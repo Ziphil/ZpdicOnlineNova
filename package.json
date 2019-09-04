@@ -1,0 +1,26 @@
+{
+  "name": "zpdic",
+  "version": "1.0.0",
+  "author": "Ziphil",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "develop": "nodemon -L",
+    "ts-node": "ts-node",
+    "tsc": "tsc"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.1",
+    "nodemon": "^1.19.2",
+    "ts-loader": "^6.0.4",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.19.0",
+    "tslint-config-airbnb": "^5.11.1",
+    "tslint-loader": "^3.5.4",
+    "typescript": "^3.6.2"
+  }
+}
