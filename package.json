@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "node dist/index.js",
-    "develop": "nodemon -L",
+    "develop": "nodemon --inspect -L",
     "ts-node": "ts-node",
     "tsc": "tsc"
   },
