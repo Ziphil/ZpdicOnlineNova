@@ -13,7 +13,7 @@ import {
 const PORT = 3000;
 const HOSTNAME = "localhost";
 
-const MONGO_URI = "mongodb://localhost/foo";
+const MONGO_URI = "mongodb://localhost:27017/zpdic";
 
 
 class Main {
@@ -37,7 +37,7 @@ class Main {
   }
 
   private setupMongo(): void {
-    mongoose.connect(MONGO_URI, {useMongoClient: true});
+    mongoose.connect(MONGO_URI);
   }
 
   private listen(): void {

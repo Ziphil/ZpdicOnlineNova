@@ -6,6 +6,9 @@ import {
   Response
 } from "express";
 import {
+  User
+} from "../model/user";
+import {
   BaseController
 } from "./base";
 
@@ -17,7 +20,14 @@ export class UserController extends BaseController {
   }
 
   private debug(requset: Request, response: Response): void {
-    response.send("Debugging");
+    let user = new User({name: "Test", password: "password", email: "foo@bar.com"});
+    user.save((error) => {
+      if (error) {
+        response.send("Error");
+      } else {
+        response.send("Success");
+      }
+    });
   }
 
   public constructor() {
