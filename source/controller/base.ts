@@ -14,8 +14,8 @@ import {
 
 export abstract class BaseController {
 
-  public router: Router;
-  public path: PathParams;
+  protected router: Router;
+  protected path: PathParams;
 
   public constructor(path: PathParams) {
     this.router = Router();
