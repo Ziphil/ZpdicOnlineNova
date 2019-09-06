@@ -33,7 +33,7 @@ class Main {
   private setupRouters(): void {
     let application = this.application;
     let userController = new UserController();
-    application.use("/user", userController.router);
+    application.use(userController.path, userController.router);
   }
 
   private setupMongo(): void {

@@ -16,18 +16,18 @@ export class UserController extends BaseController {
     console.log("Not implemented");
   }
 
-  private debug(requset: Request, response: Response, next: NextFunction): void {
+  private debug(requset: Request, response: Response): void {
     response.send("Debugging");
+  }
+
+  public constructor() {
+    super("/user");
   }
 
   protected setup(): void {
     let router = this.router;
-    router.get("/login", (request, response, next) => {
-      this.login();
-    });
-    router.get("/debug", (request, response, next) => {
-      this.debug(request, response, next);
-    });
+    router.get("/login", this.login);
+    router.get("/debug", this.debug);
   }
 
 }
