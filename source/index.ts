@@ -4,6 +4,7 @@ import * as express from "express";
 import {
   Express
 } from "express";
+import * as session from "express-session";
 import * as mongoose from "mongoose";
 import {
   UserController
@@ -26,14 +27,25 @@ class Main {
 
   public main(): void {
     this.setupRouters();
+    this.setupSession();
     this.setupMongo();
     this.listen();
   }
 
   private setupRouters(): void {
-    let application = this.application;
     let userController = new UserController();
-    application.use(userController.path, userController.router);
+    this.application.use(userController.path, userController.router);
+  }
+
+  private setupSession(): void {
+    this.application.use(session({
+      secret: "zpdic",
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        maxAge: 60 * 60 * 1000
+      }
+    }));
   }
 
   private setupMongo(): void {
@@ -41,8 +53,7 @@ class Main {
   }
 
   private listen(): void {
-    let application = this.application;
-    application.listen(PORT, HOSTNAME, () => {
+    this.application.listen(PORT, HOSTNAME, () => {
       console.log("Listening on port " + PORT);
     });
   }

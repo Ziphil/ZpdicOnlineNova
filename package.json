@@ -11,11 +11,15 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "connect-mongo": "^3.0.0",
     "express": "^4.17.1",
+    "express-session": "^1.16.2",
     "mongoose": "^5.6.12"
   },
   "devDependencies": {
+    "@types/connect-mongo": "0.0.43",
     "@types/express": "^4.17.1",
+    "@types/express-session": "^1.15.14",
     "@types/mongoose": "^5.5.17",
     "nodemon": "^1.19.2",
     "ts-loader": "^6.0.4",
