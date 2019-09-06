@@ -33,8 +33,7 @@ class Main {
   }
 
   private setupRouters(): void {
-    let userController = new UserController();
-    this.application.use(userController.path, userController.router);
+    UserController.register(this.application);
   }
 
   private setupSession(): void {
