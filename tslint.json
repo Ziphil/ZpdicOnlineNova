@@ -7,11 +7,14 @@
     "interface-name": [true, "never-prefix"],
     "max-line-length": false,
     "member-ordering": false,
+    "no-angle-bracket-type-assertion": false,
     "no-consecutive-blank-lines": false,
     "no-console": false,
+    "object-literal-sort-keys": false,
     "prefer-const": false,
     "quotemark": [true, "double"],
     "semicolon": [true, "always"],
-    "trailing-comma": false
+    "trailing-comma": false,
+    "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"]
   }
 }
