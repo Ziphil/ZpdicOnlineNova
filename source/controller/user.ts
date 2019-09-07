@@ -28,7 +28,7 @@ export class UserController extends BaseController {
     let name = request.body.name;
     let password = request.body.password;
     let email = request.body.email;
-    UserModel.create({name, password, email}).then((user) => {
+    UserModel.register(name, email, password).then((user) => {
       response.send("Registered");
     });
   }
