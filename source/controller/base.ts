@@ -36,7 +36,7 @@ export abstract class BaseController {
 
   // このクラスを継承したクラスのインスタンスを生成し、引数として渡されたアプリケーションオブジェクトに対してルーターの設定を行います。
   // このときに生成したインスタンスを返します。
-  public static register<C extends BaseController>(this: new() => C, application: Express): C {
+  public static use<C extends BaseController>(this: new() => C, application: Express): C {
     let controller = new this();
     application.use(controller.path, controller.router);
     return controller;

@@ -63,7 +63,7 @@ class Main {
   }
 
   private setupRouters(): void {
-    UserController.register(this.application);
+    UserController.use(this.application);
   }
 
   private listen(): void {
