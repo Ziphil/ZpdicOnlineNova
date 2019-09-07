@@ -24,30 +24,28 @@ export class UserController extends BaseController {
     response.render("register.ejs");
   }
 
-  private postRegister(request: Request, response: Response): void {
+  private async postRegister(request: Request, response: Response): Promise<void> {
     let name = request.body.name;
     let password = request.body.password;
     let email = request.body.email;
-    UserModel.register(name, email, password).then((user) => {
-      response.send("Registered");
-    });
+    let user = await UserModel.register(name, email, password);
+    response.send("Registered: " + user.name);
   }
 
   private getLogin(request: Request, response: Response): void {
     response.render("login.ejs");
   }
 
-  private postLogin(request: Request, response: Response): void {
+  private async postLogin(request: Request, response: Response): Promise<void> {
     let name = request.body.name;
     let password = request.body.password;
-    UserModel.authenticate(name, password).then((user) => {
-      if (user) {
-        request.session!.name = user.name;
-        response.send("Login succeeded");
-      } else {
-        response.send("Login failed");
-      }
-    });
+    let user = await UserModel.authenticate(name, password);
+    if (user) {
+      request.session!.name = user.name;
+      response.send("Login succeeded");
+    } else {
+      response.send("Login failed");
+    }
   }
 
   private getLogout(request: Request, response: Response): void {
