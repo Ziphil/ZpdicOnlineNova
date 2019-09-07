@@ -1,5 +1,6 @@
 //
 
+import * as parser from "body-parser";
 import * as express from "express";
 import {
   Express
@@ -26,14 +27,24 @@ class Main {
   }
 
   public main(): void {
-    this.setupRouters();
+    this.setupParsers();
+    this.setupRenderer();
     this.setupSession();
     this.setupMongo();
+    this.setupRouters();
     this.listen();
   }
 
-  private setupRouters(): void {
-    UserController.register(this.application);
+  private setupParsers(): void {
+    let urlencodedParser = parser.urlencoded({extended: false});
+    let jsonParser = parser.json();
+    this.application.use(urlencodedParser);
+    this.application.use(jsonParser);
+  }
+
+  private setupRenderer(): void {
+    this.application.set("views", process.cwd() + "/source/view");
+    this.application.set("view engine", "ejs");
   }
 
   private setupSession(): void {
@@ -49,6 +60,10 @@ class Main {
 
   private setupMongo(): void {
     mongoose.connect(MONGO_URI);
+  }
+
+  private setupRouters(): void {
+    UserController.register(this.application);
   }
 
   private listen(): void {

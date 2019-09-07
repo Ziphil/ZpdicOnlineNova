@@ -15,11 +15,21 @@ import {
 
 export class UserController extends BaseController {
 
-  private login(): void {
-    console.log("Not implemented");
+  private getRegister(request: Request, response: Response): void {
+    response.render("register.ejs");
   }
 
-  private debug(requset: Request, response: Response): void {
+  private postRegister(request: Request, response: Response): void {
+    let name = request.body.name;
+    let password = request.body.password;
+    let email = request.body.email;
+    let user = new User({name, password, email});
+    user.save().then(() => {
+      response.send("Registered");
+    });
+  }
+
+  private getDebug(request: Request, response: Response): void {
     let user = new User({name: "Test", password: "password", email: "foo@bar.com"});
     user.save((error) => {
       if (error) {
@@ -36,8 +46,9 @@ export class UserController extends BaseController {
 
   protected setup(): void {
     let router = this.router;
-    router.get("/login", this.login);
-    router.get("/debug", this.debug);
+    router.get("/register", this.getRegister);
+    router.post("/register", this.postRegister);
+    router.get("/debug", this.getDebug);
   }
 
 }
