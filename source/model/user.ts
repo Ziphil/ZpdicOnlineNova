@@ -8,10 +8,6 @@ import {
   prop
 } from "@hasezoey/typegoose";
 import * as bcrypt from "bcrypt";
-import {
-  Document,
-  Schema
-} from "mongoose";
 
 
 const SALT_ROUND = 10;
