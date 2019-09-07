@@ -6,7 +6,7 @@ import {
   Response
 } from "express";
 import {
-  User
+  UserModel
 } from "../model/user";
 import {
   BaseController
@@ -28,8 +28,7 @@ export class UserController extends BaseController {
     let name = request.body.name;
     let password = request.body.password;
     let email = request.body.email;
-    let user = new User({name, password, email});
-    user.save().then(() => {
+    UserModel.create({name, password, email}).then((user) => {
       response.send("Registered");
     });
   }
@@ -41,7 +40,7 @@ export class UserController extends BaseController {
   private postLogin(request: Request, response: Response): void {
     let name = request.body.name;
     let password = request.body.password;
-    User.findOne({name, password}).exec().then((user) => {
+    UserModel.authenticate(name, password).then((user) => {
       if (user) {
         request.session!.name = user.name;
         response.send("Login succeeded");
@@ -57,14 +56,7 @@ export class UserController extends BaseController {
   }
 
   private getDebug(request: Request, response: Response): void {
-    let user = new User({name: "Test", password: "password", email: "foo@bar.com"});
-    user.save((error) => {
-      if (error) {
-        response.send("Error");
-      } else {
-        response.send("Success");
-      }
-    });
+    response.send("Debugging");
   }
 
   public constructor() {

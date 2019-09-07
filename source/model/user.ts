@@ -1,24 +1,34 @@
 //
 
-import * as mongoose from "mongoose";
+import {
+  DocumentType,
+  ReturnModelType,
+  Typegoose,
+  getModelForClass,
+  prop,
+} from "@hasezoey/typegoose";
 import {
   Document,
   Schema
 } from "mongoose";
 
 
-export interface UserDocument extends Document {
+export class User {
 
-  name: string;
-  password: string;
-  email: string;
+  @prop({required: true, unique: true})
+  public name!: string;
+
+  @prop({required: true})
+  public password!: string;
+
+  @prop({required: true})
+  public email!: string;
+
+  public static authenticate(this: ReturnModelType<typeof User>, name: string, password: string): Promise<DocumentType<User> | null> {
+    return this.findOne({name, password}).exec();
+  }
 
 }
 
 
-let schema = new Schema({
-  name: {type: String, required: true},
-  password: {type: String, require: true},
-  email: {type: String, required: true}
-});
-export let User = mongoose.model<UserDocument>("User", schema);
+export let UserModel = getModelForClass(User);
