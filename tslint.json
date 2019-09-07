@@ -11,6 +11,7 @@
     "no-consecutive-blank-lines": false,
     "no-console": false,
     "object-literal-sort-keys": false,
+    "ordered-imports": [true, {"named-imports-order": "lowercase-last"}],
     "prefer-const": false,
     "quotemark": [true, "double"],
     "semicolon": [true, "always"],
