@@ -7,6 +7,7 @@ import {
 } from "express";
 import * as session from "express-session";
 import * as mongoose from "mongoose";
+import * as multer from "multer";
 import {
   DictionaryController
 } from "./controller/dictionary";
@@ -31,6 +32,7 @@ class Main {
 
   public main(): void {
     this.setupParsers();
+    this.setupMulter();
     this.setupRenderer();
     this.setupSession();
     this.setupMongo();
@@ -45,20 +47,24 @@ class Main {
     this.application.use(jsonParser);
   }
 
+  private setupMulter(): void {
+    let middleware = multer({dest: "./upload/"}).single("file");
+    this.application.use(middleware);
+  }
+
   private setupRenderer(): void {
     this.application.set("views", process.cwd() + "/source/view");
     this.application.set("view engine", "ejs");
   }
 
   private setupSession(): void {
-    this.application.use(session({
+    let middleware = session({
       secret: "zpdic",
       resave: false,
       saveUninitialized: false,
-      cookie: {
-        maxAge: 60 * 60 * 1000
-      }
-    }));
+      cookie: {maxAge: 60 * 60 * 1000}
+    });
+    this.application.use(middleware);
   }
 
   private setupMongo(): void {

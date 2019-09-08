@@ -27,6 +27,17 @@ import {
 @controller("/dictionary")
 export class DictionaryController extends Controller {
 
+  @get("/upload")
+  private getUpload(request: Request, response: Response): void {
+    response.render("upload.ejs");
+  }
+
+  @post("/upload")
+  private postUpload(request: Request, response: Response): void {
+    console.log(request.file.path);
+    response.send("Uploaded");
+  }
+
   @get("/debug")
   private async getDebug(request: Request, response: Response): Promise<void> {
     let user = await UserModel.findOne({name: "Test"}).exec();
