@@ -23,7 +23,6 @@ import {
 } from "./util/decorator";
 
 
-
 @controller("/dictionary")
 export class DictionaryController extends Controller {
 
