@@ -2,6 +2,7 @@
   "defaultSeverity": "warning",
   "extends": ["tslint:recommended"],
   "rules": {
+    "array-type": [true, "generic"],
     "eofline": false,
     "indent": [true, "spaces", 2],
     "interface-name": [true, "never-prefix"],
@@ -10,11 +11,14 @@
     "no-angle-bracket-type-assertion": false,
     "no-consecutive-blank-lines": false,
     "no-console": false,
+    "no-empty": false,
     "object-literal-sort-keys": false,
+    "only-arrow-functions": false,
     "ordered-imports": [true, {"named-imports-order": "lowercase-last"}],
     "prefer-const": false,
     "quotemark": [true, "double"],
     "semicolon": [true, "always"],
+    "space-before-function-paren": false,
     "trailing-comma": false,
     "whitespace": [true, "check-branch", "check-decl", "check-operator", "check-separator", "check-type"]
   }
