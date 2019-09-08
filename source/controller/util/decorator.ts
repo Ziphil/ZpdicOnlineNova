@@ -19,27 +19,28 @@ import {
 
 interface ControllerMetadata<P extends Params = ParamsDictionary> {
 
-  method: "get" | "post";
-  name: string;
+  name: string | symbol;
   path: string;
-  middlewares: Array<RequestHandler<P>>;
+  method: MethodType;
+  befores: Array<RequestHandler<P>>;
+  afters: Array<RequestHandler<P>>;
 
 }
 
 
-const KEY = Symbol("controller");
+type MethodType = "get" | "post";
 
 export function controller<P extends Params = ParamsDictionary>(path: string): ClassDecorator {
   let decorator = function (clazz: new() => Controller): void {
     let originalSetup = clazz.prototype.setup;
     clazz.prototype.setup = function (this: Controller): void {
       let anyThis = <any>this;
-      let array = getMetadata<ControllerMetadata<P>>(clazz.prototype);
+      let array = getMetadataArray<P>(clazz.prototype);
       for (let metadata of array) {
         let handler = function (request: Request<P>, response: Response, next: NextFunction): any {
           return anyThis[metadata.name](request, response, next);
         };
-        this.router[metadata.method](metadata.path, ...metadata.middlewares, handler);
+        this.router[metadata.method](metadata.path, ...metadata.befores, handler, ...metadata.afters);
       }
       this.path = path;
       originalSetup();
@@ -48,32 +49,71 @@ export function controller<P extends Params = ParamsDictionary>(path: string): C
   return <any>decorator;
 }
 
-export function get<P extends Params = ParamsDictionary>(path: string, ...middlewares: Array<RequestHandler<P>>): MethodDecorator {
+export function get(path: string): MethodDecorator {
   let decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
-    let metadata = {method: "get", name, path, middlewares};
-    pushMetadata(target, metadata);
+    setPath(target, name, "get", path);
   };
   return decorator;
 }
 
-export function post<P extends Params = ParamsDictionary>(path: string, ...middlewares: Array<RequestHandler<P>>): MethodDecorator {
+export function post(path: string): MethodDecorator {
   let decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
-    let metadata = {method: "post", name, path, middlewares};
-    pushMetadata(target, metadata);
+    setPath(target, name, "post", path);
   };
   return decorator;
 }
 
-function pushMetadata<M>(target: object, metadata: M): void {
+export function before<P extends Params = ParamsDictionary>(...middlewares: Array<RequestHandler<P>>): MethodDecorator {
+  let decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
+    pushMiddlewares(target, name, "before", ...middlewares);
+  };
+  return decorator;
+}
+
+export function after<P extends Params = ParamsDictionary>(...middlewares: Array<RequestHandler<P>>): MethodDecorator {
+  let decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
+    pushMiddlewares(target, name, "after", ...middlewares);
+  };
+  return decorator;
+}
+
+const KEY = Symbol("controller");
+
+function findMetadata<P extends Params = ParamsDictionary>(target: object, name: string | symbol): ControllerMetadata<P> {
   let array = Reflect.getMetadata(KEY, target);
-  if (array) {
+  if (!array) {
+    array = [];
+    Reflect.defineMetadata(KEY, array, target);
+  }
+  let metadata = null;
+  for (let candidate of array) {
+    if (candidate.name === name) {
+      metadata = candidate;
+    }
+  }
+  if (!metadata) {
+    metadata = {name, path: "/", method: "get", befores: [], afters: []};
     array.push(metadata);
-  } else {
-    Reflect.defineMetadata(KEY, [metadata], target);
+  }
+  return metadata;
+}
+
+function setPath(target: object, name: string | symbol, method: MethodType, path: string): void {
+  let metadata = findMetadata(target, name);
+  metadata.method = method;
+  metadata.path = path;
+}
+
+function pushMiddlewares<P extends Params = ParamsDictionary>(target: object, name: string | symbol, timing: string, ...middlewares: Array<RequestHandler<P>>): void {
+  let metadata = findMetadata<P>(target, name);
+  if (timing === "before") {
+    metadata.befores.push(...middlewares);
+  } else if (timing === "after") {
+    metadata.afters.push(...middlewares);
   }
 }
 
-function getMetadata<M>(target: object): M[] {
-  let metadata = Reflect.getMetadata(KEY, target);
-  return metadata;
+function getMetadataArray<P extends Params = ParamsDictionary>(target: object): Array<ControllerMetadata<P>> {
+  let array = Reflect.getMetadata(KEY, target);
+  return array;
 }

@@ -13,6 +13,7 @@ import {
   Controller
 } from "./util/class";
 import {
+  before,
   controller,
   get,
   post
@@ -22,7 +23,8 @@ import {
 @controller("/user")
 export class UserController extends Controller {
 
-  @get("/", middle.checkSession)
+  @get("/")
+  @before(middle.checkSession)
   private getPage(request: Request, response: Response): void {
     let name = request.session!.name;
     response.render("user.ejs", {name});
