@@ -8,22 +8,32 @@ import {
 import {
   UserModel
 } from "../model/user";
+import * as middle from "./middle";
 import {
-  BaseController
-} from "./base";
+  Controller
+} from "./util/class";
+import {
+  controller,
+  get,
+  post
+} from "./util/decorator";
 
 
-export class UserController extends BaseController {
+@controller("/user")
+export class UserController extends Controller {
 
+  @get("/", middle.checkSession)
   private getPage(request: Request, response: Response): void {
     let name = request.session!.name;
     response.render("user.ejs", {name});
   }
 
+  @get("/register")
   private getRegister(request: Request, response: Response): void {
     response.render("register.ejs");
   }
 
+  @post("/register")
   private async postRegister(request: Request, response: Response): Promise<void> {
     let name = request.body.name;
     let password = request.body.password;
@@ -32,10 +42,12 @@ export class UserController extends BaseController {
     response.send("Registered: " + user.name);
   }
 
+  @get("/login")
   private getLogin(request: Request, response: Response): void {
     response.render("login.ejs");
   }
 
+  @post("/login")
   private async postLogin(request: Request, response: Response): Promise<void> {
     let name = request.body.name;
     let password = request.body.password;
@@ -48,28 +60,15 @@ export class UserController extends BaseController {
     }
   }
 
+  @get("/logout")
   private getLogout(request: Request, response: Response): void {
     request.session!.destroy(() => null);
     response.send("Logout");
   }
 
+  @get("/debug")
   private getDebug(request: Request, response: Response): void {
     response.send("Debugging");
-  }
-
-  public constructor() {
-    super("/user");
-  }
-
-  protected setup(): void {
-    let router = this.router;
-    router.get("/", this.checkSession, this.getPage);
-    router.get("/register", this.getRegister);
-    router.post("/register", this.postRegister);
-    router.get("/login", this.getLogin);
-    router.post("/login", this.postLogin);
-    router.get("/logout", this.getLogout);
-    router.get("/debug", this.getDebug);
   }
 
 }
