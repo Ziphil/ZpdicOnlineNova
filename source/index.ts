@@ -8,6 +8,9 @@ import {
 import * as session from "express-session";
 import * as mongoose from "mongoose";
 import {
+  DictionaryController
+} from "./controller/dictionary";
+import {
   UserController
 } from "./controller/user";
 
@@ -64,6 +67,7 @@ class Main {
 
   private setupRouters(): void {
     UserController.use(this.application);
+    DictionaryController.use(this.application);
   }
 
   private listen(): void {
