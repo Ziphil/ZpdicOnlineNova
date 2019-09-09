@@ -8,7 +8,7 @@ import {
 import {
   SlimeDictionaryModel,
   SlimeWordModel
-} from "../model/slime-dictionary";
+} from "../model/dictionary/slime";
 import {
   UserModel
 } from "../model/user";

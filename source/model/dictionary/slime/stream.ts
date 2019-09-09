@@ -26,7 +26,7 @@ import {
   SlimeVariationModel,
   SlimeWordDocument,
   SlimeWordModel
-} from "../../slime-dictionary";
+} from "../slime";
 
 
 export class SlimeStream {
