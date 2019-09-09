@@ -7,6 +7,9 @@ import {
 } from "express";
 import * as session from "express-session";
 import * as mongoose from "mongoose";
+import {
+  Schema
+} from "mongoose";
 import * as multer from "multer";
 import {
   DictionaryController
@@ -68,6 +71,11 @@ class Main {
   }
 
   private setupMongo(): void {
+    let SchemaString = <any>Schema.Types.String;
+    let check = function (value: string): boolean {
+      return value !== null;
+    };
+    SchemaString.checkRequired(check);
     mongoose.connect(MONGO_URI);
   }
 
