@@ -65,27 +65,35 @@ export class SlimeStream {
     let word = new SlimeWordModel({});
     word.number = parseInt(raw["entry"]["id"], 10);
     word.name = raw["entry"]["form"];
+    word.equivalents = [];
     for (let rawEquivalent of raw["translations"]) {
       let equivalent = new SlimeEquivalentModel({});
       equivalent.title = rawEquivalent["title"];
       equivalent.names = rawEquivalent["forms"];
+      word.equivalents.push(equivalent);
     }
     word.tags = raw["tags"];
+    word.informations = [];
     for (let rawInformation of raw["contents"]) {
       let information = new SlimeInformationModel({});
       information.title = rawInformation["title"];
       information.text = rawInformation["text"];
+      word.informations.push(information);
     }
+    word.variations = [];
     for (let rawVariation of raw["variations"]) {
       let variation = new SlimeVariationModel({});
       variation.title = rawVariation["title"];
-      variation.name = rawVariation["name"];
+      variation.name = rawVariation["form"];
+      word.variations.push(variation);
     }
+    word.relations = [];
     for (let rawRelation of raw["relations"]) {
       let relation = new SlimeRelationModel({});
       relation.title = rawRelation["title"];
       relation.number = parseInt(rawRelation["entry"]["id"], 10);
-      relation.name = rawRelation["entry"]["name"];
+      relation.name = rawRelation["entry"]["form"];
+      word.relations.push(relation);
     }
     return word;
   }
