@@ -50,14 +50,16 @@ export class SlimeStream {
     return pipeline;
   }
 
-  public on<E extends keyof SlimeStreamType>(event: E, listener: (chunk: SlimeStreamType[E]) => void) {
+  public on<E extends keyof SlimeStreamType>(event: E, listener: (chunk: SlimeStreamType[E]) => void): void {
     if (event === "word") {
       this.wordPipeline.on("data", (chunk) => {
         let word = this.createWord(chunk.value);
-        listener(word);
+        listener(<any>word);
       });
     } else if (event === "wordEnd") {
       this.wordPipeline.on("end", listener);
+    } else if (event === "error") {
+      this.wordPipeline.on("error", listener);
     }
   }
 
@@ -104,8 +106,9 @@ export class SlimeStream {
 interface SlimeStreamType {
 
   word: SlimeWordDocument;
-  wordEnd: any;
+  wordEnd: undefined;
   other: object;
-  otherEnd: any;
+  otherEnd: undefined;
+  error: Error;
 
 }
