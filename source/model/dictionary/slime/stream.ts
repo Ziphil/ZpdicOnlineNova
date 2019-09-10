@@ -50,16 +50,19 @@ export class SlimeStream {
     return pipeline;
   }
 
-  public on<E extends keyof SlimeStreamType>(event: E, listener: (chunk: SlimeStreamType[E]) => void): void {
+  public on<E extends keyof SlimeStreamType>(event: E, listener: (...args: SlimeStreamType[E]) => void): void {
     if (event === "word") {
+      let castListener = SlimeStream.cast<"word">(listener);
       this.wordPipeline.on("data", (chunk) => {
         let word = this.createWord(chunk.value);
-        listener(<any>word);
+        castListener(word);
       });
     } else if (event === "wordEnd") {
-      this.wordPipeline.on("end", listener);
+      let castListener = SlimeStream.cast<"wordEnd">(listener);
+      this.wordPipeline.on("end", castListener);
     } else if (event === "error") {
-      this.wordPipeline.on("error", listener);
+      let castListener = SlimeStream.cast<"error">(listener);
+      this.wordPipeline.on("error", castListener);
     }
   }
 
@@ -100,15 +103,22 @@ export class SlimeStream {
     return word;
   }
 
+  // イベントリスナーの型をダウンキャストするユーティリティメソッドです。
+  // 本来なら、event の値を判定した時点で listner の型もそれに合致したものであると推論されるべきですが、推論されないようなのでこのメソッドを使います。
+  // もっと良い方法ないの?
+  private static cast<K extends keyof SlimeStreamType>(listener: (...args: any) => void): (...args: SlimeStreamType[K]) => void {
+    return listener;
+  }
+
 }
 
 
 interface SlimeStreamType {
 
-  word: SlimeWordDocument;
-  wordEnd: undefined;
-  other: object;
-  otherEnd: undefined;
-  error: Error;
+  word: [SlimeWordDocument];
+  wordEnd: [];
+  other: [object];
+  otherEnd: [];
+  error: [Error];
 
 }
