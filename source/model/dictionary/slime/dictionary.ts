@@ -10,7 +10,8 @@ import {
   User
 } from "../../user";
 import {
-  SlimeStream
+  SlimeStream,
+  SlimeWordModel
 } from "../slime";
 
 
@@ -49,10 +50,13 @@ export class SlimeDictionary {
     return dictionary;
   }
 
+  // この辞書に登録されている単語データを全て削除し、ファイルから読み込んだデータを代わりに保存します。
+  // 辞書の内部データも、ファイルから読み込んだものに更新されます。
   public async upload(this: SlimeDictionaryDocument, path: string): Promise<SlimeDictionaryDocument> {
     this.status = "saving";
     this.externalData = {};
     await this.save();
+    await SlimeWordModel.deleteMany({dictionary: this}).exec();
     let promise = new Promise<SlimeDictionaryDocument>((resolve, reject) => {
       let stream = new SlimeStream(path);
       let count = 0;
