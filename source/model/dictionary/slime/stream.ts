@@ -1,6 +1,9 @@
 //
 
 import {
+  EventEmitter
+} from "events";
+import {
   createReadStream
 } from "fs";
 import {
@@ -29,13 +32,14 @@ import {
 } from "../slime";
 
 
-export class SlimeStream {
+export class SlimeStream extends EventEmitter {
 
   public path: string;
   public encoding: string;
   private wordPipeline: Readable;
 
   public constructor(path: string, encoding: string = "utf8") {
+    super();
     this.path = path;
     this.encoding = encoding;
     this.wordPipeline = this.createWordPipeline(path, encoding);
@@ -50,20 +54,31 @@ export class SlimeStream {
     return pipeline;
   }
 
-  public on<E extends keyof SlimeStreamType>(event: E, listener: (...args: SlimeStreamType[E]) => void): void {
+  public on<E extends keyof SlimeStreamType>(event: E, listener: (...args: SlimeStreamType[E]) => void): this;
+  public on(event: string | symbol, listener: (...args: any) => void): this {
+    super.on(event, listener);
     if (event === "word") {
-      let castListener = SlimeStream.cast<"word">(listener);
       this.wordPipeline.on("data", (chunk) => {
-        let word = this.createWord(chunk.value);
-        castListener(word);
+        let word = null;
+        try {
+          word = this.createWord(chunk.value);
+        } catch (error) {
+          this.emit("error", error);
+        }
+        if (word) {
+          this.emit("word", word);
+        }
       });
     } else if (event === "wordEnd") {
-      let castListener = SlimeStream.cast<"wordEnd">(listener);
-      this.wordPipeline.on("end", castListener);
+      this.wordPipeline.on("end", () => {
+        this.emit("wordEnd");
+      });
     } else if (event === "error") {
-      let castListener = SlimeStream.cast<"error">(listener);
-      this.wordPipeline.on("error", castListener);
+      this.wordPipeline.on("error", (error) => {
+        this.emit("error");
+      });
     }
+    return this;
   }
 
   private createWord(raw: any): SlimeWordDocument {
@@ -101,13 +116,6 @@ export class SlimeStream {
       word.relations.push(relation);
     }
     return word;
-  }
-
-  // イベントリスナーの型をダウンキャストするユーティリティメソッドです。
-  // 本来なら、event の値を判定した時点で listner の型もそれに合致したものであると推論されるべきですが、推論されないようなのでこのメソッドを使います。
-  // もっと良い方法ないの?
-  private static cast<K extends keyof SlimeStreamType>(listener: (...args: any) => void): (...args: SlimeStreamType[K]) => void {
-    return listener;
   }
 
 }
