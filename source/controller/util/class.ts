@@ -17,7 +17,7 @@ export class Controller {
     this.setup();
   }
 
-  protected setup() {
+  protected setup(): void {
   }
 
   // このクラスを継承したクラスのインスタンスを生成し、引数として渡されたアプリケーションオブジェクトに対してルーターの設定を行います。

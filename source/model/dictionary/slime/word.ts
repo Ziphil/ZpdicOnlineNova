@@ -11,7 +11,7 @@ import {
   SlimeDictionary
 } from "./dictionary";
 import {
-  SlimeEquivalent,
+  SlimeEquivalent
 } from "./equivalent";
 import {
   SlimeInformation
