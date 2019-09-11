@@ -40,7 +40,7 @@ export class SlimeDictionary {
     }
   }
 
-  public static async createUpload(name: string, user: Ref<User>, path: string): Promise<SlimeDictionaryDocument> {
+  public static async registerUpload(name: string, user: Ref<User>, path: string): Promise<SlimeDictionaryDocument> {
     let dictionary = new SlimeDictionaryModel({});
     dictionary.number = await SlimeDictionaryModel.nextNumber();
     dictionary.name = name;

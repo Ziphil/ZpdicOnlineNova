@@ -35,7 +35,7 @@ export class DictionaryController extends Controller {
   private async postUpload(request: Request, response: Response): Promise<void> {
     let user = await UserModel.findOne({name: "Test"}).exec();
     if (user) {
-      SlimeDictionaryModel.createUpload("テスト辞書", user, request.file.path);
+      SlimeDictionaryModel.registerUpload("テスト辞書", user, request.file.path);
       response.send("Uploaded");
     } else {
       response.send("User not found");
