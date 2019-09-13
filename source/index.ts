@@ -53,6 +53,7 @@ class Main {
     this.listen();
   }
 
+  // リクエストボディをパースする body-parser の設定をします。
   private setupParsers(): void {
     let urlencodedParser = parser.urlencoded({extended: false});
     let jsonParser = parser.json();
@@ -60,16 +61,24 @@ class Main {
     this.application.use(jsonParser);
   }
 
+  // ファイルをアップロードする処理を行う Multer の設定をします。
+  // アップロードされたファイルは upload フォルダ内に保存するようにしています。
   private setupMulter(): void {
     let middleware = multer({dest: "./upload/"}).single("file");
     this.application.use(middleware);
   }
 
+  // HTML を出力するテンプレートエンジンの設定をします。
+  // とりあえず EJS を使うようにしています。
+  // Angular などを使った方が良いと思うので、フロントエンドを真面目に作るようになったら変えようと思います。
   private setupRenderer(): void {
     this.application.set("views", process.cwd() + "/source/view");
     this.application.set("view engine", "ejs");
   }
 
+  // セッション管理を行う express-session の設定を行います。
+  // 現状では、セッションストアにメモリを使うようになっているので、サーバーを再起動するとセッション情報が消えます。
+  // 後で何とかしてください。
   private setupSession(): void {
     let middleware = session({
       secret: "zpdic",
@@ -81,6 +90,8 @@ class Main {
   }
 
   // 認証を行うミドルウェアである Passport の設定を行います。
+  // 現状では、ユーザー名とパスワードによる認証に関する設定のみを行います。
+  // セッションに保持するデータとして、MongoDB 内の ID を利用するようにしています。
   // あらかじめセッションの設定をしておく必要があるため、setupSession メソッドより後に実行してください。
   private setupPassport(): void {
     let options = {usernameField: "name", passReqToCallback: false};
@@ -108,6 +119,8 @@ class Main {
     this.application.use(passport.session());
   }
 
+  // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
+  // typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。
   private setupMongo(): void {
     let SchemaString = <any>Schema.Types.String;
     let check = function (value: string): boolean {
@@ -117,6 +130,8 @@ class Main {
     mongoose.connect(MONGO_URI);
   }
 
+  // ルーターの設定を行います。
+  // このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。
   private setupRouters(): void {
     UserController.use(this.application);
     DictionaryController.use(this.application);
