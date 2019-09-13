@@ -31,6 +31,9 @@ import {
 const PORT = 3000;
 const HOSTNAME = "localhost";
 
+const SESSION_SECRET = "session zpdic";
+const SESSION_EXPIRE_HOUR = 3;
+
 const MONGO_URI = "mongodb://localhost:27017/zpdic";
 
 
@@ -81,10 +84,10 @@ class Main {
   // 後で何とかしてください。
   private setupSession(): void {
     let middleware = session({
-      secret: "zpdic",
+      secret: SESSION_SECRET,
       resave: false,
       saveUninitialized: false,
-      cookie: {maxAge: 60 * 60 * 1000}
+      cookie: {maxAge: SESSION_EXPIRE_HOUR * 60 * 60 * 1000}
     });
     this.application.use(middleware);
   }
