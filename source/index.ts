@@ -1,6 +1,7 @@
 //
 
 import * as parser from "body-parser";
+import * as connect from "connect-mongo";
 import * as express from "express";
 import {
   Express
@@ -80,15 +81,13 @@ class Main {
   }
 
   // セッション管理を行う express-session の設定を行います。
-  // 現状では、セッションストアにメモリを使うようになっているので、サーバーを再起動するとセッション情報が消えます。
-  // 後で何とかしてください。
+  // セッションストアとして、MongoDB の該当データベース内の sessions コレクションを用いるようになっています。
   private setupSession(): void {
-    let middleware = session({
-      secret: SESSION_SECRET,
-      resave: false,
-      saveUninitialized: false,
-      cookie: {maxAge: SESSION_EXPIRE_HOUR * 60 * 60 * 1000}
-    });
+    let MongoStore = connect(session);
+    let store = new MongoStore({url: MONGO_URI, collection: "sessions"});
+    let secret = SESSION_SECRET;
+    let cookie = {maxAge: SESSION_EXPIRE_HOUR * 60 * 60 * 1000};
+    let middleware = session({store, secret, cookie, resave: false, saveUninitialized: false});
     this.application.use(middleware);
   }
 
