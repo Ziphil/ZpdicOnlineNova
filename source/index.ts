@@ -11,12 +11,21 @@ import {
   Schema
 } from "mongoose";
 import * as multer from "multer";
+import * as passport from "passport";
+import {
+  IStrategyOptions,
+  Strategy as LocalStrategy
+} from "passport-local";
 import {
   DictionaryController
 } from "./controller/dictionary";
 import {
   UserController
 } from "./controller/user";
+import {
+  UserDocument,
+  UserModel
+} from "./model/user";
 
 
 const PORT = 3000;
@@ -38,6 +47,7 @@ class Main {
     this.setupMulter();
     this.setupRenderer();
     this.setupSession();
+    this.setupPassport();
     this.setupMongo();
     this.setupRouters();
     this.listen();
@@ -68,6 +78,34 @@ class Main {
       cookie: {maxAge: 60 * 60 * 1000}
     });
     this.application.use(middleware);
+  }
+
+  // 認証を行うミドルウェアである Passport の設定を行います。
+  // あらかじめセッションの設定をしておく必要があるため、setupSession メソッドより後に実行してください。
+  private setupPassport(): void {
+    let options = {usernameField: "name", passReqToCallback: false};
+    let strategy = new LocalStrategy(<IStrategyOptions>options, async (name, password, done) => {
+      let user = await UserModel.authenticate(name, password);
+      if (user) {
+        return done(null, user);
+      } else {
+        return done(null, false);
+      }
+    });
+    passport.use(strategy);
+    passport.serializeUser<UserDocument, string>((user, done) => {
+      done(null, user.id);
+    });
+    passport.deserializeUser<UserDocument, string>(async (id, done) => {
+      try {
+        let user = await UserModel.findById(id);
+        done(null, user || undefined);
+      } catch (error) {
+        done(error);
+      }
+    });
+    this.application.use(passport.initialize());
+    this.application.use(passport.session());
   }
 
   private setupMongo(): void {

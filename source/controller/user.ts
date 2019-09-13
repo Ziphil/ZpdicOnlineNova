@@ -18,16 +18,17 @@ import {
   get,
   post
 } from "./util/decorator";
+import "./util/extension";
 
 
 @controller("/user")
 export class UserController extends Controller {
 
   @get("/")
-  @before(middle.checkSession)
+  @before(middle.checkLogin("/"))
   private getPage(request: Request, response: Response): void {
-    let name = request.session!.name;
-    response.render("user.ejs", {name});
+    let user = request.user!;
+    response.render("user.ejs", {name: user.name});
   }
 
   @get("/register")
@@ -50,21 +51,15 @@ export class UserController extends Controller {
   }
 
   @post("/login")
+  @before(middle.authenticate("/"))
   private async postLogin(request: Request, response: Response): Promise<void> {
-    let name = request.body.name;
-    let password = request.body.password;
-    let user = await UserModel.authenticate(name, password);
-    if (user) {
-      request.session!.name = user.name;
-      response.send("Login succeeded");
-    } else {
-      response.send("Login failed");
-    }
+    let user = request.user!;
+    response.send("Login succeeded: " + user.name);
   }
 
   @get("/logout")
   private getLogout(request: Request, response: Response): void {
-    request.session!.destroy(() => null);
+    request.logout();
     response.send("Logout");
   }
 
