@@ -1,15 +1,24 @@
 {
   "compilerOptions": {
-    "outDir": "./dist",
+    "baseUrl": "./",
+    "outDir": "./dist/server",
     "module": "commonjs",
     "target": "es5",
     "moduleResolution": "node",
     "strict": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "removeComments": true
+    "removeComments": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2018",
+      "dom"
+    ]
   },
   "include": [
-    "./source/**/*"
+    "./source/**/*",
+    "./client/**/*"
   ]
 }

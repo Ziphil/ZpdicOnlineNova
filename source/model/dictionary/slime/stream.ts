@@ -61,7 +61,7 @@ export class SlimeStream extends EventEmitter {
       this.wordPipeline.on("data", (chunk) => {
         let word = null;
         try {
-          word = this.createWord(chunk.value);
+          word = this.createWord((<any>chunk).value);
         } catch (error) {
           this.emit("error", error);
         }

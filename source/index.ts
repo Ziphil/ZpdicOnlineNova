@@ -49,11 +49,11 @@ class Main {
   public main(): void {
     this.setupParsers();
     this.setupMulter();
-    this.setupRenderer();
     this.setupSession();
     this.setupPassport();
     this.setupMongo();
     this.setupRouters();
+    this.setupStaticRouters();
     this.listen();
   }
 
@@ -70,14 +70,6 @@ class Main {
   private setupMulter(): void {
     let middleware = multer({dest: "./upload/"}).single("file");
     this.application.use(middleware);
-  }
-
-  // HTML を出力するテンプレートエンジンの設定をします。
-  // とりあえず EJS を使うようにしています。
-  // Angular などを使った方が良いと思うので、フロントエンドを真面目に作るようになったら変えようと思います。
-  private setupRenderer(): void {
-    this.application.set("views", process.cwd() + "/source/view");
-    this.application.set("view engine", "ejs");
   }
 
   // セッション管理を行う express-session の設定を行います。
@@ -137,6 +129,13 @@ class Main {
   private setupRouters(): void {
     UserController.use(this.application);
     DictionaryController.use(this.application);
+  }
+
+  // 静的ファイルのルーターの設定を行います。
+  // このメソッドは、各種ミドルウェアの設定メソッドおよび他のルーターの設定メソッドを全て呼んだ後に実行してください。
+  private setupStaticRouters(): void {
+    this.application.use(express.static(process.cwd() + "/dist/client"));
+    this.application.use("/*", express.static(process.cwd() + "/dist/client/index.html"));
   }
 
   private listen(): void {
