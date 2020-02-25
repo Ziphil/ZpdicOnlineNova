@@ -1,14 +1,15 @@
 //
 
-import * as React from "react";
+import * as react from "react";
 import {
-  Component
+  Component,
+  ReactNode
 } from "react";
 
 
 export class App extends Component {
 
-  public render(): JSX.Element {
+  public render(): ReactNode {
     return (
       <div className="App">
         <header className="App-header">

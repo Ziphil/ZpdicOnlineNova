@@ -1,10 +1,12 @@
 //
 
-import * as React from "react";
-import * as ReactDOM from "react-dom";
+import * as react from "react";
+import {
+  render
+} from "react-dom";
 import {
   App
 } from "./component/app";
 
 
-ReactDOM.render(<App/>, document.getElementById("root"));
+render(<App/>, document.getElementById("root"));
