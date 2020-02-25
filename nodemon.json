@@ -2,5 +2,5 @@
   "watch": ["source"],
   "ext": "ts",
   "ignore": ["test/**/*.ts"],
-  "exec": "npm run ts-node ./source/index.ts"
+  "exec": "npm run command:tsn ./source/index.ts"
 }
