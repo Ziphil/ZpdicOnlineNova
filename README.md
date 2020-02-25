@@ -54,3 +54,6 @@ npm run develop
 
 ## 起動 (本番時)
 まだやってないのでよく分かりません。
+
+## 参考文献など
+React と Express を共存させる方法は、[このリポジトリ](https://github.com/fractalliter/express-react-typescript)を参考にしました。
