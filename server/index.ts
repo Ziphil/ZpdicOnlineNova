@@ -29,7 +29,7 @@ import {
 } from "./model/user";
 
 
-const PORT = 3000;
+const PORT = 8050;
 const HOSTNAME = "localhost";
 
 const SESSION_SECRET = "session zpdic";
