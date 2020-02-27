@@ -5,6 +5,7 @@ import {
   Request,
   Response
 } from "express";
+import * as jwt from "jsonwebtoken";
 import {
   UserModel
 } from "../model/user";
@@ -21,7 +22,7 @@ import {
 import "./util/extension";
 
 
-@controller("/user")
+@controller("/api/user")
 export class UserController extends Controller {
 
   @get("/")
@@ -51,10 +52,17 @@ export class UserController extends Controller {
   }
 
   @post("/login")
-  @before(middle.authenticate("/"))
+  @before(middle.authenticate("1d"))
   private async postLogin(request: Request, response: Response): Promise<void> {
+    let token = request.token;
+    response.json(token);
+  }
+
+  @get("/test")
+  @before(middle.verifyToken())
+  private async getTest(request: Request, response: Response): Promise<void> {
     let user = request.user!;
-    response.send("Login succeeded: " + user.name);
+    response.json({name: user.name, email: user.email});
   }
 
   @get("/logout")

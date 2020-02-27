@@ -23,7 +23,7 @@ import {
 } from "./util/decorator";
 
 
-@controller("/dictionary")
+@controller("/api/dictionary")
 export class DictionaryController extends Controller {
 
   @get("/upload")
