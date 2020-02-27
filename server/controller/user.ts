@@ -55,7 +55,8 @@ export class UserController extends Controller {
   @before(middle.authenticate("1d"))
   private async postLogin(request: Request, response: Response): Promise<void> {
     let token = request.token;
-    response.json(token);
+    let name = request.user?.name;
+    response.json({token, name});
   }
 
   @get("/test")

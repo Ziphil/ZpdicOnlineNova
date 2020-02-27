@@ -72,6 +72,7 @@ export function authenticate(expiresIn: string | number): RequestHandler {
       jwt.sign({id: user.id}, SECRET_KEY, {expiresIn}, (error, token) => {
         if (!error) {
           request.token = token;
+          request.user = user!;
           next();
         } else {
           next(error);

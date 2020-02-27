@@ -31,9 +31,10 @@ export class LoginForm extends Component<{}, LoginFormState> {
   private async submit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     let {name, password} = this.state;
-    let result = await post<string>("/api/user/login", {name, password});
+    let result = await post<LoginResult>("/api/user/login", {name, password});
     if (result.data) {
-      localStorage.setItem("token", result.data);
+      localStorage.setItem("token", result.data.token);
+      localStorage.setItem("name", result.data.name);
       console.log(result.data);
     }
   }
@@ -58,5 +59,13 @@ interface LoginFormState {
 
   name: string;
   password: string;
+
+}
+
+
+interface LoginResult {
+
+  token: string;
+  name: string
 
 }
