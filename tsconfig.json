@@ -7,6 +7,7 @@
     "jsx": "react",
     "jsxFactory": "react.createElement",
     "moduleResolution": "node",
+    "sourceMap": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
