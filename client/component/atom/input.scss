@@ -2,12 +2,7 @@
 
 
 .input-wrapper {
-  margin: 10px 0px 0px 0px;
   display: block;
-}
-
-.input-wrapper:first-child {
-  margin: 0px;
 }
 
 .input-wrapper .label {
@@ -17,8 +12,7 @@
 
 .input-wrapper .input {
   width: 100%;
-  margin: 0px;
-  padding: 2px 8px;
+  padding: 2px 10px;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;

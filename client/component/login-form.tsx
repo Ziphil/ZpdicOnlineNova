@@ -7,8 +7,11 @@ import {
 } from "react";
 import * as css from "react-css-modules";
 import {
+  Button
+} from "./atom/button";
+import {
   Input
-} from "./input";
+} from "./atom/input";
 
 
 @css(require("./login-form.scss"))
@@ -19,7 +22,9 @@ export class LoginForm extends Component {
       <form styleName="login">
         <Input label="ユーザー名"/>
         <Input label="パスワード" inputType="password"/>
-        <input type="submit" value="ログイン"/>
+        <div styleName="button-group">
+          <Button value="ログイン"/><Button value="新規登録"/>
+        </div>
       </form>
     );
   }

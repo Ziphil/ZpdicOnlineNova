@@ -2,11 +2,37 @@
 
 
 .login {
-  width: 300px;
+  width: 350px;
   margin: 0px;
-  padding: 15px 20px;
+  padding: 20px 30px;
   background-color: hsla(0, 0%, 100%, 0.5);
   border: 1px hsla(0, 0%, 100%, 0.8) solid;
   border-radius: 6px;
   box-sizing: border-box;
+  flex-direction: column;
+  align-items: stretch;
+  display: flex;
+}
+
+.login >* {
+  margin: 15px 0px 0px 0px;
+}
+
+.login >*:first-child {
+  margin: 0px;
+}
+
+.login .button-group {
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.login .button-group >* {
+  margin: 0px 0px 0px 10px;
+}
+
+.login .button-group >*:first-child {
+  margin: 0px;
 }
