@@ -1,0 +1,31 @@
+@charset "utf-8";
+
+
+.input-wrapper {
+  margin: 10px 0px 0px 0px;
+  display: block;
+}
+
+.input-wrapper:first-child {
+  margin: 0px;
+}
+
+.input-wrapper .label {
+  font-size: 15px;
+  color: hsl(30, 30%, 50%);
+}
+
+.input-wrapper .input {
+  width: 100%;
+  margin: 0px;
+  padding: 2px 8px;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border: 1px hsla(30, 30%, 50%, 0.8) solid;
+  border-radius: 3px;
+  background-color: white;
+  box-shadow: 0px 2px 3px hsla(30, 30%, 50%, 0.1) inset;
+  box-sizing: border-box;
+  outline: none;
+}
