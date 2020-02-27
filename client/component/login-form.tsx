@@ -15,25 +15,33 @@ import {
 import {
   applyStyle
 } from "./util/decorator";
+import {
+  post
+} from "./util/http";
 
 
 @applyStyle(require("./login-form.scss"))
 export class LoginForm extends Component<{}, LoginFormState> {
 
   public state: LoginFormState = {
-    username: "",
+    name: "",
     password: ""
   };
 
-  private submit(event: FormEvent<HTMLFormElement>): void {
-    console.log("submitted: " + this.state.username + ", " + this.state.password);
+  private async submit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
+    let {name, password} = this.state;
+    let result = await post<string>("/api/user/login", {name, password});
+    if (result.data) {
+      localStorage.setItem("token", result.data);
+      console.log(result.data);
+    }
   }
 
   public render(): ReactNode {
     return (
       <form styleName="login" onSubmit={this.submit.bind(this)}>
-        <Input label="ユーザー名" onChange={(value) => this.setState({username: value})}/>
+        <Input label="ユーザー名" onChange={(value) => this.setState({name: value})}/>
         <Input label="パスワード" type="password" onChange={(value) => this.setState({password: value})}/>
         <div styleName="button-group">
           <Button value="ログイン"/>
@@ -48,7 +56,7 @@ export class LoginForm extends Component<{}, LoginFormState> {
 
 interface LoginFormState {
 
-  username: string;
+  name: string;
   password: string;
 
 }
