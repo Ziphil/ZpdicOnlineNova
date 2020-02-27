@@ -5,17 +5,19 @@ import {
   Component,
   ReactNode
 } from "react";
+import * as css from "react-css-modules";
 let styles = require("./logo.scss");
 
 
+@css(styles)
 export class Logo extends Component {
 
   public render(): ReactNode {
     return (
-      <div className={styles.logo}>
-        <div className={styles.title}>ZpDIC</div>
-        <div className={styles.subtitle}>Online</div>
-        <div className={styles.version}>ver 0.0.0</div>
+      <div styleName="logo">
+        <div styleName="title">ZpDIC</div>
+        <div styleName="subtitle">Online</div>
+        <div styleName="version">ver 0.0.0</div>
       </div>
     );
   }

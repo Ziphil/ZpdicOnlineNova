@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+
+body {
+  margin: 0px;
+  padding: 0px;
+  background-color: hsl(30, 50%, 90%);
+}
+
+.top-page {
+}
+
+.top-page .logo-wrapper {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}

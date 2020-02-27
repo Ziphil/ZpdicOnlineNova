@@ -5,8 +5,11 @@ import {
   Component,
   ReactNode
 } from "react";
+import * as css from "react-css-modules";
+let styles = require("./top-page.scss");
 
 
+@css(styles)
 export class LoginForm extends Component {
 
   public render(): ReactNode {
