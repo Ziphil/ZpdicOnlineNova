@@ -27,8 +27,24 @@ let config = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: "awesome-typescript-loader"
+          loader: "ts-loader"
         }
+      },
+      {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader",
+            options: {modules: true, url: false}
+          },
+          {
+            loader: "sass-loader"
+          }
+        ]
       },
       {
         test: /\.js$/,
@@ -38,7 +54,7 @@ let config = {
     ]
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx"]
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".scss"]
   },
   devServer: {
     port: 3000,
