@@ -24,11 +24,6 @@ export class Input extends Component<InputProps, InputState> {
     value: ""
   };
 
-  public constructor(props: InputProps) {
-    super(props);
-    this.change = this.change.bind(this);
-  }
-
   private change(event: ChangeEvent<HTMLInputElement>): void {
     let value = event.target.value;
     this.setState({value});
@@ -41,7 +36,7 @@ export class Input extends Component<InputProps, InputState> {
     return (
       <label styleName="input-wrapper">
         <div styleName="label">{this.props.label}</div>
-        <input styleName="input" type={this.props.type} value={this.state.value} onChange={this.change}/>
+        <input styleName="input" type={this.props.type} value={this.state.value} onChange={this.change.bind(this)}/>
       </label>
     );
   }
