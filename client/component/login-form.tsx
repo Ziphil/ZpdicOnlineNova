@@ -5,7 +5,6 @@ import {
   Component,
   ReactNode
 } from "react";
-import * as css from "react-css-modules";
 import {
   Button
 } from "./atom/button";
