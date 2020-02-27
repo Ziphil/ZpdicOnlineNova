@@ -7,10 +7,9 @@ import {
   ReactNode
 } from "react";
 import * as css from "react-css-modules";
-let styles = require("./input.scss");
 
 
-@css(styles)
+@css(require("./input.scss"))
 export class Input extends Component<InputProps, InputState> {
 
   public static defaultProps: InputProps = {

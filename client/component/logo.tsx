@@ -6,10 +6,9 @@ import {
   ReactNode
 } from "react";
 import * as css from "react-css-modules";
-let styles = require("./logo.scss");
 
 
-@css(styles)
+@css(require("./logo.scss"))
 export class Logo extends Component {
 
   public render(): ReactNode {

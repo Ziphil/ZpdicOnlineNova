@@ -12,10 +12,9 @@ import {
 import {
   Logo
 } from "./logo";
-let styles = require("./top-page.scss");
 
 
-@css(styles)
+@css(require("./top-page.scss"))
 export class TopPage extends Component {
 
   public render(): ReactNode {

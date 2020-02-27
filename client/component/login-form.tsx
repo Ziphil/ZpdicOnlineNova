@@ -9,10 +9,9 @@ import * as css from "react-css-modules";
 import {
   Input
 } from "./input";
-let styles = require("./login-form.scss");
 
 
-@css(styles)
+@css(require("./login-form.scss"))
 export class LoginForm extends Component {
 
   public render(): ReactNode {

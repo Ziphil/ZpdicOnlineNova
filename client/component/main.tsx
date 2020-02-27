@@ -14,7 +14,7 @@ export class Main extends Component {
 
   public render(): ReactNode {
     return (
-      <div className="app">
+      <div className="main">
         <TopPage/>
       </div>
     );
