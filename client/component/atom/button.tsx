@@ -12,12 +12,14 @@ import * as css from "react-css-modules";
 export class Button extends Component<ButtonProps, {}> {
 
   public static defaultProps: ButtonProps = {
-    value: ""
+    value: "",
+    color: "default"
   };
 
   public render(): ReactNode {
+    let color = (this.props.color === "default") ? undefined : this.props.color;
     return (
-      <input styleName="button" type="submit" value={this.props.value}/>
+      <input styleName="button" className={color} type="submit" value={this.props.value}/>
     );
   }
 
@@ -27,5 +29,6 @@ export class Button extends Component<ButtonProps, {}> {
 interface ButtonProps {
 
   value: string;
+  color: "default" | "green";
 
 }

@@ -23,7 +23,8 @@ export class LoginForm extends Component {
         <Input label="ユーザー名"/>
         <Input label="パスワード" inputType="password"/>
         <div styleName="button-group">
-          <Button value="ログイン"/><Button value="新規登録"/>
+          <Button value="ログイン"/>
+          <Button value="新規登録" color="green"/>
         </div>
       </form>
     );
