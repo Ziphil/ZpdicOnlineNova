@@ -5,8 +5,8 @@ import {
   render
 } from "react-dom";
 import {
-  App
-} from "./component/app";
+  Main
+} from "./component/main";
 
 
-render(<App/>, document.getElementById("root"));
+render(<Main/>, document.getElementById("root"));
