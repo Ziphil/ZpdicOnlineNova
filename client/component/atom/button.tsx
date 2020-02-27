@@ -13,13 +13,12 @@ export class Button extends Component<ButtonProps, {}> {
 
   public static defaultProps: ButtonProps = {
     value: "",
-    color: "default"
+    color: undefined
   };
 
   public render(): ReactNode {
-    let color = (this.props.color === "default") ? undefined : this.props.color;
     return (
-      <input styleName="button" className={color} type="submit" value={this.props.value}/>
+      <input styleName="button" className={this.props.color} type="submit" value={this.props.value}/>
     );
   }
 
@@ -29,6 +28,6 @@ export class Button extends Component<ButtonProps, {}> {
 interface ButtonProps {
 
   value: string;
-  color: "default" | "green";
+  color: undefined | "green";
 
 }
