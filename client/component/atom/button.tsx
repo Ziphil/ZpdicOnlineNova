@@ -8,17 +8,21 @@ import {
 import * as css from "react-css-modules";
 
 
-@css(require("./button.scss"))
+@css(require("./button.scss"), {allowMultiple: true})
 export class Button extends Component<ButtonProps, {}> {
 
   public static defaultProps: ButtonProps = {
     value: "",
-    color: undefined
+    color: null
   };
 
   public render(): ReactNode {
+    let styleNames = ["button"];
+    if (this.props.color) {
+      styleNames.push(this.props.color);
+    }
     return (
-      <input styleName="button" className={this.props.color} type="submit" value={this.props.value}/>
+      <input styleName={styleNames.join(" ")} type="submit" value={this.props.value}/>
     );
   }
 
@@ -28,6 +32,6 @@ export class Button extends Component<ButtonProps, {}> {
 interface ButtonProps {
 
   value: string;
-  color: undefined | "green";
+  color: "green" | null;
 
 }
