@@ -12,9 +12,12 @@ import {
 import {
   Logo
 } from "./logo";
+import {
+  applyStyle
+} from "./util/decorator";
 
 
-@css(require("./top-page.scss"))
+@applyStyle(require("./top-page.scss"))
 export class TopPage extends Component {
 
   public render(): ReactNode {

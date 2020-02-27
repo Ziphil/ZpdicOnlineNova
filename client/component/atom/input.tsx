@@ -6,10 +6,12 @@ import {
   Component,
   ReactNode
 } from "react";
-import * as css from "react-css-modules";
+import {
+  applyStyle
+} from "../util/decorator";
 
 
-@css(require("./input.scss"))
+@applyStyle(require("./input.scss"))
 export class Input extends Component<InputProps, InputState> {
 
   public static defaultProps: InputProps = {

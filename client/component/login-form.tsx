@@ -12,9 +12,12 @@ import {
 import {
   Input
 } from "./atom/input";
+import {
+  applyStyle
+} from "./util/decorator";
 
 
-@css(require("./login-form.scss"))
+@applyStyle(require("./login-form.scss"))
 export class LoginForm extends Component {
 
   public render(): ReactNode {

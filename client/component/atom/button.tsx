@@ -5,10 +5,12 @@ import {
   Component,
   ReactNode
 } from "react";
-import * as css from "react-css-modules";
+import {
+  applyStyle
+} from "../util/decorator";
 
 
-@css(require("./button.scss"), {allowMultiple: true})
+@applyStyle(require("./button.scss"))
 export class Button extends Component<ButtonProps, {}> {
 
   public static defaultProps: ButtonProps = {

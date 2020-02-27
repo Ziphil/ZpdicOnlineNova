@@ -5,10 +5,12 @@ import {
   Component,
   ReactNode
 } from "react";
-import * as css from "react-css-modules";
+import {
+  applyStyle
+} from "./util/decorator";
 
 
-@css(require("./logo.scss"))
+@applyStyle(require("./logo.scss"))
 export class Logo extends Component {
 
   public render(): ReactNode {
