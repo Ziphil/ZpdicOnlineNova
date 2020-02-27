@@ -56,4 +56,8 @@ npm run develop
 まだやってないのでよく分かりません。
 
 ## 参考文献など
-React と Express を共存させる方法は、[このリポジトリ](https://github.com/fractalliter/express-react-typescript)を参考にしました。
+開発にあたって、以下のページを参考にしました。
+今後のために記録しておきます。
+
+- [React と Express を共存させる構成例](https://github.com/fractalliter/express-react-typescript)
+- [React と Express によるログイン認証](https://weblion303.net/1215/)
