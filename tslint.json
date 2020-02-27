@@ -54,7 +54,6 @@
     "no-unsafe-finally": true,
     "no-unused-expression": true,
     "no-var-keyword": true,
-    "no-var-requires": true,
     "number-literal-format": true,
     "object-literal-key-quotes": [true, "consistent-as-needed"],
     "object-literal-shorthand": true,
