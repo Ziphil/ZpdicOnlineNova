@@ -5,8 +5,10 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "build": "webpack --mode production",
-    "start": "npm run build && node src/server/index.js",
+    "build": "run-s build:client build:server",
+    "build:client": "webpack --mode production",
+    "build:server": "ts-node server/index.ts",
+    "start": "node dist/index.js",
     "develop": "run-p develop:client develop:server",
     "develop:client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "develop:server": "nodemon --inspect -L",
