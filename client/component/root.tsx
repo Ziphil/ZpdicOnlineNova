@@ -7,10 +7,10 @@ import {
 } from "react";
 import {
   TopPage
-} from "./top-page";
+} from "../page/top-page";
 
 
-export class Main extends Component<{}, {}> {
+export class Root extends Component<{}, {}> {
 
   public render(): ReactNode {
     return (

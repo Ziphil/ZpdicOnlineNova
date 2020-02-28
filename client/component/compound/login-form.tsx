@@ -8,14 +8,14 @@ import {
 } from "react";
 import {
   applyStyle
-} from "../util/decorator";
-import * as http from "../util/http";
+} from "../../util/decorator";
+import * as http from "../../util/http";
 import {
   Button
-} from "./atom/button";
+} from "../atom/button";
 import {
   Input
-} from "./atom/input";
+} from "../atom/input";
 
 
 @applyStyle(require("./login-form.scss"))
