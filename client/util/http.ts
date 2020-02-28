@@ -4,9 +4,10 @@ import axios from "axios";
 import {
   AxiosResponse
 } from "axios";
+import {
+  UserLoginBody
+} from "../../server/type/user";
 
-
-type LoginResult = {token: string, name: string};
 
 export async function get<T>(url: string): Promise<AxiosResponse<T>> {
   let response = await axios.get<T>(url, {headers: createHeaders()});
@@ -19,10 +20,12 @@ export async function post<T>(url: string, data?: any): Promise<AxiosResponse<T>
 }
 
 export async function login(url: string, name: string, password: string): Promise<void> {
-  let result = await post<LoginResult>(url, {name, password});
-  if (result.data) {
-    localStorage.setItem("token", result.data.token);
-    localStorage.setItem("name", result.data.name);
+  let result = await axios.post<UserLoginBody>(url, {name, password}, {headers: createHeaders()});
+  let token = result.data.token;
+  let authenticatedName = result.data.name;
+  if (token && authenticatedName) {
+    localStorage.setItem("token", token);
+    localStorage.setItem("name", authenticatedName);
   }
 }
 

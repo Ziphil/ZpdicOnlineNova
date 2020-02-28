@@ -3,10 +3,13 @@
 import {
   Request,
   Response
-} from "express";
+} from "express-serve-static-core";
 import {
   UserModel
 } from "../model/user";
+import {
+  UserLoginBody
+} from "../type/user";
 import {
   before,
   controller,
@@ -51,7 +54,7 @@ export class UserController extends Controller {
 
   @post("/login")
   @before(middle.authenticate("1d"))
-  private async postLogin(request: Request, response: Response): Promise<void> {
+  private async postLogin(request: Request, response: Response<UserLoginBody>): Promise<void> {
     let token = request.token;
     let name = request.user?.name;
     response.json({token, name});
