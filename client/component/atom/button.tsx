@@ -3,6 +3,7 @@
 import * as react from "react";
 import {
   Component,
+  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -15,7 +16,9 @@ export class Button extends Component<ButtonProps, {}> {
 
   public static defaultProps: ButtonProps = {
     value: "",
-    color: null
+    type: "button",
+    color: null,
+    onClick: undefined
   };
 
   public render(): ReactNode {
@@ -24,7 +27,7 @@ export class Button extends Component<ButtonProps, {}> {
       styleNames.push(this.props.color);
     }
     return (
-      <input styleName={styleNames.join(" ")} type="submit" value={this.props.value}/>
+      <input styleName={styleNames.join(" ")} type="button" value={this.props.value} onClick={this.props.onClick}/>
     );
   }
 
@@ -34,6 +37,8 @@ export class Button extends Component<ButtonProps, {}> {
 interface ButtonProps {
 
   value: string;
+  type: "button" | "submit";
   color: "green" | null;
+  onClick: ((event: MouseEvent<HTMLInputElement>) => void) | undefined;
 
 }

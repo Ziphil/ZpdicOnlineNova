@@ -17,7 +17,7 @@ export class Input extends Component<InputProps, InputState> {
   public static defaultProps: InputProps = {
     label: "",
     type: "text",
-    onChange: null
+    onChange: undefined
   };
 
   public state: InputState = {
@@ -48,7 +48,7 @@ interface InputProps {
 
   label: string;
   type: "text" | "password";
-  onChange: ((value: string) => void) | null;
+  onChange: ((value: string) => void) | undefined;
 
 }
 

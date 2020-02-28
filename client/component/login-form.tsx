@@ -3,7 +3,7 @@
 import * as react from "react";
 import {
   Component,
-  FormEvent,
+  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -28,8 +28,7 @@ export class LoginForm extends Component<{}, LoginFormState> {
     password: ""
   };
 
-  private async submit(event: FormEvent<HTMLFormElement>): Promise<void> {
-    event.preventDefault();
+  private async performLogin(event: MouseEvent<HTMLInputElement>): Promise<void> {
     let {name, password} = this.state;
     let result = await post<LoginResult>("/api/user/login", {name, password});
     if (result.data) {
@@ -41,11 +40,11 @@ export class LoginForm extends Component<{}, LoginFormState> {
 
   public render(): ReactNode {
     return (
-      <form styleName="login" onSubmit={this.submit.bind(this)}>
+      <form styleName="login">
         <Input label="ユーザー名" onChange={(value) => this.setState({name: value})}/>
         <Input label="パスワード" type="password" onChange={(value) => this.setState({password: value})}/>
         <div styleName="button-group">
-          <Button value="ログイン"/>
+          <Button value="ログイン" onClick={this.performLogin.bind(this)}/>
           <Button value="新規登録" color="green"/>
         </div>
       </form>
