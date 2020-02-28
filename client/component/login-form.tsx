@@ -66,6 +66,6 @@ interface LoginFormState {
 interface LoginResult {
 
   token: string;
-  name: string
+  name: string;
 
 }
