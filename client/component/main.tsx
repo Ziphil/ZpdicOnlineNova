@@ -10,7 +10,7 @@ import {
 } from "./top-page";
 
 
-export class Main extends Component {
+export class Main extends Component<{}, {}> {
 
   public render(): ReactNode {
     return (

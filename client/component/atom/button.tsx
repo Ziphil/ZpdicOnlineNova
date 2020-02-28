@@ -17,8 +17,7 @@ export class Button extends Component<ButtonProps, {}> {
   public static defaultProps: ButtonProps = {
     value: "",
     type: "button",
-    color: null,
-    onClick: undefined
+    color: null
   };
 
   public render(): ReactNode {
@@ -34,11 +33,9 @@ export class Button extends Component<ButtonProps, {}> {
 }
 
 
-interface ButtonProps {
-
-  value: string;
-  type: "button" | "submit";
-  color: "green" | null;
-  onClick: ((event: MouseEvent<HTMLInputElement>) => void) | undefined;
-
-}
+type ButtonProps = {
+  value: string,
+  type: "button" | "submit",
+  color: "green" | null,
+  onClick?: ((event: MouseEvent<HTMLInputElement>) => void)
+};

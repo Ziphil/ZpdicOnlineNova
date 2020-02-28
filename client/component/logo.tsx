@@ -11,7 +11,7 @@ import {
 
 
 @applyStyle(require("./logo.scss"))
-export class Logo extends Component {
+export class Logo extends Component<{}, {}> {
 
   public render(): ReactNode {
     return (

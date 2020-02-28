@@ -17,7 +17,7 @@ import {
 
 
 @applyStyle(require("./top-page.scss"))
-export class TopPage extends Component {
+export class TopPage extends Component<{}, {}> {
 
   public render(): ReactNode {
     return (

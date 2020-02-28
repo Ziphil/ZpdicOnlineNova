@@ -54,17 +54,12 @@ export class LoginForm extends Component<{}, LoginFormState> {
 }
 
 
-interface LoginFormState {
+type LoginFormState = {
+  name: string,
+  password: string
+};
 
-  name: string;
-  password: string;
-
-}
-
-
-interface LoginResult {
-
-  token: string;
-  name: string;
-
-}
+type LoginResult = {
+  token: string,
+  name: string
+};
