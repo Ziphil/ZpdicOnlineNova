@@ -27,7 +27,8 @@ export class LoginForm extends Component<{}, LoginFormState> {
   };
 
   private async performLogin(event: MouseEvent<HTMLInputElement>): Promise<void> {
-    let {name, password} = this.state;
+    let name = this.state.name;
+    let password = this.state.password;
     await http.login("/api/user/login", name, password);
   }
 
