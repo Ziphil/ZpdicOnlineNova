@@ -1,9 +1,6 @@
 //
 
 import {
-  Router
-} from "express";
-import {
   NextFunction,
   Params,
   ParamsDictionary,
@@ -14,7 +11,7 @@ import {
 import "reflect-metadata";
 import {
   Controller
-} from "./class";
+} from "../controller/controller";
 
 
 interface ControllerMetadata<P extends Params = ParamsDictionary> {

@@ -8,7 +8,7 @@ import {
 } from "react";
 import {
   applyStyle
-} from "../util/decorator";
+} from "../../util/decorator";
 
 
 @applyStyle(require("./button.scss"))

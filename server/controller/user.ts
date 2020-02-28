@@ -1,25 +1,23 @@
 //
 
 import {
-  NextFunction,
   Request,
   Response
 } from "express";
-import * as jwt from "jsonwebtoken";
 import {
   UserModel
 } from "../model/user";
-import * as middle from "./middle";
-import {
-  Controller
-} from "./util/class";
 import {
   before,
   controller,
   get,
   post
-} from "./util/decorator";
-import "./util/extension";
+} from "../util/decorator";
+import "../util/extension";
+import {
+  Controller
+} from "./controller";
+import * as middle from "./middle";
 
 
 @controller("/api/user")

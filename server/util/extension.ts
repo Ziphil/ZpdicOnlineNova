@@ -2,7 +2,7 @@
 
 import {
   UserDocument
-} from "../../model/user";
+} from "../model/user";
 
 
 declare module "express-serve-static-core" {

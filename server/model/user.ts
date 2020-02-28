@@ -2,7 +2,6 @@
 
 import {
   DocumentType,
-  ReturnModelType,
   getModelForClass,
   prop
 } from "@hasezoey/typegoose";

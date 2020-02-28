@@ -7,17 +7,15 @@ import {
   ReactNode
 } from "react";
 import {
+  applyStyle
+} from "../util/decorator";
+import * as http from "../util/http";
+import {
   Button
 } from "./atom/button";
 import {
   Input
 } from "./atom/input";
-import {
-  applyStyle
-} from "./util/decorator";
-import {
-  post
-} from "./util/http";
 
 
 @applyStyle(require("./login-form.scss"))
@@ -30,12 +28,7 @@ export class LoginForm extends Component<{}, LoginFormState> {
 
   private async performLogin(event: MouseEvent<HTMLInputElement>): Promise<void> {
     let {name, password} = this.state;
-    let result = await post<LoginResult>("/api/user/login", {name, password});
-    if (result.data) {
-      localStorage.setItem("token", result.data.token);
-      localStorage.setItem("name", result.data.name);
-      console.log(result.data);
-    }
+    await http.login("/api/user/login", name, password);
   }
 
   public render(): ReactNode {
@@ -57,9 +50,4 @@ export class LoginForm extends Component<{}, LoginFormState> {
 type LoginFormState = {
   name: string,
   password: string
-};
-
-type LoginResult = {
-  token: string,
-  name: string
 };

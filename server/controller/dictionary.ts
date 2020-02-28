@@ -1,26 +1,23 @@
 //
 
 import {
-  NextFunction,
   Request,
   Response
 } from "express";
 import {
-  SlimeDictionaryModel,
-  SlimeWordModel
+  SlimeDictionaryModel
 } from "../model/dictionary/slime";
 import {
   UserModel
 } from "../model/user";
 import {
-  Controller
-} from "./util/class";
-import {
-  before,
   controller,
   get,
   post
-} from "./util/decorator";
+} from "../util/decorator";
+import {
+  Controller
+} from "./controller";
 
 
 @controller("/api/dictionary")
