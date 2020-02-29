@@ -19,13 +19,16 @@ export async function post<T>(url: string, data?: any): Promise<AxiosResponse<T>
   return response;
 }
 
-export async function login(url: string, name: string, password: string): Promise<void> {
+export async function login(url: string, name: string, password: string): Promise<boolean> {
   let result = await axios.post<UserLoginBody>(url, {name, password}, {headers: createHeaders()});
   let token = result.data.token;
   let authenticatedName = result.data.name;
   if (token && authenticatedName) {
     localStorage.setItem("token", token);
     localStorage.setItem("name", authenticatedName);
+    return true;
+  } else {
+    return false;
   }
 }
 

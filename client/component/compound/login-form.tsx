@@ -30,8 +30,10 @@ export class LoginForm extends Component<{}, LoginFormState> {
   private async performLogin(event: MouseEvent<HTMLInputElement>): Promise<void> {
     let name = this.state.name;
     let password = this.state.password;
-    await http.login("/api/user/login", name, password);
-    history.replace("/");
+    let succeed = await http.login("/api/user/login", name, password);
+    if (succeed) {
+      history.replace("/");
+    }
   }
 
   public render(): ReactNode {
