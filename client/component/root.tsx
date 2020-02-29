@@ -43,6 +43,7 @@ export class Root extends Component<{}, {}> {
       <Router history={history}>
         <Switch>
           <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
+          <PrivateRoute path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
           <PrivateRoute path="/dashboard" redirect="/login" component={DashboardPage}/>
         </Switch>
       </Router>

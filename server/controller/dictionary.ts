@@ -3,7 +3,7 @@
 import {
   Request,
   Response
-} from "express";
+} from "express-serve-static-core";
 import {
   SlimeDictionaryModel
 } from "../model/dictionary/slime";
@@ -11,6 +11,7 @@ import {
   UserModel
 } from "../model/user";
 import {
+  before,
   controller,
   get,
   post
@@ -18,6 +19,7 @@ import {
 import {
   Controller
 } from "./controller";
+import * as middle from "./middle";
 
 
 @controller("/api/dictionary")
@@ -37,6 +39,22 @@ export class DictionaryController extends Controller {
     } else {
       response.send("User not found");
     }
+  }
+
+  @get("/list")
+  @before(middle.verifyToken())
+  private async getList(request: Request, response: Response): Promise<void> {
+    let user = request.user!;
+    let dictionaries = await SlimeDictionaryModel.findByUser(user);
+    let result = [];
+    for (let dictionary of dictionaries) {
+      let id = dictionary.id;
+      let name = dictionary.name;
+      let status = dictionary.status;
+      let wordSize = await dictionary.countWords();
+      result.push({id, name, status, wordSize});
+    }
+    response.json(result);
   }
 
   @get("/debug")

@@ -1,9 +1,7 @@
 //
 
 
-export interface UserLoginBody {
-
-  token?: string;
-  name?: string;
-
-}
+export type UserLoginBody = {
+  token?: string,
+  name?: string
+};

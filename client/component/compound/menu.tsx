@@ -25,12 +25,12 @@ export class Menu extends Component<MenuProps, {}> {
   }
 
   public render(): ReactNode {
-    let displayedMenu = this.props.displayedMenu;
+    let mode = this.props.mode;
     return (
       <nav styleName="menu">
-        <MenuItem label="辞書一覧" href="/dashboard" displayed={displayedMenu === ""}/>
-        <MenuItem label="設定" href="/dashboard/setting" displayed={displayedMenu === "setting"}/>
-        <MenuItem label="ログアウト" onClick={this.performLogout} displayed={displayedMenu === "logout"}/>
+        <MenuItem label="辞書一覧" href="/dashboard" highlight={mode === "dictionary"}/>
+        <MenuItem label="設定" href="/dashboard/setting" highlight={mode === "setting"}/>
+        <MenuItem label="ログアウト" onClick={this.performLogout} highlight={mode === "logout"}/>
       </nav>
     );
   }
@@ -39,5 +39,5 @@ export class Menu extends Component<MenuProps, {}> {
 
 
 type MenuProps = {
-  displayedMenu: string
+  mode: string
 };

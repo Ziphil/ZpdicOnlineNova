@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+
+.dictionary-list {
+}
+
+.dictionary-list >* {
+  margin: 10px 0px 0px 0px;
+}
+
+.dictionary-list >*:first-child {
+  margin: 0px;
+}

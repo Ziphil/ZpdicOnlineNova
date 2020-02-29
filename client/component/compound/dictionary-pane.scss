@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+
+.dictionary-pane {
+  padding: 12px 15px;
+  background-color: hsla(0, 0%, 100%, 0.5);
+  border: 1px hsla(0, 0%, 100%, 0.8) solid;
+  border-radius: 6px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+}
+
+.dictionary-pane .name {
+  font-weight: bold;
+}

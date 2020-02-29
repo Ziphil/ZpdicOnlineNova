@@ -17,7 +17,7 @@ export class MenuItem extends Component<MenuItemProps, {}> {
 
   public static defaultProps: MenuItemProps = {
     label: "",
-    displayed: false
+    highlight: false
   };
 
   private click(event: MouseEvent<HTMLDivElement>): void {
@@ -31,8 +31,8 @@ export class MenuItem extends Component<MenuItemProps, {}> {
 
   public render(): ReactNode {
     let styleNames = ["menu-item"];
-    if (this.props.displayed) {
-      styleNames.push("displayed");
+    if (this.props.highlight) {
+      styleNames.push("highlight");
     }
     return (
       <div styleName={styleNames.join(" ")} onClick={this.click.bind(this)}>
@@ -46,7 +46,7 @@ export class MenuItem extends Component<MenuItemProps, {}> {
 
 type MenuItemProps = {
   label: string,
-  displayed: boolean,
+  highlight: boolean,
   href?: string,
   onClick?: (event: MouseEvent<HTMLDivElement>) => void;
 };

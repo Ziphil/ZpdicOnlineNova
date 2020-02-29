@@ -11,7 +11,8 @@ import {
   SlimeWordModel
 } from ".";
 import {
-  User
+  User,
+  UserDocument
 } from "../../user";
 
 
@@ -48,6 +49,16 @@ export class SlimeDictionary {
     dictionary.user = user;
     await dictionary.upload(path);
     return dictionary;
+  }
+
+  public static async findByUser(user: UserDocument): Promise<Array<SlimeDictionaryDocument>> {
+    let dictionaries = await SlimeDictionaryModel.find({user}).exec();
+    return dictionaries;
+  }
+
+  public async countWords(this: SlimeDictionaryDocument): Promise<number> {
+    let count = SlimeWordModel.count({dictionary: this}).exec();
+    return count;
   }
 
   // この辞書に登録されている単語データを全て削除し、ファイルから読み込んだデータを代わりに保存します。
