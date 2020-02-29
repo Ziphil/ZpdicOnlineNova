@@ -11,6 +11,7 @@ let config = {
   entry: ["babel-polyfill", "./client/index.tsx"],
   output: {
     path: path.join(__dirname, "dist"),
+    publicPath: "/",
     filename: "./js/[name].bundle.js"
   },
   devtool: "source-map",
