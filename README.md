@@ -1,10 +1,10 @@
 <div align="center">
-<h1>ZpDIC Online Nova</h1>
+<h1>ZpDIC Online (Version 2)</h1>
 </div>
 
 
 ## 概要
-[ZpDIC](http://ziphil.com/application/download/2.html) の Web アプリ版です。
+[ZpDIC](http://ziphil.com/application/download/2.html) の新しい Web アプリ版です。
 正直、ちゃんと動くものができるまでモチベーションを保てるか分からないので、もしかしたら完成しないかもしれません。
 あんまり期待しないでね。
 
@@ -61,4 +61,5 @@ npm run develop
 
 - [React と Express を共存させる構成例](https://github.com/fractalliter/express-react-typescript)
 - [React と Express によるログイン認証](https://weblion303.net/1215/)
+- [深い階層の URL に直接遷移したときの 404 エラーの対処法](https://github.com/webpack/webpack-dev-server/issues/978)
 - [簡単に HTTP リクエストを送れる GUI ツール](https://www.postman.com/)
