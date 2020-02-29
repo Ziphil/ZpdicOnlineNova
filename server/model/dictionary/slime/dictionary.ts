@@ -7,12 +7,12 @@ import {
   prop
 } from "@hasezoey/typegoose";
 import {
-  User
-} from "../../user";
-import {
   SlimeStream,
   SlimeWordModel
-} from "../slime";
+} from ".";
+import {
+  User
+} from "../../user";
 
 
 export class SlimeDictionary {

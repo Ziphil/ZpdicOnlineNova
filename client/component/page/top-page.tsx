@@ -9,14 +9,10 @@ import {
   applyStyle
 } from "../../util/decorator";
 import {
-  Header
-} from "../compound/header";
-import {
-  LoginForm
-} from "../compound/login-form";
-import {
+  Header,
+  LoginForm,
   Logo
-} from "../compound/logo";
+} from "../compound";
 
 
 @applyStyle(require("./top-page.scss"))

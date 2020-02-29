@@ -6,9 +6,6 @@ import {
   getModelForClass,
   prop
 } from "@hasezoey/typegoose";
-import {
-  SlimeWord
-} from "./word";
 
 
 export class SlimeRelation {

@@ -8,20 +8,12 @@ import {
   prop
 } from "@hasezoey/typegoose";
 import {
-  SlimeDictionary
-} from "./dictionary";
-import {
-  SlimeEquivalent
-} from "./equivalent";
-import {
-  SlimeInformation
-} from "./information";
-import {
-  SlimeRelation
-} from "./relation";
-import {
+  SlimeDictionary,
+  SlimeEquivalent,
+  SlimeInformation,
+  SlimeRelation,
   SlimeVariation
-} from "./variation";
+} from ".";
 
 
 export class SlimeWord {

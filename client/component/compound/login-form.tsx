@@ -11,11 +11,9 @@ import {
 } from "../../util/decorator";
 import * as http from "../../util/http";
 import {
-  Button
-} from "../atom/button";
-import {
+  Button,
   Input
-} from "../atom/input";
+} from "../atom";
 import history from "../history";
 
 

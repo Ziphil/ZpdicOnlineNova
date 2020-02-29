@@ -29,7 +29,7 @@ import {
   SlimeVariationModel,
   SlimeWordDocument,
   SlimeWordModel
-} from "../slime";
+} from ".";
 
 
 export class SlimeStream extends EventEmitter {

@@ -14,11 +14,9 @@ import {
   Switch
 } from "react-router-dom";
 import {
-  DashboardPage
-} from "../component/page/dashboard-page";
-import {
+  DashboardPage,
   TopPage
-} from "../component/page/top-page";
+} from "../component/page";
 import * as http from "../util/http";
 import history from "./history";
 import {
