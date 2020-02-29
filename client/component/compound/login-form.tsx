@@ -30,7 +30,7 @@ export class LoginForm extends Component<{}, LoginFormState> {
     let password = this.state.password;
     let succeed = await http.login("/api/user/login", name, password);
     if (succeed) {
-      history.replace("/");
+      history.replace("/dashboard");
     }
   }
 
