@@ -6,14 +6,14 @@ import {
   ReactNode
 } from "react";
 import {
+  applyStyle
+} from "../../util/decorator";
+import {
   LoginForm
-} from "../component/compound/login-form";
+} from "../compound/login-form";
 import {
   Logo
-} from "../component/compound/logo";
-import {
-  applyStyle
-} from "../util/decorator";
+} from "../compound/logo";
 
 
 @applyStyle(require("./top-page.scss"))

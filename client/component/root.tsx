@@ -15,10 +15,10 @@ import {
 } from "react-router-dom";
 import {
   DashboardPage
-} from "../page/dashboard-page";
+} from "../component/page/dashboard-page";
 import {
   TopPage
-} from "../page/top-page";
+} from "../component/page/top-page";
 import * as http from "../util/http";
 import history from "./history";
 import {
