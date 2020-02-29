@@ -9,6 +9,9 @@ import {
   applyStyle
 } from "../../util/decorator";
 import {
+  Header
+} from "../compound/header";
+import {
   LoginForm
 } from "../compound/login-form";
 import {
@@ -22,6 +25,7 @@ export class TopPage extends Component<{}, {}> {
   public render(): ReactNode {
     return (
       <div styleName="top-page">
+        <Header/>
         <div styleName="logo-wrapper">
           <Logo/>
           <LoginForm/>
