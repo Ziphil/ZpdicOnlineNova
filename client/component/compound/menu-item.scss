@@ -5,8 +5,11 @@
   margin: 10px 0px 0px 0px;
   padding: 10px 15px 10px 0px;
   color: hsl(30, 30%, 50%);
+  text-decoration: none;
   text-align: right;
   border-right: 5px transparent solid;
+  display: block;
+  cursor: pointer;
 }
 
 .menu-item:first-child {

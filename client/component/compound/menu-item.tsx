@@ -18,7 +18,7 @@ import {
 @applyStyle(require("./menu-item.scss"))
 class MenuItemBase extends Component<RouteComponentProps<{}> & Props, State> {
 
-  private click(event: MouseEvent<HTMLDivElement>): void {
+  private click(event: MouseEvent<HTMLElement>): void {
     if (this.props.onClick) {
       this.props.onClick(event);
     }
@@ -33,9 +33,9 @@ class MenuItemBase extends Component<RouteComponentProps<{}> & Props, State> {
       styleNames.push("highlight");
     }
     let node = (
-      <div styleName={styleNames.join(" ")} onClick={this.click.bind(this)}>
+      <a styleName={styleNames.join(" ")} onClick={this.click.bind(this)}>
         {this.props.label}
-      </div>
+      </a>
     );
     return node;
   }
@@ -47,7 +47,7 @@ type Props = {
   label: string,
   highlight: boolean,
   href?: string,
-  onClick?: (event: MouseEvent<HTMLDivElement>) => void;
+  onClick?: (event: MouseEvent<HTMLElement>) => void;
 };
 type State = {
 };

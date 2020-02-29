@@ -22,7 +22,7 @@ import * as http from "../../util/http";
 @applyStyle(require("./menu.scss"))
 class MenuBase extends Component<RouteComponentProps<{}> & Props, State> {
 
-  private async performLogout(event: MouseEvent<HTMLDivElement>): Promise<void> {
+  private async performLogout(event: MouseEvent<HTMLElement>): Promise<void> {
     await http.logout();
     this.props.history.push("/");
   }
