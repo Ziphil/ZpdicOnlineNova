@@ -2,5 +2,16 @@
 
 
 .dashboard-page {
-  margin: 100px 0px;
+  margin: 130px 0px 50px 0px;
+}
+
+.dashboard-page .content-wrapper {
+  flex-direction: row;
+  justify-content: center;
+  display: flex;
+}
+
+.dashboard-page .content-wrapper .content {
+  width: 600px;
+  margin: 0px 0px 0px 50px;
 }

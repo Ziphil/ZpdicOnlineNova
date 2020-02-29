@@ -9,7 +9,7 @@ body {
   font-family: "EB Garamond", "Times New Roman", "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝", serif;
   font-size: 18px;
   font-feature-settings: "palt" 1, "pkna" 1;
-  line-height: 1.6;
+  line-height: 1;
   background-color: hsl(30, 50%, 90%);
 }
 
@@ -31,5 +31,6 @@ body {
 
 .notice p {
   margin: 10px 0px;
+  line-height: 1.6;
   text-align: justify;
 }
