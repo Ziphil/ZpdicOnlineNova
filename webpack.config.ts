@@ -58,6 +58,7 @@ let config = {
   },
   devServer: {
     port: 3000,
+    historyApiFallback: true,
     proxy: {
       "/api": "http://localhost:8050"
     }
