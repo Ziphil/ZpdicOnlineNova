@@ -14,17 +14,6 @@ import {
 
 const SECRET_KEY = "zpdic_secret";
 
-export function checkLogin(redirect: string): RequestHandler {
-  let handler = function (request: Request, response: Response, next: NextFunction): void {
-    if (request.isAuthenticated()) {
-      return next();
-    } else {
-      response.redirect(redirect);
-    }
-  };
-  return handler;
-}
-
 // リクエストのヘッダーに書き込まれたトークンを利用して認証を行います。
 // 認証に成功した場合、request オブジェクトの user プロパティにユーザーオブジェクトを書き込み、次の処理を行います。
 // 認証に失敗した場合、リダイレクト先が渡されていればそこにリダイレクトし、そうでなければステータスコード 403 を返して終了します。

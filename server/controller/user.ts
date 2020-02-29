@@ -26,20 +26,13 @@ import * as middle from "./middle";
 @controller("/api/user")
 export class UserController extends Controller {
 
-  @get("/")
-  @before(middle.checkLogin("/"))
-  private getPage(request: Request, response: Response): void {
-    let user = request.user!;
-    response.render("user.ejs", {name: user.name});
-  }
-
   @get("/register")
-  private getRegister(request: Request, response: Response): void {
+  public getRegister(request: Request, response: Response): void {
     response.render("register.ejs");
   }
 
   @post("/register")
-  private async postRegister(request: Request, response: Response): Promise<void> {
+  public async postRegister(request: Request, response: Response<string>): Promise<void> {
     let name = request.body.name;
     let password = request.body.password;
     let email = request.body.email;
@@ -48,13 +41,13 @@ export class UserController extends Controller {
   }
 
   @get("/login")
-  private getLogin(request: Request, response: Response): void {
+  public getLogin(request: Request, response: Response): void {
     response.render("login.ejs");
   }
 
   @post("/login")
   @before(middle.authenticate("1d"))
-  private async postLogin(request: Request, response: Response<UserLoginBody>): Promise<void> {
+  public async postLogin(request: Request, response: Response<UserLoginBody>): Promise<void> {
     let token = request.token;
     let name = request.user?.name;
     response.json({token, name});
@@ -62,20 +55,9 @@ export class UserController extends Controller {
 
   @get("/test")
   @before(middle.verifyToken())
-  private async getTest(request: Request, response: Response): Promise<void> {
+  public async getTest(request: Request, response: Response<any>): Promise<void> {
     let user = request.user!;
     response.json({name: user.name, email: user.email});
-  }
-
-  @get("/logout")
-  private getLogout(request: Request, response: Response): void {
-    request.logout();
-    response.send("Logout");
-  }
-
-  @get("/debug")
-  private getDebug(request: Request, response: Response): void {
-    response.send("Debugging");
   }
 
 }

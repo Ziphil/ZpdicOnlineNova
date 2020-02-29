@@ -11,6 +11,9 @@ import {
   UserModel
 } from "../model/user";
 import {
+  DictionaryListBody
+} from "../type/dictionary";
+import {
   before,
   controller,
   get,
@@ -26,12 +29,12 @@ import * as middle from "./middle";
 export class DictionaryController extends Controller {
 
   @get("/upload")
-  private getUpload(request: Request, response: Response): void {
+  public getUpload(request: Request, response: Response): void {
     response.render("upload.ejs");
   }
 
   @post("/upload")
-  private async postUpload(request: Request, response: Response): Promise<void> {
+  public async postUpload(request: Request, response: Response<string>): Promise<void> {
     let user = await UserModel.findOne({name: "Test"}).exec();
     if (user) {
       SlimeDictionaryModel.registerUpload("テスト辞書", user, request.file.path);
@@ -43,29 +46,18 @@ export class DictionaryController extends Controller {
 
   @get("/list")
   @before(middle.verifyToken())
-  private async getList(request: Request, response: Response): Promise<void> {
+  public async getList(request: Request, response: Response<DictionaryListBody>): Promise<void> {
     let user = request.user!;
     let dictionaries = await SlimeDictionaryModel.findByUser(user);
-    let result = [];
+    let body = [] as DictionaryListBody;
     for (let dictionary of dictionaries) {
       let id = dictionary.id;
       let name = dictionary.name;
       let status = dictionary.status;
       let wordSize = await dictionary.countWords();
-      result.push({id, name, status, wordSize});
+      body.push({id, name, status, wordSize});
     }
-    response.json(result);
-  }
-
-  @get("/debug")
-  private async getDebug(request: Request, response: Response): Promise<void> {
-    response.send("First");
-    let promise = new Promise((resolve, reject) => {
-      setTimeout(() => {
-        console.log("Second");
-        resolve();
-      }, 10000);
-    });
+    response.json(body);
   }
 
 }
