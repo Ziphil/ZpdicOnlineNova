@@ -13,7 +13,7 @@ import {
 import * as http from "../../util/http";
 
 
-export class PrivateRoute extends Component<AuthenticationProps, {}> {
+export class PrivateRoute extends Component<RouteProps & Props, {}> {
 
   public render(): ReactNode {
     let node = (http.isAuthenticated()) ? <Route {...this.props}/> : <Redirect to={this.props.redirect}/>;
@@ -23,7 +23,7 @@ export class PrivateRoute extends Component<AuthenticationProps, {}> {
 }
 
 
-export class GuestRoute extends Component<AuthenticationProps, {}> {
+export class GuestRoute extends Component<RouteProps & Props, {}> {
 
   public render(): ReactNode {
     let node = (!http.isAuthenticated()) ? <Route {...this.props}/> : <Redirect to={this.props.redirect}/>;
@@ -33,6 +33,6 @@ export class GuestRoute extends Component<AuthenticationProps, {}> {
 }
 
 
-type AuthenticationProps = RouteProps & {
+type Props = {
   redirect: string;
 };

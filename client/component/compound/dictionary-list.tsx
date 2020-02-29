@@ -6,6 +6,10 @@ import {
   ReactNode
 } from "react";
 import {
+  RouteComponentProps,
+  withRouter
+} from "react-router-dom";
+import {
   applyStyle
 } from "../../util/decorator";
 import {
@@ -14,22 +18,27 @@ import {
 
 
 @applyStyle(require("./dictionary-list.scss"))
-export class DictionaryList extends Component<DictionaryListProps, {}> {
+class DictionaryListBase extends Component<RouteComponentProps<{}> & Props, State> {
 
   public render(): ReactNode {
     let dictionaryPanes = this.props.dictionaries.map((dictionary) => {
       return <DictionaryPane dictionary={dictionary} key={dictionary.id}/>;
     });
-    return (
+    let node = (
       <div styleName="dictionary-list">
         {dictionaryPanes}
       </div>
     );
+    return node;
   }
 
 }
 
 
-type DictionaryListProps = {
+type Props = {
   dictionaries: Array<any>
 };
+type State = {
+};
+
+export let DictionaryList = withRouter(DictionaryListBase);

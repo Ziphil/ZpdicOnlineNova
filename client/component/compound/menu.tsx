@@ -7,37 +7,45 @@ import {
   ReactNode
 } from "react";
 import {
+  RouteComponentProps,
+  withRouter
+} from "react-router-dom";
+import {
   MenuItem
 } from ".";
 import {
   applyStyle
 } from "../../util/decorator";
 import * as http from "../../util/http";
-import history from "../history";
 
 
 @applyStyle(require("./menu.scss"))
-export class Menu extends Component<MenuProps, {}> {
+class MenuBase extends Component<RouteComponentProps<{}> & Props, State> {
 
   private async performLogout(event: MouseEvent<HTMLDivElement>): Promise<void> {
     await http.logout();
-    history.push("/");
+    this.props.history.push("/");
   }
 
   public render(): ReactNode {
     let mode = this.props.mode;
-    return (
+    let node = (
       <nav styleName="menu">
         <MenuItem label="辞書一覧" href="/dashboard" highlight={mode === "dictionary"}/>
         <MenuItem label="設定" href="/dashboard/setting" highlight={mode === "setting"}/>
-        <MenuItem label="ログアウト" onClick={this.performLogout} highlight={mode === "logout"}/>
+        <MenuItem label="ログアウト" onClick={this.performLogout.bind(this)} highlight={mode === "logout"}/>
       </nav>
     );
+    return node;
   }
 
 }
 
 
-type MenuProps = {
+type Props = {
   mode: string
 };
+type State = {
+};
+
+export let Menu = withRouter(MenuBase);

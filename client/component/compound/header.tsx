@@ -6,15 +6,19 @@ import {
   ReactNode
 } from "react";
 import {
+  RouteComponentProps,
+  withRouter
+} from "react-router-dom";
+import {
   applyStyle
 } from "../../util/decorator";
 
 
 @applyStyle(require("./header.scss"))
-export class Header extends Component<{}, {}> {
+class HeaderBase extends Component<RouteComponentProps<{}> & Props, State> {
 
   public render(): ReactNode {
-    return (
+    let node = (
       <div styleName="header">
         <div styleName="left">
           <div styleName="title">ZpDIC</div>
@@ -24,6 +28,15 @@ export class Header extends Component<{}, {}> {
         </div>
       </div>
     );
+    return node;
   }
 
 }
+
+
+type Props = {
+};
+type State = {
+};
+
+export let Header = withRouter(HeaderBase);

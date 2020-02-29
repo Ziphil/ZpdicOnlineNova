@@ -12,9 +12,9 @@ import {
 
 
 @applyStyle(require("./button.scss"))
-export class Button extends Component<ButtonProps, {}> {
+export class Button extends Component<Props, State> {
 
-  public static defaultProps: ButtonProps = {
+  public static defaultProps: Props = {
     value: "",
     type: "button",
     color: null
@@ -25,17 +25,20 @@ export class Button extends Component<ButtonProps, {}> {
     if (this.props.color) {
       styleNames.push(this.props.color);
     }
-    return (
+    let node = (
       <input styleName={styleNames.join(" ")} type="button" value={this.props.value} onClick={this.props.onClick}/>
     );
+    return node;
   }
 
 }
 
 
-type ButtonProps = {
+type Props = {
   value: string,
   type: "button" | "submit",
   color: "green" | null,
   onClick?: ((event: MouseEvent<HTMLInputElement>) => void)
+};
+type State = {
 };

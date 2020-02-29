@@ -7,25 +7,23 @@ import {
   ReactNode
 } from "react";
 import {
+  RouteComponentProps,
+  withRouter
+} from "react-router-dom";
+import {
   applyStyle
 } from "../../util/decorator";
-import history from "../history";
 
 
 @applyStyle(require("./menu-item.scss"))
-export class MenuItem extends Component<MenuItemProps, {}> {
-
-  public static defaultProps: MenuItemProps = {
-    label: "",
-    highlight: false
-  };
+class MenuItemBase extends Component<RouteComponentProps<{}> & Props, State> {
 
   private click(event: MouseEvent<HTMLDivElement>): void {
     if (this.props.onClick) {
       this.props.onClick(event);
     }
     if (this.props.href) {
-      history.push(this.props.href);
+      this.props.history.push(this.props.href);
     }
   }
 
@@ -34,19 +32,24 @@ export class MenuItem extends Component<MenuItemProps, {}> {
     if (this.props.highlight) {
       styleNames.push("highlight");
     }
-    return (
+    let node = (
       <div styleName={styleNames.join(" ")} onClick={this.click.bind(this)}>
         {this.props.label}
       </div>
     );
+    return node;
   }
 
 }
 
 
-type MenuItemProps = {
+type Props = {
   label: string,
   highlight: boolean,
   href?: string,
   onClick?: (event: MouseEvent<HTMLDivElement>) => void;
 };
+type State = {
+};
+
+export let MenuItem = withRouter(MenuItemBase);

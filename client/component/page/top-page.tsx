@@ -6,6 +6,10 @@ import {
   ReactNode
 } from "react";
 import {
+  RouteComponentProps,
+  withRouter
+} from "react-router-dom";
+import {
   applyStyle
 } from "../../util/decorator";
 import {
@@ -16,10 +20,10 @@ import {
 
 
 @applyStyle(require("./top-page.scss"))
-export class TopPage extends Component<{}, {}> {
+class TopPageBase extends Component<RouteComponentProps<{}> & Props, State> {
 
   public render(): ReactNode {
-    return (
+    let node = (
       <div styleName="top-page">
         <Header/>
         <div styleName="logo-wrapper">
@@ -38,6 +42,15 @@ export class TopPage extends Component<{}, {}> {
         </div>
       </div>
     );
+    return node;
   }
 
 }
+
+
+type Props = {
+};
+type State = {
+};
+
+export let TopPage = withRouter(TopPageBase);

@@ -9,7 +9,7 @@ import {
   ReactNode
 } from "react";
 import {
-  Router,
+  BrowserRouter,
   Switch
 } from "react-router-dom";
 import {
@@ -17,7 +17,6 @@ import {
   TopPage
 } from "../component/page";
 import * as http from "../util/http";
-import history from "./history";
 import {
   GuestRoute,
   PrivateRoute
@@ -40,13 +39,13 @@ export class Root extends Component<{}, {}> {
 
   public render(): ReactNode {
     return (
-      <Router history={history}>
+      <BrowserRouter>
         <Switch>
           <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
           <PrivateRoute path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
           <PrivateRoute path="/dashboard" redirect="/login" component={DashboardPage}/>
         </Switch>
-      </Router>
+      </BrowserRouter>
     );
   }
 

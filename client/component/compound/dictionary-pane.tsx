@@ -6,6 +6,10 @@ import {
   ReactNode
 } from "react";
 import {
+  RouteComponentProps,
+  withRouter
+} from "react-router-dom";
+import {
   DictionaryBody
 } from "../../../server/type/dictionary";
 import {
@@ -14,7 +18,7 @@ import {
 
 
 @applyStyle(require("./dictionary-pane.scss"))
-export class DictionaryPane extends Component<DictionaryPaneProps, {}> {
+class DictionaryPaneBase extends Component<RouteComponentProps<{}> & Props, State> {
 
   public render(): ReactNode {
     let name = this.props.dictionary.name;
@@ -22,19 +26,25 @@ export class DictionaryPane extends Component<DictionaryPaneProps, {}> {
     if (this.props.dictionary.status === "saving") {
       status = "保存処理中";
     } else {
-      status = this.props.dictionary.wordSize.toLocaleString("en-GB") + " 語";
+      let wordSize = this.props.dictionary.wordSize;
+      status = wordSize.toLocaleString("en-GB") + " 語";
     }
-    return (
+    let node = (
       <div styleName="dictionary-pane">
         <div styleName="name">{name}</div>
         <div styleName="status">{status}</div>
       </div>
     );
+    return node;
   }
 
 }
 
 
-type DictionaryPaneProps = {
+type Props = {
   dictionary: DictionaryBody
 };
+type State = {
+};
+
+export let DictionaryPane = withRouter(DictionaryPaneBase);

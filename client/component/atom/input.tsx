@@ -12,14 +12,14 @@ import {
 
 
 @applyStyle(require("./input.scss"))
-export class Input extends Component<InputProps, InputState> {
+export class Input extends Component<Props, State> {
 
-  public static defaultProps: InputProps = {
+  public static defaultProps: Props = {
     label: "",
     type: "text"
   };
 
-  public state: InputState = {
+  public state: State = {
     value: ""
   };
 
@@ -32,23 +32,23 @@ export class Input extends Component<InputProps, InputState> {
   }
 
   public render(): ReactNode {
-    return (
+    let node = (
       <label styleName="input-wrapper">
         <div styleName="label">{this.props.label}</div>
         <input styleName="input" type={this.props.type} value={this.state.value} onChange={this.change.bind(this)}/>
       </label>
     );
+    return node;
   }
 
 }
 
 
-type InputProps = {
+type Props = {
   label: string,
   type: "text" | "password",
   onChange?: ((value: string) => void)
 };
-
-type InputState = {
+type State = {
   value: string
 };

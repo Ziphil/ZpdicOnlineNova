@@ -6,7 +6,8 @@ import {
   ReactNode
 } from "react";
 import {
-  RouteChildrenProps
+  RouteComponentProps,
+  withRouter
 } from "react-router-dom";
 import {
   DictionaryListBody
@@ -23,9 +24,9 @@ import {
 
 
 @applyStyle(require("./dashboard-page.scss"))
-export class DashboardPage extends Component<DashboardPageProps, DashboardPageState> {
+class DashboardPageBase extends Component<RouteComponentProps<Params> & Props, State> {
 
-  public state: DashboardPageState = {
+  public state: State = {
     dictionaries: []
   };
 
@@ -35,7 +36,7 @@ export class DashboardPage extends Component<DashboardPageProps, DashboardPageSt
       let dictionaries = response.data;
       this.setState({dictionaries});
     } catch (error) {
-      this.context.router.push("/login");
+      this.props.history.push("/login");
     }
   }
 
@@ -44,8 +45,10 @@ export class DashboardPage extends Component<DashboardPageProps, DashboardPageSt
     let contentNode;
     if (mode === "dictionary") {
       contentNode = <DictionaryList dictionaries={this.state.dictionaries}/>;
+    } else {
+      contentNode = "Nothing";
     }
-    return (
+    let node = (
       <div styleName="dashboard-page">
         <Header/>
         <div styleName="content-wrapper">
@@ -56,18 +59,19 @@ export class DashboardPage extends Component<DashboardPageProps, DashboardPageSt
         </div>
       </div>
     );
+    return node;
   }
 
 }
 
 
-type DashboardPageParams = {
+type Params = {
   mode: string
 };
-
-type DashboardPageProps = RouteChildrenProps<DashboardPageParams> & {
+type Props = {
 };
-
-type DashboardPageState = {
+type State = {
   dictionaries: DictionaryListBody;
 };
+
+export let DashboardPage = withRouter(DashboardPageBase);

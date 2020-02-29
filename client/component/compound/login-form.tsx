@@ -7,6 +7,10 @@ import {
   ReactNode
 } from "react";
 import {
+  RouteComponentProps,
+  withRouter
+} from "react-router-dom";
+import {
   applyStyle
 } from "../../util/decorator";
 import * as http from "../../util/http";
@@ -14,13 +18,12 @@ import {
   Button,
   Input
 } from "../atom";
-import history from "../history";
 
 
 @applyStyle(require("./login-form.scss"))
-export class LoginForm extends Component<{}, LoginFormState> {
+class LoginFormBase extends Component<RouteComponentProps<{}> & Props, State> {
 
-  public state: LoginFormState = {
+  public state: State = {
     name: "",
     password: ""
   };
@@ -30,12 +33,12 @@ export class LoginForm extends Component<{}, LoginFormState> {
     let password = this.state.password;
     let succeed = await http.login("/api/user/login", name, password);
     if (succeed) {
-      history.replace("/dashboard");
+      this.props.history.replace("/dashboard");
     }
   }
 
   public render(): ReactNode {
-    return (
+    let node = (
       <form styleName="login">
         <Input label="ユーザー名" onChange={(value) => this.setState({name: value})}/>
         <Input label="パスワード" type="password" onChange={(value) => this.setState({password: value})}/>
@@ -45,12 +48,17 @@ export class LoginForm extends Component<{}, LoginFormState> {
         </div>
       </form>
     );
+    return node;
   }
 
 }
 
 
-type LoginFormState = {
+type Props = {
+};
+type State = {
   name: string,
   password: string
 };
+
+export let LoginForm = withRouter(LoginFormBase);
