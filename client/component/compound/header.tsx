@@ -6,6 +6,7 @@ import {
   ReactNode
 } from "react";
 import {
+  Link,
   RouteComponentProps,
   withRouter
 } from "react-router-dom";
@@ -21,7 +22,7 @@ class HeaderBase extends Component<RouteComponentProps<{}> & Props, State> {
     let node = (
       <div styleName="header">
         <div styleName="left">
-          <div styleName="title">ZpDIC</div>
+          <div styleName="title"><Link to="/">ZpDIC</Link></div>
         </div>
         <div styleName="right">
           dammy
