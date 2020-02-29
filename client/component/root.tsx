@@ -27,7 +27,7 @@ import {
 export class Root extends Component<{}, {}> {
 
   // 認証済みかどうかを確認し、その結果に応じて表示するコンポーネントを切り返るコンポーネントを返します。
-  public switch(guestComponent: ComponentType<any>, privateComponent: ComponentType<any>): ComponentType<any> {
+  private switch(guestComponent: ComponentType<any>, privateComponent: ComponentType<any>): ComponentType<any> {
     let component = function (props: PropsWithChildren<any>): ReactElement {
       if (http.isAuthenticated()) {
         return react.createElement(privateComponent, props);
