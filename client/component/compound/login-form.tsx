@@ -16,6 +16,7 @@ import {
 import {
   Input
 } from "../atom/input";
+import history from "../history";
 
 
 @applyStyle(require("./login-form.scss"))
@@ -30,6 +31,7 @@ export class LoginForm extends Component<{}, LoginFormState> {
     let name = this.state.name;
     let password = this.state.password;
     await http.login("/api/user/login", name, password);
+    history.replace("/");
   }
 
   public render(): ReactNode {
