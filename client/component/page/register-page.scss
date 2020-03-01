@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+@import "/client/component/common.scss";
+
+
+.register-page {
+  margin: 130px 0px 50px 0px;
+}
+
+.register-page .description {
+  margin: 0px 0px 20px 0px;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.register-page .register-form {
+  width: 350px;
+  margin: 0px auto;
+}

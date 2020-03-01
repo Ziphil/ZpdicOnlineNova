@@ -15,6 +15,7 @@ import {
 import {
   DashboardPage,
   LoginPage,
+  RegisterPage,
   TopPage
 } from "/client/component/page";
 import {
@@ -44,6 +45,7 @@ export class Root extends Component<{}, {}> {
         <Switch>
           <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
           <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
+          <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
           <PrivateRoute path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
           <PrivateRoute path="/dashboard" redirect="/login" component={DashboardPage}/>
         </Switch>

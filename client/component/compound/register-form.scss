@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.login {
+.register {
   @include pane;
   margin: 0px;
   padding: 20px 30px;
@@ -14,25 +14,25 @@
   align-items: stretch;
 }
 
-.login >* {
+.register >* {
   margin: 15px 0px 0px 0px;
 }
 
-.login >*:first-child {
+.register >*:first-child {
   margin: 0px;
 }
 
-.login .button-group {
+.register .button-group {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
-.login .button-group >* {
+.register .button-group >* {
   margin: 0px 0px 0px 20px;
 }
 
-.login .button-group >*:first-child {
+.register .button-group >*:first-child {
   margin: 0px;
 }
