@@ -13,4 +13,6 @@ body {
   font-feature-settings: "palt" 1, "pkna" 1;
   line-height: 1;
   background-color: hsl($primary-hue, 50%, 90%);
+  overflow-x: auto;
+  overflow-y: scroll;
 }
