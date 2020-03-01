@@ -1,18 +1,17 @@
 @charset "utf-8";
 
+@import "/client/component/mixin.scss";
+
 
 .login {
-  width: 350px;
+  @include pane;
   margin: 0px;
   padding: 20px 30px;
   line-height: 1.6;
-  background-color: hsla(0, 0%, 100%, 0.5);
-  border: 1px hsla(0, 0%, 100%, 0.8) solid;
-  border-radius: 6px;
   box-sizing: border-box;
+  display: flex;
   flex-direction: column;
   align-items: stretch;
-  display: flex;
 }
 
 .login >* {

@@ -1,10 +1,12 @@
 @charset "utf-8";
 
+@import "/client/component/mixin.scss";
+
 
 .menu-item {
   margin: 10px 0px 0px 0px;
   padding: 10px 15px 10px 0px;
-  color: hsl(30, 30%, 50%);
+  color: hsl($primary-hue, 40%, 50%);
   text-decoration: none;
   text-align: right;
   border-right: 5px transparent solid;
@@ -16,11 +18,11 @@
 }
 
 .menu-item:hover {
-  border-right: 5px hsla(30, 30%, 50%, 0.8) solid;
+  border-right: 5px hsla($primary-hue, 40%, 50%, 0.8) solid;
 }
 
 .menu-item.highlight {
   font-weight: bold;
-  color: hsla(280, 30%, 50%, 1);
-  border-right: 5px hsla(280, 30%, 50%, 1) solid;
+  color: hsla($secondary-hue, 40%, 50%, 1);
+  border-right: 5px hsla($secondary-hue, 40%, 50%, 1) solid;
 }

@@ -1,14 +1,17 @@
 @charset "utf-8";
 
+@import "/client/component/mixin.scss";
+@import "/client/component/common.scss";
+
 
 .dashboard-page {
   margin: 130px 0px 50px 0px;
 }
 
 .dashboard-page .content-wrapper {
+  display: flex;
   flex-direction: row;
   justify-content: center;
-  display: flex;
 }
 
 .dashboard-page .content-wrapper .content {

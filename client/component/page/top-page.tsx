@@ -29,7 +29,9 @@ class TopPageBase extends ComponentBase<Props, State> {
         <Header/>
         <div styleName="logo-wrapper">
           <Logo/>
-          <LoginForm/>
+          <div styleName="login-form">
+            <LoginForm/>
+          </div>
         </div>
         <div styleName="notice">
           <p>

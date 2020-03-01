@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-@import url("https://fonts.googleapis.com/css?family=Simonetta:400&display=swap");
+@import "/client/component/mixin.scss";
 
 
 .header {
@@ -10,21 +10,21 @@
   padding: 0px 50px;
   top: 0px;
   left: 0px;
-  background-color: hsl(30, 40%, 40%);
-  border-bottom: 1px hsla(0, 0%, 0%, 0.3) solid;
-  box-shadow: 0px 3px 3px hsla(30, 30%, 30%, 0.1);
+  border-bottom: 1px rgba(black, 0.3) solid;
+  background-color: hsl($primary-hue, 40%, 40%);
+  box-shadow: 0px 4px 6px hsla($primary-hue, 40%, 30%, 0.1);
   box-sizing: border-box;
+  display: flex;
   align-items: center;
   justify-content: space-between;
-  display: flex;
   position: absolute;
   z-index: 100;
 }
 
 .header .left .title {
-  font-family: "Simonetta";
+  font-family: $special-font-family;
   font-size: 40px;
-  color: hsl(30, 50%, 90%);
+  color: hsl($primary-hue, 50%, 90%);
   line-height: 1;
 }
 
@@ -34,5 +34,5 @@
 }
 
 .header .right {
-  color: hsl(30, 50%, 90%);
+  color: hsl($primary-hue, 50%, 90%);
 }

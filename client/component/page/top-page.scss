@@ -1,27 +1,22 @@
 @charset "utf-8";
 
-@import url("https://fonts.googleapis.com/css?family=EB+Garamond:400,600&display=swap&subset=cyrillic,cyrillic-ext,greek,latin-ext,vietnamese");
+@import "/client/component/mixin.scss";
+@import "/client/component/common.scss";
 
-
-body {
-  margin: 0px;
-  padding: 0px;
-  font-family: "EB Garamond", "Times New Roman", "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝", serif;
-  font-size: 18px;
-  font-feature-settings: "palt" 1, "pkna" 1;
-  line-height: 1;
-  background-color: hsl(30, 50%, 90%);
-}
 
 .top-page {
   margin: 170px 0px 50px 0px;
 }
 
 .top-page .logo-wrapper {
+  display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  display: flex;
+}
+
+.top-page .logo-wrapper .login-form {
+  width: 350px;
 }
 
 .notice {
