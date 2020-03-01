@@ -22,8 +22,8 @@ export class Button extends Component<Props, State> {
 
   public render(): ReactNode {
     let styleNames = ["button"];
-    if (this.props.color) {
-      styleNames.push(this.props.color);
+    if (this.props.color === "simple") {
+      styleNames = ["simple"];
     }
     let node = (
       <input styleName={styleNames.join(" ")} type="button" value={this.props.value} onClick={this.props.onClick}/>
@@ -37,7 +37,7 @@ export class Button extends Component<Props, State> {
 type Props = {
   value: string,
   type: "button" | "submit",
-  color: "green" | null,
+  color: "simple" | null,
   onClick?: ((event: MouseEvent<HTMLInputElement>) => void)
 };
 type State = {
