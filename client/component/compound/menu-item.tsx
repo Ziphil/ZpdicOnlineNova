@@ -20,6 +20,7 @@ import {
 class MenuItemBase extends ComponentBase<Props, State> {
 
   private click(event: MouseEvent<HTMLElement>): void {
+    event.preventDefault();
     if (this.props.onClick) {
       this.props.onClick(event);
     }
@@ -34,7 +35,7 @@ class MenuItemBase extends ComponentBase<Props, State> {
       styleNames.push("highlight");
     }
     let node = (
-      <a styleName={styleNames.join(" ")} onClick={this.click.bind(this)}>
+      <a styleName={styleNames.join(" ")} href={this.props.href} onClick={this.click.bind(this)}>
         {this.props.label}
       </a>
     );
@@ -47,7 +48,7 @@ class MenuItemBase extends ComponentBase<Props, State> {
 type Props = {
   label: string,
   highlight: boolean,
-  href?: string,
+  href: string,
   onClick?: (event: MouseEvent<HTMLElement>) => void;
 };
 type State = {

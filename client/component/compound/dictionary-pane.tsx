@@ -23,12 +23,14 @@ import {
 class DictionaryPaneBase extends ComponentBase<Props, State> {
 
   private click(event: MouseEvent<HTMLElement>): void {
+    event.preventDefault();
     let path = "/dictionary/" + this.props.dictionary.number;
     this.props.history.push(path);
   }
 
   public render(): ReactNode {
     let name = this.props.dictionary.name;
+    let href = "/dictionary/" + this.props.dictionary.number;
     let status = "";
     if (this.props.dictionary.status === "saving") {
       status = "保存処理中";
@@ -37,10 +39,10 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
       status = wordSize.toLocaleString("en-GB") + " 語";
     }
     let node = (
-      <div styleName="dictionary-pane" onClick={this.click.bind(this)}>
+      <a styleName="dictionary-pane" href={href} onClick={this.click.bind(this)}>
         <div styleName="name">{name}</div>
         <div styleName="status">{status}</div>
-      </div>
+      </a>
     );
     return node;
   }
