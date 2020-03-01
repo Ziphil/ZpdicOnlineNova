@@ -37,7 +37,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
       let dictionaries = response.data;
       this.setState({dictionaries});
     } catch (error) {
-      this.jumpLogin();
+      this.jumpLogin(error);
     }
   }
 

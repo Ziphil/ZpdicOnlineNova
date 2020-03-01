@@ -5,6 +5,7 @@ import {
   AxiosResponse
 } from "axios";
 import {
+  UserBody,
   UserLoginBody
 } from "/client/type/user";
 
@@ -20,9 +21,9 @@ export async function post<T>(url: string, data?: any): Promise<AxiosResponse<T>
 }
 
 export async function login(url: string, name: string, password: string): Promise<boolean> {
-  let result = await axios.post<UserLoginBody>(url, {name, password}, {headers: createHeaders()});
-  let token = result.data.token;
-  let authenticatedName = result.data.name;
+  let response = await post<UserLoginBody>(url, {name, password});
+  let token = response.data.token;
+  let authenticatedName = response.data.name;
   if (token && authenticatedName) {
     localStorage.setItem("token", token);
     localStorage.setItem("name", authenticatedName);
@@ -37,8 +38,12 @@ export async function logout(): Promise<void> {
   localStorage.removeItem("name");
 }
 
-export function isAuthenticated(): boolean {
+export function hasToken(): boolean {
   return !!localStorage.getItem("token");
+}
+
+export async function isAuthenticated(): Promise<boolean> {
+  return false;
 }
 
 function createHeaders(): any {

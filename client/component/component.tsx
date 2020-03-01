@@ -6,27 +6,23 @@ import {
 import {
   RouteComponentProps
 } from "react-router-dom";
+import * as http from "/client/util/http";
 
 
 export class ComponentBase<P = {}, S = {}, Q = {}, N = any> extends Component<RouteComponentProps<Q> & P, S, N> {
 
-  // 与えられた処理を実行し、例外が発生した場合は undefined を返してログインページに遷移します。
-  // 引数の jump に false が渡された場合は、ページ遷移を行いません。
-  // ログインしている場合のみ可能な処理を実行するのに利用できます。
-  protected async inPrivate<T>(action: () => Promise<T>, jump: boolean = true): Promise<T | undefined> {
-    let result;
-    try {
-      result = await action();
-    } catch (error) {
-      if (jump) {
-        this.jumpLogin();
+  // 発生した例外が HTTP リクエストの 403 エラーであった場合に、ログインページに遷移します。
+  // それ以外の例外であった場合は、単にその例外を再発生させます。
+  // 引数として例外値が渡されなかった場合は、無条件でログインページに遷移します。
+  protected jumpLogin(error?: any): void {
+    if (error === undefined || error?.respone?.status === 403) {
+      http.logout();
+      this.props.history.push("/login");
+    } else {
+      if (error) {
+        throw error;
       }
     }
-    return result;
-  }
-
-  protected jumpLogin(): void {
-    this.props.history.push("/login");
   }
 
 }

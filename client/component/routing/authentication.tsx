@@ -16,7 +16,7 @@ import * as http from "/client/util/http";
 export class PrivateRoute extends Component<RouteProps & Props, {}> {
 
   public render(): ReactNode {
-    let node = (http.isAuthenticated()) ? <Route {...this.props}/> : <Redirect to={this.props.redirect}/>;
+    let node = (http.hasToken()) ? <Route {...this.props}/> : <Redirect to={this.props.redirect}/>;
     return node;
   }
 
@@ -26,7 +26,7 @@ export class PrivateRoute extends Component<RouteProps & Props, {}> {
 export class GuestRoute extends Component<RouteProps & Props, {}> {
 
   public render(): ReactNode {
-    let node = (!http.isAuthenticated()) ? <Route {...this.props}/> : <Redirect to={this.props.redirect}/>;
+    let node = (!http.hasToken()) ? <Route {...this.props}/> : <Redirect to={this.props.redirect}/>;
     return node;
   }
 
