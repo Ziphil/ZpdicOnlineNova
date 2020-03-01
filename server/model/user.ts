@@ -6,6 +6,9 @@ import {
   prop
 } from "@hasezoey/typegoose";
 import * as bcrypt from "bcrypt";
+import {
+  CustomError
+} from "/server/model/error";
 
 
 const SALT_ROUND = 10;
@@ -31,11 +34,20 @@ export class User {
   }
 
   // 渡された情報からユーザーを作成し、データベースに保存します。
-  // パスワードは自動的にハッシュ化されます。
-  public static register(name: string, email: string, password: string): Promise<UserDocument> {
+  // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
+  // 渡されたパスワードは自動的にハッシュ化されます。
+  public static async register(name: string, email: string, password: string): Promise<UserDocument> {
+    if (!name.match(/^[A-Za-z0-9_-]$/)) {
+      throw new CustomError("invalidName");
+    }
+    let exists = await UserModel.exists({name});
+    if (exists) {
+      throw new CustomError("nameAlreadyExists");
+    }
     let user = new UserModel({name, email});
     user.encryptPassword(password);
-    return user.save();
+    let result = await user.save();
+    return result;
   }
 
   // 渡された名前とパスワードに合致するユーザーを返します。
