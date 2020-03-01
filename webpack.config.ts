@@ -55,7 +55,11 @@ let config = {
     ]
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx", ".scss"]
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".scss"],
+    alias: {
+      "/client": path.resolve(__dirname, "client"),
+      "/server": path.resolve(__dirname, "server")
+    }
   },
   devServer: {
     port: 3000,

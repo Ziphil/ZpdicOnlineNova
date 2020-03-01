@@ -8,11 +8,11 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  applyStyle
-} from "../../util/decorator";
-import {
   ComponentBase
-} from "../component";
+} from "/client/component/component";
+import {
+  applyStyle
+} from "/client/util/decorator";
 
 
 @applyStyle(require("./logo.scss"))

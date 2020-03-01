@@ -5,22 +5,22 @@ import {
   Response
 } from "express-serve-static-core";
 import {
+  Controller
+} from "/server/controller/controller";
+import * as middle from "/server/controller/middle";
+import {
   UserModel
-} from "../model/user";
+} from "/server/model/user";
 import {
   UserLoginBody
-} from "../type/user";
+} from "/server/type/user";
 import {
   before,
   controller,
   get,
   post
-} from "../util/decorator";
-import "../util/extension";
-import {
-  Controller
-} from "./controller";
-import * as middle from "./middle";
+} from "/server/util/decorator";
+import "/server/util/extension";
 
 
 @controller("/api/user")

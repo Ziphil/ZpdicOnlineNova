@@ -9,16 +9,16 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  applyStyle
-} from "../../util/decorator";
-import * as http from "../../util/http";
-import {
   Button,
   Input
-} from "../atom";
+} from "/client/component/atom";
 import {
   ComponentBase
-} from "../component";
+} from "/client/component/component";
+import {
+  applyStyle
+} from "/client/util/decorator";
+import * as http from "/client/util/http";
 
 
 @applyStyle(require("./login-form.scss"))

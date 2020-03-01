@@ -13,7 +13,7 @@ import {
   SlimeInformation,
   SlimeRelation,
   SlimeVariation
-} from ".";
+} from "/server/model/dictionary/slime";
 
 
 export class SlimeWord {

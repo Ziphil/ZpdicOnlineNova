@@ -11,7 +11,7 @@ import {
 import "reflect-metadata";
 import {
   Controller
-} from "../controller/controller";
+} from "/server/controller/controller";
 
 
 interface ControllerMetadata<P extends Params = ParamsDictionary> {
@@ -31,7 +31,7 @@ export function controller<P extends Params = ParamsDictionary>(path: string): C
   let decorator = function (clazz: new() => Controller): void {
     let originalSetup = clazz.prototype.setup;
     clazz.prototype.setup = function (this: Controller): void {
-      let anyThis = <any>this;
+      let anyThis = this as any;
       let array = getMetadataArray<P>(clazz.prototype);
       for (let metadata of array) {
         let handler = function (request: Request<P>, response: Response, next: NextFunction): any {
@@ -43,7 +43,7 @@ export function controller<P extends Params = ParamsDictionary>(path: string): C
       originalSetup();
     };
   };
-  return <any>decorator;
+  return decorator as any;
 }
 
 export function get(path: string): MethodDecorator {

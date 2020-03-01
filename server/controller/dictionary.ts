@@ -5,24 +5,24 @@ import {
   Response
 } from "express-serve-static-core";
 import {
+  Controller
+} from "/server/controller/controller";
+import * as middle from "/server/controller/middle";
+import {
   SlimeDictionaryModel
-} from "../model/dictionary/slime";
+} from "/server/model/dictionary/slime";
 import {
   UserModel
-} from "../model/user";
+} from "/server/model/user";
 import {
   DictionaryListBody
-} from "../type/dictionary";
+} from "/server/type/dictionary";
 import {
   before,
   controller,
   get,
   post
-} from "../util/decorator";
-import {
-  Controller
-} from "./controller";
-import * as middle from "./middle";
+} from "/server/util/decorator";
 
 
 @controller("/api/dictionary")

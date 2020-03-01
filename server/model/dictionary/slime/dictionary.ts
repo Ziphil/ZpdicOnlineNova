@@ -9,11 +9,11 @@ import {
 import {
   SlimeStream,
   SlimeWordModel
-} from ".";
+} from "/server/model/dictionary/slime";
 import {
   User,
   UserDocument
-} from "../../user";
+} from "/server/model/user";
 
 
 export class SlimeDictionary {

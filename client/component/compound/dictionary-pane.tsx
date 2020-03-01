@@ -8,14 +8,14 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  DictionaryBody
-} from "../../../server/type/dictionary";
+  ComponentBase
+} from "/client/component/component";
 import {
   applyStyle
-} from "../../util/decorator";
+} from "/client/util/decorator";
 import {
-  ComponentBase
-} from "../component";
+  DictionaryBody
+} from "/server/type/dictionary";
 
 
 @applyStyle(require("./dictionary-pane.scss"))

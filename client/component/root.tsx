@@ -15,12 +15,12 @@ import {
 import {
   DashboardPage,
   TopPage
-} from "../component/page";
-import * as http from "../util/http";
+} from "/client/component/page";
 import {
   GuestRoute,
   PrivateRoute
-} from "./routing/authentication";
+} from "/client/component/routing/authentication";
+import * as http from "/client/util/http";
 
 
 export class Root extends Component<{}, {}> {

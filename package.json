@@ -12,7 +12,7 @@
     "develop": "run-p develop:client develop:server",
     "develop:client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
     "develop:server": "nodemon --inspect -L",
-    "command:tsn": "ts-node",
+    "command:tsn": "ts-node -r tsconfig-paths/register",
     "command:tsc": "tsc"
   },
   "dependencies": {
@@ -66,6 +66,7 @@
     "style-loader": "^1.1.3",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.6.2",
+    "tsconfig-paths": "^3.9.0",
     "tslint": "^5.20.1",
     "tslint-config-airbnb": "^5.11.2",
     "tslint-loader": "^3.5.4",

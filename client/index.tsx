@@ -6,7 +6,7 @@ import {
 } from "react-dom";
 import {
   Root
-} from "./component/root";
+} from "/client/component/root";
 
 
 render(<Root/>, document.getElementById("root"));

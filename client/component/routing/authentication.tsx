@@ -10,7 +10,7 @@ import {
   Route,
   RouteProps
 } from "react-router-dom";
-import * as http from "../../util/http";
+import * as http from "/client/util/http";
 
 
 export class PrivateRoute extends Component<RouteProps & Props, {}> {

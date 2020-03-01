@@ -9,15 +9,15 @@ import {
   withRouter
 } from "react-router-dom";
 import {
+  ComponentBase
+} from "/client/component/component";
+import {
   MenuItem
-} from ".";
+} from "/client/component/compound";
 import {
   applyStyle
-} from "../../util/decorator";
-import * as http from "../../util/http";
-import {
-  ComponentBase
-} from "../component";
+} from "/client/util/decorator";
+import * as http from "/client/util/http";
 
 
 @applyStyle(require("./menu.scss"))

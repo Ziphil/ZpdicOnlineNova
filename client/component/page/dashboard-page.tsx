@@ -8,20 +8,20 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  DictionaryListBody
-} from "../../../server/type/dictionary";
-import {
-  applyStyle
-} from "../../util/decorator";
-import * as http from "../../util/http";
-import {
   ComponentBase
-} from "../component";
+} from "/client/component/component";
 import {
   DictionaryList,
   Header,
   Menu
-} from "../compound";
+} from "/client/component/compound";
+import {
+  applyStyle
+} from "/client/util/decorator";
+import * as http from "/client/util/http";
+import {
+  DictionaryListBody
+} from "/server/type/dictionary";
 
 
 @applyStyle(require("./dashboard-page.scss"))

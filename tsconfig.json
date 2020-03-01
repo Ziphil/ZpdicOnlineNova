@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "/client*": ["client*"],
+      "/server*": ["server*"],
+    },
     "module": "commonjs",
     "target": "es5",
     "lib": ["es2015", "dom"],
@@ -15,7 +20,7 @@
     "removeComments": true
   },
   "include": [
-    "server/**/*",
-    "client/**/*"
+    "client/**/*",
+    "server/**/*"
   ]
 }

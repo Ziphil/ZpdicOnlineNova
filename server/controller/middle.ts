@@ -9,7 +9,7 @@ import {
 import * as jwt from "jsonwebtoken";
 import {
   UserModel
-} from "../model/user";
+} from "/server/model/user";
 
 
 const SECRET_KEY = "zpdic_secret";
@@ -30,7 +30,7 @@ export function verifyToken(redirect?: string): RequestHandler {
     if (token !== undefined) {
       jwt.verify(token, SECRET_KEY, async (error, data) => {
         if (!error) {
-          let id = (<any>data).id;
+          let id = (data as any).id;
           let user = await UserModel.findById(id);
           if (user) {
             request.user = user;

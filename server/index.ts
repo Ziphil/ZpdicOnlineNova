@@ -19,14 +19,14 @@ import {
 } from "passport-local";
 import {
   DictionaryController
-} from "./controller/dictionary";
+} from "/server/controller/dictionary";
 import {
   UserController
-} from "./controller/user";
+} from "/server/controller/user";
 import {
   UserDocument,
   UserModel
-} from "./model/user";
+} from "/server/model/user";
 
 
 const PORT = 8050;
@@ -96,8 +96,8 @@ class Main {
   // セッションに保持するデータとして、MongoDB 内の ID を利用するようにしています。
   // あらかじめセッションの設定をしておく必要があるため、setupSession メソッドより後に実行してください。
   private setupPassport(): void {
-    let options = {usernameField: "name", passReqToCallback: false};
-    let strategy = new LocalStrategy(<IStrategyOptions>options, async (name, password, done) => {
+    let options = {usernameField: "name", passReqToCallback: false} as IStrategyOptions;
+    let strategy = new LocalStrategy(options, async (name, password, done) => {
       let user = await UserModel.authenticate(name, password);
       if (user) {
         return done(null, user);
@@ -124,7 +124,7 @@ class Main {
   // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
   // typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。
   private setupMongo(): void {
-    let SchemaString = <any>Schema.Types.String;
+    let SchemaString = Schema.Types.String as any;
     let check = function (value: string): boolean {
       return value !== null;
     };

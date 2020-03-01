@@ -29,7 +29,7 @@ import {
   SlimeVariationModel,
   SlimeWordDocument,
   SlimeWordModel
-} from ".";
+} from "/server/model/dictionary/slime";
 
 
 export class SlimeStream extends EventEmitter {
@@ -61,7 +61,7 @@ export class SlimeStream extends EventEmitter {
       this.wordPipeline.on("data", (chunk) => {
         let word = null;
         try {
-          let anyChunk = <any>chunk;
+          let anyChunk = chunk as any;
           word = this.createWord(anyChunk.value);
         } catch (error) {
           this.emit("error", error);
