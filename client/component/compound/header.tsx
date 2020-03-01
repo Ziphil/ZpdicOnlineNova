@@ -27,12 +27,14 @@ class HeaderBase extends ComponentBase<Props, State> {
     userName: ""
   };
 
-  public componentDidMount(): void {
-    this.inPrivate(async () => {
+  public async componentDidMount(): Promise<void> {
+    try {
       let response = await http.get<UserBody>("/api/user/info");
-      let name = response.data.name;
-      this.setState({userName: name});
-    });
+      let userName = response.data.name;
+      this.setState({userName});
+    } catch (error) {
+      this.setState({userName: ""});
+    }
   }
 
   public render(): ReactNode {
