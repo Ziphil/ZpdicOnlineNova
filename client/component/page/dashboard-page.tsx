@@ -2,11 +2,9 @@
 
 import * as react from "react";
 import {
-  Component,
   ReactNode
 } from "react";
 import {
-  RouteComponentProps,
   withRouter
 } from "react-router-dom";
 import {
@@ -17,6 +15,9 @@ import {
 } from "../../util/decorator";
 import * as http from "../../util/http";
 import {
+  ComponentBase
+} from "../component";
+import {
   DictionaryList,
   Header,
   Menu
@@ -24,20 +25,16 @@ import {
 
 
 @applyStyle(require("./dashboard-page.scss"))
-class DashboardPageBase extends Component<RouteComponentProps<Params> & Props, State> {
+class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   public state: State = {
     dictionaries: []
   };
 
-  public async componentDidMount(): Promise<void> {
-    try {
-      let response = await http.get<DictionaryListBody>("/api/dictionary/list");
-      let dictionaries = response.data;
-      this.setState({dictionaries});
-    } catch (error) {
-      this.props.history.push("/login");
-    }
+  protected async fetch(): Promise<void> {
+    let response = await http.get<DictionaryListBody>("/api/dictionary/list");
+    let dictionaries = response.data;
+    this.setState({dictionaries});
   }
 
   public render(): ReactNode {
@@ -65,13 +62,13 @@ class DashboardPageBase extends Component<RouteComponentProps<Params> & Props, S
 }
 
 
-type Params = {
-  mode: string
-};
 type Props = {
 };
 type State = {
   dictionaries: DictionaryListBody;
+};
+type Params = {
+  mode: string
 };
 
 export let DashboardPage = withRouter(DashboardPageBase);

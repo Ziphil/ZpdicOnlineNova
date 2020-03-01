@@ -2,27 +2,28 @@
 
 import * as react from "react";
 import {
-  Component,
   ReactNode
 } from "react";
 import {
-  Link,
-  RouteComponentProps,
+  Link as RawLink,
   withRouter
 } from "react-router-dom";
 import {
   applyStyle
 } from "../../util/decorator";
+import {
+  ComponentBase
+} from "../component";
 
 
 @applyStyle(require("./header.scss"))
-class HeaderBase extends Component<RouteComponentProps<{}> & Props, State> {
+class HeaderBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let node = (
       <div styleName="header">
         <div styleName="left">
-          <div styleName="title"><Link to="/">ZpDIC</Link></div>
+          <div styleName="title"><RawLink to="/">ZpDIC</RawLink></div>
         </div>
         <div styleName="right">
           dammy

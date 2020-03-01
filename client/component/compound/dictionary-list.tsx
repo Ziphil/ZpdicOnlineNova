@@ -2,23 +2,24 @@
 
 import * as react from "react";
 import {
-  Component,
   ReactNode
 } from "react";
 import {
-  RouteComponentProps,
   withRouter
 } from "react-router-dom";
 import {
   applyStyle
 } from "../../util/decorator";
 import {
+  ComponentBase
+} from "../component";
+import {
   DictionaryPane
 } from "../compound";
 
 
 @applyStyle(require("./dictionary-list.scss"))
-class DictionaryListBase extends Component<RouteComponentProps<{}> & Props, State> {
+class DictionaryListBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let dictionaryPanes = this.props.dictionaries.map((dictionary) => {

@@ -2,21 +2,22 @@
 
 import * as react from "react";
 import {
-  Component,
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  RouteComponentProps,
   withRouter
 } from "react-router-dom";
 import {
   applyStyle
 } from "../../util/decorator";
+import {
+  ComponentBase
+} from "../component";
 
 
 @applyStyle(require("./menu-item.scss"))
-class MenuItemBase extends Component<RouteComponentProps<{}> & Props, State> {
+class MenuItemBase extends ComponentBase<Props, State> {
 
   private click(event: MouseEvent<HTMLElement>): void {
     if (this.props.onClick) {

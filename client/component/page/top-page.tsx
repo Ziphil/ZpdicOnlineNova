@@ -2,16 +2,17 @@
 
 import * as react from "react";
 import {
-  Component,
   ReactNode
 } from "react";
 import {
-  RouteComponentProps,
   withRouter
 } from "react-router-dom";
 import {
   applyStyle
 } from "../../util/decorator";
+import {
+  ComponentBase
+} from "../component";
 import {
   Header,
   LoginForm,
@@ -20,7 +21,7 @@ import {
 
 
 @applyStyle(require("./top-page.scss"))
-class TopPageBase extends Component<RouteComponentProps<{}> & Props, State> {
+class TopPageBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let node = (

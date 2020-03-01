@@ -2,11 +2,9 @@
 
 import * as react from "react";
 import {
-  Component,
   ReactNode
 } from "react";
 import {
-  RouteComponentProps,
   withRouter
 } from "react-router-dom";
 import {
@@ -15,10 +13,13 @@ import {
 import {
   applyStyle
 } from "../../util/decorator";
+import {
+  ComponentBase
+} from "../component";
 
 
 @applyStyle(require("./dictionary-pane.scss"))
-class DictionaryPaneBase extends Component<RouteComponentProps<{}> & Props, State> {
+class DictionaryPaneBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let name = this.props.dictionary.name;

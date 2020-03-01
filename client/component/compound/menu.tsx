@@ -2,12 +2,10 @@
 
 import * as react from "react";
 import {
-  Component,
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  RouteComponentProps,
   withRouter
 } from "react-router-dom";
 import {
@@ -17,10 +15,13 @@ import {
   applyStyle
 } from "../../util/decorator";
 import * as http from "../../util/http";
+import {
+  ComponentBase
+} from "../component";
 
 
 @applyStyle(require("./menu.scss"))
-class MenuBase extends Component<RouteComponentProps<{}> & Props, State> {
+class MenuBase extends ComponentBase<Props, State> {
 
   private async performLogout(event: MouseEvent<HTMLElement>): Promise<void> {
     await http.logout();

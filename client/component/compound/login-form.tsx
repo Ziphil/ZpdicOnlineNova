@@ -2,12 +2,10 @@
 
 import * as react from "react";
 import {
-  Component,
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  RouteComponentProps,
   withRouter
 } from "react-router-dom";
 import {
@@ -18,10 +16,13 @@ import {
   Button,
   Input
 } from "../atom";
+import {
+  ComponentBase
+} from "../component";
 
 
 @applyStyle(require("./login-form.scss"))
-class LoginFormBase extends Component<RouteComponentProps<{}> & Props, State> {
+class LoginFormBase extends ComponentBase<Props, State> {
 
   public state: State = {
     name: "",
