@@ -15,7 +15,7 @@ export class ComponentBase<P = {}, S = {}, Q = {}, N = any> extends Component<Ro
   // それ以外の例外であった場合は、単にその例外を再発生させます。
   // 引数として例外値が渡されなかった場合は、無条件でログインページに遷移します。
   protected jumpLogin(error?: any): void {
-    if (error === undefined || error?.respone?.status === 403) {
+    if (error === undefined || error?.response?.status === 403) {
       http.logout();
       this.props.history.push("/login");
     } else {
