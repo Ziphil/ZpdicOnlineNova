@@ -38,10 +38,14 @@ class LoginFormBase extends ComponentBase<Props, State> {
     }
   }
 
+  private async jumpRegister(event: MouseEvent<HTMLInputElement>): Promise<void> {
+    this.props.history.replace("/register");
+  }
+
   public render(): ReactNode {
     let registerNode;
     if (this.props.showsRegister) {
-      registerNode = <Button value="新規登録" color="green"/>;
+      registerNode = <Button value="新規登録" color="simple" onClick={this.jumpRegister.bind(this)}/>;
     }
     let node = (
       <form styleName="login">
