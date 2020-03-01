@@ -14,10 +14,26 @@ import {
 import {
   applyStyle
 } from "/client/util/decorator";
+import * as http from "/client/util/http";
+import {
+  UserBody
+} from "/server/type/user";
 
 
 @applyStyle(require("./header.scss"))
 class HeaderBase extends ComponentBase<Props, State> {
+
+  public state: State = {
+    userName: ""
+  };
+
+  public componentDidMount(): void {
+    this.inPrivate(async () => {
+      let response = await http.get<UserBody>("/api/user/info");
+      let name = response.data.name;
+      this.setState({userName: name});
+    });
+  }
 
   public render(): ReactNode {
     let node = (
@@ -26,7 +42,7 @@ class HeaderBase extends ComponentBase<Props, State> {
           <div styleName="title"><RawLink to="/">ZpDIC</RawLink></div>
         </div>
         <div styleName="right">
-          dammy
+          {this.state.userName}
         </div>
       </div>
     );
@@ -39,6 +55,7 @@ class HeaderBase extends ComponentBase<Props, State> {
 type Props = {
 };
 type State = {
+  userName: string
 };
 
 export let Header = withRouter(HeaderBase);
