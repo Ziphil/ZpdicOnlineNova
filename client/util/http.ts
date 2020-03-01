@@ -20,8 +20,8 @@ export async function post<T>(url: string, data?: any): Promise<AxiosResponse<T>
   return response;
 }
 
-export async function login(url: string, name: string, password: string): Promise<boolean> {
-  let response = await post<UserLoginBody>(url, {name, password});
+export async function login(name: string, password: string): Promise<boolean> {
+  let response = await post<UserLoginBody>("/api/user/login", {name, password});
   let token = response.data.token;
   let authenticatedName = response.data.name;
   if (token && authenticatedName) {
