@@ -22,7 +22,8 @@
 }
 
 .menu-item.highlight {
+  margin-right: -1px;
   font-weight: bold;
   color: hsla($secondary-hue, 40%, 50%, 1);
-  border-right: 5px hsla($secondary-hue, 40%, 50%, 1) solid;
+  border-right: 6px hsla($secondary-hue, 40%, 50%, 1) solid;
 }
