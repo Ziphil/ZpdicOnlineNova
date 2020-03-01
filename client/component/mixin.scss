@@ -43,6 +43,17 @@ $special-font-family: "Simonetta";
   }
 }
 
+@mixin link($hue) {
+  & {
+    color: hsl($hue, 40%, 50%);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  &:hover {
+    color: lighten(hsl($hue, 40%, 50%), 15%);
+  }
+}
+
 @mixin pane {
   background-color: hsla(0, 0%, 100%, 0.5);
   border: 1px hsla(0, 0%, 100%, 0.8) solid;

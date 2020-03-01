@@ -12,14 +12,12 @@
 }
 
 .simple {
+  @include link($secondary-hue);
   padding: 0em;
   font-family: inherit;
   font-size: inherit;
-  color: hsl($secondary-hue, 40%, 50%);
+  line-height: inherit;
   border: none;
   background: none;
-  text-decoration: underline;
-  line-height: inherit;
-  cursor: pointer;
   outline: none;
 }
