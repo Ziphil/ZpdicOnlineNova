@@ -12,6 +12,7 @@ import {
   UserModel
 } from "/server/model/user";
 import {
+  UserBody,
   UserLoginBody
 } from "/server/type/user";
 import {
@@ -53,11 +54,13 @@ export class UserController extends Controller {
     response.json({token, name});
   }
 
-  @get("/test")
+  @get("/info")
   @before(middle.verifyToken())
-  public async getTest(request: Request, response: Response<any>): Promise<void> {
+  public async getInfo(request: Request, response: Response<UserBody>): Promise<void> {
     let user = request.user!;
-    response.json({name: user.name, email: user.email});
+    let name = user.name;
+    let email = user.email;
+    response.json({name, email});
   }
 
 }
