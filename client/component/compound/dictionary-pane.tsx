@@ -12,11 +12,11 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  DictionaryBody
+} from "/client/type/dictionary";
+import {
   applyStyle
 } from "/client/util/decorator";
-import {
-  DictionaryBody
-} from "/server/type/dictionary";
 
 
 @applyStyle(require("./dictionary-pane.scss"))

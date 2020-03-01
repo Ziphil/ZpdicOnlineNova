@@ -16,12 +16,12 @@ import {
   Menu
 } from "/client/component/compound";
 import {
+  DictionaryListBody
+} from "/client/type/dictionary";
+import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
-import {
-  DictionaryListBody
-} from "/server/type/dictionary";
 
 
 @applyStyle(require("./dashboard-page.scss"))

@@ -12,12 +12,12 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  UserBody
+} from "/client/type/user";
+import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
-import {
-  UserBody
-} from "/server/type/user";
 
 
 @applyStyle(require("./header.scss"))

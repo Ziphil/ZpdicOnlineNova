@@ -5,6 +5,9 @@ import {
   Response
 } from "express-serve-static-core";
 import {
+  DictionaryListBody
+} from "/client/type/dictionary";
+import {
   Controller
 } from "/server/controller/controller";
 import * as middle from "/server/controller/middle";
@@ -14,9 +17,6 @@ import {
 import {
   UserModel
 } from "/server/model/user";
-import {
-  DictionaryListBody
-} from "/server/type/dictionary";
 import {
   before,
   controller,

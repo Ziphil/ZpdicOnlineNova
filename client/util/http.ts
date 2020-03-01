@@ -6,7 +6,7 @@ import {
 } from "axios";
 import {
   UserLoginBody
-} from "/server/type/user";
+} from "/client/type/user";
 
 
 export async function get<T>(url: string): Promise<AxiosResponse<T>> {

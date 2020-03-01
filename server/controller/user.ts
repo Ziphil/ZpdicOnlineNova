@@ -5,16 +5,16 @@ import {
   Response
 } from "express-serve-static-core";
 import {
+  UserBody,
+  UserLoginBody
+} from "/client/type/user";
+import {
   Controller
 } from "/server/controller/controller";
 import * as middle from "/server/controller/middle";
 import {
   UserModel
 } from "/server/model/user";
-import {
-  UserBody,
-  UserLoginBody
-} from "/server/type/user";
 import {
   before,
   controller,
