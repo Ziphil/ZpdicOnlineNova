@@ -14,6 +14,7 @@ import {
 } from "react-router-dom";
 import {
   DashboardPage,
+  LoginPage,
   TopPage
 } from "/client/component/page";
 import {
@@ -42,6 +43,7 @@ export class Root extends Component<{}, {}> {
       <BrowserRouter>
         <Switch>
           <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
+          <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
           <PrivateRoute path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
           <PrivateRoute path="/dashboard" redirect="/login" component={DashboardPage}/>
         </Switch>

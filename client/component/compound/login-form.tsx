@@ -39,13 +39,17 @@ class LoginFormBase extends ComponentBase<Props, State> {
   }
 
   public render(): ReactNode {
+    let registerNode;
+    if (this.props.showsRegister) {
+      registerNode = <Button value="新規登録" color="green"/>;
+    }
     let node = (
       <form styleName="login">
         <Input label="ユーザー名" onChange={(value) => this.setState({name: value})}/>
         <Input label="パスワード" type="password" onChange={(value) => this.setState({password: value})}/>
         <div styleName="button-group">
           <Button value="ログイン" onClick={this.performLogin.bind(this)}/>
-          <Button value="新規登録" color="green"/>
+          {registerNode}
         </div>
       </form>
     );
@@ -56,6 +60,7 @@ class LoginFormBase extends ComponentBase<Props, State> {
 
 
 type Props = {
+  showsRegister: boolean
 };
 type State = {
   name: string,

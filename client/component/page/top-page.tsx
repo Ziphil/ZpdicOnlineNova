@@ -30,7 +30,7 @@ class TopPageBase extends ComponentBase<Props, State> {
         <div styleName="logo-wrapper">
           <Logo/>
           <div styleName="login-form">
-            <LoginForm/>
+            <LoginForm showsRegister={true}/>
           </div>
         </div>
         <div styleName="notice">
