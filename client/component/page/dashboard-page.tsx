@@ -31,10 +31,12 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     dictionaries: []
   };
 
-  protected async fetch(): Promise<void> {
-    let response = await http.get<DictionaryListBody>("/api/dictionary/list");
-    let dictionaries = response.data;
-    this.setState({dictionaries});
+  public componentDidMount(): void {
+    this.inPrivate(async () => {
+      let response = await http.get<DictionaryListBody>("/api/dictionary/list");
+      let dictionaries = response.data;
+      this.setState({dictionaries});
+    });
   }
 
   public render(): ReactNode {
