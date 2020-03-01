@@ -59,3 +59,12 @@ $special-font-family: "Simonetta";
   border: 1px hsla(0, 0%, 100%, 0.8) solid;
   border-radius: 6px;
 }
+
+@mixin hoverable-pane {
+  & {
+    @include pane;
+  }
+  &:hover {
+    background-color: hsla(0, 0%, 100%, 0.7);
+  }
+}
