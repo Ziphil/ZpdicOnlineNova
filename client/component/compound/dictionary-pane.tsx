@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -21,6 +22,11 @@ import {
 @applyStyle(require("./dictionary-pane.scss"))
 class DictionaryPaneBase extends ComponentBase<Props, State> {
 
+  private click(event: MouseEvent<HTMLElement>): void {
+    let path = "/dictionary/" + this.props.dictionary.number;
+    this.props.history.push(path);
+  }
+
   public render(): ReactNode {
     let name = this.props.dictionary.name;
     let status = "";
@@ -31,7 +37,7 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
       status = wordSize.toLocaleString("en-GB") + " 語";
     }
     let node = (
-      <div styleName="dictionary-pane">
+      <div styleName="dictionary-pane" onClick={this.click.bind(this)}>
         <div styleName="name">{name}</div>
         <div styleName="status">{status}</div>
       </div>

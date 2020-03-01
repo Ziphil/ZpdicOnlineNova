@@ -52,10 +52,11 @@ export class DictionaryController extends Controller {
     let body = [] as DictionaryListBody;
     for (let dictionary of dictionaries) {
       let id = dictionary.id;
+      let number = dictionary.number;
       let name = dictionary.name;
       let status = dictionary.status;
       let wordSize = await dictionary.countWords();
-      body.push({id, name, status, wordSize});
+      body.push({id, number, name, status, wordSize});
     }
     response.json(body);
   }
