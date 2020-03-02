@@ -43,10 +43,14 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
       console.log(dictionary);
       this.setState({dictionary});
     }
-    let testResponse = await http.get<any>("/api/dictionary/search", {number, search: "sa", mode: "both", type: "prefix"}, [400]);
-    let testData = testResponse.data;
+  }
+
+  private async handleAnyChange(search: string, mode: string, type: string): Promise<void> {
+    let number = this.props.match!.params.number;
+    let response = await http.get<any>("/api/dictionary/search", {number, search, mode, type}, [400]);
+    let data = response.data;
     if (!("error" in data)) {
-      let words = testData;
+      let words = data;
       this.setState({words});
     }
   }
@@ -57,7 +61,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
         <Header/>
         <DictionaryHeader name={this.state.dictionary?.name || ""}/>
         <div styleName="search-form">
-          <SearchForm/>
+          <SearchForm onAnyChange={this.handleAnyChange.bind(this)}/>
         </div>
         <div styleName="word-list">
           <WordList words={this.state.words}/>
