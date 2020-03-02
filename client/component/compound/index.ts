@@ -9,3 +9,6 @@ export * from "./logo";
 export * from "./menu";
 export * from "./menu-item";
 export * from "./register-form";
+export * from "./search-form";
+export * from "./word-list";
+export * from "./word-pane";

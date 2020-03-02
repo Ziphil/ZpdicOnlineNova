@@ -12,7 +12,9 @@ import {
 } from "/client/component/component";
 import {
   DictionaryHeader,
-  Header
+  Header,
+  SearchForm,
+  WordList
 } from "/client/component/compound";
 import {
   DictionaryBody,
@@ -28,7 +30,8 @@ import * as http from "/client/util/http";
 class DictionaryPageBase extends ComponentBase<Props, State, Params> {
 
   public state: State = {
-    dictionary: null
+    dictionary: null,
+    words: []
   };
 
   public async componentDidMount(): Promise<void> {
@@ -47,6 +50,12 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
       <div styleName="dictionary-page">
         <Header/>
         <DictionaryHeader name={this.state.dictionary?.name || ""}/>
+        <div>
+          <SearchForm/>
+        </div>
+        <div>
+          <WordList words={this.state.words}/>
+        </div>
       </div>
     );
     return node;
@@ -58,7 +67,8 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionary: DictionaryBody | null
+  dictionary: DictionaryBody | null,
+  words: Array<any>
 };
 type Params = {
   number: string
