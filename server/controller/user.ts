@@ -50,8 +50,13 @@ export class UserController extends Controller {
   @before(middle.authenticate("1d"))
   public async postLogin(request: Request, response: Response<UserLoginBody>): Promise<void> {
     let token = request.token;
-    let name = request.user?.name;
-    response.json({token, name});
+    let user = request.user;
+    if (token && user) {
+      let name = user.name;
+      response.json({token, name});
+    } else {
+      response.status(400).json({error: ""});
+    }
   }
 
   @get("/info")
