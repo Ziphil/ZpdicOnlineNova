@@ -46,6 +46,21 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @get("/search")
+  public async getSearch(request: Request, response: Response<any>): Promise<void> {
+    let number = parseInt(request.query.number, 10);
+    let search = request.query.search;
+    let mode = request.query.mode;
+    let type = request.query.type;
+    let dictionary = await SlimeDictionaryModel.findByNumber(number);
+    if (dictionary) {
+      let words = await dictionary.search(search, mode, type);
+      response.json(words);
+    } else {
+      response.status(400).json({error: "invalidNumber"});
+    }
+  }
+
   @get("/info")
   public async getInfo(request: Request, response: Response<MayError<DictionaryBody>>): Promise<void> {
     let number = parseInt(request.query.number, 10);

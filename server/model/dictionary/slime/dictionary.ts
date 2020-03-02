@@ -8,6 +8,7 @@ import {
 } from "@hasezoey/typegoose";
 import {
   SlimeStream,
+  SlimeWordDocument,
   SlimeWordModel
 } from "/server/model/dictionary/slime";
 import {
@@ -59,6 +60,29 @@ export class SlimeDictionary {
   public static async findByUser(user: UserDocument): Promise<Array<SlimeDictionaryDocument>> {
     let dictionaries = await SlimeDictionaryModel.find({user}).exec();
     return dictionaries;
+  }
+
+  public async search(search: string, mode: string, type: string): Promise<Array<SlimeWordDocument>> {
+    let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
+    let wordQuery = {dictionary: this} as any;
+    let equivalentQuery = {dictionary: this} as any;
+    if (type === "prefix") {
+      let modifiedSearch = new RegExp("^" + escapedSearch);
+      wordQuery["name"] = modifiedSearch;
+      equivalentQuery["equivalents.names"] = modifiedSearch;
+    } else if (type === "regular") {
+      wordQuery["name"] = search;
+      equivalentQuery["equivalents.names"] = search;
+    }
+    let words = new Array<SlimeWordDocument>();
+    if (mode === "word") {
+      words = await SlimeWordModel.find(wordQuery).exec();
+    } else if (mode === "equivalent") {
+      words = await SlimeWordModel.find(equivalentQuery).exec();
+    } else if (mode === "both") {
+      words = await SlimeWordModel.find().or([wordQuery, equivalentQuery]).exec();
+    }
+    return words;
   }
 
   public async countWords(this: SlimeDictionaryDocument): Promise<number> {
