@@ -42,7 +42,10 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
       let dictionary = data;
       console.log(dictionary);
       this.setState({dictionary});
+    } else {
+      this.setState({dictionary: null});
     }
+    await this.handleAnyChange("", "both", "prefix");
   }
 
   private async handleAnyChange(search: string, mode: string, type: string): Promise<void> {
@@ -52,6 +55,8 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
     if (!("error" in data)) {
       let words = data;
       this.setState({words});
+    } else {
+      this.setState({words: []});
     }
   }
 
