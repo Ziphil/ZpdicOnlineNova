@@ -43,6 +43,12 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
       console.log(dictionary);
       this.setState({dictionary});
     }
+    let testResponse = await http.get<any>("/api/dictionary/search", {number, search: "sa", mode: "both", type: "prefix"}, [400]);
+    let testData = testResponse.data;
+    if (!("error" in data)) {
+      let words = testData;
+      this.setState({words});
+    }
   }
 
   public render(): ReactNode {
