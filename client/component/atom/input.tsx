@@ -47,7 +47,7 @@ export class Input extends Component<Props, State> {
 type Props = {
   label: string,
   type: "text" | "password",
-  onChange?: ((value: string) => void)
+  onChange?: (value: string) => void
 };
 type State = {
   value: string

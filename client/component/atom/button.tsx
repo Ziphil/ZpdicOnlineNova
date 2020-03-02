@@ -38,7 +38,7 @@ type Props = {
   value: string,
   type: "button" | "submit",
   color: "simple" | null,
-  onClick?: ((event: MouseEvent<HTMLInputElement>) => void)
+  onClick?: (event: MouseEvent<HTMLInputElement>) => void
 };
 type State = {
 };
