@@ -15,7 +15,6 @@ import {
 export class Input extends Component<Props, State> {
 
   public static defaultProps: Props = {
-    label: "",
     type: "text"
   };
 
@@ -35,9 +34,13 @@ export class Input extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    let labelNode;
+    if (this.props.label) {
+      labelNode = <div styleName="label">{this.props.label}</div>;
+    }
     let node = (
       <label styleName="input-wrapper">
-        <div styleName="label">{this.props.label}</div>
+        {labelNode}
         <input styleName="input" type={this.props.type} value={this.state.value} onChange={this.handleChange.bind(this)}/>
       </label>
     );
@@ -48,7 +51,7 @@ export class Input extends Component<Props, State> {
 
 
 type Props = {
-  label: string,
+  label?: string,
   type: "text" | "password",
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
   onValueChange?: (value: string) => void
