@@ -14,8 +14,7 @@ import {
 @applyStyle(require("./button.scss"))
 export class Button extends Component<Props, State> {
 
-  public static defaultProps: Props = {
-    value: "",
+  public static defaultProps: Partial<Props> = {
     type: "button",
     color: null
   };
@@ -26,7 +25,7 @@ export class Button extends Component<Props, State> {
       styleName = "simple";
     }
     let node = (
-      <input styleName={styleName} type="button" value={this.props.value} onClick={this.props.onClick}/>
+      <input styleName={styleName} type="button" value={this.props.label} onClick={this.props.onClick}/>
     );
     return node;
   }
@@ -35,7 +34,7 @@ export class Button extends Component<Props, State> {
 
 
 type Props = {
-  value: string,
+  label: string,
   type: "button" | "submit",
   color: "simple" | null,
   onClick?: (event: MouseEvent<HTMLInputElement>) => void

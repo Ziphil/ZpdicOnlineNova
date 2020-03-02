@@ -87,7 +87,7 @@ class RegisterFormBase extends ComponentBase<Props, State> {
           <Input label="パスワード" type="password" onValueChange={(value) => this.setState({password: value})}/>
           <Input label="パスワード (確認)" type="password" onValueChange={(value) => this.setState({passwordRepeat: value})}/>
           <div styleName="button-group">
-            <Button value="新規登録" onClick={this.performRegister.bind(this)}/>
+            <Button label="新規登録" onClick={this.performRegister.bind(this)}/>
           </div>
         </form>
       </div>

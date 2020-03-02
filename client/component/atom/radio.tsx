@@ -14,13 +14,6 @@ import {
 @applyStyle(require("./radio.scss"))
 export class Radio extends Component<Props, State> {
 
-  public static defaultProps: Props = {
-    name: "",
-    label: "",
-    value: "",
-    checked: false
-  };
-
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
     if (this.props.onChange) {
       this.props.onChange(event);

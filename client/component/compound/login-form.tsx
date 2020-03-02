@@ -48,7 +48,7 @@ class LoginFormBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let registerNode;
     if (this.props.showsRegister) {
-      registerNode = <Button value="新規登録" color="simple" onClick={this.jumpRegister.bind(this)}/>;
+      registerNode = <Button label="新規登録" color="simple" onClick={this.jumpRegister.bind(this)}/>;
     }
     let errorNode;
     if (this.state.error) {
@@ -65,7 +65,7 @@ class LoginFormBase extends ComponentBase<Props, State> {
           <Input label="ユーザー名" onValueChange={(value) => this.setState({name: value})}/>
           <Input label="パスワード" type="password" onValueChange={(value) => this.setState({password: value})}/>
           <div styleName="button-group">
-            <Button value="ログイン" onClick={this.performLogin.bind(this)}/>
+            <Button label="ログイン" onClick={this.performLogin.bind(this)}/>
             {registerNode}
           </div>
         </form>

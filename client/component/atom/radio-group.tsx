@@ -17,11 +17,6 @@ import {
 @applyStyle(require("./radio-group.scss"))
 export class RadioGroup extends Component<Props, State> {
 
-  public static defaultProps: Props = {
-    name: "",
-    specs: []
-  };
-
   public state: State = {
     value: null
   };
