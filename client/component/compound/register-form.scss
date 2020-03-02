@@ -1,38 +1,3 @@
 @charset "utf-8";
 
 @import "/client/component/mixin.scss";
-
-
-.register {
-  @include pane;
-  margin: 0px;
-  padding: 20px 30px;
-  line-height: 1.6;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-}
-
-.register >* {
-  margin: 15px 0px 0px 0px;
-}
-
-.register >*:first-child {
-  margin: 0px;
-}
-
-.register .button-group {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.register .button-group >* {
-  margin: 0px 0px 0px 30px;
-}
-
-.register .button-group >*:first-child {
-  margin: 0px;
-}
