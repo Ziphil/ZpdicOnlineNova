@@ -1,5 +1,6 @@
 //
 
+export * from "./dictionary-header";
 export * from "./dictionary-list";
 export * from "./dictionary-pane";
 export * from "./header";

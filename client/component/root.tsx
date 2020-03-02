@@ -10,10 +10,12 @@ import {
 } from "react";
 import {
   BrowserRouter,
+  Route,
   Switch
 } from "react-router-dom";
 import {
   DashboardPage,
+  DictionaryPage,
   LoginPage,
   RegisterPage,
   TopPage
@@ -48,6 +50,7 @@ export class Root extends Component<{}, {}> {
           <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
           <PrivateRoute path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
           <PrivateRoute path="/dashboard" redirect="/login" component={DashboardPage}/>
+          <Route path ="/dictionary/:number" component={DictionaryPage}/>
         </Switch>
       </BrowserRouter>
     );

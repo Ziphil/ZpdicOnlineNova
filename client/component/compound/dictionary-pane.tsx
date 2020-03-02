@@ -36,7 +36,11 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
       status = "保存処理中";
     } else {
       let wordSize = this.props.dictionary.wordSize;
-      status = wordSize.toLocaleString("en-GB") + " 語";
+      if (wordSize !== undefined) {
+        status = wordSize.toLocaleString("en-GB") + " 語";
+      } else {
+        status = "? 語";
+      }
     }
     let node = (
       <a styleName="dictionary-pane" href={href} onClick={this.click.bind(this)}>

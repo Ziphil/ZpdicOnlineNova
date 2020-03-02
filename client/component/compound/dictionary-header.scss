@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.dictionary-header {
+  width: 100%;
+  height: 50px;
+  margin: 0px;
+  padding: 0px 50px;
+  top: 70px;
+  left: 0px;
+  border-bottom: 1px hsla($primary-hue, 40%, 50%, 0.8) solid;
+  background-color: hsl($primary-hue, 50%, 80%);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 80;
+}
+
+.dictionary-header .left .name {
+  font-weight: bold;
+}

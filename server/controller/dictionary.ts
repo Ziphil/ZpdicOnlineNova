@@ -5,8 +5,10 @@ import {
   Response
 } from "express-serve-static-core";
 import {
-  DictionaryListBody
-} from "/client/type/dictionary";
+  DictionaryBody,
+  DictionaryListBody,
+  MayError
+} from "/client/type";
 import {
   Controller
 } from "/server/controller/controller";
@@ -41,6 +43,20 @@ export class DictionaryController extends Controller {
       response.send("Uploaded");
     } else {
       response.send("User not found");
+    }
+  }
+
+  @get("/info")
+  public async getInfo(request: Request, response: Response<MayError<DictionaryBody>>): Promise<void> {
+    let number = parseInt(request.query.number, 10);
+    let dictionary = await SlimeDictionaryModel.findByNumber(number);
+    if (dictionary) {
+      let id = dictionary.id;
+      let name = dictionary.name;
+      let status = dictionary.status;
+      response.json({id, number, name, status});
+    } else {
+      response.status(400).json({error: "invalidNumber"});
     }
   }
 

@@ -9,10 +9,10 @@ import {
 } from "/client/type/user";
 
 
-export async function get<T>(url: string, allowedStatuses?: Array<number>): Promise<AxiosResponse<T>> {
+export async function get<T>(url: string, params?: any, allowedStatuses?: Array<number>): Promise<AxiosResponse<T>> {
   let headers = createHeaders();
   let validateStatus = createValidateStatus(allowedStatuses);
-  let response = await axios.get<T>(url, {headers, validateStatus});
+  let response = await axios.get<T>(url, {headers, params, validateStatus});
   return response;
 }
 

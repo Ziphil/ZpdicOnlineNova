@@ -51,6 +51,11 @@ export class SlimeDictionary {
     return dictionary;
   }
 
+  public static async findByNumber(number: number): Promise<SlimeDictionaryDocument | null> {
+    let dictionary = await SlimeDictionaryModel.findOne({number}).exec();
+    return dictionary;
+  }
+
   public static async findByUser(user: UserDocument): Promise<Array<SlimeDictionaryDocument>> {
     let dictionaries = await SlimeDictionaryModel.find({user}).exec();
     return dictionaries;

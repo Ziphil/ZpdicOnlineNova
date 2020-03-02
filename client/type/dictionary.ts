@@ -6,7 +6,7 @@ export type DictionaryBody = {
   number: number,
   name: string,
   status: string,
-  wordSize: number
+  wordSize?: number
 };
 
 export type DictionaryListBody = Array<DictionaryBody>;
