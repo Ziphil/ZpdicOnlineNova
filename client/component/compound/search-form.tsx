@@ -41,8 +41,8 @@ class SearchFormBase extends ComponentBase<Props, State> {
     let node = (
       <form styleName="search">
         <Input onValueChange={(value) => this.setState({search: value})}/>
-        <RadioGroup name="mode" specs={searchModeSpecs}/>
-        <RadioGroup name="type" specs={searchTypeSpecs}/>
+        <RadioGroup name="mode" initialValue="both" specs={searchModeSpecs}/>
+        <RadioGroup name="type" initialValue="prefix" specs={searchTypeSpecs}/>
       </form>
     );
     return node;

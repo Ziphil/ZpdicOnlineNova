@@ -26,6 +26,12 @@ export class RadioGroup extends Component<Props, State> {
     value: null
   };
 
+  public componentDidMount(): void {
+    if (this.props.initialValue !== undefined) {
+      this.setState({value: this.props.initialValue});
+    }
+  }
+
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
     let value = event.target.value;
     this.setState({value});
@@ -55,7 +61,8 @@ export class RadioGroup extends Component<Props, State> {
 
 type Props = {
   name: string,
-  specs: Array<{value: string, label: string}>;
+  specs: Array<{value: string, label: string}>,
+  initialValue?: string,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
   onValueChange?: (value: string) => void
 };
