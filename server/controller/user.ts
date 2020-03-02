@@ -6,7 +6,8 @@ import {
 } from "express-serve-static-core";
 import {
   UserBody,
-  UserLoginBody
+  UserLoginBody,
+  UserRegisterBody
 } from "/client/type/user";
 import {
   Controller
@@ -33,12 +34,20 @@ export class UserController extends Controller {
   }
 
   @post("/register")
-  public async postRegister(request: Request, response: Response<string>): Promise<void> {
+  public async postRegister(request: Request, response: Response<UserRegisterBody>): Promise<void> {
     let name = request.body.name;
-    let password = request.body.password;
     let email = request.body.email;
-    let user = await UserModel.register(name, email, password);
-    response.send("Registered: " + user.name);
+    let password = request.body.password;
+    try {
+      let user = await UserModel.register(name, email, password);
+      response.send({name});
+    } catch (error) {
+      if (error.name === "CustomError") {
+        response.status(400).json({error: error.type});
+      } else {
+        throw error;
+      }
+    }
   }
 
   @get("/login")
@@ -55,7 +64,7 @@ export class UserController extends Controller {
       let name = user.name;
       response.json({token, name});
     } else {
-      response.status(400).json({error: ""});
+      response.status(400).json({error: "invalidRequest"});
     }
   }
 

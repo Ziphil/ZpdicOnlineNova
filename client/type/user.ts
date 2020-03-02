@@ -5,6 +5,11 @@ import {
 } from "/client/type/error";
 
 
+export type UserRegisterSuccessBody = {
+  name: string
+};
+export type UserRegisterBody = MayError<UserRegisterSuccessBody>;
+
 export type UserLoginSuccessBody = {
   token: string,
   name: string
