@@ -36,3 +36,12 @@
 .login .button-group >*:first-child {
   margin: 0px;
 }
+
+.error {
+  @include colored-pane($error-hue);
+  @include unordered-list;
+  margin: 0px 0px 20px 0px;
+  padding: 8px 20px;
+  line-height: 1.6;
+  color: hsl($error-hue, 40%, 50%);
+}

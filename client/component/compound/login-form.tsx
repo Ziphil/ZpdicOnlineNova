@@ -26,7 +26,8 @@ class LoginFormBase extends ComponentBase<Props, State> {
 
   public state: State = {
     name: "",
-    password: ""
+    password: "",
+    error: false
   };
 
   private async performLogin(event: MouseEvent<HTMLInputElement>): Promise<void> {
@@ -35,6 +36,8 @@ class LoginFormBase extends ComponentBase<Props, State> {
     let succeed = await http.login(name, password);
     if (succeed) {
       this.props.history.replace("/dashboard");
+    } else {
+      this.setState({error: true});
     }
   }
 
@@ -47,15 +50,26 @@ class LoginFormBase extends ComponentBase<Props, State> {
     if (this.props.showsRegister) {
       registerNode = <Button value="新規登録" color="simple" onClick={this.jumpRegister.bind(this)}/>;
     }
+    let errorNode;
+    if (this.state.error) {
+      errorNode = (
+        <ul styleName="error">
+          <li>ログインに失敗しました。</li>
+        </ul>
+      );
+    }
     let node = (
-      <form styleName="login">
-        <Input label="ユーザー名" onChange={(value) => this.setState({name: value})}/>
-        <Input label="パスワード" type="password" onChange={(value) => this.setState({password: value})}/>
-        <div styleName="button-group">
-          <Button value="ログイン" onClick={this.performLogin.bind(this)}/>
-          {registerNode}
-        </div>
-      </form>
+      <div>
+        {errorNode}
+        <form styleName="login">
+          <Input label="ユーザー名" onChange={(value) => this.setState({name: value})}/>
+          <Input label="パスワード" type="password" onChange={(value) => this.setState({password: value})}/>
+          <div styleName="button-group">
+            <Button value="ログイン" onClick={this.performLogin.bind(this)}/>
+            {registerNode}
+          </div>
+        </form>
+      </div>
     );
     return node;
   }
@@ -68,7 +82,8 @@ type Props = {
 };
 type State = {
   name: string,
-  password: string
+  password: string,
+  error: boolean
 };
 
 export let LoginForm = withRouter(LoginFormBase);

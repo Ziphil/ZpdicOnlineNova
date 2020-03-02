@@ -3,6 +3,7 @@
 
 $primary-hue: 30;
 $secondary-hue: 320;
+$error-hue: 0;
 
 $europian-font-family: "EB Garamond", "Times New Roman";
 $japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝";
@@ -58,6 +59,27 @@ $special-font-family: "Simonetta";
   background-color: hsla(0, 0%, 100%, 0.5);
   border: 1px hsla(0, 0%, 100%, 0.8) solid;
   border-radius: 6px;
+}
+
+@mixin colored-pane($hue) {
+  @include pane;
+  background-color: hsl($hue, 50%, 90%);
+  border: 1px hsla($hue, 40%, 50%, 0.8) solid;
+}
+
+@mixin unordered-list {
+  & {
+    list-style-type: none;
+  }
+  & >li {
+    margin-left: 0.8em;
+  }
+  & >li::before {
+    width: 0.8em;
+    margin-left: -0.8em;
+    content: "•";
+    display: inline-block;
+  }
 }
 
 @mixin hoverable-pane {
