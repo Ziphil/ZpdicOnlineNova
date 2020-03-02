@@ -50,7 +50,9 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
 
   private async handleAnyChange(search: string, mode: string, type: string): Promise<void> {
     let number = this.props.match!.params.number;
-    let response = await http.get<any>("/api/dictionary/search", {number, search, mode, type}, [400]);
+    let firstIndex = 0;
+    let size = 40;
+    let response = await http.get<any>("/api/dictionary/search", {number, search, mode, type, firstIndex, size}, [400]);
     let data = response.data;
     if (!("error" in data)) {
       let words = data;
