@@ -19,15 +19,15 @@ import {
 } from "/client/util/decorator";
 
 
-@applyStyle(require("./register-page.scss"))
+@applyStyle(require("./login-page.scss"))
 class RegisterPageBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <div styleName="register-page">
+      <div styleName="login-page">
         <Header/>
         <div styleName="description">新規登録</div>
-        <div styleName="register-form">
+        <div styleName="login-form">
           <RegisterForm/>
         </div>
       </div>
