@@ -1,3 +1,18 @@
 @charset "utf-8";
 
 @import "/client/component/mixin.scss";
+
+
+.radio-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.radio-group >* {
+  margin: 0px 0px 0px 20px;
+}
+
+.radio-group >*:first-child {
+  margin: 0px;
+}
