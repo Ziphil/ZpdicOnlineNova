@@ -21,12 +21,12 @@ export class Button extends Component<Props, State> {
   };
 
   public render(): ReactNode {
-    let styleNames = ["button"];
+    let styleName = "button";
     if (this.props.color === "simple") {
-      styleNames = ["simple"];
+      styleName = "simple";
     }
     let node = (
-      <input styleName={styleNames.join(" ")} type="button" value={this.props.value} onClick={this.props.onClick}/>
+      <input styleName={styleName} type="button" value={this.props.value} onClick={this.props.onClick}/>
     );
     return node;
   }
