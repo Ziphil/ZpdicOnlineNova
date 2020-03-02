@@ -44,7 +44,7 @@ class WordPaneBase extends ComponentBase<Props, State> {
       let informationNode = (
         <div styleName="container">
           <p>
-            <div styleName="title">{information.title}</div>
+            <span styleName="title">{information.title}</span>
             {information.text}
           </p>
         </div>

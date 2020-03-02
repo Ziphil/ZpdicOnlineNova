@@ -31,6 +31,7 @@
 .word-pane .title {
   font-size: 70%;
   color: hsl($primary-hue, 40%, 50%);
+  display: block;
 }
 
 .word-pane .name {
