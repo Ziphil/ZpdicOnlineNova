@@ -64,7 +64,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
           <SearchForm onAnyChange={this.handleAnyChange.bind(this)}/>
         </div>
         <div styleName="word-list">
-          <WordList words={this.state.words}/>
+          <WordList words={this.state.words} firstIndex={0} size={40}/>
         </div>
       </div>
     );

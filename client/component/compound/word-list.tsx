@@ -22,7 +22,9 @@ import {
 class WordListBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
-    let wordPanes = this.props.words.map((word, index) => {
+    let words = this.props.words;
+    let displayedWords = words.slice(this.props.firstIndex, this.props.firstIndex + this.props.size);
+    let wordPanes = displayedWords.map((word, index) => {
       return <WordPane word={word} key={index}/>;
     });
     let node = (
@@ -38,6 +40,8 @@ class WordListBase extends ComponentBase<Props, State> {
 
 type Props = {
   words: Array<any>
+  size: number,
+  firstIndex: number
 };
 type State = {
 };
