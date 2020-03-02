@@ -23,7 +23,7 @@ class WordListBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let words = this.props.words;
-    let displayedWords = words.slice(this.props.firstIndex, this.props.firstIndex + this.props.size);
+    let displayedWords = words.slice(this.props.offset, this.props.offset + this.props.size);
     let wordPanes = displayedWords.map((word, index) => {
       return <WordPane word={word} key={index}/>;
     });
@@ -41,7 +41,7 @@ class WordListBase extends ComponentBase<Props, State> {
 type Props = {
   words: Array<any>
   size: number,
-  firstIndex: number
+  offset: number
 };
 type State = {
 };

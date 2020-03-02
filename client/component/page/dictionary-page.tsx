@@ -50,9 +50,9 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
 
   private async handleAnyChange(search: string, mode: string, type: string): Promise<void> {
     let number = this.props.match!.params.number;
-    let firstIndex = 0;
+    let offset = 0;
     let size = 40;
-    let response = await http.get<any>("/api/dictionary/search", {number, search, mode, type, firstIndex, size}, [400]);
+    let response = await http.get<any>("/api/dictionary/search", {number, search, mode, type, offset, size}, [400]);
     let data = response.data;
     if (!("error" in data)) {
       let words = data;
@@ -71,7 +71,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
           <SearchForm onAnyChange={this.handleAnyChange.bind(this)}/>
         </div>
         <div styleName="word-list">
-          <WordList words={this.state.words} firstIndex={0} size={40}/>
+          <WordList words={this.state.words} offset={0} size={40}/>
         </div>
       </div>
     );

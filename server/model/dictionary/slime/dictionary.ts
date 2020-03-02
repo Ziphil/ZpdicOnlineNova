@@ -62,25 +62,33 @@ export class SlimeDictionary {
     return dictionaries;
   }
 
-  public async search(search: string, mode: string, type: string): Promise<Array<SlimeWordDocument>> {
+  public async search(search: string, mode: string, type: string, offset: number, size: number): Promise<Array<SlimeWordDocument>> {
     let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
-    let wordQuery = {dictionary: this} as any;
-    let equivalentQuery = {dictionary: this} as any;
+    let wordPredicate = {dictionary: this} as any;
+    let equivalentPredicate = {dictionary: this} as any;
     if (type === "prefix") {
       let modifiedSearch = new RegExp("^" + escapedSearch);
-      wordQuery["name"] = modifiedSearch;
-      equivalentQuery["equivalents.names"] = modifiedSearch;
+      wordPredicate["name"] = modifiedSearch;
+      equivalentPredicate["equivalents.names"] = modifiedSearch;
     } else if (type === "regular") {
-      wordQuery["name"] = search;
-      equivalentQuery["equivalents.names"] = search;
+      wordPredicate["name"] = search;
+      equivalentPredicate["equivalents.names"] = search;
     }
-    let words = new Array<SlimeWordDocument>();
+    let query = undefined as any;
     if (mode === "word") {
-      words = await SlimeWordModel.find(wordQuery).exec();
+      query = SlimeWordModel.find(wordPredicate);
     } else if (mode === "equivalent") {
-      words = await SlimeWordModel.find(equivalentQuery).exec();
+      query = SlimeWordModel.find(equivalentPredicate);
     } else if (mode === "both") {
-      words = await SlimeWordModel.find().or([wordQuery, equivalentQuery]).exec();
+      query = SlimeWordModel.find().or([wordPredicate, equivalentPredicate]);
+    }
+    let words = [];
+    if (query !== undefined) {
+      if (size) {
+        words = await query.skip(offset).limit(size).exec();
+      } else {
+        words = await query.skip(offset).exec();
+      }
     }
     return words;
   }

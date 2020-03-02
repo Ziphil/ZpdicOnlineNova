@@ -52,12 +52,12 @@ export class DictionaryController extends Controller {
     let search = request.query.search;
     let mode = request.query.mode;
     let type = request.query.type;
-    let firstIndex = parseInt(request.query.firstIndex, 10) || 0;
-    let size = parseInt(request.query.size, 10) || null;
+    let offset = parseInt(request.query.offset, 10) || 0;
+    let size = parseInt(request.query.size, 10) || 0;
     let dictionary = await SlimeDictionaryModel.findByNumber(number);
     if (dictionary) {
-      let words = await dictionary.search(search, mode, type);
-      let respondedWords = (size !== null) ? words.slice(firstIndex, size) : words;
+      let words = await dictionary.search(search, mode, type, offset, size);
+      let respondedWords = (size !== null) ? words.slice(offset, size) : words;
       response.json(respondedWords);
     } else {
       response.status(400).json({error: "invalidNumber"});
