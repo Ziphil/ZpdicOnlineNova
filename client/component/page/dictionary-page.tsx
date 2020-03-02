@@ -56,10 +56,10 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
       <div styleName="dictionary-page">
         <Header/>
         <DictionaryHeader name={this.state.dictionary?.name || ""}/>
-        <div>
+        <div styleName="search-form">
           <SearchForm/>
         </div>
-        <div>
+        <div styleName="word-list">
           <WordList words={this.state.words}/>
         </div>
       </div>

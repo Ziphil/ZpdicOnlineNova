@@ -21,40 +21,75 @@ import {
 @applyStyle(require("./word-pane.scss"))
 class WordPaneBase extends ComponentBase<Props, State> {
 
-  public render(): ReactNode {
-    let equivalentNodes = this.props.word.equivalents.map((equivalent) => {
-      let equivalentNode = (
-        <div styleName="equivalent">
-          <span styleName="title">{equivalent.title}</span>
+  private renderEquivalentNode(): ReactNode {
+    let innerNodes = this.props.word.equivalents.map((equivalent) => {
+      let innerNode = (
+        <p>
+          <span styleName="box">{equivalent.title}</span>
           {equivalent.names.join(", ")}
-        </div>
+        </p>
       );
-      return equivalentNode;
+      return innerNode;
     });
-    let informationNodes = this.props.word.informations.map((information) => {
+    let node = (
+      <div styleName="container">
+        {innerNodes}
+      </div>
+    );
+    return node;
+  }
+
+  private renderInformationNode(): ReactNode {
+    let nodes = this.props.word.informations.map((information) => {
       let informationNode = (
-        <div styleName="information">
-          <span styleName="title">{information.title}</span>
-          {information.text}
+        <div styleName="container">
+          <p>
+            <div styleName="title">{information.title}</div>
+            {information.text}
+          </p>
         </div>
       );
       return informationNode;
     });
-    let relationNodes = this.props.word.relations.map((relation) => {
-      let relationNode = (
-        <div styleName="relation">
-          <span styleName="title">{relation.title}</span>
-          {relation.name}
-        </div>
+    return nodes;
+  }
+
+  private renderRationNode(): ReactNode {
+    let groupedRelations = {} as {[title: string]: Array<string>};
+    for (let relation of this.props.word.relations) {
+      let title = relation.title;
+      if (groupedRelations[title] === undefined) {
+        groupedRelations[title] = [];
+      }
+      groupedRelations[title].push(relation.name);
+    }
+    let innerNodes = Object.keys(groupedRelations).map((title) => {
+      let innerNode = (
+        <p>
+          <span styleName="box">{title}</span>
+          {groupedRelations[title].join(", ")}
+        </p>
       );
-      return relationNode;
+      return innerNode;
     });
+    let node = (
+      <div styleName="container">
+        {innerNodes}
+      </div>
+    );
+    return node;
+  }
+
+  public render(): ReactNode {
+    let equivalentNode = this.renderEquivalentNode();
+    let informationNode = this.renderInformationNode();
+    let relationNode = this.renderRationNode();
     let node = (
       <div styleName="word-pane">
         <div styleName="name">{this.props.word.name}</div>
-        {equivalentNodes}
-        {informationNodes}
-        {relationNodes}
+        {equivalentNode}
+        {informationNode}
+        {relationNode}
       </div>
     );
     return node;

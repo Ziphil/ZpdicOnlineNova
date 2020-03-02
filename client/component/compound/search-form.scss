@@ -1,3 +1,13 @@
 @charset "utf-8";
 
 @import "/client/component/mixin.scss";
+
+
+.search {
+  line-height: 1.6;
+  text-align: center;
+}
+
+.search .radio-wrapper {
+  margin: 5px 0px 0px 0px;
+}
