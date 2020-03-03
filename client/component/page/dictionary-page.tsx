@@ -47,7 +47,6 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
     let data = response.data;
     if (!("error" in data)) {
       let dictionary = data;
-      console.log(dictionary);
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
@@ -61,10 +60,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
     let type = this.state.type;
     let offset = this.state.page * 40;
     let size = 40;
-    console.log(offset);
     let response = await http.get<any>("/api/dictionary/search", {number, search, mode, type, offset, size}, [400]);
-    console.log({number, search, mode, type, offset, size});
-    console.log(response.data);
     let data = response.data;
     if (!("error" in data)) {
       let words = data;
@@ -92,6 +88,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
       page = 0;
     }
     this.setState({page}, async () => {
+      window.scrollTo(0, 0);
       await this.updateWords();
     });
   }
@@ -99,6 +96,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
   private async moveNextPage(): Promise<void> {
     let page = this.state.page + 1;
     this.setState({page}, async () => {
+      window.scrollTo(0, 0);
       await this.updateWords();
     });
   }
