@@ -8,6 +8,9 @@ import {
   withRouter
 } from "react-router-dom";
 import {
+  Button
+} from "/client/component/atom";
+import {
   ComponentBase
 } from "/client/component/component";
 import {
@@ -72,6 +75,10 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
         </div>
         <div styleName="word-list">
           <WordList words={this.state.words} offset={0} size={40}/>
+        </div>
+        <div styleName="page-button">
+          <Button label="前ページ" position="left"/>
+          <Button label="次ページ" position="right"/>
         </div>
       </div>
     );

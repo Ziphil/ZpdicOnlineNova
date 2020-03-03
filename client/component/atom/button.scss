@@ -22,3 +22,16 @@
   background: none;
   outline: none;
 }
+
+.button.left {
+  margin: 0px -1px 0px 0px;
+  border-radius: 3px 0px 0px 3px;
+}
+
+.button.right {
+  border-radius: 0px 3px 3px 0px;
+}
+
+.button:disabled {
+  opacity: 0.5;
+}
