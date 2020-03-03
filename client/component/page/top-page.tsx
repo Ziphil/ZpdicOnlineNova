@@ -35,8 +35,9 @@ class TopPageBase extends ComponentBase<Props, State> {
         </div>
         <div styleName="notice">
           <p>
-            ZpDIC Online は、現在ベータ版として稼働しています。
-            内部的な仕様変更などにより、やむを得ず保存されているデータを削除する場合がありますので、ご了承ください。
+            現在、新 ZpDIC Online は正式リリース前の開発中の段階です。
+            正式リリースまでの間に、保存されているデータの削除など、破壊的な変更が行われる可能性が大いにあります。
+            お試し版としてご利用ください。
           </p>
           <p>
             意見や要望などは随時募集中です。
