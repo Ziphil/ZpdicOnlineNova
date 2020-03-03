@@ -11,6 +11,10 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  TITLES,
+  VERSION
+} from "/client/index";
+import {
   applyStyle
 } from "/client/util/decorator";
 
@@ -19,11 +23,14 @@ import {
 class LogoBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
+    let title = TITLES[0];
+    let subtitle = TITLES[1];
+    let version = VERSION.toString();
     let node = (
       <div styleName="logo">
-        <div styleName="title">ZpDIC</div>
-        <div styleName="subtitle">Online</div>
-        <div styleName="version">ver dev-2963</div>
+        <div styleName="title">{title}</div>
+        <div styleName="subtitle">{subtitle}</div>
+        <div styleName="version">ver {version}</div>
       </div>
     );
     return node;
