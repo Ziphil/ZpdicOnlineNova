@@ -20,13 +20,15 @@ import {
   WordList
 } from "/client/component/compound";
 import {
-  DictionaryBody,
-  MayError
-} from "/client/type";
-import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
+import {
+  DictionaryInfoBody
+} from "/server/controller/dictionary";
+import {
+  SlimeDictionarySkeleton
+} from "/server/model/dictionary/slime";
 
 
 @applyStyle(require("./dictionary-page.scss"))
@@ -43,10 +45,10 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
 
   private async fetchDictionary(): Promise<void> {
     let number = this.props.match!.params.number;
-    let response = await http.get<MayError<DictionaryBody>>("/api/dictionary/info", {number}, [400]);
-    let data = response.data;
-    if (!("error" in data)) {
-      let dictionary = data;
+    let response = await http.get<DictionaryInfoBody>("/api/dictionary/info", {number}, [400]);
+    let body = response.data;
+    if (!("error" in body)) {
+      let dictionary = body;
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
@@ -127,7 +129,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionary: DictionaryBody | null,
+  dictionary: SlimeDictionarySkeleton | null,
   words: Array<any>,
   search: string,
   mode: string,

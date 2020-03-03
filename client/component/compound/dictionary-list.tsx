@@ -16,6 +16,9 @@ import {
 import {
   applyStyle
 } from "/client/util/decorator";
+import {
+  SlimeDictionarySkeleton
+} from "/server/model/dictionary/slime";
 
 
 @applyStyle(require("./dictionary-list.scss"))
@@ -37,7 +40,7 @@ class DictionaryListBase extends ComponentBase<Props, State> {
 
 
 type Props = {
-  dictionaries: Array<any>
+  dictionaries: Array<SlimeDictionarySkeleton>
 };
 type State = {
 };

@@ -16,6 +16,9 @@ import {
 import {
   applyStyle
 } from "/client/util/decorator";
+import {
+  SlimeWordSkeleton
+} from "/server/model/dictionary/slime";
 
 
 @applyStyle(require("./word-list.scss"))
@@ -39,7 +42,7 @@ class WordListBase extends ComponentBase<Props, State> {
 
 
 type Props = {
-  words: Array<any>
+  words: Array<SlimeWordSkeleton>
   size: number,
   offset: number
 };

@@ -12,11 +12,11 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
-  DictionaryBody
-} from "/client/type/dictionary";
-import {
   applyStyle
 } from "/client/util/decorator";
+import {
+  SlimeDictionarySkeleton
+} from "/server/model/dictionary/slime";
 
 
 @applyStyle(require("./dictionary-pane.scss"))
@@ -55,7 +55,7 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
 
 
 type Props = {
-  dictionary: DictionaryBody
+  dictionary: SlimeDictionarySkeleton
 };
 type State = {
 };

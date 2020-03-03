@@ -5,17 +5,18 @@ import {
   Response
 } from "express-serve-static-core";
 import {
-  DictionaryBody,
-  DictionaryListBody,
-  MayError
-} from "/client/type";
-import {
   Controller
 } from "/server/controller/controller";
 import * as middle from "/server/controller/middle";
 import {
-  SlimeDictionaryModel
+  SlimeDictionaryModel,
+  SlimeDictionarySkeleton,
+  SlimeWordSkeleton
 } from "/server/model/dictionary/slime";
+import {
+  CustomErrorSkeleton,
+  MayError
+} from "/server/model/error";
 import {
   UserModel
 } from "/server/model/user";
@@ -47,7 +48,7 @@ export class DictionaryController extends Controller {
   }
 
   @get("/search")
-  public async getSearch(request: Request, response: Response<any>): Promise<void> {
+  public async getSearch(request: Request, response: Response<DictionarySearchBody>): Promise<void> {
     let number = parseInt(request.query.number, 10);
     let search = request.query.search;
     let mode = request.query.mode;
@@ -57,23 +58,24 @@ export class DictionaryController extends Controller {
     let dictionary = await SlimeDictionaryModel.findByNumber(number);
     if (dictionary) {
       let words = await dictionary.search(search, mode, type, offset, size);
-      response.json(words);
+      let body = words.map((word) => new SlimeWordSkeleton(word));
+      response.json(body);
     } else {
-      response.status(400).json({error: "invalidNumber"});
+      let body = new CustomErrorSkeleton("invalidNumber");
+      response.status(400).json(body);
     }
   }
 
   @get("/info")
-  public async getInfo(request: Request, response: Response<MayError<DictionaryBody>>): Promise<void> {
+  public async getInfo(request: Request, response: Response<DictionaryInfoBody>): Promise<void> {
     let number = parseInt(request.query.number, 10);
     let dictionary = await SlimeDictionaryModel.findByNumber(number);
     if (dictionary) {
-      let id = dictionary.id;
-      let name = dictionary.name;
-      let status = dictionary.status;
-      response.json({id, number, name, status});
+      let body = new SlimeDictionarySkeleton(dictionary);
+      response.json(body);
     } else {
-      response.status(400).json({error: "invalidNumber"});
+      let body = new CustomErrorSkeleton("invalidNumber");
+      response.status(400).json(body);
     }
   }
 
@@ -82,16 +84,18 @@ export class DictionaryController extends Controller {
   public async getList(request: Request, response: Response<DictionaryListBody>): Promise<void> {
     let user = request.user!;
     let dictionaries = await SlimeDictionaryModel.findByUser(user);
-    let body = [] as DictionaryListBody;
+    let body = [];
     for (let dictionary of dictionaries) {
-      let id = dictionary.id;
-      let number = dictionary.number;
-      let name = dictionary.name;
-      let status = dictionary.status;
-      let wordSize = await dictionary.countWords();
-      body.push({id, number, name, status, wordSize});
+      let innerSkeleton = new SlimeDictionarySkeleton(dictionary);
+      await innerSkeleton.fetch(dictionary);
+      body.push(innerSkeleton);
     }
     response.json(body);
   }
 
 }
+
+
+export type DictionarySearchBody = MayError<Array<SlimeWordSkeleton>>;
+export type DictionaryInfoBody = MayError<SlimeDictionarySkeleton>;
+export type DictionaryListBody = Array<SlimeDictionarySkeleton>;

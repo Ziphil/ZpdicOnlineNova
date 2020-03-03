@@ -6,7 +6,7 @@ import {
 } from "axios";
 import {
   UserLoginBody
-} from "/client/type/user";
+} from "/server/controller/user";
 
 
 export async function get<T>(url: string, params?: any, allowedStatuses?: Array<number>): Promise<AxiosResponse<T>> {
@@ -25,10 +25,10 @@ export async function post<T>(url: string, data?: any, allowedStatuses?: Array<n
 
 export async function login(name: string, password: string): Promise<boolean> {
   let response = await post<UserLoginBody>("/api/user/login", {name, password}, [400]);
-  let data = response.data;
-  if (!("error" in data)) {
-    let token = data.token;
-    let authenticatedName = data.name;
+  let body = response.data;
+  if (!("error" in body)) {
+    let token = body.token;
+    let authenticatedName = body.name;
     localStorage.setItem("token", token);
     localStorage.setItem("name", authenticatedName);
     return true;

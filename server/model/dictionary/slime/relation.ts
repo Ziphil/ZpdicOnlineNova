@@ -21,5 +21,20 @@ export class SlimeRelation {
 }
 
 
+export class SlimeRelationSkeleton {
+
+  public title: string;
+  public number: number;
+  public name: string;
+
+  public constructor(relation: SlimeRelation) {
+    this.title = relation.title;
+    this.number = relation.number;
+    this.name = relation.name;
+  }
+
+}
+
+
 export type SlimeRelationDocument = DocumentType<SlimeRelation>;
 export let SlimeRelationModel = getModelForClass(SlimeRelation);

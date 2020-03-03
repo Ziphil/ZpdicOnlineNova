@@ -14,7 +14,7 @@ import {
   applyStyle
 } from "/client/util/decorator";
 import {
-  SlimeWordDocument
+  SlimeWordSkeleton
 } from "/server/model/dictionary/slime";
 
 
@@ -99,7 +99,7 @@ class WordPaneBase extends ComponentBase<Props, State> {
 
 
 type Props = {
-  word: SlimeWordDocument
+  word: SlimeWordSkeleton
 };
 type State = {
 };

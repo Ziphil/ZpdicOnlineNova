@@ -19,5 +19,18 @@ export class SlimeEquivalent {
 }
 
 
+export class SlimeEquivalentSkeleton {
+
+  public title: string;
+  public names: Array<String>;
+
+  public constructor(equivalent: SlimeEquivalent) {
+    this.title = equivalent.title;
+    this.names = equivalent.names;
+  }
+
+}
+
+
 export type SlimeEquivalentDocument = DocumentType<SlimeEquivalent>;
 export let SlimeEquivalentModel = getModelForClass(SlimeEquivalent);

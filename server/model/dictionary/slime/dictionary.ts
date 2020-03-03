@@ -128,5 +128,27 @@ export class SlimeDictionary {
 }
 
 
+export class SlimeDictionarySkeleton {
+
+  public id: string;
+  public number: number;
+  public status: string;
+  public name: string;
+  public wordSize?: number;
+
+  public constructor(dictionary: SlimeDictionaryDocument) {
+    this.id = dictionary.id;
+    this.number = dictionary.number;
+    this.status = dictionary.status;
+    this.name = dictionary.name;
+  }
+
+  public async fetch(dictionary: SlimeDictionaryDocument): Promise<void> {
+    this.wordSize = await dictionary.countWords();
+  }
+
+}
+
+
 export type SlimeDictionaryDocument = DocumentType<SlimeDictionary>;
 export let SlimeDictionaryModel = getModelForClass(SlimeDictionary);

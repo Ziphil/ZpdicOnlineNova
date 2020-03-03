@@ -64,5 +64,20 @@ export class User {
 }
 
 
+export class UserSkeleton {
+
+  public id: string;
+  public name: string;
+  public email: string;
+
+  public constructor(user: UserDocument) {
+    this.id = user.id;
+    this.name = user.name;
+    this.email = user.email;
+  }
+
+}
+
+
 export type UserDocument = DocumentType<User>;
 export let UserModel = getModelForClass(User);

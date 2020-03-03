@@ -16,12 +16,12 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
-  UserRegisterBody
-} from "/client/type/user";
-import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
+import {
+  UserRegisterBody
+} from "/server/controller/user";
 
 
 @applyStyle(require("./login-form.scss"))
@@ -32,7 +32,7 @@ class RegisterFormBase extends ComponentBase<Props, State> {
     email: "",
     password: "",
     passwordRepeat: "",
-    error: null
+    errorType: null
   };
 
   private async performRegister(event: MouseEvent<HTMLInputElement>): Promise<void> {
@@ -42,34 +42,34 @@ class RegisterFormBase extends ComponentBase<Props, State> {
     let passwordRepeat = this.state.passwordRepeat;
     if (password === passwordRepeat) {
       let response = await http.post<UserRegisterBody>("/api/user/register", {name, email, password}, [400]);
-      let data = response.data;
-      if (!("error" in data)) {
+      let body = response.data;
+      if (!("error" in body)) {
         let succeed = await http.login(name, password);
         if (succeed) {
           this.props.history.replace("/dashboard");
         } else {
-          this.setState({error: "loginFailed"});
+          this.setState({errorType: "loginFailed"});
         }
       } else {
-        this.setState({error: data.error});
+        this.setState({errorType: body.type});
       }
     } else {
-      this.setState({error: "passwordMismatched"});
+      this.setState({errorType: "passwordMismatched"});
     }
   }
 
   public render(): ReactNode {
     let errorNode;
-    let error = this.state.error;
-    if (error) {
+    let errorType = this.state.errorType;
+    if (errorType) {
       let errorMessage = "予期せぬエラーです。";
-      if (error === "passwordMismatched") {
+      if (errorType === "passwordMismatched") {
         errorMessage = "確認用のパスワードが一致しません。";
-      } else if (error === "invalidName") {
+      } else if (errorType === "invalidName") {
         errorMessage = "ユーザー名が不正です。ユーザー名は半角英数字とアンダーバーとハイフンのみで構成してください。";
-      } else if (error === "duplicatedName") {
+      } else if (errorType === "duplicatedName") {
         errorMessage = "そのユーザー名はすでに存在しています。";
-      } else if (error === "loginFailed") {
+      } else if (errorType === "loginFailed") {
         errorMessage = "ログインに失敗しました。珍しいですね!";
       }
       errorNode = (
@@ -105,7 +105,7 @@ type State = {
   email: string,
   password: string,
   passwordRepeat: string,
-  error: string | null
+  errorType: string | null
 };
 
 export let RegisterForm = withRouter(RegisterFormBase);

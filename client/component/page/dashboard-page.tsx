@@ -16,12 +16,15 @@ import {
   Menu
 } from "/client/component/compound";
 import {
-  DictionaryListBody
-} from "/client/type/dictionary";
-import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
+import {
+  DictionaryListBody
+} from "/server/controller/dictionary";
+import {
+  SlimeDictionarySkeleton
+} from "/server/model/dictionary/slime";
 
 
 @applyStyle(require("./dashboard-page.scss"))
@@ -69,7 +72,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionaries: DictionaryListBody;
+  dictionaries: Array<SlimeDictionarySkeleton>;
 };
 type Params = {
   mode: string

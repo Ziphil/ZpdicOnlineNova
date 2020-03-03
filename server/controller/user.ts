@@ -5,16 +5,16 @@ import {
   Response
 } from "express-serve-static-core";
 import {
-  UserBody,
-  UserLoginBody,
-  UserRegisterBody
-} from "/client/type/user";
-import {
   Controller
 } from "/server/controller/controller";
 import * as middle from "/server/controller/middle";
 import {
-  UserModel
+  CustomErrorSkeleton,
+  MayError
+} from "/server/model/error";
+import {
+  UserModel,
+  UserSkeleton
 } from "/server/model/user";
 import {
   before,
@@ -40,10 +40,12 @@ export class UserController extends Controller {
     let password = request.body.password;
     try {
       let user = await UserModel.register(name, email, password);
-      response.send({name});
+      let body = new UserSkeleton(user);
+      response.send(body);
     } catch (error) {
       if (error.name === "CustomError") {
-        response.status(400).json({error: error.type});
+        let body = new CustomErrorSkeleton(error.type);
+        response.status(400).json(body);
       } else {
         throw error;
       }
@@ -61,20 +63,26 @@ export class UserController extends Controller {
     let token = request.token;
     let user = request.user;
     if (token && user) {
-      let name = user.name;
-      response.json({token, name});
+      let rawBody = new UserSkeleton(user);
+      let body = {...rawBody, token};
+      response.json(body);
     } else {
-      response.status(400).json({error: "invalidRequest"});
+      let body = new CustomErrorSkeleton("invalidRequest");
+      response.status(400).json(body);
     }
   }
 
   @get("/info")
   @before(middle.verifyToken())
-  public async getInfo(request: Request, response: Response<UserBody>): Promise<void> {
+  public async getInfo(request: Request, response: Response<UserInfoBody>): Promise<void> {
     let user = request.user!;
-    let name = user.name;
-    let email = user.email;
-    response.json({name, email});
+    let body = new UserSkeleton(user);
+    response.json(body);
   }
 
 }
+
+
+export type UserRegisterBody = MayError<UserSkeleton>;
+export type UserLoginBody = MayError<UserSkeleton & {token: string}>;
+export type UserInfoBody = UserSkeleton;

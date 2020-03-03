@@ -12,12 +12,12 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
-  UserBody
-} from "/client/type/user";
-import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
+import {
+  UserInfoBody
+} from "/server/controller/user";
 
 
 @applyStyle(require("./header.scss"))
@@ -30,7 +30,7 @@ class HeaderBase extends ComponentBase<Props, State> {
   public async componentDidMount(): Promise<void> {
     if (http.hasToken()) {
       try {
-        let response = await http.get<UserBody>("/api/user/info");
+        let response = await http.get<UserInfoBody>("/api/user/info");
         let userName = response.data.name;
         this.setState({userName});
       } catch (error) {
