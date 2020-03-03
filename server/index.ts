@@ -12,21 +12,12 @@ import {
   Schema
 } from "mongoose";
 import * as multer from "multer";
-import * as passport from "passport";
-import {
-  IStrategyOptions,
-  Strategy as LocalStrategy
-} from "passport-local";
 import {
   DictionaryController
 } from "/server/controller/dictionary";
 import {
   UserController
 } from "/server/controller/user";
-import {
-  UserDocument,
-  UserModel
-} from "/server/model/user";
 
 
 const PORT = 8050;
@@ -51,7 +42,6 @@ class Main {
     this.setupMulter();
     this.setupRenderer();
     this.setupSession();
-    this.setupPassport();
     this.setupMongo();
     this.setupRouters();
     this.listen();
@@ -89,36 +79,6 @@ class Main {
     let cookie = {maxAge: SESSION_EXPIRE_HOUR * 60 * 60 * 1000};
     let middleware = session({store, secret, cookie, resave: false, saveUninitialized: false});
     this.application.use(middleware);
-  }
-
-  // 認証を行うミドルウェアである Passport の設定を行います。
-  // 現状では、ユーザー名とパスワードによる認証に関する設定のみを行います。
-  // セッションに保持するデータとして、MongoDB 内の ID を利用するようにしています。
-  // あらかじめセッションの設定をしておく必要があるため、setupSession メソッドより後に実行してください。
-  private setupPassport(): void {
-    let options = {usernameField: "name", passReqToCallback: false} as IStrategyOptions;
-    let strategy = new LocalStrategy(options, async (name, password, done) => {
-      let user = await UserModel.authenticate(name, password);
-      if (user) {
-        return done(null, user);
-      } else {
-        return done(null, false);
-      }
-    });
-    passport.use(strategy);
-    passport.serializeUser<UserDocument, string>((user, done) => {
-      done(null, user.id);
-    });
-    passport.deserializeUser<UserDocument, string>(async (id, done) => {
-      try {
-        let user = await UserModel.findById(id);
-        done(null, user || undefined);
-      } catch (error) {
-        done(error);
-      }
-    });
-    this.application.use(passport.initialize());
-    this.application.use(passport.session());
   }
 
   // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
