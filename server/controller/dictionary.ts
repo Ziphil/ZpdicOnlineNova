@@ -57,8 +57,7 @@ export class DictionaryController extends Controller {
     let dictionary = await SlimeDictionaryModel.findByNumber(number);
     if (dictionary) {
       let words = await dictionary.search(search, mode, type, offset, size);
-      let respondedWords = (size !== null) ? words.slice(offset, size) : words;
-      response.json(respondedWords);
+      response.json(words);
     } else {
       response.status(400).json({error: "invalidNumber"});
     }
