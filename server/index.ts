@@ -97,6 +97,9 @@ class Main {
   private setupRouters(): void {
     UserController.use(this.application);
     DictionaryController.use(this.application);
+    let fallback = require("express-history-api-fallback");
+    this.application.use(express.static("dist"));
+    this.application.use(fallback("/dist/index.html", {root: "."}));
   }
 
   private listen(): void {

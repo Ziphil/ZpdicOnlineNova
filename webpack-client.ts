@@ -1,8 +1,5 @@
 //
 
-import {
-  CleanWebpackPlugin
-} from "clean-webpack-plugin";
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
 import * as path from "path";
 
@@ -12,7 +9,7 @@ let config = {
   output: {
     path: path.join(__dirname, "dist"),
     publicPath: "/",
-    filename: "./js/[name].bundle.js"
+    filename: "./script/[name].bundle.js"
   },
   devtool: "source-map",
   module: {
@@ -69,9 +66,6 @@ let config = {
     }
   },
   plugins: [
-    new CleanWebpackPlugin({
-      cleanOnceBeforeBuildPatterns: ["dist"]
-    }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
       title: "ZpDIC Online"
