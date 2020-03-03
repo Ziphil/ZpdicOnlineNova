@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.input-wrapper {
+  display: block;
+}
+
+.input-wrapper .label {
+  margin: 0em 0em 0.2em 0em;
+  font-size: 80%;
+  color: hsl($primary-hue, 40%, 50%);
+  line-height: 1;
+}
+
+.input-wrapper .input {
+  @include input($primary-hue);
+  width: 100%;
+  padding: 0.1em 0.5em;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  box-sizing: border-box;
+}

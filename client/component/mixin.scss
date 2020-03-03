@@ -1,0 +1,92 @@
+@charset "utf-8";
+
+
+$primary-hue: 30;
+$secondary-hue: 320;
+$error-hue: 0;
+
+$europian-font-family: "EB Garamond", "Times New Roman";
+$japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝";
+$special-font-family: "Simonetta";
+
+
+@mixin button($hue) {
+  & {
+    color: white;
+    border: 1px rgba(black, 0.3) solid;
+    border-radius: 3px;
+    background: linear-gradient(to bottom, hsl($hue, 40%, 50%), hsl($hue, 40%, 40%));
+    outline: none;
+  }
+  &:hover {
+    background: linear-gradient(to bottom, lighten(hsl($hue, 40%, 50%), 5%), lighten(hsl($hue, 40%, 40%), 5%));
+  }
+  &:focus {
+    box-shadow: 0px 0px 0px 2px hsla($hue, 40%, 50%, 0.3);
+  }
+  &:active,
+  &:active:hover {
+    background: hsl($hue, 30%, 40%);
+    box-shadow: 0px 2px 3px rgba(black, 0.1) inset;
+  }
+}
+
+@mixin input($hue) {
+  & {
+    border: 1px hsla($hue, 40%, 50%, 0.8) solid;
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: 0px 2px 3px hsla($hue, 40%, 50%, 0.1) inset;
+    outline: none;
+  }
+  &:focus {
+    box-shadow: 0px 0px 0px 2px hsla($hue, 40%, 50%, 0.3);
+  }
+}
+
+@mixin link($hue) {
+  & {
+    color: hsl($hue, 40%, 50%);
+    text-decoration: underline;
+    cursor: pointer;
+  }
+  &:hover {
+    color: lighten(hsl($hue, 40%, 50%), 15%);
+  }
+}
+
+@mixin pane {
+  background-color: hsla(0, 0%, 100%, 0.5);
+  border: 1px hsla(0, 0%, 100%, 0.8) solid;
+  border-radius: 6px;
+}
+
+@mixin colored-pane($hue) {
+  @include pane;
+  background-color: hsl($hue, 50%, 90%);
+  border: 1px hsla($hue, 40%, 50%, 0.8) solid;
+}
+
+@mixin unordered-list {
+  & {
+    list-style-type: none;
+  }
+  & >li {
+    margin-left: 0.8em;
+  }
+  & >li::before {
+    width: 0.8em;
+    margin-left: -0.8em;
+    content: "•";
+    display: inline-block;
+  }
+}
+
+@mixin hoverable-pane {
+  & {
+    @include pane;
+  }
+  &:hover {
+    background-color: hsla(0, 0%, 100%, 0.7);
+  }
+}

@@ -1,13 +1,26 @@
 {
   "compilerOptions": {
     "outDir": "./dist",
+    "baseUrl": "./",
+    "paths": {
+      "/client*": ["client*"],
+      "/server*": ["server*"],
+    },
     "module": "commonjs",
     "target": "es5",
+    "lib": ["es2015", "dom"],
+    "jsx": "react",
+    "jsxFactory": "react.createElement",
     "moduleResolution": "node",
+    "sourceMap": true,
     "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "removeComments": true
   },
   "include": [
-    "./source/**/*"
+    "client/**/*",
+    "server/**/*"
   ]
 }

@@ -1,0 +1,9 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.menu {
+  padding: 0px 0px;
+  border-right: 1px hsla($primary-hue, 40%, 50%, 0.8) solid;
+}

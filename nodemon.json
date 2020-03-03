@@ -1,6 +1,6 @@
 {
-  "watch": ["source"],
+  "watch": ["server"],
   "ext": "ts",
   "ignore": ["test/**/*.ts"],
-  "exec": "npm run ts-node ./source/index.ts"
+  "exec": "npm run command:tsn ./server/index.ts"
 }

@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.header {
+  width: 100%;
+  height: 70px;
+  margin: 0px;
+  padding: 0px 50px;
+  top: 0px;
+  left: 0px;
+  border-bottom: 1px rgba(black, 0.3) solid;
+  background-color: hsl($primary-hue, 40%, 40%);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  z-index: 100;
+}
+
+.header .left .title {
+  font-family: $special-font-family;
+  font-size: 40px;
+  color: hsl($primary-hue, 50%, 90%);
+  line-height: 1;
+}
+
+.header .left .title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.header .right {
+  color: hsl($primary-hue, 50%, 90%);
+}

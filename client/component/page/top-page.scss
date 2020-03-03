@@ -1,0 +1,30 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+@import "/client/component/common.scss";
+
+
+.top-page {
+  margin: 170px 0px 50px 0px;
+}
+
+.top-page .logo-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.top-page .logo-wrapper .login-form {
+  width: 350px;
+}
+
+.notice {
+  width: 700px;
+  margin: 100px auto 0px auto;
+}
+
+.notice p {
+  margin: 10px 0px;
+  line-height: 1.6;
+  text-align: justify;
+}

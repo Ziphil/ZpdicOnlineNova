@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+@import "/client/component/common.scss";
+
+
+.dictionary-page {
+  margin: 180px 0px 50px 0px;
+}
+
+.dictionary-page .search-form {
+  width: 600px;
+  margin: 0px auto 30px auto;
+}
+
+.dictionary-page .word-list {
+  width: 800px;
+  margin: 0px auto;
+}
+
+.dictionary-page .page-button {
+  width: 800px;
+  margin: 30px auto 0px auto;
+  text-align: center;
+  line-height: 1.6;
+}
