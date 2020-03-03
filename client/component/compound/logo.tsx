@@ -23,7 +23,7 @@ class LogoBase extends ComponentBase<Props, State> {
       <div styleName="logo">
         <div styleName="title">ZpDIC</div>
         <div styleName="subtitle">Online</div>
-        <div styleName="version">ver 0.0.0</div>
+        <div styleName="version">ver dev-2963</div>
       </div>
     );
     return node;
