@@ -43,7 +43,7 @@ Windows 10 であれば、以下の操作で変更できます。
 npm install
 ```
 
-## 起動 (開発時)
+## 起動 (ローカル)
 以下のコマンドを実行してください。
 ```
 npm run develop
@@ -52,8 +52,33 @@ npm run develop
 ブラウザから `http://localhost:3000` にアクセスすると、React のトップページが表示されます。
 この状態では、各種スクリプトファイルを編集すると、自動的にファイルがコンパイルされるようになっています。
 
-## 起動 (本番時)
-まだやってないのでよく分かりません。
+## 環境構築 (サーバー)
+
+### Heroku に登録
+デプロイ先のサービスとして [Heroku](https://heroku.com/) を用いるので、アカウントを作成します。
+[ダッシュボード](https://dashboard.heroku.com)にアクセスし、適当な名前でアプリケーションを作成します。
+ダッシュボードに作成したアプリケーションが追加されるので、それをクリックしてアプリケーションの設定画面に移動します。
+
+### Heroku と GitHub の連携
+以下の順序で GitHub 連携を行います。
+これを行っておくと、GitHub の特定のブランチにプッシュするだけで自動的にデプロイされます。
+
+- 「Deploy」タブの「Deployment method」欄から「GitHub」を選択
+- 下に追加される「Connect to GitHub」欄の「Connect to GitHub」ボタンをクリック
+- 新しく表示されるウィンドウで GitHub アカウントを認証
+- リポジトリを検索するダイアログに「ZpdicOnlineNova」(このリポジトリ) と入力して検索
+- 見つかったリポジトリの横にある「Connect」ボタンをクリック
+- 「Automatic deploys」欄の「Enable Automatic Deploys」ボタンをクリック
+
+### MongoDB の設定
+以下の順序で Heroku から MongoDB を使えるようにします。
+なお、これは有料アドオンなので、(無料プランを使う場合でも) アカウント設定から支払い方法をあらかじめ設定しておく必要があります。
+
+- 「Resource」タブの「Add-ons」欄に「mLab MongoDB」と入力して選択
+- 料金プランを選択して「Provision」ボタンをクリック
+
+## 起動 (サーバー)
+GitHub 連携を行ったので、GitHub にプッシュするだけででデプロイされます。
 
 ## 参考文献など
 開発にあたって、以下のページを参考にしました。
@@ -63,3 +88,4 @@ npm run develop
 - [React と Express によるログイン認証](https://weblion303.net/1215/)
 - [深い階層の URL に直接遷移したときの 404 エラーの対処法](https://github.com/webpack/webpack-dev-server/issues/978)
 - [簡単に HTTP リクエストを送れる GUI ツール](https://www.postman.com/)
+- [GitHub から Heroku へデプロイする方法](https://qiita.com/sho7650/items/ebd87c5dc2c4c7abb8f0)
