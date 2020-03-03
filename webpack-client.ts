@@ -67,7 +67,7 @@ let config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./public/index.html",
+      template: "./client/public/index.html",
       title: "ZpDIC Online"
     })
   ]
