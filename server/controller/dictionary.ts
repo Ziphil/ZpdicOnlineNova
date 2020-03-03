@@ -31,11 +31,6 @@ import {
 @controller("/api/dictionary")
 export class DictionaryController extends Controller {
 
-  @get("/upload")
-  public getUpload(request: Request, response: Response): void {
-    response.render("upload.ejs");
-  }
-
   @post("/upload")
   public async postUpload(request: Request, response: Response<string>): Promise<void> {
     let user = await UserModel.findOne({name: "Test"}).exec();

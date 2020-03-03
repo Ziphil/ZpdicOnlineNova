@@ -28,11 +28,6 @@ import "/server/util/extension";
 @controller("/api/user")
 export class UserController extends Controller {
 
-  @get("/register")
-  public getRegister(request: Request, response: Response): void {
-    response.render("register.ejs");
-  }
-
   @post("/register")
   public async postRegister(request: Request, response: Response<UserRegisterBody>): Promise<void> {
     let name = request.body.name;
@@ -50,11 +45,6 @@ export class UserController extends Controller {
         throw error;
       }
     }
-  }
-
-  @get("/login")
-  public getLogin(request: Request, response: Response): void {
-    response.render("login.ejs");
   }
 
   @post("/login")
