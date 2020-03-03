@@ -12,6 +12,7 @@
     "develop": "run-p develop:client develop:server",
     "develop:client": "webpack-dev-server --mode development --devtool inline-source-map --config webpack-client.ts --hot",
     "develop:server": "nodemon --inspect -L",
+    "postinstall": "npm run build",
     "command:tsn": "ts-node -r tsconfig-paths/register",
     "command:tsc": "tsc"
   },

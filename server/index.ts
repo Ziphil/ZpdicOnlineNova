@@ -20,13 +20,11 @@ import {
 } from "/server/controller/user";
 
 
-const PORT = 8050;
-const HOSTNAME = "localhost";
+const DEFAULT_PORT = 8050;
+const DEFAULT_MONGO_URI = "mongodb://localhost:27017/zpdic";
 
 const SESSION_SECRET = "session zpdic";
 const SESSION_EXPIRE_HOUR = 3;
-
-const MONGO_URI = "mongodb://localhost:27017/zpdic";
 
 
 class Main {
@@ -74,7 +72,8 @@ class Main {
   // セッションストアとして、MongoDB の該当データベース内の sessions コレクションを用いるようになっています。
   private setupSession(): void {
     let MongoStore = connect(session);
-    let store = new MongoStore({url: MONGO_URI, collection: "sessions"});
+    let url = process.env["MONGODB_URI"] || DEFAULT_MONGO_URI;
+    let store = new MongoStore({url, collection: "sessions"});
     let secret = SESSION_SECRET;
     let cookie = {maxAge: SESSION_EXPIRE_HOUR * 60 * 60 * 1000};
     let middleware = session({store, secret, cookie, resave: false, saveUninitialized: false});
@@ -84,12 +83,13 @@ class Main {
   // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
   // typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。
   private setupMongo(): void {
-    let SchemaString = Schema.Types.String as any;
+    let url = process.env["MONGODB_URI"] || DEFAULT_MONGO_URI;
     let check = function (value: string): boolean {
       return value !== null;
     };
+    let SchemaString = Schema.Types.String as any;
     SchemaString.checkRequired(check);
-    mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+    mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
   }
 
   // ルーターの設定を行います。
@@ -103,8 +103,12 @@ class Main {
   }
 
   private listen(): void {
-    this.application.listen(PORT, HOSTNAME, () => {
-      console.log("\u001b[33m[Express]\u001b[0m Listening on port " + PORT);
+    let port = process.env["PORT"] || DEFAULT_PORT;
+    if (typeof port === "string") {
+      port = parseInt(port, 10);
+    }
+    this.application.listen(port, () => {
+      console.log("\u001b[33m[Express]\u001b[0m Listening on port " + port);
     });
   }
 
