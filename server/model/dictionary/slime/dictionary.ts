@@ -94,7 +94,7 @@ export class SlimeDictionary {
   }
 
   public async countWords(this: SlimeDictionaryDocument): Promise<number> {
-    let count = SlimeWordModel.count({dictionary: this}).exec();
+    let count = SlimeWordModel.countDocuments({dictionary: this}).exec();
     return count;
   }
 

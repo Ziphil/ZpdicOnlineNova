@@ -89,7 +89,7 @@ class Main {
       return value !== null;
     };
     SchemaString.checkRequired(check);
-    mongoose.connect(MONGO_URI);
+    mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
   }
 
   // ルーターの設定を行います。
@@ -101,7 +101,7 @@ class Main {
 
   private listen(): void {
     this.application.listen(PORT, HOSTNAME, () => {
-      console.log("Listening on port " + PORT);
+      console.log("\u001b[33m[Express]\u001b[0m Listening on port " + PORT);
     });
   }
 
