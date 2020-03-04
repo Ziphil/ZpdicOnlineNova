@@ -113,9 +113,9 @@ export class SlimeDictionary {
     let words = [];
     if (query !== undefined) {
       if (size) {
-        words = await query.skip(offset).limit(size).exec();
+        words = await query.sort({name: 1}).skip(offset).limit(size).exec();
       } else {
-        words = await query.skip(offset).exec();
+        words = await query.sort({name: 1}).skip(offset).exec();
       }
     }
     return words;
