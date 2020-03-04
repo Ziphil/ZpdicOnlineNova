@@ -22,9 +22,9 @@ import {
 class WordPaneBase extends ComponentBase<Props, State> {
 
   private renderEquivalentNode(): ReactNode {
-    let innerNodes = this.props.word.equivalents.map((equivalent) => {
+    let innerNodes = this.props.word.equivalents.map((equivalent, index) => {
       let innerNode = (
-        <p>
+        <p key={index}>
           <span styleName="box">{equivalent.title}</span>
           {equivalent.names.join(", ")}
         </p>
@@ -40,9 +40,9 @@ class WordPaneBase extends ComponentBase<Props, State> {
   }
 
   private renderInformationNode(): ReactNode {
-    let nodes = this.props.word.informations.map((information) => {
+    let nodes = this.props.word.informations.map((information, index) => {
       let informationNode = (
-        <div styleName="container">
+        <div styleName="container" key={index}>
           <p>
             <span styleName="title">{information.title}</span>
             {information.text}
@@ -63,9 +63,9 @@ class WordPaneBase extends ComponentBase<Props, State> {
       }
       groupedRelations[title].push(relation.name);
     }
-    let innerNodes = Object.keys(groupedRelations).map((title) => {
+    let innerNodes = Object.keys(groupedRelations).map((title, index) => {
       let innerNode = (
-        <p>
+        <p key={index}>
           <span styleName="box">{title}</span>
           {groupedRelations[title].join(", ")}
         </p>

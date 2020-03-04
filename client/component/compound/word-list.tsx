@@ -27,8 +27,8 @@ class WordListBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let words = this.props.words;
     let displayedWords = words.slice(this.props.offset, this.props.offset + this.props.size);
-    let wordPanes = displayedWords.map((word, index) => {
-      return <WordPane word={word} key={index}/>;
+    let wordPanes = displayedWords.map((word) => {
+      return <WordPane word={word} key={word.id}/>;
     });
     let node = (
       <div styleName="dictionary-list">

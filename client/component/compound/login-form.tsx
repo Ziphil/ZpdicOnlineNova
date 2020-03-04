@@ -33,7 +33,7 @@ class LoginFormBase extends ComponentBase<Props, State> {
   private async performLogin(event: MouseEvent<HTMLInputElement>): Promise<void> {
     let name = this.state.name;
     let password = this.state.password;
-    let succeed = await http.login(name, password);
+    let succeed = await http.login({name, password});
     if (succeed) {
       this.props.history.replace("/dashboard");
     } else {

@@ -1,8 +1,10 @@
 //
 
+import {
+  debounce
+} from "lodash-es";
 import * as react from "react";
 import {
-  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -25,57 +27,62 @@ class SearchFormBase extends ComponentBase<Props, State> {
 
   public state: State = {
     search: "",
-    searchMode: "both",
-    searchType: "prefix"
+    mode: "both",
+    type: "prefix"
   };
 
   private handleSearchChange(search: string): void {
     this.setState({search});
-    if (this.props.onSearchChange) {
-      this.props.onSearchChange(search);
+    let debounceChange = debounce((innerSearch) => {
+      if (this.props.onSearchChange) {
+        this.props.onSearchChange(innerSearch);
+      }
+      if (this.props.onAnyChange) {
+        this.props.onAnyChange(innerSearch, this.state.mode, this.state.type);
+      }
+    }, 500);
+    debounceChange(search);
+  }
+
+  private handleModeChange(mode: string): void {
+    this.setState({mode});
+    if (this.props.onModeChange) {
+      this.props.onModeChange(mode);
     }
     if (this.props.onAnyChange) {
-      this.props.onAnyChange(search, this.state.searchMode, this.state.searchType);
+      this.props.onAnyChange(this.state.search, mode, this.state.type);
     }
   }
 
-  private handleSearchModeChange(searchMode: string): void {
-    this.setState({searchMode});
-    if (this.props.onSearchModeChange) {
-      this.props.onSearchModeChange(searchMode);
+  private handleTypeChange(type: string): void {
+    this.setState({type});
+    if (this.props.onTypeChange) {
+      this.props.onTypeChange(type);
     }
     if (this.props.onAnyChange) {
-      this.props.onAnyChange(this.state.search, searchMode, this.state.searchType);
-    }
-  }
-
-  private handleSearchTypeChange(searchType: string): void {
-    this.setState({searchType});
-    if (this.props.onSearchTypeChange) {
-      this.props.onSearchTypeChange(searchType);
-    }
-    if (this.props.onAnyChange) {
-      this.props.onAnyChange(this.state.search, this.state.searchMode, searchType);
+      this.props.onAnyChange(this.state.search, this.state.mode, type);
     }
   }
 
   public render(): ReactNode {
-    let searchModeSpecs = [
+    let modeSpecs = [
       {value: "both", label: "単語＋訳語"},
       {value: "name", label: "単語"},
       {value: "equivalent", label: "訳語"},
       {value: "content", label: "全文"}
     ];
-    let searchTypeSpecs = [
+    let typeSpecs = [
       {value: "prefix", label: "前方一致"},
-      {value: "part", label: "部分一致"}
+      {value: "part", label: "部分一致"},
+      {value: "exact", label: "完全一致"},
+      {value: "regular", label: "正規表現"}
     ];
     let node = (
       <form styleName="search">
         <Input onValueChange={this.handleSearchChange.bind(this)}/>
         <div styleName="radio-wrapper">
-          <RadioGroup name="mode" initialValue="both" specs={searchModeSpecs} onValueChange={this.handleSearchModeChange.bind(this)}/>
-          <RadioGroup name="type" initialValue="prefix" specs={searchTypeSpecs} onValueChange={this.handleSearchTypeChange.bind(this)}/>
+          <RadioGroup name="mode" initialValue="both" specs={modeSpecs} onValueChange={this.handleModeChange.bind(this)}/>
+          <RadioGroup name="type" initialValue="prefix" specs={typeSpecs} onValueChange={this.handleTypeChange.bind(this)}/>
         </div>
       </form>
     );
@@ -87,14 +94,14 @@ class SearchFormBase extends ComponentBase<Props, State> {
 
 type Props = {
   onSearchChange?: (search: string) => void;
-  onSearchModeChange?: (searchMode: string) => void;
-  onSearchTypeChange?: (searchType: string) => void;
-  onAnyChange?: (search: string, searchMode: string, searchType: string) => void;
+  onModeChange?: (mode: string) => void;
+  onTypeChange?: (type: string) => void;
+  onAnyChange?: (search: string, mode: string, type: string) => void;
 };
 type State = {
   search: string,
-  searchMode: string,
-  searchType: string
+  mode: string,
+  type: string
 };
 
 export let SearchForm = withRouter(SearchFormBase);

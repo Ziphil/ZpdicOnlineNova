@@ -24,9 +24,6 @@ import {
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
 import {
-  DictionaryInfoBody
-} from "/server/controller/dictionary";
-import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
 
@@ -45,7 +42,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
 
   private async fetchDictionary(): Promise<void> {
     let number = this.props.match!.params.number;
-    let response = await http.get<DictionaryInfoBody>("/api/dictionary/info", {number}, [400]);
+    let response = await http.get("dictionaryInfo", {number}, [400]);
     let body = response.data;
     if (!("error" in body)) {
       let dictionary = body;
@@ -62,7 +59,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
     let type = this.state.type;
     let offset = this.state.page * 40;
     let size = 40;
-    let response = await http.get<any>("/api/dictionary/search", {number, search, mode, type, offset, size}, [400]);
+    let response = await http.get("dictionarySearch", {number, search, mode, type, offset, size}, [400]);
     let data = response.data;
     if (!("error" in data)) {
       let words = data;
