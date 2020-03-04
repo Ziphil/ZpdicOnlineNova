@@ -19,9 +19,6 @@ import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
-import {
-  UserRegisterBody
-} from "/server/controller/user";
 
 
 @applyStyle(require("./login-form.scss"))
@@ -41,10 +38,10 @@ class RegisterFormBase extends ComponentBase<Props, State> {
     let password = this.state.password;
     let passwordRepeat = this.state.passwordRepeat;
     if (password === passwordRepeat) {
-      let response = await http.post<UserRegisterBody>("/api/user/register", {name, email, password}, [400]);
+      let response = await http.post("userRegister", {name, email, password}, [400]);
       let body = response.data;
       if (!("error" in body)) {
-        let succeed = await http.login(name, password);
+        let succeed = await http.login({name, password});
         if (succeed) {
           this.props.history.replace("/dashboard");
         } else {

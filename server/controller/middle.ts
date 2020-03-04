@@ -53,7 +53,7 @@ export function verifyToken(redirect?: string): RequestHandler {
 // ログインに成功した場合 (該当するユーザーが存在した場合)、request オブジェクトの token プロパティにトークンを書き込み、次の処理を行います。
 // ログインに失敗した場合、何も行わずに次の処理を行います。
 export function authenticate(expiresIn: string | number): RequestHandler {
-  let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
+  let handler = async function (request: any, response: any, next: NextFunction): Promise<void> {
     let name = request.body.name;
     let password = request.body.password;
     let user = await UserModel.authenticate(name, password);

@@ -20,9 +20,6 @@ import {
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
 import {
-  DictionaryListBody
-} from "/server/controller/dictionary";
-import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
 
@@ -36,7 +33,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   public async componentDidMount(): Promise<void> {
     try {
-      let response = await http.get<DictionaryListBody>("/api/dictionary/list");
+      let response = await http.get("dictionaryList", {});
       let dictionaries = response.data;
       this.setState({dictionaries});
     } catch (error) {

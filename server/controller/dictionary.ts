@@ -1,21 +1,23 @@
 //
 
 import {
+  Controller,
   Request,
   Response
-} from "express-serve-static-core";
-import {
-  Controller
 } from "/server/controller/controller";
-import * as middle from "/server/controller/middle";
+import {
+  verifyToken
+} from "/server/controller/middle";
+import {
+  SERVER_PATH
+} from "/server/controller/type";
 import {
   SlimeDictionaryModel,
   SlimeDictionarySkeleton,
   SlimeWordSkeleton
 } from "/server/model/dictionary/slime";
 import {
-  CustomErrorSkeleton,
-  MayError
+  CustomErrorSkeleton
 } from "/server/model/error";
 import {
   UserModel
@@ -28,11 +30,11 @@ import {
 } from "/server/util/decorator";
 
 
-@controller("/api/dictionary")
+@controller("/")
 export class DictionaryController extends Controller {
 
-  @post("/upload")
-  public async postUpload(request: Request, response: Response<string>): Promise<void> {
+  @post(SERVER_PATH["dictionaryUpload"])
+  public async postUpload(request: Request<"dictionaryUpload">, response: Response<"dictionaryUpload">): Promise<void> {
     let user = await UserModel.findOne({name: "Test"}).exec();
     if (user) {
       SlimeDictionaryModel.registerUpload("テスト辞書", user, request.file.path);
@@ -42,8 +44,8 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get("/search")
-  public async getSearch(request: Request, response: Response<DictionarySearchBody>): Promise<void> {
+  @get(SERVER_PATH["dictionarySearch"])
+  public async getSearch(request: Request<"dictionarySearch">, response: Response<"dictionarySearch">): Promise<void> {
     let number = parseInt(request.query.number, 10);
     let search = request.query.search;
     let mode = request.query.mode;
@@ -61,8 +63,8 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get("/info")
-  public async getInfo(request: Request, response: Response<DictionaryInfoBody>): Promise<void> {
+  @get(SERVER_PATH["dictionaryInfo"])
+  public async getInfo(request: Request<"dictionaryInfo">, response: Response<"dictionaryInfo">): Promise<void> {
     let number = parseInt(request.query.number, 10);
     let dictionary = await SlimeDictionaryModel.findByNumber(number);
     if (dictionary) {
@@ -74,9 +76,9 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get("/list")
-  @before(middle.verifyToken())
-  public async getList(request: Request, response: Response<DictionaryListBody>): Promise<void> {
+  @get(SERVER_PATH["dictionaryList"])
+  @before(verifyToken())
+  public async getList(request: Request<"dictionaryList">, response: Response<"dictionaryList">): Promise<void> {
     let user = request.user!;
     let dictionaries = await SlimeDictionaryModel.findByUser(user);
     let body = [];
@@ -89,8 +91,3 @@ export class DictionaryController extends Controller {
   }
 
 }
-
-
-export type DictionarySearchBody = MayError<Array<SlimeWordSkeleton>>;
-export type DictionaryInfoBody = MayError<SlimeDictionarySkeleton>;
-export type DictionaryListBody = Array<SlimeDictionarySkeleton>;
