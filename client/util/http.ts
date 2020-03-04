@@ -12,7 +12,7 @@ import {
 } from "/server/controller/type";
 
 
-export async function get<T extends GetType>(type: T, params: RequestQuery[T], allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseBody[T]>> {
+export async function get<T extends GetType>(type: T, params: AnyRecord<RequestQuery[T]>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseBody[T]>> {
   let url = SERVER_PATH[type];
   let headers = createHeaders();
   let validateStatus = createValidateStatus(allowedStatuses);
@@ -20,7 +20,7 @@ export async function get<T extends GetType>(type: T, params: RequestQuery[T], a
   return response;
 }
 
-export async function post<T extends PostType>(type: T, data: RequestBody[T], allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseBody[T]>> {
+export async function post<T extends PostType>(type: T, data: AnyRecord<RequestBody[T]>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseBody[T]>> {
   let url = SERVER_PATH[type];
   let headers = createHeaders();
   let validateStatus = createValidateStatus(allowedStatuses);
@@ -70,3 +70,5 @@ function createValidateStatus(allowedStatuses?: Array<number>): (status: number)
 
 type GetType = keyof RequestQuery & keyof ResponseBody;
 type PostType = keyof RequestBody & keyof ResponseBody;
+
+type AnyRecord<T> = {[N in keyof T]: any};

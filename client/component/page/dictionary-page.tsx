@@ -57,8 +57,8 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
     let search = this.state.search;
     let mode = this.state.mode;
     let type = this.state.type;
-    let offset = (this.state.page * 40).toString();
-    let size = "40";
+    let offset = this.state.page * 40;
+    let size = 40;
     let response = await http.get("dictionarySearch", {number, search, mode, type, offset, size}, [400]);
     let data = response.data;
     if (!("error" in data)) {
