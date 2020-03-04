@@ -40,8 +40,19 @@ export class UserController extends Controller {
       let body = new UserSkeleton(user);
       response.send(body);
     } catch (error) {
+      let body;
       if (error.name === "CustomError") {
-        let body = new CustomErrorSkeleton(error.type);
+        if (error.type === "duplicateName") {
+          body = new CustomErrorSkeleton("duplicateName");
+        }
+      } else if (error.name === "ValidationError") {
+        if (error.errors.name) {
+          body = new CustomErrorSkeleton("invalidName");
+        } else if (error.errors.email) {
+          body = new CustomErrorSkeleton("invalidEmail");
+        }
+      }
+      if (body) {
         response.status(400).json(body);
       } else {
         throw error;

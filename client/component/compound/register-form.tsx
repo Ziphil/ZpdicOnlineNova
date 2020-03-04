@@ -64,7 +64,9 @@ class RegisterFormBase extends ComponentBase<Props, State> {
         errorMessage = "確認用のパスワードが一致しません。";
       } else if (errorType === "invalidName") {
         errorMessage = "ユーザー名が不正です。ユーザー名は半角英数字とアンダーバーとハイフンのみで構成してください。";
-      } else if (errorType === "duplicatedName") {
+      } else if (errorType === "invalidEmail") {
+        errorMessage = "メールアドレスが不正です。";
+      } else if (errorType === "duplicateName") {
         errorMessage = "そのユーザー名はすでに存在しています。";
       } else if (errorType === "loginFailed") {
         errorMessage = "ログインに失敗しました。珍しいですね!";

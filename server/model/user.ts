@@ -11,15 +11,16 @@ import {
 } from "/server/model/error";
 
 
+const EMAIL_VALIDATION = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const SALT_ROUND = 10;
 
 
 export class User {
 
-  @prop({required: true, unique: true})
+  @prop({required: true, unique: true, validate: /^[a-zA-Z0-9_-]+$/})
   public name!: string;
 
-  @prop({required: true})
+  @prop({required: true, validate: EMAIL_VALIDATION})
   public email!: string;
 
   @prop({required: true})
@@ -37,15 +38,13 @@ export class User {
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
   // 渡されたパスワードは自動的にハッシュ化されます。
   public static async register(name: string, email: string, password: string): Promise<UserDocument> {
-    if (!name.match(/^[A-Za-z0-9_-]+$/)) {
-      throw new CustomError("invalidName");
-    }
     let exists = await UserModel.exists({name});
     if (exists) {
-      throw new CustomError("duplicatedName");
+      throw new CustomError("duplicateName");
     }
     let user = new UserModel({name, email});
-    user.encryptPassword(password);
+    await user.encryptPassword(password);
+    await user.validate();
     let result = await user.save();
     return result;
   }
