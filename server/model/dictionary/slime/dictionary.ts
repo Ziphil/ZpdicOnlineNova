@@ -63,24 +63,52 @@ export class SlimeDictionary {
   }
 
   public async search(search: string, mode: string, type: string, offset: number, size: number): Promise<Array<SlimeWordDocument>> {
-    let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
-    let wordPredicate = {dictionary: this} as any;
-    let equivalentPredicate = {dictionary: this} as any;
-    if (type === "prefix") {
-      let modifiedSearch = new RegExp("^" + escapedSearch);
-      wordPredicate["name"] = modifiedSearch;
-      equivalentPredicate["equivalents.names"] = modifiedSearch;
-    } else if (type === "regular") {
-      wordPredicate["name"] = search;
-      equivalentPredicate["equivalents.names"] = search;
-    }
+    let outerThis = this;
+    let createPredicate = function (innerMode: string, innerType: string): any {
+      let key = "";
+      if (innerMode === "name") {
+        key = "name";
+      } else if (innerMode === "equivalent") {
+        key = "equivalents.names";
+      } else if (innerMode === "information") {
+        key = "informations.text";
+      }
+      let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
+      let predicate = {dictionary: outerThis} as any;
+      if (innerType === "exact") {
+        let modifiedSearch = new RegExp("^" + escapedSearch + "$");
+        predicate[key] = modifiedSearch;
+      } else if (innerType === "prefix") {
+        let modifiedSearch = new RegExp("^" + escapedSearch);
+        predicate[key] = modifiedSearch;
+      } else if (type === "suffix") {
+        let modifiedSearch = new RegExp(escapedSearch + "$");
+        predicate[key] = modifiedSearch;
+      } else if (type === "part") {
+        let modifiedSearch = new RegExp(escapedSearch);
+        predicate[key] = modifiedSearch;
+      } else if (type === "regular") {
+        let modifiedSearch = new RegExp(search);
+        predicate[key] = modifiedSearch;
+      }
+      return predicate;
+    };
     let query = undefined as any;
-    if (mode === "word") {
-      query = SlimeWordModel.find(wordPredicate);
+    if (mode === "name") {
+      let predicate = createPredicate("name", type);
+      query = SlimeWordModel.find(predicate);
     } else if (mode === "equivalent") {
-      query = SlimeWordModel.find(equivalentPredicate);
+      let predicate = createPredicate("equivalent", type);
+      query = SlimeWordModel.find(predicate);
+    } else if (mode === "content") {
+      let namePredicate = createPredicate("name", type);
+      let equivalentPredicate = createPredicate("equivalent", type);
+      let informationPredicate = createPredicate("information", type);
+      query = SlimeWordModel.find().or([namePredicate, equivalentPredicate, informationPredicate]);
     } else if (mode === "both") {
-      query = SlimeWordModel.find().or([wordPredicate, equivalentPredicate]);
+      let namePredicate = createPredicate("name", type);
+      let equivalentPredicate = createPredicate("equivalent", type);
+      query = SlimeWordModel.find().or([namePredicate, equivalentPredicate]);
     }
     let words = [];
     if (query !== undefined) {

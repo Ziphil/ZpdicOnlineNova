@@ -73,7 +73,9 @@ class SearchFormBase extends ComponentBase<Props, State> {
     ];
     let typeSpecs = [
       {value: "prefix", label: "前方一致"},
-      {value: "part", label: "部分一致"}
+      {value: "part", label: "部分一致"},
+      {value: "exact", label: "完全一致"},
+      {value: "regular", label: "正規表現"}
     ];
     let node = (
       <form styleName="search">
