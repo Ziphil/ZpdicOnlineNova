@@ -20,9 +20,6 @@ import {
   CustomErrorSkeleton
 } from "/server/model/error";
 import {
-  UserModel
-} from "/server/model/user";
-import {
   before,
   controller,
   get,
@@ -33,15 +30,21 @@ import {
 @controller("/")
 export class DictionaryController extends Controller {
 
+  @post(SERVER_PATH["dictionaryCreate"])
+  @before(verifyToken())
+  public async postCreate(request: Request<"dictionaryCreate">, response: Response<"dictionaryCreate">): Promise<void> {
+    let user = request.user!;
+    let name = request.body.name;
+    let dictionary = await SlimeDictionaryModel.createEmpty(name, user);
+    let body = new SlimeDictionarySkeleton(dictionary);
+    response.json(body);
+  }
+
   @post(SERVER_PATH["dictionaryUpload"])
+  @before(verifyToken())
   public async postUpload(request: Request<"dictionaryUpload">, response: Response<"dictionaryUpload">): Promise<void> {
-    let user = await UserModel.findOne({name: "Test"}).exec();
-    if (user) {
-      SlimeDictionaryModel.registerUpload("テスト辞書", user, request.file.path);
-      response.send("Uploaded");
-    } else {
-      response.send("User not found");
-    }
+    let user = request.user!;
+    response.json("Not yet implemented");
   }
 
   @get(SERVER_PATH["dictionarySearch"])

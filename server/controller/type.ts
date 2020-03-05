@@ -13,6 +13,7 @@ import {
 
 
 export const SERVER_PATH = {
+  dictionaryCreate: "/api/dictionary/create",
   dictionarySearch: "/api/dictionary/search",
   dictionaryInfo: "/api/dictionary/info",
   dictionaryList: "/api/dictionary/list",
@@ -23,6 +24,7 @@ export const SERVER_PATH = {
 };
 
 export type ResponseBody = {
+  dictionaryCreate: SlimeDictionarySkeleton,
   dictionarySearch: MayError<Array<SlimeWordSkeleton>>,
   dictionaryInfo: MayError<SlimeDictionarySkeleton>,
   dictionaryList: Array<SlimeDictionarySkeleton>,
@@ -33,6 +35,7 @@ export type ResponseBody = {
 };
 
 export type RequestQuery = {
+  dictionaryCreate: never,
   dictionarySearch: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
   dictionaryInfo: Required<"number">,
   dictionaryList: {},
@@ -43,6 +46,7 @@ export type RequestQuery = {
 };
 
 export type RequestBody = {
+  dictionaryCreate: Required<"name">,
   dictionarySearch: never,
   dictionaryInfo: never,
   dictionaryList: never,
