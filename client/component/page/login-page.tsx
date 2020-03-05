@@ -24,7 +24,7 @@ class LoginPageBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <div styleName="login-page">
+      <div styleName="page">
         <Header/>
         <div styleName="description">ログイン</div>
         <div styleName="login-form">

@@ -50,7 +50,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
       contentNode = "Nothing";
     }
     let node = (
-      <div styleName="dashboard-page">
+      <div styleName="page">
         <Header/>
         <div styleName="content-wrapper">
           <Menu mode={mode}/>

@@ -102,7 +102,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
 
   public render(): ReactNode {
     let node = (
-      <div styleName="dictionary-page">
+      <div styleName="page">
         <Header/>
         <DictionaryHeader name={this.state.dictionary?.name || ""}/>
         <div styleName="search-form">

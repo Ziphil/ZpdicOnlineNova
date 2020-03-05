@@ -6,7 +6,7 @@
 .menu-item {
   margin: 10px 0px 0px 0px;
   padding: 10px 15px 10px 0px;
-  color: hsl($primary-hue, 40%, 50%);
+  color: $light-color;
   text-decoration: none;
   text-align: right;
   border-right: 5px transparent solid;
@@ -18,12 +18,12 @@
 }
 
 .menu-item:hover {
-  border-right: 5px hsla($primary-hue, 40%, 50%, 0.8) solid;
+  border-right: 5px $light-border-color solid;
 }
 
 .menu-item.highlight {
   margin-right: -1px;
   font-weight: bold;
-  color: hsla($secondary-hue, 40%, 50%, 1);
-  border-right: 6px hsla($secondary-hue, 40%, 50%, 1) solid;
+  color: $link-color;
+  border-right: 6px $link-color solid;
 }

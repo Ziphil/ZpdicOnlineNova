@@ -4,10 +4,10 @@
 
 
 .login {
-  @include pane;
+  @include pane(normal);
   margin: 0px;
   padding: 20px 30px;
-  line-height: 1.6;
+  line-height: $line-height;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -22,26 +22,25 @@
   margin: 0px;
 }
 
-.login .button-group {
+.button-group {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
-.login .button-group >* {
+.button-group >* {
   margin: 0px 0px 0px 30px;
 }
 
-.login .button-group >*:first-child {
+.button-group >*:first-child {
   margin: 0px;
 }
 
 .error {
-  @include colored-pane($error-hue);
+  @include pane(error);
   @include unordered-list;
   margin: 0px 0px 20px 0px;
   padding: 8px 20px;
-  line-height: 1.6;
-  color: hsl($error-hue, 40%, 50%);
+  line-height: $line-height;
 }

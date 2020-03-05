@@ -10,8 +10,8 @@
   padding: 0px 50px;
   top: 70px;
   left: 0px;
-  border-bottom: 1px hsla($primary-hue, 40%, 50%, 0.8) solid;
-  background-color: hsl($primary-hue, 50%, 80%);
+  border-bottom: 1px $light-border-color solid;
+  background-color: $strong-background-color;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -20,6 +20,6 @@
   z-index: 80;
 }
 
-.dictionary-header .left .name {
+.name {
   font-weight: bold;
 }

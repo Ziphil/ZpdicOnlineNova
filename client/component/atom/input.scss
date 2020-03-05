@@ -7,19 +7,27 @@
   display: block;
 }
 
-.input-wrapper .label {
-  margin: 0em 0em 0.2em 0em;
+.label {
+  margin: 0em 0em 0.4em 0em;
   font-size: 80%;
-  color: hsl($primary-hue, 40%, 50%);
+  color: $light-color;
   line-height: 1;
 }
 
-.input-wrapper .input {
-  @include input($primary-hue);
+.input {
   width: 100%;
   padding: 0.1em 0.5em;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
+  border: 1px $light-border-color solid;
+  border-radius: $small-border-radius;
+  background: $input-background;
+  box-shadow: $inset-box-shadow-setting $input-box-shadow-color inset;
   box-sizing: border-box;
+  outline: none;
+}
+
+.input:focus {
+  box-shadow: $hover-box-shadow-setting $light-box-shadow-color;
 }
