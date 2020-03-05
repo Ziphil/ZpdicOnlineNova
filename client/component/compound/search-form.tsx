@@ -78,7 +78,7 @@ class SearchFormBase extends ComponentBase<Props, State> {
       {value: "regular", label: "正規表現"}
     ];
     let node = (
-      <form styleName="search">
+      <form styleName="root">
         <Input onValueChange={this.handleSearchChange.bind(this)}/>
         <div styleName="radio-wrapper">
           <RadioGroup name="mode" initialValue="both" specs={modeSpecs} onValueChange={this.handleModeChange.bind(this)}/>

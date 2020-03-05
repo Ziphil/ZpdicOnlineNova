@@ -3,22 +3,21 @@
 @import "/client/component/mixin.scss";
 
 
-.logo {
-  margin: 0px 100px 0px 0px;
+.root {
+  margin: 5px 100px 0px 0px;
   font-family: $special-font-family;
-  color: hsl($primary-hue, 50%, 30%);
-  line-height: 1;
+  color: $logo-color;
   text-align: center;
   font-variant-numeric: lining-nums;
   font-feature-settings: "lnum" 1;
 }
 
-.logo .title {
+.title {
   margin: 0px;
   font-size: 120px;
 }
 
-.logo .subtitle {
+.subtitle {
   left: 60px;
   margin: -5px 0px 0px 0px;
   font-size: 50px;
@@ -26,8 +25,7 @@
   position: relative;
 }
 
-.logo .version {
+.version {
   margin: 10px 0px 0px 0px;
-  font-size: 30px;
-  letter-spacing: 0.05em;
+  font-size: 20px;
 }

@@ -4,23 +4,17 @@
 @import "/client/component/common.scss";
 
 
-.dictionary-page {
-  margin: 180px 0px 50px 0px;
+.page {
+  @include page(180px);
 }
 
-.dictionary-page .search-form {
+.page .search-form {
   width: 600px;
   margin: 0px auto 30px auto;
 }
 
-.dictionary-page .word-list {
-  width: 800px;
-  margin: 0px auto;
-}
-
-.dictionary-page .page-button {
-  width: 800px;
-  margin: 30px auto 0px auto;
+.page .page-button {
+  margin: 30px 0px 0px 0px;
+  line-height: $line-height;
   text-align: center;
-  line-height: 1.6;
 }

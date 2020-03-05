@@ -3,27 +3,27 @@
 @import "/client/component/mixin.scss";
 
 
-.menu-item {
-  margin: 10px 0px 0px 0px;
-  padding: 10px 15px 10px 0px;
-  color: hsl($primary-hue, 40%, 50%);
+.root {
+  margin: 0px 0px 0px 20px;
+  padding: 0px 15px 10px 15px;
+  color: $light-color;
   text-decoration: none;
   text-align: right;
-  border-right: 5px transparent solid;
+  border-bottom: 5px transparent solid;
   display: block;
 }
 
-.menu-item:first-child {
+.root:first-child {
   margin: 0px;
 }
 
-.menu-item:hover {
-  border-right: 5px hsla($primary-hue, 40%, 50%, 0.8) solid;
+.root:hover {
+  border-bottom: 5px $light-border-color solid;
 }
 
-.menu-item.highlight {
-  margin-right: -1px;
+.root.highlight {
+  margin-bottom: -1px;
   font-weight: bold;
-  color: hsla($secondary-hue, 40%, 50%, 1);
-  border-right: 6px hsla($secondary-hue, 40%, 50%, 1) solid;
+  color: $link-color;
+  border-bottom: 6px $link-color solid;
 }

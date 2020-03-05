@@ -24,7 +24,7 @@ class RegisterPageBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <div styleName="login-page">
+      <div styleName="page">
         <Header/>
         <div styleName="description">新規登録</div>
         <div styleName="login-form">

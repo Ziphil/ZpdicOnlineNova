@@ -80,7 +80,7 @@ class RegisterFormBase extends ComponentBase<Props, State> {
     let node = (
       <div>
         {errorNode}
-        <form styleName="login">
+        <form styleName="root">
           <Input label="ユーザー名" onValueChange={(value) => this.setState({name: value})}/>
           <Input label="メールアドレス" onValueChange={(value) => this.setState({email: value})}/>
           <Input label="パスワード" type="password" onValueChange={(value) => this.setState({password: value})}/>

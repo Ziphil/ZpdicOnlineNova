@@ -44,7 +44,7 @@ export class RadioGroup extends Component<Props, State> {
       return <Radio name={this.props.name} value={spec.value} label={spec.label} checked={checked} onChange={this.handleChange.bind(this)} key={index}/>;
     });
     let node = (
-      <div styleName="radio-group">
+      <div styleName="root">
         {radioNodes}
       </div>
     );

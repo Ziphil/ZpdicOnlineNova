@@ -14,31 +14,32 @@
 }
 
 .radio +.label::before {
-  top: 0.2em;
+  top: 0.1em;
   left: 0em;
-  width: 16px;
-  height: 16px;
-  border: 1px hsla($primary-hue, 40%, 50%, 0.8) solid;
+  width: 1em;
+  height: 1em;
+  border: 1px $light-border-color solid;
   border-radius: 50%;
-  background-color: white;
-  box-shadow: 0px 2px 3px hsla($primary-hue, 40%, 50%, 0.1) inset;
+  background: $input-background;
+  box-shadow: $inset-box-shadow-setting $input-box-shadow-color inset;
   box-sizing: border-box;
-  display: block;
+  display: inline-block;
+  vertical-align: middle;
   position: absolute;
   content: "";
 }
 
 .radio:hover +.label::before {
-  border: 1px lighten(hsla($primary-hue, 40%, 50%, 0.8), 5%) solid;
+  border: 1px $light-hover-color solid;
 }
 
 .radio:checked +.label::after {
-  top: calc(0.2em + 4px);
+  top: calc(0.1em + 4px);
   left: 4px;
-  width: 8px;
-  height: 8px;
-  background: linear-gradient(to bottom, hsl($primary-hue, 40%, 50%), hsl($primary-hue, 40%, 40%));
+  width: calc(1em - 8px);
+  height: calc(1em - 8px);
   border-radius: 50%;
+  background: $button-background;
   box-sizing: border-box;
   display: block;
   position: absolute;
@@ -46,5 +47,5 @@
 }
 
 .radio:hover +.label::after {
-  background: linear-gradient(to bottom, lighten(hsl($primary-hue, 40%, 50%), 5%), lighten(hsl($primary-hue, 40%, 40%), 5%));
+  background: $button-hover-background;
 }

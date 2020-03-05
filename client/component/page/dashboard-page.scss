@@ -4,17 +4,6 @@
 @import "/client/component/common.scss";
 
 
-.dashboard-page {
-  margin: 130px 0px 50px 0px;
-}
-
-.dashboard-page .content-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.dashboard-page .content-wrapper .content {
-  width: 600px;
-  margin: 0px 0px 0px 50px;
+.page {
+  @include page(130px);
 }

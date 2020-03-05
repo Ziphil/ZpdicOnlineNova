@@ -17,7 +17,7 @@ const SECRET_KEY = "zpdic_secret";
 // リクエストのヘッダーに書き込まれたトークンを利用して認証を行います。
 // 認証に成功した場合、request オブジェクトの user プロパティにユーザーオブジェクトを書き込み、次の処理を行います。
 // 認証に失敗した場合、リダイレクト先が渡されていればそこにリダイレクトし、そうでなければステータスコード 401 を返して終了します。
-export function verifyToken(redirect?: string): RequestHandler {
+export function verifyUser(redirect?: string): RequestHandler {
   let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     let fail = function (): void {
       if (redirect !== undefined) {
@@ -61,7 +61,7 @@ export function authenticate(expiresIn: string | number): RequestHandler {
       jwt.sign({id: user.id}, SECRET_KEY, {expiresIn}, (error, token) => {
         if (!error) {
           request.token = token;
-          request.user = user!;
+          request.user = user;
           next();
         } else {
           next(error);

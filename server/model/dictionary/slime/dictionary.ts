@@ -34,21 +34,14 @@ export class SlimeDictionary {
   @prop({required: true})
   public externalData!: object;
 
-  private static async nextNumber(): Promise<number> {
-    let dictionaries = await SlimeDictionaryModel.find({}).select("number").sort({number: -1}).limit(1).exec();
-    if (dictionaries.length > 0) {
-      return dictionaries[0].number + 1;
-    } else {
-      return 1;
-    }
-  }
-
-  public static async registerUpload(name: string, user: Ref<User>, path: string): Promise<SlimeDictionaryDocument> {
+  public static async createEmpty(name: string, user: UserDocument): Promise<SlimeDictionaryDocument> {
     let dictionary = new SlimeDictionaryModel({});
     dictionary.number = await SlimeDictionaryModel.nextNumber();
+    dictionary.status = "ready";
     dictionary.name = name;
     dictionary.user = user;
-    await dictionary.upload(path);
+    dictionary.externalData = {};
+    await dictionary.save();
     return dictionary;
   }
 
@@ -60,6 +53,33 @@ export class SlimeDictionary {
   public static async findByUser(user: UserDocument): Promise<Array<SlimeDictionaryDocument>> {
     let dictionaries = await SlimeDictionaryModel.find({user}).exec();
     return dictionaries;
+  }
+
+  // この辞書に登録されている単語データを全て削除し、ファイルから読み込んだデータを代わりに保存します。
+  // 辞書の内部データも、ファイルから読み込んだものに更新されます。
+  public async upload(this: SlimeDictionaryDocument, path: string): Promise<SlimeDictionaryDocument> {
+    this.status = "saving";
+    this.externalData = {};
+    await this.save();
+    await SlimeWordModel.deleteMany({dictionary: this}).exec();
+    let promise = new Promise<SlimeDictionaryDocument>((resolve, reject) => {
+      let stream = new SlimeStream(path);
+      let count = 0;
+      stream.on("word", (word) => {
+        word.dictionary = this;
+        word.save();
+        if ((++ count) % 500 === 0) {
+          console.log("Dictionary saving: " + count);
+        }
+      });
+      stream.on("wordEnd", () => {
+        this.status = "ready";
+        this.save();
+        console.log("Dictionary saved: " + count);
+        resolve(this);
+      });
+    });
+    return await promise;
   }
 
   public async search(search: string, mode: string, type: string, offset: number, size: number): Promise<Array<SlimeWordDocument>> {
@@ -126,31 +146,13 @@ export class SlimeDictionary {
     return count;
   }
 
-  // この辞書に登録されている単語データを全て削除し、ファイルから読み込んだデータを代わりに保存します。
-  // 辞書の内部データも、ファイルから読み込んだものに更新されます。
-  public async upload(this: SlimeDictionaryDocument, path: string): Promise<SlimeDictionaryDocument> {
-    this.status = "saving";
-    this.externalData = {};
-    await this.save();
-    await SlimeWordModel.deleteMany({dictionary: this}).exec();
-    let promise = new Promise<SlimeDictionaryDocument>((resolve, reject) => {
-      let stream = new SlimeStream(path);
-      let count = 0;
-      stream.on("word", (word) => {
-        word.dictionary = this;
-        word.save();
-        if ((++ count) % 500 === 0) {
-          console.log("Dictionary saving: " + count);
-        }
-      });
-      stream.on("wordEnd", () => {
-        this.status = "ready";
-        this.save();
-        console.log("Dictionary saved: " + count);
-        resolve(this);
-      });
-    });
-    return await promise;
+  private static async nextNumber(): Promise<number> {
+    let dictionaries = await SlimeDictionaryModel.find().select("number").sort({number: -1}).limit(1).exec();
+    if (dictionaries.length > 0) {
+      return dictionaries[0].number + 1;
+    } else {
+      return 1;
+    }
   }
 
 }

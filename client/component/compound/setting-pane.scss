@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  padding: 40px 0px 40px 0px;
+  border-bottom: 1px $pale-border-color solid; 
+  display: flex;
+  flex-direction: row;
+}
+
+.description-wrapper {
+  flex-basis: 30%;
+}
+
+.content {
+  padding: 0px 0px 0px 50px;
+  flex-basis: 70%;
+}
+
+.label {
+  font-weight: bold;
+  color: $light-color;
+}
+
+.description {
+  margin: 10px 0px 0px 0px;
+  font-size: 90%;
+  line-height: $line-height;
+  text-align: justify;
+}

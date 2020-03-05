@@ -3,8 +3,8 @@
 @import "/client/component/mixin.scss";
 
 
-.dictionary-pane {
-  @include hoverable-pane;
+.root {
+  @include hoverable-pane(normal);
   padding: 12px 15px;
   color: inherit;
   text-decoration: none;
@@ -14,6 +14,6 @@
   justify-content: space-between;
 }
 
-.dictionary-pane .name {
+.name {
   font-weight: bold;
 }

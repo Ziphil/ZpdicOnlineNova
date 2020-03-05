@@ -3,7 +3,9 @@
 @import "/client/component/mixin.scss";
 
 
-.menu {
+.root {
   padding: 0px 0px;
-  border-right: 1px hsla($primary-hue, 40%, 50%, 0.8) solid;
+  border-bottom: 1px $light-border-color solid;
+  display: flex;
+  flex-direction: row;
 }

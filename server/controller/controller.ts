@@ -10,9 +10,10 @@ import {
   Response as ExpressResponse
 } from "express-serve-static-core";
 import {
-  RequestBody,
-  RequestQuery,
-  ResponseBody
+  MethodType,
+  ProcessName,
+  RequestType,
+  ResponseType
 } from "/server/controller/type";
 import {
   UserDocument
@@ -44,16 +45,33 @@ export class Controller {
 }
 
 
-export interface Request<T extends keyof ResponseBody & keyof RequestBody & keyof RequestQuery> extends ExpressRequest<ExpressParams, ResponseBody[T], RequestBody[T]> {
+export interface Request<N extends ProcessName, M extends MethodType> extends ExpressRequest<ExpressParams, ResponseType[N][M], RequestType[N][M]> {
 
-  body: RequestBody[T];
-  query: RequestQuery[T];
+  // GET リクエストの際のクエリ文字列をパースした結果です。
+  // 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。
+  query: Extract<RequestType[N]["get"], RequestType[N][M]>;
+
+  // POST リクエストの際のリクエストボディをパースした結果です。
+  // 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。
+  body: Extract<RequestType[N]["post"], RequestType[N][M]>;
+
+  // 認証に成功した場合にユーザーデータが格納されます。
+  // このプロパティは、authenticate ミドルウェアおよび verifyUser ミドルウェアが走った場合にのみ、値が格納されます。
   user?: UserDocument;
+
+  // ユーザーの検証の結果として得られた JSON トークンが格納されます。
+  // このプロパティは、authenticate ミドルウェアが走った場合にのみ、値が格納されます。
   token?: string;
 
 }
 
 
-export interface Response<T extends keyof ResponseBody> extends ExpressResponse<ResponseBody[T]> {
+export interface Response<N extends ProcessName, M extends MethodType> extends ExpressResponse<ResponseType[N][M]> {
 
 }
+
+
+export type GetRequest<N extends ProcessName> = Request<N, "get">;
+export type PostRequest<N extends ProcessName> = Request<N, "post">;
+export type GetResponse<N extends ProcessName> = Response<N, "get">;
+export type PostResponse<N extends ProcessName> = Response<N, "post">;

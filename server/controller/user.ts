@@ -2,12 +2,14 @@
 
 import {
   Controller,
-  Request,
-  Response
+  GetRequest,
+  GetResponse,
+  PostRequest,
+  PostResponse
 } from "/server/controller/controller";
 import {
   authenticate,
-  verifyToken
+  verifyUser
 } from "/server/controller/middle";
 import {
   SERVER_PATH
@@ -31,7 +33,7 @@ import {
 export class UserController extends Controller {
 
   @post(SERVER_PATH["userRegister"])
-  public async postRegister(request: Request<"userRegister">, response: Response<"userRegister">): Promise<void> {
+  public async postRegister(request: PostRequest<"userRegister">, response: PostResponse<"userRegister">): Promise<void> {
     let name = request.body.name;
     let email = request.body.email;
     let password = request.body.password;
@@ -62,7 +64,7 @@ export class UserController extends Controller {
 
   @post(SERVER_PATH["userLogin"])
   @before(authenticate("1y"))
-  public async postLogin(request: Request<"userLogin">, response: Response<"userLogin">): Promise<void> {
+  public async postLogin(request: PostRequest<"userLogin">, response: PostResponse<"userLogin">): Promise<void> {
     let token = request.token;
     let user = request.user;
     if (token && user) {
@@ -76,8 +78,8 @@ export class UserController extends Controller {
   }
 
   @get(SERVER_PATH["userInfo"])
-  @before(verifyToken())
-  public async getInfo(request: Request<"userInfo">, response: Response<"userInfo">): Promise<void> {
+  @before(verifyUser())
+  public async getInfo(request: GetRequest<"userInfo">, response: GetResponse<"userInfo">): Promise<void> {
     let user = request.user!;
     let body = new UserSkeleton(user);
     response.json(body);

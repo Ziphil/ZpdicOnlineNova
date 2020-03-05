@@ -9,10 +9,10 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: $europian-font-family, $japanese-font-family, serif;
-  font-size: 18px;
+  font-size: 17px;
   font-feature-settings: "palt" 1, "pkna" 1;
   line-height: 1;
-  background-color: hsl($primary-hue, 50%, 90%);
+  background-color: $background-color;
   overflow-x: auto;
   overflow-y: scroll;
 }

@@ -43,7 +43,7 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
       }
     }
     let node = (
-      <a styleName="dictionary-pane" href={href} onClick={this.click.bind(this)}>
+      <a styleName="root" href={href} onClick={this.click.bind(this)}>
         <div styleName="name">{name}</div>
         <div styleName="status">{status}</div>
       </a>

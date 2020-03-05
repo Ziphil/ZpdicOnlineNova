@@ -3,10 +3,10 @@
 @import "/client/component/mixin.scss";
 
 
-.dictionary-list >* {
+.root >* {
   margin: 15px 0px 0px 0px;
 }
 
-.dictionary-list >*:first-child {
+.root >*:first-child {
   margin: 0px;
 }

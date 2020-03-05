@@ -4,18 +4,18 @@
 @import "/client/component/common.scss";
 
 
-.login-page {
-  margin: 130px 0px 50px 0px;
+.page {
+  @include page(130px);
 }
 
-.login-page .description {
+.description {
   margin: 0px 0px 20px 0px;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: bold;
   text-align: center;
 }
 
-.login-page .login-form {
+.login-form {
   width: 400px;
   margin: 0px auto;
 }

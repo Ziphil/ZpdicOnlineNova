@@ -3,16 +3,16 @@
 @import "/client/component/mixin.scss";
 
 
-.radio-group {
+.root {
   display: flex;
   flex-direction: row;
   justify-content: center;
 }
 
-.radio-group >* {
+.root >* {
   margin: 0px 0px 0px 20px;
 }
 
-.radio-group >*:first-child {
+.root >*:first-child {
   margin: 0px;
 }
