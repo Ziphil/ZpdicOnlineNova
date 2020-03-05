@@ -5,26 +5,26 @@ import {
   AxiosResponse
 } from "axios";
 import {
-  RequestBody,
-  RequestQuery,
-  ResponseBody,
+  ProcessName,
+  RequestType,
+  ResponseType,
   SERVER_PATH
 } from "/server/controller/type";
 
 
-export async function get<T extends GetType>(type: T, params: AnyRecord<RequestQuery[T]>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseBody[T]>> {
-  let url = SERVER_PATH[type];
+export async function get<N extends ProcessName>(name: N, params: AnyRecord<RequestType[N]["get"]>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType[N]["get"]>> {
+  let url = SERVER_PATH[name];
   let headers = createHeaders();
   let validateStatus = createValidateStatus(allowedStatuses);
-  let response = await axios.get<ResponseBody[T]>(url, {headers, params, validateStatus});
+  let response = await axios.get<ResponseType[N]["get"]>(url, {headers, params, validateStatus});
   return response;
 }
 
-export async function post<T extends PostType>(type: T, data: AnyRecord<RequestBody[T]>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseBody[T]>> {
-  let url = SERVER_PATH[type];
+export async function post<N extends ProcessName>(name: N, data: AnyRecord<RequestType[N]["post"]>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType[N]["post"]>> {
+  let url = SERVER_PATH[name];
   let headers = createHeaders();
   let validateStatus = createValidateStatus(allowedStatuses);
-  let response = await axios.post<ResponseBody[T]>(url, data, {headers, validateStatus});
+  let response = await axios.post<ResponseType[N]["post"]>(url, data, {headers, validateStatus});
   return response;
 }
 
@@ -67,8 +67,5 @@ function createValidateStatus(allowedStatuses?: Array<number>): (status: number)
   };
   return validateStatus;
 }
-
-type GetType = keyof RequestQuery & keyof ResponseBody;
-type PostType = keyof RequestBody & keyof ResponseBody;
 
 type AnyRecord<T> = {[N in keyof T]: any};

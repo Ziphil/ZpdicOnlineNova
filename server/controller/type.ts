@@ -23,38 +23,78 @@ export const SERVER_PATH = {
   userRegister: "/api/user/register"
 };
 
-export type ResponseBody = {
-  dictionaryCreate: SlimeDictionarySkeleton,
-  dictionarySearch: MayError<Array<SlimeWordSkeleton>>,
-  dictionaryInfo: MayError<SlimeDictionarySkeleton>,
-  dictionaryList: Array<SlimeDictionarySkeleton>,
-  dictionaryUpload: string,
-  userInfo: UserSkeleton,
-  userLogin: MayError<UserSkeleton & {token: string}>,
-  userRegister: MayError<UserSkeleton>
+export type ResponseType = {
+  dictionaryCreate: {
+    get: never,
+    post: SlimeDictionarySkeleton
+  },
+  dictionarySearch: {
+    get: MayError<Array<SlimeWordSkeleton>>,
+    post: never
+  },
+  dictionaryInfo: {
+    get: MayError<SlimeDictionarySkeleton>,
+    post: never
+  },
+  dictionaryList: {
+    get: Array<SlimeDictionarySkeleton>,
+    post: never
+  },
+  dictionaryUpload: {
+    get: never,
+    post: string
+  },
+  userInfo: {
+    get: UserSkeleton,
+    post: never
+  },
+  userLogin: {
+    get: never,
+    post: MayError<UserSkeleton & {token: string}>
+  }
+  userRegister: {
+    get: never,
+    post: MayError<UserSkeleton>
+  }
 };
 
-export type RequestQuery = {
-  dictionaryCreate: never,
-  dictionarySearch: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
-  dictionaryInfo: Required<"number">,
-  dictionaryList: {},
-  dictionaryUpload: never,
-  userInfo: {},
-  userLogin: never,
-  userRegister: never
+export type RequestType = {
+  dictionaryCreate: {
+    get: never,
+    post: Required<"name">
+  },
+  dictionarySearch: {
+    get: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
+    post: never
+  },
+  dictionaryInfo: {
+    get: Required<"number">,
+    post: never
+  },
+  dictionaryList: {
+    get: {},
+    post: never
+  },
+  dictionaryUpload: {
+    get: never,
+    post: {}
+  },
+  userInfo: {
+    get: {},
+    post: never
+  },
+  userLogin: {
+    get: never,
+    post: Required<"name" | "password">
+  }
+  userRegister: {
+    get: never,
+    post: Required<"name" | "email" | "password">
+  }
 };
 
-export type RequestBody = {
-  dictionaryCreate: Required<"name">,
-  dictionarySearch: never,
-  dictionaryInfo: never,
-  dictionaryList: never,
-  dictionaryUpload: {},
-  userInfo: never,
-  userLogin: Required<"name" | "password">,
-  userRegister: Required<"name" | "email" | "password">;
-};
+export type MethodType = "get" | "post";
+export type ProcessName = keyof ResponseType & keyof RequestType;
 
-type Required<R extends string> = {[N in R]: string};
-type Optional<O extends string> = {[N in O]?: string};
+type Required<S extends string> = {[N in S]: string};
+type Optional<S extends string> = {[N in S]?: string};
