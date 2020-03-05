@@ -7,3 +7,17 @@
 .page {
   @include page(130px);
 }
+
+.create-dictionary {
+  line-height: $line-height;
+  display: flex;
+  align-items: flex-end;
+}
+
+.create-dictionary >*:nth-child(1) {
+  flex-grow: 1;
+}
+
+.create-dictionary >*:nth-child(2) {
+  margin: 0px 0px 0px 20px;
+}

@@ -8,6 +8,10 @@ import {
   withRouter
 } from "react-router-dom";
 import {
+  Button,
+  Input
+} from "/client/component/atom";
+import {
   ComponentBase
 } from "/client/component/component";
 import {
@@ -49,8 +53,24 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
       辞書の閲覧や編集ができます。
     `;
     let node = (
-      <SettingPane label={label} description={description}>
+      <SettingPane label={label} key={label} description={description}>
         <DictionaryList dictionaries={this.state.dictionaries}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderCreateDictionaryNode(): ReactNode {
+    let label = "新規作成";
+    let description = `
+      空の辞書を作成します。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <form styleName="create-dictionary">
+          <Input label="名称"/>
+          <Button label="新規作成"/>
+        </form>
       </SettingPane>
     );
     return node;
@@ -59,7 +79,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
   private renderNothingNode(): ReactNode {
     let label = "?";
     let node = (
-      <SettingPane label={label}>
+      <SettingPane label={label} key={label}>
         Not yet implemented
       </SettingPane>
     );
@@ -71,6 +91,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     let contentNodes = [];
     if (mode === "dictionary") {
       contentNodes.push(this.renderDictionaryListNode());
+      contentNodes.push(this.renderCreateDictionaryNode());
     } else {
       contentNodes.push(this.renderNothingNode());
     }
