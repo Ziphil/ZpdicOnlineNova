@@ -13,7 +13,8 @@ import {
 import {
   DictionaryList,
   Header,
-  Menu
+  Menu,
+  SettingPane
 } from "/client/component/compound";
 import {
   applyStyle
@@ -41,22 +42,44 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     }
   }
 
+  private renderDictionaryListNode(): ReactNode {
+    let label = "登録辞書一覧";
+    let description = `
+      このユーザーに登録されている辞書の一覧です。
+      辞書の閲覧や編集ができます。
+    `;
+    let node = (
+      <SettingPane label={label} description={description}>
+        <DictionaryList dictionaries={this.state.dictionaries}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderNothingNode(): ReactNode {
+    let label = "?";
+    let node = (
+      <SettingPane label={label}>
+        Not yet implemented
+      </SettingPane>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
     let mode = this.props.match?.params.mode || "dictionary";
-    let contentNode;
+    let contentNodes = [];
     if (mode === "dictionary") {
-      contentNode = <DictionaryList dictionaries={this.state.dictionaries}/>;
+      contentNodes.push(this.renderDictionaryListNode());
     } else {
-      contentNode = "Nothing";
+      contentNodes.push(this.renderNothingNode());
     }
     let node = (
       <div styleName="page">
         <Header/>
-        <div styleName="content-wrapper">
+        <div styleName="content">
           <Menu mode={mode}/>
-          <div styleName="content">
-            {contentNode}
-          </div>
+          {contentNodes}
         </div>
       </div>
     );

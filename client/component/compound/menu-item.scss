@@ -4,12 +4,12 @@
 
 
 .menu-item {
-  margin: 10px 0px 0px 0px;
-  padding: 10px 15px 10px 0px;
+  margin: 0px 0px 0px 20px;
+  padding: 0px 15px 10px 15px;
   color: $light-color;
   text-decoration: none;
   text-align: right;
-  border-right: 5px transparent solid;
+  border-bottom: 5px transparent solid;
   display: block;
 }
 
@@ -18,12 +18,12 @@
 }
 
 .menu-item:hover {
-  border-right: 5px $light-border-color solid;
+  border-bottom: 5px $light-border-color solid;
 }
 
 .menu-item.highlight {
-  margin-right: -1px;
+  margin-bottom: -1px;
   font-weight: bold;
   color: $link-color;
-  border-right: 6px $link-color solid;
+  border-bottom: 6px $link-color solid;
 }

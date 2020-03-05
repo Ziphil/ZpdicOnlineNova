@@ -7,14 +7,3 @@
 .page {
   @include page(130px);
 }
-
-.content-wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.content {
-  margin: 0px 0px 0px 50px;
-  flex-grow: 1;
-}

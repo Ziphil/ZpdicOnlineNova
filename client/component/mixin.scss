@@ -15,6 +15,7 @@ $light-color: hsl($primary-hue, 40%, 50%);
 $light-hover-color: lighten(hsla($primary-hue, 40%, 50%, 0.8), 5%);
 $light-border-color: hsla($primary-hue, 40%, 50%, 0.8);
 $light-box-shadow-color: hsla($primary-hue, 40%, 50%, 0.3);
+$pale-border-color: hsla($primary-hue, 40%, 50%, 0.2);
 $dark-border-color: rgba(black, 0.3);
 
 $header-background-color: hsl($primary-hue, 40%, 40%);
