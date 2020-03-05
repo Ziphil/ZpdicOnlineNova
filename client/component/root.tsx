@@ -25,9 +25,13 @@ import {
   GuestRoute,
   PrivateRoute
 } from "/client/component/routing/authentication";
+import {
+  applyStyle
+} from "/client/util/decorator";
 import * as http from "/client/util/http";
 
 
+@applyStyle(require("./root.scss"))
 export class Root extends Component<{}, {}> {
 
   // 認証済みかどうかを確認し、その結果に応じて表示するコンポーネントを切り返るコンポーネントを返します。
