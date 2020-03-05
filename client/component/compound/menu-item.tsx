@@ -30,7 +30,7 @@ class MenuItemBase extends ComponentBase<Props, State> {
   }
 
   public render(): ReactNode {
-    let styleNames = ["menu-item"];
+    let styleNames = ["root"];
     if (this.props.highlight) {
       styleNames.push("highlight");
     }

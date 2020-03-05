@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.menu-item {
+.root {
   margin: 0px 0px 0px 20px;
   padding: 0px 15px 10px 15px;
   color: $light-color;
@@ -13,15 +13,15 @@
   display: block;
 }
 
-.menu-item:first-child {
+.root:first-child {
   margin: 0px;
 }
 
-.menu-item:hover {
+.root:hover {
   border-bottom: 5px $light-border-color solid;
 }
 
-.menu-item.highlight {
+.root.highlight {
   margin-bottom: -1px;
   font-weight: bold;
   color: $link-color;

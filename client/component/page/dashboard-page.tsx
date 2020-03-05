@@ -8,10 +8,6 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  Button,
-  Input
-} from "/client/component/atom";
-import {
   ComponentBase
 } from "/client/component/component";
 import {

@@ -31,7 +31,7 @@ class WordListBase extends ComponentBase<Props, State> {
       return <WordPane word={word} key={word.id}/>;
     });
     let node = (
-      <div styleName="dictionary-list">
+      <div styleName="root">
         {wordPanes}
       </div>
     );

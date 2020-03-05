@@ -29,7 +29,7 @@ class DictionaryListBase extends ComponentBase<Props, State> {
       return <DictionaryPane dictionary={dictionary} key={dictionary.id}/>;
     });
     let node = (
-      <div styleName="dictionary-list">
+      <div styleName="root">
         {dictionaryPanes}
       </div>
     );

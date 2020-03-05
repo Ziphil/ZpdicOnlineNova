@@ -3,13 +3,13 @@
 @import "/client/component/mixin.scss";
 
 
-.word-pane {
+.root {
   padding: 8px 15px;
   line-height: $line-height;
   border-bottom: 1px $light-border-color solid;
 }
 
-.word-pane:first-child {
+.root:first-child {
   border-top: 1px $light-border-color solid;
 }
 

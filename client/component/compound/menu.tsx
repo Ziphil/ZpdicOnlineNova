@@ -30,7 +30,7 @@ class MenuBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let mode = this.props.mode;
     let node = (
-      <nav styleName="menu">
+      <nav styleName="root">
         <MenuItem label="辞書" href="/dashboard" highlight={mode === "dictionary"}/>
         <MenuItem label="設定" href="/dashboard/setting" highlight={mode === "setting"}/>
         <MenuItem label="ログアウト" href="/" onClick={this.performLogout.bind(this)} highlight={mode === "logout"}/>

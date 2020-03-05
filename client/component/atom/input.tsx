@@ -39,7 +39,7 @@ export class Input extends Component<Props, State> {
       labelNode = <div styleName="label">{this.props.label}</div>;
     }
     let node = (
-      <label styleName="input-wrapper">
+      <label styleName="root">
         {labelNode}
         <input styleName="input" type={this.props.type} value={this.state.value} onChange={this.handleChange.bind(this)}/>
       </label>

@@ -22,7 +22,7 @@ export class Button extends Component<Props, State> {
   };
 
   public render(): ReactNode {
-    let styleNames = ["button"];
+    let styleNames = ["root"];
     if (this.props.color === "simple") {
       styleNames = ["simple"];
     }

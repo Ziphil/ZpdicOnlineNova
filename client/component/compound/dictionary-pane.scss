@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.dictionary-pane {
+.root {
   @include hoverable-pane(normal);
   padding: 12px 15px;
   color: inherit;

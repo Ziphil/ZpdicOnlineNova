@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.login {
+.root {
   @include pane(normal);
   margin: 0px;
   padding: 20px 30px;
@@ -14,11 +14,11 @@
   align-items: stretch;
 }
 
-.login >* {
+.root >* {
   margin: 15px 0px 0px 0px;
 }
 
-.login >*:first-child {
+.root >*:first-child {
   margin: 0px;
 }
 

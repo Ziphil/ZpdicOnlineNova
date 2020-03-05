@@ -38,7 +38,7 @@ class HeaderBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <div styleName="header">
+      <div styleName="root">
         <div styleName="left">
           <div styleName="title"><RawLink to="/">ZpDIC</RawLink></div>
         </div>

@@ -29,7 +29,7 @@ class SettingPaneBase extends ComponentBase<Props, State> {
       );
     }
     let node = (
-      <div styleName="setting-pane">
+      <div styleName="root">
         <div styleName="description-wrapper">
           <div styleName="label">{this.props.label}</div>
           {descriptionNode}

@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.button {
+.root {
   padding: 0.1em 0.8em;
   font-family: inherit;
   font-size: inherit;
@@ -16,18 +16,31 @@
   outline: none;
 }
 
-.button:hover {
+.root:hover {
   background: $button-hover-background;
 }
 
-.button:focus {
+.root:focus {
   box-shadow: $hover-box-shadow-setting $light-box-shadow-color;
 }
 
-.button:active,
-.button:active:hover {
+.root:active,
+.root:active:hover {
   background: $button-active-background;
   box-shadow: $inset-box-shadow-setting $button-active-box-shadow-color inset;
+}
+
+.root.left {
+  margin: 0px -1px 0px 0px;
+  border-radius: $small-border-radius 0px 0px $small-border-radius;
+}
+
+.root.right {
+  border-radius: 0px $small-border-radius $small-border-radius 0px;
+}
+
+.root:disabled {
+  opacity: 0.5;
 }
 
 .simple {
@@ -45,17 +58,4 @@
 
 .simple:hover {
   color: $link-hover-color;
-}
-
-.button.left {
-  margin: 0px -1px 0px 0px;
-  border-radius: $small-border-radius 0px 0px $small-border-radius;
-}
-
-.button.right {
-  border-radius: 0px $small-border-radius $small-border-radius 0px;
-}
-
-.button:disabled {
-  opacity: 0.5;
 }

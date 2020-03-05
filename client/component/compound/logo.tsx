@@ -27,7 +27,7 @@ class LogoBase extends ComponentBase<Props, State> {
     let subtitle = TITLES[1];
     let version = VERSION.toString();
     let node = (
-      <div styleName="logo">
+      <div styleName="root">
         <div styleName="title">{title}</div>
         <div styleName="subtitle">{subtitle}</div>
         <div styleName="version">ver {version}</div>

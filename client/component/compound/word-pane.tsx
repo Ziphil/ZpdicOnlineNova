@@ -85,7 +85,7 @@ class WordPaneBase extends ComponentBase<Props, State> {
     let informationNode = this.renderInformationNode();
     let relationNode = this.renderRationNode();
     let node = (
-      <div styleName="word-pane">
+      <div styleName="root">
         <div styleName="name">{this.props.word.name}</div>
         {equivalentNode}
         {informationNode}
