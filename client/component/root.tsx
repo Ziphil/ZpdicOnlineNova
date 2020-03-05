@@ -16,6 +16,7 @@ import {
 import {
   DashboardPage,
   DictionaryPage,
+  DictionarySettingPage,
   LoginPage,
   RegisterPage,
   TopPage
@@ -48,9 +49,10 @@ export class Root extends Component<{}, {}> {
           <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
           <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
           <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
-          <PrivateRoute path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-          <PrivateRoute path="/dashboard" redirect="/login" component={DashboardPage}/>
-          <Route path ="/dictionary/:number" component={DictionaryPage}/>
+          <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+          <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
+          <Route exact path ="/dictionary/:number" component={DictionaryPage}/>
+          <PrivateRoute exact path="/dictionary/setting/:number" redirect="/login" component={DictionarySettingPage}/>
         </Switch>
       </BrowserRouter>
     );
