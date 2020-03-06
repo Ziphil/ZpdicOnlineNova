@@ -38,6 +38,10 @@
   color: $light-color;
 }
 
+.label >*:nth-child(1) {
+  margin: 0em 0em 0em 0.5em;
+}
+
 .description {
   margin: 10px 0px 0px 0px;
   font-size: 90%;

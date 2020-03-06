@@ -45,12 +45,13 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   private renderDictionaryListNode(): ReactNode {
     let label = "登録辞書一覧";
+    let badgeValue = this.state.dictionaries.length.toLocaleString("en-GB");
     let description = `
       このユーザーに登録されている辞書の一覧です。
       辞書の閲覧や編集ができます。
     `;
     let node = (
-      <SettingPane label={label} key={label} description={description}>
+      <SettingPane label={label} badgeValue={badgeValue} key={label} description={description}>
         <DictionaryList dictionaries={this.state.dictionaries}/>
       </SettingPane>
     );

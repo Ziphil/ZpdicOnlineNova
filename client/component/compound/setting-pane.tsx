@@ -9,6 +9,9 @@ import {
   withRouter
 } from "react-router-dom";
 import {
+  Badge
+} from "/client/component/atom";
+import {
   ComponentBase
 } from "/client/component/component";
 import {
@@ -20,6 +23,10 @@ import {
 class SettingPaneBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
+    let badgeNode;
+    if (this.props.badgeValue) {
+      badgeNode = <Badge value={this.props.badgeValue}/>;
+    }
     let descriptionNode;
     if (this.props.description) {
       descriptionNode = (
@@ -31,7 +38,10 @@ class SettingPaneBase extends ComponentBase<Props, State> {
     let node = (
       <div styleName="root">
         <div styleName="description-wrapper">
-          <div styleName="label">{this.props.label}</div>
+          <div styleName="label">
+            {this.props.label}
+            {badgeNode}
+          </div>
           {descriptionNode}
         </div>
         <div styleName="content">
@@ -47,6 +57,7 @@ class SettingPaneBase extends ComponentBase<Props, State> {
 
 type Props = {
   label: string,
+  badgeValue?: string,
   description?: string
 };
 type State = {
