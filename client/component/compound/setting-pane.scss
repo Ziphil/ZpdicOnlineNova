@@ -8,6 +8,9 @@
   border-bottom: 1px $pale-border-color solid; 
   display: flex;
   flex-direction: row;
+  @include smartphone {
+    flex-direction: column;
+  }
 }
 
 .root:last-child {
@@ -16,11 +19,18 @@
 
 .description-wrapper {
   flex-basis: 30%;
+  @include smartphone {
+    flex-basis: content;
+  }
 }
 
 .content {
   padding: 0px 0px 0px 50px;
   flex-basis: 70%;
+  @include smartphone {
+    padding: 20px 0px 0px 0px;
+    flex-basis: content;
+  }
 }
 
 .label {
