@@ -4,6 +4,7 @@ export * from "./dictionary-creation-form";
 export * from "./dictionary-header";
 export * from "./dictionary-list";
 export * from "./dictionary-pane";
+export * from "./dictionary-upload-form";
 export * from "./header";
 export * from "./login-form";
 export * from "./logo";

@@ -29,11 +29,17 @@ class MenuBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let mode = this.props.mode;
+    let itemNodes = this.props.specs.map((spec, index) => {
+      let highlight = spec.mode === this.props.mode;
+      let onClick;
+      if (spec.mode === "logout") {
+        onClick = this.performLogout.bind(this);
+      }
+      return <MenuItem label={spec.label} href={spec.href} highlight={highlight} onClick={onClick} key={index}/>;
+    });
     let node = (
       <nav styleName="root">
-        <MenuItem label="辞書" href="/dashboard" highlight={mode === "dictionary"}/>
-        <MenuItem label="設定" href="/dashboard/setting" highlight={mode === "setting"}/>
-        <MenuItem label="ログアウト" href="/" onClick={this.performLogout.bind(this)} highlight={mode === "logout"}/>
+        {itemNodes}
       </nav>
     );
     return node;
@@ -43,7 +49,8 @@ class MenuBase extends ComponentBase<Props, State> {
 
 
 type Props = {
-  mode: string
+  mode: string,
+  specs: Array<{mode: string, label: string, href: string}>
 };
 type State = {
 };

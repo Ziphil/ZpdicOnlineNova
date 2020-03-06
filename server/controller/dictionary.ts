@@ -8,6 +8,7 @@ import {
   PostResponse
 } from "/server/controller/controller";
 import {
+  verifyDictionary,
   verifyUser
 } from "/server/controller/middle";
 import {
@@ -43,10 +44,13 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATH["dictionaryUpload"])
-  @before(verifyUser())
+  @before(verifyUser(), verifyDictionary())
   public async postUpload(request: PostRequest<"dictionaryUpload">, response: PostResponse<"dictionaryUpload">): Promise<void> {
-    let user = request.user!;
-    response.json("Not yet implemented");
+    let dictionary = request.dictionary!;
+    let path = request.file.path;
+    let nextDictionary = await dictionary.upload(path);
+    let body = new SlimeDictionarySkeleton(nextDictionary);
+    response.json(body);
   }
 
   @get(SERVER_PATH["dictionarySearch"])

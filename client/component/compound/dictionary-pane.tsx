@@ -9,6 +9,9 @@ import {
   withRouter
 } from "react-router-dom";
 import {
+  Button
+} from "/client/component/atom";
+import {
   ComponentBase
 } from "/client/component/component";
 import {
@@ -28,6 +31,13 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
     this.props.history.push(path);
   }
 
+  private jumpSettingPage(event: MouseEvent<HTMLElement>): void {
+    event.preventDefault();
+    event.stopPropagation();
+    let path = "/dictionary/setting/" + this.props.dictionary.number;
+    this.props.history.push(path);
+  }
+
   public render(): ReactNode {
     let name = this.props.dictionary.name;
     let href = "/dictionary/" + this.props.dictionary.number;
@@ -44,7 +54,10 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
     }
     let node = (
       <a styleName="root" href={href} onClick={this.click.bind(this)}>
-        <div styleName="name">{name}</div>
+        <div styleName="name">
+          <Button label={"\uF013"} color="simple" icon="awesome" onClick={this.jumpSettingPage.bind(this)}/>
+          {name}
+        </div>
         <div styleName="status">{status}</div>
       </a>
     );

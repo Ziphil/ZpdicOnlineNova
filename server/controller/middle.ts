@@ -8,6 +8,9 @@ import {
 } from "express";
 import * as jwt from "jsonwebtoken";
 import {
+  SlimeDictionaryModel
+} from "/server/model/dictionary/slime";
+import {
   UserModel
 } from "/server/model/user";
 
@@ -49,11 +52,37 @@ export function verifyUser(redirect?: string): RequestHandler {
   return handler;
 }
 
+// ログイン中のユーザーにリクエストしている辞書データの編集権限があるかどうかを判定します。
+// このミドルウェアは、必ず verifyUser ミドルウェアを通してから呼び出してください。
+// 編集権限がある場合は、request オブジェクトの dictionary プロパティに辞書オブジェクトを書き込み、次の処理を行います。
+// 編集権限がない場合、リダイレクト先が渡されていればそこにリダイレクトし、そうでなければステータスコード 401 を返して終了します。
+export function verifyDictionary(redirect?: string): RequestHandler {
+  let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
+    let fail = function (): void {
+      if (redirect !== undefined) {
+        response.redirect(redirect);
+      } else {
+        response.sendStatus(401);
+      }
+    };
+    let user = request.user!;
+    let number = parseInt(request.query.number || request.body.number, 10);
+    let dictionary = await SlimeDictionaryModel.findOne({number, user});
+    if (dictionary) {
+      request.dictionary = dictionary;
+      next();
+    } else {
+      fail();
+    }
+  };
+  return handler;
+}
+
 // リクエストボディの情報からログイン認証用のトークンを生成します。
 // ログインに成功した場合 (該当するユーザーが存在した場合)、request オブジェクトの token プロパティにトークンを書き込み、次の処理を行います。
 // ログインに失敗した場合、何も行わずに次の処理を行います。
 export function authenticate(expiresIn: string | number): RequestHandler {
-  let handler = async function (request: any, response: any, next: NextFunction): Promise<void> {
+  let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let name = request.body.name;
     let password = request.body.password;
     let user = await UserModel.authenticate(name, password);

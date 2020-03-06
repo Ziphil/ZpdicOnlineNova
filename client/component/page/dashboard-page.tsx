@@ -82,6 +82,11 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   public render(): ReactNode {
     let mode = this.props.match?.params.mode || "dictionary";
+    let menuSpecs = [
+      {mode: "dictionary", label: "辞書", href: "/dashboard"},
+      {mode: "setting", label: "設定", href: "/dashboard/setting"},
+      {mode: "logout", label: "ログアウト", href: "/"}
+    ];
     let contentNodes = [];
     if (mode === "dictionary") {
       contentNodes.push(this.renderDictionaryListNode());
@@ -93,7 +98,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
       <div styleName="page">
         <Header/>
         <div styleName="content">
-          <Menu mode={mode}/>
+          <Menu mode={mode} specs={menuSpecs}/>
           {contentNodes}
         </div>
       </div>

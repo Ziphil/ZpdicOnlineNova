@@ -28,6 +28,20 @@ export async function post<N extends ProcessName>(name: N, data: AnyRecord<Reque
   return response;
 }
 
+export async function postFile<N extends ProcessName>(name: N, data: AnyRecord<RequestType[N]["post"]> & {file: Blob}, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType[N]["post"]>> {
+  let url = SERVER_PATH[name];
+  let headers = createHeaders();
+  let validateStatus = createValidateStatus(allowedStatuses);
+  let anyData = data as any;
+  let nextData = new FormData();
+  for (let key of Object.keys(data)) {
+    nextData.append(key, anyData[key]);
+  }
+  headers["content-type"] = "multipart/form-data";
+  let response = await axios.post<ResponseType[N]["post"]>(url, nextData, {headers, validateStatus});
+  return response;
+}
+
 export async function login(data: {name: string, password: string}): Promise<boolean> {
   let response = await post("userLogin", data, [400]);
   let body = response.data;

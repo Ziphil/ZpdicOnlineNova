@@ -16,6 +16,7 @@ import {
 import {
   DashboardPage,
   DictionaryPage,
+  DictionarySettingPage,
   LoginPage,
   RegisterPage,
   TopPage
@@ -24,9 +25,13 @@ import {
   GuestRoute,
   PrivateRoute
 } from "/client/component/routing/authentication";
+import {
+  applyStyle
+} from "/client/util/decorator";
 import * as http from "/client/util/http";
 
 
+@applyStyle(require("./root.scss"))
 export class Root extends Component<{}, {}> {
 
   // 認証済みかどうかを確認し、その結果に応じて表示するコンポーネントを切り返るコンポーネントを返します。
@@ -48,9 +53,10 @@ export class Root extends Component<{}, {}> {
           <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
           <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
           <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
-          <PrivateRoute path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-          <PrivateRoute path="/dashboard" redirect="/login" component={DashboardPage}/>
-          <Route path ="/dictionary/:number" component={DictionaryPage}/>
+          <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+          <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
+          <Route exact path ="/dictionary/:number" component={DictionaryPage}/>
+          <PrivateRoute exact path="/dictionary/setting/:number" redirect="/login" component={DictionarySettingPage}/>
         </Switch>
       </BrowserRouter>
     );

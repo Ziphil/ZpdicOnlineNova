@@ -1,0 +1,71 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.label {
+  margin: 0em 0em 0.4em 0em;
+  font-size: 80%;
+  color: $light-color;
+  line-height: 1;
+}
+
+.input-wrapper {
+  flex-grow: 1;
+}
+
+.input {
+  width: 100%;
+  padding: 0.1em 0.5em;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border: 1px $light-border-color solid;
+  border-radius: $small-border-radius 0px 0px $small-border-radius;
+  background: $input-background;
+  box-shadow: $inset-box-shadow-setting $input-box-shadow-color inset;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.input:focus {
+  box-shadow: $hover-box-shadow-setting $light-box-shadow-color;
+}
+
+.button {
+  margin: 0px 0px 0px -1px;
+  padding: 0.1em 0.8em;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: $button-color;
+  border: 1px $dark-border-color solid;
+  border-radius: 0px $small-border-radius $small-border-radius 0px;
+  background: $button-background;
+  cursor: pointer;
+  outline: none;
+}
+
+.button:hover {
+  background: $button-hover-background;
+}
+
+.button:focus {
+  box-shadow: $hover-box-shadow-setting $light-box-shadow-color;
+}
+
+.button:active,
+.button:active:hover {
+  background: $button-active-background;
+  box-shadow: $inset-box-shadow-setting $button-active-box-shadow-color inset;
+}
+
+.file {
+  display: none;
+}
