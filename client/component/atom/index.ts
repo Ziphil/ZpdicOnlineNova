@@ -1,5 +1,6 @@
 //
 
+export * from "./badge";
 export * from "./button";
 export * from "./file-input";
 export * from "./input";

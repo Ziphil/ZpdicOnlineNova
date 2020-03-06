@@ -45,12 +45,13 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   private renderDictionaryListNode(): ReactNode {
     let label = "登録辞書一覧";
+    let badgeValue = this.state.dictionaries.length.toLocaleString("en-GB");
     let description = `
       このユーザーに登録されている辞書の一覧です。
       辞書の閲覧や編集ができます。
     `;
     let node = (
-      <SettingPane label={label} key={label} description={description}>
+      <SettingPane label={label} badgeValue={badgeValue} key={label} description={description}>
         <DictionaryList dictionaries={this.state.dictionaries}/>
       </SettingPane>
     );
@@ -83,9 +84,9 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
   public render(): ReactNode {
     let mode = this.props.match?.params.mode || "dictionary";
     let menuSpecs = [
-      {mode: "dictionary", label: "辞書", href: "/dashboard"},
-      {mode: "setting", label: "設定", href: "/dashboard/setting"},
-      {mode: "logout", label: "ログアウト", href: "/"}
+      {mode: "dictionary", label: "辞書", iconLabel: "\uF02D", href: "/dashboard"},
+      {mode: "setting", label: "設定", iconLabel: "\uF4FE", href: "/dashboard/setting"},
+      {mode: "logout", label: "ログアウト", iconLabel: "\uF2F5", href: "/"}
     ];
     let contentNodes = [];
     if (mode === "dictionary") {

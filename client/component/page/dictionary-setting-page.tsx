@@ -69,7 +69,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
   }
 
   public render(): ReactNode {
-    let menuSpecs = [{mode: "general", label: "一般", href: ""}];
+    let menuSpecs = [{mode: "general", label: "一般", iconLabel: "\uF013", href: ""}];
     let contentNodes = [];
     contentNodes.push(this.renderDictionaryUploadFormNode());
     contentNodes.push(this.renderNothingNode());

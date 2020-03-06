@@ -36,7 +36,8 @@ class MenuItemBase extends ComponentBase<Props, State> {
     }
     let node = (
       <a styleName={styleNames.join(" ")} href={this.props.href} onClick={this.click.bind(this)}>
-        {this.props.label}
+        <span styleName="text">{this.props.label}</span>
+        <span styleName="icon">{this.props.iconLabel}</span>
       </a>
     );
     return node;
@@ -47,6 +48,7 @@ class MenuItemBase extends ComponentBase<Props, State> {
 
 type Props = {
   label: string,
+  iconLabel: string,
   highlight: boolean,
   href: string,
   onClick?: (event: MouseEvent<HTMLElement>) => void;
