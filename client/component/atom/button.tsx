@@ -17,6 +17,7 @@ export class Button extends Component<Props, State> {
   public static defaultProps: Partial<Props> = {
     type: "button",
     position: null,
+    icon: null,
     color: null,
     disabled: false
   };
@@ -28,6 +29,10 @@ export class Button extends Component<Props, State> {
     }
     if (this.props.position) {
       styleNames.push(this.props.position);
+    }
+    if (this.props.icon) {
+      styleNames.push("icon");
+      styleNames.push(this.props.icon);
     }
     let node = (
       <input styleName={styleNames.join(" ")} type="button" value={this.props.label} disabled={this.props.disabled} onClick={this.props.onClick}/>
@@ -42,6 +47,7 @@ type Props = {
   label: string,
   type: "button" | "submit",
   position: "left" | "right" | null,
+  icon: "awesome" | null,
   color: "simple" | null,
   disabled: boolean,
   onClick?: (event: MouseEvent<HTMLInputElement>) => void

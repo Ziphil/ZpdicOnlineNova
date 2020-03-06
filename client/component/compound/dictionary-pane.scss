@@ -17,3 +17,7 @@
 .name {
   font-weight: bold;
 }
+
+.name >*:nth-child(1) {
+  margin: 0px 5px 0px 0px;
+}
