@@ -4,13 +4,17 @@
 
 
 .root {
-  padding: 8px 15px;
+  padding: 8px 0px;
   line-height: $line-height;
-  border-bottom: 1px $light-border-color solid;
+  border-bottom: 1px $pale-border-color solid;
 }
 
 .root:first-child {
   border-top: 1px $light-border-color solid;
+}
+
+.root:last-child {
+  border-bottom: 1px $light-border-color solid;
 }
 
 .text {
@@ -33,6 +37,12 @@
   font-size: 70%;
   color: $light-color;
   display: block;
+}
+
+.confer {
+  margin: 0em 0.3em 0em 0em;
+  font-size: 70%;
+  color: $light-color;
 }
 
 .name {

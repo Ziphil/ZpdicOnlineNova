@@ -66,6 +66,7 @@ class WordPaneBase extends ComponentBase<Props, State> {
     let innerNodes = Object.keys(groupedRelations).map((title, index) => {
       let innerNode = (
         <p styleName="text" key={index}>
+          <span styleName="confer">cf:</span>
           <span styleName="box">{title}</span>
           {groupedRelations[title].join(", ")}
         </p>
