@@ -12,6 +12,7 @@ import {
 } from "/client/component/component";
 import {
   DictionaryHeader,
+  DictionaryUploadForm,
   Header,
   Menu,
   SettingPane
@@ -44,6 +45,19 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     }
   }
 
+  private renderDictionaryUploadFormNode(): ReactNode {
+    let label = "アップロード";
+    let description = `
+      ファイルをアップロードし、現在のデータを上書きします。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <DictionaryUploadForm number={this.props.match!.params.number}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderNothingNode(): ReactNode {
     let label = "?";
     let node = (
@@ -57,6 +71,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
   public render(): ReactNode {
     let menuSpecs = [{mode: "general", label: "一般", href: ""}];
     let contentNodes = [];
+    contentNodes.push(this.renderDictionaryUploadFormNode());
     contentNodes.push(this.renderNothingNode());
     let node = (
       <div styleName="page">
