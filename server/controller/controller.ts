@@ -16,6 +16,9 @@ import {
   ResponseType
 } from "/server/controller/type";
 import {
+  SlimeDictionaryDocument
+} from "/server/model/dictionary/slime";
+import {
   UserDocument
 } from "/server/model/user";
 
@@ -55,13 +58,17 @@ export interface Request<N extends ProcessName, M extends MethodType> extends Ex
   // 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。
   body: Extract<RequestType[N]["post"], RequestType[N][M]>;
 
+  // ユーザーの検証の結果として得られた JSON トークンが格納されます。
+  // このプロパティは、authenticate ミドルウェアが呼び出された場合にのみ、値が格納されます。
+  token?: string;
+
   // 認証に成功した場合にユーザーデータが格納されます。
-  // このプロパティは、authenticate ミドルウェアおよび verifyUser ミドルウェアが走った場合にのみ、値が格納されます。
+  // このプロパティは、authenticate ミドルウェアおよび verifyUser ミドルウェアが呼び出された場合にのみ、値が格納されます。
   user?: UserDocument;
 
-  // ユーザーの検証の結果として得られた JSON トークンが格納されます。
-  // このプロパティは、authenticate ミドルウェアが走った場合にのみ、値が格納されます。
-  token?: string;
+  // ユーザ－に辞書の編集権限があった場合に辞書データが格納されます。
+  // このプロパティは、verifyDictionary ミドルウェアが呼び出された場合にのみ、値が格納されます。
+  dictionary?: SlimeDictionaryDocument;
 
 }
 

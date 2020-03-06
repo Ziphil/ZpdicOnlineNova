@@ -42,7 +42,7 @@ export type ResponseType = {
   },
   dictionaryUpload: {
     get: never,
-    post: string
+    post: SlimeDictionarySkeleton
   },
   userInfo: {
     get: UserSkeleton,
@@ -77,7 +77,7 @@ export type RequestType = {
   },
   dictionaryUpload: {
     get: never,
-    post: {}
+    post: Required<"number">
   },
   userInfo: {
     get: {},
