@@ -40,7 +40,7 @@ class DictionaryCreationFormBase extends ComponentBase<Props, State> {
     let node = (
       <form styleName="root">
         <Input label="名称" onValueChange={(value) => this.setState({name: value})}/>
-        <Button label="新規作成" onClick={this.click.bind(this)}/>
+        <Button label="作成" onClick={this.click.bind(this)}/>
       </form>
     );
     return node;
