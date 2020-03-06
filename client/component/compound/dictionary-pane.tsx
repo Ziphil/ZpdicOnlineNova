@@ -55,7 +55,7 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
     let node = (
       <a styleName="root" href={href} onClick={this.click.bind(this)}>
         <div styleName="name">
-          <Button label={"\uF013"} color="simple" icon="awesome" onClick={this.jumpSettingPage.bind(this)}/>
+          <Button label="&#xF013;" color="simple" icon="awesome" onClick={this.jumpSettingPage.bind(this)}/>
           {name}
         </div>
         <div styleName="status">{status}</div>

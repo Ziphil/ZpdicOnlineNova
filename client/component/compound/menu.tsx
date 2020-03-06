@@ -35,7 +35,7 @@ class MenuBase extends ComponentBase<Props, State> {
       if (spec.mode === "logout") {
         onClick = this.performLogout.bind(this);
       }
-      return <MenuItem label={spec.label} href={spec.href} highlight={highlight} onClick={onClick} key={index}/>;
+      return <MenuItem label={spec.label} iconLabel={spec.iconLabel} href={spec.href} highlight={highlight} onClick={onClick} key={index}/>;
     });
     let node = (
       <nav styleName="root">
@@ -50,7 +50,7 @@ class MenuBase extends ComponentBase<Props, State> {
 
 type Props = {
   mode: string,
-  specs: Array<{mode: string, label: string, href: string}>
+  specs: Array<{mode: string, label: string, iconLabel: string, href: string}>
 };
 type State = {
 };

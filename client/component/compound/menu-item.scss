@@ -27,3 +27,19 @@
   color: $link-color;
   border-bottom: 6px $link-color solid;
 }
+
+.text {
+  @include smartphone {
+    display: none;
+  }
+}
+
+.icon {
+  font-family: $icon-font-family;
+  font-size: 90%;
+  font-weight: 900;
+  display: none;
+  @include smartphone {
+    display: inline;
+  }
+}
