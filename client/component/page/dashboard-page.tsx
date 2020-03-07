@@ -52,7 +52,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} badgeValue={badgeValue} key={label} description={description}>
-        <DictionaryList dictionaries={this.state.dictionaries}/>
+        <DictionaryList dictionaries={this.state.dictionaries} showsSetting={true}/>
       </SettingPane>
     );
     return node;

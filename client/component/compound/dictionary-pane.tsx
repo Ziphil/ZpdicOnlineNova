@@ -52,10 +52,14 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
         status = "? 語";
       }
     }
+    let settingButtonNode;
+    if (this.props.showsSetting) {
+      settingButtonNode = <Button label="&#xF013;" color="simple" icon="awesome" onClick={this.jumpSettingPage.bind(this)}/>;
+    }
     let node = (
       <a styleName="root" href={href} onClick={this.click.bind(this)}>
         <div styleName="name">
-          <Button label="&#xF013;" color="simple" icon="awesome" onClick={this.jumpSettingPage.bind(this)}/>
+          {settingButtonNode}
           {name}
         </div>
         <div styleName="status">{status}</div>
@@ -68,7 +72,8 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton
+  dictionary: SlimeDictionarySkeleton,
+  showsSetting: boolean
 };
 type State = {
 };

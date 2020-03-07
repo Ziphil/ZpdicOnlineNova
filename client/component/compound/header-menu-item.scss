@@ -4,23 +4,13 @@
 
 
 .root {
-  padding: 0px 15px 10px 15px;
-  color: $light-color;
+  color: $pale-link-color;
   text-decoration: none;
-  text-align: right;
-  border-bottom: 5px transparent solid;
-  display: block;
+  display: inline-block;
 }
 
 .root:hover {
-  border-bottom: 5px $light-border-color solid;
-}
-
-.root.highlight {
-  margin-bottom: -1px;
-  font-weight: bold;
-  color: $link-color;
-  border-bottom: 6px $link-color solid;
+  color: $pale-link-hover-color;
 }
 
 .text {

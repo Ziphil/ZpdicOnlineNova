@@ -4,7 +4,6 @@
 
 
 .root {
-  font-family: $special-font-family;
   color: $logo-color;
   text-align: center;
   font-variant-numeric: lining-nums;
@@ -13,6 +12,7 @@
 
 .title {
   margin: 0px;
+  font-family: $special-font-family;
   font-size: 120px;
   @include smartphone {
     font-size: 96px;
@@ -22,6 +22,7 @@
 .subtitle {
   left: 60px;
   margin: -5px 0px 0px 0px;
+  font-family: $special-font-family;
   font-size: 50px;
   letter-spacing: 0.2em;
   position: relative;

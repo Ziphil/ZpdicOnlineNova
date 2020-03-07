@@ -21,8 +21,10 @@ class DictionaryHeaderBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <div styleName="root">
-        <div styleName="left">
-          <div styleName="name">{this.props.name}</div>
+        <div styleName="container">
+          <div styleName="left">
+            <div styleName="name">{this.props.name}</div>
+          </div>
         </div>
       </div>
     );

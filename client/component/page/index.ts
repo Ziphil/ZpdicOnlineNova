@@ -1,6 +1,7 @@
 //
 
 export * from "./dashboard-page";
+export * from "./dictionary-list-page";
 export * from "./dictionary-page";
 export * from "./dictionary-setting-page";
 export * from "./login-page";

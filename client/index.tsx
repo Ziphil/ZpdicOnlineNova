@@ -10,7 +10,7 @@ import {
 
 
 export const TITLES = ["ZpDIC", "Online"];
-export const VERSION = "dev:2966.1";
+export const VERSION = "dev:2967.0";
 
 
 class Main {

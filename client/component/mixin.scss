@@ -34,6 +34,9 @@ $button-active-box-shadow-color: rgba(black, 0.1);
 $link-color: hsl($secondary-hue, 40%, 50%);
 $link-hover-color: lighten(hsl($secondary-hue, 40%, 50%), 15%);
 
+$pale-link-color: hsl($primary-hue, 50%, 92%);
+$pale-link-hover-color: darken(hsl($primary-hue, 50%, 92%), 15%);
+
 $pane-color: (
   normal: inherit,
   error: hsl(0, 40%, 50%),
@@ -59,24 +62,24 @@ $inset-box-shadow-setting: 0px 2px 3px;
 $small-border-radius: 3px;
 $large-border-radius: 6px;
 
+$page-width: 800px;
+$page-horizontal-margin: 30px;
+
 $line-height: 1.6;
 
 
 @mixin smartphone {
-  @media screen and (max-width: 860px) {
+  @media screen and (max-width: $page-width + $page-horizontal-margin * 2) {
     @content;
   }
 }
 
 @mixin page($margin-top) {
-  width: 800px;
+  width: $page-width;
   margin: $margin-top auto 50px auto;
   padding: 0px;
-  @media screen and (max-width: 860px) {
-    width: 100%;
-    margin: $margin-top 0px 50px 0px;
-    padding: 0px 30px;
-    box-sizing: border-box;
+  @media screen and (max-width: $page-width + $page-horizontal-margin * 2) {
+    width: calc(100% - #{$page-horizontal-margin * 2});
   }
 }
 
@@ -103,13 +106,15 @@ $line-height: 1.6;
     list-style-type: none;
   }
   & >li {
-    margin-left: 0.8em;
+    margin-left: 1.3em;
     text-align: justify;
   }
   & >li::before {
-    width: 0.8em;
-    margin-left: -0.8em;
-    content: "•";
+    font-family: $icon-font-family;
+    font-size: 90%;
+    width: 1.3em * (100% / 90%);
+    margin-left: -1.3em * (100% / 90%);
+    content: "\F06A";
     display: inline-block;
   }
 }
