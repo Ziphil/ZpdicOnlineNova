@@ -15,6 +15,7 @@ import {
 } from "react-router-dom";
 import {
   DashboardPage,
+  DictionaryListPage,
   DictionaryPage,
   DictionarySettingPage,
   LoginPage,
@@ -55,6 +56,7 @@ export class Root extends Component<{}, {}> {
           <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
           <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
           <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
+          <Route exact path ="/dictionary/list" component={DictionaryListPage}/>
           <Route exact path ="/dictionary/:number" component={DictionaryPage}/>
           <PrivateRoute exact path="/dictionary/setting/:number" redirect="/login" component={DictionarySettingPage}/>
         </Switch>

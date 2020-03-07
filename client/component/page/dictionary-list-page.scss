@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.page {
+  @include page(130px);
+}
+
+.content {
+  width: 100%;
+  max-width: 525px;
+  margin: 0px auto;
+}
