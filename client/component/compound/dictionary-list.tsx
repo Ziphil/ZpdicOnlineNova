@@ -26,7 +26,7 @@ class DictionaryListBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let dictionaryPanes = this.props.dictionaries.map((dictionary) => {
-      return <DictionaryPane dictionary={dictionary} key={dictionary.id}/>;
+      return <DictionaryPane dictionary={dictionary} showsSetting={this.props.showsSetting} key={dictionary.id}/>;
     });
     let node = (
       <div styleName="root">
@@ -40,7 +40,8 @@ class DictionaryListBase extends ComponentBase<Props, State> {
 
 
 type Props = {
-  dictionaries: Array<SlimeDictionarySkeleton>
+  dictionaries: Array<SlimeDictionarySkeleton>,
+  showsSetting: boolean
 };
 type State = {
 };

@@ -44,7 +44,7 @@ class DictionaryListPageBase extends ComponentBase<Props, State, Params> {
       <div styleName="page">
         <Header/>
         <div styleName="content">
-          <DictionaryList dictionaries={this.state.dictionaries}/>
+          <DictionaryList dictionaries={this.state.dictionaries} showsSetting={false}/>
         </div>
       </div>
     );
