@@ -17,6 +17,7 @@ export const SERVER_PATH = {
   dictionarySearch: "/api/dictionary/search",
   dictionaryInfo: "/api/dictionary/info",
   dictionaryList: "/api/dictionary/list",
+  dictionaryListAll: "/api/dictionary/list/all",
   dictionaryUpload: "/api/dictionary/upload",
   userInfo: "/api/user/info",
   userLogin: "/api/user/login",
@@ -40,6 +41,10 @@ export type ResponseType = {
     get: Array<SlimeDictionarySkeleton>,
     post: never
   },
+  dictionaryListAll: {
+    get: Array<SlimeDictionarySkeleton>,
+    post: never
+  }
   dictionaryUpload: {
     get: never,
     post: SlimeDictionarySkeleton
@@ -75,6 +80,10 @@ export type RequestType = {
     get: {},
     post: never
   },
+  dictionaryListAll: {
+    get: {},
+    post: never
+  }
   dictionaryUpload: {
     get: never,
     post: Required<"number">
