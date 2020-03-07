@@ -1,0 +1,30 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  color: $pale-link-color;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.root:hover {
+  color: $pale-link-hover-color;
+}
+
+.text {
+  @include smartphone {
+    display: none;
+  }
+}
+
+.icon {
+  font-family: $icon-font-family;
+  font-size: 90%;
+  font-weight: 900;
+  display: none;
+  @include smartphone {
+    display: inline;
+  }
+}

@@ -12,6 +12,9 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  HeaderMenuItem
+} from "/client/component/compound";
+import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
@@ -40,10 +43,17 @@ class HeaderBase extends ComponentBase<Props, State> {
     let node = (
       <div styleName="root">
         <div styleName="left">
-          <div styleName="title"><RawLink to="/">ZpDIC</RawLink></div>
+          <div styleName="title">
+            <RawLink to="/">ZpDIC</RawLink>
+          </div>
+          <div styleName="menu">
+            <HeaderMenuItem label="辞書一覧" iconLabel="&#xF02D;" href="/dictionary/list"/>
+          </div>
         </div>
         <div styleName="right">
-          {this.state.userName}
+          <div styleName="name">
+            {this.state.userName}
+          </div>
         </div>
       </div>
     );

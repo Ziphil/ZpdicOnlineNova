@@ -34,6 +34,9 @@ $button-active-box-shadow-color: rgba(black, 0.1);
 $link-color: hsl($secondary-hue, 40%, 50%);
 $link-hover-color: lighten(hsl($secondary-hue, 40%, 50%), 15%);
 
+$pale-link-color: hsl($primary-hue, 50%, 92%);
+$pale-link-hover-color: darken(hsl($primary-hue, 50%, 92%), 15%);
+
 $pane-color: (
   normal: inherit,
   error: hsl(0, 40%, 50%),
