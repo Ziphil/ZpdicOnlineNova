@@ -106,13 +106,15 @@ $line-height: 1.6;
     list-style-type: none;
   }
   & >li {
-    margin-left: 0.8em;
+    margin-left: 1.3em;
     text-align: justify;
   }
   & >li::before {
-    width: 0.8em;
-    margin-left: -0.8em;
-    content: "•";
+    font-family: $icon-font-family;
+    font-size: 90%;
+    width: 1.3em * (100% / 90%);
+    margin-left: -1.3em * (100% / 90%);
+    content: "\F06A";
     display: inline-block;
   }
 }
