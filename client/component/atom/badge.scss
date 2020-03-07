@@ -4,10 +4,13 @@
 
 
 .root {
-  padding: 0em 0.4em;
+  bottom: 0.1em;
+  padding: 0.2em 0.4em;
   font-size: 80%;
   font-weight: normal;
   color: $background-color;
   border-radius: 1em;
   background-color: $light-color;
+  display: inline-block;
+  position: relative;
 }

@@ -4,17 +4,12 @@
 
 
 .root {
-  margin: 0px 0px 0px 20px;
   padding: 0px 15px 10px 15px;
   color: $light-color;
   text-decoration: none;
   text-align: right;
   border-bottom: 5px transparent solid;
   display: block;
-}
-
-.root:first-child {
-  margin: 0px;
 }
 
 .root:hover {
@@ -36,7 +31,7 @@
 
 .icon {
   font-family: $icon-font-family;
-  font-size: 90%;
+  font-size: 110%;
   font-weight: 900;
   display: none;
   @include smartphone {

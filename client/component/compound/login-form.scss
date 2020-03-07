@@ -5,7 +5,6 @@
 
 .root {
   @include pane(normal);
-  margin: 0px;
   padding: 20px 30px;
   line-height: $line-height;
   box-sizing: border-box;

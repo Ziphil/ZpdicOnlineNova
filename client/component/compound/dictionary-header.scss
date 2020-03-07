@@ -6,20 +6,27 @@
 .root {
   width: 100%;
   height: 50px;
-  margin: 0px;
-  padding: 0px 50px;
   top: 70px;
   left: 0px;
   border-bottom: 1px $light-border-color solid;
   background-color: $strong-background-color;
-  box-sizing: border-box;
+  position: absolute;
+  z-index: 80;
+}
+
+.container {
+  margin: 0px 50px;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: absolute;
-  z-index: 80;
+  @media screen and (max-width: $page-width + 100px) {
+    width: $page-width;
+    margin: 0px auto;
+  }
   @include smartphone {
-    padding: 0px 30px;
+    width: calc(100% - #{$page-horizontal-margin * 2});
+    margin: 0px auto;
   }
 }
 

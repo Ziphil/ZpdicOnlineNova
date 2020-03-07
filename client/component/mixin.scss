@@ -62,24 +62,24 @@ $inset-box-shadow-setting: 0px 2px 3px;
 $small-border-radius: 3px;
 $large-border-radius: 6px;
 
+$page-width: 800px;
+$page-horizontal-margin: 30px;
+
 $line-height: 1.6;
 
 
 @mixin smartphone {
-  @media screen and (max-width: 860px) {
+  @media screen and (max-width: $page-width + $page-horizontal-margin * 2) {
     @content;
   }
 }
 
 @mixin page($margin-top) {
-  width: 800px;
+  width: $page-width;
   margin: $margin-top auto 50px auto;
   padding: 0px;
-  @media screen and (max-width: 860px) {
-    width: 100%;
-    margin: $margin-top 0px 50px 0px;
-    padding: 0px 30px;
-    box-sizing: border-box;
+  @media screen and (max-width: $page-width + $page-horizontal-margin * 2) {
+    width: calc(100% - #{$page-horizontal-margin * 2});
   }
 }
 

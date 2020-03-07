@@ -42,17 +42,19 @@ class HeaderBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <div styleName="root">
-        <div styleName="left">
-          <div styleName="title">
-            <RawLink to="/">ZpDIC</RawLink>
+        <div styleName="container">
+          <div styleName="left">
+            <div styleName="title">
+              <RawLink to="/">ZpDIC</RawLink>
+            </div>
+            <div styleName="menu">
+              <HeaderMenuItem label="辞書一覧" iconLabel="&#xF02D;" href="/dictionary/list"/>
+            </div>
           </div>
-          <div styleName="menu">
-            <HeaderMenuItem label="辞書一覧" iconLabel="&#xF02D;" href="/dictionary/list"/>
-          </div>
-        </div>
-        <div styleName="right">
-          <div styleName="name">
-            {this.state.userName}
+          <div styleName="right">
+            <div styleName="name">
+              {this.state.userName}
+            </div>
           </div>
         </div>
       </div>
