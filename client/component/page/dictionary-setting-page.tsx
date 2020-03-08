@@ -12,6 +12,7 @@ import {
 } from "/client/component/component";
 import {
   DictionaryHeader,
+  DictionaryRenameForm,
   DictionaryUploadForm,
   Header,
   Menu,
@@ -45,6 +46,19 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     }
   }
 
+  private renderDictionaryRenameFormNode(): ReactNode {
+    let label = "名称変更";
+    let description = `
+      辞書の名称を変更します。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <DictionaryRenameForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderDictionaryUploadFormNode(): ReactNode {
     let label = "アップロード";
     let description = `
@@ -52,7 +66,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <DictionaryUploadForm number={this.props.match!.params.number}/>
+        <DictionaryUploadForm number={this.state.dictionary!.number}/>
       </SettingPane>
     );
     return node;
@@ -71,8 +85,11 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
   public render(): ReactNode {
     let menuSpecs = [{mode: "general", label: "一般", iconLabel: "\uF013", href: ""}];
     let contentNodes = [];
-    contentNodes.push(this.renderDictionaryUploadFormNode());
-    contentNodes.push(this.renderNothingNode());
+    if (this.state.dictionary) {
+      contentNodes.push(this.renderDictionaryRenameFormNode());
+      contentNodes.push(this.renderDictionaryUploadFormNode());
+      contentNodes.push(this.renderNothingNode());
+    }
     let node = (
       <div styleName="page">
         <Header/>

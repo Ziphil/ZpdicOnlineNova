@@ -18,6 +18,7 @@ export const SERVER_PATH = {
   dictionaryInfo: "/api/dictionary/info",
   dictionaryList: "/api/dictionary/list",
   dictionaryListAll: "/api/dictionary/list/all",
+  dictionaryRename: "/api/dictionary/rename",
   dictionaryUpload: "/api/dictionary/upload",
   userInfo: "/api/user/info",
   userLogin: "/api/user/login",
@@ -44,7 +45,11 @@ export type ResponseType = {
   dictionaryListAll: {
     get: Array<SlimeDictionarySkeleton>,
     post: never
-  }
+  },
+  dictionaryRename: {
+    get: never,
+    post: SlimeDictionarySkeleton
+  },
   dictionaryUpload: {
     get: never,
     post: SlimeDictionarySkeleton
@@ -56,7 +61,7 @@ export type ResponseType = {
   userLogin: {
     get: never,
     post: MayError<UserSkeleton & {token: string}>
-  }
+  },
   userRegister: {
     get: never,
     post: MayError<UserSkeleton>
@@ -83,7 +88,11 @@ export type RequestType = {
   dictionaryListAll: {
     get: {},
     post: never
-  }
+  },
+  dictionaryRename: {
+    get: never,
+    post: Required<"number" | "name">
+  },
   dictionaryUpload: {
     get: never,
     post: Required<"number">
@@ -95,7 +104,7 @@ export type RequestType = {
   userLogin: {
     get: never,
     post: Required<"name" | "password">
-  }
+  },
   userRegister: {
     get: never,
     post: Required<"name" | "email" | "password">
