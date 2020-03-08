@@ -40,16 +40,19 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
     let name = this.props.dictionary.name;
+    let status = this.props.dictionary.status;
     let href = "/dictionary/" + this.props.dictionary.number;
-    let status = "";
-    if (this.props.dictionary.status === "saving") {
-      status = "保存処理中";
+    let statusString = "";
+    if (status === "saving") {
+      statusString = "保存処理中";
+    } else if (status === "error") {
+      statusString = "エラー";
     } else {
       let wordSize = this.props.dictionary.wordSize;
       if (wordSize !== undefined) {
-        status = wordSize.toLocaleString("en-GB") + " 語";
+        statusString = wordSize.toLocaleString("en-GB") + " 語";
       } else {
-        status = "? 語";
+        statusString = "? 語";
       }
     }
     let settingButtonNode;
@@ -62,7 +65,7 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
           {settingButtonNode}
           {name}
         </div>
-        <div styleName="status">{status}</div>
+        <div styleName="status">{statusString}</div>
       </a>
     );
     return node;
