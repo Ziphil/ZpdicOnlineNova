@@ -16,6 +16,9 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  InformationPane
+} from "/client/component/compound";
+import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
@@ -52,10 +55,11 @@ class LoginFormBase extends ComponentBase<Props, State> {
     }
     let errorNode;
     if (this.state.error) {
+      let text = "ログインに失敗しました。";
       errorNode = (
-        <ul styleName="error">
-          <li>ログインに失敗しました。</li>
-        </ul>
+        <div styleName="error">
+          <InformationPane texts={[text]} color="error"/>
+        </div>
       );
     }
     let node = (

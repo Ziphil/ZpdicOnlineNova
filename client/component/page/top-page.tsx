@@ -12,6 +12,7 @@ import {
 } from "/client/component/component";
 import {
   Header,
+  InformationPane,
   LoginForm,
   Logo
 } from "/client/component/compound";
@@ -24,6 +25,10 @@ import {
 class TopPageBase extends ComponentBase<Props, State> {
 
   public render(): ReactNode {
+    let informationText = `
+      旧 ZpDIC Online からのデータ移行が完了しました。
+      旧 ZpDIC Online のユーザーがそのまま使えますので、同じユーザー名とパスワードでログインしてください。
+    `;
     let node = (
       <div styleName="page">
         <Header/>
@@ -34,6 +39,9 @@ class TopPageBase extends ComponentBase<Props, State> {
           <div styleName="login-form">
             <LoginForm showsRegister={true}/>
           </div>
+        </div>
+        <div styleName="information">
+          <InformationPane texts={[informationText]} color="information"/>
         </div>
         <div styleName="notice">
           <p styleName="text">

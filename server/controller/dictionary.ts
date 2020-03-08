@@ -61,7 +61,7 @@ export class DictionaryController extends Controller {
     let type = request.query.type;
     let offset = parseInt(request.query.offset, 10) || 0;
     let size = parseInt(request.query.size, 10) || 0;
-    let dictionary = await SlimeDictionaryModel.findByNumber(number);
+    let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let words = await dictionary.search(search, mode, type, offset, size);
       let body = words.map((word) => new SlimeWordSkeleton(word));
@@ -75,7 +75,7 @@ export class DictionaryController extends Controller {
   @get(SERVER_PATH["dictionaryInfo"])
   public async getInfo(request: GetRequest<"dictionaryInfo">, response: GetResponse<"dictionaryInfo">): Promise<void> {
     let number = parseInt(request.query.number, 10);
-    let dictionary = await SlimeDictionaryModel.findByNumber(number);
+    let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let body = new SlimeDictionarySkeleton(dictionary);
       response.json(body);
@@ -90,18 +90,25 @@ export class DictionaryController extends Controller {
   public async getList(request: GetRequest<"dictionaryList">, response: GetResponse<"dictionaryList">): Promise<void> {
     let user = request.user!;
     let dictionaries = await SlimeDictionaryModel.findByUser(user);
-    let body = [];
-    for (let dictionary of dictionaries) {
-      let innerSkeleton = new SlimeDictionarySkeleton(dictionary);
-      await innerSkeleton.fetch(dictionary);
-      body.push(innerSkeleton);
-    }
+    let promises = dictionaries.map((dictionary) => {
+      let promise = new Promise<SlimeDictionarySkeleton>(async (resolve, reject) => {
+        try {
+          let skeleton = new SlimeDictionarySkeleton(dictionary);
+          await skeleton.fetch(dictionary);
+          resolve(skeleton);
+        } catch (error) {
+          reject(error);
+        }
+      });
+      return promise;
+    });
+    let body = await Promise.all(promises);
     response.json(body);
   }
 
   @get(SERVER_PATH["dictionaryListAll"])
   public async getListAll(request: GetRequest<"dictionaryListAll">, response: GetResponse<"dictionaryListAll">): Promise<void> {
-    let dictionaries = await SlimeDictionaryModel.find();
+    let dictionaries = await SlimeDictionaryModel.findPublic();
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<SlimeDictionarySkeleton>(async (resolve, reject) => {
         try {

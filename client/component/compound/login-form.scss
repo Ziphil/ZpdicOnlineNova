@@ -37,9 +37,5 @@
 }
 
 .error {
-  @include pane(error);
-  @include unordered-list;
   margin: 0px 0px 20px 0px;
-  padding: 8px 20px;
-  line-height: $line-height;
 }

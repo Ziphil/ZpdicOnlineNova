@@ -40,17 +40,17 @@ $pale-link-hover-color: darken(hsl($primary-hue, 50%, 92%), 15%);
 $pane-color: (
   normal: inherit,
   error: hsl(0, 40%, 50%),
-  information: hsl(120, 40%, 50%)
+  information: hsl(220, 40%, 50%)
 );
 $pane-border-color: (
   normal: rgba(white, 0.8),
   error: hsla(0, 40%, 50%, 0.8),
-  information: hsla(120, 40%, 50%, 0.8)
+  information: hsla(220, 40%, 50%, 0.8)
 );
 $pane-background: (
   normal: rgba(white, 0.5),
   error: hsl(0, 50%, 90%),
-  information: hsl(120, 50%, 90%)
+  information: hsl(220, 50%, 90%)
 );
 $pane-hover-background: (
   normal: rgba(white, 0.7)
@@ -101,7 +101,7 @@ $line-height: 1.6;
   }
 }
 
-@mixin unordered-list {
+@mixin unordered-list($icon) {
   & {
     list-style-type: none;
   }
@@ -114,7 +114,7 @@ $line-height: 1.6;
     font-size: 90%;
     width: 1.3em * (100% / 90%);
     margin-left: -1.3em * (100% / 90%);
-    content: "\F06A";
+    content: $icon;
     display: inline-block;
   }
 }
