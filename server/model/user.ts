@@ -27,6 +27,10 @@ export class User {
   public hash!: string;
 
   private encryptPassword(password: string): void {
+    let length = password.length;
+    if (length < 6 || length > 50) {
+      throw new CustomError("invalidPassword");
+    }
     this.hash = bcrypt.hashSync(password, SALT_ROUND);
   }
 

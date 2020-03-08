@@ -69,6 +69,8 @@ class RegisterFormBase extends ComponentBase<Props, State> {
         errorMessage = "ユーザー名が不正です。ユーザー名は半角英数字とアンダーバーとハイフンのみで構成してください。";
       } else if (errorType === "invalidEmail") {
         errorMessage = "メールアドレスが不正です。";
+      } else if (errorType === "invalidPassword") {
+        errorMessage = "パスワードが不正です。パスワードは 6 文字以上 50 文字以下である必要があります。";
       } else if (errorType === "duplicateName") {
         errorMessage = "そのユーザー名はすでに存在しています。";
       } else if (errorType === "loginFailed") {
