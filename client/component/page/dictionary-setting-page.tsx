@@ -12,11 +12,11 @@ import {
 } from "/client/component/component";
 import {
   DictionaryHeader,
-  DictionaryRenameForm,
-  DictionaryUploadForm,
   Header,
   Menu,
-  SettingPane
+  RenameDictionaryForm,
+  SettingPane,
+  UploadDictionaryForm
 } from "/client/component/compound";
 import {
   applyStyle
@@ -46,27 +46,27 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     }
   }
 
-  private renderDictionaryRenameFormNode(): ReactNode {
+  private renderRenameDictionaryFormNode(): ReactNode {
     let label = "名称変更";
     let description = `
       辞書の名称を変更します。
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <DictionaryRenameForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name}/>
+        <RenameDictionaryForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name}/>
       </SettingPane>
     );
     return node;
   }
 
-  private renderDictionaryUploadFormNode(): ReactNode {
+  private renderUploadDictionaryFormNode(): ReactNode {
     let label = "アップロード";
     let description = `
       ファイルをアップロードし、現在のデータを上書きします。
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <DictionaryUploadForm number={this.state.dictionary!.number}/>
+        <UploadDictionaryForm number={this.state.dictionary!.number}/>
       </SettingPane>
     );
     return node;
@@ -86,8 +86,8 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     let menuSpecs = [{mode: "general", label: "一般", iconLabel: "\uF013", href: ""}];
     let contentNodes = [];
     if (this.state.dictionary) {
-      contentNodes.push(this.renderDictionaryRenameFormNode());
-      contentNodes.push(this.renderDictionaryUploadFormNode());
+      contentNodes.push(this.renderRenameDictionaryFormNode());
+      contentNodes.push(this.renderUploadDictionaryFormNode());
       contentNodes.push(this.renderNothingNode());
     }
     let node = (

@@ -11,7 +11,7 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
-  DictionaryCreationForm,
+  CreateDictionaryForm,
   DictionaryList,
   Header,
   Menu,
@@ -58,14 +58,14 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     return node;
   }
 
-  private renderDictionaryCreationFormNode(): ReactNode {
+  private renderCreateDictionaryFormNode(): ReactNode {
     let label = "新規作成";
     let description = `
       空の辞書を作成します。
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <DictionaryCreationForm onSubmit={() => location.reload()}/>
+        <CreateDictionaryForm onSubmit={() => location.reload()}/>
       </SettingPane>
     );
     return node;
@@ -91,7 +91,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     let contentNodes = [];
     if (mode === "dictionary") {
       contentNodes.push(this.renderDictionaryListNode());
-      contentNodes.push(this.renderDictionaryCreationFormNode());
+      contentNodes.push(this.renderCreateDictionaryFormNode());
     } else {
       contentNodes.push(this.renderNothingNode());
     }

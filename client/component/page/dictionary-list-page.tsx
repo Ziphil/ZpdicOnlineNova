@@ -11,11 +11,8 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
-  DictionaryCreationForm,
   DictionaryList,
-  Header,
-  Menu,
-  SettingPane
+  Header
 } from "/client/component/compound";
 import {
   applyStyle

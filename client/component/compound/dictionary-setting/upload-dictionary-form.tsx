@@ -21,8 +21,8 @@ import {
 import * as http from "/client/util/http";
 
 
-@applyStyle(require("./dictionary-upload-form.scss"))
-class DictionaryUploadFormBase extends ComponentBase<Props, State> {
+@applyStyle(require("./upload-dictionary-form.scss"))
+class UploadDictionaryFormBase extends ComponentBase<Props, State> {
 
   public state: State = {
     file: null
@@ -60,4 +60,4 @@ type State = {
   file: File | null
 };
 
-export let DictionaryUploadForm = withRouter(DictionaryUploadFormBase);
+export let UploadDictionaryForm = withRouter(UploadDictionaryFormBase);
