@@ -72,23 +72,12 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     return node;
   }
 
-  private renderNothingNode(): ReactNode {
-    let label = "?";
-    let node = (
-      <SettingPane label={label} key={label}>
-        Not yet implemented
-      </SettingPane>
-    );
-    return node;
-  }
-
   public render(): ReactNode {
     let menuSpecs = [{mode: "general", label: "一般", iconLabel: "\uF013", href: ""}];
     let contentNodes = [];
     if (this.state.dictionary) {
       contentNodes.push(this.renderRenameDictionaryFormNode());
       contentNodes.push(this.renderUploadDictionaryFormNode());
-      contentNodes.push(this.renderNothingNode());
     }
     let node = (
       <div styleName="page">
