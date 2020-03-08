@@ -33,9 +33,9 @@ import {
 @controller("/")
 export class DictionaryController extends Controller {
 
-  @post(SERVER_PATH["dictionaryCreate"])
+  @post(SERVER_PATH["createDictionary"])
   @before(verifyUser())
-  public async postCreate(request: PostRequest<"dictionaryCreate">, response: PostResponse<"dictionaryCreate">): Promise<void> {
+  public async postCreateDictionary(request: PostRequest<"createDictionary">, response: PostResponse<"createDictionary">): Promise<void> {
     let user = request.user!;
     let name = request.body.name;
     let dictionary = await SlimeDictionaryModel.createEmpty(name, user);
@@ -43,19 +43,9 @@ export class DictionaryController extends Controller {
     response.json(body);
   }
 
-  @post(SERVER_PATH["dictionaryRename"])
+  @post(SERVER_PATH["uploadDictionary"])
   @before(verifyUser(), verifyDictionary())
-  public async postRename(request: PostRequest<"dictionaryRename">, response: PostResponse<"dictionaryRename">): Promise<void> {
-    let dictionary = request.dictionary!;
-    let name = request.body.name;
-    let nextDictionary = await dictionary.rename(name);
-    let body = new SlimeDictionarySkeleton(nextDictionary);
-    response.json(body);
-  }
-
-  @post(SERVER_PATH["dictionaryUpload"])
-  @before(verifyUser(), verifyDictionary())
-  public async postUpload(request: PostRequest<"dictionaryUpload">, response: PostResponse<"dictionaryUpload">): Promise<void> {
+  public async postUploadDictionary(request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary!;
     let path = request.file.path;
     let nextDictionary = await dictionary.upload(path);
@@ -63,8 +53,18 @@ export class DictionaryController extends Controller {
     response.json(body);
   }
 
-  @get(SERVER_PATH["dictionarySearch"])
-  public async getSearch(request: GetRequest<"dictionarySearch">, response: GetResponse<"dictionarySearch">): Promise<void> {
+  @post(SERVER_PATH["renameDictionary"])
+  @before(verifyUser(), verifyDictionary())
+  public async postRenameDictionary(request: PostRequest<"renameDictionary">, response: PostResponse<"renameDictionary">): Promise<void> {
+    let dictionary = request.dictionary!;
+    let name = request.body.name;
+    let nextDictionary = await dictionary.rename(name);
+    let body = new SlimeDictionarySkeleton(nextDictionary);
+    response.json(body);
+  }
+
+  @get(SERVER_PATH["searchDictionary"])
+  public async getSearchDictionary(request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
     let number = parseInt(request.query.number, 10);
     let search = request.query.search;
     let mode = request.query.mode;
@@ -82,8 +82,8 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["dictionaryInfo"])
-  public async getInfo(request: GetRequest<"dictionaryInfo">, response: GetResponse<"dictionaryInfo">): Promise<void> {
+  @get(SERVER_PATH["fetchDictionaryInfo"])
+  public async getFetchDictionaryInfo(request: GetRequest<"fetchDictionaryInfo">, response: GetResponse<"fetchDictionaryInfo">): Promise<void> {
     let number = parseInt(request.query.number, 10);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
@@ -95,9 +95,9 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["dictionaryList"])
+  @get(SERVER_PATH["fetchDictionaries"])
   @before(verifyUser())
-  public async getList(request: GetRequest<"dictionaryList">, response: GetResponse<"dictionaryList">): Promise<void> {
+  public async getFetchDictionaries(request: GetRequest<"fetchDictionaries">, response: GetResponse<"fetchDictionaries">): Promise<void> {
     let user = request.user!;
     let dictionaries = await SlimeDictionaryModel.findByUser(user);
     let promises = dictionaries.map((dictionary) => {
@@ -116,8 +116,8 @@ export class DictionaryController extends Controller {
     response.json(body);
   }
 
-  @get(SERVER_PATH["dictionaryListAll"])
-  public async getListAll(request: GetRequest<"dictionaryListAll">, response: GetResponse<"dictionaryListAll">): Promise<void> {
+  @get(SERVER_PATH["fetchAllDictionaries"])
+  public async getFetchAllDictionaries(request: GetRequest<"fetchAllDictionaries">, response: GetResponse<"fetchAllDictionaries">): Promise<void> {
     let dictionaries = await SlimeDictionaryModel.findPublic();
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<SlimeDictionarySkeleton>(async (resolve, reject) => {

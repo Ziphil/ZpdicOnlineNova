@@ -30,7 +30,7 @@ class DictionaryCreationFormBase extends ComponentBase<Props, State> {
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let name = this.state.name;
-    let dictionary = await http.post("dictionaryCreate", {name});
+    let dictionary = await http.post("createDictionary", {name});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }

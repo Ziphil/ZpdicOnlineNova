@@ -41,7 +41,7 @@ class RegisterFormBase extends ComponentBase<Props, State> {
     let password = this.state.password;
     let passwordRepeat = this.state.passwordRepeat;
     if (password === passwordRepeat) {
-      let response = await http.post("userRegister", {name, email, password}, [400]);
+      let response = await http.post("registerUser", {name, email, password}, [400]);
       let body = response.data;
       if (!("error" in body)) {
         let succeed = await http.login({name, password});

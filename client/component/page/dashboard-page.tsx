@@ -35,7 +35,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   public async componentDidMount(): Promise<void> {
     try {
-      let response = await http.get("dictionaryList", {});
+      let response = await http.get("fetchDictionaries", {});
       let dictionaries = response.data;
       this.setState({dictionaries});
     } catch (error) {

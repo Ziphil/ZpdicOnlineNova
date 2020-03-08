@@ -34,7 +34,7 @@ class DictionaryListPageBase extends ComponentBase<Props, State, Params> {
   };
 
   public async componentDidMount(): Promise<void> {
-    let response = await http.get("dictionaryListAll", {});
+    let response = await http.get("fetchAllDictionaries", {});
     let dictionaries = response.data;
     this.setState({dictionaries});
   }

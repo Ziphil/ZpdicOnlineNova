@@ -43,7 +43,7 @@ export async function postFile<N extends ProcessName>(name: N, data: AnyRecord<R
 }
 
 export async function login(data: {name: string, password: string}): Promise<boolean> {
-  let response = await post("userLogin", data, [400]);
+  let response = await post("login", data, [400]);
   let body = response.data;
   if (!("error" in body)) {
     let token = body.token;

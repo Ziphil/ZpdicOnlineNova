@@ -36,7 +36,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
 
   public async componentDidMount(): Promise<void> {
     let number = this.props.match!.params.number;
-    let response = await http.get("dictionaryInfo", {number}, [400]);
+    let response = await http.get("fetchDictionaryInfo", {number}, [400]);
     let body = response.data;
     if (!("error" in body)) {
       let dictionary = body;

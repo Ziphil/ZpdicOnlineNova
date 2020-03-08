@@ -31,7 +31,7 @@ class DictionaryRenameFormBase extends ComponentBase<Props, State> {
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let name = this.state.name;
-    let dictionary = await http.post("dictionaryRename", {number, name});
+    let dictionary = await http.post("renameDictionary", {number, name});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }

@@ -13,88 +13,88 @@ import {
 
 
 export const SERVER_PATH = {
-  dictionaryCreate: "/api/dictionary/create",
-  dictionarySearch: "/api/dictionary/search",
-  dictionaryInfo: "/api/dictionary/info",
-  dictionaryList: "/api/dictionary/list",
-  dictionaryListAll: "/api/dictionary/list/all",
-  dictionaryRename: "/api/dictionary/rename",
-  dictionaryUpload: "/api/dictionary/upload",
-  userInfo: "/api/user/info",
-  userLogin: "/api/user/login",
-  userRegister: "/api/user/register"
+  createDictionary: "/api/dictionary/create",
+  uploadDictionary: "/api/dictionary/upload",
+  renameDictionary: "/api/dictionary/rename",
+  searchDictionary: "/api/dictionary/search",
+  fetchDictionaryInfo: "/api/dictionary/info",
+  fetchDictionaries: "/api/dictionary/list",
+  fetchAllDictionaries: "/api/dictionary/list/all",
+  login: "/api/user/login",
+  registerUser: "/api/user/register",
+  fetchUserInfo: "/api/user/info"
 };
 
 export type ProcessType = {
-  dictionaryCreate: {
+  createDictionary: {
     get: Noop,
     post: {
       request: Required<"name">,
       response: SlimeDictionarySkeleton
     }
   },
-  dictionarySearch: {
-    get: {
-      request: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
-      response: MayError<Array<SlimeWordSkeleton>>
-    },
-    post: Noop
-  },
-  dictionaryInfo: {
-    get: {
+  uploadDictionary: {
+    get: Noop,
+    post: {
       request: Required<"number">,
-      response: MayError<SlimeDictionarySkeleton>
+      response: SlimeDictionarySkeleton
     }
-    post: Noop
   },
-  dictionaryList: {
-    get: {
-      request: {},
-      response: Array<SlimeDictionarySkeleton>
-    },
-    post: Noop
-  },
-  dictionaryListAll: {
-    get: {
-      request: {},
-      response: Array<SlimeDictionarySkeleton>
-    }
-    post: Noop
-  },
-  dictionaryRename: {
+  renameDictionary: {
     get: Noop,
     post: {
       request: Required<"number" | "name">,
       response: SlimeDictionarySkeleton
     }
   },
-  dictionaryUpload: {
-    get: Noop,
-    post: {
-      request: Required<"number">,
-      response: SlimeDictionarySkeleton
-    }
-  },
-  userInfo: {
+  searchDictionary: {
     get: {
-      request: {},
-      response: UserSkeleton
+      request: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
+      response: MayError<Array<SlimeWordSkeleton>>
     },
     post: Noop
   },
-  userLogin: {
+  fetchDictionaryInfo: {
+    get: {
+      request: Required<"number">,
+      response: MayError<SlimeDictionarySkeleton>
+    }
+    post: Noop
+  },
+  fetchDictionaries: {
+    get: {
+      request: {},
+      response: Array<SlimeDictionarySkeleton>
+    },
+    post: Noop
+  },
+  fetchAllDictionaries: {
+    get: {
+      request: {},
+      response: Array<SlimeDictionarySkeleton>
+    }
+    post: Noop
+  },
+  login: {
     get: Noop,
     post: {
       request: Required<"name" | "password">,
       response: MayError<UserSkeleton & {token: string}>
     }
   },
-  userRegister: {
+  registerUser: {
     get: Noop,
     post: {
       request: Required<"name" | "email" | "password">,
       response: MayError<UserSkeleton>
     }
+  },
+  fetchUserInfo: {
+    get: {
+      request: {},
+      response: UserSkeleton
+    },
+    post: Noop
   }
 };
 
