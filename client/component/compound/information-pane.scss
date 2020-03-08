@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  @include unordered-list;
+  padding: 8px 20px;
+  line-height: $line-height;
+}
+
+.root.error {
+  @include pane(error);
+}
+
+.root.information {
+  @include pane(information);
+}

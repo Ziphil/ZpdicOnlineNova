@@ -7,6 +7,7 @@ export * from "./dictionary-pane";
 export * from "./dictionary-upload-form";
 export * from "./header";
 export * from "./header-menu-item";
+export * from "./information-pane";
 export * from "./login-form";
 export * from "./logo";
 export * from "./menu";

@@ -16,6 +16,9 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  InformationPane
+} from "/client/component/compound";
+import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
@@ -72,9 +75,9 @@ class RegisterFormBase extends ComponentBase<Props, State> {
         errorMessage = "ログインに失敗しました。珍しいですね!";
       }
       errorNode = (
-        <ul styleName="error">
-          <li>{errorMessage}</li>
-        </ul>
+        <div styleName="error">
+          <InformationPane texts={[errorMessage]} color="error"/>
+        </div>
       );
     }
     let node = (
