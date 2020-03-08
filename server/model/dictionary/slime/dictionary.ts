@@ -31,6 +31,9 @@ export class SlimeDictionary {
   @prop({required: true, ref: User})
   public user!: Ref<User>;
 
+  @prop()
+  public secret!: boolean;
+
   @prop({required: true})
   public externalData!: object;
 
@@ -40,6 +43,7 @@ export class SlimeDictionary {
     dictionary.status = "ready";
     dictionary.name = name;
     dictionary.user = user;
+    dictionary.secret = false;
     dictionary.externalData = {};
     await dictionary.save();
     return dictionary;
@@ -141,7 +145,7 @@ export class SlimeDictionary {
     return words;
   }
 
-  public async countWords(this: SlimeDictionaryDocument): Promise<number> {
+  public async countWords(): Promise<number> {
     let count = SlimeWordModel.countDocuments({dictionary: this}).exec();
     return count;
   }
