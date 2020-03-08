@@ -71,8 +71,18 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     return node;
   }
 
-  private renderNothingNode(): ReactNode {
-    let label = "?";
+  private renderChangeEmailFormNode(): ReactNode {
+    let label = "メールアドレス変更";
+    let node = (
+      <SettingPane label={label} key={label}>
+        Not yet implemented
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderChangePasswordFormNode(): ReactNode {
+    let label = "パスワード変更";
     let node = (
       <SettingPane label={label} key={label}>
         Not yet implemented
@@ -92,8 +102,9 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     if (mode === "dictionary") {
       contentNodes.push(this.renderDictionaryListNode());
       contentNodes.push(this.renderCreateDictionaryFormNode());
-    } else {
-      contentNodes.push(this.renderNothingNode());
+    } else if (mode === "setting") {
+      contentNodes.push(this.renderChangeEmailFormNode());
+      contentNodes.push(this.renderChangePasswordFormNode());
     }
     let node = (
       <div styleName="page">
