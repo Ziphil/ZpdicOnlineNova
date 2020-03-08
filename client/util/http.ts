@@ -12,23 +12,23 @@ import {
 } from "/server/controller/type";
 
 
-export async function get<N extends ProcessName>(name: N, params: AnyRecord<RequestType[N]["get"]>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType[N]["get"]>> {
+export async function get<N extends ProcessName>(name: N, params: AnyRecord<RequestType<N, "get">>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "get">>> {
   let url = SERVER_PATH[name];
   let headers = createHeaders();
   let validateStatus = createValidateStatus(allowedStatuses);
-  let response = await axios.get<ResponseType[N]["get"]>(url, {headers, params, validateStatus});
+  let response = await axios.get<ResponseType<N, "get">>(url, {headers, params, validateStatus});
   return response;
 }
 
-export async function post<N extends ProcessName>(name: N, data: AnyRecord<RequestType[N]["post"]>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType[N]["post"]>> {
+export async function post<N extends ProcessName>(name: N, data: AnyRecord<RequestType<N, "post">>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "post">>> {
   let url = SERVER_PATH[name];
   let headers = createHeaders();
   let validateStatus = createValidateStatus(allowedStatuses);
-  let response = await axios.post<ResponseType[N]["post"]>(url, data, {headers, validateStatus});
+  let response = await axios.post<ResponseType<N, "post">>(url, data, {headers, validateStatus});
   return response;
 }
 
-export async function postFile<N extends ProcessName>(name: N, data: AnyRecord<RequestType[N]["post"]> & {file: Blob}, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType[N]["post"]>> {
+export async function postFile<N extends ProcessName>(name: N, data: AnyRecord<RequestType<N, "post">> & {file: Blob}, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "post">>> {
   let url = SERVER_PATH[name];
   let headers = createHeaders();
   let validateStatus = createValidateStatus(allowedStatuses);
@@ -38,12 +38,12 @@ export async function postFile<N extends ProcessName>(name: N, data: AnyRecord<R
     nextData.append(key, anyData[key]);
   }
   headers["content-type"] = "multipart/form-data";
-  let response = await axios.post<ResponseType[N]["post"]>(url, nextData, {headers, validateStatus});
+  let response = await axios.post<ResponseType<N, "post">>(url, nextData, {headers, validateStatus});
   return response;
 }
 
 export async function login(data: {name: string, password: string}): Promise<boolean> {
-  let response = await post("userLogin", data, [400]);
+  let response = await post("login", data, [400]);
   let body = response.data;
   if (!("error" in body)) {
     let token = body.token;

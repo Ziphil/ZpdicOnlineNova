@@ -37,7 +37,7 @@ export class SlimeDictionary {
   @prop()
   public secret!: boolean;
 
-  @prop({required: true})
+  @prop()
   public externalData!: object;
 
   public static async createEmpty(name: string, user: UserDocument): Promise<SlimeDictionaryDocument> {
@@ -96,6 +96,12 @@ export class SlimeDictionary {
       });
     });
     return await promise;
+  }
+
+  public async rename(this: SlimeDictionaryDocument, name: string): Promise<SlimeDictionaryDocument> {
+    this.name = name;
+    await this.save();
+    return this;
   }
 
   public async search(search: string, mode: string, type: string, offset?: number, size?: number): Promise<Array<SlimeWordDocument>> {

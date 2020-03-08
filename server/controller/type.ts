@@ -13,97 +13,97 @@ import {
 
 
 export const SERVER_PATH = {
-  dictionaryCreate: "/api/dictionary/create",
-  dictionarySearch: "/api/dictionary/search",
-  dictionaryInfo: "/api/dictionary/info",
-  dictionaryList: "/api/dictionary/list",
-  dictionaryListAll: "/api/dictionary/list/all",
-  dictionaryUpload: "/api/dictionary/upload",
-  userInfo: "/api/user/info",
-  userLogin: "/api/user/login",
-  userRegister: "/api/user/register"
+  createDictionary: "/api/dictionary/create",
+  uploadDictionary: "/api/dictionary/upload",
+  renameDictionary: "/api/dictionary/rename",
+  searchDictionary: "/api/dictionary/search",
+  fetchDictionaryInfo: "/api/dictionary/info",
+  fetchDictionaries: "/api/dictionary/list",
+  fetchAllDictionaries: "/api/dictionary/list/all",
+  login: "/api/user/login",
+  registerUser: "/api/user/register",
+  fetchUserInfo: "/api/user/info"
 };
 
-export type ResponseType = {
-  dictionaryCreate: {
-    get: never,
-    post: SlimeDictionarySkeleton
+export type ProcessType = {
+  createDictionary: {
+    get: Noop,
+    post: {
+      request: Required<"name">,
+      response: SlimeDictionarySkeleton
+    }
   },
-  dictionarySearch: {
-    get: MayError<Array<SlimeWordSkeleton>>,
-    post: never
+  uploadDictionary: {
+    get: Noop,
+    post: {
+      request: Required<"number">,
+      response: SlimeDictionarySkeleton
+    }
   },
-  dictionaryInfo: {
-    get: MayError<SlimeDictionarySkeleton>,
-    post: never
+  renameDictionary: {
+    get: Noop,
+    post: {
+      request: Required<"number" | "name">,
+      response: SlimeDictionarySkeleton
+    }
   },
-  dictionaryList: {
-    get: Array<SlimeDictionarySkeleton>,
-    post: never
+  searchDictionary: {
+    get: {
+      request: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
+      response: MayError<Array<SlimeWordSkeleton>>
+    },
+    post: Noop
   },
-  dictionaryListAll: {
-    get: Array<SlimeDictionarySkeleton>,
-    post: never
-  }
-  dictionaryUpload: {
-    get: never,
-    post: SlimeDictionarySkeleton
+  fetchDictionaryInfo: {
+    get: {
+      request: Required<"number">,
+      response: MayError<SlimeDictionarySkeleton>
+    }
+    post: Noop
   },
-  userInfo: {
-    get: UserSkeleton,
-    post: never
+  fetchDictionaries: {
+    get: {
+      request: {},
+      response: Array<SlimeDictionarySkeleton>
+    },
+    post: Noop
   },
-  userLogin: {
-    get: never,
-    post: MayError<UserSkeleton & {token: string}>
-  }
-  userRegister: {
-    get: never,
-    post: MayError<UserSkeleton>
-  }
-};
-
-export type RequestType = {
-  dictionaryCreate: {
-    get: never,
-    post: Required<"name">
+  fetchAllDictionaries: {
+    get: {
+      request: {},
+      response: Array<SlimeDictionarySkeleton>
+    }
+    post: Noop
   },
-  dictionarySearch: {
-    get: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
-    post: never
+  login: {
+    get: Noop,
+    post: {
+      request: Required<"name" | "password">,
+      response: MayError<UserSkeleton & {token: string}>
+    }
   },
-  dictionaryInfo: {
-    get: Required<"number">,
-    post: never
+  registerUser: {
+    get: Noop,
+    post: {
+      request: Required<"name" | "email" | "password">,
+      response: MayError<UserSkeleton>
+    }
   },
-  dictionaryList: {
-    get: {},
-    post: never
-  },
-  dictionaryListAll: {
-    get: {},
-    post: never
-  }
-  dictionaryUpload: {
-    get: never,
-    post: Required<"number">
-  },
-  userInfo: {
-    get: {},
-    post: never
-  },
-  userLogin: {
-    get: never,
-    post: Required<"name" | "password">
-  }
-  userRegister: {
-    get: never,
-    post: Required<"name" | "email" | "password">
+  fetchUserInfo: {
+    get: {
+      request: {},
+      response: UserSkeleton
+    },
+    post: Noop
   }
 };
 
 export type MethodType = "get" | "post";
-export type ProcessName = keyof ResponseType & keyof RequestType;
+export type ProcessName = keyof ProcessType;
 
+export type RequestType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["request"];
+export type ResponseType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["response"];
+
+type Noop = {request: never, response: never};
 type Required<S extends string> = {[N in S]: string};
 type Optional<S extends string> = {[N in S]?: string};

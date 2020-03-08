@@ -21,8 +21,8 @@ import {
 import * as http from "/client/util/http";
 
 
-@applyStyle(require("./dictionary-creation-form.scss"))
-class DictionaryCreationFormBase extends ComponentBase<Props, State> {
+@applyStyle(require("./create-dictionary-form.scss"))
+class CreateDictionaryFormBase extends ComponentBase<Props, State> {
 
   public state: State = {
     name: ""
@@ -30,7 +30,7 @@ class DictionaryCreationFormBase extends ComponentBase<Props, State> {
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let name = this.state.name;
-    let dictionary = await http.post("dictionaryCreate", {name});
+    let dictionary = await http.post("createDictionary", {name});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }
@@ -39,7 +39,7 @@ class DictionaryCreationFormBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="名称" onValueChange={(value) => this.setState({name: value})}/>
+        <Input label="名称" initialValue="新規辞書" onValueChange={(value) => this.setState({name: value})}/>
         <Button label="作成" onClick={this.click.bind(this)}/>
       </form>
     );
@@ -56,4 +56,4 @@ type State = {
   name: string;
 };
 
-export let DictionaryCreationForm = withRouter(DictionaryCreationFormBase);
+export let CreateDictionaryForm = withRouter(CreateDictionaryFormBase);

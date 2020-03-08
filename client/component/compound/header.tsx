@@ -30,7 +30,7 @@ class HeaderBase extends ComponentBase<Props, State> {
   public async componentDidMount(): Promise<void> {
     if (http.hasToken()) {
       try {
-        let response = await http.get("userInfo", {});
+        let response = await http.get("fetchUserInfo", {});
         let userName = response.data.name;
         this.setState({userName});
       } catch (error) {

@@ -32,8 +32,23 @@ import {
 @controller("/")
 export class UserController extends Controller {
 
-  @post(SERVER_PATH["userRegister"])
-  public async postRegister(request: PostRequest<"userRegister">, response: PostResponse<"userRegister">): Promise<void> {
+  @post(SERVER_PATH["login"])
+  @before(authenticate("1y"))
+  public async postLogin(request: PostRequest<"login">, response: PostResponse<"login">): Promise<void> {
+    let token = request.token;
+    let user = request.user;
+    if (token && user) {
+      let rawBody = new UserSkeleton(user);
+      let body = {...rawBody, token};
+      response.json(body);
+    } else {
+      let body = new CustomErrorSkeleton("invalidRequest");
+      response.status(400).json(body);
+    }
+  }
+
+  @post(SERVER_PATH["registerUser"])
+  public async postRegisterUser(request: PostRequest<"registerUser">, response: PostResponse<"registerUser">): Promise<void> {
     let name = request.body.name;
     let email = request.body.email;
     let password = request.body.password;
@@ -64,24 +79,9 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["userLogin"])
-  @before(authenticate("1y"))
-  public async postLogin(request: PostRequest<"userLogin">, response: PostResponse<"userLogin">): Promise<void> {
-    let token = request.token;
-    let user = request.user;
-    if (token && user) {
-      let rawBody = new UserSkeleton(user);
-      let body = {...rawBody, token};
-      response.json(body);
-    } else {
-      let body = new CustomErrorSkeleton("invalidRequest");
-      response.status(400).json(body);
-    }
-  }
-
-  @get(SERVER_PATH["userInfo"])
+  @get(SERVER_PATH["fetchUserInfo"])
   @before(verifyUser())
-  public async getInfo(request: GetRequest<"userInfo">, response: GetResponse<"userInfo">): Promise<void> {
+  public async getFetchUserInfo(request: GetRequest<"fetchUserInfo">, response: GetResponse<"fetchUserInfo">): Promise<void> {
     let user = request.user!;
     let body = new UserSkeleton(user);
     response.json(body);

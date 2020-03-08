@@ -11,11 +11,8 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
-  DictionaryCreationForm,
   DictionaryList,
-  Header,
-  Menu,
-  SettingPane
+  Header
 } from "/client/component/compound";
 import {
   applyStyle
@@ -34,7 +31,7 @@ class DictionaryListPageBase extends ComponentBase<Props, State, Params> {
   };
 
   public async componentDidMount(): Promise<void> {
-    let response = await http.get("dictionaryListAll", {});
+    let response = await http.get("fetchAllDictionaries", {});
     let dictionaries = response.data;
     this.setState({dictionaries});
   }

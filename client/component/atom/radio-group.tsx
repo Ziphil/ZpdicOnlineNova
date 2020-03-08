@@ -21,9 +21,10 @@ export class RadioGroup extends Component<Props, State> {
     value: null
   };
 
-  public componentDidMount(): void {
+  public constructor(props: Props) {
+    super(props);
     if (this.props.initialValue !== undefined) {
-      this.setState({value: this.props.initialValue});
+      this.state = {value: this.props.initialValue};
     }
   }
 

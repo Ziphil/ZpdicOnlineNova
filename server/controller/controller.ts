@@ -48,15 +48,15 @@ export class Controller {
 }
 
 
-export interface Request<N extends ProcessName, M extends MethodType> extends ExpressRequest<ExpressParams, ResponseType[N][M], RequestType[N][M]> {
+export interface Request<N extends ProcessName, M extends MethodType> extends ExpressRequest<ExpressParams, ResponseType<N, M>, RequestType<N, M>> {
 
   // GET リクエストの際のクエリ文字列をパースした結果です。
   // 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。
-  query: Extract<RequestType[N]["get"], RequestType[N][M]>;
+  query: Extract<RequestType<N, "get">, RequestType<N, M>>;
 
   // POST リクエストの際のリクエストボディをパースした結果です。
   // 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。
-  body: Extract<RequestType[N]["post"], RequestType[N][M]>;
+  body: Extract<RequestType<N, "post">, RequestType<N, M>>;
 
   // ユーザーの検証の結果として得られた JSON トークンが格納されます。
   // このプロパティは、authenticate ミドルウェアが呼び出された場合にのみ、値が格納されます。
@@ -73,7 +73,7 @@ export interface Request<N extends ProcessName, M extends MethodType> extends Ex
 }
 
 
-export interface Response<N extends ProcessName, M extends MethodType> extends ExpressResponse<ResponseType[N][M]> {
+export interface Response<N extends ProcessName, M extends MethodType> extends ExpressResponse<ResponseType<N, M>> {
 
 }
 

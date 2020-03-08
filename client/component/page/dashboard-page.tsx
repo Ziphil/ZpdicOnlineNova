@@ -11,7 +11,7 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
-  DictionaryCreationForm,
+  CreateDictionaryForm,
   DictionaryList,
   Header,
   Menu,
@@ -35,7 +35,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   public async componentDidMount(): Promise<void> {
     try {
-      let response = await http.get("dictionaryList", {});
+      let response = await http.get("fetchDictionaries", {});
       let dictionaries = response.data;
       this.setState({dictionaries});
     } catch (error) {
@@ -58,21 +58,31 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     return node;
   }
 
-  private renderDictionaryCreationFormNode(): ReactNode {
+  private renderCreateDictionaryFormNode(): ReactNode {
     let label = "新規作成";
     let description = `
       空の辞書を作成します。
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <DictionaryCreationForm onSubmit={() => location.reload()}/>
+        <CreateDictionaryForm onSubmit={() => location.reload()}/>
       </SettingPane>
     );
     return node;
   }
 
-  private renderNothingNode(): ReactNode {
-    let label = "?";
+  private renderChangeEmailFormNode(): ReactNode {
+    let label = "メールアドレス変更";
+    let node = (
+      <SettingPane label={label} key={label}>
+        Not yet implemented
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderChangePasswordFormNode(): ReactNode {
+    let label = "パスワード変更";
     let node = (
       <SettingPane label={label} key={label}>
         Not yet implemented
@@ -91,9 +101,10 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     let contentNodes = [];
     if (mode === "dictionary") {
       contentNodes.push(this.renderDictionaryListNode());
-      contentNodes.push(this.renderDictionaryCreationFormNode());
-    } else {
-      contentNodes.push(this.renderNothingNode());
+      contentNodes.push(this.renderCreateDictionaryFormNode());
+    } else if (mode === "setting") {
+      contentNodes.push(this.renderChangeEmailFormNode());
+      contentNodes.push(this.renderChangePasswordFormNode());
     }
     let node = (
       <div styleName="page">
