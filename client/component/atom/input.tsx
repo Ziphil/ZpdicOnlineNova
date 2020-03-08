@@ -22,6 +22,13 @@ export class Input extends Component<Props, State> {
     value: ""
   };
 
+  public constructor(props: Props) {
+    super(props);
+    if (this.props.initialValue !== undefined) {
+      this.state = {value: this.props.initialValue};
+    }
+  }
+
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
     let value = event.target.value;
     this.setState({value});
@@ -53,6 +60,7 @@ export class Input extends Component<Props, State> {
 type Props = {
   label?: string,
   type: "text" | "password",
+  initialValue?: string,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
   onValueChange?: (value: string) => void
 };
