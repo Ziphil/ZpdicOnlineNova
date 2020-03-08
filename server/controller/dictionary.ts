@@ -63,6 +63,16 @@ export class DictionaryController extends Controller {
     response.json(body);
   }
 
+  @post(SERVER_PATH["changeDictionarySecret"])
+  @before(verifyUser(), verifyDictionary())
+  public async postChangeDictionarySecret(request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {
+    let dictionary = request.dictionary!;
+    let secret = !!request.body.secret;
+    let nextDictionary = await dictionary.changeSecret(secret);
+    let body = new SlimeDictionarySkeleton(nextDictionary);
+    response.json(body);
+  }
+
   @get(SERVER_PATH["searchDictionary"])
   public async getSearchDictionary(request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
     let number = parseInt(request.query.number, 10);

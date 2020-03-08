@@ -104,6 +104,12 @@ export class SlimeDictionary {
     return this;
   }
 
+  public async changeSecret(this: SlimeDictionaryDocument, secret: boolean): Promise<SlimeDictionaryDocument> {
+    this.secret = secret;
+    await this.save();
+    return this;
+  }
+
   public async search(search: string, mode: string, type: string, offset?: number, size?: number): Promise<Array<SlimeWordDocument>> {
     let outerThis = this;
     let createQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {

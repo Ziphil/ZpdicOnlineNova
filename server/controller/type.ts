@@ -15,7 +15,8 @@ import {
 export const SERVER_PATH = {
   createDictionary: "/api/dictionary/create",
   uploadDictionary: "/api/dictionary/upload",
-  renameDictionary: "/api/dictionary/rename",
+  renameDictionary: "/api/dictionary/edit/name",
+  changeDictionarySecret: "/api/dictionary/edit/secret",
   searchDictionary: "/api/dictionary/search",
   fetchDictionaryInfo: "/api/dictionary/info",
   fetchDictionaries: "/api/dictionary/list",
@@ -47,6 +48,13 @@ export type ProcessType = {
       response: SlimeDictionarySkeleton
     }
   },
+  changeDictionarySecret: {
+    get: Noop,
+    post: {
+      request: Required<"number" | "secret">,
+      response: SlimeDictionarySkeleton
+    }
+  }
   searchDictionary: {
     get: {
       request: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
