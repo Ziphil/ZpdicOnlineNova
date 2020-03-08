@@ -43,6 +43,16 @@ export class DictionaryController extends Controller {
     response.json(body);
   }
 
+  @post(SERVER_PATH["dictionaryRename"])
+  @before(verifyUser(), verifyDictionary())
+  public async postRename(request: PostRequest<"dictionaryRename">, response: PostResponse<"dictionaryRename">): Promise<void> {
+    let dictionary = request.dictionary!;
+    let name = request.body.name;
+    let nextDictionary = await dictionary.rename(name);
+    let body = new SlimeDictionarySkeleton(nextDictionary);
+    response.json(body);
+  }
+
   @post(SERVER_PATH["dictionaryUpload"])
   @before(verifyUser(), verifyDictionary())
   public async postUpload(request: PostRequest<"dictionaryUpload">, response: PostResponse<"dictionaryUpload">): Promise<void> {
