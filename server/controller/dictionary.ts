@@ -101,7 +101,7 @@ export class DictionaryController extends Controller {
 
   @get(SERVER_PATH["dictionaryListAll"])
   public async getListAll(request: GetRequest<"dictionaryListAll">, response: GetResponse<"dictionaryListAll">): Promise<void> {
-    let dictionaries = await SlimeDictionaryModel.find();
+    let dictionaries = await SlimeDictionaryModel.findPublic();
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<SlimeDictionarySkeleton>(async (resolve, reject) => {
         try {

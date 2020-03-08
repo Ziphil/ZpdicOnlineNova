@@ -49,6 +49,11 @@ export class SlimeDictionary {
     return dictionary;
   }
 
+  public static async findPublic(): Promise<Array<SlimeDictionaryDocument>> {
+    let dictionaries = await SlimeDictionaryModel.find().ne("secret", true).exec();
+    return dictionaries;
+  }
+
   public static async findByNumber(number: number): Promise<SlimeDictionaryDocument | null> {
     let dictionary = await SlimeDictionaryModel.findOne({number}).exec();
     return dictionary;
