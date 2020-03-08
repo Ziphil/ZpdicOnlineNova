@@ -53,7 +53,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <RenameDictionaryForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name}/>
+        <RenameDictionaryForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name} onSubmit={() => location.reload()}/>
       </SettingPane>
     );
     return node;
