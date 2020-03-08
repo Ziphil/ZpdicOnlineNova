@@ -25,94 +25,85 @@ export const SERVER_PATH = {
   userRegister: "/api/user/register"
 };
 
-export type ResponseType = {
+export type ProcessType = {
   dictionaryCreate: {
-    get: never,
-    post: SlimeDictionarySkeleton
+    get: Noop,
+    post: {
+      request: Required<"name">,
+      response: SlimeDictionarySkeleton
+    }
   },
   dictionarySearch: {
-    get: MayError<Array<SlimeWordSkeleton>>,
-    post: never
+    get: {
+      request: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
+      response: MayError<Array<SlimeWordSkeleton>>
+    },
+    post: Noop
   },
   dictionaryInfo: {
-    get: MayError<SlimeDictionarySkeleton>,
-    post: never
+    get: {
+      request: Required<"number">,
+      response: MayError<SlimeDictionarySkeleton>
+    }
+    post: Noop
   },
   dictionaryList: {
-    get: Array<SlimeDictionarySkeleton>,
-    post: never
+    get: {
+      request: {},
+      response: Array<SlimeDictionarySkeleton>
+    },
+    post: Noop
   },
   dictionaryListAll: {
-    get: Array<SlimeDictionarySkeleton>,
-    post: never
+    get: {
+      request: {},
+      response: Array<SlimeDictionarySkeleton>
+    }
+    post: Noop
   },
   dictionaryRename: {
-    get: never,
-    post: SlimeDictionarySkeleton
+    get: Noop,
+    post: {
+      request: Required<"number" | "name">,
+      response: SlimeDictionarySkeleton
+    }
   },
   dictionaryUpload: {
-    get: never,
-    post: SlimeDictionarySkeleton
+    get: Noop,
+    post: {
+      request: Required<"number">,
+      response: SlimeDictionarySkeleton
+    }
   },
   userInfo: {
-    get: UserSkeleton,
-    post: never
+    get: {
+      request: {},
+      response: UserSkeleton
+    },
+    post: Noop
   },
   userLogin: {
-    get: never,
-    post: MayError<UserSkeleton & {token: string}>
+    get: Noop,
+    post: {
+      request: Required<"name" | "password">,
+      response: MayError<UserSkeleton & {token: string}>
+    }
   },
   userRegister: {
-    get: never,
-    post: MayError<UserSkeleton>
-  }
-};
-
-export type RequestType = {
-  dictionaryCreate: {
-    get: never,
-    post: Required<"name">
-  },
-  dictionarySearch: {
-    get: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
-    post: never
-  },
-  dictionaryInfo: {
-    get: Required<"number">,
-    post: never
-  },
-  dictionaryList: {
-    get: {},
-    post: never
-  },
-  dictionaryListAll: {
-    get: {},
-    post: never
-  },
-  dictionaryRename: {
-    get: never,
-    post: Required<"number" | "name">
-  },
-  dictionaryUpload: {
-    get: never,
-    post: Required<"number">
-  },
-  userInfo: {
-    get: {},
-    post: never
-  },
-  userLogin: {
-    get: never,
-    post: Required<"name" | "password">
-  },
-  userRegister: {
-    get: never,
-    post: Required<"name" | "email" | "password">
+    get: Noop,
+    post: {
+      request: Required<"name" | "email" | "password">,
+      response: MayError<UserSkeleton>
+    }
   }
 };
 
 export type MethodType = "get" | "post";
-export type ProcessName = keyof ResponseType & keyof RequestType;
+export type ProcessName = keyof ProcessType;
 
+export type RequestType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["request"];
+export type ResponseType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["response"];
+
+type Noop = {request: never, response: never};
 type Required<S extends string> = {[N in S]: string};
 type Optional<S extends string> = {[N in S]?: string};
