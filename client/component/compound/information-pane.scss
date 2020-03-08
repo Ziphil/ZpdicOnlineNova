@@ -4,15 +4,16 @@
 
 
 .root {
-  @include unordered-list;
   padding: 8px 20px;
   line-height: $line-height;
 }
 
 .root.error {
+  @include unordered-list("\F06A");
   @include pane(error);
 }
 
 .root.information {
+  @include unordered-list("\F05A");
   @include pane(information);
 }
