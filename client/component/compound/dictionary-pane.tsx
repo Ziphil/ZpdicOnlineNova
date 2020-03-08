@@ -44,7 +44,7 @@ class DictionaryPaneBase extends ComponentBase<Props, State> {
     let href = "/dictionary/" + this.props.dictionary.number;
     let statusString = "";
     if (status === "saving") {
-      statusString = "保存処理中";
+      statusString = "処理中";
     } else if (status === "error") {
       statusString = "エラー";
     } else {
