@@ -67,7 +67,7 @@ export function verifyDictionary(redirect?: string): RequestHandler {
     };
     let user = request.user!;
     let number = parseInt(request.query.number || request.body.number, 10);
-    let dictionary = await SlimeDictionaryModel.findOne({number, user});
+    let dictionary = await SlimeDictionaryModel.findOneByNumber(number, user);
     if (dictionary) {
       request.dictionary = dictionary;
       next();

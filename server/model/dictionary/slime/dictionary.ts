@@ -7,6 +7,9 @@ import {
   prop
 } from "@hasezoey/typegoose";
 import {
+  DocumentQuery
+} from "mongoose";
+import {
   SlimeStream,
   SlimeWordDocument,
   SlimeWordModel
@@ -54,13 +57,17 @@ export class SlimeDictionary {
     return dictionaries;
   }
 
-  public static async findByNumber(number: number): Promise<SlimeDictionaryDocument | null> {
-    let dictionary = await SlimeDictionaryModel.findOne({number}).exec();
+  public static async findOneByNumber(number: number, user?: UserDocument): Promise<SlimeDictionaryDocument | null> {
+    let query = SlimeDictionaryModel.findOne().where("number", number);
+    if (user) {
+      query = query.where("user", user);
+    }
+    let dictionary = await query.exec();
     return dictionary;
   }
 
   public static async findByUser(user: UserDocument): Promise<Array<SlimeDictionaryDocument>> {
-    let dictionaries = await SlimeDictionaryModel.find({user}).exec();
+    let dictionaries = await SlimeDictionaryModel.find().where("user", user).exec();
     return dictionaries;
   }
 
@@ -70,7 +77,7 @@ export class SlimeDictionary {
     this.status = "saving";
     this.externalData = {};
     await this.save();
-    await SlimeWordModel.deleteMany({dictionary: this}).exec();
+    await SlimeWordModel.deleteMany({}).where("dictionary", this).exec();
     let promise = new Promise<SlimeDictionaryDocument>((resolve, reject) => {
       let stream = new SlimeStream(path);
       let count = 0;
@@ -91,9 +98,9 @@ export class SlimeDictionary {
     return await promise;
   }
 
-  public async search(search: string, mode: string, type: string, offset: number, size: number): Promise<Array<SlimeWordDocument>> {
+  public async search(search: string, mode: string, type: string, offset?: number, size?: number): Promise<Array<SlimeWordDocument>> {
     let outerThis = this;
-    let createPredicate = function (innerMode: string, innerType: string): any {
+    let createQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
       let key = "";
       if (innerMode === "name") {
         key = "name";
@@ -103,60 +110,60 @@ export class SlimeDictionary {
         key = "informations.text";
       }
       let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
-      let predicate = {dictionary: outerThis} as any;
+      let query = SlimeWordModel.find().where("dictionary", outerThis);
       if (innerType === "exact") {
         let modifiedSearch = new RegExp("^" + escapedSearch + "$");
-        predicate[key] = modifiedSearch;
+        query = query.where(key, modifiedSearch);
       } else if (innerType === "prefix") {
         let modifiedSearch = new RegExp("^" + escapedSearch);
-        predicate[key] = modifiedSearch;
+        query = query.where(key, modifiedSearch);
       } else if (type === "suffix") {
         let modifiedSearch = new RegExp(escapedSearch + "$");
-        predicate[key] = modifiedSearch;
+        query = query.where(key, modifiedSearch);
       } else if (type === "part") {
         let modifiedSearch = new RegExp(escapedSearch);
-        predicate[key] = modifiedSearch;
+        query = query.where(key, modifiedSearch);
       } else if (type === "regular") {
         let modifiedSearch = new RegExp(search);
-        predicate[key] = modifiedSearch;
+        query = query.where(key, modifiedSearch);
       }
-      return predicate;
+      return query;
     };
-    let query = undefined as any;
+    let finalQuery;
     if (mode === "name") {
-      let predicate = createPredicate("name", type);
-      query = SlimeWordModel.find(predicate);
+      finalQuery = createQuery("name", type);
     } else if (mode === "equivalent") {
-      let predicate = createPredicate("equivalent", type);
-      query = SlimeWordModel.find(predicate);
+      finalQuery = createQuery("equivalent", type);
     } else if (mode === "content") {
-      let namePredicate = createPredicate("name", type);
-      let equivalentPredicate = createPredicate("equivalent", type);
-      let informationPredicate = createPredicate("information", type);
-      query = SlimeWordModel.find().or([namePredicate, equivalentPredicate, informationPredicate]);
+      let nameQuery = createQuery("name", type);
+      let equivalentQuery = createQuery("equivalent", type);
+      let informationQuery = createQuery("information", type);
+      finalQuery = SlimeWordModel.find().or([nameQuery.getQuery(), equivalentQuery.getQuery(), informationQuery.getQuery()]);
     } else if (mode === "both") {
-      let namePredicate = createPredicate("name", type);
-      let equivalentPredicate = createPredicate("equivalent", type);
-      query = SlimeWordModel.find().or([namePredicate, equivalentPredicate]);
+      let nameQuery = createQuery("name", type);
+      let equivalentQuery = createQuery("equivalent", type);
+      finalQuery = SlimeWordModel.find().or([nameQuery.getQuery(), equivalentQuery.getQuery()]);
+    } else {
+      finalQuery = SlimeWordModel.find();
     }
-    let words = [];
-    if (query !== undefined) {
-      if (size) {
-        words = await query.sort({name: 1}).skip(offset).limit(size).exec();
-      } else {
-        words = await query.sort({name: 1}).skip(offset).exec();
-      }
+    finalQuery.sort("name");
+    if (offset !== undefined) {
+      finalQuery = finalQuery.skip(offset);
     }
+    if (size !== undefined) {
+      finalQuery = finalQuery.limit(size);
+    }
+    let words = await finalQuery.exec();
     return words;
   }
 
   public async countWords(): Promise<number> {
-    let count = SlimeWordModel.countDocuments({dictionary: this}).exec();
+    let count = SlimeWordModel.countDocuments().where("dictionary", this).exec();
     return count;
   }
 
   private static async nextNumber(): Promise<number> {
-    let dictionaries = await SlimeDictionaryModel.find().select("number").sort({number: -1}).limit(1).exec();
+    let dictionaries = await SlimeDictionaryModel.find().select("number").sort("-number").limit(1).exec();
     if (dictionaries.length > 0) {
       return dictionaries[0].number + 1;
     } else {
