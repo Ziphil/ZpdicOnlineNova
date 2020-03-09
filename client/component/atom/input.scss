@@ -33,11 +33,9 @@
 }
 
 .button {
+  @include icon-font;
   width: 1.6em;
   margin: 0em 0em 0em -2em;
-  font-family: $icon-font-family;
-  font-weight: 900;
-  font-size: 90%;
   color: $link-color;
   line-height: 0.9;
   text-align: center;
