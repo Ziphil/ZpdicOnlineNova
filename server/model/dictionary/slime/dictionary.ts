@@ -98,8 +98,14 @@ export class SlimeDictionary {
     return await promise;
   }
 
-  public async rename(this: SlimeDictionaryDocument, name: string): Promise<SlimeDictionaryDocument> {
+  public async changeName(this: SlimeDictionaryDocument, name: string): Promise<SlimeDictionaryDocument> {
     this.name = name;
+    await this.save();
+    return this;
+  }
+
+  public async changeSecret(this: SlimeDictionaryDocument, secret: boolean): Promise<SlimeDictionaryDocument> {
+    this.secret = secret;
     await this.save();
     return this;
   }
@@ -185,6 +191,7 @@ export class SlimeDictionarySkeleton {
   public id: string;
   public number: number;
   public status: string;
+  public secret: boolean;
   public name: string;
   public wordSize?: number;
 
@@ -192,6 +199,7 @@ export class SlimeDictionarySkeleton {
     this.id = dictionary.id;
     this.number = dictionary.number;
     this.status = dictionary.status;
+    this.secret = dictionary.secret || false;
     this.name = dictionary.name;
   }
 

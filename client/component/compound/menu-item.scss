@@ -30,9 +30,9 @@
 }
 
 .icon {
-  font-family: $icon-font-family;
+  @include icon-font;
   font-size: 110%;
-  font-weight: 900;
+  line-height: 1;
   display: none;
   @include smartphone {
     display: inline;

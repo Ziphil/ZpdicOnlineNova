@@ -21,16 +21,23 @@ import {
 import * as http from "/client/util/http";
 
 
-@applyStyle(require("./create-dictionary-form.scss"))
-class CreateDictionaryFormBase extends ComponentBase<Props, State> {
+@applyStyle(require("./change-dictionary-name-form.scss"))
+class ChangeDictionaryNameFormBase extends ComponentBase<Props, State> {
 
   public state: State = {
     name: ""
   };
 
+  public constructor(props: any) {
+    super(props);
+    let name = this.props.currentName;
+    this.state = {name};
+  }
+
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
+    let number = this.props.number;
     let name = this.state.name;
-    let response = await http.post("createDictionary", {name});
+    let response = await http.post("changeDictionaryName", {number, name});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }
@@ -39,8 +46,8 @@ class CreateDictionaryFormBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="名称" initialValue="新規辞書" onValueChange={(value) => this.setState({name: value})}/>
-        <Button label="作成" onClick={this.click.bind(this)}/>
+        <Input label="名称" initialValue={this.props.currentName} onValueChange={(value) => this.setState({name: value})}/>
+        <Button label="変更" onClick={this.click.bind(this)}/>
       </form>
     );
     return node;
@@ -50,10 +57,12 @@ class CreateDictionaryFormBase extends ComponentBase<Props, State> {
 
 
 type Props = {
+  number: number,
+  currentName: string,
   onSubmit?: () => void
 };
 type State = {
   name: string;
 };
 
-export let CreateDictionaryForm = withRouter(CreateDictionaryFormBase);
+export let ChangeDictionaryNameForm = withRouter(ChangeDictionaryNameFormBase);

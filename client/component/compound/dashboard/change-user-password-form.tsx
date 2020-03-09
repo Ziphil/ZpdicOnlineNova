@@ -21,17 +21,16 @@ import {
 import * as http from "/client/util/http";
 
 
-@applyStyle(require("./rename-dictionary-form.scss"))
-class RenameDictionaryFormBase extends ComponentBase<Props, State> {
+@applyStyle(require("./change-user-password-form.scss"))
+class ChangeUserPasswordFormBase extends ComponentBase<Props, State> {
 
   public state: State = {
-    name: ""
+    password: ""
   };
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
-    let number = this.props.number;
-    let name = this.state.name;
-    let dictionary = await http.post("renameDictionary", {number, name});
+    let password = this.state.password;
+    let response = await http.post("changeUserPassword", {password});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }
@@ -40,7 +39,7 @@ class RenameDictionaryFormBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="名称" initialValue={this.props.currentName} onValueChange={(value) => this.setState({name: value})}/>
+        <Input label="パスワード" type="flexible" onValueChange={(value) => this.setState({password: value})}/>
         <Button label="変更" onClick={this.click.bind(this)}/>
       </form>
     );
@@ -51,12 +50,10 @@ class RenameDictionaryFormBase extends ComponentBase<Props, State> {
 
 
 type Props = {
-  number: number,
-  currentName: string,
   onSubmit?: () => void
 };
 type State = {
-  name: string;
+  password: string
 };
 
-export let RenameDictionaryForm = withRouter(RenameDictionaryFormBase);
+export let ChangeUserPasswordForm = withRouter(ChangeUserPasswordFormBase);

@@ -21,16 +21,21 @@ import {
 import * as http from "/client/util/http";
 
 
-@applyStyle(require("./create-dictionary-form.scss"))
-class CreateDictionaryFormBase extends ComponentBase<Props, State> {
+@applyStyle(require("./change-user-email-form.scss"))
+class ChangeUserEmailFormBase extends ComponentBase<Props, State> {
 
   public state: State = {
-    name: ""
+    email: ""
   };
+  public constructor(props: any) {
+    super(props);
+    let email = this.props.currentEmail;
+    this.state = {email};
+  }
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
-    let name = this.state.name;
-    let response = await http.post("createDictionary", {name});
+    let email = this.state.email;
+    let response = await http.post("changeUserEmail", {email});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }
@@ -39,8 +44,8 @@ class CreateDictionaryFormBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="名称" initialValue="新規辞書" onValueChange={(value) => this.setState({name: value})}/>
-        <Button label="作成" onClick={this.click.bind(this)}/>
+        <Input label="メールアドレス" initialValue={this.props.currentEmail} onValueChange={(value) => this.setState({email: value})}/>
+        <Button label="変更" onClick={this.click.bind(this)}/>
       </form>
     );
     return node;
@@ -50,10 +55,11 @@ class CreateDictionaryFormBase extends ComponentBase<Props, State> {
 
 
 type Props = {
+  currentEmail: string,
   onSubmit?: () => void
 };
 type State = {
-  name: string;
+  email: string
 };
 
-export let CreateDictionaryForm = withRouter(CreateDictionaryFormBase);
+export let ChangeUserEmailForm = withRouter(ChangeUserEmailFormBase);

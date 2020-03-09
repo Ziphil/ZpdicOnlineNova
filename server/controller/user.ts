@@ -79,6 +79,50 @@ export class UserController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["changeUserEmail"])
+  @before(verifyUser())
+  public async postChangeUserEmail(request: PostRequest<"changeUserEmail">, response: PostResponse<"changeUserEmail">): Promise<void> {
+    let user = request.user!;
+    let email = request.body.email;
+    try {
+      await user.changeEmail(email);
+      let body = new UserSkeleton(user);
+      response.send(body);
+    } catch (error) {
+      let body;
+      if (error.name === "ValidationError" && error.errors.email) {
+        body = new CustomErrorSkeleton("invalidEmail");
+      }
+      if (body) {
+        response.status(400).json(body);
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  @post(SERVER_PATH["changeUserPassword"])
+  @before(verifyUser())
+  public async postChangeUserPassword(request: PostRequest<"changeUserPassword">, response: PostResponse<"changeUserPassword">): Promise<void> {
+    let user = request.user!;
+    let password = request.body.password;
+    try {
+      await user.changePassword(password);
+      let body = new UserSkeleton(user);
+      response.send(body);
+    } catch (error) {
+      let body;
+      if (error.name === "CustomError" && error.type === "invalidPassword") {
+        body = new CustomErrorSkeleton("invalidPassword");
+      }
+      if (body) {
+        response.status(400).json(body);
+      } else {
+        throw error;
+      }
+    }
+  }
+
   @get(SERVER_PATH["fetchUserInfo"])
   @before(verifyUser())
   public async getFetchUserInfo(request: GetRequest<"fetchUserInfo">, response: GetResponse<"fetchUserInfo">): Promise<void> {

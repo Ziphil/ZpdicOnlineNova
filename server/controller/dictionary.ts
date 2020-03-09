@@ -48,18 +48,28 @@ export class DictionaryController extends Controller {
   public async postUploadDictionary(request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary!;
     let path = request.file.path;
-    let nextDictionary = await dictionary.upload(path);
-    let body = new SlimeDictionarySkeleton(nextDictionary);
+    await dictionary.upload(path);
+    let body = new SlimeDictionarySkeleton(dictionary);
     response.json(body);
   }
 
-  @post(SERVER_PATH["renameDictionary"])
+  @post(SERVER_PATH["changeDictionaryName"])
   @before(verifyUser(), verifyDictionary())
-  public async postRenameDictionary(request: PostRequest<"renameDictionary">, response: PostResponse<"renameDictionary">): Promise<void> {
+  public async postRenameDictionary(request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {
     let dictionary = request.dictionary!;
     let name = request.body.name;
-    let nextDictionary = await dictionary.rename(name);
-    let body = new SlimeDictionarySkeleton(nextDictionary);
+    await dictionary.changeName(name);
+    let body = new SlimeDictionarySkeleton(dictionary);
+    response.json(body);
+  }
+
+  @post(SERVER_PATH["changeDictionarySecret"])
+  @before(verifyUser(), verifyDictionary())
+  public async postChangeDictionarySecret(request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {
+    let dictionary = request.dictionary!;
+    let secret = !!request.body.secret;
+    await dictionary.changeSecret(secret);
+    let body = new SlimeDictionarySkeleton(dictionary);
     response.json(body);
   }
 

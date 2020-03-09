@@ -68,6 +68,16 @@ $page-horizontal-margin: 30px;
 $line-height: 1.6;
 
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 @mixin smartphone {
   @media screen and (max-width: $page-width + $page-horizontal-margin * 2) {
     @content;
@@ -88,6 +98,12 @@ $line-height: 1.6;
   border: 1px map-get($pane-border-color, $type) solid;
   border-radius: $large-border-radius;
   background: map-get($pane-background, $type);
+}
+
+@mixin icon-font {
+  font-family: $icon-font-family;
+  font-size: 90%;
+  font-weight: 900;
 }
 
 @mixin hoverable-pane($type) {

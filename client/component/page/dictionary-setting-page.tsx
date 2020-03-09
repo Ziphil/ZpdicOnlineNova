@@ -11,10 +11,11 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  ChangeDictionaryNameForm,
+  ChangeDictionarySecretForm,
   DictionaryHeader,
   Header,
   Menu,
-  RenameDictionaryForm,
   SettingPane,
   UploadDictionaryForm
 } from "/client/component/compound";
@@ -46,20 +47,33 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     }
   }
 
-  private renderRenameDictionaryFormNode(): ReactNode {
+  private renderChangeDictionaryNameForm(): ReactNode {
     let label = "名称変更";
     let description = `
-      辞書の名称を変更します。
+      この辞書の名称を変更します。
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <RenameDictionaryForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name} onSubmit={() => location.reload()}/>
+        <ChangeDictionaryNameForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name} onSubmit={() => location.reload()}/>
       </SettingPane>
     );
     return node;
   }
 
-  private renderUploadDictionaryFormNode(): ReactNode {
+  private renderChangeDictionarySecretForm(): ReactNode {
+    let label = "一覧表示変更";
+    let description = `
+      この辞書を辞書一覧ページに表示するかどうかを変更します。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <ChangeDictionarySecretForm number={this.state.dictionary!.number} currentSecret={this.state.dictionary!.secret} onSubmit={() => location.reload()}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderUploadDictionaryForm(): ReactNode {
     let label = "アップロード";
     let description = `
       ファイルをアップロードし、現在のデータを上書きします。
@@ -76,8 +90,9 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     let menuSpecs = [{mode: "general", label: "一般", iconLabel: "\uF013", href: ""}];
     let contentNodes = [];
     if (this.state.dictionary) {
-      contentNodes.push(this.renderRenameDictionaryFormNode());
-      contentNodes.push(this.renderUploadDictionaryFormNode());
+      contentNodes.push(this.renderChangeDictionaryNameForm());
+      contentNodes.push(this.renderChangeDictionarySecretForm());
+      contentNodes.push(this.renderUploadDictionaryForm());
     }
     let node = (
       <div styleName="page">

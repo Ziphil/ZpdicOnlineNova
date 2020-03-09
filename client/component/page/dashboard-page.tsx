@@ -11,9 +11,12 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  ChangeUserEmailForm,
+  ChangeUserPasswordForm,
   CreateDictionaryForm,
   DictionaryList,
   Header,
+  Loading,
   Menu,
   SettingPane
 } from "/client/component/compound";
@@ -24,68 +27,87 @@ import * as http from "/client/util/http";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
+import {
+  UserSkeleton
+} from "/server/model/user";
 
 
 @applyStyle(require("./dashboard-page.scss"))
 class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   public state: State = {
-    dictionaries: []
+    user: null,
+    dictionaries: null
   };
 
   public async componentDidMount(): Promise<void> {
     try {
-      let response = await http.get("fetchDictionaries", {});
-      let dictionaries = response.data;
-      this.setState({dictionaries});
+      {
+        let response = await http.get("fetchUserInfo", {});
+        let user = response.data;
+        this.setState({user});
+      }
+      {
+        let response = await http.get("fetchDictionaries", {});
+        let dictionaries = response.data;
+        this.setState({dictionaries});
+      }
     } catch (error) {
       this.jumpLogin(error);
     }
   }
 
-  private renderDictionaryListNode(): ReactNode {
+  private renderDictionaryList(): ReactNode {
     let label = "登録辞書一覧";
-    let badgeValue = this.state.dictionaries.length.toLocaleString("en-GB");
+    let badgeValue = (this.state.dictionaries !== null) ? this.state.dictionaries.length.toLocaleString("en-GB") : undefined;
     let description = `
       このユーザーに登録されている辞書の一覧です。
       辞書の閲覧や編集ができます。
     `;
     let node = (
       <SettingPane label={label} badgeValue={badgeValue} key={label} description={description}>
-        <DictionaryList dictionaries={this.state.dictionaries} showsSetting={true}/>
+        <Loading loading={this.state.dictionaries === null}>
+          <DictionaryList dictionaries={this.state.dictionaries!} showsSetting={true}/>
+        </Loading>
       </SettingPane>
     );
     return node;
   }
 
-  private renderCreateDictionaryFormNode(): ReactNode {
+  private renderCreateDictionaryForm(): ReactNode {
     let label = "新規作成";
     let description = `
       空の辞書を作成します。
     `;
     let node = (
-      <SettingPane label={label} key={label} description={description}>
+      <SettingPane label={label} description={description} key={label}>
         <CreateDictionaryForm onSubmit={() => location.reload()}/>
       </SettingPane>
     );
     return node;
   }
 
-  private renderChangeEmailFormNode(): ReactNode {
+  private renderChangeEmailForm(): ReactNode {
     let label = "メールアドレス変更";
+    let description = `
+      メールアドレスを変更します。
+    `;
     let node = (
-      <SettingPane label={label} key={label}>
-        Not yet implemented
+      <SettingPane label={label} description={description} key={label}>
+        <ChangeUserEmailForm currentEmail={this.state.user!.email} onSubmit={() => location.reload()}/>
       </SettingPane>
     );
     return node;
   }
 
-  private renderChangePasswordFormNode(): ReactNode {
+  private renderChangeUserPasswordForm(): ReactNode {
     let label = "パスワード変更";
+    let description = `
+      パスワードを変更します。
+    `;
     let node = (
-      <SettingPane label={label} key={label}>
-        Not yet implemented
+      <SettingPane label={label} description={description} key={label}>
+        <ChangeUserPasswordForm onSubmit={() => location.reload()}/>
       </SettingPane>
     );
     return node;
@@ -99,12 +121,14 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
       {mode: "logout", label: "ログアウト", iconLabel: "\uF2F5", href: "/"}
     ];
     let contentNodes = [];
-    if (mode === "dictionary") {
-      contentNodes.push(this.renderDictionaryListNode());
-      contentNodes.push(this.renderCreateDictionaryFormNode());
-    } else if (mode === "setting") {
-      contentNodes.push(this.renderChangeEmailFormNode());
-      contentNodes.push(this.renderChangePasswordFormNode());
+    if (this.state.user) {
+      if (mode === "dictionary") {
+        contentNodes.push(this.renderDictionaryList());
+        contentNodes.push(this.renderCreateDictionaryForm());
+      } else if (mode === "setting") {
+        contentNodes.push(this.renderChangeEmailForm());
+        contentNodes.push(this.renderChangeUserPasswordForm());
+      }
     }
     let node = (
       <div styleName="page">
@@ -124,7 +148,8 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionaries: Array<SlimeDictionarySkeleton>;
+  user: UserSkeleton | null,
+  dictionaries: Array<SlimeDictionarySkeleton> | null;
 };
 type Params = {
   mode: string

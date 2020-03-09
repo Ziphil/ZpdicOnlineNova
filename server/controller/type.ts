@@ -15,13 +15,16 @@ import {
 export const SERVER_PATH = {
   createDictionary: "/api/dictionary/create",
   uploadDictionary: "/api/dictionary/upload",
-  renameDictionary: "/api/dictionary/rename",
+  changeDictionaryName: "/api/dictionary/edit/name",
+  changeDictionarySecret: "/api/dictionary/edit/secret",
   searchDictionary: "/api/dictionary/search",
   fetchDictionaryInfo: "/api/dictionary/info",
   fetchDictionaries: "/api/dictionary/list",
   fetchAllDictionaries: "/api/dictionary/list/all",
   login: "/api/user/login",
   registerUser: "/api/user/register",
+  changeUserEmail: "/api/user/edit/email",
+  changeUserPassword: "/api/user/edit/password",
   fetchUserInfo: "/api/user/info"
 };
 
@@ -40,13 +43,20 @@ export type ProcessType = {
       response: SlimeDictionarySkeleton
     }
   },
-  renameDictionary: {
+  changeDictionaryName: {
     get: Noop,
     post: {
       request: Required<"number" | "name">,
       response: SlimeDictionarySkeleton
     }
   },
+  changeDictionarySecret: {
+    get: Noop,
+    post: {
+      request: Required<"number" | "secret">,
+      response: SlimeDictionarySkeleton
+    }
+  }
   searchDictionary: {
     get: {
       request: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
@@ -86,6 +96,20 @@ export type ProcessType = {
     get: Noop,
     post: {
       request: Required<"name" | "email" | "password">,
+      response: MayError<UserSkeleton>
+    }
+  },
+  changeUserEmail: {
+    get: Noop,
+    post: {
+      request: Required<"email">,
+      response: MayError<UserSkeleton>
+    }
+  },
+  changeUserPassword: {
+    get: Noop,
+    post: {
+      request: Required<"password">,
       response: MayError<UserSkeleton>
     }
   },

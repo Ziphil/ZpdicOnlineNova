@@ -67,7 +67,7 @@ class LoginFormBase extends ComponentBase<Props, State> {
         {errorNode}
         <form styleName="root">
           <Input label="ユーザー名" onValueChange={(value) => this.setState({name: value})}/>
-          <Input label="パスワード" type="password" onValueChange={(value) => this.setState({password: value})}/>
+          <Input label="パスワード" type="flexible" onValueChange={(value) => this.setState({password: value})}/>
           <div styleName="button-group">
             <Button label="ログイン" onClick={this.performLogin.bind(this)}/>
             {registerNode}
