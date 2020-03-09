@@ -9,6 +9,7 @@ import {
 } from "/server/controller/controller";
 import {
   login,
+  logout,
   verifyUser
 } from "/server/controller/middle";
 import {
@@ -45,6 +46,12 @@ export class UserController extends Controller {
       let body = new CustomErrorSkeleton("invalidRequest");
       response.status(400).json(body);
     }
+  }
+
+  @post(SERVER_PATH["logout"])
+  @before(logout())
+  public async postLogout(request: PostRequest<"logout">, response: PostResponse<"logout">): Promise<void> {
+    response.json(true);
   }
 
   @post(SERVER_PATH["registerUser"])

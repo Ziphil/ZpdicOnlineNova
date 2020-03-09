@@ -24,18 +24,18 @@ import * as http from "/client/util/http";
 class MenuBase extends ComponentBase<Props, State> {
 
   private async performLogout(event: MouseEvent<HTMLElement>): Promise<void> {
-    await http.logout();
+    let succeeded = await http.logout();
+    if (succeeded) {
+      this.props.history.push("/");
+    }
   }
 
   public render(): ReactNode {
-    let mode = this.props.mode;
     let itemNodes = this.props.specs.map((spec, index) => {
       let highlight = spec.mode === this.props.mode;
-      let onClick;
-      if (spec.mode === "logout") {
-        onClick = this.performLogout.bind(this);
-      }
-      return <MenuItem label={spec.label} iconLabel={spec.iconLabel} href={spec.href} highlight={highlight} onClick={onClick} key={index}/>;
+      let href = (spec.mode === "logout") ? undefined : spec.href;
+      let onClick = (spec.mode === "logout") ? this.performLogout.bind(this) : undefined;
+      return <MenuItem label={spec.label} iconLabel={spec.iconLabel} href={href} highlight={highlight} onClick={onClick} key={index}/>;
     });
     let node = (
       <nav styleName="root">

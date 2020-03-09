@@ -112,6 +112,7 @@ export function login(expiresIn: string): RequestHandler {
 export function logout(): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     response.clearCookie("authorization");
+    next();
   };
   return handler;
 }

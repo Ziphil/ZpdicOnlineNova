@@ -22,6 +22,7 @@ export const SERVER_PATH = {
   fetchDictionaries: "/api/dictionary/list",
   fetchAllDictionaries: "/api/dictionary/list/all",
   login: "/api/user/login",
+  logout: "/api/user/logout",
   registerUser: "/api/user/register",
   changeUserEmail: "/api/user/edit/email",
   changeUserPassword: "/api/user/edit/password",
@@ -92,6 +93,13 @@ export type ProcessType = {
       response: MayError<UserSkeleton & {token: string}>
     }
   },
+  logout: {
+    get: Noop,
+    post: {
+      request: {},
+      response: boolean
+    }
+  }
   registerUser: {
     get: Noop,
     post: {

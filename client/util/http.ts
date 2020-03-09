@@ -53,8 +53,10 @@ export async function login(data: {name: string, password: string}): Promise<boo
   }
 }
 
-export async function logout(): Promise<void> {
+export async function logout(): Promise<boolean> {
+  let response = await post("logout", {});
   localStorage.removeItem("login");
+  return true;
 }
 
 export function hasToken(): boolean {
