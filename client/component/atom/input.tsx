@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   ChangeEvent,
   Component,
+  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -18,15 +19,17 @@ export class Input extends Component<Props, State> {
     type: "text"
   };
 
-  public state: State = {
-    value: ""
-  };
-
   public constructor(props: Props) {
     super(props);
+    let value = "";
+    let type = this.props.type;
     if (this.props.initialValue !== undefined) {
-      this.state = {value: this.props.initialValue};
+      value = this.props.initialValue;
     }
+    if (type === "flexible") {
+      type = "password";
+    }
+    this.state = {value, type};
   }
 
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
@@ -40,15 +43,29 @@ export class Input extends Component<Props, State> {
     }
   }
 
+  private toggleType(event: MouseEvent<HTMLSpanElement>): void {
+    if (this.state.type === "text") {
+      this.setState({type: "password"});
+    } else {
+      this.setState({type: "text"});
+    }
+  }
+
   public render(): ReactNode {
     let labelNode;
+    let buttonNode;
     if (this.props.label) {
       labelNode = <div styleName="label">{this.props.label}</div>;
+    }
+    if (this.props.type === "flexible") {
+      let buttonStyleNames = ["button", this.state.type];
+      buttonNode = <span styleName={buttonStyleNames.join(" ")} onClick={this.toggleType.bind(this)}/>;
     }
     let node = (
       <label styleName="root">
         {labelNode}
-        <input styleName="input" type={this.props.type} value={this.state.value} onChange={this.handleChange.bind(this)}/>
+        <input styleName="input" type={this.state.type} value={this.state.value} onChange={this.handleChange.bind(this)}/>
+        {buttonNode}
       </label>
     );
     return node;
@@ -59,11 +76,12 @@ export class Input extends Component<Props, State> {
 
 type Props = {
   label?: string,
-  type: "text" | "password",
+  type: "text" | "password" | "flexible",
   initialValue?: string,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
   onValueChange?: (value: string) => void
 };
 type State = {
-  value: string
+  value: string,
+  type: "text" | "password"
 };

@@ -31,3 +31,29 @@
 .input:focus {
   box-shadow: $hover-box-shadow-setting $light-box-shadow-color;
 }
+
+.button {
+  width: 1.6em;
+  margin: 0em 0em 0em -2em;
+  font-family: $icon-font-family;
+  font-weight: 900;
+  font-size: 90%;
+  color: $link-color;
+  line-height: 0.9;
+  text-align: center;
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+}
+
+.button:hover {
+  color: $link-hover-color;
+}
+
+.button::before {
+  content: "\F070";
+}
+
+.button.password::before {
+  content: "\F06E";
+}
