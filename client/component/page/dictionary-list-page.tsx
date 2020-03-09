@@ -12,7 +12,8 @@ import {
 } from "/client/component/component";
 import {
   DictionaryList,
-  Header
+  Header,
+  Loading
 } from "/client/component/compound";
 import {
   applyStyle
@@ -27,7 +28,7 @@ import {
 class DictionaryListPageBase extends ComponentBase<Props, State, Params> {
 
   public state: State = {
-    dictionaries: []
+    dictionaries: null
   };
 
   public async componentDidMount(): Promise<void> {
@@ -41,7 +42,9 @@ class DictionaryListPageBase extends ComponentBase<Props, State, Params> {
       <div styleName="page">
         <Header/>
         <div styleName="content">
-          <DictionaryList dictionaries={this.state.dictionaries} showsSetting={false}/>
+          <Loading loading={this.state.dictionaries === null}>
+            <DictionaryList dictionaries={this.state.dictionaries!} showsSetting={false}/>
+          </Loading>
         </div>
       </div>
     );
@@ -54,7 +57,7 @@ class DictionaryListPageBase extends ComponentBase<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionaries: Array<SlimeDictionarySkeleton>;
+  dictionaries: Array<SlimeDictionarySkeleton> | null;
 };
 type Params = {
   mode: string

@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  width: 100%;
+  text-align: center;
+}
+
+.spinner {
+  @include icon-font;
+  font-size: 32px;
+  color: $light-color;
+  line-height: 1;
+  display: inline-block;
+  animation: spin 1.5s linear infinite;
+}
+
+.spinner::before {
+  content: "\F1CE";
+}

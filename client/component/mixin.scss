@@ -68,6 +68,16 @@ $page-horizontal-margin: 30px;
 $line-height: 1.6;
 
 
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
 @mixin smartphone {
   @media screen and (max-width: $page-width + $page-horizontal-margin * 2) {
     @content;

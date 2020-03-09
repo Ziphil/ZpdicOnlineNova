@@ -16,6 +16,7 @@ import {
   CreateDictionaryForm,
   DictionaryList,
   Header,
+  Loading,
   Menu,
   SettingPane
 } from "/client/component/compound";
@@ -36,7 +37,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   public state: State = {
     user: null,
-    dictionaries: []
+    dictionaries: null
   };
 
   public async componentDidMount(): Promise<void> {
@@ -58,14 +59,16 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   private renderDictionaryList(): ReactNode {
     let label = "登録辞書一覧";
-    let badgeValue = this.state.dictionaries.length.toLocaleString("en-GB");
+    let badgeValue = (this.state.dictionaries !== null) ? this.state.dictionaries.length.toLocaleString("en-GB") : undefined;
     let description = `
       このユーザーに登録されている辞書の一覧です。
       辞書の閲覧や編集ができます。
     `;
     let node = (
       <SettingPane label={label} badgeValue={badgeValue} key={label} description={description}>
-        <DictionaryList dictionaries={this.state.dictionaries} showsSetting={true}/>
+        <Loading loading={this.state.dictionaries === null}>
+          <DictionaryList dictionaries={this.state.dictionaries!} showsSetting={true}/>
+        </Loading>
       </SettingPane>
     );
     return node;
@@ -146,7 +149,7 @@ type Props = {
 };
 type State = {
   user: UserSkeleton | null,
-  dictionaries: Array<SlimeDictionarySkeleton>;
+  dictionaries: Array<SlimeDictionarySkeleton> | null;
 };
 type Params = {
   mode: string
