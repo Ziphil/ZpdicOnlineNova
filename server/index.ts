@@ -2,6 +2,7 @@
 
 import * as parser from "body-parser";
 import * as connect from "connect-mongo";
+import * as cookieParser from "cookie-parser";
 import * as express from "express";
 import {
   Express
@@ -20,11 +21,11 @@ import {
 } from "/server/controller/user";
 
 
-const DEFAULT_PORT = 8050;
-const DEFAULT_MONGO_URI = "mongodb://localhost:27017/zpdic";
-
-const SESSION_SECRET = "session zpdic";
-const SESSION_EXPIRE_HOUR = 3;
+export const DEFAULT_PORT = 8050;
+export const DEFAULT_MONGO_URI = "mongodb://localhost:27017/zpdic";
+export const DEFAULT_COOKIE_SECRET = "cookie-zpdic";
+export const DEFAULT_SESSION_SECRET = "session-zpdic";
+export const DEFAULT_JWT_SECRET = "jwt-secret";
 
 
 class Main {
@@ -36,21 +37,29 @@ class Main {
   }
 
   public main(): void {
-    this.setupParsers();
+    this.setupBodyParsers();
+    this.setupCookie();
     this.setupMulter();
     this.setupRenderer();
     this.setupSession();
     this.setupMongo();
     this.setupRouters();
+    this.setupFallback();
     this.listen();
   }
 
-  // リクエストボディをパースする body-parser の設定をします。
-  private setupParsers(): void {
+  // リクエストボディをパースするミドルウェアの設定をします。
+  private setupBodyParsers(): void {
     let urlencodedParser = parser.urlencoded({extended: false});
     let jsonParser = parser.json();
     this.application.use(urlencodedParser);
     this.application.use(jsonParser);
+  }
+
+  private setupCookie(): void {
+    let secret = process.env["COOKIE_SECRET"] || DEFAULT_COOKIE_SECRET;
+    let middleware = cookieParser(secret);
+    this.application.use(middleware);
   }
 
   // ファイルをアップロードする処理を行う Multer の設定をします。
@@ -73,9 +82,9 @@ class Main {
   private setupSession(): void {
     let MongoStore = connect(session);
     let url = process.env["MONGODB_URI"] || DEFAULT_MONGO_URI;
+    let secret = process.env["SESSION_SECRET"] || DEFAULT_SESSION_SECRET;
     let store = new MongoStore({url, collection: "sessions"});
-    let secret = SESSION_SECRET;
-    let cookie = {maxAge: SESSION_EXPIRE_HOUR * 60 * 60 * 1000};
+    let cookie = {maxAge: 6 * 60 * 60 * 1000};
     let middleware = session({store, secret, cookie, resave: false, saveUninitialized: false});
     this.application.use(middleware);
   }
@@ -97,6 +106,10 @@ class Main {
   private setupRouters(): void {
     UserController.use(this.application);
     DictionaryController.use(this.application);
+  }
+
+  // ルート以外にアクセスしたときのフォールバックの設定をします。
+  private setupFallback(): void {
     let fallback = require("express-history-api-fallback");
     this.application.use(express.static("dist"));
     this.application.use(fallback("/dist/index.html", {root: "."}));

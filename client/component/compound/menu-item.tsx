@@ -50,7 +50,7 @@ type Props = {
   label: string,
   iconLabel: string,
   highlight: boolean,
-  href: string,
+  href?: string,
   onClick?: (event: MouseEvent<HTMLElement>) => void;
 };
 type State = {
