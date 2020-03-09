@@ -191,6 +191,7 @@ export class SlimeDictionarySkeleton {
   public id: string;
   public number: number;
   public status: string;
+  public secret: boolean;
   public name: string;
   public wordSize?: number;
 
@@ -198,6 +199,7 @@ export class SlimeDictionarySkeleton {
     this.id = dictionary.id;
     this.number = dictionary.number;
     this.status = dictionary.status;
+    this.secret = dictionary.secret || false;
     this.name = dictionary.name;
   }
 
