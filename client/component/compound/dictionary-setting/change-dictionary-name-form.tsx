@@ -28,6 +28,12 @@ class ChangeDictionaryNameFormBase extends ComponentBase<Props, State> {
     name: ""
   };
 
+  public constructor(props: any) {
+    super(props);
+    let name = this.props.currentName;
+    this.state = {name};
+  }
+
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let name = this.state.name;

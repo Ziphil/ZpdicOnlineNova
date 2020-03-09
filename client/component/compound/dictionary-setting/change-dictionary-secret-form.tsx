@@ -29,6 +29,12 @@ class ChangeDictionarySecretFormBase extends ComponentBase<Props, State> {
     secret: false
   };
 
+  public constructor(props: any) {
+    super(props);
+    let secret = this.props.currentSecret;
+    this.state = {secret};
+  }
+
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let secret = this.state.secret;
@@ -43,11 +49,11 @@ class ChangeDictionarySecretFormBase extends ComponentBase<Props, State> {
       {value: "public", label: "表示"},
       {value: "secret", label: "非表示"}
     ];
-    let initialValue = (this.props.currentSecret) ? "secret" : "public";
+    let initialSecret = (this.props.currentSecret) ? "secret" : "public";
     let node = (
       <Fragment>
         <form styleName="root">
-          <RadioGroup name="secret" specs={specs} initialValue={initialValue} onValueChange={(value) => this.setState({secret: value === "secret"})}/>
+          <RadioGroup name="secret" specs={specs} initialValue={initialSecret} onValueChange={(value) => this.setState({secret: value === "secret"})}/>
           <Button label="変更" onClick={this.click.bind(this)}/>
         </form>
         <p styleName="caution">
