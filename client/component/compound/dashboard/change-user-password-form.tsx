@@ -21,8 +21,8 @@ import {
 import * as http from "/client/util/http";
 
 
-@applyStyle(require("./change-password-form.scss"))
-class ChangePasswordFormBase extends ComponentBase<Props, State> {
+@applyStyle(require("./change-user-password-form.scss"))
+class ChangeUserPasswordFormBase extends ComponentBase<Props, State> {
 
   public state: State = {
     password: ""
@@ -30,7 +30,7 @@ class ChangePasswordFormBase extends ComponentBase<Props, State> {
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let password = this.state.password;
-    let dictionary = await http.post("changePassword", {password});
+    let dictionary = await http.post("changeUserPassword", {password});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }
@@ -56,4 +56,4 @@ type State = {
   password: string;
 };
 
-export let ChangePasswordForm = withRouter(ChangePasswordFormBase);
+export let ChangeUserPasswordForm = withRouter(ChangeUserPasswordFormBase);

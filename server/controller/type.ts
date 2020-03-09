@@ -15,7 +15,7 @@ import {
 export const SERVER_PATH = {
   createDictionary: "/api/dictionary/create",
   uploadDictionary: "/api/dictionary/upload",
-  renameDictionary: "/api/dictionary/edit/name",
+  changeDictionaryName: "/api/dictionary/edit/name",
   changeDictionarySecret: "/api/dictionary/edit/secret",
   searchDictionary: "/api/dictionary/search",
   fetchDictionaryInfo: "/api/dictionary/info",
@@ -23,7 +23,7 @@ export const SERVER_PATH = {
   fetchAllDictionaries: "/api/dictionary/list/all",
   login: "/api/user/login",
   registerUser: "/api/user/register",
-  changePassword: "/api/user/edit/password",
+  changeUserPassword: "/api/user/edit/password",
   fetchUserInfo: "/api/user/info"
 };
 
@@ -42,7 +42,7 @@ export type ProcessType = {
       response: SlimeDictionarySkeleton
     }
   },
-  renameDictionary: {
+  changeDictionaryName: {
     get: Noop,
     post: {
       request: Required<"number" | "name">,
@@ -98,7 +98,7 @@ export type ProcessType = {
       response: MayError<UserSkeleton>
     }
   },
-  changePassword: {
+  changeUserPassword: {
     get: Noop,
     post: {
       request: Required<"password">,

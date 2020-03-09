@@ -11,10 +11,10 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  ChangeDictionaryNameForm,
   DictionaryHeader,
   Header,
   Menu,
-  RenameDictionaryForm,
   SettingPane,
   UploadDictionaryForm
 } from "/client/component/compound";
@@ -46,14 +46,14 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     }
   }
 
-  private renderRenameDictionaryFormNode(): ReactNode {
+  private renderChangeDictionaryNameFormNode(): ReactNode {
     let label = "名称変更";
     let description = `
       辞書の名称を変更します。
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <RenameDictionaryForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name} onSubmit={() => location.reload()}/>
+        <ChangeDictionaryNameForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name} onSubmit={() => location.reload()}/>
       </SettingPane>
     );
     return node;
@@ -76,7 +76,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     let menuSpecs = [{mode: "general", label: "一般", iconLabel: "\uF013", href: ""}];
     let contentNodes = [];
     if (this.state.dictionary) {
-      contentNodes.push(this.renderRenameDictionaryFormNode());
+      contentNodes.push(this.renderChangeDictionaryNameFormNode());
       contentNodes.push(this.renderUploadDictionaryFormNode());
     }
     let node = (

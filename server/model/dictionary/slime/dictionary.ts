@@ -98,7 +98,7 @@ export class SlimeDictionary {
     return await promise;
   }
 
-  public async rename(this: SlimeDictionaryDocument, name: string): Promise<SlimeDictionaryDocument> {
+  public async changeName(this: SlimeDictionaryDocument, name: string): Promise<SlimeDictionaryDocument> {
     this.name = name;
     await this.save();
     return this;

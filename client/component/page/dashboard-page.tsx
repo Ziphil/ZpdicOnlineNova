@@ -11,7 +11,7 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
-  ChangePasswordForm,
+  ChangeUserPasswordForm,
   CreateDictionaryForm,
   DictionaryList,
   Header,
@@ -82,11 +82,11 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     return node;
   }
 
-  private renderChangePasswordFormNode(): ReactNode {
+  private renderChangeUserPasswordFormNode(): ReactNode {
     let label = "パスワード変更";
     let node = (
       <SettingPane label={label} key={label}>
-        <ChangePasswordForm/>
+        <ChangeUserPasswordForm/>
       </SettingPane>
     );
     return node;
@@ -105,7 +105,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
       contentNodes.push(this.renderCreateDictionaryFormNode());
     } else if (mode === "setting") {
       contentNodes.push(this.renderChangeEmailFormNode());
-      contentNodes.push(this.renderChangePasswordFormNode());
+      contentNodes.push(this.renderChangeUserPasswordFormNode());
     }
     let node = (
       <div styleName="page">

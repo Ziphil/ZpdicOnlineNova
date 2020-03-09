@@ -21,8 +21,8 @@ import {
 import * as http from "/client/util/http";
 
 
-@applyStyle(require("./rename-dictionary-form.scss"))
-class RenameDictionaryFormBase extends ComponentBase<Props, State> {
+@applyStyle(require("./change-dictionary-name-form.scss"))
+class ChangeDictionaryNameFormBase extends ComponentBase<Props, State> {
 
   public state: State = {
     name: ""
@@ -31,7 +31,7 @@ class RenameDictionaryFormBase extends ComponentBase<Props, State> {
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let name = this.state.name;
-    let dictionary = await http.post("renameDictionary", {number, name});
+    let dictionary = await http.post("changeDictionaryName", {number, name});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }
@@ -59,4 +59,4 @@ type State = {
   name: string;
 };
 
-export let RenameDictionaryForm = withRouter(RenameDictionaryFormBase);
+export let ChangeDictionaryNameForm = withRouter(ChangeDictionaryNameFormBase);
