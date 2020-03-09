@@ -65,7 +65,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
       空の辞書を作成します。
     `;
     let node = (
-      <SettingPane label={label} key={label} description={description}>
+      <SettingPane label={label} description={description} key={label}>
         <CreateDictionaryForm onSubmit={() => location.reload()}/>
       </SettingPane>
     );
@@ -74,8 +74,11 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   private renderChangeEmailForm(): ReactNode {
     let label = "メールアドレス変更";
+    let description = `
+      メールアドレスを変更します。
+    `;
     let node = (
-      <SettingPane label={label} key={label}>
+      <SettingPane label={label} description={description} key={label}>
         Not yet implemented
       </SettingPane>
     );
@@ -84,8 +87,11 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   private renderChangeUserPasswordForm(): ReactNode {
     let label = "パスワード変更";
+    let description = `
+      パスワードを変更します。
+    `;
     let node = (
-      <SettingPane label={label} key={label}>
+      <SettingPane label={label} description={description} key={label}>
         <ChangeUserPasswordForm/>
       </SettingPane>
     );

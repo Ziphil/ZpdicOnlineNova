@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  Fragment,
   MouseEvent,
   ReactNode
 } from "react";
@@ -44,10 +45,16 @@ class ChangeDictionarySecretFormBase extends ComponentBase<Props, State> {
     ];
     let initialValue = (this.props.currentSecret) ? "secret" : "public";
     let node = (
-      <form styleName="root">
-        <RadioGroup name="secret" specs={specs} initialValue={initialValue} onValueChange={(value) => this.setState({secret: value === "secret"})}/>
-        <Button label="変更" onClick={this.click.bind(this)}/>
-      </form>
+      <Fragment>
+        <form styleName="root">
+          <RadioGroup name="secret" specs={specs} initialValue={initialValue} onValueChange={(value) => this.setState({secret: value === "secret"})}/>
+          <Button label="変更" onClick={this.click.bind(this)}/>
+        </form>
+        <p styleName="caution">
+          この設定は、辞書一覧ページに表示されるかどうかのみに関わります。
+          これを「非表示」にしても、辞書の閲覧は誰でも可能なままです。
+        </p>
+      </Fragment>
     );
     return node;
   }
