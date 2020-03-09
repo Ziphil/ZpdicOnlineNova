@@ -48,4 +48,5 @@ npm run develop
 - [React と Express を共存させる構成例](https://github.com/fractalliter/express-react-typescript)
 - [React と Express によるログイン認証](https://weblion303.net/1215/)
 - [深い階層の URL に直接遷移したときの 404 エラーの対処法](https://github.com/webpack/webpack-dev-server/issues/978)
+- [認証情報を Local Storage に保存してはいけないことについて](https://techracho.bpsinc.jp/hachi8833/2019_10_09/80851)
 - [簡単に HTTP リクエストを送れる GUI ツール](https://www.postman.com/)
