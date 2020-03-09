@@ -35,7 +35,7 @@ class ChangeUserEmailFormBase extends ComponentBase<Props, State> {
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let email = this.state.email;
-    let dictionary = await http.post("changeUserEmail", {email});
+    let response = await http.post("changeUserEmail", {email});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }

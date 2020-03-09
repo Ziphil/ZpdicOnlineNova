@@ -38,7 +38,7 @@ class ChangeDictionarySecretFormBase extends ComponentBase<Props, State> {
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let secret = this.state.secret;
-    let dictionary = await http.post("changeDictionarySecret", {number, secret});
+    let response = await http.post("changeDictionarySecret", {number, secret});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }

@@ -30,7 +30,7 @@ class ChangeUserPasswordFormBase extends ComponentBase<Props, State> {
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let password = this.state.password;
-    let dictionary = await http.post("changeUserPassword", {password});
+    let response = await http.post("changeUserPassword", {password});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }

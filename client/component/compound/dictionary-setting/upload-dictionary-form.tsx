@@ -32,7 +32,7 @@ class UploadDictionaryFormBase extends ComponentBase<Props, State> {
     let number = this.props.number;
     let file = this.state.file;
     if (file) {
-      let dictionary = await http.postFile("uploadDictionary", {number, file});
+      let response = await http.postFile("uploadDictionary", {number, file});
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
