@@ -21,15 +21,8 @@ import {
 // リクエストのヘッダーに書き込まれたトークンを利用して認証を行います。
 // 認証に成功した場合、request オブジェクトの user プロパティにユーザーオブジェクトを書き込み、次の処理を行います。
 // 認証に失敗した場合、リダイレクト先が渡されていればそこにリダイレクトし、そうでなければステータスコード 401 を返して終了します。
-export function verifyUser(redirect?: string): RequestHandler {
+export function verifyUser(authority?: unknown): RequestHandler {
   let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
-    let fail = function (): void {
-      if (redirect !== undefined) {
-        response.redirect(redirect);
-      } else {
-        response.sendStatus(401);
-      }
-    };
     let token = request.signedCookies.authorization || request.headers.authorization;
     if (typeof token === "string") {
       let secret = process.env["JWT_SECRET"] || DEFAULT_JWT_SECRET;
@@ -41,14 +34,14 @@ export function verifyUser(redirect?: string): RequestHandler {
             request.user = user;
             next();
           } else {
-            fail();
+            response.sendStatus(401);
           }
         } else {
-          fail();
+          response.sendStatus(401);
         }
       });
     } else {
-      fail();
+      response.sendStatus(401);
     }
   };
   return handler;
@@ -58,15 +51,8 @@ export function verifyUser(redirect?: string): RequestHandler {
 // このミドルウェアは、必ず verifyUser ミドルウェアを通してから呼び出してください。
 // 編集権限がある場合は、request オブジェクトの dictionary プロパティに辞書オブジェクトを書き込み、次の処理を行います。
 // 編集権限がない場合、リダイレクト先が渡されていればそこにリダイレクトし、そうでなければステータスコード 401 を返して終了します。
-export function verifyDictionary(redirect?: string): RequestHandler {
+export function verifyDictionary(): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
-    let fail = function (): void {
-      if (redirect !== undefined) {
-        response.redirect(redirect);
-      } else {
-        response.sendStatus(401);
-      }
-    };
     let user = request.user!;
     let number = parseInt(request.query.number || request.body.number, 10);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number, user);
@@ -74,7 +60,7 @@ export function verifyDictionary(redirect?: string): RequestHandler {
       request.dictionary = dictionary;
       next();
     } else {
-      fail();
+      response.sendStatus(401);
     }
   };
   return handler;
