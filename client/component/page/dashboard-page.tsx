@@ -44,7 +44,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     }
   }
 
-  private renderDictionaryListNode(): ReactNode {
+  private renderDictionaryList(): ReactNode {
     let label = "登録辞書一覧";
     let badgeValue = this.state.dictionaries.length.toLocaleString("en-GB");
     let description = `
@@ -59,7 +59,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     return node;
   }
 
-  private renderCreateDictionaryFormNode(): ReactNode {
+  private renderCreateDictionaryForm(): ReactNode {
     let label = "新規作成";
     let description = `
       空の辞書を作成します。
@@ -72,7 +72,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     return node;
   }
 
-  private renderChangeEmailFormNode(): ReactNode {
+  private renderChangeEmailForm(): ReactNode {
     let label = "メールアドレス変更";
     let node = (
       <SettingPane label={label} key={label}>
@@ -82,7 +82,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     return node;
   }
 
-  private renderChangeUserPasswordFormNode(): ReactNode {
+  private renderChangeUserPasswordForm(): ReactNode {
     let label = "パスワード変更";
     let node = (
       <SettingPane label={label} key={label}>
@@ -101,11 +101,11 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     ];
     let contentNodes = [];
     if (mode === "dictionary") {
-      contentNodes.push(this.renderDictionaryListNode());
-      contentNodes.push(this.renderCreateDictionaryFormNode());
+      contentNodes.push(this.renderDictionaryList());
+      contentNodes.push(this.renderCreateDictionaryForm());
     } else if (mode === "setting") {
-      contentNodes.push(this.renderChangeEmailFormNode());
-      contentNodes.push(this.renderChangeUserPasswordFormNode());
+      contentNodes.push(this.renderChangeEmailForm());
+      contentNodes.push(this.renderChangeUserPasswordForm());
     }
     let node = (
       <div styleName="page">

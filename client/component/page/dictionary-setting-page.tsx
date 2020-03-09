@@ -47,7 +47,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     }
   }
 
-  private renderChangeDictionaryNameFormNode(): ReactNode {
+  private renderChangeDictionaryNameForm(): ReactNode {
     let label = "名称変更";
     let description = `
       この辞書の名称を変更します。
@@ -60,7 +60,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     return node;
   }
 
-  private renderChangeDictionarySecretFormNode(): ReactNode {
+  private renderChangeDictionarySecretForm(): ReactNode {
     let label = "一覧表示変更";
     let description = `
       この辞書を辞書一覧ページに表示するかどうかを変更します。
@@ -73,7 +73,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     return node;
   }
 
-  private renderUploadDictionaryFormNode(): ReactNode {
+  private renderUploadDictionaryForm(): ReactNode {
     let label = "アップロード";
     let description = `
       ファイルをアップロードし、現在のデータを上書きします。
@@ -90,9 +90,9 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     let menuSpecs = [{mode: "general", label: "一般", iconLabel: "\uF013", href: ""}];
     let contentNodes = [];
     if (this.state.dictionary) {
-      contentNodes.push(this.renderChangeDictionaryNameFormNode());
-      contentNodes.push(this.renderChangeDictionarySecretFormNode());
-      contentNodes.push(this.renderUploadDictionaryFormNode());
+      contentNodes.push(this.renderChangeDictionaryNameForm());
+      contentNodes.push(this.renderChangeDictionarySecretForm());
+      contentNodes.push(this.renderUploadDictionaryForm());
     }
     let node = (
       <div styleName="page">
