@@ -14,24 +14,22 @@ import {
 
 export async function get<N extends ProcessName>(name: N, params: AnyRecord<RequestType<N, "get">>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "get">>> {
   let url = SERVER_PATH[name];
-  let headers = createHeaders();
   let validateStatus = createValidateStatus(allowedStatuses);
-  let response = await axios.get<ResponseType<N, "get">>(url, {headers, params, validateStatus});
+  let response = await axios.get<ResponseType<N, "get">>(url, {params, validateStatus});
   return response;
 }
 
 export async function post<N extends ProcessName>(name: N, data: AnyRecord<RequestType<N, "post">>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "post">>> {
   let url = SERVER_PATH[name];
-  let headers = createHeaders();
   let validateStatus = createValidateStatus(allowedStatuses);
-  let response = await axios.post<ResponseType<N, "post">>(url, data, {headers, validateStatus});
+  let response = await axios.post<ResponseType<N, "post">>(url, data, {validateStatus});
   return response;
 }
 
 export async function postFile<N extends ProcessName>(name: N, data: AnyRecord<RequestType<N, "post">> & {file: Blob}, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "post">>> {
   let url = SERVER_PATH[name];
-  let headers = createHeaders();
   let validateStatus = createValidateStatus(allowedStatuses);
+  let headers = {} as any;
   let anyData = data as any;
   let nextData = new FormData();
   for (let key of Object.keys(data)) {
@@ -48,8 +46,7 @@ export async function login(data: {name: string, password: string}): Promise<boo
   if (!("error" in body)) {
     let token = body.token;
     let authenticatedName = body.name;
-    localStorage.setItem("token", token);
-    localStorage.setItem("name", authenticatedName);
+    localStorage.setItem("login", "true");
     return true;
   } else {
     return false;
@@ -57,22 +54,15 @@ export async function login(data: {name: string, password: string}): Promise<boo
 }
 
 export async function logout(): Promise<void> {
-  localStorage.removeItem("token");
-  localStorage.removeItem("name");
+  localStorage.removeItem("login");
 }
 
 export function hasToken(): boolean {
-  return !!localStorage.getItem("token");
+  return !!localStorage.getItem("login");
 }
 
 export async function isAuthenticated(): Promise<boolean> {
   return false;
-}
-
-function createHeaders(): any {
-  let token = localStorage.getItem("token");
-  let headers = {authorization: token};
-  return headers;
 }
 
 function createValidateStatus(allowedStatuses?: Array<number>): (status: number) => boolean {

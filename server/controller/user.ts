@@ -8,7 +8,7 @@ import {
   PostResponse
 } from "/server/controller/controller";
 import {
-  authenticate,
+  login,
   verifyUser
 } from "/server/controller/middle";
 import {
@@ -33,7 +33,7 @@ import {
 export class UserController extends Controller {
 
   @post(SERVER_PATH["login"])
-  @before(authenticate("1y"))
+  @before(login("1y"))
   public async postLogin(request: PostRequest<"login">, response: PostResponse<"login">): Promise<void> {
     let token = request.token;
     let user = request.user;
