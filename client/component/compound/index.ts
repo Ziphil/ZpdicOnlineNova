@@ -1,6 +1,7 @@
 //
 
 export * from "./dashboard/create-dictionary-form";
+export * from "./dashboard/change-password-form";
 export * from "./dictionary-setting/rename-dictionary-form";
 export * from "./dictionary-setting/upload-dictionary-form";
 export * from "./dictionary-header";

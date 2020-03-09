@@ -23,6 +23,7 @@ export const SERVER_PATH = {
   fetchAllDictionaries: "/api/dictionary/list/all",
   login: "/api/user/login",
   registerUser: "/api/user/register",
+  changePassword: "/api/user/edit/password",
   fetchUserInfo: "/api/user/info"
 };
 
@@ -95,6 +96,13 @@ export type ProcessType = {
     post: {
       request: Required<"name" | "email" | "password">,
       response: MayError<UserSkeleton>
+    }
+  },
+  changePassword: {
+    get: Noop,
+    post: {
+      request: Required<"password">,
+      response: UserSkeleton
     }
   },
   fetchUserInfo: {

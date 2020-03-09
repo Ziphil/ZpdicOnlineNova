@@ -11,6 +11,7 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  ChangePasswordForm,
   CreateDictionaryForm,
   DictionaryList,
   Header,
@@ -85,7 +86,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     let label = "パスワード変更";
     let node = (
       <SettingPane label={label} key={label}>
-        Not yet implemented
+        <ChangePasswordForm/>
       </SettingPane>
     );
     return node;
