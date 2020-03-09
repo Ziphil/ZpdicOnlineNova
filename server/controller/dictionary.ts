@@ -48,8 +48,8 @@ export class DictionaryController extends Controller {
   public async postUploadDictionary(request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary!;
     let path = request.file.path;
-    let nextDictionary = await dictionary.upload(path);
-    let body = new SlimeDictionarySkeleton(nextDictionary);
+    await dictionary.upload(path);
+    let body = new SlimeDictionarySkeleton(dictionary);
     response.json(body);
   }
 
@@ -58,8 +58,8 @@ export class DictionaryController extends Controller {
   public async postRenameDictionary(request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {
     let dictionary = request.dictionary!;
     let name = request.body.name;
-    let nextDictionary = await dictionary.changeName(name);
-    let body = new SlimeDictionarySkeleton(nextDictionary);
+    await dictionary.changeName(name);
+    let body = new SlimeDictionarySkeleton(dictionary);
     response.json(body);
   }
 
@@ -68,8 +68,8 @@ export class DictionaryController extends Controller {
   public async postChangeDictionarySecret(request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {
     let dictionary = request.dictionary!;
     let secret = !!request.body.secret;
-    let nextDictionary = await dictionary.changeSecret(secret);
-    let body = new SlimeDictionarySkeleton(nextDictionary);
+    await dictionary.changeSecret(secret);
+    let body = new SlimeDictionarySkeleton(dictionary);
     response.json(body);
   }
 
