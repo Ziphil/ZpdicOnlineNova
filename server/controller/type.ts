@@ -103,14 +103,14 @@ export type ProcessType = {
     get: Noop,
     post: {
       request: Required<"email">,
-      response: UserSkeleton
+      response: MayError<UserSkeleton>
     }
   },
   changeUserPassword: {
     get: Noop,
     post: {
       request: Required<"password">,
-      response: UserSkeleton
+      response: MayError<UserSkeleton>
     }
   },
   fetchUserInfo: {

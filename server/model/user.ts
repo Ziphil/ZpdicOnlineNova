@@ -64,6 +64,18 @@ export class User {
     }
   }
 
+  public async changeEmail(this: UserDocument, email: string): Promise<UserDocument> {
+    this.email = email;
+    await this.save();
+    return this;
+  }
+
+  public async changePassword(this: UserDocument, password: string): Promise<UserDocument> {
+    this.encryptPassword(password);
+    await this.save();
+    return this;
+  }
+
 }
 
 
