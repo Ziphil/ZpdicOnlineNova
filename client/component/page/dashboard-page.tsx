@@ -11,6 +11,7 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  ChangeUserEmailForm,
   ChangeUserPasswordForm,
   CreateDictionaryForm,
   DictionaryList,
@@ -25,20 +26,31 @@ import * as http from "/client/util/http";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
+import {
+  UserSkeleton
+} from "/server/model/user";
 
 
 @applyStyle(require("./dashboard-page.scss"))
 class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
   public state: State = {
+    user: null,
     dictionaries: []
   };
 
   public async componentDidMount(): Promise<void> {
     try {
-      let response = await http.get("fetchDictionaries", {});
-      let dictionaries = response.data;
-      this.setState({dictionaries});
+      {
+        let response = await http.get("fetchUserInfo", {});
+        let user = response.data;
+        this.setState({user});
+      }
+      {
+        let response = await http.get("fetchDictionaries", {});
+        let dictionaries = response.data;
+        this.setState({dictionaries});
+      }
     } catch (error) {
       this.jumpLogin(error);
     }
@@ -79,7 +91,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        Not yet implemented
+        <ChangeUserEmailForm currentEmail={this.state.user!.email} onSubmit={() => location.reload()}/>
       </SettingPane>
     );
     return node;
@@ -92,7 +104,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        <ChangeUserPasswordForm/>
+        <ChangeUserPasswordForm onSubmit={() => location.reload()}/>
       </SettingPane>
     );
     return node;
@@ -106,12 +118,14 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
       {mode: "logout", label: "ログアウト", iconLabel: "\uF2F5", href: "/"}
     ];
     let contentNodes = [];
-    if (mode === "dictionary") {
-      contentNodes.push(this.renderDictionaryList());
-      contentNodes.push(this.renderCreateDictionaryForm());
-    } else if (mode === "setting") {
-      contentNodes.push(this.renderChangeEmailForm());
-      contentNodes.push(this.renderChangeUserPasswordForm());
+    if (this.state.user) {
+      if (mode === "dictionary") {
+        contentNodes.push(this.renderDictionaryList());
+        contentNodes.push(this.renderCreateDictionaryForm());
+      } else if (mode === "setting") {
+        contentNodes.push(this.renderChangeEmailForm());
+        contentNodes.push(this.renderChangeUserPasswordForm());
+      }
     }
     let node = (
       <div styleName="page">
@@ -131,6 +145,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 type Props = {
 };
 type State = {
+  user: UserSkeleton | null,
   dictionaries: Array<SlimeDictionarySkeleton>;
 };
 type Params = {

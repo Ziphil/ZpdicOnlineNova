@@ -21,16 +21,21 @@ import {
 import * as http from "/client/util/http";
 
 
-@applyStyle(require("./change-user-password-form.scss"))
-class ChangeUserPasswordFormBase extends ComponentBase<Props, State> {
+@applyStyle(require("./change-user-email-form.scss"))
+class ChangeUserEmailFormBase extends ComponentBase<Props, State> {
 
   public state: State = {
-    password: ""
+    email: ""
   };
+  public constructor(props: any) {
+    super(props);
+    let email = this.props.currentEmail;
+    this.state = {email};
+  }
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
-    let password = this.state.password;
-    let dictionary = await http.post("changeUserPassword", {password});
+    let email = this.state.email;
+    let dictionary = await http.post("changeUserEmail", {email});
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }
@@ -39,7 +44,7 @@ class ChangeUserPasswordFormBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="パスワード" type="flexible" onValueChange={(value) => this.setState({password: value})}/>
+        <Input label="メールアドレス" initialValue={this.props.currentEmail} onValueChange={(value) => this.setState({email: value})}/>
         <Button label="変更" onClick={this.click.bind(this)}/>
       </form>
     );
@@ -50,10 +55,11 @@ class ChangeUserPasswordFormBase extends ComponentBase<Props, State> {
 
 
 type Props = {
+  currentEmail: string,
   onSubmit?: () => void
 };
 type State = {
-  password: string
+  email: string
 };
 
-export let ChangeUserPasswordForm = withRouter(ChangeUserPasswordFormBase);
+export let ChangeUserEmailForm = withRouter(ChangeUserEmailFormBase);
