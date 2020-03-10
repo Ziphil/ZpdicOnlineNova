@@ -5,12 +5,12 @@ import {
 } from "mongoose";
 
 
-export class CustomError extends MongooseError {
+export class CustomError<E extends string> extends MongooseError {
 
   public name: "CustomError" = "CustomError";
-  public type: string;
+  public type: E;
 
-  public constructor(type: string, message: string = "") {
+  public constructor(type: E, message: string = "") {
     super(message);
     this.type = type;
   }
@@ -18,19 +18,16 @@ export class CustomError extends MongooseError {
 }
 
 
-export class CustomErrorSkeleton {
+export class CustomErrorSkeleton<E extends string> {
 
   public error: "error";
-  public type: string;
+  public type: E;
   public code?: number;
 
-  public constructor(type: string, code?: number) {
+  public constructor(type: E, code?: number) {
     this.error = "error";
     this.type = type;
     this.code = code;
   }
 
 }
-
-
-export type MayError<T> = T | CustomErrorSkeleton;

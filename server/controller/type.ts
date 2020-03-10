@@ -5,7 +5,7 @@ import {
   SlimeWordSkeleton
 } from "/server/model/dictionary/slime";
 import {
-  MayError
+  CustomErrorSkeleton
 } from "/server/model/error";
 import {
   UserSkeleton
@@ -137,3 +137,4 @@ export type RequestType<N extends ProcessName, M extends MethodType> = ProcessTy
 export type ResponseType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["response"];
 
 type Noop = {request: never, response: never};
+type MayError<T> = T | CustomErrorSkeleton<string>;
