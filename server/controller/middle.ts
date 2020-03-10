@@ -8,7 +8,7 @@ import {
 } from "express";
 import * as jwt from "jsonwebtoken";
 import {
-  DEFAULT_JWT_SECRET
+  JWT_SECRET
 } from "/server/index";
 import {
   SlimeDictionaryModel
@@ -25,8 +25,7 @@ export function verifyUser(authority?: unknown): RequestHandler {
   let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     let token = request.signedCookies.authorization || request.headers.authorization;
     if (typeof token === "string") {
-      let secret = process.env["JWT_SECRET"] || DEFAULT_JWT_SECRET;
-      jwt.verify(token, secret, async (error, data) => {
+      jwt.verify(token, JWT_SECRET, async (error, data) => {
         if (!error) {
           let anyData = data as any;
           let user = await UserModel.findById(anyData.id).exec();
@@ -76,8 +75,7 @@ export function login(expiresIn: number): RequestHandler {
     let password = request.body.password;
     let user = await UserModel.authenticate(name, password);
     if (user) {
-      let secret = process.env["JWT_SECRET"] || DEFAULT_JWT_SECRET;
-      jwt.sign({id: user.id}, secret, {expiresIn}, (error, token) => {
+      jwt.sign({id: user.id}, JWT_SECRET, {expiresIn}, (error, token) => {
         if (!error) {
           request.token = token;
           request.user = user;
