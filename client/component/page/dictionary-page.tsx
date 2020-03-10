@@ -41,7 +41,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
   };
 
   private async fetchDictionary(): Promise<void> {
-    let number = this.props.match!.params.number;
+    let number = +this.props.match!.params.number;
     let response = await http.get("fetchDictionaryInfo", {number}, [400]);
     let body = response.data;
     if (!("error" in body)) {
@@ -53,7 +53,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
   }
 
   private async updateWords(): Promise<void> {
-    let number = this.props.match!.params.number;
+    let number = +this.props.match!.params.number;
     let search = this.state.search;
     let mode = this.state.mode;
     let type = this.state.type;

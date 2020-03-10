@@ -53,7 +53,7 @@ class UploadDictionaryFormBase extends ComponentBase<Props, State> {
 
 
 type Props = {
-  number: number | string,
+  number: number,
   onSubmit?: () => void
 };
 type State = {

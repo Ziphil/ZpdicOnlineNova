@@ -23,6 +23,9 @@ import {
   UserSkeleton
 } from "/server/model/user";
 import {
+  ensureString
+} from "/server/util/cast";
+import {
   before,
   controller,
   get,
@@ -56,9 +59,9 @@ export class UserController extends Controller {
 
   @post(SERVER_PATH["registerUser"])
   public async postRegisterUser(request: PostRequest<"registerUser">, response: PostResponse<"registerUser">): Promise<void> {
-    let name = request.body.name;
-    let email = request.body.email;
-    let password = request.body.password;
+    let name = ensureString(request.body.name);
+    let email = ensureString(request.body.email);
+    let password = ensureString(request.body.password);
     try {
       let user = await UserModel.register(name, email, password);
       let body = new UserSkeleton(user);
@@ -90,7 +93,7 @@ export class UserController extends Controller {
   @before(verifyUser())
   public async postChangeUserEmail(request: PostRequest<"changeUserEmail">, response: PostResponse<"changeUserEmail">): Promise<void> {
     let user = request.user!;
-    let email = request.body.email;
+    let email = ensureString(request.body.email);
     try {
       await user.changeEmail(email);
       let body = new UserSkeleton(user);
@@ -112,7 +115,7 @@ export class UserController extends Controller {
   @before(verifyUser())
   public async postChangeUserPassword(request: PostRequest<"changeUserPassword">, response: PostResponse<"changeUserPassword">): Promise<void> {
     let user = request.user!;
-    let password = request.body.password;
+    let password = ensureString(request.body.password);
     try {
       await user.changePassword(password);
       let body = new UserSkeleton(user);

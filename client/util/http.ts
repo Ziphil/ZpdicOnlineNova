@@ -12,21 +12,21 @@ import {
 } from "/server/controller/type";
 
 
-export async function get<N extends ProcessName>(name: N, params: AnyRecord<RequestType<N, "get">>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "get">>> {
+export async function get<N extends ProcessName>(name: N, params: RequestType<N, "get">, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "get">>> {
   let url = SERVER_PATH[name];
   let validateStatus = createValidateStatus(allowedStatuses);
   let response = await axios.get<ResponseType<N, "get">>(url, {params, validateStatus});
   return response;
 }
 
-export async function post<N extends ProcessName>(name: N, data: AnyRecord<RequestType<N, "post">>, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "post">>> {
+export async function post<N extends ProcessName>(name: N, data: RequestType<N, "post">, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "post">>> {
   let url = SERVER_PATH[name];
   let validateStatus = createValidateStatus(allowedStatuses);
   let response = await axios.post<ResponseType<N, "post">>(url, data, {validateStatus});
   return response;
 }
 
-export async function postFile<N extends ProcessName>(name: N, data: AnyRecord<RequestType<N, "post">> & {file: Blob}, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "post">>> {
+export async function postFile<N extends ProcessName>(name: N, data: RequestType<N, "post"> & {file: Blob}, allowedStatuses?: Array<number>): Promise<AxiosResponse<ResponseType<N, "post">>> {
   let url = SERVER_PATH[name];
   let validateStatus = createValidateStatus(allowedStatuses);
   let headers = {} as any;
