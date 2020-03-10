@@ -53,7 +53,7 @@ class ChangeDictionarySecretFormBase extends ComponentBase<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <RadioGroup name="secret" specs={specs} initialValue={initialSecret} onValueChange={(value) => this.setState({secret: value === "secret"})}/>
+          <RadioGroup name="secret" specs={specs} initialValue={initialSecret} onSet={(value) => this.setState({secret: value === "secret"})}/>
           <Button label="変更" onClick={this.click.bind(this)}/>
         </form>
         <p styleName="caution">

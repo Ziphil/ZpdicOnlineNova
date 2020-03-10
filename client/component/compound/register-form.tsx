@@ -78,9 +78,9 @@ class RegisterFormBase extends ComponentBase<Props, State> {
       <div>
         {errorNode}
         <form styleName="root">
-          <Input label="ユーザー名" onValueChange={(value) => this.setState({name: value})}/>
-          <Input label="メールアドレス" onValueChange={(value) => this.setState({email: value})}/>
-          <Input label="パスワード" type="flexible" onValueChange={(value) => this.setState({password: value})}/>
+          <Input label="ユーザー名" onSet={(value) => this.setState({name: value})}/>
+          <Input label="メールアドレス" onSet={(value) => this.setState({email: value})}/>
+          <Input label="パスワード" type="flexible" onSet={(value) => this.setState({password: value})}/>
           <div styleName="button-group">
             <Button label="新規登録" onClick={this.performRegister.bind(this)}/>
           </div>

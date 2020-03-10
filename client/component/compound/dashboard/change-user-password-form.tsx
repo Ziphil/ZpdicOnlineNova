@@ -39,7 +39,7 @@ class ChangeUserPasswordFormBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="パスワード" type="flexible" onValueChange={(value) => this.setState({password: value})}/>
+        <Input label="パスワード" type="flexible" onSet={(value) => this.setState({password: value})}/>
         <Button label="変更" onClick={this.click.bind(this)}/>
       </form>
     );

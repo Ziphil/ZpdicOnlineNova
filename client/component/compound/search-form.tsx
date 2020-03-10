@@ -31,7 +31,7 @@ class SearchFormBase extends ComponentBase<Props, State> {
     type: "prefix"
   };
 
-  private handleSearchChange(search: string): void {
+  private handleSearchSet(search: string): void {
     this.setState({search});
     let debounceChange = debounce((innerSearch) => {
       if (this.props.onSearchChange) {
@@ -44,7 +44,7 @@ class SearchFormBase extends ComponentBase<Props, State> {
     debounceChange(search);
   }
 
-  private handleModeChange(mode: string): void {
+  private handleModeSet(mode: string): void {
     this.setState({mode});
     if (this.props.onModeChange) {
       this.props.onModeChange(mode);
@@ -54,7 +54,7 @@ class SearchFormBase extends ComponentBase<Props, State> {
     }
   }
 
-  private handleTypeChange(type: string): void {
+  private handleTypeSet(type: string): void {
     this.setState({type});
     if (this.props.onTypeChange) {
       this.props.onTypeChange(type);
@@ -79,10 +79,10 @@ class SearchFormBase extends ComponentBase<Props, State> {
     ];
     let node = (
       <form styleName="root">
-        <Input onValueChange={this.handleSearchChange.bind(this)}/>
+        <Input onSet={this.handleSearchSet.bind(this)}/>
         <div styleName="radio-wrapper">
-          <RadioGroup name="mode" initialValue="both" specs={modeSpecs} onValueChange={this.handleModeChange.bind(this)}/>
-          <RadioGroup name="type" initialValue="prefix" specs={typeSpecs} onValueChange={this.handleTypeChange.bind(this)}/>
+          <RadioGroup name="mode" initialValue="both" specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
+          <RadioGroup name="type" initialValue="prefix" specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
         </div>
       </form>
     );

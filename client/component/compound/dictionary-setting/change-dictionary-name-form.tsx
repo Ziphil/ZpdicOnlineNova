@@ -46,7 +46,7 @@ class ChangeDictionaryNameFormBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="名称" initialValue={this.props.currentName} onValueChange={(value) => this.setState({name: value})}/>
+        <Input label="名称" initialValue={this.props.currentName} onSet={(value) => this.setState({name: value})}/>
         <Button label="変更" onClick={this.click.bind(this)}/>
       </form>
     );

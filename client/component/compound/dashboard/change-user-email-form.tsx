@@ -44,7 +44,7 @@ class ChangeUserEmailFormBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="メールアドレス" initialValue={this.props.currentEmail} onValueChange={(value) => this.setState({email: value})}/>
+        <Input label="メールアドレス" initialValue={this.props.currentEmail} onSet={(value) => this.setState({email: value})}/>
         <Button label="変更" onClick={this.click.bind(this)}/>
       </form>
     );

@@ -42,7 +42,7 @@ class UploadDictionaryFormBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <FileInput inputLabel="ファイル" buttonLabel="選択" onFileChange={(file) => this.setState({file})}/>
+        <FileInput inputLabel="ファイル" buttonLabel="選択" onSet={(file) => this.setState({file})}/>
         <Button label="決定" onClick={this.click.bind(this)}/>
       </form>
     );
