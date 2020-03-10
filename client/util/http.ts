@@ -41,15 +41,19 @@ export async function postFile<N extends ProcessName>(name: N, data: RequestType
 }
 
 export async function login(data: {name: string, password: string}): Promise<boolean> {
-  let response = await post("login", data, [400]);
-  let body = response.data;
-  if (!("error" in body)) {
+  try {
+    let response = await post("login", data);
+    let body = response.data;
     let token = body.token;
     let authenticatedName = body.name;
     localStorage.setItem("login", "true");
     return true;
-  } else {
-    return false;
+  } catch (error) {
+    if (error.response?.status === 401) {
+      return false;
+    } else {
+      throw error;
+    }
   }
 }
 

@@ -39,16 +39,11 @@ export class UserController extends Controller {
   @post(SERVER_PATH["login"])
   @before(login(30 * 24 * 60 * 60))
   public async postLogin(request: PostRequest<"login">, response: PostResponse<"login">): Promise<void> {
-    let token = request.token;
-    let user = request.user;
-    if (token && user) {
-      let rawBody = new UserSkeleton(user);
-      let body = {...rawBody, token};
-      response.json(body);
-    } else {
-      let body = new CustomErrorSkeleton("invalidRequest");
-      response.status(400).json(body);
-    }
+    let token = request.token!;
+    let user = request.user!;
+    let rawBody = new UserSkeleton(user);
+    let body = {...rawBody, token};
+    response.json(body);
   }
 
   @post(SERVER_PATH["logout"])

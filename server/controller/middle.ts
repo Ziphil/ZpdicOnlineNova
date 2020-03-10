@@ -68,7 +68,7 @@ export function verifyDictionary(): RequestHandler {
 // リクエストボディの情報からログイン認証用のトークンを生成します。
 // 引数として、トークンの有効期限 (秒単位) を受け取ります。
 // ログインに成功した場合 (該当するユーザーが存在した場合)、request オブジェクトの token プロパティにトークンを書き込み、次の処理を行います。
-// ログインに失敗した場合、何も行わずに次の処理を行います。
+// ログインに失敗した場合、ステータスコード 401 を返して終了します。
 export function login(expiresIn: number): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let name = request.body.name;
@@ -87,7 +87,7 @@ export function login(expiresIn: number): RequestHandler {
         }
       });
     } else {
-      next();
+      response.sendStatus(401);
     }
   };
   return handler;
