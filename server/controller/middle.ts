@@ -20,7 +20,7 @@ import {
 
 // リクエストのヘッダーに書き込まれたトークンを利用して認証を行います。
 // 認証に成功した場合、request オブジェクトの user プロパティにユーザーオブジェクトを書き込み、次の処理を行います。
-// 認証に失敗した場合、リダイレクト先が渡されていればそこにリダイレクトし、そうでなければステータスコード 401 を返して終了します。
+// 認証に失敗した場合、ステータスコード 401 を返して終了します。
 export function verifyUser(authority?: unknown): RequestHandler {
   let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     let token = request.signedCookies.authorization || request.headers.authorization;
@@ -49,7 +49,7 @@ export function verifyUser(authority?: unknown): RequestHandler {
 // ログイン中のユーザーにリクエストしている辞書データの編集権限があるかどうかを判定します。
 // このミドルウェアは、必ず verifyUser ミドルウェアを通してから呼び出してください。
 // 編集権限がある場合は、request オブジェクトの dictionary プロパティに辞書オブジェクトを書き込み、次の処理を行います。
-// 編集権限がない場合、リダイレクト先が渡されていればそこにリダイレクトし、そうでなければステータスコード 401 を返して終了します。
+// 編集権限がない場合、ステータスコード 401 を返して終了します。
 export function verifyDictionary(): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let user = request.user!;
