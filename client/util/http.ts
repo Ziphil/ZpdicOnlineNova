@@ -77,5 +77,3 @@ function createValidateStatus(allowedStatuses?: Array<number>): (status: number)
   };
   return validateStatus;
 }
-
-type AnyRecord<T> = {[N in keyof T]: any};
