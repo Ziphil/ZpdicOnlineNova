@@ -28,7 +28,7 @@ import {
 import * as http from "/client/util/http";
 
 
-@observer @inject("store")
+@inject("store") @observer
 @applyStyle(require("./change-user-email-form.scss"))
 class ChangeUserEmailFormBase extends ComponentBase<{store?: GlobalStore} & Props, State> {
 
