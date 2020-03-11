@@ -20,7 +20,6 @@ import {
 import {
   applyStyle
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
 @inject("store")
