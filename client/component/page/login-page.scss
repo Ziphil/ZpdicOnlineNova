@@ -7,6 +7,10 @@
   @include page(130px);
 }
 
+.content {
+  @include page-content;
+}
+
 .description {
   margin: 0px 0px 20px 0px;
   font-size: 25px;

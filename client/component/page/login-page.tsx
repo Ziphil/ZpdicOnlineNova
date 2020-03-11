@@ -26,9 +26,11 @@ class LoginPageBase extends ComponentBase<Props, State> {
     let node = (
       <div styleName="page">
         <Header/>
-        <div styleName="description">ログイン</div>
-        <div styleName="login-form">
-          <LoginForm showsRegister={false}/>
+        <div styleName="content">
+          <div styleName="description">ログイン</div>
+          <div styleName="login-form">
+            <LoginForm showsRegister={false}/>
+          </div>
         </div>
       </div>
     );

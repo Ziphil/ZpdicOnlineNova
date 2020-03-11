@@ -8,7 +8,5 @@
 }
 
 .content {
-  width: 100%;
-  max-width: 525px;
-  margin: 0px auto;
+  @include page-content(525px);
 }

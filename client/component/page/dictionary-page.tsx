@@ -105,15 +105,17 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
       <div styleName="page">
         <Header/>
         <DictionaryHeader name={this.state.dictionary?.name || ""}/>
-        <div styleName="search-form">
-          <SearchForm onAnyChange={this.handleAnyChange.bind(this)}/>
-        </div>
-        <div styleName="word-list">
-          <WordList words={this.state.words} offset={0} size={40}/>
-        </div>
-        <div styleName="page-button">
-          <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
-          <Button label="次ページ" position="right" onClick={this.moveNextPage.bind(this)}/>
+        <div styleName="content">
+          <div styleName="search-form">
+            <SearchForm onAnyChange={this.handleAnyChange.bind(this)}/>
+          </div>
+          <div styleName="word-list">
+            <WordList words={this.state.words} offset={0} size={40}/>
+          </div>
+          <div styleName="page-button">
+            <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
+            <Button label="次ページ" position="right" onClick={this.moveNextPage.bind(this)}/>
+          </div>
         </div>
       </div>
     );

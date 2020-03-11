@@ -7,13 +7,17 @@
   @include page(180px);
 }
 
-.page .search-form {
+.content {
+  @include page-content;
+}
+
+.search-form {
   width: 100%;
   max-width: 600px;
   margin: 0px auto 30px auto;
 }
 
-.page .page-button {
+.page-button {
   margin: 30px 0px 0px 0px;
   line-height: $line-height;
   text-align: center;
