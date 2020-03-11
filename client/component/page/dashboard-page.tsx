@@ -18,10 +18,10 @@ import {
   ChangeUserPasswordForm,
   CreateDictionaryForm,
   DictionaryList,
-  FloatingInformationPane,
   Header,
   Loading,
   Menu,
+  PopupInformationPane,
   SettingPane
 } from "/client/component/compound";
 import {
@@ -137,7 +137,7 @@ class DashboardPageBase extends StoreComponentBase<Props, State, Params> {
     let node = (
       <div styleName="page">
         <Header/>
-        <FloatingInformationPane/>
+        <PopupInformationPane/>
         <div styleName="content">
           <Menu mode={mode} specs={menuSpecs}/>
           {contentNodes}

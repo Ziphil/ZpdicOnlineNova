@@ -29,12 +29,12 @@ import {
 
 
 @inject("store") @observer
-@applyStyle(require("./floating-information-pane.scss"))
-class FloatingInformationPaneBase extends ComponentBase<{store?: GlobalStore} & Props, State> {
+@applyStyle(require("./popup-information-pane.scss"))
+class PopupInformationPaneBase extends ComponentBase<{store?: GlobalStore} & Props, State> {
 
   public render(): ReactNode {
     let node;
-    let spec = this.props.store!.floatingSpec;
+    let spec = this.props.store!.popupSpec;
     if (spec) {
       node = (
         <div styleName="root">
@@ -55,4 +55,4 @@ type Props = {
 type State = {
 };
 
-export let FloatingInformationPane = withRouter(FloatingInformationPaneBase);
+export let PopupInformationPane = withRouter(PopupInformationPaneBase);
