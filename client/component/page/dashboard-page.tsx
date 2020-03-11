@@ -1,9 +1,5 @@
 //
 
-import {
-  inject,
-  observer
-} from "mobx-react";
 import * as react from "react";
 import {
   ReactNode
@@ -37,7 +33,6 @@ import {
 } from "/server/model/user";
 
 
-@observer @inject("store")
 @applyStyle(require("./dashboard-page.scss"))
 class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
@@ -100,7 +95,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        <ChangeUserEmailForm currentEmail={this.state.user!.email} onSubmit={() => location.reload()}/>
+        <ChangeUserEmailForm currentEmail={this.state.user!.email}/>
       </SettingPane>
     );
     return node;
@@ -113,7 +108,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        <ChangeUserPasswordForm onSubmit={() => location.reload()}/>
+        <ChangeUserPasswordForm/>
       </SettingPane>
     );
     return node;

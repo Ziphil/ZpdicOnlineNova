@@ -1,5 +1,9 @@
 //
 
+import {
+  inject,
+  observer
+} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
@@ -16,17 +20,22 @@ import {
   ComponentBase
 } from "/client/component/component";
 import {
+  GlobalStore
+} from "/client/component/store";
+import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
 
 
+@observer @inject("store")
 @applyStyle(require("./change-user-email-form.scss"))
-class ChangeUserEmailFormBase extends ComponentBase<Props, State> {
+class ChangeUserEmailFormBase extends ComponentBase<{store?: GlobalStore} & Props, State> {
 
   public state: State = {
     email: ""
   };
+
   public constructor(props: any) {
     super(props);
     let email = this.props.currentEmail;
@@ -36,6 +45,7 @@ class ChangeUserEmailFormBase extends ComponentBase<Props, State> {
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let email = this.state.email;
     let response = await http.post("changeUserEmail", {email});
+    this.props.store!.sendInformation("emailChanged");
     if (this.props.onSubmit) {
       this.props.onSubmit();
     }

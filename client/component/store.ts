@@ -2,7 +2,6 @@
 
 import {
   action,
-  computed,
   observable
 } from "mobx";
 import {
@@ -13,11 +12,17 @@ import {
 export class GlobalStore {
 
   @observable
-  public error: CustomErrorSkeleton<string> | null = null;
+  public floatingSpec: {type: string, color: "error" | "information"} | null = null;
 
   @bound
-  public setError<E extends string>(error: CustomErrorSkeleton<E>): void {
-    this.error = error;
+  public sendError<E extends string>(error: CustomErrorSkeleton<E>): void {
+    let type = error.type;
+    this.floatingSpec = {type, color: "error"};
+  }
+
+  @bound
+  public sendInformation(type: string): void {
+    this.floatingSpec = {type, color: "information"};
   }
 
 }
