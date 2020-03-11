@@ -12,7 +12,7 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   InformationPane
@@ -21,16 +21,13 @@ import {
   getMessage
 } from "/client/component/message";
 import {
-  GlobalStore
-} from "/client/component/store";
-import {
   applyStyle
 } from "/client/util/decorator";
 
 
 @inject("store") @observer
 @applyStyle(require("./popup-information-pane.scss"))
-class PopupInformationPaneBase extends ComponentBase<{store?: GlobalStore} & Props, State> {
+class PopupInformationPaneBase extends StoreComponentBase<Props, State> {
 
   public render(): ReactNode {
     let node;
