@@ -56,21 +56,21 @@ class RegisterFormBase extends ComponentBase<Props, State> {
     let errorNode;
     let errorType = this.state.errorType;
     if (errorType) {
-      let errorMessage = "予期せぬエラーです。";
+      let text = "予期せぬエラーです。";
       if (errorType === "invalidName") {
-        errorMessage = "ユーザー名が不正です。ユーザー名は半角英数字とアンダーバーとハイフンのみで構成してください。";
+        text = "ユーザー名が不正です。ユーザー名は半角英数字とアンダーバーとハイフンのみで構成してください。";
       } else if (errorType === "invalidEmail") {
-        errorMessage = "メールアドレスが不正です。";
+        text = "メールアドレスが不正です。";
       } else if (errorType === "invalidPassword") {
-        errorMessage = "パスワードが不正です。パスワードは 6 文字以上 50 文字以下である必要があります。";
+        text = "パスワードが不正です。パスワードは 6 文字以上 50 文字以下である必要があります。";
       } else if (errorType === "duplicateName") {
-        errorMessage = "そのユーザー名はすでに存在しています。";
+        text = "そのユーザー名はすでに存在しています。";
       } else if (errorType === "loginFailed") {
-        errorMessage = "ログインに失敗しました。珍しいですね!";
+        text = "ログインに失敗しました。珍しいですね!";
       }
       errorNode = (
         <div styleName="error">
-          <InformationPane texts={[errorMessage]} color="error"/>
+          <InformationPane texts={[text]} color="error"/>
         </div>
       );
     }

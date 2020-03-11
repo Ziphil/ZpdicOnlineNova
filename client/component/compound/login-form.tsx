@@ -30,7 +30,7 @@ class LoginFormBase extends ComponentBase<Props, State> {
   public state: State = {
     name: "",
     password: "",
-    error: false
+    errorType: null
   };
 
   private async performLogin(event: MouseEvent<HTMLInputElement>): Promise<void> {
@@ -40,7 +40,7 @@ class LoginFormBase extends ComponentBase<Props, State> {
     if (succeeded) {
       this.props.history.replace("/dashboard");
     } else {
-      this.setState({error: true});
+      this.setState({errorType: "loginFailed"});
     }
   }
 
@@ -54,8 +54,12 @@ class LoginFormBase extends ComponentBase<Props, State> {
       registerNode = <Button label="新規登録" color="simple" onClick={this.jumpRegister.bind(this)}/>;
     }
     let errorNode;
-    if (this.state.error) {
-      let text = "ログインに失敗しました。";
+    let errorType = this.state.errorType;
+    if (errorType) {
+      let text = "予期せぬエラーです。";
+      if (errorType === "loginFailed") {
+        text = "ログインに失敗しました。";
+      }
       errorNode = (
         <div styleName="error">
           <InformationPane texts={[text]} color="error"/>
@@ -87,7 +91,7 @@ type Props = {
 type State = {
   name: string,
   password: string,
-  error: boolean
+  errorType: string | null
 };
 
 export let LoginForm = withRouter(LoginFormBase);
