@@ -9,6 +9,7 @@ export * from "./dictionary-setting/upload-dictionary-form";
 export * from "./dictionary-header";
 export * from "./dictionary-list";
 export * from "./dictionary-pane";
+export * from "./floating-information-pane";
 export * from "./header";
 export * from "./header-menu-item";
 export * from "./information-pane";

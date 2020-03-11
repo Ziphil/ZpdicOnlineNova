@@ -1,5 +1,9 @@
 //
 
+import {
+  inject,
+  observer
+} from "mobx-react";
 import * as react from "react";
 import {
   ReactNode
@@ -15,6 +19,7 @@ import {
   ChangeUserPasswordForm,
   CreateDictionaryForm,
   DictionaryList,
+  FloatingInformationPane,
   Header,
   Loading,
   Menu,
@@ -32,6 +37,7 @@ import {
 } from "/server/model/user";
 
 
+@observer @inject("store")
 @applyStyle(require("./dashboard-page.scss"))
 class DashboardPageBase extends ComponentBase<Props, State, Params> {
 
@@ -133,6 +139,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     let node = (
       <div styleName="page">
         <Header/>
+        <FloatingInformationPane/>
         <div styleName="content">
           <Menu mode={mode} specs={menuSpecs}/>
           {contentNodes}

@@ -119,6 +119,7 @@ $line-height: 1.6;
 
 @mixin unordered-list($icon) {
   & {
+    margin: 0px;
     list-style-type: none;
   }
   & >li {

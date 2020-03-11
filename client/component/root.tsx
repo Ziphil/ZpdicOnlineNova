@@ -1,5 +1,8 @@
 //
 
+import {
+  Provider
+} from "mobx-react";
 import * as react from "react";
 import {
   Component,
@@ -27,6 +30,9 @@ import {
   PrivateRoute
 } from "/client/component/routing/authentication";
 import {
+  GlobalStore
+} from "/client/component/store";
+import {
   applyStyle
 } from "/client/util/decorator";
 import * as http from "/client/util/http";
@@ -50,18 +56,23 @@ export class Root extends Component<{}, {}> {
   public render(): ReactNode {
     return (
       <BrowserRouter>
-        <Switch>
-          <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
-          <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
-          <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
-          <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-          <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
-          <Route exact path="/dictionary/list" component={DictionaryListPage}/>
-          <Route exact path="/dictionary/:number(\d+)" component={DictionaryPage}/>
-          <PrivateRoute exact path="/dictionary/setting/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-        </Switch>
+        <Provider store={store}>
+          <Switch>
+            <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
+            <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
+            <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
+            <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+            <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
+            <Route exact path="/dictionary/list" component={DictionaryListPage}/>
+            <Route exact path="/dictionary/:number(\d+)" component={DictionaryPage}/>
+            <PrivateRoute exact path="/dictionary/setting/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+          </Switch>
+        </Provider>
       </BrowserRouter>
     );
   }
 
 }
+
+
+let store = new GlobalStore();
