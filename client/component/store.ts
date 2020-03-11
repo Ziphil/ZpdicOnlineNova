@@ -21,6 +21,11 @@ export class GlobalStore {
     this.popupSpec = {type, color: "information"};
   }
 
+  @bound
+  public clearPopup(): void {
+    this.popupSpec = null;
+  }
+
 }
 
 

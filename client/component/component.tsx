@@ -31,6 +31,18 @@ export class ComponentBase<P = {}, S = {}, Q = {}, H = any> extends Component<Ro
 
 export class StoreComponentBase<P = {}, S = {}, Q = {}, H = any> extends ComponentBase<{store?: GlobalStore} & P, S, Q, H> {
 
+  // グローバルストアのポップアップデータを削除しつつ、引数に指定されたパスに移動します。
+  // ページの遷移をしてもポップアップが表示され続けるのを防ぐため、ページを遷移するときは必ずこのメソッドを使ってください。
+  protected pushPath(path: string): void {
+    this.props.store!.clearPopup();
+    this.props.history.push(path);
+  }
+
+  protected replacePath(path: string): void {
+    this.props.store!.clearPopup();
+    this.props.history.replace(path);
+  }
+
   // サーバーに GET リクエストを送り、そのリスポンスを返します。
   // HTTP ステータスコードが 400 番台もしくは 500 番台の場合は、例外は投げられませんが、代わりにグローバルストアにエラータイプを送信します。
   // これにより、ページ上部にエラーを示すポップアップが表示されます。
