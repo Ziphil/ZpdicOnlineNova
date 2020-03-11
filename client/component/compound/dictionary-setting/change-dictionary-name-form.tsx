@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
@@ -13,16 +16,16 @@ import {
   Input
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   applyStyle
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@inject("store")
 @applyStyle(require("./change-dictionary-name-form.scss"))
-class ChangeDictionaryNameFormBase extends ComponentBase<Props, State> {
+class ChangeDictionaryNameFormBase extends StoreComponentBase<Props, State> {
 
   public state: State = {
     name: ""
@@ -37,9 +40,11 @@ class ChangeDictionaryNameFormBase extends ComponentBase<Props, State> {
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let name = this.state.name;
-    let response = await http.post("changeDictionaryName", {number, name});
-    if (this.props.onSubmit) {
-      this.props.onSubmit();
+    let response = await this.requestPost("changeDictionaryName", {number, name});
+    if (response.status === 200) {
+      if (this.props.onSubmit) {
+        this.props.onSubmit();
+      }
     }
   }
 

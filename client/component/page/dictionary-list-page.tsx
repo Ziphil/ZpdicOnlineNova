@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   ReactNode
@@ -8,7 +11,7 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   DictionaryList,
@@ -18,23 +21,25 @@ import {
 import {
   applyStyle
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
 
 
+@inject("store")
 @applyStyle(require("./dictionary-list-page.scss"))
-class DictionaryListPageBase extends ComponentBase<Props, State, Params> {
+class DictionaryListPageBase extends StoreComponentBase<Props, State, Params> {
 
   public state: State = {
     dictionaries: null
   };
 
   public async componentDidMount(): Promise<void> {
-    let response = await http.get("fetchAllDictionaries", {});
-    let dictionaries = response.data;
-    this.setState({dictionaries});
+    let response = await this.requestGet("fetchAllDictionaries", {});
+    if (response.status === 200) {
+      let dictionaries = response.data;
+      this.setState({dictionaries});
+    }
   }
 
   public render(): ReactNode {

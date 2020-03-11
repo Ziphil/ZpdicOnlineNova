@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
@@ -13,19 +16,22 @@ import {
   Input
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   InformationPane
 } from "/client/component/compound";
 import {
+  getMessage
+} from "/client/component/message";
+import {
   applyStyle
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@inject("store")
 @applyStyle(require("./login-form.scss"))
-class RegisterFormBase extends ComponentBase<Props, State> {
+class RegisterFormBase extends StoreComponentBase<Props, State> {
 
   public state: State = {
     name: "",
@@ -38,17 +44,19 @@ class RegisterFormBase extends ComponentBase<Props, State> {
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
-    let response = await http.post("registerUser", {name, email, password}, [400]);
+    let response = await this.requestPostRaw("registerUser", {name, email, password});
     let body = response.data;
-    if (!("error" in body)) {
-      let succeed = await http.login({name, password});
-      if (succeed) {
+    if (response.status === 200) {
+      let loginResponse = await this.login({name, password});
+      if (loginResponse.status === 200) {
         this.props.history.replace("/dashboard");
       } else {
         this.setState({errorType: "loginFailed"});
       }
-    } else {
+    } else if (response.status === 400 && "error" in body) {
       this.setState({errorType: body.type});
+    } else {
+      this.setState({errorType: "unexpected"});
     }
   }
 
@@ -56,21 +64,9 @@ class RegisterFormBase extends ComponentBase<Props, State> {
     let errorNode;
     let errorType = this.state.errorType;
     if (errorType) {
-      let text = "予期せぬエラーです。";
-      if (errorType === "invalidName") {
-        text = "ユーザー名が不正です。ユーザー名は半角英数字とアンダーバーとハイフンのみで構成してください。";
-      } else if (errorType === "invalidEmail") {
-        text = "メールアドレスが不正です。";
-      } else if (errorType === "invalidPassword") {
-        text = "パスワードが不正です。パスワードは 6 文字以上 50 文字以下である必要があります。";
-      } else if (errorType === "duplicateName") {
-        text = "そのユーザー名はすでに存在しています。";
-      } else if (errorType === "loginFailed") {
-        text = "ログインに失敗しました。珍しいですね!";
-      }
       errorNode = (
         <div styleName="error">
-          <InformationPane texts={[text]} color="error"/>
+          <InformationPane texts={[getMessage(errorType)]} color="error"/>
         </div>
       );
     }

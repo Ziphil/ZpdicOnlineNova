@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   Fragment,
@@ -14,16 +17,16 @@ import {
   RadioGroup
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   applyStyle
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@inject("store")
 @applyStyle(require("./change-dictionary-secret-form.scss"))
-class ChangeDictionarySecretFormBase extends ComponentBase<Props, State> {
+class ChangeDictionarySecretFormBase extends StoreComponentBase<Props, State> {
 
   public state: State = {
     secret: false
@@ -38,9 +41,11 @@ class ChangeDictionarySecretFormBase extends ComponentBase<Props, State> {
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let secret = this.state.secret;
-    let response = await http.post("changeDictionarySecret", {number, secret});
-    if (this.props.onSubmit) {
-      this.props.onSubmit();
+    let response = await this.requestPost("changeDictionarySecret", {number, secret});
+    if (response.status === 200) {
+      if (this.props.onSubmit) {
+        this.props.onSubmit();
+      }
     }
   }
 

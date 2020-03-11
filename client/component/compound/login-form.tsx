@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
@@ -13,19 +16,22 @@ import {
   Input
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   InformationPane
 } from "/client/component/compound";
 import {
+  getMessage
+} from "/client/component/message";
+import {
   applyStyle
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@inject("store")
 @applyStyle(require("./login-form.scss"))
-class LoginFormBase extends ComponentBase<Props, State> {
+class LoginFormBase extends StoreComponentBase<Props, State> {
 
   public state: State = {
     name: "",
@@ -36,8 +42,8 @@ class LoginFormBase extends ComponentBase<Props, State> {
   private async performLogin(event: MouseEvent<HTMLInputElement>): Promise<void> {
     let name = this.state.name;
     let password = this.state.password;
-    let succeeded = await http.login({name, password});
-    if (succeeded) {
+    let response = await this.login({name, password});
+    if (response.status === 200) {
       this.props.history.replace("/dashboard");
     } else {
       this.setState({errorType: "loginFailed"});
@@ -56,13 +62,9 @@ class LoginFormBase extends ComponentBase<Props, State> {
     let errorNode;
     let errorType = this.state.errorType;
     if (errorType) {
-      let text = "予期せぬエラーです。";
-      if (errorType === "loginFailed") {
-        text = "ログインに失敗しました。";
-      }
       errorNode = (
         <div styleName="error">
-          <InformationPane texts={[text]} color="error"/>
+          <InformationPane texts={[getMessage(errorType)]} color="error"/>
         </div>
       );
     }

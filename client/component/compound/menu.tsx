@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
@@ -9,7 +12,7 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   MenuItem
@@ -20,12 +23,13 @@ import {
 import * as http from "/client/util/http";
 
 
+@inject("store")
 @applyStyle(require("./menu.scss"))
-class MenuBase extends ComponentBase<Props, State> {
+class MenuBase extends StoreComponentBase<Props, State> {
 
   private async performLogout(event: MouseEvent<HTMLElement>): Promise<void> {
-    let succeeded = await http.logout();
-    if (succeeded) {
+    let response = await this.logout();
+    if (response.status === 200) {
       this.props.history.push("/");
     }
   }

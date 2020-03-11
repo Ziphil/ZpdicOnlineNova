@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   ReactNode
@@ -11,7 +14,7 @@ import {
   Button
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   DictionaryHeader,
@@ -22,14 +25,14 @@ import {
 import {
   applyStyle
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
 
 
+@inject("store")
 @applyStyle(require("./dictionary-page.scss"))
-class DictionaryPageBase extends ComponentBase<Props, State, Params> {
+class DictionaryPageBase extends StoreComponentBase<Props, State, Params> {
 
   public state: State = {
     dictionary: null,
@@ -42,10 +45,9 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
 
   private async fetchDictionary(): Promise<void> {
     let number = +this.props.match!.params.number;
-    let response = await http.get("fetchDictionaryInfo", {number}, [400]);
-    let body = response.data;
-    if (!("error" in body)) {
-      let dictionary = body;
+    let response = await this.requestGet("fetchDictionaryInfo", {number});
+    if (response.status === 200 && !("error" in response.data)) {
+      let dictionary = response.data;
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
@@ -59,10 +61,9 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
     let type = this.state.type;
     let offset = this.state.page * 40;
     let size = 40;
-    let response = await http.get("searchDictionary", {number, search, mode, type, offset, size}, [400]);
-    let data = response.data;
-    if (!("error" in data)) {
-      let words = data;
+    let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
+    if (response.status === 200 && !("error" in response.data)) {
+      let words = response.data;
       this.setState({words});
     } else {
       this.setState({words: []});

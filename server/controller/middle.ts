@@ -49,7 +49,7 @@ export function verifyUser(authority?: unknown): RequestHandler {
 // ログイン中のユーザーにリクエストしている辞書データの編集権限があるかどうかを判定します。
 // このミドルウェアは、必ず verifyUser ミドルウェアを通してから呼び出してください。
 // 編集権限がある場合は、request オブジェクトの dictionary プロパティに辞書オブジェクトを書き込み、次の処理を行います。
-// 編集権限がない場合、ステータスコード 401 を返して終了します。
+// 編集権限がない場合、ステータスコード 403 を返して終了します。
 export function verifyDictionary(): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let user = request.user!;
@@ -59,7 +59,7 @@ export function verifyDictionary(): RequestHandler {
       request.dictionary = dictionary;
       next();
     } else {
-      response.sendStatus(401);
+      response.sendStatus(403);
     }
   };
   return handler;

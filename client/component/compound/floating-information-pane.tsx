@@ -18,6 +18,9 @@ import {
   InformationPane
 } from "/client/component/compound";
 import {
+  getMessage
+} from "/client/component/message";
+import {
   GlobalStore
 } from "/client/component/store";
 import {
@@ -29,23 +32,14 @@ import {
 @applyStyle(require("./floating-information-pane.scss"))
 class FloatingInformationPaneBase extends ComponentBase<{store?: GlobalStore} & Props, State> {
 
-  private determineText(type: string): string {
-    let text = "奇妙なことが起こっています。";
-    if (type === "emailChanged") {
-      text = "メールアドレスの変更が完了しました。";
-    }
-    return text;
-  }
-
   public render(): ReactNode {
     let node;
     let spec = this.props.store!.floatingSpec;
     if (spec) {
-      let text = this.determineText(spec.type);
       node = (
         <div styleName="root">
           <div styleName="pane-wrapper">
-            <InformationPane texts={[text]} color={spec.color}/>
+            <InformationPane texts={[getMessage(spec.type)]} color={spec.color}/>
           </div>
         </div>
       );

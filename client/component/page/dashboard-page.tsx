@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   ReactNode
@@ -8,7 +11,7 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   ChangeUserEmailForm,
@@ -24,7 +27,6 @@ import {
 import {
   applyStyle
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
@@ -33,8 +35,9 @@ import {
 } from "/server/model/user";
 
 
+@inject("store")
 @applyStyle(require("./dashboard-page.scss"))
-class DashboardPageBase extends ComponentBase<Props, State, Params> {
+class DashboardPageBase extends StoreComponentBase<Props, State, Params> {
 
   public state: State = {
     user: null,
@@ -42,19 +45,19 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
   };
 
   public async componentDidMount(): Promise<void> {
-    try {
-      {
-        let response = await http.get("fetchUserInfo", {});
+    {
+      let response = await this.requestGet("fetchUserInfo", {});
+      if (response.status === 200) {
         let user = response.data;
         this.setState({user});
       }
-      {
-        let response = await http.get("fetchDictionaries", {});
+    }
+    {
+      let response = await this.requestGet("fetchDictionaries", {});
+      if (response.status === 200) {
         let dictionaries = response.data;
         this.setState({dictionaries});
       }
-    } catch (error) {
-      this.jumpLogin(error);
     }
   }
 

@@ -4,9 +4,6 @@ import {
   action,
   observable
 } from "mobx";
-import {
-  CustomErrorSkeleton
-} from "/server/model/error";
 
 
 export class GlobalStore {
@@ -15,8 +12,7 @@ export class GlobalStore {
   public floatingSpec: {type: string, color: "error" | "information"} | null = null;
 
   @bound
-  public sendError<E extends string>(error: CustomErrorSkeleton<E>): void {
-    let type = error.type;
+  public sendError(type: string): void {
     this.floatingSpec = {type, color: "error"};
   }
 

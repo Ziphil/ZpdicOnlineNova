@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   ReactNode
@@ -9,7 +12,7 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   HeaderMenuItem
@@ -20,8 +23,9 @@ import {
 import * as http from "/client/util/http";
 
 
+@inject("store")
 @applyStyle(require("./header.scss"))
-class HeaderBase extends ComponentBase<Props, State> {
+class HeaderBase extends StoreComponentBase<Props, State> {
 
   public state: State = {
     userName: ""
@@ -29,12 +33,10 @@ class HeaderBase extends ComponentBase<Props, State> {
 
   public async componentDidMount(): Promise<void> {
     if (http.hasToken()) {
-      try {
-        let response = await http.get("fetchUserInfo", {});
+      let response = await this.requestGetRaw("fetchUserInfo", {});
+      if (response.status === 200) {
         let userName = response.data.name;
         this.setState({userName});
-      } catch (error) {
-        this.jumpLogin(error);
       }
     }
   }

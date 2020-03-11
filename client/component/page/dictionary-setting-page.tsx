@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   ReactNode
@@ -8,7 +11,7 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   ChangeDictionaryNameForm,
@@ -22,14 +25,14 @@ import {
 import {
   applyStyle
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
 
 
+@inject("store")
 @applyStyle(require("./dictionary-setting-page.scss"))
-class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
+class DictionarySettingPageBase extends StoreComponentBase<Props, State, Params> {
 
   public state: State = {
     dictionary: null
@@ -37,10 +40,9 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
 
   public async componentDidMount(): Promise<void> {
     let number = +this.props.match!.params.number;
-    let response = await http.get("fetchDictionaryInfo", {number}, [400]);
-    let body = response.data;
-    if (!("error" in body)) {
-      let dictionary = body;
+    let response = await this.requestGet("fetchDictionaryInfo", {number});
+    if (response.status === 200 && !("error" in response.data)) {
+      let dictionary = response.data;
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
