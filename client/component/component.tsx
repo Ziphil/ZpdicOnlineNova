@@ -32,20 +32,28 @@ export class ComponentBase<P = {}, S = {}, Q = {}, H = any> extends Component<Ro
 export class StoreComponentBase<P = {}, S = {}, Q = {}, H = any> extends ComponentBase<{store?: GlobalStore} & P, S, Q, H> {
 
   // サーバーに GET リクエストを送り、そのリスポンスを返します。
-  // HTTP ステータスコードが 400 番台もしくは 500 番台であっても、例外は投げられません。
-  protected async requestGetRaw<N extends ProcessName>(name: N, params: RequestType<N, "get">): Promise<AxiosResponse<ResponseType<N, "get">>> {
+  // HTTP ステータスコードが 400 番台もしくは 500 番台の場合は、例外は投げられませんが、代わりにグローバルストアにエラータイプを送信します。
+  // これにより、ページ上部にエラーを示すポップアップが表示されます。
+  // ignroesError に true を渡すことで、このエラータイプの送信を抑制できます。
+  protected async requestGet<N extends ProcessName>(name: N, params: RequestType<N, "get">, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "get">>> {
     let url = SERVER_PATH[name];
     let response = await axios.get<ResponseType<N, "get">>(url, {params, validateStatus: () => true});
+    if (!ignoresError && response.status >= 400) {
+      this.catchError(response);
+    }
     return response;
   }
 
-  protected async requestPostRaw<N extends ProcessName>(name: N, data: RequestType<N, "post">): Promise<AxiosResponse<ResponseType<N, "post">>> {
+  protected async requestPost<N extends ProcessName>(name: N, data: RequestType<N, "post">, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "post">>> {
     let url = SERVER_PATH[name];
     let response = await axios.post<ResponseType<N, "post">>(url, data, {validateStatus: () => true});
+    if (!ignoresError && response.status >= 400) {
+      this.catchError(response);
+    }
     return response;
   }
 
-  protected async requestPostFileRaw<N extends ProcessName>(name: N, data: RequestType<N, "post"> & {file: Blob}): Promise<AxiosResponse<ResponseType<N, "post">>> {
+  protected async requestPostFile<N extends ProcessName>(name: N, data: RequestType<N, "post"> & {file: Blob}, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "post">>> {
     let url = SERVER_PATH[name];
     let headers = {} as any;
     let anyData = data as any;
@@ -55,47 +63,25 @@ export class StoreComponentBase<P = {}, S = {}, Q = {}, H = any> extends Compone
     }
     headers["content-type"] = "multipart/form-data";
     let response = await axios.post<ResponseType<N, "post">>(url, nextData, {headers, validateStatus: () => true});
-    return response;
-  }
-
-  // サーバーに GET リクエストを送り、そのリスポンスを返します。
-  // HTTP ステータスコードが 400 番台もしくは 500 番台の場合、例外は投げられませんが、代わりにグローバルストアにエラータイプを送信します。
-  // これにより、ページ上部にエラーを示すポップアップが表示されます。
-  protected async requestGet<N extends ProcessName>(name: N, params: RequestType<N, "get">): Promise<AxiosResponse<ResponseType<N, "get">>> {
-    let response = await this.requestGetRaw(name, params);
-    if (response.status !== 200) {
+    if (!ignoresError && response.status >= 400) {
       this.catchError(response);
     }
     return response;
   }
 
-  protected async requestPost<N extends ProcessName>(name: N, params: RequestType<N, "post">): Promise<AxiosResponse<ResponseType<N, "post">>> {
-    let response = await this.requestPostRaw(name, params);
-    if (response.status !== 200) {
-      this.catchError(response);
-    }
-    return response;
-  }
-
-  protected async requestPostFile<N extends ProcessName>(name: N, params: RequestType<N, "post"> & {file: Blob}): Promise<AxiosResponse<ResponseType<N, "post">>> {
-    let response = await this.requestPostFileRaw(name, params);
-    if (response.status !== 200) {
-      this.catchError(response);
-    }
-    return response;
-  }
-
-  protected async login(data: {name: string, password: string}): Promise<AxiosResponse<UserSkeleton & {token: string}>> {
-    let response = await this.requestPost("login", data);
+  protected async login(data: {name: string, password: string}, ignoresError?: boolean): Promise<AxiosResponse<UserSkeleton & {token: string}>> {
+    let response = await this.requestPost("login", data, ignoresError);
     if (response.status === 200) {
       localStorage.setItem("login", "true");
     }
     return response;
   }
 
-  protected async logout(): Promise<AxiosResponse<boolean>> {
-    let response = await this.requestPost("logout", {});
-    localStorage.removeItem("login");
+  protected async logout(ignoresError?: boolean): Promise<AxiosResponse<boolean>> {
+    let response = await this.requestPost("logout", {}, ignoresError);
+    if (response.status === 200) {
+      localStorage.removeItem("login");
+    }
     return response;
   }
 

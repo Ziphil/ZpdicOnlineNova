@@ -44,7 +44,7 @@ class RegisterFormBase extends StoreComponentBase<Props, State> {
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
-    let response = await this.requestPostRaw("registerUser", {name, email, password});
+    let response = await this.requestPost("registerUser", {name, email, password}, true);
     let body = response.data;
     if (response.status === 200) {
       let loginResponse = await this.login({name, password});

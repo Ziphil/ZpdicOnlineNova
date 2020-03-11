@@ -33,7 +33,7 @@ class HeaderBase extends StoreComponentBase<Props, State> {
 
   public async componentDidMount(): Promise<void> {
     if (http.hasToken()) {
-      let response = await this.requestGetRaw("fetchUserInfo", {});
+      let response = await this.requestGet("fetchUserInfo", {}, true);
       if (response.status === 200) {
         let userName = response.data.name;
         this.setState({userName});
