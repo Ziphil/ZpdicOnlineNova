@@ -5,8 +5,8 @@ import {
   ReactNode
 } from "react";
 import {
-  Link as RawLink
-} from "react-router-dom";
+  Link
+} from "/client/component/atom";
 import {
   StoreComponent
 } from "/client/component/component";
@@ -42,7 +42,7 @@ export class Header extends StoreComponent<Props, State> {
         <div styleName="container">
           <div styleName="left">
             <div styleName="title">
-              <RawLink to="/">ZpDIC</RawLink>
+              <Link label="ZpDIC" href="/" color="plane"/>
             </div>
             <div styleName="menu">
               <HeaderMenuItem label="辞書一覧" iconLabel="&#xF02D;" href="/dictionary/list"/>

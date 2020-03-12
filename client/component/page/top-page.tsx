@@ -5,9 +5,13 @@ import {
   ReactNode
 } from "react";
 import {
+  Link
+} from "/client/component/atom";
+import {
   StoreComponent
 } from "/client/component/component";
 import {
+  DictionaryAggregationPane,
   Header,
   InformationPane,
   LoginForm,
@@ -40,8 +44,8 @@ export class TopPage extends StoreComponent<Props, State> {
               <LoginForm showsRegister={true}/>
             </div>
           </div>
-          <div styleName="information">
-            <InformationPane texts={[informationText]} color="information"/>
+          <div styleName="aggregation">
+            <DictionaryAggregationPane/>
           </div>
           <div styleName="notice">
             <p styleName="text">
@@ -51,7 +55,7 @@ export class TopPage extends StoreComponent<Props, State> {
             </p>
             <p styleName="text">
               意見や要望などは随時募集中です。
-              「このような機能がほしい」や「こうした方が使いやすい」などの意見がありましたら、Twitter を介して @Ziphil までご連絡ください。
+              「このような機能がほしい」や「こうした方が使いやすい」などの意見がありましたら、Twitter を介して <Link label="@Ziphil" href="https://twitter.com/Ziphil" target="blank"/> までご連絡ください。
             </p>
           </div>
         </div>

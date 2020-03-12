@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  text-decoration: underline;
+  color: $link-color;
+  cursor: pointer;
+}
+
+.root:hover {
+  color: $link-hover-color;
+}
+
+.root.plane {
+  color: inherit;
+  text-decoration: inherit;
+}
+
+.root.plane:hover {
+  color: inherit !important;
+}

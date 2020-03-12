@@ -37,14 +37,15 @@
   }
 }
 
-.information {
-  width: 100%;
-  max-width: 600px;
-  margin: 60px auto 0px auto;
+.aggregation {
+  margin: 50px auto 0px auto;
+  padding: 20px 0px;
+  border-top: 1px $light-border-color solid;
+  border-bottom: 1px $light-border-color solid;
 }
 
 .notice {
-  margin: 60px auto 0px auto;
+  margin: 50px auto 0px auto;
 }
 
 .text {

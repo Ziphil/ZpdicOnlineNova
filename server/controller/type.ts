@@ -21,6 +21,7 @@ export const SERVER_PATH = {
   fetchDictionaryInfo: "/api/dictionary/info",
   fetchDictionaries: "/api/dictionary/list",
   fetchAllDictionaries: "/api/dictionary/list/all",
+  fetchDictionaryAggregation: "/api/dictionary/aggregate",
   login: "/api/user/login",
   logout: "/api/user/logout",
   registerUser: "/api/user/register",
@@ -57,7 +58,7 @@ export type ProcessType = {
       request: {number: number, secret: boolean},
       response: SlimeDictionarySkeleton
     }
-  }
+  },
   searchDictionary: {
     get: {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
@@ -69,7 +70,7 @@ export type ProcessType = {
     get: {
       request: {number: number},
       response: MayError<SlimeDictionarySkeleton>
-    }
+    },
     post: Noop
   },
   fetchDictionaries: {
@@ -83,9 +84,16 @@ export type ProcessType = {
     get: {
       request: {},
       response: Array<SlimeDictionarySkeleton>
-    }
+    },
     post: Noop
   },
+  fetchDictionaryAggregation: {
+    get: {
+      request: {},
+      response: {dictionarySize: number, wordSize: number};
+    },
+    post: Noop
+  }
   login: {
     get: Noop,
     post: {
@@ -99,7 +107,7 @@ export type ProcessType = {
       request: {},
       response: boolean
     }
-  }
+  },
   registerUser: {
     get: Noop,
     post: {
