@@ -26,9 +26,6 @@ import {
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
-import {
-  UserSkeleton
-} from "/server/model/user";
 
 
 @route @inject
