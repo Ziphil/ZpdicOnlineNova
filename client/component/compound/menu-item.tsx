@@ -1,27 +1,23 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./menu-item.scss"))
-class MenuItemBase extends StoreComponentBase<Props, State> {
+export class MenuItem extends StoreComponent<Props, State> {
 
   private click(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
@@ -59,5 +55,3 @@ type Props = {
 };
 type State = {
 };
-
-export let MenuItem = withRouter(MenuItemBase);

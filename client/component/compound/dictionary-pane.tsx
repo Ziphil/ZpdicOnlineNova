@@ -1,33 +1,29 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button
 } from "/client/component/atom";
 import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./dictionary-pane.scss"))
-class DictionaryPaneBase extends StoreComponentBase<Props, State> {
+export class DictionaryPane extends StoreComponent<Props, State> {
 
   private click(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
@@ -84,5 +80,3 @@ type Props = {
 };
 type State = {
 };
-
-export let DictionaryPane = withRouter(DictionaryPaneBase);

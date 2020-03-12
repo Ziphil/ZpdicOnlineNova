@@ -5,25 +5,20 @@ import {
 } from "lodash-es";
 import * as react from "react";
 import {
+  Component,
   ReactNode
 } from "react";
-import {
-  withRouter
-} from "react-router-dom";
 import {
   Input,
   RadioGroup
 } from "/client/component/atom";
-import {
-  ComponentBase
-} from "/client/component/component";
 import {
   applyStyle
 } from "/client/util/decorator";
 
 
 @applyStyle(require("./search-form.scss"))
-class SearchFormBase extends ComponentBase<Props, State> {
+export class SearchForm extends Component<Props, State> {
 
   public state: State = {
     search: "",
@@ -103,5 +98,3 @@ type State = {
   mode: string,
   type: string
 };
-
-export let SearchForm = withRouter(SearchFormBase);

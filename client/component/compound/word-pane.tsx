@@ -2,14 +2,9 @@
 
 import * as react from "react";
 import {
+  Component,
   ReactNode
 } from "react";
-import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
-} from "/client/component/component";
 import {
   applyStyle
 } from "/client/util/decorator";
@@ -19,7 +14,7 @@ import {
 
 
 @applyStyle(require("./word-pane.scss"))
-class WordPaneBase extends ComponentBase<Props, State> {
+export class WordPane extends Component<Props, State> {
 
   private renderEquivalentNode(): ReactNode {
     let innerNodes = this.props.word.equivalents.map((equivalent, index) => {
@@ -104,5 +99,3 @@ type Props = {
 };
 type State = {
 };
-
-export let WordPane = withRouter(WordPaneBase);

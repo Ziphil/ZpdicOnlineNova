@@ -1,8 +1,5 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   Fragment,
@@ -10,23 +7,22 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   RadioGroup
 } from "/client/component/atom";
 import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./change-dictionary-secret-form.scss"))
-class ChangeDictionarySecretFormBase extends StoreComponentBase<Props, State> {
+export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
 
   public state: State = {
     secret: false
@@ -81,5 +77,3 @@ type Props = {
 type State = {
   secret: boolean;
 };
-
-export let ChangeDictionarySecretForm = withRouter(ChangeDictionarySecretFormBase);

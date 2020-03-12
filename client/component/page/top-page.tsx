@@ -5,10 +5,7 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   Header,
@@ -17,12 +14,14 @@ import {
   Logo
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  route
 } from "/client/util/decorator";
 
 
+@route
 @applyStyle(require("./top-page.scss"))
-class TopPageBase extends ComponentBase<Props, State> {
+export class TopPage extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let informationText = `
@@ -68,5 +67,3 @@ type Props = {
 };
 type State = {
 };
-
-export let TopPage = withRouter(TopPageBase);

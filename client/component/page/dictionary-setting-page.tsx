@@ -1,17 +1,11 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   ChangeDictionaryNameForm,
@@ -23,16 +17,18 @@ import {
   UploadDictionaryForm
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./dictionary-setting-page.scss"))
-class DictionarySettingPageBase extends StoreComponentBase<Props, State, Params> {
+export class DictionarySettingPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
     dictionary: null
@@ -120,5 +116,3 @@ type State = {
 type Params = {
   number: string;
 };
-
-export let DictionarySettingPage = withRouter(DictionarySettingPageBase);

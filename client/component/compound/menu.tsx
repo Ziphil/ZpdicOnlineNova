@@ -1,30 +1,26 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   MenuItem
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./menu.scss"))
-class MenuBase extends StoreComponentBase<Props, State> {
+export class Menu extends StoreComponent<Props, State> {
 
   private async performLogout(event: MouseEvent<HTMLElement>): Promise<void> {
     let response = await this.logout();
@@ -57,5 +53,3 @@ type Props = {
 };
 type State = {
 };
-
-export let Menu = withRouter(MenuBase);

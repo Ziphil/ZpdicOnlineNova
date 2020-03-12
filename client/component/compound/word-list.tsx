@@ -2,14 +2,9 @@
 
 import * as react from "react";
 import {
+  Component,
   ReactNode
 } from "react";
-import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
-} from "/client/component/component";
 import {
   WordPane
 } from "/client/component/compound";
@@ -22,7 +17,7 @@ import {
 
 
 @applyStyle(require("./word-list.scss"))
-class WordListBase extends ComponentBase<Props, State> {
+export class WordList extends Component<Props, State> {
 
   public render(): ReactNode {
     let words = this.props.words;
@@ -48,5 +43,3 @@ type Props = {
 };
 type State = {
 };
-
-export let WordList = withRouter(WordListBase);

@@ -1,31 +1,27 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   Input
 } from "/client/component/atom";
 import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./change-user-email-form.scss"))
-class ChangeUserEmailFormBase extends StoreComponentBase<Props, State> {
+export class ChangeUserEmailForm extends StoreComponent<Props, State> {
 
   public state: State = {
     email: ""
@@ -68,5 +64,3 @@ type Props = {
 type State = {
   email: string
 };
-
-export let ChangeUserEmailForm = withRouter(ChangeUserEmailFormBase);

@@ -2,14 +2,9 @@
 
 import * as react from "react";
 import {
+  Component,
   ReactNode
 } from "react";
-import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
-} from "/client/component/component";
 import {
   TITLES,
   VERSION
@@ -20,7 +15,7 @@ import {
 
 
 @applyStyle(require("./logo.scss"))
-class LogoBase extends ComponentBase<Props, State> {
+export class Logo extends Component<Props, State> {
 
   public render(): ReactNode {
     let title = TITLES[0];
@@ -43,5 +38,3 @@ type Props = {
 };
 type State = {
 };
-
-export let Logo = withRouter(LogoBase);

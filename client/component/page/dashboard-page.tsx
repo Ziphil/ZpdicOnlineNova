@@ -1,17 +1,11 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   ChangeUserEmailForm,
@@ -25,7 +19,9 @@ import {
   SettingPane
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 import {
   SlimeDictionarySkeleton
@@ -35,9 +31,9 @@ import {
 } from "/server/model/user";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./dashboard-page.scss"))
-class DashboardPageBase extends StoreComponentBase<Props, State, Params> {
+export class DashboardPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
     user: null,
@@ -159,5 +155,3 @@ type State = {
 type Params = {
   mode: string
 };
-
-export let DashboardPage = withRouter(DashboardPageBase);

@@ -1,22 +1,16 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   Input
 } from "/client/component/atom";
 import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   InformationPane
@@ -25,13 +19,15 @@ import {
   getMessage
 } from "/client/component/message";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./login-form.scss"))
-class LoginFormBase extends StoreComponentBase<Props, State> {
+export class LoginForm extends StoreComponent<Props, State> {
 
   public state: State = {
     name: "",
@@ -95,5 +91,3 @@ type State = {
   password: string,
   errorType: string | null
 };
-
-export let LoginForm = withRouter(LoginFormBase);

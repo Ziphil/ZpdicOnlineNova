@@ -1,31 +1,27 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   Input
 } from "/client/component/atom";
 import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./change-dictionary-name-form.scss"))
-class ChangeDictionaryNameFormBase extends StoreComponentBase<Props, State> {
+export class ChangeDictionaryNameForm extends StoreComponent<Props, State> {
 
   public state: State = {
     name: ""
@@ -69,5 +65,3 @@ type Props = {
 type State = {
   name: string;
 };
-
-export let ChangeDictionaryNameForm = withRouter(ChangeDictionaryNameFormBase);

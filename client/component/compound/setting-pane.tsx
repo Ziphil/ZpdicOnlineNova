@@ -2,25 +2,19 @@
 
 import * as react from "react";
 import {
-  MouseEvent,
+  Component,
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Badge
 } from "/client/component/atom";
-import {
-  ComponentBase
-} from "/client/component/component";
 import {
   applyStyle
 } from "/client/util/decorator";
 
 
 @applyStyle(require("./setting-pane.scss"))
-class SettingPaneBase extends ComponentBase<Props, State> {
+export class SettingPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let badgeNode;
@@ -62,5 +56,3 @@ type Props = {
 };
 type State = {
 };
-
-export let SettingPane = withRouter(SettingPaneBase);

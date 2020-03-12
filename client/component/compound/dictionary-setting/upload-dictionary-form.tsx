@@ -1,31 +1,27 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   FileInput
 } from "/client/component/atom";
 import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./upload-dictionary-form.scss"))
-class UploadDictionaryFormBase extends StoreComponentBase<Props, State> {
+export class UploadDictionaryForm extends StoreComponent<Props, State> {
 
   public state: State = {
     file: null
@@ -64,5 +60,3 @@ type Props = {
 type State = {
   file: File | null
 };
-
-export let UploadDictionaryForm = withRouter(UploadDictionaryFormBase);

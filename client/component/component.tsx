@@ -24,23 +24,23 @@ import {
 } from "/server/model/user";
 
 
-export class ComponentBase<P = {}, S = {}, Q = {}, H = any> extends Component<RouteComponentProps<Q> & P, S, H> {
+export class RouteComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Partial<RouteComponentProps<Q>> & P, S, H> {
 
 }
 
 
-export class StoreComponentBase<P = {}, S = {}, Q = {}, H = any> extends ComponentBase<{store?: GlobalStore} & P, S, Q, H> {
+export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteComponent<{store?: GlobalStore} & P, S, Q, H> {
 
   // グローバルストアのポップアップデータを削除しつつ、引数に指定されたパスに移動します。
   // ページの遷移をしてもポップアップが表示され続けるのを防ぐため、ページを遷移するときは必ずこのメソッドを使ってください。
   protected pushPath(path: string): void {
     this.props.store!.clearPopup();
-    this.props.history.push(path);
+    this.props.history!.push(path);
   }
 
   protected replacePath(path: string): void {
     this.props.store!.clearPopup();
-    this.props.history.replace(path);
+    this.props.history!.replace(path);
   }
 
   // サーバーに GET リクエストを送り、そのリスポンスを返します。

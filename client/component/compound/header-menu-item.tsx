@@ -1,27 +1,23 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./header-menu-item.scss"))
-class HeaderMenuItemBase extends StoreComponentBase<Props, State> {
+export class HeaderMenuItem extends StoreComponent<Props, State> {
 
   public state: State = {
     userName: ""
@@ -58,5 +54,3 @@ type Props = {
 };
 type State = {
 };
-
-export let HeaderMenuItem = withRouter(HeaderMenuItemBase);

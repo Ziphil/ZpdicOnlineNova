@@ -5,22 +5,21 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   Header,
   RegisterForm
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  route
 } from "/client/util/decorator";
 
 
+@route
 @applyStyle(require("./register-page.scss"))
-class RegisterPageBase extends ComponentBase<Props, State> {
+export class RegisterPage extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (
@@ -44,5 +43,3 @@ type Props = {
 };
 type State = {
 };
-
-export let RegisterPage = withRouter(RegisterPageBase);

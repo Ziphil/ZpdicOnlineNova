@@ -18,6 +18,9 @@ import {
 import {
   withRouter
 } from "react-router-dom";
+import {
+  GlobalStore
+} from "/client/component/store";
 
 
 export function applyStyle(component: any): ClassDecorator {
@@ -26,17 +29,17 @@ export function applyStyle(component: any): ClassDecorator {
   return decorator;
 }
 
-export function route<P extends Partial<RouteComponentProps<any>>, T extends ComponentClass<P>>(clazz: T): T {
+export function route<P extends Partial<RouteComponentProps<any>>, C extends ComponentClass<P>>(clazz: C & ComponentClass<P>): C & ComponentClass<P> {
   let anyClass = clazz as any;
   let resultClass = withRouter(anyClass) as any;
   return resultClass;
 }
 
-export function inject<P, T extends ComponentClass<P>>(clazz: T): T {
+export function inject<P extends {store?: GlobalStore}, C extends ComponentClass<P>>(clazz: C & ComponentClass<P>): C & ComponentClass<P> {
   return mobxInject("store")(clazz);
 }
 
-export function observer<P, T extends ComponentClass<P>>(clazz: T): T {
+export function observer<P extends any, C extends ComponentClass<P>>(clazz: C): C {
   return mobxObserver(clazz);
 }
 

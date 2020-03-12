@@ -1,9 +1,9 @@
 //
 
 import {
-  action,
+  boundAction,
   observable
-} from "mobx";
+} from "/client/util/decorator";
 
 
 export class GlobalStore {
@@ -11,22 +11,19 @@ export class GlobalStore {
   @observable
   public popupSpec: {type: string, color: "error" | "information"} | null = null;
 
-  @bound
+  @boundAction
   public sendError(type: string): void {
     this.popupSpec = {type, color: "error"};
   }
 
-  @bound
+  @boundAction
   public sendInformation(type: string): void {
     this.popupSpec = {type, color: "information"};
   }
 
-  @bound
+  @boundAction
   public clearPopup(): void {
     this.popupSpec = null;
   }
 
 }
-
-
-let bound = action.bound;

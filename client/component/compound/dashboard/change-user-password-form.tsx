@@ -1,31 +1,27 @@
 //
 
-import {
-  inject
-} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   Input
 } from "/client/component/atom";
 import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 
 
-@inject("store")
+@route @inject
 @applyStyle(require("./change-user-password-form.scss"))
-class ChangeUserPasswordFormBase extends StoreComponentBase<Props, State> {
+export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
 
   public state: State = {
     password: ""
@@ -61,5 +57,3 @@ type Props = {
 type State = {
   password: string
 };
-
-export let ChangeUserPasswordForm = withRouter(ChangeUserPasswordFormBase);

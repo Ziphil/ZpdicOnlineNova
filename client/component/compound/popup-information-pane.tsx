@@ -1,18 +1,11 @@
 //
 
-import {
-  inject,
-  observer
-} from "mobx-react";
 import * as react from "react";
 import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  StoreComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   InformationPane
@@ -21,13 +14,16 @@ import {
   getMessage
 } from "/client/component/message";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  observer,
+  route
 } from "/client/util/decorator";
 
 
-@inject("store") @observer
+@route @inject @observer
 @applyStyle(require("./popup-information-pane.scss"))
-class PopupInformationPaneBase extends StoreComponentBase<Props, State> {
+export class PopupInformationPane extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node;
@@ -51,5 +47,3 @@ type Props = {
 };
 type State = {
 };
-
-export let PopupInformationPane = withRouter(PopupInformationPaneBase);
