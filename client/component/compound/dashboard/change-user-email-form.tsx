@@ -6,27 +6,27 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   Input
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@route @inject
 @applyStyle(require("./change-user-email-form.scss"))
-class ChangeUserEmailFormBase extends ComponentBase<Props, State> {
+export class ChangeUserEmailForm extends StoreComponent<Props, State> {
 
   public state: State = {
     email: ""
   };
+
   public constructor(props: any) {
     super(props);
     let email = this.props.currentEmail;
@@ -35,16 +35,19 @@ class ChangeUserEmailFormBase extends ComponentBase<Props, State> {
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let email = this.state.email;
-    let response = await http.post("changeUserEmail", {email});
-    if (this.props.onSubmit) {
-      this.props.onSubmit();
+    let response = await this.requestPost("changeUserEmail", {email});
+    if (response.status === 200) {
+      this.props.store!.sendInformation("emailChanged");
+      if (this.props.onSubmit) {
+        this.props.onSubmit();
+      }
     }
   }
 
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="メールアドレス" initialValue={this.props.currentEmail} onValueChange={(value) => this.setState({email: value})}/>
+        <Input label="メールアドレス" initialValue={this.props.currentEmail} onSet={(value) => this.setState({email: value})}/>
         <Button label="変更" onClick={this.click.bind(this)}/>
       </form>
     );
@@ -61,5 +64,3 @@ type Props = {
 type State = {
   email: string
 };
-
-export let ChangeUserEmailForm = withRouter(ChangeUserEmailFormBase);

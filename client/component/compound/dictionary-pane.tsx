@@ -6,36 +6,36 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
 
 
+@route @inject
 @applyStyle(require("./dictionary-pane.scss"))
-class DictionaryPaneBase extends ComponentBase<Props, State> {
+export class DictionaryPane extends StoreComponent<Props, State> {
 
   private click(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
     let path = "/dictionary/" + this.props.dictionary.number;
-    this.props.history.push(path);
+    this.pushPath(path);
   }
 
   private jumpSettingPage(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
     event.stopPropagation();
     let path = "/dictionary/setting/" + this.props.dictionary.number;
-    this.props.history.push(path);
+    this.pushPath(path);
   }
 
   public render(): ReactNode {
@@ -80,5 +80,3 @@ type Props = {
 };
 type State = {
 };
-
-export let DictionaryPane = withRouter(DictionaryPaneBase);

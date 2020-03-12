@@ -5,10 +5,7 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   ChangeDictionaryNameForm,
@@ -16,31 +13,37 @@ import {
   DictionaryHeader,
   Header,
   Menu,
+  PopupInformationPane,
   SettingPane,
   UploadDictionaryForm
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
 
 
+@route @inject
 @applyStyle(require("./dictionary-setting-page.scss"))
-class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
+export class DictionarySettingPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
     dictionary: null
   };
 
   public async componentDidMount(): Promise<void> {
-    let number = this.props.match!.params.number;
-    let response = await http.get("fetchDictionaryInfo", {number}, [400]);
-    let body = response.data;
-    if (!("error" in body)) {
-      let dictionary = body;
+    await this.fetchDictionary();
+  }
+
+  private async fetchDictionary(): Promise<void> {
+    let number = +this.props.match!.params.number;
+    let response = await this.requestGet("fetchDictionaryInfo", {number});
+    if (response.status === 200 && !("error" in response.data)) {
+      let dictionary = response.data;
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
@@ -54,7 +57,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeDictionaryNameForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name} onSubmit={() => location.reload()}/>
+        <ChangeDictionaryNameForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name} onSubmit={this.fetchDictionary.bind(this)}/>
       </SettingPane>
     );
     return node;
@@ -67,7 +70,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeDictionarySecretForm number={this.state.dictionary!.number} currentSecret={this.state.dictionary!.secret} onSubmit={() => location.reload()}/>
+        <ChangeDictionarySecretForm number={this.state.dictionary!.number} currentSecret={this.state.dictionary!.secret}/>
       </SettingPane>
     );
     return node;
@@ -98,6 +101,7 @@ class DictionarySettingPageBase extends ComponentBase<Props, State, Params> {
       <div styleName="page">
         <Header/>
         <DictionaryHeader name={this.state.dictionary?.name || ""}/>
+        <PopupInformationPane/>
         <div styleName="content">
           <Menu mode="general" specs={menuSpecs}/>
           {contentNodes}
@@ -118,5 +122,3 @@ type State = {
 type Params = {
   number: string;
 };
-
-export let DictionarySettingPage = withRouter(DictionarySettingPageBase);

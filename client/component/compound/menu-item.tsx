@@ -6,18 +6,18 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 
 
+@route @inject
 @applyStyle(require("./menu-item.scss"))
-class MenuItemBase extends ComponentBase<Props, State> {
+export class MenuItem extends StoreComponent<Props, State> {
 
   private click(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
@@ -25,7 +25,7 @@ class MenuItemBase extends ComponentBase<Props, State> {
       this.props.onClick(event);
     }
     if (this.props.href) {
-      this.props.history.push(this.props.href);
+      this.pushPath(this.props.href);
     }
   }
 
@@ -55,5 +55,3 @@ type Props = {
 };
 type State = {
 };
-
-export let MenuItem = withRouter(MenuItemBase);

@@ -4,7 +4,11 @@
 
 
 .page {
-  @include page(170px);
+  @include page(150px);
+}
+
+.content {
+  @include page-content;
 }
 
 .logo-wrapper {

@@ -30,8 +30,8 @@ export class RadioGroup extends Component<Props, State> {
     if (this.props.onChange) {
       this.props.onChange(event);
     }
-    if (this.props.onValueChange) {
-      this.props.onValueChange(value);
+    if (this.props.onSet) {
+      this.props.onSet(value);
     }
   }
 
@@ -56,7 +56,7 @@ type Props = {
   specs: Array<{value: string, label: string}>,
   initialValue?: string,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
-  onValueChange?: (value: string) => void
+  onSet?: (value: string) => void
 };
 type State = {
   value: string | null

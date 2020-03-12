@@ -5,10 +5,7 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   ChangeUserEmailForm,
@@ -18,42 +15,32 @@ import {
   Header,
   Loading,
   Menu,
+  PopupInformationPane,
   SettingPane
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
-import {
-  UserSkeleton
-} from "/server/model/user";
 
 
+@route @inject
 @applyStyle(require("./dashboard-page.scss"))
-class DashboardPageBase extends ComponentBase<Props, State, Params> {
+export class DashboardPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
-    user: null,
     dictionaries: null
   };
 
   public async componentDidMount(): Promise<void> {
-    try {
-      {
-        let response = await http.get("fetchUserInfo", {});
-        let user = response.data;
-        this.setState({user});
-      }
-      {
-        let response = await http.get("fetchDictionaries", {});
-        let dictionaries = response.data;
-        this.setState({dictionaries});
-      }
-    } catch (error) {
-      this.jumpLogin(error);
+    let response = await this.requestGet("fetchDictionaries", {});
+    if (response.status === 200) {
+      let dictionaries = response.data;
+      this.setState({dictionaries});
     }
   }
 
@@ -81,7 +68,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        <CreateDictionaryForm onSubmit={() => location.reload()}/>
+        <CreateDictionaryForm/>
       </SettingPane>
     );
     return node;
@@ -94,7 +81,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        <ChangeUserEmailForm currentEmail={this.state.user!.email} onSubmit={() => location.reload()}/>
+        <ChangeUserEmailForm currentEmail={this.props.store!.user!.email}/>
       </SettingPane>
     );
     return node;
@@ -107,7 +94,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        <ChangeUserPasswordForm onSubmit={() => location.reload()}/>
+        <ChangeUserPasswordForm/>
       </SettingPane>
     );
     return node;
@@ -121,7 +108,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
       {mode: "logout", label: "ログアウト", iconLabel: "\uF2F5", href: "/"}
     ];
     let contentNodes = [];
-    if (this.state.user) {
+    if (this.props.store!.user) {
       if (mode === "dictionary") {
         contentNodes.push(this.renderDictionaryList());
         contentNodes.push(this.renderCreateDictionaryForm());
@@ -133,6 +120,7 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
     let node = (
       <div styleName="page">
         <Header/>
+        <PopupInformationPane/>
         <div styleName="content">
           <Menu mode={mode} specs={menuSpecs}/>
           {contentNodes}
@@ -148,11 +136,8 @@ class DashboardPageBase extends ComponentBase<Props, State, Params> {
 type Props = {
 };
 type State = {
-  user: UserSkeleton | null,
   dictionaries: Array<SlimeDictionarySkeleton> | null;
 };
 type Params = {
   mode: string
 };
-
-export let DashboardPage = withRouter(DashboardPageBase);

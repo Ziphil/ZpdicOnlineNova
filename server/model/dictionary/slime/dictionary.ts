@@ -35,10 +35,10 @@ export class SlimeDictionary {
   public user!: Ref<User>;
 
   @prop()
-  public secret!: boolean;
+  public secret?: boolean;
 
   @prop()
-  public externalData!: object;
+  public externalData?: object;
 
   public static async createEmpty(name: string, user: UserDocument): Promise<SlimeDictionaryDocument> {
     let dictionary = new SlimeDictionaryModel({});

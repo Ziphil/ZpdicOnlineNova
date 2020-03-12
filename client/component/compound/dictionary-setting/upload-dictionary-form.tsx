@@ -6,23 +6,22 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   FileInput
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@route @inject
 @applyStyle(require("./upload-dictionary-form.scss"))
-class UploadDictionaryFormBase extends ComponentBase<Props, State> {
+export class UploadDictionaryForm extends StoreComponent<Props, State> {
 
   public state: State = {
     file: null
@@ -32,9 +31,12 @@ class UploadDictionaryFormBase extends ComponentBase<Props, State> {
     let number = this.props.number;
     let file = this.state.file;
     if (file) {
-      let response = await http.postFile("uploadDictionary", {number, file});
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+      let response = await this.requestPostFile("uploadDictionary", {number, file});
+      if (response.status === 200) {
+        this.props.store!.sendInformation("dictionaryUploaded");
+        if (this.props.onSubmit) {
+          this.props.onSubmit();
+        }
       }
     }
   }
@@ -42,7 +44,7 @@ class UploadDictionaryFormBase extends ComponentBase<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <FileInput inputLabel="ファイル" buttonLabel="選択" onFileChange={(file) => this.setState({file})}/>
+        <FileInput inputLabel="ファイル" buttonLabel="選択" onSet={(file) => this.setState({file})}/>
         <Button label="決定" onClick={this.click.bind(this)}/>
       </form>
     );
@@ -53,11 +55,9 @@ class UploadDictionaryFormBase extends ComponentBase<Props, State> {
 
 
 type Props = {
-  number: number | string,
+  number: number,
   onSubmit?: () => void
 };
 type State = {
   file: File | null
 };
-
-export let UploadDictionaryForm = withRouter(UploadDictionaryFormBase);

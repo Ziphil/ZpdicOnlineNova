@@ -2,21 +2,16 @@
 
 import * as react from "react";
 import {
+  Component,
   ReactNode
 } from "react";
-import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
-} from "/client/component/component";
 import {
   applyStyle
 } from "/client/util/decorator";
 
 
 @applyStyle(require("./loading.scss"))
-class LoadingBase extends ComponentBase<Props, State> {
+export class Loading extends Component<Props, State> {
 
   public render(): ReactNode {
     let node;
@@ -40,5 +35,3 @@ type Props = {
 };
 type State = {
 };
-
-export let Loading = withRouter(LoadingBase);

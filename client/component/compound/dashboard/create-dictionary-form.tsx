@@ -6,40 +6,43 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   Input
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@route @inject
 @applyStyle(require("./create-dictionary-form.scss"))
-class CreateDictionaryFormBase extends ComponentBase<Props, State> {
+export class CreateDictionaryForm extends StoreComponent<Props, State> {
 
   public state: State = {
-    name: ""
+    name: "新規辞書"
   };
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let name = this.state.name;
-    let response = await http.post("createDictionary", {name});
-    if (this.props.onSubmit) {
-      this.props.onSubmit();
+    let response = await this.requestPost("createDictionary", {name});
+    if (response.status === 200) {
+      let dictionary = response.data;
+      if (this.props.onSubmit) {
+        this.props.onSubmit();
+      }
+      this.pushPath("/dictionary/setting/" + dictionary.number);
     }
   }
 
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="名称" initialValue="新規辞書" onValueChange={(value) => this.setState({name: value})}/>
+        <Input label="名称" initialValue="新規辞書" onSet={(value) => this.setState({name: value})}/>
         <Button label="作成" onClick={this.click.bind(this)}/>
       </form>
     );
@@ -55,5 +58,3 @@ type Props = {
 type State = {
   name: string;
 };
-
-export let CreateDictionaryForm = withRouter(CreateDictionaryFormBase);

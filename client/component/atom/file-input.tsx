@@ -25,8 +25,8 @@ export class FileInput extends Component<Props, State> {
       let file = files[0];
       let fileName = file.name;
       this.setState({file, fileName});
-      if (this.props.onFileChange) {
-        this.props.onFileChange(file);
+      if (this.props.onSet) {
+        this.props.onSet(file);
       }
     }
   }
@@ -57,7 +57,7 @@ export class FileInput extends Component<Props, State> {
 type Props = {
   inputLabel?: string,
   buttonLabel: string,
-  onFileChange?: (file: File | null) => void
+  onSet?: (file: File | null) => void
 };
 type State = {
   file: File | null,

@@ -5,37 +5,34 @@ import {
   ReactNode
 } from "react";
 import {
-  Link as RawLink,
-  withRouter
+  Link as RawLink
 } from "react-router-dom";
 import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   HeaderMenuItem
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@route @inject
 @applyStyle(require("./header.scss"))
-class HeaderBase extends ComponentBase<Props, State> {
+export class Header extends StoreComponent<Props, State> {
 
   public state: State = {
     userName: ""
   };
 
   public async componentDidMount(): Promise<void> {
-    if (http.hasToken()) {
-      try {
-        let response = await http.get("fetchUserInfo", {});
-        let userName = response.data.name;
-        this.setState({userName});
-      } catch (error) {
-        this.jumpLogin(error);
-      }
+    let user = this.props.store!.user;
+    if (user) {
+      let userName = user.name;
+      this.setState({userName});
     }
   }
 
@@ -70,5 +67,3 @@ type Props = {
 type State = {
   userName: string
 };
-
-export let Header = withRouter(HeaderBase);

@@ -84,13 +84,16 @@ $line-height: 1.6;
   }
 }
 
-@mixin page($margin-top) {
-  width: $page-width;
-  margin: $margin-top auto 50px auto;
+@mixin page($margin-top: 130px) {
+  width: calc(100% - #{$page-horizontal-margin} * 2);
+  margin: $margin-top $page-horizontal-margin 50px $page-horizontal-margin;
   padding: 0px;
-  @media screen and (max-width: $page-width + $page-horizontal-margin * 2) {
-    width: calc(100% - #{$page-horizontal-margin * 2});
-  }
+}
+
+@mixin page-content($width: $page-width) {
+  width: 100%;
+  max-width: $width;
+  margin: 0px auto;
 }
 
 @mixin pane($type) {
@@ -119,6 +122,7 @@ $line-height: 1.6;
 
 @mixin unordered-list($icon) {
   & {
+    margin: 0px;
     list-style-type: none;
   }
   & >li {

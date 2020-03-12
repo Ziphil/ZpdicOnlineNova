@@ -6,23 +6,22 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   Input
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@route @inject
 @applyStyle(require("./change-user-password-form.scss"))
-class ChangeUserPasswordFormBase extends ComponentBase<Props, State> {
+export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
 
   public state: State = {
     password: ""
@@ -30,16 +29,19 @@ class ChangeUserPasswordFormBase extends ComponentBase<Props, State> {
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let password = this.state.password;
-    let response = await http.post("changeUserPassword", {password});
-    if (this.props.onSubmit) {
-      this.props.onSubmit();
+    let response = await this.requestPost("changeUserPassword", {password});
+    if (response.status === 200) {
+      this.props.store!.sendInformation("passwordChanged");
+      if (this.props.onSubmit) {
+        this.props.onSubmit();
+      }
     }
   }
 
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="パスワード" type="flexible" onValueChange={(value) => this.setState({password: value})}/>
+        <Input label="パスワード" type="flexible" onSet={(value) => this.setState({password: value})}/>
         <Button label="変更" onClick={this.click.bind(this)}/>
       </form>
     );
@@ -55,5 +57,3 @@ type Props = {
 type State = {
   password: string
 };
-
-export let ChangeUserPasswordForm = withRouter(ChangeUserPasswordFormBase);

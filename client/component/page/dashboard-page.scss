@@ -6,3 +6,7 @@
 .page {
   @include page(130px);
 }
+
+.content {
+  @include page-content;
+}

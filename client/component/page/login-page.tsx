@@ -5,30 +5,31 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   Header,
   LoginForm
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  route
 } from "/client/util/decorator";
 
 
+@route
 @applyStyle(require("./login-page.scss"))
-class LoginPageBase extends ComponentBase<Props, State> {
+export class LoginPage extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (
       <div styleName="page">
         <Header/>
-        <div styleName="description">ログイン</div>
-        <div styleName="login-form">
-          <LoginForm showsRegister={false}/>
+        <div styleName="content">
+          <div styleName="description">ログイン</div>
+          <div styleName="login-form">
+            <LoginForm showsRegister={false}/>
+          </div>
         </div>
       </div>
     );
@@ -42,5 +43,3 @@ type Props = {
 };
 type State = {
 };
-
-export let LoginPage = withRouter(LoginPageBase);

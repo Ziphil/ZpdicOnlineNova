@@ -23,6 +23,9 @@ import {
   UserSkeleton
 } from "/server/model/user";
 import {
+  ensureString
+} from "/server/util/cast";
+import {
   before,
   controller,
   get,
@@ -36,16 +39,11 @@ export class UserController extends Controller {
   @post(SERVER_PATH["login"])
   @before(login(30 * 24 * 60 * 60))
   public async postLogin(request: PostRequest<"login">, response: PostResponse<"login">): Promise<void> {
-    let token = request.token;
-    let user = request.user;
-    if (token && user) {
-      let rawBody = new UserSkeleton(user);
-      let body = {...rawBody, token};
-      response.json(body);
-    } else {
-      let body = new CustomErrorSkeleton("invalidRequest");
-      response.status(400).json(body);
-    }
+    let token = request.token!;
+    let user = request.user!;
+    let userBody = new UserSkeleton(user);
+    let body = {token, user: userBody};
+    response.json(body);
   }
 
   @post(SERVER_PATH["logout"])
@@ -56,9 +54,9 @@ export class UserController extends Controller {
 
   @post(SERVER_PATH["registerUser"])
   public async postRegisterUser(request: PostRequest<"registerUser">, response: PostResponse<"registerUser">): Promise<void> {
-    let name = request.body.name;
-    let email = request.body.email;
-    let password = request.body.password;
+    let name = ensureString(request.body.name);
+    let email = ensureString(request.body.email);
+    let password = ensureString(request.body.password);
     try {
       let user = await UserModel.register(name, email, password);
       let body = new UserSkeleton(user);
@@ -90,7 +88,7 @@ export class UserController extends Controller {
   @before(verifyUser())
   public async postChangeUserEmail(request: PostRequest<"changeUserEmail">, response: PostResponse<"changeUserEmail">): Promise<void> {
     let user = request.user!;
-    let email = request.body.email;
+    let email = ensureString(request.body.email);
     try {
       await user.changeEmail(email);
       let body = new UserSkeleton(user);
@@ -112,7 +110,7 @@ export class UserController extends Controller {
   @before(verifyUser())
   public async postChangeUserPassword(request: PostRequest<"changeUserPassword">, response: PostResponse<"changeUserPassword">): Promise<void> {
     let user = request.user!;
-    let password = request.body.password;
+    let password = ensureString(request.body.password);
     try {
       await user.changePassword(password);
       let body = new UserSkeleton(user);

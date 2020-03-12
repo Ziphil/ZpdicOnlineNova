@@ -6,46 +6,48 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   Input
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   InformationPane
 } from "/client/component/compound";
 import {
-  applyStyle
+  getMessage
+} from "/client/component/message";
+import {
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@route @inject
 @applyStyle(require("./login-form.scss"))
-class LoginFormBase extends ComponentBase<Props, State> {
+export class LoginForm extends StoreComponent<Props, State> {
 
   public state: State = {
     name: "",
     password: "",
-    error: false
+    errorType: null
   };
 
   private async performLogin(event: MouseEvent<HTMLInputElement>): Promise<void> {
     let name = this.state.name;
     let password = this.state.password;
-    let succeeded = await http.login({name, password});
-    if (succeeded) {
-      this.props.history.replace("/dashboard");
+    let response = await this.login({name, password}, true);
+    if (response.status === 200) {
+      this.replacePath("/dashboard");
     } else {
-      this.setState({error: true});
+      this.setState({errorType: "loginFailed"});
     }
   }
 
   private async jumpRegister(event: MouseEvent<HTMLInputElement>): Promise<void> {
-    this.props.history.replace("/register");
+    this.pushPath("/register");
   }
 
   public render(): ReactNode {
@@ -54,11 +56,11 @@ class LoginFormBase extends ComponentBase<Props, State> {
       registerNode = <Button label="新規登録" color="simple" onClick={this.jumpRegister.bind(this)}/>;
     }
     let errorNode;
-    if (this.state.error) {
-      let text = "ログインに失敗しました。";
+    let errorType = this.state.errorType;
+    if (errorType) {
       errorNode = (
         <div styleName="error">
-          <InformationPane texts={[text]} color="error"/>
+          <InformationPane texts={[getMessage(errorType)]} color="error"/>
         </div>
       );
     }
@@ -66,8 +68,8 @@ class LoginFormBase extends ComponentBase<Props, State> {
       <div>
         {errorNode}
         <form styleName="root">
-          <Input label="ユーザー名" onValueChange={(value) => this.setState({name: value})}/>
-          <Input label="パスワード" type="flexible" onValueChange={(value) => this.setState({password: value})}/>
+          <Input label="ユーザー名" onSet={(value) => this.setState({name: value})}/>
+          <Input label="パスワード" type="flexible" onSet={(value) => this.setState({password: value})}/>
           <div styleName="button-group">
             <Button label="ログイン" onClick={this.performLogin.bind(this)}/>
             {registerNode}
@@ -87,7 +89,5 @@ type Props = {
 type State = {
   name: string,
   password: string,
-  error: boolean
+  errorType: string | null
 };
-
-export let LoginForm = withRouter(LoginFormBase);

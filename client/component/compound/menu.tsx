@@ -6,27 +6,26 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   MenuItem
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@route @inject
 @applyStyle(require("./menu.scss"))
-class MenuBase extends ComponentBase<Props, State> {
+export class Menu extends StoreComponent<Props, State> {
 
   private async performLogout(event: MouseEvent<HTMLElement>): Promise<void> {
-    let succeeded = await http.logout();
-    if (succeeded) {
-      this.props.history.push("/");
+    let response = await this.logout();
+    if (response.status === 200) {
+      this.pushPath("/");
     }
   }
 
@@ -54,5 +53,3 @@ type Props = {
 };
 type State = {
 };
-
-export let Menu = withRouter(MenuBase);

@@ -6,18 +6,18 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
 
 
+@route @inject
 @applyStyle(require("./header-menu-item.scss"))
-class HeaderMenuItemBase extends ComponentBase<Props, State> {
+export class HeaderMenuItem extends StoreComponent<Props, State> {
 
   public state: State = {
     userName: ""
@@ -29,7 +29,7 @@ class HeaderMenuItemBase extends ComponentBase<Props, State> {
       this.props.onClick(event);
     }
     if (this.props.href) {
-      this.props.history.push(this.props.href);
+      this.pushPath(this.props.href);
     }
   }
 
@@ -54,5 +54,3 @@ type Props = {
 };
 type State = {
 };
-
-export let HeaderMenuItem = withRouter(HeaderMenuItemBase);

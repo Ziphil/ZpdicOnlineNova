@@ -5,31 +5,31 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   DictionaryHeader,
   Header,
+  PopupInformationPane,
   SearchForm,
   WordList
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
 
 
+@route @inject
 @applyStyle(require("./dictionary-page.scss"))
-class DictionaryPageBase extends ComponentBase<Props, State, Params> {
+export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
     dictionary: null,
@@ -41,11 +41,10 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
   };
 
   private async fetchDictionary(): Promise<void> {
-    let number = this.props.match!.params.number;
-    let response = await http.get("fetchDictionaryInfo", {number}, [400]);
-    let body = response.data;
-    if (!("error" in body)) {
-      let dictionary = body;
+    let number = +this.props.match!.params.number;
+    let response = await this.requestGet("fetchDictionaryInfo", {number});
+    if (response.status === 200 && !("error" in response.data)) {
+      let dictionary = response.data;
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
@@ -53,16 +52,15 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
   }
 
   private async updateWords(): Promise<void> {
-    let number = this.props.match!.params.number;
+    let number = +this.props.match!.params.number;
     let search = this.state.search;
     let mode = this.state.mode;
     let type = this.state.type;
     let offset = this.state.page * 40;
-    let size = 40;
-    let response = await http.get("searchDictionary", {number, search, mode, type, offset, size}, [400]);
-    let data = response.data;
-    if (!("error" in data)) {
-      let words = data;
+    let size = 41;
+    let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
+    if (response.status === 200 && !("error" in response.data)) {
+      let words = response.data;
       this.setState({words});
     } else {
       this.setState({words: []});
@@ -74,7 +72,7 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
     await promise;
   }
 
-  private async handleAnyChange(search: string, mode: string, type: string): Promise<void> {
+  private async handleAnySet(search: string, mode: string, type: string): Promise<void> {
     let page = 0;
     this.setState({search, mode, type, page}, async () => {
       await this.updateWords();
@@ -105,15 +103,18 @@ class DictionaryPageBase extends ComponentBase<Props, State, Params> {
       <div styleName="page">
         <Header/>
         <DictionaryHeader name={this.state.dictionary?.name || ""}/>
-        <div styleName="search-form">
-          <SearchForm onAnyChange={this.handleAnyChange.bind(this)}/>
-        </div>
-        <div styleName="word-list">
-          <WordList words={this.state.words} offset={0} size={40}/>
-        </div>
-        <div styleName="page-button">
-          <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
-          <Button label="次ページ" position="right" onClick={this.moveNextPage.bind(this)}/>
+        <PopupInformationPane/>
+        <div styleName="content">
+          <div styleName="search-form">
+            <SearchForm onAnySet={this.handleAnySet.bind(this)}/>
+          </div>
+          <div styleName="word-list">
+            <WordList words={this.state.words} offset={0} size={40}/>
+          </div>
+          <div styleName="page-button">
+            <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
+            <Button label="次ページ" position="right" disabled={this.state.words.length <= 40} onClick={this.moveNextPage.bind(this)}/>
+          </div>
         </div>
       </div>
     );
@@ -136,5 +137,3 @@ type State = {
 type Params = {
   number: string
 };
-
-export let DictionaryPage = withRouter(DictionaryPageBase);

@@ -2,14 +2,9 @@
 
 import * as react from "react";
 import {
+  Component,
   ReactNode
 } from "react";
-import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
-} from "/client/component/component";
 import {
   DictionaryPane
 } from "/client/component/compound";
@@ -22,7 +17,7 @@ import {
 
 
 @applyStyle(require("./dictionary-list.scss"))
-class DictionaryListBase extends ComponentBase<Props, State> {
+export class DictionaryList extends Component<Props, State> {
 
   public render(): ReactNode {
     let dictionaryPanes = this.props.dictionaries.map((dictionary) => {
@@ -45,5 +40,3 @@ type Props = {
 };
 type State = {
 };
-
-export let DictionaryList = withRouter(DictionaryListBase);

@@ -7,23 +7,22 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   RadioGroup
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@route @inject
 @applyStyle(require("./change-dictionary-secret-form.scss"))
-class ChangeDictionarySecretFormBase extends ComponentBase<Props, State> {
+export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
 
   public state: State = {
     secret: false
@@ -38,9 +37,12 @@ class ChangeDictionarySecretFormBase extends ComponentBase<Props, State> {
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let secret = this.state.secret;
-    let response = await http.post("changeDictionarySecret", {number, secret});
-    if (this.props.onSubmit) {
-      this.props.onSubmit();
+    let response = await this.requestPost("changeDictionarySecret", {number, secret});
+    if (response.status === 200) {
+      this.props.store!.sendInformation("dictionarySecretChanged");
+      if (this.props.onSubmit) {
+        this.props.onSubmit();
+      }
     }
   }
 
@@ -53,7 +55,7 @@ class ChangeDictionarySecretFormBase extends ComponentBase<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <RadioGroup name="secret" specs={specs} initialValue={initialSecret} onValueChange={(value) => this.setState({secret: value === "secret"})}/>
+          <RadioGroup name="secret" specs={specs} initialValue={initialSecret} onSet={(value) => this.setState({secret: value === "secret"})}/>
           <Button label="変更" onClick={this.click.bind(this)}/>
         </form>
         <p styleName="caution">
@@ -76,5 +78,3 @@ type Props = {
 type State = {
   secret: boolean;
 };
-
-export let ChangeDictionarySecretForm = withRouter(ChangeDictionarySecretFormBase);

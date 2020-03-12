@@ -2,21 +2,16 @@
 
 import * as react from "react";
 import {
+  Component,
   ReactNode
 } from "react";
-import {
-  withRouter
-} from "react-router-dom";
-import {
-  ComponentBase
-} from "/client/component/component";
 import {
   applyStyle
 } from "/client/util/decorator";
 
 
 @applyStyle(require("./dictionary-header.scss"))
-class DictionaryHeaderBase extends ComponentBase<Props, State> {
+export class DictionaryHeader extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (
@@ -39,5 +34,3 @@ type Props = {
 };
 type State = {
 };
-
-export let DictionaryHeader = withRouter(DictionaryHeaderBase);

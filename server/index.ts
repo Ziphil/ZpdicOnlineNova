@@ -21,11 +21,11 @@ import {
 } from "/server/controller/user";
 
 
-export const DEFAULT_PORT = 8050;
-export const DEFAULT_MONGO_URI = "mongodb://localhost:27017/zpdic";
-export const DEFAULT_COOKIE_SECRET = "cookie-zpdic";
-export const DEFAULT_SESSION_SECRET = "session-zpdic";
-export const DEFAULT_JWT_SECRET = "jwt-secret";
+export const PORT = process.env["PORT"] || 8050;
+export const MONGO_URI = process.env["MONGO_URI"] || "mongodb://localhost:27017/zpdic";
+export const COOKIE_SECRET = process.env["COOKIE_SECRET"] || "cookie-zpdic";
+export const SESSION_SECRET = process.env["SESSION_SECRET"] || "session-zpdic";
+export const JWT_SECRET = process.env["JWT_SECRET"] || "jwt-secret";
 
 
 class Main {
@@ -57,8 +57,7 @@ class Main {
   }
 
   private setupCookie(): void {
-    let secret = process.env["COOKIE_SECRET"] || DEFAULT_COOKIE_SECRET;
-    let middleware = cookieParser(secret);
+    let middleware = cookieParser(COOKIE_SECRET);
     this.application.use(middleware);
   }
 
@@ -81,24 +80,21 @@ class Main {
   // セッションストアとして、MongoDB の該当データベース内の sessions コレクションを用いるようになっています。
   private setupSession(): void {
     let MongoStore = connect(session);
-    let url = process.env["MONGODB_URI"] || DEFAULT_MONGO_URI;
-    let secret = process.env["SESSION_SECRET"] || DEFAULT_SESSION_SECRET;
-    let store = new MongoStore({url, collection: "sessions"});
+    let store = new MongoStore({url: MONGO_URI, collection: "sessions"});
     let cookie = {maxAge: 6 * 60 * 60 * 1000};
-    let middleware = session({store, secret, cookie, resave: false, saveUninitialized: false});
+    let middleware = session({store, cookie, secret: SESSION_SECRET, resave: false, saveUninitialized: false});
     this.application.use(middleware);
   }
 
   // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
   // typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。
   private setupMongo(): void {
-    let url = process.env["MONGODB_URI"] || DEFAULT_MONGO_URI;
     let check = function (value: string): boolean {
       return value !== null;
     };
     let SchemaString = Schema.Types.String as any;
     SchemaString.checkRequired(check);
-    mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true});
+    mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
   }
 
   // ルーターの設定を行います。
@@ -116,12 +112,8 @@ class Main {
   }
 
   private listen(): void {
-    let port = process.env["PORT"] || DEFAULT_PORT;
-    if (typeof port === "string") {
-      port = parseInt(port, 10);
-    }
-    this.application.listen(port, () => {
-      console.log("\u001b[33m[Express]\u001b[0m Listening on port " + port);
+    this.application.listen(+PORT, () => {
+      console.log("\u001b[33m[Express]\u001b[0m Listening on port " + PORT);
     });
   }
 

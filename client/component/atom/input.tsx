@@ -38,8 +38,8 @@ export class Input extends Component<Props, State> {
     if (this.props.onChange) {
       this.props.onChange(event);
     }
-    if (this.props.onValueChange) {
-      this.props.onValueChange(value);
+    if (this.props.onSet) {
+      this.props.onSet(value);
     }
   }
 
@@ -79,7 +79,7 @@ type Props = {
   type: "text" | "password" | "flexible",
   initialValue?: string,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
-  onValueChange?: (value: string) => void
+  onSet?: (value: string) => void
 };
 type State = {
   value: string,

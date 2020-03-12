@@ -6,23 +6,22 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   Input
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@route @inject
 @applyStyle(require("./change-dictionary-name-form.scss"))
-class ChangeDictionaryNameFormBase extends ComponentBase<Props, State> {
+export class ChangeDictionaryNameForm extends StoreComponent<Props, State> {
 
   public state: State = {
     name: ""
@@ -37,16 +36,19 @@ class ChangeDictionaryNameFormBase extends ComponentBase<Props, State> {
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let name = this.state.name;
-    let response = await http.post("changeDictionaryName", {number, name});
-    if (this.props.onSubmit) {
-      this.props.onSubmit();
+    let response = await this.requestPost("changeDictionaryName", {number, name});
+    if (response.status === 200) {
+      this.props.store!.sendInformation("dictionaryNameChanged");
+      if (this.props.onSubmit) {
+        this.props.onSubmit();
+      }
     }
   }
 
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="名称" initialValue={this.props.currentName} onValueChange={(value) => this.setState({name: value})}/>
+        <Input label="名称" initialValue={this.props.currentName} onSet={(value) => this.setState({name: value})}/>
         <Button label="変更" onClick={this.click.bind(this)}/>
       </form>
     );
@@ -64,5 +66,3 @@ type Props = {
 type State = {
   name: string;
 };
-
-export let ChangeDictionaryNameForm = withRouter(ChangeDictionaryNameFormBase);

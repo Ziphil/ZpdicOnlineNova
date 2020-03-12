@@ -6,26 +6,28 @@ import {
   ReactNode
 } from "react";
 import {
-  withRouter
-} from "react-router-dom";
-import {
   Button,
   Input
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponent
 } from "/client/component/component";
 import {
   InformationPane
 } from "/client/component/compound";
 import {
-  applyStyle
+  getMessage
+} from "/client/component/message";
+import {
+  applyStyle,
+  inject,
+  route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
+@route @inject
 @applyStyle(require("./login-form.scss"))
-class RegisterFormBase extends ComponentBase<Props, State> {
+export class RegisterForm extends StoreComponent<Props, State> {
 
   public state: State = {
     name: "",
@@ -38,17 +40,19 @@ class RegisterFormBase extends ComponentBase<Props, State> {
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
-    let response = await http.post("registerUser", {name, email, password}, [400]);
+    let response = await this.requestPost("registerUser", {name, email, password}, true);
     let body = response.data;
-    if (!("error" in body)) {
-      let succeed = await http.login({name, password});
-      if (succeed) {
-        this.props.history.replace("/dashboard");
+    if (response.status === 200) {
+      let loginResponse = await this.login({name, password});
+      if (loginResponse.status === 200) {
+        this.replacePath("/dashboard");
       } else {
         this.setState({errorType: "loginFailed"});
       }
-    } else {
+    } else if (response.status === 400 && "error" in body) {
       this.setState({errorType: body.type});
+    } else {
+      this.setState({errorType: "unexpected"});
     }
   }
 
@@ -56,21 +60,9 @@ class RegisterFormBase extends ComponentBase<Props, State> {
     let errorNode;
     let errorType = this.state.errorType;
     if (errorType) {
-      let errorMessage = "予期せぬエラーです。";
-      if (errorType === "invalidName") {
-        errorMessage = "ユーザー名が不正です。ユーザー名は半角英数字とアンダーバーとハイフンのみで構成してください。";
-      } else if (errorType === "invalidEmail") {
-        errorMessage = "メールアドレスが不正です。";
-      } else if (errorType === "invalidPassword") {
-        errorMessage = "パスワードが不正です。パスワードは 6 文字以上 50 文字以下である必要があります。";
-      } else if (errorType === "duplicateName") {
-        errorMessage = "そのユーザー名はすでに存在しています。";
-      } else if (errorType === "loginFailed") {
-        errorMessage = "ログインに失敗しました。珍しいですね!";
-      }
       errorNode = (
         <div styleName="error">
-          <InformationPane texts={[errorMessage]} color="error"/>
+          <InformationPane texts={[getMessage(errorType)]} color="error"/>
         </div>
       );
     }
@@ -78,9 +70,9 @@ class RegisterFormBase extends ComponentBase<Props, State> {
       <div>
         {errorNode}
         <form styleName="root">
-          <Input label="ユーザー名" onValueChange={(value) => this.setState({name: value})}/>
-          <Input label="メールアドレス" onValueChange={(value) => this.setState({email: value})}/>
-          <Input label="パスワード" type="flexible" onValueChange={(value) => this.setState({password: value})}/>
+          <Input label="ユーザー名" onSet={(value) => this.setState({name: value})}/>
+          <Input label="メールアドレス" onSet={(value) => this.setState({email: value})}/>
+          <Input label="パスワード" type="flexible" onSet={(value) => this.setState({password: value})}/>
           <div styleName="button-group">
             <Button label="新規登録" onClick={this.performRegister.bind(this)}/>
           </div>
@@ -101,5 +93,3 @@ type State = {
   password: string,
   errorType: string | null
 };
-
-export let RegisterForm = withRouter(RegisterFormBase);

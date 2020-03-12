@@ -5,7 +5,7 @@ import {
   SlimeWordSkeleton
 } from "/server/model/dictionary/slime";
 import {
-  MayError
+  CustomErrorSkeleton
 } from "/server/model/error";
 import {
   UserSkeleton
@@ -33,41 +33,41 @@ export type ProcessType = {
   createDictionary: {
     get: Noop,
     post: {
-      request: Required<"name">,
+      request: {name: string},
       response: SlimeDictionarySkeleton
     }
   },
   uploadDictionary: {
     get: Noop,
     post: {
-      request: Required<"number">,
+      request: {number: number},
       response: SlimeDictionarySkeleton
     }
   },
   changeDictionaryName: {
     get: Noop,
     post: {
-      request: Required<"number" | "name">,
+      request: {number: number, name: string},
       response: SlimeDictionarySkeleton
     }
   },
   changeDictionarySecret: {
     get: Noop,
     post: {
-      request: Required<"number" | "secret">,
+      request: {number: number, secret: boolean},
       response: SlimeDictionarySkeleton
     }
   }
   searchDictionary: {
     get: {
-      request: Required<"number" | "search" | "mode" | "type" | "offset" | "size">,
+      request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
       response: MayError<Array<SlimeWordSkeleton>>
     },
     post: Noop
   },
   fetchDictionaryInfo: {
     get: {
-      request: Required<"number">,
+      request: {number: number},
       response: MayError<SlimeDictionarySkeleton>
     }
     post: Noop
@@ -89,8 +89,8 @@ export type ProcessType = {
   login: {
     get: Noop,
     post: {
-      request: Required<"name" | "password">,
-      response: MayError<UserSkeleton & {token: string}>
+      request: {name: string, password: string},
+      response: {token: string, user: UserSkeleton}
     }
   },
   logout: {
@@ -103,21 +103,21 @@ export type ProcessType = {
   registerUser: {
     get: Noop,
     post: {
-      request: Required<"name" | "email" | "password">,
+      request: {name: string, email: string, password: string},
       response: MayError<UserSkeleton>
     }
   },
   changeUserEmail: {
     get: Noop,
     post: {
-      request: Required<"email">,
+      request: {email: string},
       response: MayError<UserSkeleton>
     }
   },
   changeUserPassword: {
     get: Noop,
     post: {
-      request: Required<"password">,
+      request: {password: string},
       response: MayError<UserSkeleton>
     }
   },
@@ -137,5 +137,4 @@ export type RequestType<N extends ProcessName, M extends MethodType> = ProcessTy
 export type ResponseType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["response"];
 
 type Noop = {request: never, response: never};
-type Required<S extends string> = {[N in S]: string};
-type Optional<S extends string> = {[N in S]?: string};
+type MayError<T> = T | CustomErrorSkeleton<string>;

@@ -1,28 +1,122 @@
 //
 
+import axios from "axios";
+import {
+  AxiosResponse
+} from "axios";
 import {
   Component
 } from "react";
 import {
   RouteComponentProps
 } from "react-router-dom";
-import * as http from "/client/util/http";
+import {
+  GlobalStore
+} from "/client/component/store";
+import {
+  ProcessName,
+  RequestType,
+  ResponseType,
+  SERVER_PATH
+} from "/server/controller/type";
+import {
+  UserSkeleton
+} from "/server/model/user";
 
 
-export class ComponentBase<P = {}, S = {}, Q = {}, N = any> extends Component<RouteComponentProps<Q> & P, S, N> {
+export class RouteComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Partial<RouteComponentProps<Q>> & P, S, H> {
 
-  // 発生した例外が HTTP リクエストの 401 エラーであった場合に、ログインページに遷移します。
-  // それ以外の例外であった場合は、単にその例外を再発生させます。
-  // 引数として例外値が渡されなかった場合は、無条件でログインページに遷移します。
-  protected jumpLogin(error?: any): void {
-    if (error === undefined || error?.response?.status === 401) {
-      http.logout();
-      this.props.history.push("/login");
-    } else {
-      if (error) {
-        throw error;
-      }
+}
+
+
+export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteComponent<{store?: GlobalStore} & P, S, Q, H> {
+
+  // グローバルストアのポップアップデータを削除しつつ、引数に指定されたパスに移動します。
+  // ページの遷移をしてもポップアップが表示され続けるのを防ぐため、ページを遷移するときは必ずこのメソッドを使ってください。
+  protected pushPath(path: string): void {
+    this.props.store!.clearPopup();
+    this.props.history!.push(path);
+  }
+
+  protected replacePath(path: string): void {
+    this.props.store!.clearPopup();
+    this.props.history!.replace(path);
+  }
+
+  // サーバーに GET リクエストを送り、そのリスポンスを返します。
+  // HTTP ステータスコードが 400 番台もしくは 500 番台の場合は、例外は投げられませんが、代わりにグローバルストアにエラータイプを送信します。
+  // これにより、ページ上部にエラーを示すポップアップが表示されます。
+  // ignroesError に true を渡すことで、このエラータイプの送信を抑制できます。
+  protected async requestGet<N extends ProcessName>(name: N, params: RequestType<N, "get">, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "get">>> {
+    let url = SERVER_PATH[name];
+    let response = await axios.get<ResponseType<N, "get">>(url, {params, validateStatus: () => true});
+    if (!ignoresError && response.status >= 400) {
+      this.catchError(response);
     }
+    return response;
+  }
+
+  protected async requestPost<N extends ProcessName>(name: N, data: RequestType<N, "post">, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "post">>> {
+    let url = SERVER_PATH[name];
+    let response = await axios.post<ResponseType<N, "post">>(url, data, {validateStatus: () => true});
+    if (!ignoresError && response.status >= 400) {
+      this.catchError(response);
+    }
+    return response;
+  }
+
+  protected async requestPostFile<N extends ProcessName>(name: N, data: RequestType<N, "post"> & {file: Blob}, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "post">>> {
+    let url = SERVER_PATH[name];
+    let headers = {} as any;
+    let anyData = data as any;
+    let nextData = new FormData();
+    for (let key of Object.keys(data)) {
+      nextData.append(key, anyData[key]);
+    }
+    headers["content-type"] = "multipart/form-data";
+    let response = await axios.post<ResponseType<N, "post">>(url, nextData, {headers, validateStatus: () => true});
+    if (!ignoresError && response.status >= 400) {
+      this.catchError(response);
+    }
+    return response;
+  }
+
+  protected async login(data: RequestType<"login", "post">, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<"login", "post">>> {
+    let response = await this.requestPost("login", data, ignoresError);
+    if (response.status === 200) {
+      let body = response.data;
+      this.props.store!.user = body.user;
+    }
+    return response;
+  }
+
+  protected async logout(ignoresError?: boolean): Promise<AxiosResponse<boolean>> {
+    let response = await this.requestPost("logout", {}, ignoresError);
+    if (response.status === 200) {
+      this.props.store!.user = null;
+    }
+    return response;
+  }
+
+  private catchError<T>(response: AxiosResponse<T>): AxiosResponse<T> {
+    let status = response.status;
+    let body = response.data as any;
+    if (status === 400) {
+      if ("error" in body && "type" in body && typeof body.type === "string") {
+        this.props.store!.sendError(body.type);
+      } else {
+        this.props.store!.sendError("messageNotFound");
+      }
+    } else if (status === 401) {
+      this.props.store!.sendError("unauthenticated");
+    } else if (status === 403) {
+      this.props.store!.sendError("forbidden");
+    } else if (status === 404) {
+      this.props.store!.sendError("serverNotFound");
+    } else {
+      this.props.store!.sendError("unexpected");
+    }
+    return response;
   }
 
 }

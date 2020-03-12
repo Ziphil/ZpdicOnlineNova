@@ -14,21 +14,23 @@ import {
 } from "/server/controller/controller";
 
 
-interface ControllerMetadata<P extends Params = ParamsDictionary> {
+class ControllerMetadata<P extends Params = ParamsDictionary> {
 
-  name: string | symbol;
-  path: string;
-  method: MethodType;
-  befores: Array<RequestHandler<P>>;
-  afters: Array<RequestHandler<P>>;
+  public name: string | symbol;
+  public path: string = "/";
+  public method: MethodType = "get";
+  public befores: Array<RequestHandler<P>> = [];
+  public afters: Array<RequestHandler<P>> = [];
+
+  public constructor(name: string | symbol) {
+    this.name = name;
+  }
 
 }
 
 
-type MethodType = "get" | "post";
-
 export function controller<P extends Params = ParamsDictionary>(path: string): ClassDecorator {
-  let decorator = function (clazz: new() => Controller): void {
+  let decorator = function (clazz: Function | (new() => Controller)): void {
     let originalSetup = clazz.prototype.setup;
     clazz.prototype.setup = function (this: Controller): void {
       let anyThis = this as any;
@@ -43,7 +45,7 @@ export function controller<P extends Params = ParamsDictionary>(path: string): C
       originalSetup();
     };
   };
-  return decorator as any;
+  return decorator;
 }
 
 export function get(path: string): MethodDecorator {
@@ -89,7 +91,7 @@ function findMetadata<P extends Params = ParamsDictionary>(target: object, name:
     }
   }
   if (!metadata) {
-    metadata = {name, path: "/", method: "get", befores: [], afters: []};
+    metadata = new ControllerMetadata<P>(name);
     array.push(metadata);
   }
   return metadata;
@@ -114,3 +116,5 @@ function getMetadataArray<P extends Params = ParamsDictionary>(target: object): 
   let array = Reflect.getMetadata(KEY, target);
   return array;
 }
+
+type MethodType = "get" | "post";
