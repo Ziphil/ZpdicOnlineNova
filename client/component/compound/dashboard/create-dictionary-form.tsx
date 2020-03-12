@@ -39,7 +39,7 @@ class CreateDictionaryFormBase extends StoreComponentBase<Props, State> {
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
-      this.props.history.push("/dictionary/setting/" + dictionary.number);
+      this.pushPath("/dictionary/setting/" + dictionary.number);
     }
   }
 

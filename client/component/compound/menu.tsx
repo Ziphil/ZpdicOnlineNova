@@ -29,7 +29,7 @@ class MenuBase extends StoreComponentBase<Props, State> {
   private async performLogout(event: MouseEvent<HTMLElement>): Promise<void> {
     let response = await this.logout();
     if (response.status === 200) {
-      this.props.history.push("/");
+      this.pushPath("/");
     }
   }
 

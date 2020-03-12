@@ -49,7 +49,7 @@ class RegisterFormBase extends StoreComponentBase<Props, State> {
     if (response.status === 200) {
       let loginResponse = await this.login({name, password});
       if (loginResponse.status === 200) {
-        this.props.history.replace("/dashboard");
+        this.replacePath("/dashboard");
       } else {
         this.setState({errorType: "loginFailed"});
       }

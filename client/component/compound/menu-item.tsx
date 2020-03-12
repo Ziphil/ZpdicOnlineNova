@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
@@ -9,15 +12,16 @@ import {
   withRouter
 } from "react-router-dom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   applyStyle
 } from "/client/util/decorator";
 
 
+@inject("store")
 @applyStyle(require("./menu-item.scss"))
-class MenuItemBase extends ComponentBase<Props, State> {
+class MenuItemBase extends StoreComponentBase<Props, State> {
 
   private click(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
@@ -25,7 +29,7 @@ class MenuItemBase extends ComponentBase<Props, State> {
       this.props.onClick(event);
     }
     if (this.props.href) {
-      this.props.history.push(this.props.href);
+      this.pushPath(this.props.href);
     }
   }
 

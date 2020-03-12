@@ -1,5 +1,8 @@
 //
 
+import {
+  inject
+} from "mobx-react";
 import * as react from "react";
 import {
   MouseEvent,
@@ -12,7 +15,7 @@ import {
   Button
 } from "/client/component/atom";
 import {
-  ComponentBase
+  StoreComponentBase
 } from "/client/component/component";
 import {
   applyStyle
@@ -22,20 +25,21 @@ import {
 } from "/server/model/dictionary/slime";
 
 
+@inject("store")
 @applyStyle(require("./dictionary-pane.scss"))
-class DictionaryPaneBase extends ComponentBase<Props, State> {
+class DictionaryPaneBase extends StoreComponentBase<Props, State> {
 
   private click(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
     let path = "/dictionary/" + this.props.dictionary.number;
-    this.props.history.push(path);
+    this.pushPath(path);
   }
 
   private jumpSettingPage(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
     event.stopPropagation();
     let path = "/dictionary/setting/" + this.props.dictionary.number;
-    this.props.history.push(path);
+    this.pushPath(path);
   }
 
   public render(): ReactNode {

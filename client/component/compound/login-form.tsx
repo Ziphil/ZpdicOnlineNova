@@ -44,14 +44,14 @@ class LoginFormBase extends StoreComponentBase<Props, State> {
     let password = this.state.password;
     let response = await this.login({name, password}, true);
     if (response.status === 200) {
-      this.props.history.replace("/dashboard");
+      this.replacePath("/dashboard");
     } else {
       this.setState({errorType: "loginFailed"});
     }
   }
 
   private async jumpRegister(event: MouseEvent<HTMLInputElement>): Promise<void> {
-    this.props.history.replace("/register");
+    this.pushPath("/register");
   }
 
   public render(): ReactNode {
