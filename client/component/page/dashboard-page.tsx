@@ -81,7 +81,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        <CreateDictionaryForm onSubmit={() => location.reload()}/>
+        <CreateDictionaryForm/>
       </SettingPane>
     );
     return node;
