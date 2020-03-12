@@ -5,6 +5,9 @@ import {
   ReactNode
 } from "react";
 import {
+  Link
+} from "/client/component/atom";
+import {
   StoreComponent
 } from "/client/component/component";
 import {
@@ -51,7 +54,7 @@ export class TopPage extends StoreComponent<Props, State> {
             </p>
             <p styleName="text">
               意見や要望などは随時募集中です。
-              「このような機能がほしい」や「こうした方が使いやすい」などの意見がありましたら、Twitter を介して @Ziphil までご連絡ください。
+              「このような機能がほしい」や「こうした方が使いやすい」などの意見がありましたら、Twitter を介して <Link label="@Ziphil" href="https://twitter.com/Ziphil" target="blank"/> までご連絡ください。
             </p>
           </div>
         </div>
