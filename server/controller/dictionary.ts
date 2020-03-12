@@ -17,6 +17,7 @@ import {
 import {
   SlimeDictionaryModel,
   SlimeDictionarySkeleton,
+  SlimeWordModel,
   SlimeWordSkeleton
 } from "/server/model/dictionary/slime";
 import {
@@ -147,6 +148,14 @@ export class DictionaryController extends Controller {
       return promise;
     });
     let body = await Promise.all(promises);
+    response.json(body);
+  }
+
+  @get(SERVER_PATH["fetchDictionaryAggregation"])
+  public async getFetchDictionaryAggregation(request: GetRequest<"fetchDictionaryAggregation">, response: GetResponse<"fetchDictionaryAggregation">): Promise<void> {
+    let dictionarySize = await SlimeDictionaryModel.find().countDocuments();
+    let wordSize = await SlimeWordModel.find().countDocuments();
+    let body = {dictionarySize, wordSize};
     response.json(body);
   }
 
