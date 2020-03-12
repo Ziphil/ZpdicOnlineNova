@@ -4,9 +4,15 @@ import {
   boundAction,
   observable
 } from "/client/util/decorator";
+import {
+  UserSkeleton
+} from "/server/model/user";
 
 
 export class GlobalStore {
+
+  @observable
+  public user: UserSkeleton | null = null;
 
   @observable
   public popupSpec: {type: string, color: "error" | "information"} | null = null;

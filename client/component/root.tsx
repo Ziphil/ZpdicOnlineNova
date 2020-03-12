@@ -5,7 +5,6 @@ import {
 } from "mobx-react";
 import * as react from "react";
 import {
-  Component,
   ComponentType,
   PropsWithChildren,
   ReactElement,
@@ -16,6 +15,9 @@ import {
   Route,
   Switch
 } from "react-router-dom";
+import {
+  StoreComponent
+} from "/client/component/component";
 import {
   DashboardPage,
   DictionaryListPage,
@@ -35,18 +37,28 @@ import {
 import {
   applyStyle
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
 @applyStyle(require("./root.scss"))
-export class Root extends Component<{}, {}> {
+export class Root extends StoreComponent<{}, {}> {
 
-  private store: any = new GlobalStore();
+  private store: GlobalStore = new GlobalStore();
+
+  public async componentDidMount(): Promise<void> {
+    let response = await this.requestGet("fetchUserInfo", {}, true);
+    if (response.status === 200) {
+      let user = response.data;
+      this.store.user = user;
+    } else {
+      this.store.user = null;
+    }
+  }
 
   // 認証済みかどうかを確認し、その結果に応じて表示するコンポーネントを切り返るコンポーネントを返します。
   private switch(guestComponent: ComponentType<any>, privateComponent: ComponentType<any>): ComponentType<any> {
+    let outerThis = this;
     let component = function (props: PropsWithChildren<any>): ReactElement {
-      if (http.hasToken()) {
+      if (outerThis.store.user) {
         return react.createElement(privateComponent, props);
       } else {
         return react.createElement(guestComponent, props);

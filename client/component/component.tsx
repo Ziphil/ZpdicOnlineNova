@@ -84,7 +84,8 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   protected async login(data: {name: string, password: string}, ignoresError?: boolean): Promise<AxiosResponse<UserSkeleton & {token: string}>> {
     let response = await this.requestPost("login", data, ignoresError);
     if (response.status === 200) {
-      localStorage.setItem("login", "true");
+      let user = response.data;
+      this.props.store!.user = user;
     }
     return response;
   }
@@ -92,7 +93,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   protected async logout(ignoresError?: boolean): Promise<AxiosResponse<boolean>> {
     let response = await this.requestPost("logout", {}, ignoresError);
     if (response.status === 200) {
-      localStorage.removeItem("login");
+      this.props.store!.user = null;
     }
     return response;
   }
