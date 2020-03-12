@@ -36,24 +36,14 @@ import {
 export class DashboardPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
-    user: null,
     dictionaries: null
   };
 
   public async componentDidMount(): Promise<void> {
-    {
-      let response = await this.requestGet("fetchUserInfo", {});
-      if (response.status === 200) {
-        let user = response.data;
-        this.setState({user});
-      }
-    }
-    {
-      let response = await this.requestGet("fetchDictionaries", {});
-      if (response.status === 200) {
-        let dictionaries = response.data;
-        this.setState({dictionaries});
-      }
+    let response = await this.requestGet("fetchDictionaries", {});
+    if (response.status === 200) {
+      let dictionaries = response.data;
+      this.setState({dictionaries});
     }
   }
 
@@ -94,7 +84,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     `;
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        <ChangeUserEmailForm currentEmail={this.state.user!.email}/>
+        <ChangeUserEmailForm currentEmail={this.props.store!.user!.email}/>
       </SettingPane>
     );
     return node;
@@ -121,7 +111,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
       {mode: "logout", label: "ログアウト", iconLabel: "\uF2F5", href: "/"}
     ];
     let contentNodes = [];
-    if (this.state.user) {
+    if (this.props.store!.user) {
       if (mode === "dictionary") {
         contentNodes.push(this.renderDictionaryList());
         contentNodes.push(this.renderCreateDictionaryForm());
@@ -149,7 +139,6 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
 type Props = {
 };
 type State = {
-  user: UserSkeleton | null,
   dictionaries: Array<SlimeDictionarySkeleton> | null;
 };
 type Params = {
