@@ -27,6 +27,7 @@
   letter-spacing: 0.2em;
   position: relative;
   @include smartphone {
+    left: 48px;
     font-size: 40px;
   }
 }
