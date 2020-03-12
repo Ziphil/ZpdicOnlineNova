@@ -29,11 +29,11 @@ export class SearchForm extends Component<Props, State> {
   private handleSearchSet(search: string): void {
     this.setState({search});
     let debounceChange = debounce((innerSearch) => {
-      if (this.props.onSearchChange) {
-        this.props.onSearchChange(innerSearch);
+      if (this.props.onSearchSet) {
+        this.props.onSearchSet(innerSearch);
       }
-      if (this.props.onAnyChange) {
-        this.props.onAnyChange(innerSearch, this.state.mode, this.state.type);
+      if (this.props.onAnySet) {
+        this.props.onAnySet(innerSearch, this.state.mode, this.state.type);
       }
     }, 500);
     debounceChange(search);
@@ -41,21 +41,21 @@ export class SearchForm extends Component<Props, State> {
 
   private handleModeSet(mode: string): void {
     this.setState({mode});
-    if (this.props.onModeChange) {
-      this.props.onModeChange(mode);
+    if (this.props.onModeSet) {
+      this.props.onModeSet(mode);
     }
-    if (this.props.onAnyChange) {
-      this.props.onAnyChange(this.state.search, mode, this.state.type);
+    if (this.props.onAnySet) {
+      this.props.onAnySet(this.state.search, mode, this.state.type);
     }
   }
 
   private handleTypeSet(type: string): void {
     this.setState({type});
-    if (this.props.onTypeChange) {
-      this.props.onTypeChange(type);
+    if (this.props.onTypeSet) {
+      this.props.onTypeSet(type);
     }
-    if (this.props.onAnyChange) {
-      this.props.onAnyChange(this.state.search, this.state.mode, type);
+    if (this.props.onAnySet) {
+      this.props.onAnySet(this.state.search, this.state.mode, type);
     }
   }
 
@@ -88,10 +88,10 @@ export class SearchForm extends Component<Props, State> {
 
 
 type Props = {
-  onSearchChange?: (search: string) => void;
-  onModeChange?: (mode: string) => void;
-  onTypeChange?: (type: string) => void;
-  onAnyChange?: (search: string, mode: string, type: string) => void;
+  onSearchSet?: (search: string) => void;
+  onModeSet?: (mode: string) => void;
+  onTypeSet?: (type: string) => void;
+  onAnySet?: (search: string, mode: string, type: string) => void;
 };
 type State = {
   search: string,

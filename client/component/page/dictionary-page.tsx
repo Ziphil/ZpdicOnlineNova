@@ -71,7 +71,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     await promise;
   }
 
-  private async handleAnyChange(search: string, mode: string, type: string): Promise<void> {
+  private async handleAnySet(search: string, mode: string, type: string): Promise<void> {
     let page = 0;
     this.setState({search, mode, type, page}, async () => {
       await this.updateWords();
@@ -104,7 +104,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
         <DictionaryHeader name={this.state.dictionary?.name || ""}/>
         <div styleName="content">
           <div styleName="search-form">
-            <SearchForm onAnyChange={this.handleAnyChange.bind(this)}/>
+            <SearchForm onAnySet={this.handleAnySet.bind(this)}/>
           </div>
           <div styleName="word-list">
             <WordList words={this.state.words} offset={0} size={40}/>
