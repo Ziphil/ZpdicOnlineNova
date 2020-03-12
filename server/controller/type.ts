@@ -90,7 +90,7 @@ export type ProcessType = {
     get: Noop,
     post: {
       request: {name: string, password: string},
-      response: UserSkeleton & {token: string}
+      response: {token: string, user: UserSkeleton}
     }
   },
   logout: {

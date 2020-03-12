@@ -41,8 +41,8 @@ export class UserController extends Controller {
   public async postLogin(request: PostRequest<"login">, response: PostResponse<"login">): Promise<void> {
     let token = request.token!;
     let user = request.user!;
-    let rawBody = new UserSkeleton(user);
-    let body = {...rawBody, token};
+    let userBody = new UserSkeleton(user);
+    let body = {token, user: userBody};
     response.json(body);
   }
 

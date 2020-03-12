@@ -81,11 +81,11 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
     return response;
   }
 
-  protected async login(data: {name: string, password: string}, ignoresError?: boolean): Promise<AxiosResponse<UserSkeleton & {token: string}>> {
+  protected async login(data: RequestType<"login", "post">, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<"login", "post">>> {
     let response = await this.requestPost("login", data, ignoresError);
     if (response.status === 200) {
-      let user = response.data;
-      this.props.store!.user = user;
+      let body = response.data;
+      this.props.store!.user = body.user;
     }
     return response;
   }
