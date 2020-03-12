@@ -56,7 +56,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let mode = this.state.mode;
     let type = this.state.type;
     let offset = this.state.page * 40;
-    let size = 40;
+    let size = 41;
     let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
     if (response.status === 200 && !("error" in response.data)) {
       let words = response.data;
@@ -111,7 +111,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
           </div>
           <div styleName="page-button">
             <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
-            <Button label="次ページ" position="right" onClick={this.moveNextPage.bind(this)}/>
+            <Button label="次ページ" position="right" disabled={this.state.words.length <= 40} onClick={this.moveNextPage.bind(this)}/>
           </div>
         </div>
       </div>
