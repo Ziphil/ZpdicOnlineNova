@@ -18,7 +18,6 @@ import {
   inject,
   route
 } from "/client/util/decorator";
-import * as http from "/client/util/http";
 
 
 @route @inject
@@ -30,12 +29,10 @@ export class Header extends StoreComponent<Props, State> {
   };
 
   public async componentDidMount(): Promise<void> {
-    if (http.hasToken()) {
-      let response = await this.requestGet("fetchUserInfo", {}, true);
-      if (response.status === 200) {
-        let userName = response.data.name;
-        this.setState({userName});
-      }
+    let user = this.props.store!.user;
+    if (user) {
+      let userName = user.name;
+      this.setState({userName});
     }
   }
 
