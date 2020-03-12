@@ -24,7 +24,7 @@ import {
 export class CreateDictionaryForm extends StoreComponent<Props, State> {
 
   public state: State = {
-    name: ""
+    name: "新規辞書"
   };
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
