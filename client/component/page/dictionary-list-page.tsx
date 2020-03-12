@@ -10,7 +10,8 @@ import {
 import {
   DictionaryList,
   Header,
-  Loading
+  Loading,
+  PopupInformationPane
 } from "/client/component/compound";
 import {
   applyStyle,
@@ -42,6 +43,7 @@ export class DictionaryListPage extends StoreComponent<Props, State, Params> {
     let node = (
       <div styleName="page">
         <Header/>
+        <PopupInformationPane/>
         <div styleName="content">
           <Loading loading={this.state.dictionaries === null}>
             <DictionaryList dictionaries={this.state.dictionaries!} showsSetting={false}/>

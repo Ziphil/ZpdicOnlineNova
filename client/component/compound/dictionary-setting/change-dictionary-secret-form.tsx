@@ -39,6 +39,7 @@ export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
     let secret = this.state.secret;
     let response = await this.requestPost("changeDictionarySecret", {number, secret});
     if (response.status === 200) {
+      this.props.store!.sendInformation("dictionarySecretChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }

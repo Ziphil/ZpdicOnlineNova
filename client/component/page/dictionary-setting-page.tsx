@@ -13,6 +13,7 @@ import {
   DictionaryHeader,
   Header,
   Menu,
+  PopupInformationPane,
   SettingPane,
   UploadDictionaryForm
 } from "/client/component/compound";
@@ -35,6 +36,10 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   };
 
   public async componentDidMount(): Promise<void> {
+    await this.fetchDictionary();
+  }
+
+  private async fetchDictionary(): Promise<void> {
     let number = +this.props.match!.params.number;
     let response = await this.requestGet("fetchDictionaryInfo", {number});
     if (response.status === 200 && !("error" in response.data)) {
@@ -52,7 +57,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeDictionaryNameForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name} onSubmit={() => location.reload()}/>
+        <ChangeDictionaryNameForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name} onSubmit={this.fetchDictionary.bind(this)}/>
       </SettingPane>
     );
     return node;
@@ -65,7 +70,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeDictionarySecretForm number={this.state.dictionary!.number} currentSecret={this.state.dictionary!.secret} onSubmit={() => location.reload()}/>
+        <ChangeDictionarySecretForm number={this.state.dictionary!.number} currentSecret={this.state.dictionary!.secret}/>
       </SettingPane>
     );
     return node;
@@ -96,6 +101,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
       <div styleName="page">
         <Header/>
         <DictionaryHeader name={this.state.dictionary?.name || ""}/>
+        <PopupInformationPane/>
         <div styleName="content">
           <Menu mode="general" specs={menuSpecs}/>
           {contentNodes}

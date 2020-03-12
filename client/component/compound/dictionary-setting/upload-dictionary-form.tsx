@@ -33,6 +33,7 @@ export class UploadDictionaryForm extends StoreComponent<Props, State> {
     if (file) {
       let response = await this.requestPostFile("uploadDictionary", {number, file});
       if (response.status === 200) {
+        this.props.store!.sendInformation("dictionaryUploaded");
         if (this.props.onSubmit) {
           this.props.onSubmit();
         }

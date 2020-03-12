@@ -13,6 +13,7 @@ import {
 import {
   DictionaryHeader,
   Header,
+  PopupInformationPane,
   SearchForm,
   WordList
 } from "/client/component/compound";
@@ -102,6 +103,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
       <div styleName="page">
         <Header/>
         <DictionaryHeader name={this.state.dictionary?.name || ""}/>
+        <PopupInformationPane/>
         <div styleName="content">
           <div styleName="search-form">
             <SearchForm onAnySet={this.handleAnySet.bind(this)}/>
