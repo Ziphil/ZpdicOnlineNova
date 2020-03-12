@@ -11,6 +11,7 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
+  DictionaryAggregationPane,
   Header,
   InformationPane,
   LoginForm,
@@ -43,8 +44,8 @@ export class TopPage extends StoreComponent<Props, State> {
               <LoginForm showsRegister={true}/>
             </div>
           </div>
-          <div styleName="information">
-            <InformationPane texts={[informationText]} color="information"/>
+          <div styleName="aggregation">
+            <DictionaryAggregationPane/>
           </div>
           <div styleName="notice">
             <p styleName="text">
