@@ -64,10 +64,16 @@ export class Button extends Component<Props, State> {
       styleNames.push("icon");
       styleNames.push(this.props.icon);
     }
+    if (this.state.loading) {
+      styleNames.push("loading");
+    }
     let disabled = this.props.disabled || this.state.loading;
     let node = (
       <button styleName={styleNames.join(" ")} disabled={disabled} onClick={this.handleClick.bind(this)}>
-        {this.props.label}
+        <span styleName="label">{this.props.label}</span>
+        <span styleName="spinner-wrapper">
+          <span styleName="spinner"/>
+        </span>
       </button>
     );
     return node;
