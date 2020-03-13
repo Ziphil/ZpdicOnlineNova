@@ -36,8 +36,10 @@ export function controller<P extends Params = ParamsDictionary>(path: string): C
       let anyThis = this as any;
       let array = getMetadataArray<P>(clazz.prototype);
       for (let metadata of array) {
-        let handler = function (request: Request<P>, response: Response, next: NextFunction): any {
-          return anyThis[metadata.name](request, response, next);
+        let handler = function (request: Request<P>, response: Response, next: NextFunction): void {
+          Promise.resolve(anyThis[metadata.name](request, response, next)).catch((error) => {
+            next(error);
+          });
         };
         this.router[metadata.method](metadata.path, ...metadata.befores, handler, ...metadata.afters);
       }
