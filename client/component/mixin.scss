@@ -7,7 +7,7 @@ $secondary-hue: 320;
 $europian-font-family: "EB Garamond", "Times New Roman";
 $japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝";
 $special-font-family: "Simonetta";
-$icon-font-family: "FontAwesome";
+$icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
 
 $background-color: hsl($primary-hue, 50%, 92%);
 $strong-background-color: hsl($primary-hue, 50%, 82%);
@@ -132,6 +132,7 @@ $line-height: 1.6;
   & >li::before {
     font-family: $icon-font-family;
     font-size: 90%;
+    font-weight: 900;
     width: 1.3em * (100% / 90%);
     margin-left: -1.3em * (100% / 90%);
     content: $icon;
