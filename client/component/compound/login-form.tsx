@@ -71,7 +71,7 @@ export class LoginForm extends StoreComponent<Props, State> {
           <Input label="ユーザー名" onSet={(value) => this.setState({name: value})}/>
           <Input label="パスワード" type="flexible" onSet={(value) => this.setState({password: value})}/>
           <div styleName="button-group">
-            <Button label="ログイン" onClick={this.performLogin.bind(this)}/>
+            <Button label="ログイン" reactive={true} onClick={this.performLogin.bind(this)}/>
             {registerNode}
           </div>
         </form>

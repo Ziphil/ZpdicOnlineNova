@@ -49,7 +49,7 @@ export class ChangeDictionaryNameForm extends StoreComponent<Props, State> {
     let node = (
       <form styleName="root">
         <Input label="名称" initialValue={this.props.currentName} onSet={(value) => this.setState({name: value})}/>
-        <Button label="変更" onClick={this.click.bind(this)}/>
+        <Button label="変更" reactive={true} onClick={this.click.bind(this)}/>
       </form>
     );
     return node;

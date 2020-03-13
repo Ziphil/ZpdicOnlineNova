@@ -43,7 +43,7 @@ export class CreateDictionaryForm extends StoreComponent<Props, State> {
     let node = (
       <form styleName="root">
         <Input label="名称" initialValue="新規辞書" onSet={(value) => this.setState({name: value})}/>
-        <Button label="作成" onClick={this.click.bind(this)}/>
+        <Button label="作成" reactive={true} onClick={this.click.bind(this)}/>
       </form>
     );
     return node;
