@@ -16,9 +16,9 @@ export class Button extends Component<Props, State> {
 
   public static defaultProps: Partial<Props> = {
     position: null,
-    icon: null,
-    color: null,
-    reactive: true,
+    style: "normal",
+    usesIcon: false,
+    reactive: false,
     disabled: false
   };
 
@@ -53,15 +53,14 @@ export class Button extends Component<Props, State> {
 
   public render(): ReactNode {
     let styleNames = ["root"];
-    if (this.props.color === "simple") {
-      styleNames = ["simple"];
-    }
     if (this.props.position) {
       styleNames.push(this.props.position);
     }
-    if (this.props.icon) {
+    if (this.props.style === "simple") {
+      styleNames = ["simple"];
+    }
+    if (this.props.usesIcon) {
       styleNames.push("icon");
-      styleNames.push(this.props.icon);
     }
     if (this.state.loading) {
       styleNames.push("loading");
@@ -84,8 +83,8 @@ export class Button extends Component<Props, State> {
 type Props = {
   label: string,
   position: "left" | "right" | null,
-  icon: "awesome" | null,
-  color: "simple" | null,
+  style: "simple" | "normal",
+  usesIcon: boolean,
   reactive: boolean,
   disabled: boolean,
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void | PromiseLike<void>
