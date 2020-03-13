@@ -35,6 +35,9 @@ export class SlimeDictionary {
   public user!: Ref<User>;
 
   @prop()
+  public updatedDate?: Date;
+
+  @prop()
   public secret?: boolean;
 
   @prop()
@@ -46,6 +49,7 @@ export class SlimeDictionary {
     dictionary.status = "ready";
     dictionary.name = name;
     dictionary.user = user;
+    dictionary.updatedDate = new Date();
     dictionary.secret = false;
     dictionary.externalData = {};
     await dictionary.save();
@@ -75,6 +79,7 @@ export class SlimeDictionary {
   // 辞書の内部データも、ファイルから読み込んだものに更新されます。
   public async upload(this: SlimeDictionaryDocument, path: string): Promise<SlimeDictionaryDocument> {
     this.status = "saving";
+    this.updatedDate = new Date();
     this.externalData = {};
     await this.save();
     await SlimeWordModel.deleteMany({}).where("dictionary", this).exec();
