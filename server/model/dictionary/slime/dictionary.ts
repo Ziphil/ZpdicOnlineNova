@@ -93,14 +93,20 @@ export class SlimeDictionary {
           console.log("Dictionary saving: " + count);
         }
       });
-      stream.on("wordEnd", () => {
+      stream.on("end", () => {
         this.status = "ready";
-        this.save();
         console.log("Dictionary saved: " + count);
         resolve(this);
       });
+      stream.on("error", (error) => {
+        this.status = "error";
+        console.log("Error occurred in saving");
+        resolve(this);
+      });
     });
-    return await promise;
+    await promise;
+    await this.save();
+    return this;
   }
 
   public async changeName(this: SlimeDictionaryDocument, name: string): Promise<SlimeDictionaryDocument> {

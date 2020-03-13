@@ -7,21 +7,8 @@ import {
   createReadStream
 } from "fs";
 import {
-  Readable
-} from "stream";
-import {
-  parser
-} from "stream-json";
-import {
-  Stack,
-  Token
-} from "stream-json/filters/FilterBase";
-import {
-  pick
-} from "stream-json/filters/Pick";
-import {
-  streamValues
-} from "stream-json/streamers/StreamValues";
+  parse
+} from "JSONStream";
 import {
   SlimeEquivalentModel,
   SlimeInformationModel,
@@ -35,50 +22,40 @@ import {
 export class SlimeStream extends EventEmitter {
 
   public path: string;
-  public encoding: string;
-  private wordPipeline: Readable;
+  private stream: any;
 
-  public constructor(path: string, encoding: string = "utf8") {
+  public constructor(path: string) {
     super();
     this.path = path;
-    this.encoding = encoding;
-    this.wordPipeline = this.createWordPipeline(path, encoding);
+    this.stream = this.create(path);
   }
 
-  private createWordPipeline(path: string, encoding: string): Readable {
-    let filter = function (stack: Stack, token: Token): boolean {
-      return stack[0] === "words" && typeof stack[1] === "number";
-    };
-    let stream = createReadStream(path, {encoding});
-    let pipeline = stream.pipe(parser()).pipe(pick({filter})).pipe(streamValues());
-    return pipeline;
+  private create(path: string): any {
+    let pattern = ["words", true];
+    let stream = createReadStream(path).pipe(parse(pattern));
+    stream.on("data", (data) => {
+      let word = null;
+      try {
+        word = this.createWord(data);
+      } catch (error) {
+        this.emit("error", error);
+      }
+      if (word) {
+        this.emit("word", word);
+      }
+    });
+    stream.on("end", () => {
+      this.emit("end");
+    });
+    stream.on("error", (reason) => {
+      this.emit("error", reason.thrown);
+    });
+    return stream;
   }
 
   public on<E extends keyof SlimeStreamType>(event: E, listener: (...args: SlimeStreamType[E]) => void): this;
   public on(event: string | symbol, listener: (...args: any) => void): this {
     super.on(event, listener);
-    if (event === "word") {
-      this.wordPipeline.on("data", (chunk) => {
-        let word = null;
-        try {
-          let anyChunk = chunk as any;
-          word = this.createWord(anyChunk.value);
-        } catch (error) {
-          this.emit("error", error);
-        }
-        if (word) {
-          this.emit("word", word);
-        }
-      });
-    } else if (event === "wordEnd") {
-      this.wordPipeline.on("end", () => {
-        this.emit("wordEnd");
-      });
-    } else if (event === "error") {
-      this.wordPipeline.on("error", (error) => {
-        this.emit("error");
-      });
-    }
     return this;
   }
 
@@ -125,9 +102,8 @@ export class SlimeStream extends EventEmitter {
 interface SlimeStreamType {
 
   word: [SlimeWordDocument];
-  wordEnd: [];
   other: [object];
-  otherEnd: [];
+  end: [];
   error: [Error];
 
 }
