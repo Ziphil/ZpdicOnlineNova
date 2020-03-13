@@ -35,6 +35,11 @@
   opacity: 0.5;
 }
 
+.root:disabled:hover {
+  background: $button-background;
+  cursor: not-allowed;
+}
+
 .root.left {
   margin: 0px -1px 0px 0px;
   border-radius: $small-border-radius 0px 0px $small-border-radius;
