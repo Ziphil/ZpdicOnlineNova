@@ -20,8 +20,8 @@ import {
 export class Link extends StoreComponent<Props, State> {
 
   public static defaultProps: Partial<Props> = {
-    color: null,
-    target: "self"
+    target: "self",
+    style: "normal"
   };
 
   private handleClick(event: MouseEvent<HTMLAnchorElement>): void {
@@ -41,7 +41,7 @@ export class Link extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let styleNames = ["root"];
-    if (this.props.color === "plane") {
+    if (this.props.style === "plane") {
       styleNames.push("plane");
     }
     let node = (
@@ -57,7 +57,7 @@ type Props = {
   label: string,
   href: string,
   target: "self" | "blank",
-  color: "plane" | null,
+  style: "plane" | "normal",
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void
 };
 type State = {

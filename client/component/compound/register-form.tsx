@@ -36,7 +36,7 @@ export class RegisterForm extends StoreComponent<Props, State> {
     errorType: null
   };
 
-  private async performRegister(event: MouseEvent<HTMLInputElement>): Promise<void> {
+  private async performRegister(event: MouseEvent<HTMLElement>): Promise<void> {
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
@@ -62,7 +62,7 @@ export class RegisterForm extends StoreComponent<Props, State> {
     if (errorType) {
       errorNode = (
         <div styleName="error">
-          <InformationPane texts={[getMessage(errorType)]} color="error"/>
+          <InformationPane texts={[getMessage(errorType)]} style="error"/>
         </div>
       );
     }
@@ -74,7 +74,7 @@ export class RegisterForm extends StoreComponent<Props, State> {
           <Input label="メールアドレス" onSet={(value) => this.setState({email: value})}/>
           <Input label="パスワード" type="flexible" onSet={(value) => this.setState({password: value})}/>
           <div styleName="button-group">
-            <Button label="新規登録" onClick={this.performRegister.bind(this)}/>
+            <Button label="新規登録" reactive={true} onClick={this.performRegister.bind(this)}/>
           </div>
         </form>
       </div>

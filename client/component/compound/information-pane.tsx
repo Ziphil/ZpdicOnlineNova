@@ -17,7 +17,7 @@ export class InformationPane extends Component<Props, State> {
     let itemNodes = this.props.texts.map((text, index) => {
       return <li key={index}>{text}</li>;
     });
-    let styleNames = ["root", this.props.color];
+    let styleNames = ["root", this.props.style];
     let node = (
       <ul styleName={styleNames.join(" ")}>
         {itemNodes}
@@ -31,7 +31,7 @@ export class InformationPane extends Component<Props, State> {
 
 type Props = {
   texts: Array<String>,
-  color: "error" | "information"
+  style: "error" | "information"
 };
 type State = {
 };

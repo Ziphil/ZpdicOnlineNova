@@ -15,16 +15,16 @@ export class GlobalStore {
   public user: UserSkeleton | null = null;
 
   @observable
-  public popupSpec: {type: string, color: "error" | "information"} | null = null;
+  public popupSpec: {type: string, style: "error" | "information"} | null = null;
 
   @boundAction
   public sendError(type: string): void {
-    this.popupSpec = {type, color: "error"};
+    this.popupSpec = {type, style: "error"};
   }
 
   @boundAction
   public sendInformation(type: string): void {
-    this.popupSpec = {type, color: "information"};
+    this.popupSpec = {type, style: "information"};
   }
 
   @boundAction

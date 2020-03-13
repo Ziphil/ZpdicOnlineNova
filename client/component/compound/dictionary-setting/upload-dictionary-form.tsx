@@ -45,7 +45,7 @@ export class UploadDictionaryForm extends StoreComponent<Props, State> {
     let node = (
       <form styleName="root">
         <FileInput inputLabel="ファイル" buttonLabel="選択" onSet={(file) => this.setState({file})}/>
-        <Button label="決定" onClick={this.click.bind(this)}/>
+        <Button label="決定" reactive={true} onClick={this.click.bind(this)}/>
       </form>
     );
     return node;

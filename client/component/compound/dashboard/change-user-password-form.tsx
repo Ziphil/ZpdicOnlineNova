@@ -42,7 +42,7 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
     let node = (
       <form styleName="root">
         <Input label="パスワード" type="flexible" onSet={(value) => this.setState({password: value})}/>
-        <Button label="変更" onClick={this.click.bind(this)}/>
+        <Button label="変更" reactive={true} onClick={this.click.bind(this)}/>
       </form>
     );
     return node;

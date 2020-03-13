@@ -48,7 +48,7 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
     let node = (
       <form styleName="root">
         <Input label="メールアドレス" initialValue={this.props.currentEmail} onSet={(value) => this.setState({email: value})}/>
-        <Button label="変更" onClick={this.click.bind(this)}/>
+        <Button label="変更" reactive={true} onClick={this.click.bind(this)}/>
       </form>
     );
     return node;

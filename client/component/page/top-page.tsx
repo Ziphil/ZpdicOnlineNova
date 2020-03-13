@@ -13,7 +13,6 @@ import {
 import {
   DictionaryAggregationPane,
   Header,
-  InformationPane,
   LoginForm,
   Logo
 } from "/client/component/compound";
@@ -28,10 +27,6 @@ import {
 export class TopPage extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
-    let informationText = `
-      旧 ZpDIC Online からのデータ移行が完了しました。
-      旧 ZpDIC Online のユーザーがそのまま使えますので、同じユーザー名とパスワードでログインしてください。
-    `;
     let node = (
       <div styleName="page">
         <Header/>

@@ -15,27 +15,70 @@ import {
 export class Button extends Component<Props, State> {
 
   public static defaultProps: Partial<Props> = {
-    type: "button",
     position: null,
-    icon: null,
-    color: null,
+    style: "normal",
+    usesIcon: false,
+    reactive: false,
     disabled: false
   };
 
+  public state: State = {
+    loading: false
+  };
+
+  private handleClick(event: MouseEvent<HTMLButtonElement>): void {
+    event.preventDefault();
+    let onClick = this.props.onClick;
+    if (this.props.reactive) {
+      this.setState({loading: true});
+      if (onClick) {
+        let result = onClick(event);
+        if (typeof result === "object" && typeof result.then === "function") {
+          result.then((value) => {
+            this.setState({loading: false});
+          });
+        } else {
+          onClick(event);
+          this.setState({loading: false});
+        }
+      } else {
+        this.setState({loading: false});
+      }
+    } else {
+      if (onClick) {
+        onClick(event);
+      }
+    }
+  }
+
   public render(): ReactNode {
     let styleNames = ["root"];
-    if (this.props.color === "simple") {
-      styleNames = ["simple"];
-    }
     if (this.props.position) {
       styleNames.push(this.props.position);
     }
-    if (this.props.icon) {
-      styleNames.push("icon");
-      styleNames.push(this.props.icon);
+    if (this.props.style === "simple") {
+      styleNames = ["simple"];
     }
+    if (this.props.usesIcon) {
+      styleNames.push("icon");
+    }
+    if (this.state.loading) {
+      styleNames.push("loading");
+    }
+    let spinnerNode;
+    if (this.props.reactive) {
+      spinnerNode = (
+        <span styleName="spinner-wrapper">
+          <span styleName="spinner"/>
+        </span>
+      );
+    }
+    let disabled = this.props.disabled || this.state.loading;
     let node = (
-      <input styleName={styleNames.join(" ")} type="button" value={this.props.label} disabled={this.props.disabled} onClick={this.props.onClick}/>
+      <button styleName={styleNames.join(" ")} disabled={disabled} onClick={this.handleClick.bind(this)}>
+        <span styleName="label">{this.props.label}</span>
+        {spinnerNode}
+      </button>
     );
     return node;
   }
@@ -45,12 +88,13 @@ export class Button extends Component<Props, State> {
 
 type Props = {
   label: string,
-  type: "button" | "submit",
   position: "left" | "right" | null,
-  icon: "awesome" | null,
-  color: "simple" | null,
+  style: "simple" | "normal",
+  usesIcon: boolean,
+  reactive: boolean,
   disabled: boolean,
-  onClick?: (event: MouseEvent<HTMLInputElement>) => void
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void | PromiseLike<void>
 };
 type State = {
+  loading: boolean
 };

@@ -12,6 +12,7 @@
   border: 1px $dark-border-color solid;
   border-radius: $small-border-radius;
   background: $button-background;
+  position: relative;
   cursor: pointer;
   outline: none;
 }
@@ -30,6 +31,15 @@
   box-shadow: $inset-box-shadow-setting $button-active-box-shadow-color inset;
 }
 
+.root:disabled {
+  opacity: 0.5;
+}
+
+.root:disabled:hover {
+  background: $button-background;
+  cursor: not-allowed;
+}
+
 .root.left {
   margin: 0px -1px 0px 0px;
   border-radius: $small-border-radius 0px 0px $small-border-radius;
@@ -37,10 +47,6 @@
 
 .root.right {
   border-radius: 0px $small-border-radius $small-border-radius 0px;
-}
-
-.root:disabled {
-  opacity: 0.5;
 }
 
 .simple {
@@ -63,4 +69,40 @@
 .icon {
   @include icon-font;
   text-decoration: none;
+}
+
+.loading >.label {
+  visibility: hidden;
+}
+
+.spinner-wrapper {
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  visibility: hidden;
+}
+
+.loading >.spinner-wrapper {
+  visibility: visible;
+}
+
+.spinner {
+  @include icon-font;
+  width: 1em;
+  height: 1em;
+  font-size: 100%;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: spin 1s steps(8, end) infinite;
+}
+
+.spinner::before {
+  content: "\F110";
 }

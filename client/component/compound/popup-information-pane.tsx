@@ -32,7 +32,7 @@ export class PopupInformationPane extends StoreComponent<Props, State> {
       node = (
         <div styleName="root">
           <div styleName="pane-wrapper">
-            <InformationPane texts={[getMessage(spec.type)]} color={spec.color}/>
+            <InformationPane texts={[getMessage(spec.type)]} style={spec.style}/>
           </div>
         </div>
       );

@@ -56,7 +56,7 @@ export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
       <Fragment>
         <form styleName="root">
           <RadioGroup name="secret" specs={specs} initialValue={initialSecret} onSet={(value) => this.setState({secret: value === "secret"})}/>
-          <Button label="変更" onClick={this.click.bind(this)}/>
+          <Button label="変更" reactive={true} onClick={this.click.bind(this)}/>
         </form>
         <p styleName="caution">
           この設定は、辞書一覧ページに表示されるかどうかのみに関わります。
