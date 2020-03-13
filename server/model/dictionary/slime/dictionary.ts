@@ -57,7 +57,7 @@ export class SlimeDictionary {
   }
 
   public static async findPublic(): Promise<Array<SlimeDictionaryDocument>> {
-    let dictionaries = await SlimeDictionaryModel.find().ne("secret", true).exec();
+    let dictionaries = await SlimeDictionaryModel.find().ne("secret", true).sort("-updatedDate -number").exec();
     return dictionaries;
   }
 
