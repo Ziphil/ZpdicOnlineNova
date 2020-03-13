@@ -92,11 +92,12 @@
   height: 1em;
   font-size: 100%;
   line-height: 1;
-  text-align: center;
-  display: inline-block;
-  animation: spin 1.5s linear infinite;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: spin 1s steps(8, end) infinite;
 }
 
 .spinner::before {
-  content: "\F1CE";
+  content: "\F110";
 }
