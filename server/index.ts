@@ -5,7 +5,10 @@ import * as connect from "connect-mongo";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
 import {
-  Express
+  Express,
+  NextFunction,
+  Request,
+  Response
 } from "express";
 import * as session from "express-session";
 import * as mongoose from "mongoose";
@@ -44,6 +47,7 @@ class Main {
     this.setupSession();
     this.setupMongo();
     this.setupRouters();
+    this.setupErrorHandler();
     this.setupFallback();
     this.listen();
   }
@@ -104,9 +108,23 @@ class Main {
     DictionaryController.use(this.application);
   }
 
+  private setupErrorHandler(): void {
+    let handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
+      console.error(error.stack);
+      response.sendStatus(500);
+    };
+    this.application.use(handler);
+  }
+
   // ルート以外にアクセスしたときのフォールバックの設定をします。
   private setupFallback(): void {
     let fallback = require("express-history-api-fallback");
+    let handler = function (request: Request, response: Response, next: NextFunction): void {
+      let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
+      console.error("Not found: " + fullUrl);
+      response.sendStatus(404);
+    };
+    this.application.use("/api*", handler);
     this.application.use(express.static("dist"));
     this.application.use(fallback("/dist/index.html", {root: "."}));
   }
