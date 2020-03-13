@@ -36,7 +36,7 @@ export class RegisterForm extends StoreComponent<Props, State> {
     errorType: null
   };
 
-  private async performRegister(event: MouseEvent<HTMLInputElement>): Promise<void> {
+  private async performRegister(event: MouseEvent<HTMLElement>): Promise<void> {
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;

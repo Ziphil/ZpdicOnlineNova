@@ -35,7 +35,7 @@ export class LoginForm extends StoreComponent<Props, State> {
     errorType: null
   };
 
-  private async performLogin(event: MouseEvent<HTMLInputElement>): Promise<void> {
+  private async performLogin(event: MouseEvent<HTMLElement>): Promise<void> {
     let name = this.state.name;
     let password = this.state.password;
     let response = await this.login({name, password}, true);
@@ -46,7 +46,7 @@ export class LoginForm extends StoreComponent<Props, State> {
     }
   }
 
-  private async jumpRegister(event: MouseEvent<HTMLInputElement>): Promise<void> {
+  private async jumpRegister(event: MouseEvent<HTMLElement>): Promise<void> {
     this.pushPath("/register");
   }
 

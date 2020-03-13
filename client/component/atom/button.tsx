@@ -15,12 +15,42 @@ import {
 export class Button extends Component<Props, State> {
 
   public static defaultProps: Partial<Props> = {
-    type: "button",
     position: null,
     icon: null,
     color: null,
+    reactive: true,
     disabled: false
   };
+
+  public state: State = {
+    loading: false
+  };
+
+  private handleClick(event: MouseEvent<HTMLButtonElement>): void {
+    event.preventDefault();
+    let onClick = this.props.onClick;
+    if (this.props.reactive) {
+      this.setState({loading: true});
+      if (onClick) {
+        let result = onClick(event);
+        if (result instanceof Promise) {
+          console.log("Result is a promise");
+          result.then((value) => {
+            this.setState({loading: false});
+          });
+        } else {
+          onClick(event);
+          this.setState({loading: false});
+        }
+      } else {
+        this.setState({loading: false});
+      }
+    } else {
+      if (onClick) {
+        onClick(event);
+      }
+    }
+  }
 
   public render(): ReactNode {
     let styleNames = ["root"];
@@ -34,8 +64,11 @@ export class Button extends Component<Props, State> {
       styleNames.push("icon");
       styleNames.push(this.props.icon);
     }
+    let disabled = this.props.disabled || this.state.loading;
     let node = (
-      <input styleName={styleNames.join(" ")} type="button" value={this.props.label} disabled={this.props.disabled} onClick={this.props.onClick}/>
+      <button styleName={styleNames.join(" ")} disabled={disabled} onClick={this.handleClick.bind(this)}>
+        {this.props.label}
+      </button>
     );
     return node;
   }
@@ -45,12 +78,13 @@ export class Button extends Component<Props, State> {
 
 type Props = {
   label: string,
-  type: "button" | "submit",
   position: "left" | "right" | null,
   icon: "awesome" | null,
   color: "simple" | null,
+  reactive: boolean,
   disabled: boolean,
-  onClick?: (event: MouseEvent<HTMLInputElement>) => void
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
+  loading: boolean
 };
