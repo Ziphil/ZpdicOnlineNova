@@ -33,8 +33,7 @@ export class Button extends Component<Props, State> {
       this.setState({loading: true});
       if (onClick) {
         let result = onClick(event);
-        if (result instanceof Promise) {
-          console.log("Result is a promise");
+        if (typeof result === "object" && typeof result.then === "function") {
           result.then((value) => {
             this.setState({loading: false});
           });
@@ -89,7 +88,7 @@ type Props = {
   color: "simple" | null,
   reactive: boolean,
   disabled: boolean,
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void | PromiseLike<void>
 };
 type State = {
   loading: boolean
