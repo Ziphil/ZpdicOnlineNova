@@ -83,6 +83,7 @@ export class SlimeDictionary {
     this.externalData = {};
     await this.save();
     await SlimeWordModel.deleteMany({}).where("dictionary", this).exec();
+    let nextExternalData = {} as any;
     let promise = new Promise<SlimeDictionaryDocument>((resolve, reject) => {
       let stream = new SlimeStream(path);
       let count = 0;
@@ -93,6 +94,9 @@ export class SlimeDictionary {
           console.log("Dictionary saving: " + count);
         }
       });
+      stream.on("other", (key, data) => {
+        nextExternalData[key] = data;
+      });
       stream.on("end", () => {
         this.status = "ready";
         console.log("Dictionary saved: " + count);
@@ -101,10 +105,12 @@ export class SlimeDictionary {
       stream.on("error", (error) => {
         this.status = "error";
         console.log("Error occurred in saving");
+        console.error(error);
         resolve(this);
       });
     });
     await promise;
+    this.externalData = nextExternalData;
     await this.save();
     return this;
   }
