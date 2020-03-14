@@ -15,8 +15,10 @@ const MESSAGES = {
   invalidNumber: "この辞書は存在しません。",
   unauthenticated: "ログインしていません。ログインし直してください。",
   forbidden: "このコンテンツにアクセスする権限がありません。",
-  messageNotFound: "エラーが発生しました。",
   serverNotFound: "実行すべき処理を行う API が見つかりませんでした。",
+  serverError: "サーバーでエラーが発生しました。時間を置いてもう一度お試しください。",
+  serverTimeout: "サーバーが時間内に応答しませんでした。時間を置いてもう一度お試しください。",
+  messageNotFound: "何らかのエラーが発生しました。",
   unexpected: "予期しないエラーが発生しました。バグの可能性がありますので、お手数ですが管理者までご連絡ください。"
 };
 

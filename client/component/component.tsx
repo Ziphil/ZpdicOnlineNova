@@ -113,6 +113,10 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
       this.props.store!.sendError("forbidden");
     } else if (status === 404) {
       this.props.store!.sendError("serverNotFound");
+    } else if (status === 500 || status === 503) {
+      this.props.store!.sendError("serverError");
+    } else if (status === 504) {
+      this.props.store!.sendError("serverTimeout");
     } else {
       this.props.store!.sendError("unexpected");
     }
