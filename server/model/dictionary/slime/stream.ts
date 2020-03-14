@@ -6,9 +6,7 @@ import {
 import {
   createReadStream
 } from "fs";
-import {
-  parse
-} from "JSONStream";
+import * as oboe from "oboe";
 import {
   SlimeEquivalentModel,
   SlimeInformationModel,
@@ -23,31 +21,43 @@ export class SlimeStream extends EventEmitter {
 
   public path: string;
   private stream: any;
+  private error: Error | null = null;
 
   public constructor(path: string) {
     super();
     this.path = path;
-    this.stream = this.create(path);
+    this.stream = this.createStream(path);
   }
 
-  private create(path: string): any {
-    let pattern = ["words", true];
-    let stream = createReadStream(path).pipe(parse(pattern));
-    stream.on("data", (data) => {
+  private createStream(path: string): any {
+    let stream = oboe(createReadStream(path));
+    let outerThis = this as any;
+    let patterns = {} as any;
+    patterns["words.*"] = function (data: any, jsonPath: any): void {
       let word = null;
       try {
-        word = this.createWord(data);
+        word = outerThis.createWord(data);
       } catch (error) {
-        this.emit("error", error);
+        this.error = error;
+        outerThis.emit("error", error);
       }
       if (word) {
-        this.emit("word", word);
+        outerThis.emit("word", word);
+      }
+    };
+    patterns["!.*"] = function (data: any, jsonPath: any): void {
+      if (jsonPath[0] !== "words") {
+        outerThis.emit("other", jsonPath[0], data);
+      }
+    };
+    stream.on("node", patterns);
+    stream.on("done", () => {
+      if (!this.error) {
+        this.emit("end");
       }
     });
-    stream.on("end", () => {
-      this.emit("end");
-    });
-    stream.on("error", (reason) => {
+    stream.on("fail", (reason) => {
+      this.error = reason.thrown;
       this.emit("error", reason.thrown);
     });
     return stream;
@@ -102,7 +112,7 @@ export class SlimeStream extends EventEmitter {
 interface SlimeStreamType {
 
   word: [SlimeWordDocument];
-  other: [object];
+  other: [string, any];
   end: [];
   error: [Error];
 
