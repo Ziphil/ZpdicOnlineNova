@@ -1,5 +1,10 @@
 //
 
+import {
+  LiteralType,
+  LiteralUtilType
+} from "/server/util/literal-type";
+
 
 export class NormalSearchParameter {
 
@@ -16,21 +21,11 @@ export class NormalSearchParameter {
 }
 
 
-type SearchMode = "name" | "equivalent" | "both" | "content";
-type SearchType = "exact" | "prefix" | "suffix" | "part" | "regular";
+const SEARCH_MODE_KEYS = ["name", "equivalent", "both", "content"] as const;
+const SEARCH_TYPE_KEYS = ["exact", "prefix", "suffix", "part", "regular"] as const;
 
-export function toSearchMode(mode: string): SearchMode {
-  let nextMode = "name" as SearchMode;
-  if (mode === "name" || mode === "equivalent" || mode === "both" || mode === "content") {
-    nextMode = mode;
-  }
-  return nextMode;
-}
+export let SearchModeUtil = LiteralUtilType.create(SEARCH_MODE_KEYS);
+export type SearchMode = LiteralType<typeof SEARCH_MODE_KEYS>;
 
-export function toSearchType(type: string): SearchType {
-  let nextType = "exact" as SearchType;
-  if (type === "exact" || type === "prefix" || type === "suffix" || type === "part" || type === "regular") {
-    nextType = type;
-  }
-  return nextType;
-}
+export let SearchTypeUtil = LiteralUtilType.create(SEARCH_TYPE_KEYS);
+export type SearchType = LiteralType<typeof SEARCH_TYPE_KEYS>;
