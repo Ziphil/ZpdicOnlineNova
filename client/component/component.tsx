@@ -19,9 +19,6 @@ import {
   ResponseType,
   SERVER_PATH
 } from "/server/controller/type";
-import {
-  UserSkeleton
-} from "/server/model/user";
 
 
 export class RouteComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Partial<RouteComponentProps<Q>> & P, S, H> {
@@ -90,7 +87,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
     return response;
   }
 
-  protected async logout(ignoresError?: boolean): Promise<AxiosResponse<boolean>> {
+  protected async logout(ignoresError?: boolean): Promise<AxiosResponse<ResponseType<"logout", "post">>> {
     let response = await this.requestPost("logout", {}, ignoresError);
     if (response.status === 200) {
       this.props.store!.user = null;
