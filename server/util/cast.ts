@@ -9,6 +9,8 @@ export function ensureNumber<T extends Nullable<number>>(value: T): T {
     return null as any;
   } else if (value === undefined) {
     return undefined as any;
+  } else if (typeof value === "number") {
+    return value;
   } else {
     return Number(value) as any;
   }
@@ -19,6 +21,8 @@ export function ensureBoolean<T extends Nullable<boolean>>(value: T): T {
     return null as any;
   } else if (value === undefined) {
     return undefined as any;
+  } else if (typeof value === "boolean") {
+    return value;
   } else {
     return Boolean(value) as any;
   }
@@ -29,6 +33,8 @@ export function ensureString<T extends Nullable<string>>(value: T): T {
     return null as any;
   } else if (value === undefined) {
     return undefined as any;
+  } else if (typeof value === "string") {
+    return value;
   } else {
     return String(value) as any;
   }
