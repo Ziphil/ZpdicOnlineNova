@@ -10,7 +10,14 @@ import {
   DocumentQuery
 } from "mongoose";
 import {
+  Dictionary
+} from "/server/model/dictionary/dictionary";
+import {
+  NormalSearchParameter
+} from "/server/model/dictionary/search-parameter";
+import {
   SlimeStream,
+  SlimeWord,
   SlimeWordDocument,
   SlimeWordModel
 } from "/server/model/dictionary/slime";
@@ -20,7 +27,7 @@ import {
 } from "/server/model/user";
 
 
-export class SlimeDictionary {
+export class SlimeDictionary extends Dictionary<SlimeWord> {
 
   @prop({required: true, unique: true})
   public number!: number;
@@ -127,9 +134,12 @@ export class SlimeDictionary {
     return this;
   }
 
-  public async search(search: string, mode: string, type: string, offset?: number, size?: number): Promise<Array<SlimeWordDocument>> {
+  protected createQuery(parameter: NormalSearchParameter): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
+    let search = parameter.search;
+    let mode = parameter.mode;
+    let type = parameter.type;
     let outerThis = this;
-    let createQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
+    let createAuxiliaryQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
       let key = "";
       if (innerMode === "name") {
         key = "name";
@@ -160,30 +170,23 @@ export class SlimeDictionary {
     };
     let finalQuery;
     if (mode === "name") {
-      finalQuery = createQuery("name", type);
+      finalQuery = createAuxiliaryQuery("name", type);
     } else if (mode === "equivalent") {
-      finalQuery = createQuery("equivalent", type);
+      finalQuery = createAuxiliaryQuery("equivalent", type);
     } else if (mode === "content") {
-      let nameQuery = createQuery("name", type);
-      let equivalentQuery = createQuery("equivalent", type);
-      let informationQuery = createQuery("information", type);
+      let nameQuery = createAuxiliaryQuery("name", type);
+      let equivalentQuery = createAuxiliaryQuery("equivalent", type);
+      let informationQuery = createAuxiliaryQuery("information", type);
       finalQuery = SlimeWordModel.find().or([nameQuery.getQuery(), equivalentQuery.getQuery(), informationQuery.getQuery()]);
     } else if (mode === "both") {
-      let nameQuery = createQuery("name", type);
-      let equivalentQuery = createQuery("equivalent", type);
+      let nameQuery = createAuxiliaryQuery("name", type);
+      let equivalentQuery = createAuxiliaryQuery("equivalent", type);
       finalQuery = SlimeWordModel.find().or([nameQuery.getQuery(), equivalentQuery.getQuery()]);
     } else {
       finalQuery = SlimeWordModel.find();
     }
     finalQuery.sort("name");
-    if (offset !== undefined) {
-      finalQuery = finalQuery.skip(offset);
-    }
-    if (size !== undefined) {
-      finalQuery = finalQuery.limit(size);
-    }
-    let words = await finalQuery.exec();
-    return words;
+    return finalQuery;
   }
 
   public async countWords(): Promise<number> {

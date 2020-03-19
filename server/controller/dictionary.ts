@@ -15,6 +15,11 @@ import {
   SERVER_PATH
 } from "/server/controller/type";
 import {
+  NormalSearchParameter,
+  toSearchMode,
+  toSearchType
+} from "/server/model/dictionary/search-parameter";
+import {
   SlimeDictionaryModel,
   SlimeDictionarySkeleton,
   SlimeWordModel,
@@ -83,13 +88,14 @@ export class DictionaryController extends Controller {
   public async getSearchDictionary(request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
     let number = ensureNumber(request.query.number);
     let search = ensureString(request.query.search);
-    let mode = ensureString(request.query.mode);
-    let type = ensureString(request.query.type);
+    let mode = toSearchMode(ensureString(request.query.mode));
+    let type = toSearchType(ensureString(request.query.type));
     let offset = ensureNumber(request.query.offset);
     let size = ensureNumber(request.query.size);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let words = await dictionary.search(search, mode, type, offset, size);
+      let parameter = new NormalSearchParameter(search, mode, type);
+      let words = await dictionary.search(parameter, offset, size);
       let body = words.map((word) => new SlimeWordSkeleton(word));
       response.json(body);
     } else {
