@@ -134,6 +134,11 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return this;
   }
 
+  public async getWords(): Promise<Array<SlimeWordDocument>> {
+    let words = await SlimeWordModel.find().where("dictionary", this);
+    return words;
+  }
+
   protected createQuery(parameter: NormalSearchParameter): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
     let search = parameter.search;
     let mode = parameter.mode;
@@ -213,6 +218,7 @@ export class SlimeDictionarySkeleton {
   public status: string;
   public secret: boolean;
   public name: string;
+  public words?: Array<SlimeWordDocument>;
   public wordSize?: number;
 
   public constructor(dictionary: SlimeDictionaryDocument) {
@@ -225,6 +231,78 @@ export class SlimeDictionarySkeleton {
 
   public async fetch(dictionary: SlimeDictionaryDocument): Promise<void> {
     this.wordSize = await dictionary.countWords();
+  }
+
+  public async fetchWords(dictionary: SlimeDictionaryDocument): Promise<void> {
+    this.words = await dictionary.getWords();
+    this.wordSize = this.words.length;
+  }
+
+  public search(parameter: NormalSearchParameter): Array<SlimeWordDocument> {
+    let hitWords = this.words?.filter((word) => {
+      let search = parameter.search;
+      let mode = parameter.mode;
+      let type = parameter.type;
+      let createTargets = function (innerMode: string): Array<string> {
+        let targets = [];
+        if (innerMode === "name") {
+          targets.push(word.name);
+        } else if (innerMode === "equivalent") {
+          for (let equivalent of word.equivalents) {
+            targets.push(...equivalent.names);
+          }
+        } else if (innerMode === "information") {
+          for (let information of word.informations) {
+            targets.push(information.text);
+          }
+        }
+        return targets;
+      };
+      let createNeedle = function (innerType: string): RegExp {
+        let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
+        let needle = /^$/;
+        if (innerType === "exact") {
+          needle = new RegExp("^" + escapedSearch + "$");
+        } else if (innerType === "prefix") {
+          needle = new RegExp("^" + escapedSearch);
+        } else if (innerType === "suffix") {
+          needle = new RegExp(escapedSearch + "$");
+        } else if (innerType === "part") {
+          needle = new RegExp(escapedSearch);
+        } else if (innerType === "regular") {
+          needle = new RegExp(search);
+        }
+        return needle;
+      };
+      let createPredicate = function (innerMode: string, innerType: string): boolean {
+        let targets = createTargets(innerMode);
+        let needle = createNeedle(innerType);
+        let result = targets.some((target) => {
+          return !!target.match(needle);
+        });
+        return result;
+      };
+      let finalPredicate = false;
+      if (mode === "name") {
+        finalPredicate = createPredicate("name", type);
+      } else if (mode === "equivalent") {
+        finalPredicate = createPredicate("equivalent", type);
+      } else if (mode === "content") {
+        let namePredicate = createPredicate("name", type);
+        let equivalentPredicate = createPredicate("equivalent", type);
+        let informationPredicate = createPredicate("information", type);
+        finalPredicate = namePredicate || equivalentPredicate || informationPredicate;
+      } else if (mode === "both") {
+        let namePredicate = createPredicate("name", type);
+        let equivalentPredicate = createPredicate("equivalent", type);
+        finalPredicate = namePredicate || equivalentPredicate;
+      }
+      return finalPredicate;
+    });
+    if (hitWords === undefined) {
+      hitWords = [];
+    }
+    return hitWords;
   }
 
 }
