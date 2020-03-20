@@ -143,34 +143,42 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;
+    let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
     let outerThis = this;
-    let createAuxiliaryQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
-      let key = "";
+    let createKey = function (innerMode: string): string {
+      let key;
       if (innerMode === "name") {
         key = "name";
       } else if (innerMode === "equivalent") {
         key = "equivalents.names";
       } else if (innerMode === "information") {
         key = "informations.text";
+      } else {
+        key = "";
       }
-      let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
-      let query = SlimeWordModel.find().where("dictionary", outerThis);
+      return key;
+    };
+    let createNeedle = function (innerType: string): string | RegExp {
+      let needle;
       if (innerType === "exact") {
-        let modifiedSearch = new RegExp("^" + escapedSearch + "$");
-        query = query.where(key, modifiedSearch);
+        needle = search;
       } else if (innerType === "prefix") {
-        let modifiedSearch = new RegExp("^" + escapedSearch);
-        query = query.where(key, modifiedSearch);
+        needle = new RegExp("^" + escapedSearch);
       } else if (type === "suffix") {
-        let modifiedSearch = new RegExp(escapedSearch + "$");
-        query = query.where(key, modifiedSearch);
+        needle = new RegExp(escapedSearch + "$");
       } else if (type === "part") {
-        let modifiedSearch = new RegExp(escapedSearch);
-        query = query.where(key, modifiedSearch);
+        needle = new RegExp(escapedSearch);
       } else if (type === "regular") {
-        let modifiedSearch = new RegExp(search);
-        query = query.where(key, modifiedSearch);
+        needle = new RegExp(search);
+      } else {
+        needle = "";
       }
+      return needle;
+    };
+    let createAuxiliaryQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
+      let key = createKey(innerMode);
+      let needle = createNeedle(innerType);
+      let query = SlimeWordModel.find().where("dictionary", outerThis).where(key, needle);
       return query;
     };
     let finalQuery;
@@ -190,7 +198,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     } else {
       finalQuery = SlimeWordModel.find();
     }
-    finalQuery.sort("name");
+    finalQuery = finalQuery.sort("name");
     return finalQuery;
   }
 
@@ -239,10 +247,11 @@ export class SlimeDictionarySkeleton {
   }
 
   public search(parameter: NormalSearchParameter): Array<SlimeWordDocument> {
-    let hitWords = this.words?.filter((word) => {
+    let hitWords = this.words!.filter((word) => {
       let search = parameter.search;
       let mode = parameter.mode;
       let type = parameter.type;
+      let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
       let createTargets = function (innerMode: string): Array<string> {
         let targets = [];
         if (innerMode === "name") {
@@ -259,8 +268,7 @@ export class SlimeDictionarySkeleton {
         return targets;
       };
       let createNeedle = function (innerType: string): RegExp {
-        let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
-        let needle = /^$/;
+        let needle;
         if (innerType === "exact") {
           needle = new RegExp("^" + escapedSearch + "$");
         } else if (innerType === "prefix") {
@@ -271,6 +279,8 @@ export class SlimeDictionarySkeleton {
           needle = new RegExp(escapedSearch);
         } else if (innerType === "regular") {
           needle = new RegExp(search);
+        } else {
+          needle = /^$/;
         }
         return needle;
       };
@@ -282,7 +292,7 @@ export class SlimeDictionarySkeleton {
         });
         return result;
       };
-      let finalPredicate = false;
+      let finalPredicate;
       if (mode === "name") {
         finalPredicate = createPredicate("name", type);
       } else if (mode === "equivalent") {
@@ -296,12 +306,11 @@ export class SlimeDictionarySkeleton {
         let namePredicate = createPredicate("name", type);
         let equivalentPredicate = createPredicate("equivalent", type);
         finalPredicate = namePredicate || equivalentPredicate;
+      } else {
+        finalPredicate = false;
       }
       return finalPredicate;
     });
-    if (hitWords === undefined) {
-      hitWords = [];
-    }
     return hitWords;
   }
 
