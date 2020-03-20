@@ -1,21 +1,31 @@
 //
 
 
-export abstract class LiteralUtilType<T extends string> {
+export class LiteralUtilType<T extends string> {
 
-  public abstract is(value: string): value is T;
+  public defaultValue: T;
+  public is: (value: string) => value is T;
 
-  public abstract cast(value: string): T;
+  private constructor(defaultValue: T, is: (value: string) => value is T) {
+    this.defaultValue = defaultValue;
+    this.is = is;
+  }
+
+  public cast(value: string): T {
+    if (this.is(value)) {
+      return value;
+    } else {
+      return this.defaultValue;
+    }
+  }
 
   public static create<T extends string>(values: {0: T, [key: number]: T}): LiteralUtilType<T> {
-    let anyValues = values as any;
+    let defaultValue = values[0];
     let is = function (value: string): value is T {
+      let anyValues = values as any;
       return anyValues.indexOf(value) >= 0;
     };
-    let cast = function (value: string): T {
-      return (is(value)) ? value : values[0];
-    };
-    let result = {is, cast};
+    let result = new LiteralUtilType(defaultValue, is);
     return result;
   }
 
