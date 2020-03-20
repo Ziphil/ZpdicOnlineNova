@@ -6,12 +6,12 @@ import {
   ReactNode
 } from "react";
 import {
+  applyStyle
+} from "/client/component/decorator";
+import {
   TITLES,
   VERSION
 } from "/client/index";
-import {
-  applyStyle
-} from "/client/util/decorator";
 
 
 @applyStyle(require("./logo.scss"))

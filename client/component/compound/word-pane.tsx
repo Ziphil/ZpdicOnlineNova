@@ -7,7 +7,7 @@ import {
 } from "react";
 import {
   applyStyle
-} from "/client/util/decorator";
+} from "/client/component/decorator";
 import {
   SlimeWordSkeleton
 } from "/server/model/dictionary/slime";

@@ -9,7 +9,7 @@ import {
 } from "react";
 import {
   applyStyle
-} from "/client/util/decorator";
+} from "/client/component/decorator";
 
 
 @applyStyle(require("./input.scss"))

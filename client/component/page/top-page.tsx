@@ -19,7 +19,7 @@ import {
 import {
   applyStyle,
   route
-} from "/client/util/decorator";
+} from "/client/component/decorator";
 
 
 @route

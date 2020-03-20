@@ -16,7 +16,7 @@ import {
   applyStyle,
   inject,
   route
-} from "/client/util/decorator";
+} from "/client/component/decorator";
 
 
 @route @inject

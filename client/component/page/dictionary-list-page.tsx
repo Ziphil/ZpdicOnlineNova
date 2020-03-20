@@ -17,7 +17,7 @@ import {
   applyStyle,
   inject,
   route
-} from "/client/util/decorator";
+} from "/client/component/decorator";
 import {
   SlimeDictionarySkeleton
 } from "/server/model/dictionary/slime";
