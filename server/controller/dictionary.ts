@@ -117,6 +117,20 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @get(SERVER_PATH["fetchWholeDictionary"])
+  public async getFetchWholeDictionary(request: GetRequest<"fetchWholeDictionary">, response: GetResponse<"fetchWholeDictionary">): Promise<void> {
+    let number = ensureNumber(request.query.number);
+    let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
+    if (dictionary) {
+      let body = new SlimeDictionarySkeleton(dictionary);
+      await body.fetchWords(dictionary);
+      response.json(body);
+    } else {
+      let body = new CustomErrorSkeleton("invalidNumber");
+      response.status(400).json(body);
+    }
+  }
+
   @get(SERVER_PATH["fetchDictionaries"])
   @before(verifyUser())
   public async getFetchDictionaries(request: GetRequest<"fetchDictionaries">, response: GetResponse<"fetchDictionaries">): Promise<void> {

@@ -19,6 +19,7 @@ export const SERVER_PATH = {
   changeDictionarySecret: "/api/dictionary/edit/secret",
   searchDictionary: "/api/dictionary/search",
   fetchDictionaryInfo: "/api/dictionary/info",
+  fetchWholeDictionary: "/api/dictionary/whole",
   fetchDictionaries: "/api/dictionary/list",
   fetchAllDictionaries: "/api/dictionary/list/all",
   fetchDictionaryAggregation: "/api/dictionary/aggregate",
@@ -73,6 +74,13 @@ export type ProcessType = {
     },
     post: Noop
   },
+  fetchWholeDictionary: {
+    get: {
+      request: {number: number},
+      response: MayError<SlimeDictionarySkeleton>
+    },
+    post: Noop
+  }
   fetchDictionaries: {
     get: {
       request: {},

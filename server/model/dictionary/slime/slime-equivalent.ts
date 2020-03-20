@@ -22,7 +22,7 @@ export class SlimeEquivalent {
 export class SlimeEquivalentSkeleton {
 
   public title: string;
-  public names: Array<String>;
+  public names: Array<string>;
 
   public constructor(equivalent: SlimeEquivalent) {
     this.title = equivalent.title;

@@ -19,7 +19,8 @@ import {
   SlimeStream,
   SlimeWord,
   SlimeWordDocument,
-  SlimeWordModel
+  SlimeWordModel,
+  SlimeWordSkeleton
 } from "/server/model/dictionary/slime";
 import {
   User,
@@ -226,7 +227,7 @@ export class SlimeDictionarySkeleton {
   public status: string;
   public secret: boolean;
   public name: string;
-  public words?: Array<SlimeWordDocument>;
+  public words?: Array<SlimeWordSkeleton>;
   public wordSize?: number;
 
   public constructor(dictionary: SlimeDictionaryDocument) {
@@ -242,11 +243,12 @@ export class SlimeDictionarySkeleton {
   }
 
   public async fetchWords(dictionary: SlimeDictionaryDocument): Promise<void> {
-    this.words = await dictionary.getWords();
-    this.wordSize = this.words.length;
+    let rawWords = await dictionary.getWords();
+    this.words = rawWords.map((rawWord) => new SlimeWordSkeleton(rawWord));
+    this.wordSize = rawWords.length;
   }
 
-  public search(parameter: NormalSearchParameter): Array<SlimeWordDocument> {
+  public search(parameter: NormalSearchParameter): Array<SlimeWordSkeleton> {
     let hitWords = this.words!.filter((word) => {
       let search = parameter.search;
       let mode = parameter.mode;
