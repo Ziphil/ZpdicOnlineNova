@@ -1,7 +1,8 @@
 //
 
 import {
-  debounce
+  debounce,
+  throttle
 } from "lodash-es";
 import * as react from "react";
 import {
@@ -29,6 +30,14 @@ export class SearchForm extends Component<Props, State> {
     mode: "both",
     type: "prefix"
   };
+
+  public constructor(props: Props) {
+    super(props);
+    let search = this.props.initialSearch || "";
+    let mode = this.props.initialMode || "both";
+    let type = this.props.initialType || "prefix";
+    this.state = {search, mode, type};
+  }
 
   private handleSearchSet(search: string): void {
     this.setState({search});
@@ -78,10 +87,10 @@ export class SearchForm extends Component<Props, State> {
     ] as const;
     let node = (
       <form styleName="root">
-        <Input onSet={this.handleSearchSet.bind(this)}/>
+        <Input initialValue={this.props.initialSearch} onSet={this.handleSearchSet.bind(this)}/>
         <div styleName="radio-wrapper">
-          <RadioGroup name="mode" initialValue="both" specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
-          <RadioGroup name="type" initialValue="prefix" specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
+          <RadioGroup name="mode" initialValue={this.props.initialMode || "both"} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
+          <RadioGroup name="type" initialValue={this.props.initialType || "prefix"} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
         </div>
       </form>
     );
@@ -92,6 +101,9 @@ export class SearchForm extends Component<Props, State> {
 
 
 type Props = {
+  initialSearch?: string,
+  initialMode?: SearchMode,
+  initialType?: SearchType,
   onSearchSet?: (search: string) => void;
   onModeSet?: (mode: SearchMode) => void;
   onTypeSet?: (type: SearchType) => void;

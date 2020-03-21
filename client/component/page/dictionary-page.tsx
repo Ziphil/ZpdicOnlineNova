@@ -1,5 +1,6 @@
 //
 
+import * as queryParser from "query-string";
 import * as react from "react";
 import {
   ReactNode
@@ -26,7 +27,9 @@ import {
 import {
   NormalSearchParameter,
   SearchMode,
-  SearchType
+  SearchModeUtil,
+  SearchType,
+  SearchTypeUtil
 } from "/server/model/dictionary/search-parameter";
 import {
   SlimeDictionarySkeleton,
@@ -47,6 +50,23 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     page: 0
   };
 
+  public constructor(props: Props) {
+    super(props);
+    let query = queryParser.parse(this.props.location!.search);
+    if (typeof query.search === "string") {
+      this.state.initialSearch = query.search;
+      this.state.search = query.search;
+    }
+    if (typeof query.mode === "string") {
+      this.state.initialMode = SearchModeUtil.cast(query.mode);
+      this.state.mode = SearchModeUtil.cast(query.mode);
+    }
+    if (typeof query.type === "string") {
+      this.state.initialType = SearchTypeUtil.cast(query.type);
+      this.state.type = SearchTypeUtil.cast(query.type);
+    }
+  }
+
   private async fetchDictionary(): Promise<void> {
     let number = +this.props.match!.params.number;
     let response = await this.requestGet("fetchWholeDictionary", {number});
@@ -65,7 +85,9 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let parameter = new NormalSearchParameter(search, mode, type);
     if (this.state.dictionary) {
       let hitWords = this.state.dictionary.search(parameter);
+      let queryString = queryParser.stringify({search, mode, type});
       this.setState({hitWords});
+      this.props.history!.replace({search: queryString});
     }
   }
 
@@ -110,7 +132,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
         <PopupInformationPane/>
         <div styleName="content">
           <div styleName="search-form">
-            <SearchForm onAnySet={this.handleAnySet.bind(this)}/>
+            <SearchForm initialSearch={this.state.initialSearch} initialMode={this.state.initialMode} initialType={this.state.initialType} onAnySet={this.handleAnySet.bind(this)}/>
           </div>
           <Loading loading={this.state.dictionary === null}>
             <div styleName="word-list">
@@ -138,6 +160,9 @@ type State = {
   search: string,
   mode: SearchMode,
   type: SearchType,
+  initialSearch?: string,
+  initialMode?: SearchMode,
+  initialType?: SearchType,
   page: number
 };
 type Params = {
