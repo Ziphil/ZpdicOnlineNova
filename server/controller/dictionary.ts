@@ -61,7 +61,14 @@ export class DictionaryController extends Controller {
   public async postUploadDictionary(request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary!;
     let path = request.file.path;
-    await dictionary.upload(path);
+    let promise = new Promise(async (resolve, reject) => {
+      try {
+        await dictionary.upload(path);
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
     let body = SlimeDictionarySkeleton.from(dictionary);
     response.json(body);
   }
