@@ -49,6 +49,29 @@
   border-radius: 0px $small-border-radius $small-border-radius 0px;
 }
 
+.root.caution {
+  background: $caution-button-background;
+}
+
+.root.caution:hover {
+  background: $caution-button-hover-background;
+}
+
+.root.caution:focus {
+  box-shadow: $hover-box-shadow-setting $caution-box-shadow-color;
+}
+
+.root.caution:active,
+.root.caution:active:hover {
+  background: $button-active-background;
+  box-shadow: $inset-box-shadow-setting $button-active-box-shadow-color inset;
+}
+
+.root.caution:active,
+.root.caution:active:hover {
+  background: $caution-button-active-background;
+}
+
 .simple {
   padding: 0em;
   font-family: inherit;

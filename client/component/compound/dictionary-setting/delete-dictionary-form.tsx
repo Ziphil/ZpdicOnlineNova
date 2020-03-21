@@ -42,7 +42,7 @@ export class DeleteDictionaryForm extends StoreComponent<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Button label="削除" reactive={true} onClick={this.click.bind(this)}/>
+          <Button label="削除" reactive={true} style="caution" onClick={this.click.bind(this)}/>
         </form>
         <p styleName="caution">
           この操作を行うと、辞書データが永久に削除されます。
