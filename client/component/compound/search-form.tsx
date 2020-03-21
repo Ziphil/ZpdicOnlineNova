@@ -15,6 +15,10 @@ import {
 import {
   applyStyle
 } from "/client/component/decorator";
+import {
+  SearchMode,
+  SearchType
+} from "/server/model/dictionary/search-parameter";
 
 
 @applyStyle(require("./search-form.scss"))
@@ -39,7 +43,7 @@ export class SearchForm extends Component<Props, State> {
     debounceChange(search);
   }
 
-  private handleModeSet(mode: string): void {
+  private handleModeSet(mode: SearchMode): void {
     this.setState({mode});
     if (this.props.onModeSet) {
       this.props.onModeSet(mode);
@@ -49,7 +53,7 @@ export class SearchForm extends Component<Props, State> {
     }
   }
 
-  private handleTypeSet(type: string): void {
+  private handleTypeSet(type: SearchType): void {
     this.setState({type});
     if (this.props.onTypeSet) {
       this.props.onTypeSet(type);
@@ -65,13 +69,13 @@ export class SearchForm extends Component<Props, State> {
       {value: "name", label: "単語"},
       {value: "equivalent", label: "訳語"},
       {value: "content", label: "全文"}
-    ];
+    ] as const;
     let typeSpecs = [
       {value: "prefix", label: "前方"},
       {value: "part", label: "部分"},
       {value: "exact", label: "完全"},
       {value: "regular", label: "正規"}
-    ];
+    ] as const;
     let node = (
       <form styleName="root">
         <Input onSet={this.handleSearchSet.bind(this)}/>
@@ -89,12 +93,12 @@ export class SearchForm extends Component<Props, State> {
 
 type Props = {
   onSearchSet?: (search: string) => void;
-  onModeSet?: (mode: string) => void;
-  onTypeSet?: (type: string) => void;
-  onAnySet?: (search: string, mode: string, type: string) => void;
+  onModeSet?: (mode: SearchMode) => void;
+  onTypeSet?: (type: SearchType) => void;
+  onAnySet?: (search: string, mode: SearchMode, type: SearchType) => void;
 };
 type State = {
   search: string,
-  mode: string,
-  type: string
+  mode: SearchMode,
+  type: SearchType
 };
