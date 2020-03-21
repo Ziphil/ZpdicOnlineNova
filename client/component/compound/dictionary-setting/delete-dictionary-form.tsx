@@ -29,11 +29,14 @@ export class DeleteDictionaryForm extends StoreComponent<Props, State> {
 
   private async click(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
-    let response = await this.requestPost("deleteDictionary", {number});
-    if (response.status === 200) {
-      this.props.store!.sendInformation("dictionaryDeleted");
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let result = window.confirm("本当によろしいですか?");
+    if (result) {
+      let response = await this.requestPost("deleteDictionary", {number});
+      if (response.status === 200) {
+        this.props.store!.sendInformation("dictionaryDeleted");
+        if (this.props.onSubmit) {
+          this.props.onSubmit();
+        }
       }
     }
   }
