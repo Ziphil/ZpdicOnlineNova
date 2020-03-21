@@ -29,7 +29,7 @@ import {
 } from "/server/model/dictionary/search-parameter";
 import {
   SlimeDictionarySkeleton
-} from "/server/model/dictionary/slime";
+} from "/server/model/dictionary/slime/slime-dictionary-skeleton";
 
 
 @route @inject
@@ -50,30 +50,33 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let response = await this.requestGet("fetchWholeDictionary", {number});
     if (response.status === 200 && !("error" in response.data)) {
       let dictionary = response.data;
+      dictionary.search = SlimeDictionarySkeleton.prototype.search;
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
     }
   }
 
-  private async updateWords(): Promise<void> {
+  private updateWords(): void {
     let search = this.state.search;
     let mode = this.state.mode;
     let type = this.state.type;
     let parameter = new NormalSearchParameter(search, mode, type);
-    let words = this.state.dictionary!.search(parameter);
-    this.setState({words});
+    if (this.state.dictionary) {
+      let words = this.state.dictionary.search(parameter);
+      this.setState({words});
+    }
   }
 
   public async componentDidMount(): Promise<void> {
-    let promise = Promise.all([this.fetchDictionary(), this.updateWords()]);
-    await promise;
+    await this.fetchDictionary();
+    this.updateWords();
   }
 
   private async handleAnySet(search: string, mode: SearchMode, type: SearchType): Promise<void> {
     let page = 0;
-    this.setState({search, mode, type, page}, async () => {
-      await this.updateWords();
+    this.setState({search, mode, type, page}, () => {
+      this.updateWords();
     });
   }
 
@@ -82,17 +85,17 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     if (page < 0) {
       page = 0;
     }
-    this.setState({page}, async () => {
+    this.setState({page}, () => {
       window.scrollTo(0, 0);
-      await this.updateWords();
+      this.updateWords();
     });
   }
 
   private async moveNextPage(): Promise<void> {
     let page = this.state.page + 1;
-    this.setState({page}, async () => {
+    this.setState({page}, () => {
       window.scrollTo(0, 0);
-      await this.updateWords();
+      this.updateWords();
     });
   }
 

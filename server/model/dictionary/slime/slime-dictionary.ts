@@ -16,6 +16,7 @@ import {
   NormalSearchParameter
 } from "/server/model/dictionary/search-parameter";
 import {
+  SlimeDictionarySkeleton,
   SlimeStream,
   SlimeWord,
   SlimeWordDocument,
@@ -50,6 +51,28 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
 
   @prop()
   public externalData?: object;
+
+  public skeletonize(this: SlimeDictionaryDocument): SlimeDictionarySkeleton {
+    let id = this.id;
+    let number = this.number;
+    let status = this.status;
+    let secret = this.secret || false;
+    let name = this.name;
+    let skeleton = new SlimeDictionarySkeleton({id, number, status, secret, name});
+    return skeleton;
+  }
+
+  public async skeletonizeFetch(this: SlimeDictionaryDocument, whole?: boolean): Promise<SlimeDictionarySkeleton> {
+    let skeleton = this.skeletonize();
+    if (whole) {
+      let rawWords = await this.getWords();
+      skeleton.words = rawWords.map((rawWord) => new SlimeWordSkeleton(rawWord));
+      skeleton.wordSize = rawWords.length;
+    } else {
+      skeleton.wordSize = await this.countWords();
+    }
+    return skeleton;
+  }
 
   public static async createEmpty(name: string, user: UserDocument): Promise<SlimeDictionaryDocument> {
     let dictionary = new SlimeDictionaryModel({});
@@ -215,105 +238,6 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     } else {
       return 1;
     }
-  }
-
-}
-
-
-export class SlimeDictionarySkeleton {
-
-  public id: string;
-  public number: number;
-  public status: string;
-  public secret: boolean;
-  public name: string;
-  public words?: Array<SlimeWordSkeleton>;
-  public wordSize?: number;
-
-  public constructor(dictionary: SlimeDictionaryDocument) {
-    this.id = dictionary.id;
-    this.number = dictionary.number;
-    this.status = dictionary.status;
-    this.secret = dictionary.secret || false;
-    this.name = dictionary.name;
-  }
-
-  public async fetch(dictionary: SlimeDictionaryDocument): Promise<void> {
-    this.wordSize = await dictionary.countWords();
-  }
-
-  public async fetchWords(dictionary: SlimeDictionaryDocument): Promise<void> {
-    let rawWords = await dictionary.getWords();
-    this.words = rawWords.map((rawWord) => new SlimeWordSkeleton(rawWord));
-    this.wordSize = rawWords.length;
-  }
-
-  public search(parameter: NormalSearchParameter): Array<SlimeWordSkeleton> {
-    let hitWords = this.words!.filter((word) => {
-      let search = parameter.search;
-      let mode = parameter.mode;
-      let type = parameter.type;
-      let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
-      let createTargets = function (innerMode: string): Array<string> {
-        let targets = [];
-        if (innerMode === "name") {
-          targets.push(word.name);
-        } else if (innerMode === "equivalent") {
-          for (let equivalent of word.equivalents) {
-            targets.push(...equivalent.names);
-          }
-        } else if (innerMode === "information") {
-          for (let information of word.informations) {
-            targets.push(information.text);
-          }
-        }
-        return targets;
-      };
-      let createNeedle = function (innerType: string): RegExp {
-        let needle;
-        if (innerType === "exact") {
-          needle = new RegExp("^" + escapedSearch + "$");
-        } else if (innerType === "prefix") {
-          needle = new RegExp("^" + escapedSearch);
-        } else if (innerType === "suffix") {
-          needle = new RegExp(escapedSearch + "$");
-        } else if (innerType === "part") {
-          needle = new RegExp(escapedSearch);
-        } else if (innerType === "regular") {
-          needle = new RegExp(search);
-        } else {
-          needle = /^$/;
-        }
-        return needle;
-      };
-      let createPredicate = function (innerMode: string, innerType: string): boolean {
-        let targets = createTargets(innerMode);
-        let needle = createNeedle(innerType);
-        let result = targets.some((target) => {
-          return !!target.match(needle);
-        });
-        return result;
-      };
-      let finalPredicate;
-      if (mode === "name") {
-        finalPredicate = createPredicate("name", type);
-      } else if (mode === "equivalent") {
-        finalPredicate = createPredicate("equivalent", type);
-      } else if (mode === "content") {
-        let namePredicate = createPredicate("name", type);
-        let equivalentPredicate = createPredicate("equivalent", type);
-        let informationPredicate = createPredicate("information", type);
-        finalPredicate = namePredicate || equivalentPredicate || informationPredicate;
-      } else if (mode === "both") {
-        let namePredicate = createPredicate("name", type);
-        let equivalentPredicate = createPredicate("equivalent", type);
-        finalPredicate = namePredicate || equivalentPredicate;
-      } else {
-        finalPredicate = false;
-      }
-      return finalPredicate;
-    });
-    return hitWords;
   }
 
 }

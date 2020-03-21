@@ -50,7 +50,7 @@ export class DictionaryController extends Controller {
     let user = request.user!;
     let name = ensureString(request.body.name);
     let dictionary = await SlimeDictionaryModel.createEmpty(name, user);
-    let body = new SlimeDictionarySkeleton(dictionary);
+    let body = dictionary.skeletonize();
     response.json(body);
   }
 
@@ -60,7 +60,7 @@ export class DictionaryController extends Controller {
     let dictionary = request.dictionary!;
     let path = request.file.path;
     await dictionary.upload(path);
-    let body = new SlimeDictionarySkeleton(dictionary);
+    let body = dictionary.skeletonize();
     response.json(body);
   }
 
@@ -70,7 +70,7 @@ export class DictionaryController extends Controller {
     let dictionary = request.dictionary!;
     let name = ensureString(request.body.name);
     await dictionary.changeName(name);
-    let body = new SlimeDictionarySkeleton(dictionary);
+    let body = dictionary.skeletonize();
     response.json(body);
   }
 
@@ -80,7 +80,7 @@ export class DictionaryController extends Controller {
     let dictionary = request.dictionary!;
     let secret = ensureBoolean(request.body.secret);
     await dictionary.changeSecret(secret);
-    let body = new SlimeDictionarySkeleton(dictionary);
+    let body = dictionary.skeletonize();
     response.json(body);
   }
 
@@ -109,7 +109,7 @@ export class DictionaryController extends Controller {
     let number = ensureNumber(request.query.number);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let body = new SlimeDictionarySkeleton(dictionary);
+      let body = dictionary.skeletonize();
       response.json(body);
     } else {
       let body = new CustomErrorSkeleton("invalidNumber");
@@ -122,8 +122,7 @@ export class DictionaryController extends Controller {
     let number = ensureNumber(request.query.number);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let body = new SlimeDictionarySkeleton(dictionary);
-      await body.fetchWords(dictionary);
+      let body = await dictionary.skeletonizeFetch(true);
       response.json(body);
     } else {
       let body = new CustomErrorSkeleton("invalidNumber");
@@ -139,8 +138,7 @@ export class DictionaryController extends Controller {
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<SlimeDictionarySkeleton>(async (resolve, reject) => {
         try {
-          let skeleton = new SlimeDictionarySkeleton(dictionary);
-          await skeleton.fetch(dictionary);
+          let skeleton = await dictionary.skeletonizeFetch(false);
           resolve(skeleton);
         } catch (error) {
           reject(error);
@@ -158,8 +156,7 @@ export class DictionaryController extends Controller {
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<SlimeDictionarySkeleton>(async (resolve, reject) => {
         try {
-          let skeleton = new SlimeDictionarySkeleton(dictionary);
-          await skeleton.fetch(dictionary);
+          let skeleton = await dictionary.skeletonizeFetch(false);
           resolve(skeleton);
         } catch (error) {
           reject(error);
