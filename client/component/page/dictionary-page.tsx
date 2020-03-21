@@ -65,6 +65,9 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
       this.state.initialType = SearchTypeUtil.cast(query.type);
       this.state.type = SearchTypeUtil.cast(query.type);
     }
+    if (typeof query.page === "string") {
+      this.state.page = +query.page;
+    }
   }
 
   private async fetchDictionary(): Promise<void> {
@@ -82,10 +85,11 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let search = this.state.search;
     let mode = this.state.mode;
     let type = this.state.type;
+    let page = this.state.page;
     let parameter = new NormalSearchParameter(search, mode, type);
     if (this.state.dictionary) {
       let hitWords = this.state.dictionary.search(parameter);
-      let queryString = queryParser.stringify({search, mode, type});
+      let queryString = queryParser.stringify({search, mode, type, page});
       this.setState({hitWords});
       this.props.history!.replace({search: queryString});
     }
