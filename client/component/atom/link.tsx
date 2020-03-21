@@ -38,7 +38,6 @@ export class Link extends StoreComponent<Props, State> {
     }
   }
 
-
   public render(): ReactNode {
     let styleNames = ["root"];
     if (this.props.style === "plane") {
