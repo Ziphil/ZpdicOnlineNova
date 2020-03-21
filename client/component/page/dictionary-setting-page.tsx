@@ -100,7 +100,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     let node = (
       <div styleName="page">
         <Header/>
-        <DictionaryHeader name={this.state.dictionary?.name || ""}/>
+        <DictionaryHeader dictionary={this.state.dictionary}/>
         <PopupInformationPane/>
         <div styleName="content">
           <Menu mode="general" specs={menuSpecs}/>

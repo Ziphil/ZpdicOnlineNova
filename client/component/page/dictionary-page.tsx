@@ -128,7 +128,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let node = (
       <div styleName="page">
         <Header/>
-        <DictionaryHeader name={this.state.dictionary?.name || ""}/>
+        <DictionaryHeader dictionary={this.state.dictionary}/>
         <PopupInformationPane/>
         <div styleName="content">
           <div styleName="search-form">
