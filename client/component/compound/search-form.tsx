@@ -41,15 +41,12 @@ export class SearchForm extends Component<Props, State> {
 
   private handleSearchSet(search: string): void {
     this.setState({search});
-    let debounceChange = debounce((innerSearch) => {
-      if (this.props.onSearchSet) {
-        this.props.onSearchSet(innerSearch);
-      }
-      if (this.props.onAnySet) {
-        this.props.onAnySet(innerSearch, this.state.mode, this.state.type);
-      }
-    }, 500);
-    debounceChange(search);
+    if (this.props.onSearchSet) {
+      this.props.onSearchSet(search);
+    }
+    if (this.props.onAnySet) {
+      this.props.onAnySet(search, this.state.mode, this.state.type);
+    }
   }
 
   private handleModeSet(mode: SearchMode): void {
@@ -87,7 +84,7 @@ export class SearchForm extends Component<Props, State> {
     ] as const;
     let node = (
       <form styleName="root">
-        <Input initialValue={this.props.initialSearch} onSet={this.handleSearchSet.bind(this)}/>
+        <Input initialValue={this.props.initialSearch} onSet={debounce(this.handleSearchSet.bind(this), 500)}/>
         <div styleName="radio-wrapper">
           <RadioGroup name="mode" initialValue={this.props.initialMode || "both"} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
           <RadioGroup name="type" initialValue={this.props.initialType || "prefix"} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
