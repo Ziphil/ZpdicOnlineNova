@@ -13,7 +13,7 @@ import {
 } from "/client/component/decorator";
 import {
   SlimeWordSkeleton
-} from "/server/model/dictionary/slime";
+} from "/server/skeleton/dictionary/slime";
 
 
 @applyStyle(require("./word-list.scss"))

@@ -3,13 +3,13 @@
 import {
   SlimeDictionarySkeleton,
   SlimeWordSkeleton
-} from "/server/model/dictionary/slime";
+} from "/server/skeleton/dictionary/slime";
 import {
   CustomErrorSkeleton
-} from "/server/model/error";
+} from "/server/skeleton/error";
 import {
   UserSkeleton
-} from "/server/model/user";
+} from "/server/skeleton/user";
 
 
 export const SERVER_PATH = {

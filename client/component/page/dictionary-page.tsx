@@ -29,7 +29,7 @@ import {
 } from "/server/model/dictionary/search-parameter";
 import {
   SlimeDictionarySkeleton
-} from "/server/model/dictionary/slime/slime-dictionary-skeleton";
+} from "/server/skeleton/dictionary/slime";
 
 
 @route @inject
@@ -49,8 +49,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let number = +this.props.match!.params.number;
     let response = await this.requestGet("fetchWholeDictionary", {number});
     if (response.status === 200 && !("error" in response.data)) {
-      let dictionary = response.data;
-      dictionary.search = SlimeDictionarySkeleton.prototype.search;
+      let dictionary = SlimeDictionarySkeleton.of(response.data);
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});

@@ -4,11 +4,17 @@ import {
   NormalSearchParameter
 } from "/server/model/dictionary/search-parameter";
 import {
-  SlimeWordSkeleton
+  SlimeDictionaryDocument
 } from "/server/model/dictionary/slime";
+import {
+  SlimeWordSkeleton
+} from "/server/skeleton/dictionary/slime";
+import {
+  Skeleton
+} from "/server/skeleton/skeleton";
 
 
-export class SlimeDictionarySkeleton {
+export class SlimeDictionarySkeleton extends Skeleton {
 
   public id!: string;
   public number!: number;
@@ -18,16 +24,34 @@ export class SlimeDictionarySkeleton {
   public words?: Array<SlimeWordSkeleton>;
   public wordSize?: number;
 
-  public constructor(object: Fields<SlimeDictionarySkeleton>) {
-    Object.assign(this, object);
+  public static from(raw: SlimeDictionaryDocument): SlimeDictionarySkeleton {
+    let id = raw.id;
+    let number = raw.number;
+    let status = raw.status;
+    let secret = raw.secret || false;
+    let name = raw.name;
+    let skeleton = SlimeDictionarySkeleton.of({id, number, status, secret, name});
+    return skeleton;
+  }
+
+  public static async fromFetch(raw: SlimeDictionaryDocument, whole?: boolean): Promise<SlimeDictionarySkeleton> {
+    let skeleton = SlimeDictionarySkeleton.from(raw);
+    if (whole) {
+      let rawWords = await raw.getWords();
+      skeleton.words = rawWords.map(SlimeWordSkeleton.from);
+      skeleton.wordSize = rawWords.length;
+    } else {
+      skeleton.wordSize = await raw.countWords();
+    }
+    return skeleton;
   }
 
   public search(parameter: NormalSearchParameter): Array<SlimeWordSkeleton> {
+    let search = parameter.search;
+    let mode = parameter.mode;
+    let type = parameter.type;
+    let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
     let hitWords = this.words!.filter((word) => {
-      let search = parameter.search;
-      let mode = parameter.mode;
-      let type = parameter.type;
-      let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
       let createTargets = function (innerMode: string): Array<string> {
         let targets = [];
         if (innerMode === "name") {
@@ -91,11 +115,3 @@ export class SlimeDictionarySkeleton {
   }
 
 }
-
-
-type ExtractRequired<T, P extends keyof T> = undefined extends T[P] ? never : P;
-type ExtractOptional<T, P extends keyof T> = undefined extends T[P] ? P : never;
-type RequiredFieldNames<T> = {[P in keyof T]: T[P] extends (...args: Array<any>) => any ? never : ExtractRequired<T, P>}[keyof T];
-type OptionalFieldNames<T> = {[P in keyof T]: T[P] extends (...args: Array<any>) => any ? never : ExtractOptional<T, P>}[keyof T];
-
-type Fields<T> = {[P in RequiredFieldNames<T>]: T[P]} & {[P in OptionalFieldNames<T>]?: T[P]};

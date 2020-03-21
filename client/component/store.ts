@@ -6,7 +6,7 @@ import {
 } from "/client/component/decorator";
 import {
   UserSkeleton
-} from "/server/model/user";
+} from "/server/skeleton/user";
 
 
 export class GlobalStore {

@@ -27,13 +27,15 @@ import {
 } from "/server/model/dictionary/search-parameter";
 import {
   SlimeDictionaryModel,
-  SlimeDictionarySkeleton,
-  SlimeWordModel,
-  SlimeWordSkeleton
+  SlimeWordModel
 } from "/server/model/dictionary/slime";
 import {
+  SlimeDictionarySkeleton,
+  SlimeWordSkeleton
+} from "/server/skeleton/dictionary/slime";
+import {
   CustomErrorSkeleton
-} from "/server/model/error";
+} from "/server/skeleton/error";
 import {
   ensureBoolean,
   ensureNumber,
@@ -50,7 +52,7 @@ export class DictionaryController extends Controller {
     let user = request.user!;
     let name = ensureString(request.body.name);
     let dictionary = await SlimeDictionaryModel.createEmpty(name, user);
-    let body = dictionary.skeletonize();
+    let body = SlimeDictionarySkeleton.from(dictionary);
     response.json(body);
   }
 
@@ -60,7 +62,7 @@ export class DictionaryController extends Controller {
     let dictionary = request.dictionary!;
     let path = request.file.path;
     await dictionary.upload(path);
-    let body = dictionary.skeletonize();
+    let body = SlimeDictionarySkeleton.from(dictionary);
     response.json(body);
   }
 
@@ -70,7 +72,7 @@ export class DictionaryController extends Controller {
     let dictionary = request.dictionary!;
     let name = ensureString(request.body.name);
     await dictionary.changeName(name);
-    let body = dictionary.skeletonize();
+    let body = SlimeDictionarySkeleton.from(dictionary);
     response.json(body);
   }
 
@@ -80,7 +82,7 @@ export class DictionaryController extends Controller {
     let dictionary = request.dictionary!;
     let secret = ensureBoolean(request.body.secret);
     await dictionary.changeSecret(secret);
-    let body = dictionary.skeletonize();
+    let body = SlimeDictionarySkeleton.from(dictionary);
     response.json(body);
   }
 
@@ -96,7 +98,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       let parameter = new NormalSearchParameter(search, mode, type);
       let words = await dictionary.search(parameter, offset, size);
-      let body = words.map((word) => new SlimeWordSkeleton(word));
+      let body = words.map((word) => SlimeWordSkeleton.from(word));
       response.json(body);
     } else {
       let body = new CustomErrorSkeleton("invalidNumber");
@@ -109,7 +111,7 @@ export class DictionaryController extends Controller {
     let number = ensureNumber(request.query.number);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let body = dictionary.skeletonize();
+      let body = SlimeDictionarySkeleton.from(dictionary);
       response.json(body);
     } else {
       let body = new CustomErrorSkeleton("invalidNumber");
@@ -122,7 +124,7 @@ export class DictionaryController extends Controller {
     let number = ensureNumber(request.query.number);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let body = await dictionary.skeletonizeFetch(true);
+      let body = await SlimeDictionarySkeleton.fromFetch(dictionary, true);
       response.json(body);
     } else {
       let body = new CustomErrorSkeleton("invalidNumber");
@@ -138,7 +140,7 @@ export class DictionaryController extends Controller {
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<SlimeDictionarySkeleton>(async (resolve, reject) => {
         try {
-          let skeleton = await dictionary.skeletonizeFetch(false);
+          let skeleton = await SlimeDictionarySkeleton.fromFetch(dictionary, false);
           resolve(skeleton);
         } catch (error) {
           reject(error);
@@ -156,7 +158,7 @@ export class DictionaryController extends Controller {
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<SlimeDictionarySkeleton>(async (resolve, reject) => {
         try {
-          let skeleton = await dictionary.skeletonizeFetch(false);
+          let skeleton = await SlimeDictionarySkeleton.fromFetch(dictionary, false);
           resolve(skeleton);
         } catch (error) {
           reject(error);

@@ -16,12 +16,10 @@ import {
   NormalSearchParameter
 } from "/server/model/dictionary/search-parameter";
 import {
-  SlimeDictionarySkeleton,
   SlimeStream,
   SlimeWord,
   SlimeWordDocument,
-  SlimeWordModel,
-  SlimeWordSkeleton
+  SlimeWordModel
 } from "/server/model/dictionary/slime";
 import {
   User,
@@ -51,28 +49,6 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
 
   @prop()
   public externalData?: object;
-
-  public skeletonize(this: SlimeDictionaryDocument): SlimeDictionarySkeleton {
-    let id = this.id;
-    let number = this.number;
-    let status = this.status;
-    let secret = this.secret || false;
-    let name = this.name;
-    let skeleton = new SlimeDictionarySkeleton({id, number, status, secret, name});
-    return skeleton;
-  }
-
-  public async skeletonizeFetch(this: SlimeDictionaryDocument, whole?: boolean): Promise<SlimeDictionarySkeleton> {
-    let skeleton = this.skeletonize();
-    if (whole) {
-      let rawWords = await this.getWords();
-      skeleton.words = rawWords.map((rawWord) => new SlimeWordSkeleton(rawWord));
-      skeleton.wordSize = rawWords.length;
-    } else {
-      skeleton.wordSize = await this.countWords();
-    }
-    return skeleton;
-  }
 
   public static async createEmpty(name: string, user: UserDocument): Promise<SlimeDictionaryDocument> {
     let dictionary = new SlimeDictionaryModel({});
