@@ -174,7 +174,11 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
       } else if (type === "part") {
         needle = new RegExp(escapedSearch);
       } else if (type === "regular") {
-        needle = new RegExp(search);
+        try {
+          needle = new RegExp(search);
+        } catch (error) {
+          needle = "";
+        }
       } else {
         needle = "";
       }

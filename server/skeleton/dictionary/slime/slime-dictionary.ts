@@ -78,7 +78,11 @@ export class SlimeDictionarySkeleton extends Skeleton {
         } else if (innerType === "part") {
           needle = new RegExp(escapedSearch);
         } else if (innerType === "regular") {
-          needle = new RegExp(search);
+          try {
+            needle = new RegExp(search);
+          } catch (error) {
+            needle = /^$/;
+          }
         } else {
           needle = /^$/;
         }
