@@ -30,13 +30,17 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
 
   // グローバルストアのポップアップデータを削除しつつ、引数に指定されたパスに移動します。
   // ページの遷移をしてもポップアップが表示され続けるのを防ぐため、ページを遷移するときは必ずこのメソッドを使ってください。
-  protected pushPath(path: string): void {
-    this.props.store!.clearPopup();
+  protected pushPath(path: string, preservesPopup?: boolean): void {
+    if (!preservesPopup) {
+      this.props.store!.clearPopup();
+    }
     this.props.history!.push(path);
   }
 
-  protected replacePath(path: string): void {
-    this.props.store!.clearPopup();
+  protected replacePath(path: string, preservesPopup?: boolean): void {
+    if (!preservesPopup) {
+      this.props.store!.clearPopup();
+    }
     this.props.history!.replace(path);
   }
 

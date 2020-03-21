@@ -10,6 +10,7 @@ import {
 import {
   ChangeDictionaryNameForm,
   ChangeDictionarySecretForm,
+  DeleteDictionaryForm,
   DictionaryHeader,
   Header,
   Menu,
@@ -89,6 +90,19 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     return node;
   }
 
+  private renderDeleteDictionaryForm(): ReactNode {
+    let label = "削除";
+    let description = `
+      この辞書を削除します。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <DeleteDictionaryForm number={this.state.dictionary!.number} onSubmit={() => this.pushPath("/dashboard", true)}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
     let menuSpecs = [{mode: "general", label: "一般", iconLabel: "\uF013", href: ""}];
     let contentNodes = [];
@@ -96,6 +110,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
       contentNodes.push(this.renderChangeDictionaryNameForm());
       contentNodes.push(this.renderChangeDictionarySecretForm());
       contentNodes.push(this.renderUploadDictionaryForm());
+      contentNodes.push(this.renderDeleteDictionaryForm());
     }
     let node = (
       <div styleName="page">
