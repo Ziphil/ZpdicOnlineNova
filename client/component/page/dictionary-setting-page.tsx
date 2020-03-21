@@ -10,6 +10,7 @@ import {
 import {
   ChangeDictionaryNameForm,
   ChangeDictionarySecretForm,
+  DeleteDictionaryForm,
   DictionaryHeader,
   Header,
   Menu,
@@ -21,10 +22,10 @@ import {
   applyStyle,
   inject,
   route
-} from "/client/util/decorator";
+} from "/client/component/decorator";
 import {
   SlimeDictionarySkeleton
-} from "/server/model/dictionary/slime";
+} from "/server/skeleton/dictionary/slime";
 
 
 @route @inject
@@ -32,11 +33,13 @@ import {
 export class DictionarySettingPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
-    dictionary: null
+    dictionary: null,
+    authorized: false
   };
 
   public async componentDidMount(): Promise<void> {
-    await this.fetchDictionary();
+    let promise = Promise.all([this.fetchDictionary(), this.checkAuthorization()]);
+    await promise;
   }
 
   private async fetchDictionary(): Promise<void> {
@@ -47,6 +50,14 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
+    }
+  }
+
+  private async checkAuthorization(): Promise<void> {
+    let number = +this.props.match!.params.number;
+    let response = await this.requestGet("checkDictionaryAuthorization", {number});
+    if (response.status === 200) {
+      this.setState({authorized: true});
     }
   }
 
@@ -89,18 +100,32 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     return node;
   }
 
+  private renderDeleteDictionaryForm(): ReactNode {
+    let label = "削除";
+    let description = `
+      この辞書を削除します。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <DeleteDictionaryForm number={this.state.dictionary!.number} onSubmit={() => this.pushPath("/dashboard", true)}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
     let menuSpecs = [{mode: "general", label: "一般", iconLabel: "\uF013", href: ""}];
     let contentNodes = [];
-    if (this.state.dictionary) {
+    if (this.state.dictionary && this.state.authorized) {
       contentNodes.push(this.renderChangeDictionaryNameForm());
       contentNodes.push(this.renderChangeDictionarySecretForm());
       contentNodes.push(this.renderUploadDictionaryForm());
+      contentNodes.push(this.renderDeleteDictionaryForm());
     }
     let node = (
       <div styleName="page">
         <Header/>
-        <DictionaryHeader name={this.state.dictionary?.name || ""}/>
+        <DictionaryHeader dictionary={this.state.dictionary}/>
         <PopupInformationPane/>
         <div styleName="content">
           <Menu mode="general" specs={menuSpecs}/>
@@ -117,7 +142,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
 type Props = {
 };
 type State = {
-  dictionary: SlimeDictionarySkeleton | null
+  dictionary: SlimeDictionarySkeleton | null,
+  authorized: boolean
 };
 type Params = {
   number: string;

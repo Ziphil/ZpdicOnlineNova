@@ -26,18 +26,6 @@ export class User {
   @prop({required: true})
   public hash!: string;
 
-  private encryptPassword(password: string): void {
-    let length = password.length;
-    if (length < 6 || length > 50) {
-      throw new CustomError("invalidPassword");
-    }
-    this.hash = bcrypt.hashSync(password, SALT_ROUND);
-  }
-
-  private comparePassword(password: string): boolean {
-    return bcrypt.compareSync(password, this.hash);
-  }
-
   // 渡された情報からユーザーを作成し、データベースに保存します。
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
   // 渡されたパスワードは自動的にハッシュ化されます。
@@ -76,19 +64,16 @@ export class User {
     return this;
   }
 
-}
+  private encryptPassword(password: string): void {
+    let length = password.length;
+    if (length < 6 || length > 50) {
+      throw new CustomError("invalidPassword");
+    }
+    this.hash = bcrypt.hashSync(password, SALT_ROUND);
+  }
 
-
-export class UserSkeleton {
-
-  public id: string;
-  public name: string;
-  public email: string;
-
-  public constructor(user: UserDocument) {
-    this.id = user.id;
-    this.name = user.name;
-    this.email = user.email;
+  private comparePassword(password: string): boolean {
+    return bcrypt.compareSync(password, this.hash);
   }
 
 }

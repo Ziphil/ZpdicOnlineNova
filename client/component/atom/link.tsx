@@ -12,7 +12,7 @@ import {
   applyStyle,
   inject,
   route
-} from "/client/util/decorator";
+} from "/client/component/decorator";
 
 
 @route @inject
@@ -37,7 +37,6 @@ export class Link extends StoreComponent<Props, State> {
       }
     }
   }
-
 
   public render(): ReactNode {
     let styleNames = ["root"];

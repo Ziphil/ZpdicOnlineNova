@@ -5,6 +5,7 @@ export * from "./dashboard/change-user-password-form";
 export * from "./dashboard/create-dictionary-form";
 export * from "./dictionary-setting/change-dictionary-name-form";
 export * from "./dictionary-setting/change-dictionary-secret-form";
+export * from "./dictionary-setting/delete-dictionary-form";
 export * from "./dictionary-setting/upload-dictionary-form";
 export * from "./dictionary-aggregation-pane";
 export * from "./dictionary-header";

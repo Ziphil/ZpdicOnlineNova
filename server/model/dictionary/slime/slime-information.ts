@@ -18,18 +18,5 @@ export class SlimeInformation {
 }
 
 
-export class SlimeInformationSkeleton {
-
-  public title: string;
-  public text: string;
-
-  public constructor(information: SlimeInformation) {
-    this.title = information.title;
-    this.text = information.text;
-  }
-
-}
-
-
 export type SlimeInformationDocument = DocumentType<SlimeInformation>;
 export let SlimeInformationModel = getModelForClass(SlimeInformation);

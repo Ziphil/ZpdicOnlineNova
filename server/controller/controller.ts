@@ -52,11 +52,11 @@ export interface Request<N extends ProcessName, M extends MethodType> extends Ex
 
   // GET リクエストの際のクエリ文字列をパースした結果です。
   // 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。
-  query: Extract<RequestType<N, "get">, RequestType<N, M>>;
+  query: RequestTypeChoose<N, M, "get">;
 
   // POST リクエストの際のリクエストボディをパースした結果です。
   // 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。
-  body: Extract<RequestType<N, "post">, RequestType<N, M>>;
+  body: RequestTypeChoose<N, M, "post">;
 
   // ユーザーの検証の結果として得られた JSON トークンが格納されます。
   // このプロパティは、authenticate ミドルウェアが呼び出された場合にのみ、値が格納されます。
@@ -82,3 +82,5 @@ export type GetRequest<N extends ProcessName> = Request<N, "get">;
 export type PostRequest<N extends ProcessName> = Request<N, "post">;
 export type GetResponse<N extends ProcessName> = Response<N, "get">;
 export type PostResponse<N extends ProcessName> = Response<N, "post">;
+
+type RequestTypeChoose<N extends ProcessName, M extends MethodType, T extends MethodType> = M extends T ? RequestType<N, M> : never;

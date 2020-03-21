@@ -19,6 +19,9 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
+  applyStyle
+} from "/client/component/decorator";
+import {
   DashboardPage,
   DictionaryListPage,
   DictionaryPage,
@@ -34,9 +37,6 @@ import {
 import {
   GlobalStore
 } from "/client/component/store";
-import {
-  applyStyle
-} from "/client/util/decorator";
 
 
 @applyStyle(require("./root.scss"))

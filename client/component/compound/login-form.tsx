@@ -16,13 +16,13 @@ import {
   InformationPane
 } from "/client/component/compound";
 import {
-  getMessage
-} from "/client/component/message";
-import {
   applyStyle,
   inject,
   route
-} from "/client/util/decorator";
+} from "/client/component/decorator";
+import {
+  getMessage
+} from "/client/component/message";
 
 
 @route @inject

@@ -18,7 +18,7 @@ import {
   inject,
   observer,
   route
-} from "/client/util/decorator";
+} from "/client/component/decorator";
 
 
 @route @inject @observer

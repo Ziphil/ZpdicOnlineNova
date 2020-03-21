@@ -19,9 +19,6 @@ import {
   ResponseType,
   SERVER_PATH
 } from "/server/controller/type";
-import {
-  UserSkeleton
-} from "/server/model/user";
 
 
 export class RouteComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Partial<RouteComponentProps<Q>> & P, S, H> {
@@ -33,13 +30,17 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
 
   // グローバルストアのポップアップデータを削除しつつ、引数に指定されたパスに移動します。
   // ページの遷移をしてもポップアップが表示され続けるのを防ぐため、ページを遷移するときは必ずこのメソッドを使ってください。
-  protected pushPath(path: string): void {
-    this.props.store!.clearPopup();
+  protected pushPath(path: string, preservesPopup?: boolean): void {
+    if (!preservesPopup) {
+      this.props.store!.clearPopup();
+    }
     this.props.history!.push(path);
   }
 
-  protected replacePath(path: string): void {
-    this.props.store!.clearPopup();
+  protected replacePath(path: string, preservesPopup?: boolean): void {
+    if (!preservesPopup) {
+      this.props.store!.clearPopup();
+    }
     this.props.history!.replace(path);
   }
 
@@ -90,7 +91,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
     return response;
   }
 
-  protected async logout(ignoresError?: boolean): Promise<AxiosResponse<boolean>> {
+  protected async logout(ignoresError?: boolean): Promise<AxiosResponse<ResponseType<"logout", "post">>> {
     let response = await this.requestPost("logout", {}, ignoresError);
     if (response.status === 200) {
       this.props.store!.user = null;
@@ -113,6 +114,10 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
       this.props.store!.sendError("forbidden");
     } else if (status === 404) {
       this.props.store!.sendError("serverNotFound");
+    } else if (status === 500 || status === 503) {
+      this.props.store!.sendError("serverError");
+    } else if (status === 504) {
+      this.props.store!.sendError("serverTimeout");
     } else {
       this.props.store!.sendError("unexpected");
     }

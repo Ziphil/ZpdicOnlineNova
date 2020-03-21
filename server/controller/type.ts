@@ -3,25 +3,28 @@
 import {
   SlimeDictionarySkeleton,
   SlimeWordSkeleton
-} from "/server/model/dictionary/slime";
+} from "/server/skeleton/dictionary/slime";
 import {
   CustomErrorSkeleton
-} from "/server/model/error";
+} from "/server/skeleton/error";
 import {
   UserSkeleton
-} from "/server/model/user";
+} from "/server/skeleton/user";
 
 
 export const SERVER_PATH = {
   createDictionary: "/api/dictionary/create",
   uploadDictionary: "/api/dictionary/upload",
+  deleteDictionary: "/api/dictionary/delete",
   changeDictionaryName: "/api/dictionary/edit/name",
   changeDictionarySecret: "/api/dictionary/edit/secret",
   searchDictionary: "/api/dictionary/search",
   fetchDictionaryInfo: "/api/dictionary/info",
+  fetchWholeDictionary: "/api/dictionary/whole",
   fetchDictionaries: "/api/dictionary/list",
   fetchAllDictionaries: "/api/dictionary/list/all",
   fetchDictionaryAggregation: "/api/dictionary/aggregate",
+  checkDictionaryAuthorization: "/api/dictionary/check",
   login: "/api/user/login",
   logout: "/api/user/logout",
   registerUser: "/api/user/register",
@@ -43,6 +46,13 @@ export type ProcessType = {
     post: {
       request: {number: number},
       response: SlimeDictionarySkeleton
+    }
+  },
+  deleteDictionary: {
+    get: Noop,
+    post: {
+      request: {number: number},
+      response: MayError<boolean>
     }
   },
   changeDictionaryName: {
@@ -73,6 +83,13 @@ export type ProcessType = {
     },
     post: Noop
   },
+  fetchWholeDictionary: {
+    get: {
+      request: {number: number},
+      response: MayError<SlimeDictionarySkeleton>
+    },
+    post: Noop
+  }
   fetchDictionaries: {
     get: {
       request: {},
@@ -93,7 +110,14 @@ export type ProcessType = {
       response: {dictionarySize: number, wordSize: number};
     },
     post: Noop
-  }
+  },
+  checkDictionaryAuthorization: {
+    get: {
+      request: {number: number},
+      response: boolean
+    },
+    post: Noop
+  },
   login: {
     get: Noop,
     post: {

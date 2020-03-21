@@ -10,7 +10,7 @@ import {
 } from "/client/component/atom";
 import {
   applyStyle
-} from "/client/util/decorator";
+} from "/client/component/decorator";
 
 
 @applyStyle(require("./setting-pane.scss"))

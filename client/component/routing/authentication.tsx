@@ -11,12 +11,12 @@ import {
   RouteProps
 } from "react-router-dom";
 import {
-  GlobalStore
-} from "/client/component/store";
-import {
   inject,
   observer
-} from "/client/util/decorator";
+} from "/client/component/decorator";
+import {
+  GlobalStore
+} from "/client/component/store";
 
 
 @inject @observer

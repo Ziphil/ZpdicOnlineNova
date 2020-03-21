@@ -10,13 +10,9 @@ import {
 import {
   SlimeDictionary,
   SlimeEquivalent,
-  SlimeEquivalentSkeleton,
   SlimeInformation,
-  SlimeInformationSkeleton,
   SlimeRelation,
-  SlimeRelationSkeleton,
-  SlimeVariation,
-  SlimeVariationSkeleton
+  SlimeVariation
 } from "/server/model/dictionary/slime";
 
 
@@ -45,31 +41,6 @@ export class SlimeWord {
 
   @arrayProp({required: true, items: SlimeRelation})
   public relations!: Array<SlimeRelation>;
-
-}
-
-
-export class SlimeWordSkeleton {
-
-  public id: string;
-  public number: number;
-  public name: string;
-  public equivalents: Array<SlimeEquivalentSkeleton>;
-  public tags: Array<string>;
-  public informations: Array<SlimeInformationSkeleton>;
-  public variations: Array<SlimeVariationSkeleton>;
-  public relations: Array<SlimeRelationSkeleton>;
-
-  public constructor(word: SlimeWordDocument) {
-    this.id = word.id;
-    this.number = word.number;
-    this.name = word.name;
-    this.equivalents = word.equivalents.map((equivalent) => new SlimeEquivalentSkeleton(equivalent));
-    this.tags = word.tags;
-    this.informations = word.informations.map((information) => new SlimeInformationSkeleton(information));
-    this.variations = word.variations.map((variation) => new SlimeVariationSkeleton(variation));
-    this.relations = word.relations.map((relation) => new SlimeRelationSkeleton(relation));
-  }
 
 }
 

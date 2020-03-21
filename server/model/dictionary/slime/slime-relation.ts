@@ -5,6 +5,9 @@ import {
   getModelForClass,
   prop
 } from "@hasezoey/typegoose";
+import {
+  SlimeRelationSkeleton
+} from "/server/skeleton/dictionary/slime";
 
 
 export class SlimeRelation {
@@ -17,21 +20,6 @@ export class SlimeRelation {
 
   @prop({required: true})
   public name!: string;
-
-}
-
-
-export class SlimeRelationSkeleton {
-
-  public title: string;
-  public number: number;
-  public name: string;
-
-  public constructor(relation: SlimeRelation) {
-    this.title = relation.title;
-    this.number = relation.number;
-    this.name = relation.name;
-  }
 
 }
 

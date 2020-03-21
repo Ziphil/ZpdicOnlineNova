@@ -8,7 +8,7 @@ import {
 } from "react";
 import {
   applyStyle
-} from "/client/util/decorator";
+} from "/client/component/decorator";
 
 
 @applyStyle(require("./button.scss"))
@@ -58,6 +58,8 @@ export class Button extends Component<Props, State> {
     }
     if (this.props.style === "simple") {
       styleNames = ["simple"];
+    } else if (this.props.style === "caution") {
+      styleNames.push("caution");
     }
     if (this.props.usesIcon) {
       styleNames.push("icon");
@@ -89,7 +91,7 @@ export class Button extends Component<Props, State> {
 type Props = {
   label: string,
   position: "left" | "right" | null,
-  style: "simple" | "normal",
+  style: "simple" | "normal" | "caution",
   usesIcon: boolean,
   reactive: boolean,
   disabled: boolean,

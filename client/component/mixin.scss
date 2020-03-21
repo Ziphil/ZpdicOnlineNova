@@ -3,6 +3,7 @@
 
 $primary-hue: 30;
 $secondary-hue: 320;
+$error-hue: 0;
 
 $europian-font-family: "EB Garamond", "Times New Roman";
 $japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝";
@@ -30,6 +31,11 @@ $button-background: linear-gradient(to bottom, hsl($primary-hue, 40%, 50%), hsl(
 $button-hover-background: linear-gradient(to bottom, lighten(hsl($primary-hue, 40%, 50%), 5%), lighten(hsl($primary-hue, 40%, 40%), 5%));
 $button-active-background: hsl($primary-hue, 30%, 40%);
 $button-active-box-shadow-color: rgba(black, 0.1);
+
+$caution-button-background: linear-gradient(to bottom, hsl($error-hue, 40%, 50%), hsl($error-hue, 40%, 40%));
+$caution-button-hover-background: linear-gradient(to bottom, lighten(hsl($error-hue, 40%, 50%), 5%), lighten(hsl($error-hue, 40%, 40%), 5%));
+$caution-button-active-background: hsl($error-hue, 30%, 40%);
+$caution-box-shadow-color: hsla($error-hue, 40%, 50%, 0.3);
 
 $link-color: hsl($secondary-hue, 40%, 50%);
 $link-hover-color: lighten(hsl($secondary-hue, 40%, 50%), 15%);

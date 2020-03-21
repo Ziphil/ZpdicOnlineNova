@@ -10,7 +10,14 @@ import {
   DocumentQuery
 } from "mongoose";
 import {
+  Dictionary
+} from "/server/model/dictionary/dictionary";
+import {
+  NormalSearchParameter
+} from "/server/model/dictionary/search-parameter";
+import {
   SlimeStream,
+  SlimeWord,
   SlimeWordDocument,
   SlimeWordModel
 } from "/server/model/dictionary/slime";
@@ -20,7 +27,7 @@ import {
 } from "/server/model/user";
 
 
-export class SlimeDictionary {
+export class SlimeDictionary extends Dictionary<SlimeWord> {
 
   @prop({required: true, unique: true})
   public number!: number;
@@ -115,6 +122,11 @@ export class SlimeDictionary {
     return this;
   }
 
+  public async removeWhole(this: SlimeDictionaryDocument): Promise<void> {
+    await SlimeWordModel.deleteMany({}).where("dictionary", this).exec();
+    await this.remove();
+  }
+
   public async changeName(this: SlimeDictionaryDocument, name: string): Promise<SlimeDictionaryDocument> {
     this.name = name;
     await this.save();
@@ -127,63 +139,76 @@ export class SlimeDictionary {
     return this;
   }
 
-  public async search(search: string, mode: string, type: string, offset?: number, size?: number): Promise<Array<SlimeWordDocument>> {
+  public async getWords(): Promise<Array<SlimeWordDocument>> {
+    let words = await SlimeWordModel.find().where("dictionary", this);
+    return words;
+  }
+
+  protected createQuery(parameter: NormalSearchParameter): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
+    let search = parameter.search;
+    let mode = parameter.mode;
+    let type = parameter.type;
+    let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
     let outerThis = this;
-    let createQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
-      let key = "";
+    let createKey = function (innerMode: string): string {
+      let key;
       if (innerMode === "name") {
         key = "name";
       } else if (innerMode === "equivalent") {
         key = "equivalents.names";
       } else if (innerMode === "information") {
         key = "informations.text";
+      } else {
+        key = "";
       }
-      let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
-      let query = SlimeWordModel.find().where("dictionary", outerThis);
+      return key;
+    };
+    let createNeedle = function (innerType: string): string | RegExp {
+      let needle;
       if (innerType === "exact") {
-        let modifiedSearch = new RegExp("^" + escapedSearch + "$");
-        query = query.where(key, modifiedSearch);
+        needle = search;
       } else if (innerType === "prefix") {
-        let modifiedSearch = new RegExp("^" + escapedSearch);
-        query = query.where(key, modifiedSearch);
+        needle = new RegExp("^" + escapedSearch);
       } else if (type === "suffix") {
-        let modifiedSearch = new RegExp(escapedSearch + "$");
-        query = query.where(key, modifiedSearch);
+        needle = new RegExp(escapedSearch + "$");
       } else if (type === "part") {
-        let modifiedSearch = new RegExp(escapedSearch);
-        query = query.where(key, modifiedSearch);
+        needle = new RegExp(escapedSearch);
       } else if (type === "regular") {
-        let modifiedSearch = new RegExp(search);
-        query = query.where(key, modifiedSearch);
+        try {
+          needle = new RegExp(search);
+        } catch (error) {
+          needle = "";
+        }
+      } else {
+        needle = "";
       }
+      return needle;
+    };
+    let createAuxiliaryQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
+      let key = createKey(innerMode);
+      let needle = createNeedle(innerType);
+      let query = SlimeWordModel.find().where("dictionary", outerThis).where(key, needle);
       return query;
     };
     let finalQuery;
     if (mode === "name") {
-      finalQuery = createQuery("name", type);
+      finalQuery = createAuxiliaryQuery("name", type);
     } else if (mode === "equivalent") {
-      finalQuery = createQuery("equivalent", type);
+      finalQuery = createAuxiliaryQuery("equivalent", type);
     } else if (mode === "content") {
-      let nameQuery = createQuery("name", type);
-      let equivalentQuery = createQuery("equivalent", type);
-      let informationQuery = createQuery("information", type);
+      let nameQuery = createAuxiliaryQuery("name", type);
+      let equivalentQuery = createAuxiliaryQuery("equivalent", type);
+      let informationQuery = createAuxiliaryQuery("information", type);
       finalQuery = SlimeWordModel.find().or([nameQuery.getQuery(), equivalentQuery.getQuery(), informationQuery.getQuery()]);
     } else if (mode === "both") {
-      let nameQuery = createQuery("name", type);
-      let equivalentQuery = createQuery("equivalent", type);
+      let nameQuery = createAuxiliaryQuery("name", type);
+      let equivalentQuery = createAuxiliaryQuery("equivalent", type);
       finalQuery = SlimeWordModel.find().or([nameQuery.getQuery(), equivalentQuery.getQuery()]);
     } else {
       finalQuery = SlimeWordModel.find();
     }
-    finalQuery.sort("name");
-    if (offset !== undefined) {
-      finalQuery = finalQuery.skip(offset);
-    }
-    if (size !== undefined) {
-      finalQuery = finalQuery.limit(size);
-    }
-    let words = await finalQuery.exec();
-    return words;
+    finalQuery = finalQuery.sort("name");
+    return finalQuery;
   }
 
   public async countWords(): Promise<number> {
@@ -198,30 +223,6 @@ export class SlimeDictionary {
     } else {
       return 1;
     }
-  }
-
-}
-
-
-export class SlimeDictionarySkeleton {
-
-  public id: string;
-  public number: number;
-  public status: string;
-  public secret: boolean;
-  public name: string;
-  public wordSize?: number;
-
-  public constructor(dictionary: SlimeDictionaryDocument) {
-    this.id = dictionary.id;
-    this.number = dictionary.number;
-    this.status = dictionary.status;
-    this.secret = dictionary.secret || false;
-    this.name = dictionary.name;
-  }
-
-  public async fetch(dictionary: SlimeDictionaryDocument): Promise<void> {
-    this.wordSize = await dictionary.countWords();
   }
 
 }

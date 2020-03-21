@@ -31,26 +31,23 @@ export class SlimeStream extends EventEmitter {
 
   private createStream(path: string): any {
     let stream = oboe(createReadStream(path));
-    let outerThis = this as any;
-    let patterns = {} as any;
-    patterns["words.*"] = function (data: any, jsonPath: any): void {
+    stream.on("node:words.*", (data, jsonPath) => {
       let word = null;
       try {
-        word = outerThis.createWord(data);
+        word = this.createWord(data);
       } catch (error) {
         this.error = error;
-        outerThis.emit("error", error);
+        this.emit("error", error);
       }
       if (word) {
-        outerThis.emit("word", word);
+        this.emit("word", word);
       }
-    };
-    patterns["!.*"] = function (data: any, jsonPath: any): void {
+    });
+    stream.on("node:!.*", (data, jsonPath) => {
       if (jsonPath[0] !== "words") {
-        outerThis.emit("other", jsonPath[0], data);
+        this.emit("other", jsonPath[0], data);
       }
-    };
-    stream.on("node", patterns);
+    });
     stream.on("done", () => {
       if (!this.error) {
         this.emit("end");

@@ -11,13 +11,13 @@ import {
 } from "/client/component/atom";
 import {
   applyStyle
-} from "/client/util/decorator";
+} from "/client/component/decorator";
 
 
 @applyStyle(require("./radio-group.scss"))
-export class RadioGroup extends Component<Props, State> {
+export class RadioGroup<V extends string> extends Component<Props<V>, State<V>> {
 
-  public constructor(props: Props) {
+  public constructor(props: Props<V>) {
     super(props);
     if (this.props.initialValue !== undefined) {
       this.state = {value: this.props.initialValue};
@@ -25,7 +25,7 @@ export class RadioGroup extends Component<Props, State> {
   }
 
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    let value = event.target.value;
+    let value = event.target.value as V;
     this.setState({value});
     if (this.props.onChange) {
       this.props.onChange(event);
@@ -36,7 +36,7 @@ export class RadioGroup extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let radioNodes = this.props.specs.map((spec, index) => {
+    let radioNodes = Array.from(this.props.specs).map((spec, index) => {
       let checked = spec.value === this.state.value;
       return <Radio name={this.props.name} value={spec.value} label={spec.label} checked={checked} onChange={this.handleChange.bind(this)} key={index}/>;
     });
@@ -51,13 +51,13 @@ export class RadioGroup extends Component<Props, State> {
 }
 
 
-type Props = {
+type Props<V> = {
   name: string,
-  specs: Array<{value: string, label: string}>,
-  initialValue?: string,
+  specs: ArrayLike<{value: V, label: string}>,
+  initialValue?: V,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
-  onSet?: (value: string) => void
+  onSet?: (value: V) => void
 };
-type State = {
-  value: string | null
+type State<V> = {
+  value: V | null
 };
