@@ -19,7 +19,7 @@ export class LiteralUtilType<T extends string> {
     }
   }
 
-  public static create<T extends string>(values: {0: T, [key: number]: T}): LiteralUtilType<T> {
+  public static create<T extends string>(values: {0: T} & ArrayLike<T>): LiteralUtilType<T> {
     let defaultValue = values[0];
     let is = function (value: string): value is T {
       let anyValues = values as any;
