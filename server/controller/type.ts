@@ -24,6 +24,7 @@ export const SERVER_PATH = {
   fetchDictionaries: "/api/dictionary/list",
   fetchAllDictionaries: "/api/dictionary/list/all",
   fetchDictionaryAggregation: "/api/dictionary/aggregate",
+  checkDictionaryAuthorization: "/api/dictionary/check",
   login: "/api/user/login",
   logout: "/api/user/logout",
   registerUser: "/api/user/register",
@@ -109,7 +110,14 @@ export type ProcessType = {
       response: {dictionarySize: number, wordSize: number};
     },
     post: Noop
-  }
+  },
+  checkDictionaryAuthorization: {
+    get: {
+      request: {number: number},
+      response: boolean
+    },
+    post: Noop
+  },
   login: {
     get: Noop,
     post: {

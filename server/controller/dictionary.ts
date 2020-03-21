@@ -186,4 +186,10 @@ export class DictionaryController extends Controller {
     response.json(body);
   }
 
+  @get(SERVER_PATH["checkDictionaryAuthorization"])
+  @before(verifyUser(), verifyDictionary())
+  public async getCheckDictionaryAuthorization(request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
+    response.json(true);
+  }
+
 }
