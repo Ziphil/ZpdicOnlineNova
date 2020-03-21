@@ -66,6 +66,14 @@ export class DictionaryController extends Controller {
     response.json(body);
   }
 
+  @post(SERVER_PATH["deleteDictionary"])
+  @before(verifyUser(), verifyDictionary())
+  public async postDeleteDictionary(request: PostRequest<"deleteDictionary">, response: PostResponse<"deleteDictionary">): Promise<void> {
+    let dictionary = request.dictionary!;
+    await dictionary.removeWhole();
+    response.json(true);
+  }
+
   @post(SERVER_PATH["changeDictionaryName"])
   @before(verifyUser(), verifyDictionary())
   public async postRenameDictionary(request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {

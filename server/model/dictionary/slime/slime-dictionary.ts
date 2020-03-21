@@ -122,6 +122,11 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return this;
   }
 
+  public async removeWhole(this: SlimeDictionaryDocument): Promise<void> {
+    await SlimeWordModel.deleteMany({}).where("dictionary", this).exec();
+    await this.remove();
+  }
+
   public async changeName(this: SlimeDictionaryDocument, name: string): Promise<SlimeDictionaryDocument> {
     this.name = name;
     await this.save();
