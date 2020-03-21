@@ -13,6 +13,7 @@ import {
 import {
   DictionaryHeader,
   Header,
+  Loading,
   PopupInformationPane,
   SearchForm,
   WordList
@@ -110,13 +111,15 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
           <div styleName="search-form">
             <SearchForm onAnySet={this.handleAnySet.bind(this)}/>
           </div>
-          <div styleName="word-list">
-            <WordList words={this.state.words} offset={offset} size={size}/>
-          </div>
-          <div styleName="page-button">
-            <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
-            <Button label="次ページ" position="right" disabled={this.state.words.length <= offset + size} onClick={this.moveNextPage.bind(this)}/>
-          </div>
+          <Loading loading={this.state.dictionary === null}>
+            <div styleName="word-list">
+              <WordList words={this.state.words} offset={offset} size={size}/>
+            </div>
+            <div styleName="page-button">
+              <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
+              <Button label="次ページ" position="right" disabled={this.state.words.length <= offset + size} onClick={this.moveNextPage.bind(this)}/>
+            </div>
+          </Loading>
         </div>
       </div>
     );
