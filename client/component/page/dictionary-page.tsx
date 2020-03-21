@@ -29,7 +29,8 @@ import {
   SearchType
 } from "/server/model/dictionary/search-parameter";
 import {
-  SlimeDictionarySkeleton
+  SlimeDictionarySkeleton,
+  SlimeWordSkeleton
 } from "/server/skeleton/dictionary/slime";
 
 
@@ -39,7 +40,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
     dictionary: null,
-    words: [],
+    hitWords: [],
     search: "",
     mode: "both",
     type: "prefix",
@@ -63,8 +64,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let type = this.state.type;
     let parameter = new NormalSearchParameter(search, mode, type);
     if (this.state.dictionary) {
-      let words = this.state.dictionary.search(parameter);
-      this.setState({words});
+      let hitWords = this.state.dictionary.search(parameter);
+      this.setState({hitWords});
     }
   }
 
@@ -113,11 +114,11 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
           </div>
           <Loading loading={this.state.dictionary === null}>
             <div styleName="word-list">
-              <WordList words={this.state.words} offset={offset} size={size}/>
+              <WordList words={this.state.hitWords} offset={offset} size={size}/>
             </div>
             <div styleName="page-button">
               <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
-              <Button label="次ページ" position="right" disabled={this.state.words.length <= offset + size} onClick={this.moveNextPage.bind(this)}/>
+              <Button label="次ページ" position="right" disabled={this.state.hitWords.length <= offset + size} onClick={this.moveNextPage.bind(this)}/>
             </div>
           </Loading>
         </div>
@@ -133,7 +134,7 @@ type Props = {
 };
 type State = {
   dictionary: SlimeDictionarySkeleton | null,
-  words: Array<any>,
+  hitWords: Array<SlimeWordSkeleton>,
   search: string,
   mode: SearchMode,
   type: SearchType,
