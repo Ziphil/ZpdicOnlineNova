@@ -12,10 +12,8 @@ import {
   ChangeUserPasswordForm,
   CreateDictionaryForm,
   DictionaryList,
-  Header,
   Loading,
   Menu,
-  PopupInformationPane,
   SettingPane
 } from "/client/component/compound";
 import {

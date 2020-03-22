@@ -9,9 +9,7 @@ import {
 } from "/client/component/component";
 import {
   DictionaryList,
-  Header,
-  Loading,
-  PopupInformationPane
+  Loading
 } from "/client/component/compound";
 import {
   applyStyle,

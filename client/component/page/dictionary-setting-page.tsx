@@ -11,10 +11,7 @@ import {
   ChangeDictionaryNameForm,
   ChangeDictionarySecretForm,
   DeleteDictionaryForm,
-  DictionaryHeader,
-  Header,
   Menu,
-  PopupInformationPane,
   SettingPane,
   UploadDictionaryForm
 } from "/client/component/compound";
@@ -126,7 +123,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
       contentNodes.push(this.renderDeleteDictionaryForm());
     }
     let node = (
-      <Page>
+      <Page showsDictionary={true} dictionary={this.state.dictionary}>
         <Menu mode="general" specs={menuSpecs}/>
         {contentNodes}
       </Page>

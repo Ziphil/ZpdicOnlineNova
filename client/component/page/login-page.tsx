@@ -8,7 +8,6 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
-  Header,
   LoginForm
 } from "/client/component/compound";
 import {

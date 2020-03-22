@@ -12,7 +12,6 @@ import {
 } from "/client/component/component";
 import {
   DictionaryAggregationPane,
-  Header,
   LoginForm,
   Logo
 } from "/client/component/compound";

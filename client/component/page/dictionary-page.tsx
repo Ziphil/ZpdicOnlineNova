@@ -12,10 +12,7 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
-  DictionaryHeader,
-  Header,
   Loading,
-  PopupInformationPane,
   SearchForm,
   WordList
 } from "/client/component/compound";
