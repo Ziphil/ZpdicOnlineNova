@@ -49,24 +49,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     page: 0
   };
 
-  public constructor(props: Props) {
-    super(props);
-    let query = queryParser.parse(this.props.location!.search);
-    if (typeof query.search === "string") {
-      this.state.initialSearch = query.search;
-      this.state.search = query.search;
-    }
-    if (typeof query.mode === "string") {
-      this.state.initialMode = SearchModeUtil.cast(query.mode);
-      this.state.mode = SearchModeUtil.cast(query.mode);
-    }
-    if (typeof query.type === "string") {
-      this.state.initialType = SearchTypeUtil.cast(query.type);
-      this.state.type = SearchTypeUtil.cast(query.type);
-    }
-    if (typeof query.page === "string") {
-      this.state.page = +query.page;
-    }
+  protected initialize(): void {
+    this.serializeQuery();
   }
 
   public async componentDidMount(): Promise<void> {
@@ -96,12 +80,39 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
     if (response.status === 200 && !("error" in response.data)) {
       let hitWords = response.data;
-      let queryString = queryParser.stringify({search, mode, type, page});
       this.setState({hitWords});
-      this.props.history!.replace({search: queryString});
     } else {
       this.setState({hitWords: []});
     }
+    this.deserializeQuery();
+  }
+
+  private serializeQuery(): void {
+    let query = queryParser.parse(this.props.location!.search);
+    if (typeof query.search === "string") {
+      this.state.search = query.search;
+      this.state.initialSearch = query.search;
+    }
+    if (typeof query.mode === "string") {
+      this.state.mode = SearchModeUtil.cast(query.mode);
+      this.state.initialMode = SearchModeUtil.cast(query.mode);
+    }
+    if (typeof query.type === "string") {
+      this.state.type = SearchTypeUtil.cast(query.type);
+      this.state.initialType = SearchTypeUtil.cast(query.type);
+    }
+    if (typeof query.page === "string") {
+      this.state.page = +query.page;
+    }
+  }
+
+  private deserializeQuery(): void {
+    let search = this.state.search;
+    let mode = this.state.mode;
+    let type = this.state.type;
+    let page = this.state.page;
+    let queryString = queryParser.stringify({search, mode, type, page});
+    this.props.history!.replace({search: queryString});
   }
 
   private async handleAnySet(search: string, mode: SearchMode, type: SearchType): Promise<void> {
