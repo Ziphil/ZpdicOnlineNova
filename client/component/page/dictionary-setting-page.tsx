@@ -24,6 +24,9 @@ import {
   route
 } from "/client/component/decorator";
 import {
+  Page
+} from "/client/component/page/page";
+import {
   SlimeDictionarySkeleton
 } from "/server/skeleton/dictionary/slime";
 
@@ -123,15 +126,10 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
       contentNodes.push(this.renderDeleteDictionaryForm());
     }
     let node = (
-      <div styleName="page">
-        <Header/>
-        <DictionaryHeader dictionary={this.state.dictionary}/>
-        <PopupInformationPane/>
-        <div styleName="content">
-          <Menu mode="general" specs={menuSpecs}/>
-          {contentNodes}
-        </div>
-      </div>
+      <Page>
+        <Menu mode="general" specs={menuSpecs}/>
+        {contentNodes}
+      </Page>
     );
     return node;
   }

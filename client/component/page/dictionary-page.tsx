@@ -25,6 +25,9 @@ import {
   route
 } from "/client/component/decorator";
 import {
+  Page
+} from "/client/component/page/page";
+import {
   SearchMode,
   SearchModeUtil,
   SearchType,
@@ -143,25 +146,20 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public render(): ReactNode {
     let node = (
-      <div styleName="page">
-        <Header/>
-        <DictionaryHeader dictionary={this.state.dictionary}/>
-        <PopupInformationPane/>
-        <div styleName="content">
-          <div styleName="search-form">
-            <SearchForm initialSearch={this.state.initialSearch} initialMode={this.state.initialMode} initialType={this.state.initialType} onAnySet={this.handleAnySet.bind(this)}/>
-          </div>
-          <Loading loading={this.state.dictionary === null}>
-            <div styleName="word-list">
-              <WordList words={this.state.hitWords} offset={0} size={40}/>
-            </div>
-            <div styleName="page-button">
-              <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
-              <Button label="次ページ" position="right" disabled={this.state.hitWords.length <= 40} onClick={this.moveNextPage.bind(this)}/>
-            </div>
-          </Loading>
+      <Page showsDictionary={true} dictionary={this.state.dictionary}>
+        <div styleName="search-form">
+          <SearchForm initialSearch={this.state.initialSearch} initialMode={this.state.initialMode} initialType={this.state.initialType} onAnySet={this.handleAnySet.bind(this)}/>
         </div>
-      </div>
+        <Loading loading={this.state.dictionary === null}>
+          <div styleName="word-list">
+            <WordList words={this.state.hitWords} offset={0} size={40}/>
+          </div>
+          <div styleName="page-button">
+            <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
+            <Button label="次ページ" position="right" disabled={this.state.hitWords.length <= 40} onClick={this.moveNextPage.bind(this)}/>
+          </div>
+        </Loading>
+      </Page>
     );
     return node;
   }

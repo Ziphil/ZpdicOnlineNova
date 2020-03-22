@@ -3,14 +3,6 @@
 @import "/client/component/mixin.scss";
 
 
-.page {
-  @include page(150px);
-}
-
-.content {
-  @include page-content;
-}
-
 .logo-wrapper {
   display: flex;
   flex-direction: row;

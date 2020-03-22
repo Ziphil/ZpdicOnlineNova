@@ -19,6 +19,9 @@ import {
   route
 } from "/client/component/decorator";
 import {
+  Page
+} from "/client/component/page/page";
+import {
   SlimeDictionarySkeleton
 } from "/server/skeleton/dictionary/slime";
 
@@ -41,15 +44,13 @@ export class DictionaryListPage extends StoreComponent<Props, State, Params> {
 
   public render(): ReactNode {
     let node = (
-      <div styleName="page">
-        <Header/>
-        <PopupInformationPane/>
-        <div styleName="content">
+      <Page>
+        <div styleName="list">
           <Loading loading={this.state.dictionaries === null}>
             <DictionaryList dictionaries={this.state.dictionaries!} showsSetting={false}/>
           </Loading>
         </div>
-      </div>
+      </Page>
     );
     return node;
   }
