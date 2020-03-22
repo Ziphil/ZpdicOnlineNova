@@ -25,7 +25,6 @@ import {
   route
 } from "/client/component/decorator";
 import {
-  NormalSearchParameter,
   SearchMode,
   SearchModeUtil,
   SearchType,
@@ -70,40 +69,45 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     }
   }
 
+  public async componentDidMount(): Promise<void> {
+    let promise = Promise.all([this.fetchDictionary(), this.updateWords()]);
+    await promise;
+  }
+
   private async fetchDictionary(): Promise<void> {
     let number = +this.props.match!.params.number;
-    let response = await this.requestGet("fetchWholeDictionary", {number});
+    let response = await this.requestGet("fetchDictionaryInfo", {number});
     if (response.status === 200 && !("error" in response.data)) {
-      let dictionary = SlimeDictionarySkeleton.of(response.data);
+      let dictionary = response.data;
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
     }
   }
 
-  private updateWords(): void {
+  private async updateWords(): Promise<void> {
+    let number = +this.props.match!.params.number;
     let search = this.state.search;
     let mode = this.state.mode;
     let type = this.state.type;
     let page = this.state.page;
-    let parameter = new NormalSearchParameter(search, mode, type);
-    if (this.state.dictionary) {
-      let hitWords = this.state.dictionary.search(parameter);
+    let offset = page * 40;
+    let size = 41;
+    let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
+    if (response.status === 200 && !("error" in response.data)) {
+      let hitWords = response.data;
       let queryString = queryParser.stringify({search, mode, type, page});
       this.setState({hitWords});
       this.props.history!.replace({search: queryString});
+    } else {
+      this.setState({hitWords: []});
     }
-  }
-
-  public async componentDidMount(): Promise<void> {
-    await this.fetchDictionary();
-    this.updateWords();
   }
 
   private async handleAnySet(search: string, mode: SearchMode, type: SearchType): Promise<void> {
     let page = 0;
-    this.setState({search, mode, type, page}, () => {
-      this.updateWords();
+    this.setState({search, mode, type, page}, async () => {
+      await this.updateWords();
     });
   }
 
@@ -112,23 +116,21 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     if (page < 0) {
       page = 0;
     }
-    this.setState({page}, () => {
+    this.setState({page}, async () => {
       window.scrollTo(0, 0);
-      this.updateWords();
+      await this.updateWords();
     });
   }
 
   private async moveNextPage(): Promise<void> {
     let page = this.state.page + 1;
-    this.setState({page}, () => {
+    this.setState({page}, async () => {
       window.scrollTo(0, 0);
-      this.updateWords();
+      await this.updateWords();
     });
   }
 
   public render(): ReactNode {
-    let offset = this.state.page * 40;
-    let size = 40;
     let node = (
       <div styleName="page">
         <Header/>
@@ -140,11 +142,11 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
           </div>
           <Loading loading={this.state.dictionary === null}>
             <div styleName="word-list">
-              <WordList words={this.state.hitWords} offset={offset} size={size}/>
+              <WordList words={this.state.hitWords} offset={0} size={40}/>
             </div>
             <div styleName="page-button">
               <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
-              <Button label="次ページ" position="right" disabled={this.state.hitWords.length <= offset + size} onClick={this.moveNextPage.bind(this)}/>
+              <Button label="次ページ" position="right" disabled={this.state.hitWords.length <= 40} onClick={this.moveNextPage.bind(this)}/>
             </div>
           </Loading>
         </div>
