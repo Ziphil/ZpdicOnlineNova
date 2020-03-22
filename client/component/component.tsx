@@ -5,7 +5,7 @@ import {
   AxiosResponse
 } from "axios";
 import {
-  Component
+  Component as ReactComponent
 } from "react";
 import {
   RouteComponentProps
@@ -19,6 +19,19 @@ import {
   ResponseType,
   SERVER_PATH
 } from "/server/controller/type";
+
+
+export class Component<P, S, H = any> extends ReactComponent<P, S, H> {
+
+  public constructor(props: Readonly<P>) {
+    super(props);
+    this.initialize();
+  }
+
+  protected initialize(): void | Promise<void> {
+  }
+
+}
 
 
 export class RouteComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Partial<RouteComponentProps<Q>> & P, S, H> {

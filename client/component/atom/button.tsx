@@ -2,10 +2,12 @@
 
 import * as react from "react";
 import {
-  Component,
   MouseEvent,
   ReactNode
 } from "react";
+import {
+  Component
+} from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";

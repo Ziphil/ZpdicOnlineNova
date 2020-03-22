@@ -2,7 +2,6 @@
 
 import * as react from "react";
 import {
-  Component,
   ReactNode
 } from "react";
 import {
@@ -10,6 +9,9 @@ import {
   Route,
   RouteProps
 } from "react-router-dom";
+import {
+  Component
+} from "/client/component/component";
 import {
   inject,
   observer

@@ -1,18 +1,19 @@
 //
 
 import {
-  debounce,
-  throttle
+  debounce
 } from "lodash-es";
 import * as react from "react";
 import {
-  Component,
   ReactNode
 } from "react";
 import {
   Input,
   RadioGroup
 } from "/client/component/atom";
+import {
+  Component
+} from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";
