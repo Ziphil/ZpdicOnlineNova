@@ -28,7 +28,7 @@ export class Component<P, S, H = any> extends ReactComponent<P, S, H> {
     this.initialize();
   }
 
-  protected initialize(): void | Promise<void> {
+  protected initialize(): void {
   }
 
 }

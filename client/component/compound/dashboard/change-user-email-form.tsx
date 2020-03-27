@@ -23,10 +23,6 @@ import {
 @applyStyle(require("./change-user-email-form.scss"))
 export class ChangeUserEmailForm extends StoreComponent<Props, State> {
 
-  public state: State = {
-    email: ""
-  };
-
   protected initialize(): void {
     let email = this.props.currentEmail;
     this.state = {email};
