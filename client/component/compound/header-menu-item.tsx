@@ -23,7 +23,7 @@ export class HeaderMenuItem extends StoreComponent<Props, State> {
     userName: ""
   };
 
-  private click(event: MouseEvent<HTMLElement>): void {
+  private handleClick(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
     if (this.props.onClick) {
       this.props.onClick(event);
@@ -35,7 +35,7 @@ export class HeaderMenuItem extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <a styleName="root" href={this.props.href} onClick={this.click.bind(this)}>
+      <a styleName="root" href={this.props.href} onClick={this.handleClick.bind(this)}>
         <span styleName="text">{this.props.label}</span>
         <span styleName="icon">{this.props.iconLabel}</span>
       </a>

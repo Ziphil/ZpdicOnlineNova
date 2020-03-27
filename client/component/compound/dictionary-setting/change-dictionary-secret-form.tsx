@@ -33,7 +33,7 @@ export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
     this.state = {secret};
   }
 
-  private async click(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let secret = this.state.secret;
     let response = await this.requestPost("changeDictionarySecret", {number, secret});
@@ -55,7 +55,7 @@ export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
       <Fragment>
         <form styleName="root">
           <RadioGroup name="secret" specs={specs} initialValue={initialSecret} onSet={(value) => this.setState({secret: value === "secret"})}/>
-          <Button label="変更" reactive={true} onClick={this.click.bind(this)}/>
+          <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
         </form>
         <p styleName="caution">
           この設定は、辞書一覧ページに表示されるかどうかのみに関わります。
