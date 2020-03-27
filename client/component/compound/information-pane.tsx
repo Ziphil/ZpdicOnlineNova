@@ -32,7 +32,7 @@ export class InformationPane extends Component<Props, State> {
 
 
 type Props = {
-  texts: Array<String>,
+  texts: Array<string>,
   style: "error" | "information"
 };
 type State = {
