@@ -1,7 +1,6 @@
 //
 
 import * as parser from "body-parser";
-import * as connect from "connect-mongo";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
 import {
@@ -10,7 +9,6 @@ import {
   Request,
   Response
 } from "express";
-import * as session from "express-session";
 import * as mongoose from "mongoose";
 import {
   Schema
