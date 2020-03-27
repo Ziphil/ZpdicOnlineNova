@@ -42,13 +42,24 @@ export class TopPage extends StoreComponent<Props, State> {
         <div styleName="aggregation">
           <DictionaryAggregationPane/>
         </div>
-        <div styleName="notice">
+        <div styleName="information">
+          <div styleName="head-wrapper">
+            <div styleName="icon">&#xF005;</div>
+            <div styleName="head">
+              <div styleName="date">2020/03/28</div>
+              <h1>ver 2.0.0 リリース</h1>
+            </div>
+          </div>
           <p styleName="text">
-            この新版 ZpDIC Online は、旧版にあった機能が全て実装され、現在はオープンベータ版として公開されています。
-            不具合の修正や機能の調整が終わりしだい正式リリースとなり、それ以降、旧版にアクセスするとここへリダイレクトされるようになります。
-            正式リリースは 2020 年 4 月上旬を予定しています。
+            リニューアルされた ZpDIC Online を正式リリースしました!
+            旧版の機能は全て実装済みなので、インターフェースは変わりましたが、これまで通りご利用いただけます。
           </p>
           <p styleName="text">
+            リニューアルに伴い、旧版はサービスを完全に停止し、旧版にアクセスすると自動的にこちらへリダイレクトされるようになりました。
+            このリダイレクトは 2020 年 5 月 1 日までの一時的な機能になる予定なので、リンクを張っている場合はそれまでにリンク先の変更をお願いします。
+          </p>
+          <p styleName="text">
+            今後は、旧版になかった新しい機能を実装していく予定です。
             意見や要望などは随時募集中です。
             「このような機能がほしい」や「こうした方が使いやすい」などの意見がありましたら、Twitter を介して <Link label="@Ziphil" href="https://twitter.com/Ziphil" target="blank"/> までご連絡ください。
           </p>

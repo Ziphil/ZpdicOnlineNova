@@ -36,8 +36,35 @@
   border-bottom: 1px $light-border-color solid;
 }
 
-.notice {
+.information {
   margin: 50px auto 0px auto;
+}
+
+.head-wrapper {
+  margin: 0px 0px 15px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.head-wrapper .icon {
+  @include icon-font;
+  margin: 0px 10px 0px 0px;
+  font-size: 150%;
+  color: $light-color;
+}
+
+.information .date {
+  font-size: 80%;
+  color: $light-color;
+}
+
+.information h1 {
+  margin: 5px 0px 0px 0px;
+  padding: 0px;
+  font-size: 120%;
+  font-weight: bold;
+  color: $light-color;
 }
 
 .text {
