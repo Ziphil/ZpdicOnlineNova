@@ -32,8 +32,7 @@ export class SearchForm extends Component<Props, State> {
     type: "prefix"
   };
 
-  public constructor(props: Props) {
-    super(props);
+  protected initialize(): void {
     let search = this.props.initialSearch || "";
     let mode = this.props.initialMode || "both";
     let type = this.props.initialType || "prefix";

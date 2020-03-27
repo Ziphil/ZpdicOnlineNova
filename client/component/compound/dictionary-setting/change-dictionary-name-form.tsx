@@ -27,8 +27,7 @@ export class ChangeDictionaryNameForm extends StoreComponent<Props, State> {
     name: ""
   };
 
-  public constructor(props: any) {
-    super(props);
+  protected initialize(): void {
     let name = this.props.currentName;
     this.state = {name};
   }

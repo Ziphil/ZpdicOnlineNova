@@ -19,8 +19,7 @@ import {
 @applyStyle(require("./radio-group.scss"))
 export class RadioGroup<V extends string> extends Component<Props<V>, State<V>> {
 
-  public constructor(props: Props<V>) {
-    super(props);
+  protected initialize(): void {
     if (this.props.initialValue !== undefined) {
       this.state = {value: this.props.initialValue};
     }

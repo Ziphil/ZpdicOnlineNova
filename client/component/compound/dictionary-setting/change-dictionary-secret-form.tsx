@@ -28,8 +28,7 @@ export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
     secret: false
   };
 
-  public constructor(props: any) {
-    super(props);
+  protected initialize(): void {
     let secret = this.props.currentSecret;
     this.state = {secret};
   }

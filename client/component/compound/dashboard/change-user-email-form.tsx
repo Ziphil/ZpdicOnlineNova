@@ -27,8 +27,7 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
     email: ""
   };
 
-  public constructor(props: any) {
-    super(props);
+  protected initialize(): void {
     let email = this.props.currentEmail;
     this.state = {email};
   }
