@@ -44,7 +44,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
 
   private async fetchDictionary(): Promise<void> {
     let number = +this.props.match!.params.number;
-    let response = await this.requestGet("fetchDictionaryInfo", {number});
+    let response = await this.requestGet("fetchDictionary", {number});
     if (response.status === 200 && !("error" in response.data)) {
       let dictionary = response.data;
       this.setState({dictionary});

@@ -141,8 +141,8 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchDictionaryInfo"])
-  public async getFetchDictionaryInfo(request: GetRequest<"fetchDictionaryInfo">, response: GetResponse<"fetchDictionaryInfo">): Promise<void> {
+  @get(SERVER_PATH["fetchDictionary"])
+  public async getFetchDictionary(request: GetRequest<"fetchDictionary">, response: GetResponse<"fetchDictionary">): Promise<void> {
     let number = ensureNumber(request.query.number);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {

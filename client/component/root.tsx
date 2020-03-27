@@ -48,7 +48,7 @@ export class Root extends StoreComponent<Props, State> {
   };
 
   public async componentDidMount(): Promise<void> {
-    let response = await this.requestGet("fetchUserInfo", {}, true);
+    let response = await this.requestGet("fetchUser", {}, true);
     if (response.status === 200) {
       let user = response.data;
       this.store.user = user;

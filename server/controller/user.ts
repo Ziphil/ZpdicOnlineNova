@@ -130,9 +130,9 @@ export class UserController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchUserInfo"])
+  @get(SERVER_PATH["fetchUser"])
   @before(verifyUser())
-  public async getFetchUserInfo(request: GetRequest<"fetchUserInfo">, response: GetResponse<"fetchUserInfo">): Promise<void> {
+  public async getFetchUser(request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
     let user = request.user!;
     let body = UserSkeleton.from(user);
     response.json(body);

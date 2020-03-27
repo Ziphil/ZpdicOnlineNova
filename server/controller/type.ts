@@ -19,7 +19,7 @@ export const SERVER_PATH = {
   changeDictionaryName: "/api/dictionary/edit/name",
   changeDictionarySecret: "/api/dictionary/edit/secret",
   searchDictionary: "/api/dictionary/search",
-  fetchDictionaryInfo: "/api/dictionary/info",
+  fetchDictionary: "/api/dictionary/info",
   fetchWholeDictionary: "/api/dictionary/whole",
   fetchDictionaries: "/api/dictionary/list",
   fetchAllDictionaries: "/api/dictionary/list/all",
@@ -30,7 +30,7 @@ export const SERVER_PATH = {
   registerUser: "/api/user/register",
   changeUserEmail: "/api/user/edit/email",
   changeUserPassword: "/api/user/edit/password",
-  fetchUserInfo: "/api/user/info"
+  fetchUser: "/api/user/info"
 };
 
 type ProcessType = {
@@ -94,7 +94,7 @@ type ProcessType = {
     },
     post: Noop
   },
-  fetchDictionaryInfo: {
+  fetchDictionary: {
     get: {
       request: {number: number},
       response: {
@@ -204,7 +204,7 @@ type ProcessType = {
       }
     }
   },
-  fetchUserInfo: {
+  fetchUser: {
     get: {
       request: {},
       response: {
