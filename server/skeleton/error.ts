@@ -1,16 +1,20 @@
 //
 
+import {
+  Skeleton
+} from "/server/skeleton/skeleton";
 
-export class CustomErrorSkeleton<E extends string> {
 
-  public error: "error";
-  public type: E;
+export class CustomErrorSkeleton<E extends string> extends Skeleton {
+
+  public error!: "Error";
+  public type!: E;
   public code?: number;
 
-  public constructor(type: E, code?: number) {
-    this.error = "error";
-    this.type = type;
-    this.code = code;
+  public static ofType<E extends string>(type: E, code?: number): CustomErrorSkeleton<E> {
+    let object = {error: "Error", type, code} as any;
+    let skeleton = this.of<CustomErrorSkeleton<E>>(object);
+    return skeleton;
   }
 
 }

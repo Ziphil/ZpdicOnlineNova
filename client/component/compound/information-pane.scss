@@ -6,14 +6,74 @@
 .root {
   padding: 8px 20px;
   line-height: $line-height;
+  position: relative;
 }
 
 .root.error {
-  @include unordered-list("\F06A");
   @include pane(error);
 }
 
 .root.information {
-  @include unordered-list("\F05A");
   @include pane(information);
+}
+
+.root.error .list {
+  @include unordered-list("\F06A");
+}
+
+.root.information .list {
+  @include unordered-list("\F05A");
+}
+
+.root.error .button-box {
+  @include pane(error);
+}
+
+.root.information .button-box {
+  @include pane(information);
+}
+
+.root.error .button-box,
+.root.information .button-box,
+.button {
+  right: -10px;
+  top: -10px;
+  width: 26px;
+  height: 26px;
+  text-align: center;
+  border-radius: 50%;
+  box-sizing: border-box;
+  position: absolute;
+}
+
+.root.error .button >button >span {
+  color: map-get($pane-color, error);
+}
+
+.root.error .button:hover >button >span {
+  color: lighten(map-get($pane-color, error), 15%);
+}
+
+.root.information .button >button >span {
+  color: map-get($pane-color, information);
+}
+
+.root.information .button:hover >button >span {
+  color: lighten(map-get($pane-color, information), 15%);
+}
+
+.overlay {
+  top: 0px;
+  right: 0px;
+  width: 16px;
+  height: 16px;
+  position: absolute;
+}
+
+.root.error .overlay {
+  background: map-get($pane-background, error);
+}
+
+.root.information .overlay {
+  background: map-get($pane-background, information);
 }

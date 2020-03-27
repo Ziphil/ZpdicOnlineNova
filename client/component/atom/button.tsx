@@ -2,10 +2,12 @@
 
 import * as react from "react";
 import {
-  Component,
   MouseEvent,
   ReactNode
 } from "react";
+import {
+  Component
+} from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";
@@ -15,7 +17,7 @@ import {
 export class Button extends Component<Props, State> {
 
   public static defaultProps: Partial<Props> = {
-    position: null,
+    position: "alone",
     style: "normal",
     usesIcon: false,
     reactive: false,
@@ -53,7 +55,7 @@ export class Button extends Component<Props, State> {
 
   public render(): ReactNode {
     let styleNames = ["root"];
-    if (this.props.position) {
+    if (this.props.position !== "alone") {
       styleNames.push(this.props.position);
     }
     if (this.props.style === "simple") {
@@ -90,7 +92,7 @@ export class Button extends Component<Props, State> {
 
 type Props = {
   label: string,
-  position: "left" | "right" | null,
+  position: "alone" | "left" | "right",
   style: "simple" | "normal" | "caution",
   usesIcon: boolean,
   reactive: boolean,

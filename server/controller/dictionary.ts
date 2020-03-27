@@ -116,7 +116,7 @@ export class DictionaryController extends Controller {
       let body = words.map((word) => SlimeWordSkeleton.from(word));
       response.json(body);
     } else {
-      let body = new CustomErrorSkeleton("invalidNumber");
+      let body = CustomErrorSkeleton.ofType("invalidNumber");
       response.status(400).json(body);
     }
   }
@@ -129,7 +129,7 @@ export class DictionaryController extends Controller {
       let body = SlimeDictionarySkeleton.from(dictionary);
       response.json(body);
     } else {
-      let body = new CustomErrorSkeleton("invalidNumber");
+      let body = CustomErrorSkeleton.ofType("invalidNumber");
       response.status(400).json(body);
     }
   }
@@ -142,7 +142,7 @@ export class DictionaryController extends Controller {
       let body = await SlimeDictionarySkeleton.fromFetch(dictionary, true);
       response.json(body);
     } else {
-      let body = new CustomErrorSkeleton("invalidNumber");
+      let body = CustomErrorSkeleton.ofType("invalidNumber");
       response.status(400).json(body);
     }
   }

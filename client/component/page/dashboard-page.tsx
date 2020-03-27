@@ -12,10 +12,8 @@ import {
   ChangeUserPasswordForm,
   CreateDictionaryForm,
   DictionaryList,
-  Header,
   Loading,
   Menu,
-  PopupInformationPane,
   SettingPane
 } from "/client/component/compound";
 import {
@@ -23,6 +21,9 @@ import {
   inject,
   route
 } from "/client/component/decorator";
+import {
+  Page
+} from "/client/component/page/page";
 import {
   SlimeDictionarySkeleton
 } from "/server/skeleton/dictionary/slime";
@@ -118,14 +119,10 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
       }
     }
     let node = (
-      <div styleName="page">
-        <Header/>
-        <PopupInformationPane/>
-        <div styleName="content">
-          <Menu mode={mode} specs={menuSpecs}/>
-          {contentNodes}
-        </div>
-      </div>
+      <Page>
+        <Menu mode={mode} specs={menuSpecs}/>
+        {contentNodes}
+      </Page>
     );
     return node;
   }

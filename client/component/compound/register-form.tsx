@@ -62,7 +62,7 @@ export class RegisterForm extends StoreComponent<Props, State> {
     if (errorType) {
       errorNode = (
         <div styleName="error">
-          <InformationPane texts={[getMessage(errorType)]} style="error"/>
+          <InformationPane texts={[getMessage(errorType)]} style="error" onClose={() => this.setState({errorType: null})}/>
         </div>
       );
     }

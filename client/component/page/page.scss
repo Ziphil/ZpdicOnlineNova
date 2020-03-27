@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.page {
+  @include page(130px);
+}
+
+.page.dictionary {
+  @include page(180px);
+}
+
+.content {
+  @include page-content;
+}

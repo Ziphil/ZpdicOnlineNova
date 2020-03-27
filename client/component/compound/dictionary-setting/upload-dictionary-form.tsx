@@ -27,7 +27,7 @@ export class UploadDictionaryForm extends StoreComponent<Props, State> {
     file: null
   };
 
-  private async click(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let file = this.state.file;
     if (file) {
@@ -45,7 +45,7 @@ export class UploadDictionaryForm extends StoreComponent<Props, State> {
     let node = (
       <form styleName="root">
         <FileInput inputLabel="ファイル" buttonLabel="選択" onSet={(file) => this.setState({file})}/>
-        <Button label="決定" reactive={true} onClick={this.click.bind(this)}/>
+        <Button label="決定" reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
     return node;

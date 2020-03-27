@@ -27,7 +27,7 @@ export class DeleteDictionaryForm extends StoreComponent<Props, State> {
     file: null
   };
 
-  private async click(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let result = window.confirm("本当によろしいですか?");
     if (result) {
@@ -45,7 +45,7 @@ export class DeleteDictionaryForm extends StoreComponent<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Button label="削除" reactive={true} style="caution" onClick={this.click.bind(this)}/>
+          <Button label="削除" reactive={true} style="caution" onClick={this.handleClick.bind(this)}/>
         </form>
         <p styleName="caution">
           この操作を行うと、辞書データが永久に削除されます。

@@ -27,7 +27,7 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
     password: ""
   };
 
-  private async click(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
     let password = this.state.password;
     let response = await this.requestPost("changeUserPassword", {password});
     if (response.status === 200) {
@@ -42,7 +42,7 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
     let node = (
       <form styleName="root">
         <Input label="パスワード" type="flexible" onSet={(value) => this.setState({password: value})}/>
-        <Button label="変更" reactive={true} onClick={this.click.bind(this)}/>
+        <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
     return node;

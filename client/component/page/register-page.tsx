@@ -8,13 +8,15 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
-  Header,
   RegisterForm
 } from "/client/component/compound";
 import {
   applyStyle,
   route
 } from "/client/component/decorator";
+import {
+  Page
+} from "/client/component/page/page";
 
 
 @route
@@ -23,15 +25,12 @@ export class RegisterPage extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <div styleName="page">
-        <Header/>
-        <div styleName="content">
-          <div styleName="description">新規登録</div>
-          <div styleName="login-form">
-            <RegisterForm/>
-          </div>
+      <Page>
+        <div styleName="description">新規登録</div>
+        <div styleName="login-form">
+          <RegisterForm/>
         </div>
-      </div>
+      </Page>
     );
     return node;
   }

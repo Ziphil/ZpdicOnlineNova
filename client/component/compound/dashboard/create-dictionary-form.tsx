@@ -27,7 +27,7 @@ export class CreateDictionaryForm extends StoreComponent<Props, State> {
     name: "新規辞書"
   };
 
-  private async click(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
     let name = this.state.name;
     let response = await this.requestPost("createDictionary", {name});
     if (response.status === 200) {
@@ -43,7 +43,7 @@ export class CreateDictionaryForm extends StoreComponent<Props, State> {
     let node = (
       <form styleName="root">
         <Input label="名称" initialValue="新規辞書" onSet={(value) => this.setState({name: value})}/>
-        <Button label="作成" reactive={true} onClick={this.click.bind(this)}/>
+        <Button label="作成" reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
     return node;

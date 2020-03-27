@@ -19,7 +19,7 @@ import {
 @applyStyle(require("./menu-item.scss"))
 export class MenuItem extends StoreComponent<Props, State> {
 
-  private click(event: MouseEvent<HTMLElement>): void {
+  private handleClick(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
     if (this.props.onClick) {
       this.props.onClick(event);
@@ -35,7 +35,7 @@ export class MenuItem extends StoreComponent<Props, State> {
       styleNames.push("highlight");
     }
     let node = (
-      <a styleName={styleNames.join(" ")} href={this.props.href} onClick={this.click.bind(this)}>
+      <a styleName={styleNames.join(" ")} href={this.props.href} onClick={this.handleClick.bind(this)}>
         <span styleName="text">{this.props.label}</span>
         <span styleName="icon">{this.props.iconLabel}</span>
       </a>

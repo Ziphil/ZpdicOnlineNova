@@ -23,17 +23,12 @@ import {
 @applyStyle(require("./change-user-email-form.scss"))
 export class ChangeUserEmailForm extends StoreComponent<Props, State> {
 
-  public state: State = {
-    email: ""
-  };
-
-  public constructor(props: any) {
-    super(props);
+  protected initialize(): void {
     let email = this.props.currentEmail;
     this.state = {email};
   }
 
-  private async click(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
     let email = this.state.email;
     let response = await this.requestPost("changeUserEmail", {email});
     if (response.status === 200) {
@@ -48,7 +43,7 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
     let node = (
       <form styleName="root">
         <Input label="メールアドレス" initialValue={this.props.currentEmail} onSet={(value) => this.setState({email: value})}/>
-        <Button label="変更" reactive={true} onClick={this.click.bind(this)}/>
+        <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
     return node;

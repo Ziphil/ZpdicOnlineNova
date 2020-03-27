@@ -3,14 +3,6 @@
 @import "/client/component/mixin.scss";
 
 
-.page {
-  @include page(180px);
-}
-
-.content {
-  @include page-content;
-}
-
 .search-form {
   width: 100%;
   max-width: 600px;

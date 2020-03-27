@@ -25,7 +25,7 @@ import {
 @applyStyle(require("./dictionary-pane.scss"))
 export class DictionaryPane extends StoreComponent<Props, State> {
 
-  private click(event: MouseEvent<HTMLElement>): void {
+  private handleClick(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
     let path = "/dictionary/" + this.props.dictionary.number;
     this.pushPath(path);
@@ -60,7 +60,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
       settingButtonNode = <Button label="&#xF013;" style="simple" usesIcon={true} onClick={this.jumpSettingPage.bind(this)}/>;
     }
     let node = (
-      <a styleName="root" href={href} onClick={this.click.bind(this)}>
+      <a styleName="root" href={href} onClick={this.handleClick.bind(this)}>
         <div styleName="name">
           {settingButtonNode}
           {name}

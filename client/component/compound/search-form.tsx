@@ -1,18 +1,19 @@
 //
 
 import {
-  debounce,
-  throttle
+  debounce
 } from "lodash-es";
 import * as react from "react";
 import {
-  Component,
   ReactNode
 } from "react";
 import {
   Input,
   RadioGroup
 } from "/client/component/atom";
+import {
+  Component
+} from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";
@@ -25,14 +26,7 @@ import {
 @applyStyle(require("./search-form.scss"))
 export class SearchForm extends Component<Props, State> {
 
-  public state: State = {
-    search: "",
-    mode: "both",
-    type: "prefix"
-  };
-
-  public constructor(props: Props) {
-    super(props);
+  protected initialize(): void {
     let search = this.props.initialSearch || "";
     let mode = this.props.initialMode || "both";
     let type = this.props.initialType || "prefix";

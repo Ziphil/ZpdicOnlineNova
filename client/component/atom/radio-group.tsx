@@ -3,12 +3,14 @@
 import * as react from "react";
 import {
   ChangeEvent,
-  Component,
   ReactNode
 } from "react";
 import {
   Radio
 } from "/client/component/atom";
+import {
+  Component
+} from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";
@@ -17,8 +19,7 @@ import {
 @applyStyle(require("./radio-group.scss"))
 export class RadioGroup<V extends string> extends Component<Props<V>, State<V>> {
 
-  public constructor(props: Props<V>) {
-    super(props);
+  protected initialize(): void {
     if (this.props.initialValue !== undefined) {
       this.state = {value: this.props.initialValue};
     }

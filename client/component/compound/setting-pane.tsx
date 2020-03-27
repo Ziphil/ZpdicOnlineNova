@@ -2,12 +2,14 @@
 
 import * as react from "react";
 import {
-  Component,
   ReactNode
 } from "react";
 import {
   Badge
 } from "/client/component/atom";
+import {
+  Component
+} from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";
