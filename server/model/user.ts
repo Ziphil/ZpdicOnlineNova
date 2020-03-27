@@ -32,7 +32,7 @@ export class User {
   public static async register(name: string, email: string, password: string): Promise<UserDocument> {
     let formerUser = await UserModel.findOne().where("name", name).exec();
     if (formerUser) {
-      throw new CustomError("duplicateName");
+      throw new CustomError("duplicateUserName");
     }
     let user = new UserModel({name, email});
     await user.encryptPassword(password);
