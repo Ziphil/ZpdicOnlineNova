@@ -23,7 +23,8 @@ import {
 @applyStyle(require("./change-dictionary-name-form.scss"))
 export class ChangeDictionaryNameForm extends StoreComponent<Props, State> {
 
-  protected initialize(): void {
+  public constructor(props: any) {
+    super(props);
     let name = this.props.currentName;
     this.state = {name};
   }

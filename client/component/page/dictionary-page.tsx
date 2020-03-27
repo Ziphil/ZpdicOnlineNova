@@ -49,7 +49,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     page: 0
   };
 
-  protected initialize(): void {
+  public constructor(props: any) {
+    super(props);
     this.serializeQuery();
   }
 

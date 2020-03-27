@@ -24,7 +24,8 @@ import {
 @applyStyle(require("./change-dictionary-secret-form.scss"))
 export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
 
-  protected initialize(): void {
+  public constructor(props: any) {
+    super(props);
     let secret = this.props.currentSecret;
     this.state = {secret};
   }
