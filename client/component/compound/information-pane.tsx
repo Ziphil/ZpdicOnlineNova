@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -18,6 +19,12 @@ import {
 @applyStyle(require("./information-pane.scss"))
 export class InformationPane extends Component<Props, State> {
 
+  private handleClick(event: MouseEvent<HTMLButtonElement>): void {
+    if (this.props.onClose) {
+      this.props.onClose(event);
+    }
+  }
+
   public render(): ReactNode {
     let itemNodes = this.props.texts.map((text, index) => {
       return <li key={index}>{text}</li>;
@@ -31,7 +38,7 @@ export class InformationPane extends Component<Props, State> {
         <div styleName="button-box"/>
         <div styleName="overlay"/>
         <div styleName="button">
-          <Button label="&#xF00D;" style="simple" usesIcon={true}/>
+          <Button label="&#xF00D;" style="simple" usesIcon={true} onClick={this.handleClick.bind(this)}/>
         </div>
       </div>
     );
@@ -43,7 +50,8 @@ export class InformationPane extends Component<Props, State> {
 
 type Props = {
   texts: Array<string>,
-  style: "error" | "information"
+  style: "error" | "information",
+  onClose?: (event: MouseEvent<HTMLButtonElement>) => void
 };
 type State = {
 };
