@@ -5,6 +5,9 @@ import {
   ReactNode
 } from "react";
 import {
+  Button
+} from "/client/component/atom";
+import {
   Component
 } from "/client/component/component";
 import {
@@ -21,9 +24,16 @@ export class InformationPane extends Component<Props, State> {
     });
     let styleNames = ["root", this.props.style];
     let node = (
-      <ul styleName={styleNames.join(" ")}>
-        {itemNodes}
-      </ul>
+      <div styleName={styleNames.join(" ")}>
+        <ul styleName="list">
+          {itemNodes}
+        </ul>
+        <div styleName="button-box"/>
+        <div styleName="overlay"/>
+        <div styleName="button">
+          <Button label="&#xF00D;" style="simple" usesIcon={true}/>
+        </div>
+      </div>
     );
     return node;
   }
