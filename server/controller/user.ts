@@ -67,15 +67,15 @@ export class UserController extends Controller {
       let body;
       if (error.name === "CustomError") {
         if (error.type === "duplicateName") {
-          body = new CustomErrorSkeleton("duplicateName");
+          body = CustomErrorSkeleton.ofType("duplicateName");
         } else if (error.type === "invalidPassword") {
-          body = new CustomErrorSkeleton("invalidPassword");
+          body = CustomErrorSkeleton.ofType("invalidPassword");
         }
       } else if (error.name === "ValidationError") {
         if (error.errors.name) {
-          body = new CustomErrorSkeleton("invalidName");
+          body = CustomErrorSkeleton.ofType("invalidName");
         } else if (error.errors.email) {
-          body = new CustomErrorSkeleton("invalidEmail");
+          body = CustomErrorSkeleton.ofType("invalidEmail");
         }
       }
       if (body) {
@@ -98,7 +98,7 @@ export class UserController extends Controller {
     } catch (error) {
       let body;
       if (error.name === "ValidationError" && error.errors.email) {
-        body = new CustomErrorSkeleton("invalidEmail");
+        body = CustomErrorSkeleton.ofType("invalidEmail");
       }
       if (body) {
         response.status(400).json(body);
@@ -120,7 +120,7 @@ export class UserController extends Controller {
     } catch (error) {
       let body;
       if (error.name === "CustomError" && error.type === "invalidPassword") {
-        body = new CustomErrorSkeleton("invalidPassword");
+        body = CustomErrorSkeleton.ofType("invalidPassword");
       }
       if (body) {
         response.status(400).json(body);
