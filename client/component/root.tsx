@@ -1,6 +1,10 @@
 //
 
 import {
+  History,
+  createBrowserHistory
+} from "history";
+import {
   Provider
 } from "mobx-react";
 import * as react from "react";
@@ -11,8 +15,8 @@ import {
   ReactNode
 } from "react";
 import {
-  BrowserRouter,
   Route,
+  Router,
   Switch
 } from "react-router-dom";
 import {
@@ -43,6 +47,8 @@ import {
 export class Root extends StoreComponent<Props, State> {
 
   private store: GlobalStore = new GlobalStore();
+  private history: History = createBrowserHistory();
+
   public state: State = {
     ready: false
   };
@@ -75,7 +81,7 @@ export class Root extends StoreComponent<Props, State> {
     let node;
     if (this.state.ready) {
       node = (
-        <BrowserRouter>
+        <Router history={this.history}>
           <Provider store={this.store}>
             <Switch>
               <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
@@ -88,7 +94,7 @@ export class Root extends StoreComponent<Props, State> {
               <PrivateRoute exact path="/dictionary/setting/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
             </Switch>
           </Provider>
-        </BrowserRouter>
+        </Router>
       );
     }
     return node;
