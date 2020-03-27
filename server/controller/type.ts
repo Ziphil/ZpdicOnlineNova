@@ -149,7 +149,7 @@ type ProcessType = {
       request: {number: number},
       response: {
         200: boolean,
-        400: never
+        400: CustomErrorSkeleton<"invalidDictionaryNumber">
       }
     },
     post: Noop

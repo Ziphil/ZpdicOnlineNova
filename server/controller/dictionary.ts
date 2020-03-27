@@ -59,46 +59,66 @@ export class DictionaryController extends Controller {
   @post(SERVER_PATH["uploadDictionary"])
   @before(verifyUser(), verifyDictionary())
   public async postUploadDictionary(request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
-    let dictionary = request.dictionary!;
+    let dictionary = request.dictionary;
     let path = request.file.path;
-    let promise = new Promise(async (resolve, reject) => {
-      try {
-        await dictionary.upload(path);
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-    let body = SlimeDictionarySkeleton.from(dictionary);
-    response.json(body);
+    if (dictionary) {
+      let promise = new Promise(async (resolve, reject) => {
+        try {
+          await dictionary!.upload(path);
+          resolve();
+        } catch (error) {
+          reject(error);
+        }
+      });
+      let body = SlimeDictionarySkeleton.from(dictionary);
+      response.json(body);
+    } else {
+      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      response.status(400).json(body);
+    }
   }
 
   @post(SERVER_PATH["deleteDictionary"])
   @before(verifyUser(), verifyDictionary())
   public async postDeleteDictionary(request: PostRequest<"deleteDictionary">, response: PostResponse<"deleteDictionary">): Promise<void> {
-    let dictionary = request.dictionary!;
-    await dictionary.removeWhole();
-    response.json(true);
+    let dictionary = request.dictionary;
+    if (dictionary) {
+      await dictionary.removeWhole();
+      response.json(true);
+    } else {
+      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      response.status(400).json(body);
+    }
   }
 
   @post(SERVER_PATH["changeDictionaryName"])
   @before(verifyUser(), verifyDictionary())
   public async postRenameDictionary(request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {
-    let dictionary = request.dictionary!;
+    let dictionary = request.dictionary;
     let name = ensureString(request.body.name);
-    await dictionary.changeName(name);
-    let body = SlimeDictionarySkeleton.from(dictionary);
-    response.json(body);
+    if (dictionary) {
+      await dictionary.changeName(name);
+      let body = SlimeDictionarySkeleton.from(dictionary);
+      response.json(body);
+    } else {
+      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      response.status(400).json(body);
+    }
   }
 
   @post(SERVER_PATH["changeDictionarySecret"])
   @before(verifyUser(), verifyDictionary())
   public async postChangeDictionarySecret(request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {
-    let dictionary = request.dictionary!;
+    let dictionary = request.dictionary;
     let secret = ensureBoolean(request.body.secret);
-    await dictionary.changeSecret(secret);
-    let body = SlimeDictionarySkeleton.from(dictionary);
-    response.json(body);
+    if (dictionary) {
+      await dictionary.changeSecret(secret);
+      let body = SlimeDictionarySkeleton.from(dictionary);
+      response.json(body);
+    } else {
+      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      response.status(400).json(body);
+    }
   }
 
   @get(SERVER_PATH["searchDictionary"])
@@ -196,7 +216,13 @@ export class DictionaryController extends Controller {
   @get(SERVER_PATH["checkDictionaryAuthorization"])
   @before(verifyUser(), verifyDictionary())
   public async getCheckDictionaryAuthorization(request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
-    response.json(true);
+    let dictionary = request.dictionary;
+    if (dictionary) {
+      response.json(true);
+    } else {
+      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      response.status(400).json(body);
+    }
   }
 
 }
