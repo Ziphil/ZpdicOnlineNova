@@ -33,88 +33,124 @@ export const SERVER_PATH = {
   fetchUserInfo: "/api/user/info"
 };
 
-export type ProcessType = {
+type ProcessType = {
   createDictionary: {
     get: Noop,
     post: {
       request: {name: string},
-      response: SlimeDictionarySkeleton
+      response: {
+        200: SlimeDictionarySkeleton,
+        400: never
+      }
     }
   },
   uploadDictionary: {
     get: Noop,
     post: {
       request: {number: number},
-      response: SlimeDictionarySkeleton
+      response: {
+        200: SlimeDictionarySkeleton,
+        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+      }
     }
   },
   deleteDictionary: {
     get: Noop,
     post: {
       request: {number: number},
-      response: MayError<boolean>
+      response: {
+        200: boolean,
+        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+      }
     }
   },
   changeDictionaryName: {
     get: Noop,
     post: {
       request: {number: number, name: string},
-      response: SlimeDictionarySkeleton
+      response: {
+        200: SlimeDictionarySkeleton,
+        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+      }
     }
   },
   changeDictionarySecret: {
     get: Noop,
     post: {
       request: {number: number, secret: boolean},
-      response: SlimeDictionarySkeleton
+      response: {
+        200: SlimeDictionarySkeleton,
+        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+      }
     }
   },
   searchDictionary: {
     get: {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
-      response: MayError<Array<SlimeWordSkeleton>>
+      response: {
+        200: Array<SlimeWordSkeleton>,
+        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+      }
     },
     post: Noop
   },
   fetchDictionaryInfo: {
     get: {
       request: {number: number},
-      response: MayError<SlimeDictionarySkeleton>
+      response: {
+        200: SlimeDictionarySkeleton,
+        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+      }
     },
     post: Noop
   },
   fetchWholeDictionary: {
     get: {
       request: {number: number},
-      response: MayError<SlimeDictionarySkeleton>
+      response: {
+        200: SlimeDictionarySkeleton,
+        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+      }
     },
     post: Noop
   }
   fetchDictionaries: {
     get: {
       request: {},
-      response: Array<SlimeDictionarySkeleton>
+      response: {
+        200: Array<SlimeDictionarySkeleton>,
+        400: never
+      }
     },
     post: Noop
   },
   fetchAllDictionaries: {
     get: {
       request: {},
-      response: Array<SlimeDictionarySkeleton>
+      response: {
+        200: Array<SlimeDictionarySkeleton>,
+        400: never
+      }
     },
     post: Noop
   },
   fetchDictionaryAggregation: {
     get: {
       request: {},
-      response: {dictionarySize: number, wordSize: number};
+      response: {
+        200: {dictionarySize: number, wordSize: number},
+        400: never
+      }
     },
     post: Noop
   },
   checkDictionaryAuthorization: {
     get: {
       request: {number: number},
-      response: boolean
+      response: {
+        200: boolean,
+        400: never
+      }
     },
     post: Noop
   },
@@ -122,41 +158,59 @@ export type ProcessType = {
     get: Noop,
     post: {
       request: {name: string, password: string},
-      response: {token: string, user: UserSkeleton}
+      response: {
+        200: {token: string, user: UserSkeleton},
+        400: never
+      }
     }
   },
   logout: {
     get: Noop,
     post: {
       request: {},
-      response: boolean
+      response: {
+        200: boolean,
+        400: never
+      }
     }
   },
   registerUser: {
     get: Noop,
     post: {
       request: {name: string, email: string, password: string},
-      response: MayError<UserSkeleton>
+      response: {
+        200: UserSkeleton,
+        400: CustomErrorSkeleton<"duplicateName" | "invalidName" | "invalidEmail" | "invalidPassword">
+      }
     }
   },
   changeUserEmail: {
     get: Noop,
     post: {
       request: {email: string},
-      response: MayError<UserSkeleton>
+      response: {
+        200: UserSkeleton,
+        400: CustomErrorSkeleton<"invalidEmail">
+      }
     }
   },
   changeUserPassword: {
     get: Noop,
     post: {
       request: {password: string},
-      response: MayError<UserSkeleton>
+      response: {
+        200: UserSkeleton,
+        400: CustomErrorSkeleton<"invalidPassword">
+      }
     }
   },
   fetchUserInfo: {
     get: {
       request: {},
-      response: UserSkeleton
+      response: {
+        200: UserSkeleton,
+        400: never
+      }
     },
     post: Noop
   }
@@ -166,7 +220,7 @@ export type MethodType = "get" | "post";
 export type ProcessName = keyof ProcessType;
 
 export type RequestType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["request"];
-export type ResponseType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["response"];
+export type ResponseType<N extends ProcessName, M extends MethodType> = ValueOf<ProcessType[N][M]["response"]>;
 
 type Noop = {request: never, response: never};
-type MayError<T> = T | CustomErrorSkeleton<string>;
+type ValueOf<T> = T[keyof T];

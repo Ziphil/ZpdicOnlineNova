@@ -13,7 +13,7 @@ const MESSAGES = {
   invalidPassword: "パスワードが不正です。パスワードは 6 文字以上 50 文字以下である必要があります。",
   duplicateName: "そのユーザー名はすでに存在しています。",
   loginFailed: "ログインに失敗しました。",
-  invalidNumber: "この辞書は存在しません。",
+  invalidDictionaryNumber: "この辞書は存在しません。",
   unauthenticated: "ログインしていません。ログインし直してください。",
   forbidden: "このコンテンツにアクセスする権限がありません。",
   serverNotFound: "実行すべき処理を行う API が見つかりませんでした。",
