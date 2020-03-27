@@ -51,7 +51,7 @@ export class WordPane extends Component<Props, State> {
     return nodes;
   }
 
-  private renderRationNode(): ReactNode {
+  private renderRelationNode(): ReactNode {
     let groupedRelations = {} as {[title: string]: Array<string>};
     for (let relation of this.props.word.relations) {
       let title = relation.title;
@@ -81,7 +81,7 @@ export class WordPane extends Component<Props, State> {
   public render(): ReactNode {
     let equivalentNode = this.renderEquivalentNode();
     let informationNode = this.renderInformationNode();
-    let relationNode = this.renderRationNode();
+    let relationNode = this.renderRelationNode();
     let node = (
       <div styleName="root">
         <div styleName="name">{this.props.word.name}</div>
