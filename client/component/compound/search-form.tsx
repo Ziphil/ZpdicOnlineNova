@@ -26,7 +26,8 @@ import {
 @applyStyle(require("./search-form.scss"))
 export class SearchForm extends Component<Props, State> {
 
-  protected initialize(): void {
+  public constructor(props: any) {
+    super(props);
     let search = this.props.initialSearch || "";
     let mode = this.props.initialMode || "both";
     let type = this.props.initialType || "prefix";

@@ -1,7 +1,6 @@
 //
 
 import * as parser from "body-parser";
-import * as connect from "connect-mongo";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
 import {
@@ -10,7 +9,6 @@ import {
   Request,
   Response
 } from "express";
-import * as session from "express-session";
 import * as mongoose from "mongoose";
 import {
   Schema
@@ -44,7 +42,6 @@ class Main {
     this.setupCookie();
     this.setupMulter();
     this.setupRenderer();
-    this.setupSession();
     this.setupMongo();
     this.setupRouters();
     this.setupErrorHandler();
@@ -73,21 +70,11 @@ class Main {
   }
 
   // HTML を出力するテンプレートエンジンの設定をします。
-  // とりあえず EJS を使うようにしています。
-  // Angular などを使った方が良いと思うので、フロントエンドを真面目に作るようになったら変えようと思います。
+  // フロントエンドには React を用いるのでこの設定は必要ありませんが、デバッグで利用するかもしれないので設定しておきます。
+  // とりあえず EJS を使う設定になっています。
   private setupRenderer(): void {
     this.application.set("views", process.cwd() + "/server/view");
     this.application.set("view engine", "ejs");
-  }
-
-  // セッション管理を行う express-session の設定を行います。
-  // セッションストアとして、MongoDB の該当データベース内の sessions コレクションを用いるようになっています。
-  private setupSession(): void {
-    let MongoStore = connect(session);
-    let store = new MongoStore({url: MONGO_URI, collection: "sessions"});
-    let cookie = {maxAge: 6 * 60 * 60 * 1000};
-    let middleware = session({store, cookie, secret: SESSION_SECRET, resave: false, saveUninitialized: false});
-    this.application.use(middleware);
   }
 
   // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。

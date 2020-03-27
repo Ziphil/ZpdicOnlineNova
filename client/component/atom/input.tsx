@@ -21,7 +21,8 @@ export class Input extends Component<Props, State> {
     type: "text"
   };
 
-  protected initialize(): void {
+  public constructor(props: any) {
+    super(props);
     let value = "";
     let type = this.props.type;
     if (this.props.initialValue !== undefined) {

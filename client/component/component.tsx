@@ -23,6 +23,8 @@ import {
 
 export class Component<P, S, H = any> extends ReactComponent<P, S, H> {
 
+  public state!: S;
+
   public constructor(props: Readonly<P>) {
     super(props);
     this.initialize();
