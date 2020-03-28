@@ -18,7 +18,7 @@ export class NotificationSkeleton extends Skeleton {
   public static from(raw: NotificationDocument): NotificationSkeleton {
     let id = raw.id;
     let title = raw.title;
-    let date = raw.date.toString();
+    let date = raw.date.toISOString();
     let text = raw.text;
     let skeleton = NotificationSkeleton.of({id, title, date, text});
     return skeleton;
