@@ -26,7 +26,7 @@ export class NotificationPane extends Component<Props, State> {
     let dateString = "";
     dateString += ("0000" + date.getFullYear()).slice(-4);
     dateString += "/";
-    dateString += ("00" + date.getMonth()).slice(-2);
+    dateString += ("00" + (date.getMonth() + 1)).slice(-2);
     dateString += "/";
     dateString += ("00" + date.getDate()).slice(-2);
     dateString += " ";
