@@ -4,7 +4,7 @@
 
 
 .root {
-  padding: 8px 0px;
+  padding: 15px 0px;
   border-bottom: 1px $pale-border-color solid;
 }
 
@@ -27,12 +27,12 @@
   @include icon-font;
   margin: 0px 10px 0px 0px;
   font-size: 150%;
-  color: $light-color;
+  color: $head-color;
 }
 
 .date {
   font-size: 80%;
-  color: $light-color;
+  color: $head-color;
 }
 
 .head {
@@ -40,7 +40,7 @@
   padding: 0px;
   font-size: 120%;
   font-weight: bold;
-  color: $light-color;
+  color: $head-color;
 }
 
 .text {
