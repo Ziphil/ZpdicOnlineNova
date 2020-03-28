@@ -6,6 +6,9 @@ import {
 } from "react";
 import * as ReactMarkdown from "react-markdown";
 import {
+  NodeType
+} from "react-markdown";
+import {
   Link
 } from "/client/component/atom";
 import {
@@ -20,12 +23,11 @@ import {
 export class Markdown extends Component<Props, State> {
 
   public render(): ReactNode {
-    let renderers = {
-      link: Link
-    };
+    let renderers = {link: Link};
+    let allowedTypes = ["text", "paragraph", "link"] as Array<NodeType>;
     let node = (
       <div styleName="root">
-        <ReactMarkdown source={this.props.source} renderers={renderers}/>
+        <ReactMarkdown source={this.props.source} renderers={renderers} allowedTypes={allowedTypes} linkTarget="blank"/>
       </div>
     );
     return node;
