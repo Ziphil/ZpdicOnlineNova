@@ -31,6 +31,7 @@ import {
   DictionaryPage,
   DictionarySettingPage,
   LoginPage,
+  NotificationPage,
   RegisterPage,
   TopPage
 } from "/client/component/page";
@@ -92,6 +93,7 @@ export class Root extends StoreComponent<Props, State> {
               <Route exact path="/dictionary/list" component={DictionaryListPage}/>
               <Route exact path="/dictionary/:number(\d+)" component={DictionaryPage}/>
               <PrivateRoute exact path="/dictionary/setting/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+              <Route exact path="/news" component={NotificationPage}/>
             </Switch>
           </Provider>
         </Router>
