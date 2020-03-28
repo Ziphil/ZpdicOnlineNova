@@ -8,6 +8,9 @@ import {
   CustomErrorSkeleton
 } from "/server/skeleton/error";
 import {
+  NotificationSkeleton
+} from "/server/skeleton/notification";
+import {
   UserSkeleton
 } from "/server/skeleton/user";
 
@@ -30,7 +33,8 @@ export const SERVER_PATH = {
   registerUser: "/api/user/register",
   changeUserEmail: "/api/user/edit/email",
   changeUserPassword: "/api/user/edit/password",
-  fetchUser: "/api/user/info"
+  fetchUser: "/api/user/info",
+  fetchNotifications: "/api/news/list"
 };
 
 type ProcessType = {
@@ -209,6 +213,16 @@ type ProcessType = {
       request: {},
       response: {
         200: UserSkeleton,
+        400: never
+      }
+    },
+    post: Noop
+  },
+  fetchNotifications: {
+    get: {
+      request: {offset?: number, size?: number},
+      response: {
+        200: Array<NotificationSkeleton>,
         400: never
       }
     },
