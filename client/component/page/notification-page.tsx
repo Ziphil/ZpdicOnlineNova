@@ -8,14 +8,12 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
-  DictionaryAggregationPane,
   Loading,
-  LoginForm,
-  Logo,
   NotificationList
 } from "/client/component/compound";
 import {
   applyStyle,
+  inject,
   route
 } from "/client/component/decorator";
 import {
@@ -26,17 +24,16 @@ import {
 } from "/server/skeleton/notification";
 
 
-@route
-@applyStyle(require("./top-page.scss"))
-export class TopPage extends StoreComponent<Props, State> {
+@route @inject
+@applyStyle(require("./notification-page.scss"))
+export class NotificationPage extends StoreComponent<Props, State> {
 
   public state: State = {
     notifications: null
   };
 
   public async componentDidMount(): Promise<void> {
-    let size = 2;
-    let response = await this.requestGet("fetchNotifications", {size});
+    let response = await this.requestGet("fetchNotifications", {});
     if (response.status === 200) {
       let notifications = response.data;
       this.setState({notifications});
@@ -46,20 +43,9 @@ export class TopPage extends StoreComponent<Props, State> {
   public render(): ReactNode {
     let node = (
       <Page>
-        <div styleName="logo-wrapper">
-          <div styleName="logo">
-            <Logo/>
-          </div>
-          <div styleName="login-form">
-            <LoginForm showsRegister={true}/>
-          </div>
-        </div>
-        <div styleName="aggregation">
-          <DictionaryAggregationPane/>
-        </div>
-        <div styleName="notification">
+        <div styleName="list">
           <Loading loading={this.state.notifications === null}>
-            <NotificationList notifications={this.state.notifications!} size={2} offset={0}/>
+            <NotificationList notifications={this.state.notifications!} size={10} offset={0}/>
           </Loading>
         </div>
       </Page>
@@ -73,5 +59,5 @@ export class TopPage extends StoreComponent<Props, State> {
 type Props = {
 };
 type State = {
-  notifications: Array<NotificationSkeleton> | null
+  notifications: Array<NotificationSkeleton> | null;
 };

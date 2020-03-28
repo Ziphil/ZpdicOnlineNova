@@ -26,7 +26,7 @@ import {
 
 @route @inject
 @applyStyle(require("./dictionary-list-page.scss"))
-export class DictionaryListPage extends StoreComponent<Props, State, Params> {
+export class DictionaryListPage extends StoreComponent<Props, State> {
 
   public state: State = {
     dictionaries: null
@@ -60,7 +60,4 @@ type Props = {
 };
 type State = {
   dictionaries: Array<SlimeDictionarySkeleton> | null;
-};
-type Params = {
-  mode: string
 };

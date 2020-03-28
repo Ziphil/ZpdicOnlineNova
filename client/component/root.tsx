@@ -1,6 +1,10 @@
 //
 
 import {
+  History,
+  createBrowserHistory
+} from "history";
+import {
   Provider
 } from "mobx-react";
 import * as react from "react";
@@ -11,8 +15,8 @@ import {
   ReactNode
 } from "react";
 import {
-  BrowserRouter,
   Route,
+  Router,
   Switch
 } from "react-router-dom";
 import {
@@ -27,6 +31,7 @@ import {
   DictionaryPage,
   DictionarySettingPage,
   LoginPage,
+  NotificationPage,
   RegisterPage,
   TopPage
 } from "/client/component/page";
@@ -43,12 +48,14 @@ import {
 export class Root extends StoreComponent<Props, State> {
 
   private store: GlobalStore = new GlobalStore();
+  private history: History = createBrowserHistory();
+
   public state: State = {
     ready: false
   };
 
   public async componentDidMount(): Promise<void> {
-    let response = await this.requestGet("fetchUserInfo", {}, true);
+    let response = await this.requestGet("fetchUser", {}, true);
     if (response.status === 200) {
       let user = response.data;
       this.store.user = user;
@@ -75,7 +82,7 @@ export class Root extends StoreComponent<Props, State> {
     let node;
     if (this.state.ready) {
       node = (
-        <BrowserRouter>
+        <Router history={this.history}>
           <Provider store={this.store}>
             <Switch>
               <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
@@ -86,9 +93,10 @@ export class Root extends StoreComponent<Props, State> {
               <Route exact path="/dictionary/list" component={DictionaryListPage}/>
               <Route exact path="/dictionary/:number(\d+)" component={DictionaryPage}/>
               <PrivateRoute exact path="/dictionary/setting/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+              <Route exact path="/news" component={NotificationPage}/>
             </Switch>
           </Provider>
-        </BrowserRouter>
+        </Router>
       );
     }
     return node;

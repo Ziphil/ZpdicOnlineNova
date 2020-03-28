@@ -66,14 +66,14 @@ export class UserController extends Controller {
     } catch (error) {
       let body;
       if (error.name === "CustomError") {
-        if (error.type === "duplicateName") {
-          body = CustomErrorSkeleton.ofType("duplicateName");
+        if (error.type === "duplicateUserName") {
+          body = CustomErrorSkeleton.ofType("duplicateUserName");
         } else if (error.type === "invalidPassword") {
           body = CustomErrorSkeleton.ofType("invalidPassword");
         }
       } else if (error.name === "ValidationError") {
         if (error.errors.name) {
-          body = CustomErrorSkeleton.ofType("invalidName");
+          body = CustomErrorSkeleton.ofType("invalidUserName");
         } else if (error.errors.email) {
           body = CustomErrorSkeleton.ofType("invalidEmail");
         }
@@ -130,9 +130,9 @@ export class UserController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchUserInfo"])
+  @get(SERVER_PATH["fetchUser"])
   @before(verifyUser())
-  public async getFetchUserInfo(request: GetRequest<"fetchUserInfo">, response: GetResponse<"fetchUserInfo">): Promise<void> {
+  public async getFetchUser(request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
     let user = request.user!;
     let body = UserSkeleton.from(user);
     response.json(body);

@@ -19,6 +19,8 @@ export * from "./login-form";
 export * from "./logo";
 export * from "./menu-item";
 export * from "./menu";
+export * from "./notification-list";
+export * from "./notification-pane";
 export * from "./popup-information-pane";
 export * from "./register-form";
 export * from "./search-form";

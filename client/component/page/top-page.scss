@@ -30,18 +30,10 @@
 }
 
 .aggregation {
-  margin: 50px auto 0px auto;
+  margin: 30px auto 0px auto;
   padding: 20px 0px;
-  border-top: 1px $light-border-color solid;
-  border-bottom: 1px $light-border-color solid;
 }
 
-.notice {
-  margin: 50px auto 0px auto;
-}
-
-.text {
-  margin: 10px 0px;
-  line-height: $line-height;
-  text-align: justify;
+.notification {
+  margin: 30px auto 0px auto;
 }

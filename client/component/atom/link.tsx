@@ -44,7 +44,7 @@ export class Link extends StoreComponent<Props, State> {
       styleNames.push("plane");
     }
     let node = (
-      <a styleName={styleNames.join(" ")} href={this.props.href} onClick={this.handleClick.bind(this)}>{this.props.label}</a>
+      <a styleName={styleNames.join(" ")} href={this.props.href} onClick={this.handleClick.bind(this)}>{this.props.children}</a>
     );
     return node;
   }
@@ -53,7 +53,6 @@ export class Link extends StoreComponent<Props, State> {
 
 
 type Props = {
-  label: string,
   href: string,
   target: "self" | "blank",
   style: "plane" | "normal",

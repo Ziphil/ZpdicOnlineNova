@@ -5,7 +5,7 @@ import {
 } from "/server/skeleton/skeleton";
 
 
-export class CustomErrorSkeleton<E extends string> extends Skeleton {
+export class CustomErrorSkeleton<E extends string = string> extends Skeleton {
 
   public error!: "Error";
   public type!: E;

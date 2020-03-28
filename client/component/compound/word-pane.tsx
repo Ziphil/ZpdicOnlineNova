@@ -28,11 +28,14 @@ export class WordPane extends Component<Props, State> {
       );
       return innerNode;
     });
-    let node = (
-      <div styleName="container">
-        {innerNodes}
-      </div>
-    );
+    let node;
+    if (innerNodes.length > 0) {
+      node = (
+        <div styleName="container">
+          {innerNodes}
+        </div>
+      );
+    }
     return node;
   }
 
@@ -70,11 +73,14 @@ export class WordPane extends Component<Props, State> {
       );
       return innerNode;
     });
-    let node = (
-      <div styleName="container">
-        {innerNodes}
-      </div>
-    );
+    let node;
+    if (innerNodes.length > 0) {
+      node = (
+        <div styleName="container">
+          {innerNodes}
+        </div>
+      );
+    }
     return node;
   }
 

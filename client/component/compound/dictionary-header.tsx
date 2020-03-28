@@ -29,7 +29,7 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
     if (this.props.dictionary) {
       let queryString = this.props.location!.search;
       let href = "/dictionary/" + this.props.dictionary.number + queryString;
-      nameNode = <Link label={this.props.dictionary.name} href={href} style="plane"/>;
+      nameNode = <Link href={href} style="plane">{this.props.dictionary.name}</Link>;
     }
     let node = (
       <div styleName="root">

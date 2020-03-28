@@ -48,18 +48,24 @@ export function verifyUser(authority?: unknown): RequestHandler {
 
 // ログイン中のユーザーにリクエストしている辞書データの編集権限があるかどうかを判定します。
 // このミドルウェアは、必ず verifyUser ミドルウェアを通してから呼び出してください。
-// 編集権限がある場合は、request オブジェクトの dictionary プロパティに辞書オブジェクトを書き込み、次の処理を行います。
+// また、リクエストクエリもしくはリクエストボディに number が指定されている必要があります。
+// 編集権限がある場合、request オブジェクトの dictionary プロパティに辞書オブジェクトを書き込み、次の処理を行います。
 // 編集権限がない場合、ステータスコード 403 を返して終了します。
+// そもそも該当する辞書が存在しない場合、request オブジェクトの dictionary プロパティの値は undefined のまま、次の処理を行います。
 export function verifyDictionary(): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let user = request.user!;
     let number = parseInt(request.query.number || request.body.number, 10);
-    let dictionary = await SlimeDictionaryModel.findOneByNumber(number, user);
+    let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      request.dictionary = dictionary;
-      next();
+      if (user.equals(dictionary.user)) {
+        request.dictionary = dictionary;
+        next();
+      } else {
+        response.sendStatus(403);
+      }
     } else {
-      response.sendStatus(403);
+      next();
     }
   };
   return handler;

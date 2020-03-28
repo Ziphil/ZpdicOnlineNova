@@ -4,8 +4,7 @@
 
 
 .root {
-  padding: 8px 0px;
-  line-height: $line-height;
+  padding: 15px 0px;
   border-bottom: 1px $pale-border-color solid;
 }
 
@@ -17,8 +16,17 @@
   border-bottom: 1px $light-border-color solid;
 }
 
+.name {
+  margin: -4px 0px 0px 0px;
+  font-size: 120%;
+  font-weight: bold;
+  color: $head-color;
+  line-height: $line-height;
+}
+
 .text {
   margin: 0px;
+  line-height: $line-height;
   text-align: justify;
   white-space: pre-line;
 }
@@ -43,11 +51,6 @@
   margin: 0em 0.3em 0em 0em;
   font-size: 70%;
   color: $light-color;
-}
-
-.name {
-  font-size: 120%;
-  font-weight: bold;
 }
 
 .container {
