@@ -25,9 +25,12 @@
 
 .head-wrapper .icon {
   @include icon-font;
+  width: 1.2em;
   margin: 0px 10px 0px 0px;
   font-size: 150%;
   color: $head-color;
+  text-align: center;
+  display: inline-block;
 }
 
 .date {

@@ -16,6 +16,9 @@ export class Notification {
   public date!: Date;
 
   @prop({required: true})
+  public type!: string;
+
+  @prop({required: true})
   public text!: string;
 
   public static async findAll(offset?: number, size?: number): Promise<Array<NotificationDocument>> {

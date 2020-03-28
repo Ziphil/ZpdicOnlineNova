@@ -22,6 +22,10 @@ import {
 export class NotificationPane extends Component<Props, State> {
 
   public render(): ReactNode {
+    let iconString = "\uF05A";
+    if (this.props.notification.type === "update") {
+      iconString = "\uF005";
+    }
     let date = new Date(this.props.notification.date);
     let dateString = "";
     dateString += ("0000" + date.getFullYear()).slice(-4);
@@ -36,7 +40,7 @@ export class NotificationPane extends Component<Props, State> {
     let node = (
       <div styleName="root">
         <div styleName="head-wrapper">
-          <div styleName="icon">&#xF005;</div>
+          <div styleName="icon">{iconString}</div>
           <div styleName="head-right">
             <div styleName="date">{dateString}</div>
             <h1 styleName="head">{this.props.notification.title}</h1>
