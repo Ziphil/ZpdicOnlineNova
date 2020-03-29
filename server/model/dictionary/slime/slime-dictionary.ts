@@ -25,6 +25,9 @@ import {
   User,
   UserDocument
 } from "/server/model/user";
+import {
+  QueryUtil
+} from "/server/util/query";
 
 
 export class SlimeDictionary extends Dictionary<SlimeWord> {
@@ -144,7 +147,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return words;
   }
 
-  protected createQuery(parameter: NormalSearchParameter): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
+  public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<Array<SlimeWordDocument>> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;
@@ -208,7 +211,9 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
       finalQuery = SlimeWordModel.find();
     }
     finalQuery = finalQuery.sort("name");
-    return finalQuery;
+    finalQuery = QueryUtil.restrict(finalQuery, offset, size);
+    let hitWords = await finalQuery.exec();
+    return hitWords;
   }
 
   public async countWords(): Promise<number> {
