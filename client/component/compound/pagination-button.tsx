@@ -19,11 +19,46 @@ import {
 @applyStyle(require("./pagination-button.scss"))
 export class PaginationButton extends Component<Props, State> {
 
+  public constructor(props: any) {
+    super(props);
+    let page = this.props.page;
+    this.state = {page};
+  }
+
+  public componentDidUpdate(previousProps: Props): void {
+    if (this.props.page !== previousProps.page) {
+      let page = this.props.page;
+      this.setState({page});
+    }
+  }
+
+  private movePreviousPage(): void {
+    let page = this.state.page - 1;
+    if (page < this.props.minPage) {
+      page = this.props.minPage;
+    }
+    this.setState({page});
+    if (this.props.onSet) {
+      this.props.onSet(page);
+    }
+  }
+
+  private moveNextPage(): void {
+    let page = this.state.page + 1;
+    if (page > this.props.maxPage) {
+      page = this.props.maxPage;
+    }
+    this.setState({page});
+    if (this.props.onSet) {
+      this.props.onSet(page);
+    }
+  }
+
   public render(): ReactNode {
     let node = (
       <div styleName="root">
-        <Button label="前ページ" position="left" disabled={this.props.previousDisabled} onClick={this.props.onPreviousClicked}/>
-        <Button label="次ページ" position="right" disabled={this.props.nextDisabled} onClick={this.props.onNextClicked}/>
+        <Button label="前ページ" position="left" disabled={this.state.page <= this.props.minPage} onClick={this.movePreviousPage.bind(this)}/>
+        <Button label="次ページ" position="right" disabled={this.state.page >= this.props.maxPage} onClick={this.moveNextPage.bind(this)}/>
       </div>
     );
     return node;
@@ -33,10 +68,11 @@ export class PaginationButton extends Component<Props, State> {
 
 
 type Props = {
-  previousDisabled: boolean,
-  nextDisabled: boolean,
-  onPreviousClicked?: (event: MouseEvent<HTMLButtonElement>) => void,
-  onNextClicked?: (event: MouseEvent<HTMLButtonElement>) => void
+  page: number,
+  minPage: number
+  maxPage: number
+  onSet?: (page: number) => void
 };
 type State = {
+  page: number
 };

@@ -121,19 +121,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     });
   }
 
-  private async movePreviousPage(): Promise<void> {
-    let page = this.state.page - 1;
-    if (page < 0) {
-      page = 0;
-    }
-    this.setState({page}, async () => {
-      window.scrollTo(0, 0);
-      await this.updateWords();
-    });
-  }
-
-  private async moveNextPage(): Promise<void> {
-    let page = this.state.page + 1;
+  private handlePageSet(page: number): void {
     this.setState({page}, async () => {
       window.scrollTo(0, 0);
       await this.updateWords();
@@ -141,8 +129,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   public render(): ReactNode {
-    let previousDisabled = this.state.page <= 0;
-    let nextDisabled = this.state.hitWords.length <= 40;
+    let maxPage = (this.state.hitWords.length <= 40) ? this.state.page : this.state.page + 1;
     let node = (
       <Page showsDictionary={true} dictionary={this.state.dictionary}>
         <div styleName="search-form">
@@ -153,7 +140,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
             <WordList words={this.state.hitWords} offset={0} size={40}/>
           </div>
           <div styleName="pagination-button">
-            <PaginationButton previousDisabled={previousDisabled} nextDisabled={nextDisabled} onPreviousClicked={this.movePreviousPage.bind(this)} onNextClicked={this.moveNextPage.bind(this)}/>
+            <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>
           </div>
         </Loading>
       </Page>

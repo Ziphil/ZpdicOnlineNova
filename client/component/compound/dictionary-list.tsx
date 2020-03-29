@@ -28,8 +28,7 @@ export class DictionaryList extends Component<Props, State> {
 
   public render(): ReactNode {
     let offset = this.props.size * this.state.page;
-    let previousDisabled = this.state.page <= 0;
-    let nextDisabled = this.props.dictionaries.length <= offset + this.props.size;
+    let maxPage = Math.ceil(this.props.dictionaries.length / this.props.size) - 1;
     let dictionaries = this.props.dictionaries;
     let displayedDictionaries = dictionaries.slice(offset, offset + this.props.size);
     let dictionaryPanes = displayedDictionaries.map((dictionary) => {
@@ -39,7 +38,7 @@ export class DictionaryList extends Component<Props, State> {
       <div styleName="root">
         {dictionaryPanes}
         <div styleName="pagination-button">
-          <PaginationButton previousDisabled={previousDisabled} nextDisabled={nextDisabled} onPreviousClicked={() => this.setState({page: this.state.page - 1})} onNextClicked={() => this.setState({page: this.state.page + 1})}/>
+          <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.setState({page})}/>
         </div>
       </div>
     );
