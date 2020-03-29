@@ -6,13 +6,11 @@ import {
   ReactNode
 } from "react";
 import {
-  Button
-} from "/client/component/atom";
-import {
   StoreComponent
 } from "/client/component/component";
 import {
   Loading,
+  PaginationButton,
   SearchForm,
   WordList
 } from "/client/component/compound";
@@ -153,8 +151,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
             <WordList words={this.state.hitWords} offset={0} size={40}/>
           </div>
           <div styleName="page-button">
-            <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
-            <Button label="次ページ" position="right" disabled={this.state.hitWords.length <= 40} onClick={this.moveNextPage.bind(this)}/>
+            <PaginationButton previousDisabled={this.state.page <= 0} nextDisabled={this.state.hitWords.length <= 40} onPreviousClicked={this.movePreviousPage.bind(this)} onNextClicked={this.moveNextPage.bind(this)}/>
           </div>
         </Loading>
       </Page>

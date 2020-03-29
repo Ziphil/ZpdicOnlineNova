@@ -21,6 +21,7 @@ export * from "./menu-item";
 export * from "./menu";
 export * from "./notification-list";
 export * from "./notification-pane";
+export * from "./pagination-button";
 export * from "./popup-information-pane";
 export * from "./register-form";
 export * from "./search-form";
