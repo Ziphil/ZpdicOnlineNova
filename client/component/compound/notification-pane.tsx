@@ -14,6 +14,9 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
+  DateUtil
+} from "/client/util/date";
+import {
   NotificationSkeleton
 } from "/server/skeleton/notification";
 
@@ -26,17 +29,7 @@ export class NotificationPane extends Component<Props, State> {
     if (this.props.notification.type === "update") {
       iconString = "\uF005";
     }
-    let date = new Date(this.props.notification.date);
-    let dateString = "";
-    dateString += ("0000" + date.getFullYear()).slice(-4);
-    dateString += "/";
-    dateString += ("00" + (date.getMonth() + 1)).slice(-2);
-    dateString += "/";
-    dateString += ("00" + date.getDate()).slice(-2);
-    dateString += " ";
-    dateString += ("00" + date.getHours()).slice(-2);
-    dateString += ":";
-    dateString += ("00" + date.getMinutes()).slice(-2);
+    let dateString = DateUtil.format(this.props.notification.date, "yyyy/MM/dd HH:mm");
     let node = (
       <div styleName="root">
         <div styleName="head-wrapper">

@@ -25,7 +25,6 @@ const SEARCH_MODE_KEYS = ["name", "equivalent", "both", "content"] as const;
 const SEARCH_TYPE_KEYS = ["exact", "prefix", "suffix", "part", "regular"] as const;
 
 export let SearchModeUtil = LiteralUtilType.create(SEARCH_MODE_KEYS);
-export type SearchMode = LiteralType<typeof SEARCH_MODE_KEYS>;
-
 export let SearchTypeUtil = LiteralUtilType.create(SEARCH_TYPE_KEYS);
+export type SearchMode = LiteralType<typeof SEARCH_MODE_KEYS>;
 export type SearchType = LiteralType<typeof SEARCH_TYPE_KEYS>;
