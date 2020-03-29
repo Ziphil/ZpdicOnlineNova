@@ -21,6 +21,7 @@ export class SlimeDictionarySkeleton extends Skeleton {
   public status!: string;
   public secret!: boolean;
   public name!: string;
+  public updatedDate!: string | null;
   public words?: Array<SlimeWordSkeleton>;
   public wordSize?: number;
 
@@ -30,7 +31,8 @@ export class SlimeDictionarySkeleton extends Skeleton {
     let status = raw.status;
     let secret = raw.secret || false;
     let name = raw.name;
-    let skeleton = SlimeDictionarySkeleton.of({id, number, status, secret, name});
+    let updatedDate = raw.updatedDate?.toISOString() || null;
+    let skeleton = SlimeDictionarySkeleton.of({id, number, status, secret, name, updatedDate});
     return skeleton;
   }
 

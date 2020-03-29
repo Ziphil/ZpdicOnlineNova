@@ -17,6 +17,9 @@ import {
   route
 } from "/client/component/decorator";
 import {
+  DateUtil
+} from "/client/util/date";
+import {
   SlimeDictionarySkeleton
 } from "/server/skeleton/dictionary/slime";
 
@@ -59,13 +62,22 @@ export class DictionaryPane extends StoreComponent<Props, State> {
     if (this.props.showsSetting) {
       settingButtonNode = <Button label="&#xF013;" style="simple" usesIcon={true} onClick={this.jumpSettingPage.bind(this)}/>;
     }
+    let updatedDateString = "?";
+    if (this.props.dictionary.updatedDate) {
+      updatedDateString = DateUtil.format(this.props.dictionary.updatedDate, "yyyy/MM/dd HH:mm");
+    }
     let node = (
       <a styleName="root" href={href} onClick={this.handleClick.bind(this)}>
-        <div styleName="name">
-          {settingButtonNode}
-          {name}
+        <div styleName="name-wapper">
+          <div styleName="name">
+            {settingButtonNode}
+            {name}
+          </div>
+          <div styleName="status">{statusString}</div>
         </div>
-        <div styleName="status">{statusString}</div>
+        <div styleName="information">
+          最終更新: {updatedDateString}
+        </div>
       </a>
     );
     return node;
