@@ -141,6 +141,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   public render(): ReactNode {
+    let previousDisabled = this.state.page <= 0;
+    let nextDisabled = this.state.hitWords.length <= 40;
     let node = (
       <Page showsDictionary={true} dictionary={this.state.dictionary}>
         <div styleName="search-form">
@@ -150,8 +152,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
           <div styleName="word-list">
             <WordList words={this.state.hitWords} offset={0} size={40}/>
           </div>
-          <div styleName="page-button">
-            <PaginationButton previousDisabled={this.state.page <= 0} nextDisabled={this.state.hitWords.length <= 40} onPreviousClicked={this.movePreviousPage.bind(this)} onNextClicked={this.moveNextPage.bind(this)}/>
+          <div styleName="pagination-button">
+            <PaginationButton previousDisabled={previousDisabled} nextDisabled={nextDisabled} onPreviousClicked={this.movePreviousPage.bind(this)} onNextClicked={this.moveNextPage.bind(this)}/>
           </div>
         </Loading>
       </Page>
