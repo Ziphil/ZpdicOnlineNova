@@ -84,7 +84,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeDictionaryExplanationForm number={this.state.dictionary!.number} currentExplanation={""}/>
+        <ChangeDictionaryExplanationForm number={this.state.dictionary!.number} currentExplanation={this.state.dictionary!.explanation}/>
       </SettingPane>
     );
     return node;

@@ -32,6 +32,13 @@ export class ChangeDictionaryExplanationForm extends StoreComponent<Props, State
   private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
     let number = this.props.number;
     let explanation = this.state.explanation;
+    let response = await this.requestPost("changeDictionaryExplanation", {number, explanation});
+    if (response.status === 200) {
+      this.props.store!.sendInformation("dictionaryExplanationChanged");
+      if (this.props.onSubmit) {
+        this.props.onSubmit();
+      }
+    }
   }
 
   public render(): ReactNode {

@@ -32,35 +32,39 @@ import {
 
 export class SlimeDictionary extends Dictionary<SlimeWord> {
 
+  @prop({required: true, ref: User})
+  public user!: Ref<User>;
+
   @prop({required: true, unique: true})
   public number!: number;
 
   @prop({required: true})
-  public status!: string;
-
-  @prop({required: true})
   public name!: string;
 
-  @prop({required: true, ref: User})
-  public user!: Ref<User>;
-
-  @prop()
-  public updatedDate?: Date;
+  @prop({required: true})
+  public status!: string;
 
   @prop()
   public secret?: boolean;
+
+  @prop()
+  public explanation?: string;
+
+  @prop()
+  public updatedDate?: Date;
 
   @prop()
   public externalData?: object;
 
   public static async createEmpty(name: string, user: UserDocument): Promise<SlimeDictionaryDocument> {
     let dictionary = new SlimeDictionaryModel({});
-    dictionary.number = await SlimeDictionaryModel.nextNumber();
-    dictionary.status = "ready";
-    dictionary.name = name;
     dictionary.user = user;
-    dictionary.updatedDate = new Date();
+    dictionary.number = await SlimeDictionaryModel.nextNumber();
+    dictionary.name = name;
+    dictionary.status = "ready";
     dictionary.secret = false;
+    dictionary.explanation = "";
+    dictionary.updatedDate = new Date();
     dictionary.externalData = {};
     await dictionary.save();
     return dictionary;
@@ -138,6 +142,12 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
 
   public async changeSecret(this: SlimeDictionaryDocument, secret: boolean): Promise<SlimeDictionaryDocument> {
     this.secret = secret;
+    await this.save();
+    return this;
+  }
+
+  public async changeExplanation(this: SlimeDictionaryDocument, explanation: string): Promise<SlimeDictionaryDocument> {
+    this.explanation = explanation;
     await this.save();
     return this;
   }

@@ -6,6 +6,7 @@ const MESSAGES = {
   passwordChanged: "パスワードを変更しました。",
   dictionaryNameChanged: "辞書の名称を変更しました。",
   dictionarySecretChanged: "辞書の一覧表示の設定を変更しました。",
+  dictionaryExplanationChanged: "辞書の説明を変更しました。",
   dictionaryUploaded: "辞書のアップロードが完了しました。なお、データの反映には時間がかかる場合があります。",
   dictionaryDeleted: "辞書が削除されました。",
   invalidUserName: "ユーザー名が不正です。ユーザー名は半角英数字とアンダーバーとハイフンのみで構成してください。",

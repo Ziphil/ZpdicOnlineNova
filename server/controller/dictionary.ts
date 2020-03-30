@@ -119,6 +119,21 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["changeDictionaryExplanation"])
+  @before(verifyUser(), verifyDictionary())
+  public async postChangeDictionaryExplanation(request: PostRequest<"changeDictionaryExplanation">, response: PostResponse<"changeDictionaryExplanation">): Promise<void> {
+    let dictionary = request.dictionary;
+    let explanation = CastUtil.ensureString(request.body.explanation);
+    if (dictionary) {
+      await dictionary.changeExplanation(explanation);
+      let body = SlimeDictionarySkeleton.from(dictionary);
+      response.json(body);
+    } else {
+      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      response.status(400).json(body);
+    }
+  }
+
   @get(SERVER_PATH["searchDictionary"])
   public async getSearchDictionary(request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
