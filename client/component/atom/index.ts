@@ -8,3 +8,4 @@ export * from "./link";
 export * from "./markdown";
 export * from "./radio";
 export * from "./radio-group";
+export * from "./text-area";

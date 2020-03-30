@@ -8,6 +8,7 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
+  ChangeDictionaryExplanationForm,
   ChangeDictionaryNameForm,
   ChangeDictionarySecretForm,
   DeleteDictionaryForm,
@@ -74,6 +75,21 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     return node;
   }
 
+  private renderChangeDictionaryExplanationForm(): ReactNode {
+    let label = "説明変更";
+    let description = `
+      辞書の説明を変更します。
+      一部の Markdown 形式に対応しています。
+      この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <ChangeDictionaryExplanationForm number={this.state.dictionary!.number} currentExplanation={""}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderChangeDictionarySecretForm(): ReactNode {
     let label = "一覧表示変更";
     let description = `
@@ -118,6 +134,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {
       contentNodes.push(this.renderChangeDictionaryNameForm());
+      contentNodes.push(this.renderChangeDictionaryExplanationForm());
       contentNodes.push(this.renderChangeDictionarySecretForm());
       contentNodes.push(this.renderUploadDictionaryForm());
       contentNodes.push(this.renderDeleteDictionaryForm());
