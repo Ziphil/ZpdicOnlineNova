@@ -9,8 +9,83 @@
 
 .root p {
   margin: 5px 0px 0px 0px;
+  text-align: justify;
 }
 
 .root p:first-child {
   margin: 0px;
+}
+
+.root ul {
+  margin: 5px 0px 0px 2px;
+  padding: 0px;
+  list-style-type: none;
+}
+
+.root ul >li {
+  margin-left: 0.8em;
+  text-align: justify;
+}
+
+.root ul >li::before {
+  font-family: $icon-font-family;
+  font-size: 90%;
+  font-weight: 900;
+  color: $light-color;
+  width: 0.8em * (100% / 90%);
+  margin-left: -0.8em * (100% / 90%);
+  content: "\F0DA";
+  display: inline-block;
+}
+
+.root table {
+  margin: 5px auto 0px auto;
+  padding: 0px;
+  border-collapse: separate;
+  border-spacing: 0px;
+  border-radius: $small-border-radius;
+}
+
+.root tr >* {
+  padding: 0.1em 0.5em;
+  text-align: left;
+  border-bottom: 1px $light-border-color solid;
+  border-right: 1px $light-border-color solid;
+}
+
+.root tr >th {
+  font-weight: normal;
+  background-color: $strong-background-color;
+}
+
+.root thead tr:first-child >* {
+  border-top: 1px $light-border-color solid;
+}
+
+.root tr >*:first-child {
+  border-left: 1px $light-border-color solid;
+}
+
+.root thead tr:first-child >*:first-child {
+  border-top-left-radius: $small-border-radius;
+}
+
+.root thead tr:first-child >*:last-child {
+  border-top-right-radius: $small-border-radius;
+}
+
+.root tbody tr:last-child >*:first-child {
+  border-bottom-left-radius: $small-border-radius;
+}
+
+.root tbody tr:last-child >*:last-child {
+  border-bottom-right-radius: $small-border-radius;
+}
+
+.root code {
+  padding: 0em 0.1em;
+  font-family: $monospace-font-family, monospace;
+  font-feature-settings: "palt" 0, "pkna" 0;
+  background-color: $strong-background-color;
+  border-radius: $small-border-radius;
 }
