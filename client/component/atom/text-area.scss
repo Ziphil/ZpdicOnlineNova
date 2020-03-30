@@ -16,7 +16,7 @@
 
 .textarea {
   width: 100%;
-  padding: 0.1em 0.5em;
+  padding: 0.3em 0.5em;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -35,5 +35,6 @@
 
 .textarea.monospace {
   font-family: $monospace-font-family, monospace;
+  font-size: 90%;
   font-feature-settings: "palt" 0, "pkna" 0;
 }
