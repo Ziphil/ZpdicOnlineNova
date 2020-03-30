@@ -25,39 +25,46 @@ import {
   User,
   UserDocument
 } from "/server/model/user";
+import {
+  QueryUtil
+} from "/server/util/query";
 
 
 export class SlimeDictionary extends Dictionary<SlimeWord> {
+
+  @prop({required: true, ref: User})
+  public user!: Ref<User>;
 
   @prop({required: true, unique: true})
   public number!: number;
 
   @prop({required: true})
-  public status!: string;
-
-  @prop({required: true})
   public name!: string;
 
-  @prop({required: true, ref: User})
-  public user!: Ref<User>;
-
-  @prop()
-  public updatedDate?: Date;
+  @prop({required: true})
+  public status!: string;
 
   @prop()
   public secret?: boolean;
+
+  @prop()
+  public explanation?: string;
+
+  @prop()
+  public updatedDate?: Date;
 
   @prop()
   public externalData?: object;
 
   public static async createEmpty(name: string, user: UserDocument): Promise<SlimeDictionaryDocument> {
     let dictionary = new SlimeDictionaryModel({});
-    dictionary.number = await SlimeDictionaryModel.nextNumber();
-    dictionary.status = "ready";
-    dictionary.name = name;
     dictionary.user = user;
-    dictionary.updatedDate = new Date();
+    dictionary.number = await SlimeDictionaryModel.nextNumber();
+    dictionary.name = name;
+    dictionary.status = "ready";
     dictionary.secret = false;
+    dictionary.explanation = "";
+    dictionary.updatedDate = new Date();
     dictionary.externalData = {};
     await dictionary.save();
     return dictionary;
@@ -139,12 +146,18 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return this;
   }
 
+  public async changeExplanation(this: SlimeDictionaryDocument, explanation: string): Promise<SlimeDictionaryDocument> {
+    this.explanation = explanation;
+    await this.save();
+    return this;
+  }
+
   public async getWords(): Promise<Array<SlimeWordDocument>> {
     let words = await SlimeWordModel.find().where("dictionary", this);
     return words;
   }
 
-  protected createQuery(parameter: NormalSearchParameter): DocumentQuery<Array<SlimeWordDocument>, SlimeWordDocument> {
+  public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<Array<SlimeWordDocument>> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;
@@ -208,7 +221,9 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
       finalQuery = SlimeWordModel.find();
     }
     finalQuery = finalQuery.sort("name");
-    return finalQuery;
+    finalQuery = QueryUtil.restrict(finalQuery, offset, size);
+    let hitWords = await finalQuery.exec();
+    return hitWords;
   }
 
   public async countWords(): Promise<number> {

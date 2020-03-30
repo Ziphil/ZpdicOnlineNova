@@ -31,7 +31,7 @@ import {
   UserSkeleton
 } from "/server/skeleton/user";
 import {
-  ensureString
+  CastUtil
 } from "/server/util/cast";
 
 
@@ -56,9 +56,9 @@ export class UserController extends Controller {
 
   @post(SERVER_PATH["registerUser"])
   public async postRegisterUser(request: PostRequest<"registerUser">, response: PostResponse<"registerUser">): Promise<void> {
-    let name = ensureString(request.body.name);
-    let email = ensureString(request.body.email);
-    let password = ensureString(request.body.password);
+    let name = CastUtil.ensureString(request.body.name);
+    let email = CastUtil.ensureString(request.body.email);
+    let password = CastUtil.ensureString(request.body.password);
     try {
       let user = await UserModel.register(name, email, password);
       let body = UserSkeleton.from(user);
@@ -90,7 +90,7 @@ export class UserController extends Controller {
   @before(verifyUser())
   public async postChangeUserEmail(request: PostRequest<"changeUserEmail">, response: PostResponse<"changeUserEmail">): Promise<void> {
     let user = request.user!;
-    let email = ensureString(request.body.email);
+    let email = CastUtil.ensureString(request.body.email);
     try {
       await user.changeEmail(email);
       let body = UserSkeleton.from(user);
@@ -112,7 +112,7 @@ export class UserController extends Controller {
   @before(verifyUser())
   public async postChangeUserPassword(request: PostRequest<"changeUserPassword">, response: PostResponse<"changeUserPassword">): Promise<void> {
     let user = request.user!;
-    let password = ensureString(request.body.password);
+    let password = CastUtil.ensureString(request.body.password);
     try {
       await user.changePassword(password);
       let body = UserSkeleton.from(user);

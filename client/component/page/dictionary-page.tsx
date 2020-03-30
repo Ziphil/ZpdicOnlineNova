@@ -3,16 +3,18 @@
 import * as queryParser from "query-string";
 import * as react from "react";
 import {
+  Fragment,
   ReactNode
 } from "react";
 import {
-  Button
+  Markdown
 } from "/client/component/atom";
 import {
   StoreComponent
 } from "/client/component/component";
 import {
   Loading,
+  PaginationButton,
   SearchForm,
   WordList
 } from "/client/component/compound";
@@ -43,6 +45,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   public state: State = {
     dictionary: null,
     hitWords: [],
+    showsExplanation: true,
     search: "",
     mode: "both",
     type: "prefix",
@@ -55,8 +58,12 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   public async componentDidMount(): Promise<void> {
-    let promise = Promise.all([this.fetchDictionary(), this.updateWords()]);
-    await promise;
+    let promises = [this.fetchDictionary()];
+    if (!this.state.showsExplanation) {
+      promises.push(this.updateWords());
+    }
+    let allPromise = Promise.all(promises);
+    await allPromise;
   }
 
   private async fetchDictionary(): Promise<void> {
@@ -81,7 +88,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
     if (response.status === 200 && !("error" in response.data)) {
       let hitWords = response.data;
-      this.setState({hitWords});
+      let showsExplanation = false;
+      this.setState({hitWords, showsExplanation});
     } else {
       this.setState({hitWords: []});
     }
@@ -93,6 +101,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     if (typeof query.search === "string") {
       this.state.search = query.search;
       this.state.initialSearch = query.search;
+      this.state.showsExplanation = false;
     }
     if (typeof query.mode === "string") {
       this.state.mode = SearchModeUtil.cast(query.mode);
@@ -123,19 +132,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     });
   }
 
-  private async movePreviousPage(): Promise<void> {
-    let page = this.state.page - 1;
-    if (page < 0) {
-      page = 0;
-    }
-    this.setState({page}, async () => {
-      window.scrollTo(0, 0);
-      await this.updateWords();
-    });
-  }
-
-  private async moveNextPage(): Promise<void> {
-    let page = this.state.page + 1;
+  private handlePageSet(page: number): void {
     this.setState({page}, async () => {
       window.scrollTo(0, 0);
       await this.updateWords();
@@ -143,19 +140,33 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   public render(): ReactNode {
+    let maxPage = (this.state.hitWords.length <= 40) ? this.state.page : this.state.page + 1;
+    let wordListNode;
+    if (this.state.showsExplanation) {
+      if (this.state.dictionary) {
+        wordListNode = (
+          <Markdown source={this.state.dictionary!.explanation}/>
+        );
+      }
+    } else {
+      wordListNode = (
+        <Fragment>
+          <div styleName="word-list">
+            <WordList words={this.state.hitWords} offset={0} size={40}/>
+          </div>
+          <div styleName="pagination-button">
+            <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>
+          </div>
+        </Fragment>
+      );
+    }
     let node = (
       <Page showsDictionary={true} dictionary={this.state.dictionary}>
         <div styleName="search-form">
           <SearchForm initialSearch={this.state.initialSearch} initialMode={this.state.initialMode} initialType={this.state.initialType} onAnySet={this.handleAnySet.bind(this)}/>
         </div>
         <Loading loading={this.state.dictionary === null}>
-          <div styleName="word-list">
-            <WordList words={this.state.hitWords} offset={0} size={40}/>
-          </div>
-          <div styleName="page-button">
-            <Button label="前ページ" position="left" disabled={this.state.page <= 0} onClick={this.movePreviousPage.bind(this)}/>
-            <Button label="次ページ" position="right" disabled={this.state.hitWords.length <= 40} onClick={this.moveNextPage.bind(this)}/>
-          </div>
+          {wordListNode}
         </Loading>
       </Page>
     );
@@ -170,6 +181,7 @@ type Props = {
 type State = {
   dictionary: SlimeDictionarySkeleton | null,
   hitWords: Array<SlimeWordSkeleton>,
+  showsExplanation: boolean,
   search: string,
   mode: SearchMode,
   type: SearchType,

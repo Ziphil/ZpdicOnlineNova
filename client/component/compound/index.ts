@@ -3,6 +3,7 @@
 export * from "./dashboard/change-user-email-form";
 export * from "./dashboard/change-user-password-form";
 export * from "./dashboard/create-dictionary-form";
+export * from "./dictionary-setting/change-dictionary-explanation-form";
 export * from "./dictionary-setting/change-dictionary-name-form";
 export * from "./dictionary-setting/change-dictionary-secret-form";
 export * from "./dictionary-setting/delete-dictionary-form";
@@ -21,6 +22,7 @@ export * from "./menu-item";
 export * from "./menu";
 export * from "./notification-list";
 export * from "./notification-pane";
+export * from "./pagination-button";
 export * from "./popup-information-pane";
 export * from "./register-form";
 export * from "./search-form";

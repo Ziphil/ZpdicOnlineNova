@@ -10,3 +10,9 @@
 .root >*:first-child {
   margin: 0px;
 }
+
+.pagination-button {
+  margin: 15px 0px 0px 0px;
+  line-height: $line-height;
+  text-align: center;
+}

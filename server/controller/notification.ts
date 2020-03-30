@@ -25,7 +25,7 @@ import {
   NotificationSkeleton
 } from "/server/skeleton/notification";
 import {
-  ensureNumber
+  CastUtil
 } from "/server/util/cast";
 
 
@@ -34,8 +34,8 @@ export class NotificationController extends Controller {
 
   @get(SERVER_PATH["fetchNotifications"])
   public async getFetchNotifications(request: GetRequest<"fetchNotifications">, response: GetResponse<"fetchNotifications">): Promise<void> {
-    let offset = ensureNumber(request.query.offset);
-    let size = ensureNumber(request.query.size);
+    let offset = CastUtil.ensureNumber(request.query.offset);
+    let size = CastUtil.ensureNumber(request.query.size);
     let notifications = await NotificationModel.findAll(offset, size);
     let body = notifications.map(NotificationSkeleton.from);
     response.json(body);

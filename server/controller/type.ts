@@ -21,6 +21,7 @@ export const SERVER_PATH = {
   deleteDictionary: "/api/dictionary/delete",
   changeDictionaryName: "/api/dictionary/edit/name",
   changeDictionarySecret: "/api/dictionary/edit/secret",
+  changeDictionaryExplanation: "/api/dictionary/edit/explanation",
   searchDictionary: "/api/dictionary/search",
   fetchDictionary: "/api/dictionary/info",
   fetchWholeDictionary: "/api/dictionary/whole",
@@ -82,6 +83,16 @@ type ProcessType = {
     get: Noop,
     post: {
       request: {number: number, secret: boolean},
+      response: {
+        200: SlimeDictionarySkeleton,
+        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+      }
+    }
+  },
+  changeDictionaryExplanation: {
+    get: Noop,
+    post: {
+      request: {number: number, explanation: string},
       response: {
         200: SlimeDictionarySkeleton,
         400: CustomErrorSkeleton<"invalidDictionaryNumber">

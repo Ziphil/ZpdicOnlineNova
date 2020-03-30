@@ -37,9 +37,7 @@ import {
   CustomErrorSkeleton
 } from "/server/skeleton/error";
 import {
-  ensureBoolean,
-  ensureNumber,
-  ensureString
+  CastUtil
 } from "/server/util/cast";
 
 
@@ -50,7 +48,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser())
   public async postCreateDictionary(request: PostRequest<"createDictionary">, response: PostResponse<"createDictionary">): Promise<void> {
     let user = request.user!;
-    let name = ensureString(request.body.name);
+    let name = CastUtil.ensureString(request.body.name);
     let dictionary = await SlimeDictionaryModel.createEmpty(name, user);
     let body = SlimeDictionarySkeleton.from(dictionary);
     response.json(body);
@@ -95,7 +93,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser(), verifyDictionary())
   public async postRenameDictionary(request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {
     let dictionary = request.dictionary;
-    let name = ensureString(request.body.name);
+    let name = CastUtil.ensureString(request.body.name);
     if (dictionary) {
       await dictionary.changeName(name);
       let body = SlimeDictionarySkeleton.from(dictionary);
@@ -110,7 +108,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser(), verifyDictionary())
   public async postChangeDictionarySecret(request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {
     let dictionary = request.dictionary;
-    let secret = ensureBoolean(request.body.secret);
+    let secret = CastUtil.ensureBoolean(request.body.secret);
     if (dictionary) {
       await dictionary.changeSecret(secret);
       let body = SlimeDictionarySkeleton.from(dictionary);
@@ -121,19 +119,34 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["changeDictionaryExplanation"])
+  @before(verifyUser(), verifyDictionary())
+  public async postChangeDictionaryExplanation(request: PostRequest<"changeDictionaryExplanation">, response: PostResponse<"changeDictionaryExplanation">): Promise<void> {
+    let dictionary = request.dictionary;
+    let explanation = CastUtil.ensureString(request.body.explanation);
+    if (dictionary) {
+      await dictionary.changeExplanation(explanation);
+      let body = SlimeDictionarySkeleton.from(dictionary);
+      response.json(body);
+    } else {
+      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      response.status(400).json(body);
+    }
+  }
+
   @get(SERVER_PATH["searchDictionary"])
   public async getSearchDictionary(request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
-    let number = ensureNumber(request.query.number);
-    let search = ensureString(request.query.search);
-    let mode = SearchModeUtil.cast(ensureString(request.query.mode));
-    let type = SearchTypeUtil.cast(ensureString(request.query.type));
-    let offset = ensureNumber(request.query.offset);
-    let size = ensureNumber(request.query.size);
+    let number = CastUtil.ensureNumber(request.query.number);
+    let search = CastUtil.ensureString(request.query.search);
+    let mode = SearchModeUtil.cast(CastUtil.ensureString(request.query.mode));
+    let type = SearchTypeUtil.cast(CastUtil.ensureString(request.query.type));
+    let offset = CastUtil.ensureNumber(request.query.offset);
+    let size = CastUtil.ensureNumber(request.query.size);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let parameter = new NormalSearchParameter(search, mode, type);
       let words = await dictionary.search(parameter, offset, size);
-      let body = words.map((word) => SlimeWordSkeleton.from(word));
+      let body = words.map(SlimeWordSkeleton.from);
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
@@ -143,7 +156,7 @@ export class DictionaryController extends Controller {
 
   @get(SERVER_PATH["fetchDictionary"])
   public async getFetchDictionary(request: GetRequest<"fetchDictionary">, response: GetResponse<"fetchDictionary">): Promise<void> {
-    let number = ensureNumber(request.query.number);
+    let number = CastUtil.ensureNumber(request.query.number);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let body = SlimeDictionarySkeleton.from(dictionary);
@@ -156,7 +169,7 @@ export class DictionaryController extends Controller {
 
   @get(SERVER_PATH["fetchWholeDictionary"])
   public async getFetchWholeDictionary(request: GetRequest<"fetchWholeDictionary">, response: GetResponse<"fetchWholeDictionary">): Promise<void> {
-    let number = ensureNumber(request.query.number);
+    let number = CastUtil.ensureNumber(request.query.number);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let body = await SlimeDictionarySkeleton.fromFetch(dictionary, true);

@@ -9,8 +9,123 @@
 
 .root p {
   margin: 5px 0px 0px 0px;
+  text-align: justify;
 }
 
-.root p:first-child {
+.root >p:first-child {
   margin: 0px;
+}
+
+.root ul {
+  margin: 5px 0px 0px 2px;
+  padding: 0px;
+  list-style-type: none;
+}
+
+.root >ul:first-child {
+  margin: 0px 0px 0px 2px;
+}
+
+.root ul >li {
+  margin-left: 0.7em;
+  text-align: justify;
+}
+
+.root ul >li::before {
+  width: 0.7em * (100% / 90%);
+  margin-left: -0.7em * (100% / 90%);
+  font-family: $icon-font-family;
+  font-size: 90%;
+  font-weight: 900;
+  color: $light-color;
+  content: "\F0DA";
+  display: inline-block;
+}
+
+.root ol {
+  margin: 5px 0px 0px 0px;
+  padding: 0px;
+  list-style-type: none;
+  counter-reset: section;
+}
+
+.root ol >li {
+  margin-left: 1.4em;
+  text-align: justify;
+  counter-increment: list;
+  position: relative;
+}
+
+.root ol >li::before {
+  top: 0.5em;
+  width: 0.8em * (100% / 70%);
+  height: 0.8em * (100% / 70%);
+  margin-left: -1.4em * (100% / 70%);
+  margin-right: 0.6em * (100% / 70%);
+  font-size: 70%;
+  color: $light-color;
+  line-height: 1;
+  text-align: center;
+  border: 1px $light-color solid;
+  border-radius: 50%;
+  content: counter(list);
+  display: inline-block;
+  position: absolute;
+}
+
+.root table {
+  margin: 5px auto 0px auto;
+  padding: 0px;
+  border-collapse: separate;
+  border-spacing: 0px;
+  border-radius: $small-border-radius;
+}
+
+.root >table {
+  margin: 0px auto;
+}
+
+.root tr >* {
+  padding: 0.1em 0.5em;
+  text-align: left;
+  border-bottom: 1px $light-border-color solid;
+  border-right: 1px $light-border-color solid;
+}
+
+.root tr >th {
+  font-weight: normal;
+  background-color: $strong-background-color;
+}
+
+.root thead tr:first-child >* {
+  border-top: 1px $light-border-color solid;
+}
+
+.root tr >*:first-child {
+  border-left: 1px $light-border-color solid;
+}
+
+.root thead tr:first-child >*:first-child {
+  border-top-left-radius: $small-border-radius;
+}
+
+.root thead tr:first-child >*:last-child {
+  border-top-right-radius: $small-border-radius;
+}
+
+.root tbody tr:last-child >*:first-child {
+  border-bottom-left-radius: $small-border-radius;
+}
+
+.root tbody tr:last-child >*:last-child {
+  border-bottom-right-radius: $small-border-radius;
+}
+
+.root code {
+  padding: 0em 0.1em;
+  font-family: $monospace-font-family, monospace;
+  font-size: 90%;
+  font-feature-settings: "palt" 0, "pkna" 0;
+  background-color: $strong-background-color;
+  border-radius: $small-border-radius;
 }
