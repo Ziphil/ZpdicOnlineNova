@@ -81,7 +81,7 @@
   border-radius: $small-border-radius;
 }
 
-.root >table {
+.root >table:first-child {
   margin: 0px auto;
 }
 
