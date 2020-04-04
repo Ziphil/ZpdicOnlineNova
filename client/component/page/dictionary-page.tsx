@@ -44,6 +44,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
     dictionary: null,
+    hitSize: 0,
     hitWords: [],
     showsExplanation: true,
     search: "",
@@ -87,11 +88,12 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let size = 41;
     let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
     if (response.status === 200 && !("error" in response.data)) {
+      let hitSize = response.data.hitSize;
       let hitWords = response.data.hitWords;
       let showsExplanation = false;
-      this.setState({hitWords, showsExplanation});
+      this.setState({hitSize, hitWords, showsExplanation});
     } else {
-      this.setState({hitWords: []});
+      this.setState({hitSize: 0, hitWords: []});
     }
     this.deserializeQuery();
   }
@@ -140,7 +142,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   public render(): ReactNode {
-    let maxPage = (this.state.hitWords.length <= 40) ? this.state.page : this.state.page + 1;
+    let maxPage = Math.ceil(this.state.hitSize / 40);
     let wordListNode;
     if (this.state.showsExplanation) {
       if (this.state.dictionary) {
@@ -180,6 +182,7 @@ type Props = {
 };
 type State = {
   dictionary: SlimeDictionarySkeleton | null,
+  hitSize: number,
   hitWords: Array<SlimeWordSkeleton>,
   showsExplanation: boolean,
   search: string,
