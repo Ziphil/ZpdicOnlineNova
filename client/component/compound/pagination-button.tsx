@@ -57,7 +57,7 @@ export class PaginationButton extends Component<Props, State> {
 
   public render(): ReactNode {
     let outerThis = this;
-    let calculateButtonSpecs = function (direction: "left" | "right"): Array<{page: number}> {
+    let calculateButtonSpecs = function (direction: "left" | "right"): Array<{page: number, redundant: boolean, current: boolean}> {
       let targetPage = (direction === "left") ? outerThis.props.minPage : outerThis.props.maxPage;
       let currentPage = targetPage;
       let pages = [];
@@ -65,23 +65,25 @@ export class PaginationButton extends Component<Props, State> {
       for (let i = 0 ; i < 3 ; i ++) {
         let roundedCurrentPage = Math.round(currentPage);
         if (pages.indexOf(roundedCurrentPage) < 0 && roundedCurrentPage !== outerThis.state.page) {
+          let redundant = i > 0;
           pages.push(roundedCurrentPage);
-          specs.push({page: roundedCurrentPage});
+          specs.push({page: roundedCurrentPage, redundant, current: false});
         }
         currentPage = (currentPage + outerThis.state.page) / 2;
       }
-      for (let i = 1 ; i >= 1 ; i --) {
-        let nextPage = (direction === "left") ? outerThis.state.page - i : outerThis.state.page + i;
+      for (let i = 0 ; i >= 0 ; i --) {
+        let nextPage = (direction === "left") ? outerThis.state.page - i - 1 : outerThis.state.page + i + 1;
         if (pages.indexOf(nextPage) < 0 && ((direction === "left" && nextPage > targetPage) || (direction === "right" && nextPage < targetPage))) {
+          let redundant = i > 0;
           pages.push(nextPage);
-          specs.push({page: nextPage});
+          specs.push({page: nextPage, redundant, current: false});
         }
       }
       return specs;
     };
     let buttonSpecs = [];
     buttonSpecs.push(...calculateButtonSpecs("left"));
-    buttonSpecs.push({page: this.state.page, current: true});
+    buttonSpecs.push({page: this.state.page, redundant: false, current: true});
     buttonSpecs.push(...calculateButtonSpecs("right").reverse());
     let buttonNodes = buttonSpecs.map((spec, index) => {
       let position = "middle" as "alone" | "left" | "right" | "middle";
@@ -92,9 +94,11 @@ export class PaginationButton extends Component<Props, State> {
       } else if (index === buttonSpecs.length - 1) {
         position = "right";
       }
+      let disabled = spec.current;
+      let styleName = (spec.redundant) ? "redundant" : "";
       let buttonNode = (
-        <div>
-          <Button label={(spec.page + 1).toString()} position={position} key={index} onClick={() => this.movePage(spec.page)}/>
+        <div styleName={styleName}>
+          <Button label={(spec.page + 1).toString()} position={position} disabled={disabled} key={index} onClick={() => this.movePage(spec.page)}/>
         </div>
       );
       return buttonNode;

@@ -16,3 +16,9 @@
 .root >*:last-child {
   margin: 0px 0px 0px 15px;
 }
+
+.redundant {
+  @include smartphone {
+    display: none;
+  }
+}
