@@ -35,17 +35,17 @@ export function verifyUser(authority?: string): RequestHandler {
               request.user = user;
               next();
             } else {
-              response.sendStatus(403);
+              response.status(403).end();
             }
           } else {
-            response.sendStatus(401);
+            response.status(401).end();
           }
         } else {
-          response.sendStatus(401);
+          response.status(401).end();
         }
       });
     } else {
-      response.sendStatus(401);
+      response.status(401).end();
     }
   };
   return handler;
@@ -67,7 +67,7 @@ export function verifyDictionary(): RequestHandler {
         request.dictionary = dictionary;
         next();
       } else {
-        response.sendStatus(403);
+        response.status(403).end();
       }
     } else {
       next();
@@ -98,7 +98,7 @@ export function login(expiresIn: number): RequestHandler {
         }
       });
     } else {
-      response.sendStatus(401);
+      response.status(401).end();
     }
   };
   return handler;
