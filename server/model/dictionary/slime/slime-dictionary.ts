@@ -157,7 +157,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return words;
   }
 
-  public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<Array<SlimeWordDocument>> {
+  public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<{hitSize: number, hitWords: Array<SlimeWordDocument>}> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;
@@ -221,9 +221,11 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
       finalQuery = SlimeWordModel.find();
     }
     finalQuery = finalQuery.sort("name");
-    finalQuery = QueryUtil.restrict(finalQuery, offset, size);
-    let hitWords = await finalQuery.exec();
-    return hitWords;
+    let countQuery = SlimeWordModel.countDocuments(finalQuery.getQuery());
+    let restrictedQuery = QueryUtil.restrict(finalQuery, offset, size);
+    let hitSize = await countQuery.exec();
+    let hitWords = await restrictedQuery.exec();
+    return {hitSize, hitWords};
   }
 
   public async countWords(): Promise<number> {

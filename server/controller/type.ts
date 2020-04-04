@@ -114,7 +114,7 @@ type ProcessType = {
     get: {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
       response: {
-        200: Array<SlimeWordSkeleton>,
+        200: {hitSize: number, hitWords: Array<SlimeWordSkeleton>},
         400: CustomErrorSkeleton<"invalidDictionaryNumber">
       }
     },

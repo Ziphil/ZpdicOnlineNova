@@ -145,8 +145,10 @@ export class DictionaryController extends Controller {
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let parameter = new NormalSearchParameter(search, mode, type);
-      let words = await dictionary.search(parameter, offset, size);
-      let body = words.map(SlimeWordSkeleton.from);
+      let result = await dictionary.search(parameter, offset, size);
+      let hitSize = result.hitSize;
+      let hitWordsBody = result.hitWords.map(SlimeWordSkeleton.from);
+      let body = {hitSize, hitWords: hitWordsBody};
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
