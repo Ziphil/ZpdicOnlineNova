@@ -1,3 +1,10 @@
 @charset "utf-8";
 
 @import "/client/component/mixin.scss";
+
+
+.pagination-button {
+  margin: 15px 0px 0px 0px;
+  line-height: $line-height;
+  text-align: center;
+}
