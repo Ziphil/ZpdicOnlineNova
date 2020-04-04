@@ -97,8 +97,8 @@ export class PaginationButton extends Component<Props, State> {
       let disabled = spec.current;
       let styleName = (spec.redundant) ? "redundant" : "";
       let buttonNode = (
-        <div styleName={styleName}>
-          <Button label={(spec.page + 1).toString()} position={position} disabled={disabled} key={index} onClick={() => this.movePage(spec.page)}/>
+        <div styleName={styleName} key={index}>
+          <Button label={(spec.page + 1).toString()} position={position} disabled={disabled} onClick={() => this.movePage(spec.page)}/>
         </div>
       );
       return buttonNode;
