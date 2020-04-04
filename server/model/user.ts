@@ -11,13 +11,14 @@ import {
 } from "/server/model/error";
 
 
+const NAME_VALIDATION = /^[a-zA-Z0-9_-]+$/;
 const EMAIL_VALIDATION = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const SALT_ROUND = 10;
 
 
 export class User {
 
-  @prop({required: true, unique: true, validate: /^[a-zA-Z0-9_-]+$/})
+  @prop({required: true, unique: true, validate: NAME_VALIDATION})
   public name!: string;
 
   @prop({required: true, validate: EMAIL_VALIDATION})
@@ -25,6 +26,9 @@ export class User {
 
   @prop({required: true})
   public hash!: string;
+
+  @prop()
+  public authority?: string;
 
   // 渡された情報からユーザーを作成し、データベースに保存します。
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。

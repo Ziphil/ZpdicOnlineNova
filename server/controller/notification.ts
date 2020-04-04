@@ -8,10 +8,14 @@ import {
   PostResponse
 } from "/server/controller/controller";
 import {
+  before,
   controller,
   get,
   post
 } from "/server/controller/decorator";
+import {
+  verifyUser
+} from "/server/controller/middle";
 import {
   SERVER_PATH
 } from "/server/controller/type";
@@ -31,6 +35,17 @@ import {
 
 @controller("/")
 export class NotificationController extends Controller {
+
+  @post(SERVER_PATH["addNotification"])
+  @before(verifyUser("admin"))
+  public async postAddNotification(request: PostRequest<"addNotification">, response: PostResponse<"addNotification">): Promise<void> {
+    let type = CastUtil.ensureString(request.body.type);
+    let title = CastUtil.ensureString(request.body.title);
+    let text = CastUtil.ensureString(request.body.text);
+    let notification = await NotificationModel.add(type, title, text);
+    let body = NotificationSkeleton.from(notification);
+    response.json(body);
+  }
 
   @get(SERVER_PATH["fetchNotifications"])
   public async getFetchNotifications(request: GetRequest<"fetchNotifications">, response: GetResponse<"fetchNotifications">): Promise<void> {

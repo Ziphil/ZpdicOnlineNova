@@ -21,7 +21,8 @@ import {
 // リクエストのヘッダーに書き込まれたトークンを利用して認証を行います。
 // 認証に成功した場合、request オブジェクトの user プロパティにユーザーオブジェクトを書き込み、次の処理を行います。
 // 認証に失敗した場合、ステータスコード 401 を返して終了します。
-export function verifyUser(authority?: unknown): RequestHandler {
+// なお、引数に権限を表す文字列が指定された場合、追加でユーザーが指定の権限を保持しているかチェックし、権限がなかった場合、ステータスコード 403 を返して終了します。
+export function verifyUser(authority?: string): RequestHandler {
   let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     let token = request.signedCookies.authorization || request.headers.authorization;
     if (typeof token === "string") {
@@ -30,17 +31,21 @@ export function verifyUser(authority?: unknown): RequestHandler {
           let anyData = data as any;
           let user = await UserModel.findById(anyData.id).exec();
           if (user) {
-            request.user = user;
-            next();
+            if (!authority || user.authority === authority) {
+              request.user = user;
+              next();
+            } else {
+              response.status(403).end();
+            }
           } else {
-            response.sendStatus(401);
+            response.status(401).end();
           }
         } else {
-          response.sendStatus(401);
+          response.status(401).end();
         }
       });
     } else {
-      response.sendStatus(401);
+      response.status(401).end();
     }
   };
   return handler;
@@ -62,7 +67,7 @@ export function verifyDictionary(): RequestHandler {
         request.dictionary = dictionary;
         next();
       } else {
-        response.sendStatus(403);
+        response.status(403).end();
       }
     } else {
       next();
@@ -93,7 +98,7 @@ export function login(expiresIn: number): RequestHandler {
         }
       });
     } else {
-      response.sendStatus(401);
+      response.status(401).end();
     }
   };
   return handler;

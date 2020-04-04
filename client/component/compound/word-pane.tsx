@@ -18,11 +18,26 @@ import {
 @applyStyle(require("./word-pane.scss"))
 export class WordPane extends Component<Props, State> {
 
+  private renderNameNode(): ReactNode {
+    let tagNodes = this.props.word.tags.map((tag, index) => {
+      let tagNode = (tag !== "") ? <span styleName="box" key={index}>{tag}</span> : undefined;
+      return tagNode;
+    });
+    let node = (
+      <div styleName="name-wrapper">
+        <div styleName="name">{this.props.word.name}</div>
+        <div styleName="tag">{tagNodes}</div>
+      </div>
+    );
+    return node;
+  }
+
   private renderEquivalentNode(): ReactNode {
     let innerNodes = this.props.word.equivalents.map((equivalent, index) => {
+      let titleNode = (equivalent.title !== "") ? <span styleName="box">{equivalent.title}</span> : undefined;
       let innerNode = (
         <p styleName="text" key={index}>
-          <span styleName="box">{equivalent.title}</span>
+          {titleNode}
           {equivalent.names.join(", ")}
         </p>
       );
@@ -64,10 +79,11 @@ export class WordPane extends Component<Props, State> {
       groupedRelations[title].push(relation.name);
     }
     let innerNodes = Object.keys(groupedRelations).map((title, index) => {
+      let titleNode = (title !== "") ? <span styleName="box">{title}</span> : undefined;
       let innerNode = (
         <p styleName="text" key={index}>
-          <span styleName="confer">cf:</span>
-          <span styleName="box">{title}</span>
+          <span styleName="confer">&#xF0A4;</span>
+          {titleNode}
           {groupedRelations[title].join(", ")}
         </p>
       );
@@ -85,12 +101,13 @@ export class WordPane extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    let nameNode = this.renderNameNode();
     let equivalentNode = this.renderEquivalentNode();
     let informationNode = this.renderInformationNode();
     let relationNode = this.renderRelationNode();
     let node = (
       <div styleName="root">
-        <div styleName="name">{this.props.word.name}</div>
+        {nameNode}
         {equivalentNode}
         {informationNode}
         {relationNode}
