@@ -63,7 +63,7 @@ export class PaginationButton extends Component<Props, State> {
       let buttonPages = [];
       let buttonSpecs = [];
       for (let i = 0 ; i < 3 ; i ++) {
-        let roundedCurrentPage = Math.round(currentPage);
+        let roundedCurrentPage = (direction === "left") ? Math.floor(currentPage) : Math.ceil(currentPage);
         if (buttonPages.indexOf(roundedCurrentPage) < 0 && roundedCurrentPage !== outerThis.state.page) {
           let redundant = i > 0;
           buttonPages.push(roundedCurrentPage);
