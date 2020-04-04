@@ -142,7 +142,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   public render(): ReactNode {
-    let maxPage = Math.ceil(this.state.hitSize / 40);
+    let maxPage = Math.ceil(this.state.hitSize / 40) - 1;
     let wordListNode;
     if (this.state.showsExplanation) {
       if (this.state.dictionary) {
