@@ -22,6 +22,7 @@ export const SERVER_PATH = {
   changeDictionaryName: "/api/dictionary/edit/name",
   changeDictionarySecret: "/api/dictionary/edit/secret",
   changeDictionaryExplanation: "/api/dictionary/edit/explanation",
+  addNotification: "/api/news/add",
   searchDictionary: "/api/dictionary/search",
   fetchDictionary: "/api/dictionary/info",
   fetchWholeDictionary: "/api/dictionary/whole",
@@ -99,6 +100,16 @@ type ProcessType = {
       }
     }
   },
+  addNotification: {
+    get: Noop,
+    post: {
+      request: {type: string, title: string, text: string},
+      response: {
+        200: NotificationSkeleton,
+        400: never
+      }
+    }
+  }
   searchDictionary: {
     get: {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
