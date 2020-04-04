@@ -29,14 +29,15 @@ export class DictionaryList extends Component<Props, State> {
   public render(): ReactNode {
     let offset = this.props.size * this.state.page;
     let maxPage = Math.ceil(this.props.dictionaries.length / this.props.size) - 1;
-    let dictionaries = this.props.dictionaries;
-    let displayedDictionaries = dictionaries.slice(offset, offset + this.props.size);
+    let displayedDictionaries = this.props.dictionaries.slice(offset, offset + this.props.size);
     let dictionaryPanes = displayedDictionaries.map((dictionary) => {
       return <DictionaryPane dictionary={dictionary} showsSetting={this.props.showsSetting} key={dictionary.id}/>;
     });
     let node = (
       <div styleName="root">
-        {dictionaryPanes}
+        <div styleName="dictionary">
+          {dictionaryPanes}
+        </div>
         <div styleName="pagination-button">
           <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.setState({page})}/>
         </div>
