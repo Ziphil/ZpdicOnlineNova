@@ -18,6 +18,22 @@ import {
 @applyStyle(require("./word-pane.scss"))
 export class WordPane extends Component<Props, State> {
 
+  private renderNameNode(): ReactNode {
+    let tagNodes = this.props.word.tags.map((tag, index) => {
+      let tagNode = (
+        <span styleName="box" key={index}>{tag}</span>
+      );
+      return tagNode;
+    });
+    let node = (
+      <div styleName="name-wrapper">
+        <div styleName="name">{this.props.word.name}</div>
+        <div styleName="tag">{tagNodes}</div>
+      </div>
+    );
+    return node;
+  }
+
   private renderEquivalentNode(): ReactNode {
     let innerNodes = this.props.word.equivalents.map((equivalent, index) => {
       let innerNode = (
@@ -85,12 +101,13 @@ export class WordPane extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    let nameNode = this.renderNameNode();
     let equivalentNode = this.renderEquivalentNode();
     let informationNode = this.renderInformationNode();
     let relationNode = this.renderRelationNode();
     let node = (
       <div styleName="root">
-        <div styleName="name">{this.props.word.name}</div>
+        {nameNode}
         {equivalentNode}
         {informationNode}
         {relationNode}
