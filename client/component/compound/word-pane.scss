@@ -53,8 +53,8 @@
 }
 
 .confer {
+  @include icon-font;
   margin: 0em 0.5em 0em 0em;
-  font-size: 70%;
   color: $light-color;
 }
 

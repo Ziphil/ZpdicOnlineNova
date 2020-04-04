@@ -82,7 +82,7 @@ export class WordPane extends Component<Props, State> {
       let titleNode = (title !== "") ? <span styleName="box">{title}</span> : undefined;
       let innerNode = (
         <p styleName="text" key={index}>
-          <span styleName="confer">cf:</span>
+          <span styleName="confer">&#xF0A4;</span>
           {titleNode}
           {groupedRelations[title].join(", ")}
         </p>
