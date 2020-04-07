@@ -17,7 +17,7 @@ import {
 } from "/server/model/dictionary/slime";
 
 
-export class SlimeStream extends EventEmitter {
+export class SlimeDeserializer extends EventEmitter {
 
   public path: string;
   private stream: any;

@@ -16,7 +16,7 @@ import {
   NormalSearchParameter
 } from "/server/model/dictionary/search-parameter";
 import {
-  SlimeStream,
+  SlimeDeserializer,
   SlimeWord,
   SlimeWordDocument,
   SlimeWordModel
@@ -99,7 +99,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     await SlimeWordModel.deleteMany({}).where("dictionary", this).exec();
     let nextExternalData = {} as any;
     let promise = new Promise<SlimeDictionaryDocument>((resolve, reject) => {
-      let stream = new SlimeStream(path);
+      let stream = new SlimeDeserializer(path);
       let count = 0;
       stream.on("word", (word) => {
         word.dictionary = this;
