@@ -60,7 +60,7 @@ export class SlimeDeserializer extends EventEmitter {
     return stream;
   }
 
-  public on<E extends keyof SlimeStreamType>(event: E, listener: (...args: SlimeStreamType[E]) => void): this;
+  public on<E extends keyof SlimeDeserializerType>(event: E, listener: (...args: SlimeDeserializerType[E]) => void): this;
   public on(event: string | symbol, listener: (...args: any) => void): this {
     super.on(event, listener);
     return this;
@@ -106,7 +106,7 @@ export class SlimeDeserializer extends EventEmitter {
 }
 
 
-interface SlimeStreamType {
+interface SlimeDeserializerType {
 
   word: [SlimeWordDocument];
   other: [string, any];
