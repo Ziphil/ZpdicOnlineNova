@@ -44,6 +44,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
     dictionary: null,
+    authorized: false,
     hitSize: 0,
     hitWords: [],
     showsExplanation: true,
@@ -59,7 +60,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   public async componentDidMount(): Promise<void> {
-    let promises = [this.fetchDictionary()];
+    let promises = [this.fetchDictionary(), this.checkAuthorization()];
     if (!this.state.showsExplanation) {
       promises.push(this.updateWords());
     }
@@ -75,6 +76,14 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
+    }
+  }
+
+  private async checkAuthorization(): Promise<void> {
+    let number = +this.props.match!.params.number;
+    let response = await this.requestGet("checkDictionaryAuthorization", {number}, true);
+    if (response.status === 200) {
+      this.setState({authorized: true});
     }
   }
 
@@ -163,7 +172,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
       );
     }
     let node = (
-      <Page showsDictionary={true} dictionary={this.state.dictionary}>
+      <Page showsDictionary={true} showsDictionarySetting={this.state.authorized} dictionary={this.state.dictionary}>
         <div styleName="search-form">
           <SearchForm initialSearch={this.state.initialSearch} initialMode={this.state.initialMode} initialType={this.state.initialType} onAnySet={this.handleAnySet.bind(this)}/>
         </div>
@@ -182,6 +191,7 @@ type Props = {
 };
 type State = {
   dictionary: SlimeDictionarySkeleton | null,
+  authorized: boolean,
   hitSize: number,
   hitWords: Array<SlimeWordSkeleton>,
   showsExplanation: boolean,
