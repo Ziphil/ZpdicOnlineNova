@@ -163,11 +163,13 @@ export class DictionaryController extends Controller {
   @get(SERVER_PATH["downloadDictionary"])
   public async getDownloadDictionary(request: GetRequest<"downloadDictionary">, response: GetResponse<"downloadDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
+    let fileName = CastUtil.ensureString(request.query.fileName);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let path = "./upload/download.json";
+      let fullFileName = (fileName || "dictionary") + ".json";
       await dictionary.download(path);
-      response.download(path);
+      response.download(path, fullFileName);
     } else {
       let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
       response.status(400).json(body);

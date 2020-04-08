@@ -123,7 +123,7 @@ type ProcessType = {
   },
   downloadDictionary: {
     get: {
-      request: {number: number},
+      request: {number: number, fileName?: string},
       response: {
         200: never,
         400: CustomErrorSkeleton<"invalidDictionaryNumber">
