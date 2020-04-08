@@ -28,7 +28,7 @@ export class DictionaryList extends Component<Props, State> {
 
   public render(): ReactNode {
     let offset = this.props.size * this.state.page;
-    let maxPage = Math.ceil(this.props.dictionaries.length / this.props.size) - 1;
+    let maxPage = Math.max(Math.ceil(this.props.dictionaries.length / this.props.size) - 1, 0);
     let displayedDictionaries = this.props.dictionaries.slice(offset, offset + this.props.size);
     let dictionaryPanes = displayedDictionaries.map((dictionary) => {
       return <DictionaryPane dictionary={dictionary} showsSetting={this.props.showsSetting} key={dictionary.id}/>;
