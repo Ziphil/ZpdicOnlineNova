@@ -105,7 +105,7 @@ export function login(expiresIn: number): RequestHandler {
 }
 
 export function logout(): RequestHandler {
-  let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
+  let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     response.clearCookie("authorization");
     next();
   };
