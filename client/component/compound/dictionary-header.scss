@@ -18,6 +18,7 @@
   margin: 0px 50px;
   height: 100%;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
   @media screen and (max-width: $page-width + 100px) {
@@ -28,6 +29,16 @@
     width: calc(100% - #{$page-horizontal-margin * 2});
     margin: 0px auto;
   }
+}
+
+.left {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.button >* {
+  margin: 0px 5px 0px 0px;
 }
 
 .name {

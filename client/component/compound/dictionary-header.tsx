@@ -5,6 +5,7 @@ import {
   ReactNode
 } from "react";
 import {
+  Button,
   Link
 } from "/client/component/atom";
 import {
@@ -24,6 +25,25 @@ import {
 @applyStyle(require("./dictionary-header.scss"))
 export class DictionaryHeader extends StoreComponent<Props, State> {
 
+  public static defaultProps: Partial<Props> = {
+    showsSetting: false,
+    showsDownload: true
+  };
+
+  private jumpSettingPage(): void {
+    if (this.props.dictionary) {
+      let path = "/dictionary/setting/" + this.props.dictionary.number;
+      this.pushPath(path);
+    }
+  }
+
+  private downloadDictionary(): void {
+    if (this.props.dictionary) {
+      let path = "/api/dictionary/download?number=" + this.props.dictionary.number;
+      location.replace(path);
+    }
+  }
+
   public render(): ReactNode {
     let nameNode;
     if (this.props.dictionary) {
@@ -31,10 +51,22 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
       let href = "/dictionary/" + this.props.dictionary.number + queryString;
       nameNode = <Link href={href} style="plane">{this.props.dictionary.name}</Link>;
     }
+    let settingButtonNode;
+    if (this.props.showsSetting) {
+      settingButtonNode = <Button label="&#xF013;" style="simple" usesIcon={true} onClick={this.jumpSettingPage.bind(this)}/>;
+    }
+    let downloadButtonNode;
+    if (this.props.showsDownload) {
+      downloadButtonNode = <Button label="&#xF019;" style="simple" usesIcon={true} onClick={this.downloadDictionary.bind(this)}/>;
+    }
     let node = (
       <div styleName="root">
         <div styleName="container">
           <div styleName="left">
+            <div styleName="button">
+              {settingButtonNode}
+              {downloadButtonNode}
+            </div>
             <div styleName="name">
               {nameNode}
             </div>
@@ -49,7 +81,9 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton | null;
+  dictionary: SlimeDictionarySkeleton | null,
+  showsSetting: boolean,
+  showsDownload: boolean
 };
 type State = {
 };
