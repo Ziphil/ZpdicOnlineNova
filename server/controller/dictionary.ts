@@ -1,6 +1,9 @@
 //
 
 import {
+  promises as fs
+} from "fs";
+import {
   Controller,
   GetRequest,
   GetResponse,
@@ -63,6 +66,7 @@ export class DictionaryController extends Controller {
       let promise = new Promise(async (resolve, reject) => {
         try {
           await dictionary!.upload(path);
+          await fs.unlink(path);
           resolve();
         } catch (error) {
           reject(error);
