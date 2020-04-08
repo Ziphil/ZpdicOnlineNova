@@ -20,17 +20,21 @@ import {
 export class SlimeDeserializer extends EventEmitter {
 
   public path: string;
-  private stream: any;
   private error: Error | null = null;
 
   public constructor(path: string) {
     super();
     this.path = path;
-    this.stream = this.createStream(path);
   }
 
-  private createStream(path: string): any {
-    let stream = oboe(createReadStream(path));
+  public on<E extends keyof SlimeDeserializerType>(event: E, listener: (...args: SlimeDeserializerType[E]) => void): this;
+  public on(event: string | symbol, listener: (...args: any) => void): this {
+    super.on(event, listener);
+    return this;
+  }
+
+  public start(): void {
+    let stream = oboe(createReadStream(this.path));
     stream.on("node:words.*", (data, jsonPath) => {
       let word = null;
       try {
@@ -57,13 +61,6 @@ export class SlimeDeserializer extends EventEmitter {
       this.error = reason.thrown;
       this.emit("error", reason.thrown);
     });
-    return stream;
-  }
-
-  public on<E extends keyof SlimeDeserializerType>(event: E, listener: (...args: SlimeDeserializerType[E]) => void): this;
-  public on(event: string | symbol, listener: (...args: any) => void): this {
-    super.on(event, listener);
-    return this;
   }
 
   private createWord(raw: any): SlimeWordDocument {

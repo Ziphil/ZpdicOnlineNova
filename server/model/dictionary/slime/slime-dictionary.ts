@@ -123,6 +123,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
         console.error(error);
         resolve(this);
       });
+      stream.start();
     });
     await promise;
     this.externalData = externalData;

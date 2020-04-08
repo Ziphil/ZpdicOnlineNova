@@ -25,6 +25,12 @@ export class SlimeSerializer extends EventEmitter {
     this.dictionary = dictionary;
   }
 
+  public on<E extends keyof SlimeSerializerType>(event: E, listener: (...args: SlimeSerializerType[E]) => void): this;
+  public on(event: string | symbol, listener: (...args: any) => void): this {
+    super.on(event, listener);
+    return this;
+  }
+
   public start(): void {
     let stream = SlimeWordModel.find().where("dictionary", this.dictionary).cursor();
     let writer = createWriteStream(this.path);
@@ -42,12 +48,6 @@ export class SlimeSerializer extends EventEmitter {
       this.error = error;
       this.emit("error", error);
     });
-  }
-
-  public on<E extends keyof SlimeSerializerType>(event: E, listener: (...args: SlimeSerializerType[E]) => void): this;
-  public on(event: string | symbol, listener: (...args: any) => void): this {
-    super.on(event, listener);
-    return this;
   }
 
   private createString(word: SlimeWordDocument): string {
