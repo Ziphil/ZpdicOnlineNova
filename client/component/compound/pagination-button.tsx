@@ -37,10 +37,7 @@ export class PaginationButton extends Component<Props, State> {
     if (page < this.props.minPage) {
       page = this.props.minPage;
     }
-    this.setState({page});
-    if (this.props.onSet) {
-      this.props.onSet(page);
-    }
+    this.movePage(page);
   }
 
   private moveNextPage(): void {
@@ -48,6 +45,10 @@ export class PaginationButton extends Component<Props, State> {
     if (page > this.props.maxPage) {
       page = this.props.maxPage;
     }
+    this.movePage(page);
+  }
+
+  private movePage(page: number): void {
     this.setState({page});
     if (this.props.onSet) {
       this.props.onSet(page);
@@ -55,10 +56,52 @@ export class PaginationButton extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    let outerThis = this;
+    let calculateButtonSpecs = function (direction: -1 | 1): Array<{page: number, redundant: boolean, current: boolean}> {
+      let targetPage = (direction === -1) ? outerThis.props.minPage : outerThis.props.maxPage;
+      let currentPage = outerThis.state.page;
+      let buttonSpecs = [];
+      let difference = 2;
+      for (let i = 0 ; i < 4 ; i ++) {
+        let nextPage = currentPage + (difference - 1) * direction;
+        if ((direction === -1 && nextPage > targetPage) || (direction === 1 && nextPage < targetPage)) {
+          let redundant = i > 0;
+          buttonSpecs.push({page: nextPage, redundant, current: false});
+        }
+        difference *= 2;
+      }
+      if ((direction === -1 && currentPage !== targetPage) || (direction === 1 && currentPage !== targetPage)) {
+        buttonSpecs.push({page: targetPage, redundant: false, current: false});
+      }
+      return buttonSpecs;
+    };
+    let wholeButtonSpecs = [];
+    wholeButtonSpecs.push(...calculateButtonSpecs(-1).reverse());
+    wholeButtonSpecs.push({page: this.state.page, redundant: false, current: true});
+    wholeButtonSpecs.push(...calculateButtonSpecs(1));
+    let buttonNodes = wholeButtonSpecs.map((spec, index) => {
+      let position = "middle" as "alone" | "left" | "right" | "middle";
+      if (index === 0 && index === wholeButtonSpecs.length - 1) {
+        position = "alone";
+      } else if (index === 0) {
+        position = "left";
+      } else if (index === wholeButtonSpecs.length - 1) {
+        position = "right";
+      }
+      let disabled = spec.current;
+      let styleName = (spec.redundant) ? "redundant" : "";
+      let buttonNode = (
+        <div styleName={styleName} key={index}>
+          <Button label={(spec.page + 1).toString()} position={position} disabled={disabled} onClick={() => this.movePage(spec.page)}/>
+        </div>
+      );
+      return buttonNode;
+    });
     let node = (
       <div styleName="root">
-        <Button label="前ページ" position="left" disabled={this.state.page <= this.props.minPage} onClick={this.movePreviousPage.bind(this)}/>
-        <Button label="次ページ" position="right" disabled={this.state.page >= this.props.maxPage} onClick={this.moveNextPage.bind(this)}/>
+        <Button label="&#xF060;" usesIcon={true} disabled={this.state.page <= this.props.minPage} onClick={this.movePreviousPage.bind(this)}/>
+        {buttonNodes}
+        <Button label="&#xF061;" usesIcon={true} disabled={this.state.page >= this.props.maxPage} onClick={this.moveNextPage.bind(this)}/>
       </div>
     );
     return node;

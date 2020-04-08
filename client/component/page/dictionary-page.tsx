@@ -44,6 +44,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
     dictionary: null,
+    authorized: false,
+    hitSize: 0,
     hitWords: [],
     showsExplanation: true,
     search: "",
@@ -58,7 +60,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   public async componentDidMount(): Promise<void> {
-    let promises = [this.fetchDictionary()];
+    let promises = [this.fetchDictionary(), this.checkAuthorization()];
     if (!this.state.showsExplanation) {
       promises.push(this.updateWords());
     }
@@ -77,6 +79,14 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     }
   }
 
+  private async checkAuthorization(): Promise<void> {
+    let number = +this.props.match!.params.number;
+    let response = await this.requestGet("checkDictionaryAuthorization", {number}, true);
+    if (response.status === 200) {
+      this.setState({authorized: true});
+    }
+  }
+
   private async updateWords(): Promise<void> {
     let number = +this.props.match!.params.number;
     let search = this.state.search;
@@ -87,11 +97,12 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let size = 41;
     let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
     if (response.status === 200 && !("error" in response.data)) {
-      let hitWords = response.data;
+      let hitSize = response.data.hitSize;
+      let hitWords = response.data.hitWords;
       let showsExplanation = false;
-      this.setState({hitWords, showsExplanation});
+      this.setState({hitSize, hitWords, showsExplanation});
     } else {
-      this.setState({hitWords: []});
+      this.setState({hitSize: 0, hitWords: []});
     }
     this.deserializeQuery();
   }
@@ -140,7 +151,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   public render(): ReactNode {
-    let maxPage = (this.state.hitWords.length <= 40) ? this.state.page : this.state.page + 1;
+    let maxPage = Math.ceil(this.state.hitSize / 40) - 1;
     let wordListNode;
     if (this.state.showsExplanation) {
       if (this.state.dictionary) {
@@ -161,7 +172,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
       );
     }
     let node = (
-      <Page showsDictionary={true} dictionary={this.state.dictionary}>
+      <Page showsDictionary={true} showsDictionarySetting={this.state.authorized} dictionary={this.state.dictionary}>
         <div styleName="search-form">
           <SearchForm initialSearch={this.state.initialSearch} initialMode={this.state.initialMode} initialType={this.state.initialType} onAnySet={this.handleAnySet.bind(this)}/>
         </div>
@@ -180,6 +191,8 @@ type Props = {
 };
 type State = {
   dictionary: SlimeDictionarySkeleton | null,
+  authorized: boolean,
+  hitSize: number,
   hitWords: Array<SlimeWordSkeleton>,
   showsExplanation: boolean,
   search: string,

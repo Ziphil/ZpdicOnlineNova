@@ -49,6 +49,11 @@
   border-radius: 0px $small-border-radius $small-border-radius 0px;
 }
 
+.root.middle {
+  margin: 0px -1px 0px 0px;
+  border-radius: 0px;
+}
+
 .root.caution {
   background: $caution-button-background;
 }

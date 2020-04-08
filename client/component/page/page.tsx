@@ -25,6 +25,7 @@ export class Page extends Component<Props, State> {
 
   public static defaultProps: Props = {
     showsDictionary: false,
+    showsDictionarySetting: false,
     dictionary: null
   };
 
@@ -33,7 +34,7 @@ export class Page extends Component<Props, State> {
     let dictionaryHeaderNode;
     if (this.props.showsDictionary) {
       styleNames.push("dictionary");
-      dictionaryHeaderNode = <DictionaryHeader dictionary={this.props.dictionary}/>;
+      dictionaryHeaderNode = <DictionaryHeader dictionary={this.props.dictionary} showsSetting={this.props.showsDictionarySetting}/>;
     }
     let node = (
       <div styleName={styleNames.join(" ")}>
@@ -53,6 +54,7 @@ export class Page extends Component<Props, State> {
 
 type Props = {
   showsDictionary: boolean,
+  showsDictionarySetting: boolean,
   dictionary: SlimeDictionarySkeleton | null;
 };
 type State = {

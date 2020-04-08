@@ -95,10 +95,10 @@ export class SlimeDictionarySkeleton extends Skeleton {
       let createPredicate = function (innerMode: string, innerType: string): boolean {
         let targets = createTargets(innerMode);
         let needle = createNeedle(innerType);
-        let result = targets.some((target) => {
+        let predicate = targets.some((target) => {
           return !!target.match(needle);
         });
-        return result;
+        return predicate;
       };
       let finalPredicate;
       if (mode === "name") {

@@ -1,6 +1,9 @@
 //
 
 import {
+  promises as fs
+} from "fs";
+import {
   Controller,
   GetRequest,
   GetResponse,
@@ -63,6 +66,7 @@ export class DictionaryController extends Controller {
       let promise = new Promise(async (resolve, reject) => {
         try {
           await dictionary!.upload(path);
+          await fs.unlink(path);
           resolve();
         } catch (error) {
           reject(error);
@@ -145,9 +149,27 @@ export class DictionaryController extends Controller {
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let parameter = new NormalSearchParameter(search, mode, type);
-      let words = await dictionary.search(parameter, offset, size);
-      let body = words.map(SlimeWordSkeleton.from);
+      let result = await dictionary.search(parameter, offset, size);
+      let hitSize = result.hitSize;
+      let hitWordsBody = result.hitWords.map(SlimeWordSkeleton.from);
+      let body = {hitSize, hitWords: hitWordsBody};
       response.json(body);
+    } else {
+      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      response.status(400).json(body);
+    }
+  }
+
+  @get(SERVER_PATH["downloadDictionary"])
+  public async getDownloadDictionary(request: GetRequest<"downloadDictionary">, response: GetResponse<"downloadDictionary">): Promise<void> {
+    let number = CastUtil.ensureNumber(request.query.number);
+    let fileName = CastUtil.ensureString(request.query.fileName);
+    let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
+    if (dictionary) {
+      let path = "./upload/download.json";
+      let fullFileName = (fileName || "dictionary") + ".json";
+      await dictionary.download(path);
+      response.download(path, fullFileName);
     } else {
       let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
       response.status(400).json(body);

@@ -9,7 +9,6 @@ import {
 } from "/client/component/component";
 import {
   DictionaryAggregationPane,
-  Loading,
   LoginForm,
   Logo,
   NotificationList
@@ -21,27 +20,11 @@ import {
 import {
   Page
 } from "/client/component/page/page";
-import {
-  NotificationSkeleton
-} from "/server/skeleton/notification";
 
 
 @route
 @applyStyle(require("./top-page.scss"))
 export class TopPage extends StoreComponent<Props, State> {
-
-  public state: State = {
-    notifications: null
-  };
-
-  public async componentDidMount(): Promise<void> {
-    let size = 2;
-    let response = await this.requestGet("fetchNotifications", {size});
-    if (response.status === 200) {
-      let notifications = response.data;
-      this.setState({notifications});
-    }
-  }
 
   public render(): ReactNode {
     let node = (
@@ -58,9 +41,7 @@ export class TopPage extends StoreComponent<Props, State> {
           <DictionaryAggregationPane/>
         </div>
         <div styleName="notification">
-          <Loading loading={this.state.notifications === null}>
-            <NotificationList notifications={this.state.notifications!} size={2} offset={0}/>
-          </Loading>
+          <NotificationList size={2} showsPagination={false}/>
         </div>
       </Page>
     );
@@ -73,5 +54,4 @@ export class TopPage extends StoreComponent<Props, State> {
 type Props = {
 };
 type State = {
-  notifications: Array<NotificationSkeleton> | null
 };

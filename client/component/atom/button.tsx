@@ -92,7 +92,7 @@ export class Button extends Component<Props, State> {
 
 type Props = {
   label: string,
-  position: "alone" | "left" | "right",
+  position: "alone" | "left" | "right" | "middle",
   style: "simple" | "normal" | "caution",
   usesIcon: boolean,
   reactive: boolean,

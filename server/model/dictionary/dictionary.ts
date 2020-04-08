@@ -10,6 +10,6 @@ import {
 
 export abstract class Dictionary<W> {
 
-  public abstract search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<Array<DocumentType<W>>>;
+  public abstract search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<{hitSize: number, hitWords: Array<DocumentType<W>>}>;
 
 }
