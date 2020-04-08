@@ -34,14 +34,29 @@ export class SlimeSerializer extends EventEmitter {
   public start(): void {
     let stream = SlimeWordModel.find().where("dictionary", this.dictionary).cursor();
     let writer = createWriteStream(this.path);
+    let first = true;
+    writer.write("{\"words\":[");
     stream.on("data", (word) => {
       let string = this.createString(word);
+      if (first) {
+        first = false;
+      } else {
+        writer.write(",");
+      }
       writer.write(string);
     });
     stream.on("end", () => {
       if (!this.error) {
-        writer.end();
-        this.emit("end");
+        writer.write("]");
+        let externalString = this.createExternalString();
+        if (externalString) {
+          writer.write(",");
+          writer.write(externalString);
+        }
+        writer.write("}");
+        writer.end(() => {
+          this.emit("end");
+        });
       }
     });
     stream.on("error", (error) => {
@@ -87,6 +102,12 @@ export class SlimeSerializer extends EventEmitter {
       raw["relations"].push(rawRelation);
     }
     let string = JSON.stringify(raw);
+    return string;
+  }
+
+  private createExternalString(): string {
+    let string = JSON.stringify(this.dictionary.externalData || {});
+    string = string.slice(1, -1);
     return string;
   }
 
