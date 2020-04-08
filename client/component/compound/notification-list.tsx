@@ -44,7 +44,7 @@ export class NotificationList extends StoreComponent<Props, State> {
 
   private renderNotificationPanes(): ReactNode {
     let offset = this.props.size * this.state.page;
-    let maxPage = Math.ceil(this.state.notifications!.length / this.props.size) - 1;
+    let maxPage = Math.max(Math.ceil(this.state.notifications!.length / this.props.size) - 1, 0);
     let displayedNotifications = this.state.notifications!.slice(offset, offset + this.props.size);
     let notificationPanes = displayedNotifications.map((notification) => {
       return <NotificationPane notification={notification} key={notification.id}/>;
