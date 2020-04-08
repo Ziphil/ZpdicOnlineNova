@@ -57,34 +57,28 @@ export class PaginationButton extends Component<Props, State> {
 
   public render(): ReactNode {
     let outerThis = this;
-    let calculateButtonSpecs = function (direction: "left" | "right"): Array<{page: number, redundant: boolean, current: boolean}> {
-      let targetPage = (direction === "left") ? outerThis.props.minPage : outerThis.props.maxPage;
-      let currentPage = targetPage;
-      let buttonPages = [];
+    let calculateButtonSpecs = function (direction: -1 | 1): Array<{page: number, redundant: boolean, current: boolean}> {
+      let targetPage = (direction === -1) ? outerThis.props.minPage : outerThis.props.maxPage;
+      let currentPage = outerThis.state.page;
       let buttonSpecs = [];
-      for (let i = 0 ; i < 3 ; i ++) {
-        let roundedCurrentPage = (direction === "left") ? Math.floor(currentPage) : Math.ceil(currentPage);
-        if (buttonPages.indexOf(roundedCurrentPage) < 0 && roundedCurrentPage !== outerThis.state.page) {
+      let difference = 2;
+      for (let i = 0 ; i < 4 ; i ++) {
+        let nextPage = currentPage + (difference - 1) * direction;
+        if ((direction === -1 && nextPage > targetPage) || (direction === 1 && nextPage < targetPage)) {
           let redundant = i > 0;
-          buttonPages.push(roundedCurrentPage);
-          buttonSpecs.push({page: roundedCurrentPage, redundant, current: false});
-        }
-        currentPage = (currentPage + outerThis.state.page) / 2;
-      }
-      for (let i = 0 ; i >= 0 ; i --) {
-        let nextPage = (direction === "left") ? outerThis.state.page - i - 1 : outerThis.state.page + i + 1;
-        if (buttonPages.indexOf(nextPage) < 0 && ((direction === "left" && nextPage > targetPage) || (direction === "right" && nextPage < targetPage))) {
-          let redundant = i > 0;
-          buttonPages.push(nextPage);
           buttonSpecs.push({page: nextPage, redundant, current: false});
         }
+        difference *= 2;
+      }
+      if ((direction === -1 && currentPage !== targetPage) || (direction === 1 && currentPage !== targetPage)) {
+        buttonSpecs.push({page: targetPage, redundant: false, current: false});
       }
       return buttonSpecs;
     };
     let wholeButtonSpecs = [];
-    wholeButtonSpecs.push(...calculateButtonSpecs("left"));
+    wholeButtonSpecs.push(...calculateButtonSpecs(-1).reverse());
     wholeButtonSpecs.push({page: this.state.page, redundant: false, current: true});
-    wholeButtonSpecs.push(...calculateButtonSpecs("right").reverse());
+    wholeButtonSpecs.push(...calculateButtonSpecs(1));
     let buttonNodes = wholeButtonSpecs.map((spec, index) => {
       let position = "middle" as "alone" | "left" | "right" | "middle";
       if (index === 0 && index === wholeButtonSpecs.length - 1) {
