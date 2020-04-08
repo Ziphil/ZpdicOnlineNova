@@ -68,12 +68,18 @@ export class DictionaryPane extends StoreComponent<Props, State> {
     }
     let node = (
       <a styleName="root" href={href} onClick={this.handleClick.bind(this)}>
-        <div styleName="name-wapper">
-          <div styleName="name">
-            {settingButtonNode}
-            {name}
+        <div styleName="head">
+          <div styleName="name-wrapper">
+            <div styleName="button">
+              {settingButtonNode}
+            </div>
+            <div styleName="name">
+              {name}
+            </div>
           </div>
-          <div styleName="status">{statusString}</div>
+          <div styleName="status">
+            {statusString}
+          </div>
         </div>
         <div styleName="information">
           最終更新: {updatedDateString}
