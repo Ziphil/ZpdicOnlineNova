@@ -156,6 +156,20 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @get(SERVER_PATH["downloadDictionary"])
+  public async getDownloadDictionary(request: GetRequest<"downloadDictionary">, response: GetResponse<"downloadDictionary">): Promise<void> {
+    let number = CastUtil.ensureNumber(request.query.number);
+    let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
+    if (dictionary) {
+      let path = "./upload/download.json";
+      await dictionary.download(path);
+      response.download(path);
+    } else {
+      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      response.status(400).json(body);
+    }
+  }
+
   @get(SERVER_PATH["fetchDictionary"])
   public async getFetchDictionary(request: GetRequest<"fetchDictionary">, response: GetResponse<"fetchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);

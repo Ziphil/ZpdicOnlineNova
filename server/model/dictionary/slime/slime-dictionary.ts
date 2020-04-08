@@ -17,6 +17,7 @@ import {
 } from "/server/model/dictionary/search-parameter";
 import {
   SlimeDeserializer,
+  SlimeSerializer,
   SlimeWord,
   SlimeWordDocument,
   SlimeWordModel
@@ -97,7 +98,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     this.externalData = {};
     await this.save();
     await SlimeWordModel.deleteMany({}).where("dictionary", this).exec();
-    let nextExternalData = {} as any;
+    let externalData = {} as any;
     let promise = new Promise<SlimeDictionaryDocument>((resolve, reject) => {
       let stream = new SlimeDeserializer(path);
       let count = 0;
@@ -109,7 +110,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
         }
       });
       stream.on("other", (key, data) => {
-        nextExternalData[key] = data;
+        externalData[key] = data;
       });
       stream.on("end", () => {
         this.status = "ready";
@@ -124,9 +125,23 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
       });
     });
     await promise;
-    this.externalData = nextExternalData;
+    this.externalData = externalData;
     await this.save();
     return this;
+  }
+
+  public async download(this: SlimeDictionaryDocument, path: string): Promise<void> {
+    let promise = new Promise<void>((resolve, reject) => {
+      let stream = new SlimeSerializer(path, this);
+      stream.on("end", () => {
+        resolve();
+      });
+      stream.on("error", (error) => {
+        reject(error);
+      });
+      stream.start();
+    });
+    await promise;
   }
 
   public async removeWhole(this: SlimeDictionaryDocument): Promise<void> {

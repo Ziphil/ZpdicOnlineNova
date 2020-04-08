@@ -24,6 +24,7 @@ export const SERVER_PATH = {
   changeDictionaryExplanation: "/api/dictionary/edit/explanation",
   addNotification: "/api/news/add",
   searchDictionary: "/api/dictionary/search",
+  downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
   fetchWholeDictionary: "/api/dictionary/whole",
   fetchDictionaries: "/api/dictionary/list",
@@ -115,6 +116,16 @@ type ProcessType = {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
       response: {
         200: {hitSize: number, hitWords: Array<SlimeWordSkeleton>},
+        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+      }
+    },
+    post: Noop
+  },
+  downloadDictionary: {
+    get: {
+      request: {number: number},
+      response: {
+        200: never,
         400: CustomErrorSkeleton<"invalidDictionaryNumber">
       }
     },
