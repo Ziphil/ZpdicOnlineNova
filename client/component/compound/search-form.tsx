@@ -78,7 +78,7 @@ export class SearchForm extends Component<Props, State> {
       {value: "regular", label: "正規"}
     ] as const;
     let node = (
-      <form styleName="root">
+      <form styleName="root" onSubmit={(event) => event.preventDefault()}>
         <Input initialValue={this.props.initialSearch} onSet={debounce(this.handleSearchSet.bind(this), 500)}/>
         <div styleName="radio-wrapper">
           <RadioGroup name="mode" initialValue={this.props.initialMode || "both"} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
