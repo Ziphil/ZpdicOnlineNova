@@ -16,6 +16,9 @@ import {
 } from "mongoose";
 import * as multer from "multer";
 import {
+  DebugController
+} from "/server/controller/debug";
+import {
   DictionaryController
 } from "/server/controller/dictionary";
 import {
@@ -101,6 +104,7 @@ class Main {
   // ルーターの設定を行います。
   // このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。
   private setupRouters(): void {
+    DebugController.use(this.application);
     DictionaryController.use(this.application);
     NotificationController.use(this.application);
     UserController.use(this.application);
