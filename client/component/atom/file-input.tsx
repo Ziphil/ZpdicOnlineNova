@@ -19,7 +19,6 @@ export class FileInput extends Component<Props, State> {
   public static defaultProps: Partial<Props> = {
     file: null
   };
-
   public state: State = {
     fileName: ""
   };
