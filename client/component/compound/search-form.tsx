@@ -1,14 +1,11 @@
 //
 
-import {
-  debounce
-} from "lodash-es";
 import * as react from "react";
 import {
   ReactNode
 } from "react";
 import {
-  Input,
+  InputBeta as Input,
   RadioGroup
 } from "/client/component/atom";
 import {
@@ -26,11 +23,17 @@ import {
 @applyStyle(require("./search-form.scss"))
 export class SearchForm extends Component<Props, State> {
 
+  public static defaultProps: Props = {
+    search: "",
+    mode: "both",
+    type: "prefix"
+  };
+
   public constructor(props: any) {
     super(props);
-    let search = this.props.initialSearch || "";
-    let mode = this.props.initialMode || "both";
-    let type = this.props.initialType || "prefix";
+    let search = this.props.search;
+    let mode = this.props.mode;
+    let type = this.props.type;
     this.state = {search, mode, type};
   }
 
@@ -79,10 +82,10 @@ export class SearchForm extends Component<Props, State> {
     ] as const;
     let node = (
       <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-        <Input initialValue={this.props.initialSearch} onSet={debounce(this.handleSearchSet.bind(this), 500)}/>
+        <Input value={this.props.search} onSet={this.handleSearchSet.bind(this)}/>
         <div styleName="radio-wrapper">
-          <RadioGroup name="mode" initialValue={this.props.initialMode || "both"} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
-          <RadioGroup name="type" initialValue={this.props.initialType || "prefix"} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
+          <RadioGroup name="mode" value={this.props.mode} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
+          <RadioGroup name="type" value={this.props.type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
         </div>
       </form>
     );
@@ -93,9 +96,9 @@ export class SearchForm extends Component<Props, State> {
 
 
 type Props = {
-  initialSearch?: string,
-  initialMode?: SearchMode,
-  initialType?: SearchType,
+  search: string,
+  mode: SearchMode,
+  type: SearchType,
   onSearchSet?: (search: string) => void;
   onModeSet?: (mode: SearchMode) => void;
   onTypeSet?: (type: SearchType) => void;

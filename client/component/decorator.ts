@@ -1,6 +1,9 @@
 //
 
 import {
+  debounce as lodashDebounce
+} from "lodash-es";
+import {
   action as mobxAction,
   observable as mobxObservable
 } from "mobx";
@@ -26,6 +29,14 @@ import {
 export function applyStyle(component: any): ClassDecorator {
   let options = {allowMultiple: true, handleNotFoundStyleName: "ignore"};
   let decorator = css(component, options);
+  return decorator;
+}
+
+export function debounce(duration: number): MethodDecorator {
+  let decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): PropertyDescriptor {
+    descriptor.value = lodashDebounce(descriptor.value, duration);
+    return descriptor;
+  };
   return decorator;
 }
 

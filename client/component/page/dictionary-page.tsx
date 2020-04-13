@@ -20,6 +20,7 @@ import {
 } from "/client/component/compound";
 import {
   applyStyle,
+  debounce,
   inject,
   route
 } from "/client/component/decorator";
@@ -45,9 +46,9 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   public state: State = {
     dictionary: null,
     authorized: false,
+    showsExplanation: true,
     hitSize: 0,
     hitWords: [],
-    showsExplanation: true,
     search: "",
     mode: "both",
     type: "prefix",
@@ -87,6 +88,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     }
   }
 
+  @debounce(500)
   private async updateWords(): Promise<void> {
     let number = +this.props.match!.params.number;
     let search = this.state.search;
@@ -111,16 +113,13 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let query = queryParser.parse(this.props.location!.search);
     if (typeof query.search === "string") {
       this.state.search = query.search;
-      this.state.initialSearch = query.search;
       this.state.showsExplanation = false;
     }
     if (typeof query.mode === "string") {
       this.state.mode = SearchModeUtil.cast(query.mode);
-      this.state.initialMode = SearchModeUtil.cast(query.mode);
     }
     if (typeof query.type === "string") {
       this.state.type = SearchTypeUtil.cast(query.type);
-      this.state.initialType = SearchTypeUtil.cast(query.type);
     }
     if (typeof query.page === "string") {
       this.state.page = +query.page;
@@ -153,28 +152,28 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   public render(): ReactNode {
     let maxPage = Math.max(Math.ceil(this.state.hitSize / 40) - 1, 0);
     let wordListNode;
-    if (this.state.showsExplanation) {
-      if (this.state.dictionary) {
+    if (this.state.dictionary) {
+      if (this.state.showsExplanation) {
         wordListNode = (
           <Markdown source={this.state.dictionary!.explanation}/>
         );
+      } else {
+        wordListNode = (
+          <Fragment>
+            <div styleName="word-list">
+              <WordList words={this.state.hitWords} offset={0} size={40}/>
+            </div>
+            <div styleName="pagination-button">
+              <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>
+            </div>
+          </Fragment>
+        );
       }
-    } else {
-      wordListNode = (
-        <Fragment>
-          <div styleName="word-list">
-            <WordList words={this.state.hitWords} offset={0} size={40}/>
-          </div>
-          <div styleName="pagination-button">
-            <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>
-          </div>
-        </Fragment>
-      );
     }
     let node = (
       <Page showsDictionary={true} showsDictionarySetting={this.state.authorized} dictionary={this.state.dictionary}>
         <div styleName="search-form">
-          <SearchForm initialSearch={this.state.initialSearch} initialMode={this.state.initialMode} initialType={this.state.initialType} onAnySet={this.handleAnySet.bind(this)}/>
+          <SearchForm search={this.state.search} mode={this.state.mode} type={this.state.type} onAnySet={this.handleAnySet.bind(this)}/>
         </div>
         <Loading loading={this.state.dictionary === null}>
           {wordListNode}
@@ -192,15 +191,12 @@ type Props = {
 type State = {
   dictionary: SlimeDictionarySkeleton | null,
   authorized: boolean,
+  showsExplanation: boolean,
   hitSize: number,
   hitWords: Array<SlimeWordSkeleton>,
-  showsExplanation: boolean,
   search: string,
   mode: SearchMode,
-  type: SearchType,
-  initialSearch?: string,
-  initialMode?: SearchMode,
-  initialType?: SearchType,
+  type: SearchType
   page: number
 };
 type Params = {
