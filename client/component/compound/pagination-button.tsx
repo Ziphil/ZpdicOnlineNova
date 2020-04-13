@@ -19,21 +19,8 @@ import {
 @applyStyle(require("./pagination-button.scss"))
 export class PaginationButton extends Component<Props, State> {
 
-  public constructor(props: any) {
-    super(props);
-    let page = this.props.page;
-    this.state = {page};
-  }
-
-  public componentDidUpdate(previousProps: Props): void {
-    if (this.props.page !== previousProps.page) {
-      let page = this.props.page;
-      this.setState({page});
-    }
-  }
-
   private movePreviousPage(): void {
-    let page = this.state.page - 1;
+    let page = this.props.page - 1;
     if (page < this.props.minPage) {
       page = this.props.minPage;
     }
@@ -41,7 +28,7 @@ export class PaginationButton extends Component<Props, State> {
   }
 
   private moveNextPage(): void {
-    let page = this.state.page + 1;
+    let page = this.props.page + 1;
     if (page > this.props.maxPage) {
       page = this.props.maxPage;
     }
@@ -59,7 +46,7 @@ export class PaginationButton extends Component<Props, State> {
     let outerThis = this;
     let calculateButtonSpecs = function (direction: -1 | 1): Array<{page: number, redundant: boolean, current: boolean}> {
       let targetPage = (direction === -1) ? outerThis.props.minPage : outerThis.props.maxPage;
-      let currentPage = outerThis.state.page;
+      let currentPage = outerThis.props.page;
       let buttonSpecs = [];
       let difference = 2;
       for (let i = 0 ; i < 4 ; i ++) {
@@ -77,7 +64,7 @@ export class PaginationButton extends Component<Props, State> {
     };
     let wholeButtonSpecs = [];
     wholeButtonSpecs.push(...calculateButtonSpecs(-1).reverse());
-    wholeButtonSpecs.push({page: this.state.page, redundant: false, current: true});
+    wholeButtonSpecs.push({page: this.props.page, redundant: false, current: true});
     wholeButtonSpecs.push(...calculateButtonSpecs(1));
     let buttonNodes = wholeButtonSpecs.map((spec, index) => {
       let position = "middle" as "alone" | "left" | "right" | "middle";
@@ -99,9 +86,9 @@ export class PaginationButton extends Component<Props, State> {
     });
     let node = (
       <div styleName="root">
-        <Button label="&#xF060;" usesIcon={true} disabled={this.state.page <= this.props.minPage} onClick={this.movePreviousPage.bind(this)}/>
+        <Button label="&#xF060;" usesIcon={true} disabled={this.props.page <= this.props.minPage} onClick={this.movePreviousPage.bind(this)}/>
         {buttonNodes}
-        <Button label="&#xF061;" usesIcon={true} disabled={this.state.page >= this.props.maxPage} onClick={this.moveNextPage.bind(this)}/>
+        <Button label="&#xF061;" usesIcon={true} disabled={this.props.page >= this.props.maxPage} onClick={this.moveNextPage.bind(this)}/>
       </div>
     );
     return node;
@@ -117,5 +104,4 @@ type Props = {
   onSet?: (page: number) => void
 };
 type State = {
-  page: number
 };
