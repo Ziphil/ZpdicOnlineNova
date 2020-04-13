@@ -5,7 +5,7 @@ import {
   ReactNode
 } from "react";
 import {
-  InputBeta as Input,
+  Input,
   RadioGroup
 } from "/client/component/atom";
 import {

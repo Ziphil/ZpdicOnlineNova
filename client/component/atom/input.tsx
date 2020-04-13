@@ -18,25 +18,21 @@ import {
 export class Input extends Component<Props, State> {
 
   public static defaultProps: Props = {
+    value: "",
     type: "text"
   };
 
   public constructor(props: any) {
     super(props);
-    let value = "";
     let type = this.props.type;
-    if (this.props.initialValue !== undefined) {
-      value = this.props.initialValue;
-    }
     if (type === "flexible") {
       type = "password";
     }
-    this.state = {value, type};
+    this.state = {type};
   }
 
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
     let value = event.target.value;
-    this.setState({value});
     if (this.props.onChange) {
       this.props.onChange(event);
     }
@@ -66,7 +62,7 @@ export class Input extends Component<Props, State> {
     let node = (
       <label styleName="root">
         {labelNode}
-        <input styleName="input" type={this.state.type} value={this.state.value} onChange={this.handleChange.bind(this)}/>
+        <input styleName="input" type={this.state.type} value={this.props.value} onChange={this.handleChange.bind(this)}/>
         {buttonNode}
       </label>
     );
@@ -77,13 +73,12 @@ export class Input extends Component<Props, State> {
 
 
 type Props = {
+  value: string,
   label?: string,
   type: "text" | "password" | "flexible",
-  initialValue?: string,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
   onSet?: (value: string) => void
 };
 type State = {
-  value: string,
   type: "text" | "password"
 };
