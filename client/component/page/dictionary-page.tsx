@@ -169,9 +169,10 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     this.props.history!.replace({search: queryString});
   }
 
-  private async handleAnySet(search: string, mode: SearchMode, type: SearchType): Promise<void> {
+  private async handleSomeSearchSet(someSearch: {search?: string, mode?: SearchMode, type?: SearchType}): Promise<void> {
     let page = 0;
-    this.setState({search, mode, type, page}, async () => {
+    let anySomeSearch = someSearch as any;
+    this.setState({...anySomeSearch, page}, async () => {
       await this.updateWords();
     });
   }
@@ -207,7 +208,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let node = (
       <Page showsDictionary={true} showsDictionarySetting={this.state.authorized} dictionary={this.state.dictionary}>
         <div styleName="search-form">
-          <SearchForm search={this.state.search} mode={this.state.mode} type={this.state.type} onAnySet={this.handleAnySet.bind(this)}/>
+          <SearchForm search={this.state.search} mode={this.state.mode} type={this.state.type} onSomeSet={this.handleSomeSearchSet.bind(this)}/>
         </div>
         <Loading loading={this.state.dictionary === null}>
           {wordListNode}

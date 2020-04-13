@@ -42,8 +42,8 @@ export class SearchForm extends Component<Props, State> {
     if (this.props.onSearchSet) {
       this.props.onSearchSet(search);
     }
-    if (this.props.onAnySet) {
-      this.props.onAnySet(search, this.state.mode, this.state.type);
+    if (this.props.onSomeSet) {
+      this.props.onSomeSet({search});
     }
   }
 
@@ -52,8 +52,8 @@ export class SearchForm extends Component<Props, State> {
     if (this.props.onModeSet) {
       this.props.onModeSet(mode);
     }
-    if (this.props.onAnySet) {
-      this.props.onAnySet(this.state.search, mode, this.state.type);
+    if (this.props.onSomeSet) {
+      this.props.onSomeSet({mode});
     }
   }
 
@@ -62,8 +62,8 @@ export class SearchForm extends Component<Props, State> {
     if (this.props.onTypeSet) {
       this.props.onTypeSet(type);
     }
-    if (this.props.onAnySet) {
-      this.props.onAnySet(this.state.search, this.state.mode, type);
+    if (this.props.onSomeSet) {
+      this.props.onSomeSet({type});
     }
   }
 
@@ -102,10 +102,7 @@ type Props = {
   onSearchSet?: (search: string) => void;
   onModeSet?: (mode: SearchMode) => void;
   onTypeSet?: (type: SearchType) => void;
-  onAnySet?: (search: string, mode: SearchMode, type: SearchType) => void;
+  onSomeSet?: (some: {search?: string, mode?: SearchMode, type?: SearchType}) => void;
 };
 type State = {
-  search: string,
-  mode: SearchMode,
-  type: SearchType
 };
