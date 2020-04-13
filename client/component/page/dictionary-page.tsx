@@ -105,7 +105,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let type = this.state.type;
     let page = this.state.page;
     let offset = page * 40;
-    let size = 41;
+    let size = 40;
     let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
     if (response.status === 200 && !("error" in response.data)) {
       let hitSize = response.data.hitSize;
