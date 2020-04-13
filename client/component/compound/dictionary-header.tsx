@@ -27,7 +27,8 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
 
   public static defaultProps: Partial<Props> = {
     showsSetting: false,
-    showsDownload: true
+    showsDownload: true,
+    preservesQuery: false
   };
 
   private jumpSettingPage(): void {
@@ -47,8 +48,11 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
   public render(): ReactNode {
     let nameNode;
     if (this.props.dictionary) {
-      let queryString = this.props.location!.search;
-      let href = "/dictionary/" + this.props.dictionary.number + queryString;
+      let href = "/dictionary/" + this.props.dictionary.number;
+      if (this.props.preservesQuery) {
+        let queryString = this.props.location!.search;
+        href += queryString;
+      }
       nameNode = <Link href={href} style="plane">{this.props.dictionary.name}</Link>;
     }
     let settingButtonNode;
@@ -83,7 +87,8 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
 type Props = {
   dictionary: SlimeDictionarySkeleton | null,
   showsSetting: boolean,
-  showsDownload: boolean
+  showsDownload: boolean,
+  preservesQuery: boolean
 };
 type State = {
 };

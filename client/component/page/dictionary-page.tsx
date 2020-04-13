@@ -57,16 +57,22 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public constructor(props: any) {
     super(props);
-    this.serializeQuery();
+    this.serializeQuery(true);
   }
 
   public async componentDidMount(): Promise<void> {
     let promises = [this.fetchDictionary(), this.checkAuthorization()];
     if (!this.state.showsExplanation) {
-      promises.push(this.updateWords());
+      promises.push(this.updateWordsImmediately());
     }
     let allPromise = Promise.all(promises);
     await allPromise;
+  }
+
+  public componentDidUpdate(previousProps: any): void {
+    if (this.props.location!.key !== previousProps.location!.key) {
+      this.serializeQuery(false);
+    }
   }
 
   private async fetchDictionary(): Promise<void> {
@@ -88,8 +94,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     }
   }
 
-  @debounce(500)
-  private async updateWords(): Promise<void> {
+  private async updateWordsImmediately(): Promise<void> {
     let number = +this.props.match!.params.number;
     let search = this.state.search;
     let mode = this.state.mode;
@@ -109,20 +114,40 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     this.deserializeQuery();
   }
 
-  private serializeQuery(): void {
+  @debounce(500)
+  private async updateWords(): Promise<void> {
+    await this.updateWordsImmediately();
+  }
+
+  private serializeQuery(first: boolean): void {
     let query = queryParser.parse(this.props.location!.search);
+    let nextState = {} as any;
     if (typeof query.search === "string") {
-      this.state.search = query.search;
-      this.state.showsExplanation = false;
+      nextState.search = query.search;
+      nextState.showsExplanation = false;
+    } else {
+      nextState.search = "";
+      nextState.showsExplanation = true;
     }
     if (typeof query.mode === "string") {
-      this.state.mode = SearchModeUtil.cast(query.mode);
+      nextState.mode = SearchModeUtil.cast(query.mode);
+    } else {
+      nextState.mode = "both";
     }
     if (typeof query.type === "string") {
-      this.state.type = SearchTypeUtil.cast(query.type);
+      nextState.type = SearchTypeUtil.cast(query.type);
+    } else {
+      nextState.type = "prefix";
     }
     if (typeof query.page === "string") {
-      this.state.page = +query.page;
+      nextState.page = +query.page;
+    } else {
+      nextState.page = 0;
+    }
+    if (first) {
+      this.state = Object.assign(this.state, nextState);
+    } else {
+      this.setState(nextState);
     }
   }
 
@@ -145,7 +170,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   private handlePageSet(page: number): void {
     this.setState({page}, async () => {
       window.scrollTo(0, 0);
-      await this.updateWords();
+      await this.updateWordsImmediately();
     });
   }
 
