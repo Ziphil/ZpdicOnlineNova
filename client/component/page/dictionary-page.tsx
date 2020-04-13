@@ -63,7 +63,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   public async componentDidMount(): Promise<void> {
     let promises = [this.fetchDictionary(), this.checkAuthorization()];
     if (!this.state.showsExplanation) {
-      promises.push(this.updateWordsImmediately());
+      promises.push(this.updateWordsImmediately(false));
     }
     let allPromise = Promise.all(promises);
     await allPromise;
@@ -71,7 +71,11 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public componentDidUpdate(previousProps: any): void {
     if (this.props.location!.key !== previousProps.location!.key) {
-      this.serializeQuery(false);
+      this.serializeQuery(false, () => {
+        if (!this.state.showsExplanation) {
+          this.updateWordsImmediately(false);
+        }
+      });
     }
   }
 
@@ -94,7 +98,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     }
   }
 
-  private async updateWordsImmediately(): Promise<void> {
+  private async updateWordsImmediately(deserializes: boolean): Promise<void> {
     let number = +this.props.match!.params.number;
     let search = this.state.search;
     let mode = this.state.mode;
@@ -111,15 +115,17 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     } else {
       this.setState({hitSize: 0, hitWords: []});
     }
-    this.deserializeQuery();
+    if (deserializes) {
+      this.deserializeQuery();
+    }
   }
 
   @debounce(500)
   private async updateWords(): Promise<void> {
-    await this.updateWordsImmediately();
+    await this.updateWordsImmediately(true);
   }
 
-  private serializeQuery(first: boolean): void {
+  private serializeQuery(first: boolean, callback?: () => void): void {
     let query = queryParser.parse(this.props.location!.search);
     let nextState = {} as any;
     if (typeof query.search === "string") {
@@ -146,8 +152,11 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     }
     if (first) {
       this.state = Object.assign(this.state, nextState);
+      if (callback) {
+        callback();
+      }
     } else {
-      this.setState(nextState);
+      this.setState(nextState, callback);
     }
   }
 
@@ -170,7 +179,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   private handlePageSet(page: number): void {
     this.setState({page}, async () => {
       window.scrollTo(0, 0);
-      await this.updateWordsImmediately();
+      await this.updateWordsImmediately(true);
     });
   }
 
@@ -180,13 +189,13 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     if (this.state.dictionary) {
       if (this.state.showsExplanation) {
         wordListNode = (
-          <Markdown source={this.state.dictionary!.explanation}/>
+          <Markdown source={this.state.dictionary.explanation}/>
         );
       } else {
         wordListNode = (
           <Fragment>
             <div styleName="word-list">
-              <WordList words={this.state.hitWords} offset={0} size={40}/>
+              <WordList dictionary={this.state.dictionary} words={this.state.hitWords} offset={0} size={40}/>
             </div>
             <div styleName="pagination-button">
               <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>
