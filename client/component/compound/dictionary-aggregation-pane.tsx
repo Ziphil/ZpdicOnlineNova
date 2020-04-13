@@ -19,8 +19,8 @@ import {
 export class DictionaryAggregationPane extends StoreComponent<Props, State> {
 
   public state: State = {
-    dictionarySize: 0,
-    wordSize: 0
+    dictionarySize: null,
+    wordSize: null
   };
 
   public async componentDidMount(): Promise<void> {
@@ -32,8 +32,8 @@ export class DictionaryAggregationPane extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let dictionarySizeString = this.state.dictionarySize.toLocaleString("en-GB");
-    let wordSizeString = this.state.wordSize.toLocaleString("en-GB");
+    let dictionarySizeString = this.state.dictionarySize?.toLocaleString("en-GB") || "?";
+    let wordSizeString = this.state.wordSize?.toLocaleString("en-GB") || "?";
     let node = (
       <div styleName="root">
         <div styleName="size-wrapper">
@@ -55,6 +55,6 @@ export class DictionaryAggregationPane extends StoreComponent<Props, State> {
 type Props = {
 };
 type State = {
-  dictionarySize: number,
-  wordSize: number;
+  dictionarySize: number | null,
+  wordSize: number | null;
 };
