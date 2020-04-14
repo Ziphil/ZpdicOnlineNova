@@ -28,9 +28,9 @@ import {
 @applyStyle(require("./dictionary-pane.scss"))
 export class DictionaryPane extends StoreComponent<Props, State> {
 
-  private handleClick(event: MouseEvent<HTMLElement>): void {
+  private handleClick(event: MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
-    let path = "/dictionary/" + this.props.dictionary.number;
+    let path = event.currentTarget.dataset.href!;
     this.pushPath(path);
   }
 
@@ -44,7 +44,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
   public render(): ReactNode {
     let name = this.props.dictionary.name;
     let status = this.props.dictionary.status;
-    let href = "/dictionary/" + this.props.dictionary.number;
+    let href = "/dictionary/" + (this.props.dictionary.paramName ?? this.props.dictionary.number);
     let statusString = "";
     if (status === "saving") {
       statusString = "処理中";
@@ -67,7 +67,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
       updatedDateString = DateUtil.format(this.props.dictionary.updatedDate, "yyyy/MM/dd HH:mm");
     }
     let node = (
-      <a styleName="root" href={href} onClick={this.handleClick.bind(this)}>
+      <a styleName="root" href={href} data-href={href} onClick={this.handleClick.bind(this)}>
         <div styleName="head">
           <div styleName="name-wrapper">
             <div styleName="button">
