@@ -34,7 +34,7 @@ import {
 } from "/server/util/query";
 
 
-const PARAM_NAME_VALIDATION = /^[a-zA-Z0-9_-]+$/;
+const PARAM_NAME_VALIDATION = /^[a-zA-Z0-9_-]*[a-zA-Z_-]+[a-zA-Z0-9_-]*$/;
 
 
 export class SlimeDictionary extends Dictionary<SlimeWord> {
