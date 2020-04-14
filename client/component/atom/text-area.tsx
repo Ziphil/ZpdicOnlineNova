@@ -17,21 +17,12 @@ import {
 export class TextArea extends Component<Props, State> {
 
   public static defaultProps: Props = {
+    value: "",
     font: "normal"
   };
 
-  public constructor(props: any) {
-    super(props);
-    let value = "";
-    if (this.props.initialValue !== undefined) {
-      value = this.props.initialValue;
-    }
-    this.state = {value};
-  }
-
   private handleChange(event: ChangeEvent<HTMLTextAreaElement>): void {
     let value = event.target.value;
-    this.setState({value});
     if (this.props.onChange) {
       this.props.onChange(event);
     }
@@ -52,7 +43,7 @@ export class TextArea extends Component<Props, State> {
     let node = (
       <label styleName="root">
         {labelNode}
-        <textarea styleName={textAreaStyleNames.join(" ")} value={this.state.value} onChange={this.handleChange.bind(this)}/>
+        <textarea styleName={textAreaStyleNames.join(" ")} value={this.props.value} onChange={this.handleChange.bind(this)}/>
       </label>
     );
     return node;
@@ -62,12 +53,11 @@ export class TextArea extends Component<Props, State> {
 
 
 type Props = {
+  value: string,
   label?: string,
   font: "normal" | "monospace",
-  initialValue?: string,
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
   onSet?: (value: string) => void
 };
 type State = {
-  value: string
 };

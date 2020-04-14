@@ -44,7 +44,7 @@ export class ChangeDictionaryExplanationForm extends StoreComponent<Props, State
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <TextArea label="説明" font="monospace" initialValue={this.props.currentExplanation} onSet={(value) => this.setState({explanation: value})}/>
+        <TextArea label="説明" font="monospace" value={this.state.explanation} onSet={(value) => this.setState({explanation: value})}/>
         <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );

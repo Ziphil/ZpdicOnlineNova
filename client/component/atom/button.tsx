@@ -23,7 +23,6 @@ export class Button extends Component<Props, State> {
     reactive: false,
     disabled: false
   };
-
   public state: State = {
     loading: false
   };

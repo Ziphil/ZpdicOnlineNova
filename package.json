@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@hasezoey/typegoose": "6.0.0-26",
+    "@sendgrid/mail": "^7.0.0",
     "axios": "^0.19.2",
     "babel-loader": "^8.0.6",
     "babel-polyfill": "^6.26.0",

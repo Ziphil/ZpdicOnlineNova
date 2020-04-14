@@ -20,6 +20,7 @@ export const SERVER_PATH = {
   uploadDictionary: "/api/dictionary/upload",
   deleteDictionary: "/api/dictionary/delete",
   changeDictionaryName: "/api/dictionary/edit/name",
+  changeDictionaryParamName: "/api/dictionary/edit/paramname",
   changeDictionarySecret: "/api/dictionary/edit/secret",
   changeDictionaryExplanation: "/api/dictionary/edit/explanation",
   addNotification: "/api/news/add",
@@ -57,7 +58,7 @@ type ProcessType = {
       request: {number: number},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
   },
@@ -67,7 +68,7 @@ type ProcessType = {
       request: {number: number},
       response: {
         200: boolean,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
   },
@@ -77,7 +78,17 @@ type ProcessType = {
       request: {number: number, name: string},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+      }
+    }
+  },
+  changeDictionaryParamName: {
+    get: Noop,
+    post: {
+      request: {number: number, paramName: string},
+      response: {
+        200: SlimeDictionarySkeleton,
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
       }
     }
   },
@@ -87,7 +98,7 @@ type ProcessType = {
       request: {number: number, secret: boolean},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
   },
@@ -97,7 +108,7 @@ type ProcessType = {
       request: {number: number, explanation: string},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
   },
@@ -116,7 +127,7 @@ type ProcessType = {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
       response: {
         200: {hitSize: number, hitWords: Array<SlimeWordSkeleton>},
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     },
     post: Noop
@@ -126,17 +137,17 @@ type ProcessType = {
       request: {number: number, fileName?: string},
       response: {
         200: never,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     },
     post: Noop
   },
   fetchDictionary: {
     get: {
-      request: {number: number},
+      request: {number?: number, paramName?: string},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
       }
     },
     post: Noop
@@ -146,7 +157,7 @@ type ProcessType = {
       request: {number: number},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     },
     post: Noop
@@ -186,7 +197,7 @@ type ProcessType = {
       request: {number: number},
       response: {
         200: boolean,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     },
     post: Noop

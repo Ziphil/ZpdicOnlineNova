@@ -20,6 +20,7 @@ import {
 } from "/client/component/compound";
 import {
   applyStyle,
+  debounce,
   inject,
   route
 } from "/client/component/decorator";
@@ -45,9 +46,9 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   public state: State = {
     dictionary: null,
     authorized: false,
+    showsExplanation: true,
     hitSize: 0,
     hitWords: [],
-    showsExplanation: true,
     search: "",
     mode: "both",
     type: "prefix",
@@ -56,21 +57,39 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public constructor(props: any) {
     super(props);
-    this.serializeQuery();
+    this.serializeQuery(true);
   }
 
   public async componentDidMount(): Promise<void> {
-    let promises = [this.fetchDictionary(), this.checkAuthorization()];
+    await this.fetchDictionary();
+    let promises = [this.checkAuthorization()];
     if (!this.state.showsExplanation) {
-      promises.push(this.updateWords());
+      promises.push(this.updateWordsImmediately(false));
     }
     let allPromise = Promise.all(promises);
     await allPromise;
   }
 
+  public componentDidUpdate(previousProps: any): void {
+    if (this.props.location!.key !== previousProps.location!.key) {
+      this.serializeQuery(false, () => {
+        if (!this.state.showsExplanation) {
+          this.updateWordsImmediately(false);
+        }
+      });
+    }
+  }
+
   private async fetchDictionary(): Promise<void> {
-    let number = +this.props.match!.params.number;
-    let response = await this.requestGet("fetchDictionary", {number});
+    let value = this.props.match!.params.value;
+    let number;
+    let paramName;
+    if (value.match(/^\d+$/)) {
+      number = +value;
+    } else {
+      paramName = value;
+    }
+    let response = await this.requestGet("fetchDictionary", {number, paramName});
     if (response.status === 200 && !("error" in response.data)) {
       let dictionary = response.data;
       this.setState({dictionary});
@@ -80,50 +99,76 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   private async checkAuthorization(): Promise<void> {
-    let number = +this.props.match!.params.number;
-    let response = await this.requestGet("checkDictionaryAuthorization", {number}, true);
-    if (response.status === 200) {
-      this.setState({authorized: true});
+    let number = this.state.dictionary?.number;
+    if (number !== undefined) {
+      let response = await this.requestGet("checkDictionaryAuthorization", {number}, true);
+      if (response.status === 200) {
+        this.setState({authorized: true});
+      }
     }
   }
 
+  private async updateWordsImmediately(deserializes: boolean): Promise<void> {
+    let number = this.state.dictionary?.number;
+    if (number !== undefined) {
+      let search = this.state.search;
+      let mode = this.state.mode;
+      let type = this.state.type;
+      let page = this.state.page;
+      let offset = page * 40;
+      let size = 40;
+      let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
+      if (response.status === 200 && !("error" in response.data)) {
+        let hitSize = response.data.hitSize;
+        let hitWords = response.data.hitWords;
+        let showsExplanation = false;
+        this.setState({hitSize, hitWords, showsExplanation});
+      } else {
+        this.setState({hitSize: 0, hitWords: []});
+      }
+      if (deserializes) {
+        this.deserializeQuery();
+      }
+    }
+  }
+
+  @debounce(500)
   private async updateWords(): Promise<void> {
-    let number = +this.props.match!.params.number;
-    let search = this.state.search;
-    let mode = this.state.mode;
-    let type = this.state.type;
-    let page = this.state.page;
-    let offset = page * 40;
-    let size = 41;
-    let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
-    if (response.status === 200 && !("error" in response.data)) {
-      let hitSize = response.data.hitSize;
-      let hitWords = response.data.hitWords;
-      let showsExplanation = false;
-      this.setState({hitSize, hitWords, showsExplanation});
-    } else {
-      this.setState({hitSize: 0, hitWords: []});
-    }
-    this.deserializeQuery();
+    await this.updateWordsImmediately(true);
   }
 
-  private serializeQuery(): void {
+  private serializeQuery(first: boolean, callback?: () => void): void {
     let query = queryParser.parse(this.props.location!.search);
+    let nextState = {} as any;
     if (typeof query.search === "string") {
-      this.state.search = query.search;
-      this.state.initialSearch = query.search;
-      this.state.showsExplanation = false;
+      nextState.search = query.search;
+      nextState.showsExplanation = false;
+    } else {
+      nextState.search = "";
+      nextState.showsExplanation = true;
     }
     if (typeof query.mode === "string") {
-      this.state.mode = SearchModeUtil.cast(query.mode);
-      this.state.initialMode = SearchModeUtil.cast(query.mode);
+      nextState.mode = SearchModeUtil.cast(query.mode);
+    } else {
+      nextState.mode = "both";
     }
     if (typeof query.type === "string") {
-      this.state.type = SearchTypeUtil.cast(query.type);
-      this.state.initialType = SearchTypeUtil.cast(query.type);
+      nextState.type = SearchTypeUtil.cast(query.type);
+    } else {
+      nextState.type = "prefix";
     }
     if (typeof query.page === "string") {
-      this.state.page = +query.page;
+      nextState.page = +query.page;
+    } else {
+      nextState.page = 0;
+    }
+    if (first) {
+      this.state = Object.assign(this.state, nextState);
+      if (callback) {
+        callback();
+      }
+    } else {
+      this.setState(nextState, callback);
     }
   }
 
@@ -136,9 +181,10 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     this.props.history!.replace({search: queryString});
   }
 
-  private async handleAnySet(search: string, mode: SearchMode, type: SearchType): Promise<void> {
+  private async handleSomeSearchSet(someSearch: {search?: string, mode?: SearchMode, type?: SearchType}): Promise<void> {
     let page = 0;
-    this.setState({search, mode, type, page}, async () => {
+    let anySomeSearch = someSearch as any;
+    this.setState({...anySomeSearch, page}, async () => {
       await this.updateWords();
     });
   }
@@ -146,35 +192,35 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   private handlePageSet(page: number): void {
     this.setState({page}, async () => {
       window.scrollTo(0, 0);
-      await this.updateWords();
+      await this.updateWordsImmediately(true);
     });
   }
 
   public render(): ReactNode {
     let maxPage = Math.max(Math.ceil(this.state.hitSize / 40) - 1, 0);
     let wordListNode;
-    if (this.state.showsExplanation) {
-      if (this.state.dictionary) {
+    if (this.state.dictionary) {
+      if (this.state.showsExplanation) {
         wordListNode = (
-          <Markdown source={this.state.dictionary!.explanation}/>
+          <Markdown source={this.state.dictionary.explanation}/>
+        );
+      } else {
+        wordListNode = (
+          <Fragment>
+            <div styleName="word-list">
+              <WordList dictionary={this.state.dictionary} words={this.state.hitWords} offset={0} size={40}/>
+            </div>
+            <div styleName="pagination-button">
+              <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>
+            </div>
+          </Fragment>
         );
       }
-    } else {
-      wordListNode = (
-        <Fragment>
-          <div styleName="word-list">
-            <WordList words={this.state.hitWords} offset={0} size={40}/>
-          </div>
-          <div styleName="pagination-button">
-            <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>
-          </div>
-        </Fragment>
-      );
     }
     let node = (
       <Page showsDictionary={true} showsDictionarySetting={this.state.authorized} dictionary={this.state.dictionary}>
         <div styleName="search-form">
-          <SearchForm initialSearch={this.state.initialSearch} initialMode={this.state.initialMode} initialType={this.state.initialType} onAnySet={this.handleAnySet.bind(this)}/>
+          <SearchForm search={this.state.search} mode={this.state.mode} type={this.state.type} onSomeSet={this.handleSomeSearchSet.bind(this)}/>
         </div>
         <Loading loading={this.state.dictionary === null}>
           {wordListNode}
@@ -192,17 +238,14 @@ type Props = {
 type State = {
   dictionary: SlimeDictionarySkeleton | null,
   authorized: boolean,
+  showsExplanation: boolean,
   hitSize: number,
   hitWords: Array<SlimeWordSkeleton>,
-  showsExplanation: boolean,
   search: string,
   mode: SearchMode,
-  type: SearchType,
-  initialSearch?: string,
-  initialMode?: SearchMode,
-  initialType?: SearchType,
+  type: SearchType
   page: number
 };
 type Params = {
-  number: string
+  value: string
 };

@@ -1,5 +1,6 @@
 //
 
+import * as sendgrid from "@sendgrid/mail";
 import * as parser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
@@ -14,6 +15,9 @@ import {
   Schema
 } from "mongoose";
 import * as multer from "multer";
+import {
+  DebugController
+} from "/server/controller/debug";
 import {
   DictionaryController
 } from "/server/controller/dictionary";
@@ -30,6 +34,7 @@ export const MONGO_URI = process.env["MONGO_URI"] || "mongodb://localhost:27017/
 export const COOKIE_SECRET = process.env["COOKIE_SECRET"] || "cookie-zpdic";
 export const SESSION_SECRET = process.env["SESSION_SECRET"] || "session-zpdic";
 export const JWT_SECRET = process.env["JWT_SECRET"] || "jwt-secret";
+export const SENDGRID_KEY = process.env["SENDGRID_KEY"] || "dummy";
 
 
 class Main {
@@ -46,6 +51,7 @@ class Main {
     this.setupMulter();
     this.setupRenderer();
     this.setupMongo();
+    this.setupSendgrid();
     this.setupRouters();
     this.setupErrorHandler();
     this.setupFallback();
@@ -91,9 +97,14 @@ class Main {
     mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
   }
 
+  private setupSendgrid(): void {
+    sendgrid.setApiKey(SENDGRID_KEY);
+  }
+
   // ルーターの設定を行います。
   // このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。
   private setupRouters(): void {
+    DebugController.use(this.application);
     DictionaryController.use(this.application);
     NotificationController.use(this.application);
     UserController.use(this.application);

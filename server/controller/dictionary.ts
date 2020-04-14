@@ -75,7 +75,7 @@ export class DictionaryController extends Controller {
       let body = SlimeDictionarySkeleton.from(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -88,14 +88,14 @@ export class DictionaryController extends Controller {
       await dictionary.removeWhole();
       response.json(true);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
 
   @post(SERVER_PATH["changeDictionaryName"])
   @before(verifyUser(), verifyDictionary())
-  public async postRenameDictionary(request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {
+  public async postChangeDictionaryName(request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {
     let dictionary = request.dictionary;
     let name = CastUtil.ensureString(request.body.name);
     if (dictionary) {
@@ -103,7 +103,40 @@ export class DictionaryController extends Controller {
       let body = SlimeDictionarySkeleton.from(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      response.status(400).json(body);
+    }
+  }
+
+  @post(SERVER_PATH["changeDictionaryParamName"])
+  @before(verifyUser(), verifyDictionary())
+  public async postChangeDictionaryParamName(request: PostRequest<"changeDictionaryParamName">, response: PostResponse<"changeDictionaryParamName">): Promise<void> {
+    let dictionary = request.dictionary;
+    let paramName = CastUtil.ensureString(request.body.paramName);
+    if (dictionary) {
+      try {
+        await dictionary.changeParamName(paramName);
+        let body = SlimeDictionarySkeleton.from(dictionary);
+        response.json(body);
+      } catch (error) {
+        let body;
+        if (error.name === "CustomError") {
+          if (error.type === "duplicateDictionaryParamName") {
+            body = CustomErrorSkeleton.ofType("duplicateDictionaryParamName");
+          }
+        } else if (error.name === "ValidationError") {
+          if (error.errors.paramName) {
+            body = CustomErrorSkeleton.ofType("invalidDictionaryParamName");
+          }
+        }
+        if (body) {
+          response.status(400).json(body);
+        } else {
+          throw error;
+        }
+      }
+    } else {
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -118,7 +151,7 @@ export class DictionaryController extends Controller {
       let body = SlimeDictionarySkeleton.from(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -133,7 +166,7 @@ export class DictionaryController extends Controller {
       let body = SlimeDictionarySkeleton.from(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -155,7 +188,7 @@ export class DictionaryController extends Controller {
       let body = {hitSize, hitWords: hitWordsBody};
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -171,7 +204,7 @@ export class DictionaryController extends Controller {
       await dictionary.download(path);
       response.download(path, fullFileName);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -179,12 +212,24 @@ export class DictionaryController extends Controller {
   @get(SERVER_PATH["fetchDictionary"])
   public async getFetchDictionary(request: GetRequest<"fetchDictionary">, response: GetResponse<"fetchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
-    let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
-    if (dictionary) {
-      let body = SlimeDictionarySkeleton.from(dictionary);
-      response.json(body);
+    let paramName = CastUtil.ensureString(request.query.paramName);
+    let value = number ?? paramName;
+    if (value !== undefined) {
+      let dictionary = await SlimeDictionaryModel.findOneByValue(value);
+      if (dictionary) {
+        let body = SlimeDictionarySkeleton.from(dictionary);
+        response.json(body);
+      } else {
+        let body;
+        if (number !== undefined) {
+          body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+        } else {
+          body = CustomErrorSkeleton.ofType("noSuchDictionaryParamName");
+        }
+        response.status(400).json(body);
+      }
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("invalidArgument");
       response.status(400).json(body);
     }
   }
@@ -197,7 +242,7 @@ export class DictionaryController extends Controller {
       let body = await SlimeDictionarySkeleton.fromFetch(dictionary, true);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -255,7 +300,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       response.json(true);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }

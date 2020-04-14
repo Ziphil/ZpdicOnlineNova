@@ -70,9 +70,9 @@ export class RegisterForm extends StoreComponent<Props, State> {
       <div>
         {errorNode}
         <form styleName="root">
-          <Input label="ユーザー名" onSet={(value) => this.setState({name: value})}/>
-          <Input label="メールアドレス" onSet={(value) => this.setState({email: value})}/>
-          <Input label="パスワード" type="flexible" onSet={(value) => this.setState({password: value})}/>
+          <Input label="ユーザー名" value={this.state.name} onSet={(value) => this.setState({name: value})}/>
+          <Input label="メールアドレス" value={this.state.email} onSet={(value) => this.setState({email: value})}/>
+          <Input label="パスワード" type="flexible" value={this.state.password} onSet={(value) => this.setState({password: value})}/>
           <div styleName="button-group">
             <Button label="新規登録" reactive={true} onClick={this.performRegister.bind(this)}/>
           </div>

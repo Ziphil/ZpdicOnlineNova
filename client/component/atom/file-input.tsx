@@ -16,8 +16,10 @@ import {
 @applyStyle(require("./file-input.scss"))
 export class FileInput extends Component<Props, State> {
 
+  public static defaultProps: Partial<Props> = {
+    file: null
+  };
   public state: State = {
-    file: null,
     fileName: ""
   };
 
@@ -26,7 +28,7 @@ export class FileInput extends Component<Props, State> {
     if (files && files.length > 0) {
       let file = files[0];
       let fileName = file.name;
-      this.setState({file, fileName});
+      this.setState({fileName});
       if (this.props.onSet) {
         this.props.onSet(file);
       }
@@ -57,11 +59,11 @@ export class FileInput extends Component<Props, State> {
 
 
 type Props = {
+  file: File | null,
   inputLabel?: string,
   buttonLabel: string,
   onSet?: (file: File | null) => void
 };
 type State = {
-  file: File | null,
   fileName: string
 };

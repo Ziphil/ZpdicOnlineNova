@@ -47,11 +47,11 @@ export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
       {value: "public", label: "表示"},
       {value: "secret", label: "非表示"}
     ];
-    let initialSecret = (this.props.currentSecret) ? "secret" : "public";
+    let secretValue = (this.state.secret) ? "secret" : "public";
     let node = (
       <Fragment>
         <form styleName="root">
-          <RadioGroup name="secret" specs={specs} initialValue={initialSecret} onSet={(value) => this.setState({secret: value === "secret"})}/>
+          <RadioGroup name="secret" specs={specs} value={secretValue} onSet={(value) => this.setState({secret: value === "secret"})}/>
           <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
         </form>
         <p styleName="caution">

@@ -19,18 +19,8 @@ import {
 @applyStyle(require("./radio-group.scss"))
 export class RadioGroup<V extends string> extends Component<Props<V>, State<V>> {
 
-  public constructor(props: any) {
-    super(props);
-    let value = null;
-    if (this.props.initialValue !== undefined) {
-      value = this.props.initialValue;
-    }
-    this.state = {value};
-  }
-
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
     let value = event.target.value as V;
-    this.setState({value});
     if (this.props.onChange) {
       this.props.onChange(event);
     }
@@ -40,8 +30,9 @@ export class RadioGroup<V extends string> extends Component<Props<V>, State<V>> 
   }
 
   public render(): ReactNode {
-    let radioNodes = Array.from(this.props.specs).map((spec, index) => {
-      let checked = spec.value === this.state.value;
+    let specs = Array.from(this.props.specs);
+    let radioNodes = specs.map((spec, index) => {
+      let checked = spec.value === this.props.value;
       return <Radio name={this.props.name} value={spec.value} label={spec.label} checked={checked} onChange={this.handleChange.bind(this)} key={index}/>;
     });
     let node = (
@@ -56,12 +47,11 @@ export class RadioGroup<V extends string> extends Component<Props<V>, State<V>> 
 
 
 type Props<V> = {
+  value: V | null,
   name: string,
   specs: ArrayLike<{value: V, label: string}>,
-  initialValue?: V,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
   onSet?: (value: V) => void
 };
 type State<V> = {
-  value: V | null
 };

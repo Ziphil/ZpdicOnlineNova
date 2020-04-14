@@ -10,6 +10,7 @@ import {
 import {
   ChangeDictionaryExplanationForm,
   ChangeDictionaryNameForm,
+  ChangeDictionaryParamNameForm,
   ChangeDictionarySecretForm,
   DeleteDictionaryForm,
   Menu,
@@ -63,9 +64,9 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   }
 
   private renderChangeDictionaryNameForm(): ReactNode {
-    let label = "名称変更";
+    let label = "表示名の変更";
     let description = `
-      この辞書の名称を変更します。
+      この辞書の表示名を変更します。
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
@@ -75,8 +76,22 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     return node;
   }
 
+  private renderChangeDictionaryParamNameForm(): ReactNode {
+    let label = "URL 用名称の変更";
+    let description = `
+      この辞書の URL 用名称を変更します。
+      これを設定しておくと、辞書ページの URL として、ID 番号の代わりにこの名称にしたものも利用できるようになります。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <ChangeDictionaryParamNameForm number={this.state.dictionary!.number} currentParamName={this.state.dictionary!.paramName} onSubmit={this.fetchDictionary.bind(this)}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderChangeDictionaryExplanationForm(): ReactNode {
-    let label = "説明変更";
+    let label = "説明の変更";
     let description = `
       辞書の説明を変更します。
       一部の Markdown 形式に対応しています。
@@ -91,7 +106,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   }
 
   private renderChangeDictionarySecretForm(): ReactNode {
-    let label = "一覧表示変更";
+    let label = "一覧表示の変更";
     let description = `
       この辞書を辞書一覧ページに表示するかどうかを変更します。
     `;
@@ -134,6 +149,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {
       contentNodes.push(this.renderChangeDictionaryNameForm());
+      contentNodes.push(this.renderChangeDictionaryParamNameForm());
       contentNodes.push(this.renderChangeDictionaryExplanationForm());
       contentNodes.push(this.renderChangeDictionarySecretForm());
       contentNodes.push(this.renderUploadDictionaryForm());

@@ -6,12 +6,13 @@ import {
   prop
 } from "@hasezoey/typegoose";
 import * as bcrypt from "bcrypt";
+import * as crypto from "crypto";
 import {
   CustomError
 } from "/server/model/error";
 
 
-const NAME_VALIDATION = /^[a-zA-Z0-9_-]+$/;
+const NAME_VALIDATION = /^[a-zA-Z0-9_-]*[a-zA-Z_-]+[a-zA-Z0-9_-]*$/;
 const EMAIL_VALIDATION = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const SALT_ROUND = 10;
 
@@ -66,6 +67,19 @@ export class User {
     this.encryptPassword(password);
     await this.save();
     return this;
+  }
+
+  public async resetPassword(this: UserDocument): Promise<{password: string, user: UserDocument}> {
+    let password = this.generatePassword(16);
+    this.encryptPassword(password);
+    await this.save();
+    return {password, user: this};
+  }
+
+  private generatePassword(length: number): string {
+    let bytes = crypto.randomBytes(length);
+    let password = bytes.toString("base64").substring(0, length);
+    return password;
   }
 
   private encryptPassword(password: string): void {

@@ -23,12 +23,18 @@ import {
   SlimeWordModel
 } from "/server/model/dictionary/slime";
 import {
+  CustomError
+} from "/server/model/error";
+import {
   User,
   UserDocument
 } from "/server/model/user";
 import {
   QueryUtil
 } from "/server/util/query";
+
+
+const PARAM_NAME_VALIDATION = /^[a-zA-Z0-9_-]*[a-zA-Z_-]+[a-zA-Z0-9_-]*$/;
 
 
 export class SlimeDictionary extends Dictionary<SlimeWord> {
@@ -38,6 +44,9 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
 
   @prop({required: true, unique: true})
   public number!: number;
+
+  @prop({validate: PARAM_NAME_VALIDATION})
+  public paramName?: string;
 
   @prop({required: true})
   public name!: string;
@@ -76,11 +85,15 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return dictionaries;
   }
 
-  public static async findOneByNumber(number: number, user?: UserDocument): Promise<SlimeDictionaryDocument | null> {
+  public static async findOneByNumber(number: number): Promise<SlimeDictionaryDocument | null> {
     let query = SlimeDictionaryModel.findOne().where("number", number);
-    if (user) {
-      query = query.where("user", user);
-    }
+    let dictionary = await query.exec();
+    return dictionary;
+  }
+
+  public static async findOneByValue(value: number | string): Promise<SlimeDictionaryDocument | null> {
+    let key = (typeof value === "number") ? "number" : "paramName";
+    let query = SlimeDictionaryModel.findOne().where(key, value);
     let dictionary = await query.exec();
     return dictionary;
   }
@@ -148,6 +161,16 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
   public async removeWhole(this: SlimeDictionaryDocument): Promise<void> {
     await SlimeWordModel.deleteMany({}).where("dictionary", this).exec();
     await this.remove();
+  }
+
+  public async changeParamName(this: SlimeDictionaryDocument, paramName: string): Promise<SlimeDictionaryDocument> {
+    let formerDictionary = await SlimeDictionaryModel.findOne().where("paramName", paramName).exec();
+    if (formerDictionary && formerDictionary.id !== this.id) {
+      throw new CustomError("duplicateDictionaryParamName");
+    }
+    this.paramName = paramName;
+    await this.save();
+    return this;
   }
 
   public async changeName(this: SlimeDictionaryDocument, name: string): Promise<SlimeDictionaryDocument> {
