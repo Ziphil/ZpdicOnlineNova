@@ -10,6 +10,7 @@ import {
 import {
   ChangeDictionaryExplanationForm,
   ChangeDictionaryNameForm,
+  ChangeDictionaryParamNameForm,
   ChangeDictionarySecretForm,
   DeleteDictionaryForm,
   Menu,
@@ -75,6 +76,20 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     return node;
   }
 
+  private renderChangeDictionaryParamNameForm(): ReactNode {
+    let label = "URL 用名称変更";
+    let description = `
+      この辞書の URL 用の名称を変更します。
+      これを設定しておくと、辞書ページの URL として、ID 番号の代わりにこの名称にしたものも利用できるようになります。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <ChangeDictionaryParamNameForm number={this.state.dictionary!.number} currentParamName={this.state.dictionary!.paramName} onSubmit={this.fetchDictionary.bind(this)}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderChangeDictionaryExplanationForm(): ReactNode {
     let label = "説明変更";
     let description = `
@@ -134,6 +149,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {
       contentNodes.push(this.renderChangeDictionaryNameForm());
+      contentNodes.push(this.renderChangeDictionaryParamNameForm());
       contentNodes.push(this.renderChangeDictionaryExplanationForm());
       contentNodes.push(this.renderChangeDictionarySecretForm());
       contentNodes.push(this.renderUploadDictionaryForm());
