@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  Fragment,
   MouseEvent,
   ReactNode
 } from "react";
@@ -42,11 +43,17 @@ export class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> 
   }
 
   public render(): ReactNode {
+    let nextUrl = "http://zpdic.ziphil.com/dictionary/" + ((this.state.paramName) ? this.state.paramName : this.props.number);
     let node = (
-      <form styleName="root">
-        <Input label="URL 用名称" value={this.state.paramName} onSet={(value) => this.setState({paramName: value})}/>
-        <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
-      </form>
+      <Fragment>
+        <form styleName="root">
+          <Input label="URL 用名称" value={this.state.paramName} onSet={(value) => this.setState({paramName: value})}/>
+          <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
+        </form>
+        <p styleName="url">
+          {nextUrl}
+        </p>
+      </Fragment>
     );
     return node;
   }

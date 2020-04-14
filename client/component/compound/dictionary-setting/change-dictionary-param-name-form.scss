@@ -16,3 +16,20 @@
 .root >*:nth-child(2) {
   margin: 0px 0px 0px 20px;
 }
+
+.url {
+  width: 100%;
+  margin: 10px 0px 0px 0px;
+  font-size: 90%;
+  line-height: $line-height;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.url::before {
+  @include icon-font;
+  margin-right: 0.3em;
+  color: $light-color;
+  content: "\F0A4";
+}
