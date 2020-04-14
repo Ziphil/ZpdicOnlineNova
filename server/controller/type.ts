@@ -20,6 +20,7 @@ export const SERVER_PATH = {
   uploadDictionary: "/api/dictionary/upload",
   deleteDictionary: "/api/dictionary/delete",
   changeDictionaryName: "/api/dictionary/edit/name",
+  changeDictionaryParamName: "/api/dictionary/edit/paramname",
   changeDictionarySecret: "/api/dictionary/edit/secret",
   changeDictionaryExplanation: "/api/dictionary/edit/explanation",
   addNotification: "/api/news/add",
@@ -78,6 +79,16 @@ type ProcessType = {
       response: {
         200: SlimeDictionarySkeleton,
         400: CustomErrorSkeleton<"invalidDictionaryNumber">
+      }
+    }
+  },
+  changeDictionaryParamName: {
+    get: Noop,
+    post: {
+      request: {number: number, paramName: string},
+      response: {
+        200: SlimeDictionarySkeleton,
+        400: CustomErrorSkeleton<"invalidDictionaryNumber" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
       }
     }
   },

@@ -23,6 +23,9 @@ import {
   SlimeWordModel
 } from "/server/model/dictionary/slime";
 import {
+  CustomError
+} from "/server/model/error";
+import {
   User,
   UserDocument
 } from "/server/model/user";
@@ -161,6 +164,10 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
   }
 
   public async changeParamName(this: SlimeDictionaryDocument, paramName: string): Promise<SlimeDictionaryDocument> {
+    let formerDictionary = await SlimeDictionaryModel.findOne().where("paramName", paramName).exec();
+    if (formerDictionary && formerDictionary.id !== this.id) {
+      throw new CustomError("duplicateDictionaryParamName");
+    }
     this.paramName = paramName;
     await this.save();
     return this;
