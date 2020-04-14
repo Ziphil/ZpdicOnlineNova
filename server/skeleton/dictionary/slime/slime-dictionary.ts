@@ -18,6 +18,7 @@ export class SlimeDictionarySkeleton extends Skeleton {
 
   public id!: string;
   public number!: number;
+  public paramName?: string;
   public name!: string;
   public status!: string;
   public secret!: boolean;
@@ -29,12 +30,13 @@ export class SlimeDictionarySkeleton extends Skeleton {
   public static from(raw: SlimeDictionaryDocument): SlimeDictionarySkeleton {
     let id = raw.id;
     let number = raw.number;
+    let paramName = raw.paramName;
     let name = raw.name;
     let status = raw.status;
     let secret = raw.secret || false;
     let explanation = raw.explanation || "";
     let updatedDate = raw.updatedDate?.toISOString() || null;
-    let skeleton = SlimeDictionarySkeleton.of({id, number, name, status, secret, explanation, updatedDate});
+    let skeleton = SlimeDictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, updatedDate});
     return skeleton;
   }
 
