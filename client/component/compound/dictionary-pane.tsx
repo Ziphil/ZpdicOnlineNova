@@ -30,7 +30,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
 
   private handleClick(event: MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
-    let path = event.currentTarget.dataset.href!;
+    let path = event.currentTarget.attributes.getNamedItem("href")!.value;
     this.pushPath(path);
   }
 
@@ -67,7 +67,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
       updatedDateString = DateUtil.format(this.props.dictionary.updatedDate, "yyyy/MM/dd HH:mm");
     }
     let node = (
-      <a styleName="root" href={href} data-href={href} onClick={this.handleClick.bind(this)}>
+      <a styleName="root" href={href} onClick={this.handleClick.bind(this)}>
         <div styleName="head">
           <div styleName="name-wrapper">
             <div styleName="button">
