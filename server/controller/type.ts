@@ -133,10 +133,10 @@ type ProcessType = {
   },
   fetchDictionary: {
     get: {
-      request: {number: number},
+      request: {number?: number, paramName?: string},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"invalidDictionaryNumber" | "invalidDictionaryParamName" | "invalidArgument">
       }
     },
     post: Noop

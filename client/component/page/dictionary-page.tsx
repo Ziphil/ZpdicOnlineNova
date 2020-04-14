@@ -61,7 +61,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   public async componentDidMount(): Promise<void> {
-    let promises = [this.fetchDictionary(), this.checkAuthorization()];
+    await this.fetchDictionary();
+    let promises = [this.checkAuthorization()];
     if (!this.state.showsExplanation) {
       promises.push(this.updateWordsImmediately(false));
     }
@@ -80,8 +81,15 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   private async fetchDictionary(): Promise<void> {
-    let number = +this.props.match!.params.number;
-    let response = await this.requestGet("fetchDictionary", {number});
+    let value = this.props.match!.params.value;
+    let number;
+    let paramName;
+    if (value.match(/^\d+$/)) {
+      number = +value;
+    } else {
+      paramName = value;
+    }
+    let response = await this.requestGet("fetchDictionary", {number, paramName});
     if (response.status === 200 && !("error" in response.data)) {
       let dictionary = response.data;
       this.setState({dictionary});
@@ -91,7 +99,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   private async checkAuthorization(): Promise<void> {
-    let number = +this.props.match!.params.number;
+    let number = this.state.dictionary!.number;
     let response = await this.requestGet("checkDictionaryAuthorization", {number}, true);
     if (response.status === 200) {
       this.setState({authorized: true});
@@ -99,7 +107,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   private async updateWordsImmediately(deserializes: boolean): Promise<void> {
-    let number = +this.props.match!.params.number;
+    let number = this.state.dictionary!.number;
     let search = this.state.search;
     let mode = this.state.mode;
     let type = this.state.type;
@@ -235,5 +243,5 @@ type State = {
   page: number
 };
 type Params = {
-  number: string
+  value: string
 };

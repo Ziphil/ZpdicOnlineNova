@@ -15,6 +15,8 @@ const MESSAGES = {
   duplicateUserName: "そのユーザー名はすでに存在しています。",
   loginFailed: "ログインに失敗しました。",
   invalidDictionaryNumber: "この辞書は存在しません。",
+  invalidDictionaryParamName: "この辞書は存在しません。",
+  invalidArgument: "渡された引数が不正です。",
   unauthenticated: "ログインしていません。ログインし直してください。",
   forbidden: "このコンテンツにアクセスする権限がありません。",
   serverNotFound: "実行すべき処理を行う API が見つかりませんでした。",

@@ -88,8 +88,9 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return dictionary;
   }
 
-  public static async findOneByParamName(paramName: string): Promise<SlimeDictionaryDocument | null> {
-    let query = SlimeDictionaryModel.findOne().where("paramName", paramName);
+  public static async findOneByValue(value: number | string): Promise<SlimeDictionaryDocument | null> {
+    let key = (typeof value === "number") ? "number" : "paramName";
+    let query = SlimeDictionaryModel.findOne().where(key, value);
     let dictionary = await query.exec();
     return dictionary;
   }

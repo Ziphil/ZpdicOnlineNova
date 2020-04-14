@@ -179,12 +179,24 @@ export class DictionaryController extends Controller {
   @get(SERVER_PATH["fetchDictionary"])
   public async getFetchDictionary(request: GetRequest<"fetchDictionary">, response: GetResponse<"fetchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
-    let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
-    if (dictionary) {
-      let body = SlimeDictionarySkeleton.from(dictionary);
-      response.json(body);
+    let paramName = CastUtil.ensureString(request.query.paramName);
+    let value = number ?? paramName;
+    if (value !== undefined) {
+      let dictionary = await SlimeDictionaryModel.findOneByValue(value);
+      if (dictionary) {
+        let body = SlimeDictionarySkeleton.from(dictionary);
+        response.json(body);
+      } else {
+        if (number !== undefined) {
+          let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+          response.status(400).json(body);
+        } else {
+          let body = CustomErrorSkeleton.ofType("invalidDictionaryParamName");
+          response.status(400).json(body);
+        }
+      }
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("invalidArgument");
       response.status(400).json(body);
     }
   }
