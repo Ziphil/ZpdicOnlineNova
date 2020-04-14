@@ -76,7 +76,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
   }
 
   private renderChangeEmailForm(): ReactNode {
-    let label = "メールアドレス変更";
+    let label = "メールアドレスの変更";
     let description = `
       メールアドレスを変更します。
     `;
@@ -89,7 +89,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
   }
 
   private renderChangeUserPasswordForm(): ReactNode {
-    let label = "パスワード変更";
+    let label = "パスワードの変更";
     let description = `
       パスワードを変更します。
     `;
