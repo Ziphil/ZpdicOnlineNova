@@ -58,7 +58,7 @@ type ProcessType = {
       request: {number: number},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
   },
@@ -68,7 +68,7 @@ type ProcessType = {
       request: {number: number},
       response: {
         200: boolean,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
   },
@@ -78,7 +78,7 @@ type ProcessType = {
       request: {number: number, name: string},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
   },
@@ -88,7 +88,7 @@ type ProcessType = {
       request: {number: number, paramName: string},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
       }
     }
   },
@@ -98,7 +98,7 @@ type ProcessType = {
       request: {number: number, secret: boolean},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
   },
@@ -108,7 +108,7 @@ type ProcessType = {
       request: {number: number, explanation: string},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
   },
@@ -127,7 +127,7 @@ type ProcessType = {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
       response: {
         200: {hitSize: number, hitWords: Array<SlimeWordSkeleton>},
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     },
     post: Noop
@@ -137,7 +137,7 @@ type ProcessType = {
       request: {number: number, fileName?: string},
       response: {
         200: never,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     },
     post: Noop
@@ -147,7 +147,7 @@ type ProcessType = {
       request: {number?: number, paramName?: string},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber" | "invalidDictionaryParamName" | "invalidArgument">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
       }
     },
     post: Noop
@@ -157,7 +157,7 @@ type ProcessType = {
       request: {number: number},
       response: {
         200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     },
     post: Noop
@@ -197,7 +197,7 @@ type ProcessType = {
       request: {number: number},
       response: {
         200: boolean,
-        400: CustomErrorSkeleton<"invalidDictionaryNumber">
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     },
     post: Noop

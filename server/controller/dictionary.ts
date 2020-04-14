@@ -75,7 +75,7 @@ export class DictionaryController extends Controller {
       let body = SlimeDictionarySkeleton.from(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -88,7 +88,7 @@ export class DictionaryController extends Controller {
       await dictionary.removeWhole();
       response.json(true);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -103,7 +103,7 @@ export class DictionaryController extends Controller {
       let body = SlimeDictionarySkeleton.from(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -136,7 +136,7 @@ export class DictionaryController extends Controller {
         }
       }
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -151,7 +151,7 @@ export class DictionaryController extends Controller {
       let body = SlimeDictionarySkeleton.from(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -166,7 +166,7 @@ export class DictionaryController extends Controller {
       let body = SlimeDictionarySkeleton.from(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -188,7 +188,7 @@ export class DictionaryController extends Controller {
       let body = {hitSize, hitWords: hitWordsBody};
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -204,7 +204,7 @@ export class DictionaryController extends Controller {
       await dictionary.download(path);
       response.download(path, fullFileName);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -222,9 +222,9 @@ export class DictionaryController extends Controller {
       } else {
         let body;
         if (number !== undefined) {
-          body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+          body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
         } else {
-          body = CustomErrorSkeleton.ofType("invalidDictionaryParamName");
+          body = CustomErrorSkeleton.ofType("noSuchDictionaryParamName");
         }
         response.status(400).json(body);
       }
@@ -242,7 +242,7 @@ export class DictionaryController extends Controller {
       let body = await SlimeDictionarySkeleton.fromFetch(dictionary, true);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -300,7 +300,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       response.json(true);
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidDictionaryNumber");
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
