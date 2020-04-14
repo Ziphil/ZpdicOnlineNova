@@ -99,32 +99,36 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   private async checkAuthorization(): Promise<void> {
-    let number = this.state.dictionary!.number;
-    let response = await this.requestGet("checkDictionaryAuthorization", {number}, true);
-    if (response.status === 200) {
-      this.setState({authorized: true});
+    let number = this.state.dictionary?.number;
+    if (number !== undefined) {
+      let response = await this.requestGet("checkDictionaryAuthorization", {number}, true);
+      if (response.status === 200) {
+        this.setState({authorized: true});
+      }
     }
   }
 
   private async updateWordsImmediately(deserializes: boolean): Promise<void> {
-    let number = this.state.dictionary!.number;
-    let search = this.state.search;
-    let mode = this.state.mode;
-    let type = this.state.type;
-    let page = this.state.page;
-    let offset = page * 40;
-    let size = 40;
-    let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
-    if (response.status === 200 && !("error" in response.data)) {
-      let hitSize = response.data.hitSize;
-      let hitWords = response.data.hitWords;
-      let showsExplanation = false;
-      this.setState({hitSize, hitWords, showsExplanation});
-    } else {
-      this.setState({hitSize: 0, hitWords: []});
-    }
-    if (deserializes) {
-      this.deserializeQuery();
+    let number = this.state.dictionary?.number;
+    if (number !== undefined) {
+      let search = this.state.search;
+      let mode = this.state.mode;
+      let type = this.state.type;
+      let page = this.state.page;
+      let offset = page * 40;
+      let size = 40;
+      let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
+      if (response.status === 200 && !("error" in response.data)) {
+        let hitSize = response.data.hitSize;
+        let hitWords = response.data.hitWords;
+        let showsExplanation = false;
+        this.setState({hitSize, hitWords, showsExplanation});
+      } else {
+        this.setState({hitSize: 0, hitWords: []});
+      }
+      if (deserializes) {
+        this.deserializeQuery();
+      }
     }
   }
 
