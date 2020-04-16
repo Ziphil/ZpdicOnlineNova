@@ -84,10 +84,9 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   protected async requestPostFile<N extends ProcessName>(name: N, data: RequestType<N, "post"> & {file: Blob}, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "post">>> {
     let url = SERVER_PATH[name];
     let headers = {} as any;
-    let anyData = data as any;
     let nextData = new FormData();
-    for (let key of Object.keys(data)) {
-      nextData.append(key, anyData[key]);
+    for (let [key, value] of Object.entries(data)) {
+      nextData.append(key, value);
     }
     headers["content-type"] = "multipart/form-data";
     let response = await axios.post<ResponseType<N, "post">>(url, nextData, {headers, validateStatus: () => true});

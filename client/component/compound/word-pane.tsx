@@ -76,17 +76,17 @@ export class WordPane extends Component<Props, State> {
   }
 
   private renderRelationNode(): ReactNode {
-    let groupedRelations = {} as {[title: string]: Array<SlimeRelationSkeleton>};
+    let groupedRelations = new Map<string, Array<SlimeRelationSkeleton>>();
     for (let relation of this.props.word.relations) {
       let title = relation.title;
-      if (groupedRelations[title] === undefined) {
-        groupedRelations[title] = [];
+      if (groupedRelations.get(title) === undefined) {
+        groupedRelations.set(title, []);
       }
-      groupedRelations[title].push(relation);
+      groupedRelations.get(title)!.push(relation);
     }
-    let innerNodes = Object.keys(groupedRelations).map((title, index) => {
+    let innerNodes = Array.from(groupedRelations).map(([title, relations], index) => {
       let titleNode = (title !== "") ? <span styleName="box">{title}</span> : undefined;
-      let relationNodes = groupedRelations[title].map((relation, relationIndex) => {
+      let relationNodes = relations.map((relation, relationIndex) => {
         let href = "/dictionary/" + this.props.dictionary.number + "?search=" + encodeURIComponent(relation.name) + "&mode=name&type=exact&page=0";
         let relationNode = (
           <Fragment>
