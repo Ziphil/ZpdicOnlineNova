@@ -2,6 +2,10 @@
 
 import axios from "axios";
 import {
+  AxiosInstance,
+  AxiosRequestConfig
+} from "axios";
+import {
   AxiosResponse
 } from "axios";
 import {
@@ -14,6 +18,7 @@ import {
   GlobalStore
 } from "/client/component/store";
 import {
+  MethodType,
   ProcessName,
   RequestType,
   ResponseType,
@@ -43,6 +48,8 @@ export class RouteComponent<P = {}, S = {}, Q = {}, H = any> extends Component<P
 
 export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteComponent<{store?: GlobalStore} & P, S, Q, H> {
 
+  private static client: AxiosInstance = StoreComponent.createClient();
+
   // グローバルストアのポップアップデータを削除しつつ、引数に指定されたパスに移動します。
   // ページの遷移をしてもポップアップが表示され続けるのを防ぐため、ページを遷移するときは必ずこのメソッドを使ってください。
   protected pushPath(path: string, preservesPopup?: boolean): void {
@@ -59,40 +66,51 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
     this.props.history!.replace(path);
   }
 
+  private async request<N extends ProcessName, M extends MethodType>(name: N, method: M, config: AxiosRequestConfig & {ignoresError?: boolean}): Promise<AxiosResponse<ResponseType<N, M>>> {
+    let url = SERVER_PATH[name];
+    let response;
+    try {
+      response = await StoreComponent.client.request<ResponseType<N, M>>({url, method, ...config});
+    } catch (error) {
+      if (error.code === "ECONNABORTED") {
+        let data = undefined as any;
+        let headers = config.headers;
+        response = {status: 408, statusText: "Request Timeout", data, headers, config};
+      } else {
+        throw error;
+      }
+    }
+    if (!config.ignoresError && response.status >= 400) {
+      this.catchError(response);
+    }
+    return response;
+  }
+
   // サーバーに GET リクエストを送り、そのリスポンスを返します。
   // HTTP ステータスコードが 400 番台もしくは 500 番台の場合は、例外は投げられませんが、代わりにグローバルストアにエラータイプを送信します。
   // これにより、ページ上部にエラーを示すポップアップが表示されます。
   // ignroesError に true を渡すことで、このエラータイプの送信を抑制できます。
   protected async requestGet<N extends ProcessName>(name: N, params: RequestType<N, "get">, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "get">>> {
-    let url = SERVER_PATH[name];
-    let response = await axios.get<ResponseType<N, "get">>(url, {params, validateStatus: () => true});
-    if (!ignoresError && response.status >= 400) {
-      this.catchError(response);
-    }
+    let config = {params, ignoresError};
+    let response = await this.request(name, "get", config);
     return response;
   }
 
   protected async requestPost<N extends ProcessName>(name: N, data: RequestType<N, "post">, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "post">>> {
-    let url = SERVER_PATH[name];
-    let response = await axios.post<ResponseType<N, "post">>(url, data, {validateStatus: () => true});
-    if (!ignoresError && response.status >= 400) {
-      this.catchError(response);
-    }
+    let config = {data, ignoresError};
+    let response = await this.request(name, "post", config);
     return response;
   }
 
   protected async requestPostFile<N extends ProcessName>(name: N, data: RequestType<N, "post"> & {file: Blob}, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "post">>> {
-    let url = SERVER_PATH[name];
     let headers = {} as any;
-    let nextData = new FormData();
+    let formData = new FormData();
     for (let [key, value] of Object.entries(data)) {
-      nextData.append(key, value);
+      formData.append(key, value);
     }
     headers["content-type"] = "multipart/form-data";
-    let response = await axios.post<ResponseType<N, "post">>(url, nextData, {headers, validateStatus: () => true});
-    if (!ignoresError && response.status >= 400) {
-      this.catchError(response);
-    }
+    let config = {data: formData, ignoresError};
+    let response = await this.request(name, "post", config);
     return response;
   }
 
@@ -128,6 +146,8 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
       this.props.store!.sendError("forbidden");
     } else if (status === 404) {
       this.props.store!.sendError("serverNotFound");
+    } else if (status === 408) {
+      this.props.store!.sendError("requestTimeout");
     } else if (status === 500 || status === 503) {
       this.props.store!.sendError("serverError");
     } else if (status === 504) {
@@ -136,6 +156,11 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
       this.props.store!.sendError("unexpected");
     }
     return response;
+  }
+
+  private static createClient(): AxiosInstance {
+    let client = axios.create({timeout: 3000, validateStatus: () => true});
+    return client;
   }
 
 }
