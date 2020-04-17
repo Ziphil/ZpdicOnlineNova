@@ -103,12 +103,10 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   }
 
   protected async requestPostFile<N extends ProcessName>(name: N, data: RequestType<N, "post"> & {file: Blob}, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "post">>> {
-    let headers = {} as any;
     let formData = new FormData();
     for (let [key, value] of Object.entries(data)) {
       formData.append(key, value);
     }
-    headers["content-type"] = "multipart/form-data";
     let config = {data: formData, ignoresError};
     let response = await this.request(name, "post", config);
     return response;
