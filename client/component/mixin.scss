@@ -30,9 +30,9 @@
     }
   } @else {
     @if $light {
-      @return tint($color, 20%);
+      @return tint($color, 30%);
     } @else {
-      @return darken($color, 10%);
+      @return darken($color, 15%);
     }
   }
 }
