@@ -75,6 +75,8 @@ $inset-box-shadow-setting: 0px 2px 3px;
 $small-border-radius: 3px;
 $large-border-radius: 6px;
 
+$blank-padding: 0.3em;
+
 $page-width: 800px;
 $page-horizontal-margin: 30px;
 
@@ -121,24 +123,50 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   font-weight: 900;
 }
 
-@mixin unordered-list($icon) {
-  & {
-    margin: 0px;
-    padding: 0px;
-    list-style-type: none;
-  }
-  & >li {
-    margin-left: 1.3em;
+@mixin unordered-list($icon, $icon-color, $marker-width) {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+  >li {
+    margin-left: $marker-width + $blank-padding;
     text-align: justify;
   }
-  & >li::before {
-    font-family: $icon-font-family;
-    font-size: 90%;
-    font-weight: 900;
-    width: 1.3em * (100% / 90%);
-    margin-left: -1.3em * (100% / 90%);
+  >li::before {
+    @include icon-font;
+    width: $marker-width * (100% / 90%);
+    margin-right: $blank-padding * (100% / 90%);
+    margin-left: (-$marker-width - $blank-padding) * (100% / 90%);
+    color: $icon-color;
     content: $icon;
     display: inline-block;
+  }
+}
+
+@mixin ordered-list($number-color) {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+  >li {
+    margin-left: 0.9em + $blank-padding;
+    text-align: justify;
+    position: relative;
+    counter-increment: list;
+  }
+  >li::before {
+    top: 0.5em;
+    width: 0.8em * (100% / 70%);
+    height: 0.8em * (100% / 70%);
+    margin-right: $blank-padding * (100% / 70%);
+    margin-left: (-0.9em - $blank-padding) * (100% / 70%);
+    font-size: 70%;
+    color: $number-color;
+    line-height: 1;
+    text-align: center;
+    border: 1px $number-color solid;
+    border-radius: 50%;
+    content: counter(list);
+    display: inline-block;
+    position: absolute;
   }
 }
 

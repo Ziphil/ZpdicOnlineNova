@@ -18,11 +18,11 @@
 }
 
 .root.error .list {
-  @include unordered-list("\F06A");
+  @include unordered-list("\F06A", inherit, 1em);
 }
 
 .root.information .list {
-  @include unordered-list("\F05A");
+  @include unordered-list("\F05A", inherit, 1em);
 }
 
 .root.error .button-box {
