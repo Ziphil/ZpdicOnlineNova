@@ -106,6 +106,12 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   }
 }
 
+@mixin intermediate {
+  @media screen and (max-width: $page-width + 100px) {
+    @content;
+  }
+}
+
 @mixin page($margin-top: 130px) {
   width: calc(100% - #{$page-horizontal-margin} * 2);
   margin: $margin-top $page-horizontal-margin 60px $page-horizontal-margin;
@@ -249,5 +255,18 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
     &:hover {
       background-color: hover-color(background-color($color), true, false);
     }
+  }
+}
+
+@mixin header-container {
+  margin: 0px 50px;
+  height: 100%;
+  @include intermediate {
+    width: $page-width;
+    margin: 0px auto;
+  }
+  @include smartphone {
+    width: calc(100% - #{$page-horizontal-margin * 2});
+    margin: 0px auto;
   }
 }

@@ -15,19 +15,10 @@
 }
 
 .container {
-  margin: 0px 50px;
-  height: 100%;
+  @include header-container;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @media screen and (max-width: $page-width + 100px) {
-    width: $page-width;
-    margin: 0px auto;
-  }
-  @include smartphone {
-    width: calc(100% - #{$page-horizontal-margin * 2});
-    margin: 0px auto;
-  }
 }
 
 .left {
