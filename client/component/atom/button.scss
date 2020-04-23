@@ -4,40 +4,11 @@
 
 
 .root {
-  padding: 0.1em 0.8em;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: $button-color;
-  border: 1px $dark-border-color solid;
-  border-radius: $small-border-radius;
-  background: $button-background;
-  position: relative;
-  cursor: pointer;
-  outline: none;
+  @include button(map-get($colors, primary));
 }
 
-.root:hover {
-  background: $button-hover-background;
-}
-
-.root:focus {
-  box-shadow: $hover-box-shadow-setting $light-box-shadow-color;
-}
-
-.root:active,
-.root:active:hover {
-  background: $button-active-background;
-  box-shadow: $inset-box-shadow-setting $button-active-box-shadow-color inset;
-}
-
-.root:disabled {
-  opacity: 0.5;
-}
-
-.root:disabled:hover {
-  background: $button-background;
-  cursor: not-allowed;
+.root.caution {
+  @include button(map-get($colors, error));
 }
 
 .root.left {
@@ -52,29 +23,6 @@
 .root.middle {
   margin: 0px -1px 0px 0px;
   border-radius: 0px;
-}
-
-.root.caution {
-  background: $caution-button-background;
-}
-
-.root.caution:hover {
-  background: $caution-button-hover-background;
-}
-
-.root.caution:focus {
-  box-shadow: $hover-box-shadow-setting $caution-box-shadow-color;
-}
-
-.root.caution:active,
-.root.caution:active:hover {
-  background: $button-active-background;
-  box-shadow: $inset-box-shadow-setting $button-active-box-shadow-color inset;
-}
-
-.root.caution:active,
-.root.caution:active:hover {
-  background: $caution-button-active-background;
 }
 
 .simple {
@@ -99,10 +47,6 @@
   text-decoration: none;
 }
 
-.loading >.label {
-  visibility: hidden;
-}
-
 .spinner-wrapper {
   top: 0px;
   left: 0px;
@@ -117,6 +61,10 @@
 
 .loading >.spinner-wrapper {
   visibility: visible;
+}
+
+.loading >.label {
+  visibility: hidden;
 }
 
 .spinner {

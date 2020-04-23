@@ -4,7 +4,7 @@
 
 
 .root {
-  @include pane(normal);
+  @include white-pane;
   padding: 20px 30px;
   line-height: $line-height;
   box-sizing: border-box;
