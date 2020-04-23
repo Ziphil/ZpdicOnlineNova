@@ -55,11 +55,11 @@
 }
 
 .root.error .button:hover >button >span {
-  color: hover-text-color(map-get($colors, error));
+  color: hover-color(map-get($colors, error), false);
 }
 
 .root.information .button:hover >button >span {
-  color: hover-text-color(map-get($colors, information));
+  color: hover-color(map-get($colors, information), false);
 }
 
 .overlay {
