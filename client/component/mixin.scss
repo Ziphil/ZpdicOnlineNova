@@ -15,7 +15,7 @@
 
 @function border-color($color, $light: true) {
   @if $light {
-    @return tint($color, 10%);
+    @return tint($color, 20%);
   } @else {
     @return rgba(black, 0.3);
   }
@@ -56,7 +56,7 @@ $colors: (
 $background-color: background-color(map-get($colors, primary));
 $strong-background-color: darken($background-color, 10%);
 $header-background-color: darken(map-get($colors, primary), 10%);
-$footer-background-color: $strong-background-color;//tint(map-get($colors, primary), 90%);
+$footer-background-color: tint(map-get($colors, primary), 85%);
 
 $head-color: map-get($colors, primary);
 $light-color: map-get($colors, primary);

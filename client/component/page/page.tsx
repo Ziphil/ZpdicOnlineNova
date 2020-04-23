@@ -47,7 +47,6 @@ export class Page extends Component<Props, State> {
             {this.props.children}
           </div>
         </div>
-        <Footer/>
       </div>
     );
     return node;
