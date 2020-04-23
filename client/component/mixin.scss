@@ -56,6 +56,7 @@ $colors: (
 $background-color: background-color(map-get($colors, primary));
 $strong-background-color: darken($background-color, 10%);
 $header-background-color: darken(map-get($colors, primary), 10%);
+$footer-background-color: $strong-background-color;//tint(map-get($colors, primary), 90%);
 
 $head-color: map-get($colors, primary);
 $light-color: map-get($colors, primary);
@@ -107,14 +108,8 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
 
 @mixin page($margin-top: 130px) {
   width: calc(100% - #{$page-horizontal-margin} * 2);
-  margin: $margin-top $page-horizontal-margin 50px $page-horizontal-margin;
+  margin: $margin-top $page-horizontal-margin 60px $page-horizontal-margin;
   padding: 0px;
-}
-
-@mixin page-content($width: $page-width) {
-  width: 100%;
-  max-width: $width;
-  margin: 0px auto;
 }
 
 @mixin icon-font {
