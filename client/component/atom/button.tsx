@@ -39,7 +39,6 @@ export class Button extends Component<Props, State> {
             this.setState({loading: false});
           });
         } else {
-          onClick(event);
           this.setState({loading: false});
         }
       } else {
