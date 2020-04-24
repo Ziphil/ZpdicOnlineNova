@@ -17,6 +17,12 @@ import {
   inject,
   route
 } from "/client/component/decorator";
+import {
+  getMessage
+} from "/client/component/message";
+import {
+  validatePassword
+} from "/server/model/validation";
 
 
 @route @inject
@@ -39,9 +45,12 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
+    let validatePasswordString = function (password: string): string | null {
+      return (validatePassword(password)) ? getMessage("invalidPassword") : null;
+    };
     let node = (
       <form styleName="root">
-        <Input label="パスワード" type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
+        <Input label="パスワード" type="flexible" value={this.state.password} validate={validatePasswordString} onSet={(password) => this.setState({password})}/>
         <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
