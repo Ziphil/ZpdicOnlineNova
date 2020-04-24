@@ -9,6 +9,7 @@ import {
 } from "/client/component/component";
 import {
   DictionaryHeader,
+  Footer,
   Header,
   PopupInformationPane
 } from "/client/component/compound";
@@ -37,12 +38,14 @@ export class Page extends Component<Props, State> {
       dictionaryHeaderNode = <DictionaryHeader dictionary={this.props.dictionary} showsSetting={this.props.showsDictionarySetting}/>;
     }
     let node = (
-      <div styleName={styleNames.join(" ")}>
+      <div styleName="root">
         <Header/>
-        {dictionaryHeaderNode}
-        <PopupInformationPane/>
-        <div styleName="content">
-          {this.props.children}
+        <div styleName={styleNames.join(" ")}>
+          {dictionaryHeaderNode}
+          <PopupInformationPane/>
+          <div styleName="content">
+            {this.props.children}
+          </div>
         </div>
       </div>
     );

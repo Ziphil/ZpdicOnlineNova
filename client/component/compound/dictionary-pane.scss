@@ -4,7 +4,7 @@
 
 
 .root {
-  @include hoverable-pane(normal);
+  @include white-pane(true);
   padding: 12px 15px;
   color: inherit;
   text-decoration: none;
@@ -30,7 +30,7 @@
 }
 
 .button >* {
-  margin: 0em 0.3em 0em 0em;
+  margin: 0em $blank-padding 0em 0em;
 }
 
 .name {

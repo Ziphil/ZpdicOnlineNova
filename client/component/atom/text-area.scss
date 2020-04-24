@@ -15,22 +15,9 @@
 }
 
 .textarea {
-  width: 100%;
+  @include input(map-get($colors, primary));
   padding: 0.3em 0.5em;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  border: 1px $light-border-color solid;
-  border-radius: $small-border-radius;
-  background: $input-background;
-  box-shadow: $inset-box-shadow-setting $input-box-shadow-color inset;
-  box-sizing: border-box;
   resize: none;
-  outline: none;
-}
-
-.textarea:focus {
-  box-shadow: $hover-box-shadow-setting $light-box-shadow-color;
 }
 
 .textarea.monospace {

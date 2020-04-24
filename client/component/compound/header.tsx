@@ -38,7 +38,7 @@ export class Header extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <div styleName="root">
+      <header styleName="root">
         <div styleName="container">
           <div styleName="left">
             <div styleName="title">
@@ -55,7 +55,7 @@ export class Header extends StoreComponent<Props, State> {
             </div>
           </div>
         </div>
-      </div>
+      </header>
     );
     return node;
   }

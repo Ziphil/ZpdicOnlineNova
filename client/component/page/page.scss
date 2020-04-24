@@ -3,8 +3,15 @@
 @import "/client/component/mixin.scss";
 
 
+.root {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
 .page {
   @include page(130px);
+  flex: 1;
 }
 
 .page.dictionary {
@@ -12,5 +19,7 @@
 }
 
 .content {
-  @include page-content;
+  width: 100%;
+  max-width: $page-width;
+  margin: 0px auto;
 }

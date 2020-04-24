@@ -17,60 +17,23 @@
 }
 
 .root ul {
+  @include unordered-list("\F0DA", $light-color, 0.4em);
   margin: 5px 0px 0px 2px;
   padding: 0px;
-  list-style-type: none;
 }
 
 .root >ul:first-child {
   margin: 0px 0px 0px 2px;
 }
 
-.root ul >li {
-  margin-left: 0.7em;
-  text-align: justify;
-}
-
-.root ul >li::before {
-  width: 0.7em * (100% / 90%);
-  margin-left: -0.7em * (100% / 90%);
-  font-family: $icon-font-family;
-  font-size: 90%;
-  font-weight: 900;
-  color: $light-color;
-  content: "\F0DA";
-  display: inline-block;
-}
-
 .root ol {
+  @include ordered-list($light-color);
   margin: 5px 0px 0px 0px;
   padding: 0px;
-  list-style-type: none;
-  counter-reset: section;
 }
 
-.root ol >li {
-  margin-left: 1.4em;
-  text-align: justify;
-  counter-increment: list;
-  position: relative;
-}
-
-.root ol >li::before {
-  top: 0.5em;
-  width: 0.8em * (100% / 70%);
-  height: 0.8em * (100% / 70%);
-  margin-left: -1.4em * (100% / 70%);
-  margin-right: 0.6em * (100% / 70%);
-  font-size: 70%;
-  color: $light-color;
-  line-height: 1;
-  text-align: center;
-  border: 1px $light-color solid;
-  border-radius: 50%;
-  content: counter(list);
-  display: inline-block;
-  position: absolute;
+.root >ol:first-child {
+  margin: 0px;
 }
 
 .root table {

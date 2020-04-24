@@ -4,6 +4,10 @@
 
 
 .root {
+  position: relative;
+}
+
+.label-wrapper {
   display: block;
 }
 
@@ -15,21 +19,11 @@
 }
 
 .input {
-  width: 100%;
-  padding: 0.1em 0.5em;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  border: 1px $light-border-color solid;
-  border-radius: $small-border-radius;
-  background: $input-background;
-  box-shadow: $inset-box-shadow-setting $input-box-shadow-color inset;
-  box-sizing: border-box;
-  outline: none;
+  @include input(map-get($colors, primary));
 }
 
-.input:focus {
-  box-shadow: $hover-box-shadow-setting $light-box-shadow-color;
+.input.error {
+  @include input(map-get($colors, error), true);
 }
 
 .button {
@@ -54,4 +48,32 @@
 
 .button.password::before {
   content: "\F06E";
+}
+
+.message {
+  margin: 0.4em 0em 0em 0em;
+  font-size: 80%;
+  color: map-get($colors, error);
+  line-height: $line-height;
+}
+
+.message.tooltip {
+  margin: 10px 0px 0px 0px;
+  padding: 0.2em 0.6em;
+  color: background-color(map-get($colors, error));
+  background-color: map-get($colors, error);
+  text-align: justify;
+  border-radius: $small-border-radius;
+  position: absolute;
+  z-index: 50;
+}
+
+.message.tooltip:before {
+  top: -15px;
+  left: 20px;
+  margin-left: -8px;
+  border: 8px transparent solid;
+  border-bottom: 8px map-get($colors, error) solid;
+  position: absolute;
+  content: "";
 }

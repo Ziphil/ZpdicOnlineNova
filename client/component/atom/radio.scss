@@ -20,8 +20,8 @@
   height: 1em;
   border: 1px $light-border-color solid;
   border-radius: 50%;
-  background: $input-background;
-  box-shadow: $inset-box-shadow-setting $input-box-shadow-color inset;
+  background: white;
+  box-shadow: $inset-box-shadow-setting input-box-shadow-color(map-get($colors, primary)) inset;
   box-sizing: border-box;
   display: inline-block;
   vertical-align: middle;
@@ -30,7 +30,7 @@
 }
 
 .radio:hover +.label::before {
-  border: 1px $light-hover-color solid;
+  border: 1px $light-color solid;
 }
 
 .radio:checked +.label::after {
@@ -39,7 +39,7 @@
   width: calc(1em - 8px);
   height: calc(1em - 8px);
   border-radius: 50%;
-  background: $button-background;
+  background: button-background(map-get($colors, primary));
   box-sizing: border-box;
   display: block;
   position: absolute;
@@ -47,5 +47,9 @@
 }
 
 .radio:hover +.label::after {
-  background: $button-hover-background;
+  background: button-hover-background(map-get($colors, primary));
+}
+
+.radio:focus +.label::before {
+  box-shadow: $focus-box-shadow-setting focus-box-shadow-color(map-get($colors, primary));
 }

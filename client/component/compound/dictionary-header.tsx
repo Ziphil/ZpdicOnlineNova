@@ -64,7 +64,7 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
       downloadButtonNode = <Button label="&#xF019;" style="simple" usesIcon={true} onClick={this.downloadDictionary.bind(this)}/>;
     }
     let node = (
-      <div styleName="root">
+      <header styleName="root">
         <div styleName="container">
           <div styleName="left">
             <div styleName="button">
@@ -76,7 +76,7 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
             </div>
           </div>
         </div>
-      </div>
+      </header>
     );
     return node;
   }

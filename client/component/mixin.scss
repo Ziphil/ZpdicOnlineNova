@@ -1,79 +1,93 @@
 @charset "utf-8";
 
 
-$primary-hue: 30;
-$secondary-hue: 320;
-$error-hue: 0;
+@function tint($color, $percent) {
+  @return mix(white, $color, $percent);
+}
+
+@function shade($color, $percent) {
+  @return mix(black, $color, $percent);
+}
+
+@function background-color($color) {
+  @return tint($color, 80%);
+}
+
+@function border-color($color, $light: true) {
+  @if $light {
+    @return tint($color, 20%);
+  } @else {
+    @return rgba(black, 0.3);
+  }
+}
+
+@function hover-color($color, $box: true, $light: true) {
+  @if $box {
+    @if $light {
+      @return tint($color, 10%);
+    } @else {
+      @return darken($color, 5%);
+    }
+  } @else {
+    @if $light {
+      @return tint($color, 30%);
+    } @else {
+      @return darken($color, 15%);
+    }
+  }
+}
+
+@function gradient-color($color) {
+  @return darken($color, 10%);
+}
+
+@function focus-box-shadow-color($color) {
+  @return rgba($color, 0.3)
+}
+
+
+$colors: (
+  primary: hsl(30, 40%, 50%),
+  secondary: hsl(320, 40%, 50%),
+  error: hsl(0, 40%, 50%),
+  information: hsl(220, 40%, 50%)
+);
+
+$background-color: background-color(map-get($colors, primary));
+$strong-background-color: darken($background-color, 10%);
+$header-background-color: darken(map-get($colors, primary), 10%);
+$footer-background-color: tint(map-get($colors, primary), 85%);
+
+$head-color: map-get($colors, primary);
+$light-color: map-get($colors, primary);
+$light-border-color: border-color(map-get($colors, primary));
+$dark-border-color: border-color(map-get($colors, primary), false);
+$pale-border-color: rgba($light-border-color, 0.2);
+$logo-color: darken(map-get($colors, primary), 20%);
+
+$link-color: map-get($colors, secondary);
+$link-hover-color: hover-color($link-color, false);
+
+$pale-link-color: $background-color;
+$pale-link-hover-color: hover-color($pale-link-color, false, false);
+
+$focus-box-shadow-setting: 0px 0px 0px 2px;
+$inset-box-shadow-setting: 0px 2px 3px;
+$small-border-radius: 3px;
+$large-border-radius: 6px;
+
+$blank-padding: 0.3em;
+
+$page-width: 800px;
+$page-horizontal-margin: 30px;
+
+$line-height: 1.6;
 
 $europian-font-family: "EB Garamond", "Times New Roman";
 $japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝";
 $monospace-font-family: "Courier New", "Courier", "Yu Gothic", "YuGothic", "ＭＳ ゴシック";
 $special-font-family: "Simonetta";
 $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
-
-$background-color: hsl($primary-hue, 50%, 92%);
-$strong-background-color: hsl($primary-hue, 50%, 82%);
-
-$head-color: hsl($primary-hue, 40%, 50%);
-$light-color: hsl($primary-hue, 40%, 50%);
-$light-hover-color: lighten(hsla($primary-hue, 40%, 50%, 0.8), 5%);
-$light-border-color: hsla($primary-hue, 40%, 50%, 0.8);
-$light-box-shadow-color: hsla($primary-hue, 40%, 50%, 0.3);
-$pale-border-color: hsla($primary-hue, 40%, 50%, 0.2);
-$dark-border-color: rgba(black, 0.3);
-
-$header-background-color: hsl($primary-hue, 40%, 40%);
-$logo-color: hsl($primary-hue, 50%, 30%);
-
-$input-box-shadow-color: hsla($primary-hue, 40%, 50%, 0.1);
-$input-background: white;
-
-$button-color: white;
-$button-background: linear-gradient(to bottom, hsl($primary-hue, 40%, 50%), hsl($primary-hue, 40%, 40%));
-$button-hover-background: linear-gradient(to bottom, lighten(hsl($primary-hue, 40%, 50%), 5%), lighten(hsl($primary-hue, 40%, 40%), 5%));
-$button-active-background: hsl($primary-hue, 30%, 40%);
-$button-active-box-shadow-color: rgba(black, 0.1);
-
-$caution-button-background: linear-gradient(to bottom, hsl($error-hue, 40%, 50%), hsl($error-hue, 40%, 40%));
-$caution-button-hover-background: linear-gradient(to bottom, lighten(hsl($error-hue, 40%, 50%), 5%), lighten(hsl($error-hue, 40%, 40%), 5%));
-$caution-button-active-background: hsl($error-hue, 30%, 40%);
-$caution-box-shadow-color: hsla($error-hue, 40%, 50%, 0.3);
-
-$link-color: hsl($secondary-hue, 40%, 50%);
-$link-hover-color: lighten(hsl($secondary-hue, 40%, 50%), 15%);
-
-$pale-link-color: hsl($primary-hue, 50%, 92%);
-$pale-link-hover-color: darken(hsl($primary-hue, 50%, 92%), 15%);
-
-$pane-color: (
-  normal: inherit,
-  error: hsl(0, 40%, 50%),
-  information: hsl(220, 40%, 50%)
-);
-$pane-border-color: (
-  normal: rgba(white, 0.8),
-  error: hsla(0, 40%, 50%, 0.8),
-  information: hsla(220, 40%, 50%, 0.8)
-);
-$pane-background: (
-  normal: rgba(white, 0.5),
-  error: hsl(0, 50%, 90%),
-  information: hsl(220, 50%, 90%)
-);
-$pane-hover-background: (
-  normal: rgba(white, 0.7)
-);
-
-$hover-box-shadow-setting: 0px 0px 0px 2px;
-$inset-box-shadow-setting: 0px 2px 3px;
-
-$small-border-radius: 3px;
-$large-border-radius: 6px;
-
-$page-width: 800px;
-$page-horizontal-margin: 30px;
-
-$line-height: 1.6;
 
 
 @keyframes spin {
@@ -92,23 +106,16 @@ $line-height: 1.6;
   }
 }
 
+@mixin intermediate {
+  @media screen and (max-width: $page-width + 100px) {
+    @content;
+  }
+}
+
 @mixin page($margin-top: 130px) {
   width: calc(100% - #{$page-horizontal-margin} * 2);
-  margin: $margin-top $page-horizontal-margin 50px $page-horizontal-margin;
+  margin: $margin-top $page-horizontal-margin 60px $page-horizontal-margin;
   padding: 0px;
-}
-
-@mixin page-content($width: $page-width) {
-  width: 100%;
-  max-width: $width;
-  margin: 0px auto;
-}
-
-@mixin pane($type) {
-  color: map-get($pane-color, $type);
-  border: 1px map-get($pane-border-color, $type) solid;
-  border-radius: $large-border-radius;
-  background: map-get($pane-background, $type);
 }
 
 @mixin icon-font {
@@ -117,34 +124,152 @@ $line-height: 1.6;
   font-weight: 900;
 }
 
-@mixin hoverable-pane($type) {
-  & {
-    border: 1px map-get($pane-border-color, $type) solid;
-    border-radius: $large-border-radius;
-    background: map-get($pane-background, $type);
+@mixin unordered-list($icon, $icon-color, $marker-width) {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+  >li {
+    margin-left: $marker-width + $blank-padding;
+    text-align: justify;
   }
-  &:hover {
-    background: map-get($pane-hover-background, $type);
+  >li::before {
+    @include icon-font;
+    width: $marker-width * (100% / 90%);
+    margin-right: $blank-padding * (100% / 90%);
+    margin-left: (-$marker-width - $blank-padding) * (100% / 90%);
+    color: $icon-color;
+    content: $icon;
+    display: inline-block;
   }
 }
 
-@mixin unordered-list($icon) {
-  & {
-    margin: 0px;
-    padding: 0px;
-    list-style-type: none;
-  }
-  & >li {
-    margin-left: 1.3em;
+@mixin ordered-list($number-color) {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+  >li {
+    margin-left: 0.9em + $blank-padding;
     text-align: justify;
+    position: relative;
+    counter-increment: list;
   }
-  & >li::before {
-    font-family: $icon-font-family;
-    font-size: 90%;
-    font-weight: 900;
-    width: 1.3em * (100% / 90%);
-    margin-left: -1.3em * (100% / 90%);
-    content: $icon;
+  >li::before {
+    top: 0.5em;
+    width: 0.8em * (100% / 70%);
+    height: 0.8em * (100% / 70%);
+    margin-right: $blank-padding * (100% / 70%);
+    margin-left: (-0.9em - $blank-padding) * (100% / 70%);
+    font-size: 70%;
+    color: $number-color;
+    line-height: 1;
+    text-align: center;
+    border: 1px $number-color solid;
+    border-radius: 50%;
+    content: counter(list);
     display: inline-block;
+    position: absolute;
+  }
+}
+
+@function input-box-shadow-color($color) {
+  @return rgba($color, 0.1);
+}
+
+@mixin input($color, $dye: false) {
+  width: 100%;
+  padding: 0.1em 0.5em;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border: 1px border-color($color) solid;
+  border-radius: $small-border-radius;
+  background-color: white;
+  box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color);
+  box-sizing: border-box;
+  outline: none;
+  @if $dye {
+    background-color: tint($color, 90%);
+  }
+  &:focus {
+    box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color), $focus-box-shadow-setting focus-box-shadow-color($color);
+  }
+}
+
+@function button-background($background-color) {
+  @return linear-gradient(to bottom, $background-color, gradient-color($background-color));
+}
+
+@function button-hover-background($background-color) {
+  @return linear-gradient(to bottom, hover-color($background-color), hover-color(gradient-color($background-color)));
+}
+
+@mixin button($background-color) {
+  padding: 0.1em 0.8em;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: white;
+  border: 1px border-color($background-color, false) solid;
+  border-radius: $small-border-radius;
+  background: button-background($background-color);
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  &:hover {
+    background: button-hover-background($background-color);
+  }
+  &:focus {
+    box-shadow: $focus-box-shadow-setting focus-box-shadow-color($background-color);
+  }
+  &:active {
+    background: shade($background-color, 25%);
+    box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1);
+  }
+  &:active:focus {
+    box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1), $focus-box-shadow-setting focus-box-shadow-color($background-color);
+  }
+  &:disabled {
+    opacity: 0.5;
+  }
+  &:disabled:hover {
+    background: button-background($background-color);
+    cursor: not-allowed;
+  }
+}
+
+@mixin white-pane($hover: false) {
+  color: inherit;
+  border: 1px rgba(white, 0.8) solid;
+  border-radius: $large-border-radius;
+  background-color: rgba(white, 0.5);
+  @if $hover {
+    &:hover {
+      background-color: rgba(white, 0.7);
+    }
+  }
+}
+
+@mixin color-pane($color, $hover: false) {
+  color: $color;
+  border: 1px border-color($color) solid;
+  border-radius: $large-border-radius;
+  background-color: background-color($color);
+  @if $hover {
+    &:hover {
+      background-color: hover-color(background-color($color), true, false);
+    }
+  }
+}
+
+@mixin header-container {
+  margin: 0px 50px;
+  height: 100%;
+  @include intermediate {
+    width: $page-width;
+    margin: 0px auto;
+  }
+  @include smartphone {
+    width: calc(100% - #{$page-horizontal-margin * 2});
+    margin: 0px auto;
   }
 }

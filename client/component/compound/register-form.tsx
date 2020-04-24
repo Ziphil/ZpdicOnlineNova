@@ -23,6 +23,11 @@ import {
 import {
   getMessage
 } from "/client/component/message";
+import {
+  EMAIL_REGEXP,
+  IDENTIFIER_REGEXP,
+  validatePassword
+} from "/server/model/validation";
 
 
 @route @inject
@@ -66,13 +71,18 @@ export class RegisterForm extends StoreComponent<Props, State> {
         </div>
       );
     }
+    let validateName = {regexp: IDENTIFIER_REGEXP, message: getMessage("invalidUserName")};
+    let validateEmail = {regexp: EMAIL_REGEXP, message: getMessage("invalidEmail")};
+    let validatePasswordString = function (password: string): string | null {
+      return (validatePassword(password)) ? null : getMessage("invalidPassword");
+    };
     let node = (
       <div>
         {errorNode}
         <form styleName="root">
-          <Input label="ユーザー名" value={this.state.name} onSet={(value) => this.setState({name: value})}/>
-          <Input label="メールアドレス" value={this.state.email} onSet={(value) => this.setState({email: value})}/>
-          <Input label="パスワード" type="flexible" value={this.state.password} onSet={(value) => this.setState({password: value})}/>
+          <Input label="ユーザー名" value={this.state.name} validate={validateName} onSet={(name) => this.setState({name})}/>
+          <Input label="メールアドレス" value={this.state.email} validate={validateEmail} onSet={(email) => this.setState({email})}/>
+          <Input label="パスワード" type="flexible" value={this.state.password} validate={validatePasswordString} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
             <Button label="新規登録" reactive={true} onClick={this.performRegister.bind(this)}/>
           </div>

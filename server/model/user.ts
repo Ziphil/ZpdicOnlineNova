@@ -10,19 +10,22 @@ import * as crypto from "crypto";
 import {
   CustomError
 } from "/server/model/error";
+import {
+  EMAIL_REGEXP,
+  IDENTIFIER_REGEXP,
+  validatePassword
+} from "/server/model/validation";
 
 
-const NAME_VALIDATION = /^[a-zA-Z0-9_-]*[a-zA-Z_-]+[a-zA-Z0-9_-]*$/;
-const EMAIL_VALIDATION = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
 const SALT_ROUND = 10;
 
 
 export class User {
 
-  @prop({required: true, unique: true, validate: NAME_VALIDATION})
+  @prop({required: true, unique: true, validate: IDENTIFIER_REGEXP})
   public name!: string;
 
-  @prop({required: true, validate: EMAIL_VALIDATION})
+  @prop({required: true, validate: EMAIL_REGEXP})
   public email!: string;
 
   @prop({required: true})
@@ -83,8 +86,7 @@ export class User {
   }
 
   private encryptPassword(password: string): void {
-    let length = password.length;
-    if (length < 6 || length > 50) {
+    if (!validatePassword(password)) {
       throw new CustomError("invalidPassword");
     }
     this.hash = bcrypt.hashSync(password, SALT_ROUND);

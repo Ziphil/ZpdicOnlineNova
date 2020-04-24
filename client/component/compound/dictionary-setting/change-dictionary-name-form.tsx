@@ -44,7 +44,7 @@ export class ChangeDictionaryNameForm extends StoreComponent<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label="表示名" value={this.state.name} onSet={(value) => this.setState({name: value})}/>
+        <Input label="表示名" value={this.state.name} onSet={(name) => this.setState({name})}/>
         <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );

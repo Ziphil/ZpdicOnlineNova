@@ -12,7 +12,7 @@
 .caution {
   margin: 10px 0px 0px 0px;
   font-size: 90%;
-  color: map-get($pane-color, error);
+  color: map-get($colors, error);
   line-height: $line-height;
   text-align: justify;
 }
