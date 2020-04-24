@@ -24,15 +24,28 @@ export class Input extends Component<Props, State> {
 
   public constructor(props: any) {
     super(props);
+    let errorMessage = null;
     let type = this.props.type;
     if (type === "flexible") {
       type = "password";
     }
-    this.state = {type};
+    this.state = {type, errorMessage};
   }
 
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
+    let validate = this.props.validate;
     let value = event.target.value;
+    if (validate) {
+      if (typeof validate === "function") {
+        let errorMessage = validate(value);
+        this.setState({errorMessage});
+      } else {
+        let errorMessage = (value.match(validate.regexp)) ? null : validate.message;
+        this.setState({errorMessage});
+      }
+    } else {
+      this.setState({errorMessage: null});
+    }
     if (this.props.onChange) {
       this.props.onChange(event);
     }
@@ -52,6 +65,7 @@ export class Input extends Component<Props, State> {
   public render(): ReactNode {
     let labelNode;
     let buttonNode;
+    let tooltipNode;
     if (this.props.label) {
       labelNode = <div styleName="label">{this.props.label}</div>;
     }
@@ -59,12 +73,20 @@ export class Input extends Component<Props, State> {
       let buttonStyleNames = ["button", this.state.type];
       buttonNode = <span styleName={buttonStyleNames.join(" ")} onClick={this.toggleType.bind(this)}/>;
     }
+    let inputStyleNames = ["input"];
+    if (this.state.errorMessage !== null) {
+      inputStyleNames.push("error");
+      tooltipNode = <div styleName="message">{this.state.errorMessage}</div>;
+    }
     let node = (
-      <label styleName="root">
-        {labelNode}
-        <input styleName="input" type={this.state.type} value={this.props.value} onChange={this.handleChange.bind(this)}/>
-        {buttonNode}
-      </label>
+      <div styleName="root">
+        <label styleName="label-wrapper">
+          {labelNode}
+          <input styleName={inputStyleNames.join(" ")} type={this.state.type} value={this.props.value} onChange={this.handleChange.bind(this)}/>
+          {buttonNode}
+        </label>
+        {tooltipNode}
+      </div>
     );
     return node;
   }
@@ -76,9 +98,11 @@ type Props = {
   value: string,
   label?: string,
   type: "text" | "password" | "flexible",
+  validate?: {regexp: RegExp, message: string} | ((value: string) => string | null),
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
   onSet?: (value: string) => void
 };
 type State = {
-  type: "text" | "password"
+  type: "text" | "password",
+  errorMessage: string | null
 };

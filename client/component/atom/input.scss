@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.root {
+.label-wrapper {
   display: block;
 }
 
@@ -16,6 +16,10 @@
 
 .input {
   @include input(map-get($colors, primary));
+}
+
+.input.error {
+  @include input(map-get($colors, error));
 }
 
 .button {
@@ -40,4 +44,11 @@
 
 .button.password::before {
   content: "\F06E";
+}
+
+.message {
+  margin: 0.4em 0em 0em 0em;
+  font-size: 80%;
+  color: map-get($colors, error);
+  line-height: $line-height;
 }
