@@ -24,8 +24,8 @@ import {
   getMessage
 } from "/client/component/message";
 import {
-  EMAIL_VALIDATION,
-  IDENTIFIER_VALIDATION,
+  EMAIL_REGEXP,
+  IDENTIFIER_REGEXP,
   validatePassword
 } from "/server/model/validation";
 
@@ -71,8 +71,8 @@ export class RegisterForm extends StoreComponent<Props, State> {
         </div>
       );
     }
-    let validateName = {regexp: IDENTIFIER_VALIDATION, message: getMessage("invalidUserName")};
-    let validateEmail = {regexp: EMAIL_VALIDATION, message: getMessage("invalidEmail")};
+    let validateName = {regexp: IDENTIFIER_REGEXP, message: getMessage("invalidUserName")};
+    let validateEmail = {regexp: EMAIL_REGEXP, message: getMessage("invalidEmail")};
     let validatePasswordString = function (password: string): string | null {
       return (validatePassword(password)) ? null : getMessage("invalidPassword");
     };

@@ -21,7 +21,7 @@ import {
   getMessage
 } from "/client/component/message";
 import {
-  EMAIL_VALIDATION
+  EMAIL_REGEXP
 } from "/server/model/validation";
 
 
@@ -47,7 +47,7 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let validate = {regexp: EMAIL_VALIDATION, message: getMessage("invalidEmail")};
+    let validate = {regexp: EMAIL_REGEXP, message: getMessage("invalidEmail")};
     let node = (
       <form styleName="root">
         <Input label="メールアドレス" value={this.state.email} validate={validate} onSet={(email) => this.setState({email})}/>

@@ -11,8 +11,8 @@ import {
   CustomError
 } from "/server/model/error";
 import {
-  EMAIL_VALIDATION,
-  IDENTIFIER_VALIDATION,
+  EMAIL_REGEXP,
+  IDENTIFIER_REGEXP,
   validatePassword
 } from "/server/model/validation";
 
@@ -22,10 +22,10 @@ const SALT_ROUND = 10;
 
 export class User {
 
-  @prop({required: true, unique: true, validate: IDENTIFIER_VALIDATION})
+  @prop({required: true, unique: true, validate: IDENTIFIER_REGEXP})
   public name!: string;
 
-  @prop({required: true, validate: EMAIL_VALIDATION})
+  @prop({required: true, validate: EMAIL_REGEXP})
   public email!: string;
 
   @prop({required: true})
