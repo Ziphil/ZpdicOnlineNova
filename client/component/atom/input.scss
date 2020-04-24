@@ -23,7 +23,7 @@
 }
 
 .input.error {
-  @include input(map-get($colors, error));
+  @include input(map-get($colors, error), true);
 }
 
 .button {

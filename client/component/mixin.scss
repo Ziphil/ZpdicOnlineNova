@@ -175,7 +175,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   @return rgba($color, 0.1);
 }
 
-@mixin input($color) {
+@mixin input($color, $dye: false) {
   width: 100%;
   padding: 0.1em 0.5em;
   font-family: inherit;
@@ -183,10 +183,13 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   line-height: inherit;
   border: 1px border-color($color) solid;
   border-radius: $small-border-radius;
-  background: white;
+  background-color: white;
   box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color);
   box-sizing: border-box;
   outline: none;
+  @if $dye {
+    background-color: tint($color, 90%);
+  }
   &:focus {
     box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color), $focus-box-shadow-setting focus-box-shadow-color($color);
   }
