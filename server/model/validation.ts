@@ -6,6 +6,6 @@ export const EMAIL_VALIDATION = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](
 
 export function validatePassword(password: string): boolean {
   let length = password.length;
-  let predicate = length < 6 || length > 50;
+  let predicate = length >= 6 && length <= 50;
   return predicate;
 }

@@ -46,7 +46,7 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let validatePasswordString = function (password: string): string | null {
-      return (validatePassword(password)) ? getMessage("invalidPassword") : null;
+      return (validatePassword(password)) ? null : getMessage("invalidPassword");
     };
     let node = (
       <form styleName="root">

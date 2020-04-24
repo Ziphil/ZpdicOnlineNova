@@ -86,7 +86,7 @@ export class User {
   }
 
   private encryptPassword(password: string): void {
-    if (validatePassword(password)) {
+    if (!validatePassword(password)) {
       throw new CustomError("invalidPassword");
     }
     this.hash = bcrypt.hashSync(password, SALT_ROUND);

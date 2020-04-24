@@ -74,7 +74,7 @@ export class RegisterForm extends StoreComponent<Props, State> {
     let validateName = {regexp: IDENTIFIER_VALIDATION, message: getMessage("invalidUserName")};
     let validateEmail = {regexp: EMAIL_VALIDATION, message: getMessage("invalidEmail")};
     let validatePasswordString = function (password: string): string | null {
-      return (validatePassword(password)) ? getMessage("invalidPassword") : null;
+      return (validatePassword(password)) ? null : getMessage("invalidPassword");
     };
     let node = (
       <div>
