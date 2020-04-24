@@ -59,7 +59,7 @@
 
 .message.tooltip {
   margin: 10px 0px 0px 0px;
-  padding: 4px 10px;
+  padding: 0.2em 0.6em;
   color: background-color(map-get($colors, error));
   background-color: map-get($colors, error);
   text-align: justify;
