@@ -72,13 +72,18 @@ export class RegisterForm extends StoreComponent<Props, State> {
     }
     let nameValidate = {regexp: NAME_VALIDATION, message: getMessage("invalidUserName")};
     let emailValidate = {regexp: EMAIL_VALIDATION, message: getMessage("invalidEmail")};
+    let passwordValidate = function (password: string): string | null {
+      let length = password.length;
+      let message = (length < 6 || length > 50) ? getMessage("invalidPassword") : null;
+      return message;
+    };
     let node = (
       <div>
         {errorNode}
         <form styleName="root">
           <Input label="ユーザー名" value={this.state.name} validate={nameValidate} onSet={(name) => this.setState({name})}/>
           <Input label="メールアドレス" value={this.state.email} validate={emailValidate} onSet={(email) => this.setState({email})}/>
-          <Input label="パスワード" type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
+          <Input label="パスワード" type="flexible" value={this.state.password} validate={passwordValidate} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
             <Button label="新規登録" reactive={true} onClick={this.performRegister.bind(this)}/>
           </div>
