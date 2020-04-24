@@ -75,8 +75,12 @@ export class Input extends Component<Props, State> {
     }
     let inputStyleNames = ["input"];
     if (this.state.errorMessage !== null) {
+      let tooltipStyleNames = ["message"];
+      if (this.props.usesTooltip) {
+        tooltipStyleNames.push("tooltip");
+      }
       inputStyleNames.push("error");
-      tooltipNode = <div styleName="message">{this.state.errorMessage}</div>;
+      tooltipNode = <div styleName={tooltipStyleNames.join(" ")}>{this.state.errorMessage}</div>;
     }
     let node = (
       <div styleName="root">
@@ -99,6 +103,7 @@ type Props = {
   label?: string,
   type: "text" | "password" | "flexible",
   validate?: {regexp: RegExp, message: string} | ((value: string) => string | null),
+  usesTooltip?: boolean,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
   onSet?: (value: string) => void
 };
