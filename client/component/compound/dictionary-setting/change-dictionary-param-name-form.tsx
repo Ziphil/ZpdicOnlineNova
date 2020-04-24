@@ -47,7 +47,7 @@ export class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> 
     let node = (
       <Fragment>
         <form styleName="root">
-          <Input label="URL 用名称" value={this.state.paramName} onSet={(value) => this.setState({paramName: value})}/>
+          <Input label="URL 用名称" value={this.state.paramName} onSet={(paramName) => this.setState({paramName})}/>
           <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
         </form>
         <p styleName="url">

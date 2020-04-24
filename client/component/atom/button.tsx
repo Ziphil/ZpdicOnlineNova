@@ -35,7 +35,7 @@ export class Button extends Component<Props, State> {
       if (onClick) {
         let result = onClick(event);
         if (typeof result === "object" && typeof result.then === "function") {
-          result.then((value) => {
+          result.then(() => {
             this.setState({loading: false});
           });
         } else {
