@@ -17,20 +17,23 @@ export class GlobalStore {
   @observable
   public popupSpecs: Array<{id: number, type: string, style: PopupStyle}> = [];
 
-  private addPopup(type: string, style: PopupStyle): void {
+  private addPopup(type: string, style: PopupStyle, timeout: number | null): void {
     let date = new Date();
     let id = date.getTime();
     this.popupSpecs.push({id, type, style});
+    if (timeout !== null) {
+      setTimeout(() => this.clearPopup(id), timeout);
+    }
   }
 
   @boundAction
-  public addErrorPopup(type: string): void {
-    this.addPopup(type, "error");
+  public addErrorPopup(type: string, timeout: number | null = 5000): void {
+    this.addPopup(type, "error", timeout);
   }
 
   @boundAction
-  public addInformationPopup(type: string): void {
-    this.addPopup(type, "information");
+  public addInformationPopup(type: string, timeout: number | null = 5000): void {
+    this.addPopup(type, "information", timeout);
   }
 
   @boundAction
