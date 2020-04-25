@@ -70,6 +70,7 @@
   border-radius: $small-border-radius;
   display: block;
   position: absolute;
+  pointer-events: none;
   z-index: 50;
 }
 
