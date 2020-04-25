@@ -54,26 +54,26 @@
   content: "\F06E";
 }
 
-.message {
-  margin: 0.4em 0em 0em 0em;
+.tooltip {
+  display: none;
+}
+
+:focus-within +.tooltip {
+  margin: 10px 0px 0px 0px;
+  padding: 0.2em 0.6em;
   font-size: 80%;
   color: map-get($colors, error);
   line-height: $line-height;
-}
-
-.message.tooltip {
-  margin: 10px 0px 0px 0px;
-  padding: 0.2em 0.6em;
-  color: map-get($colors, error);
   background-color: background-color(map-get($colors, error));
   border: 1px border-color(map-get($colors, error)) solid;
   text-align: justify;
   border-radius: $small-border-radius;
+  display: block;
   position: absolute;
   z-index: 50;
 }
 
-.message.tooltip::before {
+:focus-within +.tooltip::before {
   top: -16px;
   left: 20px;
   margin-left: -8px;
@@ -83,7 +83,7 @@
   content: "";
 }
 
-.message.tooltip::after {
+:focus-within +.tooltip::after {
   top: -15px;
   left: 20px;
   margin-left: -8px;

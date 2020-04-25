@@ -79,12 +79,8 @@ export class Input extends Component<Props, State> {
     }
     let inputStyleNames = ["input"];
     if (this.state.errorMessage !== null) {
-      let tooltipStyleNames = ["message"];
-      if (this.props.usesTooltip) {
-        tooltipStyleNames.push("tooltip");
-      }
       inputStyleNames.push("error");
-      tooltipNode = <div styleName={tooltipStyleNames.join(" ")}>{this.state.errorMessage}</div>;
+      tooltipNode = <div styleName="tooltip">{this.state.errorMessage}</div>;
     }
     let node = (
       <div styleName="root">
