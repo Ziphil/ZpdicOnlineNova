@@ -18,6 +18,12 @@ import {
   inject,
   route
 } from "/client/component/decorator";
+import {
+  getMessage
+} from "/client/component/message";
+import {
+  IDENTIFIER_REGEXP
+} from "/server/model/validation";
 
 
 @route @inject
@@ -44,10 +50,13 @@ export class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> 
 
   public render(): ReactNode {
     let nextUrl = "http://zpdic.ziphil.com/dictionary/" + ((this.state.paramName) ? this.state.paramName : this.props.number);
+    let validate = function (paramName: string): string | null {
+      return (paramName === "" || paramName.match(IDENTIFIER_REGEXP)) ? null : getMessage("invalidDictionaryParamName");
+    };
     let node = (
       <Fragment>
         <form styleName="root">
-          <Input label="URL 用名称" value={this.state.paramName} onSet={(paramName) => this.setState({paramName})}/>
+          <Input label="URL 用名称" value={this.state.paramName} validate={validate} onSet={(paramName) => this.setState({paramName})}/>
           <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
         </form>
         <p styleName="url">
