@@ -45,7 +45,7 @@ export class Header extends StoreComponent<Props, State> {
               <Link href="/" style="plane">ZpDIC</Link>
             </div>
             <div styleName="menu">
-              <HeaderMenuItem label="辞書一覧" iconLabel="&#xF02D;" href="/dictionary/list"/>
+              <HeaderMenuItem label="辞書一覧" iconLabel="&#xF02D;" href="/list"/>
               <HeaderMenuItem label="お知らせ" iconLabel="&#xF05A;" href="/news"/>
             </div>
           </div>
