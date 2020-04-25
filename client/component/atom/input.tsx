@@ -67,7 +67,11 @@ export class Input extends Component<Props, State> {
     let buttonNode;
     let tooltipNode;
     if (this.props.label) {
-      labelNode = <div styleName="label">{this.props.label}</div>;
+      let labelStyleNames = ["label"];
+      if (this.state.errorMessage !== null) {
+        labelStyleNames.push("error");
+      }
+      labelNode = <div styleName={labelStyleNames.join(" ")}>{this.props.label}</div>;
     }
     if (this.props.type === "flexible") {
       let buttonStyleNames = ["button", this.state.type];

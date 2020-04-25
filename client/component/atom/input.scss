@@ -14,8 +14,12 @@
 .label {
   margin: 0em 0em 0.4em 0em;
   font-size: 80%;
-  color: $light-color;
+  color: map-get($colors, primary);
   line-height: 1;
+}
+
+.label.error {
+  color: map-get($colors, error);
 }
 
 .input {
