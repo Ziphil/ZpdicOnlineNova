@@ -15,5 +15,9 @@
 .pane-wrapper {
   width: 100%;
   max-width: 600px;
+  margin: 15px auto 0px auto;
+}
+
+.pane-wrapper:first-child { 
   margin: 0px auto;
 }

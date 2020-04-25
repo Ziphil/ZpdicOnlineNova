@@ -54,14 +54,14 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   // ページの遷移をしてもポップアップが表示され続けるのを防ぐため、ページを遷移するときは必ずこのメソッドを使ってください。
   protected pushPath(path: string, preservesPopup?: boolean): void {
     if (!preservesPopup) {
-      this.props.store!.clearPopup();
+      this.props.store!.clearPopups();
     }
     this.props.history!.push(path);
   }
 
   protected replacePath(path: string, preservesPopup?: boolean): void {
     if (!preservesPopup) {
-      this.props.store!.clearPopup();
+      this.props.store!.clearPopups();
     }
     this.props.history!.replace(path);
   }

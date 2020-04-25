@@ -15,21 +15,30 @@ export class GlobalStore {
   public user: UserSkeleton | null = null;
 
   @observable
-  public popupSpec: {type: string, style: "error" | "information"} | null = null;
+  public popupSpecs: Array<{id: any, type: string, style: PopupStyle}> = [];
+
+  private send(type: string, style: PopupStyle): void {
+    let date = new Date();
+    let id = date.getTime();
+    this.popupSpecs = [...this.popupSpecs, {id, type, style}];
+  }
 
   @boundAction
   public sendError(type: string): void {
-    this.popupSpec = {type, style: "error"};
+    this.send(type, "error");
   }
 
   @boundAction
   public sendInformation(type: string): void {
-    this.popupSpec = {type, style: "information"};
+    this.send(type, "information");
   }
 
   @boundAction
-  public clearPopup(): void {
-    this.popupSpec = null;
+  public clearPopups(): void {
+    this.popupSpecs = [];
   }
 
 }
+
+
+type PopupStyle = "error" | "information";
