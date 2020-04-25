@@ -37,7 +37,7 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
     let password = this.state.password;
     let response = await this.requestPost("changeUserPassword", {password});
     if (response.status === 200) {
-      this.props.store!.sendInformation("passwordChanged");
+      this.props.store!.addInformationPopup("passwordChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }

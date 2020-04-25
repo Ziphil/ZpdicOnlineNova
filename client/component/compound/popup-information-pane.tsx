@@ -27,10 +27,10 @@ export class PopupInformationPane extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let specs = this.props.store!.popupSpecs;
-    let specNodes = specs.map((spec) => {
+    let specNodes = specs.reverse().map((spec) => {
       let specNode = (
         <div styleName="pane-wrapper">
-          <InformationPane texts={[getMessage(spec.type)]} style={spec.style} onClose={() => this.props.store!.clearPopups()}/>
+          <InformationPane texts={[getMessage(spec.type)]} style={spec.style} onClose={() => this.props.store!.clearPopup(spec.id)}/>
         </div>
       );
       return specNode;

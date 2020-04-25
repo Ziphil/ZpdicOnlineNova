@@ -35,7 +35,7 @@ export class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> 
     let paramName = this.state.paramName;
     let response = await this.requestPost("changeDictionaryParamName", {number, paramName});
     if (response.status === 200) {
-      this.props.store!.sendInformation("dictionaryParamNameChanged");
+      this.props.store!.addInformationPopup("dictionaryParamNameChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }

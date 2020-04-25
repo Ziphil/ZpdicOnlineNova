@@ -15,26 +15,31 @@ export class GlobalStore {
   public user: UserSkeleton | null = null;
 
   @observable
-  public popupSpecs: Array<{id: any, type: string, style: PopupStyle}> = [];
+  public popupSpecs: Array<{id: number, type: string, style: PopupStyle}> = [];
 
-  private send(type: string, style: PopupStyle): void {
+  private addPopup(type: string, style: PopupStyle): void {
     let date = new Date();
     let id = date.getTime();
-    this.popupSpecs = [...this.popupSpecs, {id, type, style}];
+    this.popupSpecs.push({id, type, style});
   }
 
   @boundAction
-  public sendError(type: string): void {
-    this.send(type, "error");
+  public addErrorPopup(type: string): void {
+    this.addPopup(type, "error");
   }
 
   @boundAction
-  public sendInformation(type: string): void {
-    this.send(type, "information");
+  public addInformationPopup(type: string): void {
+    this.addPopup(type, "information");
   }
 
   @boundAction
-  public clearPopups(): void {
+  public clearPopup(id: number): void {
+    this.popupSpecs = this.popupSpecs.filter((spec) => spec.id !== id);
+  }
+
+  @boundAction
+  public clearAllPopups(): void {
     this.popupSpecs = [];
   }
 
