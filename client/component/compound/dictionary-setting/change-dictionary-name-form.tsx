@@ -34,7 +34,7 @@ export class ChangeDictionaryNameForm extends StoreComponent<Props, State> {
     let name = this.state.name;
     let response = await this.requestPost("changeDictionaryName", {number, name});
     if (response.status === 200) {
-      this.props.store!.sendInformation("dictionaryNameChanged");
+      this.props.store!.addInformationPopup("dictionaryNameChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }

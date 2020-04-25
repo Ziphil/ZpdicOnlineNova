@@ -54,14 +54,14 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   // ページの遷移をしてもポップアップが表示され続けるのを防ぐため、ページを遷移するときは必ずこのメソッドを使ってください。
   protected pushPath(path: string, preservesPopup?: boolean): void {
     if (!preservesPopup) {
-      this.props.store!.clearPopup();
+      this.props.store!.clearAllPopups();
     }
     this.props.history!.push(path);
   }
 
   protected replacePath(path: string, preservesPopup?: boolean): void {
     if (!preservesPopup) {
-      this.props.store!.clearPopup();
+      this.props.store!.clearAllPopups();
     }
     this.props.history!.replace(path);
   }
@@ -134,24 +134,24 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
     let body = response.data as any;
     if (status === 400) {
       if ("error" in body && "type" in body && typeof body.type === "string") {
-        this.props.store!.sendError(body.type);
+        this.props.store!.addErrorPopup(body.type);
       } else {
-        this.props.store!.sendError("messageNotFound");
+        this.props.store!.addErrorPopup("messageNotFound");
       }
     } else if (status === 401) {
-      this.props.store!.sendError("unauthenticated");
+      this.props.store!.addErrorPopup("unauthenticated");
     } else if (status === 403) {
-      this.props.store!.sendError("forbidden");
+      this.props.store!.addErrorPopup("forbidden");
     } else if (status === 404) {
-      this.props.store!.sendError("serverNotFound");
+      this.props.store!.addErrorPopup("serverNotFound");
     } else if (status === 408) {
-      this.props.store!.sendError("requestTimeout");
+      this.props.store!.addErrorPopup("requestTimeout");
     } else if (status === 500 || status === 503) {
-      this.props.store!.sendError("serverError");
+      this.props.store!.addErrorPopup("serverError");
     } else if (status === 504) {
-      this.props.store!.sendError("serverTimeout");
+      this.props.store!.addErrorPopup("serverTimeout");
     } else {
-      this.props.store!.sendError("unexpected");
+      this.props.store!.addErrorPopup("unexpected");
     }
     return response;
   }

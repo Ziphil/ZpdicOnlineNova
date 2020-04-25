@@ -14,8 +14,12 @@
 .label {
   margin: 0em 0em 0.4em 0em;
   font-size: 80%;
-  color: $light-color;
+  color: map-get($colors, primary);
   line-height: 1;
+}
+
+.label.error {
+  color: map-get($colors, error);
 }
 
 .input {
@@ -23,7 +27,7 @@
 }
 
 .input.error {
-  @include input(map-get($colors, error), true);
+  @include input(map-get($colors, error));
 }
 
 .button {
@@ -50,30 +54,42 @@
   content: "\F06E";
 }
 
-.message {
-  margin: 0.4em 0em 0em 0em;
+.tooltip {
+  display: none;
+}
+
+:focus-within +.tooltip {
+  margin: 10px 0px 0px 0px;
+  padding: 0.2em 0.6em;
   font-size: 80%;
   color: map-get($colors, error);
   line-height: $line-height;
-}
-
-.message.tooltip {
-  margin: 10px 0px 0px 0px;
-  padding: 0.2em 0.6em;
-  color: background-color(map-get($colors, error));
-  background-color: map-get($colors, error);
+  background-color: background-color(map-get($colors, error));
+  border: 1px border-color(map-get($colors, error)) solid;
   text-align: justify;
   border-radius: $small-border-radius;
+  display: block;
   position: absolute;
+  pointer-events: none;
   z-index: 50;
 }
 
-.message.tooltip:before {
+:focus-within +.tooltip::before {
+  top: -16px;
+  left: 20px;
+  margin-left: -8px;
+  border: 8px transparent solid;
+  border-bottom: 8px border-color(map-get($colors, error)) solid;
+  position: absolute;
+  content: "";
+}
+
+:focus-within +.tooltip::after {
   top: -15px;
   left: 20px;
   margin-left: -8px;
   border: 8px transparent solid;
-  border-bottom: 8px map-get($colors, error) solid;
+  border-bottom: 8px background-color(map-get($colors, error)) solid;
   position: absolute;
   content: "";
 }

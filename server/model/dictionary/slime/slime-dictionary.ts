@@ -30,11 +30,11 @@ import {
   UserDocument
 } from "/server/model/user";
 import {
+  IDENTIFIER_REGEXP
+} from "/server/model/validation";
+import {
   QueryUtil
 } from "/server/util/query";
-
-
-const PARAM_NAME_VALIDATION = /^[a-zA-Z0-9_-]*[a-zA-Z_-]+[a-zA-Z0-9_-]*$/;
 
 
 export class SlimeDictionary extends Dictionary<SlimeWord> {
@@ -45,7 +45,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
   @prop({required: true, unique: true})
   public number!: number;
 
-  @prop({validate: PARAM_NAME_VALIDATION})
+  @prop({validate: IDENTIFIER_REGEXP})
   public paramName?: string;
 
   @prop({required: true})
@@ -164,11 +164,15 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
   }
 
   public async changeParamName(this: SlimeDictionaryDocument, paramName: string): Promise<SlimeDictionaryDocument> {
-    let formerDictionary = await SlimeDictionaryModel.findOne().where("paramName", paramName).exec();
-    if (formerDictionary && formerDictionary.id !== this.id) {
-      throw new CustomError("duplicateDictionaryParamName");
+    if (paramName !== "") {
+      let formerDictionary = await SlimeDictionaryModel.findOne().where("paramName", paramName).exec();
+      if (formerDictionary && formerDictionary.id !== this.id) {
+        throw new CustomError("duplicateDictionaryParamName");
+      }
+      this.paramName = paramName;
+    } else {
+      this.paramName = undefined;
     }
-    this.paramName = paramName;
     await this.save();
     return this;
   }

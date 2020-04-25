@@ -34,7 +34,7 @@ export class ChangeDictionaryExplanationForm extends StoreComponent<Props, State
     let explanation = this.state.explanation;
     let response = await this.requestPost("changeDictionaryExplanation", {number, explanation});
     if (response.status === 200) {
-      this.props.store!.sendInformation("dictionaryExplanationChanged");
+      this.props.store!.addInformationPopup("dictionaryExplanationChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }

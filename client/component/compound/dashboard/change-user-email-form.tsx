@@ -39,7 +39,7 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
     let email = this.state.email;
     let response = await this.requestPost("changeUserEmail", {email});
     if (response.status === 200) {
-      this.props.store!.sendInformation("emailChanged");
+      this.props.store!.addInformationPopup("emailChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }

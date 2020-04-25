@@ -67,7 +67,11 @@ export class Input extends Component<Props, State> {
     let buttonNode;
     let tooltipNode;
     if (this.props.label) {
-      labelNode = <div styleName="label">{this.props.label}</div>;
+      let labelStyleNames = ["label"];
+      if (this.state.errorMessage !== null) {
+        labelStyleNames.push("error");
+      }
+      labelNode = <div styleName={labelStyleNames.join(" ")}>{this.props.label}</div>;
     }
     if (this.props.type === "flexible") {
       let buttonStyleNames = ["button", this.state.type];
@@ -75,12 +79,8 @@ export class Input extends Component<Props, State> {
     }
     let inputStyleNames = ["input"];
     if (this.state.errorMessage !== null) {
-      let tooltipStyleNames = ["message"];
-      if (this.props.usesTooltip) {
-        tooltipStyleNames.push("tooltip");
-      }
       inputStyleNames.push("error");
-      tooltipNode = <div styleName={tooltipStyleNames.join(" ")}>{this.state.errorMessage}</div>;
+      tooltipNode = <div styleName="tooltip">{this.state.errorMessage}</div>;
     }
     let node = (
       <div styleName="root">

@@ -90,9 +90,9 @@ export class Root extends StoreComponent<Props, State> {
               <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
               <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
               <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
-              <Route exact path="/dictionary/list" component={DictionaryListPage}/>
               <Route exact path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
               <PrivateRoute exact path="/dictionary/setting/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+              <Route exact path="/list" component={DictionaryListPage}/>
               <Route exact path="/news" component={NotificationPage}/>
             </Switch>
           </Provider>

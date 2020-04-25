@@ -9,11 +9,17 @@
   width: calc(100% - #{$page-horizontal-margin} * 2);
   margin: 0px $page-horizontal-margin;
   position: fixed;
+  pointer-events: none;
   z-index: 200;
 }
 
 .pane-wrapper {
   width: 100%;
   max-width: 600px;
+  margin: 15px auto 0px auto;
+  pointer-events: auto;
+}
+
+.pane-wrapper:first-child { 
   margin: 0px auto;
 }

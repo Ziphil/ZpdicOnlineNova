@@ -33,7 +33,7 @@ export class DeleteDictionaryForm extends StoreComponent<Props, State> {
     if (result) {
       let response = await this.requestPost("deleteDictionary", {number});
       if (response.status === 200) {
-        this.props.store!.sendInformation("dictionaryDeleted");
+        this.props.store!.addInformationPopup("dictionaryDeleted");
         if (this.props.onSubmit) {
           this.props.onSubmit();
         }
