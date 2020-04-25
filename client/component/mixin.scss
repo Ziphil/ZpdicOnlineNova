@@ -10,12 +10,12 @@
 }
 
 @function background-color($color) {
-  @return tint($color, 80%);
+  @return tint($color, 83%);
 }
 
 @function border-color($color, $light: true) {
   @if $light {
-    @return tint($color, 20%);
+    @return $color;
   } @else {
     @return rgba(black, 0.3);
   }
@@ -48,21 +48,21 @@
 
 $colors: (
   primary: hsl(30, 40%, 50%),
-  secondary: hsl(320, 40%, 50%),
-  error: hsl(0, 40%, 50%),
-  information: hsl(220, 40%, 50%)
+  secondary: hsl(310, 40%, 50%),
+  error: hsl(0, 60%, 50%),
+  information: hsl(140, 60%, 40%)
 );
 
 $background-color: background-color(map-get($colors, primary));
 $strong-background-color: darken($background-color, 10%);
 $header-background-color: darken(map-get($colors, primary), 10%);
-$footer-background-color: tint(map-get($colors, primary), 85%);
+$footer-background-color: tint(map-get($colors, primary), 88%);
 
 $head-color: map-get($colors, primary);
 $light-color: map-get($colors, primary);
 $light-border-color: border-color(map-get($colors, primary));
 $dark-border-color: border-color(map-get($colors, primary), false);
-$pale-border-color: rgba($light-border-color, 0.2);
+$pale-border-color: rgba($light-border-color, 0.3);
 $logo-color: darken(map-get($colors, primary), 20%);
 
 $link-color: map-get($colors, secondary);
