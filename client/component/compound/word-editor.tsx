@@ -6,7 +6,7 @@ import {
   ReactNode
 } from "react";
 import {
-  Portal
+  Overlay
 } from "/client/component/atom";
 import {
   Component
@@ -14,21 +14,19 @@ import {
 import {
   applyStyle
 } from "/client/component/decorator";
+import {
+  SlimeWordSkeleton
+} from "/server/skeleton/dictionary/slime";
 
 
-@applyStyle(require("./overlay.scss"))
-export class Overlay extends Component<Props, State> {
+@applyStyle(require("./word-editor.scss"))
+export class WordEditor extends Component<Props, State> {
 
   public render(): ReactNode {
-    let node = this.props.open && (
-      <Portal>
-        <div styleName="background"/>
-        <div styleName="content-wrapper" onClick={this.props.onClose}>
-          <div styleName="content">
-            {this.props.children}
-          </div>
-        </div>
-      </Portal>
+    let node = (
+      <Overlay open={this.props.open} onClose={this.props.onClose}>
+        Editing: {this.props.word.name} (#{this.props.word.number})
+      </Overlay>
     );
     return node;
   }
@@ -37,6 +35,8 @@ export class Overlay extends Component<Props, State> {
 
 
 type Props = {
+  word: SlimeWordSkeleton,
+  authorized: boolean,
   open: boolean,
   onClose?: (event: MouseEvent<HTMLDivElement>) => void
 };

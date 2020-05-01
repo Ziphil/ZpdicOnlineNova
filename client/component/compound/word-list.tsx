@@ -26,7 +26,7 @@ export class WordList extends Component<Props, State> {
     let words = this.props.words;
     let displayedWords = words.slice(this.props.offset, this.props.offset + this.props.size);
     let wordPanes = displayedWords.map((word) => {
-      return <WordPane dictionary={this.props.dictionary} word={word} key={word.id}/>;
+      return <WordPane dictionary={this.props.dictionary} word={word} authorized={this.props.authorized} key={word.id}/>;
     });
     let node = (
       <div styleName="root">
@@ -41,7 +41,8 @@ export class WordList extends Component<Props, State> {
 
 type Props = {
   dictionary: SlimeDictionarySkeleton,
-  words: Array<SlimeWordSkeleton>
+  words: Array<SlimeWordSkeleton>,
+  authorized: boolean,
   size: number,
   offset: number
 };

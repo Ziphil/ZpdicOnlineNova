@@ -6,11 +6,15 @@ import {
   ReactNode
 } from "react";
 import {
+  Button,
   Link
 } from "/client/component/atom";
 import {
   Component
 } from "/client/component/component";
+import {
+  WordEditor
+} from "/client/component/compound";
 import {
   applyStyle
 } from "/client/component/decorator";
@@ -24,13 +28,26 @@ import {
 @applyStyle(require("./word-pane.scss"))
 export class WordPane extends Component<Props, State> {
 
+  public state: State = {
+    editorOpen: false
+  };
+
   private renderNameNode(): ReactNode {
+    let buttonNode;
+    if (this.props.authorized) {
+      buttonNode = (
+        <div styleName="button">
+          <Button label="&#xF044;" style="simple" usesIcon={true} onClick={() => this.setState({editorOpen: true})}/>
+        </div>
+      );
+    }
     let tagNodes = this.props.word.tags.map((tag, index) => {
       let tagNode = (tag !== "") ? <span styleName="box" key={index}>{tag}</span> : undefined;
       return tagNode;
     });
     let node = (
       <div styleName="name-wrapper">
+        {buttonNode}
         <div styleName="name">{this.props.word.name}</div>
         <div styleName="tag">{tagNodes}</div>
       </div>
@@ -89,7 +106,7 @@ export class WordPane extends Component<Props, State> {
       let relationNodes = relations.map((relation, relationIndex) => {
         let href = "/dictionary/" + this.props.dictionary.number + "?search=" + encodeURIComponent(relation.name) + "&mode=name&type=exact&page=0";
         let relationNode = (
-          <Fragment>
+          <Fragment key={relationIndex}>
             {(relationIndex === 0) ? "" : ", "}
             <Link href={href}>{relation.name}</Link>
           </Fragment>
@@ -127,6 +144,7 @@ export class WordPane extends Component<Props, State> {
         {equivalentNode}
         {informationNode}
         {relationNode}
+        <WordEditor word={this.props.word} authorized={this.props.authorized} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>
       </div>
     );
     return node;
@@ -137,7 +155,9 @@ export class WordPane extends Component<Props, State> {
 
 type Props = {
   dictionary: SlimeDictionarySkeleton,
-  word: SlimeWordSkeleton
+  word: SlimeWordSkeleton,
+  authorized: boolean
 };
 type State = {
+  editorOpen: boolean
 };

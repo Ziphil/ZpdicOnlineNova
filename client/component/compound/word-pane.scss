@@ -16,6 +16,11 @@
   border-bottom: 1px $light-border-color solid;
 }
 
+.button {
+  margin: 0em $blank-padding 0em 0em;
+  display: inline-block;
+}
+
 .name {
   margin: -4px 0.5em 0px 0px;
   font-size: 120%;
