@@ -18,6 +18,7 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  pointer-events: none;
   z-index: 220;
 }
 
@@ -28,4 +29,5 @@
   padding: 20px 30px;
   background-color: $background-color;
   border-radius: $large-border-radius;
+  pointer-events: auto;
 }

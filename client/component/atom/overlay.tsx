@@ -22,8 +22,8 @@ export class Overlay extends Component<Props, State> {
   public render(): ReactNode {
     let node = this.props.open && (
       <Portal>
-        <div styleName="background"/>
-        <div styleName="content-wrapper" onClick={this.props.onClose}>
+        <div styleName="background" onClick={this.props.onClose}/>
+        <div styleName="content-wrapper">
           <div styleName="content">
             {this.props.children}
           </div>
