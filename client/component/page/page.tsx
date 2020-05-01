@@ -38,7 +38,7 @@ export class Page extends Component<Props, State> {
       dictionaryHeaderNode = <DictionaryHeader dictionary={this.props.dictionary} showsSetting={this.props.showsDictionarySetting}/>;
     }
     let node = (
-      <div styleName="root">
+      <div styleName="root" id="page">
         <Header/>
         <div styleName={styleNames.join(" ")}>
           {dictionaryHeaderNode}
