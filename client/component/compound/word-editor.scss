@@ -1,3 +1,71 @@
 @charset "utf-8";
 
 @import "/client/component/mixin.scss";
+
+
+.container {
+  margin: 20px 0px 0px 0px;
+  line-height: $line-height;
+}
+
+.container:first-child {
+  margin: 0px;
+}
+
+.inner {
+  margin: 5px 0px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.inner:first-child {
+  margin: 0px;
+}
+
+.inner >* {
+  margin: 0px 0px 0px 10px;
+}
+
+.inner >*:first-child {
+  margin: 0px;
+}
+
+.inner.information {
+  height: 150px;
+}
+
+.title {
+  flex: 1;
+  align-self: flex-start;
+}
+
+.name {
+  flex: 3;
+}
+
+.text {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 3;
+}
+
+.text >textarea {
+  flex-grow: 1;
+}
+
+.plus {
+  margin: 5px 0px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.relation-input {
+  align-items: flex-end;
+}
+
+.relation-input >*:nth-child(1) {
+  flex-grow: 1;
+}
