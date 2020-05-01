@@ -37,7 +37,7 @@ let config = {
           },
           {
             loader: "css-loader",
-            options: {modules: true, url: false}
+            options: {modules: {localIdentName: "[name]_[local]_[hash:base64:5]"}, url: false}
           },
           {
             loader: "sass-loader"
