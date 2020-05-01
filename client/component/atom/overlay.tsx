@@ -20,11 +20,12 @@ import {
 export class Overlay extends Component<Props, State> {
 
   public render(): ReactNode {
+    let contentStyleNames = ["content", this.props.size];
     let node = this.props.open && (
       <Portal>
         <div styleName="background" onClick={this.props.onClose}/>
         <div styleName="content-wrapper">
-          <div styleName="content">
+          <div styleName={contentStyleNames.join(" ")}>
             {this.props.children}
           </div>
         </div>
@@ -37,6 +38,7 @@ export class Overlay extends Component<Props, State> {
 
 
 type Props = {
+  size: "large" | "small",
   open: boolean,
   onClose?: (event: MouseEvent<HTMLDivElement>) => void
 };

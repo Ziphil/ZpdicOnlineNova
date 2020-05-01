@@ -24,10 +24,18 @@
 
 .content {
   width: 100%;
-  max-width: 400px;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: $background-color;
   border-radius: $large-border-radius;
   pointer-events: auto;
+  box-sizing: border-box;
+}
+
+.content.large {
+  max-width: $page-width;
+}
+
+.content.small {
+  max-width: 400px;
 }
