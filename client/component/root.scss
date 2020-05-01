@@ -10,7 +10,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: $europian-font-family, $japanese-font-family, serif;
-  font-size: 17px;
+  font-size: $font-size;
   font-feature-settings: "palt" 1, "pkna" 1;
   line-height: 1;
   background-color: $background-color;

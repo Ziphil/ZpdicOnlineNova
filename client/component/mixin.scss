@@ -81,6 +81,7 @@ $blank-padding: 0.3em;
 $page-width: 800px;
 $page-horizontal-margin: 30px;
 
+$font-size: 16px;
 $line-height: 1.6;
 
 $europian-font-family: "EB Garamond", "Times New Roman";
@@ -121,7 +122,6 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
 
 @mixin icon-font {
   font-family: $icon-font-family;
-  font-size: 90%;
   font-weight: 900;
 }
 
@@ -135,9 +135,9 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   }
   >li::before {
     @include icon-font;
-    width: $marker-width * (100% / 90%);
-    margin-right: $blank-padding * (100% / 90%);
-    margin-left: (-$marker-width - $blank-padding) * (100% / 90%);
+    width: $marker-width;
+    margin-right: $blank-padding;
+    margin-left: -$marker-width - $blank-padding;
     color: $icon-color;
     content: $icon;
     display: inline-block;
