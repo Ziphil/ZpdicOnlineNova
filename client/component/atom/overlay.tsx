@@ -37,8 +37,8 @@ export class Overlay extends Component<Props, State> {
 
 
 type Props = {
-  open: boolean
-  onClose?: (event: MouseEvent<HTMLDivElement>) => void;
+  open: boolean,
+  onClose?: (event: MouseEvent<HTMLDivElement>) => void
 };
 type State = {
 };
