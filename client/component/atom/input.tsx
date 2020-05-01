@@ -22,7 +22,10 @@ export class Input extends Component<Props, State> {
 
   public static defaultProps: Props = {
     value: "",
-    type: "text"
+    type: "text",
+    usesTooltip: true,
+    readOnly: false,
+    disabled: false
   };
 
   public constructor(props: any) {
@@ -88,7 +91,7 @@ export class Input extends Component<Props, State> {
       <div styleName="root" className={this.props.className}>
         <label styleName="label-wrapper">
           {labelNode}
-          <input styleName={inputStyleName} type={this.state.type} value={this.props.value} onChange={this.handleChange.bind(this)}/>
+          <input styleName={inputStyleName} type={this.state.type} value={this.props.value} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.handleChange.bind(this)}/>
           {buttonNode}
         </label>
         {tooltipNode}
@@ -105,7 +108,9 @@ type Props = {
   label?: string,
   type: "text" | "password" | "flexible",
   validate?: {regexp: RegExp, message: string} | ((value: string) => string | null),
-  usesTooltip?: boolean,
+  usesTooltip: boolean,
+  readOnly: boolean,
+  disabled: boolean,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
   onSet?: (value: string) => void,
   className?: string
