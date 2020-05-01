@@ -17,7 +17,7 @@ export class Badge extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <span styleName="root">
+      <span styleName="root" className={this.props.className}>
         {this.props.value}
       </span>
     );
@@ -28,7 +28,8 @@ export class Badge extends Component<Props, State> {
 
 
 type Props = {
-  value: string
+  value: string,
+  className?: string
 };
 type State = {
 };

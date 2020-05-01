@@ -11,6 +11,9 @@ import {
 import {
   applyStyle
 } from "/client/component/decorator";
+import {
+  createStyleName
+} from "/client/util/style-names";
 
 
 @applyStyle(require("./button.scss"))
@@ -52,32 +55,22 @@ export class Button extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let styleNames = ["root"];
-    if (this.props.position !== "alone") {
-      styleNames.push(this.props.position);
-    }
-    if (this.props.style === "simple") {
-      styleNames = ["simple"];
-    } else if (this.props.style === "caution") {
-      styleNames.push("caution");
-    }
-    if (this.props.usesIcon) {
-      styleNames.push("icon");
-    }
-    if (this.state.loading) {
-      styleNames.push("loading");
-    }
-    let spinnerNode;
-    if (this.props.reactive) {
-      spinnerNode = (
-        <span styleName="spinner-wrapper">
-          <span styleName="spinner"/>
-        </span>
-      );
-    }
+    let styleName = createStyleName(
+      "root",
+      {if: this.props.position !== "alone", true: this.props.position},
+      {if: this.props.style === "simple", true: "simple", false: "button"},
+      {if: this.props.style === "caution", true: "caution"},
+      {if: this.props.usesIcon, true: "icon"},
+      {if: this.state.loading, true: "loading"}
+    );
+    let spinnerNode = this.props.reactive && (
+      <span styleName="spinner-wrapper">
+        <span styleName="spinner"/>
+      </span>
+    );
     let disabled = this.props.disabled || this.state.loading;
     let node = (
-      <button styleName={styleNames.join(" ")} disabled={disabled} onClick={this.handleClick.bind(this)}>
+      <button styleName={styleName} className={this.props.className} disabled={disabled} onClick={this.handleClick.bind(this)}>
         <span styleName="label">{this.props.label}</span>
         {spinnerNode}
       </button>
@@ -95,7 +88,8 @@ type Props = {
   usesIcon: boolean,
   reactive: boolean,
   disabled: boolean,
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void | PromiseLike<void>
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void | PromiseLike<void>,
+  className?: string
 };
 type State = {
   loading: boolean

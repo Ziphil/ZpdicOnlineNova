@@ -30,13 +30,12 @@ export class RadioGroup<V extends string> extends Component<Props<V>, State<V>> 
   }
 
   public render(): ReactNode {
-    let specs = Array.from(this.props.specs);
-    let radioNodes = specs.map((spec, index) => {
+    let radioNodes = Array.from(this.props.specs).map((spec, index) => {
       let checked = spec.value === this.props.value;
       return <Radio name={this.props.name} value={spec.value} label={spec.label} checked={checked} onChange={this.handleChange.bind(this)} key={index}/>;
     });
     let node = (
-      <div styleName="root">
+      <div styleName="root" className={this.props.className}>
         {radioNodes}
       </div>
     );
@@ -51,7 +50,8 @@ type Props<V> = {
   name: string,
   specs: ArrayLike<{value: V, label: string}>,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
-  onSet?: (value: V) => void
+  onSet?: (value: V) => void,
+  className?: string
 };
 type State<V> = {
 };

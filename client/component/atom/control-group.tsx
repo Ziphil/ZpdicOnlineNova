@@ -17,7 +17,7 @@ export class ControlGroup extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <div styleName="root">
+      <div styleName="root" className={this.props.className}>
         {this.props.children}
       </div>
     );
@@ -28,6 +28,7 @@ export class ControlGroup extends Component<Props, State> {
 
 
 type Props = {
+  className?: string
 };
 type State = {
 };

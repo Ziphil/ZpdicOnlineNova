@@ -14,18 +14,21 @@ import {
 import {
   applyStyle
 } from "/client/component/decorator";
+import {
+  createStyleName
+} from "/client/util/style-names";
 
 
 @applyStyle(require("./overlay.scss"))
 export class Overlay extends Component<Props, State> {
 
   public render(): ReactNode {
-    let contentStyleNames = ["content", this.props.size];
-    let node = this.props.open && (
+    let contentStyleName = createStyleName("content", this.props.size);
+    let node = (this.props.open) && (
       <Portal>
         <div styleName="background" onClick={this.props.onClose}/>
         <div styleName="content-wrapper">
-          <div styleName={contentStyleNames.join(" ")}>
+          <div styleName={contentStyleName}>
             {this.props.children}
           </div>
         </div>

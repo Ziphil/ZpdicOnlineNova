@@ -3,24 +3,24 @@
 @import "/client/component/mixin.scss";
 
 
-.root {
+.button {
   @include button(map-get($colors, primary));
 }
 
-.root.caution {
+.button.caution {
   @include button(map-get($colors, error));
 }
 
-.root.left {
+.button.left {
   margin: 0px -1px 0px 0px;
   border-radius: $small-border-radius 0px 0px $small-border-radius;
 }
 
-.root.right {
+.button.right {
   border-radius: 0px $small-border-radius $small-border-radius 0px;
 }
 
-.root.middle {
+.button.middle {
   margin: 0px -1px 0px 0px;
   border-radius: 0px;
 }

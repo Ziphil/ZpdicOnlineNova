@@ -26,7 +26,7 @@ import {
 } from "/server/controller/type";
 
 
-export class Component<P, S, H = any> extends ReactComponent<P, S, H> {
+export class Component<P, S, H = any> extends ReactComponent<{styles?: any} & P, S, H> {
 
   public state!: S;
 

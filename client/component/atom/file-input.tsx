@@ -36,15 +36,14 @@ export class FileInput extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let inputLabelNode;
-    if (this.props.inputLabel) {
-      inputLabelNode = <div styleName="label">{this.props.inputLabel}</div>;
-    }
+    let inputLabelNode = (this.props.inputLabel !== undefined) && (
+      <div styleName="label">{this.props.inputLabel}</div>
+    );
     let node = (
-      <div styleName="root">
+      <div styleName="root" className={this.props.className}>
         <label styleName="input-wrapper">
           {inputLabelNode}
-          <input styleName="input" type="text" value={this.state.fileName} readOnly/>
+          <input styleName="input" type="text" value={this.state.fileName} readOnly={true}/>
         </label>
         <label styleName="button">
           {this.props.buttonLabel}
@@ -62,7 +61,8 @@ type Props = {
   file: File | null,
   inputLabel?: string,
   buttonLabel: string,
-  onSet?: (file: File | null) => void
+  onSet?: (file: File | null) => void,
+  className?: string
 };
 type State = {
   fileName: string

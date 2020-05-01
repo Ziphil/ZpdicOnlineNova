@@ -13,6 +13,9 @@ import {
   inject,
   route
 } from "/client/component/decorator";
+import {
+  createStyleName
+} from "/client/util/style-names";
 
 
 @route @inject
@@ -39,12 +42,14 @@ export class Link extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let styleNames = ["root"];
-    if (this.props.style === "plane") {
-      styleNames.push("plane");
-    }
+    let styleName = createStyleName(
+      "root",
+      {if: this.props.style === "plane", true: "plane"}
+    );
     let node = (
-      <a styleName={styleNames.join(" ")} href={this.props.href} onClick={this.handleClick.bind(this)}>{this.props.children}</a>
+      <a styleName={styleName} className={this.props.className} href={this.props.href} onClick={this.handleClick.bind(this)}>
+        {this.props.children}
+      </a>
     );
     return node;
   }
@@ -56,7 +61,8 @@ type Props = {
   href: string,
   target: "self" | "blank",
   style: "plane" | "normal",
-  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void
+  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void,
+  className?: string
 };
 type State = {
 };
