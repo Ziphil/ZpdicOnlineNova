@@ -112,10 +112,11 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   }
 }
 
-@mixin page($margin-top: 130px) {
+@mixin page($margin-top: 130px, $margin-bottom: 60px) {
   width: calc(100% - #{$page-horizontal-margin} * 2);
-  margin: $margin-top $page-horizontal-margin 60px $page-horizontal-margin;
+  margin: $margin-top $page-horizontal-margin $margin-bottom $page-horizontal-margin;
   padding: 0px;
+  box-sizing: border-box;
 }
 
 @mixin icon-font {
