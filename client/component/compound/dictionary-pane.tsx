@@ -60,7 +60,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
     }
     let settingButtonNode;
     if (this.props.showsSetting) {
-      settingButtonNode = <Button label="&#xF013;" style="simple" usesIcon={true} onClick={this.jumpSettingPage.bind(this)}/>;
+      settingButtonNode = <Button iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>;
     }
     let updatedDateString = "?";
     if (this.props.dictionary.updatedDate) {

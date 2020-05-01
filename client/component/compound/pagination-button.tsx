@@ -86,9 +86,9 @@ export class PaginationButton extends Component<Props, State> {
     });
     let node = (
       <div styleName="root">
-        <Button label="&#xF060;" usesIcon={true} disabled={this.props.page <= this.props.minPage} onClick={this.movePreviousPage.bind(this)}/>
+        <Button iconLabel="&#xF060;" disabled={this.props.page <= this.props.minPage} onClick={this.movePreviousPage.bind(this)}/>
         {buttonNodes}
-        <Button label="&#xF061;" usesIcon={true} disabled={this.props.page >= this.props.maxPage} onClick={this.moveNextPage.bind(this)}/>
+        <Button iconLabel="&#xF061;" disabled={this.props.page >= this.props.maxPage} onClick={this.moveNextPage.bind(this)}/>
       </div>
     );
     return node;

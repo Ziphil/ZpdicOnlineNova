@@ -25,12 +25,17 @@
   border-radius: 0px;
 }
 
+.button.only-icon {
+  width: 2.2em;
+  padding-left: 0em;
+  padding-right: 0em;
+}
+
 .simple {
   padding: 0em;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-  text-decoration: underline;
   color: $link-color;
   border: none;
   background: none;
@@ -45,6 +50,14 @@
 .icon {
   @include icon-font;
   text-decoration: none;
+}
+
+.icon +.label {
+  margin: 0px 0px 0px $blank-padding;
+}
+
+.simple .label {
+  text-decoration: underline;
 }
 
 .spinner-wrapper {
@@ -63,7 +76,8 @@
   visibility: visible;
 }
 
-.loading >.label {
+.loading >.label,
+.loading >.icon {
   visibility: hidden;
 }
 

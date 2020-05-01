@@ -22,7 +22,6 @@ export class Button extends Component<Props, State> {
   public static defaultProps: Partial<Props> = {
     position: "alone",
     style: "normal",
-    usesIcon: false,
     reactive: false,
     disabled: false
   };
@@ -59,11 +58,13 @@ export class Button extends Component<Props, State> {
       "root",
       {if: this.props.position !== "alone", true: this.props.position},
       {if: this.props.style === "simple", true: "simple", false: "button"},
+      {if: this.props.label === undefined, true: "only-icon"},
       {if: this.props.style === "caution", true: "caution"},
-      {if: this.props.usesIcon, true: "icon"},
       {if: this.state.loading, true: "loading"}
     );
-    let spinnerNode = this.props.reactive && (
+    let labelNode = (this.props.label !== undefined) && <span styleName="label">{this.props.label}</span>;
+    let iconNode = (this.props.iconLabel !== undefined) && <span styleName="icon">{this.props.iconLabel}</span>;
+    let spinnerNode = (this.props.reactive) && (
       <span styleName="spinner-wrapper">
         <span styleName="spinner"/>
       </span>
@@ -71,7 +72,8 @@ export class Button extends Component<Props, State> {
     let disabled = this.props.disabled || this.state.loading;
     let node = (
       <button styleName={styleName} className={this.props.className} disabled={disabled} onClick={this.handleClick.bind(this)}>
-        <span styleName="label">{this.props.label}</span>
+        {iconNode}
+        {labelNode}
         {spinnerNode}
       </button>
     );
@@ -82,10 +84,10 @@ export class Button extends Component<Props, State> {
 
 
 type Props = {
-  label: string,
+  label?: string,
+  iconLabel?: string,
   position: "alone" | "left" | "right" | "middle",
   style: "simple" | "normal" | "caution",
-  usesIcon: boolean,
   reactive: boolean,
   disabled: boolean,
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void | PromiseLike<void>,

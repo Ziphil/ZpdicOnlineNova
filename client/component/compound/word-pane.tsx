@@ -37,7 +37,7 @@ export class WordPane extends Component<Props, State> {
     if (this.props.authorized) {
       buttonNode = (
         <div styleName="button">
-          <Button label="&#xF044;" style="simple" usesIcon={true} onClick={() => this.setState({editorOpen: true})}/>
+          <Button iconLabel="&#xF044;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
         </div>
       );
     }
