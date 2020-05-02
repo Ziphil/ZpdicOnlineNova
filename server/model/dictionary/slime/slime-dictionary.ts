@@ -33,6 +33,9 @@ import {
   IDENTIFIER_REGEXP
 } from "/server/model/validation";
 import {
+  SlimeEditWordSkeleton
+} from "/server/skeleton/dictionary/slime";
+import {
   QueryUtil
 } from "/server/util/query";
 
@@ -200,6 +203,24 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return words;
   }
 
+  public async editWord(word: SlimeEditWordSkeleton): Promise<SlimeWordDocument> {
+    let currentWord = await SlimeWordModel.findOne().where("dictionary", this).where("number", word.number);
+    let resultWord;
+    if (currentWord) {
+      resultWord = new SlimeWordModel(word);
+      resultWord.dictionary = this;
+      await currentWord.remove();
+      await resultWord.save();
+    } else {
+      if (word.number === undefined) {
+        word.number = await this.nextWordNumber();
+      }
+      resultWord = new SlimeWordModel(word);
+      await resultWord.save();
+    }
+    return resultWord;
+  }
+
   public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<{hitSize: number, hitWords: Array<SlimeWordDocument>}> {
     let search = parameter.search;
     let mode = parameter.mode;
@@ -274,6 +295,15 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
   public async countWords(): Promise<number> {
     let count = SlimeWordModel.countDocuments().where("dictionary", this).exec();
     return count;
+  }
+
+  private async nextWordNumber(): Promise<number> {
+    let words = await SlimeWordModel.find().where("dictionary", this).select("number").sort("-number").limit(1).exec();
+    if (words.length > 0) {
+      return words[0].number + 1;
+    } else {
+      return 1;
+    }
   }
 
   private static async nextNumber(): Promise<number> {

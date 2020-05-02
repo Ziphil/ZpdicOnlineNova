@@ -2,6 +2,7 @@
 
 import {
   SlimeDictionarySkeleton,
+  SlimeEditWordSkeleton,
   SlimeWordSkeleton
 } from "/server/skeleton/dictionary/slime";
 import {
@@ -23,7 +24,7 @@ export const SERVER_PATH = {
   changeDictionaryParamName: "/api/dictionary/edit/paramname",
   changeDictionarySecret: "/api/dictionary/edit/secret",
   changeDictionaryExplanation: "/api/dictionary/edit/explanation",
-  addNotification: "/api/news/add",
+  editWord: "/api/dictionary/edit",
   searchDictionary: "/api/dictionary/search",
   downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
@@ -38,6 +39,7 @@ export const SERVER_PATH = {
   changeUserEmail: "/api/user/edit/email",
   changeUserPassword: "/api/user/edit/password",
   fetchUser: "/api/user/info",
+  addNotification: "/api/news/add",
   fetchNotifications: "/api/news/list"
 };
 
@@ -112,16 +114,16 @@ type ProcessType = {
       }
     }
   },
-  addNotification: {
+  editWord: {
     get: Noop,
     post: {
-      request: {type: string, title: string, text: string},
+      request: {number: number, word: SlimeEditWordSkeleton},
       response: {
-        200: NotificationSkeleton,
-        400: never
+        200: SlimeWordSkeleton,
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
-  }
+  },
   searchDictionary: {
     get: {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
@@ -261,6 +263,16 @@ type ProcessType = {
       }
     },
     post: Noop
+  },
+  addNotification: {
+    get: Noop,
+    post: {
+      request: {type: string, title: string, text: string},
+      response: {
+        200: NotificationSkeleton,
+        400: never
+      }
+    }
   },
   fetchNotifications: {
     get: {

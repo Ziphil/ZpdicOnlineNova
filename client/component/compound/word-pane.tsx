@@ -11,13 +11,15 @@ import {
   Link
 } from "/client/component/atom";
 import {
-  Component
+  StoreComponent
 } from "/client/component/component";
 import {
   WordEditor
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/component/decorator";
 import {
   SlimeDictionarySkeleton,
@@ -26,8 +28,9 @@ import {
 } from "/server/skeleton/dictionary/slime";
 
 
+@route @inject
 @applyStyle(require("./word-pane.scss"))
-export class WordPane extends Component<Props, State> {
+export class WordPane extends StoreComponent<Props, State> {
 
   public static defaultProps: Partial<Props> = {
     showButton: false
@@ -138,18 +141,39 @@ export class WordPane extends Component<Props, State> {
     return node;
   }
 
+  private renderEditorNode(): ReactNode {
+    let dictionary = this.props.dictionary;
+    let word = this.props.word;
+    let authorized = this.props.authorized;
+    let open = this.state.editorOpen;
+    let node = (
+      <WordEditor dictionary={dictionary} word={word} authorized={authorized} open={open} onClose={() => this.setState({editorOpen: false})} onConfirm={this.handleConfirmEdit.bind(this)}/>
+    );
+    return node;
+  }
+
+  private async handleConfirmEdit(word: SlimeWordSkeleton): Promise<void> {
+    let number = this.props.dictionary.number;
+    let response = await this.requestPost("editWord", {number, word});
+    if (response.status === 200) {
+      this.props.store!.addInformationPopup("wordEdited");
+      this.setState({editorOpen: false});
+    }
+  }
+
   public render(): ReactNode {
     let nameNode = this.renderNameNode();
     let equivalentNode = this.renderEquivalentNode();
     let informationNode = this.renderInformationNode();
     let relationNode = this.renderRelationNode();
+    let editorNode = this.renderEditorNode();
     let node = (
       <div styleName="root">
         {nameNode}
         {equivalentNode}
         {informationNode}
         {relationNode}
-        <WordEditor dictionary={this.props.dictionary} word={this.props.word} authorized={this.props.authorized} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>
+        {editorNode}
       </div>
     );
     return node;

@@ -39,3 +39,6 @@ export class SlimeWordSkeleton extends Skeleton {
   }
 
 }
+
+
+export type SlimeEditWordSkeleton = Omit<SlimeWordSkeleton, "number"> & Partial<Pick<SlimeWordSkeleton, "number">>;
