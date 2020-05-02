@@ -27,7 +27,8 @@ import {
 } from "/server/model/error";
 import {
   User,
-  UserDocument
+  UserDocument,
+  UserModel
 } from "/server/model/user";
 import {
   IDENTIFIER_REGEXP
@@ -201,6 +202,11 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
   public async getWords(): Promise<Array<SlimeWordDocument>> {
     let words = await SlimeWordModel.find().where("dictionary", this);
     return words;
+  }
+
+  public async getOwner(): Promise<UserDocument> {
+    let owner = await UserModel.findOne().where(this.user);
+    return owner!;
   }
 
   public async editWord(this: SlimeDictionaryDocument, word: SlimeEditWordSkeleton): Promise<SlimeWordDocument> {

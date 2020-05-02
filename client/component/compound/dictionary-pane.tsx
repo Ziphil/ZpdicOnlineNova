@@ -74,7 +74,11 @@ export class DictionaryPane extends StoreComponent<Props, State> {
         <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
       </div>
     );
-    let updatedDateString = (this.props.dictionary.updatedDate) ? DateUtil.format(this.props.dictionary.updatedDate, "yyyy/MM/dd HH:mm") : "?";
+    let ownerNode = (!this.props.showsSetting) && (
+      <div styleName="information-item">管理者 — @{this.props.dictionary.ownerName}</div>
+    );
+    let updatedDate = this.props.dictionary.updatedDate;
+    let updatedDateString = (updatedDate !== null) ? DateUtil.format(updatedDate, "yyyy/MM/dd HH:mm") : "?";
     let node = (
       <a styleName="root" href={href} onClick={this.handleClick.bind(this)}>
         <div styleName="head">
@@ -86,7 +90,8 @@ export class DictionaryPane extends StoreComponent<Props, State> {
           </div>
         </div>
         <div styleName="information">
-          最終更新: {updatedDateString}
+          <div styleName="information-item">最終更新 — {updatedDateString}</div>
+          {ownerNode}
         </div>
         {settingNode}
       </a>
