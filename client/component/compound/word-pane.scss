@@ -21,6 +21,13 @@
   display: inline-block;
 }
 
+.name-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .name {
   margin: -4px 0.5em 0px 0px;
   font-size: 120%;

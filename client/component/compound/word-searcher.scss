@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.search-form {
+  width: 100%;
+  max-width: 600px;
+  margin: 0px auto 30px auto;
+}
+
+.pagination-button {
+  margin: 20px 0px 0px 0px;
+  line-height: $line-height;
+  text-align: center;
+}

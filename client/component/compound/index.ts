@@ -32,3 +32,4 @@ export * from "./setting-pane";
 export * from "./word-editor";
 export * from "./word-list";
 export * from "./word-pane";
+export * from "./word-searcher";

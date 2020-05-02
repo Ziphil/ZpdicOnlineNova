@@ -16,12 +16,16 @@ import {
   Component
 } from "/client/component/component";
 import {
+  WordSearcher
+} from "/client/component/compound";
+import {
   applyStyle
 } from "/client/component/decorator";
 import {
   createStyleName
 } from "/client/util/style-names";
 import {
+  SlimeDictionarySkeleton,
   SlimeWordSkeleton
 } from "/server/skeleton/dictionary/slime";
 
@@ -32,7 +36,8 @@ export class WordEditor extends Component<Props, State> {
   public constructor(props: Props) {
     super(props);
     let word = Object.assign({}, this.props.word);
-    this.state = {word};
+    let relationChooserOpen = false;
+    this.state = {word, relationChooserOpen};
   }
 
   private renderNameNode(): ReactNode {
@@ -186,7 +191,7 @@ export class WordEditor extends Component<Props, State> {
           <Input className={styles["title"]} value={relation.title} label={titleLabel} onSet={this.setWord((title) => word.relations[index].title = title)}/>
           <ControlGroup className={createStyleName(styles["name"], styles["relation-input"])}>
             <Input value={relation.name} label={nameLabel} readOnly={true}/>
-            <Button label="変更"/>
+            <Button label="変更" onClick={() => this.setState({relationChooserOpen: true})}/>
           </ControlGroup>
           <ControlGroup>
             <Button iconLabel="&#xF062;"/>
@@ -220,7 +225,7 @@ export class WordEditor extends Component<Props, State> {
     return wrapper;
   }
 
-  public render(): ReactNode {
+  private renderEditorNode(): ReactNode {
     let nameNode = this.renderNameNode();
     let tagNode = this.renderTagNode();
     let equivalentNode = this.renderEquivalentNode();
@@ -228,13 +233,33 @@ export class WordEditor extends Component<Props, State> {
     let variationNode = this.renderVariationNode();
     let relationNode = this.renderRelationNode();
     let node = (
-      <Overlay size="large" open={this.props.open} onClose={this.props.onClose}>
+      <div>
         {nameNode}
         {tagNode}
         {equivalentNode}
         {informationNode}
         {variationNode}
         {relationNode}
+      </div>
+    );
+    return node;
+  }
+
+  private renderRelationChooserNode(): ReactNode {
+    let node = (
+      <WordSearcher dictionary={this.props.dictionary} authorized={this.props.authorized}/>
+    );
+    return node;
+  }
+
+  public render(): ReactNode {
+    let page = (this.state.relationChooserOpen) ? 1 : 0;
+    let editorNode = this.renderEditorNode();
+    let relationChooserNode = this.renderRelationChooserNode();
+    let node = (
+      <Overlay size="large" title="単語編集" page={page} open={this.props.open} outsideClosable={false} onClose={this.props.onClose} onBack={() => this.setState({relationChooserOpen: false})}>
+        {editorNode}
+        {relationChooserNode}
       </Overlay>
     );
     return node;
@@ -244,11 +269,13 @@ export class WordEditor extends Component<Props, State> {
 
 
 type Props = {
+  dictionary: SlimeDictionarySkeleton,
   word: SlimeWordSkeleton,
   authorized: boolean,
   open: boolean,
-  onClose?: (event: MouseEvent<HTMLDivElement>) => void
+  onClose?: (event: MouseEvent<HTMLElement>) => void
 };
 type State = {
-  word: SlimeWordSkeleton
+  word: SlimeWordSkeleton,
+  relationChooserOpen: boolean
 };

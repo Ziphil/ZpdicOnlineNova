@@ -35,7 +35,7 @@ export class WordPane extends Component<Props, State> {
   private renderNameNode(): ReactNode {
     let buttonNode = (this.props.authorized) && (
       <div styleName="button">
-        <Button iconLabel="&#xF044;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
+        <Button label="編集" iconLabel="&#xF044;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
       </div>
     );
     let tagNodes = this.props.word.tags.map((tag, index) => {
@@ -44,9 +44,13 @@ export class WordPane extends Component<Props, State> {
     });
     let node = (
       <div styleName="name-wrapper">
-        {buttonNode}
-        <div styleName="name">{this.props.word.name}</div>
-        <div styleName="tag">{tagNodes}</div>
+        <div styleName="left">
+          <div styleName="name">{this.props.word.name}</div>
+          <div styleName="tag">{tagNodes}</div>
+        </div>
+        <div styleName="right">
+          {buttonNode}
+        </div>
       </div>
     );
     return node;
@@ -135,7 +139,7 @@ export class WordPane extends Component<Props, State> {
         {equivalentNode}
         {informationNode}
         {relationNode}
-        <WordEditor word={this.props.word} authorized={this.props.authorized} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>
+        <WordEditor dictionary={this.props.dictionary} word={this.props.word} authorized={this.props.authorized} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>
       </div>
     );
     return node;
