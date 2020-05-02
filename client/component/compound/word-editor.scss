@@ -3,46 +3,74 @@
 @import "/client/component/mixin.scss";
 
 
-.container,
-.confirm-button {
-  margin: 20px 0px 0px 0px;
+.container {
+  padding: 20px 0px;
+  border-bottom: 1px $pale-border-color solid; 
   line-height: $line-height;
 }
 
 .container:first-child {
-  margin: 0px;
+  border-top: 1px $light-border-color solid; 
+}
+
+.container:last-child {
+  border-bottom: 1px $light-border-color solid; 
 }
 
 .confirm-button {
+  margin: 20px 0px 0px 0px;
   text-align: right;
+  line-height: $line-height;
 }
 
 .inner,
 .plus {
-  margin: 7px 0px 0px 0px;
+  margin: 8px 0px 0px 0px;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
+  @include smartphone {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
-.inner:first-child {
+.inner:first-child,
+.plus:first-child {
   margin: 0px;
-}
-
-.inner >* {
-  margin: 0px 0px 0px 10px;
-}
-
-.inner >*:first-child {
-  margin: 0px;
-}
-
-.inner.information {
-  height: 150px;
 }
 
 .plus {
   justify-content: flex-end;
+  display: flex;
+  align-items: flex-end;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex: 1;
+}
+
+.form >* {
+  margin: 0px 0px 0px 10px;
+}
+
+.form >*:first-child {
+  margin: 0px;
+}
+
+.form.information {
+  height: 150px;
+}
+
+.control-button {
+  margin: 0px 0px 0px 10px;
+  @include smartphone {
+    margin: 8px 0px 0px 0px;
+    align-self: flex-end;
+  }
 }
 
 .title {

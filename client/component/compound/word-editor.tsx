@@ -64,12 +64,16 @@ export class WordEditor extends Component<Props, State> {
       let label = (index === 0) ? "タグ" : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
-          <Input className={styles["title"]} value={tag} label={label} onSet={this.setWord((tag) => word.tags[index] = tag)}/>
-          <ControlGroup>
-            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.tags, index, -1))}/>
-            <Button iconLabel="&#xF063;" disabled={index === word.tags.length - 1} onClick={this.setWord(() => this.swap(word.tags, index, 1))}/>
-            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.tags.splice(index, 1))}/>
-          </ControlGroup>
+          <div styleName="form">
+            <Input className={styles["title"]} value={tag} label={label} onSet={this.setWord((tag) => word.tags[index] = tag)}/>
+          </div>
+          <div styleName="control-button">
+            <ControlGroup>
+              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.tags, index, -1))}/>
+              <Button iconLabel="&#xF063;" disabled={index === word.tags.length - 1} onClick={this.setWord(() => this.swap(word.tags, index, 1))}/>
+              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.tags.splice(index, 1))}/>
+            </ControlGroup>
+          </div>
         </div>
       );
       return innerNode;
@@ -97,13 +101,17 @@ export class WordEditor extends Component<Props, State> {
       let nameLabel = (index === 0) ? "訳語 (コンマ区切り)" : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
-          <Input className={styles["title"]} value={equivalent.title} label={titleLabel} onSet={this.setWord((title) => word.equivalents[index].title = title)}/>
-          <Input className={styles["name"]} value={equivalentStrings[index]} label={nameLabel} onSet={this.setEquivalentStrings((string) => equivalentStrings[index] = string)}/>
-          <ControlGroup>
-            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swapEquivalent(index, -1))}/>
-            <Button iconLabel="&#xF063;" disabled={index === word.equivalents.length - 1} onClick={this.setWord(() => this.swapEquivalent(index, 1))}/>
-            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => this.deleteEquivalent(index))}/>
-          </ControlGroup>
+          <div styleName="form">
+            <Input className={styles["title"]} value={equivalent.title} label={titleLabel} onSet={this.setWord((title) => word.equivalents[index].title = title)}/>
+            <Input className={styles["name"]} value={equivalentStrings[index]} label={nameLabel} onSet={this.setEquivalentStrings((string) => equivalentStrings[index] = string)}/>
+          </div>
+          <div styleName="control-button">
+            <ControlGroup>
+              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swapEquivalent(index, -1))}/>
+              <Button iconLabel="&#xF063;" disabled={index === word.equivalents.length - 1} onClick={this.setWord(() => this.swapEquivalent(index, 1))}/>
+              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => this.deleteEquivalent(index))}/>
+            </ControlGroup>
+          </div>
         </div>
       );
       return innerNode;
@@ -150,14 +158,18 @@ export class WordEditor extends Component<Props, State> {
       let titleLabel = (index === 0) ? "分類" : undefined;
       let textLabel = (index === 0) ? "内容" : undefined;
       let innerNode = (
-        <div styleName="inner information" key={index}>
-          <Input className={styles["title"]} value={information.title} label={titleLabel} onSet={this.setWord((title) => word.informations[index].title = title)}/>
-          <TextArea className={styles["text"]} value={information.text} label={textLabel} onSet={this.setWord((text) => word.informations[index].text = text)}/>
-          <ControlGroup>
-            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.informations, index, -1))}/>
-            <Button iconLabel="&#xF063;" disabled={index === word.informations.length - 1} onClick={this.setWord(() => this.swap(word.informations, index, 1))}/>
-            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.informations.splice(index, 1))}/>
-          </ControlGroup>
+        <div styleName="inner" key={index}>
+          <div styleName="form information">
+            <Input className={styles["title"]} value={information.title} label={titleLabel} onSet={this.setWord((title) => word.informations[index].title = title)}/>
+            <TextArea className={styles["text"]} value={information.text} label={textLabel} onSet={this.setWord((text) => word.informations[index].text = text)}/>
+          </div>
+          <div styleName="control-button">
+            <ControlGroup>
+              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.informations, index, -1))}/>
+              <Button iconLabel="&#xF063;" disabled={index === word.informations.length - 1} onClick={this.setWord(() => this.swap(word.informations, index, 1))}/>
+              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.informations.splice(index, 1))}/>
+            </ControlGroup>
+          </div>
         </div>
       );
       return innerNode;
@@ -184,13 +196,17 @@ export class WordEditor extends Component<Props, State> {
       let nameLabel = (index === 0) ? "変化形" : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
-          <Input className={styles["title"]} value={variation.title} label={titleLabel} onSet={this.setWord((title) => word.variations[index].title = title)}/>
-          <Input className={styles["name"]} value={variation.name} label={nameLabel} onSet={this.setWord((name) => word.variations[index].name = name)}/>
-          <ControlGroup>
-            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.variations, index, -1))}/>
-            <Button iconLabel="&#xF063;" disabled={index === word.variations.length - 1} onClick={this.setWord(() => this.swap(word.variations, index, 1))}/>
-            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.variations.splice(index, 1))}/>
-          </ControlGroup>
+          <div styleName="form">
+            <Input className={styles["title"]} value={variation.title} label={titleLabel} onSet={this.setWord((title) => word.variations[index].title = title)}/>
+            <Input className={styles["name"]} value={variation.name} label={nameLabel} onSet={this.setWord((name) => word.variations[index].name = name)}/>
+          </div>
+          <div styleName="control-button">
+            <ControlGroup>
+              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.variations, index, -1))}/>
+              <Button iconLabel="&#xF063;" disabled={index === word.variations.length - 1} onClick={this.setWord(() => this.swap(word.variations, index, 1))}/>
+              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.variations.splice(index, 1))}/>
+            </ControlGroup>
+          </div>
         </div>
       );
       return innerNode;
@@ -217,16 +233,20 @@ export class WordEditor extends Component<Props, State> {
       let nameLabel = (index === 0) ? "関連語" : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
-          <Input className={styles["title"]} value={relation.title} label={titleLabel} onSet={this.setWord((title) => word.relations[index].title = title)}/>
-          <ControlGroup className={createStyleName(styles["name"], styles["relation-input"])}>
-            <Input value={relation.name} label={nameLabel} readOnly={true}/>
-            <Button label="変更" onClick={() => this.openRelationChooser(index)}/>
-          </ControlGroup>
-          <ControlGroup>
-            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.relations, index, -1))}/>
-            <Button iconLabel="&#xF063;" disabled={index === word.relations.length - 1} onClick={this.setWord(() => this.swap(word.relations, index, 1))}/>
-            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.relations.splice(index, 1))}/>
-          </ControlGroup>
+          <div styleName="form">
+            <Input className={styles["title"]} value={relation.title} label={titleLabel} onSet={this.setWord((title) => word.relations[index].title = title)}/>
+            <ControlGroup className={createStyleName(styles["name"], styles["relation-input"])}>
+              <Input value={relation.name} label={nameLabel} readOnly={true}/>
+              <Button label="変更" onClick={() => this.openRelationChooser(index)}/>
+            </ControlGroup>
+          </div>
+          <div styleName="control-button">
+            <ControlGroup>
+              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.relations, index, -1))}/>
+              <Button iconLabel="&#xF063;" disabled={index === word.relations.length - 1} onClick={this.setWord(() => this.swap(word.relations, index, 1))}/>
+              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.relations.splice(index, 1))}/>
+            </ControlGroup>
+          </div>
         </div>
       );
       return innerNode;
@@ -310,12 +330,14 @@ export class WordEditor extends Component<Props, State> {
     let relationNode = this.renderRelationNode();
     let node = (
       <div>
-        {nameNode}
-        {tagNode}
-        {equivalentNode}
-        {informationNode}
-        {variationNode}
-        {relationNode}
+        <div styleName="editor">
+          {nameNode}
+          {tagNode}
+          {equivalentNode}
+          {informationNode}
+          {variationNode}
+          {relationNode}
+        </div>
         <div styleName="confirm-button">
           <Button label="決定" iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.handleConfirm.bind(this)}/>
         </div>
