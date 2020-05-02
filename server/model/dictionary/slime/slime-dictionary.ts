@@ -102,7 +102,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
   }
 
   public static async findByUser(user: UserDocument): Promise<Array<SlimeDictionaryDocument>> {
-    let dictionaries = await SlimeDictionaryModel.find().where("user", user).exec();
+    let dictionaries = await SlimeDictionaryModel.find().where("user", user).sort("-updatedDate -number").exec();
     return dictionaries;
   }
 
