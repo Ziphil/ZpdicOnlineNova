@@ -42,7 +42,7 @@ export class Overlay extends Component<Props, State> {
       let headerNode = (
         <div styleName="header">
           <div styleName="left">
-            {this.props.title}
+            <div styleName="title">{this.props.title}</div>
           </div>
           <div styleName="right">
             {backNode}

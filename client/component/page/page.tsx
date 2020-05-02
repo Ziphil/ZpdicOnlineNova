@@ -17,6 +17,9 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
+  createStyleName
+} from "/client/util/style-names";
+import {
   SlimeDictionarySkeleton
 } from "/server/skeleton/dictionary/slime";
 
@@ -31,18 +34,19 @@ export class Page extends Component<Props, State> {
   };
 
   public render(): ReactNode {
-    let styleNames = ["page"];
-    let dictionaryHeaderNode;
-    if (this.props.showsDictionary) {
-      styleNames.push("dictionary");
-      dictionaryHeaderNode = <DictionaryHeader dictionary={this.props.dictionary} showsSetting={this.props.showsDictionarySetting}/>;
-    }
+    let spacerStyleName = createStyleName(
+      "spacer",
+      {if: this.props.showsDictionary, true: "dictionary"}
+    );
+    let dictionaryHeaderNode = (this.props.showsDictionary) && (
+      <DictionaryHeader dictionary={this.props.dictionary} showsSetting={this.props.showsDictionarySetting}/>
+    );
     let node = (
       <div styleName="root" id="page">
+        <PopupInformationPane/>
         <Header/>
-        <div styleName={styleNames.join(" ")}>
-          {dictionaryHeaderNode}
-          <PopupInformationPane/>
+        {dictionaryHeaderNode}
+        <div styleName={spacerStyleName}>
           <div styleName="content">
             {this.props.children}
           </div>

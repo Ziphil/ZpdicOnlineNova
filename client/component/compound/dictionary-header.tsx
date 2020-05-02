@@ -46,33 +46,32 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let nameNode;
-    if (this.props.dictionary) {
+    let nameNode = (this.props.dictionary) && (() => {
       let href = "/dictionary/" + this.props.dictionary.number;
       if (this.props.preservesQuery) {
         let queryString = this.props.location!.search;
         href += queryString;
       }
-      nameNode = <Link href={href} style="plane">{this.props.dictionary.name}</Link>;
-    }
-    let settingButtonNode;
-    if (this.props.showsSetting) {
-      settingButtonNode = <Button iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>;
-    }
-    let downloadButtonNode;
-    if (this.props.showsDownload) {
-      downloadButtonNode = <Button iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>;
-    }
+      return <Link href={href} style="plane">{this.props.dictionary.name}</Link>;
+    })();
+    let settingButtonNode = (this.props.showsSetting) && (
+      <Button label="設定" iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
+    );
+    let downloadButtonNode = (this.props.showsDownload) && (
+      <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
+    );
     let node = (
       <header styleName="root">
         <div styleName="container">
           <div styleName="left">
+            <div styleName="name">
+              {nameNode}
+            </div>
+          </div>
+          <div styleName="right">
             <div styleName="button">
               {settingButtonNode}
               {downloadButtonNode}
-            </div>
-            <div styleName="name">
-              {nameNode}
             </div>
           </div>
         </div>

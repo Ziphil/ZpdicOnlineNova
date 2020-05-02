@@ -303,7 +303,7 @@ export class WordEditor extends Component<Props, State> {
         {variationNode}
         {relationNode}
         <div styleName="confirm-button">
-          <Button label="決定" iconLabel="&#xF00C;" onClick={this.handleConfirm.bind(this)}/>
+          <Button label="決定" iconLabel="&#xF00C;" style="information" onClick={this.handleConfirm.bind(this)}/>
         </div>
       </div>
     );

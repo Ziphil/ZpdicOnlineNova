@@ -11,6 +11,10 @@
   @include button(map-get($colors, error));
 }
 
+.button.information {
+  @include button(map-get($colors, information));
+}
+
 .button.left {
   margin: 0px -1px 0px 0px;
   border-radius: $small-border-radius 0px 0px $small-border-radius;
@@ -47,6 +51,10 @@
   color: $link-hover-color;
 }
 
+.simple.link {
+  text-decoration: underline;
+}
+
 .icon {
   @include icon-font;
   text-decoration: none;
@@ -54,10 +62,6 @@
 
 .icon +.label {
   margin: 0px 0px 0px $blank-padding;
-}
-
-.simple .label {
-  text-decoration: underline;
 }
 
 .spinner-wrapper {

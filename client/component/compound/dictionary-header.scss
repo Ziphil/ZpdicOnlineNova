@@ -17,14 +17,17 @@
 .container {
   @include header-container;
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
 
-.left {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+.right {
+  margin: 0px 0px 0px 20px;
+}
+
+.name {
+  font-weight: bold;
 }
 
 .button {
@@ -32,9 +35,9 @@
 }
 
 .button >* {
-  margin: 0em $blank-padding 0em 0em;
+  margin: 0px 0px 0px 20px;
 }
 
-.name {
-  font-weight: bold;
+.button >*:first-child {
+  margin: 0px;
 }

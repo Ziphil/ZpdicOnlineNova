@@ -56,10 +56,12 @@ export class Button extends Component<Props, State> {
   public render(): ReactNode {
     let styleName = createStyleName(
       "root",
-      {if: this.props.position !== "alone", true: this.props.position},
-      {if: this.props.style === "simple", true: "simple", false: "button"},
       {if: this.props.label === undefined, true: "only-icon"},
+      {if: this.props.position !== "alone", true: this.props.position},
+      {if: this.props.style === "simple" || this.props.style === "link", true: "simple", false: "button"},
+      {if: this.props.style === "link", true: "link"},
       {if: this.props.style === "caution", true: "caution"},
+      {if: this.props.style === "information", true: "information"},
       {if: this.state.loading, true: "loading"}
     );
     let labelNode = (this.props.label !== undefined) && <span styleName="label">{this.props.label}</span>;
@@ -87,7 +89,7 @@ type Props = {
   label?: string,
   iconLabel?: string,
   position: "alone" | "left" | "right" | "middle",
-  style: "simple" | "normal" | "caution",
+  style: "normal" | "caution" | "information" | "simple" | "link",
   reactive: boolean,
   disabled: boolean,
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void | PromiseLike<void>,
