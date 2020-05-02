@@ -33,14 +33,11 @@ export class WordPane extends Component<Props, State> {
   };
 
   private renderNameNode(): ReactNode {
-    let buttonNode;
-    if (this.props.authorized) {
-      buttonNode = (
-        <div styleName="button">
-          <Button iconLabel="&#xF044;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
-        </div>
-      );
-    }
+    let buttonNode = (this.props.authorized) && (
+      <div styleName="button">
+        <Button iconLabel="&#xF044;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
+      </div>
+    );
     let tagNodes = this.props.word.tags.map((tag, index) => {
       let tagNode = (tag !== "") ? <span styleName="box" key={index}>{tag}</span> : undefined;
       return tagNode;
@@ -66,14 +63,11 @@ export class WordPane extends Component<Props, State> {
       );
       return innerNode;
     });
-    let node;
-    if (innerNodes.length > 0) {
-      node = (
-        <div styleName="container">
-          {innerNodes}
-        </div>
-      );
-    }
+    let node = (innerNodes.length > 0) && (
+      <div styleName="container">
+        {innerNodes}
+      </div>
+    );
     return node;
   }
 
@@ -122,14 +116,11 @@ export class WordPane extends Component<Props, State> {
       );
       return innerNode;
     });
-    let node;
-    if (innerNodes.length > 0) {
-      node = (
-        <div styleName="container">
-          {innerNodes}
-        </div>
-      );
-    }
+    let node = (innerNodes.length > 0) && (
+      <div styleName="container">
+        {innerNodes}
+      </div>
+    );
     return node;
   }
 
