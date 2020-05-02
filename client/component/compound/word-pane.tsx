@@ -3,6 +3,7 @@
 import * as react from "react";
 import {
   Fragment,
+  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -28,14 +29,22 @@ import {
 @applyStyle(require("./word-pane.scss"))
 export class WordPane extends Component<Props, State> {
 
+  public static defaultProps: Partial<Props> = {
+    showButton: false
+  };
   public state: State = {
     editorOpen: false
   };
 
   private renderNameNode(): ReactNode {
-    let buttonNode = (this.props.authorized) && (
+    let editButtonNode = (this.props.authorized && !this.props.showButton) && (
       <div styleName="button">
         <Button label="編集" iconLabel="&#xF044;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
+      </div>
+    );
+    let confirmButtonNode = (this.props.showButton) && (
+      <div styleName="button">
+        <Button label="決定" onClick={this.props.onConfirm}/>
       </div>
     );
     let tagNodes = this.props.word.tags.map((tag, index) => {
@@ -49,7 +58,8 @@ export class WordPane extends Component<Props, State> {
           <div styleName="tag">{tagNodes}</div>
         </div>
         <div styleName="right">
-          {buttonNode}
+          {editButtonNode}
+          {confirmButtonNode}
         </div>
       </div>
     );
@@ -151,7 +161,9 @@ export class WordPane extends Component<Props, State> {
 type Props = {
   dictionary: SlimeDictionarySkeleton,
   word: SlimeWordSkeleton,
-  authorized: boolean
+  authorized: boolean,
+  showButton: boolean,
+  onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void
 };
 type State = {
   editorOpen: boolean

@@ -3,7 +3,8 @@
 @import "/client/component/mixin.scss";
 
 
-.container {
+.container,
+.confirm-button {
   margin: 20px 0px 0px 0px;
   line-height: $line-height;
 }
@@ -12,7 +13,12 @@
   margin: 0px;
 }
 
-.inner {
+.confirm-button {
+  text-align: right;
+}
+
+.inner,
+.plus {
   margin: 7px 0px 0px 0px;
   display: flex;
   flex-direction: row;
@@ -35,6 +41,10 @@
   height: 150px;
 }
 
+.plus {
+  justify-content: flex-end;
+}
+
 .title {
   flex: 1;
   align-self: flex-start;
@@ -53,13 +63,6 @@
 
 .text >textarea {
   flex-grow: 1;
-}
-
-.plus {
-  margin: 7px 0px 0px 0px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
 }
 
 .relation-input {

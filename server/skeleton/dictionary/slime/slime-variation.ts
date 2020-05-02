@@ -20,4 +20,11 @@ export class SlimeVariationSkeleton extends Skeleton {
     return skeleton;
   }
 
+  public static empty(): SlimeVariationSkeleton {
+    let title = "";
+    let name = "";
+    let skeleton = SlimeVariationSkeleton.of({title, name});
+    return skeleton;
+  }
+
 }

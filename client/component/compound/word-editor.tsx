@@ -26,12 +26,18 @@ import {
 } from "/client/util/style-names";
 import {
   SlimeDictionarySkeleton,
+  SlimeEquivalentSkeleton,
+  SlimeInformationSkeleton,
+  SlimeRelationSkeleton,
+  SlimeVariationSkeleton,
   SlimeWordSkeleton
 } from "/server/skeleton/dictionary/slime";
 
 
 @applyStyle(require("./word-editor.scss"))
 export class WordEditor extends Component<Props, State> {
+
+  private editingRelationIndex: number | null = null;
 
   public constructor(props: Props) {
     super(props);
@@ -53,23 +59,23 @@ export class WordEditor extends Component<Props, State> {
   private renderTagNode(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let innerNodes = this.state.word.tags.map((tag, index) => {
+    let innerNodes = word.tags.map((tag, index) => {
       let label = (index === 0) ? "タグ" : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <Input className={styles["title"]} value={tag} label={label} onSet={this.setWord((tag) => word.tags[index] = tag)}/>
           <ControlGroup>
-            <Button iconLabel="&#xF062;"/>
-            <Button iconLabel="&#xF063;"/>
+            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.tags, index, -1))}/>
+            <Button iconLabel="&#xF063;" disabled={index === word.tags.length - 1} onClick={this.setWord(() => this.swap(word.tags, index, 1))}/>
+            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.tags.splice(index, 1))}/>
           </ControlGroup>
-          <Button iconLabel="&#xF00D;"/>
         </div>
       );
       return innerNode;
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;"/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.tags.push(""))}/>
       </div>
     );
     let node = (
@@ -84,7 +90,7 @@ export class WordEditor extends Component<Props, State> {
   private renderEquivalentNode(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let innerNodes = this.state.word.equivalents.map((equivalent, index) => {
+    let innerNodes = word.equivalents.map((equivalent, index) => {
       let titleLabel = (index === 0) ? "分類" : undefined;
       let nameLabel = (index === 0) ? "訳語 (コンマ区切り)" : undefined;
       let innerNode = (
@@ -92,17 +98,17 @@ export class WordEditor extends Component<Props, State> {
           <Input className={styles["title"]} value={equivalent.title} label={titleLabel} onSet={this.setWord((title) => word.equivalents[index].title = name)}/>
           <Input className={styles["name"]} value={equivalent.names.join(", ")} label={nameLabel} onSet={this.setWord((nameString) => word.equivalents[index].names = nameString.split(/\s*,\s*/))}/>
           <ControlGroup>
-            <Button iconLabel="&#xF062;"/>
-            <Button iconLabel="&#xF063;"/>
+            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.equivalents, index, -1))}/>
+            <Button iconLabel="&#xF063;" disabled={index === word.equivalents.length - 1} onClick={this.setWord(() => this.swap(word.equivalents, index, 1))}/>
+            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.equivalents.splice(index, 1))}/>
           </ControlGroup>
-          <Button iconLabel="&#xF00D;"/>
         </div>
       );
       return innerNode;
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;"/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.equivalents.push(SlimeEquivalentSkeleton.empty()))}/>
       </div>
     );
     let node = (
@@ -117,7 +123,7 @@ export class WordEditor extends Component<Props, State> {
   private renderInformationNode(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let innerNodes = this.state.word.informations.map((information, index) => {
+    let innerNodes = word.informations.map((information, index) => {
       let titleLabel = (index === 0) ? "分類" : undefined;
       let textLabel = (index === 0) ? "内容" : undefined;
       let innerNode = (
@@ -125,17 +131,17 @@ export class WordEditor extends Component<Props, State> {
           <Input className={styles["title"]} value={information.title} label={titleLabel} onSet={this.setWord((title) => word.informations[index].title = title)}/>
           <TextArea className={styles["text"]} value={information.text} label={textLabel} onSet={this.setWord((text) => word.informations[index].text = text)}/>
           <ControlGroup>
-            <Button iconLabel="&#xF062;"/>
-            <Button iconLabel="&#xF063;"/>
+            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.informations, index, -1))}/>
+            <Button iconLabel="&#xF063;" disabled={index === word.informations.length - 1} onClick={this.setWord(() => this.swap(word.informations, index, 1))}/>
+            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.informations.splice(index, 1))}/>
           </ControlGroup>
-          <Button iconLabel="&#xF00D;"/>
         </div>
       );
       return innerNode;
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;"/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.informations.push(SlimeInformationSkeleton.empty()))}/>
       </div>
     );
     let node = (
@@ -150,7 +156,7 @@ export class WordEditor extends Component<Props, State> {
   private renderVariationNode(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let innerNodes = this.state.word.variations.map((variation, index) => {
+    let innerNodes = word.variations.map((variation, index) => {
       let titleLabel = (index === 0) ? "分類" : undefined;
       let nameLabel = (index === 0) ? "変化形" : undefined;
       let innerNode = (
@@ -158,17 +164,17 @@ export class WordEditor extends Component<Props, State> {
           <Input className={styles["title"]} value={variation.title} label={titleLabel} onSet={this.setWord((title) => word.variations[index].title = title)}/>
           <Input className={styles["name"]} value={variation.name} label={nameLabel} onSet={this.setWord((name) => word.variations[index].name = name)}/>
           <ControlGroup>
-            <Button iconLabel="&#xF062;"/>
-            <Button iconLabel="&#xF063;"/>
+            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.variations, index, -1))}/>
+            <Button iconLabel="&#xF063;" disabled={index === word.variations.length - 1} onClick={this.setWord(() => this.swap(word.variations, index, 1))}/>
+            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.variations.splice(index, 1))}/>
           </ControlGroup>
-          <Button iconLabel="&#xF00D;"/>
         </div>
       );
       return innerNode;
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;"/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.variations.push(SlimeVariationSkeleton.empty()))}/>
       </div>
     );
     let node = (
@@ -183,7 +189,7 @@ export class WordEditor extends Component<Props, State> {
   private renderRelationNode(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let innerNodes = this.state.word.relations.map((relation, index) => {
+    let innerNodes = word.relations.map((relation, index) => {
       let titleLabel = (index === 0) ? "分類" : undefined;
       let nameLabel = (index === 0) ? "関連語" : undefined;
       let innerNode = (
@@ -191,20 +197,20 @@ export class WordEditor extends Component<Props, State> {
           <Input className={styles["title"]} value={relation.title} label={titleLabel} onSet={this.setWord((title) => word.relations[index].title = title)}/>
           <ControlGroup className={createStyleName(styles["name"], styles["relation-input"])}>
             <Input value={relation.name} label={nameLabel} readOnly={true}/>
-            <Button label="変更" onClick={() => this.setState({relationChooserOpen: true})}/>
+            <Button label="変更" onClick={() => this.handleClickRelation(index)}/>
           </ControlGroup>
           <ControlGroup>
-            <Button iconLabel="&#xF062;"/>
-            <Button iconLabel="&#xF063;"/>
+            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.relations, index, -1))}/>
+            <Button iconLabel="&#xF063;" disabled={index === word.relations.length - 1} onClick={this.setWord(() => this.swap(word.relations, index, 1))}/>
+            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.relations.splice(index, 1))}/>
           </ControlGroup>
-          <Button iconLabel="&#xF00D;"/>
         </div>
       );
       return innerNode;
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;"/>
+        <Button iconLabel="&#xF067;" onClick={() => this.handleClickRelation(word.relations.length)}/>
       </div>
     );
     let node = (
@@ -216,13 +222,38 @@ export class WordEditor extends Component<Props, State> {
     return node;
   }
 
-  private setWord<V>(setter: (value: V) => void): (value: V) => void {
+  private handleClickRelation(index: number): void {
+    this.editingRelationIndex = index;
+    this.setState({relationChooserOpen: true});
+  }
+
+  private handleConfirmRelation(relationWord: SlimeWordSkeleton): void {
+    let word = this.state.word;
+    let relationIndex = this.editingRelationIndex!;
+    if (word.relations[relationIndex] === undefined) {
+      word.relations[relationIndex] = SlimeRelationSkeleton.empty();
+    }
+    word.relations[relationIndex].number = relationWord.number;
+    word.relations[relationIndex].name = relationWord.name;
+    this.setState({word, relationChooserOpen: false});
+  }
+
+  private setWord<T extends Array<any>>(setter: (...args: T) => void): (...args: T) => void {
     let outerThis = this;
-    let wrapper = function (value: V): void {
-      setter(value);
+    let wrapper = function (...args: T): void {
+      setter(...args);
       outerThis.setState({word: outerThis.state.word});
     };
     return wrapper;
+  }
+
+  private swap<T>(array: Array<T>, index: number, direction: 1 | -1): void {
+    let targetIndex = index + direction;
+    if (index >= 0 && index < array.length && targetIndex >= 0 && targetIndex < array.length) {
+      let temp = array[index];
+      array[index] = array[targetIndex];
+      array[targetIndex] = temp;
+    }
   }
 
   private renderEditorNode(): ReactNode {
@@ -240,6 +271,9 @@ export class WordEditor extends Component<Props, State> {
         {informationNode}
         {variationNode}
         {relationNode}
+        <div styleName="confirm-button">
+          <Button label="決定" iconLabel="&#xF00C;"/>
+        </div>
       </div>
     );
     return node;
@@ -247,7 +281,7 @@ export class WordEditor extends Component<Props, State> {
 
   private renderRelationChooserNode(): ReactNode {
     let node = (
-      <WordSearcher dictionary={this.props.dictionary} authorized={this.props.authorized}/>
+      <WordSearcher dictionary={this.props.dictionary} authorized={this.props.authorized} showButton={true} onConfirm={this.handleConfirmRelation.bind(this)}/>
     );
     return node;
   }

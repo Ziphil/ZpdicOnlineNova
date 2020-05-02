@@ -3,6 +3,7 @@
 import * as react from "react";
 import {
   Fragment,
+  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -34,6 +35,9 @@ import {
 @applyStyle(require("./word-searcher.scss"))
 export class WordSearcher extends StoreComponent<Props, State> {
 
+  public static defaultProps: Partial<Props> = {
+    showButton: false
+  };
   public state: State = {
     search: "",
     mode: "both",
@@ -85,10 +89,14 @@ export class WordSearcher extends StoreComponent<Props, State> {
 
   private renderWordListNode(): ReactNode {
     let maxPage = Math.max(Math.ceil(this.state.hitSize / 40) - 1, 0);
+    let dictionary = this.props.dictionary!;
+    let words = this.state.hitWords;
+    let authorized = this.props.authorized;
+    let showButton = this.props.showButton;
     let node = (
       <Fragment>
         <div styleName="word-list">
-          <WordList dictionary={this.props.dictionary!} words={this.state.hitWords} authorized={this.props.authorized} offset={0} size={40}/>
+          <WordList dictionary={dictionary} words={words} authorized={authorized} showButton={showButton} offset={0} size={40} onConfirm={this.props.onConfirm}/>
         </div>
         <div styleName="pagination-button">
           <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>
@@ -118,7 +126,9 @@ export class WordSearcher extends StoreComponent<Props, State> {
 
 type Props = {
   dictionary: SlimeDictionarySkeleton,
-  authorized: boolean
+  authorized: boolean,
+  showButton: boolean,
+  onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void;
 };
 type State = {
   search: string,
