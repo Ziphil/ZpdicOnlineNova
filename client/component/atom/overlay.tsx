@@ -26,7 +26,7 @@ export class Overlay extends Component<Props, State> {
   public static defaultProps: Partial<Props> = {
     size: "small",
     open: false,
-    outsideClosable: true
+    outsideClosable: false
   };
 
   public render(): ReactNode {

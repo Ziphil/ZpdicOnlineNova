@@ -42,8 +42,9 @@ export class WordEditor extends Component<Props, State> {
   public constructor(props: Props) {
     super(props);
     let word = Object.assign({}, this.props.word);
+    let equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
     let relationChooserOpen = false;
-    this.state = {word, relationChooserOpen};
+    this.state = {word, equivalentStrings, relationChooserOpen};
   }
 
   private renderNameNode(): ReactNode {
@@ -89,14 +90,15 @@ export class WordEditor extends Component<Props, State> {
 
   private renderEquivalentNode(): ReactNode {
     let word = this.state.word;
+    let equivalentStrings = this.state.equivalentStrings;
     let styles = this.props.styles!;
     let innerNodes = word.equivalents.map((equivalent, index) => {
       let titleLabel = (index === 0) ? "分類" : undefined;
       let nameLabel = (index === 0) ? "訳語 (コンマ区切り)" : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
-          <Input className={styles["title"]} value={equivalent.title} label={titleLabel} onSet={this.setWord((title) => word.equivalents[index].title = name)}/>
-          <Input className={styles["name"]} value={equivalent.names.join(", ")} label={nameLabel} onSet={this.setWord((nameString) => word.equivalents[index].names = nameString.split(/\s*,\s*/))}/>
+          <Input className={styles["title"]} value={equivalent.title} label={titleLabel} onSet={this.setWord((title) => word.equivalents[index].title = title)}/>
+          <Input className={styles["name"]} value={equivalentStrings[index]} label={nameLabel} onSet={this.setEquivalentStrings((string) => equivalentStrings[index] = string)}/>
           <ControlGroup>
             <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.equivalents, index, -1))}/>
             <Button iconLabel="&#xF063;" disabled={index === word.equivalents.length - 1} onClick={this.setWord(() => this.swap(word.equivalents, index, 1))}/>
@@ -108,7 +110,7 @@ export class WordEditor extends Component<Props, State> {
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.equivalents.push(SlimeEquivalentSkeleton.empty()))}/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => this.addEquivalent())}/>
       </div>
     );
     let node = (
@@ -118,6 +120,13 @@ export class WordEditor extends Component<Props, State> {
       </div>
     );
     return node;
+  }
+
+  private addEquivalent(): void {
+    let word = this.state.word;
+    let equivalentStrings = this.state.equivalentStrings;
+    word.equivalents.push(SlimeEquivalentSkeleton.empty());
+    equivalentStrings.push("");
   }
 
   private renderInformationNode(): ReactNode {
@@ -197,7 +206,7 @@ export class WordEditor extends Component<Props, State> {
           <Input className={styles["title"]} value={relation.title} label={titleLabel} onSet={this.setWord((title) => word.relations[index].title = title)}/>
           <ControlGroup className={createStyleName(styles["name"], styles["relation-input"])}>
             <Input value={relation.name} label={nameLabel} readOnly={true}/>
-            <Button label="変更" onClick={() => this.handleClickRelation(index)}/>
+            <Button label="変更" onClick={() => this.openRelationChooser(index)}/>
           </ControlGroup>
           <ControlGroup>
             <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.relations, index, -1))}/>
@@ -210,7 +219,7 @@ export class WordEditor extends Component<Props, State> {
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={() => this.handleClickRelation(word.relations.length)}/>
+        <Button iconLabel="&#xF067;" onClick={() => this.openRelationChooser(word.relations.length)}/>
       </div>
     );
     let node = (
@@ -222,12 +231,12 @@ export class WordEditor extends Component<Props, State> {
     return node;
   }
 
-  private handleClickRelation(index: number): void {
+  private openRelationChooser(index: number): void {
     this.editingRelationIndex = index;
     this.setState({relationChooserOpen: true});
   }
 
-  private handleConfirmRelation(relationWord: SlimeWordSkeleton): void {
+  private changeRelation(relationWord: SlimeWordSkeleton): void {
     let word = this.state.word;
     let relationIndex = this.editingRelationIndex!;
     if (word.relations[relationIndex] === undefined) {
@@ -242,7 +251,18 @@ export class WordEditor extends Component<Props, State> {
     let outerThis = this;
     let wrapper = function (...args: T): void {
       setter(...args);
-      outerThis.setState({word: outerThis.state.word});
+      let word = outerThis.state.word;
+      outerThis.setState({word});
+    };
+    return wrapper;
+  }
+
+  private setEquivalentStrings<T extends Array<any>>(setter: (...args: T) => void): (...args: T) => void {
+    let outerThis = this;
+    let wrapper = function (...args: T): void {
+      setter(...args);
+      let equivalentStrings = outerThis.state.equivalentStrings;
+      outerThis.setState({equivalentStrings});
     };
     return wrapper;
   }
@@ -253,6 +273,17 @@ export class WordEditor extends Component<Props, State> {
       let temp = array[index];
       array[index] = array[targetIndex];
       array[targetIndex] = temp;
+    }
+  }
+
+  private handleConfirm(event: MouseEvent<HTMLButtonElement>): void {
+    let word = this.state.word;
+    let equivalentStrings = this.state.equivalentStrings;
+    equivalentStrings.forEach((equivalentString, index) => {
+      word.equivalents[index].names = equivalentString.split(/\s*,\s*/);
+    });
+    if (this.props.onConfirm) {
+      this.props.onConfirm(word, event);
     }
   }
 
@@ -272,7 +303,7 @@ export class WordEditor extends Component<Props, State> {
         {variationNode}
         {relationNode}
         <div styleName="confirm-button">
-          <Button label="決定" iconLabel="&#xF00C;"/>
+          <Button label="決定" iconLabel="&#xF00C;" onClick={this.handleConfirm.bind(this)}/>
         </div>
       </div>
     );
@@ -281,7 +312,7 @@ export class WordEditor extends Component<Props, State> {
 
   private renderRelationChooserNode(): ReactNode {
     let node = (
-      <WordSearcher dictionary={this.props.dictionary} authorized={this.props.authorized} showButton={true} onConfirm={this.handleConfirmRelation.bind(this)}/>
+      <WordSearcher dictionary={this.props.dictionary} authorized={this.props.authorized} showButton={true} onConfirm={this.changeRelation.bind(this)}/>
     );
     return node;
   }
@@ -291,7 +322,7 @@ export class WordEditor extends Component<Props, State> {
     let editorNode = this.renderEditorNode();
     let relationChooserNode = this.renderRelationChooserNode();
     let node = (
-      <Overlay size="large" title="単語編集" page={page} open={this.props.open} outsideClosable={false} onClose={this.props.onClose} onBack={() => this.setState({relationChooserOpen: false})}>
+      <Overlay size="large" title="単語編集" page={page} open={this.props.open} onClose={this.props.onClose} onBack={() => this.setState({relationChooserOpen: false})}>
         {editorNode}
         {relationChooserNode}
       </Overlay>
@@ -307,9 +338,11 @@ type Props = {
   word: SlimeWordSkeleton,
   authorized: boolean,
   open: boolean,
-  onClose?: (event: MouseEvent<HTMLElement>) => void
+  onClose?: (event: MouseEvent<HTMLElement>) => void,
+  onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void
 };
 type State = {
   word: SlimeWordSkeleton,
+  equivalentStrings: Array<string>,
   relationChooserOpen: boolean
 };
