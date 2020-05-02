@@ -203,7 +203,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return words;
   }
 
-  public async editWord(word: SlimeEditWordSkeleton): Promise<SlimeWordDocument> {
+  public async editWord(this: SlimeDictionaryDocument, word: SlimeEditWordSkeleton): Promise<SlimeWordDocument> {
     let currentWord = await SlimeWordModel.findOne().where("dictionary", this).where("number", word.number);
     let resultWord;
     if (currentWord) {
@@ -218,6 +218,8 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
       resultWord = new SlimeWordModel(word);
       await resultWord.save();
     }
+    this.updatedDate = new Date();
+    await this.save();
     return resultWord;
   }
 
