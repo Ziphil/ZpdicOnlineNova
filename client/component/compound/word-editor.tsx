@@ -100,9 +100,9 @@ export class WordEditor extends Component<Props, State> {
           <Input className={styles["title"]} value={equivalent.title} label={titleLabel} onSet={this.setWord((title) => word.equivalents[index].title = title)}/>
           <Input className={styles["name"]} value={equivalentStrings[index]} label={nameLabel} onSet={this.setEquivalentStrings((string) => equivalentStrings[index] = string)}/>
           <ControlGroup>
-            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.equivalents, index, -1))}/>
-            <Button iconLabel="&#xF063;" disabled={index === word.equivalents.length - 1} onClick={this.setWord(() => this.swap(word.equivalents, index, 1))}/>
-            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.equivalents.splice(index, 1))}/>
+            <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swapEquivalent(index, -1))}/>
+            <Button iconLabel="&#xF063;" disabled={index === word.equivalents.length - 1} onClick={this.setWord(() => this.swapEquivalent(index, 1))}/>
+            <Button iconLabel="&#xF00D;" onClick={this.setWord(() => this.deleteEquivalent(index))}/>
           </ControlGroup>
         </div>
       );
@@ -120,6 +120,20 @@ export class WordEditor extends Component<Props, State> {
       </div>
     );
     return node;
+  }
+
+  private swapEquivalent(index: number, direction: 1 | -1): void {
+    let word = this.state.word;
+    let equivalentStrings = this.state.equivalentStrings;
+    this.swap(word.equivalents, index, direction);
+    this.swap(equivalentStrings, index, direction);
+  }
+
+  private deleteEquivalent(index: number): void {
+    let word = this.state.word;
+    let equivalentStrings = this.state.equivalentStrings;
+    word.equivalents.splice(index, 1);
+    equivalentStrings.splice(index, 1);
   }
 
   private addEquivalent(): void {
