@@ -16,12 +16,6 @@
   border-bottom: 1px $light-border-color solid;
 }
 
-.button {
-  margin: 0em $blank-padding 0em 0em;
-  line-height: $line-height;
-  display: inline-block;
-}
-
 .name-wrapper {
   display: flex;
   flex-direction: row;
@@ -30,10 +24,19 @@
 }
 
 .name {
-  margin: -4px 0.5em 0px 0px;
+  margin: -2px 0.5em 0em 0em;
   font-size: 120%;
   font-weight: bold;
   color: $head-color;
+  line-height: $line-height;
+  display: inline-block;
+}
+
+.right {
+  margin: 0px 0px 0px 20px;
+}
+
+.button {
   line-height: $line-height;
   display: inline-block;
 }
