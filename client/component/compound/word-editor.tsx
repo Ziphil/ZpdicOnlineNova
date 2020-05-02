@@ -276,14 +276,14 @@ export class WordEditor extends Component<Props, State> {
     }
   }
 
-  private handleConfirm(event: MouseEvent<HTMLButtonElement>): void {
+  private async handleConfirm(event: MouseEvent<HTMLButtonElement>): Promise<void> {
     let word = this.state.word;
     let equivalentStrings = this.state.equivalentStrings;
     equivalentStrings.forEach((equivalentString, index) => {
       word.equivalents[index].names = equivalentString.split(/\s*,\s*/);
     });
     if (this.props.onConfirm) {
-      this.props.onConfirm(word, event);
+      await this.props.onConfirm(word, event);
     }
   }
 
@@ -303,7 +303,7 @@ export class WordEditor extends Component<Props, State> {
         {variationNode}
         {relationNode}
         <div styleName="confirm-button">
-          <Button label="決定" iconLabel="&#xF00C;" style="information" onClick={this.handleConfirm.bind(this)}/>
+          <Button label="決定" iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.handleConfirm.bind(this)}/>
         </div>
       </div>
     );
@@ -339,7 +339,7 @@ type Props = {
   authorized: boolean,
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => void,
-  onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void
+  onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
   word: SlimeWordSkeleton,
