@@ -1,12 +1,14 @@
 //
 
 
-export function createStyleName(...specs: Array<StyleNameSpec>): string {
+export function createStyleNames(...specs: Array<StyleNameSpec>): Array<string> {
   let styleNames = [];
   for (let spec of specs) {
     if (spec !== null && spec !== undefined) {
       if (typeof spec === "string") {
         styleNames.push(spec);
+      } else if (Array.isArray(spec)) {
+        styleNames.push(...createStyleNames(...spec));
       } else {
         if (spec.if && spec.true !== null && spec.true !== undefined) {
           styleNames.push(spec.true);
@@ -16,9 +18,13 @@ export function createStyleName(...specs: Array<StyleNameSpec>): string {
       }
     }
   }
-  let styleName = styleNames.join(" ");
+  return styleNames;
+}
+
+export function createStyleName(...specs: Array<StyleNameSpec>): string {
+  let styleName = createStyleNames(...specs).join(" ");
   return styleName;
 }
 
-type StyleNameSpec = Maybe<string> | {if: boolean, true?: Maybe<string>, false?: Maybe<string>};
-type Maybe<T> = T | null | undefined;
+type StyleNameSpec = {if: boolean, true?: MaybeString, false?: MaybeString} | MaybeString | Array<StyleNameSpec>;
+type MaybeString = string | null | undefined;

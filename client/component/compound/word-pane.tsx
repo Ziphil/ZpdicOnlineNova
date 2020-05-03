@@ -160,11 +160,14 @@ export class WordPane extends StoreComponent<Props, State> {
   }
 
   private renderEditorNode(): ReactNode {
-    let dictionary = this.props.dictionary;
-    let word = this.props.word;
-    let open = this.state.editorOpen;
     let node = (
-      <WordEditor dictionary={dictionary} word={word} open={open} onClose={() => this.setState({editorOpen: false})} onConfirm={this.props.onEditConfirm}/>
+      <WordEditor
+        dictionary={this.props.dictionary}
+        word={this.props.word}
+        open={this.state.editorOpen}
+        onClose={() => this.setState({editorOpen: false})}
+        onConfirm={this.props.onEditConfirm}
+      />
     );
     return node;
   }

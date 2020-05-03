@@ -1,5 +1,9 @@
 //
 
+import {
+  hasTypedOwnProperty
+} from "/client/util/misc";
+
 
 const MESSAGES = {
   emailChanged: "メールアドレスを変更しました。",
@@ -34,12 +38,7 @@ const MESSAGES = {
 };
 
 export function getMessage(type: string): string {
-  let message;
-  if (type in MESSAGES) {
-    let anyMessages = MESSAGES as any;
-    message = anyMessages[type];
-  } else {
-    message = MESSAGES["messageNotFound"];
-  }
+  let nextType = (hasTypedOwnProperty(MESSAGES, type)) ? type : "messageNotFound";
+  let message = MESSAGES[nextType];
   return message;
 }

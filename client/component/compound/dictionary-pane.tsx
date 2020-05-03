@@ -78,7 +78,9 @@ export class DictionaryPane extends StoreComponent<Props, State> {
       <div styleName="information-item">管理者 — @{this.props.dictionary.userName}</div>
     );
     let updatedDate = this.props.dictionary.updatedDate;
-    let updatedDateString = (updatedDate !== null) ? DateUtil.format(updatedDate, "yyyy/MM/dd HH:mm") : "?";
+    let updatedDateNode = (
+      <div styleName="information-item">最終更新 — {(updatedDate !== null) ? DateUtil.format(updatedDate, "yyyy/MM/dd HH:mm") : "?"}</div>
+    );
     let node = (
       <a styleName="root" href={href} onClick={this.handleClick.bind(this)}>
         <div styleName="head">
@@ -90,7 +92,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
           </div>
         </div>
         <div styleName="information">
-          <div styleName="information-item">最終更新 — {updatedDateString}</div>
+          {updatedDateNode}
           {userNode}
         </div>
         {settingNode}

@@ -2,7 +2,6 @@
 
 import * as react from "react";
 import {
-  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -44,7 +43,7 @@ export class PaginationButton extends Component<Props, State> {
 
   public render(): ReactNode {
     let outerThis = this;
-    let calculateButtonSpecs = function (direction: -1 | 1): Array<{page: number, redundant: boolean, current: boolean}> {
+    let calculateButtonSpecs = function (direction: 1 | -1): Array<{page: number, redundant: boolean, current: boolean}> {
       let targetPage = (direction === -1) ? outerThis.props.minPage : outerThis.props.maxPage;
       let currentPage = outerThis.props.page;
       let buttonSpecs = [];
@@ -62,19 +61,23 @@ export class PaginationButton extends Component<Props, State> {
       }
       return buttonSpecs;
     };
-    let wholeButtonSpecs = [];
-    wholeButtonSpecs.push(...calculateButtonSpecs(-1).reverse());
-    wholeButtonSpecs.push({page: this.props.page, redundant: false, current: true});
-    wholeButtonSpecs.push(...calculateButtonSpecs(1));
+    let wholeButtonSpecs = [
+      ...calculateButtonSpecs(-1).reverse(),
+      {page: this.props.page, redundant: false, current: true},
+      ...calculateButtonSpecs(1)
+    ];
     let buttonNodes = wholeButtonSpecs.map((spec, index) => {
-      let position = "middle" as "alone" | "left" | "right" | "middle";
-      if (index === 0 && index === wholeButtonSpecs.length - 1) {
-        position = "alone";
-      } else if (index === 0) {
-        position = "left";
-      } else if (index === wholeButtonSpecs.length - 1) {
-        position = "right";
-      }
+      let position = (() => {
+        if (index === 0 && index === wholeButtonSpecs.length - 1) {
+          return "alone" as const;
+        } else if (index === 0) {
+          return "left" as const;
+        } else if (index === wholeButtonSpecs.length - 1) {
+          return "right" as const;
+        } else {
+          return "middle" as const;
+        }
+      })();
       let disabled = spec.current;
       let styleName = (spec.redundant) ? "redundant" : "";
       let buttonNode = (

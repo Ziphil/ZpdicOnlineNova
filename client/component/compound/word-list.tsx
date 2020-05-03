@@ -1,5 +1,8 @@
 //
 
+import {
+  partial
+} from "lodash-es";
 import * as react from "react";
 import {
   MouseEvent,
@@ -32,22 +35,6 @@ export class WordList extends Component<Props, State> {
   public render(): ReactNode {
     let displayedWords = this.props.words.slice(this.props.offset, this.props.offset + this.props.size);
     let wordPanes = displayedWords.map((word) => {
-      let outerThis = this;
-      let onConfirm = function (event: MouseEvent<HTMLButtonElement>): void {
-        if (outerThis.props.onConfirm) {
-          outerThis.props.onConfirm(word, event);
-        }
-      };
-      let onEditConfirm = function (newWord: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>): void {
-        if (outerThis.props.onEditConfirm) {
-          outerThis.props.onEditConfirm(word, newWord, event);
-        }
-      };
-      let onDeleteConfirm = function (event: MouseEvent<HTMLButtonElement>): void {
-        if (outerThis.props.onDeleteConfirm) {
-          outerThis.props.onDeleteConfirm(word, event);
-        }
-      };
       let wordPane = (
         <WordPane
           dictionary={this.props.dictionary}
@@ -56,9 +43,9 @@ export class WordList extends Component<Props, State> {
           style={this.props.style}
           authorized={this.props.authorized}
           showButton={this.props.showButton}
-          onConfirm={onConfirm}
-          onEditConfirm={onEditConfirm}
-          onDeleteConfirm={onDeleteConfirm}
+          onConfirm={this.props.onConfirm && partial(this.props.onConfirm, word)}
+          onEditConfirm={this.props.onEditConfirm && partial(this.props.onEditConfirm, word)}
+          onDeleteConfirm={this.props.onDeleteConfirm && partial(this.props.onDeleteConfirm, word)}
         />
       );
       return wordPane;
