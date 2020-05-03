@@ -13,6 +13,18 @@ export class Skeleton {
     return new this(object);
   }
 
+  public copy(): this {
+    let skeleton = {} as any;
+    for (let [key, value] of Object.entries(this)) {
+      if (value instanceof Skeleton) {
+        skeleton[key] = value.copy();
+      } else {
+        skeleton[key] = value;
+      }
+    }
+    return skeleton;
+  }
+
 }
 
 

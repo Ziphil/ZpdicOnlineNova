@@ -45,7 +45,7 @@ export class WordEditor extends StoreComponent<Props, State> {
 
   public constructor(props: Props) {
     super(props);
-    let word = (this.props.word !== null) ? Object.assign({}, this.props.word) : SlimeEditWordSkeleton.empty();
+    let word = (this.props.word !== null) ? SlimeWordSkeleton.of(this.props.word).copy() : SlimeEditWordSkeleton.empty();
     let equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
     let relationChooserOpen = false;
     this.state = {word, equivalentStrings, relationChooserOpen};
