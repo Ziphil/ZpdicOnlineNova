@@ -21,6 +21,7 @@ import {
 } from "/client/component/decorator";
 import {
   SlimeDictionarySkeleton,
+  SlimeEditWordSkeleton,
   SlimeRelationSkeleton,
   SlimeWordSkeleton
 } from "/server/skeleton/dictionary/slime";
@@ -144,7 +145,7 @@ export class WordPane extends Component<Props, State> {
     let word = this.props.word;
     let open = this.state.editorOpen;
     let node = (
-      <WordEditor dictionary={dictionary} word={word} open={open} onClose={() => this.setState({editorOpen: false})}/>
+      <WordEditor dictionary={dictionary} word={word} open={open} onClose={() => this.setState({editorOpen: false})} onConfirm={this.props.onEditConfirm}/>
     );
     return node;
   }
@@ -176,7 +177,8 @@ type Props = {
   style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
-  onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void
+  onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void,
+  onEditConfirm?: (word: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
   editorOpen: boolean

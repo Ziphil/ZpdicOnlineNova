@@ -27,6 +27,7 @@ import {
 } from "/server/model/dictionary/search-parameter";
 import {
   SlimeDictionarySkeleton,
+  SlimeEditWordSkeleton,
   SlimeWordSkeleton
 } from "/server/skeleton/dictionary/slime";
 
@@ -102,7 +103,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
     let node = (
       <Fragment>
         <div styleName="word-list">
-          <WordList dictionary={dictionary} words={words} style={style} authorized={authorized} showButton={showButton} offset={0} size={40} onConfirm={this.props.onConfirm}/>
+          <WordList {...{dictionary, words, style, authorized, showButton}} offset={0} size={40} onConfirm={this.props.onConfirm} onEditConfirm={this.props.onEditConfirm}/>
         </div>
         <div styleName="pagination-button">
           <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>
@@ -135,7 +136,8 @@ type Props = {
   style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
-  onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void;
+  onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
+  onEditConfirm?: (oldWord: SlimeWordSkeleton, newWord: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
   search: string,
