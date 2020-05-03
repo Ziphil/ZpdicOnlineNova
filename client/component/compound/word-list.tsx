@@ -24,10 +24,12 @@ import {
 export class WordList extends Component<Props, State> {
 
   public static defaultProps: Partial<Props> = {
+    style: "normal",
     showButton: false
   };
 
   public render(): ReactNode {
+    let dictionary = this.props.dictionary;
     let words = this.props.words;
     let displayedWords = words.slice(this.props.offset, this.props.offset + this.props.size);
     let wordPanes = displayedWords.map((word) => {
@@ -37,7 +39,7 @@ export class WordList extends Component<Props, State> {
           outerThis.props.onConfirm(word, event);
         }
       };
-      return <WordPane dictionary={this.props.dictionary} word={word} authorized={this.props.authorized} showButton={this.props.showButton} key={word.id} onConfirm={onConfirm}/>;
+      return <WordPane dictionary={dictionary} word={word} key={word.id} style={this.props.style} authorized={this.props.authorized} showButton={this.props.showButton} onConfirm={onConfirm}/>;
     });
     let node = (
       <div styleName="root">
@@ -53,6 +55,7 @@ export class WordList extends Component<Props, State> {
 type Props = {
   dictionary: SlimeDictionarySkeleton,
   words: Array<SlimeWordSkeleton>,
+  style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
   size: number,

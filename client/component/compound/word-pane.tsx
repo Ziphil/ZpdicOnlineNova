@@ -30,6 +30,7 @@ import {
 export class WordPane extends Component<Props, State> {
 
   public static defaultProps: Partial<Props> = {
+    style: "normal",
     showButton: false
   };
   public state: State = {
@@ -110,7 +111,7 @@ export class WordPane extends Component<Props, State> {
       groupedRelations.get(title)!.push(relation);
     }
     let innerNodes = Array.from(groupedRelations).map(([title, relations], index) => {
-      let titleNode = (title !== "") ? <span styleName="box">{title}</span> : undefined;
+      let titleNode = (title !== "") && <span styleName="box">{title}</span>;
       let relationNodes = relations.map((relation, relationIndex) => {
         let href = "/dictionary/" + this.props.dictionary.number + "?search=" + encodeURIComponent(relation.name) + "&mode=name&type=exact&page=0";
         let relationNode = (
@@ -151,9 +152,9 @@ export class WordPane extends Component<Props, State> {
   public render(): ReactNode {
     let nameNode = this.renderNameNode();
     let equivalentNode = this.renderEquivalentNode();
-    let informationNode = this.renderInformationNode();
-    let relationNode = this.renderRelationNode();
-    let editorNode = this.renderEditorNode();
+    let informationNode = (this.props.style === "normal") && this.renderInformationNode();
+    let relationNode = (this.props.style === "normal") && this.renderRelationNode();
+    let editorNode = (!this.props.showButton) && this.renderEditorNode();
     let node = (
       <div styleName="root">
         {nameNode}
@@ -172,6 +173,7 @@ export class WordPane extends Component<Props, State> {
 type Props = {
   dictionary: SlimeDictionarySkeleton,
   word: SlimeWordSkeleton,
+  style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
   onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void
