@@ -172,6 +172,7 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["editWord"] + "-disabled")
   @before(verifyUser(), verifyDictionary())
   public async postEditWord(request: PostRequest<"editWord">, response: PostResponse<"editWord">): Promise<void> {
     let dictionary = request.dictionary;
