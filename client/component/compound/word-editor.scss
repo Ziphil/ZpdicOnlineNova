@@ -100,3 +100,10 @@
 .relation-input >*:nth-child(1) {
   flex-grow: 1;
 }
+
+.caution {
+  margin: 0px 0px 20px 0px;
+  color: map-get($colors, error);
+  line-height: $line-height;
+  text-align: justify;
+}

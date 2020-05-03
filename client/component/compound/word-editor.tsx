@@ -345,6 +345,10 @@ export class WordEditor extends StoreComponent<Props, State> {
     let relationNode = this.renderRelationNode();
     let node = (
       <div>
+        <p styleName="caution">
+          単語編集は現在ベータ版の機能です。
+          ページ右上の「ダウンロード」ボタンからデータを JSON 形式でダウンロードするなど、適宜バックアップを取っておくことをお勧めします。
+        </p>
         <div styleName="editor">
           {nameNode}
           {tagNode}
