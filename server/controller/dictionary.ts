@@ -172,21 +172,6 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @before(verifyUser(), verifyDictionary())
-  public async postEditWord(request: PostRequest<"editWord">, response: PostResponse<"editWord">): Promise<void> {
-    let dictionary = request.dictionary;
-    let word = request.body.word;
-    if (dictionary) {
-      let resultWord = await dictionary.editWord(word);
-      let body = SlimeWordSkeleton.from(resultWord);
-      this.log("edit-word", {dictionary, word});
-      response.json(body);
-    } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
-      response.status(400).json(body);
-    }
-  }
-
   @get(SERVER_PATH["searchDictionary"])
   public async getSearchDictionary(request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
