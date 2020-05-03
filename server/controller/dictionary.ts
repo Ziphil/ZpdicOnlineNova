@@ -49,7 +49,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATH["createDictionary"])
   @before(verifyUser())
-  public async postCreateDictionary(request: PostRequest<"createDictionary">, response: PostResponse<"createDictionary">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"createDictionary">, response: PostResponse<"createDictionary">): Promise<void> {
     let user = request.user!;
     let name = CastUtil.ensureString(request.body.name);
     let dictionary = await SlimeDictionaryModel.createEmpty(name, user);
@@ -59,7 +59,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATH["uploadDictionary"])
   @before(verifyUser(), verifyDictionary())
-  public async postUploadDictionary(request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     let path = request.file.path;
     if (dictionary) {
@@ -82,7 +82,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATH["deleteDictionary"])
   @before(verifyUser(), verifyDictionary())
-  public async postDeleteDictionary(request: PostRequest<"deleteDictionary">, response: PostResponse<"deleteDictionary">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"deleteDictionary">, response: PostResponse<"deleteDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {
       await dictionary.removeWhole();
@@ -95,7 +95,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATH["changeDictionaryName"])
   @before(verifyUser(), verifyDictionary())
-  public async postChangeDictionaryName(request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {
     let dictionary = request.dictionary;
     let name = CastUtil.ensureString(request.body.name);
     if (dictionary) {
@@ -110,7 +110,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATH["changeDictionaryParamName"])
   @before(verifyUser(), verifyDictionary())
-  public async postChangeDictionaryParamName(request: PostRequest<"changeDictionaryParamName">, response: PostResponse<"changeDictionaryParamName">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"changeDictionaryParamName">, response: PostResponse<"changeDictionaryParamName">): Promise<void> {
     let dictionary = request.dictionary;
     let paramName = CastUtil.ensureString(request.body.paramName);
     if (dictionary) {
@@ -143,7 +143,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATH["changeDictionarySecret"])
   @before(verifyUser(), verifyDictionary())
-  public async postChangeDictionarySecret(request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {
     let dictionary = request.dictionary;
     let secret = CastUtil.ensureBoolean(request.body.secret);
     if (dictionary) {
@@ -158,7 +158,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATH["changeDictionaryExplanation"])
   @before(verifyUser(), verifyDictionary())
-  public async postChangeDictionaryExplanation(request: PostRequest<"changeDictionaryExplanation">, response: PostResponse<"changeDictionaryExplanation">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"changeDictionaryExplanation">, response: PostResponse<"changeDictionaryExplanation">): Promise<void> {
     let dictionary = request.dictionary;
     let explanation = CastUtil.ensureString(request.body.explanation);
     if (dictionary) {
@@ -173,7 +173,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATH["editWord"])
   @before(verifyUser(), verifyDictionary())
-  public async postEditWord(request: PostRequest<"editWord">, response: PostResponse<"editWord">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"editWord">, response: PostResponse<"editWord">): Promise<void> {
     let dictionary = request.dictionary;
     let word = request.body.word;
     if (dictionary) {
@@ -188,7 +188,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATH["deleteWord"])
   @before(verifyUser(), verifyDictionary())
-  public async postDeleteWord(request: PostRequest<"deleteWord">, response: PostResponse<"deleteWord">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"deleteWord">, response: PostResponse<"deleteWord">): Promise<void> {
     let dictionary = request.dictionary;
     let wordNumber = request.body.wordNumber;
     if (dictionary) {
@@ -211,7 +211,7 @@ export class DictionaryController extends Controller {
   }
 
   @get(SERVER_PATH["searchDictionary"])
-  public async getSearchDictionary(request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
+  public async [Symbol()](request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let search = CastUtil.ensureString(request.query.search);
     let mode = SearchModeUtil.cast(CastUtil.ensureString(request.query.mode));
@@ -233,7 +233,7 @@ export class DictionaryController extends Controller {
   }
 
   @get(SERVER_PATH["downloadDictionary"])
-  public async getDownloadDictionary(request: GetRequest<"downloadDictionary">, response: GetResponse<"downloadDictionary">): Promise<void> {
+  public async [Symbol()](request: GetRequest<"downloadDictionary">, response: GetResponse<"downloadDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let fileName = CastUtil.ensureString(request.query.fileName);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
@@ -249,7 +249,7 @@ export class DictionaryController extends Controller {
   }
 
   @get(SERVER_PATH["fetchDictionary"])
-  public async getFetchDictionary(request: GetRequest<"fetchDictionary">, response: GetResponse<"fetchDictionary">): Promise<void> {
+  public async [Symbol()](request: GetRequest<"fetchDictionary">, response: GetResponse<"fetchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let paramName = CastUtil.ensureString(request.query.paramName);
     let value = number ?? paramName;
@@ -274,7 +274,7 @@ export class DictionaryController extends Controller {
   }
 
   @get(SERVER_PATH["fetchWholeDictionary"])
-  public async getFetchWholeDictionary(request: GetRequest<"fetchWholeDictionary">, response: GetResponse<"fetchWholeDictionary">): Promise<void> {
+  public async [Symbol()](request: GetRequest<"fetchWholeDictionary">, response: GetResponse<"fetchWholeDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
     if (dictionary) {
@@ -288,7 +288,7 @@ export class DictionaryController extends Controller {
 
   @get(SERVER_PATH["fetchDictionaries"])
   @before(verifyUser())
-  public async getFetchDictionaries(request: GetRequest<"fetchDictionaries">, response: GetResponse<"fetchDictionaries">): Promise<void> {
+  public async [Symbol()](request: GetRequest<"fetchDictionaries">, response: GetResponse<"fetchDictionaries">): Promise<void> {
     let user = request.user!;
     let dictionaries = await SlimeDictionaryModel.findByUser(user);
     let promises = dictionaries.map((dictionary) => {
@@ -307,7 +307,7 @@ export class DictionaryController extends Controller {
   }
 
   @get(SERVER_PATH["fetchAllDictionaries"])
-  public async getFetchAllDictionaries(request: GetRequest<"fetchAllDictionaries">, response: GetResponse<"fetchAllDictionaries">): Promise<void> {
+  public async [Symbol()](request: GetRequest<"fetchAllDictionaries">, response: GetResponse<"fetchAllDictionaries">): Promise<void> {
     let dictionaries = await SlimeDictionaryModel.findPublic();
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<SlimeDictionarySkeleton>(async (resolve, reject) => {
@@ -325,7 +325,7 @@ export class DictionaryController extends Controller {
   }
 
   @get(SERVER_PATH["fetchDictionaryAggregation"])
-  public async getFetchDictionaryAggregation(request: GetRequest<"fetchDictionaryAggregation">, response: GetResponse<"fetchDictionaryAggregation">): Promise<void> {
+  public async [Symbol()](request: GetRequest<"fetchDictionaryAggregation">, response: GetResponse<"fetchDictionaryAggregation">): Promise<void> {
     let dictionarySize = await SlimeDictionaryModel.find().countDocuments();
     let wordSize = await SlimeWordModel.find().countDocuments();
     let body = {dictionarySize, wordSize};
@@ -334,7 +334,7 @@ export class DictionaryController extends Controller {
 
   @get(SERVER_PATH["checkDictionaryAuthorization"])
   @before(verifyUser(), verifyDictionary())
-  public async getCheckDictionaryAuthorization(request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
+  public async [Symbol()](request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {
       response.json(true);

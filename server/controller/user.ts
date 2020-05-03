@@ -40,7 +40,7 @@ export class UserController extends Controller {
 
   @post(SERVER_PATH["login"])
   @before(login(30 * 24 * 60 * 60))
-  public async postLogin(request: PostRequest<"login">, response: PostResponse<"login">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"login">, response: PostResponse<"login">): Promise<void> {
     let token = request.token!;
     let user = request.user!;
     let userBody = UserSkeleton.from(user);
@@ -50,12 +50,12 @@ export class UserController extends Controller {
 
   @post(SERVER_PATH["logout"])
   @before(logout())
-  public async postLogout(request: PostRequest<"logout">, response: PostResponse<"logout">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"logout">, response: PostResponse<"logout">): Promise<void> {
     response.json(true);
   }
 
   @post(SERVER_PATH["registerUser"])
-  public async postRegisterUser(request: PostRequest<"registerUser">, response: PostResponse<"registerUser">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"registerUser">, response: PostResponse<"registerUser">): Promise<void> {
     let name = CastUtil.ensureString(request.body.name);
     let email = CastUtil.ensureString(request.body.email);
     let password = CastUtil.ensureString(request.body.password);
@@ -88,7 +88,7 @@ export class UserController extends Controller {
 
   @post(SERVER_PATH["changeUserEmail"])
   @before(verifyUser())
-  public async postChangeUserEmail(request: PostRequest<"changeUserEmail">, response: PostResponse<"changeUserEmail">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"changeUserEmail">, response: PostResponse<"changeUserEmail">): Promise<void> {
     let user = request.user!;
     let email = CastUtil.ensureString(request.body.email);
     try {
@@ -110,7 +110,7 @@ export class UserController extends Controller {
 
   @post(SERVER_PATH["changeUserPassword"])
   @before(verifyUser())
-  public async postChangeUserPassword(request: PostRequest<"changeUserPassword">, response: PostResponse<"changeUserPassword">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"changeUserPassword">, response: PostResponse<"changeUserPassword">): Promise<void> {
     let user = request.user!;
     let password = CastUtil.ensureString(request.body.password);
     try {
@@ -132,7 +132,7 @@ export class UserController extends Controller {
 
   @get(SERVER_PATH["fetchUser"])
   @before(verifyUser())
-  public async getFetchUser(request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
+  public async [Symbol()](request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
     let user = request.user!;
     let body = UserSkeleton.from(user);
     response.json(body);
