@@ -39,7 +39,7 @@ export class WordPane extends Component<Props, State> {
   private renderNameNode(): ReactNode {
     let editButtonNode = (this.props.authorized && !this.props.showButton) && (
       <div styleName="button">
-        <Button label="編集" iconLabel="&#xF044;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
+        <Button label="編集" iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
       </div>
     );
     let confirmButtonNode = (this.props.showButton) && (

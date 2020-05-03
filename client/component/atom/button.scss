@@ -64,6 +64,12 @@
   margin: 0px 0px 0px $blank-padding;
 }
 
+.hide-label >.label {
+  @include smartphone {
+    display: none;
+  }
+}
+
 .spinner-wrapper {
   top: 0px;
   left: 0px;

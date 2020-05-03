@@ -61,13 +61,13 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
       return <Link href={href} style="plane">{this.props.dictionary.name}</Link>;
     })();
     let addButtonNode = (this.props.authorized) && (
-      <Button label="追加" iconLabel="&#xF067;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
+      <Button label="追加" iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
     );
     let settingButtonNode = (this.props.authorized) && (
-      <Button label="設定" iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
+      <Button label="設定" iconLabel="&#xF013;" style="simple" hideLabel={true} onClick={this.jumpSettingPage.bind(this)}/>
     );
     let downloadButtonNode = (this.props.showsDownload) && (
-      <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
+      <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={this.downloadDictionary.bind(this)}/>
     );
     let editorNode = (this.props.dictionary) && (
       <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>

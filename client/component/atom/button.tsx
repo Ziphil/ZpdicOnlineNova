@@ -22,6 +22,7 @@ export class Button extends Component<Props, State> {
   public static defaultProps: Partial<Props> = {
     position: "alone",
     style: "normal",
+    hideLabel: false,
     reactive: false,
     disabled: false
   };
@@ -62,6 +63,7 @@ export class Button extends Component<Props, State> {
       {if: this.props.style === "link", true: "link"},
       {if: this.props.style === "caution", true: "caution"},
       {if: this.props.style === "information", true: "information"},
+      {if: this.props.hideLabel, true: "hide-label"},
       {if: this.state.loading, true: "loading"}
     );
     let labelNode = (this.props.label !== undefined) && <span styleName="label">{this.props.label}</span>;
@@ -90,6 +92,7 @@ type Props = {
   iconLabel?: string,
   position: "alone" | "left" | "right" | "middle",
   style: "normal" | "caution" | "information" | "simple" | "link",
+  hideLabel: boolean,
   reactive: boolean,
   disabled: boolean,
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void | PromiseLike<void>,
