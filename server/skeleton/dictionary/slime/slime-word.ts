@@ -14,16 +14,34 @@ import {
 } from "/server/skeleton/skeleton";
 
 
-export class SlimeWordSkeleton extends Skeleton {
+export class SlimeEditWordSkeleton extends Skeleton {
 
-  public id!: string;
-  public number!: number;
+  public number?: number;
   public name!: string;
   public equivalents!: Array<SlimeEquivalentSkeleton>;
   public tags!: Array<string>;
   public informations!: Array<SlimeInformationSkeleton>;
   public variations!: Array<SlimeVariationSkeleton>;
   public relations!: Array<SlimeRelationSkeleton>;
+
+  public static empty(): SlimeEditWordSkeleton {
+    let name = "";
+    let equivalents = new Array<SlimeEquivalentSkeleton>();
+    let tags = new Array<string>();
+    let informations = new Array<SlimeInformationSkeleton>();
+    let variations = new Array<SlimeVariationSkeleton>();
+    let relations = new Array<SlimeRelationSkeleton>();
+    let skeleton = SlimeEditWordSkeleton.of({name, equivalents, tags, informations, variations, relations});
+    return skeleton;
+  }
+
+}
+
+
+export class SlimeWordSkeleton extends SlimeEditWordSkeleton {
+
+  public id!: string;
+  public number!: number;
 
   public static from(raw: SlimeWordDocument): SlimeWordSkeleton {
     let id = raw.id;
@@ -39,6 +57,3 @@ export class SlimeWordSkeleton extends Skeleton {
   }
 
 }
-
-
-export type SlimeEditWordSkeleton = Omit<SlimeWordSkeleton, "number"> & Partial<Pick<SlimeWordSkeleton, "number">>;

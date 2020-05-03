@@ -39,7 +39,7 @@ export class Page extends Component<Props, State> {
       {if: this.props.showsDictionary, true: "dictionary"}
     );
     let dictionaryHeaderNode = (this.props.showsDictionary) && (
-      <DictionaryHeader dictionary={this.props.dictionary} showsSetting={this.props.showsDictionarySetting}/>
+      <DictionaryHeader dictionary={this.props.dictionary} authorized={this.props.showsDictionarySetting}/>
     );
     let node = (
       <div styleName="root" id="page">

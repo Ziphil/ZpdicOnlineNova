@@ -12,6 +12,9 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
+  WordEditor
+} from "/client/component/compound";
+import {
   applyStyle,
   inject,
   route
@@ -26,9 +29,12 @@ import {
 export class DictionaryHeader extends StoreComponent<Props, State> {
 
   public static defaultProps: Partial<Props> = {
-    showsSetting: false,
+    authorized: false,
     showsDownload: true,
     preservesQuery: false
+  };
+  public state: State = {
+    editorOpen: false
   };
 
   private jumpSettingPage(): void {
@@ -54,11 +60,17 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
       }
       return <Link href={href} style="plane">{this.props.dictionary.name}</Link>;
     })();
-    let settingButtonNode = (this.props.showsSetting) && (
+    let addButtonNode = (this.props.authorized) && (
+      <Button label="追加" iconLabel="&#xF067;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
+    );
+    let settingButtonNode = (this.props.authorized) && (
       <Button label="設定" iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
     );
     let downloadButtonNode = (this.props.showsDownload) && (
       <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
+    );
+    let editorNode = (this.props.dictionary) && (
+      <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>
     );
     let node = (
       <header styleName="root">
@@ -70,11 +82,13 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
           </div>
           <div styleName="right">
             <div styleName="button">
+              {addButtonNode}
               {settingButtonNode}
               {downloadButtonNode}
             </div>
           </div>
         </div>
+        {editorNode}
       </header>
     );
     return node;
@@ -85,9 +99,10 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
 
 type Props = {
   dictionary: SlimeDictionarySkeleton | null,
-  showsSetting: boolean,
+  authorized: boolean,
   showsDownload: boolean,
   preservesQuery: boolean
 };
 type State = {
+  editorOpen: boolean
 };

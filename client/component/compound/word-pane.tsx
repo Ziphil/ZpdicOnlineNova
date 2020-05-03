@@ -141,10 +141,9 @@ export class WordPane extends Component<Props, State> {
   private renderEditorNode(): ReactNode {
     let dictionary = this.props.dictionary;
     let word = this.props.word;
-    let authorized = this.props.authorized;
     let open = this.state.editorOpen;
     let node = (
-      <WordEditor dictionary={dictionary} word={word} authorized={authorized} open={open} onClose={() => this.setState({editorOpen: false})}/>
+      <WordEditor dictionary={dictionary} word={word} open={open} onClose={() => this.setState({editorOpen: false})}/>
     );
     return node;
   }

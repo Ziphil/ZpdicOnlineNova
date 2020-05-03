@@ -28,6 +28,7 @@ import {
 } from "/client/util/style-names";
 import {
   SlimeDictionarySkeleton,
+  SlimeEditWordSkeleton,
   SlimeEquivalentSkeleton,
   SlimeInformationSkeleton,
   SlimeRelationSkeleton,
@@ -44,7 +45,7 @@ export class WordEditor extends StoreComponent<Props, State> {
 
   public constructor(props: Props) {
     super(props);
-    let word = Object.assign({}, this.props.word);
+    let word = (this.props.word !== null) ? Object.assign({}, this.props.word) : SlimeEditWordSkeleton.empty();
     let equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
     let relationChooserOpen = false;
     this.state = {word, equivalentStrings, relationChooserOpen};
@@ -359,7 +360,7 @@ export class WordEditor extends StoreComponent<Props, State> {
 
   private renderRelationChooserNode(): ReactNode {
     let node = (
-      <WordSearcher dictionary={this.props.dictionary} authorized={this.props.authorized} showButton={true} onConfirm={this.changeRelation.bind(this)}/>
+      <WordSearcher dictionary={this.props.dictionary} authorized={true} showButton={true} onConfirm={this.changeRelation.bind(this)}/>
     );
     return node;
   }
@@ -382,14 +383,13 @@ export class WordEditor extends StoreComponent<Props, State> {
 
 type Props = {
   dictionary: SlimeDictionarySkeleton,
-  word: SlimeWordSkeleton,
-  authorized: boolean,
+  word: SlimeWordSkeleton | null,
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => void | Promise<void>,
-  onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onConfirm?: (word: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
-  word: SlimeWordSkeleton,
+  word: SlimeEditWordSkeleton,
   equivalentStrings: Array<string>,
   relationChooserOpen: boolean
 };

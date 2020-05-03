@@ -222,6 +222,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
         word.number = await this.nextWordNumber();
       }
       resultWord = new SlimeWordModel(word);
+      resultWord.dictionary = this;
       await resultWord.save();
     }
     this.updatedDate = new Date();
