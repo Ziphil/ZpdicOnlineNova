@@ -26,7 +26,7 @@ export class SlimeDictionarySkeleton extends Skeleton {
   public updatedDate!: string | null;
   public words?: Array<SlimeWordSkeleton>;
   public wordSize?: number;
-  public ownerName?: string;
+  public userName?: string;
 
   public static from(raw: SlimeDictionaryDocument): SlimeDictionarySkeleton {
     let id = raw.id;
@@ -59,9 +59,9 @@ export class SlimeDictionarySkeleton extends Skeleton {
     });
     let userPromise = new Promise(async (resolve, reject) => {
       try {
-        let owner = await raw.getOwner();
-        if (owner) {
-          skeleton.ownerName = owner.name;
+        let user = await raw.getUser();
+        if (user) {
+          skeleton.userName = user.name;
         }
         resolve();
       } catch (error) {

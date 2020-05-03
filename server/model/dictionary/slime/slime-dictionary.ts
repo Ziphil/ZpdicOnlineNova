@@ -37,6 +37,10 @@ import {
   SlimeEditWordSkeleton
 } from "/server/skeleton/dictionary/slime";
 import {
+  takeErrorLog,
+  takeLog
+} from "/server/util/misc";
+import {
   QueryUtil
 } from "/server/util/query";
 
@@ -123,7 +127,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
         word.dictionary = this;
         word.save();
         if ((++ count) % 500 === 0) {
-          console.log(`[dictionary/upload] uploading: ${count}`);
+          takeLog("dictionary/upload", `uploading: ${count}`);
         }
       });
       stream.on("other", (key, data) => {
@@ -131,13 +135,12 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
       });
       stream.on("end", () => {
         this.status = "ready";
-        console.log(`[dictionary/upload] uploaded: ${count}`);
+        takeLog("dictionary/upload", `uploaded: ${count}`);
         resolve(this);
       });
       stream.on("error", (error) => {
         this.status = "error";
-        console.error(`[dictionary/upload] error occurred in uploading`);
-        console.error(error);
+        takeErrorLog("dictionary/upload", "error occurred in uploading", error);
         resolve(this);
       });
       stream.start();
@@ -204,9 +207,9 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return words;
   }
 
-  public async getOwner(): Promise<UserDocument> {
-    let owner = await UserModel.findOne().where(this.user);
-    return owner!;
+  public async getUser(): Promise<UserDocument> {
+    let user = await UserModel.findOne().where(this.user);
+    return user!;
   }
 
   public async editWord(this: SlimeDictionaryDocument, word: SlimeEditWordSkeleton): Promise<SlimeWordDocument> {
@@ -227,7 +230,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     }
     this.updatedDate = new Date();
     await this.save();
-    console.log(`[dictionary/edit-word] current: ${JSON.stringify(currentWord)}, result: ${JSON.stringify(resultWord)}`);
+    takeLog("dictionary/edit-word", {currentWord, resultWord});
     return resultWord;
   }
 
@@ -238,7 +241,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     } else {
       throw new CustomError("noSuchWordNumber");
     }
-    console.log(`[dictionary/delete-word] ${JSON.stringify(word)}`);
+    takeLog("dictionary/delete-word", {word});
     return word;
   }
 

@@ -13,7 +13,7 @@ import {
 } from "/client/component/decorator";
 import {
   createStyleName
-} from "/client/util/style-names";
+} from "/client/util/style-name";
 
 
 @applyStyle(require("./button.scss"))
