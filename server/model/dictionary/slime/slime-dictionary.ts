@@ -123,7 +123,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
         word.dictionary = this;
         word.save();
         if ((++ count) % 500 === 0) {
-          console.log("Dictionary saving: " + count);
+          console.log(`[dictionary/upload] uploading: ${count}`);
         }
       });
       stream.on("other", (key, data) => {
@@ -131,12 +131,12 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
       });
       stream.on("end", () => {
         this.status = "ready";
-        console.log("Dictionary saved: " + count);
+        console.log(`[dictionary/upload] uploaded: ${count}`);
         resolve(this);
       });
       stream.on("error", (error) => {
         this.status = "error";
-        console.log("Error occurred in saving");
+        console.error(`[dictionary/upload] error occurred in uploading`);
         console.error(error);
         resolve(this);
       });
@@ -227,6 +227,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     }
     this.updatedDate = new Date();
     await this.save();
+    console.log(`[dictionary/edit-word] current: ${JSON.stringify(currentWord)}, result: ${JSON.stringify(resultWord)}`);
     return resultWord;
   }
 
@@ -237,6 +238,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     } else {
       throw new CustomError("noSuchWordNumber");
     }
+    console.log(`[dictionary/delete-word] ${JSON.stringify(word)}`);
     return word;
   }
 

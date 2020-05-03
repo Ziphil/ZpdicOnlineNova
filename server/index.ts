@@ -112,7 +112,8 @@ class Main {
 
   private setupErrorHandler(): void {
     let handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
-      console.error(error.stack);
+      console.error(`[root] error occurred`);
+      console.error(error);
       response.status(500).end();
     };
     this.application.use(handler);
@@ -123,7 +124,7 @@ class Main {
     let fallback = require("express-history-api-fallback");
     let handler = function (request: Request, response: Response, next: NextFunction): void {
       let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
-      console.error("Not found: " + fullUrl);
+      console.error(`[router] not found: ${fullUrl}`);
       response.status(404).end();
     };
     this.application.use("/api*", handler);

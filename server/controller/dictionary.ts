@@ -73,7 +73,6 @@ export class DictionaryController extends Controller {
         }
       });
       let body = SlimeDictionarySkeleton.from(dictionary);
-      this.log("upload-dictionary", {dictionary});
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
@@ -180,7 +179,6 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       let resultWord = await dictionary.editWord(word);
       let body = SlimeWordSkeleton.from(resultWord);
-      this.log("edit-word", {dictionary, word});
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
@@ -197,7 +195,6 @@ export class DictionaryController extends Controller {
       try {
         let resultWord = await dictionary.deleteWord(wordNumber);
         let body = SlimeWordSkeleton.from(resultWord);
-        this.log("delete-word", {dictionary, resultWord});
         response.json(body);
       } catch (error) {
         if (error.name === "CustomError" && error.type === "noSuchWordNumber") {

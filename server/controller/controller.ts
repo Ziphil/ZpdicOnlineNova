@@ -41,10 +41,6 @@ export class Controller {
   protected setup(): void {
   }
 
-  protected log(type: string, message: any): void {
-    console.log(`[controller/${type}]\n`, message);
-  }
-
   protected async sendMail(to: EmailData, subject: string, html: string): Promise<void> {
     let from = {name: "ZpDIC Online", email: "info@zpdic.ziphil.com"};
     let message = {to, from, subject, html};
