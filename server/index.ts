@@ -116,7 +116,7 @@ class Main {
 
   private setupErrorHandler(): void {
     let handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
-      takeErrorLog("root", "uncaught error occurred", error);
+      takeErrorLog("index", "uncaught error occurred", error);
       response.status(500).end();
     };
     this.application.use(handler);
@@ -127,7 +127,7 @@ class Main {
     let fallback = require("express-history-api-fallback");
     let handler = function (request: Request, response: Response, next: NextFunction): void {
       let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
-      takeLog("router", `not found: ${fullUrl}`);
+      takeLog("index", `not found: ${fullUrl}`);
       response.status(404).end();
     };
     this.application.use("/api*", handler);
@@ -136,7 +136,9 @@ class Main {
   }
 
   private listen(): void {
-    this.application.listen(+PORT);
+    this.application.listen(+PORT, () => {
+      takeLog("index", `listening on port ${PORT}`);
+    });
   }
 
 }
