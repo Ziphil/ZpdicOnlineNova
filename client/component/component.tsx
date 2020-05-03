@@ -26,7 +26,7 @@ import {
 } from "/server/controller/type";
 
 
-export class Component<P, S, H = any> extends ReactComponent<P, S, H> {
+export class Component<P, S, H = any> extends ReactComponent<{styles?: {[key: string]: string | undefined}} & P, S, H> {
 
   public state!: S;
 
@@ -157,7 +157,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   }
 
   private static createClient(): AxiosInstance {
-    let client = axios.create({timeout: 3000, validateStatus: () => true});
+    let client = axios.create({timeout: 6000, validateStatus: () => true});
     return client;
   }
 

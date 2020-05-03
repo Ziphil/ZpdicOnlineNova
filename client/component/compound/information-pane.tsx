@@ -38,7 +38,7 @@ export class InformationPane extends Component<Props, State> {
         <div styleName="button-box"/>
         <div styleName="overlay"/>
         <div styleName="button">
-          <Button label="&#xF00D;" style="simple" usesIcon={true} onClick={this.handleClick.bind(this)}/>
+          <Button iconLabel="&#xF00D;" style="simple" onClick={this.handleClick.bind(this)}/>
         </div>
       </div>
     );

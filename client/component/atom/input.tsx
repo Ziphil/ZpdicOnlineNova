@@ -12,6 +12,9 @@ import {
 import {
   applyStyle
 } from "/client/component/decorator";
+import {
+  createStyleName
+} from "/client/util/style-names";
 
 
 @applyStyle(require("./input.scss"))
@@ -19,7 +22,10 @@ export class Input extends Component<Props, State> {
 
   public static defaultProps: Props = {
     value: "",
-    type: "text"
+    type: "text",
+    usesTooltip: true,
+    readOnly: false,
+    disabled: false
   };
 
   public constructor(props: any) {
@@ -63,30 +69,29 @@ export class Input extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let labelNode;
-    let buttonNode;
-    let tooltipNode;
-    if (this.props.label) {
-      let labelStyleNames = ["label"];
-      if (this.state.errorMessage !== null) {
-        labelStyleNames.push("error");
-      }
-      labelNode = <div styleName={labelStyleNames.join(" ")}>{this.props.label}</div>;
-    }
-    if (this.props.type === "flexible") {
-      let buttonStyleNames = ["button", this.state.type];
-      buttonNode = <span styleName={buttonStyleNames.join(" ")} onClick={this.toggleType.bind(this)}/>;
-    }
-    let inputStyleNames = ["input"];
-    if (this.state.errorMessage !== null) {
-      inputStyleNames.push("error");
-      tooltipNode = <div styleName="tooltip">{this.state.errorMessage}</div>;
-    }
+    let inputStyleName = createStyleName(
+      "input",
+      {if: this.state.errorMessage !== null, true: "error"}
+    );
+    let labelNode = (this.props.label !== undefined) && (() => {
+      let labelStyleName = createStyleName(
+        "label",
+        {if: this.state.errorMessage !== null, true: "error"}
+      );
+      return <div styleName={labelStyleName}>{this.props.label}</div>;
+    })();
+    let buttonNode = (this.props.type === "flexible") && (() => {
+      let buttonStyleName = createStyleName("button", this.state.type);
+      return <span styleName={buttonStyleName} onClick={this.toggleType.bind(this)}/>;
+    })();
+    let tooltipNode = (this.state.errorMessage !== null) && (
+      <div styleName="tooltip">{this.state.errorMessage}</div>
+    );
     let node = (
-      <div styleName="root">
+      <div styleName="root" className={this.props.className}>
         <label styleName="label-wrapper">
           {labelNode}
-          <input styleName={inputStyleNames.join(" ")} type={this.state.type} value={this.props.value} onChange={this.handleChange.bind(this)}/>
+          <input styleName={inputStyleName} type={this.state.type} value={this.props.value} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.handleChange.bind(this)}/>
           {buttonNode}
         </label>
         {tooltipNode}
@@ -103,9 +108,12 @@ type Props = {
   label?: string,
   type: "text" | "password" | "flexible",
   validate?: {regexp: RegExp, message: string} | ((value: string) => string | null),
-  usesTooltip?: boolean,
+  usesTooltip: boolean,
+  readOnly: boolean,
+  disabled: boolean,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
-  onSet?: (value: string) => void
+  onSet?: (value: string) => void,
+  className?: string
 };
 type State = {
   type: "text" | "password",

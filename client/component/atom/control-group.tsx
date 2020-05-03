@@ -12,14 +12,14 @@ import {
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./badge.scss"))
-export class Badge extends Component<Props, State> {
+@applyStyle(require("./control-group.scss"))
+export class ControlGroup extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <span styleName="root" className={this.props.className}>
-        {this.props.value}
-      </span>
+      <div styleName="root" className={this.props.className}>
+        {this.props.children}
+      </div>
     );
     return node;
   }
@@ -28,7 +28,6 @@ export class Badge extends Component<Props, State> {
 
 
 type Props = {
-  value: string,
   className?: string
 };
 type State = {

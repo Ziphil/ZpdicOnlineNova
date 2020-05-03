@@ -3,19 +3,25 @@
 import * as react from "react";
 import {
   Fragment,
+  MouseEvent,
   ReactNode
 } from "react";
 import {
+  Button,
   Link
 } from "/client/component/atom";
 import {
   Component
 } from "/client/component/component";
 import {
+  WordEditor
+} from "/client/component/compound";
+import {
   applyStyle
 } from "/client/component/decorator";
 import {
   SlimeDictionarySkeleton,
+  SlimeEditWordSkeleton,
   SlimeRelationSkeleton,
   SlimeWordSkeleton
 } from "/server/skeleton/dictionary/slime";
@@ -24,15 +30,39 @@ import {
 @applyStyle(require("./word-pane.scss"))
 export class WordPane extends Component<Props, State> {
 
+  public static defaultProps: Partial<Props> = {
+    style: "normal",
+    showButton: false
+  };
+  public state: State = {
+    editorOpen: false
+  };
+
   private renderNameNode(): ReactNode {
+    let editButtonNode = (this.props.authorized && !this.props.showButton) && (
+      <div styleName="button">
+        <Button label="編集" iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
+      </div>
+    );
+    let confirmButtonNode = (this.props.showButton) && (
+      <div styleName="button">
+        <Button label="決定" onClick={this.props.onConfirm}/>
+      </div>
+    );
     let tagNodes = this.props.word.tags.map((tag, index) => {
-      let tagNode = (tag !== "") ? <span styleName="box" key={index}>{tag}</span> : undefined;
+      let tagNode = (tag !== "") && <span styleName="box" key={index}>{tag}</span>;
       return tagNode;
     });
     let node = (
       <div styleName="name-wrapper">
-        <div styleName="name">{this.props.word.name}</div>
-        <div styleName="tag">{tagNodes}</div>
+        <div styleName="left">
+          <div styleName="name">{this.props.word.name}</div>
+          <div styleName="tag">{tagNodes}</div>
+        </div>
+        <div styleName="right">
+          {editButtonNode}
+          {confirmButtonNode}
+        </div>
       </div>
     );
     return node;
@@ -40,7 +70,7 @@ export class WordPane extends Component<Props, State> {
 
   private renderEquivalentNode(): ReactNode {
     let innerNodes = this.props.word.equivalents.map((equivalent, index) => {
-      let titleNode = (equivalent.title !== "") ? <span styleName="box">{equivalent.title}</span> : undefined;
+      let titleNode = (equivalent.title !== "") && <span styleName="box">{equivalent.title}</span>;
       let innerNode = (
         <p styleName="text" key={index}>
           {titleNode}
@@ -49,14 +79,11 @@ export class WordPane extends Component<Props, State> {
       );
       return innerNode;
     });
-    let node;
-    if (innerNodes.length > 0) {
-      node = (
-        <div styleName="container">
-          {innerNodes}
-        </div>
-      );
-    }
+    let node = (innerNodes.length > 0) && (
+      <div styleName="container">
+        {innerNodes}
+      </div>
+    );
     return node;
   }
 
@@ -85,11 +112,11 @@ export class WordPane extends Component<Props, State> {
       groupedRelations.get(title)!.push(relation);
     }
     let innerNodes = Array.from(groupedRelations).map(([title, relations], index) => {
-      let titleNode = (title !== "") ? <span styleName="box">{title}</span> : undefined;
+      let titleNode = (title !== "") && <span styleName="box">{title}</span>;
       let relationNodes = relations.map((relation, relationIndex) => {
         let href = "/dictionary/" + this.props.dictionary.number + "?search=" + encodeURIComponent(relation.name) + "&mode=name&type=exact&page=0";
         let relationNode = (
-          <Fragment>
+          <Fragment key={relationIndex}>
             {(relationIndex === 0) ? "" : ", "}
             <Link href={href}>{relation.name}</Link>
           </Fragment>
@@ -105,28 +132,37 @@ export class WordPane extends Component<Props, State> {
       );
       return innerNode;
     });
-    let node;
-    if (innerNodes.length > 0) {
-      node = (
-        <div styleName="container">
-          {innerNodes}
-        </div>
-      );
-    }
+    let node = (innerNodes.length > 0) && (
+      <div styleName="container">
+        {innerNodes}
+      </div>
+    );
+    return node;
+  }
+
+  private renderEditorNode(): ReactNode {
+    let dictionary = this.props.dictionary;
+    let word = this.props.word;
+    let open = this.state.editorOpen;
+    let node = (
+      <WordEditor dictionary={dictionary} word={word} open={open} onClose={() => this.setState({editorOpen: false})} onConfirm={this.props.onEditConfirm}/>
+    );
     return node;
   }
 
   public render(): ReactNode {
     let nameNode = this.renderNameNode();
     let equivalentNode = this.renderEquivalentNode();
-    let informationNode = this.renderInformationNode();
-    let relationNode = this.renderRelationNode();
+    let informationNode = (this.props.style === "normal") && this.renderInformationNode();
+    let relationNode = (this.props.style === "normal") && this.renderRelationNode();
+    let editorNode = (!this.props.showButton && this.state.editorOpen) && this.renderEditorNode();
     let node = (
       <div styleName="root">
         {nameNode}
         {equivalentNode}
         {informationNode}
         {relationNode}
+        {editorNode}
       </div>
     );
     return node;
@@ -137,7 +173,13 @@ export class WordPane extends Component<Props, State> {
 
 type Props = {
   dictionary: SlimeDictionarySkeleton,
-  word: SlimeWordSkeleton
+  word: SlimeWordSkeleton,
+  style: "normal" | "simple",
+  authorized: boolean,
+  showButton: boolean,
+  onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void,
+  onEditConfirm?: (word: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
+  editorOpen: boolean
 };

@@ -1,0 +1,109 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.container {
+  padding: 20px 0px;
+  border-bottom: 1px $pale-border-color solid; 
+  line-height: $line-height;
+}
+
+.container:first-child {
+  border-top: 1px $light-border-color solid; 
+}
+
+.container:last-child {
+  border-bottom: 1px $light-border-color solid; 
+}
+
+.confirm-button {
+  margin: 20px 0px 0px 0px;
+  text-align: right;
+  line-height: $line-height;
+}
+
+.inner,
+.plus {
+  margin: 8px 0px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  @include smartphone {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.inner:first-child,
+.plus:first-child {
+  margin: 0px;
+}
+
+.plus {
+  justify-content: flex-end;
+  display: flex;
+  align-items: flex-end;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex: 1;
+}
+
+.form >* {
+  margin: 0px 0px 0px 10px;
+}
+
+.form >*:first-child {
+  margin: 0px;
+}
+
+.form.information {
+  height: 150px;
+}
+
+.control-button {
+  margin: 0px 0px 0px 10px;
+  @include smartphone {
+    margin: 8px 0px 0px 0px;
+    align-self: flex-end;
+  }
+}
+
+.title {
+  flex: 1;
+  align-self: flex-start;
+}
+
+.name {
+  flex: 3;
+}
+
+.text {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 3;
+}
+
+.text >textarea {
+  flex-grow: 1;
+}
+
+.relation-input {
+  align-items: flex-end;
+}
+
+.relation-input >*:nth-child(1) {
+  flex-grow: 1;
+}
+
+.caution {
+  margin: 0px 0px 20px 0px;
+  color: map-get($colors, error);
+  line-height: $line-height;
+  text-align: justify;
+}

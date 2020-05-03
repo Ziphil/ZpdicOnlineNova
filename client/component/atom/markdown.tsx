@@ -26,7 +26,7 @@ export class Markdown extends Component<Props, State> {
     let renderers = {link: Link};
     let allowedTypes = ["text", "paragraph", "link", "list", "listItem", "inlineCode", "table", "tableHead", "tableBody", "tableRow", "tableCell", "break"] as Array<NodeType>;
     let node = (
-      <div styleName="root">
+      <div styleName="root" className={this.props.className}>
         <ReactMarkdown source={this.props.source} renderers={renderers} allowedTypes={allowedTypes} linkTarget="blank"/>
       </div>
     );
@@ -37,7 +37,8 @@ export class Markdown extends Component<Props, State> {
 
 
 type Props = {
-  source: string
+  source: string,
+  className?: string
 };
 type State = {
 };

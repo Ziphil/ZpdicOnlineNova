@@ -21,10 +21,5 @@
 
 .icon {
   @include icon-font;
-  font-size: 110%;
-  line-height: 1;
-  display: none;
-  @include smartphone {
-    display: inline;
-  }
+  margin: 0px $blank-padding 0px 0px;
 }

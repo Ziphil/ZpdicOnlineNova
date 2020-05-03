@@ -12,6 +12,9 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
+  WordEditor
+} from "/client/component/compound";
+import {
   applyStyle,
   inject,
   route
@@ -26,9 +29,12 @@ import {
 export class DictionaryHeader extends StoreComponent<Props, State> {
 
   public static defaultProps: Partial<Props> = {
-    showsSetting: false,
+    authorized: false,
     showsDownload: true,
     preservesQuery: false
+  };
+  public state: State = {
+    editorOpen: false
   };
 
   private jumpSettingPage(): void {
@@ -46,36 +52,43 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let nameNode;
-    if (this.props.dictionary) {
+    let nameNode = (this.props.dictionary) && (() => {
       let href = "/dictionary/" + this.props.dictionary.number;
       if (this.props.preservesQuery) {
         let queryString = this.props.location!.search;
         href += queryString;
       }
-      nameNode = <Link href={href} style="plane">{this.props.dictionary.name}</Link>;
-    }
-    let settingButtonNode;
-    if (this.props.showsSetting) {
-      settingButtonNode = <Button label="&#xF013;" style="simple" usesIcon={true} onClick={this.jumpSettingPage.bind(this)}/>;
-    }
-    let downloadButtonNode;
-    if (this.props.showsDownload) {
-      downloadButtonNode = <Button label="&#xF019;" style="simple" usesIcon={true} onClick={this.downloadDictionary.bind(this)}/>;
-    }
+      return <Link href={href} style="plane">{this.props.dictionary.name}</Link>;
+    })();
+    let addButtonNode = (this.props.authorized) && (
+      <Button label="追加" iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
+    );
+    let settingButtonNode = (this.props.authorized) && (
+      <Button label="設定" iconLabel="&#xF013;" style="simple" hideLabel={true} onClick={this.jumpSettingPage.bind(this)}/>
+    );
+    let downloadButtonNode = (this.props.showsDownload) && (
+      <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={this.downloadDictionary.bind(this)}/>
+    );
+    let editorNode = (this.props.dictionary && this.state.editorOpen) && (
+      <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>
+    );
     let node = (
       <header styleName="root">
         <div styleName="container">
           <div styleName="left">
-            <div styleName="button">
-              {settingButtonNode}
-              {downloadButtonNode}
-            </div>
             <div styleName="name">
               {nameNode}
             </div>
           </div>
+          <div styleName="right">
+            <div styleName="button">
+              {addButtonNode}
+              {settingButtonNode}
+              {downloadButtonNode}
+            </div>
+          </div>
         </div>
+        {editorNode}
       </header>
     );
     return node;
@@ -86,9 +99,10 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
 
 type Props = {
   dictionary: SlimeDictionarySkeleton | null,
-  showsSetting: boolean,
+  authorized: boolean,
   showsDownload: boolean,
   preservesQuery: boolean
 };
 type State = {
+  editorOpen: boolean
 };

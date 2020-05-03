@@ -26,6 +26,7 @@ export class SlimeDictionarySkeleton extends Skeleton {
   public updatedDate!: string | null;
   public words?: Array<SlimeWordSkeleton>;
   public wordSize?: number;
+  public ownerName?: string;
 
   public static from(raw: SlimeDictionaryDocument): SlimeDictionarySkeleton {
     let id = raw.id;
@@ -42,13 +43,32 @@ export class SlimeDictionarySkeleton extends Skeleton {
 
   public static async fromFetch(raw: SlimeDictionaryDocument, whole?: boolean): Promise<SlimeDictionarySkeleton> {
     let skeleton = SlimeDictionarySkeleton.from(raw);
-    if (whole) {
-      let rawWords = await raw.getWords();
-      skeleton.words = rawWords.map(SlimeWordSkeleton.from);
-      skeleton.wordSize = rawWords.length;
-    } else {
-      skeleton.wordSize = await raw.countWords();
-    }
+    let wordPromise = new Promise(async (resolve, reject) => {
+      try {
+        if (whole) {
+          let rawWords = await raw.getWords();
+          skeleton.words = rawWords.map(SlimeWordSkeleton.from);
+          skeleton.wordSize = rawWords.length;
+        } else {
+          skeleton.wordSize = await raw.countWords();
+        }
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+    let userPromise = new Promise(async (resolve, reject) => {
+      try {
+        let owner = await raw.getOwner();
+        if (owner) {
+          skeleton.ownerName = owner.name;
+        }
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+    await Promise.all([wordPromise, userPromise]);
     return skeleton;
   }
 

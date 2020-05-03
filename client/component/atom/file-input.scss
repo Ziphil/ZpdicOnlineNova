@@ -22,6 +22,7 @@
 
 .input {
   @include input(map-get($colors, primary));
+  border-radius: $small-border-radius 0px 0px $small-border-radius;
 }
 
 .button {

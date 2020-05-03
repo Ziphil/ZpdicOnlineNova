@@ -41,49 +41,59 @@ export class DictionaryPane extends StoreComponent<Props, State> {
     this.pushPath(path);
   }
 
+  private downloadDictionary(event: MouseEvent<HTMLElement>): void {
+    event.preventDefault();
+    event.stopPropagation();
+    if (this.props.dictionary) {
+      let path = "/api/dictionary/download?number=" + this.props.dictionary.number;
+      location.replace(path);
+    }
+  }
+
   public render(): ReactNode {
     let name = this.props.dictionary.name;
     let status = this.props.dictionary.status;
     let href = "/dictionary/" + (this.props.dictionary.paramName ?? this.props.dictionary.number);
-    let statusString = "";
-    if (status === "saving") {
-      statusString = "処理中";
-    } else if (status === "error") {
-      statusString = "エラー";
-    } else {
-      let wordSize = this.props.dictionary.wordSize;
-      if (wordSize !== undefined) {
-        statusString = wordSize.toLocaleString("en-GB") + " 語";
+    let statusString = (() => {
+      if (status === "saving") {
+        return "処理中";
+      } else if (status === "error") {
+        return "エラー";
       } else {
-        statusString = "? 語";
+        let wordSize = this.props.dictionary.wordSize;
+        if (wordSize !== undefined) {
+          return wordSize.toLocaleString("en-GB") + " 語";
+        } else {
+          return "? 語";
+        }
       }
-    }
-    let settingButtonNode;
-    if (this.props.showsSetting) {
-      settingButtonNode = <Button label="&#xF013;" style="simple" usesIcon={true} onClick={this.jumpSettingPage.bind(this)}/>;
-    }
-    let updatedDateString = "?";
-    if (this.props.dictionary.updatedDate) {
-      updatedDateString = DateUtil.format(this.props.dictionary.updatedDate, "yyyy/MM/dd HH:mm");
-    }
+    })();
+    let settingNode = (this.props.showsSetting) && (
+      <div styleName="setting">
+        <Button label="設定" iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
+        <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
+      </div>
+    );
+    let ownerNode = (!this.props.showsSetting) && (
+      <div styleName="information-item">管理者 — @{this.props.dictionary.ownerName}</div>
+    );
+    let updatedDate = this.props.dictionary.updatedDate;
+    let updatedDateString = (updatedDate !== null) ? DateUtil.format(updatedDate, "yyyy/MM/dd HH:mm") : "?";
     let node = (
       <a styleName="root" href={href} onClick={this.handleClick.bind(this)}>
         <div styleName="head">
-          <div styleName="name-wrapper">
-            <div styleName="button">
-              {settingButtonNode}
-            </div>
-            <div styleName="name">
-              {name}
-            </div>
+          <div styleName="left">
+            <div styleName="name">{name}</div>
           </div>
-          <div styleName="status">
-            {statusString}
+          <div styleName="right">
+            <div styleName="status">{statusString}</div>
           </div>
         </div>
         <div styleName="information">
-          最終更新: {updatedDateString}
+          <div styleName="information-item">最終更新 — {updatedDateString}</div>
+          {ownerNode}
         </div>
+        {settingNode}
       </a>
     );
     return node;

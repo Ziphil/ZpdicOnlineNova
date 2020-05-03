@@ -25,7 +25,7 @@ import {
 export class Header extends StoreComponent<Props, State> {
 
   public state: State = {
-    userName: ""
+    userName: null
   };
 
   public async componentDidMount(): Promise<void> {
@@ -37,6 +37,9 @@ export class Header extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
+    let userNameNode = (this.state.userName !== null) && (
+      <div styleName="name">@{this.state.userName}</div>
+    );
     let node = (
       <header styleName="root">
         <div styleName="container">
@@ -50,9 +53,7 @@ export class Header extends StoreComponent<Props, State> {
             </div>
           </div>
           <div styleName="right">
-            <div styleName="name">
-              {this.state.userName}
-            </div>
+            {userNameNode}
           </div>
         </div>
       </header>
@@ -66,5 +67,5 @@ export class Header extends StoreComponent<Props, State> {
 type Props = {
 };
 type State = {
-  userName: string
+  userName: string | null
 };

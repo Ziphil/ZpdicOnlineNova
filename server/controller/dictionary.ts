@@ -73,6 +73,7 @@ export class DictionaryController extends Controller {
         }
       });
       let body = SlimeDictionarySkeleton.from(dictionary);
+      this.log("upload-dictionary", {dictionary});
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
@@ -164,6 +165,22 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       await dictionary.changeExplanation(explanation);
       let body = SlimeDictionarySkeleton.from(dictionary);
+      response.json(body);
+    } else {
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      response.status(400).json(body);
+    }
+  }
+
+  @post(SERVER_PATH["editWord"])
+  @before(verifyUser(), verifyDictionary())
+  public async postEditWord(request: PostRequest<"editWord">, response: PostResponse<"editWord">): Promise<void> {
+    let dictionary = request.dictionary;
+    let word = request.body.word;
+    if (dictionary) {
+      let resultWord = await dictionary.editWord(word);
+      let body = SlimeWordSkeleton.from(resultWord);
+      this.log("edit-word", {dictionary, word});
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");

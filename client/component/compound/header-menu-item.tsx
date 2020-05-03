@@ -36,8 +36,8 @@ export class HeaderMenuItem extends StoreComponent<Props, State> {
   public render(): ReactNode {
     let node = (
       <a styleName="root" href={this.props.href} onClick={this.handleClick.bind(this)}>
-        <span styleName="text">{this.props.label}</span>
         <span styleName="icon">{this.props.iconLabel}</span>
+        <span styleName="text">{this.props.label}</span>
       </a>
     );
     return node;

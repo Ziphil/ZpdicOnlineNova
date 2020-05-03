@@ -3,26 +3,36 @@
 @import "/client/component/mixin.scss";
 
 
-.root {
+.button {
   @include button(map-get($colors, primary));
 }
 
-.root.caution {
+.button.caution {
   @include button(map-get($colors, error));
 }
 
-.root.left {
+.button.information {
+  @include button(map-get($colors, information));
+}
+
+.button.left {
   margin: 0px -1px 0px 0px;
   border-radius: $small-border-radius 0px 0px $small-border-radius;
 }
 
-.root.right {
+.button.right {
   border-radius: 0px $small-border-radius $small-border-radius 0px;
 }
 
-.root.middle {
+.button.middle {
   margin: 0px -1px 0px 0px;
   border-radius: 0px;
+}
+
+.button.only-icon {
+  width: 2.2em;
+  padding-left: 0em;
+  padding-right: 0em;
 }
 
 .simple {
@@ -30,7 +40,6 @@
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-  text-decoration: underline;
   color: $link-color;
   border: none;
   background: none;
@@ -42,9 +51,23 @@
   color: $link-hover-color;
 }
 
+.simple.link {
+  text-decoration: underline;
+}
+
 .icon {
   @include icon-font;
   text-decoration: none;
+}
+
+.icon +.label {
+  margin: 0px 0px 0px $blank-padding;
+}
+
+.hide-label >.label {
+  @include smartphone {
+    display: none;
+  }
 }
 
 .spinner-wrapper {
@@ -63,7 +86,8 @@
   visibility: visible;
 }
 
-.loading >.label {
+.loading >.label,
+.loading >.icon {
   visibility: hidden;
 }
 

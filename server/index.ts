@@ -132,9 +132,7 @@ class Main {
   }
 
   private listen(): void {
-    this.application.listen(+PORT, () => {
-      console.log("\u001b[33m[Express]\u001b[0m Listening on port " + PORT);
-    });
+    this.application.listen(+PORT);
   }
 
 }

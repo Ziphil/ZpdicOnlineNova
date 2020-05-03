@@ -55,7 +55,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let node = (
       <SettingPane label={label} badgeValue={badgeValue} key={label} description={description}>
         <Loading loading={this.state.dictionaries === null}>
-          <DictionaryList dictionaries={this.state.dictionaries!} showsSetting={true} size={10}/>
+          <DictionaryList dictionaries={this.state.dictionaries!} showsSetting={true} size={8}/>
         </Loading>
       </SettingPane>
     );

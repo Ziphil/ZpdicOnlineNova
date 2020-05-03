@@ -24,7 +24,7 @@ export class Radio extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <label styleName="root">
+      <label styleName="root" className={this.props.className}>
         <input styleName="radio" type="radio" name={this.props.name} value={this.props.value} checked={this.props.checked} onChange={this.handleChange.bind(this)}/>
         <span styleName="label">{this.props.label}</span>
       </label>
@@ -40,7 +40,8 @@ type Props = {
   value: string,
   label: string,
   checked: boolean,
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
+  className?: string
 };
 type State = {
 };

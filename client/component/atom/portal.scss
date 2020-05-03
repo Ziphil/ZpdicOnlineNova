@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+:global(.portal) {
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  position: fixed;
+  z-index: 200;
+}

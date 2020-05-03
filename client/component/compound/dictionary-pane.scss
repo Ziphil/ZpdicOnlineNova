@@ -19,12 +19,6 @@
   justify-content: space-between;
 }
 
-.name-wrapper {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 .button {
   white-space: nowrap;
 }
@@ -38,11 +32,33 @@
 }
 
 .status {
-  margin: 0px 0px 0px 15px;
+  margin: 0px 0px 0px 20px;
   white-space: nowrap;
 }
 
 .information {
   margin: 10px 0px 0px 0px;
   font-size: 80%;
+}
+
+.setting {
+  margin: 10px 0px 0px 0px;
+  padding: 10px 0px 0px 0px;
+  border-top: 1px rgba(white, 0.8) solid;
+}
+
+.setting >* {
+  margin: 0px 0px 0px 20px;
+}
+
+.setting >*:first-child {
+  margin: 0px;
+}
+
+.information-item {
+   margin: 5px 0px 0px 0px;
+}
+
+.information-item:first-child {
+  margin: 0px;
 }

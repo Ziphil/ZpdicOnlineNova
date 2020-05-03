@@ -22,4 +22,12 @@ export class SlimeRelationSkeleton extends Skeleton {
     return skeleton;
   }
 
+  public static empty(): SlimeRelationSkeleton {
+    let title = "";
+    let number = -1;
+    let name = "";
+    let skeleton = SlimeRelationSkeleton.of({title, number, name});
+    return skeleton;
+  }
+
 }

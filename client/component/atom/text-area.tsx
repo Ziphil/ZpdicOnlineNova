@@ -11,6 +11,9 @@ import {
 import {
   applyStyle
 } from "/client/component/decorator";
+import {
+  createStyleName
+} from "/client/util/style-names";
 
 
 @applyStyle(require("./text-area.scss"))
@@ -32,18 +35,15 @@ export class TextArea extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let labelNode;
-    if (this.props.label) {
-      labelNode = <div styleName="label">{this.props.label}</div>;
-    }
-    let textAreaStyleNames = ["textarea"];
-    if (this.props.font === "monospace") {
-      textAreaStyleNames.push("monospace");
-    }
+    let textAreaStyleName = createStyleName(
+      "textarea",
+      {if: this.props.font === "monospace", true: "monospace"}
+    );
+    let labelNode = (this.props.label !== undefined) && <div styleName="label">{this.props.label}</div>;
     let node = (
-      <label styleName="root">
+      <label styleName="root" className={this.props.className}>
         {labelNode}
-        <textarea styleName={textAreaStyleNames.join(" ")} value={this.props.value} onChange={this.handleChange.bind(this)}/>
+        <textarea styleName={textAreaStyleName} value={this.props.value} onChange={this.handleChange.bind(this)}/>
       </label>
     );
     return node;
@@ -57,7 +57,8 @@ type Props = {
   label?: string,
   font: "normal" | "monospace",
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
-  onSet?: (value: string) => void
+  onSet?: (value: string) => void,
+  className?: string
 };
 type State = {
 };
