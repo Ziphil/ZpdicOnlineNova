@@ -37,7 +37,7 @@ export class Overlay extends Component<Props, State> {
     }
     let headerNode = (this.props.title !== undefined) && (() => {
       let backNode = (this.props.page !== undefined && this.props.page > 0) && (
-        <Button label="戻る" iconLabel="&#xF04A;" style="simple" onClick={this.props.onBack}/>
+        <Button label="戻る" iconLabel="&#xF04A;" style="simple" hideLabel={true} onClick={this.props.onBack}/>
       );
       let headerNode = (
         <div styleName="header">
@@ -46,7 +46,7 @@ export class Overlay extends Component<Props, State> {
           </div>
           <div styleName="right">
             {backNode}
-            <Button label="閉じる" iconLabel="&#xF00D;" style="simple" onClick={this.props.onClose}/>
+            <Button label="閉じる" iconLabel="&#xF00D;" style="simple" hideLabel={true} onClick={this.props.onClose}/>
           </div>
         </div>
       );

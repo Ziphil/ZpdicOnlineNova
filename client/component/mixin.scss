@@ -213,6 +213,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   border: 1px border-color($background-color, false) solid;
   border-radius: $small-border-radius;
   background: button-background($background-color);
+  white-space: nowrap;
   position: relative;
   cursor: pointer;
   outline: none;
