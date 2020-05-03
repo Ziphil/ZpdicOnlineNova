@@ -29,7 +29,7 @@ export class NotificationPane extends Component<Props, State> {
     let iconString = "\uF05A";
     if (type === "update") {
       iconString = "\uF005";
-    } else if (type === "error") {
+    } else if (type === "bug") {
       iconString = "\uF188";
     }
     let dateString = DateUtil.format(this.props.notification.date, "yyyy/MM/dd HH:mm");
