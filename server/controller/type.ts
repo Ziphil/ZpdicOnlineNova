@@ -24,7 +24,8 @@ export const SERVER_PATH = {
   changeDictionaryParamName: "/api/dictionary/edit/paramname",
   changeDictionarySecret: "/api/dictionary/edit/secret",
   changeDictionaryExplanation: "/api/dictionary/edit/explanation",
-  editWord: "/api/dictionary/edit",
+  editWord: "/api/word/edit",
+  deleteWord: "/api/word/delete",
   searchDictionary: "/api/dictionary/search",
   downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
@@ -121,6 +122,16 @@ type ProcessType = {
       response: {
         200: SlimeWordSkeleton,
         400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+      }
+    }
+  },
+  deleteWord: {
+    get: Noop,
+    post: {
+      request: {number: number, wordNumber: number},
+      response: {
+        200: SlimeWordSkeleton,
+        400: CustomErrorSkeleton<"noSuchDictionaryNumber" | "noSuchWordNumber">
       }
     }
   },

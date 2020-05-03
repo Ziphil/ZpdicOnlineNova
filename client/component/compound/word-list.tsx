@@ -30,12 +30,7 @@ export class WordList extends Component<Props, State> {
   };
 
   public render(): ReactNode {
-    let dictionary = this.props.dictionary;
-    let words = this.props.words;
-    let displayedWords = words.slice(this.props.offset, this.props.offset + this.props.size);
-    let style = this.props.style;
-    let authorized = this.props.authorized;
-    let showButton = this.props.showButton;
+    let displayedWords = this.props.words.slice(this.props.offset, this.props.offset + this.props.size);
     let wordPanes = displayedWords.map((word) => {
       let outerThis = this;
       let onConfirm = function (event: MouseEvent<HTMLButtonElement>): void {
@@ -48,7 +43,25 @@ export class WordList extends Component<Props, State> {
           outerThis.props.onEditConfirm(word, newWord, event);
         }
       };
-      return <WordPane dictionary={dictionary} word={word} key={word.id} style={style} authorized={authorized} showButton={showButton} onConfirm={onConfirm} onEditConfirm={onEditConfirm}/>;
+      let onDeleteConfirm = function (event: MouseEvent<HTMLButtonElement>): void {
+        if (outerThis.props.onDeleteConfirm) {
+          outerThis.props.onDeleteConfirm(word, event);
+        }
+      };
+      let wordPane = (
+        <WordPane
+          dictionary={this.props.dictionary}
+          word={word}
+          key={word.id}
+          style={this.props.style}
+          authorized={this.props.authorized}
+          showButton={this.props.showButton}
+          onConfirm={onConfirm}
+          onEditConfirm={onEditConfirm}
+          onDeleteConfirm={onDeleteConfirm}
+        />
+      );
+      return wordPane;
     });
     let node = (
       <div styleName="root">
@@ -70,7 +83,8 @@ type Props = {
   size: number,
   offset: number,
   onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: SlimeWordSkeleton, newWord: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onEditConfirm?: (oldWord: SlimeWordSkeleton, newWord: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onDeleteConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void
 };
 type State = {
 };

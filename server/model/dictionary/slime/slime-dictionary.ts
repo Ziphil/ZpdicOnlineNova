@@ -230,6 +230,16 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return resultWord;
   }
 
+  public async deleteWord(this: SlimeDictionaryDocument, number: number): Promise<SlimeWordDocument> {
+    let word = await SlimeWordModel.findOne().where("dictionary", this).where("number", number);
+    if (word) {
+      await word.remove();
+    } else {
+      throw new CustomError("noSuchWordNumber");
+    }
+    return word;
+  }
+
   public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<{hitSize: number, hitWords: Array<SlimeWordDocument>}> {
     let search = parameter.search;
     let mode = parameter.mode;

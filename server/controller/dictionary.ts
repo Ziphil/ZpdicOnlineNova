@@ -188,6 +188,31 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["deleteWord"])
+  @before(verifyUser(), verifyDictionary())
+  public async postDeleteWord(request: PostRequest<"deleteWord">, response: PostResponse<"deleteWord">): Promise<void> {
+    let dictionary = request.dictionary;
+    let wordNumber = request.body.wordNumber;
+    if (dictionary) {
+      try {
+        let resultWord = await dictionary.deleteWord(wordNumber);
+        let body = SlimeWordSkeleton.from(resultWord);
+        this.log("delete-word", {dictionary, resultWord});
+        response.json(body);
+      } catch (error) {
+        if (error.name === "CustomError" && error.type === "noSuchWordNumber") {
+          let body = CustomErrorSkeleton.ofType("noSuchWordNumber");
+          response.status(400).json(body);
+        } else {
+          throw error;
+        }
+      }
+    } else {
+      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      response.status(400).json(body);
+    }
+  }
+
   @get(SERVER_PATH["searchDictionary"])
   public async getSearchDictionary(request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
