@@ -13,13 +13,15 @@ import {
   TextArea
 } from "/client/component/atom";
 import {
-  Component
+  StoreComponent
 } from "/client/component/component";
 import {
   WordSearcher
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/component/decorator";
 import {
   createStyleName
@@ -34,8 +36,9 @@ import {
 } from "/server/skeleton/dictionary/slime";
 
 
+@route @inject
 @applyStyle(require("./word-editor.scss"))
-export class WordEditor extends Component<Props, State> {
+export class WordEditor extends StoreComponent<Props, State> {
 
   private editingRelationIndex: number | null = null;
 
@@ -316,8 +319,16 @@ export class WordEditor extends Component<Props, State> {
     equivalentStrings.forEach((equivalentString, index) => {
       word.equivalents[index].names = equivalentString.split(/\s*,\s*/);
     });
-    if (this.props.onConfirm) {
-      await this.props.onConfirm(word, event);
+    let number = this.props.dictionary.number;
+    let response = await this.requestPost("editWord", {number, word});
+    if (response.status === 200) {
+      this.props.store!.addInformationPopup("wordEdited");
+      if (this.props.onClose) {
+        await this.props.onClose(event);
+      }
+      if (this.props.onConfirm) {
+        await this.props.onConfirm(word, event);
+      }
     }
   }
 
@@ -374,7 +385,7 @@ type Props = {
   word: SlimeWordSkeleton,
   authorized: boolean,
   open: boolean,
-  onClose?: (event: MouseEvent<HTMLElement>) => void,
+  onClose?: (event: MouseEvent<HTMLElement>) => void | Promise<void>,
   onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {

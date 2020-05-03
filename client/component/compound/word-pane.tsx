@@ -11,15 +11,13 @@ import {
   Link
 } from "/client/component/atom";
 import {
-  StoreComponent
+  Component
 } from "/client/component/component";
 import {
   WordEditor
 } from "/client/component/compound";
 import {
-  applyStyle,
-  inject,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   SlimeDictionarySkeleton,
@@ -28,9 +26,8 @@ import {
 } from "/server/skeleton/dictionary/slime";
 
 
-@route @inject
 @applyStyle(require("./word-pane.scss"))
-export class WordPane extends StoreComponent<Props, State> {
+export class WordPane extends Component<Props, State> {
 
   public static defaultProps: Partial<Props> = {
     showButton: false
@@ -51,7 +48,7 @@ export class WordPane extends StoreComponent<Props, State> {
       </div>
     );
     let tagNodes = this.props.word.tags.map((tag, index) => {
-      let tagNode = (tag !== "") ? <span styleName="box" key={index}>{tag}</span> : undefined;
+      let tagNode = (tag !== "") && <span styleName="box" key={index}>{tag}</span>;
       return tagNode;
     });
     let node = (
@@ -71,7 +68,7 @@ export class WordPane extends StoreComponent<Props, State> {
 
   private renderEquivalentNode(): ReactNode {
     let innerNodes = this.props.word.equivalents.map((equivalent, index) => {
-      let titleNode = (equivalent.title !== "") ? <span styleName="box">{equivalent.title}</span> : undefined;
+      let titleNode = (equivalent.title !== "") && <span styleName="box">{equivalent.title}</span>;
       let innerNode = (
         <p styleName="text" key={index}>
           {titleNode}
@@ -147,18 +144,9 @@ export class WordPane extends StoreComponent<Props, State> {
     let authorized = this.props.authorized;
     let open = this.state.editorOpen;
     let node = (
-      <WordEditor dictionary={dictionary} word={word} authorized={authorized} open={open} onClose={() => this.setState({editorOpen: false})} onConfirm={this.handleConfirmEdit.bind(this)}/>
+      <WordEditor dictionary={dictionary} word={word} authorized={authorized} open={open} onClose={() => this.setState({editorOpen: false})}/>
     );
     return node;
-  }
-
-  private async handleConfirmEdit(word: SlimeWordSkeleton): Promise<void> {
-    let number = this.props.dictionary.number;
-    let response = await this.requestPost("editWord", {number, word});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("wordEdited");
-      this.setState({editorOpen: false});
-    }
   }
 
   public render(): ReactNode {
