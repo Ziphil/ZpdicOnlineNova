@@ -154,7 +154,7 @@ export class WordPane extends Component<Props, State> {
     let equivalentNode = this.renderEquivalentNode();
     let informationNode = (this.props.style === "normal") && this.renderInformationNode();
     let relationNode = (this.props.style === "normal") && this.renderRelationNode();
-    let editorNode = (!this.props.showButton) && this.renderEditorNode();
+    let editorNode = (!this.props.showButton && this.state.editorOpen) && this.renderEditorNode();
     let node = (
       <div styleName="root">
         {nameNode}
