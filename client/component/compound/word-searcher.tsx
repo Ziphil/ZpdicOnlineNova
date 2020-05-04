@@ -93,7 +93,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
     });
   }
 
-  private renderWordListNode(): ReactNode {
+  private renderWordList(): ReactNode {
     let maxPage = Math.max(Math.ceil(this.state.hitSize / 40) - 1, 0);
     let node = (
       <Fragment>
@@ -124,7 +124,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let innerNode = (this.props.dictionary !== null) && this.renderWordListNode();
+    let innerNode = (this.props.dictionary !== null) && this.renderWordList();
     let node = (
       <div>
         <div styleName="search-form">

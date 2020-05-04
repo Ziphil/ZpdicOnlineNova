@@ -196,7 +196,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     });
   }
 
-  private renderWordListNode(): ReactNode {
+  private renderWordList(): ReactNode {
     let maxPage = Math.max(Math.ceil(this.state.hitSize / 40) - 1, 0);
     let node = (
       <Fragment>
@@ -221,7 +221,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public render(): ReactNode {
     let innerNode = (this.state.dictionary !== null) && (
-      (this.state.showsExplanation) ? <Markdown source={this.state.dictionary.explanation}/> : this.renderWordListNode()
+      (this.state.showsExplanation) ? <Markdown source={this.state.dictionary.explanation}/> : this.renderWordList()
     );
     let node = (
       <Page showsDictionary={true} showsDictionarySetting={this.state.authorized} dictionary={this.state.dictionary}>
