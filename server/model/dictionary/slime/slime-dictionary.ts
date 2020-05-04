@@ -207,11 +207,6 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return words;
   }
 
-  public async getUser(): Promise<UserDocument> {
-    let user = await UserModel.findOne().where(this.user);
-    return user!;
-  }
-
   // この辞書に登録されている単語を編集します。
   // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
   // そうでない場合は、渡された単語データを新しいデータとして追加します。
