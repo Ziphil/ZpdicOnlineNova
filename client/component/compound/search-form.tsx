@@ -29,14 +29,6 @@ export class SearchForm extends Component<Props, State> {
     type: "prefix"
   };
 
-  public constructor(props: any) {
-    super(props);
-    let search = this.props.search;
-    let mode = this.props.mode;
-    let type = this.props.type;
-    this.state = {search, mode, type};
-  }
-
   private handleSearchSet(search: string): void {
     this.setState({search});
     if (this.props.onSearchSet) {

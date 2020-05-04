@@ -41,7 +41,7 @@ export class RegisterForm extends StoreComponent<Props, State> {
     errorType: null
   };
 
-  private async performRegister(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async performRegister(): Promise<void> {
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
@@ -62,15 +62,12 @@ export class RegisterForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let errorNode;
     let errorType = this.state.errorType;
-    if (errorType) {
-      errorNode = (
-        <div styleName="error">
-          <InformationPane texts={[getMessage(errorType)]} style="error" onClose={() => this.setState({errorType: null})}/>
-        </div>
-      );
-    }
+    let errorNode = (errorType !== null) && (
+      <div styleName="error">
+        <InformationPane texts={[getMessage(errorType)]} style="error" onClose={() => this.setState({errorType: null})}/>
+      </div>
+    );
     let validateName = {regexp: IDENTIFIER_REGEXP, message: getMessage("invalidUserName")};
     let validateEmail = {regexp: EMAIL_REGEXP, message: getMessage("invalidEmail")};
     let validatePasswordString = function (password: string): string | null {

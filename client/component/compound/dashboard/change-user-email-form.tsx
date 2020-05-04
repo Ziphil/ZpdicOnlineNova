@@ -35,7 +35,7 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
     this.state = {email};
   }
 
-  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(): Promise<void> {
     let email = this.state.email;
     let response = await this.requestPost("changeUserEmail", {email});
     if (response.status === 200) {

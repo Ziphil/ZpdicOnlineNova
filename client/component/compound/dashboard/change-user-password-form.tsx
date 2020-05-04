@@ -33,7 +33,7 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
     password: ""
   };
 
-  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(): Promise<void> {
     let password = this.state.password;
     let response = await this.requestPost("changeUserPassword", {password});
     if (response.status === 200) {

@@ -27,7 +27,7 @@ export class DeleteDictionaryForm extends StoreComponent<Props, State> {
     file: null
   };
 
-  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(): Promise<void> {
     let confirmed = window.confirm("本当によろしいですか?");
     if (confirmed) {
       let number = this.props.number;

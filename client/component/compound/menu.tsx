@@ -22,7 +22,7 @@ import {
 @applyStyle(require("./menu.scss"))
 export class Menu extends StoreComponent<Props, State> {
 
-  private async performLogout(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async performLogout(): Promise<void> {
     let response = await this.logout();
     if (response.status === 200) {
       this.pushPath("/");
@@ -32,7 +32,7 @@ export class Menu extends StoreComponent<Props, State> {
   public render(): ReactNode {
     let itemNodes = this.props.specs.map((spec, index) => {
       let highlight = spec.mode === this.props.mode;
-      let href = (spec.mode === "logout") ? undefined : spec.href;
+      let href = (spec.mode !== "logout") ? spec.href : undefined;
       let onClick = (spec.mode === "logout") ? this.performLogout.bind(this) : undefined;
       return <MenuItem label={spec.label} iconLabel={spec.iconLabel} href={href} highlight={highlight} onClick={onClick} key={index}/>;
     });

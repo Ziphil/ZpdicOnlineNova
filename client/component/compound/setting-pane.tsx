@@ -19,18 +19,14 @@ import {
 export class SettingPane extends Component<Props, State> {
 
   public render(): ReactNode {
-    let badgeNode;
-    if (this.props.badgeValue) {
-      badgeNode = <Badge value={this.props.badgeValue}/>;
-    }
-    let descriptionNode;
-    if (this.props.description) {
-      descriptionNode = (
-        <p styleName="description">
-          {this.props.description}
-        </p>
-      );
-    }
+    let badgeNode = (this.props.badgeValue) && (
+      <Badge value={this.props.badgeValue}/>
+    );
+    let descriptionNode = (this.props.description) && (
+      <p styleName="description">
+        {this.props.description}
+      </p>
+    );
     let node = (
       <div styleName="root">
         <div styleName="description-wrapper">

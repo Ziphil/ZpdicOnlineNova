@@ -35,7 +35,7 @@ export class LoginForm extends StoreComponent<Props, State> {
     errorType: null
   };
 
-  private async performLogin(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async performLogin(): Promise<void> {
     let name = this.state.name;
     let password = this.state.password;
     let response = await this.login({name, password}, true);
@@ -46,24 +46,20 @@ export class LoginForm extends StoreComponent<Props, State> {
     }
   }
 
-  private async jumpRegister(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async jumpRegister(): Promise<void> {
     this.pushPath("/register");
   }
 
   public render(): ReactNode {
-    let registerNode;
-    if (this.props.showsRegister) {
-      registerNode = <Button label="新規登録" style="link" onClick={this.jumpRegister.bind(this)}/>;
-    }
-    let errorNode;
+    let registerNode = (this.props.showsRegister) && (
+      <Button label="新規登録" style="link" onClick={this.jumpRegister.bind(this)}/>
+    );
     let errorType = this.state.errorType;
-    if (errorType) {
-      errorNode = (
-        <div styleName="error">
-          <InformationPane texts={[getMessage(errorType)]} style="error" onClose={() => this.setState({errorType: null})}/>
-        </div>
-      );
-    }
+    let errorNode = (errorType !== null) && (
+      <div styleName="error">
+        <InformationPane texts={[getMessage(errorType)]} style="error" onClose={() => this.setState({errorType: null})}/>
+      </div>
+    );
     let node = (
       <div>
         {errorNode}

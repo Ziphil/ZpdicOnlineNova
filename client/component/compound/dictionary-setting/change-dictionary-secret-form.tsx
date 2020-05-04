@@ -30,7 +30,7 @@ export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
     this.state = {secret};
   }
 
-  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(): Promise<void> {
     let number = this.props.number;
     let secret = this.state.secret;
     let response = await this.requestPost("changeDictionarySecret", {number, secret});
