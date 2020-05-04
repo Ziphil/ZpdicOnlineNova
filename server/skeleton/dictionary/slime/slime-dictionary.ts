@@ -59,9 +59,9 @@ export class SlimeDictionarySkeleton extends Skeleton {
     });
     let userPromise = new Promise(async (resolve, reject) => {
       try {
-        let user = await raw.getUser();
-        if (user) {
-          skeleton.userName = user.name;
+        await raw.populate("user").execPopulate();
+        if (raw.user && "name" in raw.user) {
+          skeleton.userName = raw.user.name;
         }
         resolve();
       } catch (error) {
