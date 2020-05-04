@@ -383,7 +383,7 @@ export class WordEditor extends StoreComponent<Props, State> {
 
   private renderRelationChooser(): ReactNode {
     let node = (
-      <WordSearcher dictionary={this.props.dictionary} style="simple" authorized={true} showButton={true} onConfirm={this.editRelation.bind(this)}/>
+      <WordSearcher dictionary={this.props.dictionary} style="simple" authorized={true} showButton={true} onSubmit={this.editRelation.bind(this)}/>
     );
     return node;
   }

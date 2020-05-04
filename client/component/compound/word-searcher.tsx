@@ -106,7 +106,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
             showButton={this.props.showButton}
             offset={0}
             size={40}
-            onConfirm={this.props.onConfirm}
+            onSubmit={this.props.onSubmit}
             onEditConfirm={this.props.onEditConfirm}
           />
         </div>
@@ -146,7 +146,7 @@ type Props = {
   style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
-  onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
+  onSubmit?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (oldWord: SlimeWordSkeleton, newWord: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {

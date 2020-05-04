@@ -44,9 +44,9 @@ export class WordPane extends Component<Props, State> {
         <Button label="編集" iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
       </div>
     );
-    let confirmButtonNode = (this.props.showButton) && (
+    let submitButtonNode = (this.props.showButton) && (
       <div styleName="button">
-        <Button label="決定" onClick={this.props.onConfirm}/>
+        <Button label="決定" onClick={this.props.onSubmit}/>
       </div>
     );
     let tagNodes = this.props.word.tags.map((tag, index) => {
@@ -61,7 +61,7 @@ export class WordPane extends Component<Props, State> {
         </div>
         <div styleName="right">
           {editButtonNode}
-          {confirmButtonNode}
+          {submitButtonNode}
         </div>
       </div>
     );
@@ -181,7 +181,7 @@ type Props = {
   style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
-  onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void,
+  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (word: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
   onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
