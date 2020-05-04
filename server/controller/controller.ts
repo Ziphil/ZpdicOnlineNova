@@ -1,10 +1,6 @@
 //
 
 import {
-  EmailData
-} from "@sendgrid/helpers/classes/email-address";
-import * as sendgrid from "@sendgrid/mail";
-import {
   Express,
   Router
 } from "express";
@@ -39,16 +35,6 @@ export class Controller {
   }
 
   protected setup(): void {
-  }
-
-  protected log(type: string, message: any): void {
-    console.log(`[controller/${type}]\n`, message);
-  }
-
-  protected async sendMail(to: EmailData, subject: string, html: string): Promise<void> {
-    let from = {name: "ZpDIC Online", email: "info@zpdic.ziphil.com"};
-    let message = {to, from, subject, html};
-    await sendgrid.send(message);
   }
 
   // このクラスを継承したクラスのインスタンスを生成し、引数として渡されたアプリケーションオブジェクトに対してルーターの設定を行います。

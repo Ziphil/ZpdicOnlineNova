@@ -38,7 +38,7 @@ export class NotificationController extends Controller {
 
   @post(SERVER_PATH["addNotification"])
   @before(verifyUser("admin"))
-  public async postAddNotification(request: PostRequest<"addNotification">, response: PostResponse<"addNotification">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"addNotification">, response: PostResponse<"addNotification">): Promise<void> {
     let type = CastUtil.ensureString(request.body.type);
     let title = CastUtil.ensureString(request.body.title);
     let text = CastUtil.ensureString(request.body.text);
@@ -48,7 +48,7 @@ export class NotificationController extends Controller {
   }
 
   @get(SERVER_PATH["fetchNotifications"])
-  public async getFetchNotifications(request: GetRequest<"fetchNotifications">, response: GetResponse<"fetchNotifications">): Promise<void> {
+  public async [Symbol()](request: GetRequest<"fetchNotifications">, response: GetResponse<"fetchNotifications">): Promise<void> {
     let offset = CastUtil.ensureNumber(request.query.offset);
     let size = CastUtil.ensureNumber(request.query.size);
     let notifications = await NotificationModel.findAll(offset, size);

@@ -27,8 +27,12 @@ import {
   route
 } from "/client/component/decorator";
 import {
+  deleteAt,
+  swap
+} from "/client/util/misc";
+import {
   createStyleName
-} from "/client/util/style-names";
+} from "/client/util/style-name";
 import {
   SlimeDictionarySkeleton,
   SlimeEditWordSkeleton,
@@ -76,9 +80,9 @@ export class WordEditor extends StoreComponent<Props, State> {
           </div>
           <div styleName="control-button">
             <ControlGroup>
-              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.tags, index, -1))}/>
-              <Button iconLabel="&#xF063;" disabled={index === word.tags.length - 1} onClick={this.setWord(() => this.swap(word.tags, index, 1))}/>
-              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.tags.splice(index, 1))}/>
+              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => swap(word.tags, index, -1))}/>
+              <Button iconLabel="&#xF063;" disabled={index === word.tags.length - 1} onClick={this.setWord(() => swap(word.tags, index, 1))}/>
+              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => deleteAt(word.tags, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -140,15 +144,15 @@ export class WordEditor extends StoreComponent<Props, State> {
   private swapEquivalent(index: number, direction: 1 | -1): void {
     let word = this.state.word;
     let equivalentStrings = this.state.equivalentStrings;
-    this.swap(word.equivalents, index, direction);
-    this.swap(equivalentStrings, index, direction);
+    swap(word.equivalents, index, direction);
+    swap(equivalentStrings, index, direction);
   }
 
   private deleteEquivalent(index: number): void {
     let word = this.state.word;
     let equivalentStrings = this.state.equivalentStrings;
-    word.equivalents.splice(index, 1);
-    equivalentStrings.splice(index, 1);
+    deleteAt(word.equivalents, index);
+    deleteAt(equivalentStrings, index);
   }
 
   private addEquivalent(): void {
@@ -172,9 +176,9 @@ export class WordEditor extends StoreComponent<Props, State> {
           </div>
           <div styleName="control-button">
             <ControlGroup>
-              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.informations, index, -1))}/>
-              <Button iconLabel="&#xF063;" disabled={index === word.informations.length - 1} onClick={this.setWord(() => this.swap(word.informations, index, 1))}/>
-              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.informations.splice(index, 1))}/>
+              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => swap(word.informations, index, -1))}/>
+              <Button iconLabel="&#xF063;" disabled={index === word.informations.length - 1} onClick={this.setWord(() => swap(word.informations, index, 1))}/>
+              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => deleteAt(word.informations, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -209,9 +213,9 @@ export class WordEditor extends StoreComponent<Props, State> {
           </div>
           <div styleName="control-button">
             <ControlGroup>
-              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.variations, index, -1))}/>
-              <Button iconLabel="&#xF063;" disabled={index === word.variations.length - 1} onClick={this.setWord(() => this.swap(word.variations, index, 1))}/>
-              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.variations.splice(index, 1))}/>
+              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => swap(word.variations, index, -1))}/>
+              <Button iconLabel="&#xF063;" disabled={index === word.variations.length - 1} onClick={this.setWord(() => swap(word.variations, index, 1))}/>
+              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => deleteAt(word.variations, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -249,9 +253,9 @@ export class WordEditor extends StoreComponent<Props, State> {
           </div>
           <div styleName="control-button">
             <ControlGroup>
-              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swap(word.relations, index, -1))}/>
-              <Button iconLabel="&#xF063;" disabled={index === word.relations.length - 1} onClick={this.setWord(() => this.swap(word.relations, index, 1))}/>
-              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => word.relations.splice(index, 1))}/>
+              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => swap(word.relations, index, -1))}/>
+              <Button iconLabel="&#xF063;" disabled={index === word.relations.length - 1} onClick={this.setWord(() => swap(word.relations, index, 1))}/>
+              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => deleteAt(word.relations, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -306,15 +310,6 @@ export class WordEditor extends StoreComponent<Props, State> {
       outerThis.setState({equivalentStrings});
     };
     return wrapper;
-  }
-
-  private swap<T>(array: Array<T>, index: number, direction: 1 | -1): void {
-    let targetIndex = index + direction;
-    if (index >= 0 && index < array.length && targetIndex >= 0 && targetIndex < array.length) {
-      let temp = array[index];
-      array[index] = array[targetIndex];
-      array[targetIndex] = temp;
-    }
   }
 
   private async handleConfirm(event: MouseEvent<HTMLButtonElement>): Promise<void> {

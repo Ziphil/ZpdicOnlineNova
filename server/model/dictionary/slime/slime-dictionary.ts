@@ -37,6 +37,10 @@ import {
   SlimeEditWordSkeleton
 } from "/server/skeleton/dictionary/slime";
 import {
+  takeErrorLog,
+  takeLog
+} from "/server/util/misc";
+import {
   QueryUtil
 } from "/server/util/query";
 
@@ -123,7 +127,7 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
         word.dictionary = this;
         word.save();
         if ((++ count) % 500 === 0) {
-          console.log("Dictionary saving: " + count);
+          takeLog("dictionary/upload", `uploading: ${count}`);
         }
       });
       stream.on("other", (key, data) => {
@@ -131,13 +135,12 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
       });
       stream.on("end", () => {
         this.status = "ready";
-        console.log("Dictionary saved: " + count);
+        takeLog("dictionary/upload", `uploaded: ${count}`);
         resolve(this);
       });
       stream.on("error", (error) => {
         this.status = "error";
-        console.log("Error occurred in saving");
-        console.error(error);
+        takeErrorLog("dictionary/upload", "error occurred in uploading", error);
         resolve(this);
       });
       stream.start();
@@ -204,11 +207,10 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return words;
   }
 
-  public async getOwner(): Promise<UserDocument> {
-    let owner = await UserModel.findOne().where(this.user);
-    return owner!;
-  }
-
+  // この辞書に登録されている単語を編集します。
+  // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
+  // そうでない場合は、渡された単語データを新しいデータとして追加します。
+  // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
   public async editWord(this: SlimeDictionaryDocument, word: SlimeEditWordSkeleton): Promise<SlimeWordDocument> {
     let currentWord = await SlimeWordModel.findOne().where("dictionary", this).where("number", word.number);
     let resultWord;
@@ -217,6 +219,9 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
       resultWord.dictionary = this;
       await currentWord.remove();
       await resultWord.save();
+      if (currentWord.name !== resultWord.name) {
+        await this.correctRelationsByEdit(resultWord);
+      }
     } else {
       if (word.number === undefined) {
         word.number = await this.nextWordNumber();
@@ -227,7 +232,42 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     }
     this.updatedDate = new Date();
     await this.save();
+    takeLog("dictionary/edit-word", {currentWord, resultWord});
     return resultWord;
+  }
+
+  public async deleteWord(this: SlimeDictionaryDocument, number: number): Promise<SlimeWordDocument> {
+    let word = await SlimeWordModel.findOne().where("dictionary", this).where("number", number);
+    if (word) {
+      await word.remove();
+      await this.correctRelationsByDelete(word);
+    } else {
+      throw new CustomError("noSuchWordNumber");
+    }
+    takeLog("dictionary/delete-word", {word});
+    return word;
+  }
+
+  private async correctRelationsByEdit(word: SlimeWordDocument): Promise<void> {
+    let affectedWords = await SlimeWordModel.find().where("dictionary", this).where("relations.number", word.number);
+    for (let affectedWord of affectedWords) {
+      for (let relation of affectedWord.relations) {
+        if (relation.number === word.number) {
+          relation.name = word.name;
+        }
+      }
+    }
+    let promises = affectedWords.map((affectedWord) => affectedWord.save());
+    await Promise.all(promises);
+  }
+
+  private async correctRelationsByDelete(word: SlimeWordDocument): Promise<void> {
+    let affectedWords = await SlimeWordModel.find().where("dictionary", this).where("relations.number", word.number);
+    for (let affectedWord of affectedWords) {
+      affectedWord.relations = affectedWord.relations.filter((relation) => relation.number !== word.number);
+    }
+    let promises = affectedWords.map((affectedWord) => affectedWord.save());
+    await Promise.all(promises);
   }
 
   public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<{hitSize: number, hitWords: Array<SlimeWordDocument>}> {

@@ -201,7 +201,15 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let node = (
       <Fragment>
         <div styleName="word-list">
-          <WordList dictionary={this.state.dictionary!} words={this.state.hitWords} authorized={this.state.authorized} offset={0} size={40} onEditConfirm={() => this.updateWordsImmediately()}/>
+          <WordList
+            dictionary={this.state.dictionary!}
+            words={this.state.hitWords}
+            authorized={this.state.authorized}
+            offset={0}
+            size={40}
+            onEditConfirm={() => this.updateWordsImmediately()}
+            onDeleteConfirm={() => this.updateWordsImmediately()}
+          />
         </div>
         <div styleName="pagination-button">
           <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>

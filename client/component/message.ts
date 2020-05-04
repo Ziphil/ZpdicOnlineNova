@@ -1,5 +1,9 @@
 //
 
+import {
+  hasTypedOwnProperty
+} from "/client/util/misc";
+
 
 const MESSAGES = {
   emailChanged: "メールアドレスを変更しました。",
@@ -11,6 +15,7 @@ const MESSAGES = {
   dictionaryUploaded: "辞書のアップロードが完了しました。なお、データの反映には時間がかかる場合があります。",
   dictionaryDeleted: "辞書が削除されました。",
   wordEdited: "単語の編集が完了しました。",
+  wordDeleted: "単語の削除が完了しました。",
   invalidUserName: "ユーザー名が不正です。半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。",
   invalidEmail: "メールアドレスが不正です。",
   invalidPassword: "パスワードが不正です。6 文字以上 50 文字以下である必要があります。",
@@ -20,6 +25,7 @@ const MESSAGES = {
   noSuchDictionaryParamName: "この名称の辞書は存在しません。",
   duplicateDictionaryParamName: "その URL 用名称はすでに利用されています。別の名称をしてしてください。",
   invalidDictionaryParamName: "URL 用名称が不正です。半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。",
+  noSuchWordNumber: "存在しない単語を編集しようとしました。",
   invalidArgument: "渡された引数が不正です。",
   unauthenticated: "ログインしていません。ログインし直してください。",
   forbidden: "このコンテンツにアクセスする権限がありません。",
@@ -32,12 +38,7 @@ const MESSAGES = {
 };
 
 export function getMessage(type: string): string {
-  let message;
-  if (type in MESSAGES) {
-    let anyMessages = MESSAGES as any;
-    message = anyMessages[type];
-  } else {
-    message = MESSAGES["messageNotFound"];
-  }
+  let nextType = (hasTypedOwnProperty(MESSAGES, type)) ? type : "messageNotFound";
+  let message = MESSAGES[nextType];
   return message;
 }

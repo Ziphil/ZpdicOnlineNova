@@ -11,13 +11,15 @@ import {
   Link
 } from "/client/component/atom";
 import {
-  Component
+  StoreComponent
 } from "/client/component/component";
 import {
   WordEditor
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  route
 } from "/client/component/decorator";
 import {
   SlimeDictionarySkeleton,
@@ -27,8 +29,9 @@ import {
 } from "/server/skeleton/dictionary/slime";
 
 
+@route @inject
 @applyStyle(require("./word-pane.scss"))
-export class WordPane extends Component<Props, State> {
+export class WordPane extends StoreComponent<Props, State> {
 
   public static defaultProps: Partial<Props> = {
     style: "normal",
@@ -38,9 +41,25 @@ export class WordPane extends Component<Props, State> {
     editorOpen: false
   };
 
+  private async deleteWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+    let confirmed = window.confirm("本当によろしいですか?");
+    if (confirmed) {
+      let number = this.props.dictionary.number;
+      let wordNumber = this.props.word.number;
+      let response = await this.requestPost("deleteWord", {number, wordNumber});
+      if (response.status === 200) {
+        this.props.store!.addInformationPopup("wordDeleted");
+        if (this.props.onDeleteConfirm) {
+          await this.props.onDeleteConfirm(event);
+        }
+      }
+    }
+  }
+
   private renderNameNode(): ReactNode {
     let editButtonNode = (this.props.authorized && !this.props.showButton) && (
       <div styleName="button">
+        <Button label="削除" iconLabel="&#xF2ED;" style="simple" hideLabel={true} onClick={this.deleteWord.bind(this)}/>
         <Button label="編集" iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
       </div>
     );
@@ -141,11 +160,14 @@ export class WordPane extends Component<Props, State> {
   }
 
   private renderEditorNode(): ReactNode {
-    let dictionary = this.props.dictionary;
-    let word = this.props.word;
-    let open = this.state.editorOpen;
     let node = (
-      <WordEditor dictionary={dictionary} word={word} open={open} onClose={() => this.setState({editorOpen: false})} onConfirm={this.props.onEditConfirm}/>
+      <WordEditor
+        dictionary={this.props.dictionary}
+        word={this.props.word}
+        open={this.state.editorOpen}
+        onClose={() => this.setState({editorOpen: false})}
+        onConfirm={this.props.onEditConfirm}
+      />
     );
     return node;
   }
@@ -178,7 +200,8 @@ type Props = {
   authorized: boolean,
   showButton: boolean,
   onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (word: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onEditConfirm?: (word: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
   editorOpen: boolean

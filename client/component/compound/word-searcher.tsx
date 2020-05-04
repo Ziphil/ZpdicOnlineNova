@@ -95,18 +95,28 @@ export class WordSearcher extends StoreComponent<Props, State> {
 
   private renderWordListNode(): ReactNode {
     let maxPage = Math.max(Math.ceil(this.state.hitSize / 40) - 1, 0);
-    let dictionary = this.props.dictionary!;
-    let words = this.state.hitWords;
-    let style = this.props.style;
-    let authorized = this.props.authorized;
-    let showButton = this.props.showButton;
     let node = (
       <Fragment>
         <div styleName="word-list">
-          <WordList {...{dictionary, words, style, authorized, showButton}} offset={0} size={40} onConfirm={this.props.onConfirm} onEditConfirm={this.props.onEditConfirm}/>
+          <WordList
+            dictionary={this.props.dictionary!}
+            words={this.state.hitWords}
+            style={this.props.style}
+            authorized={this.props.authorized}
+            showButton={this.props.showButton}
+            offset={0}
+            size={40}
+            onConfirm={this.props.onConfirm}
+            onEditConfirm={this.props.onEditConfirm}
+          />
         </div>
         <div styleName="pagination-button">
-          <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>
+          <PaginationButton
+            page={this.state.page}
+            minPage={0}
+            maxPage={maxPage}
+            onSet={this.handlePageSet.bind(this)}
+          />
         </div>
       </Fragment>
     );

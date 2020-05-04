@@ -28,9 +28,9 @@ export class DeleteDictionaryForm extends StoreComponent<Props, State> {
   };
 
   private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
-    let number = this.props.number;
-    let result = window.confirm("本当によろしいですか?");
-    if (result) {
+    let confirmed = window.confirm("本当によろしいですか?");
+    if (confirmed) {
+      let number = this.props.number;
       let response = await this.requestPost("deleteDictionary", {number});
       if (response.status === 200) {
         this.props.store!.addInformationPopup("dictionaryDeleted");
