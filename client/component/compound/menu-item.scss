@@ -25,6 +25,7 @@
 }
 
 .text {
+  margin: 0px 0px 0px $blank-padding;
   @include smartphone {
     display: none;
   }
@@ -32,5 +33,4 @@
 
 .icon {
   @include icon-font;
-  margin: 0px $blank-padding 0px 0px;
 }
