@@ -212,6 +212,10 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     return user!;
   }
 
+  // この辞書に登録されている単語を編集します。
+  // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
+  // そうでない場合は、渡された単語データを新しいデータとして追加します。
+  // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
   public async editWord(this: SlimeDictionaryDocument, word: SlimeEditWordSkeleton): Promise<SlimeWordDocument> {
     let currentWord = await SlimeWordModel.findOne().where("dictionary", this).where("number", word.number);
     let resultWord;
@@ -220,6 +224,9 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
       resultWord.dictionary = this;
       await currentWord.remove();
       await resultWord.save();
+      if (currentWord.name !== resultWord.name) {
+        await this.correctRelationsByEdit(resultWord);
+      }
     } else {
       if (word.number === undefined) {
         word.number = await this.nextWordNumber();
@@ -238,11 +245,34 @@ export class SlimeDictionary extends Dictionary<SlimeWord> {
     let word = await SlimeWordModel.findOne().where("dictionary", this).where("number", number);
     if (word) {
       await word.remove();
+      await this.correctRelationsByDelete(word);
     } else {
       throw new CustomError("noSuchWordNumber");
     }
     takeLog("dictionary/delete-word", {word});
     return word;
+  }
+
+  private async correctRelationsByEdit(word: SlimeWordDocument): Promise<void> {
+    let affectedWords = await SlimeWordModel.find().where("dictionary", this).where("relations.number", word.number);
+    for (let affectedWord of affectedWords) {
+      for (let relation of affectedWord.relations) {
+        if (relation.number === word.number) {
+          relation.name = word.name;
+        }
+      }
+    }
+    let promises = affectedWords.map((affectedWord) => affectedWord.save());
+    await Promise.all(promises);
+  }
+
+  private async correctRelationsByDelete(word: SlimeWordDocument): Promise<void> {
+    let affectedWords = await SlimeWordModel.find().where("dictionary", this).where("relations.number", word.number);
+    for (let affectedWord of affectedWords) {
+      affectedWord.relations = affectedWord.relations.filter((relation) => relation.number !== word.number);
+    }
+    let promises = affectedWords.map((affectedWord) => affectedWord.save());
+    await Promise.all(promises);
   }
 
   public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<{hitSize: number, hitWords: Array<SlimeWordDocument>}> {
