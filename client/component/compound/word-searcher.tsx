@@ -88,7 +88,6 @@ export class WordSearcher extends StoreComponent<Props, State> {
 
   private handlePageSet(page: number): void {
     this.setState({page}, async () => {
-      window.scrollTo(0, 0);
       await this.updateWordsImmediately();
     });
   }
