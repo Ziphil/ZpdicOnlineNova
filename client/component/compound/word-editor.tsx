@@ -58,7 +58,51 @@ export class WordEditor extends StoreComponent<Props, State> {
     this.state = {word, equivalentStrings, relationChooserOpen};
   }
 
-  private renderNameNode(): ReactNode {
+  private async editWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+    let number = this.props.dictionary.number;
+    let word = this.state.word;
+    let equivalentStrings = this.state.equivalentStrings;
+    equivalentStrings.forEach((equivalentString, index) => {
+      word.equivalents[index].names = equivalentString.split(/\s*,\s*/);
+    });
+    let response = await this.requestPost("editWord", {number, word});
+    if (response.status === 200) {
+      this.props.store!.addInformationPopup("wordEdited");
+      if (this.props.onClose) {
+        await this.props.onClose(event);
+      }
+      if (this.props.onEditConfirm) {
+        await this.props.onEditConfirm(word, event);
+      }
+    }
+  }
+
+  private async deleteWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+    let number = this.props.dictionary.number;
+    let wordNumber = this.state.word.number;
+    if (wordNumber !== undefined) {
+      let confirmed = window.confirm("本当によろしいですか?");
+      if (confirmed) {
+        let response = await this.requestPost("deleteWord", {number, wordNumber});
+        if (response.status === 200) {
+          this.props.store!.addInformationPopup("wordDeleted");
+          if (this.props.onClose) {
+            await this.props.onClose(event);
+          }
+          if (this.props.onDeleteConfirm) {
+            await this.props.onDeleteConfirm(event);
+          }
+        }
+      }
+    }
+  }
+
+  private openRelationChooser(index: number): void {
+    this.editingRelationIndex = index;
+    this.setState({relationChooserOpen: true});
+  }
+
+  private renderName(): ReactNode {
     let word = this.state.word;
     let node = (
       <div styleName="container">
@@ -68,7 +112,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     return node;
   }
 
-  private renderTagNode(): ReactNode {
+  private renderTags(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
     let innerNodes = word.tags.map((tag, index) => {
@@ -103,7 +147,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     return node;
   }
 
-  private renderEquivalentNode(): ReactNode {
+  private renderEquivalents(): ReactNode {
     let word = this.state.word;
     let equivalentStrings = this.state.equivalentStrings;
     let styles = this.props.styles!;
@@ -162,7 +206,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     equivalentStrings.push("");
   }
 
-  private renderInformationNode(): ReactNode {
+  private renderInformations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
     let innerNodes = word.informations.map((information, index) => {
@@ -199,7 +243,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     return node;
   }
 
-  private renderVariationNode(): ReactNode {
+  private renderVariations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
     let innerNodes = word.variations.map((variation, index) => {
@@ -236,7 +280,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     return node;
   }
 
-  private renderRelationNode(): ReactNode {
+  private renderRelations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
     let innerNodes = word.relations.map((relation, index) => {
@@ -276,12 +320,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     return node;
   }
 
-  private openRelationChooser(index: number): void {
-    this.editingRelationIndex = index;
-    this.setState({relationChooserOpen: true});
-  }
-
-  private changeRelation(relationWord: SlimeWordSkeleton): void {
+  private editRelation(relationWord: SlimeWordSkeleton): void {
     let word = this.state.word;
     let relationIndex = this.editingRelationIndex!;
     if (word.relations[relationIndex] === undefined) {
@@ -312,32 +351,13 @@ export class WordEditor extends StoreComponent<Props, State> {
     return wrapper;
   }
 
-  private async handleConfirm(event: MouseEvent<HTMLButtonElement>): Promise<void> {
-    let word = this.state.word;
-    let equivalentStrings = this.state.equivalentStrings;
-    equivalentStrings.forEach((equivalentString, index) => {
-      word.equivalents[index].names = equivalentString.split(/\s*,\s*/);
-    });
-    let number = this.props.dictionary.number;
-    let response = await this.requestPost("editWord", {number, word});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("wordEdited");
-      if (this.props.onClose) {
-        await this.props.onClose(event);
-      }
-      if (this.props.onConfirm) {
-        await this.props.onConfirm(word, event);
-      }
-    }
-  }
-
-  private renderEditorNode(): ReactNode {
-    let nameNode = this.renderNameNode();
-    let tagNode = this.renderTagNode();
-    let equivalentNode = this.renderEquivalentNode();
-    let informationNode = this.renderInformationNode();
-    let variationNode = this.renderVariationNode();
-    let relationNode = this.renderRelationNode();
+  private renderEditor(): ReactNode {
+    let deleteButtonNode = (this.props.word !== null) && (
+      <Button label="削除" iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={this.deleteWord.bind(this)}/>
+    );
+    let editButtonNode = (
+      <Button label="決定" iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.editWord.bind(this)}/>
+    );
     let node = (
       <div>
         <p styleName="caution">
@@ -345,32 +365,33 @@ export class WordEditor extends StoreComponent<Props, State> {
           ページ右上の「ダウンロード」ボタンからデータを JSON 形式でダウンロードするなど、適宜バックアップを取っておくことをお勧めします。
         </p>
         <div styleName="editor">
-          {nameNode}
-          {tagNode}
-          {equivalentNode}
-          {informationNode}
-          {variationNode}
-          {relationNode}
+          {this.renderName()}
+          {this.renderTags()}
+          {this.renderEquivalents()}
+          {this.renderInformations()}
+          {this.renderVariations()}
+          {this.renderRelations()}
         </div>
         <div styleName="confirm-button">
-          <Button label="決定" iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.handleConfirm.bind(this)}/>
+          {deleteButtonNode}
+          {editButtonNode}
         </div>
       </div>
     );
     return node;
   }
 
-  private renderRelationChooserNode(): ReactNode {
+  private renderRelationChooser(): ReactNode {
     let node = (
-      <WordSearcher dictionary={this.props.dictionary} style="simple" authorized={true} showButton={true} onConfirm={this.changeRelation.bind(this)}/>
+      <WordSearcher dictionary={this.props.dictionary} style="simple" authorized={true} showButton={true} onConfirm={this.editRelation.bind(this)}/>
     );
     return node;
   }
 
   public render(): ReactNode {
     let page = (this.state.relationChooserOpen) ? 1 : 0;
-    let editorNode = this.renderEditorNode();
-    let relationChooserNode = this.renderRelationChooserNode();
+    let editorNode = this.renderEditor();
+    let relationChooserNode = this.renderRelationChooser();
     let node = (
       <Overlay size="large" title="単語編集" page={page} open={this.props.open} onClose={this.props.onClose} onBack={() => this.setState({relationChooserOpen: false})}>
         {editorNode}
@@ -388,7 +409,8 @@ type Props = {
   word: SlimeWordSkeleton | null,
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => void | Promise<void>,
-  onConfirm?: (word: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onEditConfirm?: (word: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
   word: SlimeEditWordSkeleton,

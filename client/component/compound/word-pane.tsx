@@ -11,15 +11,13 @@ import {
   Link
 } from "/client/component/atom";
 import {
-  StoreComponent
+  Component
 } from "/client/component/component";
 import {
   WordEditor
 } from "/client/component/compound";
 import {
-  applyStyle,
-  inject,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   SlimeDictionarySkeleton,
@@ -29,9 +27,8 @@ import {
 } from "/server/skeleton/dictionary/slime";
 
 
-@route @inject
 @applyStyle(require("./word-pane.scss"))
-export class WordPane extends StoreComponent<Props, State> {
+export class WordPane extends Component<Props, State> {
 
   public static defaultProps: Partial<Props> = {
     style: "normal",
@@ -41,25 +38,9 @@ export class WordPane extends StoreComponent<Props, State> {
     editorOpen: false
   };
 
-  private async deleteWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
-    let confirmed = window.confirm("本当によろしいですか?");
-    if (confirmed) {
-      let number = this.props.dictionary.number;
-      let wordNumber = this.props.word.number;
-      let response = await this.requestPost("deleteWord", {number, wordNumber});
-      if (response.status === 200) {
-        this.props.store!.addInformationPopup("wordDeleted");
-        if (this.props.onDeleteConfirm) {
-          await this.props.onDeleteConfirm(event);
-        }
-      }
-    }
-  }
-
-  private renderNameNode(): ReactNode {
+  private renderName(): ReactNode {
     let editButtonNode = (this.props.authorized && !this.props.showButton) && (
       <div styleName="button">
-        <Button label="削除" iconLabel="&#xF2ED;" style="simple" hideLabel={true} onClick={this.deleteWord.bind(this)}/>
         <Button label="編集" iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
       </div>
     );
@@ -87,7 +68,7 @@ export class WordPane extends StoreComponent<Props, State> {
     return node;
   }
 
-  private renderEquivalentNode(): ReactNode {
+  private renderEquivalents(): ReactNode {
     let innerNodes = this.props.word.equivalents.map((equivalent, index) => {
       let titleNode = (equivalent.title !== "") && <span styleName="box">{equivalent.title}</span>;
       let innerNode = (
@@ -106,7 +87,7 @@ export class WordPane extends StoreComponent<Props, State> {
     return node;
   }
 
-  private renderInformationNode(): ReactNode {
+  private renderInformations(): ReactNode {
     let nodes = this.props.word.informations.map((information, index) => {
       let informationNode = (
         <div styleName="container" key={index}>
@@ -121,7 +102,7 @@ export class WordPane extends StoreComponent<Props, State> {
     return nodes;
   }
 
-  private renderRelationNode(): ReactNode {
+  private renderRelations(): ReactNode {
     let groupedRelations = new Map<string, Array<SlimeRelationSkeleton>>();
     for (let relation of this.props.word.relations) {
       let title = relation.title;
@@ -159,25 +140,26 @@ export class WordPane extends StoreComponent<Props, State> {
     return node;
   }
 
-  private renderEditorNode(): ReactNode {
+  private renderEditor(): ReactNode {
     let node = (
       <WordEditor
         dictionary={this.props.dictionary}
         word={this.props.word}
         open={this.state.editorOpen}
         onClose={() => this.setState({editorOpen: false})}
-        onConfirm={this.props.onEditConfirm}
+        onEditConfirm={this.props.onEditConfirm}
+        onDeleteConfirm={this.props.onDeleteConfirm}
       />
     );
     return node;
   }
 
   public render(): ReactNode {
-    let nameNode = this.renderNameNode();
-    let equivalentNode = this.renderEquivalentNode();
-    let informationNode = (this.props.style === "normal") && this.renderInformationNode();
-    let relationNode = (this.props.style === "normal") && this.renderRelationNode();
-    let editorNode = (!this.props.showButton && this.state.editorOpen) && this.renderEditorNode();
+    let nameNode = this.renderName();
+    let equivalentNode = this.renderEquivalents();
+    let informationNode = (this.props.style === "normal") && this.renderInformations();
+    let relationNode = (this.props.style === "normal") && this.renderRelations();
+    let editorNode = (!this.props.showButton && this.state.editorOpen) && this.renderEditor();
     let node = (
       <div styleName="root">
         {nameNode}

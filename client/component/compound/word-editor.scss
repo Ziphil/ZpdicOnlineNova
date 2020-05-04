@@ -23,6 +23,14 @@
   line-height: $line-height;
 }
 
+.confirm-button >* {
+  margin: 0px 0px 0px 20px;
+}
+
+.confirm-button >*:first-child {
+  margin: 0px;
+}
+
 .inner,
 .plus {
   margin: 8px 0px 0px 0px;
