@@ -7,7 +7,7 @@ import {
 } from "react";
 import {
   Button,
-  Portal
+  Modal
 } from "/client/component/atom";
 import {
   Component
@@ -31,13 +31,19 @@ export class Overlay extends Component<Props, State> {
 
   public render(): ReactNode {
     let contentStyleName = createStyleName("content-wrapper", this.props.size);
-    let displayedChildren = this.props.children;
-    if (this.props.page !== undefined && Array.isArray(this.props.children)) {
-      displayedChildren = this.props.children[this.props.page];
-    }
+    let displayedChildren = (() => {
+      if (this.props.page !== undefined && Array.isArray(this.props.children)) {
+        return this.props.children[this.props.page];
+      } else {
+        return this.props.children;
+      }
+    })();
     let headerNode = (this.props.title !== undefined) && (() => {
-      let backNode = (this.props.page !== undefined && this.props.page > 0) && (
+      let backButtonNode = (this.props.page !== undefined && this.props.page > 0) && (
         <Button label="戻る" iconLabel="&#xF04A;" style="simple" hideLabel={true} onClick={this.props.onBack}/>
+      );
+      let closeButtonNode = (
+        <Button label="閉じる" iconLabel="&#xF00D;" style="simple" hideLabel={true} onClick={this.props.onClose}/>
       );
       let headerNode = (
         <div styleName="header">
@@ -45,26 +51,22 @@ export class Overlay extends Component<Props, State> {
             <div styleName="title">{this.props.title}</div>
           </div>
           <div styleName="right">
-            {backNode}
-            <Button label="閉じる" iconLabel="&#xF00D;" style="simple" hideLabel={true} onClick={this.props.onClose}/>
+            {backButtonNode}
+            {closeButtonNode}
           </div>
         </div>
       );
       return headerNode;
     })();
-    let onBackgroundClick = (this.props.outsideClosable) ? this.props.onClose : undefined;
-    let node = (this.props.open) && (
-      <Portal>
-        <div styleName="background" onClick={onBackgroundClick}/>
-        <div styleName="spacer">
-          <div styleName={contentStyleName}>
-            {headerNode}
-            <div styleName="content">
-              {displayedChildren}
-            </div>
+    let node = (
+      <Modal open={this.props.open} outsideClosable={this.props.outsideClosable} onClose={this.props.onClose}>
+        <div styleName={contentStyleName}>
+          {headerNode}
+          <div styleName="content">
+            {displayedChildren}
           </div>
         </div>
-      </Portal>
+      </Modal>
     );
     return node;
   }

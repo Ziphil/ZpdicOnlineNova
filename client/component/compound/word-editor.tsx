@@ -5,10 +5,12 @@ import {
 } from "lodash-es";
 import * as react from "react";
 import {
+  Fragment,
   MouseEvent,
   ReactNode
 } from "react";
 import {
+  Alert,
   Button,
   ControlGroup,
   Input,
@@ -55,7 +57,8 @@ export class WordEditor extends StoreComponent<Props, State> {
     let word = cloneDeep(this.props.word) ?? SlimeEditWordSkeleton.empty();
     let equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
     let relationChooserOpen = false;
-    this.state = {word, equivalentStrings, relationChooserOpen};
+    let alertOpen = false;
+    this.state = {word, equivalentStrings, relationChooserOpen, alertOpen};
   }
 
   private async editWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
@@ -81,17 +84,14 @@ export class WordEditor extends StoreComponent<Props, State> {
     let number = this.props.dictionary.number;
     let wordNumber = this.state.word.number;
     if (wordNumber !== undefined) {
-      let confirmed = window.confirm("本当によろしいですか?");
-      if (confirmed) {
-        let response = await this.requestPost("deleteWord", {number, wordNumber});
-        if (response.status === 200) {
-          this.props.store!.addInformationPopup("wordDeleted");
-          if (this.props.onClose) {
-            await this.props.onClose(event);
-          }
-          if (this.props.onDeleteConfirm) {
-            await this.props.onDeleteConfirm(event);
-          }
+      let response = await this.requestPost("deleteWord", {number, wordNumber});
+      if (response.status === 200) {
+        this.props.store!.addInformationPopup("wordDeleted");
+        if (this.props.onClose) {
+          await this.props.onClose(event);
+        }
+        if (this.props.onDeleteConfirm) {
+          await this.props.onDeleteConfirm(event);
         }
       }
     }
@@ -353,7 +353,7 @@ export class WordEditor extends StoreComponent<Props, State> {
 
   private renderEditor(): ReactNode {
     let deleteButtonNode = (this.props.word !== null) && (
-      <Button label="削除" iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={this.deleteWord.bind(this)}/>
+      <Button label="削除" iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
     );
     let editButtonNode = (
       <Button label="決定" iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.editWord.bind(this)}/>
@@ -388,15 +388,36 @@ export class WordEditor extends StoreComponent<Props, State> {
     return node;
   }
 
+  private renderAlert(): ReactNode {
+    let text = `
+      この単語データを永久に削除します。
+      削除した後にデータを戻すことはできません。
+      本当によろしいですか?
+    `;
+    let node = (
+      <Alert
+        text={text}
+        iconLabel="&#xF071;"
+        confirmLabel="削除"
+        open={this.state.alertOpen}
+        outsideClosable={true}
+        onClose={() => this.setState({alertOpen: false})}
+        onConfirm={this.deleteWord.bind(this)}
+      />
+    );
+    return node;
+  }
+
   public render(): ReactNode {
     let page = (this.state.relationChooserOpen) ? 1 : 0;
-    let editorNode = this.renderEditor();
-    let relationChooserNode = this.renderRelationChooser();
     let node = (
-      <Overlay size="large" title="単語編集" page={page} open={this.props.open} onClose={this.props.onClose} onBack={() => this.setState({relationChooserOpen: false})}>
-        {editorNode}
-        {relationChooserNode}
-      </Overlay>
+      <Fragment>
+        <Overlay size="large" title="単語編集" page={page} open={this.props.open} onClose={this.props.onClose} onBack={() => this.setState({relationChooserOpen: false})}>
+          {this.renderEditor()}
+          {this.renderRelationChooser()}
+        </Overlay>
+        {this.renderAlert()}
+      </Fragment>
     );
     return node;
   }
@@ -415,5 +436,6 @@ type Props = {
 type State = {
   word: SlimeEditWordSkeleton,
   equivalentStrings: Array<string>,
-  relationChooserOpen: boolean
+  relationChooserOpen: boolean,
+  alertOpen: boolean
 };

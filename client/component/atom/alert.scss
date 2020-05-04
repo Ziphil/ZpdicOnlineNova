@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.content {
+  width: 100%;
+  max-width: 500px;
+  margin: 0px auto;
+  padding: 20px 20px;
+  background-color: $background-color;
+  border-radius: $large-border-radius;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.text-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.icon {
+  @include icon-font;
+  width: 1.2em;
+  margin: 0px 15px 0px 0px;
+  font-size: 250%;
+  color: map-get($colors, error);
+  text-align: center;
+  display: inline-block;
+}
+
+.text {
+  margin: 0px;
+  line-height: $line-height;
+}
+
+.button {
+  margin: 20px 0px 0px 0px;
+  line-height: $line-height;
+  text-align: right;
+}
+
+.button >* {
+  margin: 0px 0px 0px 20px;
+}
+
+.button >*:first-child { 
+  margin: 0px;
+}
