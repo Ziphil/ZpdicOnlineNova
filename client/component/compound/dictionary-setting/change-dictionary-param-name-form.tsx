@@ -3,7 +3,6 @@
 import * as react from "react";
 import {
   Fragment,
-  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -50,8 +49,8 @@ export class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> 
 
   public render(): ReactNode {
     let nextUrl = "http://zpdic.ziphil.com/dictionary/" + (this.state.paramName || this.props.number);
-    let validate = function (paramName: string): string | null {
-      return (paramName === "" || paramName.match(IDENTIFIER_REGEXP)) ? null : getMessage("invalidDictionaryParamName");
+    let validate = function (value: string): string | null {
+      return (value === "" || value.match(IDENTIFIER_REGEXP)) ? null : getMessage("invalidDictionaryParamName");
     };
     let node = (
       <Fragment>

@@ -21,3 +21,17 @@ export function deleteAt<T>(array: Array<T>, index: number): Array<T> {
 export function hasTypedOwnProperty<T extends object>(object: T, key: string | symbol | number): key is keyof T {
   return object.hasOwnProperty(key);
 }
+
+export function createValidate(query: RegExp | ((value: string) => boolean), message?: string): (value: string) => string | null {
+  if (query instanceof RegExp) {
+    let validate = function (value: string): string | null {
+      return (value.match(query)) ? null : (message ?? "");
+    };
+    return validate;
+  } else {
+    let validate = function (value: string): string | null {
+      return (query(value)) ? null : (message ?? "");
+    };
+    return validate;
+  }
+}
