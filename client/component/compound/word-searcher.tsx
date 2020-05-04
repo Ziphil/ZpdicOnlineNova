@@ -88,12 +88,11 @@ export class WordSearcher extends StoreComponent<Props, State> {
 
   private handlePageSet(page: number): void {
     this.setState({page}, async () => {
-      window.scrollTo(0, 0);
       await this.updateWordsImmediately();
     });
   }
 
-  private renderWordListNode(): ReactNode {
+  private renderWordList(): ReactNode {
     let maxPage = Math.max(Math.ceil(this.state.hitSize / 40) - 1, 0);
     let node = (
       <Fragment>
@@ -106,7 +105,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
             showButton={this.props.showButton}
             offset={0}
             size={40}
-            onConfirm={this.props.onConfirm}
+            onSubmit={this.props.onSubmit}
             onEditConfirm={this.props.onEditConfirm}
           />
         </div>
@@ -124,7 +123,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let innerNode = (this.props.dictionary !== null) && this.renderWordListNode();
+    let innerNode = (this.props.dictionary !== null) && this.renderWordList();
     let node = (
       <div>
         <div styleName="search-form">
@@ -146,7 +145,7 @@ type Props = {
   style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
-  onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
+  onSubmit?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (oldWord: SlimeWordSkeleton, newWord: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {

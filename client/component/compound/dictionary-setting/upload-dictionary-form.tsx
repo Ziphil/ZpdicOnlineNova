@@ -27,7 +27,7 @@ export class UploadDictionaryForm extends StoreComponent<Props, State> {
     file: null
   };
 
-  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(): Promise<void> {
     let number = this.props.number;
     let file = this.state.file;
     if (file) {

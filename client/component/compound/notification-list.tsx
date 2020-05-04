@@ -49,14 +49,11 @@ export class NotificationList extends StoreComponent<Props, State> {
     let notificationPanes = displayedNotifications.map((notification) => {
       return <NotificationPane notification={notification} key={notification.id}/>;
     });
-    let paginationNodes;
-    if (this.props.showsPagination) {
-      paginationNodes = (
-        <div styleName="pagination-button">
-          <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.setState({page})}/>
-        </div>
-      );
-    }
+    let paginationNodes = (this.props.showsPagination) && (
+      <div styleName="pagination-button">
+        <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.setState({page})}/>
+      </div>
+    );
     let node = (
       <Fragment>
         <div styleName="notification">
@@ -69,10 +66,7 @@ export class NotificationList extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let notificationPanes;
-    if (this.state.notifications) {
-      notificationPanes = this.renderNotificationPanes();
-    }
+    let notificationPanes = (this.state.notifications) && this.renderNotificationPanes();
     let node = (
       <div styleName="root">
         <Loading loading={this.state.notifications === null}>

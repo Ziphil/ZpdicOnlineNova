@@ -16,17 +16,16 @@ import {
 export class Loading extends Component<Props, State> {
 
   public render(): ReactNode {
-    let node;
     if (this.props.loading) {
-      node = (
+      let node = (
         <div styleName="root">
           <span styleName="spinner"/>
         </div>
       );
+      return node;
     } else {
-      node = this.props.children;
+      return this.props.children;
     }
-    return node;
   }
 
 }

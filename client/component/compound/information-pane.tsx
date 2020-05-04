@@ -14,6 +14,9 @@ import {
 import {
   applyStyle
 } from "/client/component/decorator";
+import {
+  createStyleName
+} from "/client/util/style-name";
 
 
 @applyStyle(require("./information-pane.scss"))
@@ -26,12 +29,12 @@ export class InformationPane extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    let styleName = createStyleName("root", this.props.style);
     let itemNodes = this.props.texts.map((text, index) => {
       return <li key={index}>{text}</li>;
     });
-    let styleNames = ["root", this.props.style];
     let node = (
-      <div styleName={styleNames.join(" ")}>
+      <div styleName={styleName}>
         <ul styleName="list">
           {itemNodes}
         </ul>

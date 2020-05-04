@@ -29,7 +29,7 @@ export class ChangeDictionaryExplanationForm extends StoreComponent<Props, State
     this.state = {explanation};
   }
 
-  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(): Promise<void> {
     let number = this.props.number;
     let explanation = this.state.explanation;
     let response = await this.requestPost("changeDictionaryExplanation", {number, explanation});

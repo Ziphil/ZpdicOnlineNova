@@ -3,7 +3,6 @@
 import * as react from "react";
 import {
   Fragment,
-  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -36,7 +35,7 @@ export class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> 
     this.state = {paramName};
   }
 
-  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(): Promise<void> {
     let number = this.props.number;
     let paramName = this.state.paramName;
     let response = await this.requestPost("changeDictionaryParamName", {number, paramName});
@@ -49,9 +48,9 @@ export class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> 
   }
 
   public render(): ReactNode {
-    let nextUrl = "http://zpdic.ziphil.com/dictionary/" + ((this.state.paramName) ? this.state.paramName : this.props.number);
-    let validate = function (paramName: string): string | null {
-      return (paramName === "" || paramName.match(IDENTIFIER_REGEXP)) ? null : getMessage("invalidDictionaryParamName");
+    let nextUrl = "http://zpdic.ziphil.com/dictionary/" + (this.state.paramName || this.props.number);
+    let validate = function (value: string): string | null {
+      return (value === "" || value.match(IDENTIFIER_REGEXP)) ? null : getMessage("invalidDictionaryParamName");
     };
     let node = (
       <Fragment>

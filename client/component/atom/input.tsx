@@ -42,13 +42,8 @@ export class Input extends Component<Props, State> {
     let validate = this.props.validate;
     let value = event.target.value;
     if (validate) {
-      if (typeof validate === "function") {
-        let errorMessage = validate(value);
-        this.setState({errorMessage});
-      } else {
-        let errorMessage = (value.match(validate.regexp)) ? null : validate.message;
-        this.setState({errorMessage});
-      }
+      let errorMessage = validate(value);
+      this.setState({errorMessage});
     } else {
       this.setState({errorMessage: null});
     }
@@ -60,7 +55,7 @@ export class Input extends Component<Props, State> {
     }
   }
 
-  private toggleType(event: MouseEvent<HTMLSpanElement>): void {
+  private toggleType(): void {
     if (this.state.type === "text") {
       this.setState({type: "password"});
     } else {
@@ -107,7 +102,7 @@ type Props = {
   value: string,
   label?: string,
   type: "text" | "password" | "flexible",
-  validate?: {regexp: RegExp, message: string} | ((value: string) => string | null),
+  validate?: (value: string) => string | null,
   usesTooltip: boolean,
   readOnly: boolean,
   disabled: boolean,

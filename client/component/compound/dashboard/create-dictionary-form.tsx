@@ -27,7 +27,7 @@ export class CreateDictionaryForm extends StoreComponent<Props, State> {
     name: "新規辞書"
   };
 
-  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(): Promise<void> {
     let name = this.state.name;
     let response = await this.requestPost("createDictionary", {name});
     if (response.status === 200) {

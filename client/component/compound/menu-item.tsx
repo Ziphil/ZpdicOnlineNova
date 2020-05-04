@@ -13,6 +13,9 @@ import {
   inject,
   route
 } from "/client/component/decorator";
+import {
+  createStyleName
+} from "/client/util/style-name";
 
 
 @route @inject
@@ -30,12 +33,12 @@ export class MenuItem extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let styleNames = ["root"];
-    if (this.props.highlight) {
-      styleNames.push("highlight");
-    }
+    let styleName = createStyleName(
+      "root",
+      {if: this.props.highlight, true: "highlight"}
+    );
     let node = (
-      <a styleName={styleNames.join(" ")} href={this.props.href} onClick={this.handleClick.bind(this)}>
+      <a styleName={styleName} href={this.props.href} onClick={this.handleClick.bind(this)}>
         <span styleName="icon">{this.props.iconLabel}</span>
         <span styleName="text">{this.props.label}</span>
       </a>

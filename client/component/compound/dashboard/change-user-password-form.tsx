@@ -21,7 +21,10 @@ import {
   getMessage
 } from "/client/component/message";
 import {
-  validatePassword
+  createValidate
+} from "/client/util/misc";
+import {
+  validatePassword as rawValidatePassword
 } from "/server/model/validation";
 
 
@@ -33,7 +36,7 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
     password: ""
   };
 
-  private async handleClick(event: MouseEvent<HTMLElement>): Promise<void> {
+  private async handleClick(): Promise<void> {
     let password = this.state.password;
     let response = await this.requestPost("changeUserPassword", {password});
     if (response.status === 200) {
@@ -45,12 +48,10 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let validatePasswordString = function (password: string): string | null {
-      return (validatePassword(password)) ? null : getMessage("invalidPassword");
-    };
+    let validate = createValidate(rawValidatePassword, getMessage("invalidPassword"));
     let node = (
       <form styleName="root">
-        <Input label="パスワード" type="flexible" value={this.state.password} validate={validatePasswordString} usesTooltip={true} onSet={(password) => this.setState({password})}/>
+        <Input label="パスワード" type="flexible" value={this.state.password} validate={validate} usesTooltip={true} onSet={(password) => this.setState({password})}/>
         <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );

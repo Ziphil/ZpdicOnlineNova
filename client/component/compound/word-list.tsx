@@ -43,7 +43,7 @@ export class WordList extends Component<Props, State> {
           style={this.props.style}
           authorized={this.props.authorized}
           showButton={this.props.showButton}
-          onConfirm={this.props.onConfirm && partial(this.props.onConfirm, word)}
+          onSubmit={this.props.onSubmit && partial(this.props.onSubmit, word)}
           onEditConfirm={this.props.onEditConfirm && partial(this.props.onEditConfirm, word)}
           onDeleteConfirm={this.props.onDeleteConfirm && partial(this.props.onDeleteConfirm, word)}
         />
@@ -69,7 +69,7 @@ type Props = {
   showButton: boolean,
   size: number,
   offset: number,
-  onConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
+  onSubmit?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (oldWord: SlimeWordSkeleton, newWord: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
   onDeleteConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void
 };
