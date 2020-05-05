@@ -2,6 +2,7 @@ node_modules
 dist
 upload
 *.code-workspace
+*.env
 .vscode
 desktop.ini
 Thumbs.db

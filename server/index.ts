@@ -3,6 +3,7 @@
 import * as sendgrid from "@sendgrid/mail";
 import * as parser from "body-parser";
 import * as cookieParser from "cookie-parser";
+import * as dotenv from "dotenv";
 import * as express from "express";
 import {
   Express,
@@ -32,6 +33,8 @@ import {
   takeLog
 } from "/server/util/misc";
 
+
+dotenv.config({path: "./variable.env"});
 
 export const PORT = process.env["PORT"] || 8050;
 export const MONGO_URI = process.env["MONGO_URI"] || "mongodb://localhost:27017/zpdic";
