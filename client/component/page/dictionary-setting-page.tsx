@@ -156,7 +156,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
       contentNodes.push(this.renderDeleteDictionaryForm());
     }
     let node = (
-      <Page showsDictionary={true} dictionary={this.state.dictionary}>
+      <Page dictionary={this.state.dictionary} showDictionary={true}>
         <Menu mode="general" specs={menuSpecs}/>
         {contentNodes}
       </Page>

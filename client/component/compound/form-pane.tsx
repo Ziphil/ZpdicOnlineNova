@@ -22,9 +22,13 @@ import {
 @applyStyle(require("./form-pane.scss"))
 export class FormPane extends Component<Props, State> {
 
+  public static defaultProps: Props = {
+    errorType: null
+  };
+
   public render(): ReactNode {
     let errorType = this.props.errorType;
-    let errorNode = (errorType !== null && errorType !== undefined) && (
+    let errorNode = (errorType !== null) && (
       <div styleName="error">
         <InformationPane texts={[getMessage(errorType)]} style="error" onClose={this.props.onErrorClose}/>
       </div>
@@ -44,7 +48,7 @@ export class FormPane extends Component<Props, State> {
 
 
 type Props = {
-  errorType?: string | null,
+  errorType: string | null,
   onErrorClose?: (event: MouseEvent<HTMLButtonElement>) => void
 };
 type State = {
