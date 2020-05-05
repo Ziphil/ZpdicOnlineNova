@@ -2,7 +2,6 @@
 
 import * as react from "react";
 import {
-  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -13,16 +12,13 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
-  InformationPane
+  FormPane
 } from "/client/component/compound";
 import {
   applyStyle,
   inject,
   route
 } from "/client/component/decorator";
-import {
-  getMessage
-} from "/client/component/message";
 
 
 @route @inject
@@ -54,15 +50,8 @@ export class LoginForm extends StoreComponent<Props, State> {
     let registerNode = (this.props.showsRegister) && (
       <Button label="新規登録" style="link" onClick={this.jumpRegister.bind(this)}/>
     );
-    let errorType = this.state.errorType;
-    let errorNode = (errorType !== null) && (
-      <div styleName="error">
-        <InformationPane texts={[getMessage(errorType)]} style="error" onClose={() => this.setState({errorType: null})}/>
-      </div>
-    );
     let node = (
-      <div>
-        {errorNode}
+      <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
           <Input label="ユーザー名" value={this.state.name} onSet={(name) => this.setState({name})}/>
           <Input label="パスワード" type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
@@ -71,7 +60,7 @@ export class LoginForm extends StoreComponent<Props, State> {
             {registerNode}
           </div>
         </form>
-      </div>
+      </FormPane>
     );
     return node;
   }

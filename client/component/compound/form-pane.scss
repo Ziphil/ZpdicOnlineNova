@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  @include white-pane;
+  padding: 20px 30px;
+}
+
+.error {
+  margin: 0px 0px 20px 0px;
+}

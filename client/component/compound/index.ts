@@ -14,6 +14,7 @@ export * from "./dictionary-header";
 export * from "./dictionary-list";
 export * from "./dictionary-pane";
 export * from "./footer";
+export * from "./form-pane";
 export * from "./header-menu-item";
 export * from "./header";
 export * from "./information-pane";

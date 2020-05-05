@@ -12,7 +12,7 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
-  InformationPane
+  FormPane
 } from "/client/component/compound";
 import {
   applyStyle,
@@ -64,18 +64,11 @@ export class RegisterForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let errorType = this.state.errorType;
-    let errorNode = (errorType !== null) && (
-      <div styleName="error">
-        <InformationPane texts={[getMessage(errorType)]} style="error" onClose={() => this.setState({errorType: null})}/>
-      </div>
-    );
     let validateName = createValidate(IDENTIFIER_REGEXP, getMessage("invalidUserName"));
     let validateEmail = createValidate(EMAIL_REGEXP, getMessage("invalidEmail"));
     let validatePassword = createValidate(rawValidatePassword, getMessage("invalidPassword"));
     let node = (
-      <div>
-        {errorNode}
+      <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
           <Input label="ユーザー名" value={this.state.name} validate={validateName} onSet={(name) => this.setState({name})}/>
           <Input label="メールアドレス" value={this.state.email} validate={validateEmail} onSet={(email) => this.setState({email})}/>
@@ -84,7 +77,7 @@ export class RegisterForm extends StoreComponent<Props, State> {
             <Button label="新規登録" reactive={true} onClick={this.performRegister.bind(this)}/>
           </div>
         </form>
-      </div>
+      </FormPane>
     );
     return node;
   }
