@@ -17,17 +17,11 @@ import {
 } from "mongoose";
 import * as multer from "multer";
 import {
-  DebugController
-} from "/server/controller/debug";
-import {
-  DictionaryController
-} from "/server/controller/dictionary";
-import {
-  NotificationController
-} from "/server/controller/notification";
-import {
+  DebugController,
+  DictionaryController,
+  NotificationController,
   UserController
-} from "/server/controller/user";
+} from "/server/controller";
 import {
   takeErrorLog,
   takeLog
