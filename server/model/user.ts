@@ -84,6 +84,9 @@ export class User {
     }
   }
 
+  // 与えられたリセットトークンのキーを用いてパスワードをリセットします。
+  // パスワードのリセットに成功した場合と、トークンの有効期限が切れていた場合は、再び同じトークンを使えないようトークンを削除します。
+  // パスワードが不正 (文字数が少ないなど) だった場合は、トークンは削除しません。
   public static async resetPassword(key: string, password: string, timeout: number): Promise<UserDocument> {
     let user = await UserModel.findOne().where("resetToken.key", key).exec();
     if (user && user.resetToken) {
@@ -91,9 +94,11 @@ export class User {
       let currentDate = new Date();
       let elapsedMinute = (currentDate.getTime() - createdDate.getTime()) / (60 * 1000);
       if (elapsedMinute < timeout) {
-        user.changePassword(password);
+        await user.changePassword(password);
+        await user.purgeResetToken();
         return user;
       } else {
+        await user.purgeResetToken();
         throw new CustomError("invalidResetToken");
       }
     } else {
@@ -109,6 +114,12 @@ export class User {
 
   public async changePassword(this: UserDocument, password: string): Promise<UserDocument> {
     this.encryptPassword(password);
+    await this.save();
+    return this;
+  }
+
+  public async purgeResetToken(this: UserDocument): Promise<UserDocument> {
+    this.resetToken = undefined;
     await this.save();
     return this;
   }
