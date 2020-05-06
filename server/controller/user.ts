@@ -33,6 +33,9 @@ import {
 import {
   CastUtil
 } from "/server/util/cast";
+import {
+  sendMail
+} from "/server/util/misc";
 
 
 @controller("/")
@@ -121,6 +124,27 @@ export class UserController extends Controller {
       let body;
       if (error.name === "CustomError" && error.type === "invalidPassword") {
         body = CustomErrorSkeleton.ofType("invalidPassword");
+      }
+      if (body) {
+        response.status(400).json(body);
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  @post(SERVER_PATH["issueUserResetToken"])
+  public async [Symbol()](request: PostRequest<"issueUserResetToken">, response: PostResponse<"issueUserResetToken">): Promise<void> {
+    let email = CastUtil.ensureString(request.body.email);
+    try {
+      let {user, resetToken} = await UserModel.issueResetToken(email);
+      let url = "http://" + request.get("host") + "/reset?key=" + resetToken.key;
+      sendMail(user.email, "パスワードリセット", "リセット用URL: " + url);
+      response.send({});
+    } catch (error) {
+      let body;
+      if (error.name === "CustomError" && error.type === "noSuchUserEmail") {
+        body = CustomErrorSkeleton.ofType("noSuchUserEmail");
       }
       if (body) {
         response.status(400).json(body);

@@ -70,7 +70,7 @@ export class User {
     }
   }
 
-  public static async createResetToken(email: string): Promise<ResetTokenDocument> {
+  public static async issueResetToken(email: string): Promise<{user: UserDocument, resetToken: ResetTokenDocument}> {
     let user = await UserModel.findOne().where("email", email).exec();
     if (user) {
       let date = new Date();
@@ -78,7 +78,7 @@ export class User {
       let resetToken = new ResetTokenModel({key, date});
       user.resetToken = resetToken;
       await user.save();
-      return resetToken;
+      return {user, resetToken};
     } else {
       throw new CustomError("noSuchUserEmail");
     }
