@@ -106,7 +106,9 @@ export class UserController extends Controller {
       response.send(body);
     } catch (error) {
       let body = (() => {
-        if (error.name === "ValidationError" && error.errors.email) {
+        if (error.name === "CustomError" && error.type === "duplicateUserEmail") {
+          return CustomErrorSkeleton.ofType("duplicateUserEmail");
+        } else if (error.name === "ValidationError" && error.errors.email) {
           return CustomErrorSkeleton.ofType("invalidEmail");
         }
       })();

@@ -115,6 +115,10 @@ export class User {
   }
 
   public async changeEmail(this: UserDocument, email: string): Promise<UserDocument> {
+    let formerUser = await UserModel.findOne().where("email", email).exec();
+    if (formerUser && formerUser.id !== this.id) {
+      throw new CustomError("duplicateUserEmail");
+    }
     this.email = email;
     await this.save();
     return this;
