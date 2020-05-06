@@ -145,8 +145,8 @@ export class UserController extends Controller {
   public async [Symbol()](request: PostRequest<"issueUserResetToken">, response: PostResponse<"issueUserResetToken">): Promise<void> {
     let email = CastUtil.ensureString(request.body.email);
     try {
-      let {user, resetToken} = await UserModel.issueResetToken(email);
-      let url = "http://" + request.get("host") + "/reset?key=" + resetToken.key;
+      let {user, key} = await UserModel.issueResetToken(email);
+      let url = "http://" + request.get("host") + "/reset?key=" + key;
       let subject = "パスワードリセットのお知らせ";
       let text = getMailText("issueUserResetToken", {url});
       sendMail(user.email, subject, text);

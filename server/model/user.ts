@@ -73,15 +73,18 @@ export class User {
     }
   }
 
-  public static async issueResetToken(email: string): Promise<{user: UserDocument, resetToken: ResetTokenDocument}> {
+  public static async issueResetToken(email: string): Promise<{user: UserDocument, key: string}> {
     let user = await UserModel.findOne().where("email", email).exec();
     if (user) {
+      let name = createRandomString(10, true);
+      let secret = createRandomString(30, false);
+      let key = name + secret;
+      let hash = hashSync(secret, 10);
       let date = new Date();
-      let key = createRandomString(30, true);
-      let resetToken = new ResetTokenModel({key, date});
+      let resetToken = new ResetTokenModel({name, hash, date});
       user.resetToken = resetToken;
       await user.save();
-      return {user, resetToken};
+      return {user, key};
     } else {
       throw new CustomError("noSuchUserEmail");
     }
@@ -91,8 +94,10 @@ export class User {
   // パスワードのリセットに成功した場合と、トークンの有効期限が切れていた場合は、再び同じトークンを使えないようトークンを削除します。
   // パスワードが不正 (文字数が少ないなど) だった場合は、トークンは削除しません。
   public static async resetPassword(key: string, password: string, timeout: number): Promise<UserDocument> {
-    let user = await UserModel.findOne().where("resetToken.key", key).exec();
-    if (user && user.resetToken) {
+    let name = key.substring(0, 23);
+    let secret = key.substring(23, 53);
+    let user = await UserModel.findOne().where("resetToken.name", name).exec();
+    if (user && user.resetToken && compareSync(secret, user.resetToken.hash)) {
       let createdDate = user.resetToken.date;
       let currentDate = new Date();
       let elapsedMinute = (currentDate.getTime() - createdDate.getTime()) / (60 * 1000);

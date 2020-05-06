@@ -10,7 +10,10 @@ import {
 export class ResetToken {
 
   @prop({required: true})
-  public key!: string;
+  public name!: string;
+
+  @prop({required: true})
+  public hash!: string;
 
   @prop({required: true})
   public date!: Date;
