@@ -224,7 +224,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
       (this.state.showsExplanation) ? <Markdown source={this.state.dictionary.explanation}/> : this.renderWordList()
     );
     let node = (
-      <Page showsDictionary={true} showsDictionarySetting={this.state.authorized} dictionary={this.state.dictionary}>
+      <Page dictionary={this.state.dictionary} showDictionary={true} authorized={this.state.authorized}>
         <div styleName="search-form">
           <SearchForm search={this.state.search} mode={this.state.mode} type={this.state.type} onSomeSet={this.handleSomeSearchSet.bind(this)}/>
         </div>

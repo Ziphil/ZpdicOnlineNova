@@ -86,7 +86,7 @@ export class DictionaryController extends Controller {
     let dictionary = request.dictionary;
     if (dictionary) {
       await dictionary.removeWhole();
-      response.json(true);
+      response.json({});
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
@@ -119,16 +119,17 @@ export class DictionaryController extends Controller {
         let body = SlimeDictionarySkeleton.from(dictionary);
         response.json(body);
       } catch (error) {
-        let body;
-        if (error.name === "CustomError") {
-          if (error.type === "duplicateDictionaryParamName") {
-            body = CustomErrorSkeleton.ofType("duplicateDictionaryParamName");
+        let body = (() => {
+          if (error.name === "CustomError") {
+            if (error.type === "duplicateDictionaryParamName") {
+              return CustomErrorSkeleton.ofType("duplicateDictionaryParamName");
+            }
+          } else if (error.name === "ValidationError") {
+            if (error.errors.paramName) {
+              return CustomErrorSkeleton.ofType("invalidDictionaryParamName");
+            }
           }
-        } else if (error.name === "ValidationError") {
-          if (error.errors.paramName) {
-            body = CustomErrorSkeleton.ofType("invalidDictionaryParamName");
-          }
-        }
+        })();
         if (body) {
           response.status(400).json(body);
         } else {
@@ -197,8 +198,12 @@ export class DictionaryController extends Controller {
         let body = SlimeWordSkeleton.from(resultWord);
         response.json(body);
       } catch (error) {
-        if (error.name === "CustomError" && error.type === "noSuchWordNumber") {
-          let body = CustomErrorSkeleton.ofType("noSuchWordNumber");
+        let body = (() => {
+          if (error.name === "CustomError" && error.type === "noSuchWordNumber") {
+            return CustomErrorSkeleton.ofType("noSuchWordNumber");
+          }
+        })();
+        if (body) {
           response.status(400).json(body);
         } else {
           throw error;
@@ -259,12 +264,13 @@ export class DictionaryController extends Controller {
         let body = SlimeDictionarySkeleton.from(dictionary);
         response.json(body);
       } else {
-        let body;
-        if (number !== undefined) {
-          body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
-        } else {
-          body = CustomErrorSkeleton.ofType("noSuchDictionaryParamName");
-        }
+        let body = (() => {
+          if (number !== undefined) {
+            return CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+          } else {
+            return CustomErrorSkeleton.ofType("noSuchDictionaryParamName");
+          }
+        })();
         response.status(400).json(body);
       }
     } else {
@@ -337,7 +343,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {
-      response.json(true);
+      response.json({});
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);

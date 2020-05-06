@@ -3,6 +3,7 @@
 import * as sendgrid from "@sendgrid/mail";
 import * as parser from "body-parser";
 import * as cookieParser from "cookie-parser";
+import * as dotenv from "dotenv";
 import * as express from "express";
 import {
   Express,
@@ -12,26 +13,22 @@ import {
 } from "express";
 import * as mongoose from "mongoose";
 import {
-  Schema
+  SchemaTypes
 } from "mongoose";
 import * as multer from "multer";
 import {
-  DebugController
-} from "/server/controller/debug";
-import {
-  DictionaryController
-} from "/server/controller/dictionary";
-import {
-  NotificationController
-} from "/server/controller/notification";
-import {
+  DebugController,
+  DictionaryController,
+  NotificationController,
   UserController
-} from "/server/controller/user";
+} from "/server/controller";
 import {
   takeErrorLog,
   takeLog
 } from "/server/util/misc";
 
+
+dotenv.config({path: "./variable.env"});
 
 export const PORT = process.env["PORT"] || 8050;
 export const MONGO_URI = process.env["MONGO_URI"] || "mongodb://localhost:27017/zpdic";
@@ -57,8 +54,9 @@ class Main {
     this.setupMongo();
     this.setupSendgrid();
     this.setupRouters();
-    this.setupErrorHandler();
+    this.setupStatic();
     this.setupFallback();
+    this.setupErrorHandler();
     this.listen();
   }
 
@@ -96,7 +94,7 @@ class Main {
     let check = function (value: string): boolean {
       return value !== null;
     };
-    let SchemaString = Schema.Types.String as any;
+    let SchemaString = SchemaTypes.String as any;
     SchemaString.checkRequired(check);
     mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
   }
@@ -114,25 +112,37 @@ class Main {
     UserController.use(this.application);
   }
 
+  private setupStatic(): void {
+    let middleware = express.static("dist");
+    this.application.use(middleware);
+  }
+
+  // ルート以外にアクセスしたときのフォールバックの設定をします。
+  private setupFallback(): void {
+    this.application.use("/api*", (request, response, next) => {
+      let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
+      takeLog("index", `not found: ${fullUrl}`);
+      response.status(404).end();
+    });
+    this.application.use("*", (request, response, next) => {
+      if ((request.method === "GET" || request.method === "HEAD") && request.accepts("html")) {
+        response.sendFile("/dist/index.html", {root: "."}, (error) => {
+          if (error) {
+            next(error);
+          }
+        });
+      } else {
+        next();
+      }
+    });
+  }
+
   private setupErrorHandler(): void {
     let handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
       takeErrorLog("index", "uncaught error occurred", error);
       response.status(500).end();
     };
     this.application.use(handler);
-  }
-
-  // ルート以外にアクセスしたときのフォールバックの設定をします。
-  private setupFallback(): void {
-    let fallback = require("express-history-api-fallback");
-    let handler = function (request: Request, response: Response, next: NextFunction): void {
-      let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
-      takeLog("index", `not found: ${fullUrl}`);
-      response.status(404).end();
-    };
-    this.application.use("/api*", handler);
-    this.application.use(express.static("dist"));
-    this.application.use(fallback("/dist/index.html", {root: "."}));
   }
 
   private listen(): void {

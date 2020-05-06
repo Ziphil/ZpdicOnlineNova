@@ -27,7 +27,7 @@ export class LoginPage extends StoreComponent<Props, State> {
     let node = (
       <Page>
         <div styleName="description">ログイン</div>
-        <div styleName="login-form">
+        <div styleName="form">
           <LoginForm showsRegister={false}/>
         </div>
       </Page>

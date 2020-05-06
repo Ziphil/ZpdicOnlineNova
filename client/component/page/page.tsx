@@ -28,18 +28,18 @@ import {
 export class Page extends Component<Props, State> {
 
   public static defaultProps: Props = {
-    showsDictionary: false,
-    showsDictionarySetting: false,
-    dictionary: null
+    dictionary: null,
+    showDictionary: false,
+    authorized: false
   };
 
   public render(): ReactNode {
     let spacerStyleName = createStyleName(
       "spacer",
-      {if: this.props.showsDictionary, true: "dictionary"}
+      {if: this.props.showDictionary, true: "dictionary"}
     );
-    let dictionaryHeaderNode = (this.props.showsDictionary) && (
-      <DictionaryHeader dictionary={this.props.dictionary} authorized={this.props.showsDictionarySetting}/>
+    let dictionaryHeaderNode = (this.props.showDictionary) && (
+      <DictionaryHeader dictionary={this.props.dictionary} authorized={this.props.authorized}/>
     );
     let node = (
       <div styleName="root" id="page">
@@ -60,9 +60,9 @@ export class Page extends Component<Props, State> {
 
 
 type Props = {
-  showsDictionary: boolean,
-  showsDictionarySetting: boolean,
-  dictionary: SlimeDictionarySkeleton | null;
+  dictionary: SlimeDictionarySkeleton | null,
+  showDictionary: boolean,
+  authorized: boolean
 };
 type State = {
 };

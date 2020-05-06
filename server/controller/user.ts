@@ -14,6 +14,9 @@ import {
   post
 } from "/server/controller/decorator";
 import {
+  getMailText
+} from "/server/controller/mail-text";
+import {
   login,
   logout,
   verifyUser
@@ -33,6 +36,9 @@ import {
 import {
   CastUtil
 } from "/server/util/cast";
+import {
+  sendMail
+} from "/server/util/misc";
 
 
 @controller("/")
@@ -51,7 +57,7 @@ export class UserController extends Controller {
   @post(SERVER_PATH["logout"])
   @before(logout())
   public async [Symbol()](request: PostRequest<"logout">, response: PostResponse<"logout">): Promise<void> {
-    response.json(true);
+    response.json({});
   }
 
   @post(SERVER_PATH["registerUser"])
@@ -64,20 +70,23 @@ export class UserController extends Controller {
       let body = UserSkeleton.from(user);
       response.send(body);
     } catch (error) {
-      let body;
-      if (error.name === "CustomError") {
-        if (error.type === "duplicateUserName") {
-          body = CustomErrorSkeleton.ofType("duplicateUserName");
-        } else if (error.type === "invalidPassword") {
-          body = CustomErrorSkeleton.ofType("invalidPassword");
+      let body = (() => {
+        if (error.name === "CustomError") {
+          if (error.type === "duplicateUserName") {
+            return CustomErrorSkeleton.ofType("duplicateUserName");
+          } else if (error.type === "duplicateUserEmail") {
+            return CustomErrorSkeleton.ofType("duplicateUserEmail");
+          } else if (error.type === "invalidPassword") {
+            return CustomErrorSkeleton.ofType("invalidPassword");
+          }
+        } else if (error.name === "ValidationError") {
+          if (error.errors.name) {
+            return CustomErrorSkeleton.ofType("invalidUserName");
+          } else if (error.errors.email) {
+            return CustomErrorSkeleton.ofType("invalidEmail");
+          }
         }
-      } else if (error.name === "ValidationError") {
-        if (error.errors.name) {
-          body = CustomErrorSkeleton.ofType("invalidUserName");
-        } else if (error.errors.email) {
-          body = CustomErrorSkeleton.ofType("invalidEmail");
-        }
-      }
+      })();
       if (body) {
         response.status(400).json(body);
       } else {
@@ -96,10 +105,11 @@ export class UserController extends Controller {
       let body = UserSkeleton.from(user);
       response.send(body);
     } catch (error) {
-      let body;
-      if (error.name === "ValidationError" && error.errors.email) {
-        body = CustomErrorSkeleton.ofType("invalidEmail");
-      }
+      let body = (() => {
+        if (error.name === "ValidationError" && error.errors.email) {
+          return CustomErrorSkeleton.ofType("invalidEmail");
+        }
+      })();
       if (body) {
         response.status(400).json(body);
       } else {
@@ -118,10 +128,61 @@ export class UserController extends Controller {
       let body = UserSkeleton.from(user);
       response.send(body);
     } catch (error) {
-      let body;
-      if (error.name === "CustomError" && error.type === "invalidPassword") {
-        body = CustomErrorSkeleton.ofType("invalidPassword");
+      let body = (() => {
+        if (error.name === "CustomError" && error.type === "invalidPassword") {
+          return CustomErrorSkeleton.ofType("invalidPassword");
+        }
+      })();
+      if (body) {
+        response.status(400).json(body);
+      } else {
+        throw error;
       }
+    }
+  }
+
+  @post(SERVER_PATH["issueUserResetToken"])
+  public async [Symbol()](request: PostRequest<"issueUserResetToken">, response: PostResponse<"issueUserResetToken">): Promise<void> {
+    let email = CastUtil.ensureString(request.body.email);
+    try {
+      let {user, key} = await UserModel.issueResetToken(email);
+      let url = "http://" + request.get("host") + "/reset?key=" + key;
+      let subject = "パスワードリセットのお知らせ";
+      let text = getMailText("issueUserResetToken", {url});
+      sendMail(user.email, subject, text);
+      response.send({});
+    } catch (error) {
+      let body = (() => {
+        if (error.name === "CustomError" && error.type === "noSuchUserEmail") {
+          return CustomErrorSkeleton.ofType("noSuchUserEmail");
+        }
+      })();
+      if (body) {
+        response.status(400).json(body);
+      } else {
+        throw error;
+      }
+    }
+  }
+
+  @post(SERVER_PATH["resetUserPassword"])
+  public async [Symbol()](request: PostRequest<"resetUserPassword">, response: PostResponse<"resetUserPassword">): Promise<void> {
+    let key = CastUtil.ensureString(request.body.key);
+    let password = CastUtil.ensureString(request.body.password);
+    try {
+      let user = await UserModel.resetPassword(key, password, 60);
+      let body = UserSkeleton.from(user);
+      response.send(body);
+    } catch (error) {
+      let body = (() => {
+        if (error.name === "CustomError") {
+          if (error.type === "invalidResetToken") {
+            return CustomErrorSkeleton.ofType("invalidResetToken");
+          } else if (error.type === "invalidPassword") {
+            return CustomErrorSkeleton.ofType("invalidPassword");
+          }
+        }
+      })();
       if (body) {
         response.status(400).json(body);
       } else {

@@ -18,6 +18,32 @@ export function deleteAt<T>(array: Array<T>, index: number): Array<T> {
   return array;
 }
 
+export function trimIndent(strings: TemplateStringsArray, ...expressions: Array<any>): string {
+  let finalStrings = [];
+  for (let i = 0 ; i < strings.length ; i ++) {
+    finalStrings.push(strings[i]);
+    if (i !== strings.length - 1) {
+      finalStrings.push(expressions[i].toString());
+    }
+  }
+  let string = finalStrings.join("");
+  let splitString = string.split(/\n/).filter((line) => !line.match(/^\s*$/));
+  let indentLength = splitString.reduce((indentLength, line) => {
+    let match = line.match(/^(\s*)/);
+    if (match && indentLength > match[1].length) {
+      return match[1].length;
+    } else {
+      return indentLength;
+    }
+  }, 1000);
+  let trimmedString = splitString.map((line) => {
+    let regexp = new RegExp("^\\s{" + indentLength + "}");
+    return line.replace(regexp, "");
+  });
+  let result = trimmedString.join("\n");
+  return result;
+}
+
 export function hasTypedOwnProperty<T extends object>(object: T, key: string | symbol | number): key is keyof T {
   return object.hasOwnProperty(key);
 }

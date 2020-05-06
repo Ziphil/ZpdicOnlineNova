@@ -9,6 +9,9 @@ import {
 import {
   send as sendMailOriginal
 } from "@sendgrid/mail";
+import {
+  randomBytes
+} from "crypto";
 
 
 export function takeLog(place: string, object: any): void {
@@ -24,9 +27,19 @@ export function takeErrorLog(place: string, object: any, error: Error): void {
   console.error(error);
 }
 
-export async function sendMail(to: EmailData, subject: string, html: string): Promise<ClientResponse> {
+export async function sendMail(to: EmailData, subject: string, text: string): Promise<ClientResponse> {
   let from = {name: "ZpDIC Online", email: "info@zpdic.ziphil.com"};
-  let message = {to, from, subject, html};
+  let trackingSettings = {clickTracking: {enable: false, enableText: false}};
+  let message = {to, from, subject, text, trackingSettings};
   let response = await sendMailOriginal(message);
   return response[0];
+}
+
+export function createRandomString(length: number, addDate?: boolean): string {
+  let string = randomBytes(length).toString("base64").substring(0, length).replace(/\+/g, "-").replace(/\//g, "_");
+  if (addDate) {
+    let date = new Date();
+    string += date.getTime();
+  }
+  return string;
 }

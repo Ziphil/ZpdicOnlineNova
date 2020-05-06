@@ -33,6 +33,7 @@ import {
   LoginPage,
   NotificationPage,
   RegisterPage,
+  ResetUserPasswordPage,
   TopPage
 } from "/client/component/page";
 import {
@@ -88,6 +89,7 @@ export class Root extends StoreComponent<Props, State> {
               <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
               <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
               <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
+              <GuestRoute exact path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
               <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
               <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
               <Route exact path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>

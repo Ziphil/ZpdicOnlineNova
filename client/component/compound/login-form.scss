@@ -4,8 +4,6 @@
 
 
 .root {
-  @include white-pane;
-  padding: 20px 30px;
   line-height: $line-height;
   box-sizing: border-box;
   display: flex;
@@ -22,20 +20,25 @@
 }
 
 .button-group {
-  display: flex;
+  margin: 15px 0px 0px 0px;
+}
+
+.row {
+  margin: 10px 0px 0px 0px;
+  text-align: center;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
-.button-group >* {
-  margin: 0px 0px 0px 30px;
-}
-
-.button-group >*:first-child {
+.row:first-child {
   margin: 0px;
 }
 
-.error {
-  margin: 0px 0px 20px 0px;
+.row >* {
+  margin: 0px 0px 0px 20px;
+}
+
+.row >*:first-child {
+  margin: 0px;
 }

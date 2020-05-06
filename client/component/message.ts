@@ -8,6 +8,8 @@ import {
 const MESSAGES = {
   emailChanged: "メールアドレスを変更しました。",
   passwordChanged: "パスワードを変更しました。",
+  userResetTokenIssued: "パスワードリセット用の URL を記載したメールを送信しました。メールの指示に従って操作を進めてください。",
+  userPasswordReset: "パスワードのリセットが完了しました。新しいパスワードを用いてログインしてください。",
   dictionaryNameChanged: "辞書の表示名を変更しました。",
   dictionaryParamNameChanged: "辞書の URL 用名称を変更しました。",
   dictionarySecretChanged: "辞書の一覧表示の設定を変更しました。",
@@ -20,6 +22,9 @@ const MESSAGES = {
   invalidEmail: "メールアドレスが不正です。",
   invalidPassword: "パスワードが不正です。6 文字以上 50 文字以下である必要があります。",
   duplicateUserName: "そのユーザー名はすでに存在しています。別のユーザー名を指定してください。",
+  duplicateUserEmail: "そのメールアドレスはすでに登録済みです。別のメールアドレスを指定してください。",
+  noSuchUserEmail: "そのメールアドレスのユーザーは存在しません。",
+  invalidResetToken: "パスワードのリセットに失敗しました。",
   loginFailed: "ログインに失敗しました。",
   noSuchDictionaryNumber: "この番号の辞書は存在しません。",
   noSuchDictionaryParamName: "この名称の辞書は存在しません。",
