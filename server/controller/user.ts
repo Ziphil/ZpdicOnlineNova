@@ -145,9 +145,10 @@ export class UserController extends Controller {
 
   @post(SERVER_PATH["issueUserResetToken"])
   public async [Symbol()](request: PostRequest<"issueUserResetToken">, response: PostResponse<"issueUserResetToken">): Promise<void> {
+    let name = CastUtil.ensureString(request.body.name);
     let email = CastUtil.ensureString(request.body.email);
     try {
-      let {user, key} = await UserModel.issueResetToken(email);
+      let {user, key} = await UserModel.issueResetToken(name, email);
       let url = "http://" + request.get("host") + "/reset?key=" + key;
       let subject = "パスワードリセットのお知らせ";
       let text = getMailText("issueUserResetToken", {url});
@@ -155,8 +156,8 @@ export class UserController extends Controller {
       response.send({});
     } catch (error) {
       let body = (() => {
-        if (error.name === "CustomError" && error.type === "noSuchUserEmail") {
-          return CustomErrorSkeleton.ofType("noSuchUserEmail");
+        if (error.name === "CustomError" && error.type === "noSuchUser") {
+          return CustomErrorSkeleton.ofType("noSuchUser");
         }
       })();
       if (body) {

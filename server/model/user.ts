@@ -73,8 +73,8 @@ export class User {
     }
   }
 
-  public static async issueResetToken(email: string): Promise<{user: UserDocument, key: string}> {
-    let user = await UserModel.findOne().where("email", email).exec();
+  public static async issueResetToken(name: string, email: string): Promise<{user: UserDocument, key: string}> {
+    let user = await UserModel.findOne().where("name", name).where("email", email).exec();
     if (user) {
       let name = createRandomString(10, true);
       let secret = createRandomString(30, false);
@@ -86,7 +86,7 @@ export class User {
       await user.save();
       return {user, key};
     } else {
-      throw new CustomError("noSuchUserEmail");
+      throw new CustomError("noSuchUser");
     }
   }
 

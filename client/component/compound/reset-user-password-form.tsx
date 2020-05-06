@@ -36,6 +36,7 @@ import {
 export class ResetUserPasswordForm extends StoreComponent<Props, State> {
 
   public state: State = {
+    name: "",
     email: "",
     password: "",
     errorType: null,
@@ -43,8 +44,9 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
   };
 
   private async issueResetToken(): Promise<void> {
+    let name = this.state.name;
     let email = this.state.email;
-    let response = await this.requestPost("issueUserResetToken", {email}, true);
+    let response = await this.requestPost("issueUserResetToken", {name, email}, true);
     let body = response.data;
     if (response.status === 200) {
       this.setState({errorType: "userResetTokenIssued", errorStyle: "information"});
@@ -70,11 +72,11 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
   }
 
   private renderIssueResetTokenForm(): ReactNode {
-    let validate = createValidate(EMAIL_REGEXP, getMessage("invalidEmail"));
     let node = (
       <FormPane errorType={this.state.errorType} errorStyle={this.state.errorStyle} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
-          <Input label="メールアドレス" value={this.state.email} validate={validate} onSet={(email) => this.setState({email})}/>
+          <Input label="ユーザー名" value={this.state.name} onSet={(name) => this.setState({name})}/>
+          <Input label="メールアドレス" value={this.state.email} onSet={(email) => this.setState({email})}/>
           <div styleName="button-group">
             <div styleName="row">
               <Button label="送信" iconLabel="&#xF0E0;" style="information" reactive={true} onClick={this.issueResetToken.bind(this)}/>
@@ -115,6 +117,7 @@ type Props = {
   tokenKey: string | null
 };
 type State = {
+  name: string,
   email: string,
   password: string,
   errorType: string | null,
