@@ -46,6 +46,10 @@ export class LoginForm extends StoreComponent<Props, State> {
     this.pushPath("/register");
   }
 
+  private async jumpResetPassword(): Promise<void> {
+    this.pushPath("/reset");
+  }
+
   public render(): ReactNode {
     let registerNode = (this.props.showsRegister) && (
       <Button label="新規登録" style="link" onClick={this.jumpRegister.bind(this)}/>
@@ -56,8 +60,13 @@ export class LoginForm extends StoreComponent<Props, State> {
           <Input label="ユーザー名" value={this.state.name} onSet={(name) => this.setState({name})}/>
           <Input label="パスワード" type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
-            <Button label="ログイン" reactive={true} onClick={this.performLogin.bind(this)}/>
-            {registerNode}
+            <div styleName="row">
+              <Button label="ログイン" reactive={true} onClick={this.performLogin.bind(this)}/>
+              {registerNode}
+            </div>
+            <div styleName="row">
+              <Button label="パスワードを忘れた" style="link" onClick={this.jumpResetPassword.bind(this)}/>
+            </div>
           </div>
         </form>
       </FormPane>

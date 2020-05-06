@@ -20,16 +20,25 @@
 }
 
 .button-group {
-  display: flex;
+  margin: 15px 0px 0px 0px;
+}
+
+.row {
+  margin: 10px 0px 0px 0px;
+  text-align: center;
   flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
-.button-group >* {
-  margin: 0px 0px 0px 30px;
+.row:first-child {
+  margin: 0px;
 }
 
-.button-group >*:first-child {
+.row >* {
+  margin: 0px 0px 0px 20px;
+}
+
+.row >*:first-child {
   margin: 0px;
 }

@@ -74,7 +74,9 @@ export class RegisterForm extends StoreComponent<Props, State> {
           <Input label="メールアドレス" value={this.state.email} validate={validateEmail} onSet={(email) => this.setState({email})}/>
           <Input label="パスワード" type="flexible" value={this.state.password} validate={validatePassword} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
-            <Button label="新規登録" reactive={true} onClick={this.performRegister.bind(this)}/>
+            <div styleName="row">
+              <Button label="新規登録" reactive={true} onClick={this.performRegister.bind(this)}/>
+            </div>
           </div>
         </form>
       </FormPane>
