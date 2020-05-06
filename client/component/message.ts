@@ -22,6 +22,7 @@ const MESSAGES = {
   invalidEmail: "メールアドレスが不正です。",
   invalidPassword: "パスワードが不正です。6 文字以上 50 文字以下である必要があります。",
   duplicateUserName: "そのユーザー名はすでに存在しています。別のユーザー名を指定してください。",
+  duplicateUserEmail: "そのメールアドレスはすでに登録済みです。別のメールアドレスを指定してください。",
   noSuchUserEmail: "そのメールアドレスのユーザーは存在しません。",
   invalidResetToken: "パスワードのリセットに失敗しました。",
   loginFailed: "ログインに失敗しました。",

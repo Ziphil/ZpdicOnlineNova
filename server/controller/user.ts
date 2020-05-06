@@ -74,6 +74,8 @@ export class UserController extends Controller {
         if (error.name === "CustomError") {
           if (error.type === "duplicateUserName") {
             return CustomErrorSkeleton.ofType("duplicateUserName");
+          } else if (error.type === "duplicateUserEmail") {
+            return CustomErrorSkeleton.ofType("duplicateUserEmail");
           } else if (error.type === "invalidPassword") {
             return CustomErrorSkeleton.ofType("invalidPassword");
           }

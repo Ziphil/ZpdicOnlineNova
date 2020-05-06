@@ -48,9 +48,12 @@ export class User {
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
   // 渡されたパスワードは自動的にハッシュ化されます。
   public static async register(name: string, email: string, password: string): Promise<UserDocument> {
-    let formerUser = await UserModel.findOne().where("name", name).exec();
-    if (formerUser) {
+    let formerNameUser = await UserModel.findOne().where("name", name).exec();
+    let formerEmailUser = await UserModel.findOne().where("email", email).exec();
+    if (formerNameUser) {
       throw new CustomError("duplicateUserName");
+    } else if (formerEmailUser) {
+      throw new CustomError("duplicateUserEmail");
     }
     let user = new UserModel({name, email});
     await user.encryptPassword(password);
