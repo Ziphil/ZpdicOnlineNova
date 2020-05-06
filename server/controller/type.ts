@@ -253,7 +253,7 @@ type ProcessType = {
       request: {email: string},
       response: {
         200: UserSkeleton,
-        400: CustomErrorSkeleton<"invalidEmail">
+        400: CustomErrorSkeleton<"duplicateUserEmail" | "invalidEmail">
       }
     }
   },
