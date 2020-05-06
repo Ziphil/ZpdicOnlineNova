@@ -52,7 +52,7 @@ export class LoginForm extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let registerNode = (this.props.showsRegister) && (
-      <Button label="新規登録" style="link" onClick={this.jumpRegister.bind(this)}/>
+      <Button label="新規登録" iconLabel="&#xF234;" onClick={this.jumpRegister.bind(this)}/>
     );
     let node = (
       <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
@@ -61,11 +61,11 @@ export class LoginForm extends StoreComponent<Props, State> {
           <Input label="パスワード" type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label="ログイン" reactive={true} onClick={this.performLogin.bind(this)}/>
+              <Button label="ログイン" iconLabel="&#xF2F6;" style="information" reactive={true} onClick={this.performLogin.bind(this)}/>
               {registerNode}
             </div>
             <div styleName="row">
-              <Button label="パスワードを忘れた" style="link" onClick={this.jumpResetPassword.bind(this)}/>
+              <Button label="パスワードを忘れた" iconLabel="&#xF128;" style="simple" onClick={this.jumpResetPassword.bind(this)}/>
             </div>
           </div>
         </form>

@@ -77,7 +77,7 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
           <Input label="メールアドレス" value={this.state.email} validate={validate} onSet={(email) => this.setState({email})}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label="送信" reactive={true} onClick={this.issueResetToken.bind(this)}/>
+              <Button label="送信" iconLabel="&#xF0E0;" style="information" reactive={true} onClick={this.issueResetToken.bind(this)}/>
             </div>
           </div>
         </form>
@@ -94,7 +94,7 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
           <Input label="新しいパスワード" value={this.state.password} validate={validate} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label="変更" reactive={true} onClick={this.resetPassword.bind(this)}/>
+              <Button label="変更" iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.resetPassword.bind(this)}/>
             </div>
           </div>
         </form>
