@@ -27,9 +27,10 @@ export function takeErrorLog(place: string, object: any, error: Error): void {
   console.error(error);
 }
 
-export async function sendMail(to: EmailData, subject: string, html: string): Promise<ClientResponse> {
+export async function sendMail(to: EmailData, subject: string, text: string): Promise<ClientResponse> {
   let from = {name: "ZpDIC Online", email: "info@zpdic.ziphil.com"};
-  let message = {to, from, subject, html};
+  let trackingSettings = {clickTracking: {enable: false, enableText: false}};
+  let message = {to, from, subject, text, trackingSettings};
   let response = await sendMailOriginal(message);
   return response[0];
 }

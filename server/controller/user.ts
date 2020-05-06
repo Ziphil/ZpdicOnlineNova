@@ -14,6 +14,9 @@ import {
   post
 } from "/server/controller/decorator";
 import {
+  getMailText
+} from "/server/controller/mail-text";
+import {
   login,
   logout,
   verifyUser
@@ -142,7 +145,9 @@ export class UserController extends Controller {
     try {
       let {user, resetToken} = await UserModel.issueResetToken(email);
       let url = "http://" + request.get("host") + "/reset?key=" + resetToken.key;
-      sendMail(user.email, "パスワードリセット", "リセット用URL: " + url);
+      let subject = "パスワードリセットのお知らせ";
+      let text = getMailText("issueUserResetToken", {url});
+      sendMail(user.email, subject, text);
       response.send({});
     } catch (error) {
       let body = (() => {
