@@ -39,6 +39,7 @@ export const SERVER_PATH = {
   registerUser: "/api/user/register",
   changeUserEmail: "/api/user/edit/email",
   changeUserPassword: "/api/user/edit/password",
+  issueUserResetToken: "/api/user/reset/issue",
   fetchUser: "/api/user/info",
   addNotification: "/api/news/add",
   fetchNotifications: "/api/news/list"
@@ -262,6 +263,16 @@ type ProcessType = {
       response: {
         200: UserSkeleton,
         400: CustomErrorSkeleton<"invalidPassword">
+      }
+    }
+  },
+  issueUserResetToken: {
+    get: Noop,
+    post: {
+      request: {email: string},
+      response: {
+        200: {},
+        400: CustomErrorSkeleton<"noSuchUserEmail">
       }
     }
   },

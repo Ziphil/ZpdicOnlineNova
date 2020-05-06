@@ -18,6 +18,7 @@ export * from "./form-pane";
 export * from "./header-menu-item";
 export * from "./header";
 export * from "./information-pane";
+export * from "./issue-user-reset-token-form";
 export * from "./loading";
 export * from "./login-form";
 export * from "./logo";
