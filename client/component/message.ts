@@ -8,6 +8,7 @@ import {
 const MESSAGES = {
   emailChanged: "メールアドレスを変更しました。",
   passwordChanged: "パスワードを変更しました。",
+  userResetTokenIssued: "パスワードリセット用の URL を記載したメールを送信しました。メールの指示に従って操作を進めてください。",
   dictionaryNameChanged: "辞書の表示名を変更しました。",
   dictionaryParamNameChanged: "辞書の URL 用名称を変更しました。",
   dictionarySecretChanged: "辞書の一覧表示の設定を変更しました。",

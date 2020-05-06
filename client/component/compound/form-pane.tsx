@@ -23,14 +23,16 @@ import {
 export class FormPane extends Component<Props, State> {
 
   public static defaultProps: Props = {
-    errorType: null
+    errorType: null,
+    errorStyle: "error"
   };
 
   public render(): ReactNode {
     let errorType = this.props.errorType;
+    let errorStyle = this.props.errorStyle;
     let errorNode = (errorType !== null) && (
       <div styleName="error">
-        <InformationPane texts={[getMessage(errorType)]} style="error" onClose={this.props.onErrorClose}/>
+        <InformationPane texts={[getMessage(errorType)]} style={errorStyle} onClose={this.props.onErrorClose}/>
       </div>
     );
     let node = (
@@ -49,6 +51,7 @@ export class FormPane extends Component<Props, State> {
 
 type Props = {
   errorType: string | null,
+  errorStyle: "error" | "information",
   onErrorClose?: (event: MouseEvent<HTMLButtonElement>) => void
 };
 type State = {

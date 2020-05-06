@@ -8,7 +8,7 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
-  IssueUserResetTokenForm
+  ResetUserPasswordForm
 } from "/client/component/compound";
 import {
   applyStyle,
@@ -29,7 +29,7 @@ export class ResetUserPasswordPage extends StoreComponent<Props, State> {
       <Page>
         <div styleName="description">パスワードリセット</div>
         <div styleName="form">
-          <IssueUserResetTokenForm/>
+          <ResetUserPasswordForm/>
         </div>
       </Page>
     );
