@@ -27,7 +27,7 @@ export class RegisterPage extends StoreComponent<Props, State> {
     let node = (
       <Page>
         <div styleName="description">新規登録</div>
-        <div styleName="login-form">
+        <div styleName="form">
           <RegisterForm/>
         </div>
       </Page>

@@ -28,7 +28,7 @@ export class ResetUserPasswordPage extends StoreComponent<Props, State> {
     let node = (
       <Page>
         <div styleName="description">パスワードリセット</div>
-        <div styleName="login-form">
+        <div styleName="form">
           <IssueUserResetTokenForm/>
         </div>
       </Page>

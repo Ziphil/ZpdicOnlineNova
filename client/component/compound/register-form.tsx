@@ -33,7 +33,7 @@ import {
 
 
 @route @inject
-@applyStyle(require("./login-form.scss"))
+@applyStyle(require("./register-form.scss"))
 export class RegisterForm extends StoreComponent<Props, State> {
 
   public state: State = {

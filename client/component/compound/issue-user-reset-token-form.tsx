@@ -31,7 +31,7 @@ import {
 
 
 @route @inject
-@applyStyle(require("./login-form.scss"))
+@applyStyle(require("./issue-user-reset-token-form.scss"))
 export class IssueUserResetTokenForm extends StoreComponent<Props, State> {
 
   public state: State = {
