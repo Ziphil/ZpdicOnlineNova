@@ -14,7 +14,6 @@ import {
 } from "/server/model/error";
 import {
   ResetToken,
-  ResetTokenDocument,
   ResetTokenModel
 } from "/server/model/reset-token";
 import {
@@ -75,7 +74,7 @@ export class User {
 
   public static async issueResetToken(name: string, email: string): Promise<{user: UserDocument, key: string}> {
     let user = await UserModel.findOne().where("name", name).where("email", email).exec();
-    if (user) {
+    if (user && user.authority !== "admin") {
       let name = createRandomString(10, true);
       let secret = createRandomString(30, false);
       let key = name + secret;
