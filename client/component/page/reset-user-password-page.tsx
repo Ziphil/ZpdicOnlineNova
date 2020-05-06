@@ -1,5 +1,6 @@
 //
 
+import * as queryParser from "query-string";
 import * as react from "react";
 import {
   ReactNode
@@ -24,12 +25,23 @@ import {
 @applyStyle(require("./reset-user-password-page.scss"))
 export class ResetUserPasswordPage extends StoreComponent<Props, State> {
 
+  public constructor(props: Props) {
+    super(props);
+    this.serializeQuery();
+  }
+
+  private serializeQuery(): void {
+    let query = queryParser.parse(this.props.location!.search);
+    let tokenKey = (typeof query.key === "string") ? query.key : null;
+    this.state = {tokenKey};
+  }
+
   public render(): ReactNode {
     let node = (
       <Page>
         <div styleName="description">パスワードリセット</div>
         <div styleName="form">
-          <ResetUserPasswordForm/>
+          <ResetUserPasswordForm tokenKey={this.state.tokenKey}/>
         </div>
       </Page>
     );
@@ -42,4 +54,5 @@ export class ResetUserPasswordPage extends StoreComponent<Props, State> {
 type Props = {
 };
 type State = {
+  tokenKey: string | null;
 };
