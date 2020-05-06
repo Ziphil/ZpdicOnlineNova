@@ -282,7 +282,7 @@ type ProcessType = {
     post: {
       request: {key: string, password: string},
       response: {
-        200: {},
+        200: UserSkeleton,
         400: CustomErrorSkeleton<"invalidResetToken" | "invalidPassword">
       }
     }

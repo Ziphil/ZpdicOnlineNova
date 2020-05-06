@@ -158,6 +158,32 @@ export class UserController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["resetUserPassword"])
+  public async [Symbol()](request: PostRequest<"resetUserPassword">, response: PostResponse<"resetUserPassword">): Promise<void> {
+    let key = CastUtil.ensureString(request.body.key);
+    let password = CastUtil.ensureString(request.body.password);
+    try {
+      let user = await UserModel.resetPassword(key, password, 60);
+      let body = UserSkeleton.from(user);
+      response.send(body);
+    } catch (error) {
+      let body = (() => {
+        if (error.name === "CustomError") {
+          if (error.type === "invalidResetToken") {
+            return CustomErrorSkeleton.ofType("invalidResetToken");
+          } else if (error.type === "invalidPassword") {
+            return CustomErrorSkeleton.ofType("invalidPassword");
+          }
+        }
+      })();
+      if (body) {
+        response.status(400).json(body);
+      } else {
+        throw error;
+      }
+    }
+  }
+
   @get(SERVER_PATH["fetchUser"])
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
