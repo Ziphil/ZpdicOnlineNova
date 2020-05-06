@@ -9,6 +9,9 @@ import {
 import {
   send as sendMailOriginal
 } from "@sendgrid/mail";
+import {
+  randomBytes
+} from "crypto";
 
 
 export function takeLog(place: string, object: any): void {
@@ -29,4 +32,13 @@ export async function sendMail(to: EmailData, subject: string, html: string): Pr
   let message = {to, from, subject, html};
   let response = await sendMailOriginal(message);
   return response[0];
+}
+
+export function createRandomString(length: number, addDate?: boolean): string {
+  let string = randomBytes(length).toString("base64").substring(0, length).replace("+", "-").replace("/", "_");
+  if (addDate) {
+    let date = new Date();
+    string += date.getTime();
+  }
+  return string;
 }

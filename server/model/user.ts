@@ -5,19 +5,26 @@ import {
   getModelForClass,
   prop
 } from "@hasezoey/typegoose";
-import * as bcrypt from "bcrypt";
-import * as crypto from "crypto";
+import {
+  compareSync,
+  hashSync
+} from "bcrypt";
 import {
   CustomError
 } from "/server/model/error";
+import {
+  ResetToken,
+  ResetTokenDocument,
+  ResetTokenModel
+} from "/server/model/reset-token";
 import {
   EMAIL_REGEXP,
   IDENTIFIER_REGEXP,
   validatePassword
 } from "/server/model/validation";
-
-
-const SALT_ROUND = 10;
+import {
+  createRandomString
+} from "/server/util/misc";
 
 
 export class User {
@@ -30,6 +37,9 @@ export class User {
 
   @prop({required: true})
   public hash!: string;
+
+  @prop()
+  public resetToken?: ResetToken;
 
   @prop()
   public authority?: string;
@@ -60,6 +70,37 @@ export class User {
     }
   }
 
+  public static async createResetToken(email: string): Promise<ResetTokenDocument> {
+    let user = await UserModel.findOne().where("email", email).exec();
+    if (user) {
+      let date = new Date();
+      let key = createRandomString(30, true);
+      let resetToken = new ResetTokenModel({key, date});
+      user.resetToken = resetToken;
+      await user.save();
+      return resetToken;
+    } else {
+      throw new CustomError("noSuchUserEmail");
+    }
+  }
+
+  public static async resetPassword(key: string, password: string, timeout: number): Promise<UserDocument> {
+    let user = await UserModel.findOne().where("resetToken.key", key).exec();
+    if (user && user.resetToken) {
+      let createdDate = user.resetToken.date;
+      let currentDate = new Date();
+      let elapsedMinute = (currentDate.getTime() - createdDate.getTime()) / (60 * 1000);
+      if (elapsedMinute < timeout) {
+        user.changePassword(password);
+        return user;
+      } else {
+        throw new CustomError("invalidResetToken");
+      }
+    } else {
+      throw new CustomError("invalidResetToken");
+    }
+  }
+
   public async changeEmail(this: UserDocument, email: string): Promise<UserDocument> {
     this.email = email;
     await this.save();
@@ -72,28 +113,16 @@ export class User {
     return this;
   }
 
-  public async resetPassword(this: UserDocument): Promise<{password: string, user: UserDocument}> {
-    let password = this.generatePassword(16);
-    this.encryptPassword(password);
-    await this.save();
-    return {password, user: this};
-  }
-
-  private generatePassword(length: number): string {
-    let bytes = crypto.randomBytes(length);
-    let password = bytes.toString("base64").substring(0, length);
-    return password;
-  }
-
   private encryptPassword(password: string): void {
     if (!validatePassword(password)) {
       throw new CustomError("invalidPassword");
     }
-    this.hash = bcrypt.hashSync(password, SALT_ROUND);
+    let hash = hashSync(password, 10);
+    this.hash = hash;
   }
 
   private comparePassword(password: string): boolean {
-    return bcrypt.compareSync(password, this.hash);
+    return compareSync(password, this.hash);
   }
 
 }
