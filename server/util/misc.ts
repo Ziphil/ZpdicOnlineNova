@@ -28,7 +28,7 @@ export function takeErrorLog(place: string, object: any, error: Error): void {
 }
 
 export async function sendMail(to: EmailData, subject: string, text: string): Promise<ClientResponse> {
-  let from = {name: "ZpDIC Online", email: "info@zpdic.ziphil.com"};
+  let from = {name: "ZpDIC Online", email: "zpdic@ziphil.com"};
   let trackingSettings = {clickTracking: {enable: false, enableText: false}};
   let message = {to, from, subject, text, trackingSettings};
   let response = await sendMailOriginal(message);
