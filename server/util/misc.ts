@@ -36,7 +36,7 @@ export async function sendMail(to: EmailData, subject: string, text: string): Pr
 }
 
 export function createRandomString(length: number, addDate?: boolean): string {
-  let string = randomBytes(length).toString("base64").substring(0, length).replace("+", "-").replace("/", "_");
+  let string = randomBytes(length).toString("base64").substring(0, length).replace(/\+/g, "-").replace(/\//g, "_");
   if (addDate) {
     let date = new Date();
     string += date.getTime();
