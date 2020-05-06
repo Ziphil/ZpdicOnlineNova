@@ -270,10 +270,10 @@ type ProcessType = {
   issueUserResetToken: {
     get: Noop,
     post: {
-      request: {email: string},
+      request: {name: string, email: string},
       response: {
         200: {},
-        400: CustomErrorSkeleton<"noSuchUserEmail">
+        400: CustomErrorSkeleton<"noSuchUser">
       }
     }
   },
