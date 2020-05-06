@@ -67,20 +67,21 @@ export class UserController extends Controller {
       let body = UserSkeleton.from(user);
       response.send(body);
     } catch (error) {
-      let body;
-      if (error.name === "CustomError") {
-        if (error.type === "duplicateUserName") {
-          body = CustomErrorSkeleton.ofType("duplicateUserName");
-        } else if (error.type === "invalidPassword") {
-          body = CustomErrorSkeleton.ofType("invalidPassword");
+      let body = (() => {
+        if (error.name === "CustomError") {
+          if (error.type === "duplicateUserName") {
+            return CustomErrorSkeleton.ofType("duplicateUserName");
+          } else if (error.type === "invalidPassword") {
+            return CustomErrorSkeleton.ofType("invalidPassword");
+          }
+        } else if (error.name === "ValidationError") {
+          if (error.errors.name) {
+            return CustomErrorSkeleton.ofType("invalidUserName");
+          } else if (error.errors.email) {
+            return CustomErrorSkeleton.ofType("invalidEmail");
+          }
         }
-      } else if (error.name === "ValidationError") {
-        if (error.errors.name) {
-          body = CustomErrorSkeleton.ofType("invalidUserName");
-        } else if (error.errors.email) {
-          body = CustomErrorSkeleton.ofType("invalidEmail");
-        }
-      }
+      })();
       if (body) {
         response.status(400).json(body);
       } else {
@@ -99,10 +100,11 @@ export class UserController extends Controller {
       let body = UserSkeleton.from(user);
       response.send(body);
     } catch (error) {
-      let body;
-      if (error.name === "ValidationError" && error.errors.email) {
-        body = CustomErrorSkeleton.ofType("invalidEmail");
-      }
+      let body = (() => {
+        if (error.name === "ValidationError" && error.errors.email) {
+          return CustomErrorSkeleton.ofType("invalidEmail");
+        }
+      })();
       if (body) {
         response.status(400).json(body);
       } else {
@@ -121,10 +123,11 @@ export class UserController extends Controller {
       let body = UserSkeleton.from(user);
       response.send(body);
     } catch (error) {
-      let body;
-      if (error.name === "CustomError" && error.type === "invalidPassword") {
-        body = CustomErrorSkeleton.ofType("invalidPassword");
-      }
+      let body = (() => {
+        if (error.name === "CustomError" && error.type === "invalidPassword") {
+          return CustomErrorSkeleton.ofType("invalidPassword");
+        }
+      })();
       if (body) {
         response.status(400).json(body);
       } else {
@@ -142,10 +145,11 @@ export class UserController extends Controller {
       sendMail(user.email, "パスワードリセット", "リセット用URL: " + url);
       response.send({});
     } catch (error) {
-      let body;
-      if (error.name === "CustomError" && error.type === "noSuchUserEmail") {
-        body = CustomErrorSkeleton.ofType("noSuchUserEmail");
-      }
+      let body = (() => {
+        if (error.name === "CustomError" && error.type === "noSuchUserEmail") {
+          return CustomErrorSkeleton.ofType("noSuchUserEmail");
+        }
+      })();
       if (body) {
         response.status(400).json(body);
       } else {
