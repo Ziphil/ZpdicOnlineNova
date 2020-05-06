@@ -14,7 +14,6 @@ import {
 } from "/server/model/error";
 import {
   ResetToken,
-  ResetTokenDocument,
   ResetTokenModel
 } from "/server/model/reset-token";
 import {
