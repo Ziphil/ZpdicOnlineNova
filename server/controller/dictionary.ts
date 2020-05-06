@@ -86,7 +86,7 @@ export class DictionaryController extends Controller {
     let dictionary = request.dictionary;
     if (dictionary) {
       await dictionary.removeWhole();
-      response.json(true);
+      response.json({});
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
@@ -337,7 +337,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {
-      response.json(true);
+      response.json({});
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);

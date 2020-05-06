@@ -71,7 +71,7 @@ type ProcessType = {
     post: {
       request: {number: number},
       response: {
-        200: boolean,
+        200: {},
         400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
@@ -210,7 +210,7 @@ type ProcessType = {
     get: {
       request: {number: number},
       response: {
-        200: boolean,
+        200: {},
         400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     },
@@ -231,7 +231,7 @@ type ProcessType = {
     post: {
       request: {},
       response: {
-        200: boolean,
+        200: {},
         400: never
       }
     }

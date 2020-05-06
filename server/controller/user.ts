@@ -51,7 +51,7 @@ export class UserController extends Controller {
   @post(SERVER_PATH["logout"])
   @before(logout())
   public async [Symbol()](request: PostRequest<"logout">, response: PostResponse<"logout">): Promise<void> {
-    response.json(true);
+    response.json({});
   }
 
   @post(SERVER_PATH["registerUser"])
