@@ -52,7 +52,7 @@ export class LoginForm extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let registerNode = (this.props.showsRegister) && (
-      <Button label="新規登録" iconLabel="&#xF234;" onClick={this.jumpRegister.bind(this)}/>
+      <Button label="新規登録" iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
     );
     let node = (
       <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
