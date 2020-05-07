@@ -79,7 +79,7 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
     let node = (
       <FormPane errorType={this.state.errorType} errorStyle={this.state.errorStyle} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
-          <Input label="ユーザー名" value={this.state.name} onSet={(name) => this.setState({name})}/>
+          <Input label="ユーザー ID" value={this.state.name} onSet={(name) => this.setState({name})}/>
           <Input label="メールアドレス" value={this.state.email} onSet={(email) => this.setState({email})}/>
           <div styleName="button-group">
             <div styleName="row">

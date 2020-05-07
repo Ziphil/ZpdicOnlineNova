@@ -76,7 +76,7 @@ export class RegisterForm extends StoreComponent<Props, State> {
     let node = (
       <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
-          <Input label="ユーザー名" value={this.state.name} validate={validateName} onSet={(name) => this.setState({name})}/>
+          <Input label="ユーザー ID" value={this.state.name} validate={validateName} onSet={(name) => this.setState({name})}/>
           <Input label="メールアドレス" value={this.state.email} validate={validateEmail} onSet={(email) => this.setState({email})}/>
           <Input label="パスワード" type="flexible" value={this.state.password} validate={validatePassword} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
