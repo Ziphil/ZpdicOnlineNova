@@ -138,7 +138,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <DeleteDictionaryForm number={this.state.dictionary!.number} onSubmit={() => this.pushPath("/dashboard", true)}/>
+        <DeleteDictionaryForm number={this.state.dictionary!.number} onSubmit={() => this.pushPath("/dashboard", {}, true)}/>
       </SettingPane>
     );
     return node;

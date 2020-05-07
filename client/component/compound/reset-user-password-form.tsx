@@ -26,7 +26,6 @@ import {
   createValidate
 } from "/client/util/misc";
 import {
-  EMAIL_REGEXP,
   validatePassword as rawValidatePassword
 } from "/server/model/validation";
 
@@ -42,6 +41,11 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
     errorType: null,
     errorStyle: "error"
   };
+
+  public componentDidMount(): void {
+    let name = this.props.location!.state.name;
+    this.setState({name});
+  }
 
   private async issueResetToken(): Promise<void> {
     let name = this.state.name;

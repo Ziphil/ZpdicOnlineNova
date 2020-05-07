@@ -43,11 +43,14 @@ export class LoginForm extends StoreComponent<Props, State> {
   }
 
   private async jumpRegister(): Promise<void> {
-    this.pushPath("/register");
+    let name = this.state.name;
+    let password = this.state.password;
+    this.pushPath("/register", {name, password});
   }
 
   private async jumpResetPassword(): Promise<void> {
-    this.pushPath("/reset");
+    let name = this.state.name;
+    this.pushPath("/reset", {name});
   }
 
   public render(): ReactNode {

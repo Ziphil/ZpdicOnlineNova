@@ -43,6 +43,12 @@ export class RegisterForm extends StoreComponent<Props, State> {
     errorType: null
   };
 
+  public componentDidMount(): void {
+    let name = this.props.location!.state.name;
+    let password = this.props.location!.state.password;
+    this.setState({name, password});
+  }
+
   private async performRegister(): Promise<void> {
     let name = this.state.name;
     let email = this.state.email;
