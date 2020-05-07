@@ -105,7 +105,8 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let mode = this.props.match?.params.mode || "dictionary";
     let menuSpecs = [
       {mode: "dictionary", label: "辞書", iconLabel: "\uF02D", href: "/dashboard"},
-      {mode: "setting", label: "設定", iconLabel: "\uF4FE", href: "/dashboard/setting"},
+      {mode: "notification", label: "通知", iconLabel: "\uF0F3", href: "/dashboard/notification"},
+      {mode: "profile", label: "アカウント", iconLabel: "\uF2C2", href: "/dashboard/profile"},
       {mode: "logout", label: "ログアウト", iconLabel: "\uF2F5", href: "/"}
     ];
     let contentNodes = [];
@@ -113,7 +114,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
       if (mode === "dictionary") {
         contentNodes.push(this.renderDictionaryList());
         contentNodes.push(this.renderCreateDictionaryForm());
-      } else if (mode === "setting") {
+      } else if (mode === "profile") {
         contentNodes.push(this.renderChangeEmailForm());
         contentNodes.push(this.renderChangeUserPasswordForm());
       }
