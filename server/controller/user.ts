@@ -68,6 +68,9 @@ export class UserController extends Controller {
     try {
       let user = await UserModel.register(name, email, password);
       let body = UserSkeleton.from(user);
+      let subject = "ユーザー登録完了のお知らせ";
+      let text = getMailText("registerUser", {name});
+      sendMail(user.email, subject, text);
       response.send(body);
     } catch (error) {
       let body = (() => {

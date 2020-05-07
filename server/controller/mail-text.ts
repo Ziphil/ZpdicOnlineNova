@@ -6,6 +6,11 @@ import {
 
 
 const MAIL_TEXTS = {
+  registerUser: trimIndent`
+    ZpDIC Online へのご登録ありがとうございます。
+    アカウントの作成が完了しましたのでご連絡いたします。
+    ・ ユーザー名: %name%
+  `,
   issueUserResetToken: trimIndent`
     ZpDIC Online をご利用いただきありがとうございます。
     %br%
