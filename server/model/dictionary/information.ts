@@ -7,7 +7,7 @@ import {
 } from "@hasezoey/typegoose";
 
 
-export class SlimeInformation {
+export class Information {
 
   @prop({required: true})
   public title!: string;
@@ -18,5 +18,5 @@ export class SlimeInformation {
 }
 
 
-export type SlimeInformationDocument = DocumentType<SlimeInformation>;
-export let SlimeInformationModel = getModelForClass(SlimeInformation);
+export type InformationDocument = DocumentType<Information>;
+export let InformationModel = getModelForClass(Information);

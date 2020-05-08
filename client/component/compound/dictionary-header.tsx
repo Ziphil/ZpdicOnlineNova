@@ -20,8 +20,8 @@ import {
   route
 } from "/client/component/decorator";
 import {
-  SlimeDictionarySkeleton
-} from "/server/skeleton/dictionary/slime";
+  DictionarySkeleton
+} from "/server/skeleton/dictionary";
 
 
 @route @inject
@@ -98,7 +98,7 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton | null,
+  dictionary: DictionarySkeleton | null,
   authorized: boolean,
   showsDownload: boolean,
   preservesQuery: boolean

@@ -20,8 +20,8 @@ import {
   createStyleName
 } from "/client/util/style-name";
 import {
-  SlimeDictionarySkeleton
-} from "/server/skeleton/dictionary/slime";
+  DictionarySkeleton
+} from "/server/skeleton/dictionary";
 
 
 @applyStyle(require("./page.scss"))
@@ -60,7 +60,7 @@ export class Page extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton | null,
+  dictionary: DictionarySkeleton | null,
   showDictionary: boolean,
   authorized: boolean
 };

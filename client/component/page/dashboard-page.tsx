@@ -25,8 +25,8 @@ import {
   Page
 } from "/client/component/page/page";
 import {
-  SlimeDictionarySkeleton
-} from "/server/skeleton/dictionary/slime";
+  DictionarySkeleton
+} from "/server/skeleton/dictionary";
 
 
 @route @inject
@@ -134,7 +134,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionaries: Array<SlimeDictionarySkeleton> | null;
+  dictionaries: Array<DictionarySkeleton> | null;
 };
 type Params = {
   mode: string

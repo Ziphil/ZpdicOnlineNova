@@ -20,8 +20,8 @@ import {
   DateUtil
 } from "/client/util/date";
 import {
-  SlimeDictionarySkeleton
-} from "/server/skeleton/dictionary/slime";
+  DictionarySkeleton
+} from "/server/skeleton/dictionary";
 
 
 @route @inject
@@ -105,7 +105,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton,
+  dictionary: DictionarySkeleton,
   showsSetting: boolean
 };
 type State = {

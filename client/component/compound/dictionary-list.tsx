@@ -15,8 +15,8 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  SlimeDictionarySkeleton
-} from "/server/skeleton/dictionary/slime";
+  DictionarySkeleton
+} from "/server/skeleton/dictionary";
 
 
 @applyStyle(require("./dictionary-list.scss"))
@@ -50,7 +50,7 @@ export class DictionaryList extends Component<Props, State> {
 
 
 type Props = {
-  dictionaries: Array<SlimeDictionarySkeleton>,
+  dictionaries: Array<DictionarySkeleton>,
   showsSetting: boolean,
   size: number
 };

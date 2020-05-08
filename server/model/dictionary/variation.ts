@@ -7,7 +7,7 @@ import {
 } from "@hasezoey/typegoose";
 
 
-export class SlimeVariation {
+export class Variation {
 
   @prop({required: true})
   public title!: string;
@@ -18,5 +18,5 @@ export class SlimeVariation {
 }
 
 
-export type SlimeVariationDocument = DocumentType<SlimeVariation>;
-export let SlimeVariationModel = getModelForClass(SlimeVariation);
+export type VariationDocument = DocumentType<Variation>;
+export let VariationModel = getModelForClass(Variation);

@@ -16,8 +16,8 @@ import {
   ResponseType
 } from "/server/controller/type";
 import {
-  SlimeDictionaryDocument
-} from "/server/model/dictionary/slime";
+  DictionaryDocument
+} from "/server/model/dictionary";
 import {
   UserDocument
 } from "/server/model/user";
@@ -68,7 +68,7 @@ export interface Request<N extends ProcessName, M extends MethodType> extends Ex
 
   // ユーザ－に辞書の編集権限があった場合に辞書データが格納されます。
   // このプロパティは、verifyDictionary ミドルウェアが呼び出された場合にのみ、値が格納されます。
-  dictionary?: SlimeDictionaryDocument;
+  dictionary?: DictionaryDocument;
 
 }
 

@@ -26,8 +26,8 @@ import {
   Page
 } from "/client/component/page/page";
 import {
-  SlimeDictionarySkeleton
-} from "/server/skeleton/dictionary/slime";
+  DictionarySkeleton
+} from "/server/skeleton/dictionary";
 
 
 @route @inject
@@ -170,7 +170,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
 type Props = {
 };
 type State = {
-  dictionary: SlimeDictionarySkeleton | null,
+  dictionary: DictionarySkeleton | null,
   authorized: boolean
 };
 type Params = {

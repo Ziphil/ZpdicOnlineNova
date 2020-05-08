@@ -20,11 +20,11 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  SlimeDictionarySkeleton,
-  SlimeEditWordSkeleton,
-  SlimeRelationSkeleton,
-  SlimeWordSkeleton
-} from "/server/skeleton/dictionary/slime";
+  DictionarySkeleton,
+  EditWordSkeleton,
+  RelationSkeleton,
+  WordSkeleton
+} from "/server/skeleton/dictionary";
 
 
 @applyStyle(require("./word-pane.scss"))
@@ -103,7 +103,7 @@ export class WordPane extends Component<Props, State> {
   }
 
   private renderRelations(): ReactNode {
-    let groupedRelations = new Map<string, Array<SlimeRelationSkeleton>>();
+    let groupedRelations = new Map<string, Array<RelationSkeleton>>();
     for (let relation of this.props.word.relations) {
       let title = relation.title;
       if (groupedRelations.get(title) === undefined) {
@@ -176,13 +176,13 @@ export class WordPane extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton,
-  word: SlimeWordSkeleton,
+  dictionary: DictionarySkeleton,
+  word: WordSkeleton,
   style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (word: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onEditConfirm?: (word: EditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
   onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {

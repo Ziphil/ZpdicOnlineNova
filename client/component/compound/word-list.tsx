@@ -18,10 +18,10 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  SlimeDictionarySkeleton,
-  SlimeEditWordSkeleton,
-  SlimeWordSkeleton
-} from "/server/skeleton/dictionary/slime";
+  DictionarySkeleton,
+  EditWordSkeleton,
+  WordSkeleton
+} from "/server/skeleton/dictionary";
 
 
 @applyStyle(require("./word-list.scss"))
@@ -62,16 +62,16 @@ export class WordList extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton,
-  words: Array<SlimeWordSkeleton>,
+  dictionary: DictionarySkeleton,
+  words: Array<WordSkeleton>,
   style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
   size: number,
   offset: number,
-  onSubmit?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: SlimeWordSkeleton, newWord: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
-  onDeleteConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void
+  onSubmit?: (word: WordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
+  onEditConfirm?: (oldWord: WordSkeleton, newWord: EditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onDeleteConfirm?: (word: WordSkeleton, event: MouseEvent<HTMLButtonElement>) => void
 };
 type State = {
 };

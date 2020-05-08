@@ -5,12 +5,9 @@ import {
   getModelForClass,
   prop
 } from "@hasezoey/typegoose";
-import {
-  SlimeRelationSkeleton
-} from "/server/skeleton/dictionary/slime";
 
 
-export class SlimeRelation {
+export class Relation {
 
   @prop({required: true})
   public title!: string;
@@ -24,5 +21,5 @@ export class SlimeRelation {
 }
 
 
-export type SlimeRelationDocument = DocumentType<SlimeRelation>;
-export let SlimeRelationModel = getModelForClass(SlimeRelation);
+export type RelationDocument = DocumentType<Relation>;
+export let RelationModel = getModelForClass(Relation);

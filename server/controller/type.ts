@@ -1,10 +1,10 @@
 //
 
 import {
-  SlimeDictionarySkeleton,
-  SlimeEditWordSkeleton,
-  SlimeWordSkeleton
-} from "/server/skeleton/dictionary/slime";
+  DictionarySkeleton,
+  EditWordSkeleton,
+  WordSkeleton
+} from "/server/skeleton/dictionary";
 import {
   CustomErrorSkeleton
 } from "/server/skeleton/error";
@@ -52,7 +52,7 @@ type ProcessType = {
     post: {
       request: {name: string},
       response: {
-        200: SlimeDictionarySkeleton,
+        200: DictionarySkeleton,
         400: never
       }
     }
@@ -62,7 +62,7 @@ type ProcessType = {
     post: {
       request: {number: number},
       response: {
-        200: SlimeDictionarySkeleton,
+        200: DictionarySkeleton,
         400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
@@ -82,7 +82,7 @@ type ProcessType = {
     post: {
       request: {number: number, name: string},
       response: {
-        200: SlimeDictionarySkeleton,
+        200: DictionarySkeleton,
         400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
@@ -92,7 +92,7 @@ type ProcessType = {
     post: {
       request: {number: number, paramName: string},
       response: {
-        200: SlimeDictionarySkeleton,
+        200: DictionarySkeleton,
         400: CustomErrorSkeleton<"noSuchDictionaryNumber" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
       }
     }
@@ -102,7 +102,7 @@ type ProcessType = {
     post: {
       request: {number: number, secret: boolean},
       response: {
-        200: SlimeDictionarySkeleton,
+        200: DictionarySkeleton,
         400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
@@ -112,7 +112,7 @@ type ProcessType = {
     post: {
       request: {number: number, explanation: string},
       response: {
-        200: SlimeDictionarySkeleton,
+        200: DictionarySkeleton,
         400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
@@ -120,9 +120,9 @@ type ProcessType = {
   editWord: {
     get: Noop,
     post: {
-      request: {number: number, word: SlimeEditWordSkeleton},
+      request: {number: number, word: EditWordSkeleton},
       response: {
-        200: SlimeWordSkeleton,
+        200: WordSkeleton,
         400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     }
@@ -132,7 +132,7 @@ type ProcessType = {
     post: {
       request: {number: number, wordNumber: number},
       response: {
-        200: SlimeWordSkeleton,
+        200: WordSkeleton,
         400: CustomErrorSkeleton<"noSuchDictionaryNumber" | "noSuchWordNumber">
       }
     }
@@ -141,7 +141,7 @@ type ProcessType = {
     get: {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
       response: {
-        200: {hitSize: number, hitWords: Array<SlimeWordSkeleton>},
+        200: {hitSize: number, hitWords: Array<WordSkeleton>},
         400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     },
@@ -161,7 +161,7 @@ type ProcessType = {
     get: {
       request: {number?: number, paramName?: string},
       response: {
-        200: SlimeDictionarySkeleton,
+        200: DictionarySkeleton,
         400: CustomErrorSkeleton<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
       }
     },
@@ -171,7 +171,7 @@ type ProcessType = {
     get: {
       request: {number: number},
       response: {
-        200: SlimeDictionarySkeleton,
+        200: DictionarySkeleton,
         400: CustomErrorSkeleton<"noSuchDictionaryNumber">
       }
     },
@@ -181,7 +181,7 @@ type ProcessType = {
     get: {
       request: {},
       response: {
-        200: Array<SlimeDictionarySkeleton>,
+        200: Array<DictionarySkeleton>,
         400: never
       }
     },
@@ -191,7 +191,7 @@ type ProcessType = {
     get: {
       request: {},
       response: {
-        200: Array<SlimeDictionarySkeleton>,
+        200: Array<DictionarySkeleton>,
         400: never
       }
     },

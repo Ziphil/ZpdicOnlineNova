@@ -8,16 +8,16 @@ import {
 } from "fs";
 import * as oboe from "oboe";
 import {
-  SlimeEquivalentModel,
-  SlimeInformationModel,
-  SlimeRelationModel,
-  SlimeVariationModel,
-  SlimeWordDocument,
-  SlimeWordModel
-} from "/server/model/dictionary/slime";
+  EquivalentModel,
+  InformationModel,
+  RelationModel,
+  VariationModel,
+  WordDocument,
+  WordModel
+} from "/server/model/dictionary";
 
 
-export class SlimeDeserializer extends EventEmitter {
+export class DictionaryDeserializer extends EventEmitter {
 
   public path: string;
   private error: Error | null = null;
@@ -27,7 +27,7 @@ export class SlimeDeserializer extends EventEmitter {
     this.path = path;
   }
 
-  public on<E extends keyof SlimeDeserializerType>(event: E, listener: (...args: SlimeDeserializerType[E]) => void): this;
+  public on<E extends keyof Event>(event: E, listener: (...args: Event[E]) => void): this;
   public on(event: string | symbol, listener: (...args: any) => void): this {
     super.on(event, listener);
     return this;
@@ -63,13 +63,13 @@ export class SlimeDeserializer extends EventEmitter {
     });
   }
 
-  private createWord(raw: any): SlimeWordDocument {
-    let word = new SlimeWordModel({});
+  private createWord(raw: any): WordDocument {
+    let word = new WordModel({});
     word.number = parseInt(raw["entry"]["id"], 10);
     word.name = raw["entry"]["form"];
     word.equivalents = [];
     for (let rawEquivalent of raw["translations"]) {
-      let equivalent = new SlimeEquivalentModel({});
+      let equivalent = new EquivalentModel({});
       equivalent.title = rawEquivalent["title"];
       equivalent.names = rawEquivalent["forms"];
       word.equivalents.push(equivalent);
@@ -77,21 +77,21 @@ export class SlimeDeserializer extends EventEmitter {
     word.tags = raw["tags"];
     word.informations = [];
     for (let rawInformation of raw["contents"]) {
-      let information = new SlimeInformationModel({});
+      let information = new InformationModel({});
       information.title = rawInformation["title"];
       information.text = rawInformation["text"];
       word.informations.push(information);
     }
     word.variations = [];
     for (let rawVariation of raw["variations"]) {
-      let variation = new SlimeVariationModel({});
+      let variation = new VariationModel({});
       variation.title = rawVariation["title"];
       variation.name = rawVariation["form"];
       word.variations.push(variation);
     }
     word.relations = [];
     for (let rawRelation of raw["relations"]) {
-      let relation = new SlimeRelationModel({});
+      let relation = new RelationModel({});
       relation.title = rawRelation["title"];
       relation.number = parseInt(rawRelation["entry"]["id"], 10);
       relation.name = rawRelation["entry"]["form"];
@@ -103,11 +103,9 @@ export class SlimeDeserializer extends EventEmitter {
 }
 
 
-interface SlimeDeserializerType {
-
-  word: [SlimeWordDocument];
-  other: [string, any];
-  end: [];
-  error: [Error];
-
-}
+type Event = {
+  word: [WordDocument],
+  other: [string, any],
+  end: [],
+  error: [Error]
+};

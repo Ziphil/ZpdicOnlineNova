@@ -11,8 +11,8 @@ import {
   JWT_SECRET
 } from "/server/index";
 import {
-  SlimeDictionaryModel
-} from "/server/model/dictionary/slime";
+  DictionaryModel
+} from "/server/model/dictionary";
 import {
   UserModel
 } from "/server/model/user";
@@ -61,7 +61,7 @@ export function verifyDictionary(): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let user = request.user!;
     let number = parseInt(request.query.number || request.body.number, 10);
-    let dictionary = await SlimeDictionaryModel.findOneByNumber(number);
+    let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
       if (user.equals(dictionary.user)) {
         request.dictionary = dictionary;

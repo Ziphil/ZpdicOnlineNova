@@ -8,7 +8,7 @@ import {
 } from "@hasezoey/typegoose";
 
 
-export class SlimeEquivalent {
+export class Equivalent {
 
   @prop({required: true})
   public title!: string;
@@ -19,5 +19,5 @@ export class SlimeEquivalent {
 }
 
 
-export type SlimeEquivalentDocument = DocumentType<SlimeEquivalent>;
-export let SlimeEquivalentModel = getModelForClass(SlimeEquivalent);
+export type EquivalentDocument = DocumentType<Equivalent>;
+export let EquivalentModel = getModelForClass(Equivalent);

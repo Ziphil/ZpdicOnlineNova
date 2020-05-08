@@ -32,11 +32,11 @@ import {
   SearchModeUtil,
   SearchType,
   SearchTypeUtil
-} from "/server/model/dictionary/search-parameter";
+} from "/server/model/search-parameter";
 import {
-  SlimeDictionarySkeleton,
-  SlimeWordSkeleton
-} from "/server/skeleton/dictionary/slime";
+  DictionarySkeleton,
+  WordSkeleton
+} from "/server/skeleton/dictionary";
 
 
 @route @inject
@@ -242,7 +242,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionary: SlimeDictionarySkeleton | null,
+  dictionary: DictionarySkeleton | null,
   authorized: boolean,
   search: string,
   mode: SearchMode,
@@ -250,7 +250,7 @@ type State = {
   page: number,
   showsExplanation: boolean,
   hitSize: number,
-  hitWords: Array<SlimeWordSkeleton>
+  hitWords: Array<WordSkeleton>
 };
 type Params = {
   value: string
