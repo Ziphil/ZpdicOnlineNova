@@ -48,7 +48,7 @@ export class Controller {
 }
 
 
-export interface Request<N extends ProcessName, M extends MethodType> extends ExpressRequest<ExpressParams, ResponseType<N, M>, RequestType<N, M>> {
+export interface Request<N extends ProcessName, M extends MethodType> extends ExpressRequest<ExpressParams, ResponseType<N, M>, RequestType<N, M>, any> {
 
   // GET リクエストの際のクエリ文字列をパースした結果です。
   // 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。
