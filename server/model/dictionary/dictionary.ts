@@ -4,6 +4,7 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
+  isDocument,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -400,7 +401,7 @@ export class DictionaryCreator {
     let userPromise = new Promise(async (resolve, reject) => {
       try {
         await raw.populate("user").execPopulate();
-        if (raw.user && "name" in raw.user) {
+        if (raw.user && isDocument(raw.user)) {
           skeleton.userName = raw.user.name;
         }
         resolve();
