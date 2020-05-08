@@ -1,16 +1,15 @@
 //
 
 import {
-  DocumentType,
   getModelForClass,
   prop
-} from "@hasezoey/typegoose";
+} from "@typegoose/typegoose";
 import {
   Variation as VariationSkeleton
 } from "/server/skeleton/dictionary";
 
 
-export class Variation {
+export class VariationSchema {
 
   @prop({required: true})
   public title!: string;
@@ -33,5 +32,5 @@ export class VariationCreator {
 }
 
 
-export type VariationDocument = DocumentType<Variation>;
-export let VariationModel = getModelForClass(Variation);
+export type Variation = VariationSchema;
+export let VariationModel = getModelForClass(VariationSchema);

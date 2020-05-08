@@ -4,16 +4,17 @@ import {
   DocumentType,
   Ref,
   getModelForClass,
+  modelOptions,
   prop
-} from "@hasezoey/typegoose";
+} from "@typegoose/typegoose";
 import {
   DocumentQuery
 } from "mongoose";
 import {
   DictionaryDeserializer,
   DictionarySerializer,
+  Word,
   WordCreator,
-  WordDocument,
   WordModel
 } from "/server/model/dictionary";
 import {
@@ -24,7 +25,7 @@ import {
 } from "/server/model/search-parameter";
 import {
   User,
-  UserDocument
+  UserSchema
 } from "/server/model/user";
 import {
   IDENTIFIER_REGEXP
@@ -42,10 +43,11 @@ import {
 } from "/server/util/query";
 
 
-export class Dictionary {
+@modelOptions({schemaOptions: {collection: "dictionaries"}})
+export class DictionarySchema {
 
-  @prop({required: true, ref: User})
-  public user!: Ref<User>;
+  @prop({required: true, ref: UserSchema})
+  public user!: Ref<UserSchema>;
 
   @prop({required: true, unique: true})
   public number!: number;
@@ -71,7 +73,7 @@ export class Dictionary {
   @prop()
   public externalData?: object;
 
-  public static async createEmpty(name: string, user: UserDocument): Promise<DictionaryDocument> {
+  public static async createEmpty(name: string, user: User): Promise<Dictionary> {
     let dictionary = new DictionaryModel({});
     dictionary.user = user;
     dictionary.number = await DictionaryModel.nextNumber();
@@ -85,39 +87,39 @@ export class Dictionary {
     return dictionary;
   }
 
-  public static async findPublic(): Promise<Array<DictionaryDocument>> {
+  public static async findPublic(): Promise<Array<Dictionary>> {
     let dictionaries = await DictionaryModel.find().ne("secret", true).sort("-updatedDate -number").exec();
     return dictionaries;
   }
 
-  public static async findOneByNumber(number: number): Promise<DictionaryDocument | null> {
+  public static async findOneByNumber(number: number): Promise<Dictionary | null> {
     let query = DictionaryModel.findOne().where("number", number);
     let dictionary = await query.exec();
     return dictionary;
   }
 
-  public static async findOneByValue(value: number | string): Promise<DictionaryDocument | null> {
+  public static async findOneByValue(value: number | string): Promise<Dictionary | null> {
     let key = (typeof value === "number") ? "number" : "paramName";
     let query = DictionaryModel.findOne().where(key, value);
     let dictionary = await query.exec();
     return dictionary;
   }
 
-  public static async findByUser(user: UserDocument): Promise<Array<DictionaryDocument>> {
+  public static async findByUser(user: User): Promise<Array<Dictionary>> {
     let dictionaries = await DictionaryModel.find().where("user", user).sort("-updatedDate -number").exec();
     return dictionaries;
   }
 
   // この辞書に登録されている単語データを全て削除し、ファイルから読み込んだデータを代わりに保存します。
   // 辞書の内部データも、ファイルから読み込んだものに更新されます。
-  public async upload(this: DictionaryDocument, path: string): Promise<DictionaryDocument> {
+  public async upload(this: Dictionary, path: string): Promise<Dictionary> {
     this.status = "saving";
     this.updatedDate = new Date();
     this.externalData = {};
     await this.save();
     await WordModel.deleteMany({}).where("dictionary", this).exec();
     let externalData = {} as any;
-    let promise = new Promise<DictionaryDocument>((resolve, reject) => {
+    let promise = new Promise<Dictionary>((resolve, reject) => {
       let stream = new DictionaryDeserializer(path);
       let count = 0;
       stream.on("word", (word) => {
@@ -148,7 +150,7 @@ export class Dictionary {
     return this;
   }
 
-  public async download(this: DictionaryDocument, path: string): Promise<void> {
+  public async download(this: Dictionary, path: string): Promise<void> {
     let promise = new Promise<void>((resolve, reject) => {
       let stream = new DictionarySerializer(path, this);
       stream.on("end", () => {
@@ -162,12 +164,12 @@ export class Dictionary {
     await promise;
   }
 
-  public async removeWhole(this: DictionaryDocument): Promise<void> {
+  public async removeWhole(this: Dictionary): Promise<void> {
     await WordModel.deleteMany({}).where("dictionary", this).exec();
     await this.remove();
   }
 
-  public async changeParamName(this: DictionaryDocument, paramName: string): Promise<DictionaryDocument> {
+  public async changeParamName(this: Dictionary, paramName: string): Promise<Dictionary> {
     if (paramName !== "") {
       let formerDictionary = await DictionaryModel.findOne().where("paramName", paramName).exec();
       if (formerDictionary && formerDictionary.id !== this.id) {
@@ -181,25 +183,25 @@ export class Dictionary {
     return this;
   }
 
-  public async changeName(this: DictionaryDocument, name: string): Promise<DictionaryDocument> {
+  public async changeName(this: Dictionary, name: string): Promise<Dictionary> {
     this.name = name;
     await this.save();
     return this;
   }
 
-  public async changeSecret(this: DictionaryDocument, secret: boolean): Promise<DictionaryDocument> {
+  public async changeSecret(this: Dictionary, secret: boolean): Promise<Dictionary> {
     this.secret = secret;
     await this.save();
     return this;
   }
 
-  public async changeExplanation(this: DictionaryDocument, explanation: string): Promise<DictionaryDocument> {
+  public async changeExplanation(this: Dictionary, explanation: string): Promise<Dictionary> {
     this.explanation = explanation;
     await this.save();
     return this;
   }
 
-  public async getWords(): Promise<Array<WordDocument>> {
+  public async getWords(): Promise<Array<Word>> {
     let words = await WordModel.find().where("dictionary", this);
     return words;
   }
@@ -208,7 +210,7 @@ export class Dictionary {
   // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
   // そうでない場合は、渡された単語データを新しいデータとして追加します。
   // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
-  public async editWord(this: DictionaryDocument, word: EditWordSkeleton): Promise<WordDocument> {
+  public async editWord(this: Dictionary, word: EditWordSkeleton): Promise<Word> {
     let currentWord = await WordModel.findOne().where("dictionary", this).where("number", word.number);
     let resultWord;
     if (currentWord) {
@@ -233,7 +235,7 @@ export class Dictionary {
     return resultWord;
   }
 
-  public async deleteWord(this: DictionaryDocument, number: number): Promise<WordDocument> {
+  public async deleteWord(this: Dictionary, number: number): Promise<Word> {
     let word = await WordModel.findOne().where("dictionary", this).where("number", number);
     if (word) {
       await word.remove();
@@ -245,7 +247,7 @@ export class Dictionary {
     return word;
   }
 
-  private async correctRelationsByEdit(word: WordDocument): Promise<void> {
+  private async correctRelationsByEdit(word: Word): Promise<void> {
     let affectedWords = await WordModel.find().where("dictionary", this).where("relations.number", word.number);
     for (let affectedWord of affectedWords) {
       for (let relation of affectedWord.relations) {
@@ -258,7 +260,7 @@ export class Dictionary {
     await Promise.all(promises);
   }
 
-  private async correctRelationsByDelete(word: WordDocument): Promise<void> {
+  private async correctRelationsByDelete(word: Word): Promise<void> {
     let affectedWords = await WordModel.find().where("dictionary", this).where("relations.number", word.number);
     for (let affectedWord of affectedWords) {
       affectedWord.relations = affectedWord.relations.filter((relation) => relation.number !== word.number);
@@ -267,7 +269,7 @@ export class Dictionary {
     await Promise.all(promises);
   }
 
-  public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<{hitSize: number, hitWords: Array<WordDocument>}> {
+  public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<{hitSize: number, hitWords: Array<Word>}> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;
@@ -307,7 +309,7 @@ export class Dictionary {
       }
       return needle;
     };
-    let createAuxiliaryQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<WordDocument>, WordDocument> {
+    let createAuxiliaryQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<Word>, Word> {
       let key = createKey(innerMode);
       let needle = createNeedle(innerType);
       let query = WordModel.find().where("dictionary", outerThis).where(key, needle);
@@ -331,7 +333,7 @@ export class Dictionary {
       finalQuery = WordModel.find();
     }
     finalQuery = finalQuery.sort("name");
-    let countQuery = WordModel.countDocuments(finalQuery.getQuery());
+    let countQuery = WordModel.count(finalQuery.getQuery());
     let restrictedQuery = QueryUtil.restrict(finalQuery, offset, size);
     let hitSize = await countQuery.exec();
     let hitWords = await restrictedQuery.exec();
@@ -339,7 +341,7 @@ export class Dictionary {
   }
 
   public async countWords(): Promise<number> {
-    let count = WordModel.countDocuments().where("dictionary", this).exec();
+    let count = WordModel.count({}).where("dictionary", this).exec();
     return count;
   }
 
@@ -366,7 +368,7 @@ export class Dictionary {
 
 export class DictionaryCreator {
 
-  public static create(raw: DictionaryDocument): DictionarySkeleton {
+  public static create(raw: Dictionary): DictionarySkeleton {
     let id = raw.id;
     let number = raw.number;
     let paramName = raw.paramName;
@@ -379,7 +381,7 @@ export class DictionaryCreator {
     return skeleton;
   }
 
-  public static async fetch(raw: DictionaryDocument, whole?: boolean): Promise<DictionarySkeleton> {
+  public static async fetch(raw: Dictionary, whole?: boolean): Promise<DictionarySkeleton> {
     let skeleton = DictionaryCreator.create(raw);
     let wordPromise = new Promise(async (resolve, reject) => {
       try {
@@ -413,5 +415,5 @@ export class DictionaryCreator {
 }
 
 
-export type DictionaryDocument = DocumentType<Dictionary>;
-export let DictionaryModel = getModelForClass(Dictionary);
+export type Dictionary = DocumentType<DictionarySchema>;
+export let DictionaryModel = getModelForClass(DictionarySchema);

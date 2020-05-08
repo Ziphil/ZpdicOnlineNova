@@ -16,10 +16,10 @@ import {
   ResponseType
 } from "/server/controller/type";
 import {
-  DictionaryDocument
+  Dictionary
 } from "/server/model/dictionary";
 import {
-  UserDocument
+  User
 } from "/server/model/user";
 
 
@@ -64,11 +64,11 @@ export interface Request<N extends ProcessName, M extends MethodType> extends Ex
 
   // 認証に成功した場合にユーザーデータが格納されます。
   // このプロパティは、authenticate ミドルウェアおよび verifyUser ミドルウェアが呼び出された場合にのみ、値が格納されます。
-  user?: UserDocument;
+  user?: User;
 
   // ユーザ－に辞書の編集権限があった場合に辞書データが格納されます。
   // このプロパティは、verifyDictionary ミドルウェアが呼び出された場合にのみ、値が格納されます。
-  dictionary?: DictionaryDocument;
+  dictionary?: Dictionary;
 
 }
 

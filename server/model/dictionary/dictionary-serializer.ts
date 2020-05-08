@@ -7,8 +7,8 @@ import {
   createWriteStream
 } from "fs";
 import {
-  DictionaryDocument,
-  WordDocument,
+  Dictionary,
+  Word,
   WordModel
 } from "/server/model/dictionary";
 
@@ -16,10 +16,10 @@ import {
 export class DictionarySerializer extends EventEmitter {
 
   public path: string;
-  public dictionary: DictionaryDocument;
+  public dictionary: Dictionary;
   private error: Error | null = null;
 
-  public constructor(path: string, dictionary: DictionaryDocument) {
+  public constructor(path: string, dictionary: Dictionary) {
     super();
     this.path = path;
     this.dictionary = dictionary;
@@ -65,7 +65,7 @@ export class DictionarySerializer extends EventEmitter {
     });
   }
 
-  private createString(word: WordDocument): string {
+  private createString(word: Word): string {
     let raw = {} as any;
     raw["entry"] = {};
     raw["entry"]["id"] = word.number;

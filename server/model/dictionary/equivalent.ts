@@ -1,17 +1,16 @@
 //
 
 import {
-  DocumentType,
   arrayProp,
   getModelForClass,
   prop
-} from "@hasezoey/typegoose";
+} from "@typegoose/typegoose";
 import {
   Equivalent as EquivalentSkeleton
 } from "/server/skeleton/dictionary";
 
 
-export class Equivalent {
+export class EquivalentSchema {
 
   @prop({required: true})
   public title!: string;
@@ -34,5 +33,5 @@ export class EquivalentCreator {
 }
 
 
-export type EquivalentDocument = DocumentType<Equivalent>;
-export let EquivalentModel = getModelForClass(Equivalent);
+export type Equivalent = EquivalentSchema;
+export let EquivalentModel = getModelForClass(EquivalentSchema);

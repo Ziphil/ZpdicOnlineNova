@@ -1,16 +1,15 @@
 //
 
 import {
-  DocumentType,
   getModelForClass,
   prop
-} from "@hasezoey/typegoose";
+} from "@typegoose/typegoose";
 import {
   Information as InformationSkeleton
 } from "/server/skeleton/dictionary";
 
 
-export class Information {
+export class InformationSchema {
 
   @prop({required: true})
   public title!: string;
@@ -33,5 +32,5 @@ export class InformationCreator {
 }
 
 
-export type InformationDocument = DocumentType<Information>;
-export let InformationModel = getModelForClass(Information);
+export type Information = InformationSchema;
+export let InformationModel = getModelForClass(InformationSchema);

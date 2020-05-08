@@ -5,28 +5,30 @@ import {
   Ref,
   arrayProp,
   getModelForClass,
+  modelOptions,
   prop
-} from "@hasezoey/typegoose";
+} from "@typegoose/typegoose";
 import {
-  Dictionary,
-  Equivalent,
+  DictionarySchema,
   EquivalentCreator,
-  Information,
+  EquivalentSchema,
   InformationCreator,
-  Relation,
+  InformationSchema,
   RelationCreator,
-  Variation,
-  VariationCreator
+  RelationSchema,
+  VariationCreator,
+  VariationSchema
 } from "/server/model/dictionary";
 import {
   Word as WordSkeleton
 } from "/server/skeleton/dictionary";
 
 
-export class Word {
+@modelOptions({schemaOptions: {collection: "words"}})
+export class WordSchema {
 
-  @prop({required: true, ref: Dictionary})
-  public dictionary!: Ref<Dictionary>;
+  @prop({required: true, ref: DictionarySchema})
+  public dictionary!: Ref<DictionarySchema>;
 
   @prop({required: true})
   public number!: number;
@@ -34,27 +36,27 @@ export class Word {
   @prop({required: true})
   public name!: string;
 
-  @arrayProp({required: true, items: Equivalent})
-  public equivalents!: Array<Equivalent>;
+  @arrayProp({required: true, items: EquivalentSchema})
+  public equivalents!: Array<EquivalentSchema>;
 
   @arrayProp({required: true, items: String})
   public tags!: Array<string>;
 
-  @arrayProp({required: true, items: Information})
-  public informations!: Array<Information>;
+  @arrayProp({required: true, items: InformationSchema})
+  public informations!: Array<InformationSchema>;
 
-  @arrayProp({required: true, items: Variation})
-  public variations!: Array<Variation>;
+  @arrayProp({required: true, items: VariationSchema})
+  public variations!: Array<VariationSchema>;
 
-  @arrayProp({required: true, items: Relation})
-  public relations!: Array<Relation>;
+  @arrayProp({required: true, items: RelationSchema})
+  public relations!: Array<RelationSchema>;
 
 }
 
 
 export class WordCreator {
 
-  public static create(raw: WordDocument): WordSkeleton {
+  public static create(raw: Word): WordSkeleton {
     let id = raw.id;
     let number = raw.number;
     let name = raw.name;
@@ -70,5 +72,5 @@ export class WordCreator {
 }
 
 
-export type WordDocument = DocumentType<Word>;
-export let WordModel = getModelForClass(Word);
+export type Word = DocumentType<WordSchema>;
+export let WordModel = getModelForClass(WordSchema);

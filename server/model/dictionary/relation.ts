@@ -1,16 +1,15 @@
 //
 
 import {
-  DocumentType,
   getModelForClass,
   prop
-} from "@hasezoey/typegoose";
+} from "@typegoose/typegoose";
 import {
   Relation as RelationSkeleton
 } from "/server/skeleton/dictionary";
 
 
-export class Relation {
+export class RelationSchema {
 
   @prop({required: true})
   public title!: string;
@@ -37,5 +36,5 @@ export class RelationCreator {
 }
 
 
-export type RelationDocument = DocumentType<Relation>;
-export let RelationModel = getModelForClass(Relation);
+export type Relation = RelationSchema;
+export let RelationModel = getModelForClass(RelationSchema);

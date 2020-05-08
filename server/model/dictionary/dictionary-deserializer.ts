@@ -12,7 +12,7 @@ import {
   InformationModel,
   RelationModel,
   VariationModel,
-  WordDocument,
+  Word,
   WordModel
 } from "/server/model/dictionary";
 
@@ -63,7 +63,7 @@ export class DictionaryDeserializer extends EventEmitter {
     });
   }
 
-  private createWord(raw: any): WordDocument {
+  private createWord(raw: any): Word {
     let word = new WordModel({});
     word.number = parseInt(raw["entry"]["id"], 10);
     word.name = raw["entry"]["form"];
@@ -104,7 +104,7 @@ export class DictionaryDeserializer extends EventEmitter {
 
 
 type Event = {
-  word: [WordDocument],
+  word: [Word],
   other: [string, any],
   end: [],
   error: [Error]

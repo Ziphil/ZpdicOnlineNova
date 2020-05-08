@@ -3,14 +3,16 @@
 import {
   DocumentType,
   getModelForClass,
+  modelOptions,
   prop
-} from "@hasezoey/typegoose";
+} from "@typegoose/typegoose";
 import {
   Notification as NotificationSkeleton
 } from "/server/skeleton/notification";
 
 
-export class Notification {
+@modelOptions({schemaOptions: {collection: "notifications"}})
+export class NotificationSchema {
 
   @prop({required: true})
   public type!: string;
@@ -24,7 +26,7 @@ export class Notification {
   @prop({required: true})
   public text!: string;
 
-  public static async add(type: string, title: string, text: string): Promise<NotificationDocument> {
+  public static async add(type: string, title: string, text: string): Promise<Notification> {
     let notification = new NotificationModel({});
     notification.type = type;
     notification.date = new Date();
@@ -34,7 +36,7 @@ export class Notification {
     return notification;
   }
 
-  public static async findAll(offset?: number, size?: number): Promise<Array<NotificationDocument>> {
+  public static async findAll(offset?: number, size?: number): Promise<Array<Notification>> {
     let query = NotificationModel.find().sort("-date");
     if (offset !== undefined) {
       query = query.skip(offset);
@@ -51,7 +53,7 @@ export class Notification {
 
 export class NotificationCreator {
 
-  public static create(raw: NotificationDocument): NotificationSkeleton {
+  public static create(raw: Notification): NotificationSkeleton {
     let id = raw.id;
     let type = raw.type;
     let date = raw.date.toISOString();
@@ -64,5 +66,5 @@ export class NotificationCreator {
 }
 
 
-export type NotificationDocument = DocumentType<Notification>;
-export let NotificationModel = getModelForClass(Notification);
+export type Notification = DocumentType<NotificationSchema>;
+export let NotificationModel = getModelForClass(NotificationSchema);
