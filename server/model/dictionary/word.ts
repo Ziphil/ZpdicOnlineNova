@@ -10,10 +10,17 @@ import {
 import {
   Dictionary,
   Equivalent,
+  EquivalentCreator,
   Information,
+  InformationCreator,
   Relation,
-  Variation
+  RelationCreator,
+  Variation,
+  VariationCreator
 } from "/server/model/dictionary";
+import {
+  WordSkeleton
+} from "/server/skeleton/dictionary";
 
 
 export class Word {
@@ -41,6 +48,24 @@ export class Word {
 
   @arrayProp({required: true, items: Relation})
   public relations!: Array<Relation>;
+
+}
+
+
+export class WordCreator {
+
+  public static create(raw: WordDocument): WordSkeleton {
+    let id = raw.id;
+    let number = raw.number;
+    let name = raw.name;
+    let equivalents = raw.equivalents.map(EquivalentCreator.create);
+    let tags = raw.tags;
+    let informations = raw.informations.map(InformationCreator.create);
+    let variations = raw.variations.map(VariationCreator.create);
+    let relations = raw.relations.map(RelationCreator.create);
+    let skeleton = WordSkeleton.of({id, number, name, equivalents, tags, informations, variations, relations});
+    return skeleton;
+  }
 
 }
 

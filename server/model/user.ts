@@ -22,6 +22,9 @@ import {
   validatePassword
 } from "/server/model/validation";
 import {
+  UserSkeleton
+} from "/server/skeleton/user";
+import {
   createRandomString
 } from "/server/util/misc";
 
@@ -145,6 +148,19 @@ export class User {
 
   private comparePassword(password: string): boolean {
     return compareSync(password, this.hash);
+  }
+
+}
+
+
+export class UserCreator {
+
+  public static create(raw: UserDocument): UserSkeleton {
+    let id = raw.id;
+    let name = raw.name;
+    let email = raw.email;
+    let skeleton = UserSkeleton.of({id, name, email});
+    return skeleton;
   }
 
 }

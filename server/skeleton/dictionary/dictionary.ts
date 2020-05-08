@@ -1,9 +1,6 @@
 //
 
 import {
-  DictionaryDocument
-} from "/server/model/dictionary";
-import {
   NormalSearchParameter
 } from "/server/model/search-parameter";
 import {
@@ -27,50 +24,6 @@ export class DictionarySkeleton extends Skeleton {
   public words?: Array<WordSkeleton>;
   public wordSize?: number;
   public userName?: string;
-
-  public static from(raw: DictionaryDocument): DictionarySkeleton {
-    let id = raw.id;
-    let number = raw.number;
-    let paramName = raw.paramName;
-    let name = raw.name;
-    let status = raw.status;
-    let secret = raw.secret || false;
-    let explanation = raw.explanation || "";
-    let updatedDate = raw.updatedDate?.toISOString() || null;
-    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, updatedDate});
-    return skeleton;
-  }
-
-  public static async fromFetch(raw: DictionaryDocument, whole?: boolean): Promise<DictionarySkeleton> {
-    let skeleton = DictionarySkeleton.from(raw);
-    let wordPromise = new Promise(async (resolve, reject) => {
-      try {
-        if (whole) {
-          let rawWords = await raw.getWords();
-          skeleton.words = rawWords.map(WordSkeleton.from);
-          skeleton.wordSize = rawWords.length;
-        } else {
-          skeleton.wordSize = await raw.countWords();
-        }
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-    let userPromise = new Promise(async (resolve, reject) => {
-      try {
-        await raw.populate("user").execPopulate();
-        if (raw.user && "name" in raw.user) {
-          skeleton.userName = raw.user.name;
-        }
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-    await Promise.all([wordPromise, userPromise]);
-    return skeleton;
-  }
 
   public search(parameter: NormalSearchParameter): Array<WordSkeleton> {
     let search = parameter.search;

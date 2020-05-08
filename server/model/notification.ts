@@ -5,6 +5,9 @@ import {
   getModelForClass,
   prop
 } from "@hasezoey/typegoose";
+import {
+  NotificationSkeleton
+} from "/server/skeleton/notification";
 
 
 export class Notification {
@@ -41,6 +44,21 @@ export class Notification {
     }
     let notifications = await query.exec();
     return notifications;
+  }
+
+}
+
+
+export class NotificationCreator {
+
+  public static create(raw: NotificationDocument): NotificationSkeleton {
+    let id = raw.id;
+    let type = raw.type;
+    let date = raw.date.toISOString();
+    let title = raw.title;
+    let text = raw.text;
+    let skeleton = NotificationSkeleton.of({id, type, date, title, text});
+    return skeleton;
   }
 
 }

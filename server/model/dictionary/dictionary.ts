@@ -12,6 +12,7 @@ import {
 import {
   DictionaryDeserializer,
   DictionarySerializer,
+  WordCreator,
   WordDocument,
   WordModel
 } from "/server/model/dictionary";
@@ -29,6 +30,7 @@ import {
   IDENTIFIER_REGEXP
 } from "/server/model/validation";
 import {
+  DictionarySkeleton,
   EditWordSkeleton
 } from "/server/skeleton/dictionary";
 import {
@@ -357,6 +359,55 @@ export class Dictionary {
     } else {
       return 1;
     }
+  }
+
+}
+
+
+export class DictionaryCreator {
+
+  public static create(raw: DictionaryDocument): DictionarySkeleton {
+    let id = raw.id;
+    let number = raw.number;
+    let paramName = raw.paramName;
+    let name = raw.name;
+    let status = raw.status;
+    let secret = raw.secret || false;
+    let explanation = raw.explanation || "";
+    let updatedDate = raw.updatedDate?.toISOString() || null;
+    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, updatedDate});
+    return skeleton;
+  }
+
+  public static async fetch(raw: DictionaryDocument, whole?: boolean): Promise<DictionarySkeleton> {
+    let skeleton = DictionaryCreator.create(raw);
+    let wordPromise = new Promise(async (resolve, reject) => {
+      try {
+        if (whole) {
+          let rawWords = await raw.getWords();
+          skeleton.words = rawWords.map(WordCreator.create);
+          skeleton.wordSize = rawWords.length;
+        } else {
+          skeleton.wordSize = await raw.countWords();
+        }
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+    let userPromise = new Promise(async (resolve, reject) => {
+      try {
+        await raw.populate("user").execPopulate();
+        if (raw.user && "name" in raw.user) {
+          skeleton.userName = raw.user.name;
+        }
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+    await Promise.all([wordPromise, userPromise]);
+    return skeleton;
   }
 
 }

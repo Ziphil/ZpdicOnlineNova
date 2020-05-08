@@ -24,7 +24,9 @@ import {
   SERVER_PATH
 } from "/server/controller/type";
 import {
+  DictionaryCreator,
   DictionaryModel,
+  WordCreator,
   WordModel
 } from "/server/model/dictionary";
 import {
@@ -33,8 +35,7 @@ import {
   SearchTypeUtil
 } from "/server/model/search-parameter";
 import {
-  DictionarySkeleton,
-  WordSkeleton
+  DictionarySkeleton
 } from "/server/skeleton/dictionary";
 import {
   CustomErrorSkeleton
@@ -53,7 +54,7 @@ export class DictionaryController extends Controller {
     let user = request.user!;
     let name = CastUtil.ensureString(request.body.name);
     let dictionary = await DictionaryModel.createEmpty(name, user);
-    let body = DictionarySkeleton.from(dictionary);
+    let body = DictionaryCreator.create(dictionary);
     response.json(body);
   }
 
@@ -72,7 +73,7 @@ export class DictionaryController extends Controller {
           reject(error);
         }
       });
-      let body = DictionarySkeleton.from(dictionary);
+      let body = DictionaryCreator.create(dictionary);
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
@@ -100,7 +101,7 @@ export class DictionaryController extends Controller {
     let name = CastUtil.ensureString(request.body.name);
     if (dictionary) {
       await dictionary.changeName(name);
-      let body = DictionarySkeleton.from(dictionary);
+      let body = DictionaryCreator.create(dictionary);
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
@@ -116,7 +117,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       try {
         await dictionary.changeParamName(paramName);
-        let body = DictionarySkeleton.from(dictionary);
+        let body = DictionaryCreator.create(dictionary);
         response.json(body);
       } catch (error) {
         let body = (() => {
@@ -149,7 +150,7 @@ export class DictionaryController extends Controller {
     let secret = CastUtil.ensureBoolean(request.body.secret);
     if (dictionary) {
       await dictionary.changeSecret(secret);
-      let body = DictionarySkeleton.from(dictionary);
+      let body = DictionaryCreator.create(dictionary);
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
@@ -164,7 +165,7 @@ export class DictionaryController extends Controller {
     let explanation = CastUtil.ensureString(request.body.explanation);
     if (dictionary) {
       await dictionary.changeExplanation(explanation);
-      let body = DictionarySkeleton.from(dictionary);
+      let body = DictionaryCreator.create(dictionary);
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
@@ -179,7 +180,7 @@ export class DictionaryController extends Controller {
     let word = request.body.word;
     if (dictionary) {
       let resultWord = await dictionary.editWord(word);
-      let body = WordSkeleton.from(resultWord);
+      let body = WordCreator.create(resultWord);
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
@@ -195,7 +196,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       try {
         let resultWord = await dictionary.deleteWord(wordNumber);
-        let body = WordSkeleton.from(resultWord);
+        let body = WordCreator.create(resultWord);
         response.json(body);
       } catch (error) {
         let body = (() => {
@@ -228,7 +229,7 @@ export class DictionaryController extends Controller {
       let parameter = new NormalSearchParameter(search, mode, type);
       let result = await dictionary.search(parameter, offset, size);
       let hitSize = result.hitSize;
-      let hitWordsBody = result.hitWords.map(WordSkeleton.from);
+      let hitWordsBody = result.hitWords.map(WordCreator.create);
       let body = {hitSize, hitWords: hitWordsBody};
       response.json(body);
     } else {
@@ -261,7 +262,7 @@ export class DictionaryController extends Controller {
     if (value !== undefined) {
       let dictionary = await DictionaryModel.findOneByValue(value);
       if (dictionary) {
-        let body = DictionarySkeleton.from(dictionary);
+        let body = DictionaryCreator.create(dictionary);
         response.json(body);
       } else {
         let body = (() => {
@@ -284,7 +285,7 @@ export class DictionaryController extends Controller {
     let number = CastUtil.ensureNumber(request.query.number);
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let body = await DictionarySkeleton.fromFetch(dictionary, true);
+      let body = await DictionaryCreator.fetch(dictionary, true);
       response.json(body);
     } else {
       let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
@@ -300,7 +301,7 @@ export class DictionaryController extends Controller {
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<DictionarySkeleton>(async (resolve, reject) => {
         try {
-          let skeleton = await DictionarySkeleton.fromFetch(dictionary, false);
+          let skeleton = await DictionaryCreator.fetch(dictionary, false);
           resolve(skeleton);
         } catch (error) {
           reject(error);
@@ -318,7 +319,7 @@ export class DictionaryController extends Controller {
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<DictionarySkeleton>(async (resolve, reject) => {
         try {
-          let skeleton = await DictionarySkeleton.fromFetch(dictionary, false);
+          let skeleton = await DictionaryCreator.fetch(dictionary, false);
           resolve(skeleton);
         } catch (error) {
           reject(error);

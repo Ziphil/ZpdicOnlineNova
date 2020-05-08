@@ -25,14 +25,12 @@ import {
   SERVER_PATH
 } from "/server/controller/type";
 import {
+  UserCreator,
   UserModel
 } from "/server/model/user";
 import {
   CustomErrorSkeleton
 } from "/server/skeleton/error";
-import {
-  UserSkeleton
-} from "/server/skeleton/user";
 import {
   CastUtil
 } from "/server/util/cast";
@@ -49,7 +47,7 @@ export class UserController extends Controller {
   public async [Symbol()](request: PostRequest<"login">, response: PostResponse<"login">): Promise<void> {
     let token = request.token!;
     let user = request.user!;
-    let userBody = UserSkeleton.from(user);
+    let userBody = UserCreator.create(user);
     let body = {token, user: userBody};
     response.json(body);
   }
@@ -67,7 +65,7 @@ export class UserController extends Controller {
     let password = CastUtil.ensureString(request.body.password);
     try {
       let user = await UserModel.register(name, email, password);
-      let body = UserSkeleton.from(user);
+      let body = UserCreator.create(user);
       let subject = "ユーザー登録完了のお知らせ";
       let text = getMailText("registerUser", {name});
       sendMail(user.email, subject, text);
@@ -105,7 +103,7 @@ export class UserController extends Controller {
     let email = CastUtil.ensureString(request.body.email);
     try {
       await user.changeEmail(email);
-      let body = UserSkeleton.from(user);
+      let body = UserCreator.create(user);
       response.send(body);
     } catch (error) {
       let body = (() => {
@@ -130,7 +128,7 @@ export class UserController extends Controller {
     let password = CastUtil.ensureString(request.body.password);
     try {
       await user.changePassword(password);
-      let body = UserSkeleton.from(user);
+      let body = UserCreator.create(user);
       response.send(body);
     } catch (error) {
       let body = (() => {
@@ -177,7 +175,7 @@ export class UserController extends Controller {
     let password = CastUtil.ensureString(request.body.password);
     try {
       let user = await UserModel.resetPassword(key, password, 60);
-      let body = UserSkeleton.from(user);
+      let body = UserCreator.create(user);
       response.send(body);
     } catch (error) {
       let body = (() => {
@@ -201,7 +199,7 @@ export class UserController extends Controller {
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
     let user = request.user!;
-    let body = UserSkeleton.from(user);
+    let body = UserCreator.create(user);
     response.json(body);
   }
 

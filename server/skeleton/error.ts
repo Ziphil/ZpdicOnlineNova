@@ -13,7 +13,7 @@ export class CustomErrorSkeleton<E extends string = string> extends Skeleton {
 
   public static ofType<E extends string>(type: E, code?: number): CustomErrorSkeleton<E> {
     let object = {error: "Error", type, code} as any;
-    let skeleton = this.of<CustomErrorSkeleton<E>>(object);
+    let skeleton = this.of(object) as any;
     return skeleton;
   }
 

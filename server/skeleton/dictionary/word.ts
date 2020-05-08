@@ -1,9 +1,6 @@
 //
 
 import {
-  WordDocument
-} from "/server/model/dictionary";
-import {
   EquivalentSkeleton,
   InformationSkeleton,
   RelationSkeleton,
@@ -42,18 +39,5 @@ export class WordSkeleton extends EditWordSkeleton {
 
   public id!: string;
   public number!: number;
-
-  public static from(raw: WordDocument): WordSkeleton {
-    let id = raw.id;
-    let number = raw.number;
-    let name = raw.name;
-    let equivalents = raw.equivalents.map(EquivalentSkeleton.from);
-    let tags = raw.tags;
-    let informations = raw.informations.map(InformationSkeleton.from);
-    let variations = raw.variations.map(VariationSkeleton.from);
-    let relations = raw.relations.map(RelationSkeleton.from);
-    let skeleton = WordSkeleton.of({id, number, name, equivalents, tags, informations, variations, relations});
-    return skeleton;
-  }
 
 }
