@@ -333,8 +333,8 @@ export class DictionaryController extends Controller {
 
   @get(SERVER_PATH["fetchDictionaryAggregation"])
   public async [Symbol()](request: GetRequest<"fetchDictionaryAggregation">, response: GetResponse<"fetchDictionaryAggregation">): Promise<void> {
-    let dictionarySize = await DictionaryModel.find().count();
-    let wordSize = await WordModel.find().count();
+    let dictionarySize = await DictionaryModel.find().countDocuments();
+    let wordSize = await WordModel.find().countDocuments();
     let body = {dictionarySize, wordSize};
     response.json(body);
   }
