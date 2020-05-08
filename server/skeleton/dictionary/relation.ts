@@ -5,17 +5,17 @@ import {
 } from "/server/skeleton/skeleton";
 
 
-export class RelationSkeleton extends Skeleton {
+export class Relation extends Skeleton {
 
   public title!: string;
   public number!: number;
   public name!: string;
 
-  public static empty(): RelationSkeleton {
+  public static empty(): Relation {
     let title = "";
     let number = -1;
     let name = "";
-    let skeleton = RelationSkeleton.of({title, number, name});
+    let skeleton = Relation.of({title, number, name});
     return skeleton;
   }
 

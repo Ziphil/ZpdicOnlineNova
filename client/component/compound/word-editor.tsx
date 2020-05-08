@@ -36,13 +36,13 @@ import {
   createStyleName
 } from "/client/util/style-name";
 import {
-  DictionarySkeleton,
-  EditWordSkeleton,
-  EquivalentSkeleton,
-  InformationSkeleton,
-  RelationSkeleton,
-  VariationSkeleton,
-  WordSkeleton
+  Dictionary,
+  EditWord,
+  Equivalent,
+  Information,
+  Relation,
+  Variation,
+  Word
 } from "/server/skeleton/dictionary";
 
 
@@ -54,7 +54,7 @@ export class WordEditor extends StoreComponent<Props, State> {
 
   public constructor(props: Props) {
     super(props);
-    let word = cloneDeep(this.props.word) ?? EditWordSkeleton.empty();
+    let word = cloneDeep(this.props.word) ?? EditWord.empty();
     let equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
     let relationChooserOpen = false;
     let alertOpen = false;
@@ -202,7 +202,7 @@ export class WordEditor extends StoreComponent<Props, State> {
   private addEquivalent(): void {
     let word = this.state.word;
     let equivalentStrings = this.state.equivalentStrings;
-    word.equivalents.push(EquivalentSkeleton.empty());
+    word.equivalents.push(Equivalent.empty());
     equivalentStrings.push("");
   }
 
@@ -231,7 +231,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.informations.push(InformationSkeleton.empty()))}/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.informations.push(Information.empty()))}/>
       </div>
     );
     let node = (
@@ -268,7 +268,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.variations.push(VariationSkeleton.empty()))}/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.variations.push(Variation.empty()))}/>
       </div>
     );
     let node = (
@@ -320,11 +320,11 @@ export class WordEditor extends StoreComponent<Props, State> {
     return node;
   }
 
-  private editRelation(relationWord: WordSkeleton): void {
+  private editRelation(relationWord: Word): void {
     let word = this.state.word;
     let relationIndex = this.editingRelationIndex!;
     if (word.relations[relationIndex] === undefined) {
-      word.relations[relationIndex] = RelationSkeleton.empty();
+      word.relations[relationIndex] = Relation.empty();
     }
     word.relations[relationIndex].number = relationWord.number;
     word.relations[relationIndex].name = relationWord.name;
@@ -426,15 +426,15 @@ export class WordEditor extends StoreComponent<Props, State> {
 
 
 type Props = {
-  dictionary: DictionarySkeleton,
-  word: WordSkeleton | null,
+  dictionary: Dictionary,
+  word: Word | null,
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => void | Promise<void>,
-  onEditConfirm?: (word: EditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
   onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
-  word: EditWordSkeleton,
+  word: EditWord,
   equivalentStrings: Array<string>,
   relationChooserOpen: boolean,
   alertOpen: boolean

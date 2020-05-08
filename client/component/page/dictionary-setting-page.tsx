@@ -26,7 +26,7 @@ import {
   Page
 } from "/client/component/page/page";
 import {
-  DictionarySkeleton
+  Dictionary
 } from "/server/skeleton/dictionary";
 
 
@@ -170,7 +170,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
 type Props = {
 };
 type State = {
-  dictionary: DictionarySkeleton | null,
+  dictionary: Dictionary | null,
   authorized: boolean
 };
 type Params = {

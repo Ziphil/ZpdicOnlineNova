@@ -6,7 +6,7 @@ import {
   prop
 } from "@hasezoey/typegoose";
 import {
-  InformationSkeleton
+  Information as InformationSkeleton
 } from "/server/skeleton/dictionary";
 
 

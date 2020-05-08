@@ -25,7 +25,7 @@ import {
   Page
 } from "/client/component/page/page";
 import {
-  DictionarySkeleton
+  Dictionary
 } from "/server/skeleton/dictionary";
 
 
@@ -134,7 +134,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionaries: Array<DictionarySkeleton> | null;
+  dictionaries: Array<Dictionary> | null;
 };
 type Params = {
   mode: string

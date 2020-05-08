@@ -18,9 +18,9 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  DictionarySkeleton,
-  EditWordSkeleton,
-  WordSkeleton
+  Dictionary,
+  EditWord,
+  Word
 } from "/server/skeleton/dictionary";
 
 
@@ -62,16 +62,16 @@ export class WordList extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: DictionarySkeleton,
-  words: Array<WordSkeleton>,
+  dictionary: Dictionary,
+  words: Array<Word>,
   style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
   size: number,
   offset: number,
-  onSubmit?: (word: WordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: WordSkeleton, newWord: EditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
-  onDeleteConfirm?: (word: WordSkeleton, event: MouseEvent<HTMLButtonElement>) => void
+  onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onDeleteConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void
 };
 type State = {
 };

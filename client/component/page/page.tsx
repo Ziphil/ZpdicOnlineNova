@@ -20,7 +20,7 @@ import {
   createStyleName
 } from "/client/util/style-name";
 import {
-  DictionarySkeleton
+  Dictionary
 } from "/server/skeleton/dictionary";
 
 
@@ -60,7 +60,7 @@ export class Page extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: DictionarySkeleton | null,
+  dictionary: Dictionary | null,
   showDictionary: boolean,
   authorized: boolean
 };

@@ -5,15 +5,15 @@ import {
 } from "/server/skeleton/skeleton";
 
 
-export class EquivalentSkeleton extends Skeleton {
+export class Equivalent extends Skeleton {
 
   public title!: string;
   public names!: Array<string>;
 
-  public static empty(): EquivalentSkeleton {
+  public static empty(): Equivalent {
     let title = "";
     let names = new Array<string>();
-    let skeleton = EquivalentSkeleton.of({title, names});
+    let skeleton = Equivalent.of({title, names});
     return skeleton;
   }
 

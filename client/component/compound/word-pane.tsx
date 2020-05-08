@@ -20,10 +20,10 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  DictionarySkeleton,
-  EditWordSkeleton,
-  RelationSkeleton,
-  WordSkeleton
+  Dictionary,
+  EditWord,
+  Relation,
+  Word
 } from "/server/skeleton/dictionary";
 
 
@@ -103,7 +103,7 @@ export class WordPane extends Component<Props, State> {
   }
 
   private renderRelations(): ReactNode {
-    let groupedRelations = new Map<string, Array<RelationSkeleton>>();
+    let groupedRelations = new Map<string, Array<Relation>>();
     for (let relation of this.props.word.relations) {
       let title = relation.title;
       if (groupedRelations.get(title) === undefined) {
@@ -176,13 +176,13 @@ export class WordPane extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: DictionarySkeleton,
-  word: WordSkeleton,
+  dictionary: Dictionary,
+  word: Word,
   style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (word: EditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
   onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {

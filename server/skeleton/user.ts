@@ -5,7 +5,7 @@ import {
 } from "/server/skeleton/skeleton";
 
 
-export class UserSkeleton extends Skeleton {
+export class User extends Skeleton {
 
   public id!: string;
   public name!: string;

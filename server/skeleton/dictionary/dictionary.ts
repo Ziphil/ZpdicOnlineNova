@@ -4,14 +4,14 @@ import {
   NormalSearchParameter
 } from "/server/model/search-parameter";
 import {
-  WordSkeleton
+  Word
 } from "/server/skeleton/dictionary";
 import {
   Skeleton
 } from "/server/skeleton/skeleton";
 
 
-export class DictionarySkeleton extends Skeleton {
+export class Dictionary extends Skeleton {
 
   public id!: string;
   public number!: number;
@@ -21,11 +21,11 @@ export class DictionarySkeleton extends Skeleton {
   public secret!: boolean;
   public explanation!: string;
   public updatedDate!: string | null;
-  public words?: Array<WordSkeleton>;
+  public words?: Array<Word>;
   public wordSize?: number;
   public userName?: string;
 
-  public search(parameter: NormalSearchParameter): Array<WordSkeleton> {
+  public search(parameter: NormalSearchParameter): Array<Word> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;

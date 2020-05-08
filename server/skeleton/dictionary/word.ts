@@ -1,41 +1,41 @@
 //
 
 import {
-  EquivalentSkeleton,
-  InformationSkeleton,
-  RelationSkeleton,
-  VariationSkeleton
+  Equivalent,
+  Information,
+  Relation,
+  Variation
 } from "/server/skeleton/dictionary";
 import {
   Skeleton
 } from "/server/skeleton/skeleton";
 
 
-export class EditWordSkeleton extends Skeleton {
+export class EditWord extends Skeleton {
 
   public number?: number;
   public name!: string;
-  public equivalents!: Array<EquivalentSkeleton>;
+  public equivalents!: Array<Equivalent>;
   public tags!: Array<string>;
-  public informations!: Array<InformationSkeleton>;
-  public variations!: Array<VariationSkeleton>;
-  public relations!: Array<RelationSkeleton>;
+  public informations!: Array<Information>;
+  public variations!: Array<Variation>;
+  public relations!: Array<Relation>;
 
-  public static empty(): EditWordSkeleton {
+  public static empty(): EditWord {
     let name = "";
-    let equivalents = new Array<EquivalentSkeleton>();
+    let equivalents = new Array<Equivalent>();
     let tags = new Array<string>();
-    let informations = new Array<InformationSkeleton>();
-    let variations = new Array<VariationSkeleton>();
-    let relations = new Array<RelationSkeleton>();
-    let skeleton = EditWordSkeleton.of({name, equivalents, tags, informations, variations, relations});
+    let informations = new Array<Information>();
+    let variations = new Array<Variation>();
+    let relations = new Array<Relation>();
+    let skeleton = EditWord.of({name, equivalents, tags, informations, variations, relations});
     return skeleton;
   }
 
 }
 
 
-export class WordSkeleton extends EditWordSkeleton {
+export class Word extends EditWord {
 
   public id!: string;
   public number!: number;

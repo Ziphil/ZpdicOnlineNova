@@ -5,15 +5,15 @@ import {
 } from "/server/skeleton/skeleton";
 
 
-export class VariationSkeleton extends Skeleton {
+export class Variation extends Skeleton {
 
   public title!: string;
   public name!: string;
 
-  public static empty(): VariationSkeleton {
+  public static empty(): Variation {
     let title = "";
     let name = "";
-    let skeleton = VariationSkeleton.of({title, name});
+    let skeleton = Variation.of({title, name});
     return skeleton;
   }
 

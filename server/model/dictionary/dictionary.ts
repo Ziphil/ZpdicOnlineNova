@@ -30,8 +30,8 @@ import {
   IDENTIFIER_REGEXP
 } from "/server/model/validation";
 import {
-  DictionarySkeleton,
-  EditWordSkeleton
+  Dictionary as DictionarySkeleton,
+  EditWord as EditWordSkeleton
 } from "/server/skeleton/dictionary";
 import {
   takeErrorLog,

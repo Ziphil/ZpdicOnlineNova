@@ -7,7 +7,7 @@ import {
   prop
 } from "@hasezoey/typegoose";
 import {
-  EquivalentSkeleton
+  Equivalent as EquivalentSkeleton
 } from "/server/skeleton/dictionary";
 
 

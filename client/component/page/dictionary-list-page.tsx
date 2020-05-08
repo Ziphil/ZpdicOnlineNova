@@ -20,7 +20,7 @@ import {
   Page
 } from "/client/component/page/page";
 import {
-  DictionarySkeleton
+  Dictionary
 } from "/server/skeleton/dictionary";
 
 
@@ -59,5 +59,5 @@ export class DictionaryListPage extends StoreComponent<Props, State> {
 type Props = {
 };
 type State = {
-  dictionaries: Array<DictionarySkeleton> | null;
+  dictionaries: Array<Dictionary> | null;
 };

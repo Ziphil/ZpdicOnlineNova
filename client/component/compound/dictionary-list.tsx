@@ -15,7 +15,7 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  DictionarySkeleton
+  Dictionary
 } from "/server/skeleton/dictionary";
 
 
@@ -50,7 +50,7 @@ export class DictionaryList extends Component<Props, State> {
 
 
 type Props = {
-  dictionaries: Array<DictionarySkeleton>,
+  dictionaries: Array<Dictionary>,
   showsSetting: boolean,
   size: number
 };

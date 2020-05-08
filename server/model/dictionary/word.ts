@@ -19,7 +19,7 @@ import {
   VariationCreator
 } from "/server/model/dictionary";
 import {
-  WordSkeleton
+  Word as WordSkeleton
 } from "/server/skeleton/dictionary";
 
 

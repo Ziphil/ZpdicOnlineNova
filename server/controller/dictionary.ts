@@ -35,10 +35,10 @@ import {
   SearchTypeUtil
 } from "/server/model/search-parameter";
 import {
-  DictionarySkeleton
+  Dictionary
 } from "/server/skeleton/dictionary";
 import {
-  CustomErrorSkeleton
+  CustomError
 } from "/server/skeleton/error";
 import {
   CastUtil
@@ -76,7 +76,7 @@ export class DictionaryController extends Controller {
       let body = DictionaryCreator.create(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -89,7 +89,7 @@ export class DictionaryController extends Controller {
       await dictionary.removeWhole();
       response.json({});
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -104,7 +104,7 @@ export class DictionaryController extends Controller {
       let body = DictionaryCreator.create(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -123,11 +123,11 @@ export class DictionaryController extends Controller {
         let body = (() => {
           if (error.name === "CustomError") {
             if (error.type === "duplicateDictionaryParamName") {
-              return CustomErrorSkeleton.ofType("duplicateDictionaryParamName");
+              return CustomError.ofType("duplicateDictionaryParamName");
             }
           } else if (error.name === "ValidationError") {
             if (error.errors.paramName) {
-              return CustomErrorSkeleton.ofType("invalidDictionaryParamName");
+              return CustomError.ofType("invalidDictionaryParamName");
             }
           }
         })();
@@ -138,7 +138,7 @@ export class DictionaryController extends Controller {
         }
       }
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -153,7 +153,7 @@ export class DictionaryController extends Controller {
       let body = DictionaryCreator.create(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -168,7 +168,7 @@ export class DictionaryController extends Controller {
       let body = DictionaryCreator.create(dictionary);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -183,7 +183,7 @@ export class DictionaryController extends Controller {
       let body = WordCreator.create(resultWord);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -201,7 +201,7 @@ export class DictionaryController extends Controller {
       } catch (error) {
         let body = (() => {
           if (error.name === "CustomError" && error.type === "noSuchWordNumber") {
-            return CustomErrorSkeleton.ofType("noSuchWordNumber");
+            return CustomError.ofType("noSuchWordNumber");
           }
         })();
         if (body) {
@@ -211,7 +211,7 @@ export class DictionaryController extends Controller {
         }
       }
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -233,7 +233,7 @@ export class DictionaryController extends Controller {
       let body = {hitSize, hitWords: hitWordsBody};
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -249,7 +249,7 @@ export class DictionaryController extends Controller {
       await dictionary.download(path);
       response.download(path, fullFileName);
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -267,15 +267,15 @@ export class DictionaryController extends Controller {
       } else {
         let body = (() => {
           if (number !== undefined) {
-            return CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+            return CustomError.ofType("noSuchDictionaryNumber");
           } else {
-            return CustomErrorSkeleton.ofType("noSuchDictionaryParamName");
+            return CustomError.ofType("noSuchDictionaryParamName");
           }
         })();
         response.status(400).json(body);
       }
     } else {
-      let body = CustomErrorSkeleton.ofType("invalidArgument");
+      let body = CustomError.ofType("invalidArgument");
       response.status(400).json(body);
     }
   }
@@ -288,7 +288,7 @@ export class DictionaryController extends Controller {
       let body = await DictionaryCreator.fetch(dictionary, true);
       response.json(body);
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }
@@ -299,7 +299,7 @@ export class DictionaryController extends Controller {
     let user = request.user!;
     let dictionaries = await DictionaryModel.findByUser(user);
     let promises = dictionaries.map((dictionary) => {
-      let promise = new Promise<DictionarySkeleton>(async (resolve, reject) => {
+      let promise = new Promise<Dictionary>(async (resolve, reject) => {
         try {
           let skeleton = await DictionaryCreator.fetch(dictionary, false);
           resolve(skeleton);
@@ -317,7 +317,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: GetRequest<"fetchAllDictionaries">, response: GetResponse<"fetchAllDictionaries">): Promise<void> {
     let dictionaries = await DictionaryModel.findPublic();
     let promises = dictionaries.map((dictionary) => {
-      let promise = new Promise<DictionarySkeleton>(async (resolve, reject) => {
+      let promise = new Promise<Dictionary>(async (resolve, reject) => {
         try {
           let skeleton = await DictionaryCreator.fetch(dictionary, false);
           resolve(skeleton);
@@ -346,7 +346,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       response.json({});
     } else {
-      let body = CustomErrorSkeleton.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
     }
   }

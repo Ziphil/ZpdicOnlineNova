@@ -24,7 +24,7 @@ import {
   NotificationModel
 } from "/server/model/notification";
 import {
-  CustomErrorSkeleton
+  CustomError
 } from "/server/skeleton/error";
 import {
   CastUtil

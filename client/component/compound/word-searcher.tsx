@@ -26,9 +26,9 @@ import {
   SearchType
 } from "/server/model/search-parameter";
 import {
-  DictionarySkeleton,
-  EditWordSkeleton,
-  WordSkeleton
+  Dictionary,
+  EditWord,
+  Word
 } from "/server/skeleton/dictionary";
 
 
@@ -141,12 +141,12 @@ export class WordSearcher extends StoreComponent<Props, State> {
 
 
 type Props = {
-  dictionary: DictionarySkeleton,
+  dictionary: Dictionary,
   style: "normal" | "simple",
   authorized: boolean,
   showButton: boolean,
-  onSubmit?: (word: WordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: WordSkeleton, newWord: EditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
   search: string,
@@ -154,5 +154,5 @@ type State = {
   type: SearchType
   page: number,
   hitSize: number,
-  hitWords: Array<WordSkeleton>
+  hitWords: Array<Word>
 };

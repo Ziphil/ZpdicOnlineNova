@@ -22,7 +22,7 @@ import {
   validatePassword
 } from "/server/model/validation";
 import {
-  UserSkeleton
+  User as UserSkeleton
 } from "/server/skeleton/user";
 import {
   createRandomString

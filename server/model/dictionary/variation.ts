@@ -6,7 +6,7 @@ import {
   prop
 } from "@hasezoey/typegoose";
 import {
-  VariationSkeleton
+  Variation as VariationSkeleton
 } from "/server/skeleton/dictionary";
 
 

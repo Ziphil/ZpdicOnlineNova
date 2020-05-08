@@ -17,7 +17,7 @@ import {
   DateUtil
 } from "/client/util/date";
 import {
-  NotificationSkeleton
+  Notification
 } from "/server/skeleton/notification";
 
 
@@ -58,7 +58,7 @@ export class NotificationPane extends Component<Props, State> {
 
 
 type Props = {
-  notification: NotificationSkeleton
+  notification: Notification
 };
 type State = {
 };

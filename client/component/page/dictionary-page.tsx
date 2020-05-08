@@ -34,8 +34,8 @@ import {
   SearchTypeUtil
 } from "/server/model/search-parameter";
 import {
-  DictionarySkeleton,
-  WordSkeleton
+  Dictionary,
+  Word
 } from "/server/skeleton/dictionary";
 
 
@@ -242,7 +242,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionary: DictionarySkeleton | null,
+  dictionary: Dictionary | null,
   authorized: boolean,
   search: string,
   mode: SearchMode,
@@ -250,7 +250,7 @@ type State = {
   page: number,
   showsExplanation: boolean,
   hitSize: number,
-  hitWords: Array<WordSkeleton>
+  hitWords: Array<Word>
 };
 type Params = {
   value: string

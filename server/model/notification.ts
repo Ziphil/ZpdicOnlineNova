@@ -6,7 +6,7 @@ import {
   prop
 } from "@hasezoey/typegoose";
 import {
-  NotificationSkeleton
+  Notification as NotificationSkeleton
 } from "/server/skeleton/notification";
 
 

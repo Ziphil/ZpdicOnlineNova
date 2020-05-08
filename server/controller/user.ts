@@ -29,7 +29,7 @@ import {
   UserModel
 } from "/server/model/user";
 import {
-  CustomErrorSkeleton
+  CustomError
 } from "/server/skeleton/error";
 import {
   CastUtil
@@ -74,17 +74,17 @@ export class UserController extends Controller {
       let body = (() => {
         if (error.name === "CustomError") {
           if (error.type === "duplicateUserName") {
-            return CustomErrorSkeleton.ofType("duplicateUserName");
+            return CustomError.ofType("duplicateUserName");
           } else if (error.type === "duplicateUserEmail") {
-            return CustomErrorSkeleton.ofType("duplicateUserEmail");
+            return CustomError.ofType("duplicateUserEmail");
           } else if (error.type === "invalidPassword") {
-            return CustomErrorSkeleton.ofType("invalidPassword");
+            return CustomError.ofType("invalidPassword");
           }
         } else if (error.name === "ValidationError") {
           if (error.errors.name) {
-            return CustomErrorSkeleton.ofType("invalidUserName");
+            return CustomError.ofType("invalidUserName");
           } else if (error.errors.email) {
-            return CustomErrorSkeleton.ofType("invalidEmail");
+            return CustomError.ofType("invalidEmail");
           }
         }
       })();
@@ -108,9 +108,9 @@ export class UserController extends Controller {
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError" && error.type === "duplicateUserEmail") {
-          return CustomErrorSkeleton.ofType("duplicateUserEmail");
+          return CustomError.ofType("duplicateUserEmail");
         } else if (error.name === "ValidationError" && error.errors.email) {
-          return CustomErrorSkeleton.ofType("invalidEmail");
+          return CustomError.ofType("invalidEmail");
         }
       })();
       if (body) {
@@ -133,7 +133,7 @@ export class UserController extends Controller {
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError" && error.type === "invalidPassword") {
-          return CustomErrorSkeleton.ofType("invalidPassword");
+          return CustomError.ofType("invalidPassword");
         }
       })();
       if (body) {
@@ -158,7 +158,7 @@ export class UserController extends Controller {
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError" && error.type === "noSuchUser") {
-          return CustomErrorSkeleton.ofType("noSuchUser");
+          return CustomError.ofType("noSuchUser");
         }
       })();
       if (body) {
@@ -181,9 +181,9 @@ export class UserController extends Controller {
       let body = (() => {
         if (error.name === "CustomError") {
           if (error.type === "invalidResetToken") {
-            return CustomErrorSkeleton.ofType("invalidResetToken");
+            return CustomError.ofType("invalidResetToken");
           } else if (error.type === "invalidPassword") {
-            return CustomErrorSkeleton.ofType("invalidPassword");
+            return CustomError.ofType("invalidPassword");
           }
         }
       })();

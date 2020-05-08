@@ -6,7 +6,7 @@ import {
   prop
 } from "@hasezoey/typegoose";
 import {
-  RelationSkeleton
+  Relation as RelationSkeleton
 } from "/server/skeleton/dictionary";
 
 
