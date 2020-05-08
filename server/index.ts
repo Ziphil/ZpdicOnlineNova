@@ -1,6 +1,7 @@
 //
 
 import * as sendgrid from "@sendgrid/mail";
+import * as typegoose from "@typegoose/typegoose";
 import * as parser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import * as dotenv from "dotenv";
@@ -97,6 +98,7 @@ class Main {
     let SchemaString = SchemaTypes.String as any;
     SchemaString.checkRequired(check);
     mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+    typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }
 
   private setupSendgrid(): void {
