@@ -145,7 +145,12 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   }
 
   public render(): ReactNode {
-    let menuSpecs = [{mode: "general", label: "一般", iconLabel: "\uF013", href: ""}];
+    let number = +this.props.match!.params.number;
+    let mode = this.props.match?.params.mode || "general";
+    let menuSpecs = [
+      {mode: "general", label: "一般", iconLabel: "\uF013", href: "/dictionary-setting/" + number},
+      {mode: "access", label: "権限", iconLabel: "\uF0C0", href: "/dictionary-setting/access/" + number}
+    ];
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {
       contentNodes.push(this.renderChangeDictionaryNameForm());
@@ -157,7 +162,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     }
     let node = (
       <Page dictionary={this.state.dictionary} showDictionary={true}>
-        <Menu mode="general" specs={menuSpecs}/>
+        <Menu mode={mode} specs={menuSpecs}/>
         {contentNodes}
       </Page>
     );
@@ -174,5 +179,6 @@ type State = {
   authorized: boolean
 };
 type Params = {
-  number: string;
+  number: string,
+  mode: string
 };
