@@ -93,7 +93,7 @@ export class DictionaryController extends Controller {
     let dictionary = request.dictionary;
     if (dictionary) {
       await dictionary.removeWhole();
-      response.json({});
+      response.json(null);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);
@@ -158,7 +158,7 @@ export class DictionaryController extends Controller {
     if (dictionary && user) {
       try {
         let invitation = await AccessInvitationModel.createEdit(dictionary, user);
-        response.json({});
+        response.json(null);
       } catch (error) {
         let body = (() => {
           if (error.name === "CustomError") {
@@ -388,7 +388,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {
-      response.json({});
+      response.json(null);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
       response.status(400).json(body);

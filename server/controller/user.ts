@@ -55,7 +55,7 @@ export class UserController extends Controller {
   @post(SERVER_PATH["logout"])
   @before(logout())
   public async [Symbol()](request: PostRequest<"logout">, response: PostResponse<"logout">): Promise<void> {
-    response.json({});
+    response.json(null);
   }
 
   @post(SERVER_PATH["registerUser"])
@@ -154,7 +154,7 @@ export class UserController extends Controller {
       let subject = "パスワードリセットのお知らせ";
       let text = getMailText("issueUserResetToken", {url});
       sendMail(user.email, subject, text);
-      response.send({});
+      response.send(null);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError" && error.type === "noSuchUser") {

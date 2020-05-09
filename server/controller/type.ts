@@ -73,7 +73,7 @@ type ProcessType = {
     post: {
       request: {number: number},
       response: {
-        200: {},
+        200: null,
         400: CustomError<"noSuchDictionaryNumber">
       }
     }
@@ -123,7 +123,7 @@ type ProcessType = {
     post: {
       request: {number: number, userName: string},
       response: {
-        200: {},
+        200: null,
         400: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "editDictionaryAlreadyInvited">
       }
     }
@@ -222,7 +222,7 @@ type ProcessType = {
     get: {
       request: {number: number},
       response: {
-        200: {},
+        200: null,
         400: CustomError<"noSuchDictionaryNumber">
       }
     },
@@ -243,7 +243,7 @@ type ProcessType = {
     post: {
       request: {},
       response: {
-        200: {},
+        200: null,
         400: never
       }
     }
@@ -283,7 +283,7 @@ type ProcessType = {
     post: {
       request: {name: string, email: string},
       response: {
-        200: {},
+        200: null,
         400: CustomError<"noSuchUser">
       }
     }

@@ -54,7 +54,7 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
     let body = response.data;
     if (response.status === 200) {
       this.setState({errorType: "userResetTokenIssued", errorStyle: "information"});
-    } else if (response.status === 400 && "error" in body) {
+    } else if (response.status === 400 && body !== null && "error" in body) {
       this.setState({errorType: body.type, errorStyle: "error"});
     } else {
       this.setState({errorType: "unexpected", errorStyle: "error"});
