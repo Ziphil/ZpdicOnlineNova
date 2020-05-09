@@ -42,7 +42,7 @@ export class NotificationController extends Controller {
     let text = CastUtil.ensureString(request.body.text);
     let notification = await NotificationModel.add(type, title, text);
     let body = NotificationCreator.create(notification);
-    response.json(body);
+    Controller.response(response, body);
   }
 
   @get(SERVER_PATH["fetchNotifications"])
@@ -51,7 +51,7 @@ export class NotificationController extends Controller {
     let size = CastUtil.ensureNumber(request.query.size);
     let notifications = await NotificationModel.findAll(offset, size);
     let body = notifications.map(NotificationCreator.create);
-    response.json(body);
+    Controller.response(response, body);
   }
 
 }

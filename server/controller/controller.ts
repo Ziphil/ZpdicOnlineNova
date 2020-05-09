@@ -13,7 +13,8 @@ import {
   MethodType,
   ProcessName,
   RequestType,
-  ResponseType
+  ResponseType,
+  ResponseTypeSep
 } from "/server/controller/type";
 import {
   Dictionary
@@ -35,6 +36,23 @@ export class Controller {
   }
 
   protected setup(): void {
+  }
+
+  protected static response<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 200>): void {
+    response.json(body);
+  }
+
+  // ステータスコード 400 でレスポンスボディを送ります。
+  // 第 3 引数の error が指定された場合のみ、body として undefined を渡すのが許されます。
+  // この場合は、body が undefined ならば error を例外として投げ、そうでないならば通常通り body をレスポンスとして送ります。
+  protected static responseError<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 400>): void;
+  protected static responseError<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 400> | undefined, error: any): void;
+  protected static responseError<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 400> | undefined, error?: any): void {
+    if (body !== undefined) {
+      response.status(400).json(body);
+    } else if (error !== undefined) {
+      throw error;
+    }
   }
 
   // このクラスを継承したクラスのインスタンスを生成し、引数として渡されたアプリケーションオブジェクトに対してルーターの設定を行います。

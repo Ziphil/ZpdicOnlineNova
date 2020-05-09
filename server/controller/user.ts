@@ -49,13 +49,13 @@ export class UserController extends Controller {
     let user = request.user!;
     let userBody = UserCreator.create(user);
     let body = {token, user: userBody};
-    response.json(body);
+    Controller.response(response, body);
   }
 
   @post(SERVER_PATH["logout"])
   @before(logout())
   public async [Symbol()](request: PostRequest<"logout">, response: PostResponse<"logout">): Promise<void> {
-    response.json(null);
+    Controller.response(response, null);
   }
 
   @post(SERVER_PATH["registerUser"])
@@ -69,7 +69,7 @@ export class UserController extends Controller {
       let subject = "ユーザー登録完了のお知らせ";
       let text = getMailText("registerUser", {name});
       sendMail(user.email, subject, text);
-      response.send(body);
+      Controller.response(response, body);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError") {
@@ -88,11 +88,7 @@ export class UserController extends Controller {
           }
         }
       })();
-      if (body) {
-        response.status(400).json(body);
-      } else {
-        throw error;
-      }
+      Controller.responseError(response, body, error);
     }
   }
 
@@ -104,7 +100,7 @@ export class UserController extends Controller {
     try {
       await user.changeEmail(email);
       let body = UserCreator.create(user);
-      response.send(body);
+      Controller.response(response, body);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError" && error.type === "duplicateUserEmail") {
@@ -113,11 +109,7 @@ export class UserController extends Controller {
           return CustomError.ofType("invalidEmail");
         }
       })();
-      if (body) {
-        response.status(400).json(body);
-      } else {
-        throw error;
-      }
+      Controller.responseError(response, body, error);
     }
   }
 
@@ -129,18 +121,14 @@ export class UserController extends Controller {
     try {
       await user.changePassword(password);
       let body = UserCreator.create(user);
-      response.send(body);
+      Controller.response(response, body);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError" && error.type === "invalidPassword") {
           return CustomError.ofType("invalidPassword");
         }
       })();
-      if (body) {
-        response.status(400).json(body);
-      } else {
-        throw error;
-      }
+      Controller.responseError(response, body, error);
     }
   }
 
@@ -161,11 +149,7 @@ export class UserController extends Controller {
           return CustomError.ofType("noSuchUser");
         }
       })();
-      if (body) {
-        response.status(400).json(body);
-      } else {
-        throw error;
-      }
+      Controller.responseError(response, body, error);
     }
   }
 
@@ -176,7 +160,7 @@ export class UserController extends Controller {
     try {
       let user = await UserModel.resetPassword(key, password, 60);
       let body = UserCreator.create(user);
-      response.send(body);
+      Controller.response(response, body);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError") {
@@ -187,11 +171,7 @@ export class UserController extends Controller {
           }
         }
       })();
-      if (body) {
-        response.status(400).json(body);
-      } else {
-        throw error;
-      }
+      Controller.responseError(response, body, error);
     }
   }
 
@@ -200,7 +180,7 @@ export class UserController extends Controller {
   public async [Symbol()](request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
     let user = request.user!;
     let body = UserCreator.create(user);
-    response.json(body);
+    Controller.response(response, body);
   }
 
 }
