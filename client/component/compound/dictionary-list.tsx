@@ -9,7 +9,7 @@ import {
 } from "/client/component/component";
 import {
   DictionaryPane,
-  PaginationButton
+  PaneList
 } from "/client/component/compound";
 import {
   applyStyle
@@ -22,26 +22,13 @@ import {
 @applyStyle(require("./dictionary-list.scss"))
 export class DictionaryList extends Component<Props, State> {
 
-  public state: State = {
-    page: 0
-  };
-
   public render(): ReactNode {
-    let offset = this.props.size * this.state.page;
-    let maxPage = Math.max(Math.ceil(this.props.dictionaries.length / this.props.size) - 1, 0);
-    let displayedDictionaries = this.props.dictionaries.slice(offset, offset + this.props.size);
-    let dictionaryPanes = displayedDictionaries.map((dictionary) => {
-      return <DictionaryPane dictionary={dictionary} showsSetting={this.props.showsSetting} key={dictionary.id}/>;
-    });
+    let showsSetting = this.props.showsSetting;
+    let renderer = function (dictionary: Dictionary): ReactNode {
+      return <DictionaryPane dictionary={dictionary} showsSetting={showsSetting} key={dictionary.id}/>;
+    };
     let node = (
-      <div styleName="root">
-        <div styleName="dictionary">
-          {dictionaryPanes}
-        </div>
-        <div styleName="pagination-button">
-          <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.setState({page})}/>
-        </div>
-      </div>
+      <PaneList items={this.props.dictionaries} size={this.props.size} renderer={renderer}/>
     );
     return node;
   }
@@ -55,5 +42,4 @@ type Props = {
   size: number
 };
 type State = {
-  page: number
 };

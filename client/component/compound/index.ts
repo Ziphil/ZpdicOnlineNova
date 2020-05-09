@@ -27,6 +27,7 @@ export * from "./menu";
 export * from "./notification-list";
 export * from "./notification-pane";
 export * from "./pagination-button";
+export * from "./pane-list";
 export * from "./popup-information-pane";
 export * from "./register-form";
 export * from "./reset-user-password-form";
