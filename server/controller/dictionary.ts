@@ -66,7 +66,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATH["uploadDictionary"])
-  @before(verifyUser(), verifyDictionary())
+  @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     let path = request.file.path;
@@ -89,7 +89,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATH["deleteDictionary"])
-  @before(verifyUser(), verifyDictionary())
+  @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"deleteDictionary">, response: PostResponse<"deleteDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {
@@ -102,7 +102,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATH["changeDictionaryName"])
-  @before(verifyUser(), verifyDictionary())
+  @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {
     let dictionary = request.dictionary;
     let name = CastUtil.ensureString(request.body.name);
@@ -117,7 +117,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATH["changeDictionaryParamName"])
-  @before(verifyUser(), verifyDictionary())
+  @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionaryParamName">, response: PostResponse<"changeDictionaryParamName">): Promise<void> {
     let dictionary = request.dictionary;
     let paramName = CastUtil.ensureString(request.body.paramName);
@@ -147,7 +147,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATH["inviteEditDictionary"])
-  @before(verifyUser(), verifyDictionary())
+  @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"inviteEditDictionary">, response: PostResponse<"inviteEditDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     let userName = CastUtil.ensureString(request.body.userName);
@@ -207,7 +207,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATH["changeDictionarySecret"])
-  @before(verifyUser(), verifyDictionary())
+  @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {
     let dictionary = request.dictionary;
     let secret = CastUtil.ensureBoolean(request.body.secret);
@@ -222,7 +222,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATH["changeDictionaryExplanation"])
-  @before(verifyUser(), verifyDictionary())
+  @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionaryExplanation">, response: PostResponse<"changeDictionaryExplanation">): Promise<void> {
     let dictionary = request.dictionary;
     let explanation = CastUtil.ensureString(request.body.explanation);
@@ -237,7 +237,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATH["editWord"])
-  @before(verifyUser(), verifyDictionary())
+  @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: PostRequest<"editWord">, response: PostResponse<"editWord">): Promise<void> {
     let dictionary = request.dictionary;
     let word = request.body.word;
@@ -252,7 +252,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATH["deleteWord"])
-  @before(verifyUser(), verifyDictionary())
+  @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: PostRequest<"deleteWord">, response: PostResponse<"deleteWord">): Promise<void> {
     let dictionary = request.dictionary;
     let wordNumber = request.body.wordNumber;
@@ -409,7 +409,7 @@ export class DictionaryController extends Controller {
   }
 
   @get(SERVER_PATH["checkDictionaryAuthorization"])
-  @before(verifyUser(), verifyDictionary())
+  @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {

@@ -41,7 +41,7 @@ export class InvitationSchema {
   public createdDate!: Date;
 
   public static async createEdit(dictionary: Dictionary, user: User): Promise<Invitation> {
-    let canEdit = await dictionary.canEdit(user);
+    let canEdit = await dictionary.hasAuthority(user, "edit");
     if (canEdit) {
       throw new CustomError("userCanAlreadyEdit");
     } else {

@@ -351,11 +351,14 @@ export class DictionarySchema {
     return count;
   }
 
-  public async canEdit(this: Dictionary, user: User): Promise<boolean> {
-    await this.populate("user").execPopulate();
-    await this.populate("editUsers").execPopulate();
+  public async hasAuthority(this: Dictionary, user: User, range: "own" | "edit"): Promise<boolean> {
+    await this.populate("user").populate("editUsers").execPopulate();
     if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
-      return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+      if (range === "own") {
+        return this.user.id === user.id;
+      } else {
+        return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+      }
     } else {
       throw new Error("cannot happen");
     }
