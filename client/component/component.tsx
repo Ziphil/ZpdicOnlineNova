@@ -133,7 +133,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
     let status = response.status;
     let body = response.data as any;
     if (status === 400) {
-      if ("error" in body && "type" in body && typeof body.type === "string") {
+      if (typeof body === "object" && "error" in body && "type" in body && typeof body.type === "string") {
         this.props.store!.addErrorPopup(body.type);
       } else {
         this.props.store!.addErrorPopup("messageNotFound");
