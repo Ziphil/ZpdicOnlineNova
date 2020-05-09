@@ -153,12 +153,16 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     ];
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {
-      contentNodes.push(this.renderChangeDictionaryNameForm());
-      contentNodes.push(this.renderChangeDictionaryParamNameForm());
-      contentNodes.push(this.renderChangeDictionaryExplanationForm());
-      contentNodes.push(this.renderChangeDictionarySecretForm());
-      contentNodes.push(this.renderUploadDictionaryForm());
-      contentNodes.push(this.renderDeleteDictionaryForm());
+      if (mode === "general") {
+        contentNodes.push(this.renderChangeDictionaryNameForm());
+        contentNodes.push(this.renderChangeDictionaryParamNameForm());
+        contentNodes.push(this.renderChangeDictionaryExplanationForm());
+        contentNodes.push(this.renderChangeDictionarySecretForm());
+        contentNodes.push(this.renderUploadDictionaryForm());
+        contentNodes.push(this.renderDeleteDictionaryForm());
+      } else if (mode === "access") {
+        contentNodes.push("Not yet implemented");
+      }
     }
     let node = (
       <Page dictionary={this.state.dictionary} showDictionary={true}>
