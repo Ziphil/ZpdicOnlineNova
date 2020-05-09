@@ -28,6 +28,7 @@ export const SERVER_PATH = {
   changeDictionarySecret: "/api/dictionary/edit/secret",
   changeDictionaryExplanation: "/api/dictionary/edit/explanation",
   inviteEditDictionary: "/api/dictionary/invite",
+  respondEditDictionary: "/api/dictionary/invite/respond",
   editWord: "/api/word/edit",
   deleteWord: "/api/word/delete",
   searchDictionary: "/api/dictionary/search",
@@ -129,6 +130,16 @@ type ProcessType = {
       response: {
         200: Invitation,
         400: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "editDictionaryAlreadyInvited">
+      }
+    }
+  },
+  respondEditDictionary: {
+    get: Noop,
+    post: {
+      request: {id: string, accept: boolean},
+      response: {
+        200: Invitation,
+        400: CustomError<"noSuchInvitation">
       }
     }
   },

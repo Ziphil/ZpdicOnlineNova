@@ -181,6 +181,31 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["respondEditDictionary"])
+  @before(verifyUser())
+  public async [Symbol()](request: PostRequest<"respondEditDictionary">, response: PostResponse<"respondEditDictionary">): Promise<void> {
+    let user = request.user!;
+    let id = CastUtil.ensureString(request.body.id);
+    let accept = CastUtil.ensureBoolean(request.body.accept);
+    let invitation = await InvitationModel.findById(id);
+    if (invitation) {
+      try {
+        invitation.respond(user, accept);
+        let body = await InvitationCreator.create(invitation);
+        Controller.response(response, body);
+      } catch (error) {
+        if (error.name === "CustomError" && error.type === "forbidden") {
+          Controller.responseForbidden(response);
+        } else {
+          throw error;
+        }
+      }
+    } else {
+      let body = CustomError.ofType("noSuchInvitation");
+      Controller.responseError(response, body);
+    }
+  }
+
   @post(SERVER_PATH["changeDictionarySecret"])
   @before(verifyUser(), verifyDictionary())
   public async [Symbol()](request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {

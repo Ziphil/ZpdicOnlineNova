@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -30,6 +31,18 @@ import {
 @applyStyle(require("./invitation-pane.scss"))
 export class InvitationPane extends StoreComponent<Props, State> {
 
+  private async respondInvitation(event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
+    let id = this.props.invitation.id;
+    let response = await this.requestPost("respondEditDictionary", {id, accept});
+    if (response.status === 200) {
+      let type = (accept) ? "editDictionaryAccepted" : "editDictionaryRefused";
+      this.props.store!.addInformationPopup(type);
+      if (this.props.onSubmit) {
+        await this.props.onSubmit(event);
+      }
+    }
+  }
+
   public render(): ReactNode {
     let name = this.props.invitation.dictionary.name;
     let createdDate = this.props.invitation.createdDate;
@@ -47,8 +60,8 @@ export class InvitationPane extends StoreComponent<Props, State> {
           </div>
         </div>
         <div styleName="setting">
-          <Button label="拒否" iconLabel="&#xF05E;" style="caution"/>
-          <Button label="承認" iconLabel="&#xF164;" style="information"/>
+          <Button label="拒否" iconLabel="&#xF05E;" style="caution" reactive={true} onClick={(event) => this.respondInvitation(event, false)}/>
+          <Button label="承認" iconLabel="&#xF164;" style="information" reactive={true} onClick={(event) => this.respondInvitation(event, true)}/>
         </div>
       </WhitePane>
     );
@@ -60,6 +73,7 @@ export class InvitationPane extends StoreComponent<Props, State> {
 
 type Props = {
   invitation: Invitation
+  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
 };

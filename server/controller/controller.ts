@@ -39,7 +39,7 @@ export class Controller {
   }
 
   protected static response<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 200>): void {
-    response.json(body);
+    response.json(body).end();
   }
 
   // ステータスコード 400 でレスポンスボディを送ります。
@@ -49,10 +49,14 @@ export class Controller {
   protected static responseError<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 400> | undefined, error: any): void;
   protected static responseError<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 400> | undefined, error?: any): void {
     if (body !== undefined) {
-      response.status(400).json(body);
+      response.status(400).json(body).end();
     } else if (error !== undefined) {
       throw error;
     }
+  }
+
+  protected static responseForbidden<N extends ProcessName, M extends MethodType>(response: Response<N, M>): void {
+    response.status(403).end();
   }
 
   // このクラスを継承したクラスのインスタンスを生成し、引数として渡されたアプリケーションオブジェクトに対してルーターの設定を行います。

@@ -81,15 +81,15 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
   }
 
   private renderInvitationList(): ReactNode {
-    let label = "編集の招待";
+    let label = "編集権限の付与の招待";
     let description = `
-      このユーザーに送られてきた編集の招待の一覧です。
+      このユーザーに送られてきた編集権限の付与の招待の一覧です。
       これを承認すると、該当の辞書を編集できるようになります。
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <Loading loading={this.state.editInvitations === null}>
-          <InvitationList invitations={this.state.editInvitations!} size={8}/>
+          <InvitationList invitations={this.state.editInvitations!} size={8} onSubmit={() => this.fetchEditInvitations()}/>
         </Loading>
       </SettingPane>
     );
