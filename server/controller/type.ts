@@ -37,6 +37,7 @@ export const SERVER_PATH = {
   fetchDictionaries: "/api/dictionary/list",
   fetchAllDictionaries: "/api/dictionary/list/all",
   fetchDictionaryAggregation: "/api/dictionary/aggregate",
+  fetchInvitations: "/api/dictionary/invite/fetch",
   checkDictionaryAuthorization: "/api/dictionary/check",
   login: "/api/user/login",
   logout: "/api/user/logout",
@@ -216,6 +217,16 @@ type ProcessType = {
       request: {},
       response: {
         200: {dictionarySize: number, wordSize: number},
+        400: never
+      }
+    },
+    post: Noop
+  },
+  fetchInvitations: {
+    get: {
+      request: {type: string},
+      response: {
+        200: Array<AccessInvitation>,
         400: never
       }
     },

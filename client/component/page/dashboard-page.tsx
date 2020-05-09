@@ -25,6 +25,9 @@ import {
   Page
 } from "/client/component/page/page";
 import {
+  AccessInvitation
+} from "/server/skeleton/access-invitation";
+import {
   Dictionary
 } from "/server/skeleton/dictionary";
 
@@ -34,14 +37,29 @@ import {
 export class DashboardPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
-    dictionaries: null
+    dictionaries: null,
+    editInvitations: null
   };
 
   public async componentDidMount(): Promise<void> {
+    let promise = Promise.all([this.fetchDictionaries(), this.fetchEditInvitations()]);
+    await promise;
+  }
+
+  public async fetchDictionaries(): Promise<void> {
     let response = await this.requestGet("fetchDictionaries", {});
     if (response.status === 200) {
       let dictionaries = response.data;
       this.setState({dictionaries});
+    }
+  }
+
+  public async fetchEditInvitations(): Promise<void> {
+    let type = "edit";
+    let response = await this.requestGet("fetchInvitations", {type});
+    if (response.status === 200) {
+      let editInvitations = response.data;
+      this.setState({editInvitations});
     }
   }
 
@@ -102,10 +120,13 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
 
   public render(): ReactNode {
     let mode = this.props.match?.params.mode || "dictionary";
-    let dictionaryCount = (this.state.dictionaries !== null) ? this.state.dictionaries.length.toLocaleString("en-GB") : undefined;
+    let dictionaries = this.state.dictionaries;
+    let editInvitations = this.state.editInvitations;
+    let dictionaryCount = (dictionaries !== null && dictionaries.length > 0) ? dictionaries.length.toLocaleString("en-GB") : undefined;
+    let notificationCount = (editInvitations !== null && editInvitations.length > 0) ? editInvitations.length.toLocaleString("en-GB") : undefined;
     let menuSpecs = [
       {mode: "dictionary", label: "辞書", iconLabel: "\uF02D", badgeValue: dictionaryCount, href: "/dashboard"},
-      {mode: "notification", label: "通知", iconLabel: "\uF0F3", href: "/dashboard/notification"},
+      {mode: "notification", label: "通知", iconLabel: "\uF0F3", badgeValue: notificationCount, href: "/dashboard/notification"},
       {mode: "profile", label: "アカウント", iconLabel: "\uF2C2", href: "/dashboard/profile"},
       {mode: "logout", label: "ログアウト", iconLabel: "\uF2F5", href: "/"}
     ];
@@ -134,7 +155,8 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionaries: Array<Dictionary> | null;
+  dictionaries: Array<Dictionary> | null,
+  editInvitations: Array<AccessInvitation> | null
 };
 type Params = {
   mode: string

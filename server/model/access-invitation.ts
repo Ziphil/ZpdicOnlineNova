@@ -53,8 +53,8 @@ export class AccessInvitationSchema {
     }
   }
 
-  public static async findByUser(user: User): Promise<Array<AccessInvitation>> {
-    let invitations = await AccessInvitationModel.find().where("user", user);
+  public static async findByUser(type: string, user: User): Promise<Array<AccessInvitation>> {
+    let invitations = await AccessInvitationModel.find().where("type", type).where("user", user);
     return invitations;
   }
 

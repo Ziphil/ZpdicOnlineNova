@@ -373,6 +373,16 @@ export class DictionaryController extends Controller {
     Controller.response(response, body);
   }
 
+  @get(SERVER_PATH["fetchInvitations"])
+  @before(verifyUser())
+  public async [Symbol()](request: GetRequest<"fetchInvitations">, response: GetResponse<"fetchInvitations">): Promise<void> {
+    let user = request.user!;
+    let type = CastUtil.ensureString(request.query.type);
+    let invitations = await AccessInvitationModel.findByUser(type, user);
+    let body = await Promise.all(invitations.map((invitation) => AccessInvitationCreator.create(invitation)));
+    Controller.response(response, body);
+  }
+
   @get(SERVER_PATH["checkDictionaryAuthorization"])
   @before(verifyUser(), verifyDictionary())
   public async [Symbol()](request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
