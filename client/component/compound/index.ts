@@ -32,6 +32,7 @@ export * from "./register-form";
 export * from "./reset-user-password-form";
 export * from "./search-form";
 export * from "./setting-pane";
+export * from "./white-pane";
 export * from "./word-editor";
 export * from "./word-list";
 export * from "./word-pane";

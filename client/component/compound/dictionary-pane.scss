@@ -3,15 +3,6 @@
 @import "/client/component/mixin.scss";
 
 
-.root {
-  @include white-pane(true);
-  padding: 12px 15px;
-  color: inherit;
-  text-decoration: none;
-  box-sizing: border-box;
-  display: block;
-}
-
 .head {
   display: flex;
   flex-direction: row;
@@ -41,10 +32,16 @@
   font-size: 80%;
 }
 
+.information-item {
+   margin: 5px 0px 0px 0px;
+}
+
+.information-item:first-child {
+  margin: 0px;
+}
+
 .setting {
-  margin: 10px 0px 0px 0px;
-  padding: 10px 0px 0px 0px;
-  border-top: 1px rgba(white, 0.8) solid;
+  text-align: right;
 }
 
 .setting >* {
@@ -52,13 +49,5 @@
 }
 
 .setting >*:first-child {
-  margin: 0px;
-}
-
-.information-item {
-   margin: 5px 0px 0px 0px;
-}
-
-.information-item:first-child {
   margin: 0px;
 }

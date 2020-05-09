@@ -12,6 +12,9 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
+  WhitePane
+} from "/client/component/compound";
+import {
   applyStyle,
   inject,
   route
@@ -27,12 +30,6 @@ import {
 @route @inject
 @applyStyle(require("./dictionary-pane.scss"))
 export class DictionaryPane extends StoreComponent<Props, State> {
-
-  private handleClick(event: MouseEvent<HTMLAnchorElement>): void {
-    event.preventDefault();
-    let path = event.currentTarget.attributes.getNamedItem("href")!.value;
-    this.pushPath(path);
-  }
 
   private jumpSettingPage(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
@@ -68,12 +65,6 @@ export class DictionaryPane extends StoreComponent<Props, State> {
         }
       }
     })();
-    let settingNode = (this.props.showsSetting) && (
-      <div styleName="setting">
-        <Button label="設定" iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
-        <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
-      </div>
-    );
     let userNode = (!this.props.showsSetting) && (
       <div styleName="information-item">管理者 — @{this.props.dictionary.userName}</div>
     );
@@ -81,22 +72,30 @@ export class DictionaryPane extends StoreComponent<Props, State> {
     let updatedDateNode = (
       <div styleName="information-item">最終更新 — {(updatedDate !== undefined) ? DateUtil.format(updatedDate, "yyyy/MM/dd HH:mm") : "?"}</div>
     );
+    let settingNode = (this.props.showsSetting) && (
+      <div styleName="setting">
+        <Button label="設定" iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
+        <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
+      </div>
+    );
     let node = (
-      <a styleName="root" href={href} onClick={this.handleClick.bind(this)}>
-        <div styleName="head">
-          <div styleName="left">
-            <div styleName="name">{name}</div>
+      <WhitePane href={href} clickable={true}>
+        <div>
+          <div styleName="head">
+            <div styleName="left">
+              <div styleName="name">{name}</div>
+            </div>
+            <div styleName="right">
+              <div styleName="status">{statusString}</div>
+            </div>
           </div>
-          <div styleName="right">
-            <div styleName="status">{statusString}</div>
+          <div styleName="information">
+            {updatedDateNode}
+            {userNode}
           </div>
-        </div>
-        <div styleName="information">
-          {updatedDateNode}
-          {userNode}
         </div>
         {settingNode}
-      </a>
+      </WhitePane>
     );
     return node;
   }
