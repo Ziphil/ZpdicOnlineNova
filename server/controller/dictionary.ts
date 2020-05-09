@@ -24,15 +24,15 @@ import {
   SERVER_PATH
 } from "/server/controller/type";
 import {
-  AccessInvitationCreator,
-  AccessInvitationModel
-} from "/server/model/access-invitation";
-import {
   DictionaryCreator,
   DictionaryModel,
   WordCreator,
   WordModel
 } from "/server/model/dictionary";
+import {
+  InvitationCreator,
+  InvitationModel
+} from "/server/model/invitation";
 import {
   NormalSearchParameter,
   SearchModeUtil,
@@ -154,8 +154,8 @@ export class DictionaryController extends Controller {
     let user = await UserModel.findOneByName(userName);
     if (dictionary && user) {
       try {
-        let invitation = await AccessInvitationModel.createEdit(dictionary, user);
-        let body = await AccessInvitationCreator.create(invitation);
+        let invitation = await InvitationModel.createEdit(dictionary, user);
+        let body = await InvitationCreator.create(invitation);
         Controller.response(response, body);
       } catch (error) {
         let body = (() => {
@@ -378,8 +378,8 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: GetRequest<"fetchInvitations">, response: GetResponse<"fetchInvitations">): Promise<void> {
     let user = request.user!;
     let type = CastUtil.ensureString(request.query.type);
-    let invitations = await AccessInvitationModel.findByUser(type, user);
-    let body = await Promise.all(invitations.map((invitation) => AccessInvitationCreator.create(invitation)));
+    let invitations = await InvitationModel.findByUser(type, user);
+    let body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
     Controller.response(response, body);
   }
 

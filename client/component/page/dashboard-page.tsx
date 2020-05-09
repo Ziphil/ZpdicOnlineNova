@@ -26,11 +26,11 @@ import {
   Page
 } from "/client/component/page/page";
 import {
-  AccessInvitation
-} from "/server/skeleton/access-invitation";
-import {
   Dictionary
 } from "/server/skeleton/dictionary";
+import {
+  Invitation
+} from "/server/skeleton/invitation";
 
 
 @route @inject
@@ -175,7 +175,7 @@ type Props = {
 };
 type State = {
   dictionaries: Array<Dictionary> | null,
-  editInvitations: Array<AccessInvitation> | null
+  editInvitations: Array<Invitation> | null
 };
 type Params = {
   mode: string

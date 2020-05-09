@@ -21,12 +21,12 @@ import {
   UserSchema
 } from "/server/model/user";
 import {
-  AccessInvitation as AccessInvitationSkeleton
-} from "/server/skeleton/access-invitation";
+  Invitation as InvitationSkeleton
+} from "/server/skeleton/invitation";
 
 
-@modelOptions({schemaOptions: {collection: "accessInvitations"}})
-export class AccessInvitationSchema {
+@modelOptions({schemaOptions: {collection: "invitations"}})
+export class InvitationSchema {
 
   @prop({required: true})
   public type!: string;
@@ -37,39 +37,39 @@ export class AccessInvitationSchema {
   @prop({required: true, ref: UserSchema})
   public user!: Ref<UserSchema>;
 
-  public static async createEdit(dictionary: Dictionary, user: User): Promise<AccessInvitation> {
+  public static async createEdit(dictionary: Dictionary, user: User): Promise<Invitation> {
     let canEdit = await dictionary.canEdit(user);
     if (canEdit) {
       throw new CustomError("userCanAlreadyEdit");
     } else {
-      let formerInvitation = await AccessInvitationModel.findOne().where("type", "edit").where("dictionary", dictionary).where("user", user);
+      let formerInvitation = await InvitationModel.findOne().where("type", "edit").where("dictionary", dictionary).where("user", user);
       if (formerInvitation) {
         throw new CustomError("editDictionaryAlreadyInvited");
       } else {
-        let invitation = new AccessInvitationModel({type: "edit", dictionary, user});
+        let invitation = new InvitationModel({type: "edit", dictionary, user});
         await invitation.save();
         return invitation;
       }
     }
   }
 
-  public static async findByUser(type: string, user: User): Promise<Array<AccessInvitation>> {
-    let invitations = await AccessInvitationModel.find().where("type", type).where("user", user);
+  public static async findByUser(type: string, user: User): Promise<Array<Invitation>> {
+    let invitations = await InvitationModel.find().where("type", type).where("user", user);
     return invitations;
   }
 
 }
 
 
-export class AccessInvitationCreator {
+export class InvitationCreator {
 
-  public static async create(raw: AccessInvitation): Promise<AccessInvitationSkeleton> {
+  public static async create(raw: Invitation): Promise<InvitationSkeleton> {
     await raw.populate("dictionary").execPopulate();
     if (isDocument(raw.dictionary)) {
       let id = raw.id;
       let type = raw.type;
       let dictionary = await DictionaryCreator.fetch(raw.dictionary);
-      let skeleton = AccessInvitationSkeleton.of({id, type, dictionary});
+      let skeleton = InvitationSkeleton.of({id, type, dictionary});
       return skeleton;
     } else {
       throw new Error("cannot happen");
@@ -79,5 +79,5 @@ export class AccessInvitationCreator {
 }
 
 
-export type AccessInvitation = DocumentType<AccessInvitationSchema>;
-export let AccessInvitationModel = getModelForClass(AccessInvitationSchema);
+export type Invitation = DocumentType<InvitationSchema>;
+export let InvitationModel = getModelForClass(InvitationSchema);

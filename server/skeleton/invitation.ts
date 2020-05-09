@@ -8,7 +8,7 @@ import {
 } from "/server/skeleton/skeleton";
 
 
-export class AccessInvitation extends Skeleton {
+export class Invitation extends Skeleton {
 
   public id!: string;
   public type!: string;

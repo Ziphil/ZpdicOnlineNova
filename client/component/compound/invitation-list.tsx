@@ -15,15 +15,15 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  AccessInvitation
-} from "/server/skeleton/access-invitation";
+  Invitation
+} from "/server/skeleton/invitation";
 
 
 @applyStyle(require("./invitation-list.scss"))
 export class InvitationList extends Component<Props, State> {
 
   public render(): ReactNode {
-    let renderer = function (invitation: AccessInvitation): ReactNode {
+    let renderer = function (invitation: Invitation): ReactNode {
       return <InvitationPane invitation={invitation} key={invitation.id}/>;
     };
     let node = (
@@ -36,7 +36,7 @@ export class InvitationList extends Component<Props, State> {
 
 
 type Props = {
-  invitations: Array<AccessInvitation>,
+  invitations: Array<Invitation>,
   size: number
 };
 type State = {

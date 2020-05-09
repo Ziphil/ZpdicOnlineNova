@@ -22,8 +22,8 @@ import {
   DateUtil
 } from "/client/util/date";
 import {
-  AccessInvitation
-} from "/server/skeleton/access-invitation";
+  Invitation
+} from "/server/skeleton/invitation";
 
 
 @route @inject
@@ -59,7 +59,7 @@ export class InvitationPane extends StoreComponent<Props, State> {
 
 
 type Props = {
-  invitation: AccessInvitation
+  invitation: Invitation
 };
 type State = {
 };
