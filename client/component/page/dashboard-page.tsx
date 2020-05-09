@@ -47,13 +47,12 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
 
   private renderDictionaryList(): ReactNode {
     let label = "登録辞書一覧";
-    let badgeValue = (this.state.dictionaries !== null) ? this.state.dictionaries.length.toLocaleString("en-GB") : undefined;
     let description = `
       このユーザーに登録されている辞書の一覧です。
       辞書の閲覧や編集ができます。
     `;
     let node = (
-      <SettingPane label={label} badgeValue={badgeValue} key={label} description={description}>
+      <SettingPane label={label} key={label} description={description}>
         <Loading loading={this.state.dictionaries === null}>
           <DictionaryList dictionaries={this.state.dictionaries!} showsSetting={true} size={8}/>
         </Loading>
@@ -103,8 +102,9 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
 
   public render(): ReactNode {
     let mode = this.props.match?.params.mode || "dictionary";
+    let dictionaryCount = (this.state.dictionaries !== null) ? this.state.dictionaries.length.toLocaleString("en-GB") : undefined;
     let menuSpecs = [
-      {mode: "dictionary", label: "辞書", iconLabel: "\uF02D", href: "/dashboard"},
+      {mode: "dictionary", label: "辞書", iconLabel: "\uF02D", badgeValue: dictionaryCount, href: "/dashboard"},
       {mode: "notification", label: "通知", iconLabel: "\uF0F3", href: "/dashboard/notification"},
       {mode: "profile", label: "アカウント", iconLabel: "\uF2C2", href: "/dashboard/profile"},
       {mode: "logout", label: "ログアウト", iconLabel: "\uF2F5", href: "/"}

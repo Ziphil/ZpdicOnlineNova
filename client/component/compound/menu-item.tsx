@@ -6,6 +6,9 @@ import {
   ReactNode
 } from "react";
 import {
+  Badge
+} from "/client/component/atom";
+import {
   StoreComponent
 } from "/client/component/component";
 import {
@@ -37,10 +40,14 @@ export class MenuItem extends StoreComponent<Props, State> {
       "root",
       {if: this.props.highlight, true: "highlight"}
     );
+    let badgeNode = (this.props.badgeValue) && (
+      <Badge className={this.props.styles!["badge"]} value={this.props.badgeValue} style={(this.props.highlight) ? "highlight" : "normal"}/>
+    );
     let node = (
       <a styleName={styleName} href={this.props.href} onClick={this.handleClick.bind(this)}>
         <span styleName="icon">{this.props.iconLabel}</span>
         <span styleName="text">{this.props.label}</span>
+        {badgeNode}
       </a>
     );
     return node;
@@ -52,6 +59,7 @@ export class MenuItem extends StoreComponent<Props, State> {
 type Props = {
   label: string,
   iconLabel: string,
+  badgeValue?: string,
   highlight: boolean,
   href?: string,
   onClick?: (event: MouseEvent<HTMLElement>) => void;

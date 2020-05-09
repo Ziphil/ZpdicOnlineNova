@@ -16,3 +16,7 @@
   display: inline-block;
   position: relative;
 }
+
+.root.highlight {
+  background-color: $link-color;
+}
