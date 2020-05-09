@@ -37,7 +37,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
   private jumpSettingPage(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
     event.stopPropagation();
-    let path = "/dictionary/setting/" + this.props.dictionary.number;
+    let path = "/dictionary-setting/" + this.props.dictionary.number;
     this.pushPath(path);
   }
 
