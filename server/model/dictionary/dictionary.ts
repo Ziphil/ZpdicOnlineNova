@@ -3,6 +3,7 @@
 import {
   DocumentType,
   Ref,
+  arrayProp,
   getModelForClass,
   isDocument,
   modelOptions,
@@ -49,6 +50,9 @@ export class DictionarySchema {
 
   @prop({required: true, ref: UserSchema})
   public user!: Ref<UserSchema>;
+
+  @arrayProp({required: true, ref: UserSchema})
+  public editUsers!: Array<Ref<UserSchema>>;
 
   @prop({required: true, unique: true})
   public number!: number;
