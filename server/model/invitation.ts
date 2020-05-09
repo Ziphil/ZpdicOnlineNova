@@ -37,6 +37,9 @@ export class InvitationSchema {
   @prop({required: true, ref: UserSchema})
   public user!: Ref<UserSchema>;
 
+  @prop({required: true})
+  public createdDate!: Date;
+
   public static async createEdit(dictionary: Dictionary, user: User): Promise<Invitation> {
     let canEdit = await dictionary.canEdit(user);
     if (canEdit) {
@@ -46,7 +49,8 @@ export class InvitationSchema {
       if (formerInvitation) {
         throw new CustomError("editDictionaryAlreadyInvited");
       } else {
-        let invitation = new InvitationModel({type: "edit", dictionary, user});
+        let createdDate = new Date();
+        let invitation = new InvitationModel({type: "edit", dictionary, user, createdDate});
         await invitation.save();
         return invitation;
       }
@@ -69,7 +73,8 @@ export class InvitationCreator {
       let id = raw.id;
       let type = raw.type;
       let dictionary = await DictionaryCreator.fetch(raw.dictionary);
-      let skeleton = InvitationSkeleton.of({id, type, dictionary});
+      let createdDate = raw.createdDate.toISOString();
+      let skeleton = InvitationSkeleton.of({id, type, dictionary, createdDate});
       return skeleton;
     } else {
       throw new Error("cannot happen");

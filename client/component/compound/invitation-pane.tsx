@@ -32,7 +32,7 @@ export class InvitationPane extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let name = this.props.invitation.dictionary.name;
-    let createdDate;
+    let createdDate = this.props.invitation.createdDate;
     let node = (
       <WhitePane clickable={false}>
         <div>
@@ -42,7 +42,7 @@ export class InvitationPane extends StoreComponent<Props, State> {
             </div>
           </div>
           <div styleName="information">
-            <div styleName="information-item">招待日時 — {(createdDate !== undefined) ? DateUtil.format(createdDate, "yyyy/MM/dd HH:mm") : "?"}</div>
+            <div styleName="information-item">招待日時 — {DateUtil.format(createdDate, "yyyy/MM/dd HH:mm")}</div>
             <div styleName="information-item">招待者 — @{this.props.invitation.dictionary.userName}</div>
           </div>
         </div>
