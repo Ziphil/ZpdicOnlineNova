@@ -221,7 +221,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public render(): ReactNode {
     let innerNode = (this.state.dictionary !== null) && (
-      (this.state.showsExplanation) ? <Markdown source={this.state.dictionary.explanation}/> : this.renderWordList()
+      (this.state.showsExplanation) ? <Markdown source={this.state.dictionary.explanation ?? ""}/> : this.renderWordList()
     );
     let node = (
       <Page dictionary={this.state.dictionary} showDictionary={true} authorized={this.state.authorized}>

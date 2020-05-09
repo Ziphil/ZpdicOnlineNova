@@ -19,8 +19,8 @@ export class Dictionary extends Skeleton {
   public name!: string;
   public status!: string;
   public secret!: boolean;
-  public explanation!: string;
-  public updatedDate!: string | null;
+  public explanation?: string;
+  public updatedDate?: string;
   public words?: Array<Word>;
   public wordSize?: number;
   public userName?: string;

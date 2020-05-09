@@ -67,8 +67,8 @@ export class DictionarySchema {
   @prop({required: true})
   public status!: string;
 
-  @prop()
-  public secret?: boolean;
+  @prop({required: true})
+  public secret!: boolean;
 
   @prop()
   public explanation?: string;
@@ -76,17 +76,17 @@ export class DictionarySchema {
   @prop()
   public updatedDate?: Date;
 
-  @prop()
-  public externalData?: object;
+  @prop({required: true})
+  public externalData!: object;
 
   public static async createEmpty(name: string, user: User): Promise<Dictionary> {
     let dictionary = new DictionaryModel({});
     dictionary.user = user;
+    dictionary.editUsers = [];
     dictionary.number = await DictionaryModel.nextNumber();
     dictionary.name = name;
     dictionary.status = "ready";
     dictionary.secret = false;
-    dictionary.explanation = "";
     dictionary.updatedDate = new Date();
     dictionary.externalData = {};
     await dictionary.save();
@@ -390,9 +390,9 @@ export class DictionaryCreator {
     let paramName = raw.paramName;
     let name = raw.name;
     let status = raw.status;
-    let secret = raw.secret || false;
-    let explanation = raw.explanation || "";
-    let updatedDate = raw.updatedDate?.toISOString() || null;
+    let secret = raw.secret;
+    let explanation = raw.explanation;
+    let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
     let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, updatedDate});
     return skeleton;
   }

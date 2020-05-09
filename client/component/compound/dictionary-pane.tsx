@@ -79,7 +79,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
     );
     let updatedDate = this.props.dictionary.updatedDate;
     let updatedDateNode = (
-      <div styleName="information-item">最終更新 — {(updatedDate !== null) ? DateUtil.format(updatedDate, "yyyy/MM/dd HH:mm") : "?"}</div>
+      <div styleName="information-item">最終更新 — {(updatedDate !== undefined) ? DateUtil.format(updatedDate, "yyyy/MM/dd HH:mm") : "?"}</div>
     );
     let node = (
       <a styleName="root" href={href} onClick={this.handleClick.bind(this)}>
