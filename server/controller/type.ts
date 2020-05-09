@@ -1,6 +1,9 @@
 //
 
 import {
+  AccessInvitation
+} from "/server/skeleton/access-invitation";
+import {
   Dictionary,
   EditWord,
   Word
@@ -123,7 +126,7 @@ type ProcessType = {
     post: {
       request: {number: number, userName: string},
       response: {
-        200: null,
+        200: AccessInvitation,
         400: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "editDictionaryAlreadyInvited">
       }
     }

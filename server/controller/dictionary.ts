@@ -24,6 +24,7 @@ import {
   SERVER_PATH
 } from "/server/controller/type";
 import {
+  AccessInvitationCreator,
   AccessInvitationModel
 } from "/server/model/access-invitation";
 import {
@@ -154,7 +155,8 @@ export class DictionaryController extends Controller {
     if (dictionary && user) {
       try {
         let invitation = await AccessInvitationModel.createEdit(dictionary, user);
-        Controller.response(response, null);
+        let body = await AccessInvitationCreator.create(invitation);
+        Controller.response(response, body);
       } catch (error) {
         let body = (() => {
           if (error.name === "CustomError") {
