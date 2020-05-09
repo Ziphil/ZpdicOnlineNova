@@ -334,7 +334,7 @@ export class DictionarySchema {
       finalQuery = WordModel.find();
     }
     finalQuery = finalQuery.sort("name");
-    let countQuery = WordModel.count(finalQuery.getQuery());
+    let countQuery = WordModel.countDocuments(finalQuery.getQuery());
     let restrictedQuery = QueryUtil.restrict(finalQuery, offset, size);
     let hitSize = await countQuery.exec();
     let hitWords = await restrictedQuery.exec();
@@ -342,7 +342,7 @@ export class DictionarySchema {
   }
 
   public async countWords(): Promise<number> {
-    let count = WordModel.count({}).where("dictionary", this).exec();
+    let count = WordModel.countDocuments({}).where("dictionary", this).exec();
     return count;
   }
 
