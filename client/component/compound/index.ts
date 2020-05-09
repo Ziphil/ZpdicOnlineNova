@@ -19,6 +19,8 @@ export * from "./form-pane";
 export * from "./header-menu-item";
 export * from "./header";
 export * from "./information-pane";
+export * from "./invitation-list";
+export * from "./invitation-pane";
 export * from "./loading";
 export * from "./login-form";
 export * from "./logo";

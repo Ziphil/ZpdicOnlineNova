@@ -12,6 +12,7 @@ import {
   ChangeUserPasswordForm,
   CreateDictionaryForm,
   DictionaryList,
+  InvitationList,
   Loading,
   Menu,
   SettingPane
@@ -79,6 +80,22 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     return node;
   }
 
+  private renderInvitationList(): ReactNode {
+    let label = "編集の招待";
+    let description = `
+      このユーザーに送られてきた編集の招待の一覧です。
+      これを承認すると、該当の辞書を編集できるようになります。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <Loading loading={this.state.editInvitations === null}>
+          <InvitationList invitations={this.state.editInvitations!} size={8}/>
+        </Loading>
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderCreateDictionaryForm(): ReactNode {
     let label = "新規作成";
     let description = `
@@ -135,6 +152,8 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
       if (mode === "dictionary") {
         contentNodes.push(this.renderDictionaryList());
         contentNodes.push(this.renderCreateDictionaryForm());
+      } else if (mode === "notification") {
+        contentNodes.push(this.renderInvitationList());
       } else if (mode === "profile") {
         contentNodes.push(this.renderChangeEmailForm());
         contentNodes.push(this.renderChangeUserPasswordForm());

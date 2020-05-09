@@ -68,7 +68,7 @@ export class AccessInvitationCreator {
     if (isDocument(raw.dictionary)) {
       let id = raw.id;
       let type = raw.type;
-      let dictionary = DictionaryCreator.create(raw.dictionary);
+      let dictionary = await DictionaryCreator.fetch(raw.dictionary);
       let skeleton = AccessInvitationSkeleton.of({id, type, dictionary});
       return skeleton;
     } else {
