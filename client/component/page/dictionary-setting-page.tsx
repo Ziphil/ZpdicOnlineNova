@@ -13,6 +13,7 @@ import {
   ChangeDictionaryParamNameForm,
   ChangeDictionarySecretForm,
   DeleteDictionaryForm,
+  InviteEditDictionaryForm,
   Menu,
   SettingPane,
   UploadDictionaryForm
@@ -144,6 +145,20 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     return node;
   }
 
+  private renderInviteEditDictionaryForm(): ReactNode {
+    let label = "編集権限";
+    let description = `
+      この辞書の編集権限を別のユーザーにも付与します。
+      権限を付与されたユーザーは、単語の編集や削除はできますが、辞書の表示名の変更や削除はできません。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <InviteEditDictionaryForm number={this.state.dictionary!.number} onSubmit={() => null}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
     let number = +this.props.match!.params.number;
     let mode = this.props.match?.params.mode || "general";
@@ -161,7 +176,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
         contentNodes.push(this.renderUploadDictionaryForm());
         contentNodes.push(this.renderDeleteDictionaryForm());
       } else if (mode === "access") {
-        contentNodes.push("Not yet implemented");
+        contentNodes.push(this.renderInviteEditDictionaryForm());
       }
     }
     let node = (

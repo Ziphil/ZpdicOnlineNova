@@ -24,6 +24,9 @@ import {
   SERVER_PATH
 } from "/server/controller/type";
 import {
+  AccessInvitationModel
+} from "/server/model/access-invitation";
+import {
   DictionaryCreator,
   DictionaryModel,
   WordCreator,
@@ -34,6 +37,9 @@ import {
   SearchModeUtil,
   SearchTypeUtil
 } from "/server/model/search-parameter";
+import {
+  UserModel
+} from "/server/model/user";
 import {
   Dictionary
 } from "/server/skeleton/dictionary";
@@ -139,6 +145,44 @@ export class DictionaryController extends Controller {
       }
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
+      response.status(400).json(body);
+    }
+  }
+
+  @post(SERVER_PATH["inviteEditDictionary"])
+  @before(verifyUser(), verifyDictionary())
+  public async [Symbol()](request: PostRequest<"inviteEditDictionary">, response: PostResponse<"inviteEditDictionary">): Promise<void> {
+    let dictionary = request.dictionary;
+    let userName = CastUtil.ensureString(request.body.userName);
+    let user = await UserModel.findOneByName(userName);
+    if (dictionary && user) {
+      try {
+        let invitation = await AccessInvitationModel.createEdit(dictionary, user);
+        response.json({});
+      } catch (error) {
+        let body = (() => {
+          if (error.name === "CustomError") {
+            if (error.type === "userCanAlreadyEdit") {
+              return CustomError.ofType("userCanAlreadyEdit");
+            } else if (error.type === "editDictionaryAlreadyInvited") {
+              return CustomError.ofType("editDictionaryAlreadyInvited");
+            }
+          }
+        })();
+        if (body) {
+          response.status(400).json(body);
+        } else {
+          throw error;
+        }
+      }
+    } else {
+      let body = (() => {
+        if (dictionary === undefined) {
+          return CustomError.ofType("noSuchDictionaryNumber");
+        } else {
+          return CustomError.ofType("noSuchUser");
+        }
+      })();
       response.status(400).json(body);
     }
   }

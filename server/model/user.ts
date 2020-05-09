@@ -77,6 +77,11 @@ export class UserSchema {
     }
   }
 
+  public static async findOneByName(name: string): Promise<User | null> {
+    let user = await UserModel.findOne().where("name", name);
+    return user;
+  }
+
   public static async issueResetToken(name: string, email: string): Promise<{user: User, key: string}> {
     let user = await UserModel.findOne().where("name", name).where("email", email).exec();
     if (user && user.authority !== "admin") {

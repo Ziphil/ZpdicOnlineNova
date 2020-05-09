@@ -6,6 +6,7 @@ import {
   arrayProp,
   getModelForClass,
   isDocument,
+  isDocumentArray,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -348,6 +349,16 @@ export class DictionarySchema {
   public async countWords(): Promise<number> {
     let count = WordModel.countDocuments({}).where("dictionary", this).exec();
     return count;
+  }
+
+  public async canEdit(this: Dictionary, user: User): Promise<boolean> {
+    await this.populate("user").execPopulate();
+    await this.populate("editUsers").execPopulate();
+    if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
+      return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+    } else {
+      throw new Error("cannot happen");
+    }
   }
 
   private async nextWordNumber(): Promise<number> {
