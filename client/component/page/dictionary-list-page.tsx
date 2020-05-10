@@ -45,7 +45,7 @@ export class DictionaryListPage extends StoreComponent<Props, State> {
       <Page>
         <div styleName="list">
           <Loading loading={this.state.dictionaries === null}>
-            <DictionaryList dictionaries={this.state.dictionaries!} showsSetting={false} size={20}/>
+            <DictionaryList dictionaries={this.state.dictionaries!} size={20}/>
           </Loading>
         </div>
       </Page>

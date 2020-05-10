@@ -22,10 +22,25 @@ import {
 @applyStyle(require("./dictionary-list.scss"))
 export class DictionaryList extends Component<Props, State> {
 
+  public static defaultProps: Partial<Props> = {
+    showUser: true,
+    showUpdatedDate: true,
+    showDownloadLink: false
+  };
+
   public render(): ReactNode {
-    let showsSetting = this.props.showsSetting;
+    let outerThis = this;
     let renderer = function (dictionary: Dictionary): ReactNode {
-      return <DictionaryPane dictionary={dictionary} showsSetting={showsSetting} key={dictionary.id}/>;
+      let dictionaryNode = (
+        <DictionaryPane
+          dictionary={dictionary}
+          key={dictionary.id}
+          showUser={outerThis.props.showUser}
+          showUpdatedDate={outerThis.props.showUpdatedDate}
+          showDownloadLink={outerThis.props.showDownloadLink}
+        />
+      );
+      return dictionaryNode;
     };
     let node = (
       <PaneList items={this.props.dictionaries} size={this.props.size} renderer={renderer}/>
@@ -38,7 +53,9 @@ export class DictionaryList extends Component<Props, State> {
 
 type Props = {
   dictionaries: Array<Dictionary>,
-  showsSetting: boolean,
+  showUser: boolean,
+  showUpdatedDate: boolean,
+  showDownloadLink: boolean
   size: number
 };
 type State = {

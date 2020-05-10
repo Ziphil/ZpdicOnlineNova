@@ -356,7 +356,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"fetchDictionaries">, response: GetResponse<"fetchDictionaries">): Promise<void> {
     let user = request.user!;
-    let dictionaries = await DictionaryModel.findByUser(user);
+    let dictionaries = await DictionaryModel.findByUser(user, "edit");
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<Dictionary>(async (resolve, reject) => {
         try {

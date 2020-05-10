@@ -31,6 +31,12 @@ import {
 @applyStyle(require("./dictionary-pane.scss"))
 export class DictionaryPane extends StoreComponent<Props, State> {
 
+  public static defaultProps: Partial<Props> = {
+    showUser: true,
+    showUpdatedDate: true,
+    showDownloadLink: false
+  };
+
   private jumpSettingPage(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
     event.stopPropagation();
@@ -65,16 +71,15 @@ export class DictionaryPane extends StoreComponent<Props, State> {
         }
       }
     })();
-    let userNode = (!this.props.showsSetting) && (
+    let userNode = (this.props.showUser) && (
       <div styleName="information-item">管理者 — @{this.props.dictionary.userName}</div>
     );
     let updatedDate = this.props.dictionary.updatedDate;
-    let updatedDateNode = (
+    let updatedDateNode = (this.props.showUpdatedDate) && (
       <div styleName="information-item">更新日時 — {(updatedDate !== undefined) ? DateUtil.format(updatedDate, "yyyy/MM/dd HH:mm") : "?"}</div>
     );
-    let settingNode = (this.props.showsSetting) && (
+    let settingNode = (this.props.showDownloadLink) && (
       <div styleName="setting">
-        <Button label="設定" iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
         <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
       </div>
     );
@@ -105,7 +110,9 @@ export class DictionaryPane extends StoreComponent<Props, State> {
 
 type Props = {
   dictionary: Dictionary,
-  showsSetting: boolean
+  showUser: boolean,
+  showUpdatedDate: boolean,
+  showDownloadLink: boolean
 };
 type State = {
 };
