@@ -63,7 +63,8 @@ export function verifyDictionary(range: "own" | "edit"): RequestHandler {
     let number = parseInt(request.query.number || request.body.number, 10);
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      if (dictionary.hasAuthority(user, range)) {
+      let hasAuthority = await dictionary.hasAuthority(user, range);
+      if (hasAuthority) {
         request.dictionary = dictionary;
         next();
       } else {
