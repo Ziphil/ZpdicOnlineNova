@@ -52,24 +52,25 @@ export class UserSchema {
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
   // 渡されたパスワードは自動的にハッシュ化されます。
   public static async register(name: string, email: string, password: string): Promise<User> {
-    let formerNameUser = await UserModel.findOne().where("name", name).exec();
-    let formerEmailUser = await UserModel.findOne().where("email", email).exec();
+    let formerNameUser = await UserModel.findOne().where("name", name);
+    let formerEmailUser = await UserModel.findOne().where("email", email);
     if (formerNameUser) {
       throw new CustomError("duplicateUserName");
     } else if (formerEmailUser) {
       throw new CustomError("duplicateUserEmail");
+    } else {
+      let user = new UserModel({name, email});
+      await user.encryptPassword(password);
+      await user.validate();
+      let result = await user.save();
+      return result;
     }
-    let user = new UserModel({name, email});
-    await user.encryptPassword(password);
-    await user.validate();
-    let result = await user.save();
-    return result;
   }
 
   // 渡された名前とパスワードに合致するユーザーを返します。
   // 渡された名前のユーザーが存在しない場合や、パスワードが誤っている場合は、null を返します。
   public static async authenticate(name: string, password: string): Promise<User | null> {
-    let user = await UserModel.findOne().where("name", name).exec();
+    let user = await UserModel.findOne().where("name", name);
     if (user && user.comparePassword(password)) {
       return user;
     } else {
@@ -83,7 +84,7 @@ export class UserSchema {
   }
 
   public static async issueResetToken(name: string, email: string): Promise<{user: User, key: string}> {
-    let user = await UserModel.findOne().where("name", name).where("email", email).exec();
+    let user = await UserModel.findOne().where("name", name).where("email", email);
     if (user && user.authority !== "admin") {
       let name = createRandomString(10, true);
       let secret = createRandomString(30, false);
@@ -105,7 +106,7 @@ export class UserSchema {
   public static async resetPassword(key: string, password: string, timeout: number): Promise<User> {
     let name = key.substring(0, 23);
     let secret = key.substring(23, 53);
-    let user = await UserModel.findOne().where("resetToken.name", name).exec();
+    let user = await UserModel.findOne().where("resetToken.name", name);
     if (user && user.resetToken && compareSync(secret, user.resetToken.hash)) {
       let createdDate = user.resetToken.date;
       let currentDate = new Date();
@@ -124,13 +125,14 @@ export class UserSchema {
   }
 
   public async changeEmail(this: User, email: string): Promise<User> {
-    let formerUser = await UserModel.findOne().where("email", email).exec();
+    let formerUser = await UserModel.findOne().where("email", email);
     if (formerUser && formerUser.id !== this.id) {
       throw new CustomError("duplicateUserEmail");
+    } else {
+      this.email = email;
+      await this.save();
+      return this;
     }
-    this.email = email;
-    await this.save();
-    return this;
   }
 
   public async changePassword(this: User, password: string): Promise<User> {
@@ -145,12 +147,15 @@ export class UserSchema {
     return this;
   }
 
+  // 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
+  // データベースへの保存は行わないので、別途保存処理を行ってください。
   private encryptPassword(password: string): void {
     if (!validatePassword(password)) {
       throw new CustomError("invalidPassword");
+    } else {
+      let hash = hashSync(password, 10);
+      this.hash = hash;
     }
-    let hash = hashSync(password, 10);
-    this.hash = hash;
   }
 
   private comparePassword(password: string): boolean {

@@ -94,20 +94,18 @@ export class DictionarySchema {
   }
 
   public static async findPublic(): Promise<Array<Dictionary>> {
-    let dictionaries = await DictionaryModel.find().ne("secret", true).sort("-updatedDate -number").exec();
+    let dictionaries = await DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
     return dictionaries;
   }
 
   public static async findOneByNumber(number: number): Promise<Dictionary | null> {
-    let query = DictionaryModel.findOne().where("number", number);
-    let dictionary = await query.exec();
+    let dictionary = await DictionaryModel.findOne().where("number", number);
     return dictionary;
   }
 
   public static async findOneByValue(value: number | string): Promise<Dictionary | null> {
     let key = (typeof value === "number") ? "number" : "paramName";
-    let query = DictionaryModel.findOne().where(key, value);
-    let dictionary = await query.exec();
+    let dictionary = await DictionaryModel.findOne().where(key, value);
     return dictionary;
   }
 
@@ -126,7 +124,7 @@ export class DictionarySchema {
     this.updatedDate = new Date();
     this.externalData = {};
     await this.save();
-    await WordModel.deleteMany({}).where("dictionary", this).exec();
+    await WordModel.deleteMany({}).where("dictionary", this);
     let externalData = {} as any;
     let promise = new Promise<Dictionary>((resolve, reject) => {
       let stream = new DictionaryDeserializer(path);
@@ -174,13 +172,13 @@ export class DictionarySchema {
   }
 
   public async removeWhole(this: Dictionary): Promise<void> {
-    await WordModel.deleteMany({}).where("dictionary", this).exec();
+    await WordModel.deleteMany({}).where("dictionary", this);
     await this.remove();
   }
 
   public async changeParamName(this: Dictionary, paramName: string): Promise<Dictionary> {
     if (paramName !== "") {
-      let formerDictionary = await DictionaryModel.findOne().where("paramName", paramName).exec();
+      let formerDictionary = await DictionaryModel.findOne().where("paramName", paramName);
       if (formerDictionary && formerDictionary.id !== this.id) {
         throw new CustomError("duplicateDictionaryParamName");
       }
@@ -350,7 +348,7 @@ export class DictionarySchema {
   }
 
   public async countWords(): Promise<number> {
-    let count = WordModel.countDocuments({}).where("dictionary", this).exec();
+    let count = await WordModel.countDocuments({}).where("dictionary", this);
     return count;
   }
 
@@ -368,7 +366,7 @@ export class DictionarySchema {
   }
 
   private async nextWordNumber(): Promise<number> {
-    let words = await WordModel.find().where("dictionary", this).select("number").sort("-number").limit(1).exec();
+    let words = await WordModel.find().where("dictionary", this).select("number").sort("-number").limit(1);
     if (words.length > 0) {
       return words[0].number + 1;
     } else {
@@ -377,7 +375,7 @@ export class DictionarySchema {
   }
 
   private static async nextNumber(): Promise<number> {
-    let dictionaries = await DictionaryModel.find().select("number").sort("-number").limit(1).exec();
+    let dictionaries = await DictionaryModel.find().select("number").sort("-number").limit(1);
     if (dictionaries.length > 0) {
       return dictionaries[0].number + 1;
     } else {
