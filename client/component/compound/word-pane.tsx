@@ -39,7 +39,7 @@ export class WordPane extends Component<Props, State> {
   };
 
   private renderName(): ReactNode {
-    let editButtonNode = (this.props.authorized && !this.props.showButton) && (
+    let editButtonNode = (this.props.showEditLink && !this.props.showButton) && (
       <div styleName="button">
         <Button label="編集" iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
       </div>
@@ -179,7 +179,7 @@ type Props = {
   dictionary: Dictionary,
   word: Word,
   style: "normal" | "simple",
-  authorized: boolean,
+  showEditLink: boolean,
   showButton: boolean,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,

@@ -409,11 +409,19 @@ export class DictionaryController extends Controller {
   }
 
   @get(SERVER_PATH["checkDictionaryAuthorization"])
-  @before(verifyUser(), verifyDictionary("edit"))
+  @before(verifyUser())
   public async [Symbol()](request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
-    let dictionary = request.dictionary;
+    let user = request.user!;
+    let number = CastUtil.ensureNumber(request.query.number);
+    let range = CastUtil.ensureString(request.query.range);
+    let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      Controller.response(response, null);
+      let hasAuthority = await dictionary.hasAuthority(user, range);
+      if (hasAuthority) {
+        Controller.response(response, null);
+      } else {
+        Controller.responseForbidden(response);
+      }
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.responseError(response, body);

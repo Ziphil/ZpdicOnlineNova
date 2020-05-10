@@ -41,7 +41,7 @@ export class WordList extends Component<Props, State> {
           word={word}
           key={word.id}
           style={this.props.style}
-          authorized={this.props.authorized}
+          showEditLink={this.props.showEditLink}
           showButton={this.props.showButton}
           onSubmit={this.props.onSubmit && partial(this.props.onSubmit, word)}
           onEditConfirm={this.props.onEditConfirm && partial(this.props.onEditConfirm, word)}
@@ -65,7 +65,7 @@ type Props = {
   dictionary: Dictionary,
   words: Array<Word>,
   style: "normal" | "simple",
-  authorized: boolean,
+  showEditLink: boolean,
   showButton: boolean,
   size: number,
   offset: number,
