@@ -114,6 +114,6 @@ export class DetailedDictionary extends Dictionary {
 
 export class UserDictionary extends DetailedDictionary {
 
-  public authority!: Array<DictionaryAuthority>;
+  public authorities!: Array<DictionaryAuthority>;
 
 }

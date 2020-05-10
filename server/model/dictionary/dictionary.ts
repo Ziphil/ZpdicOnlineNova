@@ -453,9 +453,9 @@ export class DictionaryCreator {
 
   public static async createUser(raw: Dictionary, rawUser: User): Promise<UserDictionarySkeleton> {
     let basePromise = DictionaryCreator.createDetailed(raw);
-    let authorityPromise = raw.getAuthorities(rawUser);
-    let [base, authority] = await Promise.all([basePromise, authorityPromise]);
-    let skeleton = UserDictionarySkeleton.of({...base, authority});
+    let authoritiesPromise = raw.getAuthorities(rawUser);
+    let [base, authorities] = await Promise.all([basePromise, authoritiesPromise]);
+    let skeleton = UserDictionarySkeleton.of({...base, authorities});
     return skeleton;
   }
 
