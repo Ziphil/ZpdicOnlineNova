@@ -56,7 +56,7 @@ export class InvitationPane extends StoreComponent<Props, State> {
           </div>
           <div styleName="information">
             <div styleName="information-item">招待日時 — {DateUtil.format(createdDate, "yyyy/MM/dd HH:mm")}</div>
-            <div styleName="information-item">招待者 — @{this.props.invitation.dictionary.userName}</div>
+            <div styleName="information-item">招待者 — @{this.props.invitation.dictionary.user.name}</div>
           </div>
         </div>
         <div styleName="setting">

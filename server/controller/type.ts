@@ -4,6 +4,7 @@ import {
   DetailedDictionary,
   Dictionary,
   EditWord,
+  UserDictionary,
   Word
 } from "/server/skeleton/dictionary";
 import {
@@ -208,7 +209,7 @@ type ProcessType = {
     get: {
       request: {},
       response: {
-        200: Array<DetailedDictionary>,
+        200: Array<UserDictionary>,
         400: never
       }
     },

@@ -1,6 +1,9 @@
 //
 
 import {
+  DictionaryAuthority
+} from "/server/model/dictionary";
+import {
   NormalSearchParameter
 } from "/server/model/search-parameter";
 import {
@@ -9,6 +12,9 @@ import {
 import {
   Skeleton
 } from "/server/skeleton/skeleton";
+import {
+  User
+} from "/server/skeleton/user";
 
 
 export class Dictionary extends Skeleton {
@@ -29,7 +35,7 @@ export class DetailedDictionary extends Dictionary {
 
   public words?: Array<Word>;
   public wordSize!: number;
-  public userName!: string;
+  public user!: User;
 
   public search(parameter: NormalSearchParameter): Array<Word> {
     let search = parameter.search;
@@ -102,5 +108,12 @@ export class DetailedDictionary extends Dictionary {
     });
     return hitWords ?? [];
   }
+
+}
+
+
+export class UserDictionary extends DetailedDictionary {
+
+  public authority!: Array<DictionaryAuthority>;
 
 }

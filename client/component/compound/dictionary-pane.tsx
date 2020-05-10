@@ -72,7 +72,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
       }
     })();
     let userNode = (this.props.showUser) && (
-      <div styleName="information-item">管理者 — @{this.props.dictionary.userName}</div>
+      <div styleName="information-item">管理者 — @{this.props.dictionary.user.name}</div>
     );
     let updatedDate = this.props.dictionary.updatedDate;
     let updatedDateNode = (this.props.showUpdatedDate) && (

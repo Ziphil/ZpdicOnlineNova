@@ -14,10 +14,11 @@ import {
   DocumentQuery
 } from "mongoose";
 import {
+  DICTIONARY_AUTHORITIES,
+  DictionaryAuthority,
   DictionaryDeserializer,
   DictionarySerializer,
   Word,
-  WordCreator,
   WordModel
 } from "/server/model/dictionary";
 import {
@@ -28,6 +29,7 @@ import {
 } from "/server/model/search-parameter";
 import {
   User,
+  UserCreator,
   UserSchema
 } from "/server/model/user";
 import {
@@ -36,8 +38,12 @@ import {
 import {
   DetailedDictionary as DetailedDictionarySkeleton,
   Dictionary as DictionarySkeleton,
-  EditWord as EditWordSkeleton
+  EditWord as EditWordSkeleton,
+  UserDictionary as UserDictionarySkeleton
 } from "/server/skeleton/dictionary";
+import {
+  User as UserSkeleton
+} from "/server/skeleton/user";
 import {
   takeErrorLog,
   takeLog
@@ -356,10 +362,10 @@ export class DictionarySchema {
     return count;
   }
 
-  public async hasAuthority(this: Dictionary, user: User, range: "own" | "edit"): Promise<boolean> {
+  public async hasAuthority(this: Dictionary, user: User, authority: DictionaryAuthority): Promise<boolean> {
     await this.populate("user").populate("editUsers").execPopulate();
     if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
-      if (range === "own") {
+      if (authority === "own") {
         return this.user.id === user.id;
       } else {
         return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
@@ -367,6 +373,18 @@ export class DictionarySchema {
     } else {
       throw new Error("cannot happen");
     }
+  }
+
+  public async getAuthorities(this: Dictionary, user: User): Promise<Array<DictionaryAuthority>> {
+    let promises = DICTIONARY_AUTHORITIES.map((authority) => {
+      let promise = this.hasAuthority(user, authority).then((predicate) => {
+        return (predicate) ? authority : null;
+      });
+      return promise;
+    });
+    let authorities = await Promise.all(promises);
+    let filteredAuthorities = authorities.filter((authority) => authority !== null);
+    return filteredAuthorities as any;
   }
 
   private async nextWordNumber(): Promise<number> {
@@ -415,12 +433,12 @@ export class DictionaryCreator {
         reject(error);
       }
     });
-    let userNamePromise = new Promise<string>(async (resolve, reject) => {
+    let userPromise = new Promise<UserSkeleton>(async (resolve, reject) => {
       try {
         await raw.populate("user").execPopulate();
         if (raw.user && isDocument(raw.user)) {
-          let userName = raw.user.name;
-          resolve(userName);
+          let user = UserCreator.create(raw.user);
+          resolve(user);
         } else {
           reject();
         }
@@ -428,8 +446,16 @@ export class DictionaryCreator {
         reject(error);
       }
     });
-    let [wordSize, userName] = await Promise.all([wordSizePromise, userNamePromise]);
-    let skeleton = DetailedDictionarySkeleton.of({...base, wordSize, userName});
+    let [wordSize, user] = await Promise.all([wordSizePromise, userPromise]);
+    let skeleton = DetailedDictionarySkeleton.of({...base, wordSize, user});
+    return skeleton;
+  }
+
+  public static async createUser(raw: Dictionary, rawUser: User): Promise<UserDictionarySkeleton> {
+    let basePromise = DictionaryCreator.createDetailed(raw);
+    let authorityPromise = raw.getAuthorities(rawUser);
+    let [base, authority] = await Promise.all([basePromise, authorityPromise]);
+    let skeleton = UserDictionarySkeleton.of({...base, authority});
     return skeleton;
   }
 

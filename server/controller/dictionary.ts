@@ -43,7 +43,7 @@ import {
 } from "/server/model/user";
 import {
   DetailedDictionary,
-  Dictionary
+  UserDictionary
 } from "/server/skeleton/dictionary";
 import {
   CustomError
@@ -359,9 +359,9 @@ export class DictionaryController extends Controller {
     let user = request.user!;
     let dictionaries = await DictionaryModel.findByUser(user, "edit");
     let promises = dictionaries.map((dictionary) => {
-      let promise = new Promise<DetailedDictionary>(async (resolve, reject) => {
+      let promise = new Promise<UserDictionary>(async (resolve, reject) => {
         try {
-          let skeleton = await DictionaryCreator.createDetailed(dictionary);
+          let skeleton = await DictionaryCreator.createUser(dictionary, user);
           resolve(skeleton);
         } catch (error) {
           reject(error);
