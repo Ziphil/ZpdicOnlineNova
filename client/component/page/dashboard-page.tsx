@@ -65,10 +65,10 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
   }
 
   private renderDictionaryList(): ReactNode {
-    let label = "登録辞書一覧";
+    let label = "辞書一覧";
     let description = `
-      このユーザーに登録されている辞書の一覧です。
-      辞書の閲覧や編集ができます。
+      このユーザーの辞書一覧です。
+      このユーザーが管理者ではなくても、編集権限があれば表示されます。
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
