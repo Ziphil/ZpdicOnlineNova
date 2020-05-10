@@ -133,7 +133,9 @@ export class DictionarySchema {
         word.dictionary = this;
         word.save();
         if ((++ count) % 500 === 0) {
-          takeLog("dictionary/upload", `uploading: ${count}`);
+          let memoryUsage = Object.entries(process.memoryUsage());
+          takeLog("dictionary/upload", `number: ${this.number}, uploading: ${count}`);
+          takeLog("dictionary/upload", memoryUsage.map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(" "));
         }
       });
       stream.on("other", (key, data) => {
@@ -141,7 +143,7 @@ export class DictionarySchema {
       });
       stream.on("end", () => {
         this.status = "ready";
-        takeLog("dictionary/upload", `uploaded: ${count}`);
+        takeLog("dictionary/upload", `number: ${this.number}, uploaded: ${count}`);
         resolve(this);
       });
       stream.on("error", (error) => {
@@ -151,6 +153,7 @@ export class DictionarySchema {
       });
       stream.start();
     });
+    takeLog("dictionary/upload", `number: ${this.number}, stream starts`);
     await promise;
     this.externalData = externalData;
     await this.save();

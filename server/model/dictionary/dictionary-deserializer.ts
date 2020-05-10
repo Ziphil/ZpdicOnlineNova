@@ -15,6 +15,9 @@ import {
   Word,
   WordModel
 } from "/server/model/dictionary";
+import {
+  takeLog
+} from "/server/util/misc";
 
 
 export class DictionaryDeserializer extends EventEmitter {
@@ -35,7 +38,7 @@ export class DictionaryDeserializer extends EventEmitter {
 
   public start(): void {
     let stream = oboe(createReadStream(this.path));
-    stream.on("node:words.*", (data, jsonPath) => {
+    stream.on("node:!.words.*", (data, jsonPath) => {
       let word = null;
       try {
         word = this.createWord(data);
@@ -46,13 +49,16 @@ export class DictionaryDeserializer extends EventEmitter {
       if (word) {
         this.emit("word", word);
       }
+      return oboe.drop;
     });
     stream.on("node:!.*", (data, jsonPath) => {
       if (jsonPath[0] !== "words") {
         this.emit("other", jsonPath[0], data);
       }
+      takeLog("dictionary-deserializer", `${jsonPath[0]}`);
+      return oboe.drop;
     });
-    stream.on("done", () => {
+    stream.on("done", (finalData) => {
       if (!this.error) {
         this.emit("end");
       }
