@@ -15,7 +15,8 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  DetailedDictionary
+  DetailedDictionary,
+  UserDictionary
 } from "/server/skeleton/dictionary";
 
 
@@ -25,19 +26,22 @@ export class DictionaryList extends Component<Props, State> {
   public static defaultProps: Partial<Props> = {
     showUser: true,
     showUpdatedDate: true,
-    showDownloadLink: false
+    showLinks: false
   };
 
   public render(): ReactNode {
     let outerThis = this;
-    let renderer = function (dictionary: DetailedDictionary): ReactNode {
+    let renderer = function (dictionary: DetailedDictionary | UserDictionary): ReactNode {
+      let showLinks = outerThis.props.showLinks && "authorities" in dictionary;
+      let canOwn = "authorities" in dictionary && dictionary.authorities.indexOf("own") >= 0;
       let dictionaryNode = (
         <DictionaryPane
           dictionary={dictionary}
           key={dictionary.id}
           showUser={outerThis.props.showUser}
           showUpdatedDate={outerThis.props.showUpdatedDate}
-          showDownloadLink={outerThis.props.showDownloadLink}
+          showSettingLink={showLinks && canOwn}
+          showDownloadLink={showLinks}
         />
       );
       return dictionaryNode;
@@ -55,7 +59,7 @@ type Props = {
   dictionaries: Array<DetailedDictionary>,
   showUser: boolean,
   showUpdatedDate: boolean,
-  showDownloadLink: boolean
+  showLinks: boolean,
   size: number
 };
 type State = {
