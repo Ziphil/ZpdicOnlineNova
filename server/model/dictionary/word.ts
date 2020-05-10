@@ -27,7 +27,7 @@ import {
 @modelOptions({schemaOptions: {collection: "words"}})
 export class WordSchema {
 
-  @prop({required: true, ref: DictionarySchema})
+  @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;
 
   @prop({required: true})

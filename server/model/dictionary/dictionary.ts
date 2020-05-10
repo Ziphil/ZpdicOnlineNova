@@ -59,10 +59,10 @@ import {
 @modelOptions({schemaOptions: {collection: "dictionaries", minimize: false}})
 export class DictionarySchema {
 
-  @prop({required: true, ref: UserSchema})
+  @prop({required: true, ref: "UserSchema"})
   public user!: Ref<UserSchema>;
 
-  @arrayProp({required: true, ref: UserSchema})
+  @arrayProp({required: true, ref: "UserSchema"})
   public editUsers!: Array<Ref<UserSchema>>;
 
   @prop({required: true, unique: true})
