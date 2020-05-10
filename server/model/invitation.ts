@@ -31,10 +31,10 @@ export class InvitationSchema {
   @prop({required: true})
   public type!: string;
 
-  @prop({required: true, ref: DictionarySchema})
+  @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;
 
-  @prop({required: true, ref: UserSchema})
+  @prop({required: true, ref: "UserSchema"})
   public user!: Ref<UserSchema>;
 
   @prop({required: true})

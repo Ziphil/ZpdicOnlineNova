@@ -25,6 +25,9 @@ import {
   CustomError
 } from "/server/model/error";
 import {
+  InvitationModel
+} from "/server/model/invitation";
+import {
   NormalSearchParameter
 } from "/server/model/search-parameter";
 import {
@@ -53,7 +56,7 @@ import {
 } from "/server/util/query";
 
 
-@modelOptions({schemaOptions: {collection: "dictionaries"}})
+@modelOptions({schemaOptions: {collection: "dictionaries", minimize: false}})
 export class DictionarySchema {
 
   @prop({required: true, ref: UserSchema})
@@ -83,7 +86,7 @@ export class DictionarySchema {
   @prop()
   public updatedDate?: Date;
 
-  @prop({required: true})
+  @prop({required: true, default: {}})
   public externalData!: object;
 
   public static async createEmpty(name: string, user: User): Promise<Dictionary> {
@@ -189,6 +192,7 @@ export class DictionarySchema {
 
   public async removeWhole(this: Dictionary): Promise<void> {
     await WordModel.deleteMany({}).where("dictionary", this);
+    await InvitationModel.deleteMany({}).where("dictionary", this);
     await this.remove();
   }
 
