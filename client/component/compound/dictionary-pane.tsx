@@ -23,7 +23,7 @@ import {
   DateUtil
 } from "/client/util/date";
 import {
-  Dictionary
+  DetailedDictionary
 } from "/server/skeleton/dictionary";
 
 
@@ -109,7 +109,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
 
 
 type Props = {
-  dictionary: Dictionary,
+  dictionary: DetailedDictionary,
   showUser: boolean,
   showUpdatedDate: boolean,
   showDownloadLink: boolean

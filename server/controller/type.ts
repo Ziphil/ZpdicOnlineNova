@@ -1,6 +1,7 @@
 //
 
 import {
+  DetailedDictionary,
   Dictionary,
   EditWord,
   Word
@@ -197,7 +198,7 @@ type ProcessType = {
     get: {
       request: {number: number},
       response: {
-        200: Dictionary,
+        200: DetailedDictionary,
         400: CustomError<"noSuchDictionaryNumber">
       }
     },
@@ -207,7 +208,7 @@ type ProcessType = {
     get: {
       request: {},
       response: {
-        200: Array<Dictionary>,
+        200: Array<DetailedDictionary>,
         400: never
       }
     },
@@ -217,7 +218,7 @@ type ProcessType = {
     get: {
       request: {},
       response: {
-        200: Array<Dictionary>,
+        200: Array<DetailedDictionary>,
         400: never
       }
     },

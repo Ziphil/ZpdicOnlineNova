@@ -1,7 +1,7 @@
 //
 
 import {
-  Dictionary
+  DetailedDictionary
 } from "/server/skeleton/dictionary";
 import {
   Skeleton
@@ -12,7 +12,7 @@ export class Invitation extends Skeleton {
 
   public id!: string;
   public type!: string;
-  public dictionary!: Dictionary;
+  public dictionary!: DetailedDictionary;
   public createdDate!: string;
 
 }

@@ -34,6 +34,7 @@ import {
   IDENTIFIER_REGEXP
 } from "/server/model/validation";
 import {
+  DetailedDictionary as DetailedDictionarySkeleton,
   Dictionary as DictionarySkeleton,
   EditWord as EditWordSkeleton
 } from "/server/skeleton/dictionary";
@@ -404,34 +405,31 @@ export class DictionaryCreator {
     return skeleton;
   }
 
-  public static async fetch(raw: Dictionary, whole?: boolean): Promise<DictionarySkeleton> {
-    let skeleton = DictionaryCreator.create(raw);
-    let wordPromise = new Promise(async (resolve, reject) => {
+  public static async createDetailed(raw: Dictionary): Promise<DetailedDictionarySkeleton> {
+    let base = DictionaryCreator.create(raw);
+    let wordSizePromise = new Promise<number>(async (resolve, reject) => {
       try {
-        if (whole) {
-          let rawWords = await raw.getWords();
-          skeleton.words = rawWords.map(WordCreator.create);
-          skeleton.wordSize = rawWords.length;
-        } else {
-          skeleton.wordSize = await raw.countWords();
-        }
-        resolve();
+        let wordSize = await raw.countWords();
+        resolve(wordSize);
       } catch (error) {
         reject(error);
       }
     });
-    let userPromise = new Promise(async (resolve, reject) => {
+    let userNamePromise = new Promise<string>(async (resolve, reject) => {
       try {
         await raw.populate("user").execPopulate();
         if (raw.user && isDocument(raw.user)) {
-          skeleton.userName = raw.user.name;
+          let userName = raw.user.name;
+          resolve(userName);
+        } else {
+          reject();
         }
-        resolve();
       } catch (error) {
         reject(error);
       }
     });
-    await Promise.all([wordPromise, userPromise]);
+    let [wordSize, userName] = await Promise.all([wordSizePromise, userNamePromise]);
+    let skeleton = DetailedDictionarySkeleton.of({...base, wordSize, userName});
     return skeleton;
   }
 

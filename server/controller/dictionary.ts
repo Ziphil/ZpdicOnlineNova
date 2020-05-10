@@ -42,6 +42,7 @@ import {
   UserModel
 } from "/server/model/user";
 import {
+  DetailedDictionary,
   Dictionary
 } from "/server/skeleton/dictionary";
 import {
@@ -344,7 +345,7 @@ export class DictionaryController extends Controller {
     let number = CastUtil.ensureNumber(request.query.number);
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let body = await DictionaryCreator.fetch(dictionary, true);
+      let body = await DictionaryCreator.createDetailed(dictionary);
       Controller.response(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
@@ -358,9 +359,9 @@ export class DictionaryController extends Controller {
     let user = request.user!;
     let dictionaries = await DictionaryModel.findByUser(user, "edit");
     let promises = dictionaries.map((dictionary) => {
-      let promise = new Promise<Dictionary>(async (resolve, reject) => {
+      let promise = new Promise<DetailedDictionary>(async (resolve, reject) => {
         try {
-          let skeleton = await DictionaryCreator.fetch(dictionary, false);
+          let skeleton = await DictionaryCreator.createDetailed(dictionary);
           resolve(skeleton);
         } catch (error) {
           reject(error);
@@ -376,9 +377,9 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: GetRequest<"fetchAllDictionaries">, response: GetResponse<"fetchAllDictionaries">): Promise<void> {
     let dictionaries = await DictionaryModel.findPublic();
     let promises = dictionaries.map((dictionary) => {
-      let promise = new Promise<Dictionary>(async (resolve, reject) => {
+      let promise = new Promise<DetailedDictionary>(async (resolve, reject) => {
         try {
-          let skeleton = await DictionaryCreator.fetch(dictionary, false);
+          let skeleton = await DictionaryCreator.createDetailed(dictionary);
           resolve(skeleton);
         } catch (error) {
           reject(error);

@@ -21,16 +21,22 @@ export class Dictionary extends Skeleton {
   public secret!: boolean;
   public explanation?: string;
   public updatedDate?: string;
+
+}
+
+
+export class DetailedDictionary extends Dictionary {
+
   public words?: Array<Word>;
-  public wordSize?: number;
-  public userName?: string;
+  public wordSize!: number;
+  public userName!: string;
 
   public search(parameter: NormalSearchParameter): Array<Word> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;
     let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
-    let hitWords = this.words!.filter((word) => {
+    let hitWords = this.words?.filter((word) => {
       let createTargets = function (innerMode: string): Array<string> {
         let targets = [];
         if (innerMode === "name") {
@@ -94,7 +100,7 @@ export class Dictionary extends Skeleton {
       }
       return finalPredicate;
     });
-    return hitWords;
+    return hitWords ?? [];
   }
 
 }

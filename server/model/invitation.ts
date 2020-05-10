@@ -88,7 +88,7 @@ export class InvitationCreator {
     if (isDocument(raw.dictionary)) {
       let id = raw.id;
       let type = raw.type;
-      let dictionary = await DictionaryCreator.fetch(raw.dictionary);
+      let dictionary = await DictionaryCreator.createDetailed(raw.dictionary);
       let createdDate = raw.createdDate.toISOString();
       let skeleton = InvitationSkeleton.of({id, type, dictionary, createdDate});
       return skeleton;

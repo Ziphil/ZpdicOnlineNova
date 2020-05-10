@@ -15,7 +15,7 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  Dictionary
+  DetailedDictionary
 } from "/server/skeleton/dictionary";
 
 
@@ -30,7 +30,7 @@ export class DictionaryList extends Component<Props, State> {
 
   public render(): ReactNode {
     let outerThis = this;
-    let renderer = function (dictionary: Dictionary): ReactNode {
+    let renderer = function (dictionary: DetailedDictionary): ReactNode {
       let dictionaryNode = (
         <DictionaryPane
           dictionary={dictionary}
@@ -52,7 +52,7 @@ export class DictionaryList extends Component<Props, State> {
 
 
 type Props = {
-  dictionaries: Array<Dictionary>,
+  dictionaries: Array<DetailedDictionary>,
   showUser: boolean,
   showUpdatedDate: boolean,
   showDownloadLink: boolean
