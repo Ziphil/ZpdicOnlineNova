@@ -157,7 +157,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   }
 
   private static createClient(): AxiosInstance {
-    let client = axios.create({timeout: 6000, validateStatus: () => true});
+    let client = axios.create({timeout: 15000, validateStatus: () => true});
     return client;
   }
 
