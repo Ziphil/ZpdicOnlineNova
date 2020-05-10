@@ -18,10 +18,10 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  SlimeDictionarySkeleton,
-  SlimeEditWordSkeleton,
-  SlimeWordSkeleton
-} from "/server/skeleton/dictionary/slime";
+  Dictionary,
+  EditWord,
+  Word
+} from "/server/skeleton/dictionary";
 
 
 @applyStyle(require("./word-list.scss"))
@@ -41,7 +41,7 @@ export class WordList extends Component<Props, State> {
           word={word}
           key={word.id}
           style={this.props.style}
-          authorized={this.props.authorized}
+          showEditLink={this.props.showEditLink}
           showButton={this.props.showButton}
           onSubmit={this.props.onSubmit && partial(this.props.onSubmit, word)}
           onEditConfirm={this.props.onEditConfirm && partial(this.props.onEditConfirm, word)}
@@ -62,16 +62,16 @@ export class WordList extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton,
-  words: Array<SlimeWordSkeleton>,
+  dictionary: Dictionary,
+  words: Array<Word>,
   style: "normal" | "simple",
-  authorized: boolean,
+  showEditLink: boolean,
   showButton: boolean,
   size: number,
   offset: number,
-  onSubmit?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: SlimeWordSkeleton, newWord: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
-  onDeleteConfirm?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void
+  onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onDeleteConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void
 };
 type State = {
 };

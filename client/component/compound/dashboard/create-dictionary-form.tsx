@@ -35,7 +35,7 @@ export class CreateDictionaryForm extends StoreComponent<Props, State> {
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
-      this.pushPath("/dictionary/setting/" + dictionary.number);
+      this.pushPath("/dictionary-setting/" + dictionary.number);
     }
   }
 

@@ -36,14 +36,14 @@ import {
   createStyleName
 } from "/client/util/style-name";
 import {
-  SlimeDictionarySkeleton,
-  SlimeEditWordSkeleton,
-  SlimeEquivalentSkeleton,
-  SlimeInformationSkeleton,
-  SlimeRelationSkeleton,
-  SlimeVariationSkeleton,
-  SlimeWordSkeleton
-} from "/server/skeleton/dictionary/slime";
+  Dictionary,
+  EditWord,
+  Equivalent,
+  Information,
+  Relation,
+  Variation,
+  Word
+} from "/server/skeleton/dictionary";
 
 
 @route @inject
@@ -54,7 +54,7 @@ export class WordEditor extends StoreComponent<Props, State> {
 
   public constructor(props: Props) {
     super(props);
-    let word = cloneDeep(this.props.word) ?? SlimeEditWordSkeleton.empty();
+    let word = cloneDeep(this.props.word) ?? EditWord.empty();
     let equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
     let relationChooserOpen = false;
     let alertOpen = false;
@@ -202,7 +202,7 @@ export class WordEditor extends StoreComponent<Props, State> {
   private addEquivalent(): void {
     let word = this.state.word;
     let equivalentStrings = this.state.equivalentStrings;
-    word.equivalents.push(SlimeEquivalentSkeleton.empty());
+    word.equivalents.push(Equivalent.empty());
     equivalentStrings.push("");
   }
 
@@ -231,7 +231,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.informations.push(SlimeInformationSkeleton.empty()))}/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.informations.push(Information.empty()))}/>
       </div>
     );
     let node = (
@@ -268,7 +268,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.variations.push(SlimeVariationSkeleton.empty()))}/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.variations.push(Variation.empty()))}/>
       </div>
     );
     let node = (
@@ -320,11 +320,11 @@ export class WordEditor extends StoreComponent<Props, State> {
     return node;
   }
 
-  private editRelation(relationWord: SlimeWordSkeleton): void {
+  private editRelation(relationWord: Word): void {
     let word = this.state.word;
     let relationIndex = this.editingRelationIndex!;
     if (word.relations[relationIndex] === undefined) {
-      word.relations[relationIndex] = SlimeRelationSkeleton.empty();
+      word.relations[relationIndex] = Relation.empty();
     }
     word.relations[relationIndex].number = relationWord.number;
     word.relations[relationIndex].name = relationWord.name;
@@ -360,10 +360,6 @@ export class WordEditor extends StoreComponent<Props, State> {
     );
     let node = (
       <div>
-        <p styleName="caution">
-          単語編集は現在ベータ版の機能です。
-          ページ右上の「ダウンロード」ボタンからデータを JSON 形式でダウンロードするなど、適宜バックアップを取っておくことをお勧めします。
-        </p>
         <div styleName="editor">
           {this.renderName()}
           {this.renderTags()}
@@ -383,7 +379,7 @@ export class WordEditor extends StoreComponent<Props, State> {
 
   private renderRelationChooser(): ReactNode {
     let node = (
-      <WordSearcher dictionary={this.props.dictionary} style="simple" authorized={true} showButton={true} onSubmit={this.editRelation.bind(this)}/>
+      <WordSearcher dictionary={this.props.dictionary} style="simple" showButton={true} onSubmit={this.editRelation.bind(this)}/>
     );
     return node;
   }
@@ -426,15 +422,15 @@ export class WordEditor extends StoreComponent<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton,
-  word: SlimeWordSkeleton | null,
+  dictionary: Dictionary,
+  word: Word | null,
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => void | Promise<void>,
-  onEditConfirm?: (word: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
   onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
-  word: SlimeEditWordSkeleton,
+  word: EditWord,
   equivalentStrings: Array<string>,
   relationChooserOpen: boolean,
   alertOpen: boolean

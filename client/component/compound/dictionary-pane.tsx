@@ -12,6 +12,9 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
+  WhitePane
+} from "/client/component/compound";
+import {
   applyStyle,
   inject,
   route
@@ -20,24 +23,25 @@ import {
   DateUtil
 } from "/client/util/date";
 import {
-  SlimeDictionarySkeleton
-} from "/server/skeleton/dictionary/slime";
+  DetailedDictionary
+} from "/server/skeleton/dictionary";
 
 
 @route @inject
 @applyStyle(require("./dictionary-pane.scss"))
 export class DictionaryPane extends StoreComponent<Props, State> {
 
-  private handleClick(event: MouseEvent<HTMLAnchorElement>): void {
-    event.preventDefault();
-    let path = event.currentTarget.attributes.getNamedItem("href")!.value;
-    this.pushPath(path);
-  }
+  public static defaultProps: Partial<Props> = {
+    showUser: true,
+    showUpdatedDate: true,
+    showSettingLink: false,
+    showDownloadLink: false
+  };
 
   private jumpSettingPage(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
     event.stopPropagation();
-    let path = "/dictionary/setting/" + this.props.dictionary.number;
+    let path = "/dictionary-setting/" + this.props.dictionary.number;
     this.pushPath(path);
   }
 
@@ -68,35 +72,43 @@ export class DictionaryPane extends StoreComponent<Props, State> {
         }
       }
     })();
-    let settingNode = (this.props.showsSetting) && (
-      <div styleName="setting">
-        <Button label="設定" iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
-        <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
-      </div>
-    );
-    let userNode = (!this.props.showsSetting) && (
-      <div styleName="information-item">管理者 — @{this.props.dictionary.userName}</div>
+    let userNode = (this.props.showUser) && (
+      <div styleName="information-item">管理者 — @{this.props.dictionary.user.name}</div>
     );
     let updatedDate = this.props.dictionary.updatedDate;
-    let updatedDateNode = (
-      <div styleName="information-item">最終更新 — {(updatedDate !== null) ? DateUtil.format(updatedDate, "yyyy/MM/dd HH:mm") : "?"}</div>
+    let updatedDateNode = (this.props.showUpdatedDate) && (
+      <div styleName="information-item">更新日時 — {(updatedDate !== undefined) ? DateUtil.format(updatedDate, "yyyy/MM/dd HH:mm") : "?"}</div>
+    );
+    let settingNode = (this.props.showSettingLink) && (
+      <Button label="設定" iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
+    );
+    let downloadNode = (this.props.showDownloadLink) && (
+      <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
+    );
+    let linkNode = (this.props.showSettingLink || this.props.showDownloadLink) && (
+      <div styleName="setting">
+        {settingNode}
+        {downloadNode}
+      </div>
     );
     let node = (
-      <a styleName="root" href={href} onClick={this.handleClick.bind(this)}>
-        <div styleName="head">
-          <div styleName="left">
-            <div styleName="name">{name}</div>
+      <WhitePane href={href} clickable={true}>
+        <div>
+          <div styleName="head">
+            <div styleName="left">
+              <div styleName="name">{name}</div>
+            </div>
+            <div styleName="right">
+              <div styleName="status">{statusString}</div>
+            </div>
           </div>
-          <div styleName="right">
-            <div styleName="status">{statusString}</div>
+          <div styleName="information">
+            {updatedDateNode}
+            {userNode}
           </div>
         </div>
-        <div styleName="information">
-          {updatedDateNode}
-          {userNode}
-        </div>
-        {settingNode}
-      </a>
+        {linkNode}
+      </WhitePane>
     );
     return node;
   }
@@ -105,8 +117,11 @@ export class DictionaryPane extends StoreComponent<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton,
-  showsSetting: boolean
+  dictionary: DetailedDictionary,
+  showUser: boolean,
+  showUpdatedDate: boolean,
+  showSettingLink: boolean,
+  showDownloadLink: boolean
 };
 type State = {
 };

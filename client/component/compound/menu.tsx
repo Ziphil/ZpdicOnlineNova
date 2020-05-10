@@ -34,7 +34,7 @@ export class Menu extends StoreComponent<Props, State> {
       let highlight = spec.mode === this.props.mode;
       let href = (spec.mode !== "logout") ? spec.href : undefined;
       let onClick = (spec.mode === "logout") ? this.performLogout.bind(this) : undefined;
-      return <MenuItem label={spec.label} iconLabel={spec.iconLabel} href={href} highlight={highlight} onClick={onClick} key={index}/>;
+      return <MenuItem label={spec.label} iconLabel={spec.iconLabel} badgeValue={spec.badgeValue} href={href} highlight={highlight} onClick={onClick} key={index}/>;
     });
     let node = (
       <nav styleName="root">
@@ -49,7 +49,7 @@ export class Menu extends StoreComponent<Props, State> {
 
 type Props = {
   mode: string,
-  specs: Array<{mode: string, label: string, iconLabel: string, href: string}>
+  specs: Array<{mode: string, label: string, iconLabel: string, badgeValue?: string, href: string}>
 };
 type State = {
 };

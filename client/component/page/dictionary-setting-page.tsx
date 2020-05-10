@@ -13,6 +13,7 @@ import {
   ChangeDictionaryParamNameForm,
   ChangeDictionarySecretForm,
   DeleteDictionaryForm,
+  InviteEditDictionaryForm,
   Menu,
   SettingPane,
   UploadDictionaryForm
@@ -26,8 +27,8 @@ import {
   Page
 } from "/client/component/page/page";
 import {
-  SlimeDictionarySkeleton
-} from "/server/skeleton/dictionary/slime";
+  Dictionary
+} from "/server/skeleton/dictionary";
 
 
 @route @inject
@@ -57,7 +58,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
 
   private async checkAuthorization(): Promise<void> {
     let number = +this.props.match!.params.number;
-    let response = await this.requestGet("checkDictionaryAuthorization", {number});
+    let authority = "own" as const;
+    let response = await this.requestGet("checkDictionaryAuthorization", {number, authority});
     if (response.status === 200) {
       this.setState({authorized: true});
     }
@@ -99,7 +101,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeDictionaryExplanationForm number={this.state.dictionary!.number} currentExplanation={this.state.dictionary!.explanation}/>
+        <ChangeDictionaryExplanationForm number={this.state.dictionary!.number} currentExplanation={this.state.dictionary!.explanation ?? ""}/>
       </SettingPane>
     );
     return node;
@@ -138,26 +140,49 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <DeleteDictionaryForm number={this.state.dictionary!.number} onSubmit={() => this.pushPath("/dashboard", true)}/>
+        <DeleteDictionaryForm number={this.state.dictionary!.number} onSubmit={() => this.pushPath("/dashboard", {}, true)}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderInviteEditDictionaryForm(): ReactNode {
+    let label = "編集権限";
+    let description = `
+      この辞書の編集権限を別のユーザーにも付与します。
+      権限を付与されたユーザーは、単語の編集や削除はできますが、辞書の表示名の変更や削除はできません。
+    `;
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <InviteEditDictionaryForm number={this.state.dictionary!.number} onSubmit={() => null}/>
       </SettingPane>
     );
     return node;
   }
 
   public render(): ReactNode {
-    let menuSpecs = [{mode: "general", label: "一般", iconLabel: "\uF013", href: ""}];
+    let number = +this.props.match!.params.number;
+    let mode = this.props.match?.params.mode || "general";
+    let menuSpecs = [
+      {mode: "general", label: "一般", iconLabel: "\uF013", href: "/dictionary-setting/" + number},
+      {mode: "access", label: "権限", iconLabel: "\uF0C0", href: "/dictionary-setting/access/" + number}
+    ];
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {
-      contentNodes.push(this.renderChangeDictionaryNameForm());
-      contentNodes.push(this.renderChangeDictionaryParamNameForm());
-      contentNodes.push(this.renderChangeDictionaryExplanationForm());
-      contentNodes.push(this.renderChangeDictionarySecretForm());
-      contentNodes.push(this.renderUploadDictionaryForm());
-      contentNodes.push(this.renderDeleteDictionaryForm());
+      if (mode === "general") {
+        contentNodes.push(this.renderChangeDictionaryNameForm());
+        contentNodes.push(this.renderChangeDictionaryParamNameForm());
+        contentNodes.push(this.renderChangeDictionaryExplanationForm());
+        contentNodes.push(this.renderChangeDictionarySecretForm());
+        contentNodes.push(this.renderUploadDictionaryForm());
+        contentNodes.push(this.renderDeleteDictionaryForm());
+      } else if (mode === "access") {
+        contentNodes.push(this.renderInviteEditDictionaryForm());
+      }
     }
     let node = (
       <Page dictionary={this.state.dictionary} showDictionary={true}>
-        <Menu mode="general" specs={menuSpecs}/>
+        <Menu mode={mode} specs={menuSpecs}/>
         {contentNodes}
       </Page>
     );
@@ -170,9 +195,10 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
 type Props = {
 };
 type State = {
-  dictionary: SlimeDictionarySkeleton | null,
+  dictionary: Dictionary | null,
   authorized: boolean
 };
 type Params = {
-  number: string;
+  number: string,
+  mode: string
 };

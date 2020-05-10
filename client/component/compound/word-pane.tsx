@@ -20,11 +20,11 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  SlimeDictionarySkeleton,
-  SlimeEditWordSkeleton,
-  SlimeRelationSkeleton,
-  SlimeWordSkeleton
-} from "/server/skeleton/dictionary/slime";
+  Dictionary,
+  EditWord,
+  Relation,
+  Word
+} from "/server/skeleton/dictionary";
 
 
 @applyStyle(require("./word-pane.scss"))
@@ -39,7 +39,7 @@ export class WordPane extends Component<Props, State> {
   };
 
   private renderName(): ReactNode {
-    let editButtonNode = (this.props.authorized && !this.props.showButton) && (
+    let editButtonNode = (this.props.showEditLink && !this.props.showButton) && (
       <div styleName="button">
         <Button label="編集" iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
       </div>
@@ -103,7 +103,7 @@ export class WordPane extends Component<Props, State> {
   }
 
   private renderRelations(): ReactNode {
-    let groupedRelations = new Map<string, Array<SlimeRelationSkeleton>>();
+    let groupedRelations = new Map<string, Array<Relation>>();
     for (let relation of this.props.word.relations) {
       let title = relation.title;
       if (groupedRelations.get(title) === undefined) {
@@ -176,13 +176,13 @@ export class WordPane extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton,
-  word: SlimeWordSkeleton,
+  dictionary: Dictionary,
+  word: Word,
   style: "normal" | "simple",
-  authorized: boolean,
+  showEditLink: boolean,
   showButton: boolean,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (word: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
   onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {

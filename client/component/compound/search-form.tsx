@@ -17,7 +17,7 @@ import {
 import {
   SearchMode,
   SearchType
-} from "/server/model/dictionary/search-parameter";
+} from "/server/model/search-parameter";
 
 
 @applyStyle(require("./search-form.scss"))

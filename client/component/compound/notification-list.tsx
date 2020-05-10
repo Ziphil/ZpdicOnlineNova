@@ -19,7 +19,7 @@ import {
   route
 } from "/client/component/decorator";
 import {
-  NotificationSkeleton
+  Notification
 } from "/server/skeleton/notification";
 
 
@@ -85,6 +85,6 @@ type Props = {
   showsPagination: boolean
 };
 type State = {
-  notifications: Array<NotificationSkeleton> | null,
+  notifications: Array<Notification> | null,
   page: number
 };

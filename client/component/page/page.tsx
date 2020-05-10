@@ -20,8 +20,8 @@ import {
   createStyleName
 } from "/client/util/style-name";
 import {
-  SlimeDictionarySkeleton
-} from "/server/skeleton/dictionary/slime";
+  Dictionary
+} from "/server/skeleton/dictionary";
 
 
 @applyStyle(require("./page.scss"))
@@ -30,7 +30,8 @@ export class Page extends Component<Props, State> {
   public static defaultProps: Props = {
     dictionary: null,
     showDictionary: false,
-    authorized: false
+    showEditLink: false,
+    showSettingLink: false
   };
 
   public render(): ReactNode {
@@ -39,7 +40,7 @@ export class Page extends Component<Props, State> {
       {if: this.props.showDictionary, true: "dictionary"}
     );
     let dictionaryHeaderNode = (this.props.showDictionary) && (
-      <DictionaryHeader dictionary={this.props.dictionary} authorized={this.props.authorized}/>
+      <DictionaryHeader dictionary={this.props.dictionary} showEditLink={this.props.showEditLink} showSettingLink={this.props.showSettingLink}/>
     );
     let node = (
       <div styleName="root" id="page">
@@ -60,9 +61,10 @@ export class Page extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton | null,
+  dictionary: Dictionary | null,
   showDictionary: boolean,
-  authorized: boolean
+  showEditLink: boolean,
+  showSettingLink: boolean
 };
 type State = {
 };

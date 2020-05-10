@@ -1,18 +1,23 @@
 //
 
 import {
-  SlimeDictionarySkeleton,
-  SlimeEditWordSkeleton,
-  SlimeWordSkeleton
-} from "/server/skeleton/dictionary/slime";
+  DetailedDictionary,
+  Dictionary,
+  EditWord,
+  UserDictionary,
+  Word
+} from "/server/skeleton/dictionary";
 import {
-  CustomErrorSkeleton
+  CustomError
 } from "/server/skeleton/error";
 import {
-  NotificationSkeleton
+  Invitation
+} from "/server/skeleton/invitation";
+import {
+  Notification
 } from "/server/skeleton/notification";
 import {
-  UserSkeleton
+  User
 } from "/server/skeleton/user";
 
 
@@ -24,6 +29,8 @@ export const SERVER_PATH = {
   changeDictionaryParamName: "/api/dictionary/edit/paramname",
   changeDictionarySecret: "/api/dictionary/edit/secret",
   changeDictionaryExplanation: "/api/dictionary/edit/explanation",
+  inviteEditDictionary: "/api/dictionary/invite",
+  respondEditDictionary: "/api/dictionary/invite/respond",
   editWord: "/api/word/edit",
   deleteWord: "/api/word/delete",
   searchDictionary: "/api/dictionary/search",
@@ -33,6 +40,7 @@ export const SERVER_PATH = {
   fetchDictionaries: "/api/dictionary/list",
   fetchAllDictionaries: "/api/dictionary/list/all",
   fetchDictionaryAggregation: "/api/dictionary/aggregate",
+  fetchInvitations: "/api/dictionary/invite/fetch",
   checkDictionaryAuthorization: "/api/dictionary/check",
   login: "/api/user/login",
   logout: "/api/user/logout",
@@ -52,7 +60,7 @@ type ProcessType = {
     post: {
       request: {name: string},
       response: {
-        200: SlimeDictionarySkeleton,
+        200: Dictionary,
         400: never
       }
     }
@@ -62,8 +70,8 @@ type ProcessType = {
     post: {
       request: {number: number},
       response: {
-        200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+        200: Dictionary,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     }
   },
@@ -72,8 +80,8 @@ type ProcessType = {
     post: {
       request: {number: number},
       response: {
-        200: {},
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+        200: null,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     }
   },
@@ -82,8 +90,8 @@ type ProcessType = {
     post: {
       request: {number: number, name: string},
       response: {
-        200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+        200: Dictionary,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     }
   },
@@ -92,8 +100,8 @@ type ProcessType = {
     post: {
       request: {number: number, paramName: string},
       response: {
-        200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
+        200: Dictionary,
+        400: CustomError<"noSuchDictionaryNumber" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
       }
     }
   },
@@ -102,8 +110,8 @@ type ProcessType = {
     post: {
       request: {number: number, secret: boolean},
       response: {
-        200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+        200: Dictionary,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     }
   },
@@ -112,18 +120,38 @@ type ProcessType = {
     post: {
       request: {number: number, explanation: string},
       response: {
-        200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+        200: Dictionary,
+        400: CustomError<"noSuchDictionaryNumber">
+      }
+    }
+  },
+  inviteEditDictionary: {
+    get: Noop,
+    post: {
+      request: {number: number, userName: string},
+      response: {
+        200: Invitation,
+        400: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "editDictionaryAlreadyInvited">
+      }
+    }
+  },
+  respondEditDictionary: {
+    get: Noop,
+    post: {
+      request: {id: string, accept: boolean},
+      response: {
+        200: Invitation,
+        400: CustomError<"noSuchInvitation">
       }
     }
   },
   editWord: {
     get: Noop,
     post: {
-      request: {number: number, word: SlimeEditWordSkeleton},
+      request: {number: number, word: EditWord},
       response: {
-        200: SlimeWordSkeleton,
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+        200: Word,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     }
   },
@@ -132,8 +160,8 @@ type ProcessType = {
     post: {
       request: {number: number, wordNumber: number},
       response: {
-        200: SlimeWordSkeleton,
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber" | "noSuchWordNumber">
+        200: Word,
+        400: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber">
       }
     }
   },
@@ -141,8 +169,8 @@ type ProcessType = {
     get: {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
       response: {
-        200: {hitSize: number, hitWords: Array<SlimeWordSkeleton>},
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+        200: {hitSize: number, hitWords: Array<Word>},
+        400: CustomError<"noSuchDictionaryNumber">
       }
     },
     post: Noop
@@ -152,7 +180,7 @@ type ProcessType = {
       request: {number: number, fileName?: string},
       response: {
         200: never,
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+        400: CustomError<"noSuchDictionaryNumber">
       }
     },
     post: Noop
@@ -161,8 +189,8 @@ type ProcessType = {
     get: {
       request: {number?: number, paramName?: string},
       response: {
-        200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
+        200: Dictionary,
+        400: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
       }
     },
     post: Noop
@@ -171,8 +199,8 @@ type ProcessType = {
     get: {
       request: {number: number},
       response: {
-        200: SlimeDictionarySkeleton,
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+        200: DetailedDictionary,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     },
     post: Noop
@@ -181,7 +209,7 @@ type ProcessType = {
     get: {
       request: {},
       response: {
-        200: Array<SlimeDictionarySkeleton>,
+        200: Array<UserDictionary>,
         400: never
       }
     },
@@ -191,7 +219,7 @@ type ProcessType = {
     get: {
       request: {},
       response: {
-        200: Array<SlimeDictionarySkeleton>,
+        200: Array<DetailedDictionary>,
         400: never
       }
     },
@@ -207,12 +235,22 @@ type ProcessType = {
     },
     post: Noop
   },
+  fetchInvitations: {
+    get: {
+      request: {type: string},
+      response: {
+        200: Array<Invitation>,
+        400: never
+      }
+    },
+    post: Noop
+  },
   checkDictionaryAuthorization: {
     get: {
-      request: {number: number},
+      request: {number: number, authority: string},
       response: {
-        200: {},
-        400: CustomErrorSkeleton<"noSuchDictionaryNumber">
+        200: null,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     },
     post: Noop
@@ -222,7 +260,7 @@ type ProcessType = {
     post: {
       request: {name: string, password: string},
       response: {
-        200: {token: string, user: UserSkeleton},
+        200: {token: string, user: User},
         400: never
       }
     }
@@ -232,7 +270,7 @@ type ProcessType = {
     post: {
       request: {},
       response: {
-        200: {},
+        200: null,
         400: never
       }
     }
@@ -242,8 +280,8 @@ type ProcessType = {
     post: {
       request: {name: string, email: string, password: string},
       response: {
-        200: UserSkeleton,
-        400: CustomErrorSkeleton<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidEmail" | "invalidPassword">
+        200: User,
+        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidEmail" | "invalidPassword">
       }
     }
   },
@@ -252,8 +290,8 @@ type ProcessType = {
     post: {
       request: {email: string},
       response: {
-        200: UserSkeleton,
-        400: CustomErrorSkeleton<"duplicateUserEmail" | "invalidEmail">
+        200: User,
+        400: CustomError<"duplicateUserEmail" | "invalidEmail">
       }
     }
   },
@@ -262,8 +300,8 @@ type ProcessType = {
     post: {
       request: {password: string},
       response: {
-        200: UserSkeleton,
-        400: CustomErrorSkeleton<"invalidPassword">
+        200: User,
+        400: CustomError<"invalidPassword">
       }
     }
   },
@@ -272,8 +310,8 @@ type ProcessType = {
     post: {
       request: {name: string, email: string},
       response: {
-        200: {},
-        400: CustomErrorSkeleton<"noSuchUser">
+        200: null,
+        400: CustomError<"noSuchUser">
       }
     }
   },
@@ -282,8 +320,8 @@ type ProcessType = {
     post: {
       request: {key: string, password: string},
       response: {
-        200: UserSkeleton,
-        400: CustomErrorSkeleton<"invalidResetToken" | "invalidPassword">
+        200: User,
+        400: CustomError<"invalidResetToken" | "invalidPassword">
       }
     }
   },
@@ -291,7 +329,7 @@ type ProcessType = {
     get: {
       request: {},
       response: {
-        200: UserSkeleton,
+        200: User,
         400: never
       }
     },
@@ -302,7 +340,7 @@ type ProcessType = {
     post: {
       request: {type: string, title: string, text: string},
       response: {
-        200: NotificationSkeleton,
+        200: Notification,
         400: never
       }
     }
@@ -311,7 +349,7 @@ type ProcessType = {
     get: {
       request: {offset?: number, size?: number},
       response: {
-        200: Array<NotificationSkeleton>,
+        200: Array<Notification>,
         400: never
       }
     },
@@ -320,10 +358,12 @@ type ProcessType = {
 };
 
 export type MethodType = "get" | "post";
+export type StatusType = 200 | 400;
 export type ProcessName = keyof ProcessType;
 
 export type RequestType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["request"];
 export type ResponseType<N extends ProcessName, M extends MethodType> = ValueOf<ProcessType[N][M]["response"]>;
+export type ResponseTypeSep<N extends ProcessName, M extends MethodType, S extends StatusType> = ProcessType[N][M]["response"][S];
 
 type Noop = {request: never, response: never};
 type ValueOf<T> = T[keyof T];

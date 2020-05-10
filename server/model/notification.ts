@@ -3,11 +3,19 @@
 import {
   DocumentType,
   getModelForClass,
+  modelOptions,
   prop
-} from "@hasezoey/typegoose";
+} from "@typegoose/typegoose";
+import {
+  Notification as NotificationSkeleton
+} from "/server/skeleton/notification";
+import {
+  QueryUtil
+} from "/server/util/query";
 
 
-export class Notification {
+@modelOptions({schemaOptions: {collection: "notifications"}})
+export class NotificationSchema {
 
   @prop({required: true})
   public type!: string;
@@ -21,7 +29,7 @@ export class Notification {
   @prop({required: true})
   public text!: string;
 
-  public static async add(type: string, title: string, text: string): Promise<NotificationDocument> {
+  public static async add(type: string, title: string, text: string): Promise<Notification> {
     let notification = new NotificationModel({});
     notification.type = type;
     notification.date = new Date();
@@ -31,20 +39,30 @@ export class Notification {
     return notification;
   }
 
-  public static async findAll(offset?: number, size?: number): Promise<Array<NotificationDocument>> {
+  public static async findAll(offset?: number, size?: number): Promise<Array<Notification>> {
     let query = NotificationModel.find().sort("-date");
-    if (offset !== undefined) {
-      query = query.skip(offset);
-    }
-    if (size !== undefined) {
-      query = query.limit(size);
-    }
-    let notifications = await query.exec();
+    let restrictedQuery = QueryUtil.restrict(query, offset, size);
+    let notifications = await restrictedQuery.exec();
     return notifications;
   }
 
 }
 
 
-export type NotificationDocument = DocumentType<Notification>;
-export let NotificationModel = getModelForClass(Notification);
+export class NotificationCreator {
+
+  public static create(raw: Notification): NotificationSkeleton {
+    let id = raw.id;
+    let type = raw.type;
+    let date = raw.date.toISOString();
+    let title = raw.title;
+    let text = raw.text;
+    let skeleton = NotificationSkeleton.of({id, type, date, title, text});
+    return skeleton;
+  }
+
+}
+
+
+export type Notification = DocumentType<NotificationSchema>;
+export let NotificationModel = getModelForClass(NotificationSchema);

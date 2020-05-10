@@ -19,12 +19,12 @@ export class DebugController extends Controller {
 
   @get("/api/debug")
   public async [Symbol()](request: Request, response: Response): Promise<void> {
-    response.json(null);
+    Controller.response(response, null);
   }
 
   @post("/api/debug")
   public async [Symbol()](request: Request, response: Response): Promise<void> {
-    response.json(null);
+    Controller.response(response, null);
   }
 
 }

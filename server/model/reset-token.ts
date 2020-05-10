@@ -1,13 +1,12 @@
 //
 
 import {
-  DocumentType,
   getModelForClass,
   prop
-} from "@hasezoey/typegoose";
+} from "@typegoose/typegoose";
 
 
-export class ResetToken {
+export class ResetTokenSchema {
 
   @prop({required: true})
   public name!: string;
@@ -21,5 +20,5 @@ export class ResetToken {
 }
 
 
-export type ResetTokenDocument = DocumentType<ResetToken>;
-export let ResetTokenModel = getModelForClass(ResetToken);
+export type ResetToken = ResetTokenSchema;
+export let ResetTokenModel = getModelForClass(ResetTokenSchema);

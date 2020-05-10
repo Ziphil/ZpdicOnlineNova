@@ -20,8 +20,8 @@ import {
   Page
 } from "/client/component/page/page";
 import {
-  SlimeDictionarySkeleton
-} from "/server/skeleton/dictionary/slime";
+  DetailedDictionary
+} from "/server/skeleton/dictionary";
 
 
 @route @inject
@@ -45,7 +45,7 @@ export class DictionaryListPage extends StoreComponent<Props, State> {
       <Page>
         <div styleName="list">
           <Loading loading={this.state.dictionaries === null}>
-            <DictionaryList dictionaries={this.state.dictionaries!} showsSetting={false} size={20}/>
+            <DictionaryList dictionaries={this.state.dictionaries!} size={20}/>
           </Loading>
         </div>
       </Page>
@@ -59,5 +59,5 @@ export class DictionaryListPage extends StoreComponent<Props, State> {
 type Props = {
 };
 type State = {
-  dictionaries: Array<SlimeDictionarySkeleton> | null;
+  dictionaries: Array<DetailedDictionary> | null;
 };

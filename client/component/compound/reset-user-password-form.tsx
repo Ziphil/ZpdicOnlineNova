@@ -26,7 +26,6 @@ import {
   createValidate
 } from "/client/util/misc";
 import {
-  EMAIL_REGEXP,
   validatePassword as rawValidatePassword
 } from "/server/model/validation";
 
@@ -43,6 +42,11 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
     errorStyle: "error"
   };
 
+  public componentDidMount(): void {
+    let name = this.props.location!.state.name;
+    this.setState({name});
+  }
+
   private async issueResetToken(): Promise<void> {
     let name = this.state.name;
     let email = this.state.email;
@@ -50,7 +54,7 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
     let body = response.data;
     if (response.status === 200) {
       this.setState({errorType: "userResetTokenIssued", errorStyle: "information"});
-    } else if (response.status === 400 && "error" in body) {
+    } else if (response.status === 400 && body !== null && "error" in body) {
       this.setState({errorType: body.type, errorStyle: "error"});
     } else {
       this.setState({errorType: "unexpected", errorStyle: "error"});
@@ -75,7 +79,7 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
     let node = (
       <FormPane errorType={this.state.errorType} errorStyle={this.state.errorStyle} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
-          <Input label="ユーザー名" value={this.state.name} onSet={(name) => this.setState({name})}/>
+          <Input label="ユーザー ID" value={this.state.name} onSet={(name) => this.setState({name})}/>
           <Input label="メールアドレス" value={this.state.email} onSet={(email) => this.setState({email})}/>
           <div styleName="button-group">
             <div styleName="row">

@@ -34,3 +34,7 @@
 .icon {
   @include icon-font;
 }
+
+.badge {
+  margin: 0px 0px 0px $blank-padding;
+}

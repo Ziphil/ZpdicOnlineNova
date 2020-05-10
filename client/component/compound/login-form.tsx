@@ -43,21 +43,24 @@ export class LoginForm extends StoreComponent<Props, State> {
   }
 
   private async jumpRegister(): Promise<void> {
-    this.pushPath("/register");
+    let name = this.state.name;
+    let password = this.state.password;
+    this.pushPath("/register", {name, password});
   }
 
   private async jumpResetPassword(): Promise<void> {
-    this.pushPath("/reset");
+    let name = this.state.name;
+    this.pushPath("/reset", {name});
   }
 
   public render(): ReactNode {
     let registerNode = (this.props.showsRegister) && (
-      <Button label="新規登録" iconLabel="&#xF234;" onClick={this.jumpRegister.bind(this)}/>
+      <Button label="新規登録" iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
     );
     let node = (
       <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
-          <Input label="ユーザー名" value={this.state.name} onSet={(name) => this.setState({name})}/>
+          <Input label="ユーザー ID" value={this.state.name} onSet={(name) => this.setState({name})}/>
           <Input label="パスワード" type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
             <div styleName="row">

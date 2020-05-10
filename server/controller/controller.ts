@@ -13,13 +13,14 @@ import {
   MethodType,
   ProcessName,
   RequestType,
-  ResponseType
+  ResponseType,
+  ResponseTypeSep
 } from "/server/controller/type";
 import {
-  SlimeDictionaryDocument
-} from "/server/model/dictionary/slime";
+  Dictionary
+} from "/server/model/dictionary";
 import {
-  UserDocument
+  User
 } from "/server/model/user";
 
 
@@ -37,6 +38,27 @@ export class Controller {
   protected setup(): void {
   }
 
+  protected static response<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 200>): void {
+    response.json(body).end();
+  }
+
+  // ステータスコード 400 でレスポンスボディを送ります。
+  // 第 3 引数の error が指定された場合のみ、body として undefined を渡すのが許されます。
+  // この場合は、body が undefined ならば error を例外として投げ、そうでないならば通常通り body をレスポンスとして送ります。
+  protected static responseError<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 400>): void;
+  protected static responseError<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 400> | undefined, error: any): void;
+  protected static responseError<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 400> | undefined, error?: any): void {
+    if (body !== undefined) {
+      response.status(400).json(body).end();
+    } else if (error !== undefined) {
+      throw error;
+    }
+  }
+
+  protected static responseForbidden<N extends ProcessName, M extends MethodType>(response: Response<N, M>): void {
+    response.status(403).end();
+  }
+
   // このクラスを継承したクラスのインスタンスを生成し、引数として渡されたアプリケーションオブジェクトに対してルーターの設定を行います。
   // このときに生成したインスタンスを返します。
   public static use<C extends Controller>(this: new() => C, application: Express): C {
@@ -48,7 +70,7 @@ export class Controller {
 }
 
 
-export interface Request<N extends ProcessName, M extends MethodType> extends ExpressRequest<ExpressParams, ResponseType<N, M>, RequestType<N, M>> {
+export interface Request<N extends ProcessName, M extends MethodType> extends ExpressRequest<ExpressParams, ResponseType<N, M>, RequestType<N, M>, any> {
 
   // GET リクエストの際のクエリ文字列をパースした結果です。
   // 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。
@@ -64,11 +86,11 @@ export interface Request<N extends ProcessName, M extends MethodType> extends Ex
 
   // 認証に成功した場合にユーザーデータが格納されます。
   // このプロパティは、authenticate ミドルウェアおよび verifyUser ミドルウェアが呼び出された場合にのみ、値が格納されます。
-  user?: UserDocument;
+  user?: User;
 
   // ユーザ－に辞書の編集権限があった場合に辞書データが格納されます。
   // このプロパティは、verifyDictionary ミドルウェアが呼び出された場合にのみ、値が格納されます。
-  dictionary?: SlimeDictionaryDocument;
+  dictionary?: Dictionary;
 
 }
 

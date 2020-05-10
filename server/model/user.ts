@@ -3,8 +3,9 @@
 import {
   DocumentType,
   getModelForClass,
+  modelOptions,
   prop
-} from "@hasezoey/typegoose";
+} from "@typegoose/typegoose";
 import {
   compareSync,
   hashSync
@@ -13,8 +14,8 @@ import {
   CustomError
 } from "/server/model/error";
 import {
-  ResetToken,
-  ResetTokenModel
+  ResetTokenModel,
+  ResetTokenSchema
 } from "/server/model/reset-token";
 import {
   EMAIL_REGEXP,
@@ -22,11 +23,15 @@ import {
   validatePassword
 } from "/server/model/validation";
 import {
+  User as UserSkeleton
+} from "/server/skeleton/user";
+import {
   createRandomString
 } from "/server/util/misc";
 
 
-export class User {
+@modelOptions({schemaOptions: {collection: "users"}})
+export class UserSchema {
 
   @prop({required: true, unique: true, validate: IDENTIFIER_REGEXP})
   public name!: string;
@@ -38,7 +43,7 @@ export class User {
   public hash!: string;
 
   @prop()
-  public resetToken?: ResetToken;
+  public resetToken?: ResetTokenSchema;
 
   @prop()
   public authority?: string;
@@ -46,25 +51,26 @@ export class User {
   // 渡された情報からユーザーを作成し、データベースに保存します。
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
   // 渡されたパスワードは自動的にハッシュ化されます。
-  public static async register(name: string, email: string, password: string): Promise<UserDocument> {
-    let formerNameUser = await UserModel.findOne().where("name", name).exec();
-    let formerEmailUser = await UserModel.findOne().where("email", email).exec();
+  public static async register(name: string, email: string, password: string): Promise<User> {
+    let formerNameUser = await UserModel.findOne().where("name", name);
+    let formerEmailUser = await UserModel.findOne().where("email", email);
     if (formerNameUser) {
       throw new CustomError("duplicateUserName");
     } else if (formerEmailUser) {
       throw new CustomError("duplicateUserEmail");
+    } else {
+      let user = new UserModel({name, email});
+      await user.encryptPassword(password);
+      await user.validate();
+      let result = await user.save();
+      return result;
     }
-    let user = new UserModel({name, email});
-    await user.encryptPassword(password);
-    await user.validate();
-    let result = await user.save();
-    return result;
   }
 
   // 渡された名前とパスワードに合致するユーザーを返します。
   // 渡された名前のユーザーが存在しない場合や、パスワードが誤っている場合は、null を返します。
-  public static async authenticate(name: string, password: string): Promise<UserDocument | null> {
-    let user = await UserModel.findOne().where("name", name).exec();
+  public static async authenticate(name: string, password: string): Promise<User | null> {
+    let user = await UserModel.findOne().where("name", name);
     if (user && user.comparePassword(password)) {
       return user;
     } else {
@@ -72,8 +78,13 @@ export class User {
     }
   }
 
-  public static async issueResetToken(name: string, email: string): Promise<{user: UserDocument, key: string}> {
-    let user = await UserModel.findOne().where("name", name).where("email", email).exec();
+  public static async findOneByName(name: string): Promise<User | null> {
+    let user = await UserModel.findOne().where("name", name);
+    return user;
+  }
+
+  public static async issueResetToken(name: string, email: string): Promise<{user: User, key: string}> {
+    let user = await UserModel.findOne().where("name", name).where("email", email);
     if (user && user.authority !== "admin") {
       let name = createRandomString(10, true);
       let secret = createRandomString(30, false);
@@ -92,10 +103,10 @@ export class User {
   // 与えられたリセットトークンのキーを用いてパスワードをリセットします。
   // パスワードのリセットに成功した場合と、トークンの有効期限が切れていた場合は、再び同じトークンを使えないようトークンを削除します。
   // パスワードが不正 (文字数が少ないなど) だった場合は、トークンは削除しません。
-  public static async resetPassword(key: string, password: string, timeout: number): Promise<UserDocument> {
+  public static async resetPassword(key: string, password: string, timeout: number): Promise<User> {
     let name = key.substring(0, 23);
     let secret = key.substring(23, 53);
-    let user = await UserModel.findOne().where("resetToken.name", name).exec();
+    let user = await UserModel.findOne().where("resetToken.name", name);
     if (user && user.resetToken && compareSync(secret, user.resetToken.hash)) {
       let createdDate = user.resetToken.date;
       let currentDate = new Date();
@@ -113,34 +124,38 @@ export class User {
     }
   }
 
-  public async changeEmail(this: UserDocument, email: string): Promise<UserDocument> {
-    let formerUser = await UserModel.findOne().where("email", email).exec();
+  public async changeEmail(this: User, email: string): Promise<User> {
+    let formerUser = await UserModel.findOne().where("email", email);
     if (formerUser && formerUser.id !== this.id) {
       throw new CustomError("duplicateUserEmail");
+    } else {
+      this.email = email;
+      await this.save();
+      return this;
     }
-    this.email = email;
-    await this.save();
-    return this;
   }
 
-  public async changePassword(this: UserDocument, password: string): Promise<UserDocument> {
+  public async changePassword(this: User, password: string): Promise<User> {
     this.encryptPassword(password);
     await this.save();
     return this;
   }
 
-  public async purgeResetToken(this: UserDocument): Promise<UserDocument> {
+  public async purgeResetToken(this: User): Promise<User> {
     this.resetToken = undefined;
     await this.save();
     return this;
   }
 
+  // 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
+  // データベースへの保存は行わないので、別途保存処理を行ってください。
   private encryptPassword(password: string): void {
     if (!validatePassword(password)) {
       throw new CustomError("invalidPassword");
+    } else {
+      let hash = hashSync(password, 10);
+      this.hash = hash;
     }
-    let hash = hashSync(password, 10);
-    this.hash = hash;
   }
 
   private comparePassword(password: string): boolean {
@@ -150,5 +165,18 @@ export class User {
 }
 
 
-export type UserDocument = DocumentType<User>;
-export let UserModel = getModelForClass(User);
+export class UserCreator {
+
+  public static create(raw: User): UserSkeleton {
+    let id = raw.id;
+    let name = raw.name;
+    let email = raw.email;
+    let skeleton = UserSkeleton.of({id, name, email});
+    return skeleton;
+  }
+
+}
+
+
+export type User = DocumentType<UserSchema>;
+export let UserModel = getModelForClass(UserSchema);

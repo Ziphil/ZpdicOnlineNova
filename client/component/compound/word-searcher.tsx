@@ -24,12 +24,12 @@ import {
 import {
   SearchMode,
   SearchType
-} from "/server/model/dictionary/search-parameter";
+} from "/server/model/search-parameter";
 import {
-  SlimeDictionarySkeleton,
-  SlimeEditWordSkeleton,
-  SlimeWordSkeleton
-} from "/server/skeleton/dictionary/slime";
+  Dictionary,
+  EditWord,
+  Word
+} from "/server/skeleton/dictionary";
 
 
 @route @inject
@@ -101,7 +101,6 @@ export class WordSearcher extends StoreComponent<Props, State> {
             dictionary={this.props.dictionary!}
             words={this.state.hitWords}
             style={this.props.style}
-            authorized={this.props.authorized}
             showButton={this.props.showButton}
             offset={0}
             size={40}
@@ -141,12 +140,11 @@ export class WordSearcher extends StoreComponent<Props, State> {
 
 
 type Props = {
-  dictionary: SlimeDictionarySkeleton,
+  dictionary: Dictionary,
   style: "normal" | "simple",
-  authorized: boolean,
   showButton: boolean,
-  onSubmit?: (word: SlimeWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: SlimeWordSkeleton, newWord: SlimeEditWordSkeleton, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {
   search: string,
@@ -154,5 +152,5 @@ type State = {
   type: SearchType
   page: number,
   hitSize: number,
-  hitWords: Array<SlimeWordSkeleton>
+  hitWords: Array<Word>
 };

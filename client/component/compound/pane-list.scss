@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.pane >* {
+  margin: 20px 0px 0px 0px;
+}
+
+.pane >*:first-child {
+  margin: 0px;
+}
+
+.pagination {
+  margin: 20px 0px 0px 0px;
+  line-height: $line-height;
+  text-align: center;
+}
+
+.pagination.empty {
+  margin: 0px;
+}

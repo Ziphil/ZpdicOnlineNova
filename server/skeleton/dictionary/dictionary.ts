@@ -1,20 +1,23 @@
 //
 
 import {
+  DictionaryAuthority
+} from "/server/model/dictionary";
+import {
   NormalSearchParameter
-} from "/server/model/dictionary/search-parameter";
+} from "/server/model/search-parameter";
 import {
-  SlimeDictionaryDocument
-} from "/server/model/dictionary/slime";
-import {
-  SlimeWordSkeleton
-} from "/server/skeleton/dictionary/slime";
+  Word
+} from "/server/skeleton/dictionary";
 import {
   Skeleton
 } from "/server/skeleton/skeleton";
+import {
+  User
+} from "/server/skeleton/user";
 
 
-export class SlimeDictionarySkeleton extends Skeleton {
+export class Dictionary extends Skeleton {
 
   public id!: string;
   public number!: number;
@@ -22,62 +25,24 @@ export class SlimeDictionarySkeleton extends Skeleton {
   public name!: string;
   public status!: string;
   public secret!: boolean;
-  public explanation!: string;
-  public updatedDate!: string | null;
-  public words?: Array<SlimeWordSkeleton>;
-  public wordSize?: number;
-  public userName?: string;
+  public explanation?: string;
+  public updatedDate?: string;
 
-  public static from(raw: SlimeDictionaryDocument): SlimeDictionarySkeleton {
-    let id = raw.id;
-    let number = raw.number;
-    let paramName = raw.paramName;
-    let name = raw.name;
-    let status = raw.status;
-    let secret = raw.secret || false;
-    let explanation = raw.explanation || "";
-    let updatedDate = raw.updatedDate?.toISOString() || null;
-    let skeleton = SlimeDictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, updatedDate});
-    return skeleton;
-  }
+}
 
-  public static async fromFetch(raw: SlimeDictionaryDocument, whole?: boolean): Promise<SlimeDictionarySkeleton> {
-    let skeleton = SlimeDictionarySkeleton.from(raw);
-    let wordPromise = new Promise(async (resolve, reject) => {
-      try {
-        if (whole) {
-          let rawWords = await raw.getWords();
-          skeleton.words = rawWords.map(SlimeWordSkeleton.from);
-          skeleton.wordSize = rawWords.length;
-        } else {
-          skeleton.wordSize = await raw.countWords();
-        }
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-    let userPromise = new Promise(async (resolve, reject) => {
-      try {
-        await raw.populate("user").execPopulate();
-        if (raw.user && "name" in raw.user) {
-          skeleton.userName = raw.user.name;
-        }
-        resolve();
-      } catch (error) {
-        reject(error);
-      }
-    });
-    await Promise.all([wordPromise, userPromise]);
-    return skeleton;
-  }
 
-  public search(parameter: NormalSearchParameter): Array<SlimeWordSkeleton> {
+export class DetailedDictionary extends Dictionary {
+
+  public words?: Array<Word>;
+  public wordSize!: number;
+  public user!: User;
+
+  public search(parameter: NormalSearchParameter): Array<Word> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;
     let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
-    let hitWords = this.words!.filter((word) => {
+    let hitWords = this.words?.filter((word) => {
       let createTargets = function (innerMode: string): Array<string> {
         let targets = [];
         if (innerMode === "name") {
@@ -141,7 +106,14 @@ export class SlimeDictionarySkeleton extends Skeleton {
       }
       return finalPredicate;
     });
-    return hitWords;
+    return hitWords ?? [];
   }
+
+}
+
+
+export class UserDictionary extends DetailedDictionary {
+
+  public authorities!: Array<DictionaryAuthority>;
 
 }

@@ -41,7 +41,7 @@ export class Component<P, S, H = any> extends ReactComponent<{styles?: {[key: st
 }
 
 
-export class RouteComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Partial<RouteComponentProps<Q>> & P, S, H> {
+export class RouteComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Partial<RouteComponentProps<Q, H, any>> & P, S, H> {
 
 }
 
@@ -52,18 +52,18 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
 
   // グローバルストアのポップアップデータを削除しつつ、引数に指定されたパスに移動します。
   // ページの遷移をしてもポップアップが表示され続けるのを防ぐため、ページを遷移するときは必ずこのメソッドを使ってください。
-  protected pushPath(path: string, preservesPopup?: boolean): void {
+  protected pushPath(path: string, state?: object, preservesPopup?: boolean): void {
     if (!preservesPopup) {
       this.props.store!.clearAllPopups();
     }
-    this.props.history!.push(path);
+    this.props.history!.push(path, state);
   }
 
-  protected replacePath(path: string, preservesPopup?: boolean): void {
+  protected replacePath(path: string, state?: object, preservesPopup?: boolean): void {
     if (!preservesPopup) {
       this.props.store!.clearAllPopups();
     }
-    this.props.history!.replace(path);
+    this.props.history!.replace(path, state);
   }
 
   private async request<N extends ProcessName, M extends MethodType>(name: N, method: M, config: AxiosRequestConfig & {ignoresError?: boolean}): Promise<AxiosResponse<ResponseType<N, M>>> {
@@ -133,7 +133,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
     let status = response.status;
     let body = response.data as any;
     if (status === 400) {
-      if ("error" in body && "type" in body && typeof body.type === "string") {
+      if (typeof body === "object" && "error" in body && "type" in body && typeof body.type === "string") {
         this.props.store!.addErrorPopup(body.type);
       } else {
         this.props.store!.addErrorPopup("messageNotFound");
@@ -157,7 +157,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   }
 
   private static createClient(): AxiosInstance {
-    let client = axios.create({timeout: 6000, validateStatus: () => true});
+    let client = axios.create({timeout: 15000, validateStatus: () => true});
     return client;
   }
 

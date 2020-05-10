@@ -32,11 +32,11 @@ import {
   SearchModeUtil,
   SearchType,
   SearchTypeUtil
-} from "/server/model/dictionary/search-parameter";
+} from "/server/model/search-parameter";
 import {
-  SlimeDictionarySkeleton,
-  SlimeWordSkeleton
-} from "/server/skeleton/dictionary/slime";
+  Dictionary,
+  Word
+} from "/server/skeleton/dictionary";
 
 
 @route @inject
@@ -45,7 +45,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
     dictionary: null,
-    authorized: false,
+    canOwn: false,
+    canEdit: false,
     search: "",
     mode: "both",
     type: "prefix",
@@ -100,12 +101,25 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   private async checkAuthorization(): Promise<void> {
     let number = this.state.dictionary?.number;
-    if (number !== undefined) {
-      let response = await this.requestGet("checkDictionaryAuthorization", {number}, true);
-      if (response.status === 200) {
-        this.setState({authorized: true});
+    let ownPromise = new Promise(async (resolve, reject) => {
+      if (number !== undefined) {
+        let authority = "own" as const;
+        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, true);
+        if (response.status === 200) {
+          this.setState({canOwn: true}, resolve);
+        }
       }
-    }
+    });
+    let editPromise = new Promise(async (resolve, reject) => {
+      if (number !== undefined) {
+        let authority = "edit" as const;
+        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, true);
+        if (response.status === 200) {
+          this.setState({canEdit: true}, resolve);
+        }
+      }
+    });
+    await Promise.all([ownPromise, editPromise]);
   }
 
   private async updateWordsImmediately(deserialize: boolean = true): Promise<void> {
@@ -204,7 +218,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
           <WordList
             dictionary={this.state.dictionary!}
             words={this.state.hitWords}
-            authorized={this.state.authorized}
+            showEditLink={this.state.canEdit}
             offset={0}
             size={40}
             onEditConfirm={() => this.updateWordsImmediately()}
@@ -221,10 +235,10 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public render(): ReactNode {
     let innerNode = (this.state.dictionary !== null) && (
-      (this.state.showsExplanation) ? <Markdown source={this.state.dictionary.explanation}/> : this.renderWordList()
+      (this.state.showsExplanation) ? <Markdown source={this.state.dictionary.explanation ?? ""}/> : this.renderWordList()
     );
     let node = (
-      <Page dictionary={this.state.dictionary} showDictionary={true} authorized={this.state.authorized}>
+      <Page dictionary={this.state.dictionary} showDictionary={true} showEditLink={this.state.canEdit} showSettingLink={this.state.canOwn}>
         <div styleName="search-form">
           <SearchForm search={this.state.search} mode={this.state.mode} type={this.state.type} onSomeSet={this.handleSomeSearchSet.bind(this)}/>
         </div>
@@ -242,15 +256,16 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionary: SlimeDictionarySkeleton | null,
-  authorized: boolean,
+  dictionary: Dictionary | null,
+  canOwn: boolean,
+  canEdit: boolean,
   search: string,
   mode: SearchMode,
   type: SearchType
   page: number,
   showsExplanation: boolean,
   hitSize: number,
-  hitWords: Array<SlimeWordSkeleton>
+  hitWords: Array<Word>
 };
 type Params = {
   value: string
