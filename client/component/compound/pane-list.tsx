@@ -13,6 +13,9 @@ import {
 import {
   applyStyle
 } from "/client/component/decorator";
+import {
+  createStyleName
+} from "/client/util/style-name";
 
 
 @applyStyle(require("./pane-list.scss"))
@@ -27,12 +30,16 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
     let maxPage = Math.max(Math.ceil(this.props.items.length / this.props.size) - 1, 0);
     let displayedItems = this.props.items.slice(offset, offset + this.props.size);
     let panes = displayedItems.map(this.props.renderer);
+    let paginationStyleName = createStyleName(
+      "pagination",
+      {if: displayedItems.length <= 0, true: "empty"}
+    );
     let node = (
       <div styleName="root">
         <div styleName="pane">
           {panes}
         </div>
-        <div styleName="pagination-button">
+        <div styleName={paginationStyleName}>
           <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.setState({page})}/>
         </div>
       </div>

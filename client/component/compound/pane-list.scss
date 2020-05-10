@@ -11,8 +11,12 @@
   margin: 0px;
 }
 
-.pagination-button {
+.pagination {
   margin: 20px 0px 0px 0px;
   line-height: $line-height;
   text-align: center;
+}
+
+.pagination.empty {
+  margin: 0px;
 }
