@@ -21,10 +21,10 @@ export class NormalSearchParameter {
 }
 
 
-const SEARCH_MODE_KEYS = ["name", "equivalent", "both", "content"] as const;
-const SEARCH_TYPE_KEYS = ["exact", "prefix", "suffix", "part", "regular"] as const;
+export const SEARCH_MODES = ["name", "equivalent", "both", "content"] as const;
+export const SEARCH_TYPES = ["exact", "prefix", "suffix", "part", "regular"] as const;
 
-export let SearchModeUtil = LiteralUtilType.create(SEARCH_MODE_KEYS);
-export let SearchTypeUtil = LiteralUtilType.create(SEARCH_TYPE_KEYS);
-export type SearchMode = LiteralType<typeof SEARCH_MODE_KEYS>;
-export type SearchType = LiteralType<typeof SEARCH_TYPE_KEYS>;
+export let SearchModeUtil = LiteralUtilType.create(SEARCH_MODES);
+export let SearchTypeUtil = LiteralUtilType.create(SEARCH_TYPES);
+export type SearchMode = LiteralType<typeof SEARCH_MODES>;
+export type SearchType = LiteralType<typeof SEARCH_TYPES>;
