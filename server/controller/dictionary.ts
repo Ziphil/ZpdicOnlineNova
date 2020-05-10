@@ -24,6 +24,7 @@ import {
   SERVER_PATH
 } from "/server/controller/type";
 import {
+  DictionaryAuthorityUtil,
   DictionaryCreator,
   DictionaryModel,
   WordCreator,
@@ -414,10 +415,10 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
     let user = request.user!;
     let number = CastUtil.ensureNumber(request.query.number);
-    let range = CastUtil.ensureString(request.query.range);
+    let authority = DictionaryAuthorityUtil.cast(CastUtil.ensureString(request.query.authority));
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let hasAuthority = await dictionary.hasAuthority(user, range);
+      let hasAuthority = await dictionary.hasAuthority(user, authority);
       if (hasAuthority) {
         Controller.response(response, null);
       } else {

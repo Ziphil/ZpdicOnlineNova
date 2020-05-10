@@ -247,7 +247,7 @@ type ProcessType = {
   },
   checkDictionaryAuthorization: {
     get: {
-      request: {number: number, range: "own" | "edit"},
+      request: {number: number, authority: string},
       response: {
         200: null,
         400: CustomError<"noSuchDictionaryNumber">

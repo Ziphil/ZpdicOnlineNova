@@ -11,6 +11,7 @@ import {
   JWT_SECRET
 } from "/server/index";
 import {
+  DictionaryAuthority,
   DictionaryModel
 } from "/server/model/dictionary";
 import {
@@ -57,13 +58,13 @@ export function verifyUser(authority?: string): RequestHandler {
 // 編集権限がある場合、request オブジェクトの dictionary プロパティに辞書オブジェクトを書き込み、次の処理を行います。
 // 編集権限がない場合、ステータスコード 403 を返して終了します。
 // そもそも該当する辞書が存在しない場合、request オブジェクトの dictionary プロパティの値は undefined のまま、次の処理を行います。
-export function verifyDictionary(range: "own" | "edit"): RequestHandler {
+export function verifyDictionary(authority: DictionaryAuthority): RequestHandler {
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let user = request.user!;
     let number = parseInt(request.query.number || request.body.number, 10);
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let hasAuthority = await dictionary.hasAuthority(user, range);
+      let hasAuthority = await dictionary.hasAuthority(user, authority);
       if (hasAuthority) {
         request.dictionary = dictionary;
         next();

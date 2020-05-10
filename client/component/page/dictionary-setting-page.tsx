@@ -58,8 +58,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
 
   private async checkAuthorization(): Promise<void> {
     let number = +this.props.match!.params.number;
-    let range = "own" as const;
-    let response = await this.requestGet("checkDictionaryAuthorization", {number, range});
+    let authority = "own" as const;
+    let response = await this.requestGet("checkDictionaryAuthorization", {number, authority});
     if (response.status === 200) {
       this.setState({authorized: true});
     }

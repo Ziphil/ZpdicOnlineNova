@@ -103,8 +103,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let number = this.state.dictionary?.number;
     let ownPromise = new Promise(async (resolve, reject) => {
       if (number !== undefined) {
-        let range = "own" as const;
-        let response = await this.requestGet("checkDictionaryAuthorization", {number, range}, true);
+        let authority = "own" as const;
+        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, true);
         if (response.status === 200) {
           this.setState({canOwn: true}, resolve);
         }
@@ -112,8 +112,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     });
     let editPromise = new Promise(async (resolve, reject) => {
       if (number !== undefined) {
-        let range = "edit" as const;
-        let response = await this.requestGet("checkDictionaryAuthorization", {number, range}, true);
+        let authority = "edit" as const;
+        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, true);
         if (response.status === 200) {
           this.setState({canEdit: true}, resolve);
         }

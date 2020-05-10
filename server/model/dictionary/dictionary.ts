@@ -116,10 +116,16 @@ export class DictionarySchema {
     return dictionary;
   }
 
-  public static async findByUser(user: User, range: "own" | "edit"): Promise<Array<Dictionary>> {
+  public static async findByUser(user: User, authority: DictionaryAuthority): Promise<Array<Dictionary>> {
     let ownQuery = DictionaryModel.find().where("user", user);
     let editQuery = DictionaryModel.find().where("editUsers", user);
-    let query = (range === "own") ? ownQuery : DictionaryModel.find().or([ownQuery.getQuery(), editQuery.getQuery()]);
+    let query = (() => {
+      if (authority === "own") {
+        return ownQuery;
+      } else {
+        return DictionaryModel.find().or([ownQuery.getQuery(), editQuery.getQuery()]);
+      }
+    })();
     let dictionaries = await query.sort("-updatedDate -number");
     return dictionaries;
   }
