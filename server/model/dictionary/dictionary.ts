@@ -141,25 +141,33 @@ export class DictionarySchema {
     this.externalData = {};
     await this.save();
     await WordModel.deleteMany({}).where("dictionary", this);
-    let externalData = {} as any;
+    let externalData = {};
     let promise = new Promise<Dictionary>((resolve, reject) => {
       let stream = new DictionaryDeserializer(path);
+      let words = new Array<Word>();
       let count = 0;
+      let saveWord = function (word?: Word): void {
+        if (word) {
+          words.push(word);
+          count ++;
+        }
+        if (word === undefined || words.length >= 500) {
+          WordModel.insertMany(words);
+          words = [];
+          takeLog("dictionary/upload", `uploading: ${count}`);
+          takeLog("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(" "));
+        }
+      };
       stream.on("word", (word) => {
         word.dictionary = this;
-        word.save();
-        if ((++ count) % 500 === 0) {
-          let memoryUsage = Object.entries(process.memoryUsage());
-          takeLog("dictionary/upload", `number: ${this.number}, uploading: ${count}`);
-          takeLog("dictionary/upload", memoryUsage.map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(" "));
-        }
+        saveWord(word);
       });
       stream.on("other", (key, data) => {
-        externalData[key] = data;
+        externalData = Object.assign(externalData, {[key]: data});
       });
       stream.on("end", () => {
         this.status = "ready";
-        takeLog("dictionary/upload", `number: ${this.number}, uploaded: ${count}`);
+        saveWord();
         resolve(this);
       });
       stream.on("error", (error) => {
@@ -169,7 +177,7 @@ export class DictionarySchema {
       });
       stream.start();
     });
-    takeLog("dictionary/upload", `number: ${this.number}, stream starts`);
+    takeLog("dictionary/upload", `number: ${this.number}, start uploading`);
     await promise;
     this.externalData = externalData;
     await this.save();
