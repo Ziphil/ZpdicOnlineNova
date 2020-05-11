@@ -39,15 +39,12 @@ export class DictionaryDeserializer extends EventEmitter {
   public start(): void {
     let stream = oboe(createReadStream(this.path));
     stream.on("node:!.words.*", (data, jsonPath) => {
-      let word = null;
       try {
-        word = this.createWord(data);
+        let word = this.createWord(data);
+        this.emit("word", word);
       } catch (error) {
         this.error = error;
         this.emit("error", error);
-      }
-      if (word) {
-        this.emit("word", word);
       }
       return oboe.drop;
     });
