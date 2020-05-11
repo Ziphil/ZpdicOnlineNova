@@ -141,7 +141,7 @@ export class DictionarySchema {
     this.externalData = {};
     await this.save();
     await WordModel.deleteMany({}).where("dictionary", this);
-    let externalData = {} as any;
+    let externalData = {};
     let promise = new Promise<Dictionary>((resolve, reject) => {
       let stream = new DictionaryDeserializer(path);
       let words = new Array<Word>();
@@ -163,7 +163,7 @@ export class DictionarySchema {
         saveWord(word);
       });
       stream.on("other", (key, data) => {
-        externalData[key] = data;
+        externalData = Object.assign(externalData, {[key]: data});
       });
       stream.on("end", () => {
         this.status = "ready";
