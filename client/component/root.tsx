@@ -80,28 +80,25 @@ export class Root extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let node;
-    if (this.state.ready) {
-      node = (
-        <Router history={this.history}>
-          <Provider store={this.store}>
-            <Switch>
-              <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
-              <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
-              <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
-              <GuestRoute exact path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
-              <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-              <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
-              <Route exact path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
-              <PrivateRoute exact path="/dictionary-setting/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-              <PrivateRoute exact path="/dictionary-setting/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-              <Route exact path="/list" component={DictionaryListPage}/>
-              <Route exact path="/news" component={NotificationPage}/>
-            </Switch>
-          </Provider>
-        </Router>
-      );
-    }
+    let node = (this.state.ready) && (
+      <Router history={this.history}>
+        <Provider store={this.store}>
+          <Switch>
+            <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
+            <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
+            <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
+            <GuestRoute exact path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
+            <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+            <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
+            <Route exact path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+            <PrivateRoute exact path="/dictionary-setting/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+            <PrivateRoute exact path="/dictionary-setting/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+            <Route exact path="/list" component={DictionaryListPage}/>
+            <Route exact path="/news" component={NotificationPage}/>
+          </Switch>
+        </Provider>
+      </Router>
+    );
     return node;
   }
 
