@@ -61,7 +61,7 @@
 }
 
 .icon +.label {
-  margin: 0px 0px 0px $blank-padding;
+  margin: 0px 0px 0px $blank-margin;
 }
 
 .hide-label >.label {
@@ -95,8 +95,6 @@
   @include icon-font;
   width: 1em;
   height: 1em;
-  font-size: 100%;
-  line-height: 1;
   display: inline-flex;
   align-items: center;
   justify-content: center;

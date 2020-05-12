@@ -3,53 +3,41 @@
 @import "/client/component/mixin.scss";
 
 
-.root {
-  line-height: $line-height;
-}
-
 .root p {
-  margin: 5px 0px 0px 0px;
+  @include reset-first-margin;
+  @include line-height;
+  margin: 10px 0px 0px 0px;
   text-align: justify;
-}
-
-.root >p:first-child {
-  margin: 0px;
 }
 
 .root ul {
   @include unordered-list("\F0DA", $light-color, 0.4em);
-  margin: 5px 0px 0px 2px;
+  @include reset-first-margin;
+  @include line-height;
+  margin: 10px 0px 0px 2px;
   padding: 0px;
-}
-
-.root >ul:first-child {
-  margin: 0px 0px 0px 2px;
 }
 
 .root ol {
   @include ordered-list($light-color);
-  margin: 5px 0px 0px 0px;
+  @include reset-first-margin;
+  @include line-height;
+  margin: 10px 0px 0px 0px;
   padding: 0px;
 }
 
-.root >ol:first-child {
-  margin: 0px;
-}
-
 .root table {
-  margin: 5px auto 0px auto;
+  @include reset-first-margin;
+  margin: 10px auto 0px auto;
   padding: 0px;
   border-collapse: separate;
   border-spacing: 0px;
   border-radius: $small-border-radius;
 }
 
-.root >table:first-child {
-  margin: 0px auto;
-}
-
 .root tr >* {
-  padding: 0.1em 0.5em;
+  padding: 0.12em 0.5em;
+  line-height: $text-line-height;
   text-align: left;
   border-bottom: 1px $light-border-color solid;
   border-right: 1px $light-border-color solid;

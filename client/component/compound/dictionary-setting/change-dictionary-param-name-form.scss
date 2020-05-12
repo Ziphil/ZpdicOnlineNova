@@ -29,7 +29,7 @@
 
 .url::before {
   @include icon-font;
-  margin-right: $blank-padding;
+  margin-right: $blank-margin;
   color: $light-color;
   content: "\F0A4";
 }

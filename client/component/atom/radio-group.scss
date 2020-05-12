@@ -10,9 +10,6 @@
 }
 
 .root >* {
-  margin: 0px 0px 0px 20px;
-}
-
-.root >*:first-child {
-  margin: 0px;
+  @include reset-first-margin;
+  margin: 0px 0px 0px $control-margin;
 }

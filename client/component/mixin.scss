@@ -76,13 +76,18 @@ $inset-box-shadow-setting: 0px 2px 3px;
 $small-border-radius: 3px;
 $large-border-radius: 6px;
 
-$blank-padding: 0.4em;
+$icon-width: 1.2em;
+$blank-margin: 0.3em;
+$control-margin: 15px;
 
 $page-width: 800px;
 $page-horizontal-margin: 30px;
 
 $font-size: 16px;
+
 $line-height: 1.6;
+$text-line-height: 1.6;
+$tooltip-line-height: 1.4;
 
 $europian-font-family: "EB Garamond", "Times New Roman";
 $japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝";
@@ -113,6 +118,32 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   }
 }
 
+@mixin line-height($line-height: $text-line-height) {
+  line-height: $line-height;
+  &::before {
+    width: 0px;
+    height: 0px;
+    margin-top: (1 - $line-height) * 0.5em;
+    display: block;
+    content: "";
+  }
+  &::after {
+    width: 0;
+    height: 0;
+    margin-bottom: (1 - $line-height) * 0.5em;
+    display: block;
+    content: "";
+  }
+}
+
+@mixin reset-first-margin($directions: top left) {
+  @each $direction in $directions {
+    &:first-child {
+      margin-#{$direction}: 0px;
+    }
+  }
+}
+
 @mixin page($margin-top: 130px, $margin-bottom: 60px) {
   width: calc(100% - #{$page-horizontal-margin} * 2);
   margin: $margin-top $page-horizontal-margin $margin-bottom $page-horizontal-margin;
@@ -130,14 +161,14 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   padding: 0px;
   list-style-type: none;
   >li {
-    margin-left: $marker-width + $blank-padding;
+    margin-left: $marker-width + $blank-margin;
     text-align: justify;
   }
   >li::before {
     @include icon-font;
     width: $marker-width;
-    margin-right: $blank-padding;
-    margin-left: -$marker-width - $blank-padding;
+    margin-right: $blank-margin;
+    margin-left: -$marker-width - $blank-margin;
     color: $icon-color;
     content: $icon;
     display: inline-block;
@@ -149,7 +180,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   padding: 0px;
   list-style-type: none;
   >li {
-    margin-left: 0.9em + $blank-padding;
+    margin-left: 0.9em + $blank-margin;
     text-align: justify;
     position: relative;
     counter-increment: list;
@@ -158,8 +189,8 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
     top: 0.5em;
     width: 0.8em * (100% / 70%);
     height: 0.8em * (100% / 70%);
-    margin-right: $blank-padding * (100% / 70%);
-    margin-left: (-0.9em - $blank-padding) * (100% / 70%);
+    margin-right: $blank-margin * (100% / 70%);
+    margin-left: (-0.9em - $blank-margin) * (100% / 70%);
     font-size: 70%;
     color: $number-color;
     line-height: 1;
@@ -181,7 +212,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   padding: 0.12em 0.5em;
   font-family: inherit;
   font-size: inherit;
-  line-height: $line-height;
+  line-height: $text-line-height;
   border: 1px border-color($color) solid;
   border-radius: $small-border-radius;
   background-color: white;
@@ -196,39 +227,39 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   }
 }
 
-@mixin button($background-color) {
+@mixin button($color) {
   padding: 0.12em 0.8em;
   font-family: inherit;
   font-size: inherit;
-  line-height: $line-height;
+  line-height: $text-line-height;
   color: white;
-  border: 1px border-color($background-color, false) solid;
+  border: 1px border-color($color, false) solid;
   border-radius: $small-border-radius;
-  background-color: $background-color;
-  background-image: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.3));
+  background-color: $color;
+  background-image: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25));
   white-space: nowrap;
   position: relative;
   cursor: pointer;
   outline: none;
   &:hover {
-    background-color: hover-color($background-color);
+    background-color: hover-color($color);
   }
   &:focus {
-    box-shadow: $focus-box-shadow-setting focus-box-shadow-color($background-color);
+    box-shadow: $focus-box-shadow-setting focus-box-shadow-color($color);
   }
   &:active {
-    background-color: shade($background-color, 25%);
+    background-color: shade($color, 25%);
     background-image: none;
     box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1);
   }
   &:active:focus {
-    box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1), $focus-box-shadow-setting focus-box-shadow-color($background-color);
+    box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1), $focus-box-shadow-setting focus-box-shadow-color($color);
   }
   &:disabled {
     opacity: 0.5;
   }
   &:disabled:hover {
-    background-color: $background-color;
+    background-color: $color;
     cursor: not-allowed;
   }
 }
