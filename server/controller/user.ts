@@ -47,7 +47,7 @@ export class UserController extends Controller {
   public async [Symbol()](request: PostRequest<"login">, response: PostResponse<"login">): Promise<void> {
     let token = request.token!;
     let user = request.user!;
-    let userBody = UserCreator.create(user);
+    let userBody = UserCreator.createDetailed(user);
     let body = {token, user: userBody};
     Controller.response(response, body);
   }
@@ -179,7 +179,7 @@ export class UserController extends Controller {
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
     let user = request.user!;
-    let body = UserCreator.create(user);
+    let body = UserCreator.createDetailed(user);
     Controller.response(response, body);
   }
 

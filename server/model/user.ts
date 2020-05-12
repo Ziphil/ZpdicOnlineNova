@@ -23,6 +23,7 @@ import {
   validatePassword
 } from "/server/model/validation";
 import {
+  DetailedUser as DetailedUserSkeleton,
   User as UserSkeleton
 } from "/server/skeleton/user";
 import {
@@ -170,8 +171,14 @@ export class UserCreator {
   public static create(raw: User): UserSkeleton {
     let id = raw.id;
     let name = raw.name;
+    let skeleton = UserSkeleton.of({id, name});
+    return skeleton;
+  }
+
+  public static createDetailed(raw: User): DetailedUserSkeleton {
+    let base = UserCreator.create(raw);
     let email = raw.email;
-    let skeleton = UserSkeleton.of({id, name, email});
+    let skeleton = DetailedUserSkeleton.of({...base, email});
     return skeleton;
   }
 

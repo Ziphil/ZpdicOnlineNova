@@ -5,14 +5,14 @@ import {
   observable
 } from "/client/component/decorator";
 import {
-  User
+  DetailedUser
 } from "/server/skeleton/user";
 
 
 export class GlobalStore {
 
   @observable
-  public user: User | null = null;
+  public user: DetailedUser | null = null;
 
   @observable
   public popupSpecs: Array<{id: number, type: string, style: PopupStyle}> = [];
