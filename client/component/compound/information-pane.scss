@@ -47,6 +47,12 @@
   position: absolute;
 }
 
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .root.error .button >button >span {
   color: map-get($colors, error);
 }
