@@ -25,6 +25,10 @@ import {
 export class NotificationPane extends Component<Props, State> {
 
   public render(): ReactNode {
+    let styles = this.props.styles!;
+    let fixedNode = (this.props.notification.type === "bugFixed") && (
+      <span styleName="fixed">(対応済み)</span>
+    );
     let iconString = (() => {
       let type = this.props.notification.type;
       if (type === "update") {
@@ -38,17 +42,19 @@ export class NotificationPane extends Component<Props, State> {
       }
     })();
     let dateString = DateUtil.format(this.props.notification.date, "yyyy/MM/dd HH:mm");
-    let fixedString = (this.props.notification.type === "bugFixed") ? " (対処済み)" : "";
     let node = (
       <div styleName="root">
         <div styleName="head-wrapper">
           <div styleName="icon">{iconString}</div>
           <div styleName="head-right">
             <div styleName="date">{dateString}</div>
-            <h1 styleName="head">{this.props.notification.title}{fixedString}</h1>
+            <h1 styleName="head">
+              {fixedNode}
+              {this.props.notification.title}
+            </h1>
           </div>
         </div>
-        <Markdown source={this.props.notification.text}/>
+        <Markdown className={styles["content"]} source={this.props.notification.text}/>
       </div>
     );
     return node;

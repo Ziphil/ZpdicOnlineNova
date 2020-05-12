@@ -11,11 +11,8 @@
 }
 
 .root >* {
+  @include reset-first-margin;
   margin: 15px 0px 0px 0px;
-}
-
-.root >*:first-child {
-  margin: 0px;
 }
 
 .button-group {
@@ -23,6 +20,7 @@
 }
 
 .row {
+  @include reset-first-margin;
   margin: 10px 0px 0px 0px;
   text-align: center;
   flex-direction: row;
@@ -30,14 +28,7 @@
   justify-content: center;
 }
 
-.row:first-child {
-  margin: 0px;
-}
-
 .row >* {
-  margin: 0px 0px 0px 20px;
-}
-
-.row >*:first-child {
-  margin: 0px;
+  @include reset-first-margin;
+  margin: 0px 0px 0px $control-margin;
 }

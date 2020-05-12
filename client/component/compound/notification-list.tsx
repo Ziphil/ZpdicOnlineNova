@@ -50,7 +50,7 @@ export class NotificationList extends StoreComponent<Props, State> {
       return <NotificationPane notification={notification} key={notification.id}/>;
     });
     let paginationNodes = (this.props.showsPagination) && (
-      <div styleName="pagination-button">
+      <div styleName="pagination">
         <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.setState({page})}/>
       </div>
     );

@@ -15,7 +15,6 @@
   margin: 0px 0px 5px 0px;
   font-size: 80%;
   color: map-get($colors, primary);
-  line-height: 1;
 }
 
 .label.error {
@@ -30,27 +29,26 @@
   @include input(map-get($colors, error));
 }
 
-.button {
+.eye {
   @include icon-font;
   width: 1.6em;
   margin: 0em 0em 0em -2em;
   color: $link-color;
-  line-height: 0.9;
   text-align: center;
   display: inline-block;
   position: relative;
   cursor: pointer;
 }
 
-.button:hover {
+.eye:hover {
   color: $link-hover-color;
 }
 
-.button::before {
+.eye::before {
   content: "\F070";
 }
 
-.button.password::before {
+.eye.password::before {
   content: "\F06E";
 }
 
@@ -60,13 +58,11 @@
 
 :focus-within +.tooltip {
   margin: 10px 0px 0px 0px;
-  padding: 0.2em 0.6em;
+  padding: 6px 8px;
   font-size: 80%;
   color: map-get($colors, error);
-  line-height: $line-height;
   background-color: background-color(map-get($colors, error));
   border: 1px border-color(map-get($colors, error)) solid;
-  text-align: justify;
   border-radius: $small-border-radius;
   display: block;
   position: absolute;
@@ -92,4 +88,10 @@
   border-bottom: 8px background-color(map-get($colors, error)) solid;
   position: absolute;
   content: "";
+}
+
+.tooltip-text {
+  @include line-height($tooltip-line-height);
+  margin: 0px;
+  text-align: justify;
 }

@@ -108,7 +108,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
             onEditConfirm={this.props.onEditConfirm}
           />
         </div>
-        <div styleName="pagination-button">
+        <div styleName="pagination">
           <PaginationButton
             page={this.state.page}
             minPage={0}

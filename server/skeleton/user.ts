@@ -9,6 +9,12 @@ export class User extends Skeleton {
 
   public id!: string;
   public name!: string;
+
+}
+
+
+export class DetailedUser extends User {
+
   public email!: string;
 
 }

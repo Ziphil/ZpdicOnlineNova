@@ -46,7 +46,7 @@ export class WordPane extends Component<Props, State> {
     );
     let submitButtonNode = (this.props.showButton) && (
       <div styleName="button">
-        <Button label="決定" onClick={this.props.onSubmit}/>
+        <Button label="決定" iconLabel="&#xF00C;" style="simple" onClick={this.props.onSubmit}/>
       </div>
     );
     let tagNodes = this.props.word.tags.map((tag, index) => {
@@ -72,16 +72,19 @@ export class WordPane extends Component<Props, State> {
     let innerNodes = this.props.word.equivalents.map((equivalent, index) => {
       let titleNode = (equivalent.title !== "") && <span styleName="box">{equivalent.title}</span>;
       let innerNode = (
-        <p styleName="text" key={index}>
+        <span styleName="equivalent" key={index}>
           {titleNode}
           {equivalent.names.join(", ")}
-        </p>
+          <br/>
+        </span>
       );
       return innerNode;
     });
     let node = (innerNodes.length > 0) && (
       <div styleName="container">
-        {innerNodes}
+        <p styleName="text">
+          {innerNodes}
+        </p>
       </div>
     );
     return node;
@@ -91,8 +94,8 @@ export class WordPane extends Component<Props, State> {
     let nodes = this.props.word.informations.map((information, index) => {
       let informationNode = (
         <div styleName="container" key={index}>
+          <div styleName="title">{information.title}</div>
           <p styleName="text">
-            <span styleName="title">{information.title}</span>
             {information.text}
           </p>
         </div>
@@ -124,17 +127,20 @@ export class WordPane extends Component<Props, State> {
         return relationNode;
       });
       let innerNode = (
-        <p styleName="text" key={index}>
-          <span styleName="confer">&#xF0A4;</span>
+        <span styleName="relations" key={index}>
+          <span styleName="confer"/>
           {titleNode}
           {relationNodes}
-        </p>
+          <br/>
+        </span>
       );
       return innerNode;
     });
     let node = (innerNodes.length > 0) && (
       <div styleName="container">
-        {innerNodes}
+        <p styleName="text">
+          {innerNodes}
+        </p>
       </div>
     );
     return node;

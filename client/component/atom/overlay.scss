@@ -37,7 +37,8 @@
 }
 
 .right >* {
-  margin: 0px 0px 0px 20px;
+  @include reset-first-margin;
+  margin: 0px 0px 0px $control-margin;
 }
 
 .content {

@@ -4,7 +4,6 @@
 
 
 .root {
-  line-height: $line-height;
   display: flex;
   align-items: flex-end;
 }
@@ -14,14 +13,13 @@
 }
 
 .root >*:nth-child(2) {
-  margin: 0px 0px 0px 20px;
+  margin: 0px 0px 0px $control-margin;
 }
 
 .url {
   width: 100%;
-  margin: 10px 0px 0px 0px;
+  margin: 15px 0px 0px 0px;
   font-size: 90%;
-  line-height: $line-height;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -29,7 +27,7 @@
 
 .url::before {
   @include icon-font;
-  margin-right: $blank-padding;
+  margin: 0em $blank-margin 0em 0em;
   color: $light-color;
   content: "\F0A4";
 }

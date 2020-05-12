@@ -4,7 +4,7 @@
 
 
 .root {
-  padding: 15px 0px;
+  padding: 20px 0px;
   border-bottom: 1px $pale-border-color solid;
 }
 
@@ -17,7 +17,6 @@
 }
 
 .head-wrapper {
-  margin: 5px 0px 13px 0px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -25,28 +24,37 @@
 
 .head-wrapper .icon {
   @include icon-font;
-  width: 1.2em;
-  margin: 0px 10px 0px 0px;
+  width: $icon-width;
   font-size: 150%;
   color: $head-color;
   text-align: center;
   display: inline-block;
 }
 
+.head-right {
+  margin: 0px 0px 0px 10px;
+}
+
 .date {
+  margin: 0px 0px 5px 0px;
   font-size: 80%;
   color: $head-color;
 }
 
 .head {
-  margin: 5px 0px 0px 0px;
+  margin: 0px;
   padding: 0px;
   font-size: 120%;
   font-weight: bold;
   color: $head-color;
 }
 
-.text {
-  margin: 10px 0px 0px 0px;
-  text-align: justify;
+.fixed {
+  margin: 0em 0.3em 0em 0em;
+  font-size: 80%;
+  font-weight: normal;
+}
+
+.content {
+  margin: 15px 0px 0px 0px;
 }

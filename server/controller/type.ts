@@ -17,6 +17,7 @@ import {
   Notification
 } from "/server/skeleton/notification";
 import {
+  DetailedUser,
   User
 } from "/server/skeleton/user";
 
@@ -260,7 +261,7 @@ type ProcessType = {
     post: {
       request: {name: string, password: string},
       response: {
-        200: {token: string, user: User},
+        200: {token: string, user: DetailedUser},
         400: never
       }
     }
@@ -329,7 +330,7 @@ type ProcessType = {
     get: {
       request: {},
       response: {
-        200: User,
+        200: DetailedUser,
         400: never
       }
     },

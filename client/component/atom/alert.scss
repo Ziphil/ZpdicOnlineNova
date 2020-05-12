@@ -22,8 +22,7 @@
 
 .icon {
   @include icon-font;
-  width: 1.2em;
-  margin: 0px 15px 0px 0px;
+  width: $icon-width;
   font-size: 250%;
   color: map-get($colors, error);
   text-align: center;
@@ -31,20 +30,17 @@
 }
 
 .text {
-  margin: 0px;
-  line-height: $line-height;
+  @include line-height;
+  margin: 0px 0px 0px 15px;
+  text-align: justify;
 }
 
 .button {
   margin: 20px 0px 0px 0px;
-  line-height: $line-height;
   text-align: right;
 }
 
 .button >* {
-  margin: 0px 0px 0px 20px;
-}
-
-.button >*:first-child { 
-  margin: 0px;
+  @include reset-first-margin;
+  margin: 0px 0px 0px $control-margin;
 }

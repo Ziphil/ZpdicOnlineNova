@@ -75,19 +75,23 @@ export class Input extends Component<Props, State> {
       );
       return <div styleName={labelStyleName}>{this.props.label}</div>;
     })();
-    let buttonNode = (this.props.type === "flexible") && (() => {
-      let buttonStyleName = createStyleName("button", this.state.type);
+    let eyeNode = (this.props.type === "flexible") && (() => {
+      let buttonStyleName = createStyleName("eye", this.state.type);
       return <span styleName={buttonStyleName} onClick={this.toggleType.bind(this)}/>;
     })();
     let tooltipNode = (this.state.errorMessage !== null) && (
-      <div styleName="tooltip">{this.state.errorMessage}</div>
+      <div styleName="tooltip">
+        <p styleName="tooltip-text">
+          {this.state.errorMessage}
+        </p>
+      </div>
     );
     let node = (
       <div styleName="root" className={this.props.className}>
         <label styleName="label-wrapper">
           {labelNode}
           <input styleName={inputStyleName} type={this.state.type} value={this.props.value} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.handleChange.bind(this)}/>
-          {buttonNode}
+          {eyeNode}
         </label>
         {tooltipNode}
       </div>

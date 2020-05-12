@@ -14,7 +14,7 @@
 }
 
 .text {
-  margin: 0px 0px 0px $blank-padding;
+  margin: 0px 0px 0px $blank-margin;
   @include smartphone {
     display: none;
   }

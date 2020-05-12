@@ -9,12 +9,14 @@
   justify-content: center;
 }
 
-.root >*:first-child {
-  margin: 0px 20px 0px 0px;
+.root >* {
+  @include reset-first-margin;
+  margin: 0px 0px 0px $control-margin;
 }
 
-.root >*:last-child {
-  margin: 0px 0px 0px 20px;
+.button-group {
+  display: flex;
+  flex-direction: row;
 }
 
 .redundant {

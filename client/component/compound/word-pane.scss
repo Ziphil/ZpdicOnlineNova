@@ -4,7 +4,7 @@
 
 
 .root {
-  padding: 15px 0px;
+  padding: 20px 0px;
   border-bottom: 1px $pale-border-color solid;
 }
 
@@ -17,6 +17,7 @@
 }
 
 .name-wrapper {
+  margin: 0px 0px 15px 0px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -24,11 +25,10 @@
 }
 
 .name {
-  margin: -2px 0.5em 0em 0em;
+  margin: 0em 0.5em 0em 0em;
   font-size: 120%;
   font-weight: bold;
   color: $head-color;
-  line-height: $line-height;
   display: inline-block;
 }
 
@@ -37,25 +37,25 @@
 }
 
 .button {
-  line-height: $line-height;
   display: inline-block;
 }
 
 .button >* {
-  margin: 0px 0px 0px 20px;
-}
-
-.button >*:first-child {
-  margin: 0px;
+  @include reset-first-margin;
+  margin: 0px 0px 0px $control-margin;
 }
 
 .tag {
   display: inline-block;
 }
 
+.container {
+  margin: 15px 0px 0px 0px;
+}
+
 .text {
+  @include line-height;
   margin: 0px;
-  line-height: $line-height;
   text-align: justify;
   white-space: pre-line;
 }
@@ -66,11 +66,12 @@
   padding: 0em 0.2em;
   font-size: 70%;
   border: 1px $light-border-color solid;
-  border-radius: 3px;
+  border-radius: $small-border-radius;
   position: relative;
 }
 
 .title {
+  margin: 0px 0px 10px 0px;
   font-size: 70%;
   color: $light-color;
   display: block;
@@ -82,6 +83,6 @@
   color: $light-color;
 }
 
-.container {
-  margin: 5px 0px 0px 0px;
+.confer::before {
+  content: "\F0A4";
 }

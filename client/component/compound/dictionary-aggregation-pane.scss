@@ -11,12 +11,10 @@
 }
 
 .size-wrapper {
+  @include reset-first-margin;
+  margin: 0px 0px 0px 80px;
   color: $logo-color;
   text-align: center;
-}
-
-.size-wrapper:first-child {
-  margin: 0px 70px 0px 0px;
 }
 
 .size {
