@@ -46,7 +46,7 @@ export class WordPane extends Component<Props, State> {
     );
     let submitButtonNode = (this.props.showButton) && (
       <div styleName="button">
-        <Button label="決定" onClick={this.props.onSubmit}/>
+        <Button label="決定" iconLabel="&#xF00C;" style="simple" onClick={this.props.onSubmit}/>
       </div>
     );
     let tagNodes = this.props.word.tags.map((tag, index) => {
