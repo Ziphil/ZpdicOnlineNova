@@ -225,7 +225,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
             onDeleteConfirm={() => this.updateWordsImmediately()}
           />
         </div>
-        <div styleName="pagination-button">
+        <div styleName="pagination">
           <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={this.handlePageSet.bind(this)}/>
         </div>
       </Fragment>

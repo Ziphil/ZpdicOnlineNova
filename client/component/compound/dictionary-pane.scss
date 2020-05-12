@@ -10,14 +10,6 @@
   justify-content: space-between;
 }
 
-.button {
-  white-space: nowrap;
-}
-
-.button >* {
-  margin: 0em $blank-margin 0em 0em;
-}
-
 .name {
   font-weight: bold;
 }
@@ -45,7 +37,7 @@
 }
 
 .setting >* {
-  margin: 0px 0px 0px 20px;
+  margin: 0px 0px 0px $control-margin;
 }
 
 .setting >*:first-child {

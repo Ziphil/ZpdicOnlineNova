@@ -4,16 +4,12 @@
 
 
 .pane >* {
+  @include reset-first-margin;
   margin: 20px 0px 0px 0px;
-}
-
-.pane >*:first-child {
-  margin: 0px;
 }
 
 .pagination {
   margin: 20px 0px 0px 0px;
-  line-height: $line-height;
   text-align: center;
 }
 

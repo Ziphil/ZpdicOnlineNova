@@ -4,8 +4,7 @@
 
 
 .root {
-  padding: 8px 20px;
-  line-height: $line-height;
+  padding: 12px 20px;
   position: relative;
 }
 
@@ -19,10 +18,12 @@
 
 .root.error .list {
   @include unordered-list("\F06A", inherit, 1em);
+  @include line-height;
 }
 
 .root.information .list {
   @include unordered-list("\F05A", inherit, 1em);
+  @include line-height;
 }
 
 .root.error .button-box {
@@ -38,8 +39,8 @@
 .button {
   right: -10px;
   top: -10px;
-  width: 26px;
-  height: 26px;
+  width: 25px;
+  height: 25px;
   text-align: center;
   border-radius: 50%;
   box-sizing: border-box;
@@ -65,8 +66,8 @@
 .overlay {
   top: 0px;
   right: 0px;
-  width: 16px;
-  height: 16px;
+  width: 15px;
+  height: 15px;
   position: absolute;
 }
 

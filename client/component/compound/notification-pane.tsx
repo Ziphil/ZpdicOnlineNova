@@ -25,6 +25,7 @@ import {
 export class NotificationPane extends Component<Props, State> {
 
   public render(): ReactNode {
+    let styles = this.props.styles!;
     let iconString = (() => {
       let type = this.props.notification.type;
       if (type === "update") {
@@ -48,7 +49,7 @@ export class NotificationPane extends Component<Props, State> {
             <h1 styleName="head">{this.props.notification.title}{fixedString}</h1>
           </div>
         </div>
-        <Markdown source={this.props.notification.text}/>
+        <Markdown className={styles["content"]} source={this.props.notification.text}/>
       </div>
     );
     return node;

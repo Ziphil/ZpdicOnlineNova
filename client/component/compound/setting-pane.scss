@@ -48,12 +48,12 @@
 }
 
 .label >*:nth-child(1) {
-  margin: 0em 0em 0em 0.5em;
+  margin: 0em 0em 0em $blank-margin;
 }
 
 .description {
-  margin: 10px 0px 0px 0px;
+  @include line-height;
+  margin: 15px 0px 0px 0px;
   font-size: 90%;
-  line-height: $line-height;
   text-align: justify;
 }

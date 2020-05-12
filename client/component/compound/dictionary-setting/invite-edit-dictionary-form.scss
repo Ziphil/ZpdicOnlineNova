@@ -4,7 +4,6 @@
 
 
 .root {
-  line-height: $line-height;
   display: flex;
   align-items: flex-end;
 }
@@ -21,5 +20,5 @@
 }
 
 .root >*:nth-child(2) {
-  margin: 0px 0px 0px 20px;
+  margin: 0px 0px 0px $control-margin;
 }

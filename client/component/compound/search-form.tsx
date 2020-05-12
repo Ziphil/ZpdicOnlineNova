@@ -77,6 +77,8 @@ export class SearchForm extends Component<Props, State> {
         <Input value={this.props.search} onSet={this.handleSearchSet.bind(this)}/>
         <div styleName="radio-wrapper">
           <RadioGroup name="mode" value={this.props.mode} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
+        </div>
+        <div styleName="radio-wrapper">
           <RadioGroup name="type" value={this.props.type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
         </div>
       </form>

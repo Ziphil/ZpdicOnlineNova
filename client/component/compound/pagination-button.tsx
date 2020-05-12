@@ -90,7 +90,9 @@ export class PaginationButton extends Component<Props, State> {
     let node = (
       <div styleName="root">
         <Button iconLabel="&#xF060;" disabled={this.props.page <= this.props.minPage} onClick={this.movePreviousPage.bind(this)}/>
-        {buttonNodes}
+        <div styleName="button-group">
+          {buttonNodes}
+        </div>
         <Button iconLabel="&#xF061;" disabled={this.props.page >= this.props.maxPage} onClick={this.moveNextPage.bind(this)}/>
       </div>
     );

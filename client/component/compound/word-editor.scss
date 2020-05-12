@@ -6,7 +6,6 @@
 .container {
   padding: 20px 0px;
   border-bottom: 1px $pale-border-color solid; 
-  line-height: $line-height;
 }
 
 .container:first-child {
@@ -20,15 +19,11 @@
 .confirm-button {
   margin: 20px 0px 0px 0px;
   text-align: right;
-  line-height: $line-height;
 }
 
 .confirm-button >* {
-  margin: 0px 0px 0px 20px;
-}
-
-.confirm-button >*:first-child {
-  margin: 0px;
+  @include reset-first-margin;
+  margin: 0px 0px 0px $control-margin;
 }
 
 .inner,
@@ -62,11 +57,8 @@
 }
 
 .form >* {
+  @include reset-first-margin;
   margin: 0px 0px 0px 10px;
-}
-
-.form >*:first-child {
-  margin: 0px;
 }
 
 .form.information {
@@ -107,11 +99,4 @@
 
 .relation-input >*:nth-child(1) {
   flex-grow: 1;
-}
-
-.caution {
-  margin: 0px 0px 20px 0px;
-  color: map-get($colors, error);
-  line-height: $line-height;
-  text-align: justify;
 }

@@ -4,15 +4,14 @@
 
 
 .root {
-  line-height: $line-height;
   display: flex;
   align-items: flex-end;
 }
 
 .caution {
-  margin: 10px 0px 0px 0px;
+  @include line-height;
+  margin: 15px 0px 0px 0px;
   font-size: 90%;
   color: map-get($colors, error);
-  line-height: $line-height;
   text-align: justify;
 }
