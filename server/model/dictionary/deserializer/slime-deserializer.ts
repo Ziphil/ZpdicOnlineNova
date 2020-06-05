@@ -1,13 +1,11 @@
 //
 
 import {
-  EventEmitter
-} from "events";
-import {
   createReadStream
 } from "fs";
 import * as oboe from "oboe";
 import {
+  Deserializer,
   EquivalentModel,
   InformationModel,
   RelationModel,
@@ -20,20 +18,12 @@ import {
 } from "/server/util/misc";
 
 
-export class DictionaryDeserializer extends EventEmitter {
+export class SlimeDeserializer extends Deserializer {
 
-  public path: string;
   private error: Error | null = null;
 
   public constructor(path: string) {
-    super();
-    this.path = path;
-  }
-
-  public on<E extends keyof Event>(event: E, listener: (...args: Event[E]) => void): this;
-  public on(event: string | symbol, listener: (...args: any) => void): this {
-    super.on(event, listener);
-    return this;
+    super(path);
   }
 
   public start(): void {
@@ -104,11 +94,3 @@ export class DictionaryDeserializer extends EventEmitter {
   }
 
 }
-
-
-type Event = {
-  word: [Word],
-  other: [string, any],
-  end: [],
-  error: [Error]
-};

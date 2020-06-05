@@ -72,10 +72,11 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     let path = request.file.path;
+    let originalPath = request.file.originalname;
     if (dictionary) {
       let promise = new Promise(async (resolve, reject) => {
         try {
-          await dictionary!.upload(path);
+          await dictionary!.upload(path, originalPath);
           await fs.unlink(path);
           resolve();
         } catch (error) {
