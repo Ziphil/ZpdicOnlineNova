@@ -4,6 +4,7 @@ import {
   EventEmitter
 } from "events";
 import {
+  Dictionary,
   SlimeDeserializer,
   Word
 } from "/server/model/dictionary";
@@ -12,12 +13,14 @@ import {
 export abstract class Deserializer extends EventEmitter {
 
   public path: string;
+  public dictionary: Dictionary;
   private cacheSize: number;
   private words: Array<Word> = [];
 
-  public constructor(path: string, cacheSize?: number) {
+  public constructor(path: string, dictionary: Dictionary, cacheSize?: number) {
     super();
     this.path = path;
+    this.dictionary = dictionary;
     this.cacheSize = cacheSize ?? 500;
   }
 
@@ -53,10 +56,10 @@ export abstract class Deserializer extends EventEmitter {
 
   // 与えられたパスの拡張子を調べ、対応するデシリアライザを返します。
   // 拡張子が対応していないものだった場合は null を返します。
-  public static create(path: string, originalPath: string, cacheSize?: number): Deserializer | null {
+  public static create(path: string, originalPath: string, dictionary: Dictionary, cacheSize?: number): Deserializer | null {
     let extension = originalPath.split(/\.(?=[^.]+$)/)[1];
     if (extension === "json") {
-      return new SlimeDeserializer(path, cacheSize);
+      return new SlimeDeserializer(path, dictionary, cacheSize);
     } else {
       return null;
     }

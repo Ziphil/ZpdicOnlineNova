@@ -143,15 +143,12 @@ export class DictionarySchema {
     await WordModel.deleteMany({}).where("dictionary", this);
     let externalData = {};
     let promise = new Promise<Dictionary>((resolve, reject) => {
-      let stream = Deserializer.create(path, originalPath);
+      let stream = Deserializer.create(path, originalPath, this);
       if (stream !== null) {
         let count = 0;
         stream.on("words", (words) => {
-          for (let word of words) {
-            word.dictionary = this;
-            count ++;
-          }
           WordModel.insertMany(words);
+          count += words.length;
           takeLog("dictionary/upload", `uploading: ${count}`);
           takeLog("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(" "));
         });

@@ -54,6 +54,7 @@ export class SlimeDeserializer extends Deserializer {
 
   private createWord(raw: any): Word {
     let word = new WordModel({});
+    word.dictionary = this.dictionary;
     word.number = parseInt(raw["entry"]["id"], 10);
     word.name = raw["entry"]["form"];
     word.equivalents = [];
