@@ -145,30 +145,21 @@ export class DictionarySchema {
     let promise = new Promise<Dictionary>((resolve, reject) => {
       let stream = Deserializer.create(path, originalPath);
       if (stream !== null) {
-        let words = new Array<Word>();
         let count = 0;
-        let saveWord = function (word?: Word): void {
-          if (word) {
-            words.push(word);
+        stream.on("words", (words) => {
+          for (let word of words) {
+            word.dictionary = this;
             count ++;
           }
-          if (word === undefined || words.length >= 500) {
-            WordModel.insertMany(words);
-            words = [];
-            takeLog("dictionary/upload", `uploading: ${count}`);
-            takeLog("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(" "));
-          }
-        };
-        stream.on("word", (word) => {
-          word.dictionary = this;
-          saveWord(word);
+          WordModel.insertMany(words);
+          takeLog("dictionary/upload", `uploading: ${count}`);
+          takeLog("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(" "));
         });
         stream.on("other", (key, data) => {
           externalData = Object.assign(externalData, {[key]: data});
         });
         stream.on("end", () => {
           this.status = "ready";
-          saveWord();
           resolve(this);
         });
         stream.on("error", (error) => {

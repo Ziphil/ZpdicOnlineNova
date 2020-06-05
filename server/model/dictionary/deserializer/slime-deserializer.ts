@@ -22,10 +22,6 @@ export class SlimeDeserializer extends Deserializer {
 
   private error: Error | null = null;
 
-  public constructor(path: string) {
-    super(path);
-  }
-
   public start(): void {
     let stream = oboe(createReadStream(this.path));
     stream.on("node:!.words.*", (data, jsonPath) => {
