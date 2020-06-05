@@ -36,6 +36,9 @@ export abstract class Deserializer extends EventEmitter {
     return result;
   }
 
+  // 指定されたイベントを発火します。
+  // このメソッドは、このクラスを継承したサブクラスの内部で呼ばれることが想定されており、外部から呼ばれることは想定されていません。
+  // このメソッドによって word イベントが発火されると、引数の単語データがキャッシュされ、一定数の単語データがキャッシュされると自動的に words イベントを発火します。
   public emit<E extends keyof DeserializerEvent>(event: E, ...args: DeserializerEvent[E]): boolean;
   public emit(event: string | symbol, ...args: any): boolean {
     if (event === "word") {
