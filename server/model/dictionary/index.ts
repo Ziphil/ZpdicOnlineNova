@@ -1,7 +1,7 @@
 //
 
 export * from "./deserializer/binary-deserializer";
-export * from "./deserializer/bocu-decoder";
+export * from "./deserializer/bocu-pull-stream";
 export * from "./deserializer/deserializer";
 export * from "./deserializer/pull-stream";
 export * from "./deserializer/slime-deserializer";
