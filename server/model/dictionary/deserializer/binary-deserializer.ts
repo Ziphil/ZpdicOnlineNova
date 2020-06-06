@@ -60,7 +60,7 @@ export class BinaryDeserializer extends Deserializer {
 
   private parseDataBlocks(): void {
     while (true) {
-      let rawLength = this.stream.pullMaybeUIntLE(2, -1);
+      let rawLength = this.stream.readMaybeUIntLE(2, -1);
       if (rawLength >= 0) {
         let length = (rawLength & 0x7FFF) * 1024;
         let fieldLength = ((rawLength & 0x8000) !== 0) ? 4 : 2;
@@ -82,10 +82,10 @@ export class BinaryDeserializer extends Deserializer {
   private parseWords(raw: BocuPullStream, fieldLength: number): void {
     let previousNameBytes = new Array<number>();
     while (true) {
-      let length = raw.pullMaybeUIntLE(fieldLength, -1);
+      let length = raw.readMaybeUIntLE(fieldLength, -1);
       if (length > 0) {
-        let omittedNameLength = raw.pullUIntLE(1);
-        let flag = raw.pullUIntLE(1);
+        let omittedNameLength = raw.readUIntLE(1);
+        let flag = raw.readUIntLE(1);
         let buffer = Buffer.alloc(length + omittedNameLength);
         buffer.set(previousNameBytes.slice(0, omittedNameLength));
         raw.pull(buffer, omittedNameLength, length);
@@ -101,12 +101,12 @@ export class BinaryDeserializer extends Deserializer {
     let level = flag & 0x0F;
     let memory = ((flag & 0x20) !== 0) ? 1 : 0;
     let modification = ((flag & 0x40) !== 0) ? 1 : 0;
-    let nameData = raw.pullBocuString();
+    let nameData = raw.readBocuString();
     let nameBytes = nameData.bytes;
     let decodedName = nameData.string;
     let nameTabIndex = decodedName.indexOf("\t");
     let name = (nameTabIndex >= 0) ? decodedName.substring(nameTabIndex + 1) : decodedName;
-    let translation = raw.pullBocuString().string;
+    let translation = raw.readBocuString().string;
     let word = new WordModel({});
     this.count ++;
     word.dictionary = this.dictionary;
@@ -132,12 +132,12 @@ export class BinaryDeserializer extends Deserializer {
   private parseExtensions(raw: BocuPullStream, fieldLength: number): Array<Information> {
     let informations = new Array<Information>();
     while (true) {
-      let flag = raw.pullMaybeUIntLE(1, -1);
+      let flag = raw.readMaybeUIntLE(1, -1);
       let type = flag & 0xF;
       if ((flag & 0x80) === 0) {
         if ((flag & 0x10) === 0) {
           let information = new InformationModel({});
-          let text = raw.pullBocuString().string;
+          let text = raw.readBocuString().string;
           if (type === 0x1) {
             information.title = "用例";
           } else if (type === 0x2) {
@@ -146,7 +146,7 @@ export class BinaryDeserializer extends Deserializer {
           information.text = text;
           informations.push(information);
         } else {
-          let length = raw.pullMaybeUIntLE(fieldLength, -1);
+          let length = raw.readMaybeUIntLE(fieldLength, -1);
           raw.skip(length);
         }
       } else {

@@ -19,7 +19,7 @@ export abstract class PullStream {
 
   // 1 バイト分を読み込んで返します。
   // すでにデータの終端に到達していて読み込むデータが存在しない場合は、-1 を返します。
-  public pullByte(): number {
+  public read(): number {
     let buffer = Buffer.alloc(1);
     let readLength = this.pull(buffer, 0);
     if (readLength === 1) {
@@ -32,7 +32,7 @@ export abstract class PullStream {
 
   // 指定されたバイト数分だけデータを読み込み、リトルエンディアンで符号なし整数に変換して返します。
   // バイト数が足りなかった場合はエラーが発生します。
-  public pullUIntLE(byteLength: number): number {
+  public readUIntLE(byteLength: number): number {
     let buffer = Buffer.alloc(byteLength);
     let readLength = this.pull(buffer, 0);
     if (readLength === byteLength) {
@@ -45,7 +45,7 @@ export abstract class PullStream {
 
   // 指定されたバイト数分だけデータを読み込み、ビッグエンディアンで符号なし整数に変換して返します。
   // バイト数が足りなかった場合はエラーが発生します。
-  public pullUIntBE(byteLength: number): number {
+  public readUIntBE(byteLength: number): number {
     let buffer = Buffer.alloc(byteLength);
     let readLength = this.pull(buffer, 0, byteLength);
     if (readLength === byteLength) {
@@ -56,17 +56,17 @@ export abstract class PullStream {
     }
   }
 
-  public pullMaybeUIntLE<T>(byteLength: number, defaultValue: T): number | T {
+  public readMaybeUIntLE<T>(byteLength: number, defaultValue: T): number | T {
     try {
-      return this.pullUIntLE(byteLength);
+      return this.readUIntLE(byteLength);
     } catch (error) {
       return defaultValue;
     }
   }
 
-  public pullMaybeUIntBE<T>(byteLength: number, defaultValue: T): number | T {
+  public readMaybeUIntBE<T>(byteLength: number, defaultValue: T): number | T {
     try {
-      return this.pullUIntBE(byteLength);
+      return this.readUIntBE(byteLength);
     } catch (error) {
       return defaultValue;
     }
@@ -119,9 +119,10 @@ export class BufferPullStream extends PullStream {
     return readLength;
   }
 
-  public pullByte(): number {
+  public read(): number {
     try {
-      let byte = this.buffer.readUIntLE(this.pointer ++, 1);
+      let byte = this.buffer.readUIntLE(this.pointer, 1);
+      this.pointer ++;
       return byte;
     } catch (error) {
       return -1;

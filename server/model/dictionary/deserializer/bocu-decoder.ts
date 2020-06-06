@@ -47,19 +47,23 @@ export class BocuPullStream extends PullStream {
     return this.stream.pull(buffer, offset, length);
   }
 
-  public pullByte(): number {
-    return this.stream.pullByte();
+  public skip(length: number): number {
+    return this.stream.skip(length);
+  }
+
+  public read(): number {
+    return this.stream.read();
   }
 
   // 指定されたオフセット位置からデータを読み込み、それを BOCU-1 でエンコードされた文字列だと解釈して、デコードした結果を返します。
   // 終端もしくは 0x0 に到達するまでバイトを読み込みます。
   // オフセット位置に null が指定されると、内部で保持されているオフセット位置を利用して読み込みを行い、その後に読み込んだバイト数分だけ内部のオフセット位置を進めます。
-  public pullBocuString(): {string: string, bytes: Array<number>} {
+  public readBocuString(): {string: string, bytes: Array<number>} {
     let string = "";
     let bytes = new Array<number>();
     let previous = ASCII_PREVIOUS;
     let current = 0;
-    while ((current = this.pullByte()) > 0) {
+    while ((current = this.read()) > 0) {
       bytes.push(current);
       let codePoint = -1;
       let count = 0;
@@ -100,7 +104,7 @@ export class BocuPullStream extends PullStream {
             count = 3;
           }
         }
-        while (count > 0 && (current = this.pullByte()) >= 0) {
+        while (count > 0 && (current = this.read()) >= 0) {
           bytes.push(current);
           let trail = 0;
           if (current <= 0x20) {
