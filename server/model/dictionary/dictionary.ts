@@ -150,7 +150,7 @@ export class DictionarySchema {
           WordModel.insertMany(words);
           count += words.length;
           takeLog("dictionary/upload", `uploading: ${count}`);
-          takeLog("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(" "));
+          takeLog("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(", "));
         });
         stream.on("other", (key, data) => {
           externalData = Object.assign(externalData, {[key]: data});
