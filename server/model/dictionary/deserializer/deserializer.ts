@@ -4,6 +4,7 @@ import {
   EventEmitter
 } from "events";
 import {
+  BinaryDeserializer,
   Dictionary,
   SlimeDeserializer,
   Word
@@ -60,10 +61,16 @@ export abstract class Deserializer extends EventEmitter {
   // 与えられたパスの拡張子を調べ、対応するデシリアライザを返します。
   // 拡張子が対応していないものだった場合は null を返します。
   public static create(path: string, originalPath: string, dictionary: Dictionary, cacheSize?: number): Deserializer | null {
-    let extension = originalPath.split(/\.(?=[^.]+$)/)[1];
-    if (extension === "json") {
-      return new SlimeDeserializer(path, dictionary, cacheSize);
-    } else {
+    try {
+      let extension = originalPath.split(/\.(?=[^.]+$)/)[1];
+      if (extension === "json") {
+        return new SlimeDeserializer(path, dictionary, cacheSize);
+      } else if (extension === "dic") {
+        return new BinaryDeserializer(path, dictionary, cacheSize);
+      } else {
+        return null;
+      }
+    } catch (error) {
       return null;
     }
   }
