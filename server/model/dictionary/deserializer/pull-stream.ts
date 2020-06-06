@@ -119,6 +119,12 @@ export class BufferPullStream extends PullStream {
     return readLength;
   }
 
+  public skip(length: number): number {
+    let readLength = Math.min(length, this.buffer.length - this.pointer);
+    this.pointer += readLength;
+    return readLength;
+  }
+
   public read(): number {
     try {
       let byte = this.buffer.readUIntLE(this.pointer, 1);
