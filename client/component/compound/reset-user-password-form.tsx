@@ -43,8 +43,10 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
   };
 
   public componentDidMount(): void {
-    let name = this.props.location!.state.name;
-    this.setState({name});
+    let name = this.props.location?.state?.name;
+    if (name) {
+      this.setState({name});
+    }
   }
 
   private async issueResetToken(): Promise<void> {
