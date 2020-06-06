@@ -1,5 +1,9 @@
 // tslint:disable: no-bitwise
 
+import {
+  PullStream
+} from "/server/model/dictionary/deserializer/pull-stream";
+
 
 const ASCII_PREVIOUS = 0x40;
 const MIN = 0x21;
@@ -30,62 +34,32 @@ const FOURTH_NEGATIVE_START = THIRD_NEGATIVE_START - THIRD_LEAD;
 const TRAILS = [-1, 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF, -1, -1, 0x10, 0x11, 0x12, 0x13, -1];
 
 
-export class BocuDecoder {
+export class BocuPullStream extends PullStream {
 
-  public buffer: Buffer;
-  public pointer: number = 0;
+  private stream: PullStream;
 
-  public constructor(buffer: Buffer) {
-    this.buffer = buffer;
+  public constructor(stream: PullStream) {
+    super();
+    this.stream = stream;
   }
 
-  // 指定されたオフセット位置から指定されたバイト数分だけデータを読み込み、符号なし整数に変換して返します。
-  // バッファにバイト数が足りなかった場合はエラーが投げられます。
-  // オフセット位置に null が指定されると、内部で保持されているオフセット位置を利用して読み込みを行い、その後に読み込んだバイト数分だけ内部のオフセット位置を進めます。
-  public readUIntLE(offset: number | null, byteLength: number): number {
-    let pointer = offset ?? this.pointer;
-    let number = this.buffer.readUIntLE(pointer, byteLength);
-    if (offset === null) {
-      this.pointer += byteLength;
-    }
-    return number;
+  public pull(buffer: Buffer, offset: number, length?: number): number {
+    return this.stream.pull(buffer, offset, length);
   }
 
-  public readUIntBE(offset: number | null, byteLength: number): number {
-    let pointer = offset ?? this.pointer;
-    let number = this.buffer.readUIntBE(pointer, byteLength);
-    if (offset === null) {
-      this.pointer += byteLength;
-    }
-    return number;
-  }
-
-  public readMaybeUIntLE<T>(offset: number | null, byteLength: number, defaultValue: T): number | T {
-    try {
-      return this.readUIntLE(offset, byteLength);
-    } catch (error) {
-      return defaultValue;
-    }
-  }
-
-  public readMaybeUIntBE<T>(offset: number | null, byteLength: number, defaultValue: T): number | T {
-    try {
-      return this.readUIntBE(offset, byteLength);
-    } catch (error) {
-      return defaultValue;
-    }
+  public pullByte(): number {
+    return this.stream.pullByte();
   }
 
   // 指定されたオフセット位置からデータを読み込み、それを BOCU-1 でエンコードされた文字列だと解釈して、デコードした結果を返します。
   // 終端もしくは 0x0 に到達するまでバイトを読み込みます。
   // オフセット位置に null が指定されると、内部で保持されているオフセット位置を利用して読み込みを行い、その後に読み込んだバイト数分だけ内部のオフセット位置を進めます。
-  public readBocuString(offset: number | null): {bytes: Array<number>, string: string} {
-    let bytes = new Array<number>();
+  public pullBocuString(): {string: string, bytes: Array<number>} {
     let string = "";
+    let bytes = new Array<number>();
     let previous = ASCII_PREVIOUS;
     let current = 0;
-    let pointer = offset ?? this.pointer;
-    while ((current = this.readMaybeUIntLE(pointer ++, 1, -1)) > 0) {
+    while ((current = this.pullByte()) > 0) {
       bytes.push(current);
       let codePoint = -1;
       let count = 0;
@@ -98,7 +72,7 @@ export class BocuDecoder {
       }
       if (current >= SECOND_NEGATIVE_START && current < SECOND_POSITIVE_START) {
         codePoint = previous + current - MIDDLE;
-        previous = BocuDecoder.nextPrevious(codePoint);
+        previous = BocuPullStream.nextPrevious(codePoint);
       } else if (current === RESET) {
         previous = ASCII_PREVIOUS;
         continue;
@@ -126,7 +100,7 @@ export class BocuDecoder {
             count = 3;
           }
         }
-        while (count > 0 && (current = this.readMaybeUIntLE(pointer ++, 1, -1)) >= 0) {
+        while (count > 0 && (current = this.pullByte()) >= 0) {
           bytes.push(current);
           let trail = 0;
           if (current <= 0x20) {
@@ -140,7 +114,7 @@ export class BocuDecoder {
           if (count === 1) {
             codePoint = previous + codePoint + trail;
             if (codePoint >= 0x0 && codePoint <= 0x10FFFF) {
-              previous = BocuDecoder.nextPrevious(codePoint);
+              previous = BocuPullStream.nextPrevious(codePoint);
               count = 0;
               break;
             } else {
@@ -161,10 +135,7 @@ export class BocuDecoder {
         string += String.fromCodePoint(codePoint);
       }
     }
-    if (offset === null) {
-      this.pointer = pointer;
-    }
-    return {bytes, string};
+    return {string, bytes};
   }
 
   private static nextPrevious(codePoint: number): number {
@@ -177,6 +148,10 @@ export class BocuDecoder {
     } else {
       return (codePoint & ~0x7F) + ASCII_PREVIOUS;
     }
+  }
+
+  public close(): void {
+    this.stream.close();
   }
 
 }

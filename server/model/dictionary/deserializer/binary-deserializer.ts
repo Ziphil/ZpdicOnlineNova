@@ -1,15 +1,13 @@
 // tslint:disable: no-bitwise
 
 import {
-  closeSync,
-  openSync,
-  readSync
-} from "fs";
-import {
-  BocuDecoder,
+  BocuPullStream,
+  BufferPullStream,
   Dictionary,
+  FilePullStream,
   Information,
   InformationModel,
+  PullStream,
   WordModel
 } from "/server/model/dictionary";
 import {
@@ -22,13 +20,12 @@ import {
 
 export class BinaryDeserializer extends Deserializer {
 
-  private descriptor: number;
-  private position: number = 0;
+  private stream: PullStream;
   private count: number = 0;
 
   public constructor(path: string, dictionary: Dictionary, cacheSize?: number) {
     super(path, dictionary, cacheSize);
-    this.descriptor = openSync(this.path, "r");
+    this.stream = new FilePullStream(path);
   }
 
   public start(): void {
@@ -39,38 +36,41 @@ export class BinaryDeserializer extends Deserializer {
     } catch (error) {
       this.emit("error", error);
     } finally {
-      closeSync(this.descriptor);
+      this.stream.close();
     }
   }
 
   private parseHeader(): void {
-    let raw = this.readBuffer(256);
-    let version = raw.readUIntLE(0x8C, 2);
-    let type = raw.readUIntLE(0xA5, 1);
-    let indexBlockSize = raw.readUIntLE(0x94, 2);
-    let wordSize = raw.readUIntLE(0xA0, 2);
-    let extendedHeaderSize = raw.readUIntLE(0xB8, 4);
-    let skippedSize = extendedHeaderSize + indexBlockSize * 1024 + 768;
+    let buffer = Buffer.alloc(256);
+    this.stream.pull(buffer, 0);
+    let version = buffer.readUIntLE(0x8C, 2);
+    let type = buffer.readUIntLE(0xA5, 1);
+    let indexBlockLength = buffer.readUIntLE(0x94, 2);
+    let wordSize = buffer.readUIntLE(0xA0, 2);
+    let extendedHeaderLength = buffer.readUIntLE(0xB8, 4);
+    let skippedLength = extendedHeaderLength + indexBlockLength * 1024 + 768;
     if ((version >> 8) !== 6) {
       throw new Error("unsupported version");
     }
     if ((type & 0x40) !== 0) {
       throw new Error("encrypted");
     }
-    this.readBuffer(skippedSize);
+    this.stream.skip(skippedLength);
   }
 
   private parseDataBlocks(): void {
     while (true) {
-      let rawLength = this.readMaybeBuffer(2)?.readUIntLE(0, 2);
-      if (rawLength !== undefined) {
+      let rawLength = this.stream.pullMaybeUIntLE(2, -1);
+      if (rawLength >= 0) {
         let length = (rawLength & 0x7FFF) * 1024;
         let fieldLength = ((rawLength & 0x8000) !== 0) ? 4 : 2;
         if (length > 0) {
-          let raw = this.readBuffer(length - 2);
+          let buffer = Buffer.alloc(length - 2);
+          this.stream.pull(buffer, 0);
+          let raw = new BocuPullStream(new BufferPullStream(buffer));
           this.parseWords(raw, fieldLength);
         } else {
-          this.readBuffer(1022);
+          this.stream.skip(1022);
         }
       } else {
         break;
@@ -79,18 +79,17 @@ export class BinaryDeserializer extends Deserializer {
     takeLog("binary-deserializer/read-words", `data block read: ${this.count}`);
   }
 
-  private parseWords(raw: BocuDecoder, fieldLength: number): void {
+  private parseWords(raw: BocuPullStream, fieldLength: number): void {
     let previousNameBytes = new Array<number>();
     while (true) {
-      let length = raw.readMaybeUIntLE(null, fieldLength, -1);
+      let length = raw.pullMaybeUIntLE(fieldLength, -1);
       if (length > 0) {
-        let omittedNameLength = raw.readUIntLE(null, 1);
-        let flag = raw.readUIntLE(null, 1);
+        let omittedNameLength = raw.pullUIntLE(1);
+        let flag = raw.pullUIntLE(1);
         let buffer = Buffer.alloc(length + omittedNameLength);
         buffer.set(previousNameBytes.slice(0, omittedNameLength));
-        buffer.set(raw.buffer.subarray(raw.pointer, raw.pointer + length), omittedNameLength);
-        raw.pointer += length;
-        let rawWord = new BocuDecoder(buffer);
+        raw.pull(buffer, omittedNameLength, length);
+        let rawWord = new BocuPullStream(new BufferPullStream(buffer));
         previousNameBytes = this.parseWord(rawWord, fieldLength, flag);
       } else {
         break;
@@ -98,16 +97,16 @@ export class BinaryDeserializer extends Deserializer {
     }
   }
 
-  private parseWord(raw: BocuDecoder, fieldLength: number, flag: number): Array<number> {
+  private parseWord(raw: BocuPullStream, fieldLength: number, flag: number): Array<number> {
     let level = flag & 0x0F;
     let memory = ((flag & 0x20) !== 0) ? 1 : 0;
     let modification = ((flag & 0x40) !== 0) ? 1 : 0;
-    let nameData = raw.readBocuString(null);
+    let nameData = raw.pullBocuString();
     let nameBytes = nameData.bytes;
     let decodedName = nameData.string;
     let nameTabIndex = decodedName.indexOf("\t");
     let name = (nameTabIndex >= 0) ? decodedName.substring(nameTabIndex + 1) : decodedName;
-    let translation = raw.readBocuString(null).string;
+    let translation = raw.pullBocuString().string;
     let word = new WordModel({});
     this.count ++;
     word.dictionary = this.dictionary;
@@ -130,15 +129,15 @@ export class BinaryDeserializer extends Deserializer {
     return nameBytes;
   }
 
-  private parseExtensions(raw: BocuDecoder, fieldLength: number): Array<Information> {
+  private parseExtensions(raw: BocuPullStream, fieldLength: number): Array<Information> {
     let informations = new Array<Information>();
     while (true) {
-      let flag = raw.readMaybeUIntLE(null, 1, -1);
+      let flag = raw.pullMaybeUIntLE(1, -1);
       let type = flag & 0xF;
       if ((flag & 0x80) === 0) {
         if ((flag & 0x10) === 0) {
           let information = new InformationModel({});
-          let text = raw.readBocuString(null).string;
+          let text = raw.pullBocuString().string;
           if (type === 0x1) {
             information.title = "用例";
           } else if (type === 0x2) {
@@ -147,34 +146,14 @@ export class BinaryDeserializer extends Deserializer {
           information.text = text;
           informations.push(information);
         } else {
-          let length = raw.readMaybeUIntLE(null, fieldLength, -1);
-          raw.pointer += length;
+          let length = raw.pullMaybeUIntLE(fieldLength, -1);
+          raw.skip(length);
         }
       } else {
         break;
       }
     }
     return informations;
-  }
-
-  private readBuffer(size: number): BocuDecoder {
-    let buffer = Buffer.alloc(size);
-    let readSize = readSync(this.descriptor, buffer, 0, size, this.position);
-    if (readSize === size) {
-      this.position += readSize;
-      let decoder = new BocuDecoder(buffer);
-      return decoder;
-    } else {
-      throw new Error("read failed");
-    }
-  }
-
-  private readMaybeBuffer(size: number): BocuDecoder | null {
-    try {
-      return this.readBuffer(size);
-    } catch (error) {
-      return null;
-    }
   }
 
 }
