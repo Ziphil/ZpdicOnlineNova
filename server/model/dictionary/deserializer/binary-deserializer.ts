@@ -41,8 +41,7 @@ export class BinaryDeserializer extends Deserializer {
   }
 
   private parseHeader(): void {
-    let buffer = Buffer.alloc(256);
-    this.stream.pull(buffer, 0);
+    let buffer = this.stream.readBuffer(256);
     let version = buffer.readUIntLE(0x8C, 2);
     let type = buffer.readUIntLE(0xA5, 1);
     let indexBlockLength = buffer.readUIntLE(0x94, 2);
@@ -65,8 +64,7 @@ export class BinaryDeserializer extends Deserializer {
         let length = (rawLength & 0x7FFF) * 1024;
         let fieldLength = ((rawLength & 0x8000) !== 0) ? 4 : 2;
         if (length > 0) {
-          let buffer = Buffer.alloc(length - 2);
-          this.stream.pull(buffer, 0);
+          let buffer = this.stream.readBuffer(length - 2);
           let raw = new BocuPullStream(new BufferPullStream(buffer));
           this.parseWords(raw, fieldLength);
         } else {
@@ -87,9 +85,9 @@ export class BinaryDeserializer extends Deserializer {
         let omittedNameLength = raw.readUIntLE(1);
         let flag = raw.readUIntLE(1);
         let buffer = Buffer.alloc(length + omittedNameLength);
+        let rawWord = new BocuPullStream(new BufferPullStream(buffer));
         buffer.set(previousNameBytes.slice(0, omittedNameLength));
         raw.pull(buffer, omittedNameLength, length);
-        let rawWord = new BocuPullStream(new BufferPullStream(buffer));
         previousNameBytes = this.parseWord(rawWord, fieldLength, flag);
       } else {
         break;
@@ -98,15 +96,11 @@ export class BinaryDeserializer extends Deserializer {
   }
 
   private parseWord(raw: BocuPullStream, fieldLength: number, flag: number): Array<number> {
-    let level = flag & 0x0F;
-    let memory = ((flag & 0x20) !== 0) ? 1 : 0;
-    let modification = ((flag & 0x40) !== 0) ? 1 : 0;
     let nameData = raw.readBocuString();
     let nameBytes = nameData.bytes;
     let decodedName = nameData.string;
     let nameTabIndex = decodedName.indexOf("\t");
     let name = (nameTabIndex >= 0) ? decodedName.substring(nameTabIndex + 1) : decodedName;
-    let translation = raw.readBocuString().string;
     let word = new WordModel({});
     this.count ++;
     word.dictionary = this.dictionary;
@@ -117,19 +111,25 @@ export class BinaryDeserializer extends Deserializer {
     word.informations = [];
     word.variations = [];
     word.relations = [];
-    let information = new InformationModel({});
-    information.title = "訳語";
-    information.text = translation;
+    let information = this.createInformations(raw);
     word.informations.push(information);
     if ((flag & 0x10) !== 0) {
-      let informations = this.parseExtensions(raw, fieldLength);
+      let informations = this.createAdditionalInformations(raw, fieldLength);
       word.informations.push(...informations);
     }
     this.emit("word", word);
     return nameBytes;
   }
 
-  private parseExtensions(raw: BocuPullStream, fieldLength: number): Array<Information> {
+  private createInformations(raw: BocuPullStream): Information {
+    let text = raw.readBocuString().string;
+    let information = new InformationModel({});
+    information.title = "訳語";
+    information.text = text;
+    return information;
+  }
+
+  private createAdditionalInformations(raw: BocuPullStream, fieldLength: number): Array<Information> {
     let informations = new Array<Information>();
     while (true) {
       let flag = raw.readMaybeUIntLE(1, -1);
