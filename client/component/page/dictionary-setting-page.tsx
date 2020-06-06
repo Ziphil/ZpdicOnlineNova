@@ -124,6 +124,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     let label = "アップロード";
     let description = `
       ファイルをアップロードし、現在のデータを上書きします。
+      OTM-JSON 形式 (拡張子 .json) と PDIC 形式 (拡張子 .dic) に対応しています。
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
