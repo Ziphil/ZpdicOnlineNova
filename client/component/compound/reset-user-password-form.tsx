@@ -43,8 +43,8 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
   };
 
   public componentDidMount(): void {
-    let name = this.props.location?.state?.name;
-    if (name) {
+    let name = this.props.location!.state?.name;
+    if (name !== undefined) {
       this.setState({name});
     }
   }

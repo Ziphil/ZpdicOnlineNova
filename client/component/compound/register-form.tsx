@@ -44,9 +44,11 @@ export class RegisterForm extends StoreComponent<Props, State> {
   };
 
   public componentDidMount(): void {
-    let name = this.props.location!.state.name;
-    let password = this.props.location!.state.password;
-    this.setState({name, password});
+    let name = this.props.location!.state?.name;
+    let password = this.props.location!.state?.password;
+    if (name !== undefined && password !== undefined) {
+      this.setState({name, password});
+    }
   }
 
   private async performRegister(): Promise<void> {
