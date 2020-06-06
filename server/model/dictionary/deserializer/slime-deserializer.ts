@@ -5,7 +5,6 @@ import {
 } from "fs";
 import * as oboe from "oboe";
 import {
-  Deserializer,
   EquivalentModel,
   InformationModel,
   RelationModel,
@@ -13,6 +12,9 @@ import {
   Word,
   WordModel
 } from "/server/model/dictionary";
+import {
+  Deserializer
+} from "/server/model/dictionary/deserializer/deserializer";
 import {
   takeLog
 } from "/server/util/misc";
@@ -38,7 +40,7 @@ export class SlimeDeserializer extends Deserializer {
       if (jsonPath[0] !== "words") {
         this.emit("other", jsonPath[0], data);
       }
-      takeLog("dictionary-deserializer", `${jsonPath[0]}`);
+      takeLog("slime-deserializer", `${jsonPath[0]}`);
       return oboe.drop;
     });
     stream.on("done", (finalData) => {
