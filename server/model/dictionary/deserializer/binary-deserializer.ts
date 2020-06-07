@@ -45,8 +45,8 @@ export class BinaryDeserializer extends Deserializer {
     let buffer = this.stream.readBuffer(256);
     let version = buffer.readUIntLE(0x8C, 2);
     let type = buffer.readUIntLE(0xA5, 1);
-    let indexBlockLength = buffer.readUIntLE(0x94, 2);
     let wordSize = buffer.readUIntLE(0xA0, 2);
+    let indexBlockLength = buffer.readUIntLE(0x94, 2);
     let extendedHeaderLength = buffer.readUIntLE(0xB8, 4);
     let skippedLength = extendedHeaderLength + indexBlockLength * 1024 + 768;
     if ((version >> 8) !== 6) {
