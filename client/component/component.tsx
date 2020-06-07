@@ -107,7 +107,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
     for (let [key, value] of Object.entries(data)) {
       formData.append(key, value);
     }
-    let config = {data: formData, ignoresError};
+    let config = {data: formData, timeout: 0, ignoresError};
     let response = await this.request(name, "post", config);
     return response;
   }
@@ -157,7 +157,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   }
 
   private static createClient(): AxiosInstance {
-    let client = axios.create({timeout: 15000, validateStatus: () => true});
+    let client = axios.create({timeout: 10000, validateStatus: () => true});
     return client;
   }
 

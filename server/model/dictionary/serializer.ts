@@ -13,7 +13,7 @@ import {
 } from "/server/model/dictionary";
 
 
-export class DictionarySerializer extends EventEmitter {
+export class Serializer extends EventEmitter {
 
   public path: string;
   public dictionary: Dictionary;
@@ -25,7 +25,7 @@ export class DictionarySerializer extends EventEmitter {
     this.dictionary = dictionary;
   }
 
-  public on<E extends keyof Event>(event: E, listener: (...args: Event[E]) => void): this;
+  public on<E extends keyof SerializerEvent>(event: E, listener: (...args: SerializerEvent[E]) => void): this;
   public on(event: string | symbol, listener: (...args: any) => void): this {
     super.on(event, listener);
     return this;
@@ -114,7 +114,7 @@ export class DictionarySerializer extends EventEmitter {
 }
 
 
-type Event = {
+export type SerializerEvent = {
   end: [],
   error: [Error]
 };

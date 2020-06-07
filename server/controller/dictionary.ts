@@ -72,10 +72,11 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     let path = request.file.path;
+    let originalPath = request.file.originalname;
     if (dictionary) {
       let promise = new Promise(async (resolve, reject) => {
         try {
-          await dictionary!.upload(path);
+          await dictionary!.upload(path, originalPath);
           await fs.unlink(path);
           resolve();
         } catch (error) {
@@ -394,8 +395,8 @@ export class DictionaryController extends Controller {
 
   @get(SERVER_PATH["fetchDictionaryAggregation"])
   public async [Symbol()](request: GetRequest<"fetchDictionaryAggregation">, response: GetResponse<"fetchDictionaryAggregation">): Promise<void> {
-    let dictionarySize = await DictionaryModel.find().countDocuments();
-    let wordSize = await WordModel.find().countDocuments();
+    let dictionarySize = await DictionaryModel.find().estimatedDocumentCount();
+    let wordSize = await WordModel.find().estimatedDocumentCount();
     let body = {dictionarySize, wordSize};
     Controller.response(response, body);
   }

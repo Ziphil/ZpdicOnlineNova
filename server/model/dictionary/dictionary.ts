@@ -15,9 +15,9 @@ import {
 } from "mongoose";
 import {
   DICTIONARY_AUTHORITIES,
+  Deserializer,
   DictionaryAuthority,
-  DictionaryDeserializer,
-  DictionarySerializer,
+  Serializer,
   Word,
   WordModel
 } from "/server/model/dictionary";
@@ -135,7 +135,7 @@ export class DictionarySchema {
 
   // この辞書に登録されている単語データを全て削除し、ファイルから読み込んだデータを代わりに保存します。
   // 辞書の内部データも、ファイルから読み込んだものに更新されます。
-  public async upload(this: Dictionary, path: string): Promise<Dictionary> {
+  public async upload(this: Dictionary, path: string, originalPath: string): Promise<Dictionary> {
     this.status = "saving";
     this.updatedDate = new Date();
     this.externalData = {};
@@ -143,39 +143,32 @@ export class DictionarySchema {
     await WordModel.deleteMany({}).where("dictionary", this);
     let externalData = {};
     let promise = new Promise<Dictionary>((resolve, reject) => {
-      let stream = new DictionaryDeserializer(path);
-      let words = new Array<Word>();
-      let count = 0;
-      let saveWord = function (word?: Word): void {
-        if (word) {
-          words.push(word);
-          count ++;
-        }
-        if (word === undefined || words.length >= 500) {
+      let stream = Deserializer.create(path, originalPath, this);
+      if (stream !== null) {
+        let count = 0;
+        stream.on("words", (words) => {
           WordModel.insertMany(words);
-          words = [];
+          count += words.length;
           takeLog("dictionary/upload", `uploading: ${count}`);
-          takeLog("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(" "));
-        }
-      };
-      stream.on("word", (word) => {
-        word.dictionary = this;
-        saveWord(word);
-      });
-      stream.on("other", (key, data) => {
-        externalData = Object.assign(externalData, {[key]: data});
-      });
-      stream.on("end", () => {
-        this.status = "ready";
-        saveWord();
-        resolve(this);
-      });
-      stream.on("error", (error) => {
+          takeLog("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(", "));
+        });
+        stream.on("other", (key, data) => {
+          externalData = Object.assign(externalData, {[key]: data});
+        });
+        stream.on("end", () => {
+          this.status = "ready";
+          resolve(this);
+        });
+        stream.on("error", (error) => {
+          this.status = "error";
+          takeErrorLog("dictionary/upload", "error occurred in uploading", error);
+          resolve(this);
+        });
+        stream.start();
+      } else {
         this.status = "error";
-        takeErrorLog("dictionary/upload", "error occurred in uploading", error);
         resolve(this);
-      });
-      stream.start();
+      }
     });
     takeLog("dictionary/upload", `number: ${this.number}, start uploading`);
     await promise;
@@ -186,7 +179,7 @@ export class DictionarySchema {
 
   public async download(this: Dictionary, path: string): Promise<void> {
     let promise = new Promise<void>((resolve, reject) => {
-      let stream = new DictionarySerializer(path, this);
+      let stream = new Serializer(path, this);
       stream.on("end", () => {
         resolve();
       });

@@ -1,9 +1,6 @@
 //
 
 import {
-  EventEmitter
-} from "events";
-import {
   createReadStream
 } from "fs";
 import * as oboe from "oboe";
@@ -16,25 +13,16 @@ import {
   WordModel
 } from "/server/model/dictionary";
 import {
+  Deserializer
+} from "/server/model/dictionary/deserializer/deserializer";
+import {
   takeLog
 } from "/server/util/misc";
 
 
-export class DictionaryDeserializer extends EventEmitter {
+export class SlimeDeserializer extends Deserializer {
 
-  public path: string;
   private error: Error | null = null;
-
-  public constructor(path: string) {
-    super();
-    this.path = path;
-  }
-
-  public on<E extends keyof Event>(event: E, listener: (...args: Event[E]) => void): this;
-  public on(event: string | symbol, listener: (...args: any) => void): this {
-    super.on(event, listener);
-    return this;
-  }
 
   public start(): void {
     let stream = oboe(createReadStream(this.path));
@@ -52,7 +40,7 @@ export class DictionaryDeserializer extends EventEmitter {
       if (jsonPath[0] !== "words") {
         this.emit("other", jsonPath[0], data);
       }
-      takeLog("dictionary-deserializer", `${jsonPath[0]}`);
+      takeLog("slime-deserializer", `${jsonPath[0]}`);
       return oboe.drop;
     });
     stream.on("done", (finalData) => {
@@ -68,6 +56,7 @@ export class DictionaryDeserializer extends EventEmitter {
 
   private createWord(raw: any): Word {
     let word = new WordModel({});
+    word.dictionary = this.dictionary;
     word.number = parseInt(raw["entry"]["id"], 10);
     word.name = raw["entry"]["form"];
     word.equivalents = [];
@@ -104,11 +93,3 @@ export class DictionaryDeserializer extends EventEmitter {
   }
 
 }
-
-
-type Event = {
-  word: [Word],
-  other: [string, any],
-  end: [],
-  error: [Error]
-};
