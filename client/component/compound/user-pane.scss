@@ -17,9 +17,10 @@
   width: 40px;
   height: 40px;
   border: 1px $light-border-color solid;
-  box-sizing: border-box;
+  border-radius: $small-border-radius;
   background-image: linear-gradient(-45deg, transparent 33%, $light-border-color 33%, $light-border-color 50%, transparent 50%, transparent 83%, $light-border-color 83%);
   background-size: 4px 4px;
+  box-sizing: border-box;
 }
 
 .screen-name {
