@@ -2,7 +2,7 @@
 
 import * as react from "react";
 import {
-  MouseEvent,
+  Fragment,
   ReactNode
 } from "react";
 import {
@@ -13,10 +13,20 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
+  Loading,
+  UserList
+} from "/client/component/compound";
+import {
   applyStyle,
   inject,
   route
 } from "/client/component/decorator";
+import {
+  Dictionary
+} from "/server/skeleton/dictionary";
+import {
+  User
+} from "/server/skeleton/user";
 
 
 @route @inject
@@ -24,8 +34,25 @@ import {
 export class InviteEditDictionaryForm extends StoreComponent<Props, State> {
 
   public state: State = {
-    userName: ""
+    userName: "",
+    authorizedUsers: null
   };
+
+  public async componentDidMount(): Promise<void> {
+    await this.fetchAuthorizedUsers();
+  }
+
+  private async fetchAuthorizedUsers(): Promise<void> {
+    let number = this.props.dictionary.number;
+    let authority = "editOnly";
+    let response = await this.requestGet("fetchDictionaryAuthorizedUsers", {number, authority});
+    if (response.status === 200 && !("error" in response.data)) {
+      let authorizedUsers = response.data;
+      this.setState({authorizedUsers});
+    } else {
+      this.setState({authorizedUsers: null});
+    }
+  }
 
   private async handleClick(): Promise<void> {
     let number = this.props.number;
@@ -41,10 +68,17 @@ export class InviteEditDictionaryForm extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <form styleName="root">
-        <Input label="ユーザー ID" value={this.state.userName} onSet={(userName) => this.setState({userName})}/>
-        <Button label="招待" reactive={true} onClick={this.handleClick.bind(this)}/>
-      </form>
+      <Fragment>
+        <form styleName="root">
+          <Input label="招待先ユーザー ID" value={this.state.userName} onSet={(userName) => this.setState({userName})}/>
+          <Button label="招待" reactive={true} onClick={this.handleClick.bind(this)}/>
+        </form>
+        <div styleName="user">
+          <Loading loading={this.state.authorizedUsers === null}>
+            <UserList users={this.state.authorizedUsers!} dictionary={this.props.dictionary} size={6} onSubmit={this.fetchAuthorizedUsers.bind(this)}/>
+          </Loading>
+        </div>
+      </Fragment>
     );
     return node;
   }
@@ -54,8 +88,10 @@ export class InviteEditDictionaryForm extends StoreComponent<Props, State> {
 
 type Props = {
   number: number,
+  dictionary: Dictionary,
   onSubmit?: () => void
 };
 type State = {
-  userName: string
+  userName: string,
+  authorizedUsers: Array<User> | null
 };

@@ -3,9 +3,9 @@
 @import "/client/component/mixin.scss";
 
 
-.pane >* {
-  @include reset-first-margin;
-  margin: 20px 0px 0px 0px;
+.pane {
+  display: grid;
+  grid-gap: 20px;
 }
 
 .pagination {

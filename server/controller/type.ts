@@ -32,11 +32,13 @@ export const SERVER_PATH = {
   changeDictionaryExplanation: "/api/dictionary/edit/explanation",
   inviteEditDictionary: "/api/dictionary/invite",
   respondEditDictionary: "/api/dictionary/invite/respond",
+  deleteDictionaryAuthorizedUser: "/api/dictionary/user/delete",
   editWord: "/api/word/edit",
   deleteWord: "/api/word/delete",
   searchDictionary: "/api/dictionary/search",
   downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
+  fetchDictionaryAuthorizedUsers: "/api/dictionary/user",
   fetchWholeDictionary: "/api/dictionary/whole",
   fetchDictionaries: "/api/dictionary/list",
   fetchAllDictionaries: "/api/dictionary/list/all",
@@ -146,6 +148,16 @@ type ProcessType = {
       }
     }
   },
+  deleteDictionaryAuthorizedUser: {
+    get: Noop,
+    post: {
+      request: {number: number, id: string},
+      response: {
+        200: null,
+        400: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryAuthorizedUser">
+      }
+    }
+  }
   editWord: {
     get: Noop,
     post: {
@@ -192,6 +204,16 @@ type ProcessType = {
       response: {
         200: Dictionary,
         400: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
+      }
+    },
+    post: Noop
+  },
+  fetchDictionaryAuthorizedUsers: {
+    get: {
+      request: {number: number, authority: string},
+      response: {
+        200: Array<User>,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     },
     post: Noop

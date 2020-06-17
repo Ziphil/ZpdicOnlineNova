@@ -3,7 +3,6 @@
 import {
   DocumentType,
   Ref,
-  arrayProp,
   getModelForClass,
   isDocument,
   isDocumentArray,
@@ -17,6 +16,8 @@ import {
   DICTIONARY_AUTHORITIES,
   Deserializer,
   DictionaryAuthority,
+  DictionaryAuthorityUtil,
+  DictionaryFullAuthority,
   Serializer,
   Word,
   WordModel
@@ -62,7 +63,7 @@ export class DictionarySchema {
   @prop({required: true, ref: "UserSchema"})
   public user!: Ref<UserSchema>;
 
-  @arrayProp({required: true, ref: "UserSchema"})
+  @prop({required: true, ref: "UserSchema"})
   public editUsers!: Array<Ref<UserSchema>>;
 
   @prop({required: true, unique: true})
@@ -378,8 +379,10 @@ export class DictionarySchema {
     if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
       if (authority === "own") {
         return this.user.id === user.id;
-      } else {
+      } else if (authority === "edit") {
         return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+      } else {
+        throw new Error("cannot happen");
       }
     } else {
       throw new Error("cannot happen");
@@ -394,8 +397,41 @@ export class DictionarySchema {
       return promise;
     });
     let authorities = await Promise.all(promises);
-    let filteredAuthorities = authorities.filter((authority) => authority !== null);
-    return filteredAuthorities as any;
+    let filteredAuthorities = authorities.filter(DictionaryAuthorityUtil.is, DictionaryAuthorityUtil);
+    return filteredAuthorities;
+  }
+
+  public async getAuthorizedUsers(this: Dictionary, authority: DictionaryFullAuthority): Promise<Array<User>> {
+    await this.populate("user").populate("editUsers").execPopulate();
+    if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
+      if (authority === "own") {
+        return [this.user];
+      } else if (authority === "edit") {
+        return [this.user, ...this.editUsers];
+      } else if (authority === "editOnly") {
+        return this.editUsers;
+      } else {
+        throw new Error("cannot happen");
+      }
+    } else {
+      throw new Error("cannot happen");
+    }
+  }
+
+  public async deleteAuthorizedUser(this: Dictionary, user: User): Promise<true> {
+    await this.populate("editUsers").execPopulate();
+    if (isDocumentArray(this.editUsers)) {
+      let exist = this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+      if (exist) {
+        this.editUsers = this.editUsers.filter((editUser) => editUser.id !== user.id);
+        await this.save();
+        return true;
+      } else {
+        throw new CustomError("noSuchDictionaryAuthorizedUser");
+      }
+    } else {
+      throw new Error("cannot happen");
+    }
   }
 
   private async nextWordNumber(): Promise<number> {
@@ -447,7 +483,7 @@ export class DictionaryCreator {
     let userPromise = new Promise<UserSkeleton>(async (resolve, reject) => {
       try {
         await raw.populate("user").execPopulate();
-        if (raw.user && isDocument(raw.user)) {
+        if (isDocument(raw.user)) {
           let user = UserCreator.create(raw.user);
           resolve(user);
         } else {

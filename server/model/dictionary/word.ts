@@ -3,7 +3,6 @@
 import {
   DocumentType,
   Ref,
-  arrayProp,
   getModelForClass,
   modelOptions,
   prop
@@ -36,19 +35,19 @@ export class WordSchema {
   @prop({required: true})
   public name!: string;
 
-  @arrayProp({required: true, items: EquivalentSchema})
+  @prop({required: true, type: EquivalentSchema})
   public equivalents!: Array<EquivalentSchema>;
 
-  @arrayProp({required: true, items: String})
+  @prop({required: true, type: String})
   public tags!: Array<string>;
 
-  @arrayProp({required: true, items: InformationSchema})
+  @prop({required: true, type: InformationSchema})
   public informations!: Array<InformationSchema>;
 
-  @arrayProp({required: true, items: VariationSchema})
+  @prop({required: true, type: VariationSchema})
   public variations!: Array<VariationSchema>;
 
-  @arrayProp({required: true, items: RelationSchema})
+  @prop({required: true, type: RelationSchema})
   public relations!: Array<RelationSchema>;
 
 }

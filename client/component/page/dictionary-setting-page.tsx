@@ -150,12 +150,13 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   private renderInviteEditDictionaryForm(): ReactNode {
     let label = "編集権限";
     let description = `
-      この辞書の編集権限を別のユーザーにも付与します。
+      この辞書の編集権限を保有しているユーザーが確認できます。
+      また、新しく別のユーザーに編集権限を付与することができます。
       権限を付与されたユーザーは、単語の編集や削除はできますが、辞書の表示名の変更や削除はできません。
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <InviteEditDictionaryForm number={this.state.dictionary!.number} onSubmit={() => null}/>
+        <InviteEditDictionaryForm number={this.state.dictionary!.number} dictionary={this.state.dictionary!}/>
       </SettingPane>
     );
     return node;

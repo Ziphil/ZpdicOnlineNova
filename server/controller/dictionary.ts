@@ -26,6 +26,7 @@ import {
 import {
   DictionaryAuthorityUtil,
   DictionaryCreator,
+  DictionaryFullAuthorityUtil,
   DictionaryModel,
   WordCreator,
   WordModel
@@ -40,6 +41,7 @@ import {
   SearchTypeUtil
 } from "/server/model/search-parameter";
 import {
+  UserCreator,
   UserModel
 } from "/server/model/user";
 import {
@@ -209,6 +211,35 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["deleteDictionaryAuthorizedUser"])
+  @before(verifyUser(), verifyDictionary("own"))
+  public async [Symbol()](request: PostRequest<"deleteDictionaryAuthorizedUser">, response: PostResponse<"deleteDictionaryAuthorizedUser">): Promise<void> {
+    let dictionary = request.dictionary;
+    let id = CastUtil.ensureString(request.body.id);
+    let user = await UserModel.findById(id);
+    if (dictionary) {
+      if (user) {
+        try {
+          await dictionary.deleteAuthorizedUser(user);
+          Controller.response(response, null);
+        } catch (error) {
+          let body = (() => {
+            if (error.name === "CustomError" && error.type === "noSuchDictionaryAuthorizedUser") {
+              return CustomError.ofType("noSuchDictionaryAuthorizedUser");
+            }
+          })();
+          Controller.responseError(response, body, error);
+        }
+      } else {
+        let body = CustomError.ofType("noSuchDictionaryAuthorizedUser");
+        Controller.responseError(response, body);
+      }
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.responseError(response, body);
+    }
+  }
+
   @post(SERVER_PATH["changeDictionarySecret"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {
@@ -338,6 +369,21 @@ export class DictionaryController extends Controller {
       }
     } else {
       let body = CustomError.ofType("invalidArgument");
+      Controller.responseError(response, body);
+    }
+  }
+
+  @get(SERVER_PATH["fetchDictionaryAuthorizedUsers"])
+  @before(verifyUser(), verifyDictionary("own"))
+  public async [Symbol()](request: GetRequest<"fetchDictionaryAuthorizedUsers">, response: GetResponse<"fetchDictionaryAuthorizedUsers">): Promise<void> {
+    let dictionary = request.dictionary;
+    let authority = DictionaryFullAuthorityUtil.cast(CastUtil.ensureString(request.query.authority));
+    if (dictionary) {
+      let users = await dictionary.getAuthorizedUsers(authority);
+      let body = users.map(UserCreator.create);
+      Controller.response(response, body);
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.responseError(response, body);
     }
   }
