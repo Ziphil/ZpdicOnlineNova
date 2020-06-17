@@ -1,7 +1,6 @@
 //
 
 import {
-  arrayProp,
   getModelForClass,
   prop
 } from "@typegoose/typegoose";
@@ -15,7 +14,7 @@ export class EquivalentSchema {
   @prop({required: true})
   public title!: string;
 
-  @arrayProp({required: true, items: String})
+  @prop({required: true, type: String})
   public names!: Array<string>;
 
 }
