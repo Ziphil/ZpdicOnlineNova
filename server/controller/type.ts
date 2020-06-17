@@ -37,6 +37,7 @@ export const SERVER_PATH = {
   searchDictionary: "/api/dictionary/search",
   downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
+  fetchDictionaryAuthorizedUsers: "/api/dictionary/user",
   fetchWholeDictionary: "/api/dictionary/whole",
   fetchDictionaries: "/api/dictionary/list",
   fetchAllDictionaries: "/api/dictionary/list/all",
@@ -192,6 +193,16 @@ type ProcessType = {
       response: {
         200: Dictionary,
         400: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
+      }
+    },
+    post: Noop
+  },
+  fetchDictionaryAuthorizedUsers: {
+    get: {
+      request: {number: number, authority: string},
+      response: {
+        200: Array<User>,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     },
     post: Noop

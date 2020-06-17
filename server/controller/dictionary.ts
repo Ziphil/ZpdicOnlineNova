@@ -40,6 +40,7 @@ import {
   SearchTypeUtil
 } from "/server/model/search-parameter";
 import {
+  UserCreator,
   UserModel
 } from "/server/model/user";
 import {
@@ -338,6 +339,21 @@ export class DictionaryController extends Controller {
       }
     } else {
       let body = CustomError.ofType("invalidArgument");
+      Controller.responseError(response, body);
+    }
+  }
+
+  @get(SERVER_PATH["fetchDictionaryAuthorizedUsers"])
+  @before(verifyUser(), verifyDictionary("own"))
+  public async [Symbol()](request: GetRequest<"fetchDictionaryAuthorizedUsers">, response: GetResponse<"fetchDictionaryAuthorizedUsers">): Promise<void> {
+    let dictionary = request.dictionary;
+    let authority = DictionaryAuthorityUtil.cast(CastUtil.ensureString(request.query.authority));
+    if (dictionary) {
+      let users = await dictionary.getAuthorizedUsers(authority);
+      let body = users.map(UserCreator.create);
+      Controller.response(response, body);
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.responseError(response, body);
     }
   }

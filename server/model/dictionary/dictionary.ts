@@ -16,6 +16,7 @@ import {
   DICTIONARY_AUTHORITIES,
   Deserializer,
   DictionaryAuthority,
+  DictionaryAuthorityUtil,
   Serializer,
   Word,
   WordModel
@@ -393,8 +394,21 @@ export class DictionarySchema {
       return promise;
     });
     let authorities = await Promise.all(promises);
-    let filteredAuthorities = authorities.filter((authority) => authority !== null);
-    return filteredAuthorities as any;
+    let filteredAuthorities = authorities.filter(DictionaryAuthorityUtil.is);
+    return filteredAuthorities;
+  }
+
+  public async getAuthorizedUsers(this: Dictionary, authority: DictionaryAuthority): Promise<Array<User>> {
+    await this.populate("user").populate("editUsers").execPopulate();
+    if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
+      if (authority === "own") {
+        return [this.user];
+      } else {
+        return [this.user, ...this.editUsers];
+      }
+    } else {
+      throw new Error("cannot happen");
+    }
   }
 
   private async nextWordNumber(): Promise<number> {
