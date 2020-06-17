@@ -447,7 +447,7 @@ export class DictionaryCreator {
     let userPromise = new Promise<UserSkeleton>(async (resolve, reject) => {
       try {
         await raw.populate("user").execPopulate();
-        if (raw.user && isDocument(raw.user)) {
+        if (isDocument(raw.user)) {
           let user = UserCreator.create(raw.user);
           resolve(user);
         } else {

@@ -50,7 +50,7 @@ export function inject<P extends {store?: GlobalStore}, C extends ComponentClass
   return mobxInject("store")(clazz);
 }
 
-export function observer<P extends any, C extends ComponentClass<P>>(clazz: C): C {
+export function observer<P extends any, C extends ComponentClass<P>>(clazz: C & ComponentClass<P>): C & ComponentClass<P> {
   return mobxObserver(clazz);
 }
 
