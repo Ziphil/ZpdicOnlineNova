@@ -22,6 +22,9 @@ import {
   route
 } from "/client/component/decorator";
 import {
+  Dictionary
+} from "/server/skeleton/dictionary";
+import {
   User
 } from "/server/skeleton/user";
 
@@ -36,7 +39,11 @@ export class InviteEditDictionaryForm extends StoreComponent<Props, State> {
   };
 
   public async componentDidMount(): Promise<void> {
-    let number = this.props.number;
+    await this.fetchAuthorizedUsers();
+  }
+
+  private async fetchAuthorizedUsers(): Promise<void> {
+    let number = this.props.dictionary.number;
     let authority = "editOnly";
     let response = await this.requestGet("fetchDictionaryAuthorizedUsers", {number, authority});
     if (response.status === 200 && !("error" in response.data)) {
@@ -68,7 +75,7 @@ export class InviteEditDictionaryForm extends StoreComponent<Props, State> {
         </form>
         <div styleName="user">
           <Loading loading={this.state.authorizedUsers === null}>
-            <UserList users={this.state.authorizedUsers!} size={6}/>
+            <UserList users={this.state.authorizedUsers!} dictionary={this.props.dictionary} size={6} onSubmit={this.fetchAuthorizedUsers.bind(this)}/>
           </Loading>
         </div>
       </Fragment>
@@ -81,6 +88,7 @@ export class InviteEditDictionaryForm extends StoreComponent<Props, State> {
 
 type Props = {
   number: number,
+  dictionary: Dictionary,
   onSubmit?: () => void
 };
 type State = {

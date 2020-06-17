@@ -16,6 +16,9 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
+  Dictionary
+} from "/server/skeleton/dictionary";
+import {
   User
 } from "/server/skeleton/user";
 
@@ -26,7 +29,7 @@ export class UserList extends Component<Props, State> {
   public render(): ReactNode {
     let outerThis = this;
     let renderer = function (user: User): ReactNode {
-      return <UserPane user={user} key={user.id} onSubmit={outerThis.props.onSubmit}/>;
+      return <UserPane user={user} dictionary={outerThis.props.dictionary} key={user.id} onSubmit={outerThis.props.onSubmit}/>;
     };
     let node = (
       <PaneList items={this.props.users} size={this.props.size} column={2} renderer={renderer}/>
@@ -39,6 +42,7 @@ export class UserList extends Component<Props, State> {
 
 type Props = {
   users: Array<User>,
+  dictionary?: Dictionary,
   size: number,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };

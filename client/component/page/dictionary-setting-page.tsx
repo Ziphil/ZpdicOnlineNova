@@ -155,7 +155,7 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     `;
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <InviteEditDictionaryForm number={this.state.dictionary!.number} onSubmit={() => null}/>
+        <InviteEditDictionaryForm number={this.state.dictionary!.number} dictionary={this.state.dictionary!}/>
       </SettingPane>
     );
     return node;

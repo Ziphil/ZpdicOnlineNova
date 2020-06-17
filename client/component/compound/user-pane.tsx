@@ -20,6 +20,9 @@ import {
   route
 } from "/client/component/decorator";
 import {
+  Dictionary
+} from "/server/skeleton/dictionary";
+import {
   User
 } from "/server/skeleton/user";
 
@@ -28,11 +31,16 @@ import {
 @applyStyle(require("./user-pane.scss"))
 export class UserPane extends StoreComponent<Props, State> {
 
-  private async respondInvitation(event: MouseEvent<HTMLButtonElement>): Promise<void> {
-    let response = await this.requestPost("logout", {});
-    if (response.status === 200) {
-      if (this.props.onSubmit) {
-        await this.props.onSubmit(event);
+  private async deleteAuthorizedUser(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+    if (this.props.dictionary !== undefined) {
+      let number = this.props.dictionary.number;
+      let id = this.props.user.id;
+      let response = await this.requestPost("deleteDictionaryAuthorizedUser", {number, id});
+      if (response.status === 200) {
+        this.props.store!.addInformationPopup("dictionaryAuthorizedUserDeleted");
+        if (this.props.onSubmit) {
+          await this.props.onSubmit(event);
+        }
       }
     }
   }
@@ -52,7 +60,7 @@ export class UserPane extends StoreComponent<Props, State> {
           </div>
         </div>
         <div styleName="setting">
-          <Button label="解除" iconLabel="&#xF05E;" style="caution" reactive={true} onClick={(event) => this.respondInvitation(event)}/>
+          <Button label="解除" iconLabel="&#xF05E;" style="caution" reactive={true} onClick={this.deleteAuthorizedUser.bind(this)}/>
         </div>
       </WhitePane>
     );
@@ -64,6 +72,7 @@ export class UserPane extends StoreComponent<Props, State> {
 
 type Props = {
   user: User,
+  dictionary?: Dictionary,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
 };
 type State = {

@@ -418,6 +418,22 @@ export class DictionarySchema {
     }
   }
 
+  public async deleteAuthorizedUser(this: Dictionary, user: User): Promise<true> {
+    await this.populate("editUsers").execPopulate();
+    if (isDocumentArray(this.editUsers)) {
+      let exist = this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+      if (exist) {
+        this.editUsers = this.editUsers.filter((editUser) => editUser.id !== user.id);
+        await this.save();
+        return true;
+      } else {
+        throw new CustomError("noSuchDictionaryAuthorizedUser");
+      }
+    } else {
+      throw new Error("cannot happen");
+    }
+  }
+
   private async nextWordNumber(): Promise<number> {
     let words = await WordModel.find().where("dictionary", this).select("number").sort("-number").limit(1);
     if (words.length > 0) {
