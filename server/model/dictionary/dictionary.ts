@@ -17,6 +17,7 @@ import {
   Deserializer,
   DictionaryAuthority,
   DictionaryAuthorityUtil,
+  DictionaryFullAuthority,
   Serializer,
   Word,
   WordModel
@@ -378,8 +379,10 @@ export class DictionarySchema {
     if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
       if (authority === "own") {
         return this.user.id === user.id;
-      } else {
+      } else if (authority === "edit") {
         return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+      } else {
+        throw new Error("cannot happen");
       }
     } else {
       throw new Error("cannot happen");
@@ -398,13 +401,17 @@ export class DictionarySchema {
     return filteredAuthorities;
   }
 
-  public async getAuthorizedUsers(this: Dictionary, authority: DictionaryAuthority): Promise<Array<User>> {
+  public async getAuthorizedUsers(this: Dictionary, authority: DictionaryFullAuthority): Promise<Array<User>> {
     await this.populate("user").populate("editUsers").execPopulate();
     if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
       if (authority === "own") {
         return [this.user];
-      } else {
+      } else if (authority === "edit") {
         return [this.user, ...this.editUsers];
+      } else if (authority === "editOnly") {
+        return this.editUsers;
+      } else {
+        throw new Error("cannot happen");
       }
     } else {
       throw new Error("cannot happen");

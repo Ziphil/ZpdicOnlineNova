@@ -37,7 +37,7 @@ export class InviteEditDictionaryForm extends StoreComponent<Props, State> {
 
   public async componentDidMount(): Promise<void> {
     let number = this.props.number;
-    let authority = "edit";
+    let authority = "editOnly";
     let response = await this.requestGet("fetchDictionaryAuthorizedUsers", {number, authority});
     if (response.status === 200 && !("error" in response.data)) {
       let authorizedUsers = response.data;

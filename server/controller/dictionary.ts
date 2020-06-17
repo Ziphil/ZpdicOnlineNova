@@ -26,6 +26,7 @@ import {
 import {
   DictionaryAuthorityUtil,
   DictionaryCreator,
+  DictionaryFullAuthorityUtil,
   DictionaryModel,
   WordCreator,
   WordModel
@@ -347,7 +348,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: GetRequest<"fetchDictionaryAuthorizedUsers">, response: GetResponse<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     let dictionary = request.dictionary;
-    let authority = DictionaryAuthorityUtil.cast(CastUtil.ensureString(request.query.authority));
+    let authority = DictionaryFullAuthorityUtil.cast(CastUtil.ensureString(request.query.authority));
     if (dictionary) {
       let users = await dictionary.getAuthorizedUsers(authority);
       let body = users.map(UserCreator.create);
