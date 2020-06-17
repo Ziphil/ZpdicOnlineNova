@@ -21,6 +21,9 @@ import {
 @applyStyle(require("./pane-list.scss"))
 export class PaneList<T> extends Component<Props<T>, State<T>> {
 
+  public static defaultProps: Partial<Props<any>> = {
+    column: 1
+  };
   public state: State<T> = {
     page: 0
   };
@@ -30,13 +33,14 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
     let maxPage = Math.max(Math.ceil(this.props.items.length / this.props.size) - 1, 0);
     let displayedItems = this.props.items.slice(offset, offset + this.props.size);
     let panes = displayedItems.map(this.props.renderer);
+    let paneStyle = {gridTemplateColumns: `repeat(${this.props.column}, 1fr)`};
     let paginationStyleName = createStyleName(
       "pagination",
       {if: displayedItems.length <= 0, true: "empty"}
     );
     let node = (
       <div styleName="root">
-        <div styleName="pane">
+        <div styleName="pane" style={paneStyle}>
           {panes}
         </div>
         <div styleName={paginationStyleName}>
@@ -53,6 +57,7 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
 type Props<T> = {
   items: Array<T>,
   renderer: (item: T) => ReactNode,
+  column: number,
   size: number
 };
 type State<T> = {
