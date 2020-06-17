@@ -5,7 +5,7 @@ import {
 } from "mongoose";
 
 
-export class CustomError<E extends string> extends MongooseError {
+export class CustomError<E extends string> extends Error {
 
   public name: "CustomError" = "CustomError";
   public type: E;
