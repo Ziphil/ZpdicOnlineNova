@@ -52,7 +52,7 @@ export class UserPane extends StoreComponent<Props, State> {
           </div>
         </div>
         <div styleName="setting">
-          <Button label="追放" iconLabel="&#xF05E;" style="caution" reactive={true} onClick={(event) => this.respondInvitation(event)}/>
+          <Button label="解除" iconLabel="&#xF05E;" style="caution" reactive={true} onClick={(event) => this.respondInvitation(event)}/>
         </div>
       </WhitePane>
     );
