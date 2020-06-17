@@ -394,7 +394,7 @@ export class DictionarySchema {
       return promise;
     });
     let authorities = await Promise.all(promises);
-    let filteredAuthorities = authorities.filter(DictionaryAuthorityUtil.is);
+    let filteredAuthorities = authorities.filter(DictionaryAuthorityUtil.is, DictionaryAuthorityUtil);
     return filteredAuthorities;
   }
 
