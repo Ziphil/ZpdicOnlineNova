@@ -38,7 +38,7 @@ export class Header extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let userNameNode = (this.state.userName !== null) && (
-      <div styleName="name">@{this.state.userName}</div>
+      <HeaderMenuItem label={"@" + this.state.userName} href="/dashboard"/>
     );
     let node = (
       <header styleName="root">

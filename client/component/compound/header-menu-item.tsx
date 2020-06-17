@@ -34,9 +34,12 @@ export class HeaderMenuItem extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
+    let iconNode = (this.props.iconLabel !== undefined) && (
+      <span styleName="icon">{this.props.iconLabel}</span>
+    );
     let node = (
       <a styleName="root" href={this.props.href} onClick={this.handleClick.bind(this)}>
-        <span styleName="icon">{this.props.iconLabel}</span>
+        {iconNode}
         <span styleName="text">{this.props.label}</span>
       </a>
     );
@@ -48,7 +51,7 @@ export class HeaderMenuItem extends StoreComponent<Props, State> {
 
 type Props = {
   label: string,
-  iconLabel: string,
+  iconLabel?: string,
   href: string,
   onClick?: (event: MouseEvent<HTMLElement>) => void;
 };
