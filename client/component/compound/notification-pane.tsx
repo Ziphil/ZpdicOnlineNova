@@ -34,9 +34,9 @@ export class NotificationPane extends Component<Props, State> {
       if (type === "update") {
         return "\uF005";
       } else if (type === "bug") {
-        return "\uF974";
+        return "\uE074";
       } else if (type === "bugFixed") {
-        return "\uF975";
+        return "\uE075";
       } else {
         return "\uF05A";
       }
