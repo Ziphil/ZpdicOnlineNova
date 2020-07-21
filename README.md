@@ -1,8 +1,7 @@
 <div align="center">
 <h1>ZpDIC Online (Version 2)</h1>
 </div>
-<img src="https://img.shields.io/github/package-json/v/Ziphil/ZpdicOnlineNova">
-<img src="https://img.shields.io/github/commit-activity/y/Ziphil/ZpdicOnlineNova?label=commits">
+<img src="https://img.shields.io/github/package-json/v/Ziphil/ZpdicOnlineNova"> <img src="https://img.shields.io/github/commit-activity/y/Ziphil/ZpdicOnlineNova?label=commits">
 
 
 ## 概要
