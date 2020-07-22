@@ -2,6 +2,9 @@
 <h1>ZpDIC Online (Version 2)</h1>
 </div>
 
+![](https://img.shields.io/github/package-json/v/Ziphil/ZpdicOnlineNova)
+![](https://img.shields.io/github/commit-activity/y/Ziphil/ZpdicOnlineNova?label=commits)
+
 
 ## 概要
 ZpDIC の Web アプリ版です。
