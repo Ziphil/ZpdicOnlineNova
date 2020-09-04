@@ -240,7 +240,7 @@ type ProcessType = {
   },
   fetchAllDictionaries: {
     get: {
-      request: {},
+      request: {offset?: number, size?: number},
       response: {
         200: Array<DetailedDictionary>,
         400: never

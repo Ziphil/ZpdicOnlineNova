@@ -104,8 +104,10 @@ export class DictionarySchema {
     return dictionary;
   }
 
-  public static async findPublic(): Promise<Array<Dictionary>> {
-    let dictionaries = await DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
+  public static async findPublic(range?: QueryRange): Promise<Array<Dictionary>> {
+    let query = DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
+    let restrictedQuery = QueryRange.restrict(query, range);
+    let dictionaries = await restrictedQuery.exec();
     return dictionaries;
   }
 
@@ -120,17 +122,19 @@ export class DictionarySchema {
     return dictionary;
   }
 
-  public static async findByUser(user: User, authority: DictionaryAuthority): Promise<Array<Dictionary>> {
+  public static async findByUser(user: User, authority: DictionaryAuthority, range?: QueryRange): Promise<Array<Dictionary>> {
     let ownQuery = DictionaryModel.find().where("user", user);
     let editQuery = DictionaryModel.find().where("editUsers", user);
-    let query = (() => {
+    let rawQuery = (() => {
       if (authority === "own") {
         return ownQuery;
       } else {
         return DictionaryModel.find().or([ownQuery.getQuery(), editQuery.getQuery()]);
       }
     })();
-    let dictionaries = await query.sort("-updatedDate -number");
+    let query = rawQuery.sort("-updatedDate -number");
+    let restrictedQuery = QueryRange.restrict(query, range);
+    let dictionaries = await restrictedQuery.exec();
     return dictionaries;
   }
 
