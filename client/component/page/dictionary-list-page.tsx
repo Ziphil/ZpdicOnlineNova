@@ -28,15 +28,14 @@ import {
 @applyStyle(require("./dictionary-list-page.scss"))
 export class DictionaryListPage extends StoreComponent<Props, State> {
 
-  public state: State = {
-    dictionaries: null
-  };
-
-  public async componentDidMount(): Promise<void> {
-    let response = await this.requestGet("fetchAllDictionaries", {});
+  private async fetchDictionaries(offset?: number, size?: number): Promise<{hitSize: number, hitItems: Array<DetailedDictionary>}> {
+    let response = await this.requestGet("fetchAllDictionaries", {offset, size});
     if (response.status === 200) {
-      let dictionaries = response.data;
-      this.setState({dictionaries});
+      let hitSize = response.data.hitSize;
+      let hitItems = response.data.hitDictionaries;
+      return {hitSize, hitItems};
+    } else {
+      return {hitSize: 0, hitItems: []};
     }
   }
 
@@ -44,9 +43,7 @@ export class DictionaryListPage extends StoreComponent<Props, State> {
     let node = (
       <Page>
         <div styleName="list">
-          <Loading loading={this.state.dictionaries === null}>
-            <DictionaryList dictionaries={this.state.dictionaries!} size={20}/>
-          </Loading>
+          <DictionaryList dictionaries={this.fetchDictionaries.bind(this)} size={20}/>
         </div>
       </Page>
     );
@@ -59,5 +56,4 @@ export class DictionaryListPage extends StoreComponent<Props, State> {
 type Props = {
 };
 type State = {
-  dictionaries: Array<DetailedDictionary> | null;
 };

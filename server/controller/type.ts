@@ -242,7 +242,7 @@ type ProcessType = {
     get: {
       request: {offset?: number, size?: number},
       response: {
-        200: Array<DetailedDictionary>,
+        200: {hitSize: number, hitDictionaries: Array<DetailedDictionary>},
         400: never
       }
     },

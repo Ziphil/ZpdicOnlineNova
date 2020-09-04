@@ -104,11 +104,13 @@ export class DictionarySchema {
     return dictionary;
   }
 
-  public static async findPublic(range?: QueryRange): Promise<Array<Dictionary>> {
+  public static async findPublic(range?: QueryRange): Promise<{hitSize: number, hitDictionaries: Array<Dictionary>}> {
     let query = DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
+    let countQuery = DictionaryModel.countDocuments(query.getQuery());
     let restrictedQuery = QueryRange.restrict(query, range);
-    let dictionaries = await restrictedQuery.exec();
-    return dictionaries;
+    let hitSize = await countQuery.exec();
+    let hitDictionaries = await restrictedQuery.exec();
+    return {hitSize, hitDictionaries};
   }
 
   public static async findOneByNumber(number: number): Promise<Dictionary | null> {
@@ -122,7 +124,7 @@ export class DictionarySchema {
     return dictionary;
   }
 
-  public static async findByUser(user: User, authority: DictionaryAuthority, range?: QueryRange): Promise<Array<Dictionary>> {
+  public static async findByUser(user: User, authority: DictionaryAuthority): Promise<Array<Dictionary>> {
     let ownQuery = DictionaryModel.find().where("user", user);
     let editQuery = DictionaryModel.find().where("editUsers", user);
     let rawQuery = (() => {
@@ -133,8 +135,7 @@ export class DictionarySchema {
       }
     })();
     let query = rawQuery.sort("-updatedDate -number");
-    let restrictedQuery = QueryRange.restrict(query, range);
-    let dictionaries = await restrictedQuery.exec();
+    let dictionaries = await query.exec();
     return dictionaries;
   }
 

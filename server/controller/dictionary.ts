@@ -326,8 +326,8 @@ export class DictionaryController extends Controller {
       let range = new QueryRange(offset, size);
       let result = await dictionary.search(parameter, range);
       let hitSize = result.hitSize;
-      let hitWordsBody = result.hitWords.map(WordCreator.create);
-      let body = {hitSize, hitWords: hitWordsBody};
+      let hitWords = result.hitWords.map(WordCreator.create);
+      let body = {hitSize, hitWords};
       Controller.response(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
@@ -430,11 +430,12 @@ export class DictionaryController extends Controller {
     let offset = CastUtil.ensureNumber(request.query.offset);
     let size = CastUtil.ensureNumber(request.query.size);
     let range = new QueryRange(offset, size);
-    let dictionaries = await DictionaryModel.findPublic(range);
-    let promises = dictionaries.map((dictionary) => {
+    let result = await DictionaryModel.findPublic(range);
+    let hitSize = result.hitSize;
+    let hitPromises = result.hitDictionaries.map((hitDictionary) => {
       let promise = new Promise<DetailedDictionary>(async (resolve, reject) => {
         try {
-          let skeleton = await DictionaryCreator.createDetailed(dictionary);
+          let skeleton = await DictionaryCreator.createDetailed(hitDictionary);
           resolve(skeleton);
         } catch (error) {
           reject(error);
@@ -442,7 +443,8 @@ export class DictionaryController extends Controller {
       });
       return promise;
     });
-    let body = await Promise.all(promises);
+    let hitDictionaries = await Promise.all(hitPromises);
+    let body = {hitSize, hitDictionaries};
     Controller.response(response, body);
   }
 

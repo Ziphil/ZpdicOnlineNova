@@ -43,8 +43,8 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
       let {hitSize, hitItems} = await items(offset, size);
       this.setState({page, hitSize, hitItems});
     } else {
-      let hitItems = items.slice(offset, offset + size);
       let hitSize = items.length;
+      let hitItems = items.slice(offset, offset + size);
       this.setState({page, hitSize, hitItems});
     }
   }
