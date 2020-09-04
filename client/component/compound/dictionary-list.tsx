@@ -15,6 +15,9 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
+  WithSize
+} from "/server/controller/type";
+import {
   DetailedDictionary,
   UserDictionary
 } from "/server/skeleton/dictionary";
@@ -65,4 +68,4 @@ type Props = {
 type State = {
 };
 
-type DetailedDictionaryProvider = (offset?: number, size?: number) => Promise<{hitSize: number, hitItems: Array<DetailedDictionary>}>;
+type DetailedDictionaryProvider = (offset?: number, size?: number) => Promise<WithSize<DetailedDictionary>>;

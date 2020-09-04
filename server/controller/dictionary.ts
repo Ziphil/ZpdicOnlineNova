@@ -324,11 +324,10 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       let parameter = new NormalSearchParameter(search, mode, type);
       let range = new QueryRange(offset, size);
-      let result = await dictionary.search(parameter, range);
-      let hitSize = result.hitSize;
-      let hitWords = result.hitWords.map(WordCreator.create);
-      let body = {hitSize, hitWords};
-      Controller.response(response, body);
+      let hitResult = await dictionary.search(parameter, range);
+      let hitWords = hitResult[0].map(WordCreator.create);
+      let hitSize = hitResult[1];
+      Controller.response(response, [hitWords, hitSize]);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.responseError(response, body);
@@ -430,9 +429,8 @@ export class DictionaryController extends Controller {
     let offset = CastUtil.ensureNumber(request.query.offset);
     let size = CastUtil.ensureNumber(request.query.size);
     let range = new QueryRange(offset, size);
-    let result = await DictionaryModel.findPublic(range);
-    let hitSize = result.hitSize;
-    let hitPromises = result.hitDictionaries.map((hitDictionary) => {
+    let hitResult = await DictionaryModel.findPublic(range);
+    let hitPromises = hitResult[0].map((hitDictionary) => {
       let promise = new Promise<DetailedDictionary>(async (resolve, reject) => {
         try {
           let skeleton = await DictionaryCreator.createDetailed(hitDictionary);
@@ -444,8 +442,8 @@ export class DictionaryController extends Controller {
       return promise;
     });
     let hitDictionaries = await Promise.all(hitPromises);
-    let body = {hitSize, hitDictionaries};
-    Controller.response(response, body);
+    let hitSize = hitResult[1];
+    Controller.response(response, [hitDictionaries, hitSize]);
   }
 
   @get(SERVER_PATH["fetchDictionaryAggregation"])

@@ -13,6 +13,9 @@ import {
   DocumentQuery
 } from "mongoose";
 import {
+  WithSize
+} from "/server/controller/type";
+import {
   DICTIONARY_AUTHORITIES,
   Deserializer,
   DictionaryAuthority,
@@ -104,13 +107,13 @@ export class DictionarySchema {
     return dictionary;
   }
 
-  public static async findPublic(range?: QueryRange): Promise<{hitSize: number, hitDictionaries: Array<Dictionary>}> {
+  public static async findPublic(range?: QueryRange): Promise<WithSize<Dictionary>> {
     let query = DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
-    let countQuery = DictionaryModel.countDocuments(query.getQuery());
     let restrictedQuery = QueryRange.restrict(query, range);
-    let hitSize = await countQuery.exec();
+    let countQuery = DictionaryModel.countDocuments(query.getQuery());
     let hitDictionaries = await restrictedQuery.exec();
-    return {hitSize, hitDictionaries};
+    let hitSize = await countQuery.exec();
+    return [hitDictionaries, hitSize];
   }
 
   public static async findOneByNumber(number: number): Promise<Dictionary | null> {
@@ -303,7 +306,7 @@ export class DictionarySchema {
     await Promise.all(promises);
   }
 
-  public async search(parameter: NormalSearchParameter, range?: QueryRange): Promise<{hitSize: number, hitWords: Array<Word>}> {
+  public async search(parameter: NormalSearchParameter, range?: QueryRange): Promise<WithSize<Word>> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;
@@ -367,11 +370,11 @@ export class DictionarySchema {
       finalQuery = WordModel.find();
     }
     finalQuery = finalQuery.sort("name");
-    let countQuery = WordModel.countDocuments(finalQuery.getQuery());
     let restrictedQuery = QueryRange.restrict(finalQuery, range);
-    let hitSize = await countQuery.exec();
+    let countQuery = WordModel.countDocuments(finalQuery.getQuery());
     let hitWords = await restrictedQuery.exec();
-    return {hitSize, hitWords};
+    let hitSize = await countQuery.exec();
+    return [hitWords, hitSize];
   }
 
   public async countWords(): Promise<number> {

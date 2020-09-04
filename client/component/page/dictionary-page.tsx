@@ -28,6 +28,9 @@ import {
   Page
 } from "/client/component/page/page";
 import {
+  WithSize
+} from "/server/controller/type";
+import {
   SearchMode,
   SearchModeUtil,
   SearchType,
@@ -52,8 +55,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     type: "prefix",
     page: 0,
     showsExplanation: true,
-    hitSize: 0,
-    hitWords: []
+    hitResult: [[], 0]
   };
 
   public constructor(props: any) {
@@ -133,12 +135,11 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
       let size = 40;
       let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
-        let hitSize = response.data.hitSize;
-        let hitWords = response.data.hitWords;
+        let hitResult = response.data;
         let showsExplanation = false;
-        this.setState({hitSize, hitWords, showsExplanation});
+        this.setState({hitResult, showsExplanation});
       } else {
-        this.setState({hitSize: 0, hitWords: []});
+        this.setState({hitResult: [[], 0]});
       }
       if (deserialize) {
         this.deserializeQuery();
@@ -211,13 +212,14 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   private renderWordList(): ReactNode {
-    let maxPage = Math.max(Math.ceil(this.state.hitSize / 40) - 1, 0);
+    let [hitWords, hitSize] = this.state.hitResult;
+    let maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
     let node = (
       <Fragment>
         <div styleName="word-list">
           <WordList
             dictionary={this.state.dictionary!}
-            words={this.state.hitWords}
+            words={hitWords}
             showEditLink={this.state.canEdit}
             offset={0}
             size={40}
@@ -264,8 +266,7 @@ type State = {
   type: SearchType
   page: number,
   showsExplanation: boolean,
-  hitSize: number,
-  hitWords: Array<Word>
+  hitResult: WithSize<Word>
 };
 type Params = {
   value: string

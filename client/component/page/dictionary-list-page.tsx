@@ -20,6 +20,9 @@ import {
   Page
 } from "/client/component/page/page";
 import {
+  WithSize
+} from "/server/controller/type";
+import {
   DetailedDictionary
 } from "/server/skeleton/dictionary";
 
@@ -28,14 +31,13 @@ import {
 @applyStyle(require("./dictionary-list-page.scss"))
 export class DictionaryListPage extends StoreComponent<Props, State> {
 
-  private async fetchDictionaries(offset?: number, size?: number): Promise<{hitSize: number, hitItems: Array<DetailedDictionary>}> {
+  private async fetchDictionaries(offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
     let response = await this.requestGet("fetchAllDictionaries", {offset, size});
     if (response.status === 200) {
-      let hitSize = response.data.hitSize;
-      let hitItems = response.data.hitDictionaries;
-      return {hitSize, hitItems};
+      let hitResult = response.data;
+      return hitResult;
     } else {
-      return {hitSize: 0, hitItems: []};
+      return [[], 0];
     }
   }
 

@@ -16,6 +16,9 @@ import {
 import {
   createStyleName
 } from "/client/util/style-name";
+import {
+  WithSize
+} from "/server/controller/type";
 
 
 @applyStyle(require("./pane-list.scss"))
@@ -26,8 +29,7 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
   };
   public state: State<T> = {
     page: 0,
-    hitSize: 0,
-    hitItems: []
+    hitResult: [[], 0]
   };
 
   public async componentDidMount(): Promise<void> {
@@ -40,22 +42,24 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
     let size = this.props.size;
     let items = this.props.items;
     if (typeof items === "function") {
-      let {hitSize, hitItems} = await items(offset, size);
-      this.setState({page, hitSize, hitItems});
+      let hitResult = await items(offset, size);
+      this.setState({page, hitResult});
     } else {
-      let hitSize = items.length;
       let hitItems = items.slice(offset, offset + size);
-      this.setState({page, hitSize, hitItems});
+      let hitSize = items.length;
+      let hitResult = [hitItems, hitSize] as WithSize<T>;
+      this.setState({page, hitResult});
     }
   }
 
   public render(): ReactNode {
-    let maxPage = Math.max(Math.ceil(this.state.hitSize / this.props.size) - 1, 0);
-    let panes = this.state.hitItems.map(this.props.renderer);
+    let [hitItems, hitSize] = this.state.hitResult;
+    let maxPage = Math.max(Math.ceil(hitSize / this.props.size) - 1, 0);
+    let panes = hitItems.map(this.props.renderer);
     let paneStyle = {gridTemplateColumns: `repeat(${this.props.column}, 1fr)`};
     let paginationStyleName = createStyleName(
       "pagination",
-      {if: this.state.hitItems.length <= 0, true: "empty"}
+      {if: hitItems.length <= 0, true: "empty"}
     );
     let node = (
       <div styleName="root">
@@ -81,8 +85,7 @@ type Props<T> = {
 };
 type State<T> = {
   page: number,
-  hitSize: number,
-  hitItems: Array<T>
+  hitResult: WithSize<T>
 };
 
-type ItemProvider<T> = (offset?: number, size?: number) => Promise<{hitSize: number, hitItems: Array<T>}>;
+type ItemProvider<T> = (offset?: number, size?: number) => Promise<WithSize<T>>;
