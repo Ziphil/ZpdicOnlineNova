@@ -54,6 +54,9 @@ import {
 import {
   CastUtil
 } from "/server/util/cast";
+import {
+  QueryRange
+} from "/server/util/query";
 
 
 @controller("/")
@@ -320,7 +323,8 @@ export class DictionaryController extends Controller {
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let parameter = new NormalSearchParameter(search, mode, type);
-      let result = await dictionary.search(parameter, offset, size);
+      let range = new QueryRange(offset, size);
+      let result = await dictionary.search(parameter, range);
       let hitSize = result.hitSize;
       let hitWordsBody = result.hitWords.map(WordCreator.create);
       let body = {hitSize, hitWords: hitWordsBody};

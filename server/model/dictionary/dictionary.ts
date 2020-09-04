@@ -53,7 +53,7 @@ import {
   takeLog
 } from "/server/util/misc";
 import {
-  QueryUtil
+  QueryRange
 } from "/server/util/query";
 
 
@@ -298,7 +298,7 @@ export class DictionarySchema {
     await Promise.all(promises);
   }
 
-  public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<{hitSize: number, hitWords: Array<Word>}> {
+  public async search(parameter: NormalSearchParameter, range?: QueryRange): Promise<{hitSize: number, hitWords: Array<Word>}> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;
@@ -363,7 +363,7 @@ export class DictionarySchema {
     }
     finalQuery = finalQuery.sort("name");
     let countQuery = WordModel.countDocuments(finalQuery.getQuery());
-    let restrictedQuery = QueryUtil.restrict(finalQuery, offset, size);
+    let restrictedQuery = QueryRange.restrict(finalQuery, range);
     let hitSize = await countQuery.exec();
     let hitWords = await restrictedQuery.exec();
     return {hitSize, hitWords};
