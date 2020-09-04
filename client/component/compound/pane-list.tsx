@@ -25,18 +25,37 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
     column: 1
   };
   public state: State<T> = {
-    page: 0
+    page: 0,
+    hitSize: 0,
+    hitItems: []
   };
 
+  public async componentDidMount(): Promise<void> {
+    let page = this.state.page;
+    await this.handlePageSet(page);
+  }
+
+  private async handlePageSet(page: number): Promise<void> {
+    let offset = this.props.size * page;
+    let size = this.props.size;
+    let items = this.props.items;
+    if (typeof items === "function") {
+      let {hitSize, hitItems} = await items(offset, size);
+      this.setState({page, hitSize, hitItems});
+    } else {
+      let hitItems = items.slice(offset, offset + size);
+      let hitSize = items.length;
+      this.setState({page, hitSize, hitItems});
+    }
+  }
+
   public render(): ReactNode {
-    let offset = this.props.size * this.state.page;
-    let maxPage = Math.max(Math.ceil(this.props.items.length / this.props.size) - 1, 0);
-    let displayedItems = this.props.items.slice(offset, offset + this.props.size);
-    let panes = displayedItems.map(this.props.renderer);
+    let maxPage = Math.max(Math.ceil(this.state.hitSize / this.props.size) - 1, 0);
+    let panes = this.state.hitItems.map(this.props.renderer);
     let paneStyle = {gridTemplateColumns: `repeat(${this.props.column}, 1fr)`};
     let paginationStyleName = createStyleName(
       "pagination",
-      {if: displayedItems.length <= 0, true: "empty"}
+      {if: this.state.hitItems.length <= 0, true: "empty"}
     );
     let node = (
       <div styleName="root">
@@ -44,7 +63,7 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
           {panes}
         </div>
         <div styleName={paginationStyleName}>
-          <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.setState({page})}/>
+          <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.handlePageSet(page)}/>
         </div>
       </div>
     );
@@ -55,11 +74,15 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
 
 
 type Props<T> = {
-  items: Array<T>,
+  items: Array<T> | ItemProvider<T>,
   renderer: (item: T) => ReactNode,
   column: number,
   size: number
 };
 type State<T> = {
-  page: number
+  page: number,
+  hitSize: number,
+  hitItems: Array<T>
 };
+
+type ItemProvider<T> = (offset?: number, size?: number) => Promise<{hitSize: number, hitItems: Array<T>}>;
