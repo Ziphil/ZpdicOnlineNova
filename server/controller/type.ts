@@ -182,7 +182,7 @@ type ProcessType = {
     get: {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
       response: {
-        200: {hitSize: number, hitWords: Array<Word>},
+        200: WithSize<Word>,
         400: CustomError<"noSuchDictionaryNumber">
       }
     },
@@ -240,9 +240,9 @@ type ProcessType = {
   },
   fetchAllDictionaries: {
     get: {
-      request: {},
+      request: {offset?: number, size?: number},
       response: {
-        200: Array<DetailedDictionary>,
+        200: WithSize<DetailedDictionary>,
         400: never
       }
     },
@@ -387,6 +387,8 @@ export type ProcessName = keyof ProcessType;
 export type RequestType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["request"];
 export type ResponseType<N extends ProcessName, M extends MethodType> = ValueOf<ProcessType[N][M]["response"]>;
 export type ResponseTypeSep<N extends ProcessName, M extends MethodType, S extends StatusType> = ProcessType[N][M]["response"][S];
+
+export type WithSize<T> = [Array<T>, number];
 
 type Noop = {request: never, response: never};
 type ValueOf<T> = T[keyof T];

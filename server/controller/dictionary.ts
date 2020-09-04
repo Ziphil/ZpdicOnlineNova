@@ -54,6 +54,9 @@ import {
 import {
   CastUtil
 } from "/server/util/cast";
+import {
+  QueryRange
+} from "/server/util/query";
 
 
 @controller("/")
@@ -320,11 +323,11 @@ export class DictionaryController extends Controller {
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let parameter = new NormalSearchParameter(search, mode, type);
-      let result = await dictionary.search(parameter, offset, size);
-      let hitSize = result.hitSize;
-      let hitWordsBody = result.hitWords.map(WordCreator.create);
-      let body = {hitSize, hitWords: hitWordsBody};
-      Controller.response(response, body);
+      let range = new QueryRange(offset, size);
+      let hitResult = await dictionary.search(parameter, range);
+      let hitWords = hitResult[0].map(WordCreator.create);
+      let hitSize = hitResult[1];
+      Controller.response(response, [hitWords, hitSize]);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.responseError(response, body);
@@ -423,11 +426,14 @@ export class DictionaryController extends Controller {
 
   @get(SERVER_PATH["fetchAllDictionaries"])
   public async [Symbol()](request: GetRequest<"fetchAllDictionaries">, response: GetResponse<"fetchAllDictionaries">): Promise<void> {
-    let dictionaries = await DictionaryModel.findPublic();
-    let promises = dictionaries.map((dictionary) => {
+    let offset = CastUtil.ensureNumber(request.query.offset);
+    let size = CastUtil.ensureNumber(request.query.size);
+    let range = new QueryRange(offset, size);
+    let hitResult = await DictionaryModel.findPublic(range);
+    let hitPromises = hitResult[0].map((hitDictionary) => {
       let promise = new Promise<DetailedDictionary>(async (resolve, reject) => {
         try {
-          let skeleton = await DictionaryCreator.createDetailed(dictionary);
+          let skeleton = await DictionaryCreator.createDetailed(hitDictionary);
           resolve(skeleton);
         } catch (error) {
           reject(error);
@@ -435,8 +441,9 @@ export class DictionaryController extends Controller {
       });
       return promise;
     });
-    let body = await Promise.all(promises);
-    Controller.response(response, body);
+    let hitDictionaries = await Promise.all(hitPromises);
+    let hitSize = hitResult[1];
+    Controller.response(response, [hitDictionaries, hitSize]);
   }
 
   @get(SERVER_PATH["fetchDictionaryAggregation"])

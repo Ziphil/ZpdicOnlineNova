@@ -15,6 +15,9 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
+  WithSize
+} from "/server/controller/type";
+import {
   DetailedDictionary,
   UserDictionary
 } from "/server/skeleton/dictionary";
@@ -56,7 +59,7 @@ export class DictionaryList extends Component<Props, State> {
 
 
 type Props = {
-  dictionaries: Array<DetailedDictionary>,
+  dictionaries: Array<DetailedDictionary> | DetailedDictionaryProvider,
   showUser: boolean,
   showUpdatedDate: boolean,
   showLinks: boolean,
@@ -64,3 +67,5 @@ type Props = {
 };
 type State = {
 };
+
+type DetailedDictionaryProvider = (offset?: number, size?: number) => Promise<WithSize<DetailedDictionary>>;

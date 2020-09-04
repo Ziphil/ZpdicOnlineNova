@@ -13,6 +13,9 @@ import {
   DocumentQuery
 } from "mongoose";
 import {
+  WithSize
+} from "/server/controller/type";
+import {
   DICTIONARY_AUTHORITIES,
   Deserializer,
   DictionaryAuthority,
@@ -53,7 +56,7 @@ import {
   takeLog
 } from "/server/util/misc";
 import {
-  QueryUtil
+  QueryRange
 } from "/server/util/query";
 
 
@@ -104,9 +107,13 @@ export class DictionarySchema {
     return dictionary;
   }
 
-  public static async findPublic(): Promise<Array<Dictionary>> {
-    let dictionaries = await DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
-    return dictionaries;
+  public static async findPublic(range?: QueryRange): Promise<WithSize<Dictionary>> {
+    let query = DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
+    let restrictedQuery = QueryRange.restrict(query, range);
+    let countQuery = DictionaryModel.countDocuments(query.getQuery());
+    let hitDictionaries = await restrictedQuery.exec();
+    let hitSize = await countQuery.exec();
+    return [hitDictionaries, hitSize];
   }
 
   public static async findOneByNumber(number: number): Promise<Dictionary | null> {
@@ -123,14 +130,15 @@ export class DictionarySchema {
   public static async findByUser(user: User, authority: DictionaryAuthority): Promise<Array<Dictionary>> {
     let ownQuery = DictionaryModel.find().where("user", user);
     let editQuery = DictionaryModel.find().where("editUsers", user);
-    let query = (() => {
+    let rawQuery = (() => {
       if (authority === "own") {
         return ownQuery;
       } else {
         return DictionaryModel.find().or([ownQuery.getQuery(), editQuery.getQuery()]);
       }
     })();
-    let dictionaries = await query.sort("-updatedDate -number");
+    let query = rawQuery.sort("-updatedDate -number");
+    let dictionaries = await query.exec();
     return dictionaries;
   }
 
@@ -298,7 +306,7 @@ export class DictionarySchema {
     await Promise.all(promises);
   }
 
-  public async search(parameter: NormalSearchParameter, offset?: number, size?: number): Promise<{hitSize: number, hitWords: Array<Word>}> {
+  public async search(parameter: NormalSearchParameter, range?: QueryRange): Promise<WithSize<Word>> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;
@@ -362,11 +370,11 @@ export class DictionarySchema {
       finalQuery = WordModel.find();
     }
     finalQuery = finalQuery.sort("name");
+    let restrictedQuery = QueryRange.restrict(finalQuery, range);
     let countQuery = WordModel.countDocuments(finalQuery.getQuery());
-    let restrictedQuery = QueryUtil.restrict(finalQuery, offset, size);
-    let hitSize = await countQuery.exec();
     let hitWords = await restrictedQuery.exec();
-    return {hitSize, hitWords};
+    let hitSize = await countQuery.exec();
+    return [hitWords, hitSize];
   }
 
   public async countWords(): Promise<number> {

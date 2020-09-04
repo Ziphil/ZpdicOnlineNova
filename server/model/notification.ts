@@ -10,7 +10,7 @@ import {
   Notification as NotificationSkeleton
 } from "/server/skeleton/notification";
 import {
-  QueryUtil
+  QueryRange
 } from "/server/util/query";
 
 
@@ -39,9 +39,9 @@ export class NotificationSchema {
     return notification;
   }
 
-  public static async findAll(offset?: number, size?: number): Promise<Array<Notification>> {
+  public static async findAll(range?: QueryRange): Promise<Array<Notification>> {
     let query = NotificationModel.find().sort("-date");
-    let restrictedQuery = QueryUtil.restrict(query, offset, size);
+    let restrictedQuery = QueryRange.restrict(query, range);
     let notifications = await restrictedQuery.exec();
     return notifications;
   }

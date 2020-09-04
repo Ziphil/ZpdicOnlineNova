@@ -29,6 +29,9 @@ import {
 import {
   CastUtil
 } from "/server/util/cast";
+import {
+  QueryRange
+} from "/server/util/query";
 
 
 @controller("/")
@@ -49,7 +52,8 @@ export class NotificationController extends Controller {
   public async [Symbol()](request: GetRequest<"fetchNotifications">, response: GetResponse<"fetchNotifications">): Promise<void> {
     let offset = CastUtil.ensureNumber(request.query.offset);
     let size = CastUtil.ensureNumber(request.query.size);
-    let notifications = await NotificationModel.findAll(offset, size);
+    let range = new QueryRange(offset, size);
+    let notifications = await NotificationModel.findAll(range);
     let body = notifications.map(NotificationCreator.create);
     Controller.response(response, body);
   }

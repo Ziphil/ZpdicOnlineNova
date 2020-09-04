@@ -22,6 +22,9 @@ import {
   route
 } from "/client/component/decorator";
 import {
+  WithSize
+} from "/server/controller/type";
+import {
   SearchMode,
   SearchType
 } from "/server/model/search-parameter";
@@ -45,8 +48,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
     mode: "both",
     type: "prefix",
     page: 0,
-    hitSize: 0,
-    hitWords: []
+    hitResult: [[], 0]
   };
 
   public async componentDidMount(): Promise<void> {
@@ -64,11 +66,10 @@ export class WordSearcher extends StoreComponent<Props, State> {
       let size = 40;
       let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
-        let hitSize = response.data.hitSize;
-        let hitWords = response.data.hitWords;
-        this.setState({hitSize, hitWords});
+        let hitResult = response.data;
+        this.setState({hitResult});
       } else {
-        this.setState({hitSize: 0, hitWords: []});
+        this.setState({hitResult: [[], 0]});
       }
     }
   }
@@ -93,13 +94,14 @@ export class WordSearcher extends StoreComponent<Props, State> {
   }
 
   private renderWordList(): ReactNode {
-    let maxPage = Math.max(Math.ceil(this.state.hitSize / 40) - 1, 0);
+    let [hitWords, hitSize] = this.state.hitResult;
+    let maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
     let node = (
       <Fragment>
         <div styleName="word-list">
           <WordList
             dictionary={this.props.dictionary!}
-            words={this.state.hitWords}
+            words={hitWords}
             style={this.props.style}
             showButton={this.props.showButton}
             offset={0}
@@ -151,6 +153,5 @@ type State = {
   mode: SearchMode,
   type: SearchType
   page: number,
-  hitSize: number,
-  hitWords: Array<Word>
+  hitResult: WithSize<Word>
 };

@@ -49,8 +49,8 @@
 $colors: (
   primary: hsl(30, 40%, 50%),
   secondary: hsl(310, 40%, 50%),
-  error: hsl(0, 60%, 50%),
-  information: hsl(140, 50%, 35%)
+  error: hsl(0, 45%, 50%),
+  information: hsl(200, 60%, 45%)
 );
 
 $background-color: background-color(map-get($colors, primary));
