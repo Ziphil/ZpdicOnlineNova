@@ -1,7 +1,6 @@
 //
 
 import {
-  DeepReadonly,
   ValueOf
 } from "ts-essentials";
 import {
@@ -391,7 +390,7 @@ export type ProcessName = keyof ProcessType;
 
 export type RequestType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["request"];
 export type ResponseType<N extends ProcessName, M extends MethodType> = ValueOf<ProcessType[N][M]["response"]>;
-export type ResponseTypeSep<N extends ProcessName, M extends MethodType, S extends StatusType> = DeepReadonly<ProcessType[N][M]["response"][S]>;
+export type ResponseTypeSep<N extends ProcessName, M extends MethodType, S extends StatusType> = ProcessType[N][M]["response"][S];
 
 export type WithSize<T> = [Array<T>, number];
 
