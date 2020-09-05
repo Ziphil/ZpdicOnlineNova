@@ -16,6 +16,7 @@ import {
   Loading,
   PaginationButton,
   SearchForm,
+  SuggestionList,
   WordList
 } from "/client/component/compound";
 import {
@@ -214,9 +215,16 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   private renderWordList(): ReactNode {
     let [hitWords, hitSize] = this.state.hitResult.words;
+    let hitSuggestions = this.state.hitResult.suggestions;
     let maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
     let node = (
       <Fragment>
+        <div styleName="suggestion-list">
+          <SuggestionList
+            dictionary={this.state.dictionary!}
+            suggestions={hitSuggestions}
+          />
+        </div>
         <div styleName="word-list">
           <WordList
             dictionary={this.state.dictionary!}
