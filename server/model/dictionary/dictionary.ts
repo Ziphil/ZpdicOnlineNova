@@ -10,9 +10,6 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
-  DocumentQuery
-} from "mongoose";
-import {
   WithSize
 } from "/server/controller/type";
 import {
@@ -308,79 +305,20 @@ export class DictionarySchema {
   }
 
   public async search(parameter: NormalSearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
-    let search = parameter.search;
-    let mode = parameter.mode;
-    let type = parameter.type;
-    let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
-    let outerThis = this;
-    let createKey = function (innerMode: string): string {
-      let key = (() => {
-        if (innerMode === "name") {
-          return "name";
-        } else if (innerMode === "equivalent") {
-          return "equivalents.names";
-        } else if (innerMode === "information") {
-          return "informations.text";
-        } else {
-          return "";
-        }
-      })();
-      return key;
-    };
-    let createNeedle = function (innerType: string): string | RegExp {
-      let needle = (() => {
-        if (innerType === "exact") {
-          return search;
-        } else if (innerType === "prefix") {
-          return new RegExp("^" + escapedSearch);
-        } else if (type === "suffix") {
-          return new RegExp(escapedSearch + "$");
-        } else if (type === "part") {
-          return new RegExp(escapedSearch);
-        } else if (type === "regular") {
-          try {
-            return new RegExp(search);
-          } catch (error) {
-            return "";
-          }
-        } else {
-          return "";
-        }
-      })();
-      return needle;
-    };
-    let createAuxiliaryQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<Word>, Word> {
-      let key = createKey(innerMode);
-      let needle = createNeedle(innerType);
-      let query = WordModel.find().where("dictionary", outerThis).where(key, needle);
-      return query;
-    };
-    let rawQuery = (() => {
-      if (mode === "name") {
-        return createAuxiliaryQuery("name", type);
-      } else if (mode === "equivalent") {
-        return createAuxiliaryQuery("equivalent", type);
-      } else if (mode === "content") {
-        let nameQuery = createAuxiliaryQuery("name", type);
-        let equivalentQuery = createAuxiliaryQuery("equivalent", type);
-        let informationQuery = createAuxiliaryQuery("information", type);
-        return WordModel.find().or([nameQuery.getQuery(), equivalentQuery.getQuery(), informationQuery.getQuery()]);
-      } else if (mode === "both") {
-        let nameQuery = createAuxiliaryQuery("name", type);
-        let equivalentQuery = createAuxiliaryQuery("equivalent", type);
-        return WordModel.find().or([nameQuery.getQuery(), equivalentQuery.getQuery()]);
-      } else {
-        return WordModel.find();
-      }
-    })();
-    let suggestionQuery = WordModel.find().where("dictionary", this).where("variations.name", createNeedle(type));
-    let finalQuery = rawQuery.sort("name");
-    let restrictedQuery = QueryRange.restrict(finalQuery, range);
-    let countQuery = WordModel.countDocuments(finalQuery.getQuery());
+    let query = parameter.createQuery().where("dictionary", this).sort("name");
+    let suggestionQuery = parameter.createSuggestionQuery()?.where("dictionary", this);
+    let restrictedQuery = QueryRange.restrict(query, range);
+    let countQuery = WordModel.countDocuments(query.getQuery());
     let hitWords = await restrictedQuery.exec();
     let hitSize = await countQuery.exec();
-    let hitSuggestionWords = await suggestionQuery.exec();
-    let hitSuggestions = hitSuggestionWords.map((word) => new Suggestion("test", word));
+    let hitSuggestions = await (async () => {
+      if (suggestionQuery !== undefined) {
+        let hitSuggestionWords = await suggestionQuery.exec();
+        return hitSuggestionWords.map((word) => new Suggestion("test", word));
+      } else {
+        return [];
+      }
+    })();
     return {words: [hitWords, hitSize], suggestions: hitSuggestions};
   }
 

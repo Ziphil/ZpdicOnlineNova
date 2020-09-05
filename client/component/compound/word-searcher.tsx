@@ -25,15 +25,15 @@ import {
   WithSize
 } from "/server/controller/type";
 import {
-  SearchMode,
-  SearchType
-} from "/server/model/search-parameter";
-import {
   Dictionary,
   EditWord,
   Suggestion,
   Word
 } from "/server/skeleton/dictionary";
+import {
+  SearchMode,
+  SearchType
+} from "/server/skeleton/search-parameter";
 
 
 @route @inject
