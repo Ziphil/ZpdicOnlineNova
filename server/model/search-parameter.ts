@@ -11,6 +11,12 @@ import {
   SearchMode,
   SearchType
 } from "/server/skeleton/search-parameter";
+export {
+  SearchMode,
+  SearchModeUtil,
+  SearchType,
+  SearchTypeUtil
+} from "/server/skeleton/search-parameter";
 
 
 export class NormalSearchParameter {
@@ -80,11 +86,3 @@ export class NormalSearchParameter {
   }
 
 }
-
-
-export {
-  SearchMode,
-  SearchModeUtil,
-  SearchType,
-  SearchTypeUtil
-} from "/server/skeleton/search-parameter";
