@@ -2,7 +2,7 @@
 
 import {
   Document,
-  DocumentQuery
+  Query
 } from "mongoose";
 
 
@@ -16,7 +16,7 @@ export class QueryRange {
     this.size = size;
   }
 
-  public restrict<T, D extends Document, H>(query: DocumentQuery<T, D, H>): DocumentQuery<T, D, H> {
+  public restrict<T, Q extends Query<T>>(query: Q): Q {
     if (this.offset !== undefined) {
       query = query.skip(this.offset);
     }
@@ -26,7 +26,7 @@ export class QueryRange {
     return query;
   }
 
-  public static restrict<T, D extends Document, H>(query: DocumentQuery<T, D, H>, range?: QueryRange): DocumentQuery<T, D, H> {
+  public static restrict<T, Q extends Query<T>>(query: Q, range?: QueryRange): Q {
     if (range !== undefined) {
       return range.restrict(query);
     } else {

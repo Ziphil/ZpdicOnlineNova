@@ -1,6 +1,6 @@
 {
   "name": "zpdic",
-  "version": "2.10.2",
+  "version": "2.11.0",
   "author": "Ziphil",
   "description": "",
   "main": "dist/index.js",
@@ -86,6 +86,7 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "@types/stream-json": "^1.5.1",
-    "@types/webpack-node-externals": "^1.7.1"
+    "@types/webpack-node-externals": "^1.7.1",
+    "ts-essentials": "^7.0.0"
   }
 }

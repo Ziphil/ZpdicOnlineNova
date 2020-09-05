@@ -11,5 +11,6 @@ export * from "./equivalent";
 export * from "./information";
 export * from "./relation";
 export * from "./serializer";
+export * from "./suggestion";
 export * from "./variation";
 export * from "./word";

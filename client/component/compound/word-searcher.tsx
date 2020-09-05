@@ -25,14 +25,15 @@ import {
   WithSize
 } from "/server/controller/type";
 import {
-  SearchMode,
-  SearchType
-} from "/server/model/search-parameter";
-import {
   Dictionary,
   EditWord,
+  Suggestion,
   Word
 } from "/server/skeleton/dictionary";
+import {
+  SearchMode,
+  SearchType
+} from "/server/skeleton/search-parameter";
 
 
 @route @inject
@@ -48,7 +49,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
     mode: "both",
     type: "prefix",
     page: 0,
-    hitResult: [[], 0]
+    hitResult: {words: [[], 0], suggestions: []}
   };
 
   public async componentDidMount(): Promise<void> {
@@ -69,7 +70,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
         let hitResult = response.data;
         this.setState({hitResult});
       } else {
-        this.setState({hitResult: [[], 0]});
+        this.setState({hitResult: {words: [[], 0], suggestions: []}});
       }
     }
   }
@@ -94,7 +95,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
   }
 
   private renderWordList(): ReactNode {
-    let [hitWords, hitSize] = this.state.hitResult;
+    let [hitWords, hitSize] = this.state.hitResult.words;
     let maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
     let node = (
       <Fragment>
@@ -153,5 +154,5 @@ type State = {
   mode: SearchMode,
   type: SearchType
   page: number,
-  hitResult: WithSize<Word>
+  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>}
 };

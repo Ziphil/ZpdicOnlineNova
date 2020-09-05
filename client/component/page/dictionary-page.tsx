@@ -16,6 +16,7 @@ import {
   Loading,
   PaginationButton,
   SearchForm,
+  SuggestionList,
   WordList
 } from "/client/component/compound";
 import {
@@ -31,15 +32,16 @@ import {
   WithSize
 } from "/server/controller/type";
 import {
+  Dictionary,
+  Suggestion,
+  Word
+} from "/server/skeleton/dictionary";
+import {
   SearchMode,
   SearchModeUtil,
   SearchType,
   SearchTypeUtil
-} from "/server/model/search-parameter";
-import {
-  Dictionary,
-  Word
-} from "/server/skeleton/dictionary";
+} from "/server/skeleton/search-parameter";
 
 
 @route @inject
@@ -55,7 +57,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     type: "prefix",
     page: 0,
     showsExplanation: true,
-    hitResult: [[], 0]
+    hitResult: {words: [[], 0], suggestions: []}
   };
 
   public constructor(props: any) {
@@ -139,7 +141,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
         let showsExplanation = false;
         this.setState({hitResult, showsExplanation});
       } else {
-        this.setState({hitResult: [[], 0]});
+        this.setState({hitResult: {words: [[], 0], suggestions: []}});
       }
       if (deserialize) {
         this.deserializeQuery();
@@ -212,10 +214,17 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   private renderWordList(): ReactNode {
-    let [hitWords, hitSize] = this.state.hitResult;
+    let [hitWords, hitSize] = this.state.hitResult.words;
+    let hitSuggestions = this.state.hitResult.suggestions;
     let maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
     let node = (
       <Fragment>
+        <div styleName="suggestion-list">
+          <SuggestionList
+            dictionary={this.state.dictionary!}
+            suggestions={hitSuggestions}
+          />
+        </div>
         <div styleName="word-list">
           <WordList
             dictionary={this.state.dictionary!}
@@ -266,7 +275,7 @@ type State = {
   type: SearchType
   page: number,
   showsExplanation: boolean,
-  hitResult: WithSize<Word>
+  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>}
 };
 type Params = {
   value: string

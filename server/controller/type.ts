@@ -1,9 +1,13 @@
 //
 
 import {
+  ValueOf
+} from "ts-essentials";
+import {
   DetailedDictionary,
   Dictionary,
   EditWord,
+  Suggestion,
   UserDictionary,
   Word
 } from "/server/skeleton/dictionary";
@@ -182,7 +186,7 @@ type ProcessType = {
     get: {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
       response: {
-        200: WithSize<Word>,
+        200: {words: WithSize<Word>, suggestions: Array<Suggestion>},
         400: CustomError<"noSuchDictionaryNumber">
       }
     },
@@ -391,4 +395,3 @@ export type ResponseTypeSep<N extends ProcessName, M extends MethodType, S exten
 export type WithSize<T> = [Array<T>, number];
 
 type Noop = {request: never, response: never};
-type ValueOf<T> = T[keyof T];

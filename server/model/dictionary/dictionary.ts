@@ -10,9 +10,6 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
-  DocumentQuery
-} from "mongoose";
-import {
   WithSize
 } from "/server/controller/type";
 import {
@@ -22,6 +19,7 @@ import {
   DictionaryAuthorityUtil,
   DictionaryFullAuthority,
   Serializer,
+  Suggestion,
   Word,
   WordModel
 } from "/server/model/dictionary";
@@ -111,9 +109,8 @@ export class DictionarySchema {
     let query = DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
     let restrictedQuery = QueryRange.restrict(query, range);
     let countQuery = DictionaryModel.countDocuments(query.getQuery());
-    let hitDictionaries = await restrictedQuery.exec();
-    let hitSize = await countQuery.exec();
-    return [hitDictionaries, hitSize];
+    let result = await Promise.all([restrictedQuery, countQuery]);
+    return result;
   }
 
   public static async findOneByNumber(number: number): Promise<Dictionary | null> {
@@ -306,75 +303,33 @@ export class DictionarySchema {
     await Promise.all(promises);
   }
 
-  public async search(parameter: NormalSearchParameter, range?: QueryRange): Promise<WithSize<Word>> {
-    let search = parameter.search;
-    let mode = parameter.mode;
-    let type = parameter.type;
-    let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
-    let outerThis = this;
-    let createKey = function (innerMode: string): string {
-      let key;
-      if (innerMode === "name") {
-        key = "name";
-      } else if (innerMode === "equivalent") {
-        key = "equivalents.names";
-      } else if (innerMode === "information") {
-        key = "informations.text";
-      } else {
-        key = "";
-      }
-      return key;
-    };
-    let createNeedle = function (innerType: string): string | RegExp {
-      let needle;
-      if (innerType === "exact") {
-        needle = search;
-      } else if (innerType === "prefix") {
-        needle = new RegExp("^" + escapedSearch);
-      } else if (type === "suffix") {
-        needle = new RegExp(escapedSearch + "$");
-      } else if (type === "part") {
-        needle = new RegExp(escapedSearch);
-      } else if (type === "regular") {
-        try {
-          needle = new RegExp(search);
-        } catch (error) {
-          needle = "";
+  // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
+  // 現状、サジェストのリストを作るのに、まず MongoDB のクエリによってサジェストされるべき単語を取得し、その後に JavaScript 側で再び各単語を走査してサジェストオブジェクトを作成しています。
+  // この処理が二度手間になっているので、MongoDB のクエリだけで処理できるように実装を変えるべきです。
+  public async search(this: Dictionary, parameter: NormalSearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
+    let query = parameter.createQuery().where("dictionary", this).sort("name");
+    let suggestionQuery = parameter.createSuggestionQuery()?.where("dictionary", this);
+    let restrictedQuery = QueryRange.restrict(query, range);
+    let countQuery = WordModel.countDocuments(query.getQuery());
+    let hitSuggestionPromise = (async () => {
+      if (suggestionQuery !== undefined) {
+        let hitSuggestionWords = await suggestionQuery.exec();
+        let hitSuggestions = [];
+        for (let word of hitSuggestionWords) {
+          for (let variation of word.variations) {
+            if (variation.name === parameter.search) {
+              let suggestion = new Suggestion(variation.title, word);
+              hitSuggestions.push(suggestion);
+            }
+          }
         }
+        return hitSuggestions;
       } else {
-        needle = "";
+        return [];
       }
-      return needle;
-    };
-    let createAuxiliaryQuery = function (innerMode: string, innerType: string): DocumentQuery<Array<Word>, Word> {
-      let key = createKey(innerMode);
-      let needle = createNeedle(innerType);
-      let query = WordModel.find().where("dictionary", outerThis).where(key, needle);
-      return query;
-    };
-    let finalQuery;
-    if (mode === "name") {
-      finalQuery = createAuxiliaryQuery("name", type);
-    } else if (mode === "equivalent") {
-      finalQuery = createAuxiliaryQuery("equivalent", type);
-    } else if (mode === "content") {
-      let nameQuery = createAuxiliaryQuery("name", type);
-      let equivalentQuery = createAuxiliaryQuery("equivalent", type);
-      let informationQuery = createAuxiliaryQuery("information", type);
-      finalQuery = WordModel.find().or([nameQuery.getQuery(), equivalentQuery.getQuery(), informationQuery.getQuery()]);
-    } else if (mode === "both") {
-      let nameQuery = createAuxiliaryQuery("name", type);
-      let equivalentQuery = createAuxiliaryQuery("equivalent", type);
-      finalQuery = WordModel.find().or([nameQuery.getQuery(), equivalentQuery.getQuery()]);
-    } else {
-      finalQuery = WordModel.find();
-    }
-    finalQuery = finalQuery.sort("name");
-    let restrictedQuery = QueryRange.restrict(finalQuery, range);
-    let countQuery = WordModel.countDocuments(finalQuery.getQuery());
-    let hitWords = await restrictedQuery.exec();
-    let hitSize = await countQuery.exec();
-    return [hitWords, hitSize];
+    })();
+    let [hitWords, hitSize, hitSuggestions] = await Promise.all([restrictedQuery, countQuery, hitSuggestionPromise]);
+    return {words: [hitWords, hitSize], suggestions: hitSuggestions};
   }
 
   public async countWords(): Promise<number> {

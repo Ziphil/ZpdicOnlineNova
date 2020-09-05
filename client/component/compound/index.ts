@@ -35,6 +35,8 @@ export * from "./register-form";
 export * from "./reset-user-password-form";
 export * from "./search-form";
 export * from "./setting-pane";
+export * from "./suggestion-list";
+export * from "./suggestion-pane";
 export * from "./user-list";
 export * from "./user-pane";
 export * from "./white-pane";
