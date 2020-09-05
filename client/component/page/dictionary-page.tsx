@@ -38,6 +38,7 @@ import {
 } from "/server/model/search-parameter";
 import {
   Dictionary,
+  Suggestion,
   Word
 } from "/server/skeleton/dictionary";
 
@@ -55,7 +56,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     type: "prefix",
     page: 0,
     showsExplanation: true,
-    hitResult: [[], 0]
+    hitResult: {words: [[], 0], suggestions: []}
   };
 
   public constructor(props: any) {
@@ -139,7 +140,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
         let showsExplanation = false;
         this.setState({hitResult, showsExplanation});
       } else {
-        this.setState({hitResult: [[], 0]});
+        this.setState({hitResult: {words: [[], 0], suggestions: []}});
       }
       if (deserialize) {
         this.deserializeQuery();
@@ -212,7 +213,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   private renderWordList(): ReactNode {
-    let [hitWords, hitSize] = this.state.hitResult;
+    let [hitWords, hitSize] = this.state.hitResult.words;
     let maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
     let node = (
       <Fragment>
@@ -266,7 +267,7 @@ type State = {
   type: SearchType
   page: number,
   showsExplanation: boolean,
-  hitResult: WithSize<Word>
+  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>}
 };
 type Params = {
   value: string

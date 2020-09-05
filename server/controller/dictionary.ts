@@ -28,6 +28,7 @@ import {
   DictionaryCreator,
   DictionaryFullAuthorityUtil,
   DictionaryModel,
+  SuggestionCreator,
   WordCreator,
   WordModel
 } from "/server/model/dictionary";
@@ -325,9 +326,11 @@ export class DictionaryController extends Controller {
       let parameter = new NormalSearchParameter(search, mode, type);
       let range = new QueryRange(offset, size);
       let hitResult = await dictionary.search(parameter, range);
-      let hitWords = hitResult[0].map(WordCreator.create);
-      let hitSize = hitResult[1];
-      Controller.response(response, [hitWords, hitSize]);
+      let hitWords = hitResult.words[0].map(WordCreator.create);
+      let hitSize = hitResult.words[1];
+      let hitSuggestions = hitResult.suggestions.map(SuggestionCreator.create);
+      let body = {words: [hitWords, hitSize], suggestions: hitSuggestions} as any;
+      Controller.response(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.responseError(response, body);
@@ -443,7 +446,8 @@ export class DictionaryController extends Controller {
     });
     let hitDictionaries = await Promise.all(hitPromises);
     let hitSize = hitResult[1];
-    Controller.response(response, [hitDictionaries, hitSize]);
+    let body = [hitDictionaries, hitSize] as any;
+    Controller.response(response, body);
   }
 
   @get(SERVER_PATH["fetchDictionaryAggregation"])

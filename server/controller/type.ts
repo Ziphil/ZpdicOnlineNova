@@ -4,6 +4,7 @@ import {
   DetailedDictionary,
   Dictionary,
   EditWord,
+  Suggestion,
   UserDictionary,
   Word
 } from "/server/skeleton/dictionary";
@@ -182,7 +183,7 @@ type ProcessType = {
     get: {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
       response: {
-        200: WithSize<Word>,
+        200: {words: WithSize<Word>, suggestions: Array<Suggestion>},
         400: CustomError<"noSuchDictionaryNumber">
       }
     },

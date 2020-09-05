@@ -22,6 +22,7 @@ import {
   DictionaryAuthorityUtil,
   DictionaryFullAuthority,
   Serializer,
+  Suggestion,
   Word,
   WordModel
 } from "/server/model/dictionary";
@@ -306,7 +307,7 @@ export class DictionarySchema {
     await Promise.all(promises);
   }
 
-  public async search(parameter: NormalSearchParameter, range?: QueryRange): Promise<WithSize<Word>> {
+  public async search(parameter: NormalSearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     let search = parameter.search;
     let mode = parameter.mode;
     let type = parameter.type;
@@ -372,12 +373,15 @@ export class DictionarySchema {
         return WordModel.find();
       }
     })();
+    let suggestionQuery = WordModel.find().where("dictionary", this).where("variations.name", createNeedle(type));
     let finalQuery = rawQuery.sort("name");
     let restrictedQuery = QueryRange.restrict(finalQuery, range);
     let countQuery = WordModel.countDocuments(finalQuery.getQuery());
     let hitWords = await restrictedQuery.exec();
     let hitSize = await countQuery.exec();
-    return [hitWords, hitSize];
+    let hitSuggestionWords = await suggestionQuery.exec();
+    let hitSuggestions = hitSuggestionWords.map((word) => new Suggestion("test", word));
+    return {words: [hitWords, hitSize], suggestions: hitSuggestions};
   }
 
   public async countWords(): Promise<number> {
