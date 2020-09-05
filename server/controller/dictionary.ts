@@ -329,7 +329,7 @@ export class DictionaryController extends Controller {
       let hitWords = hitResult.words[0].map(WordCreator.create);
       let hitSize = hitResult.words[1];
       let hitSuggestions = hitResult.suggestions.map(SuggestionCreator.create);
-      let body = {words: [hitWords, hitSize], suggestions: hitSuggestions} as any;
+      let body = {words: [hitWords, hitSize], suggestions: hitSuggestions} as const;
       Controller.response(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
@@ -446,7 +446,7 @@ export class DictionaryController extends Controller {
     });
     let hitDictionaries = await Promise.all(hitPromises);
     let hitSize = hitResult[1];
-    let body = [hitDictionaries, hitSize] as any;
+    let body = [hitDictionaries, hitSize] as const;
     Controller.response(response, body);
   }
 
