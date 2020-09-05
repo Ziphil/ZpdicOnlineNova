@@ -1,7 +1,7 @@
 //
 
 import {
-  DocumentQuery
+  Query
 } from "mongoose";
 import {
   Word,
@@ -31,7 +31,7 @@ export class NormalSearchParameter {
     this.type = type;
   }
 
-  public createQuery(): DocumentQuery<Array<Word>, Word> {
+  public createQuery(): Query<Array<Word>> {
     let keys = this.createKeys();
     let needle = this.createNeedle();
     let eachQueries = keys.map((key) => WordModel.find().where(key, needle).getQuery());
@@ -39,7 +39,9 @@ export class NormalSearchParameter {
     return query;
   }
 
-  public createSuggestionQuery(): DocumentQuery<Array<Word>, Word> | null {
+  // この検索パラメータからサジェストされる単語を検索するためのクエリを返します。
+  // 何もサジェストする必要がない場合は null を返します。
+  public createSuggestionQuery(): Query<Array<Word>> | null {
     let mode = this.mode;
     let type = this.type;
     if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {

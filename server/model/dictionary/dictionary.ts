@@ -109,9 +109,8 @@ export class DictionarySchema {
     let query = DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
     let restrictedQuery = QueryRange.restrict(query, range);
     let countQuery = DictionaryModel.countDocuments(query.getQuery());
-    let hitDictionaries = await restrictedQuery.exec();
-    let hitSize = await countQuery.exec();
-    return [hitDictionaries, hitSize];
+    let result = await Promise.all([restrictedQuery, countQuery]);
+    return result;
   }
 
   public static async findOneByNumber(number: number): Promise<Dictionary | null> {
@@ -304,21 +303,32 @@ export class DictionarySchema {
     await Promise.all(promises);
   }
 
-  public async search(parameter: NormalSearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
+  // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
+  // 現状、サジェストのリストを作るのに、まず MongoDB のクエリによってサジェストされるべき単語を取得し、その後に JavaScript 側で再び各単語を走査してサジェストオブジェクトを作成しています。
+  // この処理が二度手間になっているので、MongoDB のクエリだけで処理できるように実装を変えるべきです。
+  public async search(this: Dictionary, parameter: NormalSearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     let query = parameter.createQuery().where("dictionary", this).sort("name");
     let suggestionQuery = parameter.createSuggestionQuery()?.where("dictionary", this);
     let restrictedQuery = QueryRange.restrict(query, range);
     let countQuery = WordModel.countDocuments(query.getQuery());
-    let hitWords = await restrictedQuery.exec();
-    let hitSize = await countQuery.exec();
-    let hitSuggestions = await (async () => {
+    let hitSuggestionPromise = (async () => {
       if (suggestionQuery !== undefined) {
         let hitSuggestionWords = await suggestionQuery.exec();
-        return hitSuggestionWords.map((word) => new Suggestion("test", word));
+        let hitSuggestions = [];
+        for (let word of hitSuggestionWords) {
+          for (let variation of word.variations) {
+            if (variation.name === parameter.search) {
+              let suggestion = new Suggestion(variation.title, word);
+              hitSuggestions.push(suggestion);
+            }
+          }
+        }
+        return hitSuggestions;
       } else {
         return [];
       }
     })();
+    let [hitWords, hitSize, hitSuggestions] = await Promise.all([restrictedQuery, countQuery, hitSuggestionPromise]);
     return {words: [hitWords, hitSize], suggestions: hitSuggestions};
   }
 
