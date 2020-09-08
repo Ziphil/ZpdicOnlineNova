@@ -59,7 +59,7 @@ export class RegisterForm extends StoreComponent<Props, State> {
     let email = this.state.email;
     let password = this.state.password;
     let token = await grecaptcha.execute(Main.getRecaptchaSite(), {action: "registerUser"});
-    let response = await this.requestPost("registerUser", {name, email, password}, true);
+    let response = await this.requestPost("registerUser", {name, email, password, token}, true);
     let body = response.data;
     if (response.status === 200) {
       let loginResponse = await this.login({name, password});

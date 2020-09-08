@@ -22,6 +22,9 @@ import {
   verifyUser
 } from "/server/controller/middle";
 import {
+  RecaptchaUtil
+} from "/server/controller/recapthca";
+import {
   SERVER_PATH
 } from "/server/controller/type";
 import {
@@ -63,13 +66,20 @@ export class UserController extends Controller {
     let name = CastUtil.ensureString(request.body.name);
     let email = CastUtil.ensureString(request.body.email);
     let password = CastUtil.ensureString(request.body.password);
+    let token = CastUtil.ensureString(request.body.token);
     try {
-      let user = await UserModel.register(name, email, password);
-      let body = UserCreator.create(user);
-      let subject = "ユーザー登録完了のお知らせ";
-      let text = getMailText("registerUser", {name});
-      sendMail(user.email, subject, text);
-      Controller.response(response, body);
+      let result = await RecaptchaUtil.verify(token);
+      if (result.score >= 0.5) {
+        let user = await UserModel.register(name, email, password);
+        let body = UserCreator.create(user);
+        let subject = "ユーザー登録完了のお知らせ";
+        let text = getMailText("registerUser", {name});
+        sendMail(user.email, subject, text);
+        Controller.response(response, body);
+      } else {
+        let body = CustomError.ofType("recaptchaRejected");
+        Controller.responseError(response, body);
+      }
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError") {
@@ -79,6 +89,8 @@ export class UserController extends Controller {
             return CustomError.ofType("duplicateUserEmail");
           } else if (error.type === "invalidPassword") {
             return CustomError.ofType("invalidPassword");
+          } else if (error.type === "recaptchaError") {
+            return CustomError.ofType("recaptchaError");
           }
         } else if (error.name === "ValidationError") {
           if (error.errors.name) {

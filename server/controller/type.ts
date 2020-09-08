@@ -305,10 +305,10 @@ type ProcessType = {
   registerUser: {
     get: Noop,
     post: {
-      request: {name: string, email: string, password: string},
+      request: {name: string, email: string, password: string, token: string},
       response: {
         200: User,
-        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidEmail" | "invalidPassword">
+        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidEmail" | "invalidPassword" | "recaptchaRejected" | "recaptchaError">
       }
     }
   },
