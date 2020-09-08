@@ -145,17 +145,28 @@ export class UserController extends Controller {
   public async [Symbol()](request: PostRequest<"issueUserResetToken">, response: PostResponse<"issueUserResetToken">): Promise<void> {
     let name = CastUtil.ensureString(request.body.name);
     let email = CastUtil.ensureString(request.body.email);
+    let token = CastUtil.ensureString(request.body.token);
     try {
-      let {user, key} = await UserModel.issueResetToken(name, email);
-      let url = "http://" + request.get("host") + "/reset?key=" + key;
-      let subject = "パスワードリセットのお知らせ";
-      let text = MailUtil.getText("issueUserResetToken", {url});
-      MailUtil.send(user.email, subject, text);
-      Controller.response(response, null);
+      let result = await RecaptchaUtil.verify(token);
+      if (result.score >= 0.5) {
+        let {user, key} = await UserModel.issueResetToken(name, email);
+        let url = "http://" + request.get("host") + "/reset?key=" + key;
+        let subject = "パスワードリセットのお知らせ";
+        let text = MailUtil.getText("issueUserResetToken", {url});
+        MailUtil.send(user.email, subject, text);
+        Controller.response(response, null);
+      } else {
+        let body = CustomError.ofType("recaptchaRejected");
+        Controller.responseError(response, body);
+      }
     } catch (error) {
       let body = (() => {
-        if (error.name === "CustomError" && error.type === "noSuchUser") {
-          return CustomError.ofType("noSuchUser");
+        if (error.name === "CustomError") {
+          if (error.type === "noSuchUser") {
+            return CustomError.ofType("noSuchUser");
+          } else if (error.type === "recaptchaError") {
+            return CustomError.ofType("recaptchaError");
+          }
         }
       })();
       Controller.responseError(response, body, error);

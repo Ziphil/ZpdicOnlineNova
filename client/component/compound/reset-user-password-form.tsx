@@ -23,6 +23,9 @@ import {
   getMessage
 } from "/client/component/message";
 import {
+  Main
+} from "/client/index";
+import {
   createValidate
 } from "/client/util/misc";
 import {
@@ -52,7 +55,8 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
   private async issueResetToken(): Promise<void> {
     let name = this.state.name;
     let email = this.state.email;
-    let response = await this.requestPost("issueUserResetToken", {name, email}, true);
+    let token = await grecaptcha.execute(Main.getRecaptchaSite(), {action: "issueUserResetToken"});
+    let response = await this.requestPost("issueUserResetToken", {name, email, token}, true);
     let body = response.data;
     if (response.status === 200) {
       this.setState({errorType: "userResetTokenIssued", errorStyle: "information"});
