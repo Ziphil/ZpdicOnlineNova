@@ -31,7 +31,11 @@ class Main {
 
   private appendRecaptchaElement(): void {
     let element = document.createElement("script");
-    element.src = "https://www.google.com/recaptcha/api.js?render=6LeWRMkZAAAAADzUAl1LAFr9fT7kdW7yoVn6Qhms";
+    if (process.env["NODE_ENV"] === "development") {
+      element.src = "https://www.google.com/recaptcha/api.js?render=6LeWRMkZAAAAADzUAl1LAFr9fT7kdW7yoVn6Qhms";
+    } else {
+      element.src = "https://www.google.com/recaptcha/api.js?render=6LerQ8kZAAAAAI6vbQV_Rk-AU7-MlTCayfbejh8L";
+    }
     document.head.appendChild(element);
   }
 
