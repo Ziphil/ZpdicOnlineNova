@@ -23,6 +23,9 @@ import {
   getMessage
 } from "/client/component/message";
 import {
+  Main
+} from "/client/index";
+import {
   createValidate
 } from "/client/util/misc";
 import {
@@ -55,6 +58,7 @@ export class RegisterForm extends StoreComponent<Props, State> {
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
+    let token = await grecaptcha.execute(Main.getRecaptchaSite(), {action: "registerUser"});
     let response = await this.requestPost("registerUser", {name, email, password}, true);
     let body = response.data;
     if (response.status === 200) {

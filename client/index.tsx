@@ -12,8 +12,13 @@ import {
 export const TITLES = ["ZpDIC", "Online"];
 export const VERSION = "2.11.0";
 
+const RECAPTCHA_SITES = {
+  development: "6LeWRMkZAAAAADzUAl1LAFr9fT7kdW7yoVn6Qhms",
+  production: "6LerQ8kZAAAAAI6vbQV_Rk-AU7-MlTCayfbejh8L"
+};
 
-class Main {
+
+export class Main {
 
   public main(): void {
     this.appendIconElement();
@@ -31,16 +36,20 @@ class Main {
 
   private appendRecaptchaElement(): void {
     let element = document.createElement("script");
-    if (process.env["NODE_ENV"] === "development") {
-      element.src = "https://www.google.com/recaptcha/api.js?render=6LeWRMkZAAAAADzUAl1LAFr9fT7kdW7yoVn6Qhms";
-    } else {
-      element.src = "https://www.google.com/recaptcha/api.js?render=6LerQ8kZAAAAAI6vbQV_Rk-AU7-MlTCayfbejh8L";
-    }
+    element.src = "https://www.google.com/recaptcha/api.js?render=" + Main.getRecaptchaSite();
     document.head.appendChild(element);
   }
 
   private render(): void {
     render(<Root/>, document.getElementById("root"));
+  }
+
+  public static getRecaptchaSite(): string {
+    if (process.env["NODE_ENV"] === "development") {
+      return RECAPTCHA_SITES["development"];
+    } else {
+      return RECAPTCHA_SITES["production"];
+    }
   }
 
 }
