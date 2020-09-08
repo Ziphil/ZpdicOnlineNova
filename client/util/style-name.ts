@@ -3,7 +3,7 @@
 
 export class StyleNameUtil {
 
-  public static createArray(...specs: Array<StyleNameSpec>): Array<string> {
+  private static createArray(...specs: Array<StyleNameSpec>): Array<string> {
     let styleNames = [];
     for (let spec of specs) {
       if (spec !== null && spec !== undefined) {
