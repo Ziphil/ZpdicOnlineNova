@@ -33,7 +33,7 @@ import {
   swap
 } from "/client/util/misc";
 import {
-  createStyleName
+  StyleNameUtil
 } from "/client/util/style-name";
 import {
   Dictionary,
@@ -290,7 +290,7 @@ export class WordEditor extends StoreComponent<Props, State> {
         <div styleName="inner" key={index}>
           <div styleName="form">
             <Input className={styles["title"]} value={relation.title} label={titleLabel} onSet={this.setWord((title) => word.relations[index].title = title)}/>
-            <ControlGroup className={createStyleName(styles["name"], styles["relation-input"])}>
+            <ControlGroup className={StyleNameUtil.create(styles["name"], styles["relation-input"])}>
               <Input value={relation.name} label={nameLabel} readOnly={true}/>
               <Button label="変更" onClick={() => this.openRelationChooser(index)}/>
             </ControlGroup>

@@ -16,7 +16,7 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  createStyleName
+  StyleNameUtil
 } from "/client/util/style-name";
 
 
@@ -30,7 +30,7 @@ export class Overlay extends Component<Props, State> {
   };
 
   public render(): ReactNode {
-    let contentStyleName = createStyleName("content-wrapper", this.props.size);
+    let contentStyleName = StyleNameUtil.create("content-wrapper", this.props.size);
     let displayedChildren = (() => {
       if (this.props.page !== undefined && Array.isArray(this.props.children)) {
         return this.props.children[this.props.page];
