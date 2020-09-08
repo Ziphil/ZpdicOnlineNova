@@ -39,7 +39,7 @@ export const JWT_SECRET = process.env["JWT_SECRET"] || "jwt-secret";
 export const SENDGRID_KEY = process.env["SENDGRID_KEY"] || "dummy";
 
 
-class Main {
+export class Main {
 
   private application: Express;
 
