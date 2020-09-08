@@ -50,9 +50,8 @@ import {
   User as UserSkeleton
 } from "/server/skeleton/user";
 import {
-  takeErrorLog,
-  takeLog
-} from "/server/util/misc";
+  LogUtil
+} from "/server/util/log";
 import {
   QueryRange
 } from "/server/util/query";
@@ -155,8 +154,8 @@ export class DictionarySchema {
         stream.on("words", (words) => {
           WordModel.insertMany(words);
           count += words.length;
-          takeLog("dictionary/upload", `uploading: ${count}`);
-          takeLog("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(", "));
+          LogUtil.log("dictionary/upload", `uploading: ${count}`);
+          LogUtil.log("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(", "));
         });
         stream.on("other", (key, data) => {
           externalData = Object.assign(externalData, {[key]: data});
@@ -167,7 +166,7 @@ export class DictionarySchema {
         });
         stream.on("error", (error) => {
           this.status = "error";
-          takeErrorLog("dictionary/upload", "error occurred in uploading", error);
+          LogUtil.error("dictionary/upload", "error occurred in uploading", error);
           resolve(this);
         });
         stream.start();
@@ -176,7 +175,7 @@ export class DictionarySchema {
         resolve(this);
       }
     });
-    takeLog("dictionary/upload", `number: ${this.number}, start uploading`);
+    LogUtil.log("dictionary/upload", `number: ${this.number}, start uploading`);
     await promise;
     this.externalData = externalData;
     await this.save();
@@ -265,7 +264,7 @@ export class DictionarySchema {
     }
     this.updatedDate = new Date();
     await this.save();
-    takeLog("dictionary/edit-word", {currentWord, resultWord});
+    LogUtil.log("dictionary/edit-word", {currentWord, resultWord});
     return resultWord;
   }
 
@@ -277,7 +276,7 @@ export class DictionarySchema {
     } else {
       throw new CustomError("noSuchWordNumber");
     }
-    takeLog("dictionary/delete-word", {word});
+    LogUtil.log("dictionary/delete-word", {word});
     return word;
   }
 

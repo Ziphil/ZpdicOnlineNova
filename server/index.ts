@@ -24,9 +24,8 @@ import {
   UserController
 } from "/server/controller";
 import {
-  takeErrorLog,
-  takeLog
-} from "/server/util/misc";
+  LogUtil
+} from "/server/util/log";
 
 
 dotenv.config({path: "./variable.env"});
@@ -124,7 +123,7 @@ export class Main {
   private setupFallback(): void {
     this.application.use("/api*", (request, response, next) => {
       let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
-      takeLog("index", `not found: ${fullUrl}`);
+      LogUtil.log("index", `not found: ${fullUrl}`);
       response.status(404).end();
     });
     this.application.use("*", (request, response, next) => {
@@ -142,7 +141,7 @@ export class Main {
 
   private setupErrorHandler(): void {
     let handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
-      takeErrorLog("index", "uncaught error occurred", error);
+      LogUtil.error("index", "uncaught error occurred", error);
       response.status(500).end();
     };
     this.application.use(handler);
@@ -150,7 +149,7 @@ export class Main {
 
   private listen(): void {
     this.application.listen(+PORT, () => {
-      takeLog("index", `listening on port ${PORT}`);
+      LogUtil.log("index", `listening on port ${PORT}`);
     });
   }
 
