@@ -19,3 +19,7 @@ body {
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
 }
+
+:global(.grecaptcha-badge) {
+  visibility: hidden;
+}

@@ -56,14 +56,15 @@ $colors: (
 $background-color: background-color(map-get($colors, primary));
 $strong-background-color: darken($background-color, 10%);
 $header-background-color: darken(map-get($colors, primary), 10%);
-$footer-background-color: tint(map-get($colors, primary), 88%);
 
 $head-color: map-get($colors, primary);
 $light-color: map-get($colors, primary);
 $light-border-color: border-color(map-get($colors, primary));
 $dark-border-color: border-color(map-get($colors, primary), false);
 $pale-border-color: rgba($light-border-color, 0.3);
+
 $logo-color: darken(map-get($colors, primary), 20%);
+$footer-color: map-get($colors, primary);
 
 $link-color: map-get($colors, secondary);
 $link-hover-color: hover-color($link-color, false);
@@ -143,7 +144,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   }
 }
 
-@mixin page($margin-top: 130px, $margin-bottom: 60px) {
+@mixin page($margin-top: 130px, $margin-bottom: 80px) {
   width: calc(100% - #{$page-horizontal-margin} * 2);
   margin: $margin-top $page-horizontal-margin $margin-bottom $page-horizontal-margin;
   padding: 0px;
