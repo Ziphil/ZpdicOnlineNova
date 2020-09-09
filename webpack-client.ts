@@ -45,6 +45,17 @@ let config = {
         ]
       },
       {
+        test: /\.yml$/,
+        use: [
+          {
+            loader: "json-loader"
+          },
+          {
+            loader: "yaml-flat-loader"
+          }
+        ]
+      },
+      {
         test: /\.js$/,
         enforce: "pre",
         loader: "source-map-loader"

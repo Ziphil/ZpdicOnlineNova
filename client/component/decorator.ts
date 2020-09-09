@@ -16,6 +16,10 @@ import {
 } from "react";
 import * as css from "react-css-modules";
 import {
+  IntlShape,
+  injectIntl as reactInjectIntl
+} from "react-intl";
+import {
   RouteComponentProps
 } from "react-router";
 import {
@@ -26,9 +30,9 @@ import {
 } from "/client/component/store";
 
 
-export function applyStyle(component: any): ClassDecorator {
+export function applyStyle(style: any): ClassDecorator {
   let options = {allowMultiple: true, handleNotFoundStyleName: "ignore"};
-  let decorator = css(component, options);
+  let decorator = css(style, options);
   return decorator;
 }
 
@@ -40,18 +44,24 @@ export function debounce(duration: number): MethodDecorator {
   return decorator;
 }
 
-export function route<P extends Partial<RouteComponentProps<any>>, C extends ComponentClass<P>>(clazz: C & ComponentClass<P>): C & ComponentClass<P> {
-  let anyClass = clazz as any;
-  let resultClass = withRouter(anyClass) as any;
-  return resultClass;
+export function route<P extends Partial<RouteComponentProps<any>>, C extends ComponentClass<P>>(component: C & ComponentClass<P>): C & ComponentClass<P> {
+  let anyComponent = component as any;
+  let resultComponent = withRouter(anyComponent) as any;
+  return resultComponent;
 }
 
-export function inject<P extends {store?: GlobalStore}, C extends ComponentClass<P>>(clazz: C & ComponentClass<P>): C & ComponentClass<P> {
-  return mobxInject("store")(clazz);
+export function inject<P extends {store?: GlobalStore}, C extends ComponentClass<P>>(component: C & ComponentClass<P>): C & ComponentClass<P> {
+  return mobxInject("store")(component);
 }
 
-export function observer<P extends any, C extends ComponentClass<P>>(clazz: C & ComponentClass<P>): C & ComponentClass<P> {
-  return mobxObserver(clazz);
+export function intl<P extends {intl?: IntlShape}, C extends ComponentClass<P>>(component: C & ComponentClass<P>): C & ComponentClass<P> {
+  let anyComponent = component as any;
+  let resultComponent = reactInjectIntl(anyComponent) as any;
+  return resultComponent;
+}
+
+export function observer<P extends any, C extends ComponentClass<P>>(component: C & ComponentClass<P>): C & ComponentClass<P> {
+  return mobxObserver(component);
 }
 
 export let observable = mobxObservable;

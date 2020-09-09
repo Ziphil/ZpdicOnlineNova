@@ -12,6 +12,9 @@ import {
   ReactNode
 } from "react";
 import {
+  IntlProvider
+} from "react-intl";
+import {
   Route,
   Router,
   Switch
@@ -20,7 +23,9 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  inject,
+  observer
 } from "/client/component/decorator";
 import {
   DashboardPage,
@@ -42,6 +47,7 @@ import {
 } from "/client/component/store";
 
 
+@observer
 @applyStyle(require("./root.scss"))
 export class Root extends StoreComponent<Props, State> {
 
@@ -63,23 +69,37 @@ export class Root extends StoreComponent<Props, State> {
     this.setState({ready: true});
   }
 
+  private getMessages(): Record<string, string> {
+    let locale = this.store.locale;
+    if (locale === "ja") {
+      return require("../language/ja.yml");
+    } else if (locale === "en") {
+      return require("../language/en.yml");
+    } else {
+      return require("../language/ja.yml");
+    }
+  }
+
   public render(): ReactNode {
+    let messages = this.getMessages();
     let node = (this.state.ready) && (
       <Router history={this.history}>
         <Provider store={this.store}>
-          <Switch>
-            <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
-            <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
-            <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
-            <GuestRoute exact path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
-            <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-            <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
-            <Route exact path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
-            <PrivateRoute exact path="/dictionary-setting/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-            <PrivateRoute exact path="/dictionary-setting/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-            <Route exact path="/list" component={DictionaryListPage}/>
-            <Route exact path="/news" component={NotificationPage}/>
-          </Switch>
+          <IntlProvider defaultLocale="ja" locale={this.store.locale} messages={messages}>
+            <Switch>
+              <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
+              <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
+              <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
+              <GuestRoute exact path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
+              <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+              <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
+              <Route exact path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+              <PrivateRoute exact path="/dictionary-setting/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+              <PrivateRoute exact path="/dictionary-setting/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+              <Route exact path="/list" component={DictionaryListPage}/>
+              <Route exact path="/news" component={NotificationPage}/>
+            </Switch>
+          </IntlProvider>
         </Provider>
       </Router>
     );

@@ -12,6 +12,9 @@ import {
 export class GlobalStore {
 
   @observable
+  public locale: string = "ja";
+
+  @observable
   public user: DetailedUser | null = null;
 
   @observable

@@ -9,11 +9,18 @@ import {
   AxiosResponse
 } from "axios";
 import {
-  Component as ReactComponent
+  Component as ReactComponent,
+  ReactNode
 } from "react";
+import {
+  IntlShape
+} from "react-intl";
 import {
   RouteComponentProps
 } from "react-router-dom";
+import {
+  Primitive
+} from "ts-essentials";
 import {
   GlobalStore
 } from "/client/component/store";
@@ -26,7 +33,7 @@ import {
 } from "/server/controller/type";
 
 
-export class Component<P, S, H = any> extends ReactComponent<{styles?: {[key: string]: string | undefined}} & P, S, H> {
+export class Component<P, S, H = any> extends ReactComponent<{styles?: StylesType, intl?: IntlShape} & P, S, H> {
 
   public state!: S;
 
@@ -36,6 +43,12 @@ export class Component<P, S, H = any> extends ReactComponent<{styles?: {[key: st
   }
 
   protected initialize(): void {
+  }
+
+  protected trans(id: string | number, values?: Record<string, Primitive | FormatFunction<string, string>>): string;
+  protected trans(id: string | number, values?: Record<string, Primitive | ReactNode | FormatFunction<ReactNode, ReactNode>>): ReactNode {
+    let defaultMessage = "[" + id + "?]";
+    return this.props.intl!.formatMessage({id, defaultMessage}, values);
   }
 
 }
@@ -162,3 +175,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   }
 
 }
+
+
+type StylesType = {[key: string]: string | undefined};
+type FormatFunction<T, R> = (parts: Array<string | T>) => R;

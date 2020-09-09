@@ -17,11 +17,12 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./login-form.scss"))
 export class LoginForm extends StoreComponent<Props, State> {
 
@@ -60,11 +61,11 @@ export class LoginForm extends StoreComponent<Props, State> {
     let node = (
       <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
-          <Input label="ユーザー ID" value={this.state.name} onSet={(name) => this.setState({name})}/>
-          <Input label="パスワード" type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
+          <Input label={this.trans("common.userName")} value={this.state.name} onSet={(name) => this.setState({name})}/>
+          <Input label={this.trans("common.password")} type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label="ログイン" iconLabel="&#xF2F6;" style="information" reactive={true} onClick={this.performLogin.bind(this)}/>
+              <Button label={this.trans("loginForm.login")} iconLabel="&#xF2F6;" style="information" reactive={true} onClick={this.performLogin.bind(this)}/>
               {registerNode}
             </div>
             <div styleName="row">

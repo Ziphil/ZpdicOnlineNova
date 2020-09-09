@@ -1,0 +1,5 @@
+common:
+  userName: ユーザー ID
+  password: パスワード
+loginForm:
+  login: ログイン
