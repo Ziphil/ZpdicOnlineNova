@@ -17,11 +17,9 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
-import {
-  getMessage
-} from "/client/component/message";
 import {
   Main
 } from "/client/index";
@@ -29,11 +27,14 @@ import {
   createValidate
 } from "/client/util/misc";
 import {
+  PopupUtil
+} from "/client/util/popup";
+import {
   validatePassword as rawValidatePassword
 } from "/server/model/validation";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./reset-user-password-form.scss"))
 export class ResetUserPasswordForm extends StoreComponent<Props, State> {
 
@@ -99,7 +100,7 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
   }
 
   private renderResetPasswordForm(): ReactNode {
-    let validate = createValidate(rawValidatePassword, getMessage("invalidPassword"));
+    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidPassword"));
     let node = (
       <FormPane errorType={this.state.errorType} errorStyle={this.state.errorStyle} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">

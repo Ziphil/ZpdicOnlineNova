@@ -13,15 +13,16 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   observer,
   route
 } from "/client/component/decorator";
 import {
-  getMessage
-} from "/client/component/message";
+  PopupUtil
+} from "/client/util/popup";
 
 
-@route @inject @observer
+@route @inject @observer @intl
 @applyStyle(require("./popup-information-pane.scss"))
 export class PopupInformationPane extends StoreComponent<Props, State> {
 
@@ -30,7 +31,7 @@ export class PopupInformationPane extends StoreComponent<Props, State> {
     let specNodes = specs.reverse().map((spec) => {
       let specNode = (
         <div styleName="pane-wrapper" key={spec.id}>
-          <InformationPane texts={[getMessage(spec.type)]} style={spec.style} onClose={() => this.props.store!.clearPopup(spec.id)}/>
+          <InformationPane texts={[PopupUtil.getMessage(this.props.intl!, spec.type)]} style={spec.style} onClose={() => this.props.store!.clearPopup(spec.id)}/>
         </div>
       );
       return specNode;

@@ -15,20 +15,21 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
-  getMessage
-} from "/client/component/message";
-import {
   createValidate
 } from "/client/util/misc";
+import {
+  PopupUtil
+} from "/client/util/popup";
 import {
   validatePassword as rawValidatePassword
 } from "/server/model/validation";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./change-user-password-form.scss"))
 export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
 
@@ -48,7 +49,7 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let validate = createValidate(rawValidatePassword, getMessage("invalidPassword"));
+    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidPassword"));
     let node = (
       <form styleName="root">
         <Input label="パスワード" type="flexible" value={this.state.password} validate={validate} usesTooltip={true} onSet={(password) => this.setState({password})}/>

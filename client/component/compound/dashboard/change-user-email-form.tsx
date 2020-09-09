@@ -15,20 +15,21 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
-  getMessage
-} from "/client/component/message";
-import {
   createValidate
 } from "/client/util/misc";
+import {
+  PopupUtil
+} from "/client/util/popup";
 import {
   EMAIL_REGEXP
 } from "/server/model/validation";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./change-user-email-form.scss"))
 export class ChangeUserEmailForm extends StoreComponent<Props, State> {
 
@@ -50,7 +51,7 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let validate = createValidate(EMAIL_REGEXP, getMessage("invalidEmail"));
+    let validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidEmail"));
     let node = (
       <form styleName="root">
         <Input label="メールアドレス" value={this.state.email} validate={validate} usesTooltip={true} onSet={(email) => this.setState({email})}/>
