@@ -50,6 +50,47 @@ popup:
   messageNotFound: "ポップアップ用のメッセージが設定されていません。設定ミスの可能性がありますので、お手数ですが管理者までご連絡ください。"
   unexpected: "予期しないエラーが発生しました。バグの可能性がありますので、お手数ですが管理者までご連絡ください。"
 
+changeUserEmailForm:
+  email: "メールアドレス"
+  confirm: "変更"
+changeUserPasswordForm:
+  password: "パスワード"
+  confirm: "変更"
+createDictionaryForm:
+  defaultName: "新規辞書"
+  name: "名称"
+  confirm: "作成"
+changeDictionaryExplanationForm:
+  explanation: "説明"
+  confirm: "変更"
+changeDictionaryNameForm:
+  name: "表示名"
+  confirm: "変更"
+changeDictionaryParamNameForm:
+  paramName: "URL 用名称"
+  confirm: "変更"
+changeDictionarySecretForm:
+  public: "表示"
+  secret: "非表示"
+  confirm: "変更"
+  caution: |-
+    この設定は、辞書一覧ページに表示されるかどうかのみに関わります。
+    これを「非表示」にしても、辞書の閲覧は誰でも可能なままです。
+deleteDictionaryForm:
+  confirm: "削除"
+  caution: |-
+    この操作を行うと、辞書データが永久に削除されます。
+    削除した後にデータを戻すことはできませんので、ボタンをクリックする前に入念に確認してください。
+  alert: |-
+    この辞書データを永久に削除します。
+    削除した後にデータを戻すことはできません。
+    本当によろしいですか?
+inviteEditDictionaryForm:
+  userName: "招待先ユーザー ID"
+  confirm: "招待"
+uploadDictionaryForm:
+  file: "ファイル"
+  confirm: "決定"
 dictionaryPane:
   wordSize: "{wordSize, number} 語"
   wordSizeUndefined: "? 語"

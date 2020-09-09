@@ -16,11 +16,12 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./change-dictionary-secret-form.scss"))
 export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
 
@@ -44,19 +45,18 @@ export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let specs = [
-      {value: "public", label: "表示"},
-      {value: "secret", label: "非表示"}
+      {value: "public", label: this.trans("changeDictionarySecretForm.public")},
+      {value: "secret", label: this.trans("changeDictionarySecretForm.secret")}
     ];
     let secretValue = (this.state.secret) ? "secret" : "public";
     let node = (
       <Fragment>
         <form styleName="root">
           <RadioGroup name="secret" specs={specs} value={secretValue} onSet={(value) => this.setState({secret: value === "secret"})}/>
-          <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
+          <Button label={this.trans("changeDictionarySecretForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
         </form>
         <p styleName="caution">
-          この設定は、辞書一覧ページに表示されるかどうかのみに関わります。
-          これを「非表示」にしても、辞書の閲覧は誰でも可能なままです。
+          {this.trans("changeDictionarySecretForm.caution")}
         </p>
       </Fragment>
     );

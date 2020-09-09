@@ -54,8 +54,8 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
     let validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidEmail"));
     let node = (
       <form styleName="root">
-        <Input label="メールアドレス" value={this.state.email} validate={validate} usesTooltip={true} onSet={(email) => this.setState({email})}/>
-        <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
+        <Input label={this.trans("changeUserEmailForm.email")} value={this.state.email} validate={validate} usesTooltip={true} onSet={(email) => this.setState({email})}/>
+        <Button label={this.trans("changeUserEmailForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
     return node;

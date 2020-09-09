@@ -19,6 +19,7 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
@@ -29,7 +30,7 @@ import {
 } from "/server/skeleton/user";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./invite-edit-dictionary-form.scss"))
 export class InviteEditDictionaryForm extends StoreComponent<Props, State> {
 
@@ -70,8 +71,8 @@ export class InviteEditDictionaryForm extends StoreComponent<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Input label="招待先ユーザー ID" value={this.state.userName} onSet={(userName) => this.setState({userName})}/>
-          <Button label="招待" reactive={true} onClick={this.handleClick.bind(this)}/>
+          <Input label={this.trans("inviteEditDictionaryForm.userName")} value={this.state.userName} onSet={(userName) => this.setState({userName})}/>
+          <Button label={this.trans("inviteEditDictionaryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
         </form>
         <div styleName="user">
           <Loading loading={this.state.authorizedUsers === null}>

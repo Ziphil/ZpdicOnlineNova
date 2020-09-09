@@ -15,11 +15,12 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./change-dictionary-explanation-form.scss"))
 export class ChangeDictionaryExplanationForm extends StoreComponent<Props, State> {
 
@@ -44,8 +45,8 @@ export class ChangeDictionaryExplanationForm extends StoreComponent<Props, State
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <TextArea label="説明" font="monospace" value={this.state.explanation} onSet={(explanation) => this.setState({explanation})}/>
-        <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
+        <TextArea label={this.trans("changeDictionaryExplanationForm.explanation")} font="monospace" value={this.state.explanation} onSet={(explanation) => this.setState({explanation})}/>
+        <Button label={this.trans("changeDictionaryExplanationForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
     return node;
