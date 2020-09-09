@@ -83,12 +83,12 @@ export class RegisterForm extends StoreComponent<Props, State> {
     let node = (
       <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
-          <Input label="ユーザー ID" value={this.state.name} validate={validateName} onSet={(name) => this.setState({name})}/>
-          <Input label="メールアドレス" value={this.state.email} validate={validateEmail} onSet={(email) => this.setState({email})}/>
-          <Input label="パスワード" type="flexible" value={this.state.password} validate={validatePassword} onSet={(password) => this.setState({password})}/>
+          <Input label={this.trans("loginForm.userName")} value={this.state.name} validate={validateName} onSet={(name) => this.setState({name})}/>
+          <Input label={this.trans("loginForm.email")} value={this.state.email} validate={validateEmail} onSet={(email) => this.setState({email})}/>
+          <Input label={this.trans("loginForm.password")} type="flexible" value={this.state.password} validate={validatePassword} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label="新規登録" iconLabel="&#xF234;" style="information" reactive={true} onClick={this.performRegister.bind(this)}/>
+              <Button label={this.trans("registerForm.register")} iconLabel="&#xF234;" style="information" reactive={true} onClick={this.performRegister.bind(this)}/>
             </div>
           </div>
         </form>

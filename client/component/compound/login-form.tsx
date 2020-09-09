@@ -56,7 +56,7 @@ export class LoginForm extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let registerNode = (this.props.showsRegister) && (
-      <Button label={this.trans("loginForm.register")} iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
+      <Button label={this.trans("registerForm.register")} iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
     );
     let node = (
       <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>

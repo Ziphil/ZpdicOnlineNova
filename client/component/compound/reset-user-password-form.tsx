@@ -86,11 +86,11 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
     let node = (
       <FormPane errorType={this.state.errorType} errorStyle={this.state.errorStyle} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
-          <Input label="ユーザー ID" value={this.state.name} onSet={(name) => this.setState({name})}/>
-          <Input label="メールアドレス" value={this.state.email} onSet={(email) => this.setState({email})}/>
+          <Input label={this.trans("loginForm.userName")} value={this.state.name} onSet={(name) => this.setState({name})}/>
+          <Input label={this.trans("loginForm.email")} value={this.state.email} onSet={(email) => this.setState({email})}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label="送信" iconLabel="&#xF0E0;" style="information" reactive={true} onClick={this.issueResetToken.bind(this)}/>
+              <Button label={this.trans("resetUserPasswordForm.issue")} iconLabel="&#xF0E0;" style="information" reactive={true} onClick={this.issueResetToken.bind(this)}/>
             </div>
           </div>
         </form>
@@ -104,10 +104,10 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
     let node = (
       <FormPane errorType={this.state.errorType} errorStyle={this.state.errorStyle} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
-          <Input label="新しいパスワード" value={this.state.password} validate={validate} onSet={(password) => this.setState({password})}/>
+          <Input label={this.trans("resetUserPasswordForm.newPassword")} value={this.state.password} validate={validate} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label="変更" iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.resetPassword.bind(this)}/>
+              <Button label={this.trans("resetUserPasswordForm.reset")} iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.resetPassword.bind(this)}/>
             </div>
           </div>
         </form>

@@ -17,7 +17,13 @@ dictionaryPane:
   download: "Download"
 loginForm:
   userName: "User ID"
+  email: "Email address"
   password: "Password"
   login: "Sign in"
-  register: "Sign up"
   resetPassword: "Forgot password"
+registerForm:
+  register: "Sign up"
+resetUserPasswordForm:
+  newPassword: "New password"
+  issue: "Confirm"
+  reset: "Reset"

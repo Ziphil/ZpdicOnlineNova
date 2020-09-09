@@ -61,7 +61,13 @@ dictionaryPane:
   download: "ダウンロード"
 loginForm:
   userName: "ユーザー ID"
+  email: "メールアドレス"
   password: "パスワード"
   login: "ログイン"
-  register: "新規登録"
   resetPassword: "パスワードを忘れた"
+registerForm:
+  register: "新規登録"
+resetUserPasswordForm:
+  newPassword: "新しいパスワード"
+  issue: "送信"
+  reset: "変更"
