@@ -18,7 +18,7 @@ export class GlobalStore {
   public user: DetailedUser | null = null;
 
   @observable
-  public popupSpecs: Array<{id: number, type: string, style: PopupStyle}> = [];
+  public popupSpecs: Array<PopupSpec> = [];
 
   private addPopup(type: string, style: PopupStyle, timeout: number | null): void {
     let date = new Date();
@@ -53,3 +53,4 @@ export class GlobalStore {
 
 
 type PopupStyle = "error" | "information";
+type PopupSpec = {id: number, type: string, style: PopupStyle};
