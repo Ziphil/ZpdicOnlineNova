@@ -9,9 +9,6 @@ import {
 } from "mobx-react";
 import * as react from "react";
 import {
-  ComponentType,
-  PropsWithChildren,
-  ReactElement,
   ReactNode
 } from "react";
 import {
@@ -64,19 +61,6 @@ export class Root extends StoreComponent<Props, State> {
       this.store.user = null;
     }
     this.setState({ready: true});
-  }
-
-  // 認証済みかどうかを確認し、その結果に応じて表示するコンポーネントを切り返るコンポーネントを返します。
-  private switch(guestComponent: ComponentType<any>, privateComponent: ComponentType<any>): ComponentType<any> {
-    let outerThis = this;
-    let component = function (props: PropsWithChildren<any>): ReactElement {
-      if (outerThis.store.user) {
-        return react.createElement(privateComponent, props);
-      } else {
-        return react.createElement(guestComponent, props);
-      }
-    };
-    return component;
   }
 
   public render(): ReactNode {
