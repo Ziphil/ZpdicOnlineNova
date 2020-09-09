@@ -12,13 +12,22 @@ import {
 export class GlobalStore {
 
   @observable
-  public locale: string = "ja";
+  public locale: string = GlobalStore.getDefaultLocale();
 
   @observable
   public user: DetailedUser | null = null;
 
   @observable
   public popupSpecs: Array<PopupSpec> = [];
+
+  public changeLocale(locale: string): void {
+    this.locale = locale;
+    localStorage.setItem("locale", locale);
+  }
+
+  private static getDefaultLocale(): string {
+    return localStorage.getItem("locale") ?? "ja";
+  }
 
   private addPopup(type: string, style: PopupStyle, timeout: number | null): void {
     let date = new Date();

@@ -42,7 +42,7 @@ export class Header extends StoreComponent<Props, State> {
     );
     let languageNode = (process.env["NODE_ENV"] === "development") && (
       <div styleName="language">
-        <a href="#" onClick={() => this.props.store!.locale = "ja"}>ja</a> · <a href="#" onClick={() => this.props.store!.locale = "en"}>en</a>
+        <a href="#" onClick={() => this.props.store!.changeLocale("ja")}>ja</a> · <a href="#" onClick={() => this.props.store!.changeLocale("en")}>en</a>
       </div>
     );
     let node = (
