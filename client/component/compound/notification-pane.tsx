@@ -11,16 +11,15 @@ import {
   Component
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  intl
 } from "/client/component/decorator";
-import {
-  DateUtil
-} from "/client/util/date";
 import {
   Notification
 } from "/server/skeleton/notification";
 
 
+@intl
 @applyStyle(require("./notification-pane.scss"))
 export class NotificationPane extends Component<Props, State> {
 
