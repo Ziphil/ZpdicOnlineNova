@@ -40,6 +40,11 @@ export class Header extends StoreComponent<Props, State> {
     let userNameNode = (this.state.userName !== null) && (
       <HeaderMenuItem label={"@" + this.state.userName} href="/dashboard"/>
     );
+    let languageNode = (process.env["NODE_ENV"] === "development") && (
+      <div styleName="language">
+        <a href="#" onClick={() => this.props.store!.locale = "ja"}>ja</a> · <a href="#" onClick={() => this.props.store!.locale = "en"}>en</a>
+      </div>
+    );
     let node = (
       <header styleName="root">
         <div styleName="container">
@@ -51,6 +56,7 @@ export class Header extends StoreComponent<Props, State> {
               <HeaderMenuItem label="辞書一覧" iconLabel="&#xF02D;" href="/list"/>
               <HeaderMenuItem label="お知らせ" iconLabel="&#xF05A;" href="/news"/>
             </div>
+            {languageNode}
           </div>
           <div styleName="right">
             {userNameNode}

@@ -35,9 +35,22 @@
   line-height: 1;
 }
 
+.menu {
+  margin: 0px 30px 0px 0px;
+}
+
 .menu >* {
   @include reset-first-margin;
   margin: 0px 0px 0px $control-margin;
+}
+
+.language {
+  color: $background-color;
+  line-height: 1;
+}
+
+.language a {
+  color: inherit;
 }
 
 .right {
