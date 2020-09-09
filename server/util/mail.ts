@@ -1,6 +1,10 @@
 //
 
 import {
+  createIntl,
+  createIntlCache
+} from "@formatjs/intl";
+import {
   ClientResponse
 } from "@sendgrid/client/src/response";
 import {
@@ -9,43 +13,26 @@ import {
 import {
   send as sendMailOriginal
 } from "@sendgrid/mail";
-import {
-  trimIndent
-} from "/client/util/misc";
 
 
-const MAIL_TEXTS = {
-  registerUser: trimIndent`
-    ZpDIC Online へのご登録ありがとうございます。
-    アカウントの作成が完了しましたのでご連絡いたします。
-    ・ ユーザー ID: %name%
-  `,
-  issueUserResetToken: trimIndent`
-    ZpDIC Online をご利用いただきありがとうございます。
-    %br%
-    以下の URL にアクセスし、パスワードリセットの手続きを進めてください。
-    なお、この URL の有効期限は 1 時間です。
-    有効期限が過ぎた場合は、この URL を用いてのパスワードリセットはできなくなりますので、改めて手続きを行ってください。
-    ・ %url%
-  `,
-  footer: trimIndent`
-    ────────────────────
-    ZpDIC Online
-    ・ http://zpdic.ziphil.com
-  `
-};
+const INTL = createIntl(
+  {locale: "ja", messages: require("../language/ja.yml")},
+  createIntlCache()
+);
 
 
 export class MailUtil {
 
-  public static getText(type: keyof typeof MAIL_TEXTS, parameter: {[key: string]: string}): string {
-    let text = MAIL_TEXTS[type];
-    for (let [key, value] of Object.entries(parameter)) {
-      text = text.replace("%" + key + "%", value);
-    }
-    text = text.replace("%br%", "");
-    text += "\n\n" + MAIL_TEXTS.footer;
-    return text;
+  public static getTitle(type: string, values?: Record<string, string>): string {
+    let title = INTL.formatMessage({id: "mail." + type + ".title"}, values);
+    return title;
+  }
+
+  public static getText(type: string, values?: Record<string, string>): string {
+    let text = INTL.formatMessage({id: "mail." + type + ".text"}, values);
+    let footer = INTL.formatMessage({id: "mail.footer"});
+    let wholeText = text + "\n" + footer;
+    return wholeText;
   }
 
   public static async send(to: EmailData, subject: string, text: string): Promise<ClientResponse> {

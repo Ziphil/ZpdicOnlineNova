@@ -1,0 +1,19 @@
+mail:
+  registerUser:
+    title: ユーザー登録完了のお知らせ
+    text: |
+      ZpDIC Online へのご登録ありがとうございます。
+      アカウントの作成が完了しましたのでご連絡いたします。
+      ・ ユーザー ID: {name}
+  issueUserResetToken:
+    title: パスワードリセットのお知らせ
+    text: |
+      ZpDIC Online をご利用いただきありがとうございます。
+      以下の URL にアクセスし、パスワードリセットの手続きを進めてください。
+      なお、この URL の有効期限は 1 時間です。
+      有効期限が過ぎた場合は、この URL を用いてのパスワードリセットはできなくなりますので、改めて手続きを行ってください。
+      ・ {url}
+  footer: |
+    ────────────────────
+    ZpDIC Online
+    ・ http://zpdic.ziphil.com

@@ -69,7 +69,7 @@ export class UserController extends Controller {
       if (result.score >= 0.5) {
         let user = await UserModel.register(name, email, password);
         let body = UserCreator.create(user);
-        let subject = "ユーザー登録完了のお知らせ";
+        let subject = MailUtil.getTitle("registerUser");
         let text = MailUtil.getText("registerUser", {name});
         MailUtil.send(user.email, subject, text);
         Controller.response(response, body);
@@ -151,7 +151,7 @@ export class UserController extends Controller {
       if (result.score >= 0.5) {
         let {user, key} = await UserModel.issueResetToken(name, email);
         let url = "http://" + request.get("host") + "/reset?key=" + key;
-        let subject = "パスワードリセットのお知らせ";
+        let subject = MailUtil.getTitle("issueUserResetToken");
         let text = MailUtil.getText("issueUserResetToken", {url});
         MailUtil.send(user.email, subject, text);
         Controller.response(response, null);
