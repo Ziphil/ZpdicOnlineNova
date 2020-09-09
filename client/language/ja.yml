@@ -91,15 +91,30 @@ inviteEditDictionaryForm:
 uploadDictionaryForm:
   file: "ファイル"
   confirm: "決定"
+dictionaryAggregationPane:
+  dictionarySize: "総辞書数"
+  wordSize: "総単語数"
+dictionaryHeader:
+  add: "追加"
+  setting: "設定"
+  download: "ダウンロード"
 dictionaryPane:
   wordSize: "{wordSize, number} 語"
   wordSizeUndefined: "? 語"
   saving: "保存中"
   error: "エラー"
-  user: "管理者"
+  userName: "管理者"
   updatedDate: "更新日時"
   setting: "設定"
   download: "ダウンロード"
+header:
+  dictionaryList: "辞書一覧"
+  notification: "お知らせ"
+invitationPane:
+  createdDate: "招待日時"
+  userName: "招待者"
+  reject: "拒否"
+  accept: "承認"
 loginForm:
   userName: "ユーザー ID"
   email: "メールアドレス"
@@ -112,3 +127,37 @@ resetUserPasswordForm:
   newPassword: "新しいパスワード"
   issue: "送信"
   reset: "変更"
+searchForm:
+  both: "単語＋訳語"
+  name: "単語"
+  equivalent: "訳語"
+  content: "全文"
+  prefix: "前方"
+  part: "部分"
+  exact: "完全"
+  regular: "正規"
+suggestionPane:
+  maybe: "もしかして"
+  suggestion: "{name} の{title}?"
+userPane:
+  delete: "解除"
+  alert: |-
+    このユーザーの編集権限を解除します。
+    本当によろしいですか?
+wordEditor:
+  name: "単語"
+  tag: "タグ"
+  equivalentTitle: "分類"
+  equivalentNames: "訳語 (コンマ区切り)"
+  informationTitle: "分類"
+  informationText: "内容"
+  variationTitle: "分類"
+  variationName: "変化形"
+  relationTitle: "分類"
+  relationName: "関連語"
+  delete: "削除"
+  confirm: "決定"
+  selectRelation: "変更"
+wordPane:
+  edit: "編集"
+  submit: "決定"

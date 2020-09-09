@@ -16,11 +16,12 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./header.scss"))
 export class Header extends StoreComponent<Props, State> {
 
@@ -53,8 +54,8 @@ export class Header extends StoreComponent<Props, State> {
               <Link href="/" style="plane">ZpDIC</Link>
             </div>
             <div styleName="menu">
-              <HeaderMenuItem label="辞書一覧" iconLabel="&#xF02D;" href="/list"/>
-              <HeaderMenuItem label="お知らせ" iconLabel="&#xF05A;" href="/news"/>
+              <HeaderMenuItem label={this.trans("header.dictionaryList")} iconLabel="&#xF02D;" href="/list"/>
+              <HeaderMenuItem label={this.trans("header.notification")} iconLabel="&#xF05A;" href="/news"/>
             </div>
             {languageNode}
           </div>

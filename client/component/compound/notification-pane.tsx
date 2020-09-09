@@ -41,13 +41,12 @@ export class NotificationPane extends Component<Props, State> {
         return "\uF05A";
       }
     })();
-    let dateString = DateUtil.format(this.props.notification.date, "yyyy/MM/dd HH:mm");
     let node = (
       <div styleName="root">
         <div styleName="head-wrapper">
           <div styleName="icon">{iconString}</div>
           <div styleName="head-right">
-            <div styleName="date">{dateString}</div>
+            <div styleName="date">{this.transDate(this.props.notification.date)}</div>
             <h1 styleName="head">
               {fixedNode}
               {this.props.notification.title}

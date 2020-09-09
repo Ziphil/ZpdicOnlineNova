@@ -92,15 +92,30 @@ inviteEditDictionaryForm:
 uploadDictionaryForm:
   file: "File"
   confirm: "Confirm"
+dictionaryAggregationPane:
+  dictionarySize: "Dictionaries"
+  wordSize: "Words"
+dictionaryHeader:
+  add: "Add"
+  setting: "Setting"
+  download: "Download"
 dictionaryPane:
   wordSize: "{wordSize, plural, one {# word} other {# words}}"
   wordSizeUndefined: "? words"
   saving: "Saving"
   error: "Error"
-  user: "Owner"
+  userName: "Owner"
   updatedDate: "Last updated"
   setting: "Setting"
   download: "Download"
+header:
+  dictionaryList: "Dictionary list"
+  notification: "Notifications"
+invitationPane:
+  createdDate: "Invited"
+  userName: "Inviter"
+  reject: "Reject"
+  accept: "Accept"
 loginForm:
   userName: "User ID"
   email: "Email address"
@@ -113,3 +128,37 @@ resetUserPasswordForm:
   newPassword: "New password"
   issue: "Confirm"
   reset: "Reset"
+searchForm:
+  both: "Both"
+  name: "Headword"
+  equivalent: "Translation"
+  content: "Whole"
+  prefix: "Prefix"
+  part: "Part"
+  exact: "Exact"
+  regular: "Regexp"
+suggestionPane:
+  maybe: "Do you mean"
+  suggestion: "{title} of {name}?"
+userPane:
+  delete: "Delete"
+  alert: |-
+    The permission of this user will be revoked.
+    Are you really sure?
+wordEditor:
+  name: "Word"
+  tag: "Tag"
+  equivalentTitle: "Title"
+  equivalentNames: "Translation (separated by commas)"
+  informationTitle: "Title"
+  informationText: "Content"
+  variationTitle: "Title"
+  variationName: "Variation"
+  relationTitle: "Title"
+  relationName: "Related word"
+  delete: "Delete"
+  confirm: "Confirm"
+  selectRelation: "Select"
+wordPane:
+  edit: "Edit"
+  submit: "Select"

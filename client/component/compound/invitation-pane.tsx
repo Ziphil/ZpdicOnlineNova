@@ -17,6 +17,7 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
@@ -27,7 +28,7 @@ import {
 } from "/server/skeleton/invitation";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./invitation-pane.scss"))
 export class InvitationPane extends StoreComponent<Props, State> {
 
@@ -55,13 +56,13 @@ export class InvitationPane extends StoreComponent<Props, State> {
             </div>
           </div>
           <div styleName="information">
-            <div styleName="information-item">招待日時 — {DateUtil.format(createdDate, "yyyy/MM/dd HH:mm")}</div>
-            <div styleName="information-item">招待者 — @{this.props.invitation.dictionary.user.name}</div>
+            <div styleName="information-item">{this.trans("invitationPane.createdDate")} — {this.transDate(createdDate)}</div>
+            <div styleName="information-item">{this.trans("invitationPane.userName")} — @{this.props.invitation.dictionary.user.name}</div>
           </div>
         </div>
         <div styleName="setting">
-          <Button label="拒否" iconLabel="&#xF05E;" style="caution" reactive={true} onClick={(event) => this.respondInvitation(event, false)}/>
-          <Button label="承認" iconLabel="&#xF164;" style="information" reactive={true} onClick={(event) => this.respondInvitation(event, true)}/>
+          <Button label={this.trans("invitationPane.reject")} iconLabel="&#xF05E;" style="caution" reactive={true} onClick={(event) => this.respondInvitation(event, false)}/>
+          <Button label={this.trans("invitationPane.accept")} iconLabel="&#xF164;" style="information" reactive={true} onClick={(event) => this.respondInvitation(event, true)}/>
         </div>
       </WhitePane>
     );
