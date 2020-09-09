@@ -25,6 +25,9 @@ import {
   GlobalStore
 } from "/client/component/store";
 import {
+  DateUtil
+} from "/client/util/date";
+import {
   MethodType,
   ProcessName,
   RequestType,
@@ -49,6 +52,24 @@ export class Component<P, S, H = any> extends ReactComponent<{styles?: StylesTyp
   protected trans(id: string | number, values?: Record<string, Primitive | ReactNode | FormatFunction<ReactNode, ReactNode>>): ReactNode {
     let defaultMessage = "[" + id + "?]";
     return this.props.intl!.formatMessage({id, defaultMessage}, values);
+  }
+
+  protected transDate(date: Date | number | string | null | undefined): string {
+    if (date !== null && date !== undefined) {
+      let format =  this.props.intl!.formatMessage({id: "common.dateFormat"});
+      let locale = this.props.intl!.locale;
+      return DateUtil.format(date, format, locale);
+    } else {
+      return this.props.intl!.formatMessage({id: "common.dateUndefined"});
+    }
+  }
+
+  protected transNumber(number: number | null | undefined): string {
+    if (number !== null && number !== undefined) {
+      return this.props.intl!.formatNumber(number);
+    } else {
+      return this.props.intl!.formatMessage({id: "common.numberUndefined"});
+    }
   }
 
 }

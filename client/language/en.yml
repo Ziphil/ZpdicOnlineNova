@@ -1,3 +1,23 @@
 common:
-  userName: User ID
-  password: Password
+  dateFormat: "dd/LLL/yyyy HH:mm"
+  dateUndefined: "?"
+  numberUndefined: "?"
+
+popup: 
+  messageNotFound: "The message for this popup is not yet configured."
+
+dictionaryPane:
+  wordSize: "{wordSize, plural, one {# word} other {# words}}"
+  wordSizeUndefined: "? words"
+  saving: "Saving"
+  error: "Error"
+  user: "Owner"
+  updatedDate: "Last updated"
+  setting: "Setting"
+  download: "Download"
+loginForm:
+  userName: "User ID"
+  password: "Password"
+  login: "Sign in"
+  register: "Sign up"
+  resetPassword: "Forgot password"
