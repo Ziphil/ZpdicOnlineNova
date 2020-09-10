@@ -210,7 +210,7 @@ searchForm:
   regular: "正規"
 suggestionPane:
   maybe: "もしかして"
-  suggestion: "{name} の{title}?"
+  suggestion: "{nameNode} の{title}?"
 userPane:
   delete: "解除"
   alert: >-

@@ -211,7 +211,7 @@ searchForm:
   regular: "Regexp"
 suggestionPane:
   maybe: "Do you mean"
-  suggestion: "{title} of {name}?"
+  suggestion: "{title} of {nameNode}?"
 userPane:
   delete: "Delete"
   alert: >-
