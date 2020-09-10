@@ -24,7 +24,7 @@ import {
 @applyStyle(require("./pane-list.scss"))
 export class PaneList<T> extends Component<Props<T>, State<T>> {
 
-  public static defaultProps: Partial<Props<any>> = {
+  public static defaultProps: DefaultProps = {
     column: 1
   };
   public state: State<T> = {
@@ -82,6 +82,9 @@ type Props<T> = {
   renderer: (item: T) => ReactNode,
   column: number,
   size: number
+};
+type DefaultProps = {
+  column: number
 };
 type State<T> = {
   page: number,

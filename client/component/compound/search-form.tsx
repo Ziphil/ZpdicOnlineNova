@@ -25,7 +25,7 @@ import {
 @applyStyle(require("./search-form.scss"))
 export class SearchForm extends Component<Props, State> {
 
-  public static defaultProps: Props = {
+  public static defaultProps: DefaultProps = {
     search: "",
     mode: "both",
     type: "prefix"
@@ -99,6 +99,11 @@ type Props = {
   onModeSet?: (mode: SearchMode) => void;
   onTypeSet?: (type: SearchType) => void;
   onSomeSet?: (some: {search?: string, mode?: SearchMode, type?: SearchType}) => void;
+};
+type DefaultProps = {
+  search: string,
+  mode: SearchMode,
+  type: SearchType
 };
 type State = {
 };

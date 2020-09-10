@@ -20,7 +20,7 @@ import {
 @applyStyle(require("./input.scss"))
 export class Input extends Component<Props, State> {
 
-  public static defaultProps: Props = {
+  public static defaultProps: DefaultProps = {
     value: "",
     type: "text",
     usesTooltip: true,
@@ -113,6 +113,13 @@ type Props = {
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
   onSet?: (value: string) => void,
   className?: string
+};
+type DefaultProps = {
+  value: string,
+  type: "text" | "password" | "flexible",
+  usesTooltip: boolean,
+  readOnly: boolean,
+  disabled: boolean
 };
 type State = {
   type: "text" | "password",

@@ -29,7 +29,7 @@ import {
 @applyStyle(require("./dictionary-header.scss"))
 export class DictionaryHeader extends StoreComponent<Props, State> {
 
-  public static defaultProps: any = {
+  public static defaultProps: DefaultProps = {
     showEditLink: false,
     showSettingLink: false,
     showDownloadLink: true,
@@ -101,6 +101,12 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
 
 type Props = {
   dictionary: Dictionary | null,
+  showEditLink: boolean,
+  showSettingLink: boolean,
+  showDownloadLink: boolean,
+  preserveQuery: boolean
+};
+type DefaultProps = {
   showEditLink: boolean,
   showSettingLink: boolean,
   showDownloadLink: boolean,

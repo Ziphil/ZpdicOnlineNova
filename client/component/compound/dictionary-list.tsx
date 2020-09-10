@@ -26,7 +26,7 @@ import {
 @applyStyle(require("./dictionary-list.scss"))
 export class DictionaryList extends Component<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: DefaultProps = {
     showUser: true,
     showUpdatedDate: true,
     showLinks: false
@@ -64,6 +64,11 @@ type Props = {
   showUpdatedDate: boolean,
   showLinks: boolean,
   size: number
+};
+type DefaultProps = {
+  showUser: boolean,
+  showUpdatedDate: boolean,
+  showLinks: boolean
 };
 type State = {
 };

@@ -25,7 +25,7 @@ import {
 @applyStyle(require("./overlay.scss"))
 export class Overlay extends Component<Props, State> {
 
-  public static defaultProps: any = {
+  public static defaultProps: DefaultProps = {
     size: "small",
     open: false,
     outsideClosable: false
@@ -84,6 +84,11 @@ type Props = {
   page?: number,
   onClose?: (event: MouseEvent<HTMLElement>) => void,
   onBack?: (event: MouseEvent<HTMLButtonElement>) => void
+};
+type DefaultProps = {
+  size: "large" | "small",
+  open: boolean,
+  outsideClosable: boolean
 };
 type State = {
 };

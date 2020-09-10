@@ -40,7 +40,7 @@ import {
 @applyStyle(require("./word-searcher.scss"))
 export class WordSearcher extends StoreComponent<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: DefaultProps = {
     style: "normal",
     showButton: false
   };
@@ -148,6 +148,10 @@ type Props = {
   showButton: boolean,
   onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+};
+type DefaultProps = {
+  style: "normal" | "simple",
+  showButton: boolean
 };
 type State = {
   search: string,

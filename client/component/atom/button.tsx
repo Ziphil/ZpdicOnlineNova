@@ -19,7 +19,7 @@ import {
 @applyStyle(require("./button.scss"))
 export class Button extends Component<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: DefaultProps = {
     position: "alone",
     style: "normal",
     hideLabel: false,
@@ -97,6 +97,13 @@ type Props = {
   disabled: boolean,
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void | PromiseLike<void>,
   className?: string
+};
+type DefaultProps = {
+  position: "alone" | "left" | "right" | "middle",
+  style: "normal" | "caution" | "information" | "simple" | "link",
+  hideLabel: boolean,
+  reactive: boolean,
+  disabled: boolean
 };
 type State = {
   loading: boolean

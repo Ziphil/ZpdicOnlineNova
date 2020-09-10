@@ -32,7 +32,7 @@ import {
 @applyStyle(require("./word-pane.scss"))
 export class WordPane extends Component<Props, State> {
 
-  public static defaultProps: any = {
+  public static defaultProps: DefaultProps = {
     style: "normal",
     showButton: false
   };
@@ -192,6 +192,10 @@ type Props = {
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
   onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+};
+type DefaultProps = {
+  style: "normal" | "simple",
+  showButton: boolean
 };
 type State = {
   editorOpen: boolean

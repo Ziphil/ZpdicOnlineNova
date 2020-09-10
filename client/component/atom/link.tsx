@@ -22,7 +22,7 @@ import {
 @applyStyle(require("./link.scss"))
 export class Link extends StoreComponent<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: DefaultProps = {
     target: "self",
     style: "normal"
   };
@@ -63,6 +63,10 @@ type Props = {
   style: "plane" | "normal",
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void,
   className?: string
+};
+type DefaultProps = {
+  target: "self" | "blank",
+  style: "plane" | "normal"
 };
 type State = {
 };

@@ -22,7 +22,7 @@ import {
 @applyStyle(require("./alert.scss"))
 export class Alert extends Component<Props, State> {
 
-  public static defaultProps: any = {
+  public static defaultProps: DefaultProps = {
     open: false,
     outsideClosable: false,
     confirmLabel: null,
@@ -80,6 +80,12 @@ type Props = {
   onClose?: (event: MouseEvent<HTMLElement>) => void,
   onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void,
   onCancel?: (event: MouseEvent<HTMLButtonElement>) => void
+};
+type DefaultProps = {
+  open: boolean,
+  outsideClosable: boolean,
+  confirmLabel: string | null,
+  cancelLabel: string | null
 };
 type State = {
 };
