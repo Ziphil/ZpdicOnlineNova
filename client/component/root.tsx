@@ -28,6 +28,7 @@ import {
   observer
 } from "/client/component/decorator";
 import {
+  ContactPage,
   DashboardPage,
   DictionaryListPage,
   DictionaryPage,
@@ -98,6 +99,7 @@ export class Root extends StoreComponent<Props, State> {
               <PrivateRoute exact path="/dictionary-setting/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
               <Route exact path="/list" component={DictionaryListPage}/>
               <Route exact path="/news" component={NotificationPage}/>
+              <Route exact path="/contact" component={ContactPage}/>
             </Switch>
           </IntlProvider>
         </Provider>

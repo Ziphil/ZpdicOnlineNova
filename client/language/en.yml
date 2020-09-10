@@ -41,6 +41,8 @@ popup:
     The editing of the word has been completed.
   wordDeleted: >-
     The deletion of the word has been completed.
+  contacted: >-
+    Your message has been sent.
   invalidUserName: >-
     The user ID is invalid.
     It must be composed by alphanumeric characters or underscores or hyphens, contain at least one character other than numerics, and have no more than 30 characters.
@@ -166,6 +168,12 @@ inviteEditDictionaryForm:
 uploadDictionaryForm:
   file: "File"
   confirm: "Confirm"
+contactForm:
+  name: "Name"
+  email: "Email address"
+  subject: "Subject"
+  text: "Content"
+  send: "Send"
 dictionaryAggregationPane:
   dictionarySize: "Dictionaries"
   wordSize: "Words"
@@ -185,6 +193,7 @@ dictionaryPane:
 header:
   dictionaryList: "Dictionary list"
   notification: "Notifications"
+  contact: "Contact"
 invitationPane:
   createdDate: "Invited at"
   userName: "Inviter"
@@ -238,6 +247,8 @@ wordEditor:
 wordPane:
   edit: "Edit"
   submit: "Select"
+contactPage:
+  description: "Contact"
 dashboardPage:
   dictionary: "Dictionaries"
   notification: "Notifications"

@@ -10,6 +10,7 @@ export * from "./dictionary-setting/change-dictionary-secret-form";
 export * from "./dictionary-setting/delete-dictionary-form";
 export * from "./dictionary-setting/invite-edit-dictionary-form";
 export * from "./dictionary-setting/upload-dictionary-form";
+export * from "./contact-form";
 export * from "./dictionary-aggregation-pane";
 export * from "./dictionary-header";
 export * from "./dictionary-list";

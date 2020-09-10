@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+@import "/client/component/page/login-page.scss";
+
+
+.form {
+  width: 100%;
+  max-width: 600px;
+  margin: 0px auto;
+}

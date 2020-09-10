@@ -41,6 +41,8 @@ popup:
     単語の編集が完了しました。
   wordDeleted: >-
     単語の削除が完了しました。
+  contacted: >-
+    問い合わせ内容を送信しました。
   invalidUserName: >-
     ユーザー ID が不正です。
     半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれており、全体で 30 文字以下である必要があります。
@@ -165,6 +167,12 @@ inviteEditDictionaryForm:
 uploadDictionaryForm:
   file: "ファイル"
   confirm: "決定"
+contactForm:
+  name: "名前"
+  email: "メールアドレス"
+  subject: "件名"
+  text: "内容"
+  send: "送信"
 dictionaryAggregationPane:
   dictionarySize: "総辞書数"
   wordSize: "総単語数"
@@ -184,6 +192,7 @@ dictionaryPane:
 header:
   dictionaryList: "辞書一覧"
   notification: "お知らせ"
+  contact: "お問い合わせ"
 invitationPane:
   createdDate: "招待日時"
   userName: "招待者"
@@ -237,6 +246,8 @@ wordEditor:
 wordPane:
   edit: "編集"
   submit: "決定"
+contactPage:
+  description: "お問い合わせ"
 dashboardPage:
   dictionary: "辞書"
   notification: "通知"
