@@ -20,6 +20,7 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
@@ -33,7 +34,7 @@ import {
 } from "/server/skeleton/invitation";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./dashboard-page.scss"))
 export class DashboardPage extends StoreComponent<Props, State, Params> {
 
@@ -65,11 +66,8 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
   }
 
   private renderDictionaryList(): ReactNode {
-    let label = "辞書一覧";
-    let description = `
-      このユーザーの辞書一覧です。
-      このユーザーが管理者ではなくても、編集権限があれば表示されます。
-    `;
+    let label = this.trans("dashboardPage.dictionaryList.label");
+    let description = this.trans("dashboardPage.dictionaryList.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <Loading loading={this.state.dictionaries === null}>
@@ -81,11 +79,8 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
   }
 
   private renderInvitationList(): ReactNode {
-    let label = "編集権限の付与の招待";
-    let description = `
-      このユーザーに送られてきた編集権限の付与の招待の一覧です。
-      これを承認すると、該当の辞書を編集できるようになります。
-    `;
+    let label = this.trans("dashboardPage.invitationList.label");
+    let description = this.trans("dashboardPage.invitationList.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <Loading loading={this.state.editInvitations === null}>
@@ -97,25 +92,21 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
   }
 
   private renderCreateDictionaryForm(): ReactNode {
-    let label = "新規作成";
-    let description = `
-      空の辞書を作成します。
-    `;
+    let label = this.trans("dashboardPage.createDictionaryForm.label");
+    let description = this.trans("dashboardPage.createDictionaryForm.description");
     let node = (
-      <SettingPane label={label} description={description} key={label}>
+      <SettingPane label={label} key={label} description={description}>
         <CreateDictionaryForm/>
       </SettingPane>
     );
     return node;
   }
 
-  private renderChangeEmailForm(): ReactNode {
-    let label = "メールアドレスの変更";
-    let description = `
-      メールアドレスを変更します。
-    `;
+  private renderChangeUserEmailForm(): ReactNode {
+    let label = this.trans("dashboardPage.changeUserEmailForm.label");
+    let description = this.trans("dashboardPage.changeUserEmailForm.description");
     let node = (
-      <SettingPane label={label} description={description} key={label}>
+      <SettingPane label={label} key={label} description={description}>
         <ChangeUserEmailForm currentEmail={this.props.store!.user!.email}/>
       </SettingPane>
     );
@@ -123,10 +114,8 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
   }
 
   private renderChangeUserPasswordForm(): ReactNode {
-    let label = "パスワードの変更";
-    let description = `
-      パスワードを変更します。
-    `;
+    let label = this.trans("dashboardPage.changeUserPasswordForm.label");
+    let description = this.trans("dashboardPage.changeUserPasswordForm.description");
     let node = (
       <SettingPane label={label} description={description} key={label}>
         <ChangeUserPasswordForm/>
@@ -142,10 +131,10 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let dictionaryCount = (dictionaries !== null && dictionaries.length > 0) ? dictionaries.length.toLocaleString("en-GB") : undefined;
     let notificationCount = (editInvitations !== null && editInvitations.length > 0) ? editInvitations.length.toLocaleString("en-GB") : undefined;
     let menuSpecs = [
-      {mode: "dictionary", label: "辞書", iconLabel: "\uF02D", badgeValue: dictionaryCount, href: "/dashboard"},
-      {mode: "notification", label: "通知", iconLabel: "\uF0F3", badgeValue: notificationCount, href: "/dashboard/notification"},
-      {mode: "profile", label: "アカウント", iconLabel: "\uF2C2", href: "/dashboard/profile"},
-      {mode: "logout", label: "ログアウト", iconLabel: "\uF2F5", href: "/"}
+      {mode: "dictionary", label: this.trans("dashboardPage.dictionary"), iconLabel: "\uF02D", badgeValue: dictionaryCount, href: "/dashboard"},
+      {mode: "notification", label: this.trans("dashboardPage.notification"), iconLabel: "\uF0F3", badgeValue: notificationCount, href: "/dashboard/notification"},
+      {mode: "profile", label: this.trans("dashboardPage.profile"), iconLabel: "\uF2C2", href: "/dashboard/profile"},
+      {mode: "logout", label: this.trans("dashboardPage.logout"), iconLabel: "\uF2F5", href: "/"}
     ];
     let contentNodes = [];
     if (this.props.store!.user) {
@@ -155,7 +144,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
       } else if (mode === "notification") {
         contentNodes.push(this.renderInvitationList());
       } else if (mode === "profile") {
-        contentNodes.push(this.renderChangeEmailForm());
+        contentNodes.push(this.renderChangeUserEmailForm());
         contentNodes.push(this.renderChangeUserPasswordForm());
       }
     }

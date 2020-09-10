@@ -12,6 +12,7 @@ import {
 } from "/client/component/compound";
 import {
   applyStyle,
+  intl,
   route
 } from "/client/component/decorator";
 import {
@@ -19,14 +20,14 @@ import {
 } from "/client/component/page/page";
 
 
-@route
+@route @intl
 @applyStyle(require("./register-page.scss"))
 export class RegisterPage extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (
       <Page>
-        <div styleName="description">新規登録</div>
+        <div styleName="description">{this.trans("registerPage.desciption")}</div>
         <div styleName="form">
           <RegisterForm/>
         </div>

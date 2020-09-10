@@ -97,7 +97,7 @@ dictionaryAggregationPane:
   wordSize: "Words"
 dictionaryHeader:
   add: "Add"
-  setting: "Setting"
+  setting: "Settings"
   download: "Download"
 dictionaryPane:
   wordSize: "{wordSize, plural, one {# word} other {# words}}"
@@ -105,14 +105,14 @@ dictionaryPane:
   saving: "Saving"
   error: "Error"
   userName: "Owner"
-  updatedDate: "Last updated"
-  setting: "Setting"
+  updatedDate: "Updated at"
+  setting: "Settings"
   download: "Download"
 header:
   dictionaryList: "Dictionary list"
   notification: "Notifications"
 invitationPane:
-  createdDate: "Invited"
+  createdDate: "Invited at"
   userName: "Inviter"
   reject: "Reject"
   accept: "Accept"
@@ -162,3 +162,73 @@ wordEditor:
 wordPane:
   edit: "Edit"
   submit: "Select"
+dashboardPage:
+  dictionary: "Dictionaries"
+  notification: "Notifications"
+  profile: "Account"
+  logout: "Sign out"
+  dictionaryList:
+    label: "Dictionaries"
+    description: |-
+      The list of your dictionaries.
+      This also includes those which you are not an owner of but you have editing permission of.
+  invitationList:
+    label: "Permisson invitations"
+    description: |-
+      The list of invitations to grant you permission.
+      Accepting it will enable you to edit the dictionary. 
+  createDictionaryForm:
+    label: "Create new dictionary"
+    description: |-
+      Create a new empty dictionary.
+  changeUserEmailForm:
+    label: "Change email address"
+    description: |-
+      Change your email address.
+  changeUserPasswordForm:
+    label: "Change password"
+    description: |-
+      Change your password.
+dictionarySettingPage:
+  general: "General"
+  access: "Permissions"
+  changeDictionaryNameForm:
+    label: "Change name"
+    description: |-
+      Change the display name of this dictionary.
+  changeDictionaryParamNameForm:
+    label: "Change name for URL"
+    description: |-
+      Change the name of this dictionary for URL.
+      Setting this will enable to replace the ID number with the name set here in the URL to access the dictionary.
+  changeDictionaryExplanationForm:
+    label: "Change explanation"
+    description: |-
+      Change the explanation of this dictionary.
+      You can use some of the Markdown syntax.
+      This will be displayed in the dictionary page before one searches something.
+  changeDictionarySecretForm:
+    label: "Change visibility"
+    description: |-
+      Change whether or not this dictionary is shown in the dictionary list page.
+  uploadDictionaryForm:
+    label: "Upload"
+    description: |-
+      Upload a file and overwrite the current data.
+      The supported formats are: OTM-JSON format (with extension .json) and PDIC format (with extension .dic).
+  deleteDictionaryForm:
+    label: "Delete"
+    description: |-
+      Delete this dictionary.
+  inviteEditDictionaryForm:
+    label: "Editing permissions"
+    description: |-
+      The list of the users who have permission to edit this dictionary.
+      You can also give permission to another user here.
+      Users with permission can edit and delete words, but cannot change the name of the dictionary or delete it.
+loginPage:
+  description: "Sign in"
+registerPage:
+  desciption: "Sign up"
+resetUserPasswordPage:
+  description: "Reset password"

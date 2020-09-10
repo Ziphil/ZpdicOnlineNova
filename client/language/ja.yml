@@ -161,3 +161,73 @@ wordEditor:
 wordPane:
   edit: "編集"
   submit: "決定"
+dashboardPage:
+  dictionary: "辞書"
+  notification: "通知"
+  profile: "アカウント"
+  logout: "ログアウト"
+  dictionaryList:
+    label: "辞書一覧"
+    description: |-
+      このユーザーの辞書一覧です。
+      このユーザーが管理者ではなくても、編集権限があれば表示されます。
+  invitationList:
+    label: "編集権限の付与の招待"
+    description: |-
+      このユーザーに送られてきた編集権限の付与の招待の一覧です。
+      これを承認すると、該当の辞書を編集できるようになります。
+  createDictionaryForm:
+    label: "新規作成"
+    description: |-
+      空の辞書を作成します。
+  changeUserEmailForm:
+    label: "メールアドレスの変更"
+    description: |-
+      メールアドレスを変更します。
+  changeUserPasswordForm:
+    label: "パスワードの変更"
+    description: |-
+      パスワードを変更します。
+dictionarySettingPage:
+  general: "一般"
+  access: "権限"
+  changeDictionaryNameForm:
+    label: "表示名の変更"
+    description: |-
+      この辞書の表示名を変更します。
+  changeDictionaryParamNameForm:
+    label: "URL 用名称の変更"
+    description: |-
+      この辞書の URL 用名称を変更します。
+      これを設定しておくと、辞書ページの URL として、ID 番号の代わりにこの名称にしたものも利用できるようになります。
+  changeDictionaryExplanationForm:
+    label: "説明の変更"
+    description: |-
+      辞書の説明を変更します。
+      一部の Markdown 形式に対応しています。
+      この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
+  changeDictionarySecretForm:
+    label: "一覧表示の変更"
+    description: |-
+      この辞書を辞書一覧ページに表示するかどうかを変更します。
+  uploadDictionaryForm:
+    label: "アップロード"
+    description: |-
+      ファイルをアップロードし、現在のデータを上書きします。
+      OTM-JSON 形式 (拡張子 .json) と PDIC 形式 (拡張子 .dic) に対応しています。
+  deleteDictionaryForm:
+    label: "削除"
+    description: |-
+      この辞書を削除します。
+  inviteEditDictionaryForm:
+    label: "編集権限"
+    description: |-
+      この辞書の編集権限を保有しているユーザーが確認できます。
+      また、新しく別のユーザーに編集権限を付与することができます。
+      権限を付与されたユーザーは、単語の編集や削除はできますが、辞書の表示名の変更や削除はできません。
+loginPage:
+  description: "ログイン"
+registerPage:
+  desciption: "新規登録"
+resetUserPasswordPage:
+  description: "パスワードリセット"

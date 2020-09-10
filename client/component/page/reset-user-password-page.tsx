@@ -14,6 +14,7 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
@@ -21,7 +22,7 @@ import {
 } from "/client/component/page/page";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./reset-user-password-page.scss"))
 export class ResetUserPasswordPage extends StoreComponent<Props, State> {
 
@@ -39,7 +40,7 @@ export class ResetUserPasswordPage extends StoreComponent<Props, State> {
   public render(): ReactNode {
     let node = (
       <Page>
-        <div styleName="description">パスワードリセット</div>
+        <div styleName="description">{this.trans("resetUserPasswordPage.description")}</div>
         <div styleName="form">
           <ResetUserPasswordForm tokenKey={this.state.tokenKey}/>
         </div>
