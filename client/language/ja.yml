@@ -193,6 +193,8 @@ loginForm:
   password: "パスワード"
   login: "ログイン"
   resetPassword: "パスワードを忘れた"
+notificationPane:
+  fixed: "対応済み"
 registerForm:
   register: "新規登録"
 resetUserPasswordForm:

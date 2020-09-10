@@ -26,7 +26,7 @@ export class NotificationPane extends Component<Props, State> {
   public render(): ReactNode {
     let styles = this.props.styles!;
     let fixedNode = (this.props.notification.type === "bugFixed") && (
-      <span styleName="fixed">(対応済み)</span>
+      <span styleName="fixed">({this.trans("notificationPane.fixed")})</span>
     );
     let iconString = (() => {
       let type = this.props.notification.type;

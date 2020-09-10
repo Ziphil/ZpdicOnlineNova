@@ -194,6 +194,8 @@ loginForm:
   password: "Password"
   login: "Sign in"
   resetPassword: "Forgot password"
+notificationPane:
+  fixed: "Fixed"
 registerForm:
   register: "Sign up"
 resetUserPasswordForm:
