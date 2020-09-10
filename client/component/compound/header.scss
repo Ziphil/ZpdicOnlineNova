@@ -49,8 +49,20 @@
   line-height: 1;
 }
 
-.language a {
-  color: inherit;
+.language .icon {
+  @include icon-font;
+  margin: 0px $blank-margin 0px 0px;
+}
+
+.language .link {
+  text-decoration: none;
+  display: inline-block;
+  color: $pale-link-color;
+  cursor: pointer;
+}
+
+.language .link:hover {
+  color: $pale-link-hover-color;
 }
 
 .right {
