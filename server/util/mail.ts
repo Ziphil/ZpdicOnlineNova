@@ -23,8 +23,8 @@ const INTL = createIntl(
 
 export class MailUtil {
 
-  public static getTitle(type: string, values?: Record<string, string>): string {
-    let title = INTL.formatMessage({id: "mail." + type + ".title"}, values);
+  public static getSubject(type: string, values?: Record<string, string>): string {
+    let title = INTL.formatMessage({id: "mail." + type + ".subject"}, values);
     return title;
   }
 

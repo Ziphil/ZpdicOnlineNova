@@ -1,12 +1,12 @@
 mail:
   registerUser:
-    title: "ユーザー登録完了のお知らせ"
+    subject: "ユーザー登録完了のお知らせ"
     text: |
       ZpDIC Online へのご登録ありがとうございます。
       アカウントの作成が完了しましたのでご連絡いたします。
       ・ ユーザー ID: {name}
   issueUserResetToken:
-    title: "パスワードリセットのお知らせ"
+    subject: "パスワードリセットのお知らせ"
     text: |
       ZpDIC Online をご利用いただきありがとうございます。
       以下の URL にアクセスし、パスワードリセットの手続きを進めてください。
@@ -14,7 +14,7 @@ mail:
       有効期限が過ぎた場合は、この URL を用いてのパスワードリセットはできなくなりますので、改めて手続きを行ってください。
       ・ {url}
   contact:
-    title: "お問い合わせ: {subject}"
+    subject: "お問い合わせ: {subject}"
     text: |
       お問合せフォームからお問い合わせです。
       ・ 名前: {name}

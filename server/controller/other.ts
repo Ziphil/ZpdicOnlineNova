@@ -48,7 +48,7 @@ export class OtherController extends Controller {
       if (result.score >= 0.5) {
         let user = await UserModel.findOneAdministrator();
         if (user !== null) {
-          let nextSubject = MailUtil.getTitle("issueUserResetToken", {subject});
+          let nextSubject = MailUtil.getSubject("issueUserResetToken", {subject});
           let nextText = MailUtil.getText("issueUserResetToken", {name, email, subject, text});
           MailUtil.send(user.email, nextSubject, nextText);
           Controller.respond(response, null);
