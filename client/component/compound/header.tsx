@@ -41,7 +41,7 @@ export class Header extends StoreComponent<Props, State> {
     let userNameNode = (this.state.userName !== null) && (
       <HeaderMenuItem label={"@" + this.state.userName} href="/dashboard"/>
     );
-    let languageNode = (process.env["NODE_ENV"] === "development") && (
+    let languageNode = (
       <div styleName="language">
         <span styleName="icon">&#xF1AB;</span>
         <span styleName="link" onClick={() => this.props.store!.changeLocale("ja")}>Ja</span> · <span styleName="link" onClick={() => this.props.store!.changeLocale("en")}>En</span>
