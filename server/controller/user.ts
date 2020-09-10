@@ -49,13 +49,13 @@ export class UserController extends Controller {
     let user = request.user!;
     let userBody = UserCreator.createDetailed(user);
     let body = {token, user: userBody};
-    Controller.response(response, body);
+    Controller.respond(response, body);
   }
 
   @post(SERVER_PATH["logout"])
   @before(logout())
   public async [Symbol()](request: PostRequest<"logout">, response: PostResponse<"logout">): Promise<void> {
-    Controller.response(response, null);
+    Controller.respond(response, null);
   }
 
   @post(SERVER_PATH["registerUser"])
@@ -72,10 +72,10 @@ export class UserController extends Controller {
         let subject = MailUtil.getTitle("registerUser");
         let text = MailUtil.getText("registerUser", {name});
         MailUtil.send(user.email, subject, text);
-        Controller.response(response, body);
+        Controller.respond(response, body);
       } else {
         let body = CustomError.ofType("recaptchaRejected");
-        Controller.responseError(response, body);
+        Controller.respondError(response, body);
       }
     } catch (error) {
       let body = (() => {
@@ -97,7 +97,7 @@ export class UserController extends Controller {
           }
         }
       })();
-      Controller.responseError(response, body, error);
+      Controller.respondError(response, body, error);
     }
   }
 
@@ -109,7 +109,7 @@ export class UserController extends Controller {
     try {
       await user.changeEmail(email);
       let body = UserCreator.create(user);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError" && error.type === "duplicateUserEmail") {
@@ -118,7 +118,7 @@ export class UserController extends Controller {
           return CustomError.ofType("invalidEmail");
         }
       })();
-      Controller.responseError(response, body, error);
+      Controller.respondError(response, body, error);
     }
   }
 
@@ -130,14 +130,14 @@ export class UserController extends Controller {
     try {
       await user.changePassword(password);
       let body = UserCreator.create(user);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError" && error.type === "invalidPassword") {
           return CustomError.ofType("invalidPassword");
         }
       })();
-      Controller.responseError(response, body, error);
+      Controller.respondError(response, body, error);
     }
   }
 
@@ -154,10 +154,10 @@ export class UserController extends Controller {
         let subject = MailUtil.getTitle("issueUserResetToken");
         let text = MailUtil.getText("issueUserResetToken", {url});
         MailUtil.send(user.email, subject, text);
-        Controller.response(response, null);
+        Controller.respond(response, null);
       } else {
         let body = CustomError.ofType("recaptchaRejected");
-        Controller.responseError(response, body);
+        Controller.respondError(response, body);
       }
     } catch (error) {
       let body = (() => {
@@ -169,7 +169,7 @@ export class UserController extends Controller {
           }
         }
       })();
-      Controller.responseError(response, body, error);
+      Controller.respondError(response, body, error);
     }
   }
 
@@ -180,7 +180,7 @@ export class UserController extends Controller {
     try {
       let user = await UserModel.resetPassword(key, password, 60);
       let body = UserCreator.create(user);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError") {
@@ -191,7 +191,7 @@ export class UserController extends Controller {
           }
         }
       })();
-      Controller.responseError(response, body, error);
+      Controller.respondError(response, body, error);
     }
   }
 
@@ -200,7 +200,7 @@ export class UserController extends Controller {
   public async [Symbol()](request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
     let user = request.user!;
     let body = UserCreator.createDetailed(user);
-    Controller.response(response, body);
+    Controller.respond(response, body);
   }
 
 }

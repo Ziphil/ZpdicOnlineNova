@@ -45,7 +45,7 @@ export class NotificationController extends Controller {
     let text = CastUtil.ensureString(request.body.text);
     let notification = await NotificationModel.add(type, title, text);
     let body = NotificationCreator.create(notification);
-    Controller.response(response, body);
+    Controller.respond(response, body);
   }
 
   @get(SERVER_PATH["fetchNotifications"])
@@ -55,7 +55,7 @@ export class NotificationController extends Controller {
     let range = new QueryRange(offset, size);
     let notifications = await NotificationModel.findAll(range);
     let body = notifications.map(NotificationCreator.create);
-    Controller.response(response, body);
+    Controller.respond(response, body);
   }
 
 }

@@ -70,7 +70,7 @@ export class DictionaryController extends Controller {
     let name = CastUtil.ensureString(request.body.name);
     let dictionary = await DictionaryModel.createEmpty(name, user);
     let body = DictionaryCreator.create(dictionary);
-    Controller.response(response, body);
+    Controller.respond(response, body);
   }
 
   @post(SERVER_PATH["uploadDictionary"])
@@ -90,10 +90,10 @@ export class DictionaryController extends Controller {
         }
       });
       let body = DictionaryCreator.create(dictionary);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -103,10 +103,10 @@ export class DictionaryController extends Controller {
     let dictionary = request.dictionary;
     if (dictionary) {
       await dictionary.removeWhole();
-      Controller.response(response, null);
+      Controller.respond(response, null);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -118,10 +118,10 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       await dictionary.changeName(name);
       let body = DictionaryCreator.create(dictionary);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -134,7 +134,7 @@ export class DictionaryController extends Controller {
       try {
         await dictionary.changeParamName(paramName);
         let body = DictionaryCreator.create(dictionary);
-        Controller.response(response, body);
+        Controller.respond(response, body);
       } catch (error) {
         let body = (() => {
           if (error.name === "CustomError") {
@@ -147,11 +147,11 @@ export class DictionaryController extends Controller {
             }
           }
         })();
-        Controller.responseError(response, body, error);
+        Controller.respondError(response, body, error);
       }
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -165,7 +165,7 @@ export class DictionaryController extends Controller {
       try {
         let invitation = await InvitationModel.createEdit(dictionary, user);
         let body = await InvitationCreator.create(invitation);
-        Controller.response(response, body);
+        Controller.respond(response, body);
       } catch (error) {
         let body = (() => {
           if (error.name === "CustomError") {
@@ -176,7 +176,7 @@ export class DictionaryController extends Controller {
             }
           }
         })();
-        Controller.responseError(response, body, error);
+        Controller.respondError(response, body, error);
       }
     } else {
       let body = (() => {
@@ -186,7 +186,7 @@ export class DictionaryController extends Controller {
           return CustomError.ofType("noSuchUser");
         }
       })();
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -201,17 +201,17 @@ export class DictionaryController extends Controller {
       try {
         invitation.respond(user, accept);
         let body = await InvitationCreator.create(invitation);
-        Controller.response(response, body);
+        Controller.respond(response, body);
       } catch (error) {
         if (error.name === "CustomError" && error.type === "forbidden") {
-          Controller.responseForbidden(response);
+          Controller.respondForbidden(response);
         } else {
           throw error;
         }
       }
     } else {
       let body = CustomError.ofType("noSuchInvitation");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -225,22 +225,22 @@ export class DictionaryController extends Controller {
       if (user) {
         try {
           await dictionary.deleteAuthorizedUser(user);
-          Controller.response(response, null);
+          Controller.respond(response, null);
         } catch (error) {
           let body = (() => {
             if (error.name === "CustomError" && error.type === "noSuchDictionaryAuthorizedUser") {
               return CustomError.ofType("noSuchDictionaryAuthorizedUser");
             }
           })();
-          Controller.responseError(response, body, error);
+          Controller.respondError(response, body, error);
         }
       } else {
         let body = CustomError.ofType("noSuchDictionaryAuthorizedUser");
-        Controller.responseError(response, body);
+        Controller.respondError(response, body);
       }
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -252,10 +252,10 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       await dictionary.changeSecret(secret);
       let body = DictionaryCreator.create(dictionary);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -267,10 +267,10 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       await dictionary.changeExplanation(explanation);
       let body = DictionaryCreator.create(dictionary);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -282,10 +282,10 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       let resultWord = await dictionary.editWord(word);
       let body = WordCreator.create(resultWord);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -298,18 +298,18 @@ export class DictionaryController extends Controller {
       try {
         let resultWord = await dictionary.deleteWord(wordNumber);
         let body = WordCreator.create(resultWord);
-        Controller.response(response, body);
+        Controller.respond(response, body);
       } catch (error) {
         let body = (() => {
           if (error.name === "CustomError" && error.type === "noSuchWordNumber") {
             return CustomError.ofType("noSuchWordNumber");
           }
         })();
-        Controller.responseError(response, body, error);
+        Controller.respondError(response, body, error);
       }
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -330,10 +330,10 @@ export class DictionaryController extends Controller {
       let hitSize = hitResult.words[1];
       let hitSuggestions = hitResult.suggestions.map(SuggestionCreator.create);
       let body = {words: [hitWords, hitSize], suggestions: hitSuggestions} as any;
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -349,7 +349,7 @@ export class DictionaryController extends Controller {
       response.download(path, fullFileName);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -362,7 +362,7 @@ export class DictionaryController extends Controller {
       let dictionary = await DictionaryModel.findOneByValue(value);
       if (dictionary) {
         let body = DictionaryCreator.create(dictionary);
-        Controller.response(response, body);
+        Controller.respond(response, body);
       } else {
         let body = (() => {
           if (number !== undefined) {
@@ -371,11 +371,11 @@ export class DictionaryController extends Controller {
             return CustomError.ofType("noSuchDictionaryParamName");
           }
         })();
-        Controller.responseError(response, body);
+        Controller.respondError(response, body);
       }
     } else {
       let body = CustomError.ofType("invalidArgument");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -387,10 +387,10 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       let users = await dictionary.getAuthorizedUsers(authority);
       let body = users.map(UserCreator.create);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -400,10 +400,10 @@ export class DictionaryController extends Controller {
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let body = await DictionaryCreator.createDetailed(dictionary);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
@@ -424,7 +424,7 @@ export class DictionaryController extends Controller {
       return promise;
     });
     let body = await Promise.all(promises);
-    Controller.response(response, body);
+    Controller.respond(response, body);
   }
 
   @get(SERVER_PATH["fetchAllDictionaries"])
@@ -447,7 +447,7 @@ export class DictionaryController extends Controller {
     let hitDictionaries = await Promise.all(hitPromises);
     let hitSize = hitResult[1];
     let body = [hitDictionaries, hitSize] as any;
-    Controller.response(response, body);
+    Controller.respond(response, body);
   }
 
   @get(SERVER_PATH["fetchDictionaryAggregation"])
@@ -455,7 +455,7 @@ export class DictionaryController extends Controller {
     let dictionarySize = await DictionaryModel.find().estimatedDocumentCount();
     let wordSize = await WordModel.find().estimatedDocumentCount();
     let body = {dictionarySize, wordSize};
-    Controller.response(response, body);
+    Controller.respond(response, body);
   }
 
   @get(SERVER_PATH["fetchInvitations"])
@@ -465,7 +465,7 @@ export class DictionaryController extends Controller {
     let type = CastUtil.ensureString(request.query.type);
     let invitations = await InvitationModel.findByUser(type, user);
     let body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
-    Controller.response(response, body);
+    Controller.respond(response, body);
   }
 
   @get(SERVER_PATH["checkDictionaryAuthorization"])
@@ -478,13 +478,13 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       let hasAuthority = await dictionary.hasAuthority(user, authority);
       if (hasAuthority) {
-        Controller.response(response, null);
+        Controller.respond(response, null);
       } else {
-        Controller.responseForbidden(response);
+        Controller.respondForbidden(response);
       }
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.responseError(response, body);
+      Controller.respondError(response, body);
     }
   }
 
