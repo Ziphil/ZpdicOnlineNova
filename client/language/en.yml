@@ -191,7 +191,7 @@ dictionaryPane:
   setting: "Settings"
   download: "Download"
 header:
-  dictionaryList: "Dictionary list"
+  dictionaryList: "Dictionaries"
   notification: "Notifications"
   contact: "Contact"
 invitationPane:
