@@ -1,6 +1,5 @@
 {
-  "watch": ["server"],
-  "ext": "ts",
-  "ignore": ["test/**/*.ts"],
-  "exec": "npm run command:tsn ./server/index.ts"
+  "watch": ["dist"],
+  "ext": "js",
+  "ignore": ["dist/script/**"]
 }

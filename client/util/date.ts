@@ -3,7 +3,7 @@
 
 export class DateUtil {
 
-  public static format(date: Date | number | string, format: string): string {
+  public static format(date: Date | number | string, format: string, locale?: string): string {
     if (!(date instanceof Date)) {
       date = new Date(date);
     }
@@ -20,6 +20,8 @@ export class DateUtil {
     result = result.replace(/m/g, this.padZero(date.getMinutes(), 1));
     result = result.replace(/ss/g, this.padZero(date.getSeconds(), 2));
     result = result.replace(/s/g, this.padZero(date.getSeconds(), 1));
+    result = result.replace(/LLLL/g, date.toLocaleString(locale, {month: "long"}));
+    result = result.replace(/LLL/g, date.toLocaleString(locale, {month: "short"}));
     return result;
   }
 

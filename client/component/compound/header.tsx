@@ -16,11 +16,12 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./header.scss"))
 export class Header extends StoreComponent<Props, State> {
 
@@ -40,6 +41,12 @@ export class Header extends StoreComponent<Props, State> {
     let userNameNode = (this.state.userName !== null) && (
       <HeaderMenuItem label={"@" + this.state.userName} href="/dashboard"/>
     );
+    let languageNode = (
+      <div styleName="language">
+        <span styleName="icon">&#xF1AB;</span>
+        <span styleName="link" onClick={() => this.props.store!.changeLocale("ja")}>Ja</span> · <span styleName="link" onClick={() => this.props.store!.changeLocale("en")}>En</span>
+      </div>
+    );
     let node = (
       <header styleName="root">
         <div styleName="container">
@@ -48,9 +55,11 @@ export class Header extends StoreComponent<Props, State> {
               <Link href="/" style="plane">ZpDIC</Link>
             </div>
             <div styleName="menu">
-              <HeaderMenuItem label="辞書一覧" iconLabel="&#xF02D;" href="/list"/>
-              <HeaderMenuItem label="お知らせ" iconLabel="&#xF05A;" href="/news"/>
+              <HeaderMenuItem label={this.trans("header.dictionaryList")} iconLabel="&#xF02D;" href="/list"/>
+              <HeaderMenuItem label={this.trans("header.notification")} iconLabel="&#xF05A;" href="/news"/>
+              <HeaderMenuItem label={this.trans("header.contact")} iconLabel="&#xF0E0;" href="/contact"/>
             </div>
+            {languageNode}
           </div>
           <div styleName="right">
             {userNameNode}

@@ -15,20 +15,21 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./create-dictionary-form.scss"))
 export class CreateDictionaryForm extends StoreComponent<Props, State> {
 
   public state: State = {
-    name: "新規辞書"
+    name: null
   };
 
   private async handleClick(): Promise<void> {
-    let name = this.state.name;
+    let name = this.state.name ?? this.trans("createDictionaryForm.defaultName");
     let response = await this.requestPost("createDictionary", {name});
     if (response.status === 200) {
       let dictionary = response.data;
@@ -40,10 +41,11 @@ export class CreateDictionaryForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
+    let name = this.state.name ?? this.trans("createDictionaryForm.defaultName");
     let node = (
       <form styleName="root">
-        <Input label="名称" value={this.state.name} onSet={(name) => this.setState({name})}/>
-        <Button label="作成" reactive={true} onClick={this.handleClick.bind(this)}/>
+        <Input label={this.trans("createDictionaryForm.name")} value={name} onSet={(name) => this.setState({name})}/>
+        <Button label={this.trans("createDictionaryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
     return node;
@@ -56,5 +58,5 @@ type Props = {
   onSubmit?: () => void
 };
 type State = {
-  name: string;
+  name: string | null;
 };

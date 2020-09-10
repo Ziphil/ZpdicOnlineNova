@@ -15,17 +15,18 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
-  getMessage
-} from "/client/component/message";
+  PopupUtil
+} from "/client/util/popup";
 import {
   IDENTIFIER_REGEXP
 } from "/server/model/validation";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./change-dictionary-param-name-form.scss"))
 export class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> {
 
@@ -48,15 +49,16 @@ export class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> 
   }
 
   public render(): ReactNode {
+    let outerThis = this;
     let nextUrl = "http://zpdic.ziphil.com/dictionary/" + (this.state.paramName || this.props.number);
     let validate = function (value: string): string | null {
-      return (value === "" || value.match(IDENTIFIER_REGEXP)) ? null : getMessage("invalidDictionaryParamName");
+      return (value === "" || value.match(IDENTIFIER_REGEXP)) ? null : PopupUtil.getMessage(outerThis.props.intl!, "invalidDictionaryParamName");
     };
     let node = (
       <Fragment>
         <form styleName="root">
-          <Input label="URL 用名称" value={this.state.paramName} validate={validate} onSet={(paramName) => this.setState({paramName})}/>
-          <Button label="変更" reactive={true} onClick={this.handleClick.bind(this)}/>
+          <Input label={this.trans("changeDictionaryParamNameForm.paramName")} value={this.state.paramName} validate={validate} onSet={(paramName) => this.setState({paramName})}/>
+          <Button label={this.trans("changeDictionaryParamNameForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
         </form>
         <p styleName="url">
           {nextUrl}

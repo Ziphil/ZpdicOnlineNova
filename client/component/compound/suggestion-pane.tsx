@@ -11,7 +11,8 @@ import {
   Component
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  intl
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -19,17 +20,19 @@ import {
 } from "/server/skeleton/dictionary";
 
 
+@intl
 @applyStyle(require("./suggestion-pane.scss"))
 export class SuggestionPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let suggestion = this.props.suggestion;
     let href = "/dictionary/" + this.props.dictionary.number + "?search=" + encodeURIComponent(suggestion.word.name) + "&mode=name&type=exact&page=0";
+    let nameNode = <Link href={href}>{suggestion.word.name}</Link>;
+    let title = suggestion.title;
     let node = (
       <li styleName="root">
-        <span styleName="maybe">もしかして</span>
-        <Link href={href}>{suggestion.word.name}</Link> の
-        {suggestion.title}?
+        <span styleName="maybe">{this.trans("suggestionPane.maybe")}</span>
+        {this.trans("suggestionPane.suggestion", {nameNode, title})}
       </li>
     );
     return node;

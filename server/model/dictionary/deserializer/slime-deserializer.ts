@@ -16,8 +16,8 @@ import {
   Deserializer
 } from "/server/model/dictionary/deserializer/deserializer";
 import {
-  takeLog
-} from "/server/util/misc";
+  LogUtil
+} from "/server/util/log";
 
 
 export class SlimeDeserializer extends Deserializer {
@@ -40,7 +40,7 @@ export class SlimeDeserializer extends Deserializer {
       if (jsonPath[0] !== "words") {
         this.emit("other", jsonPath[0], data);
       }
-      takeLog("slime-deserializer", `${jsonPath[0]}`);
+      LogUtil.log("slime-deserializer", `${jsonPath[0]}`);
       return oboe.drop;
     });
     stream.on("done", (finalData) => {

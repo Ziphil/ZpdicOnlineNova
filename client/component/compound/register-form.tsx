@@ -17,14 +17,18 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
-  getMessage
-} from "/client/component/message";
+  Main
+} from "/client/index";
 import {
   createValidate
 } from "/client/util/misc";
+import {
+  PopupUtil
+} from "/client/util/popup";
 import {
   EMAIL_REGEXP,
   IDENTIFIER_REGEXP,
@@ -32,7 +36,7 @@ import {
 } from "/server/model/validation";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./register-form.scss"))
 export class RegisterForm extends StoreComponent<Props, State> {
 
@@ -55,7 +59,8 @@ export class RegisterForm extends StoreComponent<Props, State> {
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
-    let response = await this.requestPost("registerUser", {name, email, password}, true);
+    let token = await grecaptcha.execute(Main.getRecaptchaSite(), {action: "registerUser"});
+    let response = await this.requestPost("registerUser", {name, email, password, token}, true);
     let body = response.data;
     if (response.status === 200) {
       let loginResponse = await this.login({name, password});
@@ -72,18 +77,18 @@ export class RegisterForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let validateName = createValidate(IDENTIFIER_REGEXP, getMessage("invalidUserName"));
-    let validateEmail = createValidate(EMAIL_REGEXP, getMessage("invalidEmail"));
-    let validatePassword = createValidate(rawValidatePassword, getMessage("invalidPassword"));
+    let validateName = createValidate(IDENTIFIER_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidUserName"));
+    let validateEmail = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidEmail"));
+    let validatePassword = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidPassword"));
     let node = (
       <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
-          <Input label="ユーザー ID" value={this.state.name} validate={validateName} onSet={(name) => this.setState({name})}/>
-          <Input label="メールアドレス" value={this.state.email} validate={validateEmail} onSet={(email) => this.setState({email})}/>
-          <Input label="パスワード" type="flexible" value={this.state.password} validate={validatePassword} onSet={(password) => this.setState({password})}/>
+          <Input label={this.trans("loginForm.userName")} value={this.state.name} validate={validateName} onSet={(name) => this.setState({name})}/>
+          <Input label={this.trans("loginForm.email")} value={this.state.email} validate={validateEmail} onSet={(email) => this.setState({email})}/>
+          <Input label={this.trans("loginForm.password")} type="flexible" value={this.state.password} validate={validatePassword} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label="新規登録" iconLabel="&#xF234;" style="information" reactive={true} onClick={this.performRegister.bind(this)}/>
+              <Button label={this.trans("registerForm.register")} iconLabel="&#xF234;" style="information" reactive={true} onClick={this.performRegister.bind(this)}/>
             </div>
           </div>
         </form>

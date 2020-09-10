@@ -17,11 +17,12 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./login-form.scss"))
 export class LoginForm extends StoreComponent<Props, State> {
 
@@ -55,20 +56,20 @@ export class LoginForm extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let registerNode = (this.props.showsRegister) && (
-      <Button label="新規登録" iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
+      <Button label={this.trans("registerForm.register")} iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
     );
     let node = (
       <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">
-          <Input label="ユーザー ID" value={this.state.name} onSet={(name) => this.setState({name})}/>
-          <Input label="パスワード" type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
+          <Input label={this.trans("loginForm.userName")} value={this.state.name} onSet={(name) => this.setState({name})}/>
+          <Input label={this.trans("loginForm.password")} type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label="ログイン" iconLabel="&#xF2F6;" style="information" reactive={true} onClick={this.performLogin.bind(this)}/>
+              <Button label={this.trans("loginForm.login")} iconLabel="&#xF2F6;" style="information" reactive={true} onClick={this.performLogin.bind(this)}/>
               {registerNode}
             </div>
             <div styleName="row">
-              <Button label="パスワードを忘れた" iconLabel="&#xF128;" style="simple" onClick={this.jumpResetPassword.bind(this)}/>
+              <Button label={this.trans("loginForm.resetPassword")} iconLabel="&#xF128;" style="simple" onClick={this.jumpResetPassword.bind(this)}/>
             </div>
           </div>
         </form>

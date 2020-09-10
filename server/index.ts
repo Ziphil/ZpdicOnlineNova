@@ -21,12 +21,12 @@ import {
   DebugController,
   DictionaryController,
   NotificationController,
+  OtherController,
   UserController
 } from "/server/controller";
 import {
-  takeErrorLog,
-  takeLog
-} from "/server/util/misc";
+  LogUtil
+} from "/server/util/log";
 
 
 dotenv.config({path: "./variable.env"});
@@ -37,9 +37,10 @@ export const COOKIE_SECRET = process.env["COOKIE_SECRET"] || "cookie-zpdic";
 export const SESSION_SECRET = process.env["SESSION_SECRET"] || "session-zpdic";
 export const JWT_SECRET = process.env["JWT_SECRET"] || "jwt-secret";
 export const SENDGRID_KEY = process.env["SENDGRID_KEY"] || "dummy";
+export const RECAPTCHA_SECRET = process.env["RECAPTCHA_SECRET"] || "dummy";
 
 
-class Main {
+export class Main {
 
   private application: Express;
 
@@ -111,6 +112,7 @@ class Main {
     DebugController.use(this.application);
     DictionaryController.use(this.application);
     NotificationController.use(this.application);
+    OtherController.use(this.application);
     UserController.use(this.application);
   }
 
@@ -123,7 +125,7 @@ class Main {
   private setupFallback(): void {
     this.application.use("/api*", (request, response, next) => {
       let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
-      takeLog("index", `not found: ${fullUrl}`);
+      LogUtil.log("index", `not found: ${fullUrl}`);
       response.status(404).end();
     });
     this.application.use("*", (request, response, next) => {
@@ -141,7 +143,7 @@ class Main {
 
   private setupErrorHandler(): void {
     let handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
-      takeErrorLog("index", "uncaught error occurred", error);
+      LogUtil.error("index", "uncaught error occurred", error);
       response.status(500).end();
     };
     this.application.use(handler);
@@ -149,7 +151,7 @@ class Main {
 
   private listen(): void {
     this.application.listen(+PORT, () => {
-      takeLog("index", `listening on port ${PORT}`);
+      LogUtil.log("index", `listening on port ${PORT}`);
     });
   }
 

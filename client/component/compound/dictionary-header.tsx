@@ -17,6 +17,7 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
@@ -24,11 +25,11 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./dictionary-header.scss"))
 export class DictionaryHeader extends StoreComponent<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: any = {
     showEditLink: false,
     showSettingLink: false,
     showDownloadLink: true,
@@ -62,13 +63,13 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
       return <Link href={href} style="plane">{this.props.dictionary.name}</Link>;
     })();
     let addButtonNode = (this.props.showEditLink) && (
-      <Button label="追加" iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
+      <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
     );
     let settingButtonNode = (this.props.showSettingLink) && (
-      <Button label="設定" iconLabel="&#xF013;" style="simple" hideLabel={true} onClick={this.jumpSettingPage.bind(this)}/>
+      <Button label={this.trans("dictionaryHeader.setting")} iconLabel="&#xF013;" style="simple" hideLabel={true} onClick={this.jumpSettingPage.bind(this)}/>
     );
     let downloadButtonNode = (this.props.showDownloadLink) && (
-      <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={this.downloadDictionary.bind(this)}/>
+      <Button label={this.trans("dictionaryHeader.download")} iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={this.downloadDictionary.bind(this)}/>
     );
     let editorNode = (this.props.dictionary && this.state.editorOpen) && (
       <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>

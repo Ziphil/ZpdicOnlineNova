@@ -12,6 +12,7 @@ import {
 } from "/client/component/compound";
 import {
   applyStyle,
+  intl,
   route
 } from "/client/component/decorator";
 import {
@@ -19,14 +20,14 @@ import {
 } from "/client/component/page/page";
 
 
-@route
+@route @intl
 @applyStyle(require("./login-page.scss"))
 export class LoginPage extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (
       <Page>
-        <div styleName="description">ログイン</div>
+        <div styleName="description">{this.trans("loginPage.description")}</div>
         <div styleName="form">
           <LoginForm showsRegister={false}/>
         </div>

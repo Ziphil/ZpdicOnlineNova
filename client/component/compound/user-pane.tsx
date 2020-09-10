@@ -19,6 +19,7 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
@@ -29,7 +30,7 @@ import {
 } from "/server/skeleton/user";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./user-pane.scss"))
 export class UserPane extends StoreComponent<Props, State> {
 
@@ -52,10 +53,6 @@ export class UserPane extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let alertText = `
-      このユーザーの編集権限を解除します。
-      本当によろしいですか?
-    `;
     let node = (
       <Fragment>
         <WhitePane clickable={false}>
@@ -71,13 +68,13 @@ export class UserPane extends StoreComponent<Props, State> {
             </div>
           </div>
           <div styleName="setting">
-            <Button label="解除" iconLabel="&#xF05E;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
+            <Button label={this.trans("userPane.delete")} iconLabel="&#xF05E;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
           </div>
         </WhitePane>
         <Alert
-          text={alertText}
+          text={this.trans("userPane.alert")}
           iconLabel="&#xF071;"
-          confirmLabel="解除"
+          confirmLabel={this.trans("userPane.delete")}
           open={this.state.alertOpen}
           outsideClosable={true}
           onClose={() => this.setState({alertOpen: false})}

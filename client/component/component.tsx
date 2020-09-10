@@ -9,14 +9,24 @@ import {
   AxiosResponse
 } from "axios";
 import {
-  Component as ReactComponent
+  Component as ReactComponent,
+  ReactNode
 } from "react";
+import {
+  IntlShape
+} from "react-intl";
 import {
   RouteComponentProps
 } from "react-router-dom";
 import {
+  Primitive
+} from "ts-essentials";
+import {
   GlobalStore
 } from "/client/component/store";
+import {
+  DateUtil
+} from "/client/util/date";
 import {
   MethodType,
   ProcessName,
@@ -26,7 +36,7 @@ import {
 } from "/server/controller/type";
 
 
-export class Component<P, S, H = any> extends ReactComponent<{styles?: {[key: string]: string | undefined}} & P, S, H> {
+export class Component<P, S, H = any> extends ReactComponent<{styles?: StylesType, intl?: IntlShape} & P, S, H> {
 
   public state!: S;
 
@@ -36,6 +46,31 @@ export class Component<P, S, H = any> extends ReactComponent<{styles?: {[key: st
   }
 
   protected initialize(): void {
+  }
+
+  protected trans(id: string | number, values?: Record<string, Primitive | FormatFunction<string, string>>): string;
+  protected trans(id: string | number, values?: Record<string, Primitive | ReactNode | FormatFunction<ReactNode, ReactNode>>): ReactNode;
+  protected trans(id: string | number, values?: Record<string, any>): ReactNode {
+    let defaultMessage = "[" + id + "?]";
+    return this.props.intl!.formatMessage({id, defaultMessage}, values);
+  }
+
+  protected transDate(date: Date | number | string | null | undefined): string {
+    if (date !== null && date !== undefined) {
+      let format =  this.props.intl!.formatMessage({id: "common.dateFormat"});
+      let locale = this.props.intl!.locale;
+      return DateUtil.format(date, format, locale);
+    } else {
+      return this.props.intl!.formatMessage({id: "common.dateUndefined"});
+    }
+  }
+
+  protected transNumber(number: number | null | undefined): string {
+    if (number !== null && number !== undefined) {
+      return this.props.intl!.formatNumber(number);
+    } else {
+      return this.props.intl!.formatMessage({id: "common.numberUndefined"});
+    }
   }
 
 }
@@ -162,3 +197,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
   }
 
 }
+
+
+type StylesType = {[key: string]: string | undefined};
+type FormatFunction<T, R> = (parts: Array<string | T>) => R;

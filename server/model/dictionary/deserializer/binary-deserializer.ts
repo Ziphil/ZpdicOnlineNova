@@ -15,8 +15,8 @@ import {
   Deserializer
 } from "/server/model/dictionary/deserializer/deserializer";
 import {
-  takeLog
-} from "/server/util/misc";
+  LogUtil
+} from "/server/util/log";
 
 
 export class BinaryDeserializer extends Deserializer {
@@ -73,7 +73,7 @@ export class BinaryDeserializer extends Deserializer {
         break;
       }
     }
-    takeLog("binary-deserializer/read-words", `data block read: ${this.count}`);
+    LogUtil.log("binary-deserializer/read-words", `data block read: ${this.count}`);
   }
 
   private parseWords(length: number, fieldLength: number): void {

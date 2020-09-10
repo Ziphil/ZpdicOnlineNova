@@ -17,7 +17,8 @@ import {
   WordEditor
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  intl
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -27,10 +28,11 @@ import {
 } from "/server/skeleton/dictionary";
 
 
+@intl
 @applyStyle(require("./word-pane.scss"))
 export class WordPane extends Component<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: any = {
     style: "normal",
     showButton: false
   };
@@ -41,12 +43,12 @@ export class WordPane extends Component<Props, State> {
   private renderName(): ReactNode {
     let editButtonNode = (this.props.showEditLink && !this.props.showButton) && (
       <div styleName="button">
-        <Button label="編集" iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
+        <Button label={this.trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
       </div>
     );
     let submitButtonNode = (this.props.showButton) && (
       <div styleName="button">
-        <Button label="決定" iconLabel="&#xF00C;" style="simple" onClick={this.props.onSubmit}/>
+        <Button label={this.trans("wordPane.submit")} iconLabel="&#xF00C;" style="simple" onClick={this.props.onSubmit}/>
       </div>
     );
     let tagNodes = this.props.word.tags.map((tag, index) => {

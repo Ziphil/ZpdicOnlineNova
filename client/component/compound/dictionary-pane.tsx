@@ -17,21 +17,19 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
-import {
-  DateUtil
-} from "/client/util/date";
 import {
   DetailedDictionary
 } from "/server/skeleton/dictionary";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./dictionary-pane.scss"))
 export class DictionaryPane extends StoreComponent<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: any = {
     showUser: true,
     showUpdatedDate: true,
     showSettingLink: false,
@@ -60,30 +58,29 @@ export class DictionaryPane extends StoreComponent<Props, State> {
     let href = "/dictionary/" + (this.props.dictionary.paramName ?? this.props.dictionary.number);
     let statusString = (() => {
       if (status === "saving") {
-        return "処理中";
+        return this.trans("dictionaryPane.saving");
       } else if (status === "error") {
-        return "エラー";
+        return this.trans("dictionaryPane.error");
       } else {
         let wordSize = this.props.dictionary.wordSize;
         if (wordSize !== undefined) {
-          return wordSize.toLocaleString("en-GB") + " 語";
+          return this.trans("dictionaryPane.wordSize", {wordSize});
         } else {
-          return "? 語";
+          return this.trans("dictionaryPane.wordSizeUndefined");
         }
       }
     })();
     let userNode = (this.props.showUser) && (
-      <div styleName="information-item">管理者 — @{this.props.dictionary.user.name}</div>
+      <div styleName="information-item">{this.trans("dictionaryPane.userName")} — @{this.props.dictionary.user.name}</div>
     );
-    let updatedDate = this.props.dictionary.updatedDate;
     let updatedDateNode = (this.props.showUpdatedDate) && (
-      <div styleName="information-item">更新日時 — {(updatedDate !== undefined) ? DateUtil.format(updatedDate, "yyyy/MM/dd HH:mm") : "?"}</div>
+      <div styleName="information-item">{this.trans("dictionaryPane.updatedDate")} — {this.transDate(this.props.dictionary.updatedDate)}</div>
     );
     let settingNode = (this.props.showSettingLink) && (
-      <Button label="設定" iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
+      <Button label={this.trans("dictionaryPane.setting")} iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
     );
     let downloadNode = (this.props.showDownloadLink) && (
-      <Button label="ダウンロード" iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
+      <Button label={this.trans("dictionaryPane.download")} iconLabel="&#xF019;" style="simple" onClick={this.downloadDictionary.bind(this)}/>
     );
     let linkNode = (this.props.showSettingLink || this.props.showDownloadLink) && (
       <div styleName="setting">

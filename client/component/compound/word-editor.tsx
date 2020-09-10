@@ -26,6 +26,7 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
@@ -33,7 +34,7 @@ import {
   swap
 } from "/client/util/misc";
 import {
-  createStyleName
+  StyleNameUtil
 } from "/client/util/style-name";
 import {
   Dictionary,
@@ -46,7 +47,7 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./word-editor.scss"))
 export class WordEditor extends StoreComponent<Props, State> {
 
@@ -106,7 +107,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     let word = this.state.word;
     let node = (
       <div styleName="container">
-        <Input value={word.name} label="単語" onSet={this.setWord((name) => word.name = name)}/>
+        <Input value={word.name} label={this.trans("wordEditor.name")} onSet={this.setWord((name) => word.name = name)}/>
       </div>
     );
     return node;
@@ -116,7 +117,7 @@ export class WordEditor extends StoreComponent<Props, State> {
     let word = this.state.word;
     let styles = this.props.styles!;
     let innerNodes = word.tags.map((tag, index) => {
-      let label = (index === 0) ? "タグ" : undefined;
+      let label = (index === 0) ? this.trans("wordEditor.tag") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
@@ -152,8 +153,8 @@ export class WordEditor extends StoreComponent<Props, State> {
     let equivalentStrings = this.state.equivalentStrings;
     let styles = this.props.styles!;
     let innerNodes = word.equivalents.map((equivalent, index) => {
-      let titleLabel = (index === 0) ? "分類" : undefined;
-      let nameLabel = (index === 0) ? "訳語 (コンマ区切り)" : undefined;
+      let titleLabel = (index === 0) ? this.trans("wordEditor.equivalentTitle") : undefined;
+      let nameLabel = (index === 0) ? this.trans("wordEditor.equivalentNames") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
@@ -210,8 +211,8 @@ export class WordEditor extends StoreComponent<Props, State> {
     let word = this.state.word;
     let styles = this.props.styles!;
     let innerNodes = word.informations.map((information, index) => {
-      let titleLabel = (index === 0) ? "分類" : undefined;
-      let textLabel = (index === 0) ? "内容" : undefined;
+      let titleLabel = (index === 0) ? this.trans("wordEditor.informationTitle") : undefined;
+      let textLabel = (index === 0) ? this.trans("wordEditor.informationText") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form information">
@@ -247,8 +248,8 @@ export class WordEditor extends StoreComponent<Props, State> {
     let word = this.state.word;
     let styles = this.props.styles!;
     let innerNodes = word.variations.map((variation, index) => {
-      let titleLabel = (index === 0) ? "分類" : undefined;
-      let nameLabel = (index === 0) ? "変化形" : undefined;
+      let titleLabel = (index === 0) ? this.trans("wordEditor.variationTitle") : undefined;
+      let nameLabel = (index === 0) ? this.trans("wordEditor.variationName") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
@@ -284,15 +285,15 @@ export class WordEditor extends StoreComponent<Props, State> {
     let word = this.state.word;
     let styles = this.props.styles!;
     let innerNodes = word.relations.map((relation, index) => {
-      let titleLabel = (index === 0) ? "分類" : undefined;
-      let nameLabel = (index === 0) ? "関連語" : undefined;
+      let titleLabel = (index === 0) ? this.trans("wordEditor.relationTitle") : undefined;
+      let nameLabel = (index === 0) ? this.trans("wordEditor.relationName") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
             <Input className={styles["title"]} value={relation.title} label={titleLabel} onSet={this.setWord((title) => word.relations[index].title = title)}/>
-            <ControlGroup className={createStyleName(styles["name"], styles["relation-input"])}>
+            <ControlGroup className={StyleNameUtil.create(styles["name"], styles["relation-input"])}>
               <Input value={relation.name} label={nameLabel} readOnly={true}/>
-              <Button label="変更" onClick={() => this.openRelationChooser(index)}/>
+              <Button label={this.trans("wordEditor.selectRelation")} onClick={() => this.openRelationChooser(index)}/>
             </ControlGroup>
           </div>
           <div styleName="control-button">
@@ -353,10 +354,10 @@ export class WordEditor extends StoreComponent<Props, State> {
 
   private renderEditor(): ReactNode {
     let deleteButtonNode = (this.props.word !== null) && (
-      <Button label="削除" iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
+      <Button label={this.trans("wordEditor.delete")} iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
     );
-    let editButtonNode = (
-      <Button label="決定" iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.editWord.bind(this)}/>
+    let confirmButtonNode = (
+      <Button label={this.trans("wordEditor.confirm")} iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.editWord.bind(this)}/>
     );
     let node = (
       <div>
@@ -370,7 +371,7 @@ export class WordEditor extends StoreComponent<Props, State> {
         </div>
         <div styleName="confirm-button">
           {deleteButtonNode}
-          {editButtonNode}
+          {confirmButtonNode}
         </div>
       </div>
     );

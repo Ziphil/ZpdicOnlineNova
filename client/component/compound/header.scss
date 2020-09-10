@@ -35,9 +35,34 @@
   line-height: 1;
 }
 
+.menu {
+  margin: 0px 30px 0px 0px;
+}
+
 .menu >* {
   @include reset-first-margin;
   margin: 0px 0px 0px $control-margin;
+}
+
+.language {
+  color: $background-color;
+  line-height: 1;
+}
+
+.language .icon {
+  @include icon-font;
+  margin: 0px $blank-margin 0px 0px;
+}
+
+.language .link {
+  text-decoration: none;
+  display: inline-block;
+  color: $pale-link-color;
+  cursor: pointer;
+}
+
+.language .link:hover {
+  color: $pale-link-hover-color;
 }
 
 .right {

@@ -11,23 +11,22 @@ import {
   Component
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  intl
 } from "/client/component/decorator";
-import {
-  DateUtil
-} from "/client/util/date";
 import {
   Notification
 } from "/server/skeleton/notification";
 
 
+@intl
 @applyStyle(require("./notification-pane.scss"))
 export class NotificationPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let styles = this.props.styles!;
     let fixedNode = (this.props.notification.type === "bugFixed") && (
-      <span styleName="fixed">(対応済み)</span>
+      <span styleName="fixed">({this.trans("notificationPane.fixed")})</span>
     );
     let iconString = (() => {
       let type = this.props.notification.type;
@@ -41,13 +40,12 @@ export class NotificationPane extends Component<Props, State> {
         return "\uF05A";
       }
     })();
-    let dateString = DateUtil.format(this.props.notification.date, "yyyy/MM/dd HH:mm");
     let node = (
       <div styleName="root">
         <div styleName="head-wrapper">
           <div styleName="icon">{iconString}</div>
           <div styleName="head-right">
-            <div styleName="date">{dateString}</div>
+            <div styleName="date">{this.transDate(this.props.notification.date)}</div>
             <h1 styleName="head">
               {fixedNode}
               {this.props.notification.title}

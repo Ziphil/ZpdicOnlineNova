@@ -12,7 +12,8 @@ import {
   Component
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  intl
 } from "/client/component/decorator";
 import {
   SearchMode,
@@ -20,6 +21,7 @@ import {
 } from "/server/skeleton/search-parameter";
 
 
+@intl
 @applyStyle(require("./search-form.scss"))
 export class SearchForm extends Component<Props, State> {
 
@@ -61,16 +63,16 @@ export class SearchForm extends Component<Props, State> {
 
   public render(): ReactNode {
     let modeSpecs = [
-      {value: "both", label: "単語＋訳語"},
-      {value: "name", label: "単語"},
-      {value: "equivalent", label: "訳語"},
-      {value: "content", label: "全文"}
+      {value: "both", label: this.trans("searchForm.both")},
+      {value: "name", label: this.trans("searchForm.name")},
+      {value: "equivalent", label: this.trans("searchForm.equivalent")},
+      {value: "content", label: this.trans("searchForm.content")}
     ] as const;
     let typeSpecs = [
-      {value: "prefix", label: "前方"},
-      {value: "part", label: "部分"},
-      {value: "exact", label: "完全"},
-      {value: "regular", label: "正規"}
+      {value: "prefix", label: this.trans("searchForm.prefix")},
+      {value: "part", label: this.trans("searchForm.part")},
+      {value: "exact", label: this.trans("searchForm.exact")},
+      {value: "regular", label: this.trans("searchForm.regular")}
     ] as const;
     let node = (
       <form styleName="root" onSubmit={(event) => event.preventDefault()}>

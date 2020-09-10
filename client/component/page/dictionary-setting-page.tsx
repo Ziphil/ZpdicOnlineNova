@@ -21,6 +21,7 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 import {
@@ -31,7 +32,7 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./dictionary-setting-page.scss"))
 export class DictionarySettingPage extends StoreComponent<Props, State, Params> {
 
@@ -66,10 +67,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   }
 
   private renderChangeDictionaryNameForm(): ReactNode {
-    let label = "表示名の変更";
-    let description = `
-      この辞書の表示名を変更します。
-    `;
+    let label = this.trans("dictionarySettingPage.changeDictionaryNameForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionaryNameForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <ChangeDictionaryNameForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name} onSubmit={this.fetchDictionary.bind(this)}/>
@@ -79,11 +78,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   }
 
   private renderChangeDictionaryParamNameForm(): ReactNode {
-    let label = "URL 用名称の変更";
-    let description = `
-      この辞書の URL 用名称を変更します。
-      これを設定しておくと、辞書ページの URL として、ID 番号の代わりにこの名称にしたものも利用できるようになります。
-    `;
+    let label = this.trans("dictionarySettingPage.changeDictionaryParamNameForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionaryParamNameForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <ChangeDictionaryParamNameForm number={this.state.dictionary!.number} currentParamName={this.state.dictionary!.paramName} onSubmit={this.fetchDictionary.bind(this)}/>
@@ -93,12 +89,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   }
 
   private renderChangeDictionaryExplanationForm(): ReactNode {
-    let label = "説明の変更";
-    let description = `
-      辞書の説明を変更します。
-      一部の Markdown 形式に対応しています。
-      この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
-    `;
+    let label = this.trans("dictionarySettingPage.changeDictionaryExplanationForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionaryExplanationForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <ChangeDictionaryExplanationForm number={this.state.dictionary!.number} currentExplanation={this.state.dictionary!.explanation ?? ""}/>
@@ -108,10 +100,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   }
 
   private renderChangeDictionarySecretForm(): ReactNode {
-    let label = "一覧表示の変更";
-    let description = `
-      この辞書を辞書一覧ページに表示するかどうかを変更します。
-    `;
+    let label = this.trans("dictionarySettingPage.changeDictionarySecretForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionarySecretForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <ChangeDictionarySecretForm number={this.state.dictionary!.number} currentSecret={this.state.dictionary!.secret}/>
@@ -121,11 +111,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   }
 
   private renderUploadDictionaryForm(): ReactNode {
-    let label = "アップロード";
-    let description = `
-      ファイルをアップロードし、現在のデータを上書きします。
-      OTM-JSON 形式 (拡張子 .json) と PDIC 形式 (拡張子 .dic) に対応しています。
-    `;
+    let label = this.trans("dictionarySettingPage.uploadDictionaryForm.label");
+    let description = this.trans("dictionarySettingPage.uploadDictionaryForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <UploadDictionaryForm number={this.state.dictionary!.number}/>
@@ -135,10 +122,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   }
 
   private renderDeleteDictionaryForm(): ReactNode {
-    let label = "削除";
-    let description = `
-      この辞書を削除します。
-    `;
+    let label = this.trans("dictionarySettingPage.deleteDictionaryForm.label");
+    let description = this.trans("dictionarySettingPage.deleteDictionaryForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <DeleteDictionaryForm number={this.state.dictionary!.number} onSubmit={() => this.pushPath("/dashboard", {}, true)}/>
@@ -148,12 +133,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
   }
 
   private renderInviteEditDictionaryForm(): ReactNode {
-    let label = "編集権限";
-    let description = `
-      この辞書の編集権限を保有しているユーザーが確認できます。
-      また、新しく別のユーザーに編集権限を付与することができます。
-      権限を付与されたユーザーは、単語の編集や削除はできますが、辞書の表示名の変更や削除はできません。
-    `;
+    let label = this.trans("dictionarySettingPage.inviteEditDictionaryForm.label");
+    let description = this.trans("dictionarySettingPage.inviteEditDictionaryForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <InviteEditDictionaryForm number={this.state.dictionary!.number} dictionary={this.state.dictionary!}/>
@@ -166,8 +147,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     let number = +this.props.match!.params.number;
     let mode = this.props.match?.params.mode || "general";
     let menuSpecs = [
-      {mode: "general", label: "一般", iconLabel: "\uF013", href: "/dictionary-setting/" + number},
-      {mode: "access", label: "権限", iconLabel: "\uF0C0", href: "/dictionary-setting/access/" + number}
+      {mode: "general", label: this.trans("dictionarySettingPage.general"), iconLabel: "\uF013", href: "/dictionary-setting/" + number},
+      {mode: "access", label: this.trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dictionary-setting/access/" + number}
     ];
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {

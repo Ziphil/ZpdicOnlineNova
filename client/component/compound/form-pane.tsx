@@ -12,13 +12,15 @@ import {
   InformationPane
 } from "/client/component/compound";
 import {
-  applyStyle
+  applyStyle,
+  intl
 } from "/client/component/decorator";
 import {
-  getMessage
-} from "/client/component/message";
+  PopupUtil
+} from "/client/util/popup";
 
 
+@intl
 @applyStyle(require("./form-pane.scss"))
 export class FormPane extends Component<Props, State> {
 
@@ -32,7 +34,7 @@ export class FormPane extends Component<Props, State> {
     let errorStyle = this.props.errorStyle;
     let errorNode = (errorType !== null) && (
       <div styleName="error">
-        <InformationPane texts={[getMessage(errorType)]} style={errorStyle} onClose={this.props.onErrorClose}/>
+        <InformationPane texts={[PopupUtil.getMessage(this.props.intl!, errorType)]} style={errorStyle} onClose={this.props.onErrorClose}/>
       </div>
     );
     let node = (

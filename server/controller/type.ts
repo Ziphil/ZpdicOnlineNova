@@ -58,7 +58,8 @@ export const SERVER_PATH = {
   resetUserPassword: "/api/user/reset/reset",
   fetchUser: "/api/user/info",
   addNotification: "/api/news/add",
-  fetchNotifications: "/api/news/list"
+  fetchNotifications: "/api/news/list",
+  contact: "/api/other/contact"
 };
 
 type ProcessType = {
@@ -305,10 +306,10 @@ type ProcessType = {
   registerUser: {
     get: Noop,
     post: {
-      request: {name: string, email: string, password: string},
+      request: {name: string, email: string, password: string, token: string},
       response: {
         200: User,
-        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidEmail" | "invalidPassword">
+        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidEmail" | "invalidPassword" | "recaptchaRejected" | "recaptchaError">
       }
     }
   },
@@ -335,10 +336,10 @@ type ProcessType = {
   issueUserResetToken: {
     get: Noop,
     post: {
-      request: {name: string, email: string},
+      request: {name: string, email: string, token: string},
       response: {
         200: null,
-        400: CustomError<"noSuchUser">
+        400: CustomError<"noSuchUser" | "recaptchaRejected" | "recaptchaError">
       }
     }
   },
@@ -381,6 +382,16 @@ type ProcessType = {
       }
     },
     post: Noop
+  },
+  contact: {
+    get: Noop,
+    post: {
+      request: {name: string, email: string, subject: string, text: string, token: string},
+      response: {
+        200: null,
+        400: CustomError<"administratorNotFound" | "recaptchaRejected" | "recaptchaError">
+      }
+    }
   }
 };
 

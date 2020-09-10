@@ -15,6 +15,13 @@ let config = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "ts-loader"
+        }
+      },
+      {
         test: /\.jsx?$/,
         exclude: /node_modules/,
         use: {
@@ -22,11 +29,9 @@ let config = {
         }
       },
       {
-        test: /\.tsx?$/,
-        exclude: /node_modules/,
-        use: {
-          loader: "ts-loader"
-        }
+        test: /\.js$/,
+        enforce: "pre",
+        loader: "source-map-loader"
       },
       {
         test: /\.scss$/,
@@ -45,14 +50,20 @@ let config = {
         ]
       },
       {
-        test: /\.js$/,
-        enforce: "pre",
-        loader: "source-map-loader"
+        test: /\.yml$/,
+        use: [
+          {
+            loader: "json-loader"
+          },
+          {
+            loader: "yaml-flat-loader"
+          }
+        ]
       }
     ]
   },
   resolve: {
-    extensions: [".ts", ".tsx", ".js", ".jsx", ".scss"],
+    extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".yml"],
     alias: {
       "/client": path.resolve(__dirname, "client"),
       "/server": path.resolve(__dirname, "server")

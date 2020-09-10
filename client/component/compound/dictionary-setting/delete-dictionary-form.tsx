@@ -15,11 +15,12 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./delete-dictionary-form.scss"))
 export class DeleteDictionaryForm extends StoreComponent<Props, State> {
 
@@ -40,24 +41,18 @@ export class DeleteDictionaryForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let alertText = `
-      この辞書データを永久に削除します。
-      削除した後にデータを戻すことはできません。
-      本当によろしいですか?
-    `;
     let node = (
       <Fragment>
         <form styleName="root">
-          <Button label="削除" reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
+          <Button label={this.trans("deleteDictionaryForm.confirm")} reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
         </form>
         <p styleName="caution">
-          この操作を行うと、辞書データが永久に削除されます。
-          削除した後にデータを戻すことはできませんので、ボタンをクリックする前に入念に確認してください。
+          {this.trans("deleteDictionaryForm.caution")}
         </p>
         <Alert
-          text={alertText}
+          text={this.trans("deleteDictionaryForm.alert")}
           iconLabel="&#xF071;"
-          confirmLabel="削除"
+          confirmLabel={this.trans("deleteDictionaryForm.confirm")}
           open={this.state.alertOpen}
           outsideClosable={true}
           onClose={() => this.setState({alertOpen: false})}

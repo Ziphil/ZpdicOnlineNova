@@ -13,7 +13,7 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  createStyleName
+  StyleNameUtil
 } from "/client/util/style-name";
 
 
@@ -64,19 +64,19 @@ export class Input extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let inputStyleName = createStyleName(
+    let inputStyleName = StyleNameUtil.create(
       "input",
       {if: this.state.errorMessage !== null, true: "error"}
     );
     let labelNode = (this.props.label !== undefined) && (() => {
-      let labelStyleName = createStyleName(
+      let labelStyleName = StyleNameUtil.create(
         "label",
         {if: this.state.errorMessage !== null, true: "error"}
       );
       return <div styleName={labelStyleName}>{this.props.label}</div>;
     })();
     let eyeNode = (this.props.type === "flexible") && (() => {
-      let buttonStyleName = createStyleName("eye", this.state.type);
+      let buttonStyleName = StyleNameUtil.create("eye", this.state.type);
       return <span styleName={buttonStyleName} onClick={this.toggleType.bind(this)}/>;
     })();
     let tooltipNode = (this.state.errorMessage !== null) && (

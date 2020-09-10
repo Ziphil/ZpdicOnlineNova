@@ -4,7 +4,9 @@
 
 
 .root {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
 .label {
@@ -18,6 +20,7 @@
   padding: 0.25em 0.5em;
   display: block;
   resize: none;
+  flex-grow: 1;
 }
 
 .textarea.monospace {

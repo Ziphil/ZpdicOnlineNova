@@ -14,7 +14,7 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  createStyleName
+  StyleNameUtil
 } from "/client/util/style-name";
 import {
   WithSize
@@ -57,7 +57,7 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
     let maxPage = Math.max(Math.ceil(hitSize / this.props.size) - 1, 0);
     let panes = hitItems.map(this.props.renderer);
     let paneStyle = {gridTemplateColumns: `repeat(${this.props.column}, 1fr)`};
-    let paginationStyleName = createStyleName(
+    let paginationStyleName = StyleNameUtil.create(
       "pagination",
       {if: hitItems.length <= 0, true: "empty"}
     );

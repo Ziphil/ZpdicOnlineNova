@@ -14,7 +14,7 @@ import {
   route
 } from "/client/component/decorator";
 import {
-  createStyleName
+  StyleNameUtil
 } from "/client/util/style-name";
 
 
@@ -42,7 +42,7 @@ export class Link extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let styleName = createStyleName(
+    let styleName = StyleNameUtil.create(
       "root",
       {if: this.props.style === "plane", true: "plane"}
     );

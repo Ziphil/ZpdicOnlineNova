@@ -17,7 +17,7 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  createStyleName
+  StyleNameUtil
 } from "/client/util/style-name";
 import {
   Dictionary
@@ -35,7 +35,7 @@ export class Page extends Component<Props, State> {
   };
 
   public render(): ReactNode {
-    let spacerStyleName = createStyleName(
+    let spacerStyleName = StyleNameUtil.create(
       "spacer",
       {if: this.props.showDictionary, true: "dictionary"}
     );
@@ -52,6 +52,7 @@ export class Page extends Component<Props, State> {
             {this.props.children}
           </div>
         </div>
+        <Footer/>
       </div>
     );
     return node;

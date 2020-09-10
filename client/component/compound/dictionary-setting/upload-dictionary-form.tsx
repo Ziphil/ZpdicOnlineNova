@@ -15,11 +15,12 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./upload-dictionary-form.scss"))
 export class UploadDictionaryForm extends StoreComponent<Props, State> {
 
@@ -44,8 +45,8 @@ export class UploadDictionaryForm extends StoreComponent<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <FileInput inputLabel="ファイル" buttonLabel="選択" onSet={(file) => this.setState({file})}/>
-        <Button label="決定" reactive={true} onClick={this.handleClick.bind(this)}/>
+        <FileInput inputLabel={this.trans("uploadDictionaryForm.file")} onSet={(file) => this.setState({file})}/>
+        <Button label={this.trans("uploadDictionaryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
     return node;

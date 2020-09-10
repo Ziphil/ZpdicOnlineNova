@@ -14,9 +14,6 @@ import {
   post
 } from "/server/controller/decorator";
 import {
-  getMailText
-} from "/server/controller/mail-text";
-import {
   login,
   logout,
   verifyUser
@@ -35,8 +32,11 @@ import {
   CastUtil
 } from "/server/util/cast";
 import {
-  sendMail
-} from "/server/util/misc";
+  MailUtil
+} from "/server/util/mail";
+import {
+  RecaptchaUtil
+} from "/server/util/recapthca";
 
 
 @controller("/")
@@ -49,13 +49,13 @@ export class UserController extends Controller {
     let user = request.user!;
     let userBody = UserCreator.createDetailed(user);
     let body = {token, user: userBody};
-    Controller.response(response, body);
+    Controller.respond(response, body);
   }
 
   @post(SERVER_PATH["logout"])
   @before(logout())
   public async [Symbol()](request: PostRequest<"logout">, response: PostResponse<"logout">): Promise<void> {
-    Controller.response(response, null);
+    Controller.respond(response, null);
   }
 
   @post(SERVER_PATH["registerUser"])
@@ -63,13 +63,20 @@ export class UserController extends Controller {
     let name = CastUtil.ensureString(request.body.name);
     let email = CastUtil.ensureString(request.body.email);
     let password = CastUtil.ensureString(request.body.password);
+    let token = CastUtil.ensureString(request.body.token);
     try {
-      let user = await UserModel.register(name, email, password);
-      let body = UserCreator.create(user);
-      let subject = "ユーザー登録完了のお知らせ";
-      let text = getMailText("registerUser", {name});
-      sendMail(user.email, subject, text);
-      Controller.response(response, body);
+      let result = await RecaptchaUtil.verify(token);
+      if (result.score >= 0.5) {
+        let user = await UserModel.register(name, email, password);
+        let body = UserCreator.create(user);
+        let subject = MailUtil.getSubject("registerUser");
+        let text = MailUtil.getText("registerUser", {name});
+        MailUtil.send(user.email, subject, text);
+        Controller.respond(response, body);
+      } else {
+        let body = CustomError.ofType("recaptchaRejected");
+        Controller.respondError(response, body);
+      }
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError") {
@@ -79,6 +86,8 @@ export class UserController extends Controller {
             return CustomError.ofType("duplicateUserEmail");
           } else if (error.type === "invalidPassword") {
             return CustomError.ofType("invalidPassword");
+          } else if (error.type === "recaptchaError") {
+            return CustomError.ofType("recaptchaError");
           }
         } else if (error.name === "ValidationError") {
           if (error.errors.name) {
@@ -88,7 +97,7 @@ export class UserController extends Controller {
           }
         }
       })();
-      Controller.responseError(response, body, error);
+      Controller.respondError(response, body, error);
     }
   }
 
@@ -100,7 +109,7 @@ export class UserController extends Controller {
     try {
       await user.changeEmail(email);
       let body = UserCreator.create(user);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError" && error.type === "duplicateUserEmail") {
@@ -109,7 +118,7 @@ export class UserController extends Controller {
           return CustomError.ofType("invalidEmail");
         }
       })();
-      Controller.responseError(response, body, error);
+      Controller.respondError(response, body, error);
     }
   }
 
@@ -121,14 +130,14 @@ export class UserController extends Controller {
     try {
       await user.changePassword(password);
       let body = UserCreator.create(user);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError" && error.type === "invalidPassword") {
           return CustomError.ofType("invalidPassword");
         }
       })();
-      Controller.responseError(response, body, error);
+      Controller.respondError(response, body, error);
     }
   }
 
@@ -136,20 +145,31 @@ export class UserController extends Controller {
   public async [Symbol()](request: PostRequest<"issueUserResetToken">, response: PostResponse<"issueUserResetToken">): Promise<void> {
     let name = CastUtil.ensureString(request.body.name);
     let email = CastUtil.ensureString(request.body.email);
+    let token = CastUtil.ensureString(request.body.token);
     try {
-      let {user, key} = await UserModel.issueResetToken(name, email);
-      let url = "http://" + request.get("host") + "/reset?key=" + key;
-      let subject = "パスワードリセットのお知らせ";
-      let text = getMailText("issueUserResetToken", {url});
-      sendMail(user.email, subject, text);
-      response.send(null);
+      let result = await RecaptchaUtil.verify(token);
+      if (result.score >= 0.5) {
+        let {user, key} = await UserModel.issueResetToken(name, email);
+        let url = "http://" + request.get("host") + "/reset?key=" + key;
+        let subject = MailUtil.getSubject("issueUserResetToken");
+        let text = MailUtil.getText("issueUserResetToken", {url});
+        MailUtil.send(user.email, subject, text);
+        Controller.respond(response, null);
+      } else {
+        let body = CustomError.ofType("recaptchaRejected");
+        Controller.respondError(response, body);
+      }
     } catch (error) {
       let body = (() => {
-        if (error.name === "CustomError" && error.type === "noSuchUser") {
-          return CustomError.ofType("noSuchUser");
+        if (error.name === "CustomError") {
+          if (error.type === "noSuchUser") {
+            return CustomError.ofType("noSuchUser");
+          } else if (error.type === "recaptchaError") {
+            return CustomError.ofType("recaptchaError");
+          }
         }
       })();
-      Controller.responseError(response, body, error);
+      Controller.respondError(response, body, error);
     }
   }
 
@@ -160,7 +180,7 @@ export class UserController extends Controller {
     try {
       let user = await UserModel.resetPassword(key, password, 60);
       let body = UserCreator.create(user);
-      Controller.response(response, body);
+      Controller.respond(response, body);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError") {
@@ -171,7 +191,7 @@ export class UserController extends Controller {
           }
         }
       })();
-      Controller.responseError(response, body, error);
+      Controller.respondError(response, body, error);
     }
   }
 
@@ -180,7 +200,7 @@ export class UserController extends Controller {
   public async [Symbol()](request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
     let user = request.user!;
     let body = UserCreator.createDetailed(user);
-    Controller.response(response, body);
+    Controller.respond(response, body);
   }
 
 }

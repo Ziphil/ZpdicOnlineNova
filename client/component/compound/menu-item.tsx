@@ -17,7 +17,7 @@ import {
   route
 } from "/client/component/decorator";
 import {
-  createStyleName
+  StyleNameUtil
 } from "/client/util/style-name";
 
 
@@ -36,7 +36,7 @@ export class MenuItem extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let styleName = createStyleName(
+    let styleName = StyleNameUtil.create(
       "root",
       {if: this.props.highlight, true: "highlight"}
     );

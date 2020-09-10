@@ -10,11 +10,12 @@ import {
 import {
   applyStyle,
   inject,
+  intl,
   route
 } from "/client/component/decorator";
 
 
-@route @inject
+@route @inject @intl
 @applyStyle(require("./dictionary-aggregation-pane.scss"))
 export class DictionaryAggregationPane extends StoreComponent<Props, State> {
 
@@ -32,17 +33,15 @@ export class DictionaryAggregationPane extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let dictionarySizeString = this.state.dictionarySize?.toLocaleString("en-GB") || "?";
-    let wordSizeString = this.state.wordSize?.toLocaleString("en-GB") || "?";
     let node = (
       <div styleName="root">
         <div styleName="size-wrapper">
-          <div styleName="title">総辞書数</div>
-          <div styleName="size">{dictionarySizeString}</div>
+          <div styleName="title">{this.trans("dictionaryAggregationPane.dictionarySize")}</div>
+          <div styleName="size">{this.transNumber(this.state.dictionarySize)}</div>
         </div>
         <div styleName="size-wrapper">
-          <div styleName="title">総単語数</div>
-          <div styleName="size">{wordSizeString}</div>
+          <div styleName="title">{this.trans("dictionaryAggregationPane.wordSize")}</div>
+          <div styleName="size">{this.transNumber(this.state.wordSize)}</div>
         </div>
       </div>
     );

@@ -12,7 +12,7 @@ import {
   applyStyle
 } from "/client/component/decorator";
 import {
-  createStyleName
+  StyleNameUtil
 } from "/client/util/style-name";
 
 
@@ -55,7 +55,7 @@ export class Button extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let styleName = createStyleName(
+    let styleName = StyleNameUtil.create(
       "root",
       {if: this.props.label === undefined, true: "only-icon"},
       {if: this.props.position !== "alone", true: this.props.position},
