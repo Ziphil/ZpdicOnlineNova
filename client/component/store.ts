@@ -20,6 +20,7 @@ export class GlobalStore {
   @observable
   public popupSpecs: Array<PopupSpec> = [];
 
+  @boundAction
   public changeLocale(locale: string): void {
     this.locale = locale;
     localStorage.setItem("locale", locale);

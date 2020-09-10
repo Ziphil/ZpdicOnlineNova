@@ -22,7 +22,7 @@ import {
 } from "/client/util/popup";
 
 
-@route @inject @observer @intl
+@route @inject @intl @observer
 @applyStyle(require("./popup-information-pane.scss"))
 export class PopupInformationPane extends StoreComponent<Props, State> {
 
