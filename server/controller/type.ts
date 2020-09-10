@@ -58,7 +58,8 @@ export const SERVER_PATH = {
   resetUserPassword: "/api/user/reset/reset",
   fetchUser: "/api/user/info",
   addNotification: "/api/news/add",
-  fetchNotifications: "/api/news/list"
+  fetchNotifications: "/api/news/list",
+  contact: "/api/other/contact"
 };
 
 type ProcessType = {
@@ -381,6 +382,16 @@ type ProcessType = {
       }
     },
     post: Noop
+  },
+  contact: {
+    get: Noop,
+    post: {
+      request: {name: string, email: string, subject: string, text: string, token: string},
+      response: {
+        200: null,
+        400: CustomError<"administratorNotFound" | "recaptchaRejected" | "recaptchaError">
+      }
+    }
   }
 };
 

@@ -21,6 +21,7 @@ import {
   DebugController,
   DictionaryController,
   NotificationController,
+  OtherController,
   UserController
 } from "/server/controller";
 import {
@@ -111,6 +112,7 @@ export class Main {
     DebugController.use(this.application);
     DictionaryController.use(this.application);
     NotificationController.use(this.application);
+    OtherController.use(this.application);
     UserController.use(this.application);
   }
 

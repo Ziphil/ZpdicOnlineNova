@@ -83,6 +83,8 @@ popup:
     そのような権限の招待は存在しません。
   noSuchDictionaryAuthorizedUser: >-
     そのような権限を保有しているユーザーは存在しません。
+  administratorNotFound: >-
+    予期しないエラーが発生しました。
   invalidArgument: >-
     渡された引数が不正です。
   unauthenticated: >-

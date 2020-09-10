@@ -83,6 +83,8 @@ popup:
     This invitation does not exist.
   noSuchDictionaryAuthorizedUser: >-
     There is no user with such permission.
+  administratorNotFound: >-
+    An unexpected error occurred.
   invalidArgument: >-
     The argument is invalid.
   unauthenticated: >-
