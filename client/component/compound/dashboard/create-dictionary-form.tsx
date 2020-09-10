@@ -25,11 +25,11 @@ import {
 export class CreateDictionaryForm extends StoreComponent<Props, State> {
 
   public state: State = {
-    name: this.trans("createDictionaryForm.defaultName")
+    name: null
   };
 
   private async handleClick(): Promise<void> {
-    let name = this.state.name;
+    let name = this.state.name ?? this.trans("createDictionaryForm.defaultName");
     let response = await this.requestPost("createDictionary", {name});
     if (response.status === 200) {
       let dictionary = response.data;
@@ -41,9 +41,10 @@ export class CreateDictionaryForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
+    let name = this.state.name ?? this.trans("createDictionaryForm.defaultName");
     let node = (
       <form styleName="root">
-        <Input label={this.trans("createDictionaryForm.name")} value={this.state.name} onSet={(name) => this.setState({name})}/>
+        <Input label={this.trans("createDictionaryForm.name")} value={name} onSet={(name) => this.setState({name})}/>
         <Button label={this.trans("createDictionaryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
@@ -57,5 +58,5 @@ type Props = {
   onSubmit?: () => void
 };
 type State = {
-  name: string;
+  name: string | null;
 };
