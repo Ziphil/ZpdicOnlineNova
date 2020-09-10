@@ -114,6 +114,14 @@ popup:
     予期しないエラーが発生しました。
     お手数ですが管理者までご連絡ください。
 
+alert:
+  confirm: "実行"
+  cancel: "キャンセル"
+fileInput:
+  button: "選択"
+overlay:
+  back: "戻る"
+  close: "閉じる"
 changeUserEmailForm:
   email: "メールアドレス"
   confirm: "変更"

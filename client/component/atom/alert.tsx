@@ -13,18 +13,20 @@ import {
   Component
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  intl
 } from "/client/component/decorator";
 
 
+@intl
 @applyStyle(require("./alert.scss"))
 export class Alert extends Component<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: any = {
     open: false,
     outsideClosable: false,
-    confirmLabel: "実行",
-    cancelLabel: "キャンセル"
+    confirmLabel: null,
+    cancelLabel: null
   };
 
   private handleConfirm(event: MouseEvent<HTMLButtonElement>): void {
@@ -46,6 +48,8 @@ export class Alert extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    let cancelLabel = this.props.cancelLabel ?? this.trans("alert.cancel");
+    let confirmLabel = this.props.confirmLabel ?? this.trans("alert.confirm");
     let node = (
       <Modal open={this.props.open} outsideClosable={this.props.outsideClosable} onClose={this.props.onClose}>
         <div styleName="content">
@@ -54,8 +58,8 @@ export class Alert extends Component<Props, State> {
             <p styleName="text">{this.props.text}</p>
           </div>
           <div styleName="button">
-            <Button label={this.props.cancelLabel} onClick={this.handleCancel.bind(this)}/>
-            <Button label={this.props.confirmLabel} style="caution" onClick={this.handleConfirm.bind(this)}/>
+            <Button label={cancelLabel} onClick={this.handleCancel.bind(this)}/>
+            <Button label={confirmLabel} style="caution" onClick={this.handleConfirm.bind(this)}/>
           </div>
         </div>
       </Modal>
@@ -69,8 +73,8 @@ export class Alert extends Component<Props, State> {
 type Props = {
   text: string,
   iconLabel: string,
-  confirmLabel: string,
-  cancelLabel: string,
+  confirmLabel: string | null,
+  cancelLabel: string | null,
   open: boolean,
   outsideClosable: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => void,

@@ -114,6 +114,14 @@ popup:
     An unexpected error occurred.
     Please notify the administrator.
 
+alert:
+  confirm: "Confirm"
+  cancel: "Cancel"
+fileInput:
+  button: "Select"
+overlay:
+  back: "Back"
+  close: "Close"
 changeUserEmailForm:
   email: "Email address"
   confirm: "Confirm"

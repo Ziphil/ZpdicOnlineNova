@@ -9,15 +9,18 @@ import {
   Component
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  intl
 } from "/client/component/decorator";
 
 
+@intl
 @applyStyle(require("./file-input.scss"))
 export class FileInput extends Component<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
-    file: null
+  public static defaultProps: any = {
+    file: null,
+    buttonLabel: null
   };
   public state: State = {
     fileName: ""
@@ -46,7 +49,7 @@ export class FileInput extends Component<Props, State> {
           <input styleName="input" type="text" value={this.state.fileName} readOnly={true}/>
         </label>
         <label styleName="button">
-          {this.props.buttonLabel}
+          {this.props.buttonLabel ?? this.trans("fileInput.button")}
           <input styleName="file" type="file" onChange={this.handleChange.bind(this)}/>
         </label>
       </div>
@@ -60,7 +63,7 @@ export class FileInput extends Component<Props, State> {
 type Props = {
   file: File | null,
   inputLabel?: string,
-  buttonLabel: string,
+  buttonLabel: string | null,
   onSet?: (file: File | null) => void,
   className?: string
 };

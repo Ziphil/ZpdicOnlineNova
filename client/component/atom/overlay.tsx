@@ -13,17 +13,19 @@ import {
   Component
 } from "/client/component/component";
 import {
-  applyStyle
+  applyStyle,
+  intl
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
+@intl
 @applyStyle(require("./overlay.scss"))
 export class Overlay extends Component<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: any = {
     size: "small",
     open: false,
     outsideClosable: false
@@ -40,10 +42,10 @@ export class Overlay extends Component<Props, State> {
     })();
     let headerNode = (this.props.title !== undefined) && (() => {
       let backButtonNode = (this.props.page !== undefined && this.props.page > 0) && (
-        <Button label="戻る" iconLabel="&#xF04A;" style="simple" hideLabel={true} onClick={this.props.onBack}/>
+        <Button label={this.trans("overlay.back")} iconLabel="&#xF04A;" style="simple" hideLabel={true} onClick={this.props.onBack}/>
       );
       let closeButtonNode = (
-        <Button label="閉じる" iconLabel="&#xF00D;" style="simple" hideLabel={true} onClick={this.props.onClose}/>
+        <Button label={this.trans("overlay.close")} iconLabel="&#xF00D;" style="simple" hideLabel={true} onClick={this.props.onClose}/>
       );
       let headerNode = (
         <div styleName="header">

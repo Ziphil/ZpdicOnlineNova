@@ -45,7 +45,7 @@ export class UploadDictionaryForm extends StoreComponent<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <FileInput inputLabel={this.trans("uploadDictionaryForm.file")} buttonLabel="選択" onSet={(file) => this.setState({file})}/>
+        <FileInput inputLabel={this.trans("uploadDictionaryForm.file")} onSet={(file) => this.setState({file})}/>
         <Button label={this.trans("uploadDictionaryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
