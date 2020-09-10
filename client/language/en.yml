@@ -4,51 +4,115 @@ common:
   numberUndefined: "?"
 
 popup: 
-  emailChanged: "メールアドレスを変更しました。"
-  passwordChanged: "パスワードを変更しました。"
-  userResetTokenIssued: "パスワードリセット用の URL を記載したメールを送信しました。メールの指示に従って操作を進めてください。"
-  userPasswordReset: "パスワードのリセットが完了しました。新しいパスワードを用いてログインしてください。"
-  dictionaryNameChanged: "辞書の表示名を変更しました。"
-  dictionaryParamNameChanged: "辞書の URL 用名称を変更しました。"
-  dictionarySecretChanged: "辞書の一覧表示の設定を変更しました。"
-  dictionaryExplanationChanged: "辞書の説明を変更しました。"
-  dictionaryUploaded: "辞書のアップロードが完了しました。なお、データの反映には時間がかかる場合があります。"
-  dictionaryDeleted: "辞書を削除しました。"
-  editDictionaryInvited: "編集権限の付与をリクエストしました。相手ユーザーがこれを承認すれば編集権限が付与されます。"
-  editDictionaryAccepted: "編集権限の付与の招待を承認しました。これ以降、該当の辞書を編集することができます。"
-  editDictionaryRefused: "編集権限の付与の招待を拒否しました。"
-  dictionaryAuthorizedUserDeleted: "該当ユーザーの編集権限を削除しました。"
-  wordEdited: "単語の編集が完了しました。"
-  wordDeleted: "単語の削除が完了しました。"
-  invalidUserName: "ユーザー ID が不正です。半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれており、全体で 30 文字以下である必要があります。"
-  invalidEmail: "メールアドレスが不正です。"
-  invalidPassword: "パスワードが不正です。6 文字以上 50 文字以下である必要があります。"
-  duplicateUserName: "そのユーザー ID はすでに存在しています。別のユーザー ID を指定してください。"
-  duplicateUserEmail: "そのメールアドレスはすでに登録済みです。別のメールアドレスを指定してください。"
-  noSuchUser: "そのユーザーは存在しません。"
-  noSuchUserEmail: "そのメールアドレスのユーザーは存在しません。"
-  invalidResetToken: "パスワードのリセットに失敗しました。"
-  loginFailed: "ログインに失敗しました。"
-  noSuchDictionaryNumber: "この番号の辞書は存在しません。"
-  noSuchDictionaryParamName: "この名称の辞書は存在しません。"
-  duplicateDictionaryParamName: "その URL 用名称はすでに利用されています。別の名称をしてしてください。"
-  invalidDictionaryParamName: "URL 用名称が不正です。半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれており、全体で 30 文字以下である必要があります。"
-  noSuchWordNumber: "存在しない単語を編集しようとしました。"
-  userCanAlreadyEdit: "そのユーザーはすでに編集権限を保有しています。"
-  editDictionaryAlreadyInvited: "同一の編集権限の付与がすでにリクエストされています。"
-  noSuchInvitation: "そのような権限の招待は存在しません。"
-  noSuchDictionaryAuthorizedUser: "そのような権限を保有しているユーザーは存在しません。"
-  invalidArgument: "渡された引数が不正です。"
-  unauthenticated: "ログインしていません。ログインし直してください。"
-  forbidden: "このコンテンツにアクセスする権限がありません。"
-  serverNotFound: "実行すべき処理を行う API が見つかりませんでした。"
-  serverError: "サーバーでエラーが発生しました。時間を置いてもう一度お試しください。"
-  serverTimeout: "サーバーが時間内に応答しませんでした。時間を置いてもう一度お試しください。"
-  requestTimeout: "サーバーが時間内に応答しませんでした。時間を置いてもう一度お試しください。"
-  recaptchaError: "reCAPTCHA がエラーを返しました。もう一度お試しください。"
-  recaptchaRejected: "reCAPTCHA による認証に失敗しました。もう一度お試しください。"
-  messageNotFound: "ポップアップ用のメッセージが設定されていません。設定ミスの可能性がありますので、お手数ですが管理者までご連絡ください。"
-  unexpected: "予期しないエラーが発生しました。バグの可能性がありますので、お手数ですが管理者までご連絡ください。"
+  emailChanged: >-
+    Your email address has been changed.
+  passwordChanged: >-
+    Your password has been changed.
+  userResetTokenIssued: >-
+    We sent an email with the URL for resetting password.
+    Please follow the instruction in the email.
+  userPasswordReset: >-
+    Your password has been reset.
+    Please sign in again using the new password.
+  dictionaryNameChanged: >-
+    The display name of the dictionary has been changed.
+  dictionaryParamNameChanged: >-
+    The name of the dictionary for URL has been changed.
+  dictionarySecretChanged: >-
+    The visibility of the dictionary has been changed.
+  dictionaryExplanationChanged: >-
+    The explanation of the dictionary has been changed.
+  dictionaryUploaded: >-
+    Your file was successfully uploaded.
+    Note that it will take some time before the dictionary data is updated.
+  dictionaryDeleted: >-
+    The dictionary has been deleted.
+  editDictionaryInvited: >-
+    You requested the user to get permission.
+    The permission will be given to them after they accept the request.
+  editDictionaryAccepted: >-
+    You accepted the invitation to get permission.
+    You can edit the dictionary from now on.
+  editDictionaryRefused: >-
+    You rejected the invitation to get permission.
+  dictionaryAuthorizedUserDeleted: >-
+    The permission of the user has been revoked.
+  wordEdited: >-
+    The editing of the word has been completed.
+  wordDeleted: >-
+    The deletion of the word has been completed.
+  invalidUserName: >-
+    The user ID is invalid.
+    It must be composed by alphanumeric characters or underscores or hyphens, contain at least one character other than numerics, and have no more than 30 characters.
+  invalidEmail: >-
+    The email address is invalid.
+  invalidPassword: >-
+    The password is invalid.
+    It must have 6–50 characters.
+  duplicateUserName: >-
+    The user ID you specified already exists.
+    Please specify another user ID.
+  duplicateUserEmail: >-
+    The email address you specified is already registered.
+    Please specify another email address.
+  noSuchUser: >-
+    This user does not exist.
+  noSuchUserEmail: >-
+    There is no user with this email address.
+  invalidResetToken: >-
+    Failed to reset your password.
+  loginFailed: >-
+    Failed to sign in.
+  noSuchDictionaryNumber: >-
+    There is no dictionary with this number.
+  noSuchDictionaryParamName: >-
+    There is no dictionary with this name.
+  duplicateDictionaryParamName: >-
+    The name for URL you specified is already used.
+    Please specify another name.
+  invalidDictionaryParamName: >-
+    The name for URL is invalid.
+    It must be composed by alphanumeric characters or underscores or hyphens, contain at least one character other than numerics, and have no more than 30 characters.
+  noSuchWordNumber: >-
+    You tried to edit a word which does not exist.
+  userCanAlreadyEdit: >-
+    This user already has permission.
+  editDictionaryAlreadyInvited: >-
+    You have already requested this user to get permission.
+  noSuchInvitation: >-
+    This invitation does not exist.
+  noSuchDictionaryAuthorizedUser: >-
+    There is no user with such permission.
+  invalidArgument: >-
+    The argument is invalid.
+  unauthenticated: >-
+    You are not signed in.
+    Please sign in again.
+  forbidden: >-
+    You have no permission to access the content.
+  serverNotFound: >-
+    The API is not found.
+  serverError: >-
+    An error occurred in the server.
+    Please try again after a while.
+  serverTimeout: >-
+    The server does not respond within the time.
+    Please try again after a while.
+  requestTimeout: >-
+    The server does not respond within the time.
+    Please try again after a while.
+  recaptchaError: >-
+    An error is returned by reCAPTCHA.
+    Please try again.
+  recaptchaRejected: >-
+    Failed to authenticate by reCAPTCHA.
+    Please try again.
+  messageNotFound: >-
+    There is no message configured for this popup.
+    Please notify the administrator.
+  unexpected: >-
+    An unexpected error occurred.
+    Please notify the administrator.
 
 changeUserEmailForm:
   email: "Email address"
@@ -73,16 +137,16 @@ changeDictionarySecretForm:
   public: "Show"
   secret: "Hide"
   confirm: "Confirm"
-  caution: |-
+  caution: >-
     This setting affects only whether or not this dictionary is shown in the dictionary list page.
     Even if you select “Hide” here, everyone can still view this dictionary.
 deleteDictionaryForm:
   confirm: "Delete"
-  caution: |-
+  caution: >-
     This operation will delete this dictionary permanently.
     Once you delete this dictionary, you cannot restore it.
     Please be certain.
-  alert: |-
+  alert: >-
     This dictionary will be deleted parmanently.
     You cannot restore it hereafter.
     Are you really sure?
@@ -142,7 +206,7 @@ suggestionPane:
   suggestion: "{title} of {name}?"
 userPane:
   delete: "Delete"
-  alert: |-
+  alert: >-
     The permission of this user will be revoked.
     Are you really sure?
 wordEditor:
@@ -169,60 +233,60 @@ dashboardPage:
   logout: "Sign out"
   dictionaryList:
     label: "Dictionaries"
-    description: |-
+    description: >-
       The list of your dictionaries.
       This also includes those which you are not an owner of but you have editing permission of.
   invitationList:
     label: "Permisson invitations"
-    description: |-
+    description: >-
       The list of invitations to grant you permission.
       Accepting it will enable you to edit the dictionary. 
   createDictionaryForm:
     label: "Create new dictionary"
-    description: |-
+    description: >-
       Create a new empty dictionary.
   changeUserEmailForm:
     label: "Change email address"
-    description: |-
+    description: >-
       Change your email address.
   changeUserPasswordForm:
     label: "Change password"
-    description: |-
+    description: >-
       Change your password.
 dictionarySettingPage:
   general: "General"
   access: "Permissions"
   changeDictionaryNameForm:
     label: "Change name"
-    description: |-
+    description: >-
       Change the display name of this dictionary.
   changeDictionaryParamNameForm:
     label: "Change name for URL"
-    description: |-
+    description: >-
       Change the name of this dictionary for URL.
       Setting this will enable to replace the ID number with the name set here in the URL to access the dictionary.
   changeDictionaryExplanationForm:
     label: "Change explanation"
-    description: |-
+    description: >-
       Change the explanation of this dictionary.
       You can use some of the Markdown syntax.
       This will be displayed in the dictionary page before one searches something.
   changeDictionarySecretForm:
     label: "Change visibility"
-    description: |-
+    description: >-
       Change whether or not this dictionary is shown in the dictionary list page.
   uploadDictionaryForm:
     label: "Upload"
-    description: |-
+    description: >-
       Upload a file and overwrite the current data.
       The supported formats are: OTM-JSON format (with extension .json) and PDIC format (with extension .dic).
   deleteDictionaryForm:
     label: "Delete"
-    description: |-
+    description: >-
       Delete this dictionary.
   inviteEditDictionaryForm:
     label: "Editing permissions"
-    description: |-
+    description: >-
       The list of the users who have permission to edit this dictionary.
       You can also give permission to another user here.
       Users with permission can edit and delete words, but cannot change the name of the dictionary or delete it.
