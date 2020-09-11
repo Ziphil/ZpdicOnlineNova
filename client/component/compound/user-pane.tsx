@@ -7,6 +7,9 @@ import {
   ReactNode
 } from "react";
 import {
+  AsyncOrSync
+} from "ts-essentials";
+import {
   Alert,
   Button
 } from "/client/component/atom";
@@ -91,7 +94,7 @@ export class UserPane extends StoreComponent<Props, State> {
 type Props = {
   user: User,
   dictionary?: Dictionary,
-  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
   alertOpen: boolean

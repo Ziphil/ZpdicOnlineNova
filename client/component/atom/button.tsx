@@ -6,6 +6,9 @@ import {
   ReactNode
 } from "react";
 import {
+  AsyncOrSync
+} from "ts-essentials";
+import {
   Component
 } from "/client/component/component";
 import {
@@ -95,7 +98,7 @@ type Props = {
   hideLabel: boolean,
   reactive: boolean,
   disabled: boolean,
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void | PromiseLike<void>,
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   className?: string
 };
 type DefaultProps = {

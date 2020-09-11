@@ -10,6 +10,9 @@ import {
   ReactNode
 } from "react";
 import {
+  AsyncOrSync
+} from "ts-essentials";
+import {
   Alert,
   Button,
   ControlGroup,
@@ -426,9 +429,9 @@ type Props = {
   dictionary: Dictionary,
   word: Word | null,
   open: boolean,
-  onClose?: (event: MouseEvent<HTMLElement>) => void | Promise<void>,
-  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
-  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
+  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
   word: EditWord,

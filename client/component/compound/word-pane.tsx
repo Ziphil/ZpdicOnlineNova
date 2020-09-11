@@ -7,6 +7,9 @@ import {
   ReactNode
 } from "react";
 import {
+  AsyncOrSync
+} from "ts-essentials";
+import {
   Button,
   Link
 } from "/client/component/atom";
@@ -190,8 +193,8 @@ type Props = {
   showEditLink: boolean,
   showButton: boolean,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
-  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type DefaultProps = {
   style: "normal" | "simple",

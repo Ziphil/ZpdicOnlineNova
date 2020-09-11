@@ -7,6 +7,9 @@ import {
   ReactNode
 } from "react";
 import {
+  AsyncOrSync
+} from "ts-essentials";
+import {
   StoreComponent
 } from "/client/component/component";
 import {
@@ -143,7 +146,7 @@ type Props = {
   style: "normal" | "simple",
   showButton: boolean,
   onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type DefaultProps = {
   style: "normal" | "simple",

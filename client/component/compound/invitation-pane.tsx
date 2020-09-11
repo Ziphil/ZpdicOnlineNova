@@ -6,6 +6,9 @@ import {
   ReactNode
 } from "react";
 import {
+  AsyncOrSync
+} from "ts-essentials";
+import {
   Button
 } from "/client/component/atom";
 import {
@@ -20,9 +23,6 @@ import {
   intl,
   route
 } from "/client/component/decorator";
-import {
-  DateUtil
-} from "/client/util/date";
 import {
   Invitation
 } from "/server/skeleton/invitation";
@@ -74,7 +74,7 @@ export class InvitationPane extends StoreComponent<Props, State> {
 
 type Props = {
   invitation: Invitation
-  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
 };
