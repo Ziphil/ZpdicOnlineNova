@@ -56,7 +56,7 @@ export class Header extends StoreComponent<Props, State> {
             </div>
             <div styleName="menu">
               <HeaderMenuItem label={this.trans("header.dictionaryList")} iconLabel="&#xF02D;" href="/list"/>
-              <HeaderMenuItem label={this.trans("header.notification")} iconLabel="&#xF05A;" href="/news"/>
+              <HeaderMenuItem label={this.trans("header.notification")} iconLabel="&#xF05A;" href="/notification"/>
               <HeaderMenuItem label={this.trans("header.contact")} iconLabel="&#xF0E0;" href="/contact"/>
             </div>
             {languageNode}

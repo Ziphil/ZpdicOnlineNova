@@ -129,7 +129,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let menuSpecs = [
       {mode: "dictionary", label: this.trans("dashboardPage.dictionary"), iconLabel: "\uF02D", badgeValue: dictionaryCount, href: "/dashboard"},
       {mode: "notification", label: this.trans("dashboardPage.notification"), iconLabel: "\uF0F3", badgeValue: notificationCount, href: "/dashboard/notification"},
-      {mode: "profile", label: this.trans("dashboardPage.profile"), iconLabel: "\uF2C2", href: "/dashboard/profile"},
+      {mode: "account", label: this.trans("dashboardPage.account"), iconLabel: "\uF2C2", href: "/dashboard/account"},
       {mode: "logout", label: this.trans("dashboardPage.logout"), iconLabel: "\uF2F5", href: "/"}
     ];
     let contentNodes = [];
@@ -139,7 +139,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
         contentNodes.push(this.renderCreateDictionaryForm());
       } else if (mode === "notification") {
         contentNodes.push(this.renderInvitationList());
-      } else if (mode === "profile") {
+      } else if (mode === "account") {
         contentNodes.push(this.renderChangeUserEmailForm());
         contentNodes.push(this.renderChangeUserPasswordForm());
       }

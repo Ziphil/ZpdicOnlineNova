@@ -41,7 +41,7 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
 
   private jumpSettingPage(): void {
     if (this.props.dictionary) {
-      let path = "/dictionary-setting/" + this.props.dictionary.number;
+      let path = "/dashboard/dictionary/" + this.props.dictionary.number;
       this.pushPath(path);
     }
   }

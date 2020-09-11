@@ -147,8 +147,8 @@ export class DictionarySettingPage extends StoreComponent<Props, State, Params> 
     let number = +this.props.match!.params.number;
     let mode = this.props.match?.params.mode || "general";
     let menuSpecs = [
-      {mode: "general", label: this.trans("dictionarySettingPage.general"), iconLabel: "\uF013", href: "/dictionary-setting/" + number},
-      {mode: "access", label: this.trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dictionary-setting/access/" + number}
+      {mode: "general", label: this.trans("dictionarySettingPage.general"), iconLabel: "\uF013", href: "/dashboard/dictionary/" + number},
+      {mode: "access", label: this.trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dashboard/dictionary/access/" + number}
     ];
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {
