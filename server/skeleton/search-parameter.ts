@@ -1,22 +1,19 @@
 //
 
 import {
+  Skeleton
+} from "/server/skeleton/skeleton";
+import {
   LiteralType,
   LiteralUtilType
 } from "/server/util/literal-type";
 
 
-export class NormalSearchParameter {
+export class NormalSearchParameter extends Skeleton {
 
-  public search: string;
-  public mode: SearchMode;
-  public type: SearchType;
-
-  public constructor(search: string, mode: SearchMode, type: SearchType) {
-    this.search = search;
-    this.mode = mode;
-    this.type = type;
-  }
+  public search!: string;
+  public mode!: SearchMode;
+  public type!: SearchType;
 
 }
 

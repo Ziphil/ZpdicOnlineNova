@@ -37,6 +37,7 @@ import {
   Word
 } from "/server/skeleton/dictionary";
 import {
+  NormalSearchParameter,
   SearchMode,
   SearchModeUtil,
   SearchType,
@@ -52,9 +53,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     dictionary: null,
     canOwn: false,
     canEdit: false,
-    search: "",
-    mode: "both",
-    type: "prefix",
+    parameter: {search: "", mode: "both", type: "prefix"},
     page: 0,
     showsExplanation: true,
     hitResult: {words: [[], 0], suggestions: []}
@@ -129,9 +128,9 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   private async updateWordsImmediately(deserialize: boolean = true): Promise<void> {
     let number = this.state.dictionary?.number;
     if (number !== undefined) {
-      let search = this.state.search;
-      let mode = this.state.mode;
-      let type = this.state.type;
+      let search = this.state.parameter.search;
+      let mode = this.state.parameter.mode;
+      let type = this.state.parameter.type;
       let page = this.state.page;
       let offset = page * 40;
       let size = 40;
@@ -157,22 +156,23 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   private serializeQuery(first: boolean, callback?: () => void): void {
     let query = queryParser.parse(this.props.location!.search);
     let nextState = {} as any;
+    nextState.parameter = {search: "", mode: "both", type: "prefix"};
     if (typeof query.search === "string") {
-      nextState.search = query.search;
+      nextState.parameter.search = query.search;
       nextState.showsExplanation = false;
     } else {
-      nextState.search = "";
+      nextState.parameter.search = "";
       nextState.showsExplanation = true;
     }
     if (typeof query.mode === "string") {
-      nextState.mode = SearchModeUtil.cast(query.mode);
+      nextState.parameter.mode = SearchModeUtil.cast(query.mode);
     } else {
-      nextState.mode = "both";
+      nextState.parameter.mode = "both";
     }
     if (typeof query.type === "string") {
-      nextState.type = SearchTypeUtil.cast(query.type);
+      nextState.parameter.type = SearchTypeUtil.cast(query.type);
     } else {
-      nextState.type = "prefix";
+      nextState.parameter.type = "prefix";
     }
     if (typeof query.page === "string") {
       nextState.page = +query.page;
@@ -190,18 +190,17 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   }
 
   private deserializeQuery(): void {
-    let search = this.state.search;
-    let mode = this.state.mode;
-    let type = this.state.type;
+    let search = this.state.parameter.search;
+    let mode = this.state.parameter.mode;
+    let type = this.state.parameter.type;
     let page = this.state.page;
     let queryString = queryParser.stringify({search, mode, type, page});
     this.props.history!.replace({search: queryString});
   }
 
-  private async handleSomeSearchSet(someSearch: {search?: string, mode?: SearchMode, type?: SearchType}): Promise<void> {
+  private async handleParameterSet(parameter: NormalSearchParameter): Promise<void> {
     let page = 0;
-    let anySomeSearch = someSearch as any;
-    this.setState({...anySomeSearch, page}, async () => {
+    this.setState({parameter, page}, async () => {
       await this.updateWords();
     });
   }
@@ -251,7 +250,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     let node = (
       <Page dictionary={this.state.dictionary} showDictionary={true} showEditLink={this.state.canEdit} showSettingLink={this.state.canOwn}>
         <div styleName="search-form">
-          <SearchForm search={this.state.search} mode={this.state.mode} type={this.state.type} onSomeSet={this.handleSomeSearchSet.bind(this)}/>
+          <SearchForm parameter={this.state.parameter} onParameterSet={this.handleParameterSet.bind(this)}/>
         </div>
         <Loading loading={this.state.dictionary === null}>
           {innerNode}
@@ -270,9 +269,7 @@ type State = {
   dictionary: Dictionary | null,
   canOwn: boolean,
   canEdit: boolean,
-  search: string,
-  mode: SearchMode,
-  type: SearchType
+  parameter: NormalSearchParameter,
   page: number,
   showsExplanation: boolean,
   hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>}
