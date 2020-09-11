@@ -41,7 +41,7 @@ export class TopPage extends StoreComponent<Props, State> {
           <DictionaryAggregationPane/>
         </div>
         <div styleName="notification">
-          <NotificationList size={3} showsPagination={false}/>
+          <NotificationList size={3} showPagination={false}/>
         </div>
       </Page>
     );

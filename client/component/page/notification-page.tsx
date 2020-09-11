@@ -28,7 +28,7 @@ export class NotificationPage extends StoreComponent<Props, State> {
     let node = (
       <Page>
         <div styleName="list">
-          <NotificationList size={10} showsPagination={true}/>
+          <NotificationList size={10} showPagination={true}/>
         </div>
       </Page>
     );

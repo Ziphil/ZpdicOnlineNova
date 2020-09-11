@@ -25,7 +25,9 @@ import {
 export class PaneList<T> extends Component<Props<T>, State<T>> {
 
   public static defaultProps: DefaultProps = {
-    column: 1
+    column: 1,
+    style: "spaced",
+    showPagination: true
   };
   public state: State<T> = {
     page: 0,
@@ -37,6 +39,13 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
     await this.handlePageSet(page);
   }
 
+  public async componentDidUpdate(previousProps: any): Promise<void> {
+    if (this.props.items !== previousProps.items) {
+      let page = this.state.page;
+      await this.handlePageSet(page);
+    }
+  }
+
   private async handlePageSet(page: number): Promise<void> {
     let offset = this.props.size * page;
     let size = this.props.size;
@@ -45,10 +54,14 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
       let hitResult = await items(offset, size);
       this.setState({page, hitResult});
     } else {
-      let hitItems = items.slice(offset, offset + size);
-      let hitSize = items.length;
-      let hitResult = [hitItems, hitSize] as WithSize<T>;
-      this.setState({page, hitResult});
+      if (items !== null) {
+        let hitItems = items.slice(offset, offset + size);
+        let hitSize = items.length;
+        let hitResult = [hitItems, hitSize] as WithSize<T>;
+        this.setState({page, hitResult});
+      } else {
+        this.setState({page, hitResult: [[], 0]});
+      }
     }
   }
 
@@ -69,12 +82,16 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
 
   public render(): ReactNode {
     let [hitItems, hitSize] = this.state.hitResult;
+    let styleName = StyleNameUtil.create(
+      "pane",
+      {if: this.props.style === "compact", true: "compact"}
+    );
+    let style = {gridTemplateColumns: `repeat(${this.props.column}, 1fr)`};
     let panes = hitItems.map(this.props.renderer);
-    let paneStyle = {gridTemplateColumns: `repeat(${this.props.column}, 1fr)`};
-    let pagenationButtonNode = this.renderPagenationButton();
+    let pagenationButtonNode = this.props.showPagination && this.renderPagenationButton();
     let node = (
       <div styleName="root">
-        <div styleName="pane" style={paneStyle}>
+        <div styleName={styleName} style={style}>
           {panes}
         </div>
         {pagenationButtonNode}
@@ -87,17 +104,22 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
 
 
 type Props<T> = {
-  items: Array<T> | ItemProvider<T>,
+  items: Items<T> | ItemProvider<T>,
   renderer: (item: T) => ReactNode,
   column: number,
-  size: number
+  size: number,
+  style: "spaced" | "compact"
+  showPagination: boolean
 };
 type DefaultProps = {
-  column: number
+  column: number,
+  style: "spaced" | "compact",
+  showPagination: boolean
 };
 type State<T> = {
   page: number,
   hitResult: WithSize<T>
 };
 
+type Items<T> = Array<T> | null;
 type ItemProvider<T> = (offset?: number, size?: number) => Promise<WithSize<T>>;
