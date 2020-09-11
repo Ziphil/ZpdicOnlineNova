@@ -126,7 +126,7 @@ export class WordPane extends Component<Props, State> {
         let relationNode = (
           <Fragment key={relationIndex}>
             {(relationIndex === 0) ? "" : ", "}
-            <Link href={href}>{relation.name}</Link>
+            <Link href={href} target="self">{relation.name}</Link>
           </Fragment>
         );
         return relationNode;
