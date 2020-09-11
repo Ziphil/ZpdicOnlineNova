@@ -52,23 +52,32 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
     }
   }
 
-  public render(): ReactNode {
+  private renderPagenationButton(): ReactNode {
     let [hitItems, hitSize] = this.state.hitResult;
     let maxPage = Math.max(Math.ceil(hitSize / this.props.size) - 1, 0);
-    let panes = hitItems.map(this.props.renderer);
-    let paneStyle = {gridTemplateColumns: `repeat(${this.props.column}, 1fr)`};
-    let paginationStyleName = StyleNameUtil.create(
+    let styleName = StyleNameUtil.create(
       "pagination",
       {if: hitItems.length <= 0, true: "empty"}
     );
+    let node = (
+      <div styleName={styleName}>
+        <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.handlePageSet(page)}/>
+      </div>
+    );
+    return node;
+  }
+
+  public render(): ReactNode {
+    let [hitItems, hitSize] = this.state.hitResult;
+    let panes = hitItems.map(this.props.renderer);
+    let paneStyle = {gridTemplateColumns: `repeat(${this.props.column}, 1fr)`};
+    let pagenationButtonNode = this.renderPagenationButton();
     let node = (
       <div styleName="root">
         <div styleName="pane" style={paneStyle}>
           {panes}
         </div>
-        <div styleName={paginationStyleName}>
-          <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.handlePageSet(page)}/>
-        </div>
+        {pagenationButtonNode}
       </div>
     );
     return node;
