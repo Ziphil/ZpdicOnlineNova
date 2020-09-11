@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  Fragment,
   ReactNode
 } from "react";
 import {
@@ -24,7 +25,12 @@ export class Loading extends Component<Props, State> {
       );
       return node;
     } else {
-      return this.props.children;
+      let node = (
+        <Fragment>
+          {this.props.children}
+        </Fragment>
+      );
+      return node;
     }
   }
 
