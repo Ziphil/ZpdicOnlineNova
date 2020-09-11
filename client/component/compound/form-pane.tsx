@@ -24,7 +24,7 @@ import {
 @applyStyle(require("./form-pane.scss"))
 export class FormPane extends Component<Props, State> {
 
-  public static defaultProps: Props = {
+  public static defaultProps: DefaultProps = {
     errorType: null,
     errorStyle: "error"
   };
@@ -55,6 +55,10 @@ type Props = {
   errorType: string | null,
   errorStyle: "error" | "information",
   onErrorClose?: (event: MouseEvent<HTMLButtonElement>) => void
+};
+type DefaultProps = {
+  errorType: string | null,
+  errorStyle: "error" | "information"
 };
 type State = {
 };

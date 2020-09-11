@@ -34,14 +34,14 @@ export class TopPage extends StoreComponent<Props, State> {
             <Logo/>
           </div>
           <div styleName="login-form">
-            <LoginForm showsRegister={true}/>
+            <LoginForm showRegister={true}/>
           </div>
         </div>
         <div styleName="aggregation">
           <DictionaryAggregationPane/>
         </div>
         <div styleName="notification">
-          <NotificationList size={3} showsPagination={false}/>
+          <NotificationList size={3} showPagination={false}/>
         </div>
       </Page>
     );

@@ -7,6 +7,9 @@ import {
   ReactNode
 } from "react";
 import {
+  AsyncOrSync
+} from "ts-essentials";
+import {
   StoreComponent
 } from "/client/component/component";
 import {
@@ -31,8 +34,7 @@ import {
   Word
 } from "/server/skeleton/dictionary";
 import {
-  SearchMode,
-  SearchType
+  NormalSearchParameter
 } from "/server/skeleton/search-parameter";
 
 
@@ -40,16 +42,15 @@ import {
 @applyStyle(require("./word-searcher.scss"))
 export class WordSearcher extends StoreComponent<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: DefaultProps = {
     style: "normal",
     showButton: false
   };
   public state: State = {
-    search: "",
-    mode: "both",
-    type: "prefix",
+    parameter: {search: "", mode: "both", type: "prefix"},
     page: 0,
-    hitResult: {words: [[], 0], suggestions: []}
+    hitResult: {words: [[], 0], suggestions: []},
+    loading: false
   };
 
   public async componentDidMount(): Promise<void> {
@@ -59,18 +60,19 @@ export class WordSearcher extends StoreComponent<Props, State> {
   private async updateWordsImmediately(): Promise<void> {
     let number = this.props.dictionary?.number;
     if (number !== undefined) {
-      let search = this.state.search;
-      let mode = this.state.mode;
-      let type = this.state.type;
+      let search = this.state.parameter.search;
+      let mode = this.state.parameter.mode;
+      let type = this.state.parameter.type;
       let page = this.state.page;
       let offset = page * 40;
       let size = 40;
+      this.setState({loading: true});
       let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
         let hitResult = response.data;
-        this.setState({hitResult});
+        this.setState({hitResult, loading: true});
       } else {
-        this.setState({hitResult: {words: [[], 0], suggestions: []}});
+        this.setState({hitResult: {words: [[], 0], suggestions: []}, loading: true});
       }
     }
   }
@@ -80,10 +82,9 @@ export class WordSearcher extends StoreComponent<Props, State> {
     await this.updateWordsImmediately();
   }
 
-  private async handleSomeSearchSet(someSearch: {search?: string, mode?: SearchMode, type?: SearchType}): Promise<void> {
+  private async handleParameterSet(parameter: NormalSearchParameter): Promise<void> {
     let page = 0;
-    let anySomeSearch = someSearch as any;
-    this.setState({...anySomeSearch, page}, async () => {
+    this.setState({parameter, page}, async () => {
       await this.updateWords();
     });
   }
@@ -129,7 +130,7 @@ export class WordSearcher extends StoreComponent<Props, State> {
     let node = (
       <div>
         <div styleName="search-form">
-          <SearchForm search={this.state.search} mode={this.state.mode} type={this.state.type} onSomeSet={this.handleSomeSearchSet.bind(this)}/>
+          <SearchForm parameter={this.state.parameter} onParameterSet={this.handleParameterSet.bind(this)}/>
         </div>
         <Loading loading={this.props.dictionary === null}>
           {innerNode}
@@ -147,12 +148,15 @@ type Props = {
   style: "normal" | "simple",
   showButton: boolean,
   onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+};
+type DefaultProps = {
+  style: "normal" | "simple",
+  showButton: boolean
 };
 type State = {
-  search: string,
-  mode: SearchMode,
-  type: SearchType
+  parameter: NormalSearchParameter,
   page: number,
-  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>}
+  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},
+  loading: boolean
 };

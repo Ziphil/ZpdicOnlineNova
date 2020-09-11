@@ -19,7 +19,7 @@ import {
 @applyStyle(require("./text-area.scss"))
 export class TextArea extends Component<Props, State> {
 
-  public static defaultProps: Props = {
+  public static defaultProps: DefaultProps = {
     value: "",
     font: "normal"
   };
@@ -59,6 +59,10 @@ type Props = {
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
   onSet?: (value: string) => void,
   className?: string
+};
+type DefaultProps = {
+  value: string,
+  font: "normal" | "monospace"
 };
 type State = {
 };

@@ -9,6 +9,9 @@ import {
   ReactNode
 } from "react";
 import {
+  AsyncOrSync
+} from "ts-essentials";
+import {
   Component
 } from "/client/component/component";
 import {
@@ -27,8 +30,9 @@ import {
 @applyStyle(require("./word-list.scss"))
 export class WordList extends Component<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: DefaultProps = {
     style: "normal",
+    showEditLink: false,
     showButton: false
   };
 
@@ -70,8 +74,13 @@ type Props = {
   size: number,
   offset: number,
   onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
+  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   onDeleteConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void
+};
+type DefaultProps = {
+  style: "normal" | "simple",
+  showEditLink: boolean,
+  showButton: boolean
 };
 type State = {
 };

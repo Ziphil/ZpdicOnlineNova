@@ -8,6 +8,10 @@
   grid-gap: 20px;
 }
 
+.pane.compact { 
+  grid-gap: 0px;
+}
+
 .pagination {
   margin: 20px 0px 0px 0px;
   text-align: center;

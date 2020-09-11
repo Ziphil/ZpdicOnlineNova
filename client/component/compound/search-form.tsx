@@ -16,6 +16,7 @@ import {
   intl
 } from "/client/component/decorator";
 import {
+  NormalSearchParameter,
   SearchMode,
   SearchType
 } from "/server/skeleton/search-parameter";
@@ -25,10 +26,8 @@ import {
 @applyStyle(require("./search-form.scss"))
 export class SearchForm extends Component<Props, State> {
 
-  public static defaultProps: Props = {
-    search: "",
-    mode: "both",
-    type: "prefix"
+  public static defaultProps: DefaultProps = {
+    parameter: {search: "", mode: "both", type: "prefix"}
   };
 
   private handleSearchSet(search: string): void {
@@ -36,8 +35,10 @@ export class SearchForm extends Component<Props, State> {
     if (this.props.onSearchSet) {
       this.props.onSearchSet(search);
     }
-    if (this.props.onSomeSet) {
-      this.props.onSomeSet({search});
+    if (this.props.onParameterSet) {
+      let mode = this.props.parameter.mode;
+      let type = this.props.parameter.type;
+      this.props.onParameterSet({search, mode, type});
     }
   }
 
@@ -46,8 +47,10 @@ export class SearchForm extends Component<Props, State> {
     if (this.props.onModeSet) {
       this.props.onModeSet(mode);
     }
-    if (this.props.onSomeSet) {
-      this.props.onSomeSet({mode});
+    if (this.props.onParameterSet) {
+      let search = this.props.parameter.search;
+      let type = this.props.parameter.type;
+      this.props.onParameterSet({search, mode, type});
     }
   }
 
@@ -56,8 +59,10 @@ export class SearchForm extends Component<Props, State> {
     if (this.props.onTypeSet) {
       this.props.onTypeSet(type);
     }
-    if (this.props.onSomeSet) {
-      this.props.onSomeSet({type});
+    if (this.props.onParameterSet) {
+      let search = this.props.parameter.search;
+      let mode = this.props.parameter.mode;
+      this.props.onParameterSet({search, mode, type});
     }
   }
 
@@ -76,12 +81,12 @@ export class SearchForm extends Component<Props, State> {
     ] as const;
     let node = (
       <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-        <Input value={this.props.search} onSet={this.handleSearchSet.bind(this)}/>
+        <Input value={this.props.parameter.search} onSet={this.handleSearchSet.bind(this)}/>
         <div styleName="radio-wrapper">
-          <RadioGroup name="mode" value={this.props.mode} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
+          <RadioGroup name="mode" value={this.props.parameter.mode} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
         </div>
         <div styleName="radio-wrapper">
-          <RadioGroup name="type" value={this.props.type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
+          <RadioGroup name="type" value={this.props.parameter.type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
         </div>
       </form>
     );
@@ -92,13 +97,14 @@ export class SearchForm extends Component<Props, State> {
 
 
 type Props = {
-  search: string,
-  mode: SearchMode,
-  type: SearchType,
+  parameter: NormalSearchParameter,
   onSearchSet?: (search: string) => void;
   onModeSet?: (mode: SearchMode) => void;
   onTypeSet?: (type: SearchType) => void;
-  onSomeSet?: (some: {search?: string, mode?: SearchMode, type?: SearchType}) => void;
+  onParameterSet?: (parameter: NormalSearchParameter) => void;
+};
+type DefaultProps = {
+  parameter: NormalSearchParameter
 };
 type State = {
 };

@@ -19,7 +19,7 @@ import {
 @applyStyle(require("./modal.scss"))
 export class Modal extends Component<Props, State> {
 
-  public static defaultProps: Partial<Props> = {
+  public static defaultProps: DefaultProps = {
     outsideClosable: false
   };
 
@@ -43,6 +43,9 @@ type Props = {
   open: boolean,
   outsideClosable: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => void
+};
+type DefaultProps = {
+  outsideClosable: boolean
 };
 type State = {
 };

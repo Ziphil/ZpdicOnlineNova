@@ -27,7 +27,7 @@ import {
 @applyStyle(require("./page.scss"))
 export class Page extends Component<Props, State> {
 
-  public static defaultProps: Props = {
+  public static defaultProps: DefaultProps = {
     dictionary: null,
     showDictionary: false,
     showEditLink: false,
@@ -62,6 +62,12 @@ export class Page extends Component<Props, State> {
 
 
 type Props = {
+  dictionary: Dictionary | null,
+  showDictionary: boolean,
+  showEditLink: boolean,
+  showSettingLink: boolean
+};
+type DefaultProps = {
   dictionary: Dictionary | null,
   showDictionary: boolean,
   showEditLink: boolean,

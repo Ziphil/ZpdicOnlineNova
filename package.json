@@ -1,6 +1,6 @@
 {
   "name": "zpdic",
-  "version": "2.12.0",
+  "version": "2.12.1",
   "author": "Ziphil",
   "description": "",
   "main": "dist/index.js",
@@ -58,6 +58,7 @@
     "source-map-loader": "^1.0.1",
     "stream-json": "^1.7.0",
     "style-loader": "^1.2.1",
+    "ts-essentials": "^7.0.0",
     "ts-loader": "^8.0.1",
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
@@ -92,7 +93,6 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.5",
     "@types/stream-json": "^1.5.1",
-    "@types/webpack-node-externals": "^1.7.1",
-    "ts-essentials": "^7.0.0"
+    "@types/webpack-node-externals": "^1.7.1"
   }
 }

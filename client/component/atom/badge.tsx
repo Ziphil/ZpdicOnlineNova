@@ -18,7 +18,7 @@ import {
 @applyStyle(require("./badge.scss"))
 export class Badge extends Component<Props, State> {
 
-  public static defaultProps: Props = {
+  public static defaultProps: DefaultProps = {
     value: "",
     style: "normal"
   };
@@ -43,6 +43,10 @@ type Props = {
   value: string,
   style: "normal" | "highlight",
   className?: string
+};
+type DefaultProps = {
+  value: string,
+  style: "normal" | "highlight"
 };
 type State = {
 };

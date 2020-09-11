@@ -252,7 +252,7 @@ contactPage:
 dashboardPage:
   dictionary: "Dictionaries"
   notification: "Notifications"
-  profile: "Account"
+  account: "Account"
   logout: "Sign out"
   dictionaryList:
     label: "Dictionaries"

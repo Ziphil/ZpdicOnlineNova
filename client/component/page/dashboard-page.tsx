@@ -70,9 +70,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let description = this.trans("dashboardPage.dictionaryList.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <Loading loading={this.state.dictionaries === null}>
-          <DictionaryList dictionaries={this.state.dictionaries!} showLinks={true} size={8}/>
-        </Loading>
+        <DictionaryList dictionaries={this.state.dictionaries} showLinks={true} size={5}/>
       </SettingPane>
     );
     return node;
@@ -83,9 +81,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let description = this.trans("dashboardPage.invitationList.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <Loading loading={this.state.editInvitations === null}>
-          <InvitationList invitations={this.state.editInvitations!} size={8} onSubmit={() => this.fetchEditInvitations()}/>
-        </Loading>
+        <InvitationList invitations={this.state.editInvitations} size={5} onSubmit={() => this.fetchEditInvitations()}/>
       </SettingPane>
     );
     return node;
@@ -133,7 +129,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let menuSpecs = [
       {mode: "dictionary", label: this.trans("dashboardPage.dictionary"), iconLabel: "\uF02D", badgeValue: dictionaryCount, href: "/dashboard"},
       {mode: "notification", label: this.trans("dashboardPage.notification"), iconLabel: "\uF0F3", badgeValue: notificationCount, href: "/dashboard/notification"},
-      {mode: "profile", label: this.trans("dashboardPage.profile"), iconLabel: "\uF2C2", href: "/dashboard/profile"},
+      {mode: "account", label: this.trans("dashboardPage.account"), iconLabel: "\uF2C2", href: "/dashboard/account"},
       {mode: "logout", label: this.trans("dashboardPage.logout"), iconLabel: "\uF2F5", href: "/"}
     ];
     let contentNodes = [];
@@ -143,7 +139,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
         contentNodes.push(this.renderCreateDictionaryForm());
       } else if (mode === "notification") {
         contentNodes.push(this.renderInvitationList());
-      } else if (mode === "profile") {
+      } else if (mode === "account") {
         contentNodes.push(this.renderChangeUserEmailForm());
         contentNodes.push(this.renderChangeUserPasswordForm());
       }

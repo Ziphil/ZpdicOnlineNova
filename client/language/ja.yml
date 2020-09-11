@@ -251,7 +251,7 @@ contactPage:
 dashboardPage:
   dictionary: "辞書"
   notification: "通知"
-  profile: "アカウント"
+  account: "アカウント"
   logout: "ログアウト"
   dictionaryList:
     label: "辞書一覧"

@@ -7,6 +7,9 @@ import {
   ReactNode
 } from "react";
 import {
+  AsyncOrSync
+} from "ts-essentials";
+import {
   Button,
   Link
 } from "/client/component/atom";
@@ -32,7 +35,7 @@ import {
 @applyStyle(require("./word-pane.scss"))
 export class WordPane extends Component<Props, State> {
 
-  public static defaultProps: any = {
+  public static defaultProps: DefaultProps = {
     style: "normal",
     showButton: false
   };
@@ -190,8 +193,12 @@ type Props = {
   showEditLink: boolean,
   showButton: boolean,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => void | Promise<void>,
-  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+};
+type DefaultProps = {
+  style: "normal" | "simple",
+  showButton: boolean
 };
 type State = {
   editorOpen: boolean

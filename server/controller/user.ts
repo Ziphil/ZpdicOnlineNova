@@ -36,7 +36,7 @@ import {
 } from "/server/util/mail";
 import {
   RecaptchaUtil
-} from "/server/util/recapthca";
+} from "/server/util/recaptcha";
 
 
 @controller("/")

@@ -57,8 +57,8 @@ export const SERVER_PATH = {
   issueUserResetToken: "/api/user/reset/token",
   resetUserPassword: "/api/user/reset/reset",
   fetchUser: "/api/user/info",
-  addNotification: "/api/news/add",
-  fetchNotifications: "/api/news/list",
+  addNotification: "/api/notification/add",
+  fetchNotifications: "/api/notification/list",
   contact: "/api/other/contact"
 };
 

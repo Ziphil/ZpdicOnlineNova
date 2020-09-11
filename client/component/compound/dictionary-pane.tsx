@@ -29,7 +29,7 @@ import {
 @applyStyle(require("./dictionary-pane.scss"))
 export class DictionaryPane extends StoreComponent<Props, State> {
 
-  public static defaultProps: any = {
+  public static defaultProps: DefaultProps = {
     showUser: true,
     showUpdatedDate: true,
     showSettingLink: false,
@@ -39,7 +39,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
   private jumpSettingPage(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
     event.stopPropagation();
-    let path = "/dictionary-setting/" + this.props.dictionary.number;
+    let path = "/dashboard/dictionary/" + this.props.dictionary.number;
     this.pushPath(path);
   }
 
@@ -115,6 +115,12 @@ export class DictionaryPane extends StoreComponent<Props, State> {
 
 type Props = {
   dictionary: DetailedDictionary,
+  showUser: boolean,
+  showUpdatedDate: boolean,
+  showSettingLink: boolean,
+  showDownloadLink: boolean
+};
+type DefaultProps = {
   showUser: boolean,
   showUpdatedDate: boolean,
   showSettingLink: boolean,

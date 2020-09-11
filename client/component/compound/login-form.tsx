@@ -55,7 +55,7 @@ export class LoginForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let registerNode = (this.props.showsRegister) && (
+    let registerNode = (this.props.showRegister) && (
       <Button label={this.trans("registerForm.register")} iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
     );
     let node = (
@@ -82,7 +82,7 @@ export class LoginForm extends StoreComponent<Props, State> {
 
 
 type Props = {
-  showsRegister: boolean
+  showRegister: boolean
 };
 type State = {
   name: string,

@@ -6,6 +6,9 @@ import {
   ReactNode
 } from "react";
 import {
+  AsyncOrSync
+} from "ts-essentials";
+import {
   Component
 } from "/client/component/component";
 import {
@@ -41,10 +44,10 @@ export class UserList extends Component<Props, State> {
 
 
 type Props = {
-  users: Array<User>,
+  users: Array<User> | null,
   dictionary?: Dictionary,
   size: number,
-  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void | Promise<void>
+  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
 };

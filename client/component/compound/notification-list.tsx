@@ -11,7 +11,8 @@ import {
 import {
   Loading,
   NotificationPane,
-  PaginationButton
+  PaginationButton,
+  PaneList
 } from "/client/component/compound";
 import {
   applyStyle,
@@ -28,51 +29,24 @@ import {
 export class NotificationList extends StoreComponent<Props, State> {
 
   public state: State = {
-    notifications: null,
-    page: 0
+    notifications: null
   };
 
   public async componentDidMount(): Promise<void> {
-    let size = (this.props.showsPagination) ? undefined : this.props.size;
+    let size = (this.props.showPagination) ? undefined : this.props.size;
     let response = await this.requestGet("fetchNotifications", {size});
     if (response.status === 200) {
       let notifications = response.data;
-      let page = 0;
-      this.setState({notifications, page});
+      this.setState({notifications});
     }
   }
 
-  private renderNotificationPanes(): ReactNode {
-    let offset = this.props.size * this.state.page;
-    let maxPage = Math.max(Math.ceil(this.state.notifications!.length / this.props.size) - 1, 0);
-    let displayedNotifications = this.state.notifications!.slice(offset, offset + this.props.size);
-    let notificationPanes = displayedNotifications.map((notification) => {
-      return <NotificationPane notification={notification} key={notification.id}/>;
-    });
-    let paginationNodes = (this.props.showsPagination) && (
-      <div styleName="pagination">
-        <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.setState({page})}/>
-      </div>
-    );
-    let node = (
-      <Fragment>
-        <div styleName="notification">
-          {notificationPanes}
-        </div>
-        {paginationNodes}
-      </Fragment>
-    );
-    return node;
-  }
-
   public render(): ReactNode {
-    let notificationPanes = (this.state.notifications) && this.renderNotificationPanes();
+    let renderer = function (notification: Notification): ReactNode {
+      return <NotificationPane notification={notification} key={notification.id}/>;
+    };
     let node = (
-      <div styleName="root">
-        <Loading loading={this.state.notifications === null}>
-          {notificationPanes}
-        </Loading>
-      </div>
+      <PaneList items={this.state.notifications} size={this.props.size} showPagination={this.props.showPagination} style="compact" renderer={renderer}/>
     );
     return node;
   }
@@ -82,9 +56,8 @@ export class NotificationList extends StoreComponent<Props, State> {
 
 type Props = {
   size: number,
-  showsPagination: boolean
+  showPagination: boolean
 };
 type State = {
-  notifications: Array<Notification> | null,
-  page: number
+  notifications: Array<Notification> | null
 };
