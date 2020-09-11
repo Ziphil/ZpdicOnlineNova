@@ -60,7 +60,7 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
         let queryString = this.props.location!.search;
         href += queryString;
       }
-      return <Link href={href} style="plane">{this.props.dictionary.name}</Link>;
+      return <Link href={href} target="self" style="plane">{this.props.dictionary.name}</Link>;
     })();
     let addButtonNode = (this.props.showEditLink) && (
       <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>

@@ -52,7 +52,7 @@ export class Header extends StoreComponent<Props, State> {
         <div styleName="container">
           <div styleName="left">
             <div styleName="title">
-              <Link href="/" style="plane">ZpDIC</Link>
+              <Link href="/" target="self" style="plane">ZpDIC</Link>
             </div>
             <div styleName="menu">
               <HeaderMenuItem label={this.trans("header.dictionaryList")} iconLabel="&#xF02D;" href="/list"/>

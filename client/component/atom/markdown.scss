@@ -72,6 +72,12 @@
   border-bottom-right-radius: $small-border-radius;
 }
 
+.root blockquote {
+  @include reset-first-margin;
+  margin: 10px 0px 0px 0px;
+  padding: 0px;
+}
+
 .root code {
   padding: 0em 0.1em;
   font-family: $monospace-font-family, monospace;
@@ -79,4 +85,12 @@
   font-feature-settings: "palt" 0, "pkna" 0;
   background-color: $strong-background-color;
   border-radius: $small-border-radius;
+}
+
+.root em,
+.root strong,
+.root del {
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
 }
