@@ -55,7 +55,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     canEdit: false,
     parameter: {search: "", mode: "both", type: "prefix"},
     page: 0,
-    showsExplanation: true,
+    showExplanation: true,
     hitResult: {words: [[], 0], suggestions: []}
   };
 
@@ -67,7 +67,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   public async componentDidMount(): Promise<void> {
     await this.fetchDictionary();
     let promises = [this.checkAuthorization()];
-    if (!this.state.showsExplanation) {
+    if (!this.state.showExplanation) {
       promises.push(this.updateWordsImmediately(false));
     }
     let allPromise = Promise.all(promises);
@@ -77,7 +77,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
   public componentDidUpdate(previousProps: any): void {
     if (this.props.location!.key !== previousProps.location!.key) {
       this.serializeQuery(false, () => {
-        if (!this.state.showsExplanation) {
+        if (!this.state.showExplanation) {
           this.updateWordsImmediately(false);
         }
       });
@@ -86,13 +86,13 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   private async fetchDictionary(): Promise<void> {
     let value = this.props.match!.params.value;
-    let number;
-    let paramName;
-    if (value.match(/^\d+$/)) {
-      number = +value;
-    } else {
-      paramName = value;
-    }
+    let [number, paramName] = (() => {
+      if (value.match(/^\d+$/)) {
+        return [+value, undefined] as const;
+      } else {
+        return [undefined, value] as const;
+      }
+    })();
     let response = await this.requestGet("fetchDictionary", {number, paramName});
     if (response.status === 200 && !("error" in response.data)) {
       let dictionary = response.data;
@@ -137,8 +137,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
       let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
         let hitResult = response.data;
-        let showsExplanation = false;
-        this.setState({hitResult, showsExplanation});
+        let showExplanation = false;
+        this.setState({hitResult, showExplanation});
       } else {
         this.setState({hitResult: {words: [[], 0], suggestions: []}});
       }
@@ -159,10 +159,10 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     nextState.parameter = {search: "", mode: "both", type: "prefix"};
     if (typeof query.search === "string") {
       nextState.parameter.search = query.search;
-      nextState.showsExplanation = false;
+      nextState.showExplanation = false;
     } else {
       nextState.parameter.search = "";
-      nextState.showsExplanation = true;
+      nextState.showExplanation = true;
     }
     if (typeof query.mode === "string") {
       nextState.parameter.mode = SearchModeUtil.cast(query.mode);
@@ -245,7 +245,7 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public render(): ReactNode {
     let innerNode = (this.state.dictionary !== null) && (
-      (this.state.showsExplanation) ? <Markdown source={this.state.dictionary.explanation ?? ""}/> : this.renderWordList()
+      (this.state.showExplanation) ? <Markdown source={this.state.dictionary.explanation ?? ""}/> : this.renderWordList()
     );
     let node = (
       <Page dictionary={this.state.dictionary} showDictionary={true} showEditLink={this.state.canEdit} showSettingLink={this.state.canOwn}>
@@ -271,7 +271,7 @@ type State = {
   canEdit: boolean,
   parameter: NormalSearchParameter,
   page: number,
-  showsExplanation: boolean,
+  showExplanation: boolean,
   hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>}
 };
 type Params = {
