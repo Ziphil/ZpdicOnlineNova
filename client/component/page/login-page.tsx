@@ -29,7 +29,7 @@ export class LoginPage extends StoreComponent<Props, State> {
       <Page>
         <div styleName="description">{this.trans("loginPage.description")}</div>
         <div styleName="form">
-          <LoginForm showsRegister={false}/>
+          <LoginForm showRegister={false}/>
         </div>
       </Page>
     );

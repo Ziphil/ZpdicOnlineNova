@@ -34,7 +34,7 @@ export class TopPage extends StoreComponent<Props, State> {
             <Logo/>
           </div>
           <div styleName="login-form">
-            <LoginForm showsRegister={true}/>
+            <LoginForm showRegister={true}/>
           </div>
         </div>
         <div styleName="aggregation">
