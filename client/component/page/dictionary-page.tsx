@@ -38,9 +38,7 @@ import {
 } from "/server/skeleton/dictionary";
 import {
   NormalSearchParameter,
-  SearchMode,
   SearchModeUtil,
-  SearchType,
   SearchTypeUtil
 } from "/server/skeleton/search-parameter";
 
@@ -56,7 +54,8 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
     parameter: {search: "", mode: "both", type: "prefix"},
     page: 0,
     showExplanation: true,
-    hitResult: {words: [[], 0], suggestions: []}
+    hitResult: {words: [[], 0], suggestions: []},
+    loading: false
   };
 
   public constructor(props: any) {
@@ -134,13 +133,14 @@ export class DictionaryPage extends StoreComponent<Props, State, Params> {
       let page = this.state.page;
       let offset = page * 40;
       let size = 40;
+      this.setState({loading: true});
       let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
         let hitResult = response.data;
         let showExplanation = false;
-        this.setState({hitResult, showExplanation});
+        this.setState({hitResult, showExplanation, loading: false});
       } else {
-        this.setState({hitResult: {words: [[], 0], suggestions: []}});
+        this.setState({hitResult: {words: [[], 0], suggestions: []}, loading: false});
       }
       if (deserialize) {
         this.deserializeQuery();
@@ -272,7 +272,8 @@ type State = {
   parameter: NormalSearchParameter,
   page: number,
   showExplanation: boolean,
-  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>}
+  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},
+  loading: boolean
 };
 type Params = {
   value: string

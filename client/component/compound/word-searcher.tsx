@@ -49,7 +49,8 @@ export class WordSearcher extends StoreComponent<Props, State> {
   public state: State = {
     parameter: {search: "", mode: "both", type: "prefix"},
     page: 0,
-    hitResult: {words: [[], 0], suggestions: []}
+    hitResult: {words: [[], 0], suggestions: []},
+    loading: false
   };
 
   public async componentDidMount(): Promise<void> {
@@ -65,12 +66,13 @@ export class WordSearcher extends StoreComponent<Props, State> {
       let page = this.state.page;
       let offset = page * 40;
       let size = 40;
+      this.setState({loading: true});
       let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
         let hitResult = response.data;
-        this.setState({hitResult});
+        this.setState({hitResult, loading: true});
       } else {
-        this.setState({hitResult: {words: [[], 0], suggestions: []}});
+        this.setState({hitResult: {words: [[], 0], suggestions: []}, loading: true});
       }
     }
   }
@@ -155,5 +157,6 @@ type DefaultProps = {
 type State = {
   parameter: NormalSearchParameter,
   page: number,
-  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>}
+  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},
+  loading: boolean
 };
