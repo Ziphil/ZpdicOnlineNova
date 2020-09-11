@@ -36,7 +36,7 @@ export class Link extends StoreComponent<Props, State> {
     if (href) {
       let target = (() => {
         if (this.props.target === "auto") {
-          if (href.includes(location.host) || !href.startsWith("http") || !href.startsWith("//")) {
+          if (href.includes(location.host) || (!href.startsWith("http") && !href.startsWith("//"))) {
             return "self";
           } else {
             return "blank";
