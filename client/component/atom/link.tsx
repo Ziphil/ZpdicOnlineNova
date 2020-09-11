@@ -23,20 +23,33 @@ import {
 export class Link extends StoreComponent<Props, State> {
 
   public static defaultProps: DefaultProps = {
-    target: "self",
+    target: "auto",
     style: "normal"
   };
 
   private handleClick(event: MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();
+    let href = this.props.href;
     if (this.props.onClick) {
       this.props.onClick(event);
     }
-    if (this.props.href) {
-      if (this.props.target === "self") {
-        this.pushPath(this.props.href);
+    if (href) {
+      let target = (() => {
+        if (this.props.target === "auto") {
+          if (href.includes(location.host) || !href.startsWith("http") || !href.startsWith("//")) {
+            return "self";
+          } else {
+            return "blank";
+          }
+        } else {
+          return this.props.target;
+        }
+      })();
+      if (target === "self") {
+        let shortHref = href.replace(/^(\w+?):\/\//, "").replace(location.host, "");
+        this.pushPath(shortHref);
       } else {
-        window.open(this.props.href);
+        window.open(href);
       }
     }
   }
@@ -59,13 +72,13 @@ export class Link extends StoreComponent<Props, State> {
 
 type Props = {
   href: string,
-  target: "self" | "blank",
+  target: "self" | "blank" | "auto",
   style: "plane" | "normal",
   onClick?: (event: MouseEvent<HTMLAnchorElement>) => void,
   className?: string
 };
 type DefaultProps = {
-  target: "self" | "blank",
+  target: "self" | "blank" | "auto",
   style: "plane" | "normal"
 };
 type State = {
