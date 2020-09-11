@@ -59,7 +59,7 @@ export class DictionaryList extends Component<Props, State> {
 
 
 type Props = {
-  dictionaries: Array<DetailedDictionary> | DetailedDictionaryProvider,
+  dictionaries: Array<DetailedDictionary> | DetailedDictionaryProvider | null,
   showUser: boolean,
   showUpdatedDate: boolean,
   showLinks: boolean,

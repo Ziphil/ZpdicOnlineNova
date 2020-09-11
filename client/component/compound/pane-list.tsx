@@ -8,6 +8,7 @@ import {
   Component
 } from "/client/component/component";
 import {
+  Loading,
   PaginationButton
 } from "/client/component/compound";
 import {
@@ -31,7 +32,8 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
   };
   public state: State<T> = {
     page: 0,
-    hitResult: [[], 0]
+    hitResult: [[], 0],
+    loading: false
   };
 
   public async componentDidMount(): Promise<void> {
@@ -51,16 +53,17 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
     let size = this.props.size;
     let items = this.props.items;
     if (typeof items === "function") {
+      this.setState({loading: true});
       let hitResult = await items(offset, size);
-      this.setState({page, hitResult});
+      this.setState({page, hitResult, loading: false});
     } else {
       if (items !== null) {
         let hitItems = items.slice(offset, offset + size);
         let hitSize = items.length;
         let hitResult = [hitItems, hitSize] as WithSize<T>;
-        this.setState({page, hitResult});
+        this.setState({page, hitResult, loading: false});
       } else {
-        this.setState({page, hitResult: [[], 0]});
+        this.setState({loading: true});
       }
     }
   }
@@ -91,10 +94,12 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
     let pagenationButtonNode = this.props.showPagination && this.renderPagenationButton();
     let node = (
       <div styleName="root">
-        <div styleName={styleName} style={style}>
-          {panes}
-        </div>
-        {pagenationButtonNode}
+        <Loading loading={this.state.loading}>
+          <div styleName={styleName} style={style}>
+            {panes}
+          </div>
+          {pagenationButtonNode}
+        </Loading>
       </div>
     );
     return node;
@@ -104,7 +109,7 @@ export class PaneList<T> extends Component<Props<T>, State<T>> {
 
 
 type Props<T> = {
-  items: Items<T> | ItemProvider<T>,
+  items: Array<T> | ItemProvider<T> | null,
   renderer: (item: T) => ReactNode,
   column: number,
   size: number,
@@ -118,8 +123,8 @@ type DefaultProps = {
 };
 type State<T> = {
   page: number,
-  hitResult: WithSize<T>
+  hitResult: WithSize<T>,
+  loading: boolean
 };
 
-type Items<T> = Array<T> | null;
 type ItemProvider<T> = (offset?: number, size?: number) => Promise<WithSize<T>>;

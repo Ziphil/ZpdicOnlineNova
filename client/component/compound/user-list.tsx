@@ -44,7 +44,7 @@ export class UserList extends Component<Props, State> {
 
 
 type Props = {
-  users: Array<User>,
+  users: Array<User> | null,
   dictionary?: Dictionary,
   size: number,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>

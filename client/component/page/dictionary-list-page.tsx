@@ -8,8 +8,7 @@ import {
   StoreComponent
 } from "/client/component/component";
 import {
-  DictionaryList,
-  Loading
+  DictionaryList
 } from "/client/component/compound";
 import {
   applyStyle,

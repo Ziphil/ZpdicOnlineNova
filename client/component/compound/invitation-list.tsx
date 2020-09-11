@@ -41,7 +41,7 @@ export class InvitationList extends Component<Props, State> {
 
 
 type Props = {
-  invitations: Array<Invitation>,
+  invitations: Array<Invitation> | null,
   size: number,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };

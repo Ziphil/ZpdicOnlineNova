@@ -46,9 +46,7 @@ export class NotificationList extends StoreComponent<Props, State> {
       return <NotificationPane notification={notification} key={notification.id}/>;
     };
     let node = (
-      <div styleName="root">
-        <PaneList items={this.state.notifications} size={this.props.size} showPagination={this.props.showPagination} style="compact" renderer={renderer}/>
-      </div>
+      <PaneList items={this.state.notifications} size={this.props.size} showPagination={this.props.showPagination} style="compact" renderer={renderer}/>
     );
     return node;
   }

@@ -70,9 +70,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let description = this.trans("dashboardPage.dictionaryList.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <Loading loading={this.state.dictionaries === null}>
-          <DictionaryList dictionaries={this.state.dictionaries!} showLinks={true} size={8}/>
-        </Loading>
+        <DictionaryList dictionaries={this.state.dictionaries} showLinks={true} size={8}/>
       </SettingPane>
     );
     return node;
@@ -83,9 +81,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let description = this.trans("dashboardPage.invitationList.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <Loading loading={this.state.editInvitations === null}>
-          <InvitationList invitations={this.state.editInvitations!} size={8} onSubmit={() => this.fetchEditInvitations()}/>
-        </Loading>
+        <InvitationList invitations={this.state.editInvitations} size={8} onSubmit={() => this.fetchEditInvitations()}/>
       </SettingPane>
     );
     return node;
