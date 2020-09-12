@@ -1,3 +1,33 @@
 @charset "utf-8";
 
 @import "/client/component/root.scss";
+
+
+.page {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+.page-spacer {
+  @include page(130px);
+  flex: 1;
+}
+
+.content {
+  width: 100%;
+  max-width: $page-width;
+  margin: 0px auto;
+}
+
+#header {
+  @import "/client/component/compound/header.scss";
+}
+
+#header a {
+  text-decoration: none;
+}
+
+#footer {
+  @import "/client/component/compound/footer.scss";
+}
