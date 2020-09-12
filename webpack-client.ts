@@ -9,7 +9,7 @@ let config = {
   output: {
     path: path.join(__dirname, "dist"),
     publicPath: "/",
-    filename: "./script/[name].bundle.js"
+    filename: "./bundle.js"
   },
   devtool: "source-map",
   module: {
