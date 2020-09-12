@@ -73,7 +73,8 @@ let config = {
     port: 3000,
     historyApiFallback: true,
     proxy: {
-      "/api": "http://localhost:8050"
+      "/api": "http://localhost:8050",
+      "/static": "http://localhost:8050"
     }
   },
   plugins: [
