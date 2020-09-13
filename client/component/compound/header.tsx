@@ -31,15 +31,8 @@ export class Header extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let user = this.props.store!.user;
-    let userScreenName = (() => {
-      if (user !== null) {
-        return (user.screenName !== undefined) ? user.screenName : "@" + user.name;
-      } else {
-        return "";
-      }
-    })();
     let userNameNode = (user !== null) && (
-      <HeaderMenuItem label={userScreenName} href="/dashboard"/>
+      <HeaderMenuItem label={user.screenName} href="/dashboard"/>
     );
     let languageNode = (
       <div styleName="language">

@@ -37,8 +37,8 @@ export class UserSchema {
   @prop({required: true, unique: true, validate: IDENTIFIER_REGEXP})
   public name!: string;
 
-  @prop()
-  public screenName?: string;
+  @prop({required: true})
+  public screenName!: string;
 
   @prop({required: true, validate: EMAIL_REGEXP})
   public email!: string;
@@ -63,7 +63,8 @@ export class UserSchema {
     } else if (formerEmailUser) {
       throw new CustomError("duplicateUserEmail");
     } else {
-      let user = new UserModel({name, email});
+      let screenName = "@" + name;
+      let user = new UserModel({name, screenName, email});
       await user.encryptPassword(password);
       await user.validate();
       let result = await user.save();
@@ -133,14 +134,8 @@ export class UserSchema {
     }
   }
 
-  // スクリーンネームを変更します。
-  // 引数として空文字列が渡された場合は、スクリーンネームの設定を破棄すると解釈されます。
   public async changeScreenName(this: User, screenName: string): Promise<User> {
-    if (screenName !== "") {
-      this.screenName = screenName;
-    } else {
-      this.screenName = undefined;
-    }
+    this.screenName = screenName;
     await this.save();
     return this;
   }

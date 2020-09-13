@@ -70,10 +70,8 @@ export class DictionaryPane extends StoreComponent<Props, State> {
         }
       }
     })();
-    let user = this.props.dictionary.user;
-    let userScreenName = (user.screenName !== undefined) ? user.screenName : "@" + user.name;
     let userNode = (this.props.showUser) && (
-      <div styleName="information-item">{this.trans("dictionaryPane.userName")} — {userScreenName}</div>
+      <div styleName="information-item">{this.trans("dictionaryPane.userName")} — {this.props.dictionary.user.screenName}</div>
     );
     let updatedDateNode = (this.props.showUpdatedDate) && (
       <div styleName="information-item">{this.trans("dictionaryPane.updatedDate")} — {this.transDate(this.props.dictionary.updatedDate)}</div>

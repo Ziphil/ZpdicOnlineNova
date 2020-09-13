@@ -47,8 +47,6 @@ export class InvitationPane extends StoreComponent<Props, State> {
   public render(): ReactNode {
     let name = this.props.invitation.dictionary.name;
     let createdDate = this.props.invitation.createdDate;
-    let user = this.props.invitation.dictionary.user;
-    let userScreenName = (user.screenName !== undefined) ? user.screenName : "@" + user.name;
     let node = (
       <WhitePane clickable={false}>
         <div>
@@ -59,7 +57,7 @@ export class InvitationPane extends StoreComponent<Props, State> {
           </div>
           <div styleName="information">
             <div styleName="information-item">{this.trans("invitationPane.createdDate")} — {this.transDate(createdDate)}</div>
-            <div styleName="information-item">{this.trans("invitationPane.userName")} — {userScreenName}</div>
+            <div styleName="information-item">{this.trans("invitationPane.userName")} — {this.props.invitation.dictionary.user.screenName}</div>
           </div>
         </div>
         <div styleName="setting">
