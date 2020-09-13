@@ -74,6 +74,7 @@ let config = {
     historyApiFallback: true,
     proxy: {
       "/api": "http://localhost:8050",
+      "/document": "http://localhost:8050",
       "/static": "http://localhost:8050"
     }
   },

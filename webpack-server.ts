@@ -37,6 +37,22 @@ let config = {
         loader: "source-map-loader"
       },
       {
+        test: /\.scss$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader",
+            options: {modules: {localIdentName: "[name]_[local]_[hash:base64:5]"}, url: false}
+          },
+          {
+            loader: "sass-loader"
+          }
+        ]
+      },
+      {
         test: /\.yml$/,
         use: [
           {
@@ -50,7 +66,7 @@ let config = {
     ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", ".yml"],
+    extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".yml"],
     alias: {
       "/client": path.resolve(__dirname, "client"),
       "/server": path.resolve(__dirname, "server")

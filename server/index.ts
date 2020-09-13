@@ -18,6 +18,9 @@ import {
 } from "mongoose";
 import * as multer from "multer";
 import {
+  DocumentController
+} from "/server/controller/document/document";
+import {
   DebugController,
   DictionaryController,
   NotificationController,
@@ -114,6 +117,7 @@ export class Main {
     NotificationController.use(this.application);
     OtherController.use(this.application);
     UserController.use(this.application);
+    DocumentController.use(this.application);
   }
 
   private setupStatic(): void {
