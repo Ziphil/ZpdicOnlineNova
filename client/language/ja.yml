@@ -4,6 +4,8 @@ common:
   numberUndefined: "?"
 
 popup: 
+  screenNameChanged: >-
+    ニックネームを変更しました。
   emailChanged: >-
     メールアドレスを変更しました。
   passwordChanged: >-
@@ -126,6 +128,9 @@ fileInput:
 overlay:
   back: "戻る"
   close: "閉じる"
+changeUserScreenNameForm:
+  screenName: "ニックネーム"
+  confirm: "変更"
 changeUserEmailForm:
   email: "メールアドレス"
   confirm: "変更"
@@ -267,6 +272,11 @@ dashboardPage:
     label: "新規作成"
     description: >-
       空の辞書を作成します。
+  changeUserScreenNameForm:
+    label: "ニックネームの変更"
+    description: >-
+      ニックネームを変更します。
+      ユーザー ID とは異なり、ここでは英数字以外の文字も使えます。
   changeUserEmailForm:
     label: "メールアドレスの変更"
     description: >-

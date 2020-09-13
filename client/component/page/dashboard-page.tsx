@@ -10,10 +10,10 @@ import {
 import {
   ChangeUserEmailForm,
   ChangeUserPasswordForm,
+  ChangeUserScreenNameForm,
   CreateDictionaryForm,
   DictionaryList,
   InvitationList,
-  Loading,
   Menu,
   SettingPane
 } from "/client/component/compound";
@@ -98,6 +98,17 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     return node;
   }
 
+  private renderChangeUserScreenNameForm(): ReactNode {
+    let label = this.trans("dashboardPage.changeUserScreenNameForm.label");
+    let description = this.trans("dashboardPage.changeUserScreenNameForm.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <ChangeUserScreenNameForm currentScreenName={this.props.store!.user!.screenName}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderChangeUserEmailForm(): ReactNode {
     let label = this.trans("dashboardPage.changeUserEmailForm.label");
     let description = this.trans("dashboardPage.changeUserEmailForm.description");
@@ -140,6 +151,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
       } else if (mode === "notification") {
         contentNodes.push(this.renderInvitationList());
       } else if (mode === "account") {
+        contentNodes.push(this.renderChangeUserScreenNameForm());
         contentNodes.push(this.renderChangeUserEmailForm());
         contentNodes.push(this.renderChangeUserPasswordForm());
       }

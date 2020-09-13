@@ -191,7 +191,8 @@ export class UserCreator {
   public static create(raw: User): UserSkeleton {
     let id = raw.id;
     let name = raw.name;
-    let skeleton = UserSkeleton.of({id, name});
+    let screenName = raw.screenName;
+    let skeleton = UserSkeleton.of({id, name, screenName});
     return skeleton;
   }
 

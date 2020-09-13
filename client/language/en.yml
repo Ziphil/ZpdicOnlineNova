@@ -3,7 +3,9 @@ common:
   dateUndefined: "?"
   numberUndefined: "?"
 
-popup: 
+popup:
+  screenNameChanged: >-
+    Your nickname has been changed.
   emailChanged: >-
     Your email address has been changed.
   passwordChanged: >-
@@ -126,6 +128,9 @@ fileInput:
 overlay:
   back: "Back"
   close: "Close"
+changeUserScreenNameForm:
+  screenName: "Nickname"
+  confirm: "Confirm"
 changeUserEmailForm:
   email: "Email address"
   confirm: "Confirm"
@@ -268,6 +273,11 @@ dashboardPage:
     label: "Create new dictionary"
     description: >-
       Create a new empty dictionary.
+  changeUserScreenNameForm:
+    label: "Change nickname"
+    description: >-
+      Change youe nickname.
+      Unlike user ID, you can use any characters other than alphanumerics here.
   changeUserEmailForm:
     label: "Change email address"
     description: >-
