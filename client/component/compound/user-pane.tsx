@@ -56,6 +56,7 @@ export class UserPane extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
+    let screenName = (this.props.user.screenName !== undefined) ? this.props.user.screenName : "@" + this.props.user.name;
     let node = (
       <Fragment>
         <WhitePane clickable={false}>
@@ -65,7 +66,7 @@ export class UserPane extends StoreComponent<Props, State> {
                 <div styleName="image"/>
               </div>
               <div styleName="left">
-                <div styleName="screen-name">@{this.props.user.name}</div>
+                <div styleName="screen-name">{screenName}</div>
                 <div styleName="name">@{this.props.user.name}</div>
               </div>
             </div>
