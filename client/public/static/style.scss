@@ -1,0 +1,101 @@
+@charset "utf-8";
+
+@import "/client/component/root.scss";
+
+
+.page {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
+}
+
+.page-spacer {
+  @include page(130px);
+  flex: 1;
+}
+
+.content {
+  width: 100%;
+  max-width: $page-width;
+  margin: 0px auto;
+}
+
+#header {
+  @import "/client/component/compound/header.scss";
+}
+
+#header a {
+  text-decoration: none;
+}
+
+#footer {
+  @import "/client/component/compound/footer.scss";
+}
+
+h2 {
+  @include reset-first-margin;
+  margin: 20px 0px 20px 0px;
+  font-size: 150%;
+  font-weight: bold;
+  color: $head-color;
+}
+
+h3 {
+  @include reset-first-margin;
+  margin: 15px 0px 15px 0px;
+  font-size: 120%;
+  font-weight: bold;
+  color: $head-color;
+}
+
+p {
+  @include line-height;
+  margin: 10px 0px 0px 0px;
+  text-align: justify;
+}
+
+.code {
+  width: 100%;
+  margin: 10px 0px 0px 0px;
+  background-color: $strong-background-color;
+  border-radius: $small-border-radius;
+  line-height: $text-line-height;
+}
+
+.code >div {
+  display: flex;
+}
+
+.code >div >div:nth-child(1) {
+  width: 250px;
+  padding: 0px 10px 0px 0px;
+  font-family: $monospace-font-family, monospace;
+  border-right: 1px $background-color solid;
+  white-space: pre;
+}
+
+.code >div >div:nth-child(2) {
+  padding: 0px 0px 0px 10px;
+}
+
+.error {
+  @include line-height;
+}
+
+.error >div {
+  display: flex;
+}
+
+.error >div >div:nth-child(1) {
+  width: 250px;
+  padding: 0px 10px 0px 0px;
+  display: flex;
+}
+
+.error >div >div:nth-child(1) >span:nth-child(1) {
+  width: 30px;
+} 
+
+.error >div >div:nth-child(2) {
+  padding: 0px 0px 0px 10px;
+}

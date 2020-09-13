@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="ja">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=0.8"/>
+    <meta name="description" content="ZpDIC Online"/>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>ZpDIC Online</title>
+  </head>
+  <body>
+
+    <div class="page">
+      <div id="header">
+        <header class="root">
+          <div class="container">
+            <div class="left">
+              <a class="title" href="/">ZpDIC</a>
+            </div>
+          </div>
+        </header>
+      </div>
+      <div class="page-spacer">
+        <div class="content">
+          
+          <h2>POST /api/dictionary/create</h2>
+          <p>
+            空の辞書を新しく作成します。
+          </p>
+          <h3>リクエストボディ</h3>
+          <div class="code">
+            <div><div>{</div></div>
+            <div><div>  name: string</div><div>辞書の名称</div></div>
+            <div><div>}</div></div>
+          </div>
+          <h3>レスポンス</h3>
+          <div class="code">
+            <div><div>Dictionary</div><div>作成した辞書</div></div>
+          </div>
+          <h3>エラー</h3>
+          <div class="error">
+            <div>
+              <div><span>401</span><span>-</span></div>
+              <div>ユーザー情報が不正です。</div>
+            </div>
+          </div>
+
+          <h2>POST /api/dictionary/upload</h2>
+          <p>
+            ファイルをアップロードし、現在のデータを上書きします。
+            OTM-JSON 形式 (拡張子 .json) と PDIC 形式 (拡張子 .dic) に対応しています。
+          </p>
+          <p>
+            ファイルのアップロードが完了した段階でレスポンスが返されます。
+            ファイルのパース処理やデータベースの更新処理は、レスポンスが返された後にバックグラウンドで行われます。
+          </p>
+          <h3>リクエストボディ</h3>
+          <div class="code">
+            <div><div>{</div></div>
+            <div><div>  number: number</div><div>辞書の ID 番号</div></div>
+            <div><div>}</div></div>
+          </div>
+          <h3>レスポンス</h3>
+          <div class="code">
+            <div><div>Dictionary</div><div>作成した辞書</div></div>
+          </div>
+          <h3>エラー</h3>
+          <div class="error">
+            <div>
+              <div><span>400</span><span>noSuchDictionaryNumber</span></div>
+              <div>与えられた ID 番号の辞書は存在しません。</div>
+            </div>
+            <div>
+              <div><span>401</span><span>-</span></div>
+              <div>ユーザー情報が不正です。</div>
+            </div>
+            <div>
+              <div><span>403</span><span>-</span></div>
+              <div>該当辞書にアクセスする権限がありません。</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div id="footer">
+        <footer class="root">
+          <div class="container">
+            <div class="left">
+              <div class="copyright">
+                © 2020 Ziphil
+              </div>
+            </div>
+            <div class="right">
+              This site is protected by reCAPTCHA.<br/>
+              The Google <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  
+  </body>
+</html>
