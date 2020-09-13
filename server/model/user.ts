@@ -37,6 +37,9 @@ export class UserSchema {
   @prop({required: true, unique: true, validate: IDENTIFIER_REGEXP})
   public name!: string;
 
+  @prop()
+  public screenName?: string;
+
   @prop({required: true, validate: EMAIL_REGEXP})
   public email!: string;
 
@@ -128,6 +131,18 @@ export class UserSchema {
     } else {
       throw new CustomError("invalidResetToken");
     }
+  }
+
+  // スクリーンネームを変更します。
+  // 引数として空文字列が渡された場合は、スクリーンネームの設定を破棄すると解釈されます。
+  public async changeScreenName(this: User, screenName: string): Promise<User> {
+    if (screenName !== "") {
+      this.screenName = screenName;
+    } else {
+      this.screenName = undefined;
+    }
+    await this.save();
+    return this;
   }
 
   public async changeEmail(this: User, email: string): Promise<User> {

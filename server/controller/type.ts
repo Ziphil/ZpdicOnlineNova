@@ -52,6 +52,7 @@ export const SERVER_PATH = {
   login: "/api/user/login",
   logout: "/api/user/logout",
   registerUser: "/api/user/register",
+  changeUserScreenName: "/api/user/edit/name",
   changeUserEmail: "/api/user/edit/email",
   changeUserPassword: "/api/user/edit/password",
   issueUserResetToken: "/api/user/reset/token",
@@ -310,6 +311,16 @@ type ProcessType = {
       response: {
         200: User,
         400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidEmail" | "invalidPassword" | "recaptchaRejected" | "recaptchaError">
+      }
+    }
+  },
+  changeUserScreenName: {
+    get: Noop,
+    post: {
+      request: {screenName: string},
+      response: {
+        200: User,
+        400: never
       }
     }
   },

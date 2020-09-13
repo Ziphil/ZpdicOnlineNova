@@ -101,6 +101,20 @@ export class UserController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["changeUserScreenName"])
+  @before(verifyUser())
+  public async [Symbol()](request: PostRequest<"changeUserScreenName">, response: PostResponse<"changeUserScreenName">): Promise<void> {
+    let user = request.user!;
+    let screenName = CastUtil.ensureString(request.body.screenName);
+    try {
+      await user.changeScreenName(screenName);
+      let body = UserCreator.create(user);
+      Controller.respond(response, body);
+    } catch (error) {
+      Controller.respondError(response, undefined, error);
+    }
+  }
+
   @post(SERVER_PATH["changeUserEmail"])
   @before(verifyUser())
   public async [Symbol()](request: PostRequest<"changeUserEmail">, response: PostResponse<"changeUserEmail">): Promise<void> {
