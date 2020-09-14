@@ -209,6 +209,18 @@ export class UserController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["deleteUser"])
+  @before(verifyUser())
+  public async [Symbol()](request: PostRequest<"deleteUser">, response: PostResponse<"deleteUser">): Promise<void> {
+    let user = request.user!;
+    try {
+      await user.removeWhole();
+      Controller.respond(response, null);
+    } catch (error) {
+      Controller.respondError(response, undefined, error);
+    }
+  }
+
   @get(SERVER_PATH["fetchUser"])
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {

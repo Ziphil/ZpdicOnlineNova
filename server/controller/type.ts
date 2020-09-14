@@ -57,6 +57,7 @@ export const SERVER_PATH = {
   changeUserPassword: "/api/user/edit/password",
   issueUserResetToken: "/api/user/reset/token",
   resetUserPassword: "/api/user/reset/reset",
+  deleteUser: "/api/user/delete",
   fetchUser: "/api/user/info",
   addNotification: "/api/notification/add",
   fetchNotifications: "/api/notification/list",
@@ -361,6 +362,16 @@ type ProcessType = {
       response: {
         200: User,
         400: CustomError<"invalidResetToken" | "invalidPassword">
+      }
+    }
+  },
+  deleteUser: {
+    get: Noop,
+    post: {
+      request: {},
+      response: {
+        200: null,
+        400: never
       }
     }
   },

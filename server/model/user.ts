@@ -11,6 +11,9 @@ import {
   hashSync
 } from "bcrypt";
 import {
+  DictionaryModel
+} from "/server/model/dictionary";
+import {
   CustomError
 } from "/server/model/error";
 import {
@@ -132,6 +135,16 @@ export class UserSchema {
     } else {
       throw new CustomError("invalidResetToken");
     }
+  }
+
+  public async removeWhole(this: User): Promise<User> {
+    let dictionaries = await DictionaryModel.findByUser(this, "own");
+    let promises = dictionaries.map((dictionary) => {
+      return dictionary.removeWhole();
+    });
+    await Promise.all(promises);
+    await this.remove();
+    return this;
   }
 
   public async changeScreenName(this: User, screenName: string): Promise<User> {
