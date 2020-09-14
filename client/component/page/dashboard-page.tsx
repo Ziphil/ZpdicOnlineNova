@@ -104,7 +104,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let description = this.trans("dashboardPage.changeUserScreenNameForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeUserScreenNameForm currentScreenName={this.props.store!.user!.screenName}/>
+        <ChangeUserScreenNameForm currentScreenName={this.props.store!.user!.screenName} onSubmit={() => this.props.store!.fetchUser()}/>
       </SettingPane>
     );
     return node;
@@ -115,7 +115,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let description = this.trans("dashboardPage.changeUserEmailForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeUserEmailForm currentEmail={this.props.store!.user!.email}/>
+        <ChangeUserEmailForm currentEmail={this.props.store!.user!.email} onSubmit={() => this.props.store!.fetchUser()}/>
       </SettingPane>
     );
     return node;
