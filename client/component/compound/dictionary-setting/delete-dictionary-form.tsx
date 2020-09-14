@@ -25,7 +25,6 @@ import {
 export class DeleteDictionaryForm extends StoreComponent<Props, State> {
 
   public state: State = {
-    file: null,
     alertOpen: false
   };
 
@@ -71,6 +70,5 @@ type Props = {
   onSubmit?: () => void
 };
 type State = {
-  file: File | null,
   alertOpen: boolean
 };
