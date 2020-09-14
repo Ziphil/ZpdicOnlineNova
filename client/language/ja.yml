@@ -16,6 +16,9 @@ popup:
   userPasswordReset: >-
     パスワードのリセットが完了しました。
     新しいパスワードを用いてログインしてください。
+  userDeleted: >-
+    ユーザーが削除しました。
+    ZpDIC Online のご利用ありがとうございました。
   dictionaryNameChanged: >-
     辞書の表示名を変更しました。
   dictionaryParamNameChanged: >-
@@ -141,6 +144,15 @@ createDictionaryForm:
   defaultName: "新規辞書"
   name: "名称"
   confirm: "作成"
+deleteUserForm:
+  confirm: "削除"
+  caution: >-
+    この操作を行うと、ユーザーが永久に削除され、同時にこのユーザーが所有者である辞書も削除されます。
+    削除した後にデータを戻すことはできませんので、ボタンをクリックする前に入念に確認してください。
+  alert: >-
+    このユーザーを永久に削除し、同時にこのユーザーが所有者である辞書も削除します。
+    削除した後にデータを戻すことはできません。
+    本当によろしいですか?
 changeDictionaryExplanationForm:
   explanation: "説明"
   confirm: "変更"
@@ -285,6 +297,10 @@ dashboardPage:
     label: "パスワードの変更"
     description: >-
       パスワードを変更します。
+  deleteUserForm:
+    label: "削除"
+    description: >-
+      この辞書を削除します。
 dictionarySettingPage:
   general: "一般"
   access: "権限"

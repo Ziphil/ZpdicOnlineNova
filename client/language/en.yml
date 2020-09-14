@@ -16,6 +16,9 @@ popup:
   userPasswordReset: >-
     Your password has been reset.
     Please sign in again using the new password.
+  userDeleted: >-
+    This user has been deleted.
+    Thank you for using ZpDIC Online.
   dictionaryNameChanged: >-
     The display name of the dictionary has been changed.
   dictionaryParamNameChanged: >-
@@ -141,6 +144,16 @@ createDictionaryForm:
   defaultName: "New dictionary"
   name: "Name"
   confirm: "Create"
+deleteUserForm:
+  confirm: "Delete"
+  caution: >-
+    This operation will delete this user permanently, and also delete the dictionariers which this user is an owner of.
+    Once you delete them, you cannot restore it.
+    Please be certain.
+  alert: >-
+    This user will be deleted parmanently, and the dictionaries which this user owns will be also deleted.
+    You cannot restore it hereafter.
+    Are you really sure?
 changeDictionaryExplanationForm:
   explanation: "Explanation"
   confirm: "Confirm"
@@ -286,6 +299,10 @@ dashboardPage:
     label: "Change password"
     description: >-
       Change your password.
+  deleteUserForm:
+    label: "Delete"
+    description: >-
+      Delete this user.
 dictionarySettingPage:
   general: "General"
   access: "Permissions"

@@ -12,6 +12,7 @@ import {
   ChangeUserPasswordForm,
   ChangeUserScreenNameForm,
   CreateDictionaryForm,
+  DeleteUserForm,
   DictionaryList,
   InvitationList,
   Menu,
@@ -131,6 +132,17 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     return node;
   }
 
+  private renderDeleteUserForm(): ReactNode {
+    let label = this.trans("dashboardPage.deleteUserForm.label");
+    let description = this.trans("dashboardPage.deleteUserForm.description");
+    let node = (
+      <SettingPane label={label} description={description} key={label}>
+        <DeleteUserForm onSubmit={() => this.pushPath("/", {}, true)}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
     let mode = this.props.match?.params.mode || "dictionary";
     let dictionaries = this.state.dictionaries;
@@ -154,6 +166,7 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
         contentNodes.push(this.renderChangeUserScreenNameForm());
         contentNodes.push(this.renderChangeUserEmailForm());
         contentNodes.push(this.renderChangeUserPasswordForm());
+        contentNodes.push(this.renderDeleteUserForm());
       }
     }
     let node = (
