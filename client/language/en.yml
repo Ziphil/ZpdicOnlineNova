@@ -147,12 +147,12 @@ createDictionaryForm:
 deleteUserForm:
   confirm: "Delete"
   caution: >-
-    This operation will delete this user permanently, and also delete the dictionariers which this user is an owner of.
-    Once you delete them, you cannot restore it.
+    This operation will delete this user permanently, and also delete the dictionaries which this user owns.
+    Once you delete them, you cannot restore them.
     Please be certain.
   alert: >-
     This user will be deleted parmanently, and the dictionaries which this user owns will be also deleted.
-    You cannot restore it hereafter.
+    You cannot restore them hereafter.
     Are you really sure?
 changeDictionaryExplanationForm:
   explanation: "Explanation"
@@ -276,7 +276,7 @@ dashboardPage:
     label: "Dictionaries"
     description: >-
       The list of your dictionaries.
-      This also includes those which you are not an owner of but you have editing permission of.
+      This also includes those which you do not own but you are permitted to edit.
   invitationList:
     label: "Permisson invitations"
     description: >-
