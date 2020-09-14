@@ -9,7 +9,7 @@ let config = {
   output: {
     path: path.join(__dirname, "dist"),
     publicPath: "/",
-    filename: "./script/[name].bundle.js"
+    filename: "./bundle.js"
   },
   devtool: "source-map",
   module: {
@@ -73,7 +73,8 @@ let config = {
     port: 3000,
     historyApiFallback: true,
     proxy: {
-      "/api": "http://localhost:8050"
+      "/api": "http://localhost:8050",
+      "/static": "http://localhost:8050"
     }
   },
   plugins: [

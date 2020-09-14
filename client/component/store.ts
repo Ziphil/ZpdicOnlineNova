@@ -1,9 +1,13 @@
 //
 
+import axios from "axios";
 import {
   boundAction,
   observable
 } from "/client/component/decorator";
+import {
+  SERVER_PATH
+} from "/server/controller/type";
 import {
   DetailedUser
 } from "/server/skeleton/user";
@@ -28,6 +32,18 @@ export class GlobalStore {
 
   private static getDefaultLocale(): string {
     return localStorage.getItem("locale") ?? "ja";
+  }
+
+  @boundAction
+  public async fetchUser(): Promise<void> {
+    let url = SERVER_PATH["fetchUser"];
+    let response = await axios.get(url, {validateStatus: () => true});
+    if (response.status === 200) {
+      let user = response.data;
+      this.user = user;
+    } else {
+      this.user = null;
+    }
   }
 
   private addPopup(type: string, style: PopupStyle, timeout: number | null): void {

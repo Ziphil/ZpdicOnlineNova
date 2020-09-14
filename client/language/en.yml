@@ -3,7 +3,9 @@ common:
   dateUndefined: "?"
   numberUndefined: "?"
 
-popup: 
+popup:
+  screenNameChanged: >-
+    Your nickname has been changed.
   emailChanged: >-
     Your email address has been changed.
   passwordChanged: >-
@@ -14,6 +16,9 @@ popup:
   userPasswordReset: >-
     Your password has been reset.
     Please sign in again using the new password.
+  userDeleted: >-
+    This user has been deleted.
+    Thank you for using ZpDIC Online.
   dictionaryNameChanged: >-
     The display name of the dictionary has been changed.
   dictionaryParamNameChanged: >-
@@ -126,6 +131,9 @@ fileInput:
 overlay:
   back: "Back"
   close: "Close"
+changeUserScreenNameForm:
+  screenName: "Nickname"
+  confirm: "Confirm"
 changeUserEmailForm:
   email: "Email address"
   confirm: "Confirm"
@@ -136,6 +144,16 @@ createDictionaryForm:
   defaultName: "New dictionary"
   name: "Name"
   confirm: "Create"
+deleteUserForm:
+  confirm: "Delete"
+  caution: >-
+    This operation will delete this user permanently, and also delete the dictionaries which this user owns.
+    Once you delete them, you cannot restore them.
+    Please be certain.
+  alert: >-
+    This user will be deleted parmanently, and the dictionaries which this user owns will be also deleted.
+    You cannot restore them hereafter.
+    Are you really sure?
 changeDictionaryExplanationForm:
   explanation: "Explanation"
   confirm: "Confirm"
@@ -163,7 +181,7 @@ deleteDictionaryForm:
     You cannot restore it hereafter.
     Are you really sure?
 inviteEditDictionaryForm:
-  userName: "User ID to invite"
+  userName: "User ID to invite (without “@”)"
   confirm: "Confirm"
 uploadDictionaryForm:
   file: "File"
@@ -258,7 +276,7 @@ dashboardPage:
     label: "Dictionaries"
     description: >-
       The list of your dictionaries.
-      This also includes those which you are not an owner of but you have editing permission of.
+      This also includes those which you do not own but you are permitted to edit.
   invitationList:
     label: "Permisson invitations"
     description: >-
@@ -268,6 +286,11 @@ dashboardPage:
     label: "Create new dictionary"
     description: >-
       Create a new empty dictionary.
+  changeUserScreenNameForm:
+    label: "Change nickname"
+    description: >-
+      Change youe nickname.
+      Unlike user ID, you can use any characters other than alphanumerics here.
   changeUserEmailForm:
     label: "Change email address"
     description: >-
@@ -276,6 +299,10 @@ dashboardPage:
     label: "Change password"
     description: >-
       Change your password.
+  deleteUserForm:
+    label: "Delete"
+    description: >-
+      Delete this user.
 dictionarySettingPage:
   general: "General"
   access: "Permissions"

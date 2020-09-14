@@ -1,5 +1,0 @@
-{
-  "watch": ["dist"],
-  "ext": "js",
-  "ignore": ["dist/script/**"]
-}

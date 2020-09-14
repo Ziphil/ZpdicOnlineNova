@@ -52,10 +52,12 @@ export const SERVER_PATH = {
   login: "/api/user/login",
   logout: "/api/user/logout",
   registerUser: "/api/user/register",
+  changeUserScreenName: "/api/user/edit/name",
   changeUserEmail: "/api/user/edit/email",
   changeUserPassword: "/api/user/edit/password",
   issueUserResetToken: "/api/user/reset/token",
   resetUserPassword: "/api/user/reset/reset",
+  deleteUser: "/api/user/delete",
   fetchUser: "/api/user/info",
   addNotification: "/api/notification/add",
   fetchNotifications: "/api/notification/list",
@@ -313,6 +315,16 @@ type ProcessType = {
       }
     }
   },
+  changeUserScreenName: {
+    get: Noop,
+    post: {
+      request: {screenName: string},
+      response: {
+        200: User,
+        400: never
+      }
+    }
+  },
   changeUserEmail: {
     get: Noop,
     post: {
@@ -350,6 +362,16 @@ type ProcessType = {
       response: {
         200: User,
         400: CustomError<"invalidResetToken" | "invalidPassword">
+      }
+    }
+  },
+  deleteUser: {
+    get: Noop,
+    post: {
+      request: {},
+      response: {
+        200: null,
+        400: never
       }
     }
   },

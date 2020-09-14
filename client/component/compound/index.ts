@@ -2,7 +2,9 @@
 
 export * from "./dashboard/change-user-email-form";
 export * from "./dashboard/change-user-password-form";
+export * from "./dashboard/change-user-screen-name-form";
 export * from "./dashboard/create-dictionary-form";
+export * from "./dashboard/delete-user-form";
 export * from "./dictionary-setting/change-dictionary-explanation-form";
 export * from "./dictionary-setting/change-dictionary-name-form";
 export * from "./dictionary-setting/change-dictionary-param-name-form";

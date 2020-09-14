@@ -23,7 +23,7 @@ import {
   NotificationController,
   OtherController,
   UserController
-} from "/server/controller";
+} from "/server/controller/interface";
 import {
   LogUtil
 } from "/server/util/log";

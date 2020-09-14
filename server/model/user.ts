@@ -11,6 +11,9 @@ import {
   hashSync
 } from "bcrypt";
 import {
+  DictionaryModel
+} from "/server/model/dictionary";
+import {
   CustomError
 } from "/server/model/error";
 import {
@@ -37,6 +40,9 @@ export class UserSchema {
   @prop({required: true, unique: true, validate: IDENTIFIER_REGEXP})
   public name!: string;
 
+  @prop({required: true})
+  public screenName!: string;
+
   @prop({required: true, validate: EMAIL_REGEXP})
   public email!: string;
 
@@ -60,7 +66,8 @@ export class UserSchema {
     } else if (formerEmailUser) {
       throw new CustomError("duplicateUserEmail");
     } else {
-      let user = new UserModel({name, email});
+      let screenName = "@" + name;
+      let user = new UserModel({name, screenName, email});
       await user.encryptPassword(password);
       await user.validate();
       let result = await user.save();
@@ -130,6 +137,22 @@ export class UserSchema {
     }
   }
 
+  public async removeWhole(this: User): Promise<User> {
+    let dictionaries = await DictionaryModel.findByUser(this, "own");
+    let promises = dictionaries.map((dictionary) => {
+      return dictionary.removeWhole();
+    });
+    await Promise.all(promises);
+    await this.remove();
+    return this;
+  }
+
+  public async changeScreenName(this: User, screenName: string): Promise<User> {
+    this.screenName = screenName;
+    await this.save();
+    return this;
+  }
+
   public async changeEmail(this: User, email: string): Promise<User> {
     let formerUser = await UserModel.findOne().where("email", email);
     if (formerUser && formerUser.id !== this.id) {
@@ -176,7 +199,8 @@ export class UserCreator {
   public static create(raw: User): UserSkeleton {
     let id = raw.id;
     let name = raw.name;
-    let skeleton = UserSkeleton.of({id, name});
+    let screenName = raw.screenName;
+    let skeleton = UserSkeleton.of({id, name, screenName});
     return skeleton;
   }
 

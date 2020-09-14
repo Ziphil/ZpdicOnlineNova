@@ -175,6 +175,7 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
       }
     } else if (status === 401) {
       this.props.store!.addErrorPopup("unauthenticated");
+      this.props.store!.user = null;
     } else if (status === 403) {
       this.props.store!.addErrorPopup("forbidden");
     } else if (status === 404) {

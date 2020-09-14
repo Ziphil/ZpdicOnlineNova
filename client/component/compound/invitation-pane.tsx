@@ -57,7 +57,7 @@ export class InvitationPane extends StoreComponent<Props, State> {
           </div>
           <div styleName="information">
             <div styleName="information-item">{this.trans("invitationPane.createdDate")} — {this.transDate(createdDate)}</div>
-            <div styleName="information-item">{this.trans("invitationPane.userName")} — @{this.props.invitation.dictionary.user.name}</div>
+            <div styleName="information-item">{this.trans("invitationPane.userName")} — {this.props.invitation.dictionary.user.screenName}</div>
           </div>
         </div>
         <div styleName="setting">

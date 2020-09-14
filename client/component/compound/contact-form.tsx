@@ -42,7 +42,7 @@ export class ContactForm extends StoreComponent<Props, State> {
   public async componentDidMount(): Promise<void> {
     let user = this.props.store!.user;
     if (user !== null) {
-      let name = "@" + user.name;
+      let name = user.screenName;
       let email = user.email;
       this.setState({name, email});
     }

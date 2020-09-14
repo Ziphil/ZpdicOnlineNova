@@ -29,17 +29,10 @@ export class Header extends StoreComponent<Props, State> {
     userName: null
   };
 
-  public async componentDidMount(): Promise<void> {
-    let user = this.props.store!.user;
-    if (user) {
-      let userName = user.name;
-      this.setState({userName});
-    }
-  }
-
   public render(): ReactNode {
-    let userNameNode = (this.state.userName !== null) && (
-      <HeaderMenuItem label={"@" + this.state.userName} href="/dashboard"/>
+    let user = this.props.store!.user;
+    let userNameNode = (user !== null) && (
+      <HeaderMenuItem label={user.screenName} href="/dashboard"/>
     );
     let languageNode = (
       <div styleName="language">
@@ -76,5 +69,4 @@ export class Header extends StoreComponent<Props, State> {
 type Props = {
 };
 type State = {
-  userName: string | null
 };

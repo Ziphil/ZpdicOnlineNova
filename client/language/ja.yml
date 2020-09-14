@@ -4,6 +4,8 @@ common:
   numberUndefined: "?"
 
 popup: 
+  screenNameChanged: >-
+    ニックネームを変更しました。
   emailChanged: >-
     メールアドレスを変更しました。
   passwordChanged: >-
@@ -14,6 +16,9 @@ popup:
   userPasswordReset: >-
     パスワードのリセットが完了しました。
     新しいパスワードを用いてログインしてください。
+  userDeleted: >-
+    ユーザーが削除しました。
+    ZpDIC Online のご利用ありがとうございました。
   dictionaryNameChanged: >-
     辞書の表示名を変更しました。
   dictionaryParamNameChanged: >-
@@ -126,6 +131,9 @@ fileInput:
 overlay:
   back: "戻る"
   close: "閉じる"
+changeUserScreenNameForm:
+  screenName: "ニックネーム"
+  confirm: "変更"
 changeUserEmailForm:
   email: "メールアドレス"
   confirm: "変更"
@@ -136,6 +144,15 @@ createDictionaryForm:
   defaultName: "新規辞書"
   name: "名称"
   confirm: "作成"
+deleteUserForm:
+  confirm: "削除"
+  caution: >-
+    この操作を行うと、ユーザーが永久に削除され、同時にこのユーザーが所有者である辞書も削除されます。
+    削除した後にデータを戻すことはできませんので、ボタンをクリックする前に入念に確認してください。
+  alert: >-
+    このユーザーを永久に削除し、同時にこのユーザーが所有者である辞書も削除します。
+    削除した後にデータを戻すことはできません。
+    本当によろしいですか?
 changeDictionaryExplanationForm:
   explanation: "説明"
   confirm: "変更"
@@ -162,7 +179,7 @@ deleteDictionaryForm:
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
 inviteEditDictionaryForm:
-  userName: "招待先ユーザー ID"
+  userName: "招待先ユーザー ID (「@」を除く)"
   confirm: "招待"
 uploadDictionaryForm:
   file: "ファイル"
@@ -267,6 +284,11 @@ dashboardPage:
     label: "新規作成"
     description: >-
       空の辞書を作成します。
+  changeUserScreenNameForm:
+    label: "ニックネームの変更"
+    description: >-
+      ニックネームを変更します。
+      ユーザー ID とは異なり、ここでは英数字以外の文字も使えます。
   changeUserEmailForm:
     label: "メールアドレスの変更"
     description: >-
@@ -275,6 +297,10 @@ dashboardPage:
     label: "パスワードの変更"
     description: >-
       パスワードを変更します。
+  deleteUserForm:
+    label: "削除"
+    description: >-
+      この辞書を削除します。
 dictionarySettingPage:
   general: "一般"
   access: "権限"

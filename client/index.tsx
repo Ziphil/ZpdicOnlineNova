@@ -10,7 +10,7 @@ import {
 
 
 export const TITLES = ["ZpDIC", "Online"];
-export const VERSION = "2.12.3";
+export const VERSION = "2.13.0";
 
 const RECAPTCHA_SITES = {
   development: "6LeWRMkZAAAAADzUAl1LAFr9fT7kdW7yoVn6Qhms",

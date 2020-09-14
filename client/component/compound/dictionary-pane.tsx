@@ -71,7 +71,7 @@ export class DictionaryPane extends StoreComponent<Props, State> {
       }
     })();
     let userNode = (this.props.showUser) && (
-      <div styleName="information-item">{this.trans("dictionaryPane.userName")} — @{this.props.dictionary.user.name}</div>
+      <div styleName="information-item">{this.trans("dictionaryPane.userName")} — {this.props.dictionary.user.screenName}</div>
     );
     let updatedDateNode = (this.props.showUpdatedDate) && (
       <div styleName="information-item">{this.trans("dictionaryPane.updatedDate")} — {this.transDate(this.props.dictionary.updatedDate)}</div>

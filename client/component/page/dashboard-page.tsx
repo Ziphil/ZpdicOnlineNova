@@ -10,10 +10,11 @@ import {
 import {
   ChangeUserEmailForm,
   ChangeUserPasswordForm,
+  ChangeUserScreenNameForm,
   CreateDictionaryForm,
+  DeleteUserForm,
   DictionaryList,
   InvitationList,
-  Loading,
   Menu,
   SettingPane
 } from "/client/component/compound";
@@ -98,12 +99,23 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     return node;
   }
 
+  private renderChangeUserScreenNameForm(): ReactNode {
+    let label = this.trans("dashboardPage.changeUserScreenNameForm.label");
+    let description = this.trans("dashboardPage.changeUserScreenNameForm.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <ChangeUserScreenNameForm currentScreenName={this.props.store!.user!.screenName} onSubmit={() => this.props.store!.fetchUser()}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderChangeUserEmailForm(): ReactNode {
     let label = this.trans("dashboardPage.changeUserEmailForm.label");
     let description = this.trans("dashboardPage.changeUserEmailForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeUserEmailForm currentEmail={this.props.store!.user!.email}/>
+        <ChangeUserEmailForm currentEmail={this.props.store!.user!.email} onSubmit={() => this.props.store!.fetchUser()}/>
       </SettingPane>
     );
     return node;
@@ -115,6 +127,17 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
     let node = (
       <SettingPane label={label} description={description} key={label}>
         <ChangeUserPasswordForm/>
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderDeleteUserForm(): ReactNode {
+    let label = this.trans("dashboardPage.deleteUserForm.label");
+    let description = this.trans("dashboardPage.deleteUserForm.description");
+    let node = (
+      <SettingPane label={label} description={description} key={label}>
+        <DeleteUserForm onSubmit={() => this.pushPath("/", {}, true)}/>
       </SettingPane>
     );
     return node;
@@ -140,8 +163,10 @@ export class DashboardPage extends StoreComponent<Props, State, Params> {
       } else if (mode === "notification") {
         contentNodes.push(this.renderInvitationList());
       } else if (mode === "account") {
+        contentNodes.push(this.renderChangeUserScreenNameForm());
         contentNodes.push(this.renderChangeUserEmailForm());
         contentNodes.push(this.renderChangeUserPasswordForm());
+        contentNodes.push(this.renderDeleteUserForm());
       }
     }
     let node = (
