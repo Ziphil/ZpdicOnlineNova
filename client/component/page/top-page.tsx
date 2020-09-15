@@ -4,23 +4,19 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import DictionaryAggregationPane from "/client/component/compound/dictionary-aggregation-pane";
 import LoginForm from "/client/component/compound/login-form";
 import Logo from "/client/component/compound/logo";
 import NotificationList from "/client/component/compound/notification-list";
 import {
-  applyStyle,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 
 
-@route
 @applyStyle(require("./top-page.scss"))
-export default class TopPage extends StoreComponent<Props, State> {
+export default class TopPage extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (

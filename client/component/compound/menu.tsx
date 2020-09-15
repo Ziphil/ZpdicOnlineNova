@@ -4,20 +4,15 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import MenuItem from "/client/component/compound/menu-item";
 import {
-  applyStyle,
-  inject,
-  route
+  applyStyle
 } from "/client/component/decorator";
 
 
-@route @inject
 @applyStyle(require("./menu.scss"))
-export default class Menu extends StoreComponent<Props, State> {
+export default class Menu extends Component<Props, State> {
 
   private async performLogout(): Promise<void> {
     let response = await this.logout();

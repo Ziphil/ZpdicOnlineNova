@@ -16,15 +16,10 @@ import ControlGroup from "/client/component/atom/control-group";
 import Input from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import WordSearcher from "/client/component/compound/word-searcher";
 import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   deleteAt,
@@ -44,9 +39,8 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@route @inject @intl
 @applyStyle(require("./word-editor.scss"))
-export default class WordEditor extends StoreComponent<Props, State> {
+export default class WordEditor extends Component<Props, State> {
 
   private editingRelationIndex: number | null = null;
 

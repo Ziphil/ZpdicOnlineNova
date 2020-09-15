@@ -9,9 +9,7 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import WordPane from "/client/component/compound/word-pane";
 import {
   applyStyle

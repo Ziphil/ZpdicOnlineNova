@@ -9,24 +9,18 @@ import {
   AsyncOrSync
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import WhitePane from "/client/component/compound/white-pane";
 import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   Invitation
 } from "/server/skeleton/invitation";
 
 
-@route @inject @intl
 @applyStyle(require("./invitation-pane.scss"))
-export default class InvitationPane extends StoreComponent<Props, State> {
+export default class InvitationPane extends Component<Props, State> {
 
   private async respondInvitation(event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
     let id = this.props.invitation.id;

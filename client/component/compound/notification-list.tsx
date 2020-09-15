@@ -4,24 +4,19 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import NotificationPane from "/client/component/compound/notification-pane";
 import PaneList from "/client/component/compound/pane-list";
 import {
-  applyStyle,
-  inject,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   Notification
 } from "/server/skeleton/notification";
 
 
-@route @inject
 @applyStyle(require("./notification-list.scss"))
-export default class NotificationList extends StoreComponent<Props, State> {
+export default class NotificationList extends Component<Props, State> {
 
   public state: State = {
     notifications: null

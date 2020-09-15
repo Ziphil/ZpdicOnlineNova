@@ -6,20 +6,14 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import FileInput from "/client/component/atom/file-input";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 
 
-@route @inject @intl
 @applyStyle(require("./upload-dictionary-form.scss"))
-export default class UploadDictionaryForm extends StoreComponent<Props, State> {
+export default class UploadDictionaryForm extends Component<Props, State> {
 
   public state: State = {
     file: null

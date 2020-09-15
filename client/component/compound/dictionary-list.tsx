@@ -4,9 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import DictionaryPane from "/client/component/compound/dictionary-pane";
 import PaneList from "/client/component/compound/pane-list";
 import {

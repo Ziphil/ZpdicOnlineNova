@@ -6,24 +6,18 @@ import {
   ReactNode
 } from "react";
 import Button from "/client/component/atom/button";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import WhitePane from "/client/component/compound/white-pane";
 import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   DetailedDictionary
 } from "/server/skeleton/dictionary";
 
 
-@route @inject @intl
 @applyStyle(require("./dictionary-pane.scss"))
-export default class DictionaryPane extends StoreComponent<Props, State> {
+export default class DictionaryPane extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     showUser: true,

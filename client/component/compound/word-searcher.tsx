@@ -9,18 +9,14 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
 import SearchForm from "/client/component/compound/search-form";
 import WordList from "/client/component/compound/word-list";
 import {
   applyStyle,
-  debounce,
-  inject,
-  route
+  debounce
 } from "/client/component/decorator";
 import {
   WithSize
@@ -36,9 +32,8 @@ import {
 } from "/server/skeleton/search-parameter";
 
 
-@route @inject
 @applyStyle(require("./word-searcher.scss"))
-export default class WordSearcher extends StoreComponent<Props, State> {
+export default class WordSearcher extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     style: "normal",

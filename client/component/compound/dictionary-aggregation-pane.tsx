@@ -4,20 +4,14 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 
 
-@route @inject @intl
 @applyStyle(require("./dictionary-aggregation-pane.scss"))
-export default class DictionaryAggregationPane extends StoreComponent<Props, State> {
+export default class DictionaryAggregationPane extends Component<Props, State> {
 
   public state: State = {
     dictionarySize: null,

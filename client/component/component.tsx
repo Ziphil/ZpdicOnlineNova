@@ -9,7 +9,7 @@ import {
   AxiosResponse
 } from "axios";
 import {
-  Component as ReactComponent,
+  Component,
   ReactNode
 } from "react";
 import {
@@ -36,11 +36,11 @@ import {
 } from "/server/controller/type";
 
 
-export class Component<P, S, H = any> extends ReactComponent<{styles?: StylesType, intl?: IntlShape} & P, S, H> {
+export default class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Partial<RouteComponentProps<Q, any, any> & AdditionalProps> & P, S, H> {
 
-  public state!: S;
+  private static client: AxiosInstance = StoreComponent.createClient();
 
-  public constructor(props: Readonly<P>) {
+  public constructor(props?: any) {
     super(props);
     this.initialize();
   }
@@ -72,18 +72,6 @@ export class Component<P, S, H = any> extends ReactComponent<{styles?: StylesTyp
       return this.props.intl!.formatMessage({id: "common.numberUndefined"});
     }
   }
-
-}
-
-
-export class RouteComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Partial<RouteComponentProps<Q, H, any>> & P, S, H> {
-
-}
-
-
-export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteComponent<{store?: GlobalStore} & P, S, Q, H> {
-
-  private static client: AxiosInstance = StoreComponent.createClient();
 
   // グローバルストアのポップアップデータを削除しつつ、引数に指定されたパスに移動します。
   // ページの遷移をしてもポップアップが表示され続けるのを防ぐため、ページを遷移するときは必ずこのメソッドを使ってください。
@@ -199,6 +187,12 @@ export class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends RouteCompon
 
 }
 
+
+type AdditionalProps = {
+  styles: StylesType,
+  intl: IntlShape,
+  store: GlobalStore
+};
 
 type StylesType = {[key: string]: string | undefined};
 type FormatFunction<T, R> = (parts: Array<string | T>) => R;

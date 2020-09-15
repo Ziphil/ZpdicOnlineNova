@@ -8,14 +8,9 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import Link from "/client/component/atom/link";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   Dictionary
@@ -25,9 +20,8 @@ import {
 let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
 
 
-@route @inject @intl
 @applyStyle(require("./dictionary-header.scss"))
-export default class DictionaryHeader extends StoreComponent<Props, State> {
+export default class DictionaryHeader extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     showEditLink: false,

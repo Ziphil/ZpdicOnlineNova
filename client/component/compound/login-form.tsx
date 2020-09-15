@@ -6,21 +6,15 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import FormPane from "/client/component/compound/form-pane";
 import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 
 
-@route @inject @intl
 @applyStyle(require("./login-form.scss"))
-export default class LoginForm extends StoreComponent<Props, State> {
+export default class LoginForm extends Component<Props, State> {
 
   public state: State = {
     name: "",

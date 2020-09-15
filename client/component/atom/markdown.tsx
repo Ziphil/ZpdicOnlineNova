@@ -6,9 +6,7 @@ import {
 } from "react";
 import ReactMarkdown from "react-markdown";
 import Link from "/client/component/atom/link";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";

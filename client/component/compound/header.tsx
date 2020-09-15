@@ -5,21 +5,15 @@ import {
   ReactNode
 } from "react";
 import Link from "/client/component/atom/link";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import HeaderMenuItem from "/client/component/compound/header-menu-item";
 import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 
 
-@route @inject @intl
 @applyStyle(require("./header.scss"))
-export default class Header extends StoreComponent<Props, State> {
+export default class Header extends Component<Props, State> {
 
   public state: State = {
     userName: null

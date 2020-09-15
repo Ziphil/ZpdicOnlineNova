@@ -5,12 +5,9 @@ import {
   ReactNode
 } from "react";
 import Link from "/client/component/atom/link";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle,
-  intl
+  applyStyle
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -18,7 +15,6 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@intl
 @applyStyle(require("./suggestion-pane.scss"))
 export default class SuggestionPane extends Component<Props, State> {
 

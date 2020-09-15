@@ -6,9 +6,7 @@ import {
   ReactNode
 } from "react";
 import Radio from "/client/component/atom/radio";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";

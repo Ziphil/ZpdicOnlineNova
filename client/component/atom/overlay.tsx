@@ -7,19 +7,15 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import Modal from "/client/component/atom/modal";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle,
-  intl
+  applyStyle
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@intl
 @applyStyle(require("./overlay.scss"))
 export default class Overlay extends Component<Props, State> {
 

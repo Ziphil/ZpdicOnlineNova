@@ -4,21 +4,16 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import LoginForm from "/client/component/compound/login-form";
 import {
-  applyStyle,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 
 
-@route @intl
 @applyStyle(require("./login-page.scss"))
-export default class LoginPage extends StoreComponent<Props, State> {
+export default class LoginPage extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (

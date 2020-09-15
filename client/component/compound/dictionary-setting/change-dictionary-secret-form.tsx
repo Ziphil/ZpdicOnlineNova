@@ -7,20 +7,14 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import RadioGroup from "/client/component/atom/radio-group";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 
 
-@route @inject @intl
 @applyStyle(require("./change-dictionary-secret-form.scss"))
-export default class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
+export default class ChangeDictionarySecretForm extends Component<Props, State> {
 
   public constructor(props: any) {
     super(props);

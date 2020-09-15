@@ -6,20 +6,14 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import TextArea from "/client/component/atom/text-area";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 
 
-@route @inject @intl
 @applyStyle(require("./change-dictionary-explanation-form.scss"))
-export default class ChangeDictionaryExplanationForm extends StoreComponent<Props, State> {
+export default class ChangeDictionaryExplanationForm extends Component<Props, State> {
 
   public constructor(props: any) {
     super(props);

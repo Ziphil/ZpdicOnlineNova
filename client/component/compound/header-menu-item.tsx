@@ -5,19 +5,14 @@ import {
   MouseEvent,
   ReactNode
 } from "react";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  route
+  applyStyle
 } from "/client/component/decorator";
 
 
-@route @inject
 @applyStyle(require("./header-menu-item.scss"))
-export default class HeaderMenuItem extends StoreComponent<Props, State> {
+export default class HeaderMenuItem extends Component<Props, State> {
 
   public state: State = {
     userName: ""

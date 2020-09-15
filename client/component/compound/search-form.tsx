@@ -6,12 +6,9 @@ import {
 } from "react";
 import Input from "/client/component/atom/input";
 import RadioGroup from "/client/component/atom/radio-group";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle,
-  intl
+  applyStyle
 } from "/client/component/decorator";
 import {
   NormalSearchParameter,
@@ -20,7 +17,6 @@ import {
 } from "/server/skeleton/search-parameter";
 
 
-@intl
 @applyStyle(require("./search-form.scss"))
 export default class SearchForm extends Component<Props, State> {
 

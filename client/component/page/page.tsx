@@ -4,9 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import DictionaryHeader from "/client/component/compound/dictionary-header";
 import Footer from "/client/component/compound/footer";
 import Header from "/client/component/compound/header";

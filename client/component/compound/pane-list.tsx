@@ -4,9 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
 import {

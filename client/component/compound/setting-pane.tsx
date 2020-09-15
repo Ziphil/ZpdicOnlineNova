@@ -5,9 +5,7 @@ import {
   ReactNode
 } from "react";
 import Badge from "/client/component/atom/badge";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";

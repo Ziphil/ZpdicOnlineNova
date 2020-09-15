@@ -5,22 +5,17 @@ import {
   MouseEvent,
   ReactNode
 } from "react";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@route @inject
 @applyStyle(require("./link.scss"))
-export default class Link extends StoreComponent<Props, State> {
+export default class Link extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     target: "auto",

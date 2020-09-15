@@ -6,19 +6,14 @@ import {
   MouseEvent,
   ReactNode
 } from "react";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  route
+  applyStyle
 } from "/client/component/decorator";
 
 
-@route @inject
 @applyStyle(require("./white-pane.scss"))
-export default class WhitePane extends StoreComponent<Props, State> {
+export default class WhitePane extends Component<Props, State> {
 
   private handleClickAnchor(event: MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();

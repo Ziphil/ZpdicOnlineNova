@@ -8,9 +8,7 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import PaneList from "/client/component/compound/pane-list";
 import UserPane from "/client/component/compound/user-pane";
 import {

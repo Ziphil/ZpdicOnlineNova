@@ -5,9 +5,7 @@ import {
   ReactNode
 } from "react";
 import Button from "/client/component/atom/button";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";

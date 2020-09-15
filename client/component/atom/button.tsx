@@ -8,9 +8,7 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";

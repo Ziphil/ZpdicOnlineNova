@@ -11,13 +11,10 @@ import {
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Link from "/client/component/atom/link";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import WordEditor from "/client/component/compound/word-editor";
 import {
-  applyStyle,
-  intl
+  applyStyle
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -27,7 +24,6 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@intl
 @applyStyle(require("./word-pane.scss"))
 export default class WordPane extends Component<Props, State> {
 

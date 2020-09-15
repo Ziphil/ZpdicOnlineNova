@@ -5,19 +5,15 @@ import {
   ReactNode
 } from "react";
 import Markdown from "/client/component/atom/markdown";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle,
-  intl
+  applyStyle
 } from "/client/component/decorator";
 import {
   Notification
 } from "/server/skeleton/notification";
 
 
-@intl
 @applyStyle(require("./notification-pane.scss"))
 export default class NotificationPane extends Component<Props, State> {
 

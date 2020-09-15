@@ -6,9 +6,7 @@ import {
   ReactNode
 } from "react";
 import Portal from "/client/component/atom/portal";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 import {
   applyStyle
 } from "/client/component/decorator";

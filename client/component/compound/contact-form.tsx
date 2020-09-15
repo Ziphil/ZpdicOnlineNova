@@ -7,24 +7,18 @@ import {
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import TextArea from "/client/component/atom/text-area";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import FormPane from "/client/component/compound/form-pane";
 import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   Main
 } from "/client/index";
 
 
-@route @inject @intl
 @applyStyle(require("./contact-form.scss"))
-export default class ContactForm extends StoreComponent<Props, State> {
+export default class ContactForm extends Component<Props, State> {
 
   public state: State = {
     name: "",

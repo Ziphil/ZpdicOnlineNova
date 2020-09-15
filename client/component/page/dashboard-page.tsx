@@ -4,9 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import ChangeUserEmailForm from "/client/component/compound/dashboard/change-user-email-form";
 import ChangeUserPasswordForm from "/client/component/compound/dashboard/change-user-password-form";
 import ChangeUserScreenNameForm from "/client/component/compound/dashboard/change-user-screen-name-form";
@@ -17,10 +15,7 @@ import InvitationList from "/client/component/compound/invitation-list";
 import Menu from "/client/component/compound/menu";
 import SettingPane from "/client/component/compound/setting-pane";
 import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
@@ -31,9 +26,8 @@ import {
 } from "/server/skeleton/invitation";
 
 
-@route @inject @intl
 @applyStyle(require("./dashboard-page.scss"))
-export default class DashboardPage extends StoreComponent<Props, State, Params> {
+export default class DashboardPage extends Component<Props, State, Params> {
 
   public state: State = {
     dictionaries: null,

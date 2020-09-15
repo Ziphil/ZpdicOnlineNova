@@ -7,14 +7,9 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   PopupUtil
@@ -24,9 +19,8 @@ import {
 } from "/server/model/validation";
 
 
-@route @inject @intl
 @applyStyle(require("./change-dictionary-param-name-form.scss"))
-export default class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> {
+export default class ChangeDictionaryParamNameForm extends Component<Props, State> {
 
   public constructor(props: any) {
     super(props);

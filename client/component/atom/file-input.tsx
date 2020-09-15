@@ -5,16 +5,12 @@ import {
   ChangeEvent,
   ReactNode
 } from "react";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle,
-  intl
+  applyStyle
 } from "/client/component/decorator";
 
 
-@intl
 @applyStyle(require("./file-input.scss"))
 export default class FileInput extends Component<Props, State> {
 

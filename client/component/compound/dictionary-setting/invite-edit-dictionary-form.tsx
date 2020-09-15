@@ -7,15 +7,10 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import UserList from "/client/component/compound/user-list";
 import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   Dictionary
@@ -25,9 +20,8 @@ import {
 } from "/server/skeleton/user";
 
 
-@route @inject @intl
 @applyStyle(require("./invite-edit-dictionary-form.scss"))
-export default class InviteEditDictionaryForm extends StoreComponent<Props, State> {
+export default class InviteEditDictionaryForm extends Component<Props, State> {
 
   public state: State = {
     userName: "",

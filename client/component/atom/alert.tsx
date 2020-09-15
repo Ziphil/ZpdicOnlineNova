@@ -7,16 +7,12 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import Modal from "/client/component/atom/modal";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle,
-  intl
+  applyStyle
 } from "/client/component/decorator";
 
 
-@intl
 @applyStyle(require("./alert.scss"))
 export default class Alert extends Component<Props, State> {
 

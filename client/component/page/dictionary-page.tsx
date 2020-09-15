@@ -7,9 +7,7 @@ import {
   ReactNode
 } from "react";
 import Markdown from "/client/component/atom/markdown";
-import {
-  StoreComponent
-} from "/client/component/component";
+import Component from "/client/component/component";
 import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
 import SearchForm from "/client/component/compound/search-form";
@@ -17,9 +15,7 @@ import SuggestionList from "/client/component/compound/suggestion-list";
 import WordList from "/client/component/compound/word-list";
 import {
   applyStyle,
-  debounce,
-  inject,
-  route
+  debounce
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
@@ -37,9 +33,8 @@ import {
 } from "/server/skeleton/search-parameter";
 
 
-@route @inject
 @applyStyle(require("./dictionary-page.scss"))
-export default class DictionaryPage extends StoreComponent<Props, State, Params> {
+export default class DictionaryPage extends Component<Props, State, Params> {
 
   public state: State = {
     dictionary: null,

@@ -21,16 +21,11 @@ import {
   Router,
   Switch
 } from "react-router-dom";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  observer
+  applyStyle
 } from "/client/component/decorator";
-import {
-  EmptyPage
-} from "/client/component/page/empty-page";
+import EmptyPage from "/client/component/page/empty-page";
 import {
   GuestRoute,
   PrivateRoute
@@ -52,9 +47,8 @@ let ResetUserPasswordPage = lazy(() => import("/client/component/page/reset-user
 let TopPage = lazy(() => import("/client/component/page/top-page"));
 
 
-@observer
-@applyStyle(require("./root.scss"))
-export class Root extends StoreComponent<Props, State> {
+@applyStyle(require("./root.scss"), {withRouter: false, inject: false, injectIntl: false, observer: true})
+export class Root extends Component<Props, State> {
 
   private store: GlobalStore = new GlobalStore();
   private history: History = createBrowserHistory();
@@ -85,7 +79,7 @@ export class Root extends StoreComponent<Props, State> {
       <Router history={this.history}>
         <Provider store={this.store}>
           <IntlProvider defaultLocale="ja" locale={this.store.locale} messages={messages}>
-            <Suspense fallback={EmptyPage}>
+            <Suspense fallback={<EmptyPage/>}>
               <Switch>
                 <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
                 <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>

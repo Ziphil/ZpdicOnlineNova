@@ -7,9 +7,7 @@ import {
 import {
   createPortal
 } from "react-dom";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 
 
 export default class Portal extends Component<Props, State> {

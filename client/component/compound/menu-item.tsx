@@ -6,22 +6,17 @@ import {
   ReactNode
 } from "react";
 import Badge from "/client/component/atom/badge";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  route
+  applyStyle
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@route @inject
 @applyStyle(require("./menu-item.scss"))
-export default class MenuItem extends StoreComponent<Props, State> {
+export default class MenuItem extends Component<Props, State> {
 
   private handleClick(event: MouseEvent<HTMLElement>): void {
     event.preventDefault();
