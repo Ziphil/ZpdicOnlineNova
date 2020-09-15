@@ -87,7 +87,7 @@ let config = {
       title: "ZpDIC Online"
     }),
     new BundleAnalyzerPlugin({
-      analyzerMode: (!!process.env["ANALYZE"]) ? "static" : "json",
+      analyzerMode: (!!process.env["ANALYZE"]) ? "static" : "disabled",
       reportFilename: path.join(__dirname, "dist", "client", "stats.html")
     })
   ]

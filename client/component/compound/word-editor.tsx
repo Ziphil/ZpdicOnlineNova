@@ -1,8 +1,6 @@
 //
 
-import {
-  cloneDeep
-} from "lodash-es";
+import cloneDeep from "lodash-es/cloneDeep";
 import * as react from "react";
 import {
   Fragment,

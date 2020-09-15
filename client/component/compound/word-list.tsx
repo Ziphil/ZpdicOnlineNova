@@ -1,8 +1,6 @@
 //
 
-import {
-  partial
-} from "lodash-es";
+import partial from "lodash-es/partial";
 import * as react from "react";
 import {
   MouseEvent,

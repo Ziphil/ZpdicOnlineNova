@@ -1,8 +1,6 @@
 //
 
-import {
-  debounce as lodashDebounce
-} from "lodash-es";
+import lodashDebounce from "lodash-es/debounce";
 import {
   action as mobxAction,
   observable as mobxObservable
