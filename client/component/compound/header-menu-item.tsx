@@ -17,7 +17,7 @@ import {
 
 @route @inject
 @applyStyle(require("./header-menu-item.scss"))
-export class HeaderMenuItem extends StoreComponent<Props, State> {
+export default class HeaderMenuItem extends StoreComponent<Props, State> {
 
   public state: State = {
     userName: ""

@@ -7,10 +7,8 @@ import {
 import {
   Component
 } from "/client/component/component";
-import {
-  Loading,
-  PaginationButton
-} from "/client/component/compound";
+import Loading from "/client/component/compound/loading";
+import PaginationButton from "/client/component/compound/pagination-button";
 import {
   applyStyle
 } from "/client/component/decorator";
@@ -23,7 +21,7 @@ import {
 
 
 @applyStyle(require("./pane-list.scss"))
-export class PaneList<T> extends Component<Props<T>, State<T>> {
+export default class PaneList<T> extends Component<Props<T>, State<T>> {
 
   public static defaultProps: DefaultProps = {
     column: 1,

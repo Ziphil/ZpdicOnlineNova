@@ -14,7 +14,7 @@ import {
 
 
 @applyStyle(require("./radio.scss"))
-export class Radio extends Component<Props, State> {
+export default class Radio extends Component<Props, State> {
 
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
     if (this.props.onChange) {

@@ -3,7 +3,6 @@
 import * as react from "react";
 import {
   ChangeEvent,
-  MouseEvent,
   ReactNode
 } from "react";
 import {
@@ -18,7 +17,7 @@ import {
 
 
 @applyStyle(require("./input.scss"))
-export class Input extends Component<Props, State> {
+export default class Input extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     value: "",

@@ -18,7 +18,7 @@ import {
 
 @route @inject
 @applyStyle(require("./white-pane.scss"))
-export class WhitePane extends StoreComponent<Props, State> {
+export default class WhitePane extends StoreComponent<Props, State> {
 
   private handleClickAnchor(event: MouseEvent<HTMLAnchorElement>): void {
     event.preventDefault();

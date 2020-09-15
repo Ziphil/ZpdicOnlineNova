@@ -13,7 +13,7 @@ import {
 
 
 @applyStyle(require("./control-group.scss"))
-export class ControlGroup extends Component<Props, State> {
+export default class ControlGroup extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (

@@ -7,17 +7,13 @@ import {
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  ContactForm
-} from "/client/component/compound";
+import ContactForm from "/client/component/compound/contact-form";
 import {
   applyStyle,
   intl,
   route
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 
 
 @route @intl

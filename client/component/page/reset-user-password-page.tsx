@@ -8,18 +8,14 @@ import {
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  ResetUserPasswordForm
-} from "/client/component/compound";
+import ResetUserPasswordForm from "/client/component/compound/reset-user-password-form";
 import {
   applyStyle,
   inject,
   intl,
   route
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 
 
 @route @inject @intl

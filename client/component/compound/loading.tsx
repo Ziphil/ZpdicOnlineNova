@@ -14,7 +14,7 @@ import {
 
 
 @applyStyle(require("./loading.scss"))
-export class Loading extends Component<Props, State> {
+export default class Loading extends Component<Props, State> {
 
   public render(): ReactNode {
     if (this.props.loading) {

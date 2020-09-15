@@ -2,18 +2,13 @@
 
 import * as react from "react";
 import {
-  Fragment,
   ReactNode
 } from "react";
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  Loading,
-  NotificationPane,
-  PaginationButton,
-  PaneList
-} from "/client/component/compound";
+import NotificationPane from "/client/component/compound/notification-pane";
+import PaneList from "/client/component/compound/pane-list";
 import {
   applyStyle,
   inject,
@@ -26,7 +21,7 @@ import {
 
 @route @inject
 @applyStyle(require("./notification-list.scss"))
-export class NotificationList extends StoreComponent<Props, State> {
+export default class NotificationList extends StoreComponent<Props, State> {
 
   public state: State = {
     notifications: null

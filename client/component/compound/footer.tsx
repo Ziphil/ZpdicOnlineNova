@@ -16,7 +16,7 @@ import {
 
 @route @inject
 @applyStyle(require("./footer.scss"))
-export class Footer extends StoreComponent<Props, State> {
+export default class Footer extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let date = new Date();

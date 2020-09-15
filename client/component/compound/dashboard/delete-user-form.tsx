@@ -5,10 +5,8 @@ import {
   Fragment,
   ReactNode
 } from "react";
-import {
-  Alert,
-  Button
-} from "/client/component/atom";
+import Alert from "/client/component/atom/alert";
+import Button from "/client/component/atom/button";
 import {
   StoreComponent
 } from "/client/component/component";
@@ -22,7 +20,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./delete-user-form.scss"))
-export class DeleteUserForm extends StoreComponent<Props, State> {
+export default class DeleteUserForm extends StoreComponent<Props, State> {
 
   public state: State = {
     alertOpen: false

@@ -7,17 +7,13 @@ import {
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  DictionaryList
-} from "/client/component/compound";
+import DictionaryList from "/client/component/compound/dictionary-list";
 import {
   applyStyle,
   inject,
   route
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 import {
   WithSize
 } from "/server/controller/type";

@@ -4,16 +4,12 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  Button,
-  Input
-} from "/client/component/atom";
+import Button from "/client/component/atom/button";
+import Input from "/client/component/atom/input";
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  FormPane
-} from "/client/component/compound";
+import FormPane from "/client/component/compound/form-pane";
 import {
   applyStyle,
   inject,
@@ -36,7 +32,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./reset-user-password-form.scss"))
-export class ResetUserPasswordForm extends StoreComponent<Props, State> {
+export default class ResetUserPasswordForm extends StoreComponent<Props, State> {
 
   public state: State = {
     name: "",

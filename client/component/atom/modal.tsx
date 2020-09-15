@@ -5,9 +5,7 @@ import {
   MouseEvent,
   ReactNode
 } from "react";
-import {
-  Portal
-} from "/client/component/atom";
+import Portal from "/client/component/atom/portal";
 import {
   Component
 } from "/client/component/component";
@@ -17,7 +15,7 @@ import {
 
 
 @applyStyle(require("./modal.scss"))
-export class Modal extends Component<Props, State> {
+export default class Modal extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     outsideClosable: false

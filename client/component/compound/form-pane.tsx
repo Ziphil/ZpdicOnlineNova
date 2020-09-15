@@ -8,9 +8,7 @@ import {
 import {
   Component
 } from "/client/component/component";
-import {
-  InformationPane
-} from "/client/component/compound";
+import InformationPane from "/client/component/compound/information-pane";
 import {
   applyStyle,
   intl
@@ -22,7 +20,7 @@ import {
 
 @intl
 @applyStyle(require("./form-pane.scss"))
-export class FormPane extends Component<Props, State> {
+export default class FormPane extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     errorType: null,

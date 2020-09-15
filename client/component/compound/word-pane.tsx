@@ -9,16 +9,12 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
-import {
-  Button,
-  Link
-} from "/client/component/atom";
+import Button from "/client/component/atom/button";
+import Link from "/client/component/atom/link";
 import {
   Component
 } from "/client/component/component";
-import {
-  WordEditor
-} from "/client/component/compound";
+import WordEditor from "/client/component/compound/word-editor";
 import {
   applyStyle,
   intl
@@ -33,7 +29,7 @@ import {
 
 @intl
 @applyStyle(require("./word-pane.scss"))
-export class WordPane extends Component<Props, State> {
+export default class WordPane extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     style: "normal",

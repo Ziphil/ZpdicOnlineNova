@@ -3,13 +3,10 @@
 import * as react from "react";
 import {
   Fragment,
-  MouseEvent,
   ReactNode
 } from "react";
-import {
-  Button,
-  RadioGroup
-} from "/client/component/atom";
+import Button from "/client/component/atom/button";
+import RadioGroup from "/client/component/atom/radio-group";
 import {
   StoreComponent
 } from "/client/component/component";
@@ -23,7 +20,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./change-dictionary-secret-form.scss"))
-export class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
+export default class ChangeDictionarySecretForm extends StoreComponent<Props, State> {
 
   public constructor(props: any) {
     super(props);

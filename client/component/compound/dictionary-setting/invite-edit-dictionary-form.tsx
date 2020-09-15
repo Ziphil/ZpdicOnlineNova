@@ -5,17 +5,12 @@ import {
   Fragment,
   ReactNode
 } from "react";
-import {
-  Button,
-  Input
-} from "/client/component/atom";
+import Button from "/client/component/atom/button";
+import Input from "/client/component/atom/input";
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  Loading,
-  UserList
-} from "/client/component/compound";
+import UserList from "/client/component/compound/user-list";
 import {
   applyStyle,
   inject,
@@ -32,7 +27,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./invite-edit-dictionary-form.scss"))
-export class InviteEditDictionaryForm extends StoreComponent<Props, State> {
+export default class InviteEditDictionaryForm extends StoreComponent<Props, State> {
 
   public state: State = {
     userName: "",

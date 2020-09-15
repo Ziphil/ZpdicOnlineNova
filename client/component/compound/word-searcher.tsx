@@ -12,12 +12,10 @@ import {
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  Loading,
-  PaginationButton,
-  SearchForm,
-  WordList
-} from "/client/component/compound";
+import Loading from "/client/component/compound/loading";
+import PaginationButton from "/client/component/compound/pagination-button";
+import SearchForm from "/client/component/compound/search-form";
+import WordList from "/client/component/compound/word-list";
 import {
   applyStyle,
   debounce,
@@ -40,7 +38,7 @@ import {
 
 @route @inject
 @applyStyle(require("./word-searcher.scss"))
-export class WordSearcher extends StoreComponent<Props, State> {
+export default class WordSearcher extends StoreComponent<Props, State> {
 
   public static defaultProps: DefaultProps = {
     style: "normal",

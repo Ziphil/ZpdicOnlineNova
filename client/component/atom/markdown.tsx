@@ -4,13 +4,8 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import * as ReactMarkdown from "react-markdown";
-import {
-  NodeType
-} from "react-markdown";
-import {
-  Link
-} from "/client/component/atom";
+import ReactMarkdown from "react-markdown";
+import Link from "/client/component/atom/link";
 import {
   Component
 } from "/client/component/component";
@@ -20,7 +15,7 @@ import {
 
 
 @applyStyle(require("./markdown.scss"))
-export class Markdown extends Component<Props, State> {
+export default class Markdown extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (

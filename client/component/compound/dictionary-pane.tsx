@@ -5,15 +5,11 @@ import {
   MouseEvent,
   ReactNode
 } from "react";
-import {
-  Button
-} from "/client/component/atom";
+import Button from "/client/component/atom/button";
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  WhitePane
-} from "/client/component/compound";
+import WhitePane from "/client/component/compound/white-pane";
 import {
   applyStyle,
   inject,
@@ -27,7 +23,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./dictionary-pane.scss"))
-export class DictionaryPane extends StoreComponent<Props, State> {
+export default class DictionaryPane extends StoreComponent<Props, State> {
 
   public static defaultProps: DefaultProps = {
     showUser: true,

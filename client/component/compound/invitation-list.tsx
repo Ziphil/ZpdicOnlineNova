@@ -11,10 +11,8 @@ import {
 import {
   Component
 } from "/client/component/component";
-import {
-  InvitationPane,
-  PaneList
-} from "/client/component/compound";
+import InvitationPane from "/client/component/compound/invitation-pane";
+import PaneList from "/client/component/compound/pane-list";
 import {
   applyStyle
 } from "/client/component/decorator";
@@ -24,7 +22,7 @@ import {
 
 
 @applyStyle(require("./invitation-list.scss"))
-export class InvitationList extends Component<Props, State> {
+export default class InvitationList extends Component<Props, State> {
 
   public render(): ReactNode {
     let outerThis = this;

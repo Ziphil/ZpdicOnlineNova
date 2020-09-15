@@ -7,9 +7,7 @@ import {
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  InformationPane
-} from "/client/component/compound";
+import InformationPane from "/client/component/compound/information-pane";
 import {
   applyStyle,
   inject,
@@ -24,7 +22,7 @@ import {
 
 @route @inject @intl @observer
 @applyStyle(require("./popup-information-pane.scss"))
-export class PopupInformationPane extends StoreComponent<Props, State> {
+export default class PopupInformationPane extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let specs = Array.from(this.props.store!.popupSpecs);

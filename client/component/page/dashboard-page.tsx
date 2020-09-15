@@ -7,26 +7,22 @@ import {
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  ChangeUserEmailForm,
-  ChangeUserPasswordForm,
-  ChangeUserScreenNameForm,
-  CreateDictionaryForm,
-  DeleteUserForm,
-  DictionaryList,
-  InvitationList,
-  Menu,
-  SettingPane
-} from "/client/component/compound";
+import ChangeUserEmailForm from "/client/component/compound/dashboard/change-user-email-form";
+import ChangeUserPasswordForm from "/client/component/compound/dashboard/change-user-password-form";
+import ChangeUserScreenNameForm from "/client/component/compound/dashboard/change-user-screen-name-form";
+import CreateDictionaryForm from "/client/component/compound/dashboard/create-dictionary-form";
+import DeleteUserForm from "/client/component/compound/dashboard/delete-user-form";
+import DictionaryList from "/client/component/compound/dictionary-list";
+import InvitationList from "/client/component/compound/invitation-list";
+import Menu from "/client/component/compound/menu";
+import SettingPane from "/client/component/compound/setting-pane";
 import {
   applyStyle,
   inject,
   intl,
   route
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 import {
   UserDictionary
 } from "/server/skeleton/dictionary";

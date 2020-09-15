@@ -2,15 +2,12 @@
 
 import * as react from "react";
 import {
-  MouseEvent,
   ReactNode
 } from "react";
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  MenuItem
-} from "/client/component/compound";
+import MenuItem from "/client/component/compound/menu-item";
 import {
   applyStyle,
   inject,
@@ -20,7 +17,7 @@ import {
 
 @route @inject
 @applyStyle(require("./menu.scss"))
-export class Menu extends StoreComponent<Props, State> {
+export default class Menu extends StoreComponent<Props, State> {
 
   private async performLogout(): Promise<void> {
     let response = await this.logout();

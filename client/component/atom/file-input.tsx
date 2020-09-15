@@ -16,7 +16,7 @@ import {
 
 @intl
 @applyStyle(require("./file-input.scss"))
-export class FileInput extends Component<Props, State> {
+export default class FileInput extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     file: null,

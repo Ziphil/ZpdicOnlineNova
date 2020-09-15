@@ -2,13 +2,10 @@
 
 import * as react from "react";
 import {
-  MouseEvent,
   ReactNode
 } from "react";
-import {
-  Button,
-  TextArea
-} from "/client/component/atom";
+import Button from "/client/component/atom/button";
+import TextArea from "/client/component/atom/text-area";
 import {
   StoreComponent
 } from "/client/component/component";
@@ -22,7 +19,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./change-dictionary-explanation-form.scss"))
-export class ChangeDictionaryExplanationForm extends StoreComponent<Props, State> {
+export default class ChangeDictionaryExplanationForm extends StoreComponent<Props, State> {
 
   public constructor(props: any) {
     super(props);

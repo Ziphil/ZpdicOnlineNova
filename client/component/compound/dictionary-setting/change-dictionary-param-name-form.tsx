@@ -5,10 +5,8 @@ import {
   Fragment,
   ReactNode
 } from "react";
-import {
-  Button,
-  Input
-} from "/client/component/atom";
+import Button from "/client/component/atom/button";
+import Input from "/client/component/atom/input";
 import {
   StoreComponent
 } from "/client/component/component";
@@ -28,7 +26,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./change-dictionary-param-name-form.scss"))
-export class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> {
+export default class ChangeDictionaryParamNameForm extends StoreComponent<Props, State> {
 
   public constructor(props: any) {
     super(props);

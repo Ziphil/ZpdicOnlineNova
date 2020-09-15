@@ -4,9 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  Markdown
-} from "/client/component/atom";
+import Markdown from "/client/component/atom/markdown";
 import {
   Component
 } from "/client/component/component";
@@ -21,7 +19,7 @@ import {
 
 @intl
 @applyStyle(require("./notification-pane.scss"))
-export class NotificationPane extends Component<Props, State> {
+export default class NotificationPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let styles = this.props.styles!;

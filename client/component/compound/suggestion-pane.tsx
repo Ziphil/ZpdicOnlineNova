@@ -4,9 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  Link
-} from "/client/component/atom";
+import Link from "/client/component/atom/link";
 import {
   Component
 } from "/client/component/component";
@@ -22,7 +20,7 @@ import {
 
 @intl
 @applyStyle(require("./suggestion-pane.scss"))
-export class SuggestionPane extends Component<Props, State> {
+export default class SuggestionPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let suggestion = this.props.suggestion;

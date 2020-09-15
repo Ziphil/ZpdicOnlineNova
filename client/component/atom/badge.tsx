@@ -16,7 +16,7 @@ import {
 
 
 @applyStyle(require("./badge.scss"))
-export class Badge extends Component<Props, State> {
+export default class Badge extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     value: "",

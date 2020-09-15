@@ -2,18 +2,15 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactNode,
+  Suspense,
+  lazy
 } from "react";
-import {
-  Button,
-  Link
-} from "/client/component/atom";
+import Button from "/client/component/atom/button";
+import Link from "/client/component/atom/link";
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  WordEditor
-} from "/client/component/compound";
 import {
   applyStyle,
   inject,
@@ -25,9 +22,12 @@ import {
 } from "/server/skeleton/dictionary";
 
 
+let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
+
+
 @route @inject @intl
 @applyStyle(require("./dictionary-header.scss"))
-export class DictionaryHeader extends StoreComponent<Props, State> {
+export default class DictionaryHeader extends StoreComponent<Props, State> {
 
   public static defaultProps: DefaultProps = {
     showEditLink: false,
@@ -72,7 +72,9 @@ export class DictionaryHeader extends StoreComponent<Props, State> {
       <Button label={this.trans("dictionaryHeader.download")} iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={this.downloadDictionary.bind(this)}/>
     );
     let editorNode = (this.props.dictionary && this.state.editorOpen) && (
-      <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>
+      <Suspense fallback="">
+        <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>
+      </Suspense>
     );
     let node = (
       <header styleName="root">

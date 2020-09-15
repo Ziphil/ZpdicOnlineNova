@@ -4,10 +4,8 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  Input,
-  RadioGroup
-} from "/client/component/atom";
+import Input from "/client/component/atom/input";
+import RadioGroup from "/client/component/atom/radio-group";
 import {
   Component
 } from "/client/component/component";
@@ -24,7 +22,7 @@ import {
 
 @intl
 @applyStyle(require("./search-form.scss"))
-export class SearchForm extends Component<Props, State> {
+export default class SearchForm extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     parameter: {search: "", mode: "both", type: "prefix"}

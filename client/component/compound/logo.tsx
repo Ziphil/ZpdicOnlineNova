@@ -17,7 +17,7 @@ import {
 
 
 @applyStyle(require("./logo.scss"))
-export class Logo extends Component<Props, State> {
+export default class Logo extends Component<Props, State> {
 
   public render(): ReactNode {
     let title = TITLES[0];

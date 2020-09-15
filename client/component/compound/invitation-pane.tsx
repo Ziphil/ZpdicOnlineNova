@@ -8,15 +8,11 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
-import {
-  Button
-} from "/client/component/atom";
+import Button from "/client/component/atom/button";
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  WhitePane
-} from "/client/component/compound";
+import WhitePane from "/client/component/compound/white-pane";
 import {
   applyStyle,
   inject,
@@ -30,7 +26,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./invitation-pane.scss"))
-export class InvitationPane extends StoreComponent<Props, State> {
+export default class InvitationPane extends StoreComponent<Props, State> {
 
   private async respondInvitation(event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
     let id = this.props.invitation.id;

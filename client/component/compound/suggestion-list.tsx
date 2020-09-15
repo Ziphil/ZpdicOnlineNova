@@ -7,9 +7,7 @@ import {
 import {
   Component
 } from "/client/component/component";
-import {
-  SuggestionPane
-} from "/client/component/compound";
+import SuggestionPane from "/client/component/compound/suggestion-pane";
 import {
   applyStyle
 } from "/client/component/decorator";
@@ -20,7 +18,7 @@ import {
 
 
 @applyStyle(require("./suggestion-list.scss"))
-export class SuggestionList extends Component<Props, State> {
+export default class SuggestionList extends Component<Props, State> {
 
   public render(): ReactNode {
     let displayedSuggestions = this.props.suggestions;

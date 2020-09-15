@@ -12,9 +12,7 @@ import {
 import {
   Component
 } from "/client/component/component";
-import {
-  WordPane
-} from "/client/component/compound";
+import WordPane from "/client/component/compound/word-pane";
 import {
   applyStyle
 } from "/client/component/decorator";
@@ -26,7 +24,7 @@ import {
 
 
 @applyStyle(require("./word-list.scss"))
-export class WordList extends Component<Props, State> {
+export default class WordList extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     style: "normal",

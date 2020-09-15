@@ -6,28 +6,22 @@ import {
   Fragment,
   ReactNode
 } from "react";
-import {
-  Markdown
-} from "/client/component/atom";
+import Markdown from "/client/component/atom/markdown";
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  Loading,
-  PaginationButton,
-  SearchForm,
-  SuggestionList,
-  WordList
-} from "/client/component/compound";
+import Loading from "/client/component/compound/loading";
+import PaginationButton from "/client/component/compound/pagination-button";
+import SearchForm from "/client/component/compound/search-form";
+import SuggestionList from "/client/component/compound/suggestion-list";
+import WordList from "/client/component/compound/word-list";
 import {
   applyStyle,
   debounce,
   inject,
   route
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 import {
   WithSize
 } from "/server/controller/type";

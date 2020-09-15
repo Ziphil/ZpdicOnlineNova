@@ -10,20 +10,16 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
-import {
-  Alert,
-  Button,
-  ControlGroup,
-  Input,
-  Overlay,
-  TextArea
-} from "/client/component/atom";
+import Alert from "/client/component/atom/alert";
+import Button from "/client/component/atom/button";
+import ControlGroup from "/client/component/atom/control-group";
+import Input from "/client/component/atom/input";
+import Overlay from "/client/component/atom/overlay";
+import TextArea from "/client/component/atom/text-area";
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  WordSearcher
-} from "/client/component/compound";
+import WordSearcher from "/client/component/compound/word-searcher";
 import {
   applyStyle,
   inject,
@@ -50,7 +46,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./word-editor.scss"))
-export class WordEditor extends StoreComponent<Props, State> {
+export default class WordEditor extends StoreComponent<Props, State> {
 
   private editingRelationIndex: number | null = null;
 

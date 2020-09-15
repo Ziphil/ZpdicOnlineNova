@@ -5,9 +5,7 @@ import {
   ChangeEvent,
   ReactNode
 } from "react";
-import {
-  Radio
-} from "/client/component/atom";
+import Radio from "/client/component/atom/radio";
 import {
   Component
 } from "/client/component/component";
@@ -17,7 +15,7 @@ import {
 
 
 @applyStyle(require("./radio-group.scss"))
-export class RadioGroup<V extends string> extends Component<Props<V>, State<V>> {
+export default class RadioGroup<V extends string> extends Component<Props<V>, State<V>> {
 
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
     let value = event.target.value as V;

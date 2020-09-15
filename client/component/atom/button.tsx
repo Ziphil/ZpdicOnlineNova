@@ -20,7 +20,7 @@ import {
 
 
 @applyStyle(require("./button.scss"))
-export class Button extends Component<Props, State> {
+export default class Button extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     position: "alone",

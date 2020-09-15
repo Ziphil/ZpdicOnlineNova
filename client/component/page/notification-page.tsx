@@ -7,17 +7,13 @@ import {
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  NotificationList
-} from "/client/component/compound";
+import NotificationList from "/client/component/compound/notification-list";
 import {
   applyStyle,
   inject,
   route
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 
 
 @route @inject

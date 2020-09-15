@@ -7,10 +7,8 @@ import {
 import {
   Component
 } from "/client/component/component";
-import {
-  DictionaryPane,
-  PaneList
-} from "/client/component/compound";
+import DictionaryPane from "/client/component/compound/dictionary-pane";
+import PaneList from "/client/component/compound/pane-list";
 import {
   applyStyle
 } from "/client/component/decorator";
@@ -24,7 +22,7 @@ import {
 
 
 @applyStyle(require("./dictionary-list.scss"))
-export class DictionaryList extends Component<Props, State> {
+export default class DictionaryList extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     showUser: true,

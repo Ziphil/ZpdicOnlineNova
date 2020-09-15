@@ -9,16 +9,12 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
-import {
-  Alert,
-  Button
-} from "/client/component/atom";
+import Alert from "/client/component/atom/alert";
+import Button from "/client/component/atom/button";
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  WhitePane
-} from "/client/component/compound";
+import WhitePane from "/client/component/compound/white-pane";
 import {
   applyStyle,
   inject,
@@ -35,7 +31,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./user-pane.scss"))
-export class UserPane extends StoreComponent<Props, State> {
+export default class UserPane extends StoreComponent<Props, State> {
 
   public state: State = {
     alertOpen: false

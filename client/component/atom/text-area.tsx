@@ -17,7 +17,7 @@ import {
 
 
 @applyStyle(require("./text-area.scss"))
-export class TextArea extends Component<Props, State> {
+export default class TextArea extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     value: "",

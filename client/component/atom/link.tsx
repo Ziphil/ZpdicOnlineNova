@@ -20,7 +20,7 @@ import {
 
 @route @inject
 @applyStyle(require("./link.scss"))
-export class Link extends StoreComponent<Props, State> {
+export default class Link extends StoreComponent<Props, State> {
 
   public static defaultProps: DefaultProps = {
     target: "auto",

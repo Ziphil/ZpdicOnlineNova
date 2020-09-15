@@ -7,12 +7,10 @@ import {
 import {
   Component
 } from "/client/component/component";
-import {
-  DictionaryHeader,
-  Footer,
-  Header,
-  PopupInformationPane
-} from "/client/component/compound";
+import DictionaryHeader from "/client/component/compound/dictionary-header";
+import Footer from "/client/component/compound/footer";
+import Header from "/client/component/compound/header";
+import PopupInformationPane from "/client/component/compound/popup-information-pane";
 import {
   applyStyle
 } from "/client/component/decorator";
@@ -25,7 +23,7 @@ import {
 
 
 @applyStyle(require("./page.scss"))
-export class Page extends Component<Props, State> {
+export default class Page extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     dictionary: null,

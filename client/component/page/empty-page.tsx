@@ -11,9 +11,7 @@ import {
   applyStyle,
   route
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 
 
 @route

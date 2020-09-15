@@ -7,19 +7,15 @@ import {
 import {
   StoreComponent
 } from "/client/component/component";
-import {
-  DictionaryAggregationPane,
-  LoginForm,
-  Logo,
-  NotificationList
-} from "/client/component/compound";
+import DictionaryAggregationPane from "/client/component/compound/dictionary-aggregation-pane";
+import LoginForm from "/client/component/compound/login-form";
+import Logo from "/client/component/compound/logo";
+import NotificationList from "/client/component/compound/notification-list";
 import {
   applyStyle,
   route
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 
 
 @route

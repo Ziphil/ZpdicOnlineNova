@@ -17,7 +17,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./dictionary-aggregation-pane.scss"))
-export class DictionaryAggregationPane extends StoreComponent<Props, State> {
+export default class DictionaryAggregationPane extends StoreComponent<Props, State> {
 
   public state: State = {
     dictionarySize: null,
