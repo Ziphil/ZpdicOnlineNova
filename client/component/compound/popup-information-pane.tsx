@@ -7,14 +7,14 @@ import {
 import Component from "/client/component/component";
 import InformationPane from "/client/component/compound/information-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   PopupUtil
 } from "/client/util/popup";
 
 
-@applyStyle(require("./popup-information-pane.scss"), {observer: true})
+@style(require("./popup-information-pane.scss"), {observer: true})
 export default class PopupInformationPane extends Component<Props, State> {
 
   public render(): ReactNode {

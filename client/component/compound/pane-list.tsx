@@ -8,7 +8,7 @@ import Component from "/client/component/component";
 import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
@@ -18,7 +18,7 @@ import {
 } from "/server/controller/type";
 
 
-@applyStyle(require("./pane-list.scss"))
+@style(require("./pane-list.scss"))
 export default class PaneList<T> extends Component<Props<T>, State<T>> {
 
   public static defaultProps: DefaultProps = {

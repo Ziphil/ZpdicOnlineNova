@@ -6,7 +6,7 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   TITLES,
@@ -14,7 +14,7 @@ import {
 } from "/client/index";
 
 
-@applyStyle(require("./logo.scss"))
+@style(require("./logo.scss"))
 export default class Logo extends Component<Props, State> {
 
   public render(): ReactNode {

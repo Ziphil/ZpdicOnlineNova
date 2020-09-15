@@ -8,11 +8,11 @@ import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./change-dictionary-name-form.scss"))
+@style(require("./change-dictionary-name-form.scss"))
 export default class ChangeDictionaryNameForm extends Component<Props, State> {
 
   public constructor(props: any) {

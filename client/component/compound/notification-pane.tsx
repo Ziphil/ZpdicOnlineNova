@@ -7,14 +7,14 @@ import {
 import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Notification
 } from "/server/skeleton/notification";
 
 
-@applyStyle(require("./notification-pane.scss"))
+@style(require("./notification-pane.scss"))
 export default class NotificationPane extends Component<Props, State> {
 
   public render(): ReactNode {

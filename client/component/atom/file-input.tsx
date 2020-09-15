@@ -7,11 +7,11 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./file-input.scss"))
+@style(require("./file-input.scss"))
 export default class FileInput extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {

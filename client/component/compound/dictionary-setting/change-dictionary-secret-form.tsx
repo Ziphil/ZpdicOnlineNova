@@ -9,11 +9,11 @@ import Button from "/client/component/atom/button";
 import RadioGroup from "/client/component/atom/radio-group";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./change-dictionary-secret-form.scss"))
+@style(require("./change-dictionary-secret-form.scss"))
 export default class ChangeDictionarySecretForm extends Component<Props, State> {
 
   public constructor(props: any) {

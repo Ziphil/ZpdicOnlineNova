@@ -7,12 +7,12 @@ import {
 import Component from "/client/component/component";
 import ContactForm from "/client/component/compound/contact-form";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 
 
-@applyStyle(require("./contact-page.scss"))
+@style(require("./contact-page.scss"))
 export default class ContactPage extends Component<Props, State> {
 
   public render(): ReactNode {

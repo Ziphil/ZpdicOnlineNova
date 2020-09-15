@@ -9,11 +9,11 @@ import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./delete-dictionary-form.scss"))
+@style(require("./delete-dictionary-form.scss"))
 export default class DeleteDictionaryForm extends Component<Props, State> {
 
   public state: State = {

@@ -10,7 +10,7 @@ import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
 import UserList from "/client/component/compound/user-list";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Dictionary
@@ -20,7 +20,7 @@ import {
 } from "/server/skeleton/user";
 
 
-@applyStyle(require("./invite-edit-dictionary-form.scss"))
+@style(require("./invite-edit-dictionary-form.scss"))
 export default class InviteEditDictionaryForm extends Component<Props, State> {
 
   public state: State = {

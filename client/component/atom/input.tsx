@@ -7,14 +7,14 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@applyStyle(require("./input.scss"))
+@style(require("./input.scss"))
 export default class Input extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {

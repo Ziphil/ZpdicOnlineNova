@@ -8,14 +8,14 @@ import {
 import Button from "/client/component/atom/button";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@applyStyle(require("./information-pane.scss"))
+@style(require("./information-pane.scss"))
 export default class InformationPane extends Component<Props, State> {
 
   private handleClick(event: MouseEvent<HTMLButtonElement>): void {

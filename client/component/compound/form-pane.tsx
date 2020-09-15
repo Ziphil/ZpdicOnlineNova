@@ -8,14 +8,14 @@ import {
 import Component from "/client/component/component";
 import InformationPane from "/client/component/compound/information-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   PopupUtil
 } from "/client/util/popup";
 
 
-@applyStyle(require("./form-pane.scss"))
+@style(require("./form-pane.scss"))
 export default class FormPane extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {

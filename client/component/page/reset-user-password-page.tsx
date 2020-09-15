@@ -8,12 +8,12 @@ import {
 import Component from "/client/component/component";
 import ResetUserPasswordForm from "/client/component/compound/reset-user-password-form";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 
 
-@applyStyle(require("./reset-user-password-page.scss"))
+@style(require("./reset-user-password-page.scss"))
 export default class ResetUserPasswordPage extends Component<Props, State> {
 
   public constructor(props: Props) {

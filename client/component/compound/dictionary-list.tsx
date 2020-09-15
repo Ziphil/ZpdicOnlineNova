@@ -8,7 +8,7 @@ import Component from "/client/component/component";
 import DictionaryPane from "/client/component/compound/dictionary-pane";
 import PaneList from "/client/component/compound/pane-list";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   WithSize
@@ -19,7 +19,7 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./dictionary-list.scss"))
+@style(require("./dictionary-list.scss"))
 export default class DictionaryList extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {

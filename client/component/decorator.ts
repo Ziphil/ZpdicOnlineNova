@@ -28,7 +28,7 @@ import {
 } from "/client/component/store";
 
 
-export function applyStyle(style: any, options: DecoratorOptions = {}): ClassDecorator {
+export function style(style: any, options: DecoratorOptions = {}): ClassDecorator {
   let nextOptions = Object.assign({}, DEFAULT_DECORATOR_OPTIONS, options);
   let decorator = function <P, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
     if (style !== null && style !== undefined) {

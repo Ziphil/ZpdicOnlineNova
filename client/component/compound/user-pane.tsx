@@ -14,7 +14,7 @@ import Button from "/client/component/atom/button";
 import Component from "/client/component/component";
 import WhitePane from "/client/component/compound/white-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Dictionary
@@ -24,7 +24,7 @@ import {
 } from "/server/skeleton/user";
 
 
-@applyStyle(require("./user-pane.scss"))
+@style(require("./user-pane.scss"))
 export default class UserPane extends Component<Props, State> {
 
   public state: State = {

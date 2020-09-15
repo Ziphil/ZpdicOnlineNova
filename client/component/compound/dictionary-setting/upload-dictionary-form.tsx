@@ -8,11 +8,11 @@ import Button from "/client/component/atom/button";
 import FileInput from "/client/component/atom/file-input";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./upload-dictionary-form.scss"))
+@style(require("./upload-dictionary-form.scss"))
 export default class UploadDictionaryForm extends Component<Props, State> {
 
   public state: State = {

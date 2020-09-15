@@ -23,7 +23,7 @@ import {
 } from "react-router-dom";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import EmptyPage from "/client/component/page/empty-page";
 import {
@@ -47,7 +47,7 @@ let ResetUserPasswordPage = lazy(() => import("/client/component/page/reset-user
 let TopPage = lazy(() => import("/client/component/page/top-page"));
 
 
-@applyStyle(require("./root.scss"), {withRouter: false, inject: false, injectIntl: false, observer: true})
+@style(require("./root.scss"), {withRouter: false, inject: false, injectIntl: false, observer: true})
 export class Root extends Component<Props, State> {
 
   private store: GlobalStore = new GlobalStore();

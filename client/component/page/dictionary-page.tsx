@@ -14,8 +14,8 @@ import SearchForm from "/client/component/compound/search-form";
 import SuggestionList from "/client/component/compound/suggestion-list";
 import WordList from "/client/component/compound/word-list";
 import {
-  applyStyle,
-  debounce
+  debounce,
+  style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
@@ -33,7 +33,7 @@ import {
 } from "/server/skeleton/search-parameter";
 
 
-@applyStyle(require("./dictionary-page.scss"))
+@style(require("./dictionary-page.scss"))
 export default class DictionaryPage extends Component<Props, State, Params> {
 
   public state: State = {

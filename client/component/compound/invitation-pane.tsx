@@ -12,14 +12,14 @@ import Button from "/client/component/atom/button";
 import Component from "/client/component/component";
 import WhitePane from "/client/component/compound/white-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Invitation
 } from "/server/skeleton/invitation";
 
 
-@applyStyle(require("./invitation-pane.scss"))
+@style(require("./invitation-pane.scss"))
 export default class InvitationPane extends Component<Props, State> {
 
   private async respondInvitation(event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {

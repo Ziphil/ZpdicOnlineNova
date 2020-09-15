@@ -7,12 +7,12 @@ import {
 import Component from "/client/component/component";
 import RegisterForm from "/client/component/compound/register-form";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 
 
-@applyStyle(require("./register-page.scss"))
+@style(require("./register-page.scss"))
 export default class RegisterPage extends Component<Props, State> {
 
   public render(): ReactNode {

@@ -8,11 +8,11 @@ import ReactMarkdown from "react-markdown";
 import Link from "/client/component/atom/link";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./markdown.scss"))
+@style(require("./markdown.scss"))
 export default class Markdown extends Component<Props, State> {
 
   public render(): ReactNode {

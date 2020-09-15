@@ -9,7 +9,7 @@ import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   PopupUtil
@@ -19,7 +19,7 @@ import {
 } from "/server/model/validation";
 
 
-@applyStyle(require("./change-dictionary-param-name-form.scss"))
+@style(require("./change-dictionary-param-name-form.scss"))
 export default class ChangeDictionaryParamNameForm extends Component<Props, State> {
 
   public constructor(props: any) {

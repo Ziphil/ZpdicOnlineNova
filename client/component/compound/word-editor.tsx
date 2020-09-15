@@ -19,7 +19,7 @@ import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
 import WordSearcher from "/client/component/compound/word-searcher";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   deleteAt,
@@ -39,7 +39,7 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./word-editor.scss"))
+@style(require("./word-editor.scss"))
 export default class WordEditor extends Component<Props, State> {
 
   private editingRelationIndex: number | null = null;

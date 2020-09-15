@@ -7,12 +7,12 @@ import {
 import Component from "/client/component/component";
 import LoginForm from "/client/component/compound/login-form";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 
 
-@applyStyle(require("./login-page.scss"))
+@style(require("./login-page.scss"))
 export default class LoginPage extends Component<Props, State> {
 
   public render(): ReactNode {

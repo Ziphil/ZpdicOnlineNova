@@ -8,11 +8,11 @@ import {
 import Portal from "/client/component/atom/portal";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./modal.scss"))
+@style(require("./modal.scss"))
 export default class Modal extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {

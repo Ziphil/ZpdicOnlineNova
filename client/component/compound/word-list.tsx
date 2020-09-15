@@ -12,7 +12,7 @@ import {
 import Component from "/client/component/component";
 import WordPane from "/client/component/compound/word-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -21,7 +21,7 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./word-list.scss"))
+@style(require("./word-list.scss"))
 export default class WordList extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {

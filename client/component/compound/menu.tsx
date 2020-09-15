@@ -7,11 +7,11 @@ import {
 import Component from "/client/component/component";
 import MenuItem from "/client/component/compound/menu-item";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./menu.scss"))
+@style(require("./menu.scss"))
 export default class Menu extends Component<Props, State> {
 
   private async performLogout(): Promise<void> {

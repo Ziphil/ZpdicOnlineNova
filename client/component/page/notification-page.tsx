@@ -7,12 +7,12 @@ import {
 import Component from "/client/component/component";
 import NotificationList from "/client/component/compound/notification-list";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 
 
-@applyStyle(require("./notification-page.scss"))
+@style(require("./notification-page.scss"))
 export default class NotificationPage extends Component<Props, State> {
 
   public render(): ReactNode {

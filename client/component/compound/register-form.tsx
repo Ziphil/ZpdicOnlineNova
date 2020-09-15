@@ -9,7 +9,7 @@ import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
 import FormPane from "/client/component/compound/form-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Main
@@ -27,7 +27,7 @@ import {
 } from "/server/model/validation";
 
 
-@applyStyle(require("./register-form.scss"))
+@style(require("./register-form.scss"))
 export default class RegisterForm extends Component<Props, State> {
 
   public state: State = {

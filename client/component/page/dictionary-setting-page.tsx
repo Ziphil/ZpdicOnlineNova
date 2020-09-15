@@ -15,7 +15,7 @@ import UploadDictionaryForm from "/client/component/compound/dictionary-setting/
 import Menu from "/client/component/compound/menu";
 import SettingPane from "/client/component/compound/setting-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
@@ -23,7 +23,7 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./dictionary-setting-page.scss"))
+@style(require("./dictionary-setting-page.scss"))
 export default class DictionarySettingPage extends Component<Props, State, Params> {
 
   public state: State = {

@@ -10,7 +10,7 @@ import Button from "/client/component/atom/button";
 import Link from "/client/component/atom/link";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Dictionary
@@ -20,7 +20,7 @@ import {
 let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
 
 
-@applyStyle(require("./dictionary-header.scss"))
+@style(require("./dictionary-header.scss"))
 export default class DictionaryHeader extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {

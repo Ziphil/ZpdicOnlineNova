@@ -7,7 +7,7 @@ import {
 import Component from "/client/component/component";
 import DictionaryList from "/client/component/compound/dictionary-list";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
@@ -18,7 +18,7 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./dictionary-list-page.scss"))
+@style(require("./dictionary-list-page.scss"))
 export default class DictionaryListPage extends Component<Props, State> {
 
   private async fetchDictionaries(offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {

@@ -14,7 +14,7 @@ import Link from "/client/component/atom/link";
 import Component from "/client/component/component";
 import WordEditor from "/client/component/compound/word-editor";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -24,7 +24,7 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./word-pane.scss"))
+@style(require("./word-pane.scss"))
 export default class WordPane extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {

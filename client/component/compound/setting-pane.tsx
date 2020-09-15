@@ -7,11 +7,11 @@ import {
 import Badge from "/client/component/atom/badge";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./setting-pane.scss"))
+@style(require("./setting-pane.scss"))
 export default class SettingPane extends Component<Props, State> {
 
   public render(): ReactNode {

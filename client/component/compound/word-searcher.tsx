@@ -15,8 +15,8 @@ import PaginationButton from "/client/component/compound/pagination-button";
 import SearchForm from "/client/component/compound/search-form";
 import WordList from "/client/component/compound/word-list";
 import {
-  applyStyle,
-  debounce
+  debounce,
+  style
 } from "/client/component/decorator";
 import {
   WithSize
@@ -32,7 +32,7 @@ import {
 } from "/server/skeleton/search-parameter";
 
 
-@applyStyle(require("./word-searcher.scss"))
+@style(require("./word-searcher.scss"))
 export default class WordSearcher extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {

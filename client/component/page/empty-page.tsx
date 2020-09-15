@@ -6,12 +6,12 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 
 
-@applyStyle(require("./empty-page.scss"))
+@style(require("./empty-page.scss"))
 export default class EmptyPage extends Component<Props, State> {
 
   public render(): ReactNode {

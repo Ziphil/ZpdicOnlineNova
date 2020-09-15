@@ -10,14 +10,14 @@ import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
 import FormPane from "/client/component/compound/form-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Main
 } from "/client/index";
 
 
-@applyStyle(require("./contact-form.scss"))
+@style(require("./contact-form.scss"))
 export default class ContactForm extends Component<Props, State> {
 
   public state: State = {

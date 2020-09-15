@@ -8,11 +8,11 @@ import Button from "/client/component/atom/button";
 import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./change-dictionary-explanation-form.scss"))
+@style(require("./change-dictionary-explanation-form.scss"))
 export default class ChangeDictionaryExplanationForm extends Component<Props, State> {
 
   public constructor(props: any) {

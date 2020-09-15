@@ -9,7 +9,7 @@ import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
 import FormPane from "/client/component/compound/form-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Main
@@ -25,7 +25,7 @@ import {
 } from "/server/model/validation";
 
 
-@applyStyle(require("./reset-user-password-form.scss"))
+@style(require("./reset-user-password-form.scss"))
 export default class ResetUserPasswordForm extends Component<Props, State> {
 
   public state: State = {

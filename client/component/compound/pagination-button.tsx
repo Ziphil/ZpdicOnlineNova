@@ -7,11 +7,11 @@ import {
 import Button from "/client/component/atom/button";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./pagination-button.scss"))
+@style(require("./pagination-button.scss"))
 export default class PaginationButton extends Component<Props, State> {
 
   private movePreviousPage(): void {

@@ -8,11 +8,11 @@ import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./create-dictionary-form.scss"))
+@style(require("./create-dictionary-form.scss"))
 export default class CreateDictionaryForm extends Component<Props, State> {
 
   public state: State = {

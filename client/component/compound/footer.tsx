@@ -6,11 +6,11 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./footer.scss"))
+@style(require("./footer.scss"))
 export default class Footer extends Component<Props, State> {
 
   public render(): ReactNode {

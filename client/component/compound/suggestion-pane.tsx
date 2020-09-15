@@ -7,7 +7,7 @@ import {
 import Link from "/client/component/atom/link";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -15,7 +15,7 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./suggestion-pane.scss"))
+@style(require("./suggestion-pane.scss"))
 export default class SuggestionPane extends Component<Props, State> {
 
   public render(): ReactNode {

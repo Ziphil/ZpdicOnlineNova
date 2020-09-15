@@ -7,11 +7,11 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./radio.scss"))
+@style(require("./radio.scss"))
 export default class Radio extends Component<Props, State> {
 
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {

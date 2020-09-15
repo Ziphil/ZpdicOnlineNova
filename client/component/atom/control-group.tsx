@@ -6,11 +6,11 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./control-group.scss"))
+@style(require("./control-group.scss"))
 export default class ControlGroup extends Component<Props, State> {
 
   public render(): ReactNode {

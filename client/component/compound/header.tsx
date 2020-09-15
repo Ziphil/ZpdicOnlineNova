@@ -8,11 +8,11 @@ import Link from "/client/component/atom/link";
 import Component from "/client/component/component";
 import HeaderMenuItem from "/client/component/compound/header-menu-item";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./header.scss"))
+@style(require("./header.scss"))
 export default class Header extends Component<Props, State> {
 
   public state: State = {

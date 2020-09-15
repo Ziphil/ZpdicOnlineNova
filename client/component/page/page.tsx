@@ -10,7 +10,7 @@ import Footer from "/client/component/compound/footer";
 import Header from "/client/component/compound/header";
 import PopupInformationPane from "/client/component/compound/popup-information-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
@@ -20,7 +20,7 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./page.scss"))
+@style(require("./page.scss"))
 export default class Page extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {

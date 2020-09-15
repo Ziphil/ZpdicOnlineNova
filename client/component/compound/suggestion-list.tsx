@@ -7,7 +7,7 @@ import {
 import Component from "/client/component/component";
 import SuggestionPane from "/client/component/compound/suggestion-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -15,7 +15,7 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./suggestion-list.scss"))
+@style(require("./suggestion-list.scss"))
 export default class SuggestionList extends Component<Props, State> {
 
   public render(): ReactNode {

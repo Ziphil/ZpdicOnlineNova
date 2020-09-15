@@ -8,11 +8,11 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./white-pane.scss"))
+@style(require("./white-pane.scss"))
 export default class WhitePane extends Component<Props, State> {
 
   private handleClickAnchor(event: MouseEvent<HTMLAnchorElement>): void {

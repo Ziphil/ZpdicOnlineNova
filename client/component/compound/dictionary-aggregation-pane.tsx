@@ -6,11 +6,11 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./dictionary-aggregation-pane.scss"))
+@style(require("./dictionary-aggregation-pane.scss"))
 export default class DictionaryAggregationPane extends Component<Props, State> {
 
   public state: State = {

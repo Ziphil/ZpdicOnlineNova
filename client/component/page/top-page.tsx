@@ -10,12 +10,12 @@ import LoginForm from "/client/component/compound/login-form";
 import Logo from "/client/component/compound/logo";
 import NotificationList from "/client/component/compound/notification-list";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 
 
-@applyStyle(require("./top-page.scss"))
+@style(require("./top-page.scss"))
 export default class TopPage extends Component<Props, State> {
 
   public render(): ReactNode {

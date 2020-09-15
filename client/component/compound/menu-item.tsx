@@ -8,14 +8,14 @@ import {
 import Badge from "/client/component/atom/badge";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@applyStyle(require("./menu-item.scss"))
+@style(require("./menu-item.scss"))
 export default class MenuItem extends Component<Props, State> {
 
   private handleClick(event: MouseEvent<HTMLElement>): void {

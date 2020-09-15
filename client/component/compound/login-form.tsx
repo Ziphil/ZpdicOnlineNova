@@ -9,11 +9,11 @@ import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
 import FormPane from "/client/component/compound/form-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./login-form.scss"))
+@style(require("./login-form.scss"))
 export default class LoginForm extends Component<Props, State> {
 
   public state: State = {

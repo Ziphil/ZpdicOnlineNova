@@ -15,7 +15,7 @@ import InvitationList from "/client/component/compound/invitation-list";
 import Menu from "/client/component/compound/menu";
 import SettingPane from "/client/component/compound/setting-pane";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
@@ -26,7 +26,7 @@ import {
 } from "/server/skeleton/invitation";
 
 
-@applyStyle(require("./dashboard-page.scss"))
+@style(require("./dashboard-page.scss"))
 export default class DashboardPage extends Component<Props, State, Params> {
 
   public state: State = {

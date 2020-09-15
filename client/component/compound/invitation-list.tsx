@@ -12,14 +12,14 @@ import Component from "/client/component/component";
 import InvitationPane from "/client/component/compound/invitation-pane";
 import PaneList from "/client/component/compound/pane-list";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Invitation
 } from "/server/skeleton/invitation";
 
 
-@applyStyle(require("./invitation-list.scss"))
+@style(require("./invitation-list.scss"))
 export default class InvitationList extends Component<Props, State> {
 
   public render(): ReactNode {

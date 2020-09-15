@@ -7,14 +7,14 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@applyStyle(require("./link.scss"))
+@style(require("./link.scss"))
 export default class Link extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
