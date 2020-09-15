@@ -84,8 +84,8 @@ export class UserController extends Controller {
             return CustomError.ofType("duplicateUserName");
           } else if (error.type === "duplicateUserEmail") {
             return CustomError.ofType("duplicateUserEmail");
-          } else if (error.type === "invalidPassword") {
-            return CustomError.ofType("invalidPassword");
+          } else if (error.type === "invalidUserPassword") {
+            return CustomError.ofType("invalidUserPassword");
           } else if (error.type === "recaptchaError") {
             return CustomError.ofType("recaptchaError");
           }
@@ -93,7 +93,7 @@ export class UserController extends Controller {
           if (error.errors.name) {
             return CustomError.ofType("invalidUserName");
           } else if (error.errors.email) {
-            return CustomError.ofType("invalidEmail");
+            return CustomError.ofType("invalidUserEmail");
           }
         }
       })();
@@ -129,7 +129,7 @@ export class UserController extends Controller {
         if (error.name === "CustomError" && error.type === "duplicateUserEmail") {
           return CustomError.ofType("duplicateUserEmail");
         } else if (error.name === "ValidationError" && error.errors.email) {
-          return CustomError.ofType("invalidEmail");
+          return CustomError.ofType("invalidUserEmail");
         }
       })();
       Controller.respondError(response, body, error);
@@ -147,8 +147,8 @@ export class UserController extends Controller {
       Controller.respond(response, body);
     } catch (error) {
       let body = (() => {
-        if (error.name === "CustomError" && error.type === "invalidPassword") {
-          return CustomError.ofType("invalidPassword");
+        if (error.name === "CustomError" && error.type === "invalidUserPassword") {
+          return CustomError.ofType("invalidUserPassword");
         }
       })();
       Controller.respondError(response, body, error);
@@ -200,8 +200,8 @@ export class UserController extends Controller {
         if (error.name === "CustomError") {
           if (error.type === "invalidResetToken") {
             return CustomError.ofType("invalidResetToken");
-          } else if (error.type === "invalidPassword") {
-            return CustomError.ofType("invalidPassword");
+          } else if (error.type === "invalidUserPassword") {
+            return CustomError.ofType("invalidUserPassword");
           }
         }
       })();

@@ -43,7 +43,7 @@ export class ChangeUserScreenNameForm extends StoreComponent<Props, State> {
     let screenName = this.state.screenName;
     let response = await this.requestPost("changeUserScreenName", {screenName});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("screenNameChanged");
+      this.props.store!.addInformationPopup("userScreenNameChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }

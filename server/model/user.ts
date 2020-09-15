@@ -180,7 +180,7 @@ export class UserSchema {
   // データベースへの保存は行わないので、別途保存処理を行ってください。
   private encryptPassword(password: string): void {
     if (!validatePassword(password)) {
-      throw new CustomError("invalidPassword");
+      throw new CustomError("invalidUserPassword");
     } else {
       let hash = hashSync(password, 10);
       this.hash = hash;

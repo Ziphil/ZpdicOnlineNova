@@ -43,7 +43,7 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
     let email = this.state.email;
     let response = await this.requestPost("changeUserEmail", {email});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("emailChanged");
+      this.props.store!.addInformationPopup("userEmailChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
@@ -51,7 +51,7 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidEmail"));
+    let validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidUserEmail"));
     let node = (
       <form styleName="root">
         <Input label={this.trans("changeUserEmailForm.email")} value={this.state.email} validate={validate} usesTooltip={true} onSet={(email) => this.setState({email})}/>

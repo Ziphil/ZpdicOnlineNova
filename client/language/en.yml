@@ -4,11 +4,11 @@ common:
   numberUndefined: "?"
 
 popup:
-  screenNameChanged: >-
+  userScreenNameChanged: >-
     Your nickname has been changed.
-  emailChanged: >-
+  userEmailChanged: >-
     Your email address has been changed.
-  passwordChanged: >-
+  userPasswordChanged: >-
     Your password has been changed.
   userResetTokenIssued: >-
     We sent an email with the URL for resetting password.
@@ -51,9 +51,9 @@ popup:
   invalidUserName: >-
     The user ID is invalid.
     It must be composed by alphanumeric characters or underscores or hyphens, contain at least one character other than numerics, and have no more than 30 characters.
-  invalidEmail: >-
+  invalidUserEmail: >-
     The email address is invalid.
-  invalidPassword: >-
+  invalidUserPassword: >-
     The password is invalid.
     It must have 6–50 characters.
   duplicateUserName: >-

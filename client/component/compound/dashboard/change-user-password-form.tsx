@@ -41,7 +41,7 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
     let password = this.state.password;
     let response = await this.requestPost("changeUserPassword", {password});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("passwordChanged");
+      this.props.store!.addInformationPopup("userPasswordChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
@@ -49,7 +49,7 @@ export class ChangeUserPasswordForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidPassword"));
+    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidUserPassword"));
     let node = (
       <form styleName="root">
         <Input label={this.trans("changeUserPasswordForm.password")} type="flexible" value={this.state.password} validate={validate} usesTooltip={true} onSet={(password) => this.setState({password})}/>

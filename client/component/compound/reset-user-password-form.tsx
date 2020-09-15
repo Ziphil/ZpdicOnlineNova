@@ -100,7 +100,7 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
   }
 
   private renderResetPasswordForm(): ReactNode {
-    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidPassword"));
+    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidUserPassword"));
     let node = (
       <FormPane errorType={this.state.errorType} errorStyle={this.state.errorStyle} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">

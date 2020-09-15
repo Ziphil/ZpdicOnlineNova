@@ -78,8 +78,8 @@ export class RegisterForm extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let validateName = createValidate(IDENTIFIER_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidUserName"));
-    let validateEmail = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidEmail"));
-    let validatePassword = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidPassword"));
+    let validateEmail = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidUserEmail"));
+    let validatePassword = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidUserPassword"));
     let node = (
       <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">

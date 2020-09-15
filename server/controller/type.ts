@@ -311,7 +311,7 @@ type ProcessType = {
       request: {name: string, email: string, password: string, token: string},
       response: {
         200: User,
-        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidEmail" | "invalidPassword" | "recaptchaRejected" | "recaptchaError">
+        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidUserEmail" | "invalidUserPassword" | "recaptchaRejected" | "recaptchaError">
       }
     }
   },
@@ -331,7 +331,7 @@ type ProcessType = {
       request: {email: string},
       response: {
         200: User,
-        400: CustomError<"duplicateUserEmail" | "invalidEmail">
+        400: CustomError<"duplicateUserEmail" | "invalidUserEmail">
       }
     }
   },
@@ -341,7 +341,7 @@ type ProcessType = {
       request: {password: string},
       response: {
         200: User,
-        400: CustomError<"invalidPassword">
+        400: CustomError<"invalidUserPassword">
       }
     }
   },
@@ -361,7 +361,7 @@ type ProcessType = {
       request: {key: string, password: string},
       response: {
         200: User,
-        400: CustomError<"invalidResetToken" | "invalidPassword">
+        400: CustomError<"invalidResetToken" | "invalidUserPassword">
       }
     }
   },
