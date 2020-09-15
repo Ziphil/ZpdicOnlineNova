@@ -2,6 +2,9 @@
 
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
 import * as path from "path";
+import {
+  BundleAnalyzerPlugin
+} from "webpack-bundle-analyzer";
 
 
 let config = {
@@ -82,6 +85,10 @@ let config = {
     new HtmlWebpackPlugin({
       template: "./client/public/index.html",
       title: "ZpDIC Online"
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: (!!process.env["ANALYZE"]) ? "static" : "json",
+      reportFilename: path.join(__dirname, "dist", "client", "stats.html")
     })
   ]
 };
