@@ -46,6 +46,7 @@ export class GlobalStore {
     }
   }
 
+  @action
   private addPopup(type: string, style: PopupStyle, timeout: number | null): void {
     let date = new Date();
     let id = date.getTime();
