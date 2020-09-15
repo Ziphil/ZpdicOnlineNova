@@ -14,10 +14,12 @@ import SearchForm from "/client/component/compound/search-form";
 import SuggestionList from "/client/component/compound/suggestion-list";
 import WordList from "/client/component/compound/word-list";
 import {
-  debounce,
   style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
+import {
+  debounce
+} from "/client/util/decorator";
 import {
   WithSize
 } from "/server/controller/type";

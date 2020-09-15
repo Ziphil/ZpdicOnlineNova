@@ -1,13 +1,8 @@
 //
 
-import lodashDebounce from "lodash-es/debounce";
 import {
-  action as originalAction,
-  observable as originalObservable
-} from "mobx";
-import {
-  inject as originalInject,
-  observer as originalObserver
+  inject,
+  observer
 } from "mobx-react";
 import {
   ComponentClass
@@ -15,13 +10,13 @@ import {
 import css from "react-css-modules";
 import {
   IntlShape,
-  injectIntl as originalInjectIntl
+  injectIntl
 } from "react-intl";
 import {
   RouteComponentProps
 } from "react-router";
 import {
-  withRouter as originalWithRouter
+  withRouter
 } from "react-router-dom";
 import {
   GlobalStore
@@ -35,53 +30,41 @@ export function style(style: any, options: DecoratorOptions = {}): ClassDecorato
       component = css(style, {allowMultiple: true, handleNotFoundStyleName: "ignore"})(component);
     }
     if (nextOptions.withRouter) {
-      component = withRouter(component);
+      component = wrappedWithRouter(component);
     }
     if (nextOptions.observer) {
-      component = observer(component);
+      component = wrappedObserver(component);
     }
     if (nextOptions.inject) {
-      component = inject(component);
+      component = wrappedInject(component);
     }
     if (nextOptions.injectIntl) {
-      component = injectIntl(component);
+      component = wrappedInjectIntl(component);
     }
     return component;
   };
   return decorator as any;
 }
 
-export function withRouter<P extends Partial<RouteComponentProps<any>>, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
+function wrappedWithRouter<P extends Partial<RouteComponentProps<any>>, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
   let anyComponent = component as any;
-  let resultComponent = originalWithRouter(anyComponent) as any;
+  let resultComponent = withRouter(anyComponent) as any;
   return resultComponent;
 }
 
-export function inject<P extends {store?: GlobalStore}, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
-  return originalInject("store")(component);
+function wrappedInject<P extends {store?: GlobalStore}, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
+  return inject("store")(component);
 }
 
-export function injectIntl<P extends {intl?: IntlShape}, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
+function wrappedInjectIntl<P extends {intl?: IntlShape}, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
   let anyComponent = component as any;
-  let resultComponent = originalInjectIntl(anyComponent) as any;
+  let resultComponent = injectIntl(anyComponent) as any;
   return resultComponent;
 }
 
-export function observer<P extends any, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
-  return originalObserver(component);
+function wrappedObserver<P extends any, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
+  return observer(component);
 }
-
-export function debounce(duration: number): MethodDecorator {
-  let decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): PropertyDescriptor {
-    descriptor.value = lodashDebounce(descriptor.value, duration);
-    return descriptor;
-  };
-  return decorator;
-}
-
-export let observable = originalObservable;
-export let action = originalAction;
-export let boundAction = originalAction.bound;
 
 type DecoratorOptions = {
   withRouter?: boolean,

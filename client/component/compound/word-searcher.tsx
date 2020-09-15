@@ -15,9 +15,11 @@ import PaginationButton from "/client/component/compound/pagination-button";
 import SearchForm from "/client/component/compound/search-form";
 import WordList from "/client/component/compound/word-list";
 import {
-  debounce,
   style
 } from "/client/component/decorator";
+import {
+  debounce
+} from "/client/util/decorator";
 import {
   WithSize
 } from "/server/controller/type";

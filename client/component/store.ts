@@ -2,9 +2,9 @@
 
 import axios from "axios";
 import {
-  boundAction,
+  action,
   observable
-} from "/client/component/decorator";
+} from "mobx";
 import {
   SERVER_PATH
 } from "/server/controller/type";
@@ -24,7 +24,7 @@ export class GlobalStore {
   @observable
   public popupSpecs: Array<PopupSpec> = [];
 
-  @boundAction
+  @action
   public changeLocale(locale: string): void {
     this.locale = locale;
     localStorage.setItem("locale", locale);
@@ -34,7 +34,7 @@ export class GlobalStore {
     return localStorage.getItem("locale") ?? "ja";
   }
 
-  @boundAction
+  @action
   public async fetchUser(): Promise<void> {
     let url = SERVER_PATH["fetchUser"];
     let response = await axios.get(url, {validateStatus: () => true});
@@ -55,22 +55,22 @@ export class GlobalStore {
     }
   }
 
-  @boundAction
+  @action
   public addErrorPopup(type: string, timeout: number | null = 5000): void {
     this.addPopup(type, "error", timeout);
   }
 
-  @boundAction
+  @action
   public addInformationPopup(type: string, timeout: number | null = 5000): void {
     this.addPopup(type, "information", timeout);
   }
 
-  @boundAction
+  @action
   public clearPopup(id: number): void {
     this.popupSpecs = this.popupSpecs.filter((spec) => spec.id !== id);
   }
 
-  @boundAction
+  @action
   public clearAllPopups(): void {
     this.popupSpecs = [];
   }
