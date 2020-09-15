@@ -29,6 +29,9 @@ import {
   observer
 } from "/client/component/decorator";
 import {
+  EmptyPage
+} from "/client/component/page/empty-page";
+import {
   GuestRoute,
   PrivateRoute
 } from "/client/component/routing/authentication";
@@ -82,7 +85,7 @@ export class Root extends StoreComponent<Props, State> {
       <Router history={this.history}>
         <Provider store={this.store}>
           <IntlProvider defaultLocale="ja" locale={this.store.locale} messages={messages}>
-            <Suspense fallback="Loading">
+            <Suspense fallback={EmptyPage}>
               <Switch>
                 <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
                 <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
