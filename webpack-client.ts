@@ -7,8 +7,8 @@ import * as path from "path";
 let config = {
   entry: ["babel-polyfill", "./client/index.tsx"],
   output: {
-    path: path.join(__dirname, "dist"),
-    publicPath: "/",
+    path: path.join(__dirname, "dist", "client"),
+    publicPath: "/client",
     filename: "./bundle.js"
   },
   devtool: "source-map",
@@ -72,6 +72,7 @@ let config = {
   devServer: {
     port: 3000,
     historyApiFallback: true,
+    contentBase: path.join(__dirname, "dist", "client"),
     proxy: {
       "/api": "http://localhost:8050",
       "/static": "http://localhost:8050"

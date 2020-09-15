@@ -130,7 +130,7 @@ export class Main {
     });
     this.application.use("*", (request, response, next) => {
       if ((request.method === "GET" || request.method === "HEAD") && request.accepts("html")) {
-        response.sendFile("/dist/index.html", {root: "."}, (error) => {
+        response.sendFile(process.cwd() + "/dist/client/index.html", (error) => {
           if (error) {
             next(error);
           }

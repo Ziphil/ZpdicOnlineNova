@@ -20,7 +20,7 @@
   "nodemonConfig": {
     "watch": ["dist"],
     "ext": "js",
-    "ignore": ["dist/script/**", "dist/static/**", "dist/bundle*", "dist/main*"]
+    "ignore": ["dist/script/**", "dist/static/**", "dist/client/**", "dist/main*"]
   },
   "dependencies": {
     "@formatjs/intl": "^1.3.0",
