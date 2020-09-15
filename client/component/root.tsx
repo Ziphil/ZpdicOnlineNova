@@ -9,7 +9,9 @@ import {
 } from "mobx-react";
 import * as react from "react";
 import {
-  ReactNode
+  ReactNode,
+  Suspense,
+  lazy
 } from "react";
 import {
   IntlProvider
@@ -24,21 +26,8 @@ import {
 } from "/client/component/component";
 import {
   applyStyle,
-  inject,
   observer
 } from "/client/component/decorator";
-import {
-  ContactPage,
-  DashboardPage,
-  DictionaryListPage,
-  DictionaryPage,
-  DictionarySettingPage,
-  LoginPage,
-  NotificationPage,
-  RegisterPage,
-  ResetUserPasswordPage,
-  TopPage
-} from "/client/component/page";
 import {
   GuestRoute,
   PrivateRoute
@@ -46,6 +35,18 @@ import {
 import {
   GlobalStore
 } from "/client/component/store";
+
+
+let ContactPage = lazy(() => import("/client/component/page/contact-page"));
+let DashboardPage = lazy(() => import("/client/component/page/dashboard-page"));
+let DictionaryListPage = lazy(() => import("/client/component/page/dictionary-list-page"));
+let DictionaryPage = lazy(() => import("/client/component/page/dictionary-page"));
+let DictionarySettingPage = lazy(() => import("/client/component/page/dictionary-setting-page"));
+let LoginPage = lazy(() => import("/client/component/page/login-page"));
+let NotificationPage = lazy(() => import("/client/component/page/notification-page"));
+let RegisterPage = lazy(() => import("/client/component/page/register-page"));
+let ResetUserPasswordPage = lazy(() => import("/client/component/page/reset-user-password-page"));
+let TopPage = lazy(() => import("/client/component/page/top-page"));
 
 
 @observer
@@ -81,20 +82,22 @@ export class Root extends StoreComponent<Props, State> {
       <Router history={this.history}>
         <Provider store={this.store}>
           <IntlProvider defaultLocale="ja" locale={this.store.locale} messages={messages}>
-            <Switch>
-              <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
-              <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
-              <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
-              <GuestRoute exact path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
-              <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-              <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
-              <Route exact path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
-              <PrivateRoute exact path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-              <PrivateRoute exact path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-              <Route exact path="/list" component={DictionaryListPage}/>
-              <Route exact path="/notification" component={NotificationPage}/>
-              <Route exact path="/contact" component={ContactPage}/>
-            </Switch>
+            <Suspense fallback="Loading">
+              <Switch>
+                <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
+                <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
+                <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
+                <GuestRoute exact path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
+                <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+                <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
+                <Route exact path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+                <PrivateRoute exact path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                <PrivateRoute exact path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                <Route exact path="/list" component={DictionaryListPage}/>
+                <Route exact path="/notification" component={NotificationPage}/>
+                <Route exact path="/contact" component={ContactPage}/>
+              </Switch>
+            </Suspense>
           </IntlProvider>
         </Provider>
       </Router>

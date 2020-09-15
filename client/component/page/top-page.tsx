@@ -24,7 +24,7 @@ import {
 
 @route
 @applyStyle(require("./top-page.scss"))
-export class TopPage extends StoreComponent<Props, State> {
+export default class TopPage extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (

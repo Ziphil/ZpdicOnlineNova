@@ -11,8 +11,9 @@ let config = {
   entry: ["babel-polyfill", "./client/index.tsx"],
   output: {
     path: path.join(__dirname, "dist", "client"),
-    publicPath: "/client",
-    filename: "./bundle.js"
+    publicPath: "/client/",
+    filename: "./bundle.js",
+    chunkFilename: "./chunk-[name].js"
   },
   devtool: "source-map",
   module: {
@@ -21,7 +22,10 @@ let config = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: "ts-loader"
+          loader: "ts-loader",
+          options: {
+            configFile: "tsconfig-esnext.json"
+          }
         }
       },
       {

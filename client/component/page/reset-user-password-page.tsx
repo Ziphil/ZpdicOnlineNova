@@ -24,7 +24,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./reset-user-password-page.scss"))
-export class ResetUserPasswordPage extends StoreComponent<Props, State> {
+export default class ResetUserPasswordPage extends StoreComponent<Props, State> {
 
   public constructor(props: Props) {
     super(props);

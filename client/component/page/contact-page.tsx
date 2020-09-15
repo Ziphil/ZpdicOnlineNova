@@ -22,7 +22,7 @@ import {
 
 @route @intl
 @applyStyle(require("./contact-page.scss"))
-export class ContactPage extends StoreComponent<Props, State> {
+export default class ContactPage extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (

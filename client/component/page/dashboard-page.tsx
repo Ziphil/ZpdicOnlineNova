@@ -37,7 +37,7 @@ import {
 
 @route @inject @intl
 @applyStyle(require("./dashboard-page.scss"))
-export class DashboardPage extends StoreComponent<Props, State, Params> {
+export default class DashboardPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
     dictionaries: null,

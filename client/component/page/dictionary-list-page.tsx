@@ -28,7 +28,7 @@ import {
 
 @route @inject
 @applyStyle(require("./dictionary-list-page.scss"))
-export class DictionaryListPage extends StoreComponent<Props, State> {
+export default class DictionaryListPage extends StoreComponent<Props, State> {
 
   private async fetchDictionaries(offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
     let response = await this.requestGet("fetchAllDictionaries", {offset, size});

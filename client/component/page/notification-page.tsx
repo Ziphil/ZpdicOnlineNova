@@ -22,7 +22,7 @@ import {
 
 @route @inject
 @applyStyle(require("./notification-page.scss"))
-export class NotificationPage extends StoreComponent<Props, State> {
+export default class NotificationPage extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (

@@ -22,7 +22,7 @@ import {
 
 @route @intl
 @applyStyle(require("./login-page.scss"))
-export class LoginPage extends StoreComponent<Props, State> {
+export default class LoginPage extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let node = (

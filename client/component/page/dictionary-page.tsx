@@ -45,7 +45,7 @@ import {
 
 @route @inject
 @applyStyle(require("./dictionary-page.scss"))
-export class DictionaryPage extends StoreComponent<Props, State, Params> {
+export default class DictionaryPage extends StoreComponent<Props, State, Params> {
 
   public state: State = {
     dictionary: null,
