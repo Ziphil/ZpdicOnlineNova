@@ -58,27 +58,15 @@ export class Root extends Component<Props, State> {
   };
 
   public async componentDidMount(): Promise<void> {
-    await this.store.fetchUser();
+    await Promise.all([this.store.fetchUser(), this.store.defaultLocale()]);
     this.setState({ready: true});
   }
 
-  private getMessages(): Record<string, string> {
-    let locale = this.store.locale;
-    if (locale === "ja") {
-      return require("../language/ja.yml");
-    } else if (locale === "en") {
-      return require("../language/en.yml");
-    } else {
-      return require("../language/ja.yml");
-    }
-  }
-
   public render(): ReactNode {
-    let messages = this.getMessages();
     let node = (this.state.ready) && (
       <Router history={this.history}>
         <Provider store={this.store}>
-          <IntlProvider defaultLocale="ja" locale={this.store.locale} messages={messages}>
+          <IntlProvider defaultLocale="ja" locale={this.store.locale} messages={this.store.messages}>
             <Suspense fallback={<EmptyPage/>}>
               <Switch>
                 <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>

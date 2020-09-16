@@ -16,7 +16,10 @@ import {
 export class GlobalStore {
 
   @observable
-  public locale: string = GlobalStore.getDefaultLocale();
+  public locale: string = "";
+
+  @observable
+  public messages: Record<string, string> = {};
 
   @observable
   public user: DetailedUser | null = null;
@@ -25,13 +28,22 @@ export class GlobalStore {
   public popupSpecs: Array<PopupSpec> = [];
 
   @action
-  public changeLocale(locale: string): void {
+  public async changeLocale(locale: string): Promise<void> {
     this.locale = locale;
     localStorage.setItem("locale", locale);
+    if (locale === "ja") {
+      this.messages = await import("../language/ja.yml" as any);
+    } else if (locale === "en") {
+      this.messages = await import("../language/en.yml" as any);
+    } else {
+      this.messages = await import("../language/ja.yml" as any);
+    }
   }
 
-  private static getDefaultLocale(): string {
-    return localStorage.getItem("locale") ?? "ja";
+  @action
+  public async defaultLocale(): Promise<void> {
+    let locale = localStorage.getItem("locale") ?? "ja";
+    this.changeLocale(locale);
   }
 
   @action
