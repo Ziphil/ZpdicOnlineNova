@@ -8,23 +8,19 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import Component from "/client/component/component";
+import InvitationPane from "/client/component/compound/invitation-pane";
+import PaneList from "/client/component/compound/pane-list";
 import {
-  Component
-} from "/client/component/component";
-import {
-  InvitationPane,
-  PaneList
-} from "/client/component/compound";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Invitation
 } from "/server/skeleton/invitation";
 
 
-@applyStyle(require("./invitation-list.scss"))
-export class InvitationList extends Component<Props, State> {
+@style(require("./invitation-list.scss"))
+export default class InvitationList extends Component<Props, State> {
 
   public render(): ReactNode {
     let outerThis = this;

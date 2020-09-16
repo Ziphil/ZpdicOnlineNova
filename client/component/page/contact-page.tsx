@@ -4,25 +4,16 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
+import ContactForm from "/client/component/compound/contact-form";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  ContactForm
-} from "/client/component/compound";
-import {
-  applyStyle,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 
 
-@route @intl
-@applyStyle(require("./contact-page.scss"))
-export class ContactPage extends StoreComponent<Props, State> {
+@style(require("./contact-page.scss"))
+export default class ContactPage extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (

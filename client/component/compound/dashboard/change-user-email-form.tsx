@@ -2,21 +2,13 @@
 
 import * as react from "react";
 import {
-  MouseEvent,
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
+import Input from "/client/component/atom/input";
+import Component from "/client/component/component";
 import {
-  Button,
-  Input
-} from "/client/component/atom";
-import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
 import {
   createValidate
@@ -29,9 +21,8 @@ import {
 } from "/server/model/validation";
 
 
-@route @inject @intl
-@applyStyle(require("./change-user-email-form.scss"))
-export class ChangeUserEmailForm extends StoreComponent<Props, State> {
+@style(require("./change-user-email-form.scss"))
+export default class ChangeUserEmailForm extends Component<Props, State> {
 
   public constructor(props: any) {
     super(props);
@@ -43,7 +34,7 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
     let email = this.state.email;
     let response = await this.requestPost("changeUserEmail", {email});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("emailChanged");
+      this.props.store!.addInformationPopup("userEmailChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
@@ -51,7 +42,7 @@ export class ChangeUserEmailForm extends StoreComponent<Props, State> {
   }
 
   public render(): ReactNode {
-    let validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidEmail"));
+    let validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidUserEmail"));
     let node = (
       <form styleName="root">
         <Input label={this.trans("changeUserEmailForm.email")} value={this.state.email} validate={validate} usesTooltip={true} onSet={(email) => this.setState({email})}/>

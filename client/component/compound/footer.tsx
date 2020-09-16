@@ -4,19 +4,14 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  route
+  style
 } from "/client/component/decorator";
 
 
-@route @inject
-@applyStyle(require("./footer.scss"))
-export class Footer extends StoreComponent<Props, State> {
+@style(require("./footer.scss"))
+export default class Footer extends Component<Props, State> {
 
   public render(): ReactNode {
     let date = new Date();

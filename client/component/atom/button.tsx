@@ -8,19 +8,17 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@applyStyle(require("./button.scss"))
-export class Button extends Component<Props, State> {
+@style(require("./button.scss"))
+export default class Button extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     position: "alone",

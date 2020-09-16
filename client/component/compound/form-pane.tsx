@@ -5,24 +5,18 @@ import {
   MouseEvent,
   ReactNode
 } from "react";
+import Component from "/client/component/component";
+import InformationPane from "/client/component/compound/information-pane";
 import {
-  Component
-} from "/client/component/component";
-import {
-  InformationPane
-} from "/client/component/compound";
-import {
-  applyStyle,
-  intl
+  style
 } from "/client/component/decorator";
 import {
   PopupUtil
 } from "/client/util/popup";
 
 
-@intl
-@applyStyle(require("./form-pane.scss"))
-export class FormPane extends Component<Props, State> {
+@style(require("./form-pane.scss"))
+export default class FormPane extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     errorType: null,

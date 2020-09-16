@@ -4,15 +4,11 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
+import Loading from "/client/component/compound/loading";
+import PaginationButton from "/client/component/compound/pagination-button";
 import {
-  Component
-} from "/client/component/component";
-import {
-  Loading,
-  PaginationButton
-} from "/client/component/compound";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
@@ -22,8 +18,8 @@ import {
 } from "/server/controller/type";
 
 
-@applyStyle(require("./pane-list.scss"))
-export class PaneList<T> extends Component<Props<T>, State<T>> {
+@style(require("./pane-list.scss"))
+export default class PaneList<T> extends Component<Props<T>, State<T>> {
 
   public static defaultProps: DefaultProps = {
     column: 1,

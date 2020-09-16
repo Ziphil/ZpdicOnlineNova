@@ -5,29 +5,19 @@ import {
   MouseEvent,
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
+import Component from "/client/component/component";
+import WhitePane from "/client/component/compound/white-pane";
 import {
-  Button
-} from "/client/component/atom";
-import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  WhitePane
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
 import {
   DetailedDictionary
 } from "/server/skeleton/dictionary";
 
 
-@route @inject @intl
-@applyStyle(require("./dictionary-pane.scss"))
-export class DictionaryPane extends StoreComponent<Props, State> {
+@style(require("./dictionary-pane.scss"))
+export default class DictionaryPane extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     showUser: true,

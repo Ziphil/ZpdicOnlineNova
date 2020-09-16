@@ -5,22 +5,18 @@ import {
   MouseEvent,
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
+import Component from "/client/component/component";
 import {
-  Button
-} from "/client/component/atom";
-import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@applyStyle(require("./information-pane.scss"))
-export class InformationPane extends Component<Props, State> {
+@style(require("./information-pane.scss"))
+export default class InformationPane extends Component<Props, State> {
 
   private handleClick(event: MouseEvent<HTMLButtonElement>): void {
     if (this.props.onClose) {

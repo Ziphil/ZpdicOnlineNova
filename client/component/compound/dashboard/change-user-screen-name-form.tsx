@@ -2,36 +2,18 @@
 
 import * as react from "react";
 import {
-  MouseEvent,
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
+import Input from "/client/component/atom/input";
+import Component from "/client/component/component";
 import {
-  Button,
-  Input
-} from "/client/component/atom";
-import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
-import {
-  createValidate
-} from "/client/util/misc";
-import {
-  PopupUtil
-} from "/client/util/popup";
-import {
-  EMAIL_REGEXP
-} from "/server/model/validation";
 
 
-@route @inject @intl
-@applyStyle(require("./change-user-screen-name-form.scss"))
-export class ChangeUserScreenNameForm extends StoreComponent<Props, State> {
+@style(require("./change-user-screen-name-form.scss"))
+export default class ChangeUserScreenNameForm extends Component<Props, State> {
 
   public constructor(props: Props) {
     super(props);
@@ -43,7 +25,7 @@ export class ChangeUserScreenNameForm extends StoreComponent<Props, State> {
     let screenName = this.state.screenName;
     let response = await this.requestPost("changeUserScreenName", {screenName});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("screenNameChanged");
+      this.props.store!.addInformationPopup("userScreenNameChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }

@@ -4,20 +4,12 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
+import DictionaryList from "/client/component/compound/dictionary-list";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  DictionaryList
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  route
+  style
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 import {
   WithSize
 } from "/server/controller/type";
@@ -26,9 +18,8 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@route @inject
-@applyStyle(require("./dictionary-list-page.scss"))
-export class DictionaryListPage extends StoreComponent<Props, State> {
+@style(require("./dictionary-list-page.scss"))
+export default class DictionaryListPage extends Component<Props, State> {
 
   private async fetchDictionaries(offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
     let response = await this.requestGet("fetchAllDictionaries", {offset, size});

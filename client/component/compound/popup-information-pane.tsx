@@ -4,27 +4,18 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
+import InformationPane from "/client/component/compound/information-pane";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  InformationPane
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  intl,
-  observer,
-  route
+  style
 } from "/client/component/decorator";
 import {
   PopupUtil
 } from "/client/util/popup";
 
 
-@route @inject @intl @observer
-@applyStyle(require("./popup-information-pane.scss"))
-export class PopupInformationPane extends StoreComponent<Props, State> {
+@style(require("./popup-information-pane.scss"), {observer: true})
+export default class PopupInformationPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let specs = Array.from(this.props.store!.popupSpecs);

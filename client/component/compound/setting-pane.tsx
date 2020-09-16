@@ -4,19 +4,15 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Badge from "/client/component/atom/badge";
+import Component from "/client/component/component";
 import {
-  Badge
-} from "/client/component/atom";
-import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./setting-pane.scss"))
-export class SettingPane extends Component<Props, State> {
+@style(require("./setting-pane.scss"))
+export default class SettingPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let badgeNode = (this.props.badgeValue) && (

@@ -8,15 +8,11 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import Component from "/client/component/component";
+import PaneList from "/client/component/compound/pane-list";
+import UserPane from "/client/component/compound/user-pane";
 import {
-  Component
-} from "/client/component/component";
-import {
-  PaneList,
-  UserPane
-} from "/client/component/compound";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Dictionary
@@ -26,8 +22,8 @@ import {
 } from "/server/skeleton/user";
 
 
-@applyStyle(require("./invitation-list.scss"))
-export class UserList extends Component<Props, State> {
+@style(require("./invitation-list.scss"))
+export default class UserList extends Component<Props, State> {
 
   public render(): ReactNode {
     let outerThis = this;

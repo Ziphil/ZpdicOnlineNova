@@ -4,16 +4,14 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./control-group.scss"))
-export class ControlGroup extends Component<Props, State> {
+@style(require("./control-group.scss"))
+export default class ControlGroup extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (

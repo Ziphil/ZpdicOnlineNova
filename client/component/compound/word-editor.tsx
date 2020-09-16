@@ -1,8 +1,6 @@
 //
 
-import {
-  cloneDeep
-} from "lodash-es";
+import cloneDeep from "lodash-es/cloneDeep";
 import * as react from "react";
 import {
   Fragment,
@@ -12,25 +10,16 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import Alert from "/client/component/atom/alert";
+import Button from "/client/component/atom/button";
+import ControlGroup from "/client/component/atom/control-group";
+import Input from "/client/component/atom/input";
+import Overlay from "/client/component/atom/overlay";
+import TextArea from "/client/component/atom/text-area";
+import Component from "/client/component/component";
+import WordSearcher from "/client/component/compound/word-searcher";
 import {
-  Alert,
-  Button,
-  ControlGroup,
-  Input,
-  Overlay,
-  TextArea
-} from "/client/component/atom";
-import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  WordSearcher
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
 import {
   deleteAt,
@@ -50,9 +39,8 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@route @inject @intl
-@applyStyle(require("./word-editor.scss"))
-export class WordEditor extends StoreComponent<Props, State> {
+@style(require("./word-editor.scss"))
+export default class WordEditor extends Component<Props, State> {
 
   private editingRelationIndex: number | null = null;
 

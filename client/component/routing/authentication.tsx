@@ -9,19 +9,16 @@ import {
   Route,
   RouteProps
 } from "react-router-dom";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  inject,
-  observer
+  style
 } from "/client/component/decorator";
 import {
   GlobalStore
 } from "/client/component/store";
 
 
-@inject @observer
+@style(null, {withRouter: false, inject: true, injectIntl: false, observer: true})
 export class PrivateRoute extends Component<RouteProps & {store?: GlobalStore, redirect: string}, {}> {
 
   public render(): ReactNode {
@@ -32,7 +29,7 @@ export class PrivateRoute extends Component<RouteProps & {store?: GlobalStore, r
 }
 
 
-@inject @observer
+@style(null, {withRouter: false, inject: true, injectIntl: false, observer: true})
 export class GuestRoute extends Component<RouteProps & {store?: GlobalStore, redirect: string}, {}> {
 
   public render(): ReactNode {

@@ -4,14 +4,10 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
+import SuggestionPane from "/client/component/compound/suggestion-pane";
 import {
-  Component
-} from "/client/component/component";
-import {
-  SuggestionPane
-} from "/client/component/compound";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -19,8 +15,8 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./suggestion-list.scss"))
-export class SuggestionList extends Component<Props, State> {
+@style(require("./suggestion-list.scss"))
+export default class SuggestionList extends Component<Props, State> {
 
   public render(): ReactNode {
     let displayedSuggestions = this.props.suggestions;

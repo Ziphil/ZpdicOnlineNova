@@ -9,21 +9,12 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import Alert from "/client/component/atom/alert";
+import Button from "/client/component/atom/button";
+import Component from "/client/component/component";
+import WhitePane from "/client/component/compound/white-pane";
 import {
-  Alert,
-  Button
-} from "/client/component/atom";
-import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  WhitePane
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
 import {
   Dictionary
@@ -33,9 +24,8 @@ import {
 } from "/server/skeleton/user";
 
 
-@route @inject @intl
-@applyStyle(require("./user-pane.scss"))
-export class UserPane extends StoreComponent<Props, State> {
+@style(require("./user-pane.scss"))
+export default class UserPane extends Component<Props, State> {
 
   public state: State = {
     alertOpen: false

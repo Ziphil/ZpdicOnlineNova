@@ -2,31 +2,21 @@
 
 import * as react from "react";
 import {
-  Fragment,
   ReactNode
 } from "react";
+import Component from "/client/component/component";
+import NotificationPane from "/client/component/compound/notification-pane";
+import PaneList from "/client/component/compound/pane-list";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  Loading,
-  NotificationPane,
-  PaginationButton,
-  PaneList
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  route
+  style
 } from "/client/component/decorator";
 import {
   Notification
 } from "/server/skeleton/notification";
 
 
-@route @inject
-@applyStyle(require("./notification-list.scss"))
-export class NotificationList extends StoreComponent<Props, State> {
+@style(require("./notification-list.scss"))
+export default class NotificationList extends Component<Props, State> {
 
   public state: State = {
     notifications: null

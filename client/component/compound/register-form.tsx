@@ -4,21 +4,12 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
+import Input from "/client/component/atom/input";
+import Component from "/client/component/component";
+import FormPane from "/client/component/compound/form-pane";
 import {
-  Button,
-  Input
-} from "/client/component/atom";
-import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  FormPane
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
 import {
   Main
@@ -36,9 +27,8 @@ import {
 } from "/server/model/validation";
 
 
-@route @inject @intl
-@applyStyle(require("./register-form.scss"))
-export class RegisterForm extends StoreComponent<Props, State> {
+@style(require("./register-form.scss"))
+export default class RegisterForm extends Component<Props, State> {
 
   public state: State = {
     name: "",
@@ -78,8 +68,8 @@ export class RegisterForm extends StoreComponent<Props, State> {
 
   public render(): ReactNode {
     let validateName = createValidate(IDENTIFIER_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidUserName"));
-    let validateEmail = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidEmail"));
-    let validatePassword = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidPassword"));
+    let validateEmail = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidUserEmail"));
+    let validatePassword = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidUserPassword"));
     let node = (
       <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">

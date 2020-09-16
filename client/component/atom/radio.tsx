@@ -5,16 +5,14 @@ import {
   ChangeEvent,
   ReactNode
 } from "react";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./radio.scss"))
-export class Radio extends Component<Props, State> {
+@style(require("./radio.scss"))
+export default class Radio extends Component<Props, State> {
 
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
     if (this.props.onChange) {

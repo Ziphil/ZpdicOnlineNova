@@ -9,19 +9,12 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import Button from "/client/component/atom/button";
+import Link from "/client/component/atom/link";
+import Component from "/client/component/component";
+import WordEditor from "/client/component/compound/word-editor";
 import {
-  Button,
-  Link
-} from "/client/component/atom";
-import {
-  Component
-} from "/client/component/component";
-import {
-  WordEditor
-} from "/client/component/compound";
-import {
-  applyStyle,
-  intl
+  style
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -31,9 +24,8 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@intl
-@applyStyle(require("./word-pane.scss"))
-export class WordPane extends Component<Props, State> {
+@style(require("./word-pane.scss"))
+export default class WordPane extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     style: "normal",

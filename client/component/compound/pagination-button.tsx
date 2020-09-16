@@ -4,19 +4,15 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
+import Component from "/client/component/component";
 import {
-  Button
-} from "/client/component/atom";
-import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./pagination-button.scss"))
-export class PaginationButton extends Component<Props, State> {
+@style(require("./pagination-button.scss"))
+export default class PaginationButton extends Component<Props, State> {
 
   private movePreviousPage(): void {
     let page = this.props.page - 1;

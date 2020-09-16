@@ -4,37 +4,27 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
+import ChangeDictionaryExplanationForm from "/client/component/compound/dictionary-setting/change-dictionary-explanation-form";
+import ChangeDictionaryNameForm from "/client/component/compound/dictionary-setting/change-dictionary-name-form";
+import ChangeDictionaryParamNameForm from "/client/component/compound/dictionary-setting/change-dictionary-param-name-form";
+import ChangeDictionarySecretForm from "/client/component/compound/dictionary-setting/change-dictionary-secret-form";
+import DeleteDictionaryForm from "/client/component/compound/dictionary-setting/delete-dictionary-form";
+import InviteEditDictionaryForm from "/client/component/compound/dictionary-setting/invite-edit-dictionary-form";
+import UploadDictionaryForm from "/client/component/compound/dictionary-setting/upload-dictionary-form";
+import Menu from "/client/component/compound/menu";
+import SettingPane from "/client/component/compound/setting-pane";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  ChangeDictionaryExplanationForm,
-  ChangeDictionaryNameForm,
-  ChangeDictionaryParamNameForm,
-  ChangeDictionarySecretForm,
-  DeleteDictionaryForm,
-  InviteEditDictionaryForm,
-  Menu,
-  SettingPane,
-  UploadDictionaryForm
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 import {
   Dictionary
 } from "/server/skeleton/dictionary";
 
 
-@route @inject @intl
-@applyStyle(require("./dictionary-setting-page.scss"))
-export class DictionarySettingPage extends StoreComponent<Props, State, Params> {
+@style(require("./dictionary-setting-page.scss"))
+export default class DictionarySettingPage extends Component<Props, State, Params> {
 
   public state: State = {
     dictionary: null,

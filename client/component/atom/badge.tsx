@@ -4,19 +4,17 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@applyStyle(require("./badge.scss"))
-export class Badge extends Component<Props, State> {
+@style(require("./badge.scss"))
+export default class Badge extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     value: "",

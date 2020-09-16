@@ -4,15 +4,11 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
+import DictionaryPane from "/client/component/compound/dictionary-pane";
+import PaneList from "/client/component/compound/pane-list";
 import {
-  Component
-} from "/client/component/component";
-import {
-  DictionaryPane,
-  PaneList
-} from "/client/component/compound";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   WithSize
@@ -23,8 +19,8 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./dictionary-list.scss"))
-export class DictionaryList extends Component<Props, State> {
+@style(require("./dictionary-list.scss"))
+export default class DictionaryList extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     showUser: true,

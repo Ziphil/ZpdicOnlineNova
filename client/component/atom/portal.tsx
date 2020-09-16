@@ -7,12 +7,10 @@ import {
 import {
   createPortal
 } from "react-dom";
-import {
-  Component
-} from "/client/component/component";
+import Component from "/client/component/component";
 
 
-export class Portal extends Component<Props, State> {
+export default class Portal extends Component<Props, State> {
 
   public render(): ReactNode {
     let container = document.getElementById("page") ?? document.body;

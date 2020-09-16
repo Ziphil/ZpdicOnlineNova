@@ -3,22 +3,19 @@
 import * as react from "react";
 import {
   ChangeEvent,
-  MouseEvent,
   ReactNode
 } from "react";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@applyStyle(require("./input.scss"))
-export class Input extends Component<Props, State> {
+@style(require("./input.scss"))
+export default class Input extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     value: "",

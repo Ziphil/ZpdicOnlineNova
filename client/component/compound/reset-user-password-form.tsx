@@ -4,21 +4,12 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
+import Input from "/client/component/atom/input";
+import Component from "/client/component/component";
+import FormPane from "/client/component/compound/form-pane";
 import {
-  Button,
-  Input
-} from "/client/component/atom";
-import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  FormPane
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
 import {
   Main
@@ -34,9 +25,8 @@ import {
 } from "/server/model/validation";
 
 
-@route @inject @intl
-@applyStyle(require("./reset-user-password-form.scss"))
-export class ResetUserPasswordForm extends StoreComponent<Props, State> {
+@style(require("./reset-user-password-form.scss"))
+export default class ResetUserPasswordForm extends Component<Props, State> {
 
   public state: State = {
     name: "",
@@ -100,7 +90,7 @@ export class ResetUserPasswordForm extends StoreComponent<Props, State> {
   }
 
   private renderResetPasswordForm(): ReactNode {
-    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidPassword"));
+    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidUserPassword"));
     let node = (
       <FormPane errorType={this.state.errorType} errorStyle={this.state.errorStyle} onErrorClose={() => this.setState({errorType: null})}>
         <form styleName="root">

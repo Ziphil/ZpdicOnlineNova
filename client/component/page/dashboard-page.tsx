@@ -4,29 +4,20 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
+import ChangeUserEmailForm from "/client/component/compound/dashboard/change-user-email-form";
+import ChangeUserPasswordForm from "/client/component/compound/dashboard/change-user-password-form";
+import ChangeUserScreenNameForm from "/client/component/compound/dashboard/change-user-screen-name-form";
+import CreateDictionaryForm from "/client/component/compound/dashboard/create-dictionary-form";
+import DeleteUserForm from "/client/component/compound/dashboard/delete-user-form";
+import DictionaryList from "/client/component/compound/dictionary-list";
+import InvitationList from "/client/component/compound/invitation-list";
+import Menu from "/client/component/compound/menu";
+import SettingPane from "/client/component/compound/setting-pane";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  ChangeUserEmailForm,
-  ChangeUserPasswordForm,
-  ChangeUserScreenNameForm,
-  CreateDictionaryForm,
-  DeleteUserForm,
-  DictionaryList,
-  InvitationList,
-  Menu,
-  SettingPane
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 import {
   UserDictionary
 } from "/server/skeleton/dictionary";
@@ -35,9 +26,8 @@ import {
 } from "/server/skeleton/invitation";
 
 
-@route @inject @intl
-@applyStyle(require("./dashboard-page.scss"))
-export class DashboardPage extends StoreComponent<Props, State, Params> {
+@style(require("./dashboard-page.scss"))
+export default class DashboardPage extends Component<Props, State, Params> {
 
   public state: State = {
     dictionaries: null,

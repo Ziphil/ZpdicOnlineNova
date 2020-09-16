@@ -4,15 +4,10 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Link from "/client/component/atom/link";
+import Component from "/client/component/component";
 import {
-  Link
-} from "/client/component/atom";
-import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle,
-  intl
+  style
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -20,9 +15,8 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@intl
-@applyStyle(require("./suggestion-pane.scss"))
-export class SuggestionPane extends Component<Props, State> {
+@style(require("./suggestion-pane.scss"))
+export default class SuggestionPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let suggestion = this.props.suggestion;

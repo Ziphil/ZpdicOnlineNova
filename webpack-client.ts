@@ -2,14 +2,18 @@
 
 import * as HtmlWebpackPlugin from "html-webpack-plugin";
 import * as path from "path";
+import {
+  BundleAnalyzerPlugin
+} from "webpack-bundle-analyzer";
 
 
 let config = {
   entry: ["babel-polyfill", "./client/index.tsx"],
   output: {
-    path: path.join(__dirname, "dist"),
-    publicPath: "/",
-    filename: "./bundle.js"
+    path: path.join(__dirname, "dist", "client"),
+    publicPath: "/client/",
+    filename: "./bundle.js",
+    chunkFilename: "./chunk-[name].js"
   },
   devtool: "source-map",
   module: {
@@ -18,7 +22,10 @@ let config = {
         test: /\.tsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: "ts-loader"
+          loader: "ts-loader",
+          options: {
+            configFile: "tsconfig-esnext.json"
+          }
         }
       },
       {
@@ -72,6 +79,7 @@ let config = {
   devServer: {
     port: 3000,
     historyApiFallback: true,
+    contentBase: path.join(__dirname, "dist", "client"),
     proxy: {
       "/api": "http://localhost:8050",
       "/static": "http://localhost:8050"
@@ -81,6 +89,10 @@ let config = {
     new HtmlWebpackPlugin({
       template: "./client/public/index.html",
       title: "ZpDIC Online"
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: (!!process.env["ANALYZE"]) ? "static" : "disabled",
+      reportFilename: path.join(__dirname, "dist", "client", "stats.html")
     })
   ]
 };

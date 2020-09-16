@@ -1,23 +1,16 @@
 //
 
 import {
-  debounce as lodashDebounce
-} from "lodash-es";
-import {
-  action as mobxAction,
-  observable as mobxObservable
-} from "mobx";
-import {
-  inject as mobxInject,
-  observer as mobxObserver
+  inject,
+  observer
 } from "mobx-react";
 import {
   ComponentClass
 } from "react";
-import * as css from "react-css-modules";
+import css from "react-css-modules";
 import {
   IntlShape,
-  injectIntl as reactInjectIntl
+  injectIntl
 } from "react-intl";
 import {
   RouteComponentProps
@@ -30,40 +23,59 @@ import {
 } from "/client/component/store";
 
 
-export function applyStyle(style: any): ClassDecorator {
-  let options = {allowMultiple: true, handleNotFoundStyleName: "ignore"};
-  let decorator = css(style, options);
-  return decorator;
-}
-
-export function debounce(duration: number): MethodDecorator {
-  let decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): PropertyDescriptor {
-    descriptor.value = lodashDebounce(descriptor.value, duration);
-    return descriptor;
+export function style(style: any, options: DecoratorOptions = {}): ClassDecorator {
+  let nextOptions = Object.assign({}, DEFAULT_DECORATOR_OPTIONS, options);
+  let decorator = function <P, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
+    if (style !== null && style !== undefined) {
+      component = css(style, {allowMultiple: true, handleNotFoundStyleName: "ignore"})(component);
+    }
+    if (nextOptions.withRouter) {
+      component = wrappedWithRouter(component);
+    }
+    if (nextOptions.observer) {
+      component = wrappedObserver(component);
+    }
+    if (nextOptions.inject) {
+      component = wrappedInject(component);
+    }
+    if (nextOptions.injectIntl) {
+      component = wrappedInjectIntl(component);
+    }
+    return component;
   };
-  return decorator;
+  return decorator as any;
 }
 
-export function route<P extends Partial<RouteComponentProps<any>>, C extends ComponentClass<P>>(component: C & ComponentClass<P>): C & ComponentClass<P> {
+function wrappedWithRouter<P extends Partial<RouteComponentProps<any>>, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
   let anyComponent = component as any;
   let resultComponent = withRouter(anyComponent) as any;
   return resultComponent;
 }
 
-export function inject<P extends {store?: GlobalStore}, C extends ComponentClass<P>>(component: C & ComponentClass<P>): C & ComponentClass<P> {
-  return mobxInject("store")(component);
+function wrappedInject<P extends {store?: GlobalStore}, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
+  return inject("store")(component);
 }
 
-export function intl<P extends {intl?: IntlShape}, C extends ComponentClass<P>>(component: C & ComponentClass<P>): C & ComponentClass<P> {
+function wrappedInjectIntl<P extends {intl?: IntlShape}, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
   let anyComponent = component as any;
-  let resultComponent = reactInjectIntl(anyComponent) as any;
+  let resultComponent = injectIntl(anyComponent) as any;
   return resultComponent;
 }
 
-export function observer<P extends any, C extends ComponentClass<P>>(component: C & ComponentClass<P>): C & ComponentClass<P> {
-  return mobxObserver(component);
+function wrappedObserver<P extends any, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
+  return observer(component);
 }
 
-export let observable = mobxObservable;
-export let action = mobxAction;
-export let boundAction = mobxAction.bound;
+type DecoratorOptions = {
+  withRouter?: boolean,
+  inject?: boolean,
+  injectIntl?: boolean,
+  observer?: boolean
+};
+
+const DEFAULT_DECORATOR_OPTIONS = {
+  withRouter: true,
+  inject: true,
+  injectIntl: true,
+  observer: false
+};

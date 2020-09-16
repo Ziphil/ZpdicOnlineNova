@@ -5,25 +5,19 @@ import {
   MouseEvent,
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
+import Modal from "/client/component/atom/modal";
+import Component from "/client/component/component";
 import {
-  Button,
-  Modal
-} from "/client/component/atom";
-import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle,
-  intl
+  style
 } from "/client/component/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@intl
-@applyStyle(require("./overlay.scss"))
-export class Overlay extends Component<Props, State> {
+@style(require("./overlay.scss"))
+export default class Overlay extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     size: "small",

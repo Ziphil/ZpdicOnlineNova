@@ -5,16 +5,14 @@ import {
   Fragment,
   ReactNode
 } from "react";
+import Component from "/client/component/component";
 import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 
 
-@applyStyle(require("./loading.scss"))
-export class Loading extends Component<Props, State> {
+@style(require("./loading.scss"))
+export default class Loading extends Component<Props, State> {
 
   public render(): ReactNode {
     if (this.props.loading) {

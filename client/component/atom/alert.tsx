@@ -5,22 +5,16 @@ import {
   MouseEvent,
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
+import Modal from "/client/component/atom/modal";
+import Component from "/client/component/component";
 import {
-  Button,
-  Modal
-} from "/client/component/atom";
-import {
-  Component
-} from "/client/component/component";
-import {
-  applyStyle,
-  intl
+  style
 } from "/client/component/decorator";
 
 
-@intl
-@applyStyle(require("./alert.scss"))
-export class Alert extends Component<Props, State> {
+@style(require("./alert.scss"))
+export default class Alert extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     open: false,

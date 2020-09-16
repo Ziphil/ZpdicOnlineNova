@@ -5,26 +5,16 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Component from "/client/component/component";
+import ResetUserPasswordForm from "/client/component/compound/reset-user-password-form";
 import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  ResetUserPasswordForm
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
-import {
-  Page
-} from "/client/component/page/page";
+import Page from "/client/component/page/page";
 
 
-@route @inject @intl
-@applyStyle(require("./reset-user-password-page.scss"))
-export class ResetUserPasswordPage extends StoreComponent<Props, State> {
+@style(require("./reset-user-password-page.scss"))
+export default class ResetUserPasswordPage extends Component<Props, State> {
 
   public constructor(props: Props) {
     super(props);

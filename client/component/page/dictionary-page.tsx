@@ -6,28 +6,20 @@ import {
   Fragment,
   ReactNode
 } from "react";
+import Markdown from "/client/component/atom/markdown";
+import Component from "/client/component/component";
+import Loading from "/client/component/compound/loading";
+import PaginationButton from "/client/component/compound/pagination-button";
+import SearchForm from "/client/component/compound/search-form";
+import SuggestionList from "/client/component/compound/suggestion-list";
+import WordList from "/client/component/compound/word-list";
 import {
-  Markdown
-} from "/client/component/atom";
-import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  Loading,
-  PaginationButton,
-  SearchForm,
-  SuggestionList,
-  WordList
-} from "/client/component/compound";
-import {
-  applyStyle,
-  debounce,
-  inject,
-  route
+  style
 } from "/client/component/decorator";
+import Page from "/client/component/page/page";
 import {
-  Page
-} from "/client/component/page/page";
+  debounce
+} from "/client/util/decorator";
 import {
   WithSize
 } from "/server/controller/type";
@@ -43,9 +35,8 @@ import {
 } from "/server/skeleton/search-parameter";
 
 
-@route @inject
-@applyStyle(require("./dictionary-page.scss"))
-export class DictionaryPage extends StoreComponent<Props, State, Params> {
+@style(require("./dictionary-page.scss"))
+export default class DictionaryPage extends Component<Props, State, Params> {
 
   public state: State = {
     dictionary: null,

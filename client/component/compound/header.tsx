@@ -4,26 +4,16 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Link from "/client/component/atom/link";
+import Component from "/client/component/component";
+import HeaderMenuItem from "/client/component/compound/header-menu-item";
 import {
-  Link
-} from "/client/component/atom";
-import {
-  StoreComponent
-} from "/client/component/component";
-import {
-  HeaderMenuItem
-} from "/client/component/compound";
-import {
-  applyStyle,
-  inject,
-  intl,
-  route
+  style
 } from "/client/component/decorator";
 
 
-@route @inject @intl
-@applyStyle(require("./header.scss"))
-export class Header extends StoreComponent<Props, State> {
+@style(require("./header.scss"))
+export default class Header extends Component<Props, State> {
 
   public state: State = {
     userName: null

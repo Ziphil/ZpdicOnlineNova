@@ -1,8 +1,6 @@
 //
 
-import {
-  partial
-} from "lodash-es";
+import partial from "lodash-es/partial";
 import * as react from "react";
 import {
   MouseEvent,
@@ -11,14 +9,10 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import Component from "/client/component/component";
+import WordPane from "/client/component/compound/word-pane";
 import {
-  Component
-} from "/client/component/component";
-import {
-  WordPane
-} from "/client/component/compound";
-import {
-  applyStyle
+  style
 } from "/client/component/decorator";
 import {
   Dictionary,
@@ -27,8 +21,8 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@applyStyle(require("./word-list.scss"))
-export class WordList extends Component<Props, State> {
+@style(require("./word-list.scss"))
+export default class WordList extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     style: "normal",

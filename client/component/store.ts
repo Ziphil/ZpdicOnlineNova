@@ -2,9 +2,9 @@
 
 import axios from "axios";
 import {
-  boundAction,
+  action,
   observable
-} from "/client/component/decorator";
+} from "mobx";
 import {
   SERVER_PATH
 } from "/server/controller/type";
@@ -16,7 +16,10 @@ import {
 export class GlobalStore {
 
   @observable
-  public locale: string = GlobalStore.getDefaultLocale();
+  public locale: string = "";
+
+  @observable
+  public messages: Record<string, string> = {};
 
   @observable
   public user: DetailedUser | null = null;
@@ -24,17 +27,26 @@ export class GlobalStore {
   @observable
   public popupSpecs: Array<PopupSpec> = [];
 
-  @boundAction
-  public changeLocale(locale: string): void {
+  @action
+  public async changeLocale(locale: string): Promise<void> {
     this.locale = locale;
     localStorage.setItem("locale", locale);
+    if (locale === "ja") {
+      this.messages = await import("../language/ja.yml" as any);
+    } else if (locale === "en") {
+      this.messages = await import("../language/en.yml" as any);
+    } else {
+      this.messages = await import("../language/ja.yml" as any);
+    }
   }
 
-  private static getDefaultLocale(): string {
-    return localStorage.getItem("locale") ?? "ja";
+  @action
+  public async defaultLocale(): Promise<void> {
+    let locale = localStorage.getItem("locale") ?? "ja";
+    this.changeLocale(locale);
   }
 
-  @boundAction
+  @action
   public async fetchUser(): Promise<void> {
     let url = SERVER_PATH["fetchUser"];
     let response = await axios.get(url, {validateStatus: () => true});
@@ -46,6 +58,7 @@ export class GlobalStore {
     }
   }
 
+  @action
   private addPopup(type: string, style: PopupStyle, timeout: number | null): void {
     let date = new Date();
     let id = date.getTime();
@@ -55,22 +68,22 @@ export class GlobalStore {
     }
   }
 
-  @boundAction
+  @action
   public addErrorPopup(type: string, timeout: number | null = 5000): void {
     this.addPopup(type, "error", timeout);
   }
 
-  @boundAction
+  @action
   public addInformationPopup(type: string, timeout: number | null = 5000): void {
     this.addPopup(type, "information", timeout);
   }
 
-  @boundAction
+  @action
   public clearPopup(id: number): void {
     this.popupSpecs = this.popupSpecs.filter((spec) => spec.id !== id);
   }
 
-  @boundAction
+  @action
   public clearAllPopups(): void {
     this.popupSpecs = [];
   }
