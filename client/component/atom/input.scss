@@ -41,6 +41,11 @@
   flex-grow: 1;
 }
 
+.prefix,
+.suffix {
+  display: inline-block;
+}
+
 .eye {
   @include icon-font;
   width: 1.6em;

@@ -72,6 +72,12 @@ export default class Input extends Component<Props, State> {
       );
       return <div styleName={labelStyleName}>{this.props.label}</div>;
     })();
+    let prefixNode = (this.props.prefix !== undefined) && (
+      <div styleName="prefix">{this.props.prefix}</div>
+    );
+    let suffixNode = (this.props.suffix !== undefined) && (
+      <div styleName="suffix">{this.props.suffix}</div>
+    );
     let eyeNode = (this.props.type === "flexible") && (() => {
       let buttonStyleName = StyleNameUtil.create("eye", this.state.type);
       return <span styleName={buttonStyleName} onClick={this.toggleType.bind(this)}/>;
@@ -88,7 +94,9 @@ export default class Input extends Component<Props, State> {
         <label styleName="label-wrapper">
           {labelNode}
           <div styleName={inputStyleName}>
+            {prefixNode}
             <input styleName="input-inner" type={this.state.type} value={this.props.value} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.handleChange.bind(this)}/>
+            {suffixNode}
           </div>
           {eyeNode}
         </label>
@@ -104,6 +112,8 @@ export default class Input extends Component<Props, State> {
 type Props = {
   value: string,
   label?: string,
+  prefix?: ReactNode,
+  suffix?: ReactNode,
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
   usesTooltip: boolean,
