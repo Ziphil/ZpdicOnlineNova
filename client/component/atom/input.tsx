@@ -87,7 +87,9 @@ export default class Input extends Component<Props, State> {
       <div styleName="root" className={this.props.className}>
         <label styleName="label-wrapper">
           {labelNode}
-          <input styleName={inputStyleName} type={this.state.type} value={this.props.value} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.handleChange.bind(this)}/>
+          <div styleName={inputStyleName}>
+            <input styleName="input-inner" type={this.state.type} value={this.props.value} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.handleChange.bind(this)}/>
+          </div>
           {eyeNode}
         </label>
         {tooltipNode}

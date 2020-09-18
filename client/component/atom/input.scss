@@ -23,10 +23,22 @@
 
 .input {
   @include input(map-get($colors, primary));
+  display: inline-flex;
 }
 
 .input.error {
   @include input(map-get($colors, error));
+}
+
+.input-inner {
+  margin: 0px;
+  padding: 0px;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border: none;
+  outline: none;
+  flex-grow: 1;
 }
 
 .eye {
