@@ -13,6 +13,9 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  CancelablePromise
+} from "/client/util/cancelable";
+import {
   StyleNameUtil
 } from "/client/util/style-name";
 
@@ -31,6 +34,12 @@ export default class Button extends Component<Props, State> {
     loading: false
   };
 
+  private promise: CancelablePromise<void> | null = null;
+
+  public componentWillUnmount(): void {
+    this.promise?.cancel();
+  }
+
   private handleClick(event: MouseEvent<HTMLButtonElement>): void {
     event.preventDefault();
     let onClick = this.props.onClick;
@@ -39,8 +48,11 @@ export default class Button extends Component<Props, State> {
       if (onClick) {
         let result = onClick(event);
         if (typeof result === "object" && typeof result.then === "function") {
-          result.then(() => {
+          let promise = new CancelablePromise(result);
+          this.promise = promise;
+          promise.then(() => {
             this.setState({loading: false});
+          }).catch((error) => {
           });
         } else {
           this.setState({loading: false});
