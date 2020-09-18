@@ -94,7 +94,7 @@ export class DictionarySchema {
     let dictionary = new DictionaryModel({});
     dictionary.user = user;
     dictionary.editUsers = [];
-    dictionary.number = await DictionaryModel.nextNumber();
+    dictionary.number = await DictionaryModel.fetchNextNumber();
     dictionary.name = name;
     dictionary.status = "ready";
     dictionary.secret = false;
@@ -256,7 +256,7 @@ export class DictionarySchema {
       }
     } else {
       if (word.number === undefined) {
-        word.number = await this.nextWordNumber();
+        word.number = await this.fetchNextWordNumber();
       }
       resultWord = new WordModel(word);
       resultWord.dictionary = this;
@@ -396,7 +396,7 @@ export class DictionarySchema {
     }
   }
 
-  private async nextWordNumber(): Promise<number> {
+  private async fetchNextWordNumber(): Promise<number> {
     let words = await WordModel.find().where("dictionary", this).select("number").sort("-number").limit(1);
     if (words.length > 0) {
       return words[0].number + 1;
@@ -405,7 +405,7 @@ export class DictionarySchema {
     }
   }
 
-  private static async nextNumber(): Promise<number> {
+  private static async fetchNextNumber(): Promise<number> {
     let dictionaries = await DictionaryModel.find().select("number").sort("-number").limit(1);
     if (dictionaries.length > 0) {
       return dictionaries[0].number + 1;
