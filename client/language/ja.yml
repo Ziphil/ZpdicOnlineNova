@@ -179,7 +179,7 @@ deleteDictionaryForm:
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
 inviteEditDictionaryForm:
-  userName: "招待先ユーザー ID (「@」を除く)"
+  userName: "招待先ユーザー ID"
   confirm: "招待"
 uploadDictionaryForm:
   file: "ファイル"

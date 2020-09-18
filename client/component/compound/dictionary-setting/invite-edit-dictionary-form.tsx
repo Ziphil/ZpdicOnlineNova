@@ -60,7 +60,7 @@ export default class InviteEditDictionaryForm extends Component<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Input label={this.trans("inviteEditDictionaryForm.userName")} value={this.state.userName} onSet={(userName) => this.setState({userName})}/>
+          <Input label={this.trans("inviteEditDictionaryForm.userName")} value={this.state.userName} prefix="@" onSet={(userName) => this.setState({userName})}/>
           <Button label={this.trans("inviteEditDictionaryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
         </form>
         <div styleName="user">
