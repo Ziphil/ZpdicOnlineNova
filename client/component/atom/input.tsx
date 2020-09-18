@@ -20,7 +20,7 @@ export default class Input extends Component<Props, State> {
   public static defaultProps: DefaultProps = {
     value: "",
     type: "text",
-    usesTooltip: true,
+    useTooltip: true,
     readOnly: false,
     disabled: false
   };
@@ -116,7 +116,7 @@ type Props = {
   suffix?: ReactNode,
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
-  usesTooltip: boolean,
+  useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
@@ -126,7 +126,7 @@ type Props = {
 type DefaultProps = {
   value: string,
   type: "text" | "password" | "flexible",
-  usesTooltip: boolean,
+  useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean
 };
