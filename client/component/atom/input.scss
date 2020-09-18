@@ -5,6 +5,7 @@
 
 .root {
   position: relative;
+  display: block;
 }
 
 .label-wrapper {
@@ -111,4 +112,29 @@
   @include line-height($tooltip-line-height);
   margin: 0px;
   text-align: justify;
+}
+
+.suggestion {
+  display: none;
+}
+
+:focus-within +.suggestion {
+  width: 100%;
+  margin: -1px 0px 0px 0px;
+  background-color: white;
+  border: 1px $light-border-color solid;
+  border-radius: $small-border-radius;
+  box-sizing: border-box;
+  display: block;
+  position: absolute;
+  z-index: 50;
+}
+
+.suggestion-item {
+  padding: 0em 0.5em;
+}
+
+.suggestion-item:hover {
+  background-color: $background-color;
+  cursor: pointer;
 }

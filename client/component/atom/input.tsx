@@ -5,6 +5,9 @@ import {
   ChangeEvent,
   ReactNode
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Component from "/client/component/component";
 import {
   style
@@ -27,18 +30,17 @@ export default class Input extends Component<Props, State> {
 
   public constructor(props: any) {
     super(props);
-    let errorMessage = null;
     let type = this.props.type;
     if (type === "flexible") {
       type = "password";
     }
-    this.state = {type, errorMessage};
+    this.state = {type, errorMessage: null, suggestions: []};
   }
 
-  private handleChange(event: ChangeEvent<HTMLInputElement>): void {
+  private async handleChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
     let validate = this.props.validate;
     let value = event.target.value;
-    if (validate) {
+    if (validate !== undefined) {
       let errorMessage = validate(value);
       this.setState({errorMessage});
     } else {
@@ -49,6 +51,11 @@ export default class Input extends Component<Props, State> {
     }
     if (this.props.onSet) {
       this.props.onSet(value);
+    }
+    let suggest = this.props.suggest;
+    if (suggest !== undefined) {
+      let suggestions = await suggest(value);
+      this.setState({suggestions});
     }
   }
 
@@ -89,6 +96,22 @@ export default class Input extends Component<Props, State> {
         </p>
       </div>
     );
+    let suggestionNode = (this.state.suggestions.length > 0) && (() => {
+      let itemNodes = this.state.suggestions.map((suggestion, index) => {
+        let itemNode = (
+          <div styleName="suggestion-item" key={index}>
+            {suggestion.node}
+          </div>
+        );
+        return itemNode;
+      });
+      let suggestionNode = (
+        <div styleName="suggestion">
+          {itemNodes}
+        </div>
+      );
+      return suggestionNode;
+    })();
     let node = (
       <div styleName="root" className={this.props.className}>
         <label styleName="label-wrapper">
@@ -101,6 +124,7 @@ export default class Input extends Component<Props, State> {
           {eyeNode}
         </label>
         {tooltipNode}
+        {suggestionNode}
       </div>
     );
     return node;
@@ -116,6 +140,7 @@ type Props = {
   suffix?: ReactNode,
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
+  suggest?: (value: string) => AsyncOrSync<Array<{node: ReactNode, replacement: string}>>,
   useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean,
@@ -132,5 +157,6 @@ type DefaultProps = {
 };
 type State = {
   type: "text" | "password",
-  errorMessage: string | null
+  errorMessage: string | null,
+  suggestions: Array<{node: ReactNode, replacement: string}>
 };
