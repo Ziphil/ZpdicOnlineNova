@@ -10,9 +10,7 @@ import {
   compareSync,
   hashSync
 } from "bcrypt";
-import {
-  get as levenshtein
-} from "fast-levenshtein";
+import Fuse from "fuse.js";
 import {
   DictionaryModel
 } from "/server/model/dictionary";
@@ -102,18 +100,11 @@ export class UserSchema {
     return user;
   }
 
-  public static async suggest(query: string, range?: QueryRange): Promise<Array<User>> {
-    let iterable = UserModel.find() as unknown as AsyncIterable<User>;
-    let results = [];
-    for await (let user of iterable) {
-      let nameScore = levenshtein(query, user.name);
-      let screenNameScore = levenshtein(query, user.screenName);
-      let score = -Math.min(nameScore, screenNameScore);
-      results.push({user, score});
-    }
-    results.sort((first, second) => second.score - first.score);
-    let users = QueryRange.restrict(results.map((result) => result.user), range);
-    return users;
+  public static async suggest(pattern: string): Promise<Array<User>> {
+    let users = await UserModel.find();
+    let fuse = new Fuse(users, {keys: ["name", "screenName"]});
+    let hitUsers = fuse.search(pattern).map((result) => result.item);
+    return hitUsers;
   }
 
   public static async issueResetToken(name: string, email: string): Promise<{user: User, key: string}> {

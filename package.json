@@ -50,6 +50,7 @@
     "express-session": "^1.17.1",
     "fast-levenshtein": "^3.0.0",
     "file-loader": "^6.1.0",
+    "fuse.js": "^6.4.1",
     "html-webpack-plugin": "^4.4.1",
     "json-loader": "^0.5.7",
     "jsonwebtoken": "^8.5.1",
