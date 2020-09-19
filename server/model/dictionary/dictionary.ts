@@ -107,7 +107,7 @@ export class DictionarySchema {
   public static async findPublic(range?: QueryRange): Promise<WithSize<Dictionary>> {
     let query = DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
     let restrictedQuery = QueryRange.restrict(query, range);
-    let countQuery = DictionaryModel.countDocuments(query.getQuery());
+    let countQuery = DictionaryModel.countDocuments(query.getFilter());
     let result = await Promise.all([restrictedQuery, countQuery]);
     return result;
   }
@@ -130,7 +130,7 @@ export class DictionarySchema {
       if (authority === "own") {
         return ownQuery;
       } else {
-        return DictionaryModel.find().or([ownQuery.getQuery(), editQuery.getQuery()]);
+        return DictionaryModel.find().or([ownQuery.getFilter(), editQuery.getFilter()]);
       }
     })();
     let query = rawQuery.sort("-updatedDate -number");
@@ -309,7 +309,7 @@ export class DictionarySchema {
     let query = parameter.createQuery().where("dictionary", this).sort("name");
     let suggestionQuery = parameter.createSuggestionQuery()?.where("dictionary", this);
     let restrictedQuery = QueryRange.restrict(query, range);
-    let countQuery = WordModel.countDocuments(query.getQuery());
+    let countQuery = WordModel.countDocuments(query.getFilter());
     let hitSuggestionPromise = (async () => {
       if (suggestionQuery !== undefined) {
         let hitSuggestionWords = await suggestionQuery.exec();

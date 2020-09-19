@@ -33,9 +33,6 @@ import {
 import {
   createRandomString
 } from "/server/util/misc";
-import {
-  QueryRange
-} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "users"}})
@@ -102,7 +99,7 @@ export class UserSchema {
 
   public static async suggest(pattern: string): Promise<Array<User>> {
     let users = await UserModel.find();
-    let fuse = new Fuse(users, {keys: ["name", "screenName"]});
+    let fuse = new Fuse(users, {keys: ["name", "screenName"], threshold: 0.5, distance: 60});
     let hitUsers = fuse.search(pattern).map((result) => result.item);
     return hitUsers;
   }

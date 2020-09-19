@@ -45,8 +45,8 @@ export default class InviteEditDictionaryForm extends Component<Props, State> {
     }
   }
 
-  private async suggestUsers(query: string): Promise<Array<{node: ReactNode, replacement: string}>> {
-    let response = await this.requestGet("fetchUserSuggestion", {query}, true);
+  private async suggestUsers(pattern: string): Promise<Array<{node: ReactNode, replacement: string}>> {
+    let response = await this.requestGet("fetchUserSuggestion", {pattern}, true);
     if (response.status === 200 && !("error" in response.data)) {
       let users = response.data;
       let suggestions = users.map((user) => {

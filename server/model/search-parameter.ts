@@ -34,7 +34,7 @@ export class NormalSearchParameter {
   public createQuery(): Query<Array<Word>> {
     let keys = this.createKeys();
     let needle = this.createNeedle();
-    let eachQueries = keys.map((key) => WordModel.find().where(key, needle).getQuery());
+    let eachQueries = keys.map((key) => WordModel.find().where(key, needle).getFilter());
     let query = WordModel.find().or(eachQueries);
     return query;
   }

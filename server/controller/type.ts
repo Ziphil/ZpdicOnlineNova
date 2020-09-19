@@ -388,7 +388,7 @@ type ProcessType = {
   },
   fetchUserSuggestion: {
     get: {
-      request: {query: string},
+      request: {pattern: string},
       response: {
         200: Array<User>,
         400: never
