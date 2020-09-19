@@ -1,8 +1,8 @@
 //
 
-import * as glob from "glob";
+import glob from "glob";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
-import * as path from "path";
+import path from "path";
 import externals from "webpack-node-externals";
 
 
