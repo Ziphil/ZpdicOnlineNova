@@ -101,8 +101,8 @@ export class Main {
 
   // 内部処理で用いるディレクトリを用意します。
   private setupDirectories(): void {
-    fs.mkdirSync("./file/download");
-    fs.mkdirSync("./file/icon");
+    fs.mkdirSync("./file/download", {recursive: true});
+    fs.mkdirSync("./file/icon", {recursive: true});
   }
 
   // ルーターの設定を行います。

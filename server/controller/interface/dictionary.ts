@@ -343,7 +343,9 @@ export class DictionaryController extends Controller {
     let fileName = CastUtil.ensureString(request.query.fileName);
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let path = "./file/download/download.json";
+      let date = new Date();
+      let id = date.getTime();
+      let path = "./file/download/" + id + ".json";
       let fullFileName = (fileName || "dictionary") + ".json";
       await dictionary.download(path);
       response.download(path, fullFileName);
