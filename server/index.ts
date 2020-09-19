@@ -12,6 +12,7 @@ import {
   Request,
   Response
 } from "express";
+import fs from "fs";
 import mongoose from "mongoose";
 import {
   SchemaTypes
@@ -52,9 +53,9 @@ export class Main {
     this.setupBodyParsers();
     this.setupCookie();
     this.setupMulter();
-    this.setupRenderer();
     this.setupMongo();
     this.setupSendgrid();
+    this.setupDirectories();
     this.setupRouters();
     this.setupStatic();
     this.setupFallback();
@@ -78,16 +79,8 @@ export class Main {
   // ファイルをアップロードする処理を行う Multer の設定をします。
   // アップロードされたファイルは upload フォルダ内に保存するようにしています。
   private setupMulter(): void {
-    let middleware = multer({dest: "./upload/"}).single("file");
+    let middleware = multer({dest: "./file/upload/"}).single("file");
     this.application.use(middleware);
-  }
-
-  // HTML を出力するテンプレートエンジンの設定をします。
-  // フロントエンドには React を用いるのでこの設定は必要ありませんが、デバッグで利用するかもしれないので設定しておきます。
-  // とりあえず EJS を使う設定になっています。
-  private setupRenderer(): void {
-    this.application.set("views", process.cwd() + "/server/view");
-    this.application.set("view engine", "ejs");
   }
 
   // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
@@ -106,6 +99,12 @@ export class Main {
     sendgrid.setApiKey(SENDGRID_KEY);
   }
 
+  // 内部処理で用いるディレクトリを用意します。
+  private setupDirectories(): void {
+    fs.mkdirSync("./file/download");
+    fs.mkdirSync("./file/icon");
+  }
+
   // ルーターの設定を行います。
   // このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。
   private setupRouters(): void {
@@ -117,8 +116,8 @@ export class Main {
   }
 
   private setupStatic(): void {
-    let middleware = express.static("dist");
-    this.application.use(middleware);
+    this.application.use("/client", express.static(process.cwd() + "/dist/client"));
+    this.application.use("/static", express.static(process.cwd() + "/dist/static"));
   }
 
   // ルート以外にアクセスしたときのフォールバックの設定をします。
