@@ -1,22 +1,22 @@
 //
 
-import * as sendgrid from "@sendgrid/mail";
+import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
 import * as parser from "body-parser";
-import * as cookieParser from "cookie-parser";
+import cookieParser from "cookie-parser";
 import * as dotenv from "dotenv";
-import * as express from "express";
+import express from "express";
 import {
   Express,
   NextFunction,
   Request,
   Response
 } from "express";
-import * as mongoose from "mongoose";
+import mongoose from "mongoose";
 import {
   SchemaTypes
 } from "mongoose";
-import * as multer from "multer";
+import multer from "multer";
 import {
   DebugController,
   DictionaryController,

@@ -1,9 +1,9 @@
 //
 
 import * as glob from "glob";
-import * as MiniCssExtractPlugin from "mini-css-extract-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import * as path from "path";
-import * as externals from "webpack-node-externals";
+import externals from "webpack-node-externals";
 
 
 let config = {

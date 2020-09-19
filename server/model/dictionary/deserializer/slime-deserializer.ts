@@ -3,7 +3,7 @@
 import {
   createReadStream
 } from "fs";
-import * as oboe from "oboe";
+import oboe from "oboe";
 import {
   EquivalentModel,
   InformationModel,
