@@ -71,10 +71,6 @@
 }
 
 .tooltip {
-  display: none;
-}
-
-:focus-within +.tooltip {
   margin: 10px 0px 0px 0px;
   padding: 6px 8px;
   font-size: 80%;
@@ -82,13 +78,17 @@
   background-color: background-color(map-get($colors, error));
   border: 1px border-color(map-get($colors, error)) solid;
   border-radius: $small-border-radius;
-  display: block;
+  display: none;
   position: absolute;
   pointer-events: none;
   z-index: 50;
 }
 
-:focus-within +.tooltip::before {
+:focus-within +.tooltip {
+  display: block;
+}
+
+.tooltip::before {
   top: -16px;
   left: 20px;
   margin-left: -8px;
@@ -98,7 +98,7 @@
   content: "";
 }
 
-:focus-within +.tooltip::after {
+.tooltip::after {
   top: -15px;
   left: 20px;
   margin-left: -8px;
@@ -115,23 +115,24 @@
 }
 
 .suggestion {
-  display: none;
-}
-
-:focus-within +.suggestion {
   width: 100%;
   margin: -1px 0px 0px 0px;
   background-color: white;
   border: 1px $light-border-color solid;
   border-radius: $small-border-radius;
   box-sizing: border-box;
-  display: block;
+  display: none;
   position: absolute;
   z-index: 50;
 }
 
+:focus-within .suggestion {
+  display: block;
+}
+
 .suggestion-item {
   padding: 0em 0.5em;
+  outline: none;
 }
 
 .suggestion-item:hover {

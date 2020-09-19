@@ -13,6 +13,9 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  debounce
+} from "/client/util/decorator";
+import {
   StyleNameUtil
 } from "/client/util/style-name";
 
@@ -38,20 +41,29 @@ export default class Input extends Component<Props, State> {
   }
 
   private async handleChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
-    let validate = this.props.validate;
     let value = event.target.value;
+    this.updateValue(value);
+    this.updateSuggestions(value);
+    if (this.props.onChange) {
+      this.props.onChange(event);
+    }
+  }
+
+  private updateValue(value: string): void {
+    let validate = this.props.validate;
     if (validate !== undefined) {
       let errorMessage = validate(value);
       this.setState({errorMessage});
     } else {
       this.setState({errorMessage: null});
     }
-    if (this.props.onChange) {
-      this.props.onChange(event);
-    }
     if (this.props.onSet) {
       this.props.onSet(value);
     }
+  }
+
+  @debounce(500)
+  private async updateSuggestions(value: string): Promise<void> {
     let suggest = this.props.suggest;
     if (suggest !== undefined) {
       let suggestions = await suggest(value);
@@ -99,7 +111,7 @@ export default class Input extends Component<Props, State> {
     let suggestionNode = (this.state.suggestions.length > 0) && (() => {
       let itemNodes = this.state.suggestions.map((suggestion, index) => {
         let itemNode = (
-          <div styleName="suggestion-item" key={index}>
+          <div styleName="suggestion-item" key={index} tabIndex={0} onClick={() => this.updateValue(suggestion.replacement)}>
             {suggestion.node}
           </div>
         );
@@ -113,8 +125,8 @@ export default class Input extends Component<Props, State> {
       return suggestionNode;
     })();
     let node = (
-      <div styleName="root" className={this.props.className}>
-        <label styleName="label-wrapper">
+      <label styleName="root" className={this.props.className}>
+        <div styleName="label-wrapper">
           {labelNode}
           <div styleName={inputStyleName}>
             {prefixNode}
@@ -122,10 +134,10 @@ export default class Input extends Component<Props, State> {
             {suffixNode}
           </div>
           {eyeNode}
-        </label>
+        </div>
         {tooltipNode}
         {suggestionNode}
-      </div>
+      </label>
     );
     return node;
   }
