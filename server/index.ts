@@ -2,9 +2,9 @@
 
 import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
-import * as parser from "body-parser";
+import parser from "body-parser";
 import cookieParser from "cookie-parser";
-import * as dotenv from "dotenv";
+import dotenv from "dotenv";
 import express from "express";
 import {
   Express,

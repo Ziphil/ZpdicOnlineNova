@@ -1,7 +1,6 @@
 //
 
 import {
-  Document,
   Query
 } from "mongoose";
 
