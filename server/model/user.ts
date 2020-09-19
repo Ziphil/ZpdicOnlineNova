@@ -11,6 +11,9 @@ import {
   hashSync
 } from "bcrypt";
 import {
+  get as levenshtein
+} from "fast-levenshtein";
+import {
   DictionaryModel
 } from "/server/model/dictionary";
 import {
@@ -32,6 +35,9 @@ import {
 import {
   createRandomString
 } from "/server/util/misc";
+import {
+  QueryRange
+} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "users"}})
@@ -94,6 +100,20 @@ export class UserSchema {
   public static async findOneAdministrator(): Promise<User | null> {
     let user = await UserModel.findOne().where("authority", "admin");
     return user;
+  }
+
+  public static async suggest(query: string, range?: QueryRange): Promise<Array<User>> {
+    let iterable = UserModel.find() as unknown as AsyncIterable<User>;
+    let results = [];
+    for await (let user of iterable) {
+      let nameScore = levenshtein(query, user.name);
+      let screenNameScore = levenshtein(query, user.screenName);
+      let score = -Math.min(nameScore, screenNameScore);
+      results.push({user, score});
+    }
+    results.sort((first, second) => second.score - first.score);
+    let users = QueryRange.restrict(results.map((result) => result.user), range);
+    return users;
   }
 
   public static async issueResetToken(name: string, email: string): Promise<{user: User, key: string}> {
