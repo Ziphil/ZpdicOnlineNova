@@ -181,7 +181,7 @@ deleteDictionaryForm:
     You cannot restore it hereafter.
     Are you really sure?
 inviteEditDictionaryForm:
-  userName: "User ID to invite (without “@”)"
+  userName: "User ID to invite"
   confirm: "Confirm"
 uploadDictionaryForm:
   file: "File"

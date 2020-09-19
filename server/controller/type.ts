@@ -59,6 +59,7 @@ export const SERVER_PATH = {
   resetUserPassword: "/api/user/reset/reset",
   deleteUser: "/api/user/delete",
   fetchUser: "/api/user/info",
+  fetchUserSuggestion: "/api/user/suggestion",
   addNotification: "/api/notification/add",
   fetchNotifications: "/api/notification/list",
   contact: "/api/other/contact"
@@ -380,6 +381,16 @@ type ProcessType = {
       request: {},
       response: {
         200: DetailedUser,
+        400: never
+      }
+    },
+    post: Noop
+  },
+  fetchUserSuggestion: {
+    get: {
+      request: {query: string},
+      response: {
+        200: Array<User>,
         400: never
       }
     },

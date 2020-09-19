@@ -5,10 +5,16 @@ import {
   ChangeEvent,
   ReactNode
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Component from "/client/component/component";
 import {
   style
 } from "/client/component/decorator";
+import {
+  debounce
+} from "/client/util/decorator";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
@@ -20,35 +26,48 @@ export default class Input extends Component<Props, State> {
   public static defaultProps: DefaultProps = {
     value: "",
     type: "text",
-    usesTooltip: true,
+    useTooltip: true,
     readOnly: false,
     disabled: false
   };
 
   public constructor(props: any) {
     super(props);
-    let errorMessage = null;
     let type = this.props.type;
     if (type === "flexible") {
       type = "password";
     }
-    this.state = {type, errorMessage};
+    this.state = {type, errorMessage: null, suggestions: []};
   }
 
-  private handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    let validate = this.props.validate;
+  private async handleChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
     let value = event.target.value;
-    if (validate) {
+    this.updateValue(value);
+    this.updateSuggestions(value);
+    if (this.props.onChange) {
+      this.props.onChange(event);
+    }
+  }
+
+  private updateValue(value: string): void {
+    let validate = this.props.validate;
+    if (validate !== undefined) {
       let errorMessage = validate(value);
       this.setState({errorMessage});
     } else {
       this.setState({errorMessage: null});
     }
-    if (this.props.onChange) {
-      this.props.onChange(event);
-    }
     if (this.props.onSet) {
       this.props.onSet(value);
+    }
+  }
+
+  @debounce(500)
+  private async updateSuggestions(value: string): Promise<void> {
+    let suggest = this.props.suggest;
+    if (suggest !== undefined) {
+      let suggestions = await suggest(value);
+      this.setState({suggestions});
     }
   }
 
@@ -72,6 +91,12 @@ export default class Input extends Component<Props, State> {
       );
       return <div styleName={labelStyleName}>{this.props.label}</div>;
     })();
+    let prefixNode = (this.props.prefix !== undefined) && (
+      <div styleName="prefix">{this.props.prefix}</div>
+    );
+    let suffixNode = (this.props.suffix !== undefined) && (
+      <div styleName="suffix">{this.props.suffix}</div>
+    );
     let eyeNode = (this.props.type === "flexible") && (() => {
       let buttonStyleName = StyleNameUtil.create("eye", this.state.type);
       return <span styleName={buttonStyleName} onClick={this.toggleType.bind(this)}/>;
@@ -83,15 +108,36 @@ export default class Input extends Component<Props, State> {
         </p>
       </div>
     );
+    let suggestionNode = (this.state.suggestions.length > 0) && (() => {
+      let itemNodes = this.state.suggestions.map((suggestion, index) => {
+        let itemNode = (
+          <div styleName="suggestion-item" key={index} tabIndex={0} onClick={() => this.updateValue(suggestion.replacement)}>
+            {suggestion.node}
+          </div>
+        );
+        return itemNode;
+      });
+      let suggestionNode = (
+        <div styleName="suggestion">
+          {itemNodes}
+        </div>
+      );
+      return suggestionNode;
+    })();
     let node = (
-      <div styleName="root" className={this.props.className}>
-        <label styleName="label-wrapper">
+      <label styleName="root" className={this.props.className}>
+        <div styleName="label-wrapper">
           {labelNode}
-          <input styleName={inputStyleName} type={this.state.type} value={this.props.value} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.handleChange.bind(this)}/>
+          <div styleName={inputStyleName}>
+            {prefixNode}
+            <input styleName="input-inner" type={this.state.type} value={this.props.value} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.handleChange.bind(this)}/>
+            {suffixNode}
+          </div>
           {eyeNode}
-        </label>
+        </div>
         {tooltipNode}
-      </div>
+        {suggestionNode}
+      </label>
     );
     return node;
   }
@@ -102,9 +148,12 @@ export default class Input extends Component<Props, State> {
 type Props = {
   value: string,
   label?: string,
+  prefix?: ReactNode,
+  suffix?: ReactNode,
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
-  usesTooltip: boolean,
+  suggest?: (value: string) => AsyncOrSync<Array<{node: ReactNode, replacement: string}>>,
+  useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean,
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
@@ -114,11 +163,12 @@ type Props = {
 type DefaultProps = {
   value: string,
   type: "text" | "password" | "flexible",
-  usesTooltip: boolean,
+  useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean
 };
 type State = {
   type: "text" | "password",
-  errorMessage: string | null
+  errorMessage: string | null,
+  suggestions: Array<{node: ReactNode, replacement: string}>
 };

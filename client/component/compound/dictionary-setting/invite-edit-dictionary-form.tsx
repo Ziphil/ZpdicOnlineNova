@@ -9,6 +9,7 @@ import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
 import UserList from "/client/component/compound/user-list";
+import UserSuggestionPane from "/client/component/compound/user-suggestion-pane";
 import {
   style
 } from "/client/component/decorator";
@@ -44,6 +45,21 @@ export default class InviteEditDictionaryForm extends Component<Props, State> {
     }
   }
 
+  private async suggestUsers(query: string): Promise<Array<{node: ReactNode, replacement: string}>> {
+    let response = await this.requestGet("fetchUserSuggestion", {query}, true);
+    if (response.status === 200 && !("error" in response.data)) {
+      let users = response.data;
+      let suggestions = users.map((user) => {
+        let node = <UserSuggestionPane user={user}/>;
+        let replacement = user.name;
+        return {node, replacement};
+      });
+      return suggestions;
+    } else {
+      return [];
+    }
+  }
+
   private async handleClick(): Promise<void> {
     let number = this.props.number;
     let userName = this.state.userName;
@@ -60,7 +76,7 @@ export default class InviteEditDictionaryForm extends Component<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Input label={this.trans("inviteEditDictionaryForm.userName")} value={this.state.userName} onSet={(userName) => this.setState({userName})}/>
+          <Input label={this.trans("inviteEditDictionaryForm.userName")} value={this.state.userName} prefix="@" suggest={this.suggestUsers.bind(this)} onSet={(userName) => this.setState({userName})}/>
           <Button label={this.trans("inviteEditDictionaryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
         </form>
         <div styleName="user">

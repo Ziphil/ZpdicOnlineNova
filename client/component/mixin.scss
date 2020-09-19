@@ -222,7 +222,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   @if $dye {
     background-color: tint($color, 90%);
   }
-  &:focus {
+  &:focus-within {
     box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color), $focus-box-shadow-setting focus-box-shadow-color($color);
   }
 }

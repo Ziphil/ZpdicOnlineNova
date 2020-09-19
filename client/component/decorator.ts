@@ -29,11 +29,11 @@ export function style(style: any, options: DecoratorOptions = {}): ClassDecorato
     if (style !== null && style !== undefined) {
       component = css(style, {allowMultiple: true, handleNotFoundStyleName: "ignore"})(component);
     }
-    if (nextOptions.withRouter) {
-      component = wrappedWithRouter(component);
-    }
     if (nextOptions.observer) {
       component = wrappedObserver(component);
+    }
+    if (nextOptions.withRouter) {
+      component = wrappedWithRouter(component);
     }
     if (nextOptions.inject) {
       component = wrappedInject(component);

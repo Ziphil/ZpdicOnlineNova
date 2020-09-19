@@ -35,6 +35,9 @@ import {
   MailUtil
 } from "/server/util/mail";
 import {
+  QueryRange
+} from "/server/util/query";
+import {
   RecaptchaUtil
 } from "/server/util/recaptcha";
 
@@ -226,6 +229,14 @@ export class UserController extends Controller {
   public async [Symbol()](request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
     let user = request.user!;
     let body = UserCreator.createDetailed(user);
+    Controller.respond(response, body);
+  }
+
+  @get(SERVER_PATH["fetchUserSuggestion"])
+  public async [Symbol()](request: GetRequest<"fetchUserSuggestion">, response: GetResponse<"fetchUserSuggestion">): Promise<void> {
+    let query = CastUtil.ensureString(request.query.query);
+    let users = await UserModel.suggest(query);
+    let body = users.map(UserCreator.create);
     Controller.respond(response, body);
   }
 

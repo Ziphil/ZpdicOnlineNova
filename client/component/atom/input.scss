@@ -5,6 +5,7 @@
 
 .root {
   position: relative;
+  display: block;
 }
 
 .label-wrapper {
@@ -23,10 +24,27 @@
 
 .input {
   @include input(map-get($colors, primary));
+  display: inline-flex;
 }
 
 .input.error {
   @include input(map-get($colors, error));
+}
+
+.input-inner {
+  margin: 0px;
+  padding: 0px;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border: none;
+  outline: none;
+  flex-grow: 1;
+}
+
+.prefix,
+.suffix {
+  display: inline-block;
 }
 
 .eye {
@@ -53,10 +71,6 @@
 }
 
 .tooltip {
-  display: none;
-}
-
-:focus-within +.tooltip {
   margin: 10px 0px 0px 0px;
   padding: 6px 8px;
   font-size: 80%;
@@ -64,13 +78,17 @@
   background-color: background-color(map-get($colors, error));
   border: 1px border-color(map-get($colors, error)) solid;
   border-radius: $small-border-radius;
-  display: block;
+  display: none;
   position: absolute;
   pointer-events: none;
   z-index: 50;
 }
 
-:focus-within +.tooltip::before {
+:focus-within +.tooltip {
+  display: block;
+}
+
+.tooltip::before {
   top: -16px;
   left: 20px;
   margin-left: -8px;
@@ -80,7 +98,7 @@
   content: "";
 }
 
-:focus-within +.tooltip::after {
+.tooltip::after {
   top: -15px;
   left: 20px;
   margin-left: -8px;
@@ -94,4 +112,30 @@
   @include line-height($tooltip-line-height);
   margin: 0px;
   text-align: justify;
+}
+
+.suggestion {
+  width: 100%;
+  margin: -1px 0px 0px 0px;
+  background-color: white;
+  border: 1px $light-border-color solid;
+  border-radius: $small-border-radius;
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  z-index: 50;
+}
+
+:focus-within >.suggestion {
+  display: block;
+}
+
+.suggestion-item {
+  padding: 0.42em 0.5em;
+  outline: none;
+}
+
+.suggestion-item:hover {
+  background-color: $background-color;
+  cursor: pointer;
 }

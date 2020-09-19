@@ -43,7 +43,7 @@ export default class ChangeUserPasswordForm extends Component<Props, State> {
     let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidUserPassword"));
     let node = (
       <form styleName="root">
-        <Input label={this.trans("changeUserPasswordForm.password")} type="flexible" value={this.state.password} validate={validate} usesTooltip={true} onSet={(password) => this.setState({password})}/>
+        <Input label={this.trans("changeUserPasswordForm.password")} type="flexible" value={this.state.password} validate={validate} useTooltip={true} onSet={(password) => this.setState({password})}/>
         <Button label={this.trans("changeUserPasswordForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );

@@ -10,6 +10,7 @@ import {
   compareSync,
   hashSync
 } from "bcrypt";
+import Fuse from "fuse.js";
 import {
   DictionaryModel
 } from "/server/model/dictionary";
@@ -32,6 +33,9 @@ import {
 import {
   createRandomString
 } from "/server/util/misc";
+import {
+  QueryRange
+} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "users"}})
@@ -94,6 +98,13 @@ export class UserSchema {
   public static async findOneAdministrator(): Promise<User | null> {
     let user = await UserModel.findOne().where("authority", "admin");
     return user;
+  }
+
+  public static async suggest(pattern: string): Promise<Array<User>> {
+    let users = await UserModel.find();
+    let fuse = new Fuse(users, {keys: ["name", "screenName"]});
+    let hitUsers = fuse.search(pattern).map((result) => result.item);
+    return hitUsers;
   }
 
   public static async issueResetToken(name: string, email: string): Promise<{user: User, key: string}> {

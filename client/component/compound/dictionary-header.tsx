@@ -17,9 +17,6 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
-
-
 @style(require("./dictionary-header.scss"))
 export default class DictionaryHeader extends Component<Props, State> {
 
@@ -65,11 +62,15 @@ export default class DictionaryHeader extends Component<Props, State> {
     let downloadButtonNode = (this.props.showDownloadLink) && (
       <Button label={this.trans("dictionaryHeader.download")} iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={this.downloadDictionary.bind(this)}/>
     );
-    let editorNode = (this.props.dictionary && this.state.editorOpen) && (
-      <Suspense fallback="">
-        <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>
-      </Suspense>
-    );
+    let editorNode = (this.props.dictionary && this.state.editorOpen) && (() => {
+      let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
+      let editorNode = (
+        <Suspense fallback="">
+          <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>
+        </Suspense>
+      );
+      return editorNode;
+    })();
     let node = (
       <header styleName="root">
         <div styleName="container">
