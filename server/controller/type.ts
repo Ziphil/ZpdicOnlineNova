@@ -42,6 +42,7 @@ export const SERVER_PATH = {
   searchDictionary: "/api/dictionary/search",
   downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
+  fetchDictionaryTitles: "/api/dictionary/title",
   fetchDictionaryAuthorizedUsers: "/api/dictionary/user",
   fetchWholeDictionary: "/api/dictionary/whole",
   fetchDictionaries: "/api/dictionary/list",
@@ -212,6 +213,16 @@ type ProcessType = {
       response: {
         200: Dictionary,
         400: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
+      }
+    },
+    post: Noop
+  },
+  fetchDictionaryTitles: {
+    get: {
+      request: {number: number},
+      response: {
+        200: DictionaryTitles,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     },
     post: Noop
@@ -428,6 +439,10 @@ type ProcessType = {
   }
 };
 
+export type WithSize<T> = [Array<T>, number];
+export type DictionaryTitleKey = "equivalentTitles" | "tags" | "informationTitles" | "variationTitles" | "relationTitles";
+export type DictionaryTitles = {[K in DictionaryTitleKey]: Array<string>};
+
 export type MethodType = "get" | "post";
 export type StatusType = 200 | 400;
 export type ProcessName = keyof ProcessType;
@@ -435,7 +450,5 @@ export type ProcessName = keyof ProcessType;
 export type RequestType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["request"];
 export type ResponseType<N extends ProcessName, M extends MethodType> = ValueOf<ProcessType[N][M]["response"]>;
 export type ResponseTypeSep<N extends ProcessName, M extends MethodType, S extends StatusType> = ProcessType[N][M]["response"][S];
-
-export type WithSize<T> = [Array<T>, number];
 
 type Noop = {request: never, response: never};

@@ -10,6 +10,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  DictionaryTitles,
   WithSize
 } from "/server/controller/type";
 import {
@@ -237,6 +238,28 @@ export class DictionarySchema {
   public async getWords(): Promise<Array<Word>> {
     let words = await WordModel.find().where("dictionary", this);
     return words;
+  }
+
+  public async getTitles(this: Dictionary): Promise<DictionaryTitles> {
+    let propertyNames = ["equivalent", "tag", "information", "variation", "relation"];
+    let query = WordModel.find().where("dictionary", this);
+    let distinctQueries = propertyNames.map((propertyName) => {
+      if (propertyName === "equivalent") {
+        return WordModel.find(query.getFilter()).distinct("equivalents.title");
+      } else if (propertyName === "tag") {
+        return WordModel.find(query.getFilter()).distinct("tags");
+      } else if (propertyName === "information") {
+        return WordModel.find(query.getFilter()).distinct("informations.title");
+      } else if (propertyName === "variation") {
+        return WordModel.find(query.getFilter()).distinct("variations.title");
+      } else if (propertyName === "relation") {
+        return WordModel.find(query.getFilter()).distinct("relations.title");
+      } else {
+        throw new Error("cannot happen");
+      }
+    });
+    let [equivalentTitles, tags, informationTitles, variationTitles, relationTitles] = await Promise.all(distinctQueries);
+    return {equivalentTitles, tags, informationTitles, variationTitles, relationTitles};
   }
 
   // この辞書に登録されている単語を編集します。

@@ -381,6 +381,20 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @get(SERVER_PATH["fetchDictionaryTitles"])
+  public async [Symbol()](request: GetRequest<"fetchDictionaryTitles">, response: GetResponse<"fetchDictionaryTitles">): Promise<void> {
+    let number = CastUtil.ensureNumber(request.query.number);
+    let dictionary = await DictionaryModel.findOneByNumber(number);
+    if (dictionary) {
+      let titles = await dictionary.getTitles();
+      let body = titles;
+      Controller.respond(response, body);
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
   @get(SERVER_PATH["fetchDictionaryAuthorizedUsers"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: GetRequest<"fetchDictionaryAuthorizedUsers">, response: GetResponse<"fetchDictionaryAuthorizedUsers">): Promise<void> {
