@@ -30,7 +30,8 @@ import {
   StyleNameUtil
 } from "/client/util/style-name";
 import {
-  DictionaryTitleKey
+  DictionaryTitleKey,
+  DictionaryTitles
 } from "/server/controller/type";
 import {
   Dictionary,
@@ -46,6 +47,7 @@ import {
 @style(require("./word-editor.scss"))
 export default class WordEditor extends Component<Props, State> {
 
+  private titles: DictionaryTitles | null = null;
   private fuses: {[K in DictionaryTitleKey]: Fuse<string>} | null = null;
   private editingRelationIndex: number | null = null;
 
@@ -65,6 +67,7 @@ export default class WordEditor extends Component<Props, State> {
       let titles = response.data;
       let options = {threshold: 1, distance: 40};
       let fuses = Object.fromEntries(Object.entries(titles).map(([key, strings]) => [key, new Fuse(strings, options)]));
+      this.titles = titles;
       this.fuses = fuses as any;
     }
   }
@@ -113,11 +116,17 @@ export default class WordEditor extends Component<Props, State> {
   private getSuggest(key: DictionaryTitleKey): (value: string) => Array<{node: ReactNode, replacement: string}> {
     let outerThis = this;
     let suggest = function (pattern: string): Array<{node: ReactNode, replacement: string}> {
-      if (outerThis.fuses !== null) {
-        let fuse = outerThis.fuses[key];
-        let hitStrings = fuse.search(pattern).map((result) => result.item);
-        let suggestions = hitStrings.map((hitString) => ({node: hitString, replacement: hitString}));
-        return suggestions;
+      if (outerThis.titles !== null && outerThis.fuses !== null) {
+        if (pattern !== "") {
+          let fuse = outerThis.fuses[key];
+          let strings = fuse.search(pattern).map((result) => result.item);
+          let suggestions = strings.map((string) => ({node: string, replacement: string}));
+          return suggestions;
+        } else {
+          let strings = outerThis.titles[key];
+          let suggestions = strings.map((string) => ({node: string, replacement: string}));
+          return suggestions;
+        }
       } else {
         return [];
       }
