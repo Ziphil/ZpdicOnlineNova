@@ -157,7 +157,7 @@ type Props = {
   suffix?: ReactNode,
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
-  suggest?: (value: string) => AsyncOrSync<Array<{node: ReactNode, replacement: string}>>,
+  suggest?: (pattern: string) => AsyncOrSync<Array<{node: ReactNode, replacement: string}>>,
   useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean,
