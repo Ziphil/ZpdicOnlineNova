@@ -413,16 +413,11 @@ export default class WordEditor extends Component<Props, State> {
   }
 
   private renderAlert(): ReactNode {
-    let text = `
-      この単語データを永久に削除します。
-      削除した後にデータを戻すことはできません。
-      本当によろしいですか?
-    `;
     let node = (
       <Alert
-        text={text}
+        text={this.trans("wordEditor.alert")}
         iconLabel="&#xF071;"
-        confirmLabel="削除"
+        confirmLabel={this.trans("wordEditor.alertConfirm")}
         open={this.state.alertOpen}
         outsideClosable={true}
         onClose={() => this.setState({alertOpen: false})}
@@ -436,7 +431,7 @@ export default class WordEditor extends Component<Props, State> {
     let page = (this.state.relationChooserOpen) ? 1 : 0;
     let node = (
       <Fragment>
-        <Overlay size="large" title="単語編集" page={page} open={this.props.open} onClose={this.props.onClose} onBack={() => this.setState({relationChooserOpen: false})}>
+        <Overlay size="large" title={this.trans("wordEditor.title")} page={page} open={this.props.open} onClose={this.props.onClose} onBack={() => this.setState({relationChooserOpen: false})}>
           {this.renderEditor()}
           {this.renderRelationChooser()}
         </Overlay>

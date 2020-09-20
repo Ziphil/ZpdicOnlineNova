@@ -247,6 +247,7 @@ userPane:
     このユーザーの編集権限を解除します。
     本当によろしいですか?
 wordEditor:
+  title: "単語編集"
   name: "単語"
   tag: "タグ"
   equivalentTitle: "分類"
@@ -260,6 +261,11 @@ wordEditor:
   delete: "削除"
   confirm: "決定"
   selectRelation: "変更"
+  alertConfirm: "削除"
+  alert: >-
+    この単語データを永久に削除します。
+    削除した後にデータを戻すことはできません。
+    本当によろしいですか?
 wordPane:
   edit: "編集"
   submit: "決定"

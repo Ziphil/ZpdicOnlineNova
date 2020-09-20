@@ -249,6 +249,7 @@ userPane:
     The permission of this user will be revoked.
     Are you really sure?
 wordEditor:
+  title: "Edit word"
   name: "Word"
   tag: "Tag"
   equivalentTitle: "Title"
@@ -262,6 +263,11 @@ wordEditor:
   delete: "Delete"
   confirm: "Confirm"
   selectRelation: "Select"
+  alertConfirm: "Delete"
+  alert: >-
+    This word will be deleted parmanently.
+    You cannot restore it hereafter.
+    Are you really sure?
 wordPane:
   edit: "Edit"
   submit: "Select"
