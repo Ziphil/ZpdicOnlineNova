@@ -345,7 +345,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       let date = new Date();
       let id = date.getTime();
-      let path = "./file/download/" + id + ".json";
+      let path = "./dist/download/" + id + ".json";
       let fullFileName = (fileName || "dictionary") + ".json";
       await dictionary.download(path);
       response.download(path, fullFileName);

@@ -79,7 +79,7 @@ export class Main {
   // ファイルをアップロードする処理を行う Multer の設定をします。
   // アップロードされたファイルは upload フォルダ内に保存するようにしています。
   private setupMulter(): void {
-    let middleware = multer({dest: "./file/upload/"}).single("file");
+    let middleware = multer({dest: "./dist/upload/"}).single("file");
     this.application.use(middleware);
   }
 
@@ -101,8 +101,7 @@ export class Main {
 
   // 内部処理で用いるディレクトリを用意します。
   private setupDirectories(): void {
-    fs.mkdirSync("./file/download", {recursive: true});
-    fs.mkdirSync("./file/icon", {recursive: true});
+    fs.mkdirSync("./dist/download", {recursive: true});
   }
 
   // ルーターの設定を行います。
