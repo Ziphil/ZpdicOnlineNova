@@ -128,7 +128,7 @@
   z-index: 50;
 }
 
-:focus-within >.suggestion {
+:focus-within +.suggestion {
   display: block;
 }
 

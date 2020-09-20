@@ -30,6 +30,11 @@ export default class Input extends Component<Props, State> {
     readOnly: false,
     disabled: false
   };
+  public state: State = {
+    type: undefined as any,
+    errorMessage: null,
+    suggestions: []
+  };
 
   public constructor(props: any) {
     super(props);
@@ -37,7 +42,7 @@ export default class Input extends Component<Props, State> {
     if (type === "flexible") {
       type = "password";
     }
-    this.state = {type, errorMessage: null, suggestions: []};
+    this.state.type = type;
   }
 
   private async handleChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
@@ -111,7 +116,7 @@ export default class Input extends Component<Props, State> {
     let suggestionNode = (this.state.suggestions.length > 0) && (() => {
       let itemNodes = this.state.suggestions.map((suggestion, index) => {
         let itemNode = (
-          <div styleName="suggestion-item" key={index} tabIndex={0} onClick={() => this.updateValue(suggestion.replacement)}>
+          <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={() => this.updateValue(suggestion.replacement)}>
             {suggestion.node}
           </div>
         );
@@ -125,8 +130,8 @@ export default class Input extends Component<Props, State> {
       return suggestionNode;
     })();
     let node = (
-      <label styleName="root" className={this.props.className}>
-        <div styleName="label-wrapper">
+      <div styleName="root" className={this.props.className}>
+        <label styleName="label-wrapper">
           {labelNode}
           <div styleName={inputStyleName}>
             {prefixNode}
@@ -134,10 +139,10 @@ export default class Input extends Component<Props, State> {
             {suffixNode}
           </div>
           {eyeNode}
-        </div>
+        </label>
         {tooltipNode}
         {suggestionNode}
-      </label>
+      </div>
     );
     return node;
   }
