@@ -1,5 +1,6 @@
 //
 
+import Fuse from "fuse.js";
 import cloneDeep from "lodash-es/cloneDeep";
 import * as react from "react";
 import {
@@ -29,6 +30,9 @@ import {
   StyleNameUtil
 } from "/client/util/style-name";
 import {
+  DictionaryTitleKey
+} from "/server/controller/type";
+import {
   Dictionary,
   EditWord,
   Equivalent,
@@ -42,6 +46,7 @@ import {
 @style(require("./word-editor.scss"))
 export default class WordEditor extends Component<Props, State> {
 
+  private fuses: {[K in DictionaryTitleKey]: Fuse<string>} | null = null;
   private editingRelationIndex: number | null = null;
 
   public constructor(props: Props) {
@@ -51,6 +56,17 @@ export default class WordEditor extends Component<Props, State> {
     let relationChooserOpen = false;
     let alertOpen = false;
     this.state = {word, equivalentStrings, relationChooserOpen, alertOpen};
+  }
+
+  public async componentDidMount(): Promise<void> {
+    let number = this.props.dictionary.number;
+    let response = await this.requestGet("fetchDictionaryTitles", {number}, true);
+    if (response.status === 200 && !("error" in response.data)) {
+      let titles = response.data;
+      let options = {threshold: 1, distance: 40};
+      let fuses = Object.fromEntries(Object.entries(titles).map(([key, strings]) => [key, new Fuse(strings, options)]));
+      this.fuses = fuses as any;
+    }
   }
 
   private async editWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
@@ -94,6 +110,21 @@ export default class WordEditor extends Component<Props, State> {
     this.setState({relationChooserOpen: true});
   }
 
+  private getSuggest(key: DictionaryTitleKey): (value: string) => Array<{node: ReactNode, replacement: string}> {
+    let outerThis = this;
+    let suggest = function (pattern: string): Array<{node: ReactNode, replacement: string}> {
+      if (outerThis.fuses !== null) {
+        let fuse = outerThis.fuses[key];
+        let hitStrings = fuse.search(pattern).map((result) => result.item);
+        let suggestions = hitStrings.map((hitString) => ({node: hitString, replacement: hitString}));
+        return suggestions;
+      } else {
+        return [];
+      }
+    };
+    return suggest;
+  }
+
   private renderName(): ReactNode {
     let word = this.state.word;
     let node = (
@@ -107,12 +138,13 @@ export default class WordEditor extends Component<Props, State> {
   private renderTags(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
+    let suggest = this.getSuggest("tags");
     let innerNodes = word.tags.map((tag, index) => {
       let label = (index === 0) ? this.trans("wordEditor.tag") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
-            <Input className={styles["title"]} value={tag} label={label} onSet={this.setWord((tag) => word.tags[index] = tag)}/>
+            <Input className={styles["title"]} value={tag} label={label} suggest={suggest} onSet={this.setWord((tag) => word.tags[index] = tag)}/>
           </div>
           <div styleName="control-button">
             <ControlGroup>
@@ -143,13 +175,14 @@ export default class WordEditor extends Component<Props, State> {
     let word = this.state.word;
     let equivalentStrings = this.state.equivalentStrings;
     let styles = this.props.styles!;
+    let suggest = this.getSuggest("equivalentTitles");
     let innerNodes = word.equivalents.map((equivalent, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.equivalentTitle") : undefined;
       let nameLabel = (index === 0) ? this.trans("wordEditor.equivalentNames") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
-            <Input className={styles["title"]} value={equivalent.title} label={titleLabel} onSet={this.setWord((title) => word.equivalents[index].title = title)}/>
+            <Input className={styles["title"]} value={equivalent.title} label={titleLabel} suggest={suggest} onSet={this.setWord((title) => word.equivalents[index].title = title)}/>
             <Input className={styles["name"]} value={equivalentStrings[index]} label={nameLabel} onSet={this.setEquivalentStrings((string) => equivalentStrings[index] = string)}/>
           </div>
           <div styleName="control-button">
@@ -201,13 +234,14 @@ export default class WordEditor extends Component<Props, State> {
   private renderInformations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
+    let suggest = this.getSuggest("informationTitles");
     let innerNodes = word.informations.map((information, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.informationTitle") : undefined;
       let textLabel = (index === 0) ? this.trans("wordEditor.informationText") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form information">
-            <Input className={styles["title"]} value={information.title} label={titleLabel} onSet={this.setWord((title) => word.informations[index].title = title)}/>
+            <Input className={styles["title"]} value={information.title} label={titleLabel} suggest={suggest} onSet={this.setWord((title) => word.informations[index].title = title)}/>
             <TextArea className={styles["text"]} value={information.text} label={textLabel} onSet={this.setWord((text) => word.informations[index].text = text)}/>
           </div>
           <div styleName="control-button">
@@ -238,13 +272,14 @@ export default class WordEditor extends Component<Props, State> {
   private renderVariations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
+    let suggest = this.getSuggest("variationTitles");
     let innerNodes = word.variations.map((variation, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.variationTitle") : undefined;
       let nameLabel = (index === 0) ? this.trans("wordEditor.variationName") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
-            <Input className={styles["title"]} value={variation.title} label={titleLabel} onSet={this.setWord((title) => word.variations[index].title = title)}/>
+            <Input className={styles["title"]} value={variation.title} label={titleLabel} suggest={suggest} onSet={this.setWord((title) => word.variations[index].title = title)}/>
             <Input className={styles["name"]} value={variation.name} label={nameLabel} onSet={this.setWord((name) => word.variations[index].name = name)}/>
           </div>
           <div styleName="control-button">
@@ -275,13 +310,14 @@ export default class WordEditor extends Component<Props, State> {
   private renderRelations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
+    let suggest = this.getSuggest("relationTitles");
     let innerNodes = word.relations.map((relation, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.relationTitle") : undefined;
       let nameLabel = (index === 0) ? this.trans("wordEditor.relationName") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
-            <Input className={styles["title"]} value={relation.title} label={titleLabel} onSet={this.setWord((title) => word.relations[index].title = title)}/>
+            <Input className={styles["title"]} value={relation.title} label={titleLabel} suggest={suggest} onSet={this.setWord((title) => word.relations[index].title = title)}/>
             <ControlGroup className={StyleNameUtil.create(styles["name"], styles["relation-input"])}>
               <Input value={relation.name} label={nameLabel} readOnly={true}/>
               <Button label={this.trans("wordEditor.selectRelation")} onClick={() => this.openRelationChooser(index)}/>
