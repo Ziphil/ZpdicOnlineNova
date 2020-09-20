@@ -3,6 +3,7 @@
 import * as react from "react";
 import {
   ChangeEvent,
+  FocusEvent,
   ReactNode
 } from "react";
 import {
@@ -45,13 +46,18 @@ export default class Input extends Component<Props, State> {
     this.state.type = type;
   }
 
-  private async handleChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
+  private handleChange(event: ChangeEvent<HTMLInputElement>): void {
     let value = event.target.value;
     this.updateValue(value);
     this.updateSuggestions(value);
     if (this.props.onChange) {
       this.props.onChange(event);
     }
+  }
+
+  private handleFocus(event: FocusEvent<HTMLInputElement>): void {
+    let value = event.target.value;
+    this.updateSuggestions(value);
   }
 
   private updateValue(value: string): void {
@@ -135,7 +141,15 @@ export default class Input extends Component<Props, State> {
           {labelNode}
           <div styleName={inputStyleName}>
             {prefixNode}
-            <input styleName="input-inner" type={this.state.type} value={this.props.value} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.handleChange.bind(this)}/>
+            <input
+              styleName="input-inner"
+              type={this.state.type}
+              value={this.props.value}
+              readOnly={this.props.readOnly}
+              disabled={this.props.disabled}
+              onChange={this.handleChange.bind(this)}
+              onFocus={this.handleFocus.bind(this)}
+            />
             {suffixNode}
           </div>
           {eyeNode}
