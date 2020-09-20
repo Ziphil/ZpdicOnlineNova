@@ -191,8 +191,8 @@ contactForm:
   text: "内容"
   send: "送信"
 dictionaryAggregationPane:
-  dictionarySize: "総辞書数"
-  wordSize: "総単語数"
+  dictionaryCount: "総辞書数"
+  wordCount: "総単語数"
 dictionaryHeader:
   add: "追加"
   setting: "設定"

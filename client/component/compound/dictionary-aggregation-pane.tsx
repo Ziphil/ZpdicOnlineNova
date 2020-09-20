@@ -14,6 +14,8 @@ import {
 export default class DictionaryAggregationPane extends Component<Props, State> {
 
   public state: State = {
+    dictionaryCount: null,
+    wordCount: null,
     dictionarySize: null,
     wordSize: null
   };
@@ -27,15 +29,20 @@ export default class DictionaryAggregationPane extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    let dictionaryCount = this.state.dictionaryCount;
+    let wordCount = this.state.wordCount;
+    let wordSize = (this.state.wordSize !== null) ? this.state.wordSize / 1048576 : null;
     let node = (
       <div styleName="root">
-        <div styleName="size-wrapper">
-          <div styleName="title">{this.trans("dictionaryAggregationPane.dictionarySize")}</div>
-          <div styleName="size">{this.transNumber(this.state.dictionarySize)}</div>
+        <div styleName="count-wrapper">
+          <div styleName="title">{this.trans("dictionaryAggregationPane.dictionaryCount")}</div>
+          <div styleName="count">{this.transNumber(dictionaryCount)}</div>
+          <div styleName="size"></div>
         </div>
-        <div styleName="size-wrapper">
-          <div styleName="title">{this.trans("dictionaryAggregationPane.wordSize")}</div>
-          <div styleName="size">{this.transNumber(this.state.wordSize)}</div>
+        <div styleName="count-wrapper">
+          <div styleName="title">{this.trans("dictionaryAggregationPane.wordCount")}</div>
+          <div styleName="count">{this.transNumber(wordCount)}</div>
+          <div styleName="size">{this.transNumber(wordSize, 2)} MB</div>
         </div>
       </div>
     );
@@ -48,6 +55,8 @@ export default class DictionaryAggregationPane extends Component<Props, State> {
 type Props = {
 };
 type State = {
+  dictionaryCount: number | null,
+  wordCount: number | null,
   dictionarySize: number | null,
   wordSize: number | null;
 };

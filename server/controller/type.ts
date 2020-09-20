@@ -271,7 +271,7 @@ type ProcessType = {
     get: {
       request: {},
       response: {
-        200: {dictionarySize: number, wordSize: number},
+        200: {dictionaryCount: number, wordCount: number, dictionarySize: number, wordSize: number},
         400: never
       }
     },

@@ -10,13 +10,18 @@
   justify-content: center;
 }
 
-.size-wrapper {
+.count-wrapper {
   @include reset-first-margin;
   margin: 0px 0px 0px 80px;
   color: $logo-color;
   text-align: center;
 }
 
-.size {
+.count {
   font-size: 48px;
+}
+
+.size {
+  margin: 3px 0px 0px 0px;
+  font-size: 20px;
 }

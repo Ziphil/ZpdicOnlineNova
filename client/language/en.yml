@@ -193,8 +193,8 @@ contactForm:
   text: "Content"
   send: "Send"
 dictionaryAggregationPane:
-  dictionarySize: "Dictionaries"
-  wordSize: "Words"
+  dictionaryCount: "Dictionaries"
+  wordCount: "Words"
 dictionaryHeader:
   add: "Add"
   setting: "Settings"

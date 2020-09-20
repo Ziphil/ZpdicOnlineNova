@@ -65,9 +65,10 @@ export default class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends Com
     }
   }
 
-  protected transNumber(number: number | null | undefined): string {
+  protected transNumber(number: number | null | undefined, digit?: number): string {
+    let options = {minimumFractionDigits: digit, maximumFractionDigits: digit};
     if (number !== null && number !== undefined) {
-      return this.props.intl!.formatNumber(number);
+      return this.props.intl!.formatNumber(number, options);
     } else {
       return this.props.intl!.formatMessage({id: "common.numberUndefined"});
     }
