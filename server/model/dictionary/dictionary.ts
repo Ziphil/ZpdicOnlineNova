@@ -86,6 +86,9 @@ export class DictionarySchema {
   public explanation?: string;
 
   @prop()
+  public createdDate?: Date;
+
+  @prop()
   public updatedDate?: Date;
 
   @prop({required: true, default: {}})
@@ -99,6 +102,7 @@ export class DictionarySchema {
     dictionary.name = name;
     dictionary.status = "ready";
     dictionary.secret = false;
+    dictionary.createdDate = new Date();
     dictionary.updatedDate = new Date();
     dictionary.externalData = {};
     await dictionary.save();
@@ -272,6 +276,8 @@ export class DictionarySchema {
     if (currentWord) {
       resultWord = new WordModel(word);
       resultWord.dictionary = this;
+      resultWord.createdDate = currentWord.createdDate;
+      resultWord.updatedDate = new Date();
       await currentWord.remove();
       await resultWord.save();
       if (currentWord.name !== resultWord.name) {
@@ -283,6 +289,8 @@ export class DictionarySchema {
       }
       resultWord = new WordModel(word);
       resultWord.dictionary = this;
+      resultWord.createdDate = new Date();
+      resultWord.updatedDate = new Date();
       await resultWord.save();
     }
     this.updatedDate = new Date();
@@ -450,8 +458,9 @@ export class DictionaryCreator {
     let status = raw.status;
     let secret = raw.secret;
     let explanation = raw.explanation;
+    let createdDate = raw.createdDate?.toISOString() ?? undefined;
     let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, updatedDate});
+    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, createdDate, updatedDate});
     return skeleton;
   }
 

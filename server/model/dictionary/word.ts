@@ -50,6 +50,12 @@ export class WordSchema {
   @prop({required: true, type: RelationSchema})
   public relations!: Array<RelationSchema>;
 
+  @prop()
+  public createdDate?: Date;
+
+  @prop()
+  public updatedDate?: Date;
+
 }
 
 
@@ -64,7 +70,9 @@ export class WordCreator {
     let informations = raw.informations.map(InformationCreator.create);
     let variations = raw.variations.map(VariationCreator.create);
     let relations = raw.relations.map(RelationCreator.create);
-    let skeleton = WordSkeleton.of({id, number, name, equivalents, tags, informations, variations, relations});
+    let createdDate = raw.createdDate?.toISOString() ?? undefined;
+    let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
+    let skeleton = WordSkeleton.of({id, number, name, equivalents, tags, informations, variations, relations, createdDate, updatedDate});
     return skeleton;
   }
 
