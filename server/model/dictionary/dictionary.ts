@@ -189,14 +189,18 @@ export class DictionarySchema {
 
   public async download(this: Dictionary, path: string): Promise<void> {
     let promise = new Promise<void>((resolve, reject) => {
-      let stream = new Serializer(path, this);
-      stream.on("end", () => {
-        resolve();
-      });
-      stream.on("error", (error) => {
-        reject(error);
-      });
-      stream.start();
+      let stream = Serializer.create(path, this);
+      if (stream !== null) {
+        stream.on("end", () => {
+          resolve();
+        });
+        stream.on("error", (error) => {
+          reject(error);
+        });
+        stream.start();
+      } else {
+        reject();
+      }
     });
     await promise;
   }

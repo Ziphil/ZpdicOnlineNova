@@ -1,34 +1,22 @@
 //
 
 import {
-  EventEmitter
-} from "events";
-import {
   createWriteStream
 } from "fs";
 import {
   Dictionary,
+  Serializer,
   Word,
   WordModel
 } from "/server/model/dictionary";
 
 
-export class Serializer extends EventEmitter {
+export class SlimeSerializer extends Serializer {
 
-  public path: string;
-  public dictionary: Dictionary;
   private error: Error | null = null;
 
   public constructor(path: string, dictionary: Dictionary) {
-    super();
-    this.path = path;
-    this.dictionary = dictionary;
-  }
-
-  public on<E extends keyof SerializerEvent>(event: E, listener: (...args: SerializerEvent[E]) => void): this;
-  public on(event: string | symbol, listener: (...args: any) => void): this {
-    super.on(event, listener);
-    return this;
+    super(path, dictionary);
   }
 
   public start(): void {
@@ -112,9 +100,3 @@ export class Serializer extends EventEmitter {
   }
 
 }
-
-
-export type SerializerEvent = {
-  end: [],
-  error: [Error]
-};
