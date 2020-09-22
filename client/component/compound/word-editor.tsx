@@ -14,6 +14,9 @@ import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
 import Input from "/client/component/atom/input";
+import {
+  SuggestFunction
+} from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
@@ -94,7 +97,7 @@ export default class WordEditor extends Component<Props, State> {
     this.setState({relationChooserOpen: true});
   }
 
-  private createSuggest(propertyName: string): (value: string) => Promise<Array<{node: ReactNode, replacement: string}>> {
+  private createSuggest(propertyName: string): SuggestFunction {
     let outerThis = this;
     let number = this.props.dictionary.number;
     let suggest = async function (pattern: string): Promise<Array<{node: ReactNode, replacement: string}>> {

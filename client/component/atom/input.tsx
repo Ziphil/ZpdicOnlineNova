@@ -171,7 +171,7 @@ type Props = {
   suffix?: ReactNode,
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
-  suggest?: (pattern: string) => AsyncOrSync<Array<{node: ReactNode, replacement: string}>>,
+  suggest?: SuggestFunction,
   useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean,
@@ -191,3 +191,6 @@ type State = {
   errorMessage: string | null,
   suggestions: Array<{node: ReactNode, replacement: string}>
 };
+
+export type Suggestion = {node: ReactNode, replacement: string};
+export type SuggestFunction = (pattern: string) => AsyncOrSync<Array<Suggestion>>;
