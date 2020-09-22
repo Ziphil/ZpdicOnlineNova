@@ -42,7 +42,7 @@ export const SERVER_PATH = {
   searchDictionary: "/api/dictionary/search",
   downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
-  fetchDictionaryTitles: "/api/dictionary/title",
+  suggestDictionaryTitles: "/api/dictionary/title",
   fetchDictionaryAuthorizedUsers: "/api/dictionary/user",
   fetchWholeDictionary: "/api/dictionary/whole",
   fetchDictionaries: "/api/dictionary/list",
@@ -217,11 +217,11 @@ type ProcessType = {
     },
     post: Noop
   },
-  fetchDictionaryTitles: {
+  suggestDictionaryTitles: {
     get: {
-      request: {number: number},
+      request: {number: number, propertyName: string, pattern: string},
       response: {
-        200: DictionaryTitles,
+        200: Array<string>,
         400: CustomError<"noSuchDictionaryNumber">
       }
     },
@@ -440,8 +440,6 @@ type ProcessType = {
 };
 
 export type WithSize<T> = [Array<T>, number];
-export type DictionaryTitleKey = "equivalentTitles" | "tags" | "informationTitles" | "variationTitles" | "relationTitles";
-export type DictionaryTitles = {[K in DictionaryTitleKey]: Array<string>};
 
 export type MethodType = "get" | "post";
 export type StatusType = 200 | 400;

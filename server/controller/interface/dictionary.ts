@@ -381,12 +381,14 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchDictionaryTitles"])
-  public async [Symbol()](request: GetRequest<"fetchDictionaryTitles">, response: GetResponse<"fetchDictionaryTitles">): Promise<void> {
+  @get(SERVER_PATH["suggestDictionaryTitles"])
+  public async [Symbol()](request: GetRequest<"suggestDictionaryTitles">, response: GetResponse<"suggestDictionaryTitles">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
+    let propertyName = CastUtil.ensureString(request.query.propertyName);
+    let pattern = CastUtil.ensureString(request.query.pattern);
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let titles = await dictionary.getTitles();
+      let titles = await dictionary.suggestTitles(propertyName, pattern);
       let body = titles;
       Controller.respond(response, body);
     } else {

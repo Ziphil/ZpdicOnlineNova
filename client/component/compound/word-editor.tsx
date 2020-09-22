@@ -1,6 +1,5 @@
 //
 
-import Fuse from "fuse.js";
 import cloneDeep from "lodash-es/cloneDeep";
 import * as react from "react";
 import {
@@ -30,10 +29,6 @@ import {
   StyleNameUtil
 } from "/client/util/style-name";
 import {
-  DictionaryTitleKey,
-  DictionaryTitles
-} from "/server/controller/type";
-import {
   Dictionary,
   EditWord,
   Equivalent,
@@ -47,8 +42,6 @@ import {
 @style(require("./word-editor.scss"))
 export default class WordEditor extends Component<Props, State> {
 
-  private titles: DictionaryTitles | null = null;
-  private fuses: {[K in DictionaryTitleKey]: Fuse<string>} | null = null;
   private editingRelationIndex: number | null = null;
 
   public constructor(props: Props) {
@@ -58,18 +51,6 @@ export default class WordEditor extends Component<Props, State> {
     let relationChooserOpen = false;
     let alertOpen = false;
     this.state = {word, equivalentStrings, relationChooserOpen, alertOpen};
-  }
-
-  public async componentDidMount(): Promise<void> {
-    let number = this.props.dictionary.number;
-    let response = await this.requestGet("fetchDictionaryTitles", {number}, true);
-    if (response.status === 200 && !("error" in response.data)) {
-      let titles = response.data;
-      let options = {threshold: 1, distance: 40};
-      let fuses = Object.fromEntries(Object.entries(titles).map(([key, strings]) => [key, new Fuse(strings, options)]));
-      this.titles = titles;
-      this.fuses = fuses as any;
-    }
   }
 
   private async editWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
@@ -113,20 +94,15 @@ export default class WordEditor extends Component<Props, State> {
     this.setState({relationChooserOpen: true});
   }
 
-  private getSuggest(key: DictionaryTitleKey): (value: string) => Array<{node: ReactNode, replacement: string}> {
+  private createSuggest(propertyName: string): (value: string) => Promise<Array<{node: ReactNode, replacement: string}>> {
     let outerThis = this;
-    let suggest = function (pattern: string): Array<{node: ReactNode, replacement: string}> {
-      if (outerThis.titles !== null && outerThis.fuses !== null) {
-        if (pattern !== "") {
-          let fuse = outerThis.fuses[key];
-          let strings = fuse.search(pattern).map((result) => result.item);
-          let suggestions = strings.map((string) => ({node: string, replacement: string}));
-          return suggestions;
-        } else {
-          let strings = outerThis.titles[key];
-          let suggestions = strings.map((string) => ({node: string, replacement: string}));
-          return suggestions;
-        }
+    let number = this.props.dictionary.number;
+    let suggest = async function (pattern: string): Promise<Array<{node: ReactNode, replacement: string}>> {
+      let response = await outerThis.requestGet("suggestDictionaryTitles", {number, propertyName, pattern}, true);
+      if (response.status === 200 && !("error" in response.data)) {
+        let titles = response.data;
+        let suggestions = titles.map((title) => ({node: title, replacement: title}));
+        return suggestions;
       } else {
         return [];
       }
@@ -147,7 +123,7 @@ export default class WordEditor extends Component<Props, State> {
   private renderTags(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let suggest = this.getSuggest("tags");
+    let suggest = this.createSuggest("tag");
     let innerNodes = word.tags.map((tag, index) => {
       let label = (index === 0) ? this.trans("wordEditor.tag") : undefined;
       let innerNode = (
@@ -184,7 +160,7 @@ export default class WordEditor extends Component<Props, State> {
     let word = this.state.word;
     let equivalentStrings = this.state.equivalentStrings;
     let styles = this.props.styles!;
-    let suggest = this.getSuggest("equivalentTitles");
+    let suggest = this.createSuggest("equivalent");
     let innerNodes = word.equivalents.map((equivalent, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.equivalentTitle") : undefined;
       let nameLabel = (index === 0) ? this.trans("wordEditor.equivalentNames") : undefined;
@@ -243,7 +219,7 @@ export default class WordEditor extends Component<Props, State> {
   private renderInformations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let suggest = this.getSuggest("informationTitles");
+    let suggest = this.createSuggest("information");
     let innerNodes = word.informations.map((information, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.informationTitle") : undefined;
       let textLabel = (index === 0) ? this.trans("wordEditor.informationText") : undefined;
@@ -281,7 +257,7 @@ export default class WordEditor extends Component<Props, State> {
   private renderVariations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let suggest = this.getSuggest("variationTitles");
+    let suggest = this.createSuggest("variation");
     let innerNodes = word.variations.map((variation, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.variationTitle") : undefined;
       let nameLabel = (index === 0) ? this.trans("wordEditor.variationName") : undefined;
@@ -319,7 +295,7 @@ export default class WordEditor extends Component<Props, State> {
   private renderRelations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let suggest = this.getSuggest("relationTitles");
+    let suggest = this.createSuggest("relation");
     let innerNodes = word.relations.map((relation, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.relationTitle") : undefined;
       let nameLabel = (index === 0) ? this.trans("wordEditor.relationName") : undefined;

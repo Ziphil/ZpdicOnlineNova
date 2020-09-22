@@ -9,8 +9,8 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
+import Fuse from "fuse.js";
 import {
-  DictionaryTitles,
   WithSize
 } from "/server/controller/type";
 import {
@@ -248,28 +248,6 @@ export class DictionarySchema {
     return words;
   }
 
-  public async getTitles(this: Dictionary): Promise<DictionaryTitles> {
-    let propertyNames = ["equivalent", "tag", "information", "variation", "relation"];
-    let query = WordModel.find().where("dictionary", this);
-    let distinctQueries = propertyNames.map((propertyName) => {
-      if (propertyName === "equivalent") {
-        return WordModel.find(query.getFilter()).distinct("equivalents.title");
-      } else if (propertyName === "tag") {
-        return WordModel.find(query.getFilter()).distinct("tags");
-      } else if (propertyName === "information") {
-        return WordModel.find(query.getFilter()).distinct("informations.title");
-      } else if (propertyName === "variation") {
-        return WordModel.find(query.getFilter()).distinct("variations.title");
-      } else if (propertyName === "relation") {
-        return WordModel.find(query.getFilter()).distinct("relations.title");
-      } else {
-        throw new Error("cannot happen");
-      }
-    });
-    let [equivalentTitles, tags, informationTitles, variationTitles, relationTitles] = await Promise.all(distinctQueries);
-    return {equivalentTitles, tags, informationTitles, variationTitles, relationTitles};
-  }
-
   // この辞書に登録されている単語を編集します。
   // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
   // そうでない場合は、渡された単語データを新しいデータとして追加します。
@@ -364,6 +342,29 @@ export class DictionarySchema {
     })();
     let [hitWords, hitSize, hitSuggestions] = await Promise.all([restrictedQuery, countQuery, hitSuggestionPromise]);
     return {words: [hitWords, hitSize], suggestions: hitSuggestions};
+  }
+
+  public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {
+    let query = WordModel.find().where("dictionary", this);
+    let titleQuery = (() => {
+      if (propertyName === "equivalent") {
+        return WordModel.find(query.getFilter()).distinct("equivalents.title");
+      } else if (propertyName === "tag") {
+        return WordModel.find(query.getFilter()).distinct("tags");
+      } else if (propertyName === "information") {
+        return WordModel.find(query.getFilter()).distinct("informations.title");
+      } else if (propertyName === "variation") {
+        return WordModel.find(query.getFilter()).distinct("variations.title");
+      } else if (propertyName === "relation") {
+        return WordModel.find(query.getFilter()).distinct("relations.title");
+      } else {
+        return null;
+      }
+    })();
+    let titles = (titleQuery !== null) ? await titleQuery : [];
+    let fuse = new Fuse(titles, {threshold: 1, distance: 40});
+    let hitTitles = fuse.search(pattern).map((result) => result.item);
+    return hitTitles;
   }
 
   public async countWords(): Promise<number> {
