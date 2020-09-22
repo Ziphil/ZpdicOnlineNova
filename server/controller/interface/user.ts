@@ -229,8 +229,8 @@ export class UserController extends Controller {
     Controller.respond(response, body);
   }
 
-  @get(SERVER_PATH["suggestUser"])
-  public async [Symbol()](request: GetRequest<"suggestUser">, response: GetResponse<"suggestUser">): Promise<void> {
+  @get(SERVER_PATH["suggestUsers"])
+  public async [Symbol()](request: GetRequest<"suggestUsers">, response: GetResponse<"suggestUsers">): Promise<void> {
     let pattern = CastUtil.ensureString(request.query.pattern);
     let users = await UserModel.suggest(pattern);
     let body = users.map(UserCreator.create);
