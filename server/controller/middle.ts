@@ -34,29 +34,26 @@ import {
 // なお、引数に権限を表す文字列が指定された場合、追加でユーザーが指定の権限を保持しているかチェックし、権限がなかった場合、ステータスコード 403 を返して終了します。
 export function verifyUser(authority?: string): RequestHandler {
   let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
-    let token = request.signedCookies.authorization || request.headers.authorization;
-    if (typeof token === "string") {
-      jwt.verify(token, JWT_SECRET, async (error, data) => {
-        if (!error) {
-          let anyData = data as any;
-          let user = await UserModel.findById(anyData.id).exec();
-          if (user) {
-            if (!authority || user.authority === authority) {
-              request.user = user;
-              next();
-            } else {
-              response.status(403).end();
-            }
+    let token = String(request.signedCookies.authorization || request.headers.authorization);
+    jwt.verify(token, JWT_SECRET, async (error, data) => {
+      if (!error) {
+        let anyData = data as any;
+        let user = await UserModel.findById(anyData.id).exec();
+        if (user) {
+          if (!authority || user.authority === authority) {
+            request.user = user;
+            next();
           } else {
-            response.status(401).end();
+            let body = CustomError.ofType("notEnoughUserAuthority");
+            response.status(403).send(body).end();
           }
         } else {
           response.status(401).end();
         }
-      });
-    } else {
-      response.status(401).end();
-    }
+      } else {
+        response.status(401).end();
+      }
+    });
   };
   return handler;
 }
@@ -78,7 +75,8 @@ export function verifyDictionary(authority: DictionaryAuthority): RequestHandler
         request.dictionary = dictionary;
         next();
       } else {
-        response.status(403).end();
+        let body = CustomError.ofType("notEnoughDictionaryAuthority");
+        response.status(403).send(body).end();
       }
     } else {
       next();
@@ -98,12 +96,12 @@ export function verifyRecaptcha(): RequestHandler {
         next();
       } else {
         let body = CustomError.ofType("recaptchaRejected");
-        response.status(400).send(body).end();
+        response.status(403).send(body).end();
       }
     } catch (error) {
       if (error.name === "CustomError" && error.type === "recaptchaError") {
         let body = CustomError.ofType("recaptchaError");
-        response.status(400).send(body).end();
+        response.status(403).send(body).end();
       } else {
         next(error);
       }

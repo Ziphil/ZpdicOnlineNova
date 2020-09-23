@@ -166,7 +166,11 @@ export default class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends Com
       this.props.store!.addErrorPopup("unauthenticated");
       this.props.store!.user = null;
     } else if (status === 403) {
-      this.props.store!.addErrorPopup("forbidden");
+      if (typeof body === "object" && "error" in body && "type" in body && typeof body.type === "string") {
+        this.props.store!.addErrorPopup(body.type);
+      } else {
+        this.props.store!.addErrorPopup("forbidden");
+      }
     } else if (status === 404) {
       this.props.store!.addErrorPopup("serverNotFound");
     } else if (status === 408) {

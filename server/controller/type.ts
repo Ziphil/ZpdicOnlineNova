@@ -323,7 +323,7 @@ type ProcessType = {
       request: WithRecaptcha<{name: string, email: string, password: string}>,
       response: {
         200: User,
-        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidUserEmail" | "invalidUserPassword" | "recaptchaRejected" | "recaptchaError">
+        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidUserEmail" | "invalidUserPassword">
       }
     }
   },
@@ -433,7 +433,7 @@ type ProcessType = {
       request: WithRecaptcha<{name: string, email: string, subject: string, text: string}>,
       response: {
         200: null,
-        400: CustomError<"administratorNotFound" | "recaptchaRejected" | "recaptchaError">
+        400: CustomError<"administratorNotFound">
       }
     }
   }
