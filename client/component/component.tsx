@@ -39,9 +39,9 @@ import {
 } from "/server/controller/type";
 
 
-export default class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Partial<RouteComponentProps<Q, any, any> & AdditionalProps> & P, S, H> {
+export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Props<P, Q>, S, H> {
 
-  private static client: AxiosInstance = StoreComponent.createClient();
+  private static client: AxiosInstance = BaseComponent.createClient();
 
   public constructor(props?: any) {
     super(props);
@@ -111,7 +111,7 @@ export default class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends Com
     }
     let response = await (() => {
       try {
-        return StoreComponent.client.request<ResponseType<N, M>>({url, method, ...config});
+        return BaseComponent.client.request<ResponseType<N, M>>({url, method, ...config});
       } catch (error) {
         if (error.code === "ECONNABORTED") {
           let data = undefined as any;
@@ -225,6 +225,7 @@ type AdditionalRequestConfig = {
   useRecaptcha?: boolean | string
 };
 
+type Props<P, Q> = Partial<RouteComponentProps<Q, any, any> & AdditionalProps> & P;
 type RequestConfig = AxiosRequestConfig & AdditionalRequestConfig;
 
 type StylesType = {[key: string]: string | undefined};
