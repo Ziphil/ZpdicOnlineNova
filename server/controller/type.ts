@@ -360,10 +360,10 @@ type ProcessType = {
   issueUserResetToken: {
     get: Noop,
     post: {
-      request: {name: string, email: string, token: string},
+      request: WithRecaptcha<{name: string, email: string}>,
       response: {
         200: null,
-        400: CustomError<"noSuchUser" | "recaptchaRejected" | "recaptchaError">
+        400: CustomError<"noSuchUser">
       }
     }
   },

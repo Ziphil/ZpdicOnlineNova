@@ -35,9 +35,6 @@ import {
 import {
   MailUtil
 } from "/server/util/mail";
-import {
-  RecaptchaUtil
-} from "/server/util/recaptcha";
 
 
 @controller("/")
@@ -149,30 +146,22 @@ export class UserController extends Controller {
   }
 
   @post(SERVER_PATH["issueUserResetToken"])
+  @before(verifyRecaptcha())
   public async [Symbol()](request: PostRequest<"issueUserResetToken">, response: PostResponse<"issueUserResetToken">): Promise<void> {
     let name = CastUtil.ensureString(request.body.name);
     let email = CastUtil.ensureString(request.body.email);
-    let token = CastUtil.ensureString(request.body.token);
     try {
-      let result = await RecaptchaUtil.verify(token);
-      if (result.score >= 0.5) {
-        let {user, key} = await UserModel.issueResetToken(name, email);
-        let url = "http://" + request.get("host") + "/reset?key=" + key;
-        let subject = MailUtil.getSubject("issueUserResetToken");
-        let text = MailUtil.getText("issueUserResetToken", {url});
-        MailUtil.send(user.email, subject, text);
-        Controller.respond(response, null);
-      } else {
-        let body = CustomError.ofType("recaptchaRejected");
-        Controller.respondError(response, body);
-      }
+      let {user, key} = await UserModel.issueResetToken(name, email);
+      let url = "http://" + request.get("host") + "/reset?key=" + key;
+      let subject = MailUtil.getSubject("issueUserResetToken");
+      let text = MailUtil.getText("issueUserResetToken", {url});
+      MailUtil.send(user.email, subject, text);
+      Controller.respond(response, null);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError") {
           if (error.type === "noSuchUser") {
             return CustomError.ofType("noSuchUser");
-          } else if (error.type === "recaptchaError") {
-            return CustomError.ofType("recaptchaError");
           }
         }
       })();
