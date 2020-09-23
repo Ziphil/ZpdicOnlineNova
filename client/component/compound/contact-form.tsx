@@ -43,8 +43,8 @@ export default class ContactForm extends Component<Props, State> {
     let email = this.state.email;
     let subject = this.state.subject;
     let text = this.state.text;
-    let token = await grecaptcha.execute(Main.getRecaptchaSite(), {action: "contact"});
-    let response = await this.requestPost("contact", {name, email, subject, text, token}, true);
+    let recaptchaToken = await grecaptcha.execute(Main.getRecaptchaSite(), {action: "contact"});
+    let response = await this.requestPost("contact", {name, email, subject, text, recaptchaToken}, true);
     let body = response.data;
     if (response.status === 200) {
       this.setState({errorType: "contacted", errorStyle: "information"});

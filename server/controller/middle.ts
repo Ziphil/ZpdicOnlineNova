@@ -17,6 +17,15 @@ import {
 import {
   UserModel
 } from "/server/model/user";
+import {
+  CustomError
+} from "/server/skeleton/error";
+import {
+  LogUtil
+} from "/server/util/log";
+import {
+  RecaptchaUtil
+} from "/server/util/recaptcha";
 
 
 // リクエストのヘッダーに書き込まれたトークンを利用して認証を行います。
@@ -73,6 +82,31 @@ export function verifyDictionary(authority: DictionaryAuthority): RequestHandler
       }
     } else {
       next();
+    }
+  };
+  return handler;
+}
+
+export function verifyRecaptcha(): RequestHandler {
+  let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
+    let recaptchaToken = request.query.recaptchaToken || request.body.recaptchaToken;
+    try {
+      let result = await RecaptchaUtil.verify(recaptchaToken);
+      LogUtil.log("middle/verify-recaptcha", `score: ${result.score}`);
+      if (result.score >= 0.5) {
+        request.recaptchaScore = result.score;
+        next();
+      } else {
+        let body = CustomError.ofType("recaptchaRejected");
+        response.status(400).send(body).end();
+      }
+    } catch (error) {
+      if (error.name === "CustomError" && error.type === "recaptchaError") {
+        let body = CustomError.ofType("recaptchaError");
+        response.status(400).send(body).end();
+      } else {
+        next(error);
+      }
     }
   };
   return handler;

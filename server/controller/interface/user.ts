@@ -16,6 +16,7 @@ import {
 import {
   login,
   logout,
+  verifyRecaptcha,
   verifyUser
 } from "/server/controller/middle";
 import {
@@ -59,24 +60,18 @@ export class UserController extends Controller {
   }
 
   @post(SERVER_PATH["registerUser"])
+  @before(verifyRecaptcha())
   public async [Symbol()](request: PostRequest<"registerUser">, response: PostResponse<"registerUser">): Promise<void> {
     let name = CastUtil.ensureString(request.body.name);
     let email = CastUtil.ensureString(request.body.email);
     let password = CastUtil.ensureString(request.body.password);
-    let token = CastUtil.ensureString(request.body.token);
     try {
-      let result = await RecaptchaUtil.verify(token);
-      if (result.score >= 0.5) {
-        let user = await UserModel.register(name, email, password);
-        let body = UserCreator.create(user);
-        let subject = MailUtil.getSubject("registerUser");
-        let text = MailUtil.getText("registerUser", {name});
-        MailUtil.send(user.email, subject, text);
-        Controller.respond(response, body);
-      } else {
-        let body = CustomError.ofType("recaptchaRejected");
-        Controller.respondError(response, body);
-      }
+      let user = await UserModel.register(name, email, password);
+      let body = UserCreator.create(user);
+      let subject = MailUtil.getSubject("registerUser");
+      let text = MailUtil.getText("registerUser", {name});
+      MailUtil.send(user.email, subject, text);
+      Controller.respond(response, body);
     } catch (error) {
       let body = (() => {
         if (error.name === "CustomError") {
@@ -86,8 +81,6 @@ export class UserController extends Controller {
             return CustomError.ofType("duplicateUserEmail");
           } else if (error.type === "invalidUserPassword") {
             return CustomError.ofType("invalidUserPassword");
-          } else if (error.type === "recaptchaError") {
-            return CustomError.ofType("recaptchaError");
           }
         } else if (error.name === "ValidationError") {
           if (error.errors.name) {

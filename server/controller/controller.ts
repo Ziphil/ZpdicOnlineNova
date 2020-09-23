@@ -92,6 +92,10 @@ export interface Request<N extends ProcessName, M extends MethodType> extends Ex
   // このプロパティは、verifyDictionary ミドルウェアが呼び出された場合にのみ、値が格納されます。
   dictionary?: Dictionary;
 
+  // reCAPTCHA が返したスコアが格納されます。
+  // このプロパティは、verifyRecaptcha ミドルウェアが呼び出された場合にのみ、値が格納されます。
+  recaptchaScore?: number;
+
 }
 
 

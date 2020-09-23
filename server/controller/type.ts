@@ -320,7 +320,7 @@ type ProcessType = {
   registerUser: {
     get: Noop,
     post: {
-      request: {name: string, email: string, password: string, token: string},
+      request: WithRecaptcha<{name: string, email: string, password: string}>,
       response: {
         200: User,
         400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidUserEmail" | "invalidUserPassword" | "recaptchaRejected" | "recaptchaError">
@@ -430,7 +430,7 @@ type ProcessType = {
   contact: {
     get: Noop,
     post: {
-      request: {name: string, email: string, subject: string, text: string, token: string},
+      request: WithRecaptcha<{name: string, email: string, subject: string, text: string}>,
       response: {
         200: null,
         400: CustomError<"administratorNotFound" | "recaptchaRejected" | "recaptchaError">
@@ -439,6 +439,7 @@ type ProcessType = {
   }
 };
 
+export type WithRecaptcha<T> = T & {recaptchaToken: string};
 export type WithSize<T> = [Array<T>, number];
 
 export type MethodType = "get" | "post";
