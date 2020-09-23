@@ -90,6 +90,8 @@ popup:
     そのような権限の招待は存在しません。
   noSuchDictionaryAuthorizedUser: >-
     そのような権限を保有しているユーザーは存在しません。
+  emptyContactText: >-
+    お問い合わせ内容が空です。
   administratorNotFound: >-
     予期しないエラーが発生しました。
   invalidArgument: >-

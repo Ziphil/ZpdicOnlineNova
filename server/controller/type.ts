@@ -433,7 +433,7 @@ type ProcessType = {
       request: WithRecaptcha<{name: string, email: string, subject: string, text: string}>,
       response: {
         200: null,
-        400: CustomError<"administratorNotFound">
+        400: CustomError<"emptyContactText" | "administratorNotFound">
       }
     }
   }

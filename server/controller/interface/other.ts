@@ -43,14 +43,19 @@ export class OtherController extends Controller {
     let email = CastUtil.ensureString(request.body.email);
     let subject = CastUtil.ensureString(request.body.subject);
     let text = CastUtil.ensureString(request.body.text);
-    let user = await UserModel.findOneAdministrator();
-    if (user !== null) {
-      let nextSubject = MailUtil.getSubject("contact", {subject});
-      let nextText = MailUtil.getText("contact", {name, email, subject, text});
-      MailUtil.send(user.email, nextSubject, nextText);
-      Controller.respond(response, null);
+    if (text !== "") {
+      let user = await UserModel.findOneAdministrator();
+      if (user !== null) {
+        let nextSubject = MailUtil.getSubject("contact", {subject});
+        let nextText = MailUtil.getText("contact", {name, email, subject, text});
+        MailUtil.send(user.email, nextSubject, nextText);
+        Controller.respond(response, null);
+      } else {
+        let body = CustomError.ofType("administratorNotFound");
+        Controller.respondError(response, body);
+      }
     } else {
-      let body = CustomError.ofType("administratorNotFound");
+      let body = CustomError.ofType("emptyContactText");
       Controller.respondError(response, body);
     }
   }

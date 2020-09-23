@@ -90,6 +90,8 @@ popup:
     This invitation does not exist.
   noSuchDictionaryAuthorizedUser: >-
     There is no user with such permission.
+  emptyContactText: >-
+    The content is empty.
   administratorNotFound: >-
     An unexpected error occurred.
   invalidArgument: >-
