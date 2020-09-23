@@ -43,7 +43,7 @@ export default class ContactForm extends Component<Props, State> {
     let response = await this.requestPost("contact", {name, email, subject, text}, {ignoreError: true, useRecaptcha: true});
     let body = response.data;
     if (response.status === 200) {
-      this.setState({errorType: "contacted", errorStyle: "information"});
+      this.setState({errorType: "contacted", errorStyle: "information", text: ""});
     } else if (response.status === 400 && body !== null && "error" in body) {
       this.setState({errorType: body.type, errorStyle: "error"});
     } else {
