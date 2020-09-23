@@ -15,7 +15,8 @@ import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
 import Input from "/client/component/atom/input";
 import {
-  SuggestFunction
+  SuggestFunction,
+  Suggestion
 } from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
@@ -100,7 +101,7 @@ export default class WordEditor extends Component<Props, State> {
   private createSuggest(propertyName: string): SuggestFunction {
     let outerThis = this;
     let number = this.props.dictionary.number;
-    let suggest = async function (pattern: string): Promise<Array<{node: ReactNode, replacement: string}>> {
+    let suggest = async function (pattern: string): Promise<Array<Suggestion>> {
       let response = await outerThis.requestGet("suggestDictionaryTitles", {number, propertyName, pattern}, {ignoreError: true});
       if (response.status === 200 && !("error" in response.data)) {
         let titles = response.data;
