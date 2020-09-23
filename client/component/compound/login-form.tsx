@@ -25,7 +25,7 @@ export default class LoginForm extends Component<Props, State> {
   private async performLogin(): Promise<void> {
     let name = this.state.name;
     let password = this.state.password;
-    let response = await this.login({name, password}, true);
+    let response = await this.login({name, password}, {ignoreError: true});
     if (response.status === 200) {
       this.replacePath("/dashboard");
     } else {

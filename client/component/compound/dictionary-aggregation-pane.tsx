@@ -21,7 +21,7 @@ export default class DictionaryAggregationPane extends Component<Props, State> {
   };
 
   public async componentDidMount(): Promise<void> {
-    let response = await this.requestGet("fetchDictionaryAggregation", {}, true);
+    let response = await this.requestGet("fetchDictionaryAggregation", {}, {ignoreError: true});
     if (response.status === 200) {
       let body = response.data;
       this.setState(body);

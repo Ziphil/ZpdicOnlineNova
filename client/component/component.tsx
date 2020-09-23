@@ -25,6 +25,9 @@ import {
   GlobalStore
 } from "/client/component/store";
 import {
+  Main
+} from "/client/index";
+import {
   DateUtil
 } from "/client/util/date";
 import {
@@ -90,21 +93,36 @@ export default class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends Com
     this.props.history!.replace(path, state);
   }
 
-  private async request<N extends ProcessName, M extends MethodType>(name: N, method: M, config: AxiosRequestConfig & {ignoresError?: boolean}): Promise<AxiosResponse<ResponseType<N, M>>> {
+  private async request<N extends ProcessName, M extends MethodType>(name: N, method: M, config: RequestConfig = {}): Promise<AxiosResponseType<N, M>> {
     let url = SERVER_PATH[name];
-    let response;
-    try {
-      response = await StoreComponent.client.request<ResponseType<N, M>>({url, method, ...config});
-    } catch (error) {
-      if (error.code === "ECONNABORTED") {
-        let data = undefined as any;
-        let headers = config.headers;
-        response = {status: 408, statusText: "Request Timeout", data, headers, config};
-      } else {
-        throw error;
+    if (config.useRecaptcha) {
+      let action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : "action";
+      let recaptchaToken = await grecaptcha.execute(Main.getRecaptchaSite(), {action});
+      if (config.params !== undefined) {
+        config.params.recaptchaToken = recaptchaToken;
+      }
+      if (config.data !== undefined) {
+        if (config.data instanceof FormData) {
+          config.data.append("recaptchaToken", recaptchaToken);
+        } else {
+          config.data.recaptchaToken = recaptchaToken;
+        }
       }
     }
-    if (!config.ignoresError && response.status >= 400) {
+    let response = await (() => {
+      try {
+        return StoreComponent.client.request<ResponseType<N, M>>({url, method, ...config});
+      } catch (error) {
+        if (error.code === "ECONNABORTED") {
+          let data = undefined as any;
+          let headers = config.headers;
+          return {status: 408, statusText: "Request Timeout", data, headers, config};
+        } else {
+          throw error;
+        }
+      }
+    })();
+    if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
       this.catchError(response);
     }
     return response;
@@ -114,30 +132,34 @@ export default class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends Com
   // HTTP ステータスコードが 400 番台もしくは 500 番台の場合は、例外は投げられませんが、代わりにグローバルストアにエラータイプを送信します。
   // これにより、ページ上部にエラーを示すポップアップが表示されます。
   // ignroesError に true を渡すことで、このエラータイプの送信を抑制できます。
-  protected async requestGet<N extends ProcessName>(name: N, params: RequestType<N, "get">, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "get">>> {
-    let config = {params, ignoresError};
-    let response = await this.request(name, "get", config);
+  protected async requestGet<N extends ProcessName>(name: N, params: Omit<RequestType<N, "get">, "recaptchaToken">, config: RequestConfig & {useRecaptcha: true}): Promise<AxiosResponseType<N, "get">>;
+  protected async requestGet<N extends ProcessName>(name: N, params: RequestType<N, "get">, config?: RequestConfig): Promise<AxiosResponseType<N, "get">>;
+  protected async requestGet<N extends ProcessName>(name: N, params: RequestType<N, "get">, config: RequestConfig = {}): Promise<AxiosResponseType<N, "get">> {
+    let nextConfig = {...config, params};
+    let response = await this.request(name, "get", nextConfig);
     return response;
   }
 
-  protected async requestPost<N extends ProcessName>(name: N, data: RequestType<N, "post">, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "post">>> {
-    let config = {data, ignoresError};
-    let response = await this.request(name, "post", config);
+  protected async requestPost<N extends ProcessName>(name: N, data: Omit<RequestType<N, "post">, "recaptchaToken">, config: RequestConfig & {useRecaptcha: true}): Promise<AxiosResponseType<N, "post">>;
+  protected async requestPost<N extends ProcessName>(name: N, data: RequestType<N, "post">, config?: RequestConfig): Promise<AxiosResponseType<N, "post">>;
+  protected async requestPost<N extends ProcessName>(name: N, data: RequestType<N, "post">, config: RequestConfig = {}): Promise<AxiosResponseType<N, "post">> {
+    let nextConfig = {...config, data};
+    let response = await this.request(name, "post", nextConfig);
     return response;
   }
 
-  protected async requestPostFile<N extends ProcessName>(name: N, data: RequestType<N, "post"> & {file: Blob}, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<N, "post">>> {
+  protected async requestPostFile<N extends ProcessName>(name: N, data: RequestType<N, "post"> & {file: Blob}, config: RequestConfig = {}): Promise<AxiosResponseType<N, "post">> {
     let formData = new FormData();
     for (let [key, value] of Object.entries(data)) {
       formData.append(key, value);
     }
-    let config = {data: formData, timeout: 0, ignoresError};
-    let response = await this.request(name, "post", config);
+    let nextConfig = {...config, data: formData, timeout: 0};
+    let response = await this.request(name, "post", nextConfig);
     return response;
   }
 
-  protected async login(data: RequestType<"login", "post">, ignoresError?: boolean): Promise<AxiosResponse<ResponseType<"login", "post">>> {
-    let response = await this.requestPost("login", data, ignoresError);
+  protected async login(data: RequestType<"login", "post">, config: RequestConfig = {}): Promise<AxiosResponseType<"login", "post">> {
+    let response = await this.requestPost("login", data, config);
     if (response.status === 200) {
       let body = response.data;
       this.props.store!.user = body.user;
@@ -145,8 +167,8 @@ export default class StoreComponent<P = {}, S = {}, Q = {}, H = any> extends Com
     return response;
   }
 
-  protected async logout(ignoresError?: boolean): Promise<AxiosResponse<ResponseType<"logout", "post">>> {
-    let response = await this.requestPost("logout", {}, ignoresError);
+  protected async logout(config: RequestConfig = {}): Promise<AxiosResponseType<"logout", "post">> {
+    let response = await this.requestPost("logout", {}, config);
     if (response.status === 200) {
       this.props.store!.user = null;
     }
@@ -198,6 +220,13 @@ type AdditionalProps = {
   intl: IntlShape,
   store: GlobalStore
 };
+type AdditionalRequestConfig = {
+  ignoreError?: boolean,
+  useRecaptcha?: boolean | string
+};
+
+type RequestConfig = AxiosRequestConfig & AdditionalRequestConfig;
 
 type StylesType = {[key: string]: string | undefined};
 type FormatFunction<T, R> = (parts: Array<string | T>) => R;
+type AxiosResponseType<N extends ProcessName, M extends MethodType> = AxiosResponse<ResponseType<N, M>>;

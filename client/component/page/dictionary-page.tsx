@@ -97,7 +97,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     let ownPromise = new Promise(async (resolve, reject) => {
       if (number !== undefined) {
         let authority = "own" as const;
-        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, true);
+        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
         if (response.status === 200) {
           this.setState({canOwn: true}, resolve);
         }
@@ -106,7 +106,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     let editPromise = new Promise(async (resolve, reject) => {
       if (number !== undefined) {
         let authority = "edit" as const;
-        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, true);
+        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
         if (response.status === 200) {
           this.setState({canEdit: true}, resolve);
         }

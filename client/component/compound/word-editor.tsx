@@ -101,7 +101,7 @@ export default class WordEditor extends Component<Props, State> {
     let outerThis = this;
     let number = this.props.dictionary.number;
     let suggest = async function (pattern: string): Promise<Array<{node: ReactNode, replacement: string}>> {
-      let response = await outerThis.requestGet("suggestDictionaryTitles", {number, propertyName, pattern}, true);
+      let response = await outerThis.requestGet("suggestDictionaryTitles", {number, propertyName, pattern}, {ignoreError: true});
       if (response.status === 200 && !("error" in response.data)) {
         let titles = response.data;
         let suggestions = titles.map((title) => ({node: title, replacement: title}));
