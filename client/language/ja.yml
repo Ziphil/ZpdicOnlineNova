@@ -309,6 +309,9 @@ dashboardPage:
     label: "削除"
     description: >-
       この辞書を削除します。
+dictionaryListPage:
+  updatedDate: "更新日時順"
+  createdDate: "作成日時順"
 dictionarySettingPage:
   general: "一般"
   access: "権限"

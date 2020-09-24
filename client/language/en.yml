@@ -311,6 +311,9 @@ dashboardPage:
     label: "Delete"
     description: >-
       Delete this user.
+dictionaryListPage:
+  updatedDate: "Sort by update date"
+  createdDate: "Sort by creation date"
 dictionarySettingPage:
   general: "General"
   access: "Permissions"
