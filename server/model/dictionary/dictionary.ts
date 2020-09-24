@@ -363,8 +363,14 @@ export class DictionarySchema {
       }
     })();
     let titles = (titleQuery !== null) ? await titleQuery : [];
-    let fuse = new Fuse(titles, {threshold: 1, distance: 40});
-    let hitTitles = fuse.search(pattern).map((result) => result.item);
+    let hitTitles = (() => {
+      if (pattern !== "") {
+        let fuse = new Fuse(titles, {threshold: 1, distance: 40});
+        return fuse.search(pattern).map((result) => result.item);
+      } else {
+        return titles.filter((title) => title !== "");
+      }
+    })();
     return hitTitles;
   }
 
