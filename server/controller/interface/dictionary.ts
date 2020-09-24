@@ -447,10 +447,11 @@ export class DictionaryController extends Controller {
 
   @get(SERVER_PATH["fetchAllDictionaries"])
   public async [Symbol()](request: GetRequest<"fetchAllDictionaries">, response: GetResponse<"fetchAllDictionaries">): Promise<void> {
+    let order = CastUtil.ensureString(request.query.order);
     let offset = CastUtil.ensureNumber(request.query.offset);
     let size = CastUtil.ensureNumber(request.query.size);
     let range = new QueryRange(offset, size);
-    let hitResult = await DictionaryModel.findPublic(range);
+    let hitResult = await DictionaryModel.findPublic(order, range);
     let hitPromises = hitResult[0].map((hitDictionary) => {
       let promise = new Promise<DetailedDictionary>(async (resolve, reject) => {
         try {

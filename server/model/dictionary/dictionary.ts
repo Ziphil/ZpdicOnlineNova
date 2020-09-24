@@ -109,8 +109,9 @@ export class DictionarySchema {
     return dictionary;
   }
 
-  public static async findPublic(range?: QueryRange): Promise<WithSize<Dictionary>> {
-    let query = DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
+  public static async findPublic(order: string, range?: QueryRange): Promise<WithSize<Dictionary>> {
+    let sortArg = (order === "createdDate") ? "-createdDate -updatedDate -number" : "-updatedDate -number";
+    let query = DictionaryModel.find().ne("secret", true).sort(sortArg);
     let restrictedQuery = QueryRange.restrict(query, range);
     let countQuery = DictionaryModel.countDocuments(query.getFilter());
     let result = await Promise.all([restrictedQuery, countQuery]);

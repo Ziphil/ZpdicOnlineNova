@@ -259,7 +259,7 @@ type ProcessType = {
   },
   fetchAllDictionaries: {
     get: {
-      request: {offset?: number, size?: number},
+      request: {order: string, offset?: number, size?: number},
       response: {
         200: WithSize<DetailedDictionary>,
         400: never
