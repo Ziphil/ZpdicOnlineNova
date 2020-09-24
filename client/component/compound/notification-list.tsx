@@ -11,6 +11,9 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  WithSize
+} from "/server/controller/type";
+import {
   Notification
 } from "/server/skeleton/notification";
 
@@ -18,16 +21,13 @@ import {
 @style(require("./notification-list.scss"))
 export default class NotificationList extends Component<Props, State> {
 
-  public state: State = {
-    notifications: null
-  };
-
-  public async componentDidMount(): Promise<void> {
-    let size = (this.props.showPagination) ? undefined : this.props.size;
-    let response = await this.requestGet("fetchNotifications", {size});
+  private async fetchNotifications(offset?: number, size?: number): Promise<WithSize<Notification>> {
+    let response = await this.requestGet("fetchNotifications", {offset, size});
     if (response.status === 200) {
-      let notifications = response.data;
-      this.setState({notifications});
+      let hitResult = response.data;
+      return hitResult;
+    } else {
+      return [[], 0];
     }
   }
 
@@ -36,7 +36,7 @@ export default class NotificationList extends Component<Props, State> {
       return <NotificationPane notification={notification} key={notification.id}/>;
     };
     let node = (
-      <PaneList items={this.state.notifications} size={this.props.size} showPagination={this.props.showPagination} style="compact" renderer={renderer}/>
+      <PaneList items={this.fetchNotifications.bind(this)} size={this.props.size} showPagination={this.props.showPagination} style="compact" renderer={renderer}/>
     );
     return node;
   }
@@ -49,5 +49,4 @@ type Props = {
   showPagination: boolean
 };
 type State = {
-  notifications: Array<Notification> | null
 };

@@ -421,7 +421,7 @@ type ProcessType = {
     get: {
       request: {offset?: number, size?: number},
       response: {
-        200: Array<Notification>,
+        200: WithSize<Notification>,
         400: never
       }
     },
@@ -440,7 +440,7 @@ type ProcessType = {
 };
 
 export type WithRecaptcha<T> = T & {recaptchaToken: string};
-export type WithSize<T> = [Array<T>, number];
+export type WithSize<T> = readonly [Array<T>, number];
 
 export type MethodType = "get" | "post";
 export type StatusType = 200 | 400;
