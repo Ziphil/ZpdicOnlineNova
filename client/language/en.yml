@@ -90,6 +90,8 @@ popup:
     This invitation does not exist.
   noSuchDictionaryAuthorizedUser: >-
     There is no user with such permission.
+  emptyContactText: >-
+    The content is empty.
   administratorNotFound: >-
     An unexpected error occurred.
   invalidArgument: >-
@@ -193,8 +195,8 @@ contactForm:
   text: "Content"
   send: "Send"
 dictionaryAggregationPane:
-  dictionarySize: "Dictionaries"
-  wordSize: "Words"
+  dictionaryCount: "Dictionaries"
+  wordCount: "Words"
 dictionaryHeader:
   add: "Add"
   setting: "Settings"
@@ -206,6 +208,7 @@ dictionaryPane:
   error: "Error"
   userName: "Owner"
   updatedDate: "Updated at"
+  createdDate: "Created at"
   setting: "Settings"
   download: "Download"
 header:
@@ -249,6 +252,7 @@ userPane:
     The permission of this user will be revoked.
     Are you really sure?
 wordEditor:
+  title: "Edit word"
   name: "Word"
   tag: "Tag"
   equivalentTitle: "Title"
@@ -262,6 +266,11 @@ wordEditor:
   delete: "Delete"
   confirm: "Confirm"
   selectRelation: "Select"
+  alertConfirm: "Delete"
+  alert: >-
+    This word will be deleted parmanently.
+    You cannot restore it hereafter.
+    Are you really sure?
 wordPane:
   edit: "Edit"
   submit: "Select"
@@ -303,6 +312,9 @@ dashboardPage:
     label: "Delete"
     description: >-
       Delete this user.
+dictionaryListPage:
+  updatedDate: "Sort by update date"
+  createdDate: "Sort by creation date"
 dictionarySettingPage:
   general: "General"
   access: "Permissions"

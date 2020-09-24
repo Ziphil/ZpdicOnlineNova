@@ -42,6 +42,7 @@ export const SERVER_PATH = {
   searchDictionary: "/api/dictionary/search",
   downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
+  suggestDictionaryTitles: "/api/dictionary/title",
   fetchDictionaryAuthorizedUsers: "/api/dictionary/user",
   fetchWholeDictionary: "/api/dictionary/whole",
   fetchDictionaries: "/api/dictionary/list",
@@ -59,7 +60,7 @@ export const SERVER_PATH = {
   resetUserPassword: "/api/user/reset/reset",
   deleteUser: "/api/user/delete",
   fetchUser: "/api/user/info",
-  fetchUserSuggestion: "/api/user/suggestion",
+  suggestUsers: "/api/user/suggestion",
   addNotification: "/api/notification/add",
   fetchNotifications: "/api/notification/list",
   contact: "/api/other/contact"
@@ -216,6 +217,16 @@ type ProcessType = {
     },
     post: Noop
   },
+  suggestDictionaryTitles: {
+    get: {
+      request: {number: number, propertyName: string, pattern: string},
+      response: {
+        200: Array<string>,
+        400: CustomError<"noSuchDictionaryNumber">
+      }
+    },
+    post: Noop
+  },
   fetchDictionaryAuthorizedUsers: {
     get: {
       request: {number: number, authority: string},
@@ -248,7 +259,7 @@ type ProcessType = {
   },
   fetchAllDictionaries: {
     get: {
-      request: {offset?: number, size?: number},
+      request: {order: string, offset?: number, size?: number},
       response: {
         200: WithSize<DetailedDictionary>,
         400: never
@@ -260,7 +271,7 @@ type ProcessType = {
     get: {
       request: {},
       response: {
-        200: {dictionarySize: number, wordSize: number},
+        200: {dictionaryCount: number, wordCount: number, dictionarySize: number, wordSize: number},
         400: never
       }
     },
@@ -309,10 +320,10 @@ type ProcessType = {
   registerUser: {
     get: Noop,
     post: {
-      request: {name: string, email: string, password: string, token: string},
+      request: WithRecaptcha<{name: string, email: string, password: string}>,
       response: {
         200: User,
-        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidUserEmail" | "invalidUserPassword" | "recaptchaRejected" | "recaptchaError">
+        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidUserEmail" | "invalidUserPassword">
       }
     }
   },
@@ -349,10 +360,10 @@ type ProcessType = {
   issueUserResetToken: {
     get: Noop,
     post: {
-      request: {name: string, email: string, token: string},
+      request: WithRecaptcha<{name: string, email: string}>,
       response: {
         200: null,
-        400: CustomError<"noSuchUser" | "recaptchaRejected" | "recaptchaError">
+        400: CustomError<"noSuchUser">
       }
     }
   },
@@ -386,7 +397,7 @@ type ProcessType = {
     },
     post: Noop
   },
-  fetchUserSuggestion: {
+  suggestUsers: {
     get: {
       request: {pattern: string},
       response: {
@@ -410,7 +421,7 @@ type ProcessType = {
     get: {
       request: {offset?: number, size?: number},
       response: {
-        200: Array<Notification>,
+        200: WithSize<Notification>,
         400: never
       }
     },
@@ -419,14 +430,17 @@ type ProcessType = {
   contact: {
     get: Noop,
     post: {
-      request: {name: string, email: string, subject: string, text: string, token: string},
+      request: WithRecaptcha<{name: string, email: string, subject: string, text: string}>,
       response: {
         200: null,
-        400: CustomError<"administratorNotFound" | "recaptchaRejected" | "recaptchaError">
+        400: CustomError<"emptyContactText" | "administratorNotFound">
       }
     }
   }
 };
+
+export type WithRecaptcha<T> = T & {recaptchaToken: string};
+export type WithSize<T> = [Array<T>, number];
 
 export type MethodType = "get" | "post";
 export type StatusType = 200 | 400;
@@ -435,7 +449,5 @@ export type ProcessName = keyof ProcessType;
 export type RequestType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["request"];
 export type ResponseType<N extends ProcessName, M extends MethodType> = ValueOf<ProcessType[N][M]["response"]>;
 export type ResponseTypeSep<N extends ProcessName, M extends MethodType, S extends StatusType> = ProcessType[N][M]["response"][S];
-
-export type WithSize<T> = [Array<T>, number];
 
 type Noop = {request: never, response: never};

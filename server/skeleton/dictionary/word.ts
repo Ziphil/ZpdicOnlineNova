@@ -39,5 +39,7 @@ export class Word extends EditWord {
 
   public id!: string;
   public number!: number;
+  public createdDate?: string;
+  public updatedDate?: string;
 
 }

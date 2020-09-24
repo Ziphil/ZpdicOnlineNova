@@ -14,6 +14,10 @@ import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
 import Input from "/client/component/atom/input";
+import {
+  SuggestFunction,
+  Suggestion
+} from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
@@ -94,6 +98,22 @@ export default class WordEditor extends Component<Props, State> {
     this.setState({relationChooserOpen: true});
   }
 
+  private createSuggest(propertyName: string): SuggestFunction {
+    let outerThis = this;
+    let number = this.props.dictionary.number;
+    let suggest = async function (pattern: string): Promise<Array<Suggestion>> {
+      let response = await outerThis.requestGet("suggestDictionaryTitles", {number, propertyName, pattern}, {ignoreError: true});
+      if (response.status === 200 && !("error" in response.data)) {
+        let titles = response.data;
+        let suggestions = titles.map((title) => ({node: title, replacement: title}));
+        return suggestions;
+      } else {
+        return [];
+      }
+    };
+    return suggest;
+  }
+
   private renderName(): ReactNode {
     let word = this.state.word;
     let node = (
@@ -107,12 +127,13 @@ export default class WordEditor extends Component<Props, State> {
   private renderTags(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
+    let suggest = this.createSuggest("tag");
     let innerNodes = word.tags.map((tag, index) => {
       let label = (index === 0) ? this.trans("wordEditor.tag") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
-            <Input className={styles["title"]} value={tag} label={label} onSet={this.setWord((tag) => word.tags[index] = tag)}/>
+            <Input className={styles["title"]} value={tag} label={label} suggest={suggest} onSet={this.setWord((tag) => word.tags[index] = tag)}/>
           </div>
           <div styleName="control-button">
             <ControlGroup>
@@ -143,13 +164,14 @@ export default class WordEditor extends Component<Props, State> {
     let word = this.state.word;
     let equivalentStrings = this.state.equivalentStrings;
     let styles = this.props.styles!;
+    let suggest = this.createSuggest("equivalent");
     let innerNodes = word.equivalents.map((equivalent, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.equivalentTitle") : undefined;
       let nameLabel = (index === 0) ? this.trans("wordEditor.equivalentNames") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
-            <Input className={styles["title"]} value={equivalent.title} label={titleLabel} onSet={this.setWord((title) => word.equivalents[index].title = title)}/>
+            <Input className={styles["title"]} value={equivalent.title} label={titleLabel} suggest={suggest} onSet={this.setWord((title) => word.equivalents[index].title = title)}/>
             <Input className={styles["name"]} value={equivalentStrings[index]} label={nameLabel} onSet={this.setEquivalentStrings((string) => equivalentStrings[index] = string)}/>
           </div>
           <div styleName="control-button">
@@ -201,13 +223,14 @@ export default class WordEditor extends Component<Props, State> {
   private renderInformations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
+    let suggest = this.createSuggest("information");
     let innerNodes = word.informations.map((information, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.informationTitle") : undefined;
       let textLabel = (index === 0) ? this.trans("wordEditor.informationText") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form information">
-            <Input className={styles["title"]} value={information.title} label={titleLabel} onSet={this.setWord((title) => word.informations[index].title = title)}/>
+            <Input className={styles["title"]} value={information.title} label={titleLabel} suggest={suggest} onSet={this.setWord((title) => word.informations[index].title = title)}/>
             <TextArea className={styles["text"]} value={information.text} label={textLabel} onSet={this.setWord((text) => word.informations[index].text = text)}/>
           </div>
           <div styleName="control-button">
@@ -238,13 +261,14 @@ export default class WordEditor extends Component<Props, State> {
   private renderVariations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
+    let suggest = this.createSuggest("variation");
     let innerNodes = word.variations.map((variation, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.variationTitle") : undefined;
       let nameLabel = (index === 0) ? this.trans("wordEditor.variationName") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
-            <Input className={styles["title"]} value={variation.title} label={titleLabel} onSet={this.setWord((title) => word.variations[index].title = title)}/>
+            <Input className={styles["title"]} value={variation.title} label={titleLabel} suggest={suggest} onSet={this.setWord((title) => word.variations[index].title = title)}/>
             <Input className={styles["name"]} value={variation.name} label={nameLabel} onSet={this.setWord((name) => word.variations[index].name = name)}/>
           </div>
           <div styleName="control-button">
@@ -275,13 +299,14 @@ export default class WordEditor extends Component<Props, State> {
   private renderRelations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
+    let suggest = this.createSuggest("relation");
     let innerNodes = word.relations.map((relation, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.relationTitle") : undefined;
       let nameLabel = (index === 0) ? this.trans("wordEditor.relationName") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
-            <Input className={styles["title"]} value={relation.title} label={titleLabel} onSet={this.setWord((title) => word.relations[index].title = title)}/>
+            <Input className={styles["title"]} value={relation.title} label={titleLabel} suggest={suggest} onSet={this.setWord((title) => word.relations[index].title = title)}/>
             <ControlGroup className={StyleNameUtil.create(styles["name"], styles["relation-input"])}>
               <Input value={relation.name} label={nameLabel} readOnly={true}/>
               <Button label={this.trans("wordEditor.selectRelation")} onClick={() => this.openRelationChooser(index)}/>
@@ -377,16 +402,11 @@ export default class WordEditor extends Component<Props, State> {
   }
 
   private renderAlert(): ReactNode {
-    let text = `
-      この単語データを永久に削除します。
-      削除した後にデータを戻すことはできません。
-      本当によろしいですか?
-    `;
     let node = (
       <Alert
-        text={text}
+        text={this.trans("wordEditor.alert")}
         iconLabel="&#xF071;"
-        confirmLabel="削除"
+        confirmLabel={this.trans("wordEditor.alertConfirm")}
         open={this.state.alertOpen}
         outsideClosable={true}
         onClose={() => this.setState({alertOpen: false})}
@@ -400,7 +420,7 @@ export default class WordEditor extends Component<Props, State> {
     let page = (this.state.relationChooserOpen) ? 1 : 0;
     let node = (
       <Fragment>
-        <Overlay size="large" title="単語編集" page={page} open={this.props.open} onClose={this.props.onClose} onBack={() => this.setState({relationChooserOpen: false})}>
+        <Overlay size="large" title={this.trans("wordEditor.title")} page={page} open={this.props.open} onClose={this.props.onClose} onBack={() => this.setState({relationChooserOpen: false})}>
           {this.renderEditor()}
           {this.renderRelationChooser()}
         </Overlay>

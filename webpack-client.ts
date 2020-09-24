@@ -1,7 +1,7 @@
 //
 
 import HtmlWebpackPlugin from "html-webpack-plugin";
-import * as path from "path";
+import path from "path";
 import {
   BundleAnalyzerPlugin
 } from "webpack-bundle-analyzer";

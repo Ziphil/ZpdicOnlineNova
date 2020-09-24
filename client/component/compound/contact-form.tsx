@@ -12,9 +12,6 @@ import FormPane from "/client/component/compound/form-pane";
 import {
   style
 } from "/client/component/decorator";
-import {
-  Main
-} from "/client/index";
 
 
 @style(require("./contact-form.scss"))
@@ -43,11 +40,10 @@ export default class ContactForm extends Component<Props, State> {
     let email = this.state.email;
     let subject = this.state.subject;
     let text = this.state.text;
-    let token = await grecaptcha.execute(Main.getRecaptchaSite(), {action: "contact"});
-    let response = await this.requestPost("contact", {name, email, subject, text, token}, true);
+    let response = await this.requestPost("contact", {name, email, subject, text}, {ignoreError: true, useRecaptcha: true});
     let body = response.data;
     if (response.status === 200) {
-      this.setState({errorType: "contacted", errorStyle: "information"});
+      this.setState({errorType: "contacted", errorStyle: "information", text: ""});
     } else if (response.status === 400 && body !== null && "error" in body) {
       this.setState({errorType: body.type, errorStyle: "error"});
     } else {

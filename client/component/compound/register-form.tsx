@@ -12,9 +12,6 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  Main
-} from "/client/index";
-import {
   createValidate
 } from "/client/util/misc";
 import {
@@ -49,8 +46,7 @@ export default class RegisterForm extends Component<Props, State> {
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
-    let token = await grecaptcha.execute(Main.getRecaptchaSite(), {action: "registerUser"});
-    let response = await this.requestPost("registerUser", {name, email, password, token}, true);
+    let response = await this.requestPost("registerUser", {name, email, password}, {ignoreError: true, useRecaptcha: true});
     let body = response.data;
     if (response.status === 200) {
       let loginResponse = await this.login({name, password});

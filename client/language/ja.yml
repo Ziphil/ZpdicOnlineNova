@@ -90,6 +90,8 @@ popup:
     そのような権限の招待は存在しません。
   noSuchDictionaryAuthorizedUser: >-
     そのような権限を保有しているユーザーは存在しません。
+  emptyContactText: >-
+    お問い合わせ内容が空です。
   administratorNotFound: >-
     予期しないエラーが発生しました。
   invalidArgument: >-
@@ -191,8 +193,8 @@ contactForm:
   text: "内容"
   send: "送信"
 dictionaryAggregationPane:
-  dictionarySize: "総辞書数"
-  wordSize: "総単語数"
+  dictionaryCount: "総辞書数"
+  wordCount: "総単語数"
 dictionaryHeader:
   add: "追加"
   setting: "設定"
@@ -204,6 +206,7 @@ dictionaryPane:
   error: "エラー"
   userName: "管理者"
   updatedDate: "更新日時"
+  createdDate: "作成日時"
   setting: "設定"
   download: "ダウンロード"
 header:
@@ -247,6 +250,7 @@ userPane:
     このユーザーの編集権限を解除します。
     本当によろしいですか?
 wordEditor:
+  title: "単語編集"
   name: "単語"
   tag: "タグ"
   equivalentTitle: "分類"
@@ -260,6 +264,11 @@ wordEditor:
   delete: "削除"
   confirm: "決定"
   selectRelation: "変更"
+  alertConfirm: "削除"
+  alert: >-
+    この単語データを永久に削除します。
+    削除した後にデータを戻すことはできません。
+    本当によろしいですか?
 wordPane:
   edit: "編集"
   submit: "決定"
@@ -301,6 +310,9 @@ dashboardPage:
     label: "削除"
     description: >-
       この辞書を削除します。
+dictionaryListPage:
+  updatedDate: "更新日時順"
+  createdDate: "作成日時順"
 dictionarySettingPage:
   general: "一般"
   access: "権限"

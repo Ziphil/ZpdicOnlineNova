@@ -53,8 +53,10 @@ export class NotificationController extends Controller {
     let offset = CastUtil.ensureNumber(request.query.offset);
     let size = CastUtil.ensureNumber(request.query.size);
     let range = new QueryRange(offset, size);
-    let notifications = await NotificationModel.findAll(range);
-    let body = notifications.map(NotificationCreator.create);
+    let hitResult = await NotificationModel.findAll(range);
+    let hitNotifications = hitResult[0].map(NotificationCreator.create);
+    let hitSize = hitResult[1];
+    let body = [hitNotifications, hitSize] as any;
     Controller.respond(response, body);
   }
 

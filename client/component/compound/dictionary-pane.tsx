@@ -22,6 +22,7 @@ export default class DictionaryPane extends Component<Props, State> {
   public static defaultProps: DefaultProps = {
     showUser: true,
     showUpdatedDate: true,
+    showCreatedDate: false,
     showSettingLink: false,
     showDownloadLink: false
   };
@@ -66,6 +67,9 @@ export default class DictionaryPane extends Component<Props, State> {
     let updatedDateNode = (this.props.showUpdatedDate) && (
       <div styleName="information-item">{this.trans("dictionaryPane.updatedDate")} — {this.transDate(this.props.dictionary.updatedDate)}</div>
     );
+    let createdDateNode = (this.props.showCreatedDate) && (
+      <div styleName="information-item">{this.trans("dictionaryPane.createdDate")} — {this.transDate(this.props.dictionary.createdDate)}</div>
+    );
     let settingNode = (this.props.showSettingLink) && (
       <Button label={this.trans("dictionaryPane.setting")} iconLabel="&#xF013;" style="simple" onClick={this.jumpSettingPage.bind(this)}/>
     );
@@ -91,6 +95,7 @@ export default class DictionaryPane extends Component<Props, State> {
           </div>
           <div styleName="information">
             {updatedDateNode}
+            {createdDateNode}
             {userNode}
           </div>
         </div>
@@ -107,12 +112,14 @@ type Props = {
   dictionary: DetailedDictionary,
   showUser: boolean,
   showUpdatedDate: boolean,
+  showCreatedDate: boolean,
   showSettingLink: boolean,
   showDownloadLink: boolean
 };
 type DefaultProps = {
   showUser: boolean,
   showUpdatedDate: boolean,
+  showCreatedDate: boolean,
   showSettingLink: boolean,
   showDownloadLink: boolean
 };

@@ -17,6 +17,15 @@ import {
 import {
   UserModel
 } from "/server/model/user";
+import {
+  CustomError
+} from "/server/skeleton/error";
+import {
+  LogUtil
+} from "/server/util/log";
+import {
+  RecaptchaUtil
+} from "/server/util/recaptcha";
 
 
 // リクエストのヘッダーに書き込まれたトークンを利用して認証を行います。
@@ -25,29 +34,26 @@ import {
 // なお、引数に権限を表す文字列が指定された場合、追加でユーザーが指定の権限を保持しているかチェックし、権限がなかった場合、ステータスコード 403 を返して終了します。
 export function verifyUser(authority?: string): RequestHandler {
   let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
-    let token = request.signedCookies.authorization || request.headers.authorization;
-    if (typeof token === "string") {
-      jwt.verify(token, JWT_SECRET, async (error, data) => {
-        if (!error) {
-          let anyData = data as any;
-          let user = await UserModel.findById(anyData.id).exec();
-          if (user) {
-            if (!authority || user.authority === authority) {
-              request.user = user;
-              next();
-            } else {
-              response.status(403).end();
-            }
+    let token = String(request.signedCookies.authorization || request.headers.authorization);
+    jwt.verify(token, JWT_SECRET, async (error, data) => {
+      if (!error) {
+        let anyData = data as any;
+        let user = await UserModel.findById(anyData.id).exec();
+        if (user) {
+          if (!authority || user.authority === authority) {
+            request.user = user;
+            next();
           } else {
-            response.status(401).end();
+            let body = CustomError.ofType("notEnoughUserAuthority");
+            response.status(403).send(body).end();
           }
         } else {
           response.status(401).end();
         }
-      });
-    } else {
-      response.status(401).end();
-    }
+      } else {
+        response.status(401).end();
+      }
+    });
   };
   return handler;
 }
@@ -69,10 +75,36 @@ export function verifyDictionary(authority: DictionaryAuthority): RequestHandler
         request.dictionary = dictionary;
         next();
       } else {
-        response.status(403).end();
+        let body = CustomError.ofType("notEnoughDictionaryAuthority");
+        response.status(403).send(body).end();
       }
     } else {
       next();
+    }
+  };
+  return handler;
+}
+
+export function verifyRecaptcha(): RequestHandler {
+  let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
+    let recaptchaToken = request.query.recaptchaToken || request.body.recaptchaToken;
+    try {
+      let result = await RecaptchaUtil.verify(recaptchaToken);
+      LogUtil.log("middle/verify-recaptcha", `score: ${result.score}`);
+      if (result.score >= 0.5) {
+        request.recaptchaScore = result.score;
+        next();
+      } else {
+        let body = CustomError.ofType("recaptchaRejected");
+        response.status(403).send(body).end();
+      }
+    } catch (error) {
+      if (error.name === "CustomError" && error.type === "recaptchaError") {
+        let body = CustomError.ofType("recaptchaError");
+        response.status(403).send(body).end();
+      } else {
+        next(error);
+      }
     }
   };
   return handler;

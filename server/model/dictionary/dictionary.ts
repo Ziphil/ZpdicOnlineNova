@@ -9,6 +9,7 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
+import Fuse from "fuse.js";
 import {
   WithSize
 } from "/server/controller/type";
@@ -85,6 +86,9 @@ export class DictionarySchema {
   public explanation?: string;
 
   @prop()
+  public createdDate?: Date;
+
+  @prop()
   public updatedDate?: Date;
 
   @prop({required: true, default: {}})
@@ -98,14 +102,16 @@ export class DictionarySchema {
     dictionary.name = name;
     dictionary.status = "ready";
     dictionary.secret = false;
+    dictionary.createdDate = new Date();
     dictionary.updatedDate = new Date();
     dictionary.externalData = {};
     await dictionary.save();
     return dictionary;
   }
 
-  public static async findPublic(range?: QueryRange): Promise<WithSize<Dictionary>> {
-    let query = DictionaryModel.find().ne("secret", true).sort("-updatedDate -number");
+  public static async findPublic(order: string, range?: QueryRange): Promise<WithSize<Dictionary>> {
+    let sortArg = (order === "createdDate") ? "-createdDate -updatedDate -number" : "-updatedDate -number";
+    let query = DictionaryModel.find().ne("secret", true).sort(sortArg);
     let restrictedQuery = QueryRange.restrict(query, range);
     let countQuery = DictionaryModel.countDocuments(query.getFilter());
     let result = await Promise.all([restrictedQuery, countQuery]);
@@ -184,14 +190,18 @@ export class DictionarySchema {
 
   public async download(this: Dictionary, path: string): Promise<void> {
     let promise = new Promise<void>((resolve, reject) => {
-      let stream = new Serializer(path, this);
-      stream.on("end", () => {
-        resolve();
-      });
-      stream.on("error", (error) => {
-        reject(error);
-      });
-      stream.start();
+      let stream = Serializer.create(path, this);
+      if (stream !== null) {
+        stream.on("end", () => {
+          resolve();
+        });
+        stream.on("error", (error) => {
+          reject(error);
+        });
+        stream.start();
+      } else {
+        reject();
+      }
     });
     await promise;
   }
@@ -249,6 +259,8 @@ export class DictionarySchema {
     if (currentWord) {
       resultWord = new WordModel(word);
       resultWord.dictionary = this;
+      resultWord.createdDate = currentWord.createdDate;
+      resultWord.updatedDate = new Date();
       await currentWord.remove();
       await resultWord.save();
       if (currentWord.name !== resultWord.name) {
@@ -260,6 +272,8 @@ export class DictionarySchema {
       }
       resultWord = new WordModel(word);
       resultWord.dictionary = this;
+      resultWord.createdDate = new Date();
+      resultWord.updatedDate = new Date();
       await resultWord.save();
     }
     this.updatedDate = new Date();
@@ -329,6 +343,35 @@ export class DictionarySchema {
     })();
     let [hitWords, hitSize, hitSuggestions] = await Promise.all([restrictedQuery, countQuery, hitSuggestionPromise]);
     return {words: [hitWords, hitSize], suggestions: hitSuggestions};
+  }
+
+  public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {
+    let query = WordModel.find().where("dictionary", this);
+    let titleQuery = (() => {
+      if (propertyName === "equivalent") {
+        return WordModel.find(query.getFilter()).distinct("equivalents.title");
+      } else if (propertyName === "tag") {
+        return WordModel.find(query.getFilter()).distinct("tags");
+      } else if (propertyName === "information") {
+        return WordModel.find(query.getFilter()).distinct("informations.title");
+      } else if (propertyName === "variation") {
+        return WordModel.find(query.getFilter()).distinct("variations.title");
+      } else if (propertyName === "relation") {
+        return WordModel.find(query.getFilter()).distinct("relations.title");
+      } else {
+        return null;
+      }
+    })();
+    let titles = (titleQuery !== null) ? await titleQuery : [];
+    let hitTitles = (() => {
+      if (pattern !== "") {
+        let fuse = new Fuse(titles, {threshold: 1, distance: 40});
+        return fuse.search(pattern).map((result) => result.item);
+      } else {
+        return titles.filter((title) => title !== "");
+      }
+    })();
+    return hitTitles;
   }
 
   public async countWords(): Promise<number> {
@@ -427,8 +470,9 @@ export class DictionaryCreator {
     let status = raw.status;
     let secret = raw.secret;
     let explanation = raw.explanation;
+    let createdDate = raw.createdDate?.toISOString() ?? undefined;
     let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, updatedDate});
+    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, createdDate, updatedDate});
     return skeleton;
   }
 

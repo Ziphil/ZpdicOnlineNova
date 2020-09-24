@@ -7,6 +7,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  WithSize
+} from "/server/controller/type";
+import {
   Notification as NotificationSkeleton
 } from "/server/skeleton/notification";
 import {
@@ -39,11 +42,12 @@ export class NotificationSchema {
     return notification;
   }
 
-  public static async findAll(range?: QueryRange): Promise<Array<Notification>> {
+  public static async findAll(range?: QueryRange): Promise<WithSize<Notification>> {
     let query = NotificationModel.find().sort("-date");
     let restrictedQuery = QueryRange.restrict(query, range);
-    let notifications = await restrictedQuery.exec();
-    return notifications;
+    let countQuery = NotificationModel.countDocuments(query.getFilter());
+    let result = await Promise.all([restrictedQuery, countQuery]);
+    return result;
   }
 
 }

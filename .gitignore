@@ -1,6 +1,6 @@
 node_modules
 dist
-upload
+file
 *.code-workspace
 *.env
 .vscode

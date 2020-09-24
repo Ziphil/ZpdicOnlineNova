@@ -3,6 +3,7 @@
 import * as react from "react";
 import {
   ChangeEvent,
+  FocusEvent,
   ReactNode
 } from "react";
 import {
@@ -30,6 +31,11 @@ export default class Input extends Component<Props, State> {
     readOnly: false,
     disabled: false
   };
+  public state: State = {
+    type: undefined as any,
+    errorMessage: null,
+    suggestions: []
+  };
 
   public constructor(props: any) {
     super(props);
@@ -37,16 +43,21 @@ export default class Input extends Component<Props, State> {
     if (type === "flexible") {
       type = "password";
     }
-    this.state = {type, errorMessage: null, suggestions: []};
+    this.state.type = type;
   }
 
-  private async handleChange(event: ChangeEvent<HTMLInputElement>): Promise<void> {
+  private handleChange(event: ChangeEvent<HTMLInputElement>): void {
     let value = event.target.value;
     this.updateValue(value);
     this.updateSuggestions(value);
     if (this.props.onChange) {
       this.props.onChange(event);
     }
+  }
+
+  private handleFocus(event: FocusEvent<HTMLInputElement>): void {
+    let value = event.target.value;
+    this.updateSuggestions(value);
   }
 
   private updateValue(value: string): void {
@@ -111,7 +122,7 @@ export default class Input extends Component<Props, State> {
     let suggestionNode = (this.state.suggestions.length > 0) && (() => {
       let itemNodes = this.state.suggestions.map((suggestion, index) => {
         let itemNode = (
-          <div styleName="suggestion-item" key={index} tabIndex={0} onClick={() => this.updateValue(suggestion.replacement)}>
+          <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={() => this.updateValue(suggestion.replacement)}>
             {suggestion.node}
           </div>
         );
@@ -125,19 +136,27 @@ export default class Input extends Component<Props, State> {
       return suggestionNode;
     })();
     let node = (
-      <label styleName="root" className={this.props.className}>
-        <div styleName="label-wrapper">
+      <div styleName="root" className={this.props.className}>
+        <label styleName="label-wrapper">
           {labelNode}
           <div styleName={inputStyleName}>
             {prefixNode}
-            <input styleName="input-inner" type={this.state.type} value={this.props.value} readOnly={this.props.readOnly} disabled={this.props.disabled} onChange={this.handleChange.bind(this)}/>
+            <input
+              styleName="input-inner"
+              type={this.state.type}
+              value={this.props.value}
+              readOnly={this.props.readOnly}
+              disabled={this.props.disabled}
+              onChange={this.handleChange.bind(this)}
+              onFocus={this.handleFocus.bind(this)}
+            />
             {suffixNode}
           </div>
           {eyeNode}
-        </div>
+        </label>
         {tooltipNode}
         {suggestionNode}
-      </label>
+      </div>
     );
     return node;
   }
@@ -152,7 +171,7 @@ type Props = {
   suffix?: ReactNode,
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
-  suggest?: (value: string) => AsyncOrSync<Array<{node: ReactNode, replacement: string}>>,
+  suggest?: SuggestFunction,
   useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean,
@@ -172,3 +191,6 @@ type State = {
   errorMessage: string | null,
   suggestions: Array<{node: ReactNode, replacement: string}>
 };
+
+export type Suggestion = {node: ReactNode, replacement: string};
+export type SuggestFunction = (pattern: string) => AsyncOrSync<Array<Suggestion>>;

@@ -8,7 +8,7 @@
     },
     "module": "commonjs",
     "target": "es5",
-    "lib": ["es2015", "dom"],
+    "lib": ["es2015", "esnext", "dom"],
     "jsx": "react",
     "jsxFactory": "react.createElement",
     "moduleResolution": "node",

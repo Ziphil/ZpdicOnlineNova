@@ -12,9 +12,6 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  Main
-} from "/client/index";
-import {
   createValidate
 } from "/client/util/misc";
 import {
@@ -46,8 +43,7 @@ export default class ResetUserPasswordForm extends Component<Props, State> {
   private async issueResetToken(): Promise<void> {
     let name = this.state.name;
     let email = this.state.email;
-    let token = await grecaptcha.execute(Main.getRecaptchaSite(), {action: "issueUserResetToken"});
-    let response = await this.requestPost("issueUserResetToken", {name, email, token}, true);
+    let response = await this.requestPost("issueUserResetToken", {name, email}, {ignoreError: true, useRecaptcha: true});
     let body = response.data;
     if (response.status === 200) {
       this.setState({errorType: "userResetTokenIssued", errorStyle: "information"});
@@ -61,7 +57,7 @@ export default class ResetUserPasswordForm extends Component<Props, State> {
   private async resetPassword(): Promise<void> {
     let key = this.props.tokenKey!;
     let password = this.state.password;
-    let response = await this.requestPost("resetUserPassword", {key, password}, true);
+    let response = await this.requestPost("resetUserPassword", {key, password}, {ignoreError: true});
     let body = response.data;
     if (response.status === 200) {
       this.setState({errorType: "userPasswordReset", errorStyle: "information"});
