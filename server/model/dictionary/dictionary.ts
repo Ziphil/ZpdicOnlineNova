@@ -317,32 +317,16 @@ export class DictionarySchema {
   }
 
   // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
-  // 現状、サジェストのリストを作るのに、まず MongoDB のクエリによってサジェストされるべき単語を取得し、その後に JavaScript 側で再び各単語を走査してサジェストオブジェクトを作成しています。
-  // この処理が二度手間になっているので、MongoDB のクエリだけで処理できるように実装を変えるべきです。
   public async search(this: Dictionary, parameter: NormalSearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
-    let query = parameter.createQuery().where("dictionary", this).sort("name");
-    let suggestionQuery = parameter.createSuggestionQuery()?.where("dictionary", this);
+    let query = parameter.createQuery(this).sort("name");
+    let suggestionAggregate = parameter.createSuggestionAggregate(this);
     let restrictedQuery = QueryRange.restrict(query, range);
     let countQuery = WordModel.countDocuments(query.getFilter());
-    let hitSuggestionPromise = (async () => {
-      if (suggestionQuery !== undefined) {
-        let hitSuggestionWords = await suggestionQuery.exec();
-        let hitSuggestions = [];
-        for (let word of hitSuggestionWords) {
-          for (let variation of word.variations) {
-            if (variation.name === parameter.search) {
-              let suggestion = new Suggestion(variation.title, word);
-              hitSuggestions.push(suggestion);
-            }
-          }
-        }
-        return hitSuggestions;
-      } else {
-        return [];
-      }
-    })();
+    let hitSuggestionPromise = suggestionAggregate?.then((suggestions) => {
+      return suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word));
+    });
     let [hitWords, hitSize, hitSuggestions] = await Promise.all([restrictedQuery, countQuery, hitSuggestionPromise]);
-    return {words: [hitWords, hitSize], suggestions: hitSuggestions};
+    return {words: [hitWords, hitSize], suggestions: hitSuggestions ?? []};
   }
 
   public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {
