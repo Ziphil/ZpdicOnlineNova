@@ -138,8 +138,9 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
 
 @mixin reset-first-margin($directions: top left) {
   @each $direction in $directions {
+    $property-name: "margin-" + $direction;
     &:first-child {
-      margin-#{$direction}: 0px;
+      #{$property-name}: 0px;
     }
   }
 }
