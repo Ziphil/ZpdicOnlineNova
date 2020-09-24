@@ -23,8 +23,8 @@ export default class UserSuggestionPane extends Component<Props, State> {
           <div styleName="image"/>
         </div>
         <div styleName="left">
-          <div styleName="screen-name">{this.props.user.screenName}</div>
-          <div styleName="name">@{this.props.user.name}</div>
+          <span styleName="screen-name">{this.props.user.screenName}</span>
+          <span styleName="name">@{this.props.user.name}</span>
         </div>
       </div>
     );

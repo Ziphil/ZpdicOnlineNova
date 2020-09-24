@@ -14,8 +14,8 @@
 }
 
 .image {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border: 1px $light-border-color solid;
   border-radius: $small-border-radius;
   background-image: linear-gradient(-45deg, transparent 33%, $light-border-color 33%, $light-border-color 50%, transparent 50%, transparent 83%, $light-border-color 83%);
@@ -23,11 +23,7 @@
   box-sizing: border-box;
 }
 
-.screen-name {
-  font-weight: bold;
-}
-
 .name {
-  margin: 5px 0px 0px 0px;
+  margin: 0em 0em 0em 0.3em;
   font-size: 80%;
 }
