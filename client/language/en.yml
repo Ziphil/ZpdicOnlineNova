@@ -208,6 +208,7 @@ dictionaryPane:
   error: "Error"
   userName: "Owner"
   updatedDate: "Updated at"
+  createdDate: "Created at"
   setting: "Settings"
   download: "Download"
 header:

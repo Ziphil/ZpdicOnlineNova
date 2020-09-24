@@ -48,7 +48,7 @@ export default class DictionaryListPage extends Component<Props, State> {
           <RadioGroup name="order" value={this.state.order} specs={specs} onSet={(order) => this.setState({order})}/>
         </div>
         <div styleName="list">
-          <DictionaryList dictionaries={this.fetchDictionaries.bind(this)} size={20}/>
+          <DictionaryList dictionaries={this.fetchDictionaries.bind(this)} showCreatedDate={true} size={20}/>
         </div>
       </Page>
     );

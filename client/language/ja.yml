@@ -206,6 +206,7 @@ dictionaryPane:
   error: "エラー"
   userName: "管理者"
   updatedDate: "更新日時"
+  createdDate: "作成日時"
   setting: "設定"
   download: "ダウンロード"
 header:

@@ -23,8 +23,6 @@ import {
 export default class DictionaryList extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
-    showUser: true,
-    showUpdatedDate: true,
     showLinks: false
   };
 
@@ -39,6 +37,7 @@ export default class DictionaryList extends Component<Props, State> {
           key={dictionary.id}
           showUser={outerThis.props.showUser}
           showUpdatedDate={outerThis.props.showUpdatedDate}
+          showCreatedDate={outerThis.props.showCreatedDate}
           showSettingLink={showLinks && canOwn}
           showDownloadLink={showLinks}
         />
@@ -56,14 +55,13 @@ export default class DictionaryList extends Component<Props, State> {
 
 type Props = {
   dictionaries: Array<DetailedDictionary> | DetailedDictionaryProvider | null,
-  showUser: boolean,
-  showUpdatedDate: boolean,
+  showUser?: boolean,
+  showUpdatedDate?: boolean,
+  showCreatedDate?: boolean,
   showLinks: boolean,
   size: number
 };
 type DefaultProps = {
-  showUser: boolean,
-  showUpdatedDate: boolean,
   showLinks: boolean
 };
 type State = {
