@@ -56,7 +56,7 @@ export class NotificationController extends Controller {
     let hitResult = await NotificationModel.findAll(range);
     let hitNotifications = hitResult[0].map(NotificationCreator.create);
     let hitSize = hitResult[1];
-    let body = [hitNotifications, hitSize] as const;
+    let body = [hitNotifications, hitSize] as any;
     Controller.respond(response, body);
   }
 
