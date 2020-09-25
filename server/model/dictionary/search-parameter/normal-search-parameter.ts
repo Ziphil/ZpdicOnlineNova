@@ -35,8 +35,6 @@ export class NormalSearchParameter extends SearchParameter {
     return query;
   }
 
-  // この検索パラメータからサジェストされる単語を検索するためのクエリを返します。
-  // 何もサジェストする必要がない場合は null を返します。
   public createSuggestionAggregate(dictionary: Dictionary): Aggregate<Array<{title: string, word: Word}>> | null {
     let mode = this.mode;
     let type = this.type;
