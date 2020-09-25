@@ -92,6 +92,8 @@ popup:
     This invitation does not exist.
   noSuchDictionaryAuthorizedUser: >-
     There is no user with such permission.
+  emptyOrderName: >-
+    造語依頼する単語が空です。
   emptyContactText: >-
     The content is empty.
   administratorNotFound: >-

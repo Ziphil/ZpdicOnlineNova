@@ -38,7 +38,7 @@ export class OrderSchema {
     let order = new OrderModel({});
     order.dictionary = dictionary;
     order.name = name;
-    order.comment = comment;
+    order.comment = (comment === "") ? undefined : comment;
     order.createdDate = new Date();
     await order.save();
     return order;

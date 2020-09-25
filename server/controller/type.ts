@@ -197,7 +197,7 @@ type ProcessType = {
       request: {number: number, name: string, comment?: string},
       response: {
         200: Order,
-        400: CustomError<"noSuchDictionaryNumber">
+        400: CustomError<"noSuchDictionaryNumber" | "emptyOrderName">
       }
     }
   },

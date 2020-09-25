@@ -320,13 +320,18 @@ export class DictionaryController extends Controller {
     let number = CastUtil.ensureNumber(request.body.number);
     let name = CastUtil.ensureString(request.body.name);
     let comment = CastUtil.ensureString(request.body.comment);
-    let dictionary = await DictionaryModel.findOneByNumber(number);
-    if (dictionary) {
-      let order = await OrderModel.add(dictionary, name, comment);
-      let body = OrderCreator.create(order);
-      Controller.respond(response, body);
+    if (name !== "") {
+      let dictionary = await DictionaryModel.findOneByNumber(number);
+      if (dictionary) {
+        let order = await OrderModel.add(dictionary, name, comment);
+        let body = OrderCreator.create(order);
+        Controller.respond(response, body);
+      } else {
+        let body = CustomError.ofType("noSuchDictionaryNumber");
+        Controller.respondError(response, body);
+      }
     } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
+      let body = CustomError.ofType("emptyOrderName");
       Controller.respondError(response, body);
     }
   }

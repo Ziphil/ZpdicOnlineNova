@@ -92,6 +92,8 @@ popup:
     そのような権限の招待は存在しません。
   noSuchDictionaryAuthorizedUser: >-
     そのような権限を保有しているユーザーは存在しません。
+  emptyOrderName: >-
+    造語依頼する単語が空です。
   emptyContactText: >-
     お問い合わせ内容が空です。
   administratorNotFound: >-
