@@ -40,6 +40,10 @@ import {
   InvitationModel
 } from "/server/model/invitation";
 import {
+  OrderCreator,
+  OrderModel
+} from "/server/model/order";
+import {
   UserCreator,
   UserModel
 } from "/server/model/user";
@@ -310,6 +314,23 @@ export class DictionaryController extends Controller {
       Controller.respondError(response, body);
     }
   }
+
+  @post(SERVER_PATH["orderWord"])
+  public async [Symbol()](request: PostRequest<"orderWord">, response: PostResponse<"orderWord">): Promise<void> {
+    let number = CastUtil.ensureNumber(request.body.number);
+    let name = CastUtil.ensureString(request.body.name);
+    let comment = CastUtil.ensureString(request.body.comment);
+    let dictionary = await DictionaryModel.findOneByNumber(number);
+    if (dictionary) {
+      let order = await OrderModel.add(dictionary, name, comment);
+      let body = OrderCreator.create(order);
+      Controller.respond(response, body);
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
 
   @get(SERVER_PATH["searchDictionary"])
   public async [Symbol()](request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {

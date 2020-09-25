@@ -8,6 +8,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  Dictionary,
   DictionarySchema
 } from "/server/model/dictionary";
 import {
@@ -32,6 +33,16 @@ export class OrderSchema {
 
   @prop({required: true})
   public createdDate!: Date;
+
+  public static async add(dictionary: Dictionary, name: string, comment?: string): Promise<Order> {
+    let order = new OrderModel({});
+    order.dictionary = dictionary;
+    order.name = name;
+    order.comment = comment;
+    order.createdDate = new Date();
+    await order.save();
+    return order;
+  }
 
 }
 

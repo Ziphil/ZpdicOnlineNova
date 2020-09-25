@@ -21,6 +21,9 @@ import {
   Notification
 } from "/server/skeleton/notification";
 import {
+  Order
+} from "/server/skeleton/order";
+import {
   DetailedUser,
   User
 } from "/server/skeleton/user";
@@ -39,6 +42,7 @@ export const SERVER_PATH = {
   deleteDictionaryAuthorizedUser: "/api/dictionary/user/delete",
   editWord: "/api/word/edit",
   deleteWord: "/api/word/delete",
+  orderWord: "/api/word/request",
   searchDictionary: "/api/dictionary/search",
   downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
@@ -184,6 +188,16 @@ type ProcessType = {
       response: {
         200: Word,
         400: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber">
+      }
+    }
+  },
+  orderWord: {
+    get: Noop,
+    post: {
+      request: {number: number, name: string, comment?: string},
+      response: {
+        200: Order,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     }
   },
