@@ -94,3 +94,13 @@
   font-style: normal;
   text-decoration: none;
 }
+
+.root a {
+  color: $link-color;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.root a:hover {
+  color: $link-hover-color;
+}
