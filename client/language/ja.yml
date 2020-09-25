@@ -46,6 +46,8 @@ popup:
     単語の編集が完了しました。
   wordDeleted: >-
     単語の削除が完了しました。
+  wordOrdered: >-
+    単語の造語依頼が完了しました。
   contacted: >-
     問い合わせ内容を送信しました。
   invalidUserName: >-
@@ -226,6 +228,10 @@ loginForm:
   resetPassword: "パスワードを忘れた"
 notificationPane:
   fixed: "対応済み"
+orderWordForm:
+  name: "単語"
+  comment: "コメント"
+  confirm: "依頼"
 registerForm:
   register: "新規登録"
 resetUserPasswordForm:
@@ -354,5 +360,7 @@ loginPage:
   description: "ログイン"
 registerPage:
   desciption: "新規登録"
+orderWordPage:
+  description: "造語依頼"
 resetUserPasswordPage:
   description: "パスワードリセット"
