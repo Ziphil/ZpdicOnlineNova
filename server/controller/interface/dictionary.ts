@@ -24,6 +24,10 @@ import {
   SERVER_PATH
 } from "/server/controller/type";
 import {
+  CommissionCreator,
+  CommissionModel
+} from "/server/model/commission";
+import {
   DictionaryAuthorityUtil,
   DictionaryCreator,
   DictionaryFullAuthorityUtil,
@@ -39,10 +43,6 @@ import {
   InvitationCreator,
   InvitationModel
 } from "/server/model/invitation";
-import {
-  OrderCreator,
-  OrderModel
-} from "/server/model/order";
 import {
   UserCreator,
   UserModel
@@ -315,23 +315,23 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["orderWord"])
-  public async [Symbol()](request: PostRequest<"orderWord">, response: PostResponse<"orderWord">): Promise<void> {
+  @post(SERVER_PATH["addCommission"])
+  public async [Symbol()](request: PostRequest<"addCommission">, response: PostResponse<"addCommission">): Promise<void> {
     let number = CastUtil.ensureNumber(request.body.number);
     let name = CastUtil.ensureString(request.body.name);
     let comment = CastUtil.ensureString(request.body.comment);
     if (name !== "") {
       let dictionary = await DictionaryModel.findOneByNumber(number);
       if (dictionary) {
-        let order = await OrderModel.add(dictionary, name, comment);
-        let body = OrderCreator.create(order);
+        let commission = await CommissionModel.add(dictionary, name, comment);
+        let body = CommissionCreator.create(commission);
         Controller.respond(response, body);
       } else {
         let body = CustomError.ofType("noSuchDictionaryNumber");
         Controller.respondError(response, body);
       }
     } else {
-      let body = CustomError.ofType("emptyOrderName");
+      let body = CustomError.ofType("emptyCommissionName");
       Controller.respondError(response, body);
     }
   }

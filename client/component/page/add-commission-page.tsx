@@ -5,7 +5,7 @@ import {
   ReactNode
 } from "react";
 import Component from "/client/component/component";
-import OrderWordForm from "/client/component/compound/order-word-form";
+import AddCommissionForm from "/client/component/compound/add-commission-form";
 import {
   style
 } from "/client/component/decorator";
@@ -15,8 +15,8 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@style(require("./order-word-page.scss"))
-export default class OrderWordPage extends Component<Props, State, Params> {
+@style(require("./add-commission-page.scss"))
+export default class AddCommissionPage extends Component<Props, State, Params> {
 
   public state: State = {
     dictionary: null
@@ -36,9 +36,9 @@ export default class OrderWordPage extends Component<Props, State, Params> {
   public render(): ReactNode {
     let node = (
       <Page dictionary={this.state.dictionary} showDictionary={true}>
-        <div styleName="description">{this.trans("orderWordPage.description")}</div>
+        <div styleName="description">{this.trans("addCommissionPage.description")}</div>
         <div styleName="form">
-          <OrderWordForm dictionary={this.state.dictionary}/>
+          <AddCommissionForm dictionary={this.state.dictionary}/>
         </div>
       </Page>
     );

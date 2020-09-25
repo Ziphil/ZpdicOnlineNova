@@ -5,7 +5,7 @@ import {
 } from "/server/skeleton/skeleton";
 
 
-export class Order extends Skeleton {
+export class Commission extends Skeleton {
 
   public id!: string;
   public name!: string;

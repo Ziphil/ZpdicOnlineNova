@@ -16,32 +16,32 @@ import {
 } from "/server/skeleton/dictionary";
 
 
-@style(require("./order-word-form.scss"))
-export default class OrderWordForm extends Component<Props, State> {
+@style(require("./add-commision-form.scss"))
+export default class AddCommissionForm extends Component<Props, State> {
 
   public state: State = {
     name: "",
     comment: ""
   };
 
-  private async orderWord(): Promise<void> {
+  private async addCommission(): Promise<void> {
     let number = this.props.dictionary!.number;
     let name = this.state.name;
     let comment = this.state.comment;
-    let response = await this.requestPost("orderWord", {number, name, comment});
+    let response = await this.requestPost("addCommission", {number, name, comment});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("wordOrdered");
+      this.props.store!.addInformationPopup("commissionAdded");
     }
   }
 
   public render(): ReactNode {
     let node = (this.props.dictionary !== null) && (
       <form styleName="root">
-        <Input label={this.trans("orderWordForm.name")} value={this.state.name} onSet={(name) => this.setState({name})}/>
-        <TextArea label={this.trans("orderWordForm.comment")} value={this.state.comment} onSet={(comment) => this.setState({comment})}/>
+        <Input label={this.trans("addCommissionForm.name")} value={this.state.name} onSet={(name) => this.setState({name})}/>
+        <TextArea label={this.trans("addCommissionForm.comment")} value={this.state.comment} onSet={(comment) => this.setState({comment})}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={this.trans("orderWordForm.confirm")} iconLabel="&#xF022;" style="information" reactive={true} onClick={this.orderWord.bind(this)}/>
+            <Button label={this.trans("addCommissionForm.confirm")} iconLabel="&#xF022;" style="information" reactive={true} onClick={this.addCommission.bind(this)}/>
           </div>
         </div>
       </form>

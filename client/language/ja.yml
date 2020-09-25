@@ -46,7 +46,7 @@ popup:
     単語の編集が完了しました。
   wordDeleted: >-
     単語の削除が完了しました。
-  wordOrdered: >-
+  commissionAdded: >-
     単語の造語依頼が完了しました。
   contacted: >-
     問い合わせ内容を送信しました。
@@ -92,7 +92,7 @@ popup:
     そのような権限の招待は存在しません。
   noSuchDictionaryAuthorizedUser: >-
     そのような権限を保有しているユーザーは存在しません。
-  emptyOrderName: >-
+  emptyCommissionName: >-
     造語依頼する単語が空です。
   emptyContactText: >-
     お問い合わせ内容が空です。
@@ -190,6 +190,10 @@ inviteEditDictionaryForm:
 uploadDictionaryForm:
   file: "ファイル"
   confirm: "決定"
+addCommissionForm:
+  name: "単語"
+  comment: "コメント"
+  confirm: "依頼"
 contactForm:
   name: "名前"
   email: "メールアドレス"
@@ -231,10 +235,6 @@ loginForm:
   resetPassword: "パスワードを忘れた"
 notificationPane:
   fixed: "対応済み"
-orderWordForm:
-  name: "単語"
-  comment: "コメント"
-  confirm: "依頼"
 registerForm:
   confirm: "新規登録"
 resetUserPasswordForm:
@@ -281,6 +281,8 @@ wordEditor:
 wordPane:
   edit: "編集"
   submit: "決定"
+addCommissionPage:
+  description: "造語依頼"
 contactPage:
   description: "お問い合わせ"
 dashboardPage:
@@ -363,7 +365,5 @@ loginPage:
   description: "ログイン"
 registerPage:
   desciption: "新規登録"
-orderWordPage:
-  description: "造語依頼"
 resetUserPasswordPage:
   description: "パスワードリセット"

@@ -4,6 +4,9 @@ import {
   ValueOf
 } from "ts-essentials";
 import {
+  Commission
+} from "/server/skeleton/commission";
+import {
   DetailedDictionary,
   Dictionary,
   EditWord,
@@ -20,9 +23,6 @@ import {
 import {
   Notification
 } from "/server/skeleton/notification";
-import {
-  Order
-} from "/server/skeleton/order";
 import {
   DetailedUser,
   User
@@ -42,7 +42,7 @@ export const SERVER_PATH = {
   deleteDictionaryAuthorizedUser: "/api/dictionary/user/delete",
   editWord: "/api/word/edit",
   deleteWord: "/api/word/delete",
-  orderWord: "/api/word/request",
+  addCommission: "/api/word/request",
   searchDictionary: "/api/dictionary/search",
   downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
@@ -191,13 +191,13 @@ type ProcessType = {
       }
     }
   },
-  orderWord: {
+  addCommission: {
     get: Noop,
     post: {
       request: {number: number, name: string, comment?: string},
       response: {
-        200: Order,
-        400: CustomError<"noSuchDictionaryNumber" | "emptyOrderName">
+        200: Commission,
+        400: CustomError<"noSuchDictionaryNumber" | "emptyCommissionName">
       }
     }
   },
