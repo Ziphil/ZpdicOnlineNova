@@ -19,6 +19,7 @@ import {
   DictionaryAuthority,
   DictionaryAuthorityUtil,
   DictionaryFullAuthority,
+  SearchParameter,
   Serializer,
   Suggestion,
   Word,
@@ -30,9 +31,6 @@ import {
 import {
   InvitationModel
 } from "/server/model/invitation";
-import {
-  NormalSearchParameter
-} from "/server/model/search-parameter";
 import {
   User,
   UserCreator,
@@ -317,7 +315,7 @@ export class DictionarySchema {
   }
 
   // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
-  public async search(this: Dictionary, parameter: NormalSearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
+  public async search(this: Dictionary, parameter: SearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     let query = parameter.createQuery(this).sort("name");
     let suggestionAggregate = parameter.createSuggestionAggregate(this);
     let restrictedQuery = QueryRange.restrict(query, range);

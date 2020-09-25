@@ -6,28 +6,22 @@ import {
 } from "mongoose";
 import {
   Dictionary,
+  SearchMode,
+  SearchParameter,
+  SearchType,
   Word,
   WordModel
 } from "/server/model/dictionary";
-import {
-  SearchMode,
-  SearchType
-} from "/server/skeleton/search-parameter";
-export {
-  SearchMode,
-  SearchModeUtil,
-  SearchType,
-  SearchTypeUtil
-} from "/server/skeleton/search-parameter";
 
 
-export class NormalSearchParameter {
+export class NormalSearchParameter extends SearchParameter {
 
   public search: string;
   public mode: SearchMode;
   public type: SearchType;
 
   public constructor(search: string, mode: SearchMode, type: SearchType) {
+    super();
     this.search = search;
     this.mode = mode;
     this.type = type;

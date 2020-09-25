@@ -28,6 +28,9 @@ import {
   DictionaryCreator,
   DictionaryFullAuthorityUtil,
   DictionaryModel,
+  NormalSearchParameter,
+  SearchModeUtil,
+  SearchTypeUtil,
   SuggestionCreator,
   WordCreator,
   WordModel
@@ -36,11 +39,6 @@ import {
   InvitationCreator,
   InvitationModel
 } from "/server/model/invitation";
-import {
-  NormalSearchParameter,
-  SearchModeUtil,
-  SearchTypeUtil
-} from "/server/model/search-parameter";
 import {
   UserCreator,
   UserModel

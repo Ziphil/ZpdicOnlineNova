@@ -25,14 +25,12 @@ import {
 } from "/server/controller/type";
 import {
   Dictionary,
+  NormalSearchParameter,
+  SearchModeUtil,
+  SearchTypeUtil,
   Suggestion,
   Word
 } from "/server/skeleton/dictionary";
-import {
-  NormalSearchParameter,
-  SearchModeUtil,
-  SearchTypeUtil
-} from "/server/skeleton/search-parameter";
 
 
 @style(require("./dictionary-page.scss"))
