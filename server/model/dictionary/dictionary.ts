@@ -330,23 +330,22 @@ export class DictionarySchema {
   }
 
   public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {
-    let query = WordModel.find().where("dictionary", this);
-    let titleQuery = (() => {
+    let key = (() => {
       if (propertyName === "equivalent") {
-        return WordModel.find(query.getFilter()).distinct("equivalents.title");
+        return "equivalents.title";
       } else if (propertyName === "tag") {
-        return WordModel.find(query.getFilter()).distinct("tags");
+        return "tags";
       } else if (propertyName === "information") {
-        return WordModel.find(query.getFilter()).distinct("informations.title");
+        return "informations.title";
       } else if (propertyName === "variation") {
-        return WordModel.find(query.getFilter()).distinct("variations.title");
+        return "variations.title";
       } else if (propertyName === "relation") {
-        return WordModel.find(query.getFilter()).distinct("relations.title");
+        return "relations.title";
       } else {
-        return null;
+        return "";
       }
     })();
-    let titles = (titleQuery !== null) ? await titleQuery : [];
+    let titles = await WordModel.where("dictionary", this).distinct(key);
     let hitTitles = (() => {
       if (pattern !== "") {
         let fuse = new Fuse(titles, {threshold: 1, distance: 40});
