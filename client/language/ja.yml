@@ -193,7 +193,7 @@ contactForm:
   email: "メールアドレス"
   subject: "件名"
   text: "内容"
-  send: "送信"
+  confirm: "送信"
 dictionaryAggregationPane:
   dictionaryCount: "総辞書数"
   wordCount: "総単語数"
@@ -224,7 +224,7 @@ loginForm:
   userName: "ユーザー ID"
   email: "メールアドレス"
   password: "パスワード"
-  login: "ログイン"
+  confirm: "ログイン"
   resetPassword: "パスワードを忘れた"
 notificationPane:
   fixed: "対応済み"
@@ -233,7 +233,7 @@ orderWordForm:
   comment: "コメント"
   confirm: "依頼"
 registerForm:
-  register: "新規登録"
+  confirm: "新規登録"
 resetUserPasswordForm:
   newPassword: "新しいパスワード"
   issue: "送信"

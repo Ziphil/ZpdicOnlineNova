@@ -67,7 +67,7 @@ export default class RegisterForm extends Component<Props, State> {
         <Input label={this.trans("loginForm.password")} type="flexible" value={this.state.password} validate={validatePassword} onSet={(password) => this.setState({password})}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={this.trans("registerForm.register")} iconLabel="&#xF234;" style="information" reactive={true} onClick={this.performRegister.bind(this)}/>
+            <Button label={this.trans("registerForm.confirm")} iconLabel="&#xF234;" style="information" reactive={true} onClick={this.performRegister.bind(this)}/>
           </div>
         </div>
       </form>

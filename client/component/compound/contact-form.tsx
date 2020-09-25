@@ -53,7 +53,7 @@ export default class ContactForm extends Component<Props, State> {
         <TextArea label={this.trans("contactForm.text")} value={this.state.text} onSet={(text) => this.setState({text})}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={this.trans("contactForm.send")} iconLabel="&#xF0E0;" style="information" reactive={true} onClick={this.performSend.bind(this)}/>
+            <Button label={this.trans("contactForm.confirm")} iconLabel="&#xF0E0;" style="information" reactive={true} onClick={this.performSend.bind(this)}/>
           </div>
         </div>
       </form>

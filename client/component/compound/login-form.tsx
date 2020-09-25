@@ -44,7 +44,7 @@ export default class LoginForm extends Component<Props, State> {
 
   public render(): ReactNode {
     let registerNode = (this.props.showRegister) && (
-      <Button label={this.trans("registerForm.register")} iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
+      <Button label={this.trans("registerForm.confirm")} iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
     );
     let node = (
       <form styleName="root">
@@ -52,7 +52,7 @@ export default class LoginForm extends Component<Props, State> {
         <Input label={this.trans("loginForm.password")} type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={this.trans("loginForm.login")} iconLabel="&#xF2F6;" style="information" reactive={true} onClick={this.performLogin.bind(this)}/>
+            <Button label={this.trans("loginForm.confirm")} iconLabel="&#xF2F6;" style="information" reactive={true} onClick={this.performLogin.bind(this)}/>
             {registerNode}
           </div>
           <div styleName="row">

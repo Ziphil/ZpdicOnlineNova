@@ -46,6 +46,8 @@ popup:
     The editing of the word has been completed.
   wordDeleted: >-
     The deletion of the word has been completed.
+  wordOrdered: >-
+    単語の造語依頼が完了しました。
   contacted: >-
     Your message has been sent.
   invalidUserName: >-
@@ -193,7 +195,7 @@ contactForm:
   email: "Email address"
   subject: "Subject"
   text: "Content"
-  send: "Send"
+  perform: "Send"
 dictionaryAggregationPane:
   dictionaryCount: "Dictionaries"
   wordCount: "Words"
@@ -224,12 +226,16 @@ loginForm:
   userName: "User ID"
   email: "Email address"
   password: "Password"
-  login: "Sign in"
+  confirm: "Sign in"
   resetPassword: "Forgot password"
 notificationPane:
   fixed: "Fixed"
+orderWordForm:
+  name: "Word"
+  comment: "Comment"
+  confirm: "Request"
 registerForm:
-  register: "Sign up"
+  confirm: "Sign up"
 resetUserPasswordForm:
   newPassword: "New password"
   issue: "Confirm"
@@ -356,5 +362,7 @@ loginPage:
   description: "Sign in"
 registerPage:
   desciption: "Sign up"
+orderWordPage:
+  description: "造語依頼"
 resetUserPasswordPage:
   description: "Reset password"
