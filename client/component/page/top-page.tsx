@@ -6,6 +6,7 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import DictionaryAggregationPane from "/client/component/compound/dictionary-aggregation-pane";
+import FormPane from "/client/component/compound/form-pane";
 import LoginForm from "/client/component/compound/login-form";
 import Logo from "/client/component/compound/logo";
 import NotificationList from "/client/component/compound/notification-list";
@@ -26,7 +27,9 @@ export default class TopPage extends Component<Props, State> {
             <Logo/>
           </div>
           <div styleName="login-form">
-            <LoginForm showRegister={true}/>
+            <FormPane>
+              <LoginForm showRegister={true}/>
+            </FormPane>
           </div>
         </div>
         <div styleName="aggregation">

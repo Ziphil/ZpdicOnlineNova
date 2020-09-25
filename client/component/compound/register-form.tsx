@@ -7,7 +7,6 @@ import {
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
-import FormPane from "/client/component/compound/form-pane";
 import {
   style
 } from "/client/component/decorator";
@@ -30,8 +29,7 @@ export default class RegisterForm extends Component<Props, State> {
   public state: State = {
     name: "",
     email: "",
-    password: "",
-    errorType: null
+    password: ""
   };
 
   public componentDidMount(): void {
@@ -46,19 +44,15 @@ export default class RegisterForm extends Component<Props, State> {
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
-    let response = await this.requestPost("registerUser", {name, email, password}, {ignoreError: true, useRecaptcha: true});
+    let response = await this.requestPost("registerUser", {name, email, password}, {useRecaptcha: true});
     let body = response.data;
     if (response.status === 200) {
       let loginResponse = await this.login({name, password});
       if (loginResponse.status === 200) {
         this.replacePath("/dashboard");
       } else {
-        this.setState({errorType: "loginFailed"});
+        this.props.store!.addErrorPopup("loginFailed");
       }
-    } else if (response.status === 400 && "error" in body) {
-      this.setState({errorType: body.type});
-    } else {
-      this.setState({errorType: "unexpected"});
     }
   }
 
@@ -67,18 +61,16 @@ export default class RegisterForm extends Component<Props, State> {
     let validateEmail = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidUserEmail"));
     let validatePassword = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidUserPassword"));
     let node = (
-      <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
-        <form styleName="root">
-          <Input label={this.trans("loginForm.userName")} value={this.state.name} validate={validateName} onSet={(name) => this.setState({name})}/>
-          <Input label={this.trans("loginForm.email")} value={this.state.email} validate={validateEmail} onSet={(email) => this.setState({email})}/>
-          <Input label={this.trans("loginForm.password")} type="flexible" value={this.state.password} validate={validatePassword} onSet={(password) => this.setState({password})}/>
-          <div styleName="button-group">
-            <div styleName="row">
-              <Button label={this.trans("registerForm.register")} iconLabel="&#xF234;" style="information" reactive={true} onClick={this.performRegister.bind(this)}/>
-            </div>
+      <form styleName="root">
+        <Input label={this.trans("loginForm.userName")} value={this.state.name} validate={validateName} onSet={(name) => this.setState({name})}/>
+        <Input label={this.trans("loginForm.email")} value={this.state.email} validate={validateEmail} onSet={(email) => this.setState({email})}/>
+        <Input label={this.trans("loginForm.password")} type="flexible" value={this.state.password} validate={validatePassword} onSet={(password) => this.setState({password})}/>
+        <div styleName="button-group">
+          <div styleName="row">
+            <Button label={this.trans("registerForm.register")} iconLabel="&#xF234;" style="information" reactive={true} onClick={this.performRegister.bind(this)}/>
           </div>
-        </form>
-      </FormPane>
+        </div>
+      </form>
     );
     return node;
   }
@@ -91,6 +83,5 @@ type Props = {
 type State = {
   name: string,
   email: string,
-  password: string,
-  errorType: string | null
+  password: string
 };
