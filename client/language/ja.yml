@@ -200,6 +200,7 @@ dictionaryAggregationPane:
 dictionaryHeader:
   add: "追加"
   setting: "設定"
+  orderWord: "造語依頼"
   download: "ダウンロード"
 dictionaryPane:
   wordSize: "{wordSize, number} 語"

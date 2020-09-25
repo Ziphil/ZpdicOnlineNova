@@ -41,7 +41,7 @@ export default class OrderWordForm extends Component<Props, State> {
         <TextArea label={this.trans("orderWordForm.comment")} value={this.state.comment} onSet={(comment) => this.setState({comment})}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={this.trans("orderWordForm.confirm")} iconLabel="&#xF0E0;" style="information" reactive={true} onClick={this.orderWord.bind(this)}/>
+            <Button label={this.trans("orderWordForm.confirm")} iconLabel="&#xF022;" style="information" reactive={true} onClick={this.orderWord.bind(this)}/>
           </div>
         </div>
       </form>
