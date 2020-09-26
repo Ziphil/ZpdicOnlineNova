@@ -2,8 +2,10 @@
 
 import * as react from "react";
 import {
+  Fragment,
   MouseEvent,
-  ReactNode
+  ReactNode,
+  lazy
 } from "react";
 import {
   AsyncOrSync
@@ -17,12 +19,17 @@ import {
   Commission
 } from "/server/skeleton/commission";
 import {
-  Dictionary
+  Dictionary,
+  EditWord
 } from "/server/skeleton/dictionary";
 
 
 @style(require("./commission-pane.scss"))
 export default class CommissionPane extends Component<Props, State> {
+
+  public state: State = {
+    editorOpen: false
+  };
 
   private async deleteCommission(event: MouseEvent<HTMLButtonElement>): Promise<void> {
     let number = this.props.dictionary.number;
@@ -36,18 +43,35 @@ export default class CommissionPane extends Component<Props, State> {
     }
   }
 
+  private async handleEditConfirm(word: EditWord, event: MouseEvent<HTMLButtonElement>): Promise<void> {
+    await this.deleteCommission(event);
+    if (this.props.onAddConfirm) {
+      await this.props.onAddConfirm(word, event);
+    }
+  }
+
   public render(): ReactNode {
+    let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
     let node = (
-      <div styleName="root">
-        {this.props.commission.name}
-        <div styleName="comment">
-          {this.props.commission.comment}
+      <Fragment>
+        <div styleName="root">
+          {this.props.commission.name}
+          <div styleName="comment">
+            {this.props.commission.comment}
+          </div>
+          <div styleName="button">
+            <Button label={this.trans("commissionPane.delete")} iconLabel="&#xF2ED;" style="simple" onClick={(event) => this.deleteCommission(event)}/>
+            <Button label={this.trans("commissionPane.add")} iconLabel="&#xF067;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
+          </div>
         </div>
-        <div styleName="button">
-          <Button label={this.trans("commissionPane.delete")} iconLabel="&#xF2ED;" style="simple" onClick={(event) => this.deleteCommission(event)}/>
-          <Button label={this.trans("commissionPane.add")} iconLabel="&#xF067;" style="simple"/>
-        </div>
-      </div>
+        <WordEditor
+          dictionary={this.props.dictionary}
+          word={null}
+          open={this.state.editorOpen}
+          onClose={() => this.setState({editorOpen: false})}
+          onEditConfirm={this.handleEditConfirm.bind(this)}
+        />
+      </Fragment>
     );
     return node;
   }
@@ -59,7 +83,8 @@ type Props = {
   commission: Commission,
   dictionary: Dictionary,
   onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onAddConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  onAddConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
+  editorOpen: boolean
 };
