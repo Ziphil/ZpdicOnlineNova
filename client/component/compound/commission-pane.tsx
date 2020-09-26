@@ -10,6 +10,7 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import Component from "/client/component/component";
 import {
@@ -28,15 +29,18 @@ import {
 export default class CommissionPane extends Component<Props, State> {
 
   public state: State = {
+    alertOpen: false,
     editorOpen: false
   };
 
-  private async deleteCommission(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+  private async deleteCommission(event: MouseEvent<HTMLButtonElement>, showPopup?: boolean): Promise<void> {
     let number = this.props.dictionary.number;
     let id = this.props.commission.id;
     let response = await this.requestPost("deleteCommission", {number, id});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("commissionDeleted");
+      if (showPopup) {
+        this.props.store!.addInformationPopup("commissionDeleted");
+      }
       if (this.props.onDeleteConfirm) {
         await this.props.onDeleteConfirm(event);
       }
@@ -44,7 +48,7 @@ export default class CommissionPane extends Component<Props, State> {
   }
 
   private async handleEditConfirm(word: EditWord, event: MouseEvent<HTMLButtonElement>): Promise<void> {
-    await this.deleteCommission(event);
+    await this.deleteCommission(event, false);
     if (this.props.onAddConfirm) {
       await this.props.onAddConfirm(word, event);
     }
@@ -60,10 +64,19 @@ export default class CommissionPane extends Component<Props, State> {
             {this.props.commission.comment}
           </div>
           <div styleName="button">
-            <Button label={this.trans("commissionPane.delete")} iconLabel="&#xF2ED;" style="simple" onClick={(event) => this.deleteCommission(event)}/>
+            <Button label={this.trans("commissionPane.delete")} iconLabel="&#xF2ED;" style="simple" onClick={() => this.setState({alertOpen: true})}/>
             <Button label={this.trans("commissionPane.add")} iconLabel="&#xF067;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
           </div>
         </div>
+        <Alert
+          text={this.trans("commissionPane.alert")}
+          iconLabel="&#xF071;"
+          confirmLabel={this.trans("commissionPane.delete")}
+          open={this.state.alertOpen}
+          outsideClosable={true}
+          onClose={() => this.setState({alertOpen: false})}
+          onConfirm={this.deleteCommission.bind(this)}
+        />
         <WordEditor
           dictionary={this.props.dictionary}
           word={null}
@@ -86,5 +99,6 @@ type Props = {
   onAddConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
+  alertOpen: boolean,
   editorOpen: boolean
 };

@@ -203,6 +203,9 @@ addCommissionForm:
 commissionPane:
   delete: "削除"
   add: "造語"
+  alert: >-
+    この造語依頼を削除します。
+    よろしいですか?
 contactForm:
   name: "Name"
   email: "Email address"
