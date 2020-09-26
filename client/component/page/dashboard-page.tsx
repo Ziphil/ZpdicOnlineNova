@@ -61,7 +61,7 @@ export default class DashboardPage extends Component<Props, State, Params> {
     let description = this.trans("dashboardPage.dictionaryList.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <DictionaryList dictionaries={this.state.dictionaries} showLinks={true} size={5}/>
+        <DictionaryList dictionaries={this.state.dictionaries} showLinks={true} size={8}/>
       </SettingPane>
     );
     return node;
@@ -72,7 +72,7 @@ export default class DashboardPage extends Component<Props, State, Params> {
     let description = this.trans("dashboardPage.invitationList.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <InvitationList invitations={this.state.editInvitations} size={5} onSubmit={() => this.fetchEditInvitations()}/>
+        <InvitationList invitations={this.state.editInvitations} size={8} onSubmit={() => this.fetchEditInvitations()}/>
       </SettingPane>
     );
     return node;

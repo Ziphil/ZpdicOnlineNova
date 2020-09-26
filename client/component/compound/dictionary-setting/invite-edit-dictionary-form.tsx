@@ -83,7 +83,7 @@ export default class InviteEditDictionaryForm extends Component<Props, State> {
           <Button label={this.trans("inviteEditDictionaryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
         </form>
         <div styleName="user">
-          <UserList users={this.state.authorizedUsers} dictionary={this.props.dictionary} size={6} onSubmit={this.fetchAuthorizedUsers.bind(this)}/>
+          <UserList users={this.state.authorizedUsers} dictionary={this.props.dictionary} size={8} onSubmit={this.fetchAuthorizedUsers.bind(this)}/>
         </div>
       </Fragment>
     );
