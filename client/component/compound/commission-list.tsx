@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  Fragment,
   MouseEvent,
   ReactNode
 } from "react";
@@ -44,7 +45,14 @@ export default class CommissionList extends Component<Props, State> {
       return node;
     };
     let node = (
-      <PaneList items={this.props.commissions} size={this.props.size} column={3} method="table" style="spaced" border={true} renderer={renderer}/>
+      <Fragment>
+        <div styleName="normal">
+          <PaneList items={this.props.commissions} size={this.props.size} column={3} method="table" style="spaced" border={true} renderer={renderer}/>
+        </div>
+        <div styleName="smartphone">
+          <PaneList items={this.props.commissions} size={this.props.size} column={2} method="table" style="spaced" border={true} renderer={renderer}/>
+        </div>
+      </Fragment>
     );
     return node;
   }
