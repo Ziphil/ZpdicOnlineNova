@@ -1,5 +1,9 @@
 //
 
+import {
+  Repeat
+} from "typescript-tuple";
+
 
 export function swap<T>(array: Array<T>, index: number, direction: 1 | -1): Array<T> {
   let targetIndex = index + direction;
@@ -16,6 +20,21 @@ export function deleteAt<T>(array: Array<T>, index: number): Array<T> {
     array.splice(index, 1);
   }
   return array;
+}
+
+export function slices<T, N extends number>(array: Array<T>, sliceLength: N, fill: true): Array<Repeat<T | undefined, N>>;
+export function slices<T, N extends number>(array: Array<T>, sliceLength: N, fill?: false): Array<Repeat<T, N>>;
+export function slices<T, N extends number>(array: Array<T>, sliceLength: N, fill?: boolean): Array<Repeat<T | undefined, N>> {
+  let result = [] as any;
+  for (let i = 0 ; sliceLength * i < array.length ; i ++) {
+    let slice = array.slice(sliceLength * i, sliceLength * (i + 1));
+    if (fill) {
+      let rest = new Array(sliceLength - slice.length);
+      slice.push(...rest.fill(undefined));
+    }
+    result.push(slice);
+  }
+  return result;
 }
 
 export function trimIndent(strings: TemplateStringsArray, ...expressions: Array<any>): string {

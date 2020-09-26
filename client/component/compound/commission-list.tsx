@@ -44,7 +44,7 @@ export default class CommissionList extends Component<Props, State> {
       return node;
     };
     let node = (
-      <PaneList items={this.props.commissions} size={this.props.size} column={3} style="spaced" renderer={renderer}/>
+      <PaneList items={this.props.commissions} size={this.props.size} column={3} method="table" style="spaced" border={true} renderer={renderer}/>
     );
     return node;
   }

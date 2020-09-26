@@ -155,7 +155,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
 
   private renderCommissionList(): ReactNode {
     let node = (
-      <SettingPane>
+      <SettingPane key="commissionList">
         <CommissionList commissions={this.fetchCommissions.bind(this)} dictionary={this.state.dictionary!} size={30} onDeleteConfirm={this.fetchCommissionCount.bind(this)}/>
       </SettingPane>
     );
