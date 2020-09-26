@@ -47,9 +47,9 @@ popup:
   wordDeleted: >-
     The deletion of the word has been completed.
   commissionAdded: >-
-    単語の造語依頼が完了しました。
+    Your request has been completed.
   commissionDeleted: >-
-    単語の造語依頼を削除しました。
+    The request has been deleted.
   contacted: >-
     Your message has been sent.
   invalidUserName: >-
@@ -95,9 +95,9 @@ popup:
   noSuchDictionaryAuthorizedUser: >-
     There is no user with such permission.
   emptyCommissionName: >-
-    造語依頼する単語が空です。
+    The word to request is empty.
   noSuchCommission: >-
-    その造語依頼は存在しません。
+    This request does not exist.
   emptyContactText: >-
     The content is empty.
   administratorNotFound: >-
@@ -201,11 +201,11 @@ addCommissionForm:
   comment: "Comment"
   confirm: "Request"
 commissionPane:
-  delete: "削除"
-  add: "造語"
+  delete: "Delete"
+  add: "Create"
   alert: >-
-    この造語依頼を削除します。
-    よろしいですか?
+    This request will be deleted.
+    Are you really sure?
 contactForm:
   name: "Name"
   email: "Email address"
@@ -294,7 +294,7 @@ wordPane:
   edit: "Edit"
   submit: "Select"
 addCommissionPage:
-  description: "造語依頼"
+  description: "Request"
 contactPage:
   description: "Contact"
 dashboardPage:
