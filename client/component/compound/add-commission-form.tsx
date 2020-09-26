@@ -28,7 +28,7 @@ export default class AddCommissionForm extends Component<Props, State> {
     let number = this.props.dictionary!.number;
     let name = this.state.name;
     let comment = this.state.comment;
-    let response = await this.requestPost("addCommission", {number, name, comment});
+    let response = await this.requestPost("addCommission", {number, name, comment}, {useRecaptcha: true});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("commissionAdded");
       this.setState({name: "", comment: ""});

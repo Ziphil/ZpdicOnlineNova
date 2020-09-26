@@ -18,6 +18,7 @@ import {
 } from "/server/controller/decorator";
 import {
   verifyDictionary,
+  verifyRecaptcha,
   verifyUser
 } from "/server/controller/middle";
 import {
@@ -316,6 +317,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATH["addCommission"])
+  @before(verifyRecaptcha())
   public async [Symbol()](request: PostRequest<"addCommission">, response: PostResponse<"addCommission">): Promise<void> {
     let number = CastUtil.ensureNumber(request.body.number);
     let name = CastUtil.ensureString(request.body.name);

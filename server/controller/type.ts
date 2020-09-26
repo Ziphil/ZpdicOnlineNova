@@ -195,7 +195,7 @@ type ProcessType = {
   addCommission: {
     get: Noop,
     post: {
-      request: {number: number, name: string, comment?: string},
+      request: WithRecaptcha<{number: number, name: string, comment?: string}>,
       response: {
         200: Commission,
         400: CustomError<"noSuchDictionaryNumber" | "emptyCommissionName">
