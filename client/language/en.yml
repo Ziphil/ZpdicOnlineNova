@@ -196,6 +196,9 @@ addCommissionForm:
   name: "Word"
   comment: "Comment"
   confirm: "Request"
+commissionPane:
+  delete: "削除"
+  add: "造語"
 contactForm:
   name: "Name"
   email: "Email address"
