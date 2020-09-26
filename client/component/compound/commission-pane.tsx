@@ -1,0 +1,36 @@
+//
+
+import * as react from "react";
+import {
+  MouseEvent,
+  ReactNode
+} from "react";
+import Component from "/client/component/component";
+import {
+  style
+} from "/client/component/decorator";
+import {
+  Commission
+} from "/server/skeleton/commission";
+
+
+@style(require("./commission-pane.scss"))
+export default class CommissionPane extends Component<Props, State> {
+
+  public render(): ReactNode {
+    let node = (
+      <div>
+        {this.props.commission.name}
+      </div>
+    );
+    return node;
+  }
+
+}
+
+
+type Props = {
+  commission: Commission
+};
+type State = {
+};

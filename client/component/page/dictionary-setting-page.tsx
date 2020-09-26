@@ -5,6 +5,7 @@ import {
   ReactNode
 } from "react";
 import Component from "/client/component/component";
+import CommissionList from "/client/component/compound/commission-list";
 import ChangeDictionaryExplanationForm from "/client/component/compound/dictionary-setting/change-dictionary-explanation-form";
 import ChangeDictionaryNameForm from "/client/component/compound/dictionary-setting/change-dictionary-name-form";
 import ChangeDictionaryParamNameForm from "/client/component/compound/dictionary-setting/change-dictionary-param-name-form";
@@ -18,6 +19,12 @@ import {
   style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
+import {
+  WithSize
+} from "/server/controller/type";
+import {
+  Commission
+} from "/server/skeleton/commission";
 import {
   Dictionary
 } from "/server/skeleton/dictionary";
@@ -57,6 +64,17 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       this.setState({commissionCount});
     } else {
       this.setState({commissionCount: 0});
+    }
+  }
+
+  private async fetchCommissions(offset?: number, size?: number): Promise<WithSize<Commission>> {
+    let number = +this.props.match!.params.number;
+    let response = await this.requestGet("fetchCommissions", {number, offset, size});
+    if (response.status === 200 && !("error" in response.data)) {
+      let hitResult = response.data;
+      return hitResult;
+    } else {
+      return [[], 0];
     }
   }
 
@@ -137,9 +155,9 @@ export default class DictionarySettingPage extends Component<Props, State, Param
 
   private renderCommissionList(): ReactNode {
     let node = (
-      <div>
-        DUMMY
-      </div>
+      <SettingPane>
+        <CommissionList commissions={this.fetchCommissions.bind(this)} size={30}/>
+      </SettingPane>
     );
     return node;
   }
