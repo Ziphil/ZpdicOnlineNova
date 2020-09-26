@@ -31,6 +31,7 @@ export default class AddCommissionForm extends Component<Props, State> {
     let response = await this.requestPost("addCommission", {number, name, comment});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("commissionAdded");
+      this.setState({name: "", comment: ""});
     }
   }
 
