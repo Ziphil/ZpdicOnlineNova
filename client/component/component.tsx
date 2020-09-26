@@ -96,7 +96,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
   private async request<N extends ProcessName, M extends MethodType>(name: N, method: M, config: RequestConfig = {}): Promise<AxiosResponseType<N, M>> {
     let url = SERVER_PATH[name];
     if (config.useRecaptcha) {
-      let action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : "action";
+      let action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : name;
       let recaptchaToken = await grecaptcha.execute(Main.getRecaptchaSite(), {action});
       if (config.params !== undefined) {
         config.params.recaptchaToken = recaptchaToken;
@@ -132,7 +132,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
   // HTTP ステータスコードが 400 番台もしくは 500 番台の場合は、例外は投げられませんが、代わりにグローバルストアにエラータイプを送信します。
   // これにより、ページ上部にエラーを示すポップアップが表示されます。
   // ignroesError に true を渡すことで、このエラータイプの送信を抑制できます。
-  protected async requestGet<N extends ProcessName>(name: N, params: Omit<RequestType<N, "get">, "recaptchaToken">, config: RequestConfig & {useRecaptcha: true}): Promise<AxiosResponseType<N, "get">>;
+  protected async requestGet<N extends ProcessName>(name: N, params: Omit<RequestType<N, "get">, "recaptchaToken">, config: RequestConfigWithRecaptcha): Promise<AxiosResponseType<N, "get">>;
   protected async requestGet<N extends ProcessName>(name: N, params: RequestType<N, "get">, config?: RequestConfig): Promise<AxiosResponseType<N, "get">>;
   protected async requestGet<N extends ProcessName>(name: N, params: RequestType<N, "get">, config: RequestConfig = {}): Promise<AxiosResponseType<N, "get">> {
     let nextConfig = {...config, params};
@@ -140,7 +140,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
     return response;
   }
 
-  protected async requestPost<N extends ProcessName>(name: N, data: Omit<RequestType<N, "post">, "recaptchaToken">, config: RequestConfig & {useRecaptcha: true}): Promise<AxiosResponseType<N, "post">>;
+  protected async requestPost<N extends ProcessName>(name: N, data: Omit<RequestType<N, "post">, "recaptchaToken">, config: RequestConfigWithRecaptcha): Promise<AxiosResponseType<N, "post">>;
   protected async requestPost<N extends ProcessName>(name: N, data: RequestType<N, "post">, config?: RequestConfig): Promise<AxiosResponseType<N, "post">>;
   protected async requestPost<N extends ProcessName>(name: N, data: RequestType<N, "post">, config: RequestConfig = {}): Promise<AxiosResponseType<N, "post">> {
     let nextConfig = {...config, data};
@@ -227,6 +227,7 @@ type AdditionalRequestConfig = {
 
 type Props<P, Q> = Partial<RouteComponentProps<Q, any, any> & AdditionalProps> & P;
 type RequestConfig = AxiosRequestConfig & AdditionalRequestConfig;
+type RequestConfigWithRecaptcha = RequestConfig & {useRecaptcha: true | string};
 
 type StylesType = {[key: string]: string | undefined};
 type FormatFunction<T, R> = (parts: Array<string | T>) => R;
