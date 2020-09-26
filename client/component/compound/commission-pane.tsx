@@ -5,6 +5,7 @@ import {
   Fragment,
   MouseEvent,
   ReactNode,
+  Suspense,
   lazy
 } from "react";
 import {
@@ -77,13 +78,15 @@ export default class CommissionPane extends Component<Props, State> {
           onClose={() => this.setState({alertOpen: false})}
           onConfirm={this.deleteCommission.bind(this)}
         />
-        <WordEditor
-          dictionary={this.props.dictionary}
-          word={null}
-          open={this.state.editorOpen}
-          onClose={() => this.setState({editorOpen: false})}
-          onEditConfirm={this.handleEditConfirm.bind(this)}
-        />
+        <Suspense fallback="">
+          <WordEditor
+            dictionary={this.props.dictionary}
+            word={null}
+            open={this.state.editorOpen}
+            onClose={() => this.setState({editorOpen: false})}
+            onEditConfirm={this.handleEditConfirm.bind(this)}
+          />
+        </Suspense>
       </Fragment>
     );
     return node;
