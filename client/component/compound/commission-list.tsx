@@ -23,12 +23,11 @@ import {
 export default class CommissionList extends Component<Props, State> {
 
   public render(): ReactNode {
-    let outerThis = this;
     let renderer = function (commission: Commission): ReactNode {
       return <CommissionPane commission={commission} key={commission.id}/>;
     };
     let node = (
-      <PaneList items={this.props.commissions} size={this.props.size} column={2} renderer={renderer}/>
+      <PaneList items={this.props.commissions} size={this.props.size} column={3} style="spaced" renderer={renderer}/>
     );
     return node;
   }
