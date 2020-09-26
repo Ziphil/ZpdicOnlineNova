@@ -320,7 +320,7 @@ dashboardPage:
   deleteUserForm:
     label: "削除"
     description: >-
-      この辞書を削除します。
+      このユーザーを削除します。
 dictionaryListPage:
   updatedDate: "更新日時順"
   createdDate: "作成日時順"
