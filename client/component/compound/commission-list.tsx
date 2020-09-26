@@ -61,4 +61,4 @@ type Props = {
 type State = {
 };
 
-type CommissionProvider = (offset?: number, size?: number) => Promise<WithSize<Commission>>;
+export type CommissionProvider = (offset?: number, size?: number) => Promise<WithSize<Commission>>;

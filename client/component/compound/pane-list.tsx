@@ -123,4 +123,4 @@ type State<T> = {
   loading: boolean
 };
 
-type ItemProvider<T> = (offset?: number, size?: number) => Promise<WithSize<T>>;
+export type ItemProvider<T> = (offset?: number, size?: number) => Promise<WithSize<T>>;

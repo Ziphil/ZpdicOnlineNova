@@ -67,4 +67,4 @@ type DefaultProps = {
 type State = {
 };
 
-type DetailedDictionaryProvider = (offset?: number, size?: number) => Promise<WithSize<DetailedDictionary>>;
+export type DetailedDictionaryProvider = (offset?: number, size?: number) => Promise<WithSize<DetailedDictionary>>;
