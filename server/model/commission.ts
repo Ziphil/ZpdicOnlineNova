@@ -48,6 +48,11 @@ export class CommissionSchema {
     return result;
   }
 
+  public static async findOneByDictionaryAndId(dictionary: Dictionary, id: string): Promise<Commission | null> {
+    let commission = await CommissionModel.findById(id).where("dictionary", dictionary);
+    return commission;
+  }
+
   public static async add(dictionary: Dictionary, name: string, comment?: string): Promise<Commission> {
     let commission = new CommissionModel({});
     commission.dictionary = dictionary;
@@ -56,6 +61,10 @@ export class CommissionSchema {
     commission.createdDate = new Date();
     await commission.save();
     return commission;
+  }
+
+  public async delete(this: Commission): Promise<void> {
+    await this.remove();
   }
 
 }

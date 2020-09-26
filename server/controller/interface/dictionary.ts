@@ -338,6 +338,26 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["deleteCommission"])
+  @before(verifyUser(), verifyDictionary("own"))
+  public async [Symbol()](request: PostRequest<"deleteCommission">, response: PostResponse<"deleteCommission">): Promise<void> {
+    let dictionary = request.dictionary!;
+    let id = CastUtil.ensureString(request.body.id);
+    if (dictionary) {
+      let commission = await CommissionModel.findOneByDictionaryAndId(dictionary, id);
+      if (commission) {
+        await commission.delete();
+        let body = CommissionCreator.create(commission);
+        Controller.respond(response, body);
+      } else {
+        let body = CustomError.ofType("noSuchCommission");
+        Controller.respondError(response, body);
+      }
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
 
   @get(SERVER_PATH["searchDictionary"])
   public async [Symbol()](request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {

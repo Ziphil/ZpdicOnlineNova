@@ -48,6 +48,8 @@ popup:
     単語の削除が完了しました。
   commissionAdded: >-
     単語の造語依頼が完了しました。
+  commissionDeleted: >-
+    単語の造語依頼を削除しました。
   contacted: >-
     問い合わせ内容を送信しました。
   invalidUserName: >-
@@ -94,6 +96,8 @@ popup:
     そのような権限を保有しているユーザーは存在しません。
   emptyCommissionName: >-
     造語依頼する単語が空です。
+  noSuchCommission: >-
+    その造語依頼は存在しません。
   emptyContactText: >-
     お問い合わせ内容が空です。
   administratorNotFound: >-

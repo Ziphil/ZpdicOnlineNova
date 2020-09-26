@@ -43,6 +43,7 @@ export const SERVER_PATH = {
   editWord: "/api/word/edit",
   deleteWord: "/api/word/delete",
   addCommission: "/api/request/add",
+  deleteCommission: "/api/request/delete",
   searchDictionary: "/api/dictionary/search",
   downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
@@ -202,6 +203,16 @@ type ProcessType = {
       }
     }
   },
+  deleteCommission: {
+    get: Noop,
+    post: {
+      request: {number: number, id: string},
+      response: {
+        200: Commission,
+        400: CustomError<"noSuchDictionaryNumber" | "noSuchCommission">
+      }
+    }
+  }
   searchDictionary: {
     get: {
       request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},

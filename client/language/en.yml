@@ -48,6 +48,8 @@ popup:
     The deletion of the word has been completed.
   commissionAdded: >-
     単語の造語依頼が完了しました。
+  commissionDeleted: >-
+    単語の造語依頼を削除しました。
   contacted: >-
     Your message has been sent.
   invalidUserName: >-
@@ -94,6 +96,8 @@ popup:
     There is no user with such permission.
   emptyCommissionName: >-
     造語依頼する単語が空です。
+  noSuchCommission: >-
+    その造語依頼は存在しません。
   emptyContactText: >-
     The content is empty.
   administratorNotFound: >-
