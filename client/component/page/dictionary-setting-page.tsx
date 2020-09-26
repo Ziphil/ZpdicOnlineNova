@@ -28,11 +28,12 @@ export default class DictionarySettingPage extends Component<Props, State, Param
 
   public state: State = {
     dictionary: null,
+    commissionCount: 0,
     authorized: false
   };
 
   public async componentDidMount(): Promise<void> {
-    let promise = Promise.all([this.fetchDictionary(), this.checkAuthorization()]);
+    let promise = Promise.all([this.fetchDictionary(), this.fetchCommissionCount(), this.checkAuthorization()]);
     await promise;
   }
 
@@ -44,6 +45,18 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
+    }
+  }
+
+  private async fetchCommissionCount(): Promise<void> {
+    let number = +this.props.match!.params.number;
+    let size = 1;
+    let response = await this.requestGet("fetchCommissions", {number, size});
+    if (response.status === 200 && !("error" in response.data)) {
+      let commissionCount = response.data[1];
+      this.setState({commissionCount});
+    } else {
+      this.setState({commissionCount: 0});
     }
   }
 
@@ -122,6 +135,15 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
+  private renderCommissionList(): ReactNode {
+    let node = (
+      <div>
+        DUMMY
+      </div>
+    );
+    return node;
+  }
+
   private renderInviteEditDictionaryForm(): ReactNode {
     let label = this.trans("dictionarySettingPage.inviteEditDictionaryForm.label");
     let description = this.trans("dictionarySettingPage.inviteEditDictionaryForm.description");
@@ -136,8 +158,10 @@ export default class DictionarySettingPage extends Component<Props, State, Param
   public render(): ReactNode {
     let number = +this.props.match!.params.number;
     let mode = this.props.match?.params.mode || "general";
+    let commissionCount = (this.state.commissionCount > 0) ? this.state.commissionCount : undefined;
     let menuSpecs = [
       {mode: "general", label: this.trans("dictionarySettingPage.general"), iconLabel: "\uF013", href: "/dashboard/dictionary/" + number},
+      {mode: "request", label: this.trans("dictionarySettingPage.commission"), iconLabel: "\uF022", badgeValue: commissionCount, href: "/dashboard/dictionary/request/" + number},
       {mode: "access", label: this.trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dashboard/dictionary/access/" + number}
     ];
     let contentNodes = [];
@@ -149,6 +173,8 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderChangeDictionarySecretForm());
         contentNodes.push(this.renderUploadDictionaryForm());
         contentNodes.push(this.renderDeleteDictionaryForm());
+      } else if (mode === "request") {
+        contentNodes.push(this.renderCommissionList());
       } else if (mode === "access") {
         contentNodes.push(this.renderInviteEditDictionaryForm());
       }
@@ -169,6 +195,7 @@ type Props = {
 };
 type State = {
   dictionary: Dictionary | null,
+  commissionCount: number,
   authorized: boolean
 };
 type Params = {

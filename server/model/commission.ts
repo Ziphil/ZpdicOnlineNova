@@ -8,6 +8,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  WithSize
+} from "/server/controller/type";
+import {
   Dictionary,
   DictionarySchema
 } from "/server/model/dictionary";
@@ -17,6 +20,9 @@ import {
 import {
   Commission as CommissionSkeleton
 } from "/server/skeleton/commission";
+import {
+  QueryRange
+} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "commissions"}})
@@ -33,6 +39,14 @@ export class CommissionSchema {
 
   @prop({required: true})
   public createdDate!: Date;
+
+  public static async findByDictionary(dictionary: Dictionary, range?: QueryRange): Promise<WithSize<Commission>> {
+    let query = CommissionModel.find().where("dictionary", dictionary);
+    let restrictedQuery = QueryRange.restrict(query, range);
+    let countQuery = CommissionModel.countDocuments(query.getFilter());
+    let result = await Promise.all([restrictedQuery, countQuery]);
+    return result;
+  }
 
   public static async add(dictionary: Dictionary, name: string, comment?: string): Promise<Commission> {
     let commission = new CommissionModel({});

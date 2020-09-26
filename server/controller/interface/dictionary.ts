@@ -534,4 +534,24 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @get(SERVER_PATH["fetchCommissions"])
+  @before(verifyUser(), verifyDictionary("own"))
+  public async [Symbol()](request: GetRequest<"fetchCommissions">, response: GetResponse<"fetchCommissions">): Promise<void> {
+    let dictionary = request.dictionary;
+    let offset = CastUtil.ensureNumber(request.query.offset);
+    let size = CastUtil.ensureNumber(request.query.size);
+    if (dictionary) {
+      let range = new QueryRange(offset, size);
+      let hitResult = await CommissionModel.findByDictionary(dictionary, range);
+      let hitCommissions = hitResult[0].map(CommissionCreator.create);
+      let hitSize = hitResult[1];
+      let body = [hitCommissions, hitSize] as any;
+      Controller.respond(response, body);
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
+
 }

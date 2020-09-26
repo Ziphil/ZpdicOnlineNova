@@ -328,6 +328,7 @@ dictionaryListPage:
   createdDate: "Sort by creation date"
 dictionarySettingPage:
   general: "General"
+  commission: "Requests"
   access: "Permissions"
   changeDictionaryNameForm:
     label: "Change name"

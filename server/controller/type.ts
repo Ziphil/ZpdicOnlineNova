@@ -42,7 +42,7 @@ export const SERVER_PATH = {
   deleteDictionaryAuthorizedUser: "/api/dictionary/user/delete",
   editWord: "/api/word/edit",
   deleteWord: "/api/word/delete",
-  addCommission: "/api/word/request",
+  addCommission: "/api/request/add",
   searchDictionary: "/api/dictionary/search",
   downloadDictionary: "/api/dictionary/download",
   fetchDictionary: "/api/dictionary/info",
@@ -54,6 +54,7 @@ export const SERVER_PATH = {
   fetchDictionaryAggregation: "/api/dictionary/aggregate",
   fetchInvitations: "/api/dictionary/invite/fetch",
   checkDictionaryAuthorization: "/api/dictionary/check",
+  fetchCommissions: "/api/request/fetch",
   login: "/api/user/login",
   logout: "/api/user/logout",
   registerUser: "/api/user/register",
@@ -306,6 +307,16 @@ type ProcessType = {
       request: {number: number, authority: string},
       response: {
         200: null,
+        400: CustomError<"noSuchDictionaryNumber">
+      }
+    },
+    post: Noop
+  },
+  fetchCommissions: {
+    get: {
+      request: {number: number, offset?: number, size?: number},
+      response: {
+        200: WithSize<Commission>,
         400: CustomError<"noSuchDictionaryNumber">
       }
     },

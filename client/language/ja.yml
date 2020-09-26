@@ -326,6 +326,7 @@ dictionaryListPage:
   createdDate: "作成日時順"
 dictionarySettingPage:
   general: "一般"
+  commission: "造語依頼"
   access: "権限"
   changeDictionaryNameForm:
     label: "表示名の変更"
