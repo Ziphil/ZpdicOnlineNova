@@ -5,11 +5,11 @@
 
 .pane {
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 20px 20px;
 }
 
 .pane.compact { 
-  grid-gap: 0px;
+  grid-gap: 0px 20px;
 }
 
 .pagination {

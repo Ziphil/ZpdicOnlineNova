@@ -40,6 +40,10 @@
   }
 }
 
+.content:first-child {
+  flex-basis: 100%;
+}
+
 .label {
   font-weight: bold;
   color: $head-color;
