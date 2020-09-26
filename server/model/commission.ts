@@ -41,7 +41,7 @@ export class CommissionSchema {
   public createdDate!: Date;
 
   public static async findByDictionary(dictionary: Dictionary, range?: QueryRange): Promise<WithSize<Commission>> {
-    let query = CommissionModel.find().where("dictionary", dictionary);
+    let query = CommissionModel.find().where("dictionary", dictionary).sort("-createdDate");
     let restrictedQuery = QueryRange.restrict(query, range);
     let countQuery = CommissionModel.countDocuments(query.getFilter());
     let result = await Promise.all([restrictedQuery, countQuery]);
