@@ -137,8 +137,8 @@ export default class DashboardPage extends Component<Props, State, Params> {
     let mode = this.props.match?.params.mode || "dictionary";
     let dictionaries = this.state.dictionaries;
     let editInvitations = this.state.editInvitations;
-    let dictionaryCount = (dictionaries !== null && dictionaries.length > 0) ? dictionaries.length.toLocaleString("en-GB") : undefined;
-    let notificationCount = (editInvitations !== null && editInvitations.length > 0) ? editInvitations.length.toLocaleString("en-GB") : undefined;
+    let dictionaryCount = (dictionaries !== null && dictionaries.length > 0) ? dictionaries.length : undefined;
+    let notificationCount = (editInvitations !== null && editInvitations.length > 0) ? editInvitations.length : undefined;
     let menuSpecs = [
       {mode: "dictionary", label: this.trans("dashboardPage.dictionary"), iconLabel: "\uF02D", badgeValue: dictionaryCount, href: "/dashboard"},
       {mode: "notification", label: this.trans("dashboardPage.notification"), iconLabel: "\uF0F3", badgeValue: notificationCount, href: "/dashboard/notification"},

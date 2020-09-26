@@ -17,7 +17,6 @@ import {
 export default class Badge extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
-    value: "",
     style: "normal"
   };
 
@@ -26,9 +25,16 @@ export default class Badge extends Component<Props, State> {
       "root",
       {if: this.props.style === "highlight", true: "highlight"}
     );
+    let value = (() => {
+      if (typeof this.props.value === "number") {
+        return this.transNumber(this.props.value);
+      } else {
+        return this.props.value;
+      }
+    })();
     let node = (
       <span styleName={styleName} className={this.props.className}>
-        {this.props.value}
+        {value}
       </span>
     );
     return node;
@@ -38,12 +44,11 @@ export default class Badge extends Component<Props, State> {
 
 
 type Props = {
-  value: string,
+  value: string | number,
   style: "normal" | "highlight",
   className?: string
 };
 type DefaultProps = {
-  value: string,
   style: "normal" | "highlight"
 };
 type State = {

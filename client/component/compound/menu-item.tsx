@@ -52,7 +52,7 @@ export default class MenuItem extends Component<Props, State> {
 type Props = {
   label: string,
   iconLabel: string,
-  badgeValue?: string,
+  badgeValue?: string | number,
   highlight: boolean,
   href?: string,
   onClick?: (event: MouseEvent<HTMLElement>) => void;
