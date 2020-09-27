@@ -82,6 +82,7 @@ export default class CommissionPane extends Component<Props, State> {
           <WordEditor
             dictionary={this.props.dictionary}
             word={null}
+            defaultEquivalentName={this.props.commission.name}
             open={this.state.editorOpen}
             onClose={() => this.setState({editorOpen: false})}
             onEditConfirm={this.handleEditConfirm.bind(this)}

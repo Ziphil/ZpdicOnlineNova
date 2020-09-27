@@ -51,6 +51,13 @@ export default class WordEditor extends Component<Props, State> {
   public constructor(props: Props) {
     super(props);
     let word = cloneDeep(this.props.word) ?? EditWord.empty();
+    if (this.props.defaultName) {
+      word.name = this.props.defaultName;
+    }
+    if (this.props.defaultEquivalentName) {
+      let equivalent = {title: "", names: [this.props.defaultEquivalentName]};
+      word.equivalents.push(equivalent);
+    }
     let equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
     let relationChooserOpen = false;
     let alertOpen = false;
@@ -436,6 +443,8 @@ export default class WordEditor extends Component<Props, State> {
 type Props = {
   dictionary: Dictionary,
   word: Word | null,
+  defaultName?: string,
+  defaultEquivalentName?: string,
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
   onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
