@@ -46,6 +46,13 @@ import {
 @style(require("./word-editor.scss"))
 export default class WordEditor extends Component<Props, State> {
 
+  public state: State = {
+    word: undefined as any,
+    equivalentStrings: undefined as any,
+    relationChooserOpen: false,
+    alertOpen: false
+  };
+
   private editingRelationIndex: number | null = null;
 
   public constructor(props: Props) {
@@ -58,10 +65,8 @@ export default class WordEditor extends Component<Props, State> {
       let equivalent = {title: "", names: [this.props.defaultEquivalentName]};
       word.equivalents.push(equivalent);
     }
-    let equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
-    let relationChooserOpen = false;
-    let alertOpen = false;
-    this.state = {word, equivalentStrings, relationChooserOpen, alertOpen};
+    this.state.word = word;
+    this.state.equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
   }
 
   private async editWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
