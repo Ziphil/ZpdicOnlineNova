@@ -26,7 +26,7 @@ export default class DictionaryListPage extends Component<Props, State> {
     order: "updatedDate"
   };
 
-  private async fetchDictionaries(offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
+  private async provideDictionaries(offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
     let order = this.state.order;
     let response = await this.requestGet("fetchAllDictionaries", {order, offset, size});
     if (response.status === 200) {
@@ -48,7 +48,7 @@ export default class DictionaryListPage extends Component<Props, State> {
           <RadioGroup name="order" value={this.state.order} specs={specs} onSet={(order) => this.setState({order})}/>
         </div>
         <div styleName="list">
-          <DictionaryList dictionaries={this.fetchDictionaries.bind(this)} showCreatedDate={true} size={20}/>
+          <DictionaryList dictionaries={this.provideDictionaries.bind(this)} showCreatedDate={true} size={20}/>
         </div>
       </Page>
     );

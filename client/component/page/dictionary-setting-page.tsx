@@ -67,7 +67,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     }
   }
 
-  private async fetchCommissions(offset?: number, size?: number): Promise<WithSize<Commission>> {
+  private async provideCommissions(offset?: number, size?: number): Promise<WithSize<Commission>> {
     let number = +this.props.match!.params.number;
     let response = await this.requestGet("fetchCommissions", {number, offset, size});
     if (response.status === 200 && !("error" in response.data)) {
@@ -156,7 +156,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
   private renderCommissionList(): ReactNode {
     let node = (
       <SettingPane key="commissionList">
-        <CommissionList commissions={this.fetchCommissions.bind(this)} dictionary={this.state.dictionary!} size={30} onDeleteConfirm={this.fetchCommissionCount.bind(this)}/>
+        <CommissionList commissions={this.provideCommissions.bind(this)} dictionary={this.state.dictionary!} size={30} onDeleteConfirm={this.fetchCommissionCount.bind(this)}/>
       </SettingPane>
     );
     return node;

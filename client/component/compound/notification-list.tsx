@@ -21,7 +21,7 @@ import {
 @style(require("./notification-list.scss"))
 export default class NotificationList extends Component<Props, State> {
 
-  private async fetchNotifications(offset?: number, size?: number): Promise<WithSize<Notification>> {
+  private async provideNotifications(offset?: number, size?: number): Promise<WithSize<Notification>> {
     let response = await this.requestGet("fetchNotifications", {offset, size});
     if (response.status === 200) {
       let hitResult = response.data;
@@ -36,7 +36,7 @@ export default class NotificationList extends Component<Props, State> {
       return <NotificationPane notification={notification} key={notification.id}/>;
     };
     let node = (
-      <PaneList items={this.fetchNotifications.bind(this)} size={this.props.size} showPagination={this.props.showPagination} style="compact" renderer={renderer}/>
+      <PaneList items={this.provideNotifications.bind(this)} size={this.props.size} showPagination={this.props.showPagination} style="compact" renderer={renderer}/>
     );
     return node;
   }
