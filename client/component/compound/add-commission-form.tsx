@@ -39,7 +39,7 @@ export default class AddCommissionForm extends Component<Props, State> {
     let node = (this.props.dictionary !== null) && (
       <form styleName="root">
         <Input label={this.trans("addCommissionForm.name")} value={this.state.name} onSet={(name) => this.setState({name})}/>
-        <TextArea label={this.trans("addCommissionForm.comment")} value={this.state.comment} onSet={(comment) => this.setState({comment})}/>
+        <TextArea label={this.trans("addCommissionForm.comment")} value={this.state.comment} showOptional={true} onSet={(comment) => this.setState({comment})}/>
         <div styleName="button-group">
           <div styleName="row">
             <Button label={this.trans("addCommissionForm.confirm")} iconLabel="&#xF022;" style="information" reactive={true} onClick={this.addCommission.bind(this)}/>

@@ -40,7 +40,7 @@ export default class TextArea extends Component<Props, State> {
     );
     let node = (
       <label styleName="root" className={this.props.className}>
-        <Label text={this.props.label}/>
+        <Label text={this.props.label} showRequired={this.props.showRequired} showOptional={this.props.showOptional}/>
         <textarea styleName={textAreaStyleName} value={this.props.value} onChange={this.handleChange.bind(this)}/>
       </label>
     );
@@ -54,6 +54,8 @@ type Props = {
   value: string,
   label?: string,
   font: "normal" | "monospace",
+  showRequired?: boolean,
+  showOptional?: boolean,
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
   onSet?: (value: string) => void,
   className?: string

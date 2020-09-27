@@ -47,9 +47,9 @@ export default class ContactForm extends Component<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label={this.trans("contactForm.name")} value={this.state.name} onSet={(name) => this.setState({name})}/>
-        <Input label={this.trans("contactForm.email")} value={this.state.email} onSet={(email) => this.setState({email})}/>
-        <Input label={this.trans("contactForm.subject")} value={this.state.subject} onSet={(subject) => this.setState({subject})}/>
+        <Input label={this.trans("contactForm.name")} value={this.state.name} showOptional={true} onSet={(name) => this.setState({name})}/>
+        <Input label={this.trans("contactForm.email")} value={this.state.email} showOptional={true} onSet={(email) => this.setState({email})}/>
+        <Input label={this.trans("contactForm.subject")} value={this.state.subject} showOptional={true} onSet={(subject) => this.setState({subject})}/>
         <TextArea label={this.trans("contactForm.text")} value={this.state.text} onSet={(text) => this.setState({text})}/>
         <div styleName="button-group">
           <div styleName="row">
