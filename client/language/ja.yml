@@ -138,6 +138,9 @@ alert:
   cancel: "キャンセル"
 fileInput:
   button: "選択"
+label:
+  required: "必須"
+  optional: "任意"
 overlay:
   back: "戻る"
   close: "閉じる"

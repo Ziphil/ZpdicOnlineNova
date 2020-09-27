@@ -138,6 +138,9 @@ alert:
   cancel: "Cancel"
 fileInput:
   button: "Select"
+label:
+  required: "required"
+  optional: "optional"
 overlay:
   back: "Back"
   close: "Close"

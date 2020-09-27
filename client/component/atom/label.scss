@@ -12,3 +12,8 @@
 .root.error {
   color: map-get($colors, error);
 }
+
+.required,
+.optional {
+  margin: 0em 0em 0em 0.5em;
+}

@@ -120,6 +120,18 @@ export default class Input extends Component<Props, State> {
     return node;
   }
 
+  private renderLabel(): ReactNode {
+    let node = (
+      <Label
+        text={this.props.label}
+        style={(this.state.errorMessage === null) ? "normal" : "error"}
+        showRequired={this.props.showRequired}
+        showOptional={this.props.showOptional}
+      />
+    );
+    return node;
+  }
+
   private renderTooltip(): ReactNode {
     let node = (
       <div styleName="tooltip">
@@ -154,12 +166,13 @@ export default class Input extends Component<Props, State> {
       return <span styleName={buttonStyleName} onClick={this.toggleType.bind(this)}/>;
     })();
     let inputNode = this.renderInput();
+    let labelNode = this.renderLabel();
     let tooltipNode = (this.state.errorMessage !== null) && this.renderTooltip();
     let suggestionNode = (this.state.suggestions.length > 0) && this.renderSuggestions();
     let node = (
       <div styleName="root" className={this.props.className}>
         <label styleName="label-wrapper">
-          <Label text={this.props.label} style={(this.state.errorMessage === null) ? "normal" : "error"}/>
+          {labelNode}
           {inputNode}
           {eyeNode}
         </label>
@@ -181,6 +194,8 @@ type Props = {
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
   suggest?: SuggestFunction,
+  showRequired?: boolean,
+  showOptional?: boolean,
   useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean,
