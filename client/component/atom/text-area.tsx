@@ -5,6 +5,7 @@ import {
   ChangeEvent,
   ReactNode
 } from "react";
+import Label from "/client/component/atom/label";
 import Component from "/client/component/component";
 import {
   style
@@ -37,10 +38,9 @@ export default class TextArea extends Component<Props, State> {
       "textarea",
       {if: this.props.font === "monospace", true: "monospace"}
     );
-    let labelNode = (this.props.label !== undefined) && <div styleName="label">{this.props.label}</div>;
     let node = (
       <label styleName="root" className={this.props.className}>
-        {labelNode}
+        <Label text={this.props.label}/>
         <textarea styleName={textAreaStyleName} value={this.props.value} onChange={this.handleChange.bind(this)}/>
       </label>
     );

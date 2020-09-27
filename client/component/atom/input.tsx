@@ -9,6 +9,7 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import Label from "/client/component/atom/label";
 import Component from "/client/component/component";
 import {
   style
@@ -95,13 +96,6 @@ export default class Input extends Component<Props, State> {
       "input",
       {if: this.state.errorMessage !== null, true: "error"}
     );
-    let labelNode = (this.props.label !== undefined) && (() => {
-      let labelStyleName = StyleNameUtil.create(
-        "label",
-        {if: this.state.errorMessage !== null, true: "error"}
-      );
-      return <div styleName={labelStyleName}>{this.props.label}</div>;
-    })();
     let prefixNode = (this.props.prefix !== undefined) && (
       <div styleName="prefix">{this.props.prefix}</div>
     );
@@ -138,7 +132,7 @@ export default class Input extends Component<Props, State> {
     let node = (
       <div styleName="root" className={this.props.className}>
         <label styleName="label-wrapper">
-          {labelNode}
+          <Label text={this.props.label} style={(this.state.errorMessage === null) ? "normal" : "error"}/>
           <div styleName={inputStyleName}>
             {prefixNode}
             <input

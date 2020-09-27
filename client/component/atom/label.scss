@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  margin: 0px 0px 5px 0px;
+  font-size: 80%;
+  color: map-get($colors, primary);
+}
+
+.root.error {
+  color: map-get($colors, error);
+}
