@@ -30,7 +30,7 @@ export default class Label extends Component<Props, State> {
     let requiredNode = (this.props.showRequired) && (
       <span styleName="required">({this.trans("label.required")})</span>
     );
-    let optionalNode = (this.props.showRequired) && (
+    let optionalNode = (this.props.showOptional) && (
       <span styleName="optional">({this.trans("label.optional")})</span>
     );
     let node = (this.props.text !== undefined) && (
