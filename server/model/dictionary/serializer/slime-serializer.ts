@@ -41,6 +41,7 @@ export class SlimeSerializer extends Serializer {
           writer.write(",");
           writer.write(externalString);
         }
+        writer.write(",\"version\":1");
         writer.write("}");
         writer.end(() => {
           this.emit("end");
