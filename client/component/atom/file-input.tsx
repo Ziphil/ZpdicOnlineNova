@@ -5,6 +5,7 @@ import {
   ChangeEvent,
   ReactNode
 } from "react";
+import Label from "/client/component/atom/label";
 import Component from "/client/component/component";
 import {
   style
@@ -35,13 +36,10 @@ export default class FileInput extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let inputLabelNode = (this.props.inputLabel !== undefined) && (
-      <div styleName="label">{this.props.inputLabel}</div>
-    );
     let node = (
       <div styleName="root" className={this.props.className}>
         <label styleName="input-wrapper">
-          {inputLabelNode}
+        <Label text={this.props.inputLabel}/>
           <input styleName="input" type="text" value={this.state.fileName} readOnly={true}/>
         </label>
         <label styleName="button">

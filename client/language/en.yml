@@ -46,6 +46,10 @@ popup:
     The editing of the word has been completed.
   wordDeleted: >-
     The deletion of the word has been completed.
+  commissionAdded: >-
+    Your request has been completed.
+  commissionDeleted: >-
+    The request has been deleted.
   contacted: >-
     Your message has been sent.
   invalidUserName: >-
@@ -90,6 +94,10 @@ popup:
     This invitation does not exist.
   noSuchDictionaryAuthorizedUser: >-
     There is no user with such permission.
+  emptyCommissionName: >-
+    The word to request is empty.
+  noSuchCommission: >-
+    This request does not exist.
   emptyContactText: >-
     The content is empty.
   administratorNotFound: >-
@@ -130,6 +138,9 @@ alert:
   cancel: "Cancel"
 fileInput:
   button: "Select"
+label:
+  required: "required"
+  optional: "optional"
 overlay:
   back: "Back"
   close: "Close"
@@ -188,18 +199,29 @@ inviteEditDictionaryForm:
 uploadDictionaryForm:
   file: "File"
   confirm: "Confirm"
+addCommissionForm:
+  name: "Word"
+  comment: "Comment"
+  confirm: "Request"
+commissionPane:
+  delete: "Delete"
+  add: "Create"
+  alert: >-
+    This request will be deleted.
+    Are you really sure?
 contactForm:
   name: "Name"
   email: "Email address"
   subject: "Subject"
   text: "Content"
-  send: "Send"
+  perform: "Send"
 dictionaryAggregationPane:
   dictionaryCount: "Dictionaries"
   wordCount: "Words"
 dictionaryHeader:
   add: "Add"
   setting: "Settings"
+  orderWord: "Request"
   download: "Download"
 dictionaryPane:
   wordSize: "{wordSize, plural, one {# word} other {# words}}"
@@ -224,12 +246,12 @@ loginForm:
   userName: "User ID"
   email: "Email address"
   password: "Password"
-  login: "Sign in"
+  confirm: "Sign in"
   resetPassword: "Forgot password"
 notificationPane:
   fixed: "Fixed"
 registerForm:
-  register: "Sign up"
+  confirm: "Sign up"
 resetUserPasswordForm:
   newPassword: "New password"
   issue: "Confirm"
@@ -274,6 +296,8 @@ wordEditor:
 wordPane:
   edit: "Edit"
   submit: "Select"
+addCommissionPage:
+  description: "Request"
 contactPage:
   description: "Contact"
 dashboardPage:
@@ -317,6 +341,7 @@ dictionaryListPage:
   createdDate: "Sort by creation date"
 dictionarySettingPage:
   general: "General"
+  commission: "Requests"
   access: "Permissions"
   changeDictionaryNameForm:
     label: "Change name"

@@ -41,7 +41,7 @@ export default class Menu extends Component<Props, State> {
 
 type Props = {
   mode: string,
-  specs: Array<{mode: string, label: string, iconLabel: string, badgeValue?: string, href: string}>
+  specs: Array<{mode: string, label: string, iconLabel: string, badgeValue?: string | number, href: string}>
 };
 type State = {
 };

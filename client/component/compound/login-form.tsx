@@ -7,7 +7,6 @@ import {
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
-import FormPane from "/client/component/compound/form-pane";
 import {
   style
 } from "/client/component/decorator";
@@ -18,8 +17,7 @@ export default class LoginForm extends Component<Props, State> {
 
   public state: State = {
     name: "",
-    password: "",
-    errorType: null
+    password: ""
   };
 
   private async performLogin(): Promise<void> {
@@ -29,7 +27,7 @@ export default class LoginForm extends Component<Props, State> {
     if (response.status === 200) {
       this.replacePath("/dashboard");
     } else {
-      this.setState({errorType: "loginFailed"});
+      this.props.store!.addErrorPopup("loginFailed");
     }
   }
 
@@ -46,24 +44,22 @@ export default class LoginForm extends Component<Props, State> {
 
   public render(): ReactNode {
     let registerNode = (this.props.showRegister) && (
-      <Button label={this.trans("registerForm.register")} iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
+      <Button label={this.trans("registerForm.confirm")} iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
     );
     let node = (
-      <FormPane errorType={this.state.errorType} onErrorClose={() => this.setState({errorType: null})}>
-        <form styleName="root">
-          <Input label={this.trans("loginForm.userName")} value={this.state.name} onSet={(name) => this.setState({name})}/>
-          <Input label={this.trans("loginForm.password")} type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
-          <div styleName="button-group">
-            <div styleName="row">
-              <Button label={this.trans("loginForm.login")} iconLabel="&#xF2F6;" style="information" reactive={true} onClick={this.performLogin.bind(this)}/>
-              {registerNode}
-            </div>
-            <div styleName="row">
-              <Button label={this.trans("loginForm.resetPassword")} iconLabel="&#xF128;" style="simple" onClick={this.jumpResetPassword.bind(this)}/>
-            </div>
+      <form styleName="root">
+        <Input label={this.trans("loginForm.userName")} value={this.state.name} onSet={(name) => this.setState({name})}/>
+        <Input label={this.trans("loginForm.password")} type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
+        <div styleName="button-group">
+          <div styleName="row">
+            <Button label={this.trans("loginForm.confirm")} iconLabel="&#xF2F6;" style="information" reactive={true} onClick={this.performLogin.bind(this)}/>
+            {registerNode}
           </div>
-        </form>
-      </FormPane>
+          <div styleName="row">
+            <Button label={this.trans("loginForm.resetPassword")} iconLabel="&#xF128;" style="simple" onClick={this.jumpResetPassword.bind(this)}/>
+          </div>
+        </div>
+      </form>
     );
     return node;
   }
@@ -76,6 +72,5 @@ type Props = {
 };
 type State = {
   name: string,
-  password: string,
-  errorType: string | null
+  password: string
 };

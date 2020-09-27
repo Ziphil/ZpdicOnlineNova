@@ -46,15 +46,27 @@ import {
 @style(require("./word-editor.scss"))
 export default class WordEditor extends Component<Props, State> {
 
+  public state: State = {
+    word: undefined as any,
+    equivalentStrings: undefined as any,
+    relationChooserOpen: false,
+    alertOpen: false
+  };
+
   private editingRelationIndex: number | null = null;
 
   public constructor(props: Props) {
     super(props);
     let word = cloneDeep(this.props.word) ?? EditWord.empty();
-    let equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
-    let relationChooserOpen = false;
-    let alertOpen = false;
-    this.state = {word, equivalentStrings, relationChooserOpen, alertOpen};
+    if (this.props.defaultName) {
+      word.name = this.props.defaultName;
+    }
+    if (this.props.defaultEquivalentName) {
+      let equivalent = {title: "", names: [this.props.defaultEquivalentName]};
+      word.equivalents.push(equivalent);
+    }
+    this.state.word = word;
+    this.state.equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
   }
 
   private async editWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
@@ -436,6 +448,8 @@ export default class WordEditor extends Component<Props, State> {
 type Props = {
   dictionary: Dictionary,
   word: Word | null,
+  defaultName?: string,
+  defaultEquivalentName?: string,
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
   onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,

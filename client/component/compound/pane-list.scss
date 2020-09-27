@@ -3,13 +3,40 @@
 @import "/client/component/mixin.scss";
 
 
-.pane {
+.div-pane {
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 0px 20px;
 }
 
-.pane.compact { 
-  grid-gap: 0px;
+.div-pane.spaced { 
+  grid-gap: 20px 20px;
+}
+
+.table-pane {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table-pane .spacer {
+  width: 20px;
+}
+
+.table-pane .spacer.border {
+  border-left: 1px $pale-border-color solid;
+}
+
+.table-pane tr >td {
+  padding: 0px;
+  vertical-align: top;
+}
+
+.table-pane.spaced tr >td {
+  padding-top: 20px;
+}
+
+.table-pane.spaced tr:first-child >td {
+  padding-top: 0px;
 }
 
 .pagination {

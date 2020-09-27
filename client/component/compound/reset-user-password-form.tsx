@@ -7,7 +7,6 @@ import {
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import Component from "/client/component/component";
-import FormPane from "/client/component/compound/form-pane";
 import {
   style
 } from "/client/component/decorator";
@@ -28,9 +27,7 @@ export default class ResetUserPasswordForm extends Component<Props, State> {
   public state: State = {
     name: "",
     email: "",
-    password: "",
-    errorType: null,
-    errorStyle: "error"
+    password: ""
   };
 
   public componentDidMount(): void {
@@ -43,44 +40,32 @@ export default class ResetUserPasswordForm extends Component<Props, State> {
   private async issueResetToken(): Promise<void> {
     let name = this.state.name;
     let email = this.state.email;
-    let response = await this.requestPost("issueUserResetToken", {name, email}, {ignoreError: true, useRecaptcha: true});
-    let body = response.data;
+    let response = await this.requestPost("issueUserResetToken", {name, email}, {useRecaptcha: true});
     if (response.status === 200) {
-      this.setState({errorType: "userResetTokenIssued", errorStyle: "information"});
-    } else if (response.status === 400 && body !== null && "error" in body) {
-      this.setState({errorType: body.type, errorStyle: "error"});
-    } else {
-      this.setState({errorType: "unexpected", errorStyle: "error"});
+      this.props.store!.addInformationPopup("userResetTokenIssued");
     }
   }
 
   private async resetPassword(): Promise<void> {
     let key = this.props.tokenKey!;
     let password = this.state.password;
-    let response = await this.requestPost("resetUserPassword", {key, password}, {ignoreError: true});
-    let body = response.data;
+    let response = await this.requestPost("resetUserPassword", {key, password});
     if (response.status === 200) {
-      this.setState({errorType: "userPasswordReset", errorStyle: "information"});
-    } else if (response.status === 400 && "error" in body) {
-      this.setState({errorType: body.type, errorStyle: "error"});
-    } else {
-      this.setState({errorType: "unexpected", errorStyle: "error"});
+      this.props.store!.addInformationPopup("userPasswordReset");
     }
   }
 
   private renderIssueResetTokenForm(): ReactNode {
     let node = (
-      <FormPane errorType={this.state.errorType} errorStyle={this.state.errorStyle} onErrorClose={() => this.setState({errorType: null})}>
-        <form styleName="root">
-          <Input label={this.trans("loginForm.userName")} value={this.state.name} onSet={(name) => this.setState({name})}/>
-          <Input label={this.trans("loginForm.email")} value={this.state.email} onSet={(email) => this.setState({email})}/>
-          <div styleName="button-group">
-            <div styleName="row">
-              <Button label={this.trans("resetUserPasswordForm.issue")} iconLabel="&#xF0E0;" style="information" reactive={true} onClick={this.issueResetToken.bind(this)}/>
-            </div>
+      <form styleName="root">
+        <Input label={this.trans("loginForm.userName")} value={this.state.name} onSet={(name) => this.setState({name})}/>
+        <Input label={this.trans("loginForm.email")} value={this.state.email} onSet={(email) => this.setState({email})}/>
+        <div styleName="button-group">
+          <div styleName="row">
+            <Button label={this.trans("resetUserPasswordForm.issue")} iconLabel="&#xF0E0;" style="information" reactive={true} onClick={this.issueResetToken.bind(this)}/>
           </div>
-        </form>
-      </FormPane>
+        </div>
+      </form>
     );
     return node;
   }
@@ -88,16 +73,14 @@ export default class ResetUserPasswordForm extends Component<Props, State> {
   private renderResetPasswordForm(): ReactNode {
     let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidUserPassword"));
     let node = (
-      <FormPane errorType={this.state.errorType} errorStyle={this.state.errorStyle} onErrorClose={() => this.setState({errorType: null})}>
-        <form styleName="root">
-          <Input label={this.trans("resetUserPasswordForm.newPassword")} value={this.state.password} validate={validate} onSet={(password) => this.setState({password})}/>
-          <div styleName="button-group">
-            <div styleName="row">
-              <Button label={this.trans("resetUserPasswordForm.reset")} iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.resetPassword.bind(this)}/>
-            </div>
+      <form styleName="root">
+        <Input label={this.trans("resetUserPasswordForm.newPassword")} value={this.state.password} validate={validate} onSet={(password) => this.setState({password})}/>
+        <div styleName="button-group">
+          <div styleName="row">
+            <Button label={this.trans("resetUserPasswordForm.reset")} iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.resetPassword.bind(this)}/>
           </div>
-        </form>
-      </FormPane>
+        </div>
+      </form>
     );
     return node;
   }
@@ -116,7 +99,5 @@ type Props = {
 type State = {
   name: string,
   email: string,
-  password: string,
-  errorType: string | null,
-  errorStyle: "error" | "information"
+  password: string
 };

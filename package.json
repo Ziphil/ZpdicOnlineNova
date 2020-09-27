@@ -1,6 +1,6 @@
 {
   "name": "zpdic",
-  "version": "2.14.0",
+  "version": "2.15.0",
   "author": "Ziphil",
   "description": "",
   "main": "dist/index.js",
@@ -86,6 +86,7 @@
     "tslint-config-airbnb": "^5.11.2",
     "tslint-loader": "^3.5.4",
     "typescript": "^3.9.7",
+    "typescript-tuple": "^4.0.0",
     "webpack": "^4.44.2",
     "webpack-bundle-analyzer": "^3.9.0",
     "webpack-cli": "^3.3.12",

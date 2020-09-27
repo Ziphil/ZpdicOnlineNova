@@ -23,15 +23,18 @@ export default class SettingPane extends Component<Props, State> {
         {this.props.description}
       </p>
     );
+    let descriptionWrapperNode = (this.props.label || this.props.description) && (
+      <div styleName="description-wrapper">
+        <div styleName="label">
+          {this.props.label}
+          {badgeNode}
+        </div>
+        {descriptionNode}
+      </div>
+    );
     let node = (
       <div styleName="root">
-        <div styleName="description-wrapper">
-          <div styleName="label">
-            {this.props.label}
-            {badgeNode}
-          </div>
-          {descriptionNode}
-        </div>
+        {descriptionWrapperNode}
         <div styleName="content">
           {this.props.children}
         </div>
@@ -44,8 +47,8 @@ export default class SettingPane extends Component<Props, State> {
 
 
 type Props = {
-  label: string,
-  badgeValue?: string,
+  label?: string,
+  badgeValue?: string | number,
   description?: string
 };
 type State = {

@@ -23,6 +23,7 @@ export default class DictionaryHeader extends Component<Props, State> {
   public static defaultProps: DefaultProps = {
     showEditLink: false,
     showSettingLink: false,
+    showOrderWordLink: true,
     showDownloadLink: true,
     preserveQuery: false
   };
@@ -33,6 +34,13 @@ export default class DictionaryHeader extends Component<Props, State> {
   private jumpSettingPage(): void {
     if (this.props.dictionary) {
       let path = "/dashboard/dictionary/" + this.props.dictionary.number;
+      this.pushPath(path);
+    }
+  }
+
+  private jumpOrderWordPage(): void {
+    if (this.props.dictionary) {
+      let path = "/request/" + this.props.dictionary.number;
       this.pushPath(path);
     }
   }
@@ -59,6 +67,9 @@ export default class DictionaryHeader extends Component<Props, State> {
     let settingButtonNode = (this.props.showSettingLink) && (
       <Button label={this.trans("dictionaryHeader.setting")} iconLabel="&#xF013;" style="simple" hideLabel={true} onClick={this.jumpSettingPage.bind(this)}/>
     );
+    let orderWordButtonNode = (this.props.showOrderWordLink) && (
+      <Button label={this.trans("dictionaryHeader.orderWord")} iconLabel="&#xF022;" style="simple" hideLabel={true} onClick={this.jumpOrderWordPage.bind(this)}/>
+    );
     let downloadButtonNode = (this.props.showDownloadLink) && (
       <Button label={this.trans("dictionaryHeader.download")} iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={this.downloadDictionary.bind(this)}/>
     );
@@ -83,6 +94,7 @@ export default class DictionaryHeader extends Component<Props, State> {
             <div styleName="button">
               {addButtonNode}
               {settingButtonNode}
+              {orderWordButtonNode}
               {downloadButtonNode}
             </div>
           </div>
@@ -100,12 +112,14 @@ type Props = {
   dictionary: Dictionary | null,
   showEditLink: boolean,
   showSettingLink: boolean,
+  showOrderWordLink: boolean,
   showDownloadLink: boolean,
   preserveQuery: boolean
 };
 type DefaultProps = {
   showEditLink: boolean,
   showSettingLink: boolean,
+  showOrderWordLink: boolean,
   showDownloadLink: boolean,
   preserveQuery: boolean
 };

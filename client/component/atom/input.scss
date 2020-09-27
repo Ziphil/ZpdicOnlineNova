@@ -12,16 +12,6 @@
   display: block;
 }
 
-.label {
-  margin: 0px 0px 5px 0px;
-  font-size: 80%;
-  color: map-get($colors, primary);
-}
-
-.label.error {
-  color: map-get($colors, error);
-}
-
 .input {
   @include input(map-get($colors, primary));
   display: inline-flex;

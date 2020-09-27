@@ -42,6 +42,7 @@ let DictionaryPage = lazy(() => import("/client/component/page/dictionary-page")
 let DictionarySettingPage = lazy(() => import("/client/component/page/dictionary-setting-page"));
 let LoginPage = lazy(() => import("/client/component/page/login-page"));
 let NotificationPage = lazy(() => import("/client/component/page/notification-page"));
+let AddCommissionPage = lazy(() => import("/client/component/page/add-commission-page"));
 let RegisterPage = lazy(() => import("/client/component/page/register-page"));
 let ResetUserPasswordPage = lazy(() => import("/client/component/page/reset-user-password-page"));
 let TopPage = lazy(() => import("/client/component/page/top-page"));
@@ -76,6 +77,7 @@ export class Root extends Component<Props, State> {
                 <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
                 <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
                 <Route exact path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+                <Route exact path="/request/:number(\d+)" component={AddCommissionPage}/>
                 <PrivateRoute exact path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
                 <PrivateRoute exact path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
                 <Route exact path="/list" component={DictionaryListPage}/>

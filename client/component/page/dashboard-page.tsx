@@ -61,7 +61,7 @@ export default class DashboardPage extends Component<Props, State, Params> {
     let description = this.trans("dashboardPage.dictionaryList.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <DictionaryList dictionaries={this.state.dictionaries} showLinks={true} size={5}/>
+        <DictionaryList dictionaries={this.state.dictionaries} showLinks={true} size={8}/>
       </SettingPane>
     );
     return node;
@@ -72,7 +72,7 @@ export default class DashboardPage extends Component<Props, State, Params> {
     let description = this.trans("dashboardPage.invitationList.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <InvitationList invitations={this.state.editInvitations} size={5} onSubmit={() => this.fetchEditInvitations()}/>
+        <InvitationList invitations={this.state.editInvitations} size={8} onSubmit={() => this.fetchEditInvitations()}/>
       </SettingPane>
     );
     return node;
@@ -137,8 +137,8 @@ export default class DashboardPage extends Component<Props, State, Params> {
     let mode = this.props.match?.params.mode || "dictionary";
     let dictionaries = this.state.dictionaries;
     let editInvitations = this.state.editInvitations;
-    let dictionaryCount = (dictionaries !== null && dictionaries.length > 0) ? dictionaries.length.toLocaleString("en-GB") : undefined;
-    let notificationCount = (editInvitations !== null && editInvitations.length > 0) ? editInvitations.length.toLocaleString("en-GB") : undefined;
+    let dictionaryCount = (dictionaries !== null && dictionaries.length > 0) ? dictionaries.length : undefined;
+    let notificationCount = (editInvitations !== null && editInvitations.length > 0) ? editInvitations.length : undefined;
     let menuSpecs = [
       {mode: "dictionary", label: this.trans("dashboardPage.dictionary"), iconLabel: "\uF02D", badgeValue: dictionaryCount, href: "/dashboard"},
       {mode: "notification", label: this.trans("dashboardPage.notification"), iconLabel: "\uF0F3", badgeValue: notificationCount, href: "/dashboard/notification"},

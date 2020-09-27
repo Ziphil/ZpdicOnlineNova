@@ -26,12 +26,10 @@ import {
 import {
   Dictionary,
   EditWord,
+  NormalSearchParameter,
   Suggestion,
   Word
 } from "/server/skeleton/dictionary";
-import {
-  NormalSearchParameter
-} from "/server/skeleton/search-parameter";
 
 
 @style(require("./word-searcher.scss"))

@@ -46,6 +46,10 @@ popup:
     単語の編集が完了しました。
   wordDeleted: >-
     単語の削除が完了しました。
+  commissionAdded: >-
+    単語の造語依頼が完了しました。
+  commissionDeleted: >-
+    単語の造語依頼を削除しました。
   contacted: >-
     問い合わせ内容を送信しました。
   invalidUserName: >-
@@ -90,6 +94,10 @@ popup:
     そのような権限の招待は存在しません。
   noSuchDictionaryAuthorizedUser: >-
     そのような権限を保有しているユーザーは存在しません。
+  emptyCommissionName: >-
+    造語依頼する単語が空です。
+  noSuchCommission: >-
+    その造語依頼は存在しません。
   emptyContactText: >-
     お問い合わせ内容が空です。
   administratorNotFound: >-
@@ -130,6 +138,9 @@ alert:
   cancel: "キャンセル"
 fileInput:
   button: "選択"
+label:
+  required: "必須"
+  optional: "任意"
 overlay:
   back: "戻る"
   close: "閉じる"
@@ -186,18 +197,29 @@ inviteEditDictionaryForm:
 uploadDictionaryForm:
   file: "ファイル"
   confirm: "決定"
+addCommissionForm:
+  name: "単語"
+  comment: "コメント"
+  confirm: "依頼"
+commissionPane:
+  delete: "削除"
+  add: "造語"
+  alert: >-
+    この造語依頼を削除します。
+    よろしいですか?
 contactForm:
   name: "名前"
   email: "メールアドレス"
   subject: "件名"
   text: "内容"
-  send: "送信"
+  confirm: "送信"
 dictionaryAggregationPane:
   dictionaryCount: "総辞書数"
   wordCount: "総単語数"
 dictionaryHeader:
   add: "追加"
   setting: "設定"
+  orderWord: "造語依頼"
   download: "ダウンロード"
 dictionaryPane:
   wordSize: "{wordSize, number} 語"
@@ -222,12 +244,12 @@ loginForm:
   userName: "ユーザー ID"
   email: "メールアドレス"
   password: "パスワード"
-  login: "ログイン"
+  confirm: "ログイン"
   resetPassword: "パスワードを忘れた"
 notificationPane:
   fixed: "対応済み"
 registerForm:
-  register: "新規登録"
+  confirm: "新規登録"
 resetUserPasswordForm:
   newPassword: "新しいパスワード"
   issue: "送信"
@@ -272,6 +294,8 @@ wordEditor:
 wordPane:
   edit: "編集"
   submit: "決定"
+addCommissionPage:
+  description: "造語依頼"
 contactPage:
   description: "お問い合わせ"
 dashboardPage:
@@ -309,12 +333,13 @@ dashboardPage:
   deleteUserForm:
     label: "削除"
     description: >-
-      この辞書を削除します。
+      このユーザーを削除します。
 dictionaryListPage:
   updatedDate: "更新日時順"
   createdDate: "作成日時順"
 dictionarySettingPage:
   general: "一般"
+  commission: "造語依頼"
   access: "権限"
   changeDictionaryNameForm:
     label: "表示名の変更"

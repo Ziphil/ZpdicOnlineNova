@@ -14,7 +14,7 @@ import {
   NormalSearchParameter,
   SearchMode,
   SearchType
-} from "/server/skeleton/search-parameter";
+} from "/server/skeleton/dictionary";
 
 
 @style(require("./search-form.scss"))

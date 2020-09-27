@@ -49,8 +49,11 @@ export class InvitationSchema {
       if (formerInvitation) {
         throw new CustomError("editDictionaryAlreadyInvited");
       } else {
-        let createdDate = new Date();
-        let invitation = new InvitationModel({type: "edit", dictionary, user, createdDate});
+        let invitation = new InvitationModel({});
+        invitation.type = "edit";
+        invitation.dictionary = dictionary;
+        invitation.user = user;
+        invitation.createdDate = new Date();
         await invitation.save();
         return invitation;
       }

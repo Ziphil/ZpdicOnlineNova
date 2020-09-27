@@ -9,6 +9,7 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import Label from "/client/component/atom/label";
 import Component from "/client/component/component";
 import {
   style
@@ -90,68 +91,89 @@ export default class Input extends Component<Props, State> {
     }
   }
 
-  public render(): ReactNode {
-    let inputStyleName = StyleNameUtil.create(
+  private renderInput(): ReactNode {
+    let styleName = StyleNameUtil.create(
       "input",
       {if: this.state.errorMessage !== null, true: "error"}
     );
-    let labelNode = (this.props.label !== undefined) && (() => {
-      let labelStyleName = StyleNameUtil.create(
-        "label",
-        {if: this.state.errorMessage !== null, true: "error"}
-      );
-      return <div styleName={labelStyleName}>{this.props.label}</div>;
-    })();
     let prefixNode = (this.props.prefix !== undefined) && (
       <div styleName="prefix">{this.props.prefix}</div>
     );
     let suffixNode = (this.props.suffix !== undefined) && (
       <div styleName="suffix">{this.props.suffix}</div>
     );
-    let eyeNode = (this.props.type === "flexible") && (() => {
-      let buttonStyleName = StyleNameUtil.create("eye", this.state.type);
-      return <span styleName={buttonStyleName} onClick={this.toggleType.bind(this)}/>;
-    })();
-    let tooltipNode = (this.state.errorMessage !== null) && (
+    let node = (
+      <div styleName={styleName}>
+        {prefixNode}
+        <input
+          styleName="input-inner"
+          type={this.state.type}
+          value={this.props.value}
+          readOnly={this.props.readOnly}
+          disabled={this.props.disabled}
+          onChange={this.handleChange.bind(this)}
+          onFocus={this.handleFocus.bind(this)}
+        />
+        {suffixNode}
+      </div>
+    );
+    return node;
+  }
+
+  private renderLabel(): ReactNode {
+    let node = (
+      <Label
+        text={this.props.label}
+        style={(this.state.errorMessage === null) ? "normal" : "error"}
+        showRequired={this.props.showRequired}
+        showOptional={this.props.showOptional}
+      />
+    );
+    return node;
+  }
+
+  private renderTooltip(): ReactNode {
+    let node = (
       <div styleName="tooltip">
         <p styleName="tooltip-text">
           {this.state.errorMessage}
         </p>
       </div>
     );
-    let suggestionNode = (this.state.suggestions.length > 0) && (() => {
-      let itemNodes = this.state.suggestions.map((suggestion, index) => {
-        let itemNode = (
-          <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={() => this.updateValue(suggestion.replacement)}>
-            {suggestion.node}
-          </div>
-        );
-        return itemNode;
-      });
-      let suggestionNode = (
-        <div styleName="suggestion">
-          {itemNodes}
+    return node;
+  }
+
+  private renderSuggestions(): ReactNode {
+    let itemNodes = this.state.suggestions.map((suggestion, index) => {
+      let itemNode = (
+        <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={() => this.updateValue(suggestion.replacement)}>
+          {suggestion.node}
         </div>
       );
-      return suggestionNode;
+      return itemNode;
+    });
+    let node = (
+      <div styleName="suggestion">
+        {itemNodes}
+      </div>
+    );
+    return node;
+  }
+
+  public render(): ReactNode {
+    let eyeNode = (this.props.type === "flexible") && (() => {
+      let buttonStyleName = StyleNameUtil.create("eye", this.state.type);
+      return <span styleName={buttonStyleName} onClick={this.toggleType.bind(this)}/>;
     })();
+    let inputNode = this.renderInput();
+    let labelNode = this.renderLabel();
+    let tooltipNode = (this.state.errorMessage !== null) && this.renderTooltip();
+    let suggestionNode = (this.state.suggestions.length > 0) && this.renderSuggestions();
     let node = (
       <div styleName="root" className={this.props.className}>
         <label styleName="label-wrapper">
           {labelNode}
-          <div styleName={inputStyleName}>
-            {prefixNode}
-            <input
-              styleName="input-inner"
-              type={this.state.type}
-              value={this.props.value}
-              readOnly={this.props.readOnly}
-              disabled={this.props.disabled}
-              onChange={this.handleChange.bind(this)}
-              onFocus={this.handleFocus.bind(this)}
-            />
-            {suffixNode}
-          </div>
+          {inputNode}
           {eyeNode}
         </label>
         {tooltipNode}
@@ -172,6 +194,8 @@ type Props = {
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
   suggest?: SuggestFunction,
+  showRequired?: boolean,
+  showOptional?: boolean,
   useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean,
@@ -189,7 +213,7 @@ type DefaultProps = {
 type State = {
   type: "text" | "password",
   errorMessage: string | null,
-  suggestions: Array<{node: ReactNode, replacement: string}>
+  suggestions: Array<Suggestion>
 };
 
 export type Suggestion = {node: ReactNode, replacement: string};

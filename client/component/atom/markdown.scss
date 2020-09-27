@@ -78,6 +78,23 @@
   padding: 0px;
 }
 
+.root pre {
+  @include reset-first-margin;
+  padding: 0.12em 0.5em;
+  font-family: $monospace-font-family, monospace;
+  font-size: 90%;
+  font-feature-settings: "palt" 0, "pkna" 0;
+  line-height: $text-line-height;
+  background-color: $strong-background-color;
+  border-radius: $small-border-radius;
+  overflow: hidden;
+}
+
+.root pre >code {
+  padding: 0em;
+  font-size: 100%;
+}
+
 .root code {
   padding: 0em 0.1em;
   font-family: $monospace-font-family, monospace;
@@ -93,4 +110,14 @@
   font-weight: normal;
   font-style: normal;
   text-decoration: none;
+}
+
+.root a {
+  color: $link-color;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.root a:hover {
+  color: $link-hover-color;
 }

@@ -1,21 +1,9 @@
 //
 
 import {
-  Skeleton
-} from "/server/skeleton/skeleton";
-import {
   LiteralType,
   LiteralUtilType
 } from "/server/util/literal-type";
-
-
-export class NormalSearchParameter extends Skeleton {
-
-  public search!: string;
-  public mode!: SearchMode;
-  public type!: SearchType;
-
-}
 
 
 export const SEARCH_MODES = ["name", "equivalent", "both", "content"] as const;

@@ -138,8 +138,9 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
 
 @mixin reset-first-margin($directions: top left) {
   @each $direction in $directions {
+    $property-name: "margin-" + $direction;
     &:first-child {
-      margin-#{$direction}: 0px;
+      #{$property-name}: 0px;
     }
   }
 }
@@ -156,15 +157,10 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   font-weight: 900;
 }
 
-@mixin unordered-list($icon, $icon-color, $marker-width) {
-  margin: 0px;
-  padding: 0px;
-  list-style-type: none;
-  >li {
-    margin-left: $marker-width + $blank-margin;
-    text-align: justify;
-  }
-  >li::before {
+@mixin unordered-list-item($icon, $icon-color, $marker-width) {
+  margin-left: $marker-width + $blank-margin;
+  text-align: justify;
+  &::before {
     @include icon-font;
     width: $marker-width;
     margin-right: $blank-margin;
@@ -175,17 +171,21 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   }
 }
 
-@mixin ordered-list($number-color) {
+@mixin unordered-list($icon, $icon-color, $marker-width) {
   margin: 0px;
   padding: 0px;
   list-style-type: none;
   >li {
-    margin-left: 0.9em + $blank-margin;
-    text-align: justify;
-    position: relative;
-    counter-increment: list;
+    @include unordered-list-item($icon, $icon-color, $marker-width);
   }
-  >li::before {
+}
+
+@mixin ordered-list-item($number-color) {
+  margin-left: 0.9em + $blank-margin;
+  text-align: justify;
+  position: relative;
+  counter-increment: list;
+  &::before {
     top: 0.5em;
     width: 0.8em * (100% / 70%);
     height: 0.8em * (100% / 70%);
@@ -200,6 +200,15 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
     content: counter(list);
     display: inline-block;
     position: absolute;
+  }
+}
+
+@mixin ordered-list($number-color) {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+  >li {
+    @include ordered-list-item($number-color);
   }
 }
 

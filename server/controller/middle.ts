@@ -90,7 +90,9 @@ export function verifyRecaptcha(): RequestHandler {
     let recaptchaToken = request.query.recaptchaToken || request.body.recaptchaToken;
     try {
       let result = await RecaptchaUtil.verify(recaptchaToken);
-      LogUtil.log("middle/verify-recaptcha", `score: ${result.score}`);
+      let score = result.score;
+      let action = result.action;
+      LogUtil.log("middle/verify-recaptcha", {score, action});
       if (result.score >= 0.5) {
         request.recaptchaScore = result.score;
         next();

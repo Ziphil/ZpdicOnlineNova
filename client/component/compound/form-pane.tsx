@@ -26,9 +26,10 @@ export default class FormPane extends Component<Props, State> {
   public render(): ReactNode {
     let errorType = this.props.errorType;
     let errorStyle = this.props.errorStyle;
+    let texts = [PopupUtil.getMessage(this.props.intl!, errorType ?? "")];
     let errorNode = (errorType !== null) && (
       <div styleName="error">
-        <InformationPane texts={[PopupUtil.getMessage(this.props.intl!, errorType)]} style={errorStyle} onClose={this.props.onErrorClose}/>
+        <InformationPane texts={texts} style={errorStyle} onClose={this.props.onErrorClose}/>
       </div>
     );
     let node = (

@@ -21,7 +21,7 @@ export default class Markdown extends Component<Props, State> {
         <ReactMarkdown
           source={this.props.source}
           renderers={{link: Link}}
-          disallowedTypes={["thematicBreak", "image", "imageReference", "definition", "heading", "code", "html", "virtualHtml"]}
+          disallowedTypes={["thematicBreak", "image", "imageReference", "definition", "heading", "html", "virtualHtml"]}
         />
       </div>
     );

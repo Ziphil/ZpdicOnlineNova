@@ -1,53 +1,52 @@
 //
 
 import {
+  Aggregate,
   Query
 } from "mongoose";
 import {
+  Dictionary,
+  SearchMode,
+  SearchParameter,
+  SearchType,
   Word,
   WordModel
 } from "/server/model/dictionary";
-import {
-  SearchMode,
-  SearchType
-} from "/server/skeleton/search-parameter";
-export {
-  SearchMode,
-  SearchModeUtil,
-  SearchType,
-  SearchTypeUtil
-} from "/server/skeleton/search-parameter";
 
 
-export class NormalSearchParameter {
+export class NormalSearchParameter extends SearchParameter {
 
   public search: string;
   public mode: SearchMode;
   public type: SearchType;
 
   public constructor(search: string, mode: SearchMode, type: SearchType) {
+    super();
     this.search = search;
     this.mode = mode;
     this.type = type;
   }
 
-  public createQuery(): Query<Array<Word>> {
+  public createQuery(dictionary: Dictionary): Query<Array<Word>> {
     let keys = this.createKeys();
     let needle = this.createNeedle();
-    let eachQueries = keys.map((key) => WordModel.find().where(key, needle).getFilter());
-    let query = WordModel.find().or(eachQueries);
+    let disjunctQueries = keys.map((key) => WordModel.find().where(key, needle).getFilter());
+    let query = WordModel.find().where("dictionary", dictionary).or(disjunctQueries);
     return query;
   }
 
-  // この検索パラメータからサジェストされる単語を検索するためのクエリを返します。
-  // 何もサジェストする必要がない場合は null を返します。
-  public createSuggestionQuery(): Query<Array<Word>> | null {
+  public createSuggestionAggregate(dictionary: Dictionary): Aggregate<Array<{title: string, word: Word}>> | null {
     let mode = this.mode;
     let type = this.type;
     if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {
       let needle = this.createNeedle("exact");
-      let query = WordModel.find().where("variations.name", needle);
-      return query;
+      let aggregate = WordModel.aggregate();
+      aggregate = aggregate.match(WordModel.where("dictionary", dictionary["_id"]).where("variations.name", needle).getFilter());
+      aggregate = aggregate.addFields({oldVariations: "$variations"});
+      aggregate = aggregate.unwind("$oldVariations");
+      aggregate = aggregate.match(WordModel.where("oldVariations.name", needle).getFilter());
+      aggregate = aggregate.project({title: "$oldVariations.title", word: "$$CURRENT"});
+      return aggregate;
     } else {
       return null;
     }
