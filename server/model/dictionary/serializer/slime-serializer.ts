@@ -20,7 +20,7 @@ export class SlimeSerializer extends Serializer {
   }
 
   public start(): void {
-    let stream = WordModel.find().where("dictionary", this.dictionary).cursor();
+    let stream = WordModel.find().where("dictionary", this.dictionary).lean().cursor();
     let writer = createWriteStream(this.path);
     let first = true;
     writer.write("{\"words\":[");
