@@ -22,34 +22,55 @@ import {
 
 export class SlimeDeserializer extends Deserializer {
 
-  private error: Error | null = null;
+  private pronunciationTitle?: string;
 
   public start(): void {
+    this.readSettings();
+  }
+
+  private readSettings(): void {
+    let stream = oboe(createReadStream(this.path));
+    stream.on("node:!.*", (data, jsonPath) => {
+      if (jsonPath[0] === "zpdic") {
+        if (typeof data["pronunciationTitle"] === "string") {
+          this.pronunciationTitle = data["pronunciationTitle"];
+        }
+      } else if (jsonPath[0] === "snoj") {
+        if (typeof data === "string") {
+          this.emit("property", {snoj: data});
+        }
+      }
+      return oboe.drop;
+    });
+    stream.on("done", () => {
+      this.readMain();
+    });
+    stream.on("fail", (reason) => {
+      this.emit("error", reason.thrown);
+    });
+  }
+
+  private readMain(): void {
     let stream = oboe(createReadStream(this.path));
     stream.on("node:!.words.*", (data, jsonPath) => {
       try {
         let word = this.createWord(data);
         this.emit("word", word);
       } catch (error) {
-        this.error = error;
         this.emit("error", error);
       }
       return oboe.drop;
     });
     stream.on("node:!.*", (data, jsonPath) => {
       if (jsonPath[0] !== "words") {
-        this.emit("other", jsonPath[0], data);
+        this.emit("external", jsonPath[0], data);
       }
-      LogUtil.log("slime-deserializer", `${jsonPath[0]}`);
       return oboe.drop;
     });
-    stream.on("done", (finalData) => {
-      if (!this.error) {
-        this.emit("end");
-      }
+    stream.on("done", () => {
+      this.emit("end");
     });
     stream.on("fail", (reason) => {
-      this.error = reason.thrown;
       this.emit("error", reason.thrown);
     });
   }

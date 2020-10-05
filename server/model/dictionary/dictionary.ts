@@ -84,6 +84,9 @@ export class DictionarySchema {
   public explanation?: string;
 
   @prop()
+  public snoj?: number;
+
+  @prop()
   public createdDate?: Date;
 
   @prop()
@@ -161,7 +164,7 @@ export class DictionarySchema {
           LogUtil.log("dictionary/upload", `uploading: ${count}`);
           LogUtil.log("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(", "));
         });
-        stream.on("other", (key, data) => {
+        stream.on("external", (key, data) => {
           externalData = Object.assign(externalData, {[key]: data});
         });
         stream.on("end", () => {
