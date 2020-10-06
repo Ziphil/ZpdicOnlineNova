@@ -178,23 +178,25 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let mode = this.props.match?.params.mode || "general";
     let commissionCount = (this.state.commissionCount > 0) ? this.state.commissionCount : undefined;
     let menuSpecs = [
-      {mode: "general", label: this.trans("dictionarySettingPage.general"), iconLabel: "\uF013", href: "/dashboard/dictionary/" + number},
-      {mode: "request", label: this.trans("dictionarySettingPage.commission"), iconLabel: "\uF022", badgeValue: commissionCount, href: "/dashboard/dictionary/request/" + number},
-      {mode: "access", label: this.trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dashboard/dictionary/access/" + number}
+      {mode: "general", label: this.trans("dictionarySettingPage.general"), iconLabel: "\uF05A", href: "/dashboard/dictionary/" + number},
+      {mode: "setting", label: this.trans("dictionarySettingPage.setting"), iconLabel: "\uF013", href: "/dashboard/dictionary/setting/" + number},
+      {mode: "access", label: this.trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dashboard/dictionary/access/" + number},
+      {mode: "request", label: this.trans("dictionarySettingPage.commission"), iconLabel: "\uF022", badgeValue: commissionCount, href: "/dashboard/dictionary/request/" + number}
     ];
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {
       if (mode === "general") {
         contentNodes.push(this.renderChangeDictionaryNameForm());
         contentNodes.push(this.renderChangeDictionaryParamNameForm());
-        contentNodes.push(this.renderChangeDictionaryExplanationForm());
         contentNodes.push(this.renderChangeDictionarySecretForm());
         contentNodes.push(this.renderUploadDictionaryForm());
         contentNodes.push(this.renderDeleteDictionaryForm());
-      } else if (mode === "request") {
-        contentNodes.push(this.renderCommissionList());
+      } else if (mode === "setting") {
+        contentNodes.push(this.renderChangeDictionaryExplanationForm());
       } else if (mode === "access") {
         contentNodes.push(this.renderInviteEditDictionaryForm());
+      } else if (mode === "request") {
+        contentNodes.push(this.renderCommissionList());
       }
     }
     let node = (

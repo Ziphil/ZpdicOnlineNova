@@ -342,6 +342,7 @@ dictionaryListPage:
   createdDate: "Sort by creation date"
 dictionarySettingPage:
   general: "General"
+  setting: "Settings"
   commission: "Requests"
   access: "Permissions"
   changeDictionaryNameForm:

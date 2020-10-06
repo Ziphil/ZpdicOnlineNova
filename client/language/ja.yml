@@ -340,6 +340,7 @@ dictionaryListPage:
   createdDate: "作成日時順"
 dictionarySettingPage:
   general: "一般"
+  setting: "設定"
   commission: "造語依頼"
   access: "権限"
   changeDictionaryNameForm:
