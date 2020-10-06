@@ -1,5 +1,6 @@
 //
 
+import "akrantiain/dist/code-mirror/mode";
 import "codemirror/mode/markdown/markdown";
 import * as react from "react";
 import {
@@ -51,8 +52,8 @@ export default class TextArea extends Component<Props, State> {
         let options = (() => {
           if (this.props.mode === "markdown") {
             return {theme: "zpmarkdown", mode: {name: "markdown", xml: false, fencedCodeBlockHighlighting: false}};
-          } else {
-            return undefined;
+          } else if (this.props.mode === "akrantiain") {
+            return {theme: "zpakrantiain", mode: {name: "akrantiain"}};
           }
         })();
         let textAreaNode = (
@@ -85,7 +86,7 @@ type Props = {
   value: string,
   label?: string,
   font: "normal" | "monospace",
-  mode?: string,
+  mode?: "markdown" | "akrantiain",
   nowrap: boolean,
   showRequired?: boolean,
   showOptional?: boolean,
