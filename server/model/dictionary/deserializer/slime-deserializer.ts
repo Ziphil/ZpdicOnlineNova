@@ -65,7 +65,7 @@ export class SlimeDeserializer extends Deserializer {
       return oboe.drop;
     });
     stream.on("node:!.*", (data, jsonPath) => {
-      if (jsonPath[0] !== "words") {
+      if (jsonPath[0] !== "words" && jsonPath[0] !== "version") {
         this.emit("external", jsonPath[0], data);
       }
       return oboe.drop;
