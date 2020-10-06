@@ -35,6 +35,9 @@ export class WordSchema {
   @prop({required: true})
   public name!: string;
 
+  @prop()
+  public pronunciation?: string;
+
   @prop({required: true, type: EquivalentSchema})
   public equivalents!: Array<EquivalentSchema>;
 
@@ -65,6 +68,7 @@ export class WordCreator {
     let id = raw.id;
     let number = raw.number;
     let name = raw.name;
+    let pronunciation = raw.pronunciation;
     let equivalents = raw.equivalents.map(EquivalentCreator.create);
     let tags = raw.tags;
     let informations = raw.informations.map(InformationCreator.create);
@@ -72,7 +76,7 @@ export class WordCreator {
     let relations = raw.relations.map(RelationCreator.create);
     let createdDate = raw.createdDate?.toISOString() ?? undefined;
     let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = WordSkeleton.of({id, number, name, equivalents, tags, informations, variations, relations, createdDate, updatedDate});
+    let skeleton = WordSkeleton.of({id, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate, updatedDate});
     return skeleton;
   }
 

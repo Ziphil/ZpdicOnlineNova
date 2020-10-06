@@ -90,10 +90,14 @@ export class SlimeDeserializer extends Deserializer {
     word.tags = raw["tags"] ?? [];
     word.informations = [];
     for (let rawInformation of raw["contents"] ?? []) {
-      let information = new InformationModel({});
-      information.title = rawInformation["title"] ?? "";
-      information.text = rawInformation["text"] ?? "";
-      word.informations.push(information);
+      if (rawInformation["title"] === this.pronunciationTitle) {
+        word.pronunciation = rawInformation["text"] ?? undefined;
+      } else {
+        let information = new InformationModel({});
+        information.title = rawInformation["title"] ?? "";
+        information.text = rawInformation["text"] ?? "";
+        word.informations.push(information);
+      }
     }
     word.variations = [];
     for (let rawVariation of raw["variations"] ?? []) {

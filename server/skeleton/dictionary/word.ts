@@ -15,6 +15,7 @@ export class EditWord extends Skeleton {
 
   public number?: number;
   public name!: string;
+  public pronunciation?: string;
   public equivalents!: Array<Equivalent>;
   public tags!: Array<string>;
   public informations!: Array<Information>;
@@ -23,12 +24,13 @@ export class EditWord extends Skeleton {
 
   public static empty(): EditWord {
     let name = "";
+    let pronunciation;
     let equivalents = new Array<Equivalent>();
     let tags = new Array<string>();
     let informations = new Array<Information>();
     let variations = new Array<Variation>();
     let relations = new Array<Relation>();
-    let skeleton = EditWord.of({name, equivalents, tags, informations, variations, relations});
+    let skeleton = EditWord.of({name, pronunciation, equivalents, tags, informations, variations, relations});
     return skeleton;
   }
 
