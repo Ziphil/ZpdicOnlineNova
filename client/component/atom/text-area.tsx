@@ -5,6 +5,9 @@ import {
   ChangeEvent,
   ReactNode
 } from "react";
+import {
+  Controlled as CodeMirror
+} from "react-codemirror2";
 import Label from "/client/component/atom/label";
 import Component from "/client/component/component";
 import {
@@ -34,16 +37,34 @@ export default class TextArea extends Component<Props, State> {
     }
   }
 
+  private handleBeforeChange(editor: any, data: any, value: string): void {
+    if (this.props.onSet) {
+      this.props.onSet(value);
+    }
+  }
+
   public render(): ReactNode {
-    let textAreaStyleName = StyleNameUtil.create(
-      "textarea",
-      {if: this.props.font === "monospace", true: "monospace"},
-      {if: this.props.nowrap, true: "nowrap"}
-    );
+    let styles = this.props.styles!;
+    let textAreaNode = (() => {
+      if (this.props.mode !== undefined) {
+        let textAreaNode = (
+          <CodeMirror className={styles["textarea-code"]} value={this.props.value} onBeforeChange={this.handleBeforeChange.bind(this)}/>
+        );
+        return textAreaNode;
+      } else {
+        let textAreaStyleName = StyleNameUtil.create(
+          "textarea",
+          {if: this.props.font === "monospace", true: "monospace"},
+          {if: this.props.nowrap, true: "nowrap"}
+        );
+        let textAreaNode = <textarea styleName={textAreaStyleName} value={this.props.value} onChange={this.handleChange.bind(this)}/>;
+        return textAreaNode;
+      }
+    })();
     let node = (
       <label styleName="root" className={this.props.className}>
         <Label text={this.props.label} showRequired={this.props.showRequired} showOptional={this.props.showOptional}/>
-        <textarea styleName={textAreaStyleName} value={this.props.value} onChange={this.handleChange.bind(this)}/>
+        {textAreaNode}
       </label>
     );
     return node;
@@ -56,6 +77,7 @@ type Props = {
   value: string,
   label?: string,
   font: "normal" | "monospace",
+  mode?: string,
   nowrap: boolean,
   showRequired?: boolean,
   showOptional?: boolean,

@@ -57,6 +57,17 @@ let config = {
         ]
       },
       {
+        test: /\.css$/,
+        use: [
+          {
+            loader: "style-loader"
+          },
+          {
+            loader: "css-loader"
+          }
+        ]
+      },
+      {
         test: /\.yml$/,
         use: [
           {
@@ -70,7 +81,7 @@ let config = {
     ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".yml"],
+    extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".css", ".yml"],
     alias: {
       "/client": path.resolve(__dirname, "client"),
       "/server": path.resolve(__dirname, "server")

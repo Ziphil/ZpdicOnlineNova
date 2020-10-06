@@ -27,3 +27,39 @@
   white-space: nowrap;
   overflow: auto;
 }
+
+.textarea-code {
+  @include input(map-get($colors, primary));
+  padding: 0px;
+  display: block;
+  resize: none;
+  flex-grow: 1;
+  position: relative;
+}
+
+:global(.CodeMirror) {
+  height: 100%;
+  padding: 0em;
+  font-family: $monospace-font-family, monospace;
+  font-size: 90%;
+  font-feature-settings: "palt" 0, "pkna" 0;
+  background: transparent;
+  box-sizing: border-box;
+  top: 0px ;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  position: absolute;
+}
+
+:global(.CodeMirror-lines) {
+  padding: 0.25em 0em !important;
+} 
+
+:global(.CodeMirror-line) {
+  padding: 0em 0.5em !important;
+} 
+
+:global(.CodeMirror-selected) {
+  background: rgba($background-color, 0.9) !important;
+}
