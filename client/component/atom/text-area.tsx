@@ -1,5 +1,6 @@
 //
 
+import "codemirror/mode/markdown/markdown";
 import * as react from "react";
 import {
   ChangeEvent,
@@ -47,8 +48,16 @@ export default class TextArea extends Component<Props, State> {
     let styles = this.props.styles!;
     let textAreaNode = (() => {
       if (this.props.mode !== undefined) {
+        let mode = (() => {
+          if (this.props.mode === "markdown") {
+            return {name: "markdown", xml: false, fencedCodeBlockHighlighting: false};
+          } else {
+            return undefined;
+          }
+        })();
+        let options = {mode};
         let textAreaNode = (
-          <CodeMirror className={styles["textarea-code"]} value={this.props.value} onBeforeChange={this.handleBeforeChange.bind(this)}/>
+          <CodeMirror className={styles["textarea-code"]} value={this.props.value} options={options} onBeforeChange={this.handleBeforeChange.bind(this)}/>
         );
         return textAreaNode;
       } else {
