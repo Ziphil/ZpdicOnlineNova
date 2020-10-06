@@ -13,14 +13,12 @@ import {
 
 export class SlimeSerializer extends Serializer {
 
-  private error: Error | null = null;
-
   public constructor(path: string, dictionary: Dictionary) {
     super(path, dictionary);
   }
 
   public start(): void {
-    let stream = WordModel.find().where("dictionary", this.dictionary).cursor();
+    let stream = WordModel.find().where("dictionary", this.dictionary).lean().cursor();
     let writer = createWriteStream(this.path);
     let first = true;
     writer.write("{\"words\":[");
@@ -34,21 +32,19 @@ export class SlimeSerializer extends Serializer {
       writer.write(string);
     });
     stream.on("end", () => {
-      if (!this.error) {
-        writer.write("]");
-        let externalString = this.createExternalString();
-        if (externalString) {
-          writer.write(",");
-          writer.write(externalString);
-        }
-        writer.write("}");
-        writer.end(() => {
-          this.emit("end");
-        });
+      writer.write("]");
+      let externalString = this.createExternalString();
+      if (externalString) {
+        writer.write(",");
+        writer.write(externalString);
       }
+      writer.write(",\"version\":1");
+      writer.write("}");
+      writer.end(() => {
+        this.emit("end");
+      });
     });
     stream.on("error", (error) => {
-      this.error = error;
       this.emit("error", error);
     });
   }
@@ -73,6 +69,14 @@ export class SlimeSerializer extends Serializer {
       rawInformation["text"] = information.text;
       raw["contents"].push(rawInformation);
     }
+    if (word.pronunciation !== undefined) {
+      let externalData = this.dictionary.externalData as any;
+      let title = externalData?.zpdic?.pronunciationTitle ?? "pronunciation";
+      let rawInformation = {} as any;
+      rawInformation["title"] = title;
+      rawInformation["text"] = word.pronunciation;
+      raw["contents"].push(rawInformation);
+    }
     raw["variations"] = [];
     for (let variation of word.variations) {
       let rawVariation = {} as any;
@@ -94,8 +98,22 @@ export class SlimeSerializer extends Serializer {
   }
 
   private createExternalString(): string {
-    let string = JSON.stringify(this.dictionary.externalData || {});
-    string = string.slice(1, -1);
+    let externalData = this.dictionary.externalData as any;
+    if (!("zpdic" in externalData)) {
+      externalData = Object.assign({}, externalData, {zpdic: {}});
+    }
+    if (externalData.zpdic.pronunciationTitle === undefined) {
+      let zpdic = Object.assign({}, externalData.zpdic, {pronunciationTitle: "pronunciation"});
+      externalData = Object.assign({}, externalData, {zpdic});
+    }
+    if (externalData?.zpdic.explanation === undefined) {
+      let zpdic = Object.assign({}, externalData.zpdic, {explanation: this.dictionary.explanation});
+      externalData = Object.assign({}, externalData, {zpdic});
+    }
+    if (this.dictionary.snoj !== undefined) {
+      externalData = Object.assign({}, externalData, {snoj: this.dictionary.snoj});
+    }
+    let string = JSON.stringify(externalData).slice(1, -1);
     return string;
   }
 

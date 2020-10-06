@@ -13,6 +13,10 @@
   }
 }
 
+.root.force-wide {
+  flex-direction: column;
+}
+
 .root:last-child {
   border-bottom: 1px $light-border-color solid;
 }
@@ -30,6 +34,12 @@
   }
 }
 
+.force-wide .description-wrapper {
+  width: 100%;
+  padding: 0px;
+  flex-basis: content;
+}
+
 .content {
   flex-basis: 65%;
   flex-grow: 1;
@@ -40,6 +50,12 @@
     padding: 30px 0px 0px 0px;
     flex-basis: content;
   }
+}
+
+.force-wide .content {
+  width: 100%;
+  padding: 30px 0px 0px 0px;
+  flex-basis: content;
 }
 
 .content:first-child {

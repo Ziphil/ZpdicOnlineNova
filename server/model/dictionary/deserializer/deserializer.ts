@@ -17,6 +17,7 @@ export abstract class Deserializer extends EventEmitter {
   public dictionary: Dictionary;
   private cacheSize: number;
   private words: Array<Word> = [];
+  private error: Error | null = null;
 
   public constructor(path: string, dictionary: Dictionary, cacheSize?: number) {
     super();
@@ -51,9 +52,16 @@ export abstract class Deserializer extends EventEmitter {
     } else if (event === "end" || event === "error") {
       super.emit("words", this.words);
       this.words = [];
+      if (event === "error") {
+        this.error = args[0];
+      }
     }
-    let result = super.emit(event, ...args);
-    return result;
+    if (event !== "end" || (event === "end" && this.error === null)) {
+      let result = super.emit(event, ...args);
+      return result;
+    } else {
+      return this.listeners(event).length > 0;
+    }
   }
 
   public abstract start(): void;
@@ -81,7 +89,14 @@ export abstract class Deserializer extends EventEmitter {
 export type DeserializerEvent = {
   word: [Word],
   words: [Array<Word>],
-  other: [string, any],
+  property: TupleOf<DictionaryProperty>,
+  external: [string, any],
   end: [],
   error: [Error]
 };
+export type DictionaryProperty = {
+  explanation: string,
+  snoj: string
+};
+
+type TupleOf<T> = {[K in keyof T]: [K, T[K]]}[keyof T];

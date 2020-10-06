@@ -27,6 +27,8 @@ popup:
     The visibility of the dictionary has been changed.
   dictionaryExplanationChanged: >-
     The explanation of the dictionary has been changed.
+  dictionarySnojChanged: >-
+    The snoj data for akrantiain has been changed.
   dictionaryUploaded: >-
     Your file was successfully uploaded.
     Note that it will take some time before the dictionary data is updated.
@@ -183,6 +185,9 @@ changeDictionarySecretForm:
   caution: >-
     This setting affects only whether or not this dictionary is shown in the dictionary list page.
     Even if you select “Hide” here, everyone can still view this dictionary.
+changeDictionarySnojForm:
+  snoj: "Snoj data for akrantiain"
+  confirm: "Confirm"
 deleteDictionaryForm:
   confirm: "Delete"
   caution: >-
@@ -276,6 +281,7 @@ userPane:
 wordEditor:
   title: "Edit word"
   name: "Word"
+  pronunciation: "Pronunciation"
   tag: "Tag"
   equivalentTitle: "Title"
   equivalentNames: "Translation (separated by commas)"
@@ -341,6 +347,7 @@ dictionaryListPage:
   createdDate: "Sort by creation date"
 dictionarySettingPage:
   general: "General"
+  setting: "Settings"
   commission: "Requests"
   access: "Permissions"
   changeDictionaryNameForm:
@@ -352,16 +359,22 @@ dictionarySettingPage:
     description: >-
       Change the name of this dictionary for URL.
       Setting this will enable to replace the ID number with the name set here in the URL to access the dictionary.
+  changeDictionarySecretForm:
+    label: "Change visibility"
+    description: >-
+      Change whether or not this dictionary is shown in the dictionary list page.
   changeDictionaryExplanationForm:
     label: "Change explanation"
     description: >-
       Change the explanation of this dictionary.
       You can use some of the Markdown syntax.
       This will be displayed in the dictionary page before one searches something.
-  changeDictionarySecretForm:
-    label: "Change visibility"
+  changeDictionarySnojForm:
+    label: "Change snoj data for akrantiain"
     description: >-
-      Change whether or not this dictionary is shown in the dictionary list page.
+      Change the snoj data for akrantiain.
+      If you set this data, akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
+      When a word data has its own pronunciation specified, it will be displayed instead.
   uploadDictionaryForm:
     label: "Upload"
     description: >-

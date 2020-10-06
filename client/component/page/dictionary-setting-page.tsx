@@ -10,6 +10,7 @@ import ChangeDictionaryExplanationForm from "/client/component/compound/dictiona
 import ChangeDictionaryNameForm from "/client/component/compound/dictionary-setting/change-dictionary-name-form";
 import ChangeDictionaryParamNameForm from "/client/component/compound/dictionary-setting/change-dictionary-param-name-form";
 import ChangeDictionarySecretForm from "/client/component/compound/dictionary-setting/change-dictionary-secret-form";
+import ChangeDictionarySnojForm from "/client/component/compound/dictionary-setting/change-dictionary-snoj-form";
 import DeleteDictionaryForm from "/client/component/compound/dictionary-setting/delete-dictionary-form";
 import InviteEditDictionaryForm from "/client/component/compound/dictionary-setting/invite-edit-dictionary-form";
 import UploadDictionaryForm from "/client/component/compound/dictionary-setting/upload-dictionary-form";
@@ -67,7 +68,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     }
   }
 
-  private async fetchCommissions(offset?: number, size?: number): Promise<WithSize<Commission>> {
+  private async provideCommissions(offset?: number, size?: number): Promise<WithSize<Commission>> {
     let number = +this.props.match!.params.number;
     let response = await this.requestGet("fetchCommissions", {number, offset, size});
     if (response.status === 200 && !("error" in response.data)) {
@@ -109,23 +110,34 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
-  private renderChangeDictionaryExplanationForm(): ReactNode {
-    let label = this.trans("dictionarySettingPage.changeDictionaryExplanationForm.label");
-    let description = this.trans("dictionarySettingPage.changeDictionaryExplanationForm.description");
-    let node = (
-      <SettingPane label={label} key={label} description={description}>
-        <ChangeDictionaryExplanationForm number={this.state.dictionary!.number} currentExplanation={this.state.dictionary!.explanation ?? ""}/>
-      </SettingPane>
-    );
-    return node;
-  }
-
   private renderChangeDictionarySecretForm(): ReactNode {
     let label = this.trans("dictionarySettingPage.changeDictionarySecretForm.label");
     let description = this.trans("dictionarySettingPage.changeDictionarySecretForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <ChangeDictionarySecretForm number={this.state.dictionary!.number} currentSecret={this.state.dictionary!.secret}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderChangeDictionaryExplanationForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.changeDictionaryExplanationForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionaryExplanationForm.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description} forceWide={true}>
+        <ChangeDictionaryExplanationForm number={this.state.dictionary!.number} currentExplanation={this.state.dictionary!.explanation ?? ""}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderChangeDictionarySnojForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.changeDictionarySnojForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionarySnojForm.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description} forceWide={true}>
+        <ChangeDictionarySnojForm number={this.state.dictionary!.number} currentSnoj={this.state.dictionary!.snoj ?? ""}/>
       </SettingPane>
     );
     return node;
@@ -156,7 +168,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
   private renderCommissionList(): ReactNode {
     let node = (
       <SettingPane key="commissionList">
-        <CommissionList commissions={this.fetchCommissions.bind(this)} dictionary={this.state.dictionary!} size={30} onDeleteConfirm={this.fetchCommissionCount.bind(this)}/>
+        <CommissionList commissions={this.provideCommissions.bind(this)} dictionary={this.state.dictionary!} size={30} onDeleteConfirm={this.fetchCommissionCount.bind(this)}/>
       </SettingPane>
     );
     return node;
@@ -178,23 +190,26 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let mode = this.props.match?.params.mode || "general";
     let commissionCount = (this.state.commissionCount > 0) ? this.state.commissionCount : undefined;
     let menuSpecs = [
-      {mode: "general", label: this.trans("dictionarySettingPage.general"), iconLabel: "\uF013", href: "/dashboard/dictionary/" + number},
-      {mode: "request", label: this.trans("dictionarySettingPage.commission"), iconLabel: "\uF022", badgeValue: commissionCount, href: "/dashboard/dictionary/request/" + number},
-      {mode: "access", label: this.trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dashboard/dictionary/access/" + number}
+      {mode: "general", label: this.trans("dictionarySettingPage.general"), iconLabel: "\uF05A", href: "/dashboard/dictionary/" + number},
+      {mode: "setting", label: this.trans("dictionarySettingPage.setting"), iconLabel: "\uF013", href: "/dashboard/dictionary/setting/" + number},
+      {mode: "access", label: this.trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dashboard/dictionary/access/" + number},
+      {mode: "request", label: this.trans("dictionarySettingPage.commission"), iconLabel: "\uF022", badgeValue: commissionCount, href: "/dashboard/dictionary/request/" + number}
     ];
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {
       if (mode === "general") {
         contentNodes.push(this.renderChangeDictionaryNameForm());
         contentNodes.push(this.renderChangeDictionaryParamNameForm());
-        contentNodes.push(this.renderChangeDictionaryExplanationForm());
         contentNodes.push(this.renderChangeDictionarySecretForm());
         contentNodes.push(this.renderUploadDictionaryForm());
         contentNodes.push(this.renderDeleteDictionaryForm());
-      } else if (mode === "request") {
-        contentNodes.push(this.renderCommissionList());
+      } else if (mode === "setting") {
+        contentNodes.push(this.renderChangeDictionaryExplanationForm());
+        contentNodes.push(this.renderChangeDictionarySnojForm());
       } else if (mode === "access") {
         contentNodes.push(this.renderInviteEditDictionaryForm());
+      } else if (mode === "request") {
+        contentNodes.push(this.renderCommissionList());
       }
     }
     let node = (

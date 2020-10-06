@@ -45,6 +45,13 @@
   margin: 0px 0px 0px $control-margin;
 }
 
+.pronunciation {
+  margin: 0em 0.75em 0em 0em;
+  color: $head-color;
+  font-size: 80%;
+  display: inline-block;
+}
+
 .tag {
   display: inline-block;
 }

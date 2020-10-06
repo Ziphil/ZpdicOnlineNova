@@ -84,6 +84,9 @@ export class DictionarySchema {
   public explanation?: string;
 
   @prop()
+  public snoj?: string;
+
+  @prop()
   public createdDate?: Date;
 
   @prop()
@@ -110,9 +113,7 @@ export class DictionarySchema {
   public static async findPublic(order: string, range?: QueryRange): Promise<WithSize<Dictionary>> {
     let sortArg = (order === "createdDate") ? "-createdDate -updatedDate -number" : "-updatedDate -number";
     let query = DictionaryModel.find().ne("secret", true).sort(sortArg);
-    let restrictedQuery = QueryRange.restrict(query, range);
-    let countQuery = DictionaryModel.countDocuments(query.getFilter());
-    let result = await Promise.all([restrictedQuery, countQuery]);
+    let result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 
@@ -145,11 +146,7 @@ export class DictionarySchema {
   // この辞書に登録されている単語データを全て削除し、ファイルから読み込んだデータを代わりに保存します。
   // 辞書の内部データも、ファイルから読み込んだものに更新されます。
   public async upload(this: Dictionary, path: string, originalPath: string): Promise<Dictionary> {
-    this.status = "saving";
-    this.updatedDate = new Date();
-    this.externalData = {};
-    await this.save();
-    await WordModel.deleteMany({}).where("dictionary", this);
+    await this.startUpload();
     let externalData = {};
     let promise = new Promise<Dictionary>((resolve, reject) => {
       let stream = Deserializer.create(path, originalPath, this);
@@ -161,11 +158,18 @@ export class DictionarySchema {
           LogUtil.log("dictionary/upload", `uploading: ${count}`);
           LogUtil.log("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(", "));
         });
-        stream.on("other", (key, data) => {
+        stream.on("property", (key, value) => {
+          if (value !== undefined) {
+            let anyThis = this as any;
+            anyThis[key] = value;
+          }
+        });
+        stream.on("external", (key, data) => {
           externalData = Object.assign(externalData, {[key]: data});
         });
         stream.on("end", () => {
           this.status = "ready";
+          this.externalData = externalData;
           resolve(this);
         });
         stream.on("error", (error) => {
@@ -179,11 +183,18 @@ export class DictionarySchema {
         resolve(this);
       }
     });
-    LogUtil.log("dictionary/upload", `number: ${this.number}, start uploading`);
     await promise;
-    this.externalData = externalData;
     await this.save();
     return this;
+  }
+
+  private async startUpload(this: Dictionary): Promise<void> {
+    this.status = "saving";
+    this.updatedDate = new Date();
+    this.externalData = {};
+    await this.save();
+    await WordModel.deleteMany({}).where("dictionary", this);
+    LogUtil.log("dictionary/upload", `number: ${this.number}, start uploading`);
   }
 
   public async download(this: Dictionary, path: string): Promise<void> {
@@ -238,6 +249,12 @@ export class DictionarySchema {
 
   public async changeExplanation(this: Dictionary, explanation: string): Promise<Dictionary> {
     this.explanation = explanation;
+    await this.save();
+    return this;
+  }
+
+  public async changeSnoj(this: Dictionary, snoj: string): Promise<Dictionary> {
+    this.snoj = snoj;
     await this.save();
     return this;
   }
@@ -318,13 +335,11 @@ export class DictionarySchema {
   public async search(this: Dictionary, parameter: SearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     let query = parameter.createQuery(this).sort("name");
     let suggestionAggregate = parameter.createSuggestionAggregate(this);
-    let restrictedQuery = QueryRange.restrict(query, range);
-    let countQuery = WordModel.countDocuments(query.getFilter());
     let hitSuggestionPromise = suggestionAggregate?.then((suggestions) => {
       return suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word));
     });
-    let [hitWords, hitSize, hitSuggestions] = await Promise.all([restrictedQuery, countQuery, hitSuggestionPromise]);
-    return {words: [hitWords, hitSize], suggestions: hitSuggestions ?? []};
+    let [hitWordResult, hitSuggestions] = await Promise.all([QueryRange.restrictWithSize(query, range), hitSuggestionPromise]);
+    return {words: hitWordResult, suggestions: hitSuggestions ?? []};
   }
 
   public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {
@@ -451,9 +466,10 @@ export class DictionaryCreator {
     let status = raw.status;
     let secret = raw.secret;
     let explanation = raw.explanation;
+    let snoj = raw.snoj;
     let createdDate = raw.createdDate?.toISOString() ?? undefined;
     let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, createdDate, updatedDate});
+    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, snoj, createdDate, updatedDate});
     return skeleton;
   }
 

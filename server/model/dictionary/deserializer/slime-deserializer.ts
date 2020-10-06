@@ -22,34 +22,58 @@ import {
 
 export class SlimeDeserializer extends Deserializer {
 
-  private error: Error | null = null;
+  private pronunciationTitle?: string;
 
   public start(): void {
+    this.readSettings();
+  }
+
+  private readSettings(): void {
+    let stream = oboe(createReadStream(this.path));
+    stream.on("node:!.*", (data, jsonPath) => {
+      if (jsonPath[0] === "zpdic") {
+        if (typeof data["pronunciationTitle"] === "string") {
+          this.pronunciationTitle = data["pronunciationTitle"];
+        }
+        if (typeof data["explanation"] === "string") {
+          this.emit("property", "explanation", data["explanation"]);
+        }
+      } else if (jsonPath[0] === "snoj") {
+        if (typeof data === "string") {
+          this.emit("property", "snoj", data);
+        }
+      }
+      return oboe.drop;
+    });
+    stream.on("done", () => {
+      this.readMain();
+    });
+    stream.on("fail", (reason) => {
+      this.emit("error", reason.thrown);
+    });
+  }
+
+  private readMain(): void {
     let stream = oboe(createReadStream(this.path));
     stream.on("node:!.words.*", (data, jsonPath) => {
       try {
         let word = this.createWord(data);
         this.emit("word", word);
       } catch (error) {
-        this.error = error;
         this.emit("error", error);
       }
       return oboe.drop;
     });
     stream.on("node:!.*", (data, jsonPath) => {
-      if (jsonPath[0] !== "words") {
-        this.emit("other", jsonPath[0], data);
+      if (jsonPath[0] !== "words" && jsonPath[0] !== "version") {
+        this.emit("external", jsonPath[0], data);
       }
-      LogUtil.log("slime-deserializer", `${jsonPath[0]}`);
       return oboe.drop;
     });
-    stream.on("done", (finalData) => {
-      if (!this.error) {
-        this.emit("end");
-      }
+    stream.on("done", () => {
+      this.emit("end");
     });
     stream.on("fail", (reason) => {
-      this.error = reason.thrown;
       this.emit("error", reason.thrown);
     });
   }
@@ -69,10 +93,14 @@ export class SlimeDeserializer extends Deserializer {
     word.tags = raw["tags"] ?? [];
     word.informations = [];
     for (let rawInformation of raw["contents"] ?? []) {
-      let information = new InformationModel({});
-      information.title = rawInformation["title"] ?? "";
-      information.text = rawInformation["text"] ?? "";
-      word.informations.push(information);
+      if (rawInformation["title"] === this.pronunciationTitle) {
+        word.pronunciation = rawInformation["text"] ?? undefined;
+      } else {
+        let information = new InformationModel({});
+        information.title = rawInformation["title"] ?? "";
+        information.text = rawInformation["text"] ?? "";
+        word.informations.push(information);
+      }
     }
     word.variations = [];
     for (let rawVariation of raw["variations"] ?? []) {

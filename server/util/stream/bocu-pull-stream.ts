@@ -2,7 +2,7 @@
 
 import {
   PullStream
-} from "/server/model/dictionary/deserializer/pull-stream";
+} from "/server/util/stream/pull-stream";
 
 
 const ASCII_PREVIOUS = 0x40;

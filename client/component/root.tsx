@@ -35,6 +35,8 @@ import {
 } from "/client/component/store";
 
 
+require("../../node_modules/codemirror/lib/codemirror.css");
+
 let ContactPage = lazy(() => import("/client/component/page/contact-page"));
 let DashboardPage = lazy(() => import("/client/component/page/dashboard-page"));
 let DictionaryListPage = lazy(() => import("/client/component/page/dictionary-list-page"));

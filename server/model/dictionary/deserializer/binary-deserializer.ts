@@ -1,13 +1,9 @@
 // tslint:disable: no-bitwise
 
 import {
-  BocuPullStream,
-  BufferPullStream,
   Dictionary,
-  FilePullStream,
   Information,
   InformationModel,
-  PullStream,
   Word,
   WordModel
 } from "/server/model/dictionary";
@@ -17,6 +13,14 @@ import {
 import {
   LogUtil
 } from "/server/util/log";
+import {
+  BocuPullStream
+} from "/server/util/stream/bocu-pull-stream";
+import {
+  BufferPullStream,
+  FilePullStream,
+  PullStream
+} from "/server/util/stream/pull-stream";
 
 
 export class BinaryDeserializer extends Deserializer {

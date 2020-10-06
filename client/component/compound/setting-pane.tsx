@@ -9,12 +9,23 @@ import Component from "/client/component/component";
 import {
   style
 } from "/client/component/decorator";
+import {
+  StyleNameUtil
+} from "/client/util/style-name";
 
 
 @style(require("./setting-pane.scss"))
 export default class SettingPane extends Component<Props, State> {
 
+  public static defaultProps: DefaultProps = {
+    forceWide: false
+  };
+
   public render(): ReactNode {
+    let styleName = StyleNameUtil.create([
+      "root",
+      {if: this.props.forceWide, true: "force-wide"}
+    ]);
     let badgeNode = (this.props.badgeValue) && (
       <Badge value={this.props.badgeValue}/>
     );
@@ -33,7 +44,7 @@ export default class SettingPane extends Component<Props, State> {
       </div>
     );
     let node = (
-      <div styleName="root">
+      <div styleName={styleName}>
         {descriptionWrapperNode}
         <div styleName="content">
           {this.props.children}
@@ -49,7 +60,11 @@ export default class SettingPane extends Component<Props, State> {
 type Props = {
   label?: string,
   badgeValue?: string | number,
-  description?: string
+  description?: string,
+  forceWide: boolean
+};
+type DefaultProps = {
+  forceWide: boolean
 };
 type State = {
 };

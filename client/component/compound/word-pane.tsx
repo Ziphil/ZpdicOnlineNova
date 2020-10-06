@@ -1,5 +1,8 @@
 //
 
+import {
+  Akrantiain
+} from "akrantiain";
 import * as react from "react";
 import {
   Fragment,
@@ -46,15 +49,43 @@ export default class WordPane extends Component<Props, State> {
         <Button label={this.trans("wordPane.submit")} iconLabel="&#xF00C;" style="simple" onClick={this.props.onSubmit}/>
       </div>
     );
-    let tagNodes = this.props.word.tags.map((tag, index) => {
-      let tagNode = (tag !== "") && <span styleName="box" key={index}>{tag}</span>;
+    let pronunciationText = (() => {
+      if (this.props.word.pronunciation !== undefined) {
+        if (this.props.word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
+          return this.props.word.pronunciation;
+        } else {
+          return "/" + this.props.word.pronunciation + "/";
+        }
+      } else if (this.props.akrantiain !== undefined) {
+        try {
+          let pronunciation = this.props.akrantiain.convert(this.props.word.name);
+          return "/" + pronunciation + "/";
+        } catch (error) {
+          console.error(error);
+          return undefined;
+        }
+      } else {
+        return undefined;
+      }
+    })();
+    let pronunciationNode = (pronunciationText !== undefined) && (() => {
+      let pronunciationNode = <div styleName="pronunciation">{pronunciationText}</div>;
+      return pronunciationNode;
+    })();
+    let tagNode = (this.props.word.tags.length > 0) && (() => {
+      let tagBoxNodes = this.props.word.tags.map((tag, index) => {
+        let tagBoxNode = (tag !== "") && <span styleName="box" key={index}>{tag}</span>;
+        return tagBoxNode;
+      });
+      let tagNode = <div styleName="tag">{tagBoxNodes}</div>;
       return tagNode;
-    });
+    })();
     let node = (
       <div styleName="name-wrapper">
         <div styleName="left">
           <div styleName="name">{this.props.word.name}</div>
-          <div styleName="tag">{tagNodes}</div>
+          {pronunciationNode}
+          {tagNode}
         </div>
         <div styleName="right">
           {editButtonNode}
@@ -181,6 +212,7 @@ export default class WordPane extends Component<Props, State> {
 type Props = {
   dictionary: Dictionary,
   word: Word,
+  akrantiain?: Akrantiain,
   style: "normal" | "simple",
   showEditLink: boolean,
   showButton: boolean,
