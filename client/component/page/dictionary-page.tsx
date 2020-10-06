@@ -1,5 +1,8 @@
 //
 
+import {
+  Akrantiain
+} from "akrantiain";
 import * as queryParser from "query-string";
 import * as react from "react";
 import {
@@ -84,7 +87,20 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     let response = await this.requestGet("fetchDictionary", {number, paramName});
     if (response.status === 200 && !("error" in response.data)) {
       let dictionary = response.data;
-      this.setState({dictionary});
+      let akrantiain = (() => {
+        if (dictionary.snoj !== undefined) {
+          try {
+            let akrantiain = Akrantiain.load(dictionary.snoj);
+            return akrantiain;
+          } catch (error) {
+            console.error(error);
+            return undefined;
+          }
+        } else {
+          return undefined;
+        }
+      })();
+      this.setState({dictionary, akrantiain});
     } else {
       this.setState({dictionary: null});
     }
@@ -217,6 +233,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
           <WordList
             dictionary={this.state.dictionary!}
             words={hitWords}
+            akrantiain={this.state.akrantiain}
             showEditLink={this.state.canEdit}
             offset={0}
             size={40}
@@ -256,6 +273,7 @@ type Props = {
 };
 type State = {
   dictionary: Dictionary | null,
+  akrantiain?: Akrantiain,
   canOwn: boolean,
   canEdit: boolean,
   parameter: NormalSearchParameter,

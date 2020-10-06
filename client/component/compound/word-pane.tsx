@@ -1,5 +1,8 @@
 //
 
+import {
+  Akrantiain
+} from "akrantiain";
 import * as react from "react";
 import {
   Fragment,
@@ -46,14 +49,26 @@ export default class WordPane extends Component<Props, State> {
         <Button label={this.trans("wordPane.submit")} iconLabel="&#xF00C;" style="simple" onClick={this.props.onSubmit}/>
       </div>
     );
-    let pronunciationNode = (this.props.word.pronunciation !== undefined) && (() => {
-      let pronunciationText = (() => {
-        if (this.props.word.pronunciation!.match(/^(\/.+\/|\[.+\])$/)) {
-          return this.props.word.pronunciation!;
+    let pronunciationText = (() => {
+      if (this.props.word.pronunciation !== undefined) {
+        if (this.props.word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
+          return this.props.word.pronunciation;
         } else {
-          return "/" + this.props.word.pronunciation! + "/";
+          return "/" + this.props.word.pronunciation + "/";
         }
-      })();
+      } else if (this.props.akrantiain !== undefined) {
+        try {
+          let pronunciation = this.props.akrantiain.convert(this.props.word.name);
+          return "/" + pronunciation + "/";
+        } catch (error) {
+          console.error(error);
+          return undefined;
+        }
+      } else {
+        return undefined;
+      }
+    })();
+    let pronunciationNode = (pronunciationText !== undefined) && (() => {
       let pronunciationNode = <div styleName="pronunciation">{pronunciationText}</div>;
       return pronunciationNode;
     })();
@@ -197,6 +212,7 @@ export default class WordPane extends Component<Props, State> {
 type Props = {
   dictionary: Dictionary,
   word: Word,
+  akrantiain?: Akrantiain,
   style: "normal" | "simple",
   showEditLink: boolean,
   showButton: boolean,
