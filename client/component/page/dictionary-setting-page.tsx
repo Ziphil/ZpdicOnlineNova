@@ -125,7 +125,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let label = this.trans("dictionarySettingPage.changeDictionaryExplanationForm.label");
     let description = this.trans("dictionarySettingPage.changeDictionaryExplanationForm.description");
     let node = (
-      <SettingPane label={label} key={label} description={description}>
+      <SettingPane label={label} key={label} description={description} forceWide={true}>
         <ChangeDictionaryExplanationForm number={this.state.dictionary!.number} currentExplanation={this.state.dictionary!.explanation ?? ""}/>
       </SettingPane>
     );
@@ -136,7 +136,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let label = this.trans("dictionarySettingPage.changeDictionarySnojForm.label");
     let description = this.trans("dictionarySettingPage.changeDictionarySnojForm.description");
     let node = (
-      <SettingPane label={label} key={label} description={description}>
+      <SettingPane label={label} key={label} description={description} forceWide={true}>
         <ChangeDictionarySnojForm number={this.state.dictionary!.number} currentSnoj={this.state.dictionary!.snoj ?? ""}/>
       </SettingPane>
     );
