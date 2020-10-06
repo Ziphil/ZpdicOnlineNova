@@ -27,6 +27,8 @@ popup:
     辞書の一覧表示の設定を変更しました。
   dictionaryExplanationChanged: >-
     辞書の説明を変更しました。
+  dictionarySnojChanged: >-
+    akrantiain 用 snoj データを変更しました。
   dictionaryUploaded: >-
     辞書のアップロードが完了しました。
     なお、データの反映には時間がかかる場合があります。
@@ -182,6 +184,9 @@ changeDictionarySecretForm:
   caution: >-
     この設定は、辞書一覧ページに表示されるかどうかのみに関わります。
     これを「非表示」にしても、辞書の閲覧は誰でも可能なままです。
+changeDictionarySnojForm:
+  snoj: "akrantiain 用 snoj データ"
+  confirm: "変更"
 deleteDictionaryForm:
   confirm: "削除"
   caution: >-
@@ -352,16 +357,20 @@ dictionarySettingPage:
     description: >-
       この辞書の URL 用名称を変更します。
       これを設定しておくと、辞書ページの URL として、ID 番号の代わりにこの名称にしたものも利用できるようになります。
+  changeDictionarySecretForm:
+    label: "一覧表示の変更"
+    description: >-
+      この辞書を辞書一覧ページに表示するかどうかを変更します。
   changeDictionaryExplanationForm:
     label: "説明の変更"
     description: >-
       辞書の説明を変更します。
       一部の Markdown 形式に対応しています。
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
-  changeDictionarySecretForm:
-    label: "一覧表示の変更"
+  changeDictionarySnojForm:
+    label: "akrantiain 用 snoj データの変更"
     description: >-
-      この辞書を辞書一覧ページに表示するかどうかを変更します。
+      akrantiain 用 snoj データの変更します。
   uploadDictionaryForm:
     label: "アップロード"
     description: >-

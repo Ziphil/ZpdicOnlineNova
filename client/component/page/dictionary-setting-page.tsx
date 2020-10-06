@@ -10,6 +10,7 @@ import ChangeDictionaryExplanationForm from "/client/component/compound/dictiona
 import ChangeDictionaryNameForm from "/client/component/compound/dictionary-setting/change-dictionary-name-form";
 import ChangeDictionaryParamNameForm from "/client/component/compound/dictionary-setting/change-dictionary-param-name-form";
 import ChangeDictionarySecretForm from "/client/component/compound/dictionary-setting/change-dictionary-secret-form";
+import ChangeDictionarySnojForm from "/client/component/compound/dictionary-setting/change-dictionary-snoj-form";
 import DeleteDictionaryForm from "/client/component/compound/dictionary-setting/delete-dictionary-form";
 import InviteEditDictionaryForm from "/client/component/compound/dictionary-setting/invite-edit-dictionary-form";
 import UploadDictionaryForm from "/client/component/compound/dictionary-setting/upload-dictionary-form";
@@ -109,6 +110,17 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
+  private renderChangeDictionarySecretForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.changeDictionarySecretForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionarySecretForm.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <ChangeDictionarySecretForm number={this.state.dictionary!.number} currentSecret={this.state.dictionary!.secret}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderChangeDictionaryExplanationForm(): ReactNode {
     let label = this.trans("dictionarySettingPage.changeDictionaryExplanationForm.label");
     let description = this.trans("dictionarySettingPage.changeDictionaryExplanationForm.description");
@@ -120,12 +132,12 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
-  private renderChangeDictionarySecretForm(): ReactNode {
-    let label = this.trans("dictionarySettingPage.changeDictionarySecretForm.label");
-    let description = this.trans("dictionarySettingPage.changeDictionarySecretForm.description");
+  private renderChangeDictionarySnojForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.changeDictionarySnojForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionarySnojForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeDictionarySecretForm number={this.state.dictionary!.number} currentSecret={this.state.dictionary!.secret}/>
+        <ChangeDictionarySnojForm number={this.state.dictionary!.number} currentSnoj={this.state.dictionary!.snoj ?? ""}/>
       </SettingPane>
     );
     return node;
@@ -193,6 +205,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderDeleteDictionaryForm());
       } else if (mode === "setting") {
         contentNodes.push(this.renderChangeDictionaryExplanationForm());
+        contentNodes.push(this.renderChangeDictionarySnojForm());
       } else if (mode === "access") {
         contentNodes.push(this.renderInviteEditDictionaryForm());
       } else if (mode === "request") {
