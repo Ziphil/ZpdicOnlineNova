@@ -146,11 +146,7 @@ export class DictionarySchema {
   // この辞書に登録されている単語データを全て削除し、ファイルから読み込んだデータを代わりに保存します。
   // 辞書の内部データも、ファイルから読み込んだものに更新されます。
   public async upload(this: Dictionary, path: string, originalPath: string): Promise<Dictionary> {
-    this.status = "saving";
-    this.updatedDate = new Date();
-    this.externalData = {};
-    await this.save();
-    await WordModel.deleteMany({}).where("dictionary", this);
+    await this.startUpload();
     let externalData = {};
     let promise = new Promise<Dictionary>((resolve, reject) => {
       let stream = Deserializer.create(path, originalPath, this);
@@ -162,11 +158,18 @@ export class DictionarySchema {
           LogUtil.log("dictionary/upload", `uploading: ${count}`);
           LogUtil.log("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(", "));
         });
+        stream.on("property", (key, value) => {
+          if (value !== undefined) {
+            let anyThis = this as any;
+            anyThis[key] = value;
+          }
+        });
         stream.on("external", (key, data) => {
           externalData = Object.assign(externalData, {[key]: data});
         });
         stream.on("end", () => {
           this.status = "ready";
+          this.externalData = externalData;
           resolve(this);
         });
         stream.on("error", (error) => {
@@ -180,11 +183,18 @@ export class DictionarySchema {
         resolve(this);
       }
     });
-    LogUtil.log("dictionary/upload", `number: ${this.number}, start uploading`);
     await promise;
-    this.externalData = externalData;
     await this.save();
     return this;
+  }
+
+  private async startUpload(this: Dictionary): Promise<void> {
+    this.status = "saving";
+    this.updatedDate = new Date();
+    this.externalData = {};
+    await this.save();
+    await WordModel.deleteMany({}).where("dictionary", this);
+    LogUtil.log("dictionary/upload", `number: ${this.number}, start uploading`);
   }
 
   public async download(this: Dictionary, path: string): Promise<void> {

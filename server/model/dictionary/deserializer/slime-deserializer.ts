@@ -35,9 +35,12 @@ export class SlimeDeserializer extends Deserializer {
         if (typeof data["pronunciationTitle"] === "string") {
           this.pronunciationTitle = data["pronunciationTitle"];
         }
+        if (typeof data["explanation"] === "string") {
+          this.emit("property", "explanation", data["explanation"]);
+        }
       } else if (jsonPath[0] === "snoj") {
         if (typeof data === "string") {
-          this.emit("property", {snoj: data});
+          this.emit("property", "snoj", data);
         }
       }
       return oboe.drop;
