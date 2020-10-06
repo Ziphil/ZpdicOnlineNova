@@ -36,7 +36,13 @@ export default class ChangeDictionarySnojForm extends Component<Props, State> {
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <TextArea label={this.trans("changeDictionarySnojForm.snoj")} font="monospace" value={this.state.snoj} onSet={(snoj) => this.setState({snoj})}/>
+        <TextArea
+          label={this.trans("changeDictionarySnojForm.snoj")}
+          font="monospace"
+          nowrap={true}
+          value={this.state.snoj}
+          onSet={(snoj) => this.setState({snoj})}
+        />
         <Button label={this.trans("changeDictionarySnojForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );

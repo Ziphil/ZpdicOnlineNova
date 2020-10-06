@@ -20,7 +20,8 @@ export default class TextArea extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     value: "",
-    font: "normal"
+    font: "normal",
+    nowrap: false
   };
 
   private handleChange(event: ChangeEvent<HTMLTextAreaElement>): void {
@@ -36,7 +37,8 @@ export default class TextArea extends Component<Props, State> {
   public render(): ReactNode {
     let textAreaStyleName = StyleNameUtil.create(
       "textarea",
-      {if: this.props.font === "monospace", true: "monospace"}
+      {if: this.props.font === "monospace", true: "monospace"},
+      {if: this.props.nowrap, true: "nowrap"}
     );
     let node = (
       <label styleName="root" className={this.props.className}>
@@ -54,6 +56,7 @@ type Props = {
   value: string,
   label?: string,
   font: "normal" | "monospace",
+  nowrap: boolean,
   showRequired?: boolean,
   showOptional?: boolean,
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
@@ -62,7 +65,8 @@ type Props = {
 };
 type DefaultProps = {
   value: string,
-  font: "normal" | "monospace"
+  font: "normal" | "monospace",
+  nowrap: boolean
 };
 type State = {
 };

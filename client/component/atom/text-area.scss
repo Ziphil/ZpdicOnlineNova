@@ -22,3 +22,8 @@
   font-size: 90%;
   font-feature-settings: "palt" 0, "pkna" 0;
 }
+
+.textarea.nowrap {
+  white-space: nowrap;
+  overflow: auto;
+}

@@ -36,7 +36,13 @@ export default class ChangeDictionaryExplanationForm extends Component<Props, St
   public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <TextArea label={this.trans("changeDictionaryExplanationForm.explanation")} font="monospace" value={this.state.explanation} onSet={(explanation) => this.setState({explanation})}/>
+        <TextArea
+          label={this.trans("changeDictionaryExplanationForm.explanation")}
+          font="monospace"
+          nowrap={true}
+          value={this.state.explanation}
+          onSet={(explanation) => this.setState({explanation})}
+        />
         <Button label={this.trans("changeDictionaryExplanationForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
