@@ -371,6 +371,8 @@ dictionarySettingPage:
     label: "akrantiain 用 snoj データの変更"
     description: >-
       akrantiain 用 snoj データの変更します。
+      これを設定しておくと、akrantiain を実行することで単語の発音が綴りから自動生成され、単語の横に表示されるようになります。
+      単語に個別の発音が指定されているときは、そちらが優先されます。
   uploadDictionaryForm:
     label: "アップロード"
     description: >-

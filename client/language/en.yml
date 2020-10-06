@@ -373,6 +373,8 @@ dictionarySettingPage:
     label: "Change snoj data for akrantiain"
     description: >-
       Change the snoj data for akrantiain.
+      If you set this data, akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
+      When a word data has its own pronunciation specified, it will be displayed instead.
   uploadDictionaryForm:
     label: "Upload"
     description: >-
