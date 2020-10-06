@@ -13,8 +13,6 @@ import {
 
 export class SlimeSerializer extends Serializer {
 
-  private error: Error | null = null;
-
   public constructor(path: string, dictionary: Dictionary) {
     super(path, dictionary);
   }
@@ -34,22 +32,19 @@ export class SlimeSerializer extends Serializer {
       writer.write(string);
     });
     stream.on("end", () => {
-      if (!this.error) {
-        writer.write("]");
-        let externalString = this.createExternalString();
-        if (externalString) {
-          writer.write(",");
-          writer.write(externalString);
-        }
-        writer.write(",\"version\":1");
-        writer.write("}");
-        writer.end(() => {
-          this.emit("end");
-        });
+      writer.write("]");
+      let externalString = this.createExternalString();
+      if (externalString) {
+        writer.write(",");
+        writer.write(externalString);
       }
+      writer.write(",\"version\":1");
+      writer.write("}");
+      writer.end(() => {
+        this.emit("end");
+      });
     });
     stream.on("error", (error) => {
-      this.error = error;
       this.emit("error", error);
     });
   }
