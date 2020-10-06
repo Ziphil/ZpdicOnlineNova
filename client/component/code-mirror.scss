@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+
+*[class~="CodeMirror-selected"] {
+  background: rgba($background-color, 0.9) !important;
+}
+
+*[class|="cm"] {
+  font-weight: normal !important;
+  font-style: normal !important;
+  text-decoration: none !important;
+}
+
+:global(.cm-s-zpmarkdown .cm-header) {
+  color: hsl(240, 80%, 40%);
+}
+
+:global(.cm-s-zpmarkdown .cm-link) {
+  color: hsl(200, 80%, 40%);
+}
+
+:global(.cm-s-zpmarkdown .cm-url) {
+  color: hsl(0, 80%, 40%);
+}
+
+:global(.cm-s-zpmarkdown .cm-comment) {
+  color: hsl(280, 80%, 40%);
+}

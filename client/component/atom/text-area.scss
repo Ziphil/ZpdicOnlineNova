@@ -37,7 +37,7 @@
   position: relative;
 }
 
-:global(.CodeMirror) {
+.textarea-code >div {
   height: 100%;
   padding: 0em;
   font-family: $monospace-font-family, monospace;
@@ -52,14 +52,10 @@
   position: absolute;
 }
 
-:global(.CodeMirror-lines) {
+.textarea-code >div *[class~="CodeMirror-lines"] {
   padding: 0.25em 0em !important;
 } 
 
-:global(.CodeMirror-line) {
+.textarea-code >div *[class~="CodeMirror-line"] {
   padding: 0em 0.5em !important;
-} 
-
-:global(.CodeMirror-selected) {
-  background: rgba($background-color, 0.9) !important;
 }
