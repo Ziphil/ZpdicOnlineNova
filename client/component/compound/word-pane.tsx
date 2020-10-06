@@ -46,15 +46,31 @@ export default class WordPane extends Component<Props, State> {
         <Button label={this.trans("wordPane.submit")} iconLabel="&#xF00C;" style="simple" onClick={this.props.onSubmit}/>
       </div>
     );
-    let tagNodes = this.props.word.tags.map((tag, index) => {
-      let tagNode = (tag !== "") && <span styleName="box" key={index}>{tag}</span>;
+    let pronunciationNode = (this.props.word.pronunciation !== undefined) && (() => {
+      let pronunciationText = (() => {
+        if (this.props.word.pronunciation!.match(/^(\/.+\/|\[.+\])$/)) {
+          return this.props.word.pronunciation!;
+        } else {
+          return "/" + this.props.word.pronunciation! + "/";
+        }
+      })();
+      let pronunciationNode = <div styleName="pronunciation">{pronunciationText}</div>;
+      return pronunciationNode;
+    })();
+    let tagNode = (this.props.word.tags.length > 0) && (() => {
+      let tagBoxNodes = this.props.word.tags.map((tag, index) => {
+        let tagBoxNode = (tag !== "") && <span styleName="box" key={index}>{tag}</span>;
+        return tagBoxNode;
+      });
+      let tagNode = <div styleName="tag">{tagBoxNodes}</div>;
       return tagNode;
-    });
+    })();
     let node = (
       <div styleName="name-wrapper">
         <div styleName="left">
           <div styleName="name">{this.props.word.name}</div>
-          <div styleName="tag">{tagNodes}</div>
+          {pronunciationNode}
+          {tagNode}
         </div>
         <div styleName="right">
           {editButtonNode}
