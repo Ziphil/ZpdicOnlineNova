@@ -276,6 +276,7 @@ userPane:
 wordEditor:
   title: "Edit word"
   name: "Word"
+  pronunciation: "Pronunciation"
   tag: "Tag"
   equivalentTitle: "Title"
   equivalentNames: "Translation (separated by commas)"

@@ -274,6 +274,7 @@ userPane:
 wordEditor:
   title: "単語編集"
   name: "単語"
+  pronunciation: "発音"
   tag: "タグ"
   equivalentTitle: "分類"
   equivalentNames: "訳語 (コンマ区切り)"
