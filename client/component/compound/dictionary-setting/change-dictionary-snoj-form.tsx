@@ -39,6 +39,7 @@ export default class ChangeDictionarySnojForm extends Component<Props, State> {
         <TextArea
           label={this.trans("changeDictionarySnojForm.snoj")}
           font="monospace"
+          mode="akrantiain"
           nowrap={true}
           value={this.state.snoj}
           onSet={(snoj) => this.setState({snoj})}

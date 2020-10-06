@@ -44,9 +44,7 @@ export class NotificationSchema {
 
   public static async findAll(range?: QueryRange): Promise<WithSize<Notification>> {
     let query = NotificationModel.find().sort("-date");
-    let restrictedQuery = QueryRange.restrict(query, range);
-    let countQuery = NotificationModel.countDocuments(query.getFilter());
-    let result = await Promise.all([restrictedQuery, countQuery]);
+    let result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 

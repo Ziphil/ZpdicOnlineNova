@@ -3,6 +3,9 @@
 import {
   Query
 } from "mongoose";
+import {
+  WithSize
+} from "/server/controller/type";
 
 
 export class QueryRange {
@@ -15,36 +18,44 @@ export class QueryRange {
     this.size = size;
   }
 
-  public restrict<T, Q extends Query<T>>(query: Q): Q;
-  public restrict<T>(query: Array<T>): Array<T>;
-  public restrict<T, Q extends Query<T>>(query: Q | Array<T>): Q | Array<T> {
-    if (Array.isArray(query)) {
-      let start = this.offset ?? 0;
-      let end = (this.size !== undefined) ? start + this.size : undefined;
-      return query.slice(start, end);
+  public restrict<T, Q extends Query<Array<T>>>(query: Q): Q {
+    if (this.offset !== undefined) {
+      query = query.skip(this.offset);
+    }
+    if (this.size !== undefined) {
+      query = query.limit(this.size);
+    }
+    return query;
+  }
+
+  public restrictArray<T>(query: Array<T>): Array<T> {
+    let start = this.offset ?? 0;
+    let end = (this.size !== undefined) ? start + this.size : undefined;
+    return query.slice(start, end);
+  }
+
+  public static restrict<T, Q extends Query<Array<T>>>(query: Q, range?: QueryRange): Q {
+    if (range !== undefined) {
+      return range.restrict(query);
     } else {
-      if (this.offset !== undefined) {
-        query = query.skip(this.offset);
-      }
-      if (this.size !== undefined) {
-        query = query.limit(this.size);
-      }
       return query;
     }
   }
 
-  public static restrict<T, Q extends Query<T>>(query: Q, range?: QueryRange): Q;
-  public static restrict<T>(query: Array<T>, range?: QueryRange): Array<T>;
-  public static restrict<T, Q extends Query<T>>(query: Q | Array<T>, range?: QueryRange): Q | Array<T> {
+  public static restrictArray<T>(query: Array<T>, range?: QueryRange): Array<T> {
     if (range !== undefined) {
-      if (Array.isArray(query)) {
-        return range.restrict(query);
-      } else {
-        return range.restrict(query);
-      }
+      return range.restrictArray(query);
     } else {
       return query;
     }
+  }
+
+  public static restrictWithSize<T>(query: Query<Array<T>>, range?: QueryRange): PromiseLike<WithSize<T>> {
+    let anyQuery = query as any;
+    let restrictedQuery = QueryRange.restrict(query, range);
+    let countQuery = anyQuery.model.countDocuments(query.getFilter());
+    let promise = Promise.all([restrictedQuery, countQuery]);
+    return promise;
   }
 
 }

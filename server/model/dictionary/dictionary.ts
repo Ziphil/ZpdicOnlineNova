@@ -113,9 +113,7 @@ export class DictionarySchema {
   public static async findPublic(order: string, range?: QueryRange): Promise<WithSize<Dictionary>> {
     let sortArg = (order === "createdDate") ? "-createdDate -updatedDate -number" : "-updatedDate -number";
     let query = DictionaryModel.find().ne("secret", true).sort(sortArg);
-    let restrictedQuery = QueryRange.restrict(query, range);
-    let countQuery = DictionaryModel.countDocuments(query.getFilter());
-    let result = await Promise.all([restrictedQuery, countQuery]);
+    let result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 
@@ -327,13 +325,11 @@ export class DictionarySchema {
   public async search(this: Dictionary, parameter: SearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     let query = parameter.createQuery(this).sort("name");
     let suggestionAggregate = parameter.createSuggestionAggregate(this);
-    let restrictedQuery = QueryRange.restrict(query, range);
-    let countQuery = WordModel.countDocuments(query.getFilter());
     let hitSuggestionPromise = suggestionAggregate?.then((suggestions) => {
       return suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word));
     });
-    let [hitWords, hitSize, hitSuggestions] = await Promise.all([restrictedQuery, countQuery, hitSuggestionPromise]);
-    return {words: [hitWords, hitSize], suggestions: hitSuggestions ?? []};
+    let [hitWordResult, hitSuggestions] = await Promise.all([QueryRange.restrictWithSize(query, range), hitSuggestionPromise]);
+    return {words: hitWordResult, suggestions: hitSuggestions ?? []};
   }
 
   public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {
