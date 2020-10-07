@@ -31,10 +31,10 @@ import {
   DateUtil
 } from "/client/util/date";
 import {
-  MethodType,
+  Method,
   ProcessName,
-  RequestType,
-  ResponseType,
+  RequestData,
+  ResponseData,
   SERVER_PATH,
   SERVER_PATH_PREFIX
 } from "/server/controller/type";
@@ -94,7 +94,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
     this.props.history!.replace(path, state);
   }
 
-  private async request<N extends ProcessName, M extends MethodType>(name: N, method: M, config: RequestConfig = {}): Promise<AxiosResponseType<N, M>> {
+  private async request<N extends ProcessName, M extends Method>(name: N, method: M, config: RequestConfig = {}): Promise<AxiosResponseData<N, M>> {
     let url = SERVER_PATH_PREFIX + SERVER_PATH[name];
     if (config.useRecaptcha) {
       let action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : name;
@@ -112,7 +112,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
     }
     let response = await (() => {
       try {
-        return BaseComponent.client.request<ResponseType<N, M>>({url, method, ...config});
+        return BaseComponent.client.request<ResponseData<N, M>>({url, method, ...config});
       } catch (error) {
         if (error.code === "ECONNABORTED") {
           let data = undefined as any;
@@ -133,23 +133,23 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
   // HTTP ステータスコードが 400 番台もしくは 500 番台の場合は、例外は投げられませんが、代わりにグローバルストアにエラータイプを送信します。
   // これにより、ページ上部にエラーを示すポップアップが表示されます。
   // ignroesError に true を渡すことで、このエラータイプの送信を抑制できます。
-  protected async requestGet<N extends ProcessName>(name: N, params: Omit<RequestType<N, "get">, "recaptchaToken">, config: RequestConfigWithRecaptcha): Promise<AxiosResponseType<N, "get">>;
-  protected async requestGet<N extends ProcessName>(name: N, params: RequestType<N, "get">, config?: RequestConfig): Promise<AxiosResponseType<N, "get">>;
-  protected async requestGet<N extends ProcessName>(name: N, params: RequestType<N, "get">, config: RequestConfig = {}): Promise<AxiosResponseType<N, "get">> {
+  protected async requestGet<N extends ProcessName>(name: N, params: Omit<RequestData<N, "get">, "recaptchaToken">, config: RequestConfigWithRecaptcha): Promise<AxiosResponseData<N, "get">>;
+  protected async requestGet<N extends ProcessName>(name: N, params: RequestData<N, "get">, config?: RequestConfig): Promise<AxiosResponseData<N, "get">>;
+  protected async requestGet<N extends ProcessName>(name: N, params: RequestData<N, "get">, config?: RequestConfig): Promise<AxiosResponseData<N, "get">> {
     let nextConfig = {...config, params};
     let response = await this.request(name, "get", nextConfig);
     return response;
   }
 
-  protected async requestPost<N extends ProcessName>(name: N, data: Omit<RequestType<N, "post">, "recaptchaToken">, config: RequestConfigWithRecaptcha): Promise<AxiosResponseType<N, "post">>;
-  protected async requestPost<N extends ProcessName>(name: N, data: RequestType<N, "post">, config?: RequestConfig): Promise<AxiosResponseType<N, "post">>;
-  protected async requestPost<N extends ProcessName>(name: N, data: RequestType<N, "post">, config: RequestConfig = {}): Promise<AxiosResponseType<N, "post">> {
+  protected async requestPost<N extends ProcessName>(name: N, data: Omit<RequestData<N, "post">, "recaptchaToken">, config: RequestConfigWithRecaptcha): Promise<AxiosResponseData<N, "post">>;
+  protected async requestPost<N extends ProcessName>(name: N, data: RequestData<N, "post">, config?: RequestConfig): Promise<AxiosResponseData<N, "post">>;
+  protected async requestPost<N extends ProcessName>(name: N, data: RequestData<N, "post">, config?: RequestConfig): Promise<AxiosResponseData<N, "post">> {
     let nextConfig = {...config, data};
     let response = await this.request(name, "post", nextConfig);
     return response;
   }
 
-  protected async requestPostFile<N extends ProcessName>(name: N, data: RequestType<N, "post"> & {file: Blob}, config: RequestConfig = {}): Promise<AxiosResponseType<N, "post">> {
+  protected async requestPostFile<N extends ProcessName>(name: N, data: RequestData<N, "post"> & {file: Blob}, config?: RequestConfig): Promise<AxiosResponseData<N, "post">> {
     let formData = new FormData();
     for (let [key, value] of Object.entries(data)) {
       formData.append(key, value);
@@ -159,7 +159,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
     return response;
   }
 
-  protected async login(data: RequestType<"login", "post">, config: RequestConfig = {}): Promise<AxiosResponseType<"login", "post">> {
+  protected async login(data: RequestData<"login", "post">, config?: RequestConfig): Promise<AxiosResponseData<"login", "post">> {
     let response = await this.requestPost("login", data, config);
     if (response.status === 200) {
       let body = response.data;
@@ -168,7 +168,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
     return response;
   }
 
-  protected async logout(config: RequestConfig = {}): Promise<AxiosResponseType<"logout", "post">> {
+  protected async logout(config?: RequestConfig): Promise<AxiosResponseData<"logout", "post">> {
     let response = await this.requestPost("logout", {}, config);
     if (response.status === 200) {
       this.props.store!.user = null;
@@ -217,7 +217,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
 
 
 type AdditionalProps = {
-  styles: StylesType,
+  styles: StylesRecord,
   intl: IntlShape,
   store: GlobalStore
 };
@@ -230,6 +230,6 @@ type Props<P, Q> = Partial<RouteComponentProps<Q, any, any> & AdditionalProps> &
 type RequestConfig = AxiosRequestConfig & AdditionalRequestConfig;
 type RequestConfigWithRecaptcha = RequestConfig & {useRecaptcha: true | string};
 
-type StylesType = {[key: string]: string | undefined};
+type StylesRecord = {[key: string]: string | undefined};
 type FormatFunction<T, R> = (parts: Array<string | T>) => R;
-type AxiosResponseType<N extends ProcessName, M extends MethodType> = AxiosResponse<ResponseType<N, M>>;
+type AxiosResponseData<N extends ProcessName, M extends Method> = AxiosResponse<ResponseData<N, M>>;

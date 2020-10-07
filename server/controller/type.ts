@@ -74,7 +74,7 @@ export const SERVER_PATH = {
   contact: "/other/contact"
 };
 
-type ProcessType = {
+type ProcessData = {
   createDictionary: {
     get: Noop,
     post: {
@@ -490,12 +490,12 @@ type ProcessType = {
 export type WithRecaptcha<T> = T & {recaptchaToken: string};
 export type WithSize<T> = [Array<T>, number];
 
-export type MethodType = "get" | "post";
-export type StatusType = 200 | 400;
-export type ProcessName = keyof ProcessType;
+export type Method = "get" | "post";
+export type Status = 200 | 400;
+export type ProcessName = keyof ProcessData;
 
-export type RequestType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["request"];
-export type ResponseType<N extends ProcessName, M extends MethodType> = ValueOf<ProcessType[N][M]["response"]>;
-export type ResponseTypeSep<N extends ProcessName, M extends MethodType, S extends StatusType> = ProcessType[N][M]["response"][S];
+export type RequestData<N extends ProcessName, M extends Method> = ProcessData[N][M]["request"];
+export type ResponseData<N extends ProcessName, M extends Method> = ValueOf<ProcessData[N][M]["response"]>;
+export type ResponseDataSep<N extends ProcessName, M extends Method, S extends Status> = ProcessData[N][M]["response"][S];
 
 type Noop = {request: never, response: never};

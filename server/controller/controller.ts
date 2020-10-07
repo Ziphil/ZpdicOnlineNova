@@ -10,11 +10,11 @@ import {
   Response as ExpressResponse
 } from "express-serve-static-core";
 import {
-  MethodType,
+  Method,
   ProcessName,
-  RequestType,
-  ResponseType,
-  ResponseTypeSep
+  RequestData,
+  ResponseData,
+  ResponseDataSep
 } from "/server/controller/type";
 import {
   Dictionary
@@ -38,16 +38,16 @@ export class Controller {
   protected setup(): void {
   }
 
-  protected static respond<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 200>): void {
+  protected static respond<N extends ProcessName, M extends Method>(response: Response<N, M>, body: ResponseDataSep<N, M, 200>): void {
     response.json(body).end();
   }
 
   // ステータスコード 400 でレスポンスボディを送ります。
   // 第 3 引数の error が指定された場合のみ、body として undefined を渡すのが許されます。
   // この場合は、body が undefined ならば error を例外として投げ、そうでないならば通常通り body をレスポンスとして送ります。
-  protected static respondError<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 400>): void;
-  protected static respondError<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 400> | undefined, error: any): void;
-  protected static respondError<N extends ProcessName, M extends MethodType>(response: Response<N, M>, body: ResponseTypeSep<N, M, 400> | undefined, error?: any): void {
+  protected static respondError<N extends ProcessName, M extends Method>(response: Response<N, M>, body: ResponseDataSep<N, M, 400>): void;
+  protected static respondError<N extends ProcessName, M extends Method>(response: Response<N, M>, body: ResponseDataSep<N, M, 400> | undefined, error: any): void;
+  protected static respondError<N extends ProcessName, M extends Method>(response: Response<N, M>, body: ResponseDataSep<N, M, 400> | undefined, error?: any): void {
     if (body !== undefined) {
       response.status(400).json(body).end();
     } else if (error !== undefined) {
@@ -55,7 +55,7 @@ export class Controller {
     }
   }
 
-  protected static respondForbidden<N extends ProcessName, M extends MethodType>(response: Response<N, M>): void {
+  protected static respondForbidden<N extends ProcessName, M extends Method>(response: Response<N, M>): void {
     response.status(403).end();
   }
 
@@ -70,15 +70,15 @@ export class Controller {
 }
 
 
-export interface Request<N extends ProcessName, M extends MethodType> extends ExpressRequest<ExpressParams, ResponseType<N, M>, RequestType<N, M>, any> {
+export interface Request<N extends ProcessName, M extends Method> extends ExpressRequest<ExpressParams, ResponseData<N, M>, RequestData<N, M>, any> {
 
   // GET リクエストの際のクエリ文字列をパースした結果です。
   // 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。
-  query: RequestTypeChoose<N, M, "get">;
+  query: RequestDataChoose<N, M, "get">;
 
   // POST リクエストの際のリクエストボディをパースした結果です。
   // 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。
-  body: RequestTypeChoose<N, M, "post">;
+  body: RequestDataChoose<N, M, "post">;
 
   // ユーザーの検証の結果として得られた JSON トークンが格納されます。
   // このプロパティは、authenticate ミドルウェアが呼び出された場合にのみ、値が格納されます。
@@ -99,7 +99,7 @@ export interface Request<N extends ProcessName, M extends MethodType> extends Ex
 }
 
 
-export interface Response<N extends ProcessName, M extends MethodType> extends ExpressResponse<ResponseType<N, M>> {
+export interface Response<N extends ProcessName, M extends Method> extends ExpressResponse<ResponseData<N, M>> {
 
 }
 
@@ -109,4 +109,4 @@ export type PostRequest<N extends ProcessName> = Request<N, "post">;
 export type GetResponse<N extends ProcessName> = Response<N, "get">;
 export type PostResponse<N extends ProcessName> = Response<N, "post">;
 
-type RequestTypeChoose<N extends ProcessName, M extends MethodType, T extends MethodType> = M extends T ? RequestType<N, M> : never;
+type RequestDataChoose<N extends ProcessName, M extends Method, T extends Method> = M extends T ? RequestData<N, M> : never;
