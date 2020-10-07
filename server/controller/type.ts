@@ -29,51 +29,52 @@ import {
 } from "/server/skeleton/user";
 
 
+export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
 export const SERVER_PATH = {
-  createDictionary: "/api/dictionary/create",
-  uploadDictionary: "/api/dictionary/upload",
-  deleteDictionary: "/api/dictionary/delete",
-  changeDictionaryName: "/api/dictionary/edit/name",
-  changeDictionaryParamName: "/api/dictionary/edit/paramname",
-  changeDictionarySecret: "/api/dictionary/edit/secret",
-  changeDictionaryExplanation: "/api/dictionary/edit/explanation",
-  changeDictionarySnoj: "/api/dictionary/edit/snoj",
-  inviteEditDictionary: "/api/dictionary/invite",
-  respondEditDictionary: "/api/dictionary/invite/respond",
-  deleteDictionaryAuthorizedUser: "/api/dictionary/user/delete",
-  editWord: "/api/word/edit",
-  deleteWord: "/api/word/delete",
-  addCommission: "/api/request/add",
-  deleteCommission: "/api/request/delete",
-  searchDictionary: "/api/dictionary/search",
-  downloadDictionary: "/api/dictionary/download",
-  fetchDictionary: "/api/dictionary/info",
-  suggestDictionaryTitles: "/api/dictionary/title",
-  fetchDictionaryAuthorizedUsers: "/api/dictionary/user",
-  fetchWholeDictionary: "/api/dictionary/whole",
-  fetchDictionaries: "/api/dictionary/list",
-  fetchAllDictionaries: "/api/dictionary/list/all",
-  fetchDictionaryAggregation: "/api/dictionary/aggregate",
-  fetchInvitations: "/api/dictionary/invite/fetch",
-  checkDictionaryAuthorization: "/api/dictionary/check",
-  fetchCommissions: "/api/request/fetch",
-  login: "/api/user/login",
-  logout: "/api/user/logout",
-  registerUser: "/api/user/register",
-  changeUserScreenName: "/api/user/edit/name",
-  changeUserEmail: "/api/user/edit/email",
-  changeUserPassword: "/api/user/edit/password",
-  issueUserResetToken: "/api/user/reset/token",
-  resetUserPassword: "/api/user/reset/reset",
-  deleteUser: "/api/user/delete",
-  fetchUser: "/api/user/info",
-  suggestUsers: "/api/user/suggestion",
-  addNotification: "/api/notification/add",
-  fetchNotifications: "/api/notification/list",
-  contact: "/api/other/contact"
+  createDictionary: "/dictionary/create",
+  uploadDictionary: "/dictionary/upload",
+  deleteDictionary: "/dictionary/delete",
+  changeDictionaryName: "/dictionary/edit/name",
+  changeDictionaryParamName: "/dictionary/edit/paramname",
+  changeDictionarySecret: "/dictionary/edit/secret",
+  changeDictionaryExplanation: "/dictionary/edit/explanation",
+  changeDictionarySnoj: "/dictionary/edit/snoj",
+  inviteEditDictionary: "/dictionary/invite",
+  respondEditDictionary: "/dictionary/invite/respond",
+  deleteDictionaryAuthorizedUser: "/dictionary/user/delete",
+  editWord: "/word/edit",
+  deleteWord: "/word/delete",
+  addCommission: "/request/add",
+  deleteCommission: "/request/delete",
+  searchDictionary: "/dictionary/search",
+  downloadDictionary: "/dictionary/download",
+  fetchDictionary: "/dictionary/info",
+  suggestDictionaryTitles: "/dictionary/title",
+  fetchDictionaryAuthorizedUsers: "/dictionary/user",
+  fetchWholeDictionary: "/dictionary/whole",
+  fetchDictionaries: "/dictionary/list",
+  fetchAllDictionaries: "/dictionary/list/all",
+  fetchDictionaryAggregation: "/dictionary/aggregate",
+  fetchInvitations: "/dictionary/invite/fetch",
+  checkDictionaryAuthorization: "/dictionary/check",
+  fetchCommissions: "/request/fetch",
+  login: "/user/login",
+  logout: "/user/logout",
+  registerUser: "/user/register",
+  changeUserScreenName: "/user/edit/name",
+  changeUserEmail: "/user/edit/email",
+  changeUserPassword: "/user/edit/password",
+  issueUserResetToken: "/user/reset/token",
+  resetUserPassword: "/user/reset/reset",
+  deleteUser: "/user/delete",
+  fetchUser: "/user/info",
+  suggestUsers: "/user/suggestion",
+  addNotification: "/notification/add",
+  fetchNotifications: "/notification/list",
+  contact: "/other/contact"
 };
 
-type ProcessType = {
+type ProcessData = {
   createDictionary: {
     get: Noop,
     post: {
@@ -489,12 +490,12 @@ type ProcessType = {
 export type WithRecaptcha<T> = T & {recaptchaToken: string};
 export type WithSize<T> = [Array<T>, number];
 
-export type MethodType = "get" | "post";
-export type StatusType = 200 | 400;
-export type ProcessName = keyof ProcessType;
+export type Method = "get" | "post";
+export type Status = 200 | 400;
+export type ProcessName = keyof ProcessData;
 
-export type RequestType<N extends ProcessName, M extends MethodType> = ProcessType[N][M]["request"];
-export type ResponseType<N extends ProcessName, M extends MethodType> = ValueOf<ProcessType[N][M]["response"]>;
-export type ResponseTypeSep<N extends ProcessName, M extends MethodType, S extends StatusType> = ProcessType[N][M]["response"][S];
+export type RequestData<N extends ProcessName, M extends Method> = ProcessData[N][M]["request"];
+export type ResponseData<N extends ProcessName, M extends Method> = ValueOf<ProcessData[N][M]["response"]>;
+export type ResponseDataSep<N extends ProcessName, M extends Method, S extends Status> = ProcessData[N][M]["response"][S];
 
 type Noop = {request: never, response: never};

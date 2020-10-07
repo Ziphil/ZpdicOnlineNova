@@ -17,7 +17,8 @@ import {
   verifyRecaptcha
 } from "/server/controller/middle";
 import {
-  SERVER_PATH
+  SERVER_PATH,
+  SERVER_PATH_PREFIX
 } from "/server/controller/type";
 import {
   UserModel
@@ -33,7 +34,7 @@ import {
 } from "/server/util/mail";
 
 
-@controller("/")
+@controller(SERVER_PATH_PREFIX)
 export class OtherController extends Controller {
 
   @post(SERVER_PATH["contact"])

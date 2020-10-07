@@ -3,6 +3,9 @@
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
 import {
+  EnvironmentPlugin
+} from "webpack";
+import {
   BundleAnalyzerPlugin
 } from "webpack-bundle-analyzer";
 
@@ -92,7 +95,7 @@ let config = {
     historyApiFallback: true,
     contentBase: path.join(__dirname, "dist", "client"),
     proxy: {
-      "/api": "http://localhost:8050",
+      "/internal": "http://localhost:8050",
       "/static": "http://localhost:8050"
     }
   },
@@ -104,7 +107,8 @@ let config = {
     new BundleAnalyzerPlugin({
       analyzerMode: (!!process.env["ANALYZE"]) ? "static" : "disabled",
       reportFilename: path.join(__dirname, "dist", "client", "stats.html")
-    })
+    }),
+    new EnvironmentPlugin(["npm_package_version"])
   ]
 };
 

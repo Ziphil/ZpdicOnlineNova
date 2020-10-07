@@ -17,7 +17,8 @@ import {
   verifyUser
 } from "/server/controller/middle";
 import {
-  SERVER_PATH
+  SERVER_PATH,
+  SERVER_PATH_PREFIX
 } from "/server/controller/type";
 import {
   NotificationCreator,
@@ -34,7 +35,7 @@ import {
 } from "/server/util/query";
 
 
-@controller("/")
+@controller(SERVER_PATH_PREFIX)
 export class NotificationController extends Controller {
 
   @post(SERVER_PATH["addNotification"])
