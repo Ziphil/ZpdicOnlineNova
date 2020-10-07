@@ -113,6 +113,7 @@ popup:
     You have no permission to access the content.
   serverNotFound: >-
     The API is not found.
+    Since the server may be updated now, please refresh the page.
   serverError: >-
     An error occurred in the server.
     Please try again after a while.
