@@ -9,9 +9,6 @@ import {
 } from "/client/component/root";
 
 
-export const TITLES = ["ZpDIC", "Online"];
-export const VERSION = "2.16.0";
-
 const RECAPTCHA_SITES = {
   development: "6LeWRMkZAAAAADzUAl1LAFr9fT7kdW7yoVn6Qhms",
   production: "6LerQ8kZAAAAAI6vbQV_Rk-AU7-MlTCayfbejh8L"

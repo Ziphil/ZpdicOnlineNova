@@ -12,17 +12,20 @@ import {
   get,
   post
 } from "/server/controller/decorator";
+import {
+  SERVER_PATH_PREFIX
+} from "/server/controller/type";
 
 
-@controller("/")
+@controller(SERVER_PATH_PREFIX)
 export class DebugController extends Controller {
 
-  @get("/api/debug")
+  @get("/debug")
   public async [Symbol()](request: Request, response: Response): Promise<void> {
     Controller.respond(response, null);
   }
 
-  @post("/api/debug")
+  @post("/debug")
   public async [Symbol()](request: Request, response: Response): Promise<void> {
     Controller.respond(response, null);
   }

@@ -35,7 +35,8 @@ import {
   ProcessName,
   RequestType,
   ResponseType,
-  SERVER_PATH
+  SERVER_PATH,
+  SERVER_PATH_PREFIX
 } from "/server/controller/type";
 
 
@@ -94,7 +95,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
   }
 
   private async request<N extends ProcessName, M extends MethodType>(name: N, method: M, config: RequestConfig = {}): Promise<AxiosResponseType<N, M>> {
-    let url = SERVER_PATH[name];
+    let url = SERVER_PATH_PREFIX + SERVER_PATH[name];
     if (config.useRecaptcha) {
       let action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : name;
       let recaptchaToken = await grecaptcha.execute(Main.getRecaptchaSite(), {action});

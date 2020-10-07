@@ -22,7 +22,8 @@ import {
   verifyUser
 } from "/server/controller/middle";
 import {
-  SERVER_PATH
+  SERVER_PATH,
+  SERVER_PATH_PREFIX
 } from "/server/controller/type";
 import {
   CommissionCreator,
@@ -63,7 +64,7 @@ import {
 } from "/server/util/query";
 
 
-@controller("/")
+@controller(SERVER_PATH_PREFIX)
 export class DictionaryController extends Controller {
 
   @post(SERVER_PATH["createDictionary"])
