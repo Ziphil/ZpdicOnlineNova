@@ -91,7 +91,7 @@ popup:
   userCanAlreadyEdit: >-
     This user already has permission.
   editDictionaryAlreadyInvited: >-
-    You have already invited this user to get permission.
+    You have already invited this user to edit this dictionary.
   noSuchInvitation: >-
     This invitation does not exist.
   noSuchDictionaryAuthorizedUser: >-
@@ -163,11 +163,10 @@ createDictionaryForm:
 deleteUserForm:
   confirm: "Delete"
   caution: >-
-    This operation will delete this user permanently, and also delete the dictionaries they own.
+    Warning: this operation will delete this user permanently, and also delete the dictionaries they own.
     Once you delete them, you cannot restore them.
-    Please be certain.
   alert: >-
-    This user will be deleted parmanently, and the dictionaries they own will be also deleted.
+    This user will be deleted permanently, and the dictionaries they own will be also deleted.
     You cannot restore them afterwards.
     Are you really sure?
 changeDictionaryExplanationForm:
@@ -184,17 +183,16 @@ changeDictionarySecretForm:
   secret: "Hide"
   confirm: "Confirm"
   caution: >-
-    This setting affects only whether or not this dictionary is shown in the dictionary list page.
-    Even if you select “Hide” here, everyone can still view this dictionary.
+    This setting affects only whether or not this dictionary is shown in the public dictionary list.
+    Even if you select “Hide” here, everyone who has the link can still view this dictionary.
 changeDictionarySnojForm:
   snoj: "Snoj data for akrantiain"
   confirm: "Confirm"
 deleteDictionaryForm:
   confirm: "Delete"
   caution: >-
-    This operation will delete this dictionary permanently.
+    Warning: this operation will delete this dictionary permanently.
     Once you delete this dictionary, you cannot restore it.
-    Please be certain.
   alert: >-
     This dictionary will be deleted permanently.
     You cannot restore it afterwards.
