@@ -11,18 +11,18 @@ popup:
   userPasswordChanged: >-
     Your password has been changed.
   userResetTokenIssued: >-
-    We sent an email with the URL for resetting password.
-    Please follow the instruction in the email.
+    We sent an email with a URL for resetting your password.
+    Please follow the instructions in the email.
   userPasswordReset: >-
     Your password has been reset.
-    Please sign in again using the new password.
+    Please sign in again using your new password.
   userDeleted: >-
     This user has been deleted.
     Thank you for using ZpDIC Online.
   dictionaryNameChanged: >-
     The display name of the dictionary has been changed.
   dictionaryParamNameChanged: >-
-    The name of the dictionary for URL has been changed.
+    The dictionary URL name has been changed.
   dictionarySecretChanged: >-
     The visibility of the dictionary has been changed.
   dictionaryExplanationChanged: >-
@@ -35,19 +35,19 @@ popup:
   dictionaryDeleted: >-
     The dictionary has been deleted.
   editDictionaryInvited: >-
-    You requested the user to get permission.
+    You invited the user to edit this dictionary.
     The permission will be given to them after they accept the request.
   editDictionaryAccepted: >-
     You accepted the invitation to get permission.
     You can edit the dictionary from now on.
   editDictionaryRefused: >-
-    You rejected the invitation to get permission.
+    You rejected the invitation to edit this dictionary.
   dictionaryAuthorizedUserDeleted: >-
-    The permission of the user has been revoked.
+    The user's edit permission has been revoked.
   wordEdited: >-
-    The editing of the word has been completed.
+    The word has been edited.
   wordDeleted: >-
-    The deletion of the word has been completed.
+    The word has been deleted.
   commissionAdded: >-
     Your request has been completed.
   commissionDeleted: >-
@@ -56,7 +56,7 @@ popup:
     Your message has been sent.
   invalidUserName: >-
     The user ID is invalid.
-    It must be composed by alphanumeric characters or underscores or hyphens, contain at least one character other than numerics, and have no more than 30 characters.
+    It must be composed of alphanumeric characters, underscores and hyphens, contain at least one non-digit, and have no more than 30 characters.
   invalidUserEmail: >-
     The email address is invalid.
   invalidUserPassword: >-
@@ -81,17 +81,17 @@ popup:
   noSuchDictionaryParamName: >-
     There is no dictionary with this name.
   duplicateDictionaryParamName: >-
-    The name for URL you specified is already used.
+    The URL name you specified is already used.
     Please specify another name.
   invalidDictionaryParamName: >-
-    The name for URL is invalid.
-    It must be composed by alphanumeric characters or underscores or hyphens, contain at least one character other than numerics, and have no more than 30 characters.
+    The URL name is invalid.
+    It must be composed of alphanumeric characters, underscores and hyphens, contain at least one non-digit, and have no more than 30 characters.
   noSuchWordNumber: >-
     You tried to edit a word which does not exist.
   userCanAlreadyEdit: >-
     This user already has permission.
   editDictionaryAlreadyInvited: >-
-    You have already requested this user to get permission.
+    You have already invited this user to get permission.
   noSuchInvitation: >-
     This invitation does not exist.
   noSuchDictionaryAuthorizedUser: >-
@@ -110,21 +110,21 @@ popup:
     You are not signed in.
     Please sign in again.
   forbidden: >-
-    You have no permission to access the content.
+    You aren't authorized to access this content.
   serverNotFound: >-
-    The API is not found.
+    The API was not found.
     Since the server may be updated now, please refresh the page.
   serverError: >-
     An error occurred in the server.
     Please try again after a while.
   serverTimeout: >-
-    The server does not respond within the time.
+    Couldn't get a response from the server.
     Please try again after a while.
   requestTimeout: >-
-    The server does not respond within the time.
+    Couldn't get a response from the server.
     Please try again after a while.
   recaptchaError: >-
-    An error is returned by reCAPTCHA.
+    The reCAPTCHA returned an error.
     Please try again.
   recaptchaRejected: >-
     Failed to authenticate by reCAPTCHA.
@@ -163,15 +163,15 @@ createDictionaryForm:
 deleteUserForm:
   confirm: "Delete"
   caution: >-
-    This operation will delete this user permanently, and also delete the dictionaries which this user owns.
+    This operation will delete this user permanently, and also delete the dictionaries they own.
     Once you delete them, you cannot restore them.
     Please be certain.
   alert: >-
-    This user will be deleted parmanently, and the dictionaries which this user owns will be also deleted.
-    You cannot restore them hereafter.
+    This user will be deleted parmanently, and the dictionaries they own will be also deleted.
+    You cannot restore them afterwards.
     Are you really sure?
 changeDictionaryExplanationForm:
-  explanation: "Explanation"
+  explanation: "Description"
   confirm: "Confirm"
 changeDictionaryNameForm:
   name: "Name"
@@ -196,8 +196,8 @@ deleteDictionaryForm:
     Once you delete this dictionary, you cannot restore it.
     Please be certain.
   alert: >-
-    This dictionary will be deleted parmanently.
-    You cannot restore it hereafter.
+    This dictionary will be deleted permanently.
+    You cannot restore it afterwards.
     Are you really sure?
 inviteEditDictionaryForm:
   userName: "User ID to invite"
@@ -277,7 +277,7 @@ suggestionPane:
 userPane:
   delete: "Delete"
   alert: >-
-    The permission of this user will be revoked.
+    This user's edit permission will be revoked.
     Are you really sure?
 wordEditor:
   title: "Edit word"
@@ -285,7 +285,7 @@ wordEditor:
   pronunciation: "Pronunciation"
   tag: "Tag"
   equivalentTitle: "Title"
-  equivalentNames: "Translation (separated by commas)"
+  equivalentNames: "Translations (separated by commas)"
   informationTitle: "Title"
   informationText: "Content"
   variationTitle: "Title"
@@ -297,8 +297,8 @@ wordEditor:
   selectRelation: "Select"
   alertConfirm: "Delete"
   alert: >-
-    This word will be deleted parmanently.
-    You cannot restore it hereafter.
+    This word will be deleted permanently.
+    You cannot restore it afterwards.
     Are you really sure?
 wordPane:
   edit: "Edit"
@@ -315,13 +315,13 @@ dashboardPage:
   dictionaryList:
     label: "Dictionaries"
     description: >-
-      The list of your dictionaries.
+      This is a list of your dictionaries.
       This also includes those which you do not own but you are permitted to edit.
   invitationList:
-    label: "Permisson invitations"
+    label: "Permission invitations"
     description: >-
-      The list of invitations to grant you permission.
-      Accepting it will enable you to edit the dictionary. 
+      This is a list of dictionary invitations.
+      Accepting an invitation will enable you to edit the dictionary. 
   createDictionaryForm:
     label: "Create new dictionary"
     description: >-
@@ -329,8 +329,8 @@ dashboardPage:
   changeUserScreenNameForm:
     label: "Change nickname"
     description: >-
-      Change youe nickname.
-      Unlike user ID, you can use any characters other than alphanumerics here.
+      Change your nickname.
+      Unlike in your user ID, you can use any characters here.
   changeUserEmailForm:
     label: "Change email address"
     description: >-
@@ -356,26 +356,26 @@ dictionarySettingPage:
     description: >-
       Change the display name of this dictionary.
   changeDictionaryParamNameForm:
-    label: "Change name for URL"
+    label: "Change URL name"
     description: >-
-      Change the name of this dictionary for URL.
-      Setting this will enable to replace the ID number with the name set here in the URL to access the dictionary.
+      Change the URL name of this dictionary.
+      Setting this will replace the ID number in the dictionary URL with the name set here.
   changeDictionarySecretForm:
     label: "Change visibility"
     description: >-
       Change whether or not this dictionary is shown in the dictionary list page.
   changeDictionaryExplanationForm:
-    label: "Change explanation"
+    label: "Change description"
     description: >-
-      Change the explanation of this dictionary.
-      You can use some of the Markdown syntax.
-      This will be displayed in the dictionary page before one searches something.
+      Change the description of this dictionary.
+      You can use some Markdown syntax.
+      This will be displayed in the dictionary page before searching.
   changeDictionarySnojForm:
     label: "Change snoj data for akrantiain"
     description: >-
       Change the snoj data for akrantiain.
       If you set this data, akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
-      When a word data has its own pronunciation specified, it will be displayed instead.
+      When a word has its own pronunciation specified, it will be displayed instead.
   uploadDictionaryForm:
     label: "Upload"
     description: >-
@@ -388,7 +388,7 @@ dictionarySettingPage:
   inviteEditDictionaryForm:
     label: "Editing permissions"
     description: >-
-      The list of the users who have permission to edit this dictionary.
+      These users have permission to edit this dictionary.
       You can also give permission to another user here.
       Users with permission can edit and delete words, but cannot change the name of the dictionary or delete it.
 loginPage:
