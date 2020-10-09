@@ -220,7 +220,7 @@ contactForm:
   email: "Email address"
   subject: "Subject"
   text: "Content"
-  perform: "Send"
+  confirm: "Send"
 dictionaryAggregationPane:
   dictionaryCount: "Dictionaries"
   wordCount: "Words"
