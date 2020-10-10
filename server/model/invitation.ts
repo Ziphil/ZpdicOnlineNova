@@ -23,13 +23,22 @@ import {
 import {
   Invitation as InvitationSkeleton
 } from "/server/skeleton/invitation";
+import {
+  LiteralType,
+  LiteralUtilType
+} from "/server/util/literal-type";
+
+
+export const INVITATION_TYPES = ["edit", "transfer"] as const;
+export type InvitationType = LiteralType<typeof INVITATION_TYPES>;
+export let InvitationTypeUtil = LiteralUtilType.create(INVITATION_TYPES);
 
 
 @modelOptions({schemaOptions: {collection: "invitations"}})
 export class InvitationSchema {
 
-  @prop({required: true})
-  public type!: string;
+  @prop({required: true, enum: INVITATION_TYPES})
+  public type!: InvitationType;
 
   @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;
