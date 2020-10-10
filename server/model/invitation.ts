@@ -69,8 +69,8 @@ export class InvitationSchema {
     }
   }
 
-  public static async findByUser(type: string, user: User): Promise<Array<Invitation>> {
-    let invitations = await InvitationModel.find().where("type", type).where("user", user).sort("-updatedDate");
+  public static async findByUser(type: InvitationType, user: User): Promise<Array<Invitation>> {
+    let invitations = await InvitationModel.find().where("type", type).where("user", user).sort("-createdDate");
     return invitations;
   }
 

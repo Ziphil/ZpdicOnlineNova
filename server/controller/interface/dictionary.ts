@@ -43,7 +43,8 @@ import {
 } from "/server/model/dictionary";
 import {
   InvitationCreator,
-  InvitationModel
+  InvitationModel,
+  InvitationTypeUtil
 } from "/server/model/invitation";
 import {
   UserCreator,
@@ -546,7 +547,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"fetchInvitations">, response: GetResponse<"fetchInvitations">): Promise<void> {
     let user = request.user!;
-    let type = CastUtil.ensureString(request.query.type);
+    let type = InvitationTypeUtil.cast(CastUtil.ensureString(request.query.type));
     let invitations = await InvitationModel.findByUser(type, user);
     let body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
     Controller.respond(response, body);
