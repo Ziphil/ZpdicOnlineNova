@@ -39,8 +39,8 @@ export const SERVER_PATH = {
   changeDictionarySecret: "/dictionary/edit/secret",
   changeDictionaryExplanation: "/dictionary/edit/explanation",
   changeDictionarySnoj: "/dictionary/edit/snoj",
-  inviteEditDictionary: "/dictionary/invite",
-  respondEditDictionary: "/dictionary/invite/respond",
+  addInvitation: "/dictionary/invite",
+  respondInvitation: "/dictionary/invite/respond",
   deleteDictionaryAuthorizedUser: "/dictionary/user/delete",
   editWord: "/word/edit",
   deleteWord: "/word/delete",
@@ -155,17 +155,17 @@ type ProcessData = {
       }
     }
   },
-  inviteEditDictionary: {
+  addInvitation: {
     get: Noop,
     post: {
-      request: {number: number, userName: string},
+      request: {number: number, type: string, userName: string},
       response: {
         200: Invitation,
-        400: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "editDictionaryAlreadyInvited">
+        400: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "userCanAlreadyOwn" | "editInvitationAlreadyAdded" | "transferInvitationAlreadyAdded">
       }
     }
   },
-  respondEditDictionary: {
+  respondInvitation: {
     get: Noop,
     post: {
       request: {id: string, accept: boolean},

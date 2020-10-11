@@ -24,8 +24,8 @@ import {
 } from "/server/skeleton/user";
 
 
-@style(require("./invite-edit-dictionary-form.scss"))
-export default class InviteEditDictionaryForm extends Component<Props, State> {
+@style(require("./add-edit-invitation-form.scss"))
+export default class AddEditInvitationForm extends Component<Props, State> {
 
   public state: State = {
     userName: "",
@@ -66,9 +66,10 @@ export default class InviteEditDictionaryForm extends Component<Props, State> {
   private async handleClick(): Promise<void> {
     let number = this.props.number;
     let userName = this.state.userName;
-    let response = await this.requestPost("inviteEditDictionary", {number, userName});
+    let type = "edit";
+    let response = await this.requestPost("addInvitation", {number, type, userName});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("editDictionaryInvited");
+      this.props.store!.addInformationPopup("editInvitationAdded");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
@@ -79,8 +80,14 @@ export default class InviteEditDictionaryForm extends Component<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Input label={this.trans("inviteEditDictionaryForm.userName")} value={this.state.userName} prefix="@" suggest={this.suggestUsers.bind(this)} onSet={(userName) => this.setState({userName})}/>
-          <Button label={this.trans("inviteEditDictionaryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+          <Input
+            label={this.trans("addEditInvitationForm.userName")}
+            value={this.state.userName}
+            prefix="@"
+            suggest={this.suggestUsers.bind(this)}
+            onSet={(userName) => this.setState({userName})}
+          />
+          <Button label={this.trans("addEditInvitationForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
         </form>
         <div styleName="user">
           <UserList users={this.state.authorizedUsers} dictionary={this.props.dictionary} size={8} onSubmit={this.fetchAuthorizedUsers.bind(this)}/>

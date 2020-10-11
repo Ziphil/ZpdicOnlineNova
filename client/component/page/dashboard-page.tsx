@@ -31,15 +31,16 @@ export default class DashboardPage extends Component<Props, State, Params> {
 
   public state: State = {
     dictionaries: null,
-    editInvitations: null
+    editInvitations: null,
+    transferInvitations: null
   };
 
   public async componentDidMount(): Promise<void> {
-    let promise = Promise.all([this.fetchDictionaries(), this.fetchEditInvitations()]);
+    let promise = Promise.all([this.fetchDictionaries(), this.fetchEditInvitations(), this.fetchTransferInvitations()]);
     await promise;
   }
 
-  public async fetchDictionaries(): Promise<void> {
+  private async fetchDictionaries(): Promise<void> {
     let response = await this.requestGet("fetchDictionaries", {});
     if (response.status === 200) {
       let dictionaries = response.data;
@@ -47,12 +48,21 @@ export default class DashboardPage extends Component<Props, State, Params> {
     }
   }
 
-  public async fetchEditInvitations(): Promise<void> {
+  private async fetchEditInvitations(): Promise<void> {
     let type = "edit";
     let response = await this.requestGet("fetchInvitations", {type});
     if (response.status === 200) {
       let editInvitations = response.data;
       this.setState({editInvitations});
+    }
+  }
+
+  private async fetchTransferInvitations(): Promise<void> {
+    let type = "transfer";
+    let response = await this.requestGet("fetchInvitations", {type});
+    if (response.status === 200) {
+      let transferInvitations = response.data;
+      this.setState({transferInvitations});
     }
   }
 
@@ -67,12 +77,23 @@ export default class DashboardPage extends Component<Props, State, Params> {
     return node;
   }
 
-  private renderInvitationList(): ReactNode {
-    let label = this.trans("dashboardPage.invitationList.label");
-    let description = this.trans("dashboardPage.invitationList.description");
+  private renderEditInvitationList(): ReactNode {
+    let label = this.trans("dashboardPage.editInvitationList.label");
+    let description = this.trans("dashboardPage.editInvitationList.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
         <InvitationList invitations={this.state.editInvitations} size={8} onSubmit={() => this.fetchEditInvitations()}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderTransferInvitationList(): ReactNode {
+    let label = this.trans("dashboardPage.transferInvitationList.label");
+    let description = this.trans("dashboardPage.transferInvitationList.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <InvitationList invitations={this.state.transferInvitations} size={8} onSubmit={() => this.fetchTransferInvitations()}/>
       </SettingPane>
     );
     return node;
@@ -136,12 +157,13 @@ export default class DashboardPage extends Component<Props, State, Params> {
   public render(): ReactNode {
     let mode = this.props.match?.params.mode || "dictionary";
     let dictionaries = this.state.dictionaries;
-    let editInvitations = this.state.editInvitations;
-    let dictionaryCount = (dictionaries !== null && dictionaries.length > 0) ? dictionaries.length : undefined;
-    let notificationCount = (editInvitations !== null && editInvitations.length > 0) ? editInvitations.length : undefined;
+    let dictionaryCount = dictionaries?.length ?? 0;
+    let editNotificationCount = this.state.editInvitations?.length ?? 0;
+    let transferNotificationCount = this.state.transferInvitations?.length ?? 0;
+    let notificationCount = editNotificationCount + transferNotificationCount;
     let menuSpecs = [
-      {mode: "dictionary", label: this.trans("dashboardPage.dictionary"), iconLabel: "\uF02D", badgeValue: dictionaryCount, href: "/dashboard"},
-      {mode: "notification", label: this.trans("dashboardPage.notification"), iconLabel: "\uF0F3", badgeValue: notificationCount, href: "/dashboard/notification"},
+      {mode: "dictionary", label: this.trans("dashboardPage.dictionary"), iconLabel: "\uF02D", badgeValue: dictionaryCount || undefined, href: "/dashboard"},
+      {mode: "notification", label: this.trans("dashboardPage.notification"), iconLabel: "\uF0F3", badgeValue: notificationCount || undefined, href: "/dashboard/notification"},
       {mode: "account", label: this.trans("dashboardPage.account"), iconLabel: "\uF2C2", href: "/dashboard/account"},
       {mode: "logout", label: this.trans("dashboardPage.logout"), iconLabel: "\uF2F5", href: "/"}
     ];
@@ -151,7 +173,8 @@ export default class DashboardPage extends Component<Props, State, Params> {
         contentNodes.push(this.renderDictionaryList());
         contentNodes.push(this.renderCreateDictionaryForm());
       } else if (mode === "notification") {
-        contentNodes.push(this.renderInvitationList());
+        contentNodes.push(this.renderEditInvitationList());
+        contentNodes.push(this.renderTransferInvitationList());
       } else if (mode === "account") {
         contentNodes.push(this.renderChangeUserScreenNameForm());
         contentNodes.push(this.renderChangeUserEmailForm());
@@ -175,7 +198,8 @@ type Props = {
 };
 type State = {
   dictionaries: Array<UserDictionary> | null,
-  editInvitations: Array<Invitation> | null
+  editInvitations: Array<Invitation> | null,
+  transferInvitations: Array<Invitation> | null
 };
 type Params = {
   mode: string

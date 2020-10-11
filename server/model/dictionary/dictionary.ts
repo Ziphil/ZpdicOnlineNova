@@ -49,11 +49,20 @@ import {
   User as UserSkeleton
 } from "/server/skeleton/user";
 import {
+  LiteralType,
+  LiteralUtilType
+} from "/server/util/literal-type";
+import {
   LogUtil
 } from "/server/util/log";
 import {
   QueryRange
 } from "/server/util/query";
+
+
+export const DICTIONARY_STATUSES = ["ready", "saving", "error"] as const;
+export type DictionaryStatus = LiteralType<typeof DICTIONARY_STATUSES>;
+export let DictionaryStatusUtil = LiteralUtilType.create(DICTIONARY_STATUSES);
 
 
 @modelOptions({schemaOptions: {collection: "dictionaries", minimize: false}})
@@ -74,8 +83,8 @@ export class DictionarySchema {
   @prop({required: true})
   public name!: string;
 
-  @prop({required: true})
-  public status!: string;
+  @prop({required: true, enum: DICTIONARY_STATUSES})
+  public status!: DictionaryStatus;
 
   @prop({required: true})
   public secret!: boolean;

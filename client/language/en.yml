@@ -34,14 +34,22 @@ popup:
     Note that it will take some time before the dictionary data is updated.
   dictionaryDeleted: >-
     The dictionary has been deleted.
-  editDictionaryInvited: >-
+  editInvitationAdded: >-
     You requested the user to get permission.
     The permission will be given to them after they accept the request.
-  editDictionaryAccepted: >-
+  editInvitationAccepted: >-
     You accepted the invitation to get permission.
     You can edit the dictionary from now on.
-  editDictionaryRefused: >-
+  editInvitationRefused: >-
     You rejected the invitation to get permission.
+  transferInvitationAdded: >-
+    You requested the transference of this dictionary.
+    The dictionary will be transferred after the user accept the request.
+  transferInvitationAccepted: >-
+    You accepted the transferrence of the dictionary.
+    You are now the owner of the dictionary.
+  transferInvitationRefused: >-
+    You rejected the transferrence of the dictionary.
   dictionaryAuthorizedUserDeleted: >-
     The permission of the user has been revoked.
   wordEdited: >-
@@ -90,8 +98,12 @@ popup:
     You tried to edit a word which does not exist.
   userCanAlreadyEdit: >-
     This user already has permission.
-  editDictionaryAlreadyInvited: >-
+  userCanAlreadyOwn: >-
+    This user is already the owner of this dictionary.
+  editInvitationAlreadyAdded: >-
     You have already requested this user to get permission.
+  transferInvitationAlreadyAdded: >-
+    You have already requested this user to be the owner of this dictionary.
   noSuchInvitation: >-
     This invitation does not exist.
   noSuchDictionaryAuthorizedUser: >-
@@ -170,6 +182,12 @@ deleteUserForm:
     This user will be deleted parmanently, and the dictionaries which this user owns will be also deleted.
     You cannot restore them hereafter.
     Are you really sure?
+addEditInvitationForm:
+  userName: "User ID to invite"
+  confirm: "Confirm"
+addTransferInvitationForm:
+  userName: "User ID to invite"
+  confirm: "Confirm"
 changeDictionaryExplanationForm:
   explanation: "Explanation"
   confirm: "Confirm"
@@ -199,9 +217,6 @@ deleteDictionaryForm:
     This dictionary will be deleted parmanently.
     You cannot restore it hereafter.
     Are you really sure?
-inviteEditDictionaryForm:
-  userName: "User ID to invite"
-  confirm: "Confirm"
 uploadDictionaryForm:
   file: "File"
   confirm: "Confirm"
@@ -317,11 +332,16 @@ dashboardPage:
     description: >-
       The list of your dictionaries.
       This also includes those which you do not own but you are permitted to edit.
-  invitationList:
-    label: "Permisson invitations"
+  editInvitationList:
+    label: "Invitations for editing"
     description: >-
-      The list of invitations to grant you permission.
+      The list of invitations to grant you editing permission.
       Accepting it will enable you to edit the dictionary. 
+  transferInvitationList:
+    label: "Invitations for transferring"
+    description: >-
+      The list of invitations to let you be the owner of a dictionary.
+      Accepting it will make you the new owner of the dictionary. 
   createDictionaryForm:
     label: "Create new dictionary"
     description: >-
@@ -385,12 +405,17 @@ dictionarySettingPage:
     label: "Delete"
     description: >-
       Delete this dictionary.
-  inviteEditDictionaryForm:
+  addEditInvitationForm:
     label: "Editing permissions"
     description: >-
       The list of the users who have permission to edit this dictionary.
       You can also give permission to another user here.
       Users with permission can edit and delete words, but cannot change the name of the dictionary or delete it.
+  addTransferInvitationForm:
+    label: "Transfer"
+    description: >-
+      Transfer this dictionary to another user.
+      After the dictionary is transferred, you still have editing permission and thus you can edit the words.
 loginPage:
   description: "Sign in"
 registerPage:

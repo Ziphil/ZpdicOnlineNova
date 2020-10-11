@@ -43,7 +43,8 @@ import {
 } from "/server/model/dictionary";
 import {
   InvitationCreator,
-  InvitationModel
+  InvitationModel,
+  InvitationTypeUtil
 } from "/server/model/invitation";
 import {
   UserCreator,
@@ -159,15 +160,16 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["inviteEditDictionary"])
+  @post(SERVER_PATH["addInvitation"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: PostRequest<"inviteEditDictionary">, response: PostResponse<"inviteEditDictionary">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"addInvitation">, response: PostResponse<"addInvitation">): Promise<void> {
     let dictionary = request.dictionary;
+    let type = InvitationTypeUtil.cast(CastUtil.ensureString(request.body.type));
     let userName = CastUtil.ensureString(request.body.userName);
     let user = await UserModel.findOneByName(userName);
     if (dictionary && user) {
       try {
-        let invitation = await InvitationModel.createEdit(dictionary, user);
+        let invitation = await InvitationModel.add(type, dictionary, user);
         let body = await InvitationCreator.create(invitation);
         Controller.respond(response, body);
       } catch (error) {
@@ -175,8 +177,12 @@ export class DictionaryController extends Controller {
           if (error.name === "CustomError") {
             if (error.type === "userCanAlreadyEdit") {
               return CustomError.ofType("userCanAlreadyEdit");
-            } else if (error.type === "editDictionaryAlreadyInvited") {
-              return CustomError.ofType("editDictionaryAlreadyInvited");
+            } else if (error.type === "userCanAlreadyOwn") {
+              return CustomError.ofType("userCanAlreadyOwn");
+            } else if (error.type === "editInvitationAlreadyAdded") {
+              return CustomError.ofType("editInvitationAlreadyAdded");
+            } else if (error.type === "transferInvitationAlreadyAdded") {
+              return CustomError.ofType("transferInvitationAlreadyAdded");
             }
           }
         })();
@@ -194,9 +200,9 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["respondEditDictionary"])
+  @post(SERVER_PATH["respondInvitation"])
   @before(verifyUser())
-  public async [Symbol()](request: PostRequest<"respondEditDictionary">, response: PostResponse<"respondEditDictionary">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"respondInvitation">, response: PostResponse<"respondInvitation">): Promise<void> {
     let user = request.user!;
     let id = CastUtil.ensureString(request.body.id);
     let accept = CastUtil.ensureBoolean(request.body.accept);
@@ -546,7 +552,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"fetchInvitations">, response: GetResponse<"fetchInvitations">): Promise<void> {
     let user = request.user!;
-    let type = CastUtil.ensureString(request.query.type);
+    let type = InvitationTypeUtil.cast(CastUtil.ensureString(request.query.type));
     let invitations = await InvitationModel.findByUser(type, user);
     let body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
     Controller.respond(response, body);

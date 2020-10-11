@@ -34,14 +34,22 @@ popup:
     なお、データの反映には時間がかかる場合があります。
   dictionaryDeleted: >-
     辞書を削除しました。
-  editDictionaryInvited: >-
+  editInvitationAdded: >-
     編集権限の付与をリクエストしました。
     相手ユーザーがこれを承認すれば編集権限が付与されます。
-  editDictionaryAccepted: >-
+  editInvitationAccepted: >-
     編集権限の付与の招待を承認しました。
     これ以降、該当の辞書を編集することができます。
-  editDictionaryRefused: >-
+  editInvitationRefused: >-
     編集権限の付与の招待を拒否しました。
+  transferInvitationAdded: >-
+    辞書の譲渡をリクエストしました。
+    相手ユーザーがこれを承認すれば辞書が譲渡されます。
+  transferInvitationAccepted: >-
+    辞書の譲渡を承認しました。
+    これ以降、該当の辞書の管理者になります。
+  transferInvitationRefused: >-
+    辞書の譲渡を拒否しました。
   dictionaryAuthorizedUserDeleted: >-
     該当ユーザーの編集権限を削除しました。
   wordEdited: >-
@@ -90,8 +98,12 @@ popup:
     存在しない単語を編集しようとしました。
   userCanAlreadyEdit: >-
     そのユーザーはすでに編集権限を保有しています。
-  editDictionaryAlreadyInvited: >-
-    同一の編集権限の付与がすでにリクエストされています。
+  userCanAlreadyOwn: >-
+    そのユーザーはすでに辞書の管理者です。
+  editInvitationAlreadyAdded: >-
+    同一の編集権限の付与リクエストがすでになされています。
+  transferInvitationAlreadyAdded: >-
+    同一の譲渡リクエストがすでになされています。
   noSuchInvitation: >-
     そのような権限の招待は存在しません。
   noSuchDictionaryAuthorizedUser: >-
@@ -169,6 +181,12 @@ deleteUserForm:
     このユーザーを永久に削除し、同時にこのユーザーが所有者である辞書も削除します。
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
+addEditInvitationForm:
+  userName: "招待先ユーザー ID"
+  confirm: "招待"
+addTransferInvitationForm:
+  userName: "招待先ユーザー ID"
+  confirm: "招待"
 changeDictionaryExplanationForm:
   explanation: "説明"
   confirm: "変更"
@@ -197,9 +215,6 @@ deleteDictionaryForm:
     この辞書データを永久に削除します。
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
-inviteEditDictionaryForm:
-  userName: "招待先ユーザー ID"
-  confirm: "招待"
 uploadDictionaryForm:
   file: "ファイル"
   confirm: "決定"
@@ -315,11 +330,16 @@ dashboardPage:
     description: >-
       このユーザーの辞書一覧です。
       このユーザーが管理者ではなくても、編集権限があれば表示されます。
-  invitationList:
+  editInvitationList:
     label: "編集権限の付与の招待"
     description: >-
       このユーザーに送られてきた編集権限の付与の招待の一覧です。
       これを承認すると、該当の辞書を編集できるようになります。
+  transferInvitationList:
+    label: "辞書の譲渡の招待"
+    description: >-
+      このユーザーに送られてきた辞書の譲渡の招待の一覧です。
+      これを承認すると、該当の辞書の管理者になります。
   createDictionaryForm:
     label: "新規作成"
     description: >-
@@ -383,12 +403,17 @@ dictionarySettingPage:
     label: "削除"
     description: >-
       この辞書を削除します。
-  inviteEditDictionaryForm:
+  addEditInvitationForm:
     label: "編集権限"
     description: >-
       この辞書の編集権限を保有しているユーザーが確認できます。
       また、新しく別のユーザーに編集権限を付与することができます。
       権限を付与されたユーザーは、単語の編集や削除はできますが、辞書の表示名の変更や削除はできません。
+  addTransferInvitationForm:
+    label: "譲渡"
+    description: >-
+      この辞書を別のユーザーに譲渡します。
+      辞書の譲渡後もこのユーザーに編集権限は残るので、単語の編集は引き続き行うことができます。
 loginPage:
   description: "ログイン"
 registerPage:
