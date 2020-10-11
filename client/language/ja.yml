@@ -45,6 +45,11 @@ popup:
   transferInvitationAdded: >-
     辞書の譲渡をリクエストしました。
     相手ユーザーがこれを承認すれば辞書が譲渡されます。
+  transferInvitationAccepted: >-
+    辞書の譲渡を承認しました。
+    これ以降、該当の辞書の管理者になります。
+  transferInvitationRefused: >-
+    辞書の譲渡を拒否しました。
   dictionaryAuthorizedUserDeleted: >-
     該当ユーザーの編集権限を削除しました。
   wordEdited: >-

@@ -24,9 +24,18 @@ export default class InvitationPane extends Component<Props, State> {
 
   private async respondInvitation(event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
     let id = this.props.invitation.id;
+    let invitationType = this.props.invitation.type;
     let response = await this.requestPost("respondInvitation", {id, accept});
     if (response.status === 200) {
-      let type = (accept) ? "editInvitationAccepted" : "editInvitationRefused";
+      let type = (() => {
+        if (invitationType === "edit") {
+          return (accept) ? "editInvitationAccepted" : "editInvitationRefused";
+        } else if (invitationType === "transfer") {
+          return (accept) ? "transferInvitationAccepted" : "transferInvitationRefused";
+        } else {
+          return "messageNotFound";
+        }
+      })();
       this.props.store!.addInformationPopup(type);
       if (this.props.onSubmit) {
         await this.props.onSubmit(event);

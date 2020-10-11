@@ -45,6 +45,11 @@ popup:
   transferInvitationAdded: >-
     You requested the transference of this dictionary.
     The dictionary will be transferred after the user accept the request.
+  transferInvitationAccepted: >-
+    You accepted the transferrence of the dictionary.
+    You are now the owner of the dictionary.
+  transferInvitationRefused: >-
+    You rejected the transferrence of the dictionary.
   dictionaryAuthorizedUserDeleted: >-
     The permission of the user has been revoked.
   wordEdited: >-
