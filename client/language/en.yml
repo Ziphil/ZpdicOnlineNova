@@ -34,13 +34,13 @@ popup:
     Note that it will take some time before the dictionary data is updated.
   dictionaryDeleted: >-
     The dictionary has been deleted.
-  editDictionaryInvited: >-
+  editInvitationAdded: >-
     You requested the user to get permission.
     The permission will be given to them after they accept the request.
-  editDictionaryAccepted: >-
+  editInvitationAccepted: >-
     You accepted the invitation to get permission.
     You can edit the dictionary from now on.
-  editDictionaryRefused: >-
+  editInvitationRefused: >-
     You rejected the invitation to get permission.
   dictionaryAuthorizedUserDeleted: >-
     The permission of the user has been revoked.
@@ -90,7 +90,7 @@ popup:
     You tried to edit a word which does not exist.
   userCanAlreadyEdit: >-
     This user already has permission.
-  editDictionaryAlreadyInvited: >-
+  editInvitationAlreadyAdded: >-
     You have already requested this user to get permission.
   noSuchInvitation: >-
     This invitation does not exist.
@@ -170,6 +170,9 @@ deleteUserForm:
     This user will be deleted parmanently, and the dictionaries which this user owns will be also deleted.
     You cannot restore them hereafter.
     Are you really sure?
+addEditInvitationForm:
+  userName: "User ID to invite"
+  confirm: "Confirm"
 changeDictionaryExplanationForm:
   explanation: "Explanation"
   confirm: "Confirm"
@@ -199,9 +202,6 @@ deleteDictionaryForm:
     This dictionary will be deleted parmanently.
     You cannot restore it hereafter.
     Are you really sure?
-inviteEditDictionaryForm:
-  userName: "User ID to invite"
-  confirm: "Confirm"
 uploadDictionaryForm:
   file: "File"
   confirm: "Confirm"
@@ -385,7 +385,7 @@ dictionarySettingPage:
     label: "Delete"
     description: >-
       Delete this dictionary.
-  inviteEditDictionaryForm:
+  addEditInvitationForm:
     label: "Editing permissions"
     description: >-
       The list of the users who have permission to edit this dictionary.

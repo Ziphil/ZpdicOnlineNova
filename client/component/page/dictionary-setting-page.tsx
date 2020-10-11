@@ -6,13 +6,13 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import CommissionList from "/client/component/compound/commission-list";
+import AddEditInvitationForm from "/client/component/compound/dictionary-setting/add-edit-invitation-form";
 import ChangeDictionaryExplanationForm from "/client/component/compound/dictionary-setting/change-dictionary-explanation-form";
 import ChangeDictionaryNameForm from "/client/component/compound/dictionary-setting/change-dictionary-name-form";
 import ChangeDictionaryParamNameForm from "/client/component/compound/dictionary-setting/change-dictionary-param-name-form";
 import ChangeDictionarySecretForm from "/client/component/compound/dictionary-setting/change-dictionary-secret-form";
 import ChangeDictionarySnojForm from "/client/component/compound/dictionary-setting/change-dictionary-snoj-form";
 import DeleteDictionaryForm from "/client/component/compound/dictionary-setting/delete-dictionary-form";
-import InviteEditDictionaryForm from "/client/component/compound/dictionary-setting/invite-edit-dictionary-form";
 import UploadDictionaryForm from "/client/component/compound/dictionary-setting/upload-dictionary-form";
 import Menu from "/client/component/compound/menu";
 import SettingPane from "/client/component/compound/setting-pane";
@@ -174,12 +174,12 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
-  private renderInviteEditDictionaryForm(): ReactNode {
-    let label = this.trans("dictionarySettingPage.inviteEditDictionaryForm.label");
-    let description = this.trans("dictionarySettingPage.inviteEditDictionaryForm.description");
+  private renderAddEditInvitationForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.addEditInvitationForm.label");
+    let description = this.trans("dictionarySettingPage.addEditInvitationForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <InviteEditDictionaryForm number={this.state.dictionary!.number} dictionary={this.state.dictionary!}/>
+        <AddEditInvitationForm number={this.state.dictionary!.number} dictionary={this.state.dictionary!}/>
       </SettingPane>
     );
     return node;
@@ -207,7 +207,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderChangeDictionaryExplanationForm());
         contentNodes.push(this.renderChangeDictionarySnojForm());
       } else if (mode === "access") {
-        contentNodes.push(this.renderInviteEditDictionaryForm());
+        contentNodes.push(this.renderAddEditInvitationForm());
       } else if (mode === "request") {
         contentNodes.push(this.renderCommissionList());
       }

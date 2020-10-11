@@ -26,7 +26,7 @@ export default class InvitationPane extends Component<Props, State> {
     let id = this.props.invitation.id;
     let response = await this.requestPost("respondInvitation", {id, accept});
     if (response.status === 200) {
-      let type = (accept) ? "editDictionaryAccepted" : "editDictionaryRefused";
+      let type = (accept) ? "editInvitationAccepted" : "editInvitationRefused";
       this.props.store!.addInformationPopup(type);
       if (this.props.onSubmit) {
         await this.props.onSubmit(event);

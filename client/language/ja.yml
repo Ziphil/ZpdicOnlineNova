@@ -34,13 +34,13 @@ popup:
     なお、データの反映には時間がかかる場合があります。
   dictionaryDeleted: >-
     辞書を削除しました。
-  editDictionaryInvited: >-
+  editInvitationAdded: >-
     編集権限の付与をリクエストしました。
     相手ユーザーがこれを承認すれば編集権限が付与されます。
-  editDictionaryAccepted: >-
+  editInvitationAccepted: >-
     編集権限の付与の招待を承認しました。
     これ以降、該当の辞書を編集することができます。
-  editDictionaryRefused: >-
+  editInvitationRefused: >-
     編集権限の付与の招待を拒否しました。
   dictionaryAuthorizedUserDeleted: >-
     該当ユーザーの編集権限を削除しました。
@@ -90,7 +90,7 @@ popup:
     存在しない単語を編集しようとしました。
   userCanAlreadyEdit: >-
     そのユーザーはすでに編集権限を保有しています。
-  editDictionaryAlreadyInvited: >-
+  editInvitationAlreadyAdded: >-
     同一の編集権限の付与がすでにリクエストされています。
   noSuchInvitation: >-
     そのような権限の招待は存在しません。
@@ -169,6 +169,9 @@ deleteUserForm:
     このユーザーを永久に削除し、同時にこのユーザーが所有者である辞書も削除します。
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
+addEditInvitationForm:
+  userName: "招待先ユーザー ID"
+  confirm: "招待"
 changeDictionaryExplanationForm:
   explanation: "説明"
   confirm: "変更"
@@ -197,9 +200,6 @@ deleteDictionaryForm:
     この辞書データを永久に削除します。
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
-inviteEditDictionaryForm:
-  userName: "招待先ユーザー ID"
-  confirm: "招待"
 uploadDictionaryForm:
   file: "ファイル"
   confirm: "決定"
@@ -383,7 +383,7 @@ dictionarySettingPage:
     label: "削除"
     description: >-
       この辞書を削除します。
-  inviteEditDictionaryForm:
+  addEditInvitationForm:
     label: "編集権限"
     description: >-
       この辞書の編集権限を保有しているユーザーが確認できます。

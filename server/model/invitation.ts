@@ -66,7 +66,7 @@ export class InvitationSchema {
     } else {
       let formerInvitation = await InvitationModel.findOne().where("type", "edit").where("dictionary", dictionary).where("user", user);
       if (formerInvitation) {
-        throw new CustomError("editDictionaryAlreadyInvited");
+        throw new CustomError("editInvitationAlreadyAdded");
       } else {
         let invitation = new InvitationModel({});
         invitation.type = "edit";
