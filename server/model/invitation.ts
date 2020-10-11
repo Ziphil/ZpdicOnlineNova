@@ -118,13 +118,16 @@ export class InvitationSchema {
   }
 
   private async respondTransfer(this: Invitation, user: User): Promise<void> {
-    await this.populate("dictionary").populate("dictionary.user").populate("dictionary.editUsers").execPopulate();
-    if (isDocument(this.dictionary) && isDocument(this.dictionary.user) && isDocumentArray(this.dictionary.editUsers)) {
-      let previousUser = this.dictionary.user;
-      let nextEditUsers = this.dictionary.editUsers.filter((editUser) => editUser.id !== user.id && editUser.id !== previousUser.id);
-      this.dictionary.user = user;
-      this.dictionary.editUsers = [...nextEditUsers, previousUser];
-      await this.dictionary.save();
+    await this.populate("dictionary").execPopulate();
+    if (isDocument(this.dictionary)) {
+      await this.dictionary.populate("user").populate("editUsers").execPopulate();
+      if (isDocument(this.dictionary.user) && isDocumentArray(this.dictionary.editUsers)) {
+        let previousUser = this.dictionary.user;
+        let nextEditUsers = this.dictionary.editUsers.filter((editUser) => editUser.id !== user.id && editUser.id !== previousUser.id);
+        this.dictionary.user = user;
+        this.dictionary.editUsers = [...nextEditUsers, previousUser];
+        await this.dictionary.save();
+      }
     }
   }
 
