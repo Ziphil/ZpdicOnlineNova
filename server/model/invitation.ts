@@ -5,6 +5,7 @@ import {
   Ref,
   getModelForClass,
   isDocument,
+  isDocumentArray,
   modelOptions,
   prop
 } from "@typegoose/typegoose";
@@ -94,27 +95,36 @@ export class InvitationSchema {
   public async respond(this: Invitation, user: User, accept: boolean): Promise<void> {
     await this.populate("user").execPopulate();
     if (isDocument(this.user) && this.user.id === user.id) {
-      let type = this.type;
-      if (type === "edit") {
-        await this.respondEdit(user, accept);
-        await this.remove();
-      } else if (type === "transfer") {
-        throw new Error("not implemented");
-      } else {
-        throw new Error("cannot happen");
+      if (accept) {
+        let type = this.type;
+        if (type === "edit") {
+          await this.respondEdit(user);
+        } else if (type === "transfer") {
+          await this.respondTransfer(user);
+        }
       }
+      await this.remove();
     } else {
       throw new CustomError("forbidden");
     }
   }
 
-  private async respondEdit(this: Invitation, user: User, accept: boolean): Promise<void> {
-    if (accept) {
-      await this.populate("dictionary").execPopulate();
-      if (isDocument(this.dictionary)) {
-        this.dictionary.editUsers = [...this.dictionary.editUsers, user];
-        await this.dictionary.save();
-      }
+  private async respondEdit(this: Invitation, user: User): Promise<void> {
+    await this.populate("dictionary").execPopulate();
+    if (isDocument(this.dictionary)) {
+      this.dictionary.editUsers = [...this.dictionary.editUsers, user];
+      await this.dictionary.save();
+    }
+  }
+
+  private async respondTransfer(this: Invitation, user: User): Promise<void> {
+    await this.populate("dictionary").populate("dictionary.user").populate("dictionary.editUsers").execPopulate();
+    if (isDocument(this.dictionary) && isDocument(this.dictionary.user) && isDocumentArray(this.dictionary.editUsers)) {
+      let previousUser = this.dictionary.user;
+      let nextEditUsers = this.dictionary.editUsers.filter((editUser) => editUser.id !== user.id && editUser.id !== previousUser.id);
+      this.dictionary.user = user;
+      this.dictionary.editUsers = [...nextEditUsers, previousUser];
+      await this.dictionary.save();
     }
   }
 
