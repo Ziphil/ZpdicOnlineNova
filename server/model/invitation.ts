@@ -50,31 +50,38 @@ export class InvitationSchema {
   public createdDate!: Date;
 
   public static async add(type: InvitationType, dictionary: Dictionary, user: User): Promise<Invitation> {
+    await this.assure(type, dictionary, user);
+    let invitation = new InvitationModel({});
+    invitation.type = type;
+    invitation.dictionary = dictionary;
+    invitation.user = user;
+    invitation.createdDate = new Date();
+    await invitation.save();
+    return invitation;
+  }
+
+  private static async assure(type: InvitationType, dictionary: Dictionary, user: User): Promise<void> {
     if (type === "edit") {
-      return await this.addEdit(dictionary, user);
+      let canEdit = await dictionary.hasAuthority(user, "edit");
+      if (canEdit) {
+        throw new CustomError("userCanAlreadyEdit");
+      }
     } else if (type === "transfer") {
-      throw new Error("not implemented");
+      let canOwn = await dictionary.hasAuthority(user, "own");
+      if (canOwn) {
+        throw new CustomError("userCanAlreadyOwn");
+      }
     } else {
       throw new Error("cannot happen");
     }
-  }
-
-  private static async addEdit(dictionary: Dictionary, user: User): Promise<Invitation> {
-    let canEdit = await dictionary.hasAuthority(user, "edit");
-    if (canEdit) {
-      throw new CustomError("userCanAlreadyEdit");
-    } else {
-      let formerInvitation = await InvitationModel.findOne().where("type", "edit").where("dictionary", dictionary).where("user", user);
-      if (formerInvitation) {
+    let formerInvitation = await InvitationModel.findOne().where("type", type).where("dictionary", dictionary).where("user", user);
+    if (formerInvitation !== null) {
+      if (type === "edit") {
         throw new CustomError("editInvitationAlreadyAdded");
+      } else if (type === "transfer") {
+        throw new CustomError("transferInvitationAlreadyAdded");
       } else {
-        let invitation = new InvitationModel({});
-        invitation.type = "edit";
-        invitation.dictionary = dictionary;
-        invitation.user = user;
-        invitation.createdDate = new Date();
-        await invitation.save();
-        return invitation;
+        throw new Error("cannot happen");
       }
     }
   }

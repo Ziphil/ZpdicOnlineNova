@@ -93,8 +93,12 @@ popup:
     You tried to edit a word which does not exist.
   userCanAlreadyEdit: >-
     This user already has permission.
+  userCanAlreadyOwn: >-
+    This user is already the owner of this dictionary.
   editInvitationAlreadyAdded: >-
     You have already requested this user to get permission.
+  transferInvitationAlreadyAdded: >-
+    You have already requested this user to be the owner of this dictionary.
   noSuchInvitation: >-
     This invitation does not exist.
   noSuchDictionaryAuthorizedUser: >-

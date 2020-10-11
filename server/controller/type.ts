@@ -161,7 +161,7 @@ type ProcessData = {
       request: {number: number, type: string, userName: string},
       response: {
         200: Invitation,
-        400: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "editInvitationAlreadyAdded">
+        400: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "userCanAlreadyOwn" | "editInvitationAlreadyAdded" | "transferInvitationAlreadyAdded">
       }
     }
   },

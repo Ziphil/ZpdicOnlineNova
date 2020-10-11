@@ -93,8 +93,12 @@ popup:
     存在しない単語を編集しようとしました。
   userCanAlreadyEdit: >-
     そのユーザーはすでに編集権限を保有しています。
+  userCanAlreadyOwn: >-
+    そのユーザーはすでに辞書の管理者です。
   editInvitationAlreadyAdded: >-
-    同一の編集権限の付与がすでにリクエストされています。
+    同一の編集権限の付与リクエストがすでになされています。
+  transferInvitationAlreadyAdded: >-
+    同一の譲渡リクエストがすでになされています。
   noSuchInvitation: >-
     そのような権限の招待は存在しません。
   noSuchDictionaryAuthorizedUser: >-

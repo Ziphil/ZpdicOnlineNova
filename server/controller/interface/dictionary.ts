@@ -177,8 +177,12 @@ export class DictionaryController extends Controller {
           if (error.name === "CustomError") {
             if (error.type === "userCanAlreadyEdit") {
               return CustomError.ofType("userCanAlreadyEdit");
+            } else if (error.type === "userCanAlreadyOwn") {
+              return CustomError.ofType("userCanAlreadyOwn");
             } else if (error.type === "editInvitationAlreadyAdded") {
               return CustomError.ofType("editInvitationAlreadyAdded");
+            } else if (error.type === "transferInvitationAlreadyAdded") {
+              return CustomError.ofType("transferInvitationAlreadyAdded");
             }
           }
         })();
