@@ -42,6 +42,9 @@ popup:
     これ以降、該当の辞書を編集することができます。
   editInvitationRefused: >-
     編集権限の付与の招待を拒否しました。
+  transferInvitationAdded: >-
+    辞書の譲渡をリクエストしました。
+    相手ユーザーがこれを承認すれば辞書が譲渡されます。
   dictionaryAuthorizedUserDeleted: >-
     該当ユーザーの編集権限を削除しました。
   wordEdited: >-
@@ -170,6 +173,9 @@ deleteUserForm:
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
 addEditInvitationForm:
+  userName: "招待先ユーザー ID"
+  confirm: "招待"
+addTransferInvitationForm:
   userName: "招待先ユーザー ID"
   confirm: "招待"
 changeDictionaryExplanationForm:
@@ -389,6 +395,11 @@ dictionarySettingPage:
       この辞書の編集権限を保有しているユーザーが確認できます。
       また、新しく別のユーザーに編集権限を付与することができます。
       権限を付与されたユーザーは、単語の編集や削除はできますが、辞書の表示名の変更や削除はできません。
+  addTransferInvitationForm:
+    label: "譲渡"
+    description: >-
+      この辞書を別のユーザーに譲渡します。
+      辞書の譲渡後もこのユーザーに編集権限は残るので、単語の編集は引き続き行うことができます。
 loginPage:
   description: "ログイン"
 registerPage:

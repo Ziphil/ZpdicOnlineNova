@@ -7,6 +7,7 @@ import {
 import Component from "/client/component/component";
 import CommissionList from "/client/component/compound/commission-list";
 import AddEditInvitationForm from "/client/component/compound/dictionary-setting/add-edit-invitation-form";
+import AddTransferInvitationForm from "/client/component/compound/dictionary-setting/add-transfer-invitation-form";
 import ChangeDictionaryExplanationForm from "/client/component/compound/dictionary-setting/change-dictionary-explanation-form";
 import ChangeDictionaryNameForm from "/client/component/compound/dictionary-setting/change-dictionary-name-form";
 import ChangeDictionaryParamNameForm from "/client/component/compound/dictionary-setting/change-dictionary-param-name-form";
@@ -185,6 +186,17 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
+  private renderAddTransferInvitationForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.addTransferInvitationForm.label");
+    let description = this.trans("dictionarySettingPage.addTransferInvitationForm.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <AddTransferInvitationForm number={this.state.dictionary!.number} dictionary={this.state.dictionary!}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
     let number = +this.props.match!.params.number;
     let mode = this.props.match?.params.mode || "general";
@@ -208,6 +220,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderChangeDictionarySnojForm());
       } else if (mode === "access") {
         contentNodes.push(this.renderAddEditInvitationForm());
+        contentNodes.push(this.renderAddTransferInvitationForm());
       } else if (mode === "request") {
         contentNodes.push(this.renderCommissionList());
       }

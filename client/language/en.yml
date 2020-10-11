@@ -42,6 +42,9 @@ popup:
     You can edit the dictionary from now on.
   editInvitationRefused: >-
     You rejected the invitation to get permission.
+  transferInvitationAdded: >-
+    You requested the transference of this dictionary.
+    The dictionary will be transferred after the user accept the request.
   dictionaryAuthorizedUserDeleted: >-
     The permission of the user has been revoked.
   wordEdited: >-
@@ -171,6 +174,9 @@ deleteUserForm:
     You cannot restore them hereafter.
     Are you really sure?
 addEditInvitationForm:
+  userName: "User ID to invite"
+  confirm: "Confirm"
+addTransferInvitationForm:
   userName: "User ID to invite"
   confirm: "Confirm"
 changeDictionaryExplanationForm:
@@ -391,6 +397,11 @@ dictionarySettingPage:
       The list of the users who have permission to edit this dictionary.
       You can also give permission to another user here.
       Users with permission can edit and delete words, but cannot change the name of the dictionary or delete it.
+  addTransferInvitationForm:
+    label: "Transfer"
+    description: >-
+      Transfer this dictionary to another user.
+      After the dictionary is transferred, you still have editing permission and thus you can edit the words.
 loginPage:
   description: "Sign in"
 registerPage:
