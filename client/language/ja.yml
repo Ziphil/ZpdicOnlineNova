@@ -325,11 +325,16 @@ dashboardPage:
     description: >-
       このユーザーの辞書一覧です。
       このユーザーが管理者ではなくても、編集権限があれば表示されます。
-  invitationList:
+  editInvitationList:
     label: "編集権限の付与の招待"
     description: >-
       このユーザーに送られてきた編集権限の付与の招待の一覧です。
       これを承認すると、該当の辞書を編集できるようになります。
+  transferInvitationList:
+    label: "辞書の譲渡の招待"
+    description: >-
+      このユーザーに送られてきた辞書の譲渡の招待の一覧です。
+      これを承認すると、該当の辞書の管理者になります。
   createDictionaryForm:
     label: "新規作成"
     description: >-

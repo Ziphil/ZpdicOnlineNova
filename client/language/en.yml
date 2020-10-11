@@ -327,11 +327,16 @@ dashboardPage:
     description: >-
       The list of your dictionaries.
       This also includes those which you do not own but you are permitted to edit.
-  invitationList:
-    label: "Permisson invitations"
+  editInvitationList:
+    label: "Invitations for editing"
     description: >-
-      The list of invitations to grant you permission.
+      The list of invitations to grant you editing permission.
       Accepting it will enable you to edit the dictionary. 
+  transferInvitationList:
+    label: "Invitations for transferring"
+    description: >-
+      The list of invitations to let you be the owner of a dictionary.
+      Accepting it will make you the new owner of the dictionary. 
   createDictionaryForm:
     label: "Create new dictionary"
     description: >-
