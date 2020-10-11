@@ -49,7 +49,17 @@ export class InvitationSchema {
   @prop({required: true})
   public createdDate!: Date;
 
-  public static async createEdit(dictionary: Dictionary, user: User): Promise<Invitation> {
+  public static async add(type: InvitationType, dictionary: Dictionary, user: User): Promise<Invitation> {
+    if (type === "edit") {
+      return await this.addEdit(dictionary, user);
+    } else if (type === "transfer") {
+      throw new Error("not implemented");
+    } else {
+      throw new Error("cannot happen");
+    }
+  }
+
+  private static async addEdit(dictionary: Dictionary, user: User): Promise<Invitation> {
     let canEdit = await dictionary.hasAuthority(user, "edit");
     if (canEdit) {
       throw new CustomError("userCanAlreadyEdit");
@@ -77,16 +87,27 @@ export class InvitationSchema {
   public async respond(this: Invitation, user: User, accept: boolean): Promise<void> {
     await this.populate("user").execPopulate();
     if (isDocument(this.user) && this.user.id === user.id) {
-      if (accept) {
-        await this.populate("dictionary").execPopulate();
-        if (isDocument(this.dictionary)) {
-          this.dictionary.editUsers = [...this.dictionary.editUsers, user];
-          await this.dictionary.save();
-        }
+      let type = this.type;
+      if (type === "edit") {
+        await this.respondEdit(user, accept);
+        await this.remove();
+      } else if (type === "transfer") {
+        throw new Error("not implemented");
+      } else {
+        throw new Error("cannot happen");
       }
-      await this.remove();
     } else {
       throw new CustomError("forbidden");
+    }
+  }
+
+  private async respondEdit(this: Invitation, user: User, accept: boolean): Promise<void> {
+    if (accept) {
+      await this.populate("dictionary").execPopulate();
+      if (isDocument(this.dictionary)) {
+        this.dictionary.editUsers = [...this.dictionary.editUsers, user];
+        await this.dictionary.save();
+      }
     }
   }
 

@@ -66,7 +66,8 @@ export default class InviteEditDictionaryForm extends Component<Props, State> {
   private async handleClick(): Promise<void> {
     let number = this.props.number;
     let userName = this.state.userName;
-    let response = await this.requestPost("inviteEditDictionary", {number, userName});
+    let type = "edit";
+    let response = await this.requestPost("addInvitation", {number, type, userName});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("editDictionaryInvited");
       if (this.props.onSubmit) {

@@ -160,15 +160,16 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["inviteEditDictionary"])
+  @post(SERVER_PATH["addInvitation"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: PostRequest<"inviteEditDictionary">, response: PostResponse<"inviteEditDictionary">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"addInvitation">, response: PostResponse<"addInvitation">): Promise<void> {
     let dictionary = request.dictionary;
+    let type = InvitationTypeUtil.cast(CastUtil.ensureString(request.body.type));
     let userName = CastUtil.ensureString(request.body.userName);
     let user = await UserModel.findOneByName(userName);
     if (dictionary && user) {
       try {
-        let invitation = await InvitationModel.createEdit(dictionary, user);
+        let invitation = await InvitationModel.add(type, dictionary, user);
         let body = await InvitationCreator.create(invitation);
         Controller.respond(response, body);
       } catch (error) {
@@ -195,9 +196,9 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["respondEditDictionary"])
+  @post(SERVER_PATH["respondInvitation"])
   @before(verifyUser())
-  public async [Symbol()](request: PostRequest<"respondEditDictionary">, response: PostResponse<"respondEditDictionary">): Promise<void> {
+  public async [Symbol()](request: PostRequest<"respondInvitation">, response: PostResponse<"respondInvitation">): Promise<void> {
     let user = request.user!;
     let id = CastUtil.ensureString(request.body.id);
     let accept = CastUtil.ensureBoolean(request.body.accept);
