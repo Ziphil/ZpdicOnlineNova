@@ -42,13 +42,10 @@ export const RECAPTCHA_SECRET = process.env["RECAPTCHA_SECRET"] || "dummy";
 
 export class Main {
 
-  private application: Express;
-
-  public constructor() {
-    this.application = express();
-  }
+  private application!: Express;
 
   public main(): void {
+    this.application = express();
     this.setupBodyParsers();
     this.setupCookie();
     this.setupMulter();
@@ -57,7 +54,7 @@ export class Main {
     this.setupDirectories();
     this.setupRouters();
     this.setupStatic();
-    this.setupFallback();
+    this.setupFallbackHandlers();
     this.setupErrorHandler();
     this.listen();
   }
@@ -84,7 +81,7 @@ export class Main {
 
   // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
   // typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。
-  private setupMongo(): void {
+  protected setupMongo(): void {
     let check = function (value: string): boolean {
       return value !== null;
     };
@@ -94,7 +91,7 @@ export class Main {
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }
 
-  private setupSendgrid(): void {
+  protected setupSendgrid(): void {
     sendgrid.setApiKey(SENDGRID_KEY);
   }
 
@@ -118,15 +115,18 @@ export class Main {
     this.application.use("/static", express.static(process.cwd() + "/dist/static"));
   }
 
-  // ルート以外にアクセスしたときのフォールバックの設定をします。
-  private setupFallback(): void {
-    this.application.use("/api*", (request, response, next) => {
+  // ルーターで設定されていない URL にアクセスされたときのフォールバックの設定をします。
+  // フロントエンドから呼び出すためのエンドポイント用 URL で処理が存在しないものにアクセスされた場合は、404 エラーを返します。
+  // そうでない場合は、フロントエンドのトップページを返します。
+  private setupFallbackHandlers(): void {
+    let internalHandler = function (request: Request, response: Response, next: NextFunction): void {
       let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
       LogUtil.log("index", `not found: ${fullUrl}`);
       response.status(404).end();
-    });
-    this.application.use("*", (request, response, next) => {
-      if ((request.method === "GET" || request.method === "HEAD") && request.accepts("html")) {
+    };
+    let otherHandler = function (request: Request, response: Response, next: NextFunction): void {
+      let method = request.method;
+      if ((method === "GET" || method === "HEAD") && request.accepts("html")) {
         response.sendFile(process.cwd() + "/dist/client/index.html", (error) => {
           if (error) {
             next(error);
@@ -135,7 +135,9 @@ export class Main {
       } else {
         next();
       }
-    });
+    };
+    this.application.use("/internal*", internalHandler);
+    this.application.use("*", otherHandler);
   }
 
   private setupErrorHandler(): void {
@@ -155,5 +157,7 @@ export class Main {
 }
 
 
-let main = new Main();
-main.main();
+if (require.main === module) {
+  let main = new Main();
+  main.main();
+}
