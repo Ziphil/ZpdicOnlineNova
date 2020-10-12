@@ -26,7 +26,7 @@ popup:
   dictionarySecretChanged: >-
     The visibility of the dictionary has been changed.
   dictionaryExplanationChanged: >-
-    The explanation of the dictionary has been changed.
+    The description of the dictionary has been changed.
   dictionarySnojChanged: >-
     The snoj data for akrantiain has been changed.
   dictionaryUploaded: >-
@@ -44,7 +44,7 @@ popup:
     You rejected the invitation to edit this dictionary.
   transferInvitationAdded: >-
     You requested the transference of this dictionary.
-    The dictionary will be transferred after the user accept the request.
+    The dictionary will be transferred after the user accepts the request.
   transferInvitationAccepted: >-
     You accepted the transferrence of the dictionary.
     You are now the owner of the dictionary.
@@ -336,9 +336,9 @@ dashboardPage:
       This is a list of dictionary invitations.
       Accepting an invitation will enable you to edit the dictionary. 
   transferInvitationList:
-    label: "Invitations for transferring"
+    label: "Transferrence invitations"
     description: >-
-      The list of invitations to let you be the owner of a dictionary.
+      This is a list of invitations to let you be the owner of a dictionary.
       Accepting it will make you the new owner of the dictionary. 
   createDictionaryForm:
     label: "Create new dictionary"
