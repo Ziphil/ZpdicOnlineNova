@@ -3,6 +3,9 @@
 import * as typegoose from "@typegoose/typegoose";
 import mongoose from "mongoose";
 import {
+  HistoryController
+} from "/server/controller/interface";
+import {
   MongoUtil
 } from "/server/util/mongo";
 import {
@@ -12,9 +15,10 @@ import {
 
 export class Service {
 
-  public main(): void {
+  public async main(): Promise<void> {
     this.setupMongo();
-    this.execute();
+    await this.execute();
+    this.closeMongo();
   }
 
   private setupMongo(): void {
@@ -23,10 +27,14 @@ export class Service {
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }
 
-  private execute(): void {
+  private closeMongo(): void {
+    mongoose.connection.close();
+  }
+
+  private async execute(): Promise<void> {
     let name = process.argv[2];
     if (name === "history") {
-      console.log("hello");
+      await HistoryController.addHistories();
     }
   }
 
