@@ -7,10 +7,13 @@ import externals from "webpack-node-externals";
 
 
 let config = {
-  entry: ["./server/index.ts"],
+  entry: {
+    index: ["./server/index.ts"],
+    service: ["./server/service.ts"]
+  },
   output: {
     path: path.join(__dirname, "dist"),
-    filename: "index.js"
+    filename: "[name].js"
   },
   devtool: "source-map",
   target: "node",

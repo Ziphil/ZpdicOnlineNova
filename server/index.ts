@@ -4,7 +4,6 @@ import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
 import parser from "body-parser";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
 import express from "express";
 import {
   Express,
@@ -14,9 +13,6 @@ import {
 } from "express";
 import fs from "fs";
 import mongoose from "mongoose";
-import {
-  SchemaTypes
-} from "mongoose";
 import multer from "multer";
 import {
   DebugController,
@@ -28,27 +24,23 @@ import {
 import {
   LogUtil
 } from "/server/util/log";
-
-
-dotenv.config({path: "./variable.env"});
-
-export const PORT = process.env["PORT"] || 8050;
-export const MONGO_URI = process.env["DB_URI"] || "mongodb://dummy";
-export const COOKIE_SECRET = process.env["COOKIE_SECRET"] || "cookie-zpdic";
-export const JWT_SECRET = process.env["JWT_SECRET"] || "jwt-secret";
-export const SENDGRID_KEY = process.env["SENDGRID_KEY"] || "dummy";
-export const RECAPTCHA_SECRET = process.env["RECAPTCHA_SECRET"] || "dummy";
+import {
+  MongoUtil
+} from "/server/util/mongo";
+import {
+  COOKIE_SECRET,
+  MONGO_URI,
+  PORT,
+  SENDGRID_KEY
+} from "/server/variable";
 
 
 export class Main {
 
-  private application: Express;
-
-  public constructor() {
-    this.application = express();
-  }
+  private application!: Express;
 
   public main(): void {
+    this.application = express();
     this.setupBodyParsers();
     this.setupCookie();
     this.setupMulter();
@@ -57,7 +49,7 @@ export class Main {
     this.setupDirectories();
     this.setupRouters();
     this.setupStatic();
-    this.setupFallback();
+    this.setupFallbackHandlers();
     this.setupErrorHandler();
     this.listen();
   }
@@ -85,11 +77,7 @@ export class Main {
   // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
   // typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。
   private setupMongo(): void {
-    let check = function (value: string): boolean {
-      return value !== null;
-    };
-    let SchemaString = SchemaTypes.String as any;
-    SchemaString.checkRequired(check);
+    MongoUtil.setCheckRequired("String");
     mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }
@@ -118,15 +106,18 @@ export class Main {
     this.application.use("/static", express.static(process.cwd() + "/dist/static"));
   }
 
-  // ルート以外にアクセスしたときのフォールバックの設定をします。
-  private setupFallback(): void {
-    this.application.use("/api*", (request, response, next) => {
+  // ルーターで設定されていない URL にアクセスされたときのフォールバックの設定をします。
+  // フロントエンドから呼び出すためのエンドポイント用 URL で処理が存在しないものにアクセスされた場合は、404 エラーを返します。
+  // そうでない場合は、フロントエンドのトップページを返します。
+  private setupFallbackHandlers(): void {
+    let internalHandler = function (request: Request, response: Response, next: NextFunction): void {
       let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
       LogUtil.log("index", `not found: ${fullUrl}`);
       response.status(404).end();
-    });
-    this.application.use("*", (request, response, next) => {
-      if ((request.method === "GET" || request.method === "HEAD") && request.accepts("html")) {
+    };
+    let otherHandler = function (request: Request, response: Response, next: NextFunction): void {
+      let method = request.method;
+      if ((method === "GET" || method === "HEAD") && request.accepts("html")) {
         response.sendFile(process.cwd() + "/dist/client/index.html", (error) => {
           if (error) {
             next(error);
@@ -135,7 +126,9 @@ export class Main {
       } else {
         next();
       }
-    });
+    };
+    this.application.use("/internal*", internalHandler);
+    this.application.use("*", otherHandler);
   }
 
   private setupErrorHandler(): void {

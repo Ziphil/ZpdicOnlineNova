@@ -8,9 +8,6 @@ import {
 } from "express";
 import * as jwt from "jsonwebtoken";
 import {
-  JWT_SECRET
-} from "/server/index";
-import {
   DictionaryAuthority,
   DictionaryModel
 } from "/server/model/dictionary";
@@ -26,6 +23,9 @@ import {
 import {
   RecaptchaUtil
 } from "/server/util/recaptcha";
+import {
+  JWT_SECRET
+} from "/server/variable";
 
 
 // リクエストのヘッダーに書き込まれたトークンを利用して認証を行います。

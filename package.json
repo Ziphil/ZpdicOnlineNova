@@ -1,6 +1,6 @@
 {
   "name": "zpdic",
-  "version": "2.17.1",
+  "version": "2.17.2",
   "author": "Ziphil",
   "description": "",
   "main": "dist/index.js",
@@ -9,13 +9,15 @@
     "build:client": "webpack -p --mode production --config webpack-client.ts",
     "build:client:analyze": "cross-env ANALYZE=1 npm run build:client",
     "build:server": "webpack --mode production --config webpack-server.ts",
-    "start": "node dist/index.js",
     "develop": "run-p develop:client develop:server develop:nodemon",
     "develop:client": "webpack-dev-server --mode development --devtool inline-source-map --config webpack-client.ts --hot",
     "develop:server": "webpack --mode development --config webpack-server.ts --watch",
     "develop:nodemon": "nodemon --inspect -L dist/index.js",
+    "develop:service": "node dist/service.js",
+    "start": "node dist/index.js",
+    "start:service": "node dist/service.js",
     "postinstall": "npm run build",
-    "command:tsn": "ts-node -r tsconfig-paths/register",
+    "command:tsnode": "ts-node -r tsconfig-paths/register",
     "command:tsc": "tsc"
   },
   "nodemonConfig": {
