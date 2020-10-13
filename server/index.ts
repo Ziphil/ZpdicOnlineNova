@@ -13,9 +13,6 @@ import {
 } from "express";
 import fs from "fs";
 import mongoose from "mongoose";
-import {
-  SchemaTypes
-} from "mongoose";
 import multer from "multer";
 import {
   DebugController,
@@ -27,6 +24,9 @@ import {
 import {
   LogUtil
 } from "/server/util/log";
+import {
+  MongoUtil
+} from "/server/util/mongo";
 import {
   COOKIE_SECRET,
   MONGO_URI,
@@ -77,11 +77,7 @@ export class Main {
   // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
   // typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。
   private setupMongo(): void {
-    let check = function (value: string): boolean {
-      return value !== null;
-    };
-    let SchemaString = SchemaTypes.String as any;
-    SchemaString.checkRequired(check);
+    MongoUtil.setCheckRequired("String");
     mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }
