@@ -2,11 +2,11 @@
 
 import axios from "axios";
 import {
-  RECAPTCHA_SECRET
-} from "/server/index";
-import {
   CustomError
 } from "/server/model/error";
+import {
+  RECAPTCHA_SECRET
+} from "/server/variable";
 
 
 export class RecaptchaUtil {

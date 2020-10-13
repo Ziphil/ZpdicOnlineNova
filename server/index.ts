@@ -4,7 +4,6 @@ import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
 import parser from "body-parser";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
 import express from "express";
 import {
   Express,
@@ -28,16 +27,12 @@ import {
 import {
   LogUtil
 } from "/server/util/log";
-
-
-dotenv.config({path: "./variable.env"});
-
-export const PORT = process.env["PORT"] || 8050;
-export const MONGO_URI = process.env["DB_URI"] || "mongodb://dummy";
-export const COOKIE_SECRET = process.env["COOKIE_SECRET"] || "cookie-zpdic";
-export const JWT_SECRET = process.env["JWT_SECRET"] || "jwt-secret";
-export const SENDGRID_KEY = process.env["SENDGRID_KEY"] || "dummy";
-export const RECAPTCHA_SECRET = process.env["RECAPTCHA_SECRET"] || "dummy";
+import {
+  COOKIE_SECRET,
+  MONGO_URI,
+  PORT,
+  SENDGRID_KEY
+} from "/server/variable";
 
 
 export class Main {
@@ -81,7 +76,7 @@ export class Main {
 
   // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
   // typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。
-  protected setupMongo(): void {
+  private setupMongo(): void {
     let check = function (value: string): boolean {
       return value !== null;
     };
@@ -91,7 +86,7 @@ export class Main {
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }
 
-  protected setupSendgrid(): void {
+  private setupSendgrid(): void {
     sendgrid.setApiKey(SENDGRID_KEY);
   }
 
@@ -157,7 +152,5 @@ export class Main {
 }
 
 
-if (require.main === module) {
-  let main = new Main();
-  main.main();
-}
+let main = new Main();
+main.main();
