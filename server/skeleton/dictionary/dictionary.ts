@@ -4,8 +4,7 @@ import {
   DictionaryAuthority
 } from "/server/model/dictionary";
 import {
-  DictionarySettings,
-  Word
+  DictionarySettings
 } from "/server/skeleton/dictionary";
 import {
   Skeleton
