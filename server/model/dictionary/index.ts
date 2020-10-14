@@ -9,6 +9,7 @@ export * from "./serializer/serializer";
 export * from "./serializer/slime-serializer";
 export * from "./dictionary";
 export * from "./dictionary-authority";
+export * from "./dictionary-settings";
 export * from "./equivalent";
 export * from "./information";
 export * from "./relation";

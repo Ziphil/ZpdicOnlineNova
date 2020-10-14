@@ -19,6 +19,9 @@ import {
   DictionaryAuthority,
   DictionaryAuthorityUtil,
   DictionaryFullAuthority,
+  DictionarySettingsCreator,
+  DictionarySettingsModel,
+  DictionarySettingsSchema,
   SearchParameter,
   Serializer,
   Suggestion,
@@ -95,6 +98,9 @@ export class DictionarySchema {
   @prop()
   public snoj?: string;
 
+  @prop({required: true, type: () => DictionarySettingsSchema})
+  public settings!: DictionarySettingsSchema;
+
   @prop()
   public createdDate?: Date;
 
@@ -112,6 +118,7 @@ export class DictionarySchema {
     dictionary.name = name;
     dictionary.status = "ready";
     dictionary.secret = false;
+    dictionary.settings = DictionarySettingsModel.createDefault();
     dictionary.createdDate = new Date();
     dictionary.updatedDate = new Date();
     dictionary.externalData = {};
@@ -476,9 +483,10 @@ export class DictionaryCreator {
     let secret = raw.secret;
     let explanation = raw.explanation;
     let snoj = raw.snoj;
+    let settings = DictionarySettingsCreator.create(raw.settings);
     let createdDate = raw.createdDate?.toISOString() ?? undefined;
     let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, snoj, createdDate, updatedDate});
+    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, snoj, settings, createdDate, updatedDate});
     return skeleton;
   }
 
