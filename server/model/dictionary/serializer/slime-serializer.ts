@@ -105,7 +105,9 @@ export class SlimeSerializer extends Serializer {
     if (this.dictionary.snoj !== undefined) {
       externalData.snoj = this.dictionary.snoj;
     }
-    externalData.zpdic = {...externalData.zpdic, ...this.dictionary.settings};
+    externalData.zpdic.punctuations = this.dictionary.settings.punctuations;
+    externalData.zpdic.pronunciationTitle = this.dictionary.settings.pronunciationTitle;
+    externalData.zpdic.enableMarkdown = this.dictionary.settings.enableMarkdown;
     let string = JSON.stringify(externalData).slice(1, -1);
     return string;
   }

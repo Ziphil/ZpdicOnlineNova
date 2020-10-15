@@ -21,13 +21,15 @@ import {
   DictionaryFullAuthority,
   DictionarySettingsCreator,
   DictionarySettingsModel,
-  DictionarySettingsSchema,
   SearchParameter,
   Serializer,
   Suggestion,
   Word,
   WordModel
 } from "/server/model/dictionary";
+import {
+  DictionarySettingsSchema
+} from "/server/model/dictionary/dictionary-settings";
 import {
   CustomError
 } from "/server/model/error";
@@ -98,7 +100,7 @@ export class DictionarySchema {
   @prop()
   public snoj?: string;
 
-  @prop({required: true, type: () => DictionarySettingsSchema})
+  @prop({required: true, type: DictionarySettingsSchema})
   public settings!: DictionarySettingsSchema;
 
   @prop()
