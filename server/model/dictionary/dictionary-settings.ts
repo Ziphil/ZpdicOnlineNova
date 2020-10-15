@@ -15,11 +15,15 @@ export class DictionarySettingsSchema {
   public punctuations!: Array<string>;
 
   @prop({required: true})
+  public pronunciationTitle!: string;
+
+  @prop({required: true})
   public enableMarkdown!: boolean;
 
   public static createDefault(): DictionarySettings {
     let settings = new DictionarySettingsModel({});
     settings.punctuations = [",", "、"];
+    settings.pronunciationTitle = "pronunciation";
     settings.enableMarkdown = false;
     return settings;
   }
@@ -31,8 +35,9 @@ export class DictionarySettingsCreator {
 
   public static create(raw: DictionarySettings): DictionarySettingsSkeleton {
     let punctuations = raw.punctuations;
+    let pronunciationTitle = raw.pronunciationTitle;
     let enableMarkdown = raw.enableMarkdown;
-    let skeleton = DictionarySettingsSkeleton.of({punctuations, enableMarkdown});
+    let skeleton = DictionarySettingsSkeleton.of({punctuations, pronunciationTitle, enableMarkdown});
     return skeleton;
   }
 
