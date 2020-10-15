@@ -13,6 +13,10 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  SERVER_PATH,
+  SERVER_PATH_PREFIX
+} from "/server/controller/type";
+import {
   Dictionary
 } from "/server/skeleton/dictionary";
 
@@ -47,7 +51,7 @@ export default class DictionaryHeader extends Component<Props, State> {
 
   private downloadDictionary(): void {
     if (this.props.dictionary) {
-      let path = "/api/dictionary/download?number=" + this.props.dictionary.number;
+      let path = SERVER_PATH_PREFIX + SERVER_PATH["downloadDictionary"] + "?number=" + this.props.dictionary.number;
       location.replace(path);
     }
   }
