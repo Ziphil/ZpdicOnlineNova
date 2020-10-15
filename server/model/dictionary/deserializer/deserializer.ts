@@ -6,6 +6,7 @@ import {
 import {
   BinaryDeserializer,
   Dictionary,
+  DictionarySettings,
   SlimeDeserializer,
   Word
 } from "/server/model/dictionary";
@@ -90,6 +91,7 @@ export type DeserializerEvent = {
   word: [Word],
   words: [Array<Word>],
   property: TupleOf<DictionaryProperty>,
+  settings: TupleOf<DictionarySettings>,
   external: [string, any],
   end: [],
   error: [Error]

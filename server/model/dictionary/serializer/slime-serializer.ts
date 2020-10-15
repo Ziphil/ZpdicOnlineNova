@@ -98,21 +98,14 @@ export class SlimeSerializer extends Serializer {
   }
 
   private createExternalString(): string {
-    let externalData = this.dictionary.externalData as any;
-    if (!("zpdic" in externalData)) {
-      externalData = Object.assign({}, externalData, {zpdic: {}});
-    }
-    if (externalData.zpdic.pronunciationTitle === undefined) {
-      let zpdic = Object.assign({}, externalData.zpdic, {pronunciationTitle: "pronunciation"});
-      externalData = Object.assign({}, externalData, {zpdic});
-    }
-    if (externalData?.zpdic.explanation === undefined) {
-      let zpdic = Object.assign({}, externalData.zpdic, {explanation: this.dictionary.explanation});
-      externalData = Object.assign({}, externalData, {zpdic});
+    let externalData = {zpdic: {}, ...this.dictionary.externalData} as any;
+    if (this.dictionary.explanation !== undefined) {
+      externalData.zpdic.explanation = this.dictionary.explanation;
     }
     if (this.dictionary.snoj !== undefined) {
-      externalData = Object.assign({}, externalData, {snoj: this.dictionary.snoj});
+      externalData = {...externalData, snoj: this.dictionary.snoj};
     }
+    externalData.zpdic = {...externalData.zpdic, ...this.dictionary.settings};
     let string = JSON.stringify(externalData).slice(1, -1);
     return string;
   }

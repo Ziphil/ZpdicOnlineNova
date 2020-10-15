@@ -163,7 +163,9 @@ export class DictionarySchema {
   // 辞書の内部データも、ファイルから読み込んだものに更新されます。
   public async upload(this: Dictionary, path: string, originalPath: string): Promise<Dictionary> {
     await this.startUpload();
+    let settings = DictionarySettingsModel.createDefault() as any;
     let externalData = {};
+    let anyThis = this as any;
     let promise = new Promise<Dictionary>((resolve, reject) => {
       let stream = Deserializer.create(path, originalPath, this);
       if (stream !== null) {
@@ -176,8 +178,12 @@ export class DictionarySchema {
         });
         stream.on("property", (key, value) => {
           if (value !== undefined) {
-            let anyThis = this as any;
             anyThis[key] = value;
+          }
+        });
+        stream.on("settings", (key, value) => {
+          if (value !== undefined) {
+            settings[key] = value;
           }
         });
         stream.on("external", (key, data) => {
@@ -185,6 +191,7 @@ export class DictionarySchema {
         });
         stream.on("end", () => {
           this.status = "ready";
+          this.settings = settings;
           this.externalData = externalData;
           resolve(this);
         });
