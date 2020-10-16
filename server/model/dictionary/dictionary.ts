@@ -19,6 +19,7 @@ import {
   DictionaryAuthority,
   DictionaryAuthorityUtil,
   DictionaryFullAuthority,
+  DictionarySettings,
   DictionarySettingsCreator,
   DictionarySettingsModel,
   SearchParameter,
@@ -280,6 +281,17 @@ export class DictionarySchema {
 
   public async changeSnoj(this: Dictionary, snoj: string): Promise<Dictionary> {
     this.snoj = snoj;
+    await this.save();
+    return this;
+  }
+
+  public async changeSettings(this: Dictionary, settings: Partial<DictionarySettings>): Promise<Dictionary> {
+    let anySettings = this.settings as any;
+    for (let [key, value] of Object.entries(settings)) {
+      if (value !== undefined) {
+        anySettings[key] = value;
+      }
+    }
     await this.save();
     return this;
   }

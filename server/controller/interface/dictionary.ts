@@ -299,6 +299,21 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @post(SERVER_PATH["changeDictionarySettings"])
+  @before(verifyUser(), verifyDictionary("own"))
+  public async [Symbol()](request: PostRequest<"changeDictionarySettings">, response: PostResponse<"changeDictionarySettings">): Promise<void> {
+    let dictionary = request.dictionary;
+    let settings = request.body.settings;
+    if (dictionary) {
+      await dictionary.changeSettings(settings);
+      let body = DictionaryCreator.create(dictionary);
+      Controller.respond(response, body);
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
   @post(SERVER_PATH["editWord"])
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: PostRequest<"editWord">, response: PostResponse<"editWord">): Promise<void> {

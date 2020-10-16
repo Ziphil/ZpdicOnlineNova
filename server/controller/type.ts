@@ -9,6 +9,7 @@ import {
 import {
   DetailedDictionary,
   Dictionary,
+  DictionarySettings,
   EditWord,
   Suggestion,
   UserDictionary,
@@ -39,6 +40,7 @@ export const SERVER_PATH = {
   changeDictionarySecret: "/dictionary/edit/secret",
   changeDictionaryExplanation: "/dictionary/edit/explanation",
   changeDictionarySnoj: "/dictionary/edit/snoj",
+  changeDictionarySettings: "/dictionary/edit/settings",
   addInvitation: "/dictionary/invite",
   respondInvitation: "/dictionary/invite/respond",
   deleteDictionaryAuthorizedUser: "/dictionary/user/delete",
@@ -149,6 +151,16 @@ type ProcessData = {
     get: Noop,
     post: {
       request: {number: number, snoj: string},
+      response: {
+        200: Dictionary,
+        400: CustomError<"noSuchDictionaryNumber">
+      }
+    }
+  },
+  changeDictionarySettings: {
+    get: Noop,
+    post: {
+      request: {number: number, settings: Partial<DictionarySettings>},
       response: {
         200: Dictionary,
         400: CustomError<"noSuchDictionaryNumber">
