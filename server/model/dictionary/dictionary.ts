@@ -330,7 +330,7 @@ export class DictionarySchema {
     }
     this.updatedDate = new Date();
     await this.save();
-    LogUtil.log("dictionary/edit-word", {currentWord, resultWord});
+    LogUtil.log("dictionary/edit-word", {dictionary: {id: this.id, name: this.name}, current: currentWord?.id, result: resultWord.id});
     return resultWord;
   }
 
@@ -342,7 +342,7 @@ export class DictionarySchema {
     } else {
       throw new CustomError("noSuchWordNumber");
     }
-    LogUtil.log("dictionary/delete-word", {word});
+    LogUtil.log("dictionary/delete-word", {dictionary: {id: this.id, name: this.name}, current: word.id});
     return word;
   }
 
