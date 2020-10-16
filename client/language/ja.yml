@@ -408,7 +408,7 @@ dictionarySettingPage:
     description: >-
       OTM-JSON 形式で出力する際に、発音データを格納しておく説明欄の分類名を設定できます。
   changeDictionaryEnableMarkdownForm:
-    label: "Markdown 設定の変更"
+    label: "Markdown の有効化/無効化"
     description: >-
       これを有効にしておくと、単語データの説明欄を Markdown 形式で書くことができるようになります。
   uploadDictionaryForm:
