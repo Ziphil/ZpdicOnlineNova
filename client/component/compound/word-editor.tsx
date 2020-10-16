@@ -428,7 +428,6 @@ export default class WordEditor extends Component<Props, State> {
     let node = (
       <Alert
         text={this.trans("wordEditor.alert")}
-        iconLabel="&#xF071;"
         confirmLabel={this.trans("wordEditor.alertConfirm")}
         open={this.state.alertOpen}
         outsideClosable={true}

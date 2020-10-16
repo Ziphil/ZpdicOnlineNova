@@ -66,7 +66,6 @@ export default class UserPane extends Component<Props, State> {
         </WhitePane>
         <Alert
           text={this.trans("userPane.alert")}
-          iconLabel="&#xF071;"
           confirmLabel={this.trans("userPane.delete")}
           open={this.state.alertOpen}
           outsideClosable={true}

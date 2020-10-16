@@ -71,7 +71,6 @@ export default class CommissionPane extends Component<Props, State> {
         </div>
         <Alert
           text={this.trans("commissionPane.alert")}
-          iconLabel="&#xF071;"
           confirmLabel={this.trans("commissionPane.delete")}
           open={this.state.alertOpen}
           outsideClosable={true}

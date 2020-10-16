@@ -42,7 +42,6 @@ export default class DeleteUserForm extends Component<Props, State> {
         </p>
         <Alert
           text={this.trans("deleteUserForm.alert")}
-          iconLabel="&#xF071;"
           confirmLabel={this.trans("deleteUserForm.confirm")}
           open={this.state.alertOpen}
           outsideClosable={true}
