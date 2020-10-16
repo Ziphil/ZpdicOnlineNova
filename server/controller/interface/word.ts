@@ -14,13 +14,13 @@ import {
   post
 } from "/server/controller/decorator";
 import {
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/interface/type";
+import {
   verifyDictionary,
   verifyUser
 } from "/server/controller/middle";
-import {
-  SERVER_PATH,
-  SERVER_PATH_PREFIX
-} from "/server/controller/type";
 import {
   WordCreator
 } from "/server/model/dictionary";
@@ -32,7 +32,7 @@ import {
 @controller(SERVER_PATH_PREFIX)
 export class WordController extends Controller {
 
-  @post(SERVER_PATH["editWord"])
+  @post(SERVER_PATHS["editWord"])
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: PostRequest<"editWord">, response: PostResponse<"editWord">): Promise<void> {
     let dictionary = request.dictionary;
@@ -47,7 +47,7 @@ export class WordController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["deleteWord"])
+  @post(SERVER_PATHS["deleteWord"])
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: PostRequest<"deleteWord">, response: PostResponse<"deleteWord">): Promise<void> {
     let dictionary = request.dictionary;

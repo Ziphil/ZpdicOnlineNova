@@ -17,7 +17,7 @@ import {
 } from "/client/component/decorator";
 import {
   WithSize
-} from "/server/controller/type";
+} from "/server/controller/interface/type";
 import {
   Commission
 } from "/server/skeleton/commission";

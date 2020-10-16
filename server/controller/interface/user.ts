@@ -14,15 +14,15 @@ import {
   post
 } from "/server/controller/decorator";
 import {
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/interface/type";
+import {
   login,
   logout,
   verifyRecaptcha,
   verifyUser
 } from "/server/controller/middle";
-import {
-  SERVER_PATH,
-  SERVER_PATH_PREFIX
-} from "/server/controller/type";
 import {
   UserCreator,
   UserModel
@@ -41,7 +41,7 @@ import {
 @controller(SERVER_PATH_PREFIX)
 export class UserController extends Controller {
 
-  @post(SERVER_PATH["login"])
+  @post(SERVER_PATHS["login"])
   @before(login(30 * 24 * 60 * 60))
   public async [Symbol()](request: PostRequest<"login">, response: PostResponse<"login">): Promise<void> {
     let token = request.token!;
@@ -51,13 +51,13 @@ export class UserController extends Controller {
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATH["logout"])
+  @post(SERVER_PATHS["logout"])
   @before(logout())
   public async [Symbol()](request: PostRequest<"logout">, response: PostResponse<"logout">): Promise<void> {
     Controller.respond(response, null);
   }
 
-  @post(SERVER_PATH["registerUser"])
+  @post(SERVER_PATHS["registerUser"])
   @before(verifyRecaptcha())
   public async [Symbol()](request: PostRequest<"registerUser">, response: PostResponse<"registerUser">): Promise<void> {
     let name = CastUtil.ensureString(request.body.name);
@@ -92,7 +92,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeUserScreenName"])
+  @post(SERVER_PATHS["changeUserScreenName"])
   @before(verifyUser())
   public async [Symbol()](request: PostRequest<"changeUserScreenName">, response: PostResponse<"changeUserScreenName">): Promise<void> {
     let user = request.user!;
@@ -106,7 +106,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeUserEmail"])
+  @post(SERVER_PATHS["changeUserEmail"])
   @before(verifyUser())
   public async [Symbol()](request: PostRequest<"changeUserEmail">, response: PostResponse<"changeUserEmail">): Promise<void> {
     let user = request.user!;
@@ -127,7 +127,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeUserPassword"])
+  @post(SERVER_PATHS["changeUserPassword"])
   @before(verifyUser())
   public async [Symbol()](request: PostRequest<"changeUserPassword">, response: PostResponse<"changeUserPassword">): Promise<void> {
     let user = request.user!;
@@ -146,7 +146,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["issueUserResetToken"])
+  @post(SERVER_PATHS["issueUserResetToken"])
   @before(verifyRecaptcha())
   public async [Symbol()](request: PostRequest<"issueUserResetToken">, response: PostResponse<"issueUserResetToken">): Promise<void> {
     let name = CastUtil.ensureString(request.body.name);
@@ -170,7 +170,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["resetUserPassword"])
+  @post(SERVER_PATHS["resetUserPassword"])
   public async [Symbol()](request: PostRequest<"resetUserPassword">, response: PostResponse<"resetUserPassword">): Promise<void> {
     let key = CastUtil.ensureString(request.body.key);
     let password = CastUtil.ensureString(request.body.password);
@@ -192,7 +192,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["deleteUser"])
+  @post(SERVER_PATHS["deleteUser"])
   @before(verifyUser())
   public async [Symbol()](request: PostRequest<"deleteUser">, response: PostResponse<"deleteUser">): Promise<void> {
     let user = request.user!;
@@ -204,7 +204,7 @@ export class UserController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchUser"])
+  @get(SERVER_PATHS["fetchUser"])
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
     let user = request.user!;
@@ -212,7 +212,7 @@ export class UserController extends Controller {
     Controller.respond(response, body);
   }
 
-  @get(SERVER_PATH["suggestUsers"])
+  @get(SERVER_PATHS["suggestUsers"])
   public async [Symbol()](request: GetRequest<"suggestUsers">, response: GetResponse<"suggestUsers">): Promise<void> {
     let pattern = CastUtil.ensureString(request.query.pattern);
     let users = await UserModel.suggest(pattern);

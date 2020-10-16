@@ -13,9 +13,9 @@ import {
   post
 } from "/server/controller/decorator";
 import {
-  SERVER_PATH,
+  SERVER_PATHS,
   SERVER_PATH_PREFIX
-} from "/server/controller/type";
+} from "/server/controller/interface/type";
 import {
   HistoryModel
 } from "/server/model/history";

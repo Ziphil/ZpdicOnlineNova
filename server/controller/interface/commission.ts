@@ -14,14 +14,14 @@ import {
   post
 } from "/server/controller/decorator";
 import {
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/interface/type";
+import {
   verifyDictionary,
   verifyRecaptcha,
   verifyUser
 } from "/server/controller/middle";
-import {
-  SERVER_PATH,
-  SERVER_PATH_PREFIX
-} from "/server/controller/type";
 import {
   CommissionCreator,
   CommissionModel
@@ -43,7 +43,7 @@ import {
 @controller(SERVER_PATH_PREFIX)
 export class CommissionController extends Controller {
 
-  @post(SERVER_PATH["addCommission"])
+  @post(SERVER_PATHS["addCommission"])
   @before(verifyRecaptcha())
   public async [Symbol()](request: PostRequest<"addCommission">, response: PostResponse<"addCommission">): Promise<void> {
     let number = CastUtil.ensureNumber(request.body.number);
@@ -65,7 +65,7 @@ export class CommissionController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["deleteCommission"])
+  @post(SERVER_PATHS["deleteCommission"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"deleteCommission">, response: PostResponse<"deleteCommission">): Promise<void> {
     let dictionary = request.dictionary!;
@@ -86,7 +86,7 @@ export class CommissionController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchCommissions"])
+  @get(SERVER_PATHS["fetchCommissions"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: GetRequest<"fetchCommissions">, response: GetResponse<"fetchCommissions">): Promise<void> {
     let dictionary = request.dictionary;

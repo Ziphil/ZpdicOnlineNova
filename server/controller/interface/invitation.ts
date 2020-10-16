@@ -14,13 +14,13 @@ import {
   post
 } from "/server/controller/decorator";
 import {
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/interface/type";
+import {
   verifyDictionary,
   verifyUser
 } from "/server/controller/middle";
-import {
-  SERVER_PATH,
-  SERVER_PATH_PREFIX
-} from "/server/controller/type";
 import {
   InvitationCreator,
   InvitationModel,
@@ -40,7 +40,7 @@ import {
 @controller(SERVER_PATH_PREFIX)
 export class InvitationController extends Controller {
 
-  @post(SERVER_PATH["addInvitation"])
+  @post(SERVER_PATHS["addInvitation"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"addInvitation">, response: PostResponse<"addInvitation">): Promise<void> {
     let dictionary = request.dictionary;
@@ -80,7 +80,7 @@ export class InvitationController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["respondInvitation"])
+  @post(SERVER_PATHS["respondInvitation"])
   @before(verifyUser())
   public async [Symbol()](request: PostRequest<"respondInvitation">, response: PostResponse<"respondInvitation">): Promise<void> {
     let user = request.user!;
@@ -105,7 +105,7 @@ export class InvitationController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchInvitations"])
+  @get(SERVER_PATHS["fetchInvitations"])
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"fetchInvitations">, response: GetResponse<"fetchInvitations">): Promise<void> {
     let user = request.user!;

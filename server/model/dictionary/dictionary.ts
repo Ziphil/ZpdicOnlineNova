@@ -12,7 +12,7 @@ import {
 import Fuse from "fuse.js";
 import {
   WithSize
-} from "/server/controller/type";
+} from "/server/controller/interface/type";
 import {
   DICTIONARY_AUTHORITIES,
   Deserializer,

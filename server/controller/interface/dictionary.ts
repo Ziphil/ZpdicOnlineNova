@@ -17,13 +17,13 @@ import {
   post
 } from "/server/controller/decorator";
 import {
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/interface/type";
+import {
   verifyDictionary,
   verifyUser
 } from "/server/controller/middle";
-import {
-  SERVER_PATH,
-  SERVER_PATH_PREFIX
-} from "/server/controller/type";
 import {
   DictionaryAuthorityUtil,
   DictionaryCreator,
@@ -58,7 +58,7 @@ import {
 @controller(SERVER_PATH_PREFIX)
 export class DictionaryController extends Controller {
 
-  @post(SERVER_PATH["createDictionary"])
+  @post(SERVER_PATHS["createDictionary"])
   @before(verifyUser())
   public async [Symbol()](request: PostRequest<"createDictionary">, response: PostResponse<"createDictionary">): Promise<void> {
     let user = request.user!;
@@ -68,7 +68,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATH["uploadDictionary"])
+  @post(SERVER_PATHS["uploadDictionary"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary;
@@ -92,7 +92,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["deleteDictionary"])
+  @post(SERVER_PATHS["deleteDictionary"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"deleteDictionary">, response: PostResponse<"deleteDictionary">): Promise<void> {
     let dictionary = request.dictionary;
@@ -105,7 +105,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeDictionaryName"])
+  @post(SERVER_PATHS["changeDictionaryName"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {
     let dictionary = request.dictionary;
@@ -120,7 +120,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeDictionaryParamName"])
+  @post(SERVER_PATHS["changeDictionaryParamName"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionaryParamName">, response: PostResponse<"changeDictionaryParamName">): Promise<void> {
     let dictionary = request.dictionary;
@@ -150,7 +150,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["deleteDictionaryAuthorizedUser"])
+  @post(SERVER_PATHS["deleteDictionaryAuthorizedUser"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"deleteDictionaryAuthorizedUser">, response: PostResponse<"deleteDictionaryAuthorizedUser">): Promise<void> {
     let dictionary = request.dictionary;
@@ -179,7 +179,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeDictionarySecret"])
+  @post(SERVER_PATHS["changeDictionarySecret"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {
     let dictionary = request.dictionary;
@@ -194,7 +194,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeDictionaryExplanation"])
+  @post(SERVER_PATHS["changeDictionaryExplanation"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionaryExplanation">, response: PostResponse<"changeDictionaryExplanation">): Promise<void> {
     let dictionary = request.dictionary;
@@ -209,7 +209,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeDictionarySnoj"])
+  @post(SERVER_PATHS["changeDictionarySnoj"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionarySnoj">, response: PostResponse<"changeDictionarySnoj">): Promise<void> {
     let dictionary = request.dictionary;
@@ -224,7 +224,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeDictionarySettings"])
+  @post(SERVER_PATHS["changeDictionarySettings"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionarySettings">, response: PostResponse<"changeDictionarySettings">): Promise<void> {
     let dictionary = request.dictionary;
@@ -239,7 +239,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["searchDictionary"])
+  @get(SERVER_PATHS["searchDictionary"])
   public async [Symbol()](request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let search = CastUtil.ensureString(request.query.search);
@@ -263,7 +263,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["downloadDictionary"])
+  @get(SERVER_PATHS["downloadDictionary"])
   public async [Symbol()](request: GetRequest<"downloadDictionary">, response: GetResponse<"downloadDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let fileName = CastUtil.ensureString(request.query.fileName);
@@ -281,7 +281,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchDictionary"])
+  @get(SERVER_PATHS["fetchDictionary"])
   public async [Symbol()](request: GetRequest<"fetchDictionary">, response: GetResponse<"fetchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let paramName = CastUtil.ensureString(request.query.paramName);
@@ -307,7 +307,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["suggestDictionaryTitles"])
+  @get(SERVER_PATHS["suggestDictionaryTitles"])
   public async [Symbol()](request: GetRequest<"suggestDictionaryTitles">, response: GetResponse<"suggestDictionaryTitles">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let propertyName = CastUtil.ensureString(request.query.propertyName);
@@ -323,7 +323,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchDictionaryAuthorizedUsers"])
+  @get(SERVER_PATHS["fetchDictionaryAuthorizedUsers"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: GetRequest<"fetchDictionaryAuthorizedUsers">, response: GetResponse<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     let dictionary = request.dictionary;
@@ -338,7 +338,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchWholeDictionary"])
+  @get(SERVER_PATHS["fetchWholeDictionary"])
   public async [Symbol()](request: GetRequest<"fetchWholeDictionary">, response: GetResponse<"fetchWholeDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let dictionary = await DictionaryModel.findOneByNumber(number);
@@ -351,7 +351,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchDictionaries"])
+  @get(SERVER_PATHS["fetchDictionaries"])
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"fetchDictionaries">, response: GetResponse<"fetchDictionaries">): Promise<void> {
     let user = request.user!;
@@ -371,7 +371,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @get(SERVER_PATH["fetchAllDictionaries"])
+  @get(SERVER_PATHS["fetchAllDictionaries"])
   public async [Symbol()](request: GetRequest<"fetchAllDictionaries">, response: GetResponse<"fetchAllDictionaries">): Promise<void> {
     let order = CastUtil.ensureString(request.query.order);
     let offset = CastUtil.ensureNumber(request.query.offset);
@@ -395,7 +395,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @get(SERVER_PATH["fetchDictionaryAggregation"])
+  @get(SERVER_PATHS["fetchDictionaryAggregation"])
   public async [Symbol()](request: GetRequest<"fetchDictionaryAggregation">, response: GetResponse<"fetchDictionaryAggregation">): Promise<void> {
     let dictionaryCountPromise = DictionaryModel.find().estimatedDocumentCount();
     let wordCountPromise = WordModel.find().estimatedDocumentCount();
@@ -406,7 +406,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @get(SERVER_PATH["checkDictionaryAuthorization"])
+  @get(SERVER_PATHS["checkDictionaryAuthorization"])
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
     let user = request.user!;

@@ -6,9 +6,9 @@ import {
   observable
 } from "mobx";
 import {
-  SERVER_PATH,
+  SERVER_PATHS,
   SERVER_PATH_PREFIX
-} from "/server/controller/type";
+} from "/server/controller/interface/type";
 import {
   DetailedUser
 } from "/server/skeleton/user";
@@ -49,7 +49,7 @@ export class GlobalStore {
 
   @action
   public async fetchUser(): Promise<void> {
-    let url = SERVER_PATH_PREFIX + SERVER_PATH["fetchUser"];
+    let url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
     let response = await axios.get(url, {validateStatus: () => true});
     if (response.status === 200) {
       let user = response.data;

@@ -35,9 +35,9 @@ import {
   ProcessName,
   RequestData,
   ResponseData,
-  SERVER_PATH,
+  SERVER_PATHS,
   SERVER_PATH_PREFIX
-} from "/server/controller/type";
+} from "/server/controller/interface/type";
 
 
 export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Props<P, Q>, S, H> {
@@ -95,7 +95,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
   }
 
   private async request<N extends ProcessName, M extends Method>(name: N, method: M, config: RequestConfig = {}): Promise<AxiosResponseData<N, M>> {
-    let url = SERVER_PATH_PREFIX + SERVER_PATH[name];
+    let url = SERVER_PATH_PREFIX + SERVER_PATHS[name];
     if (config.useRecaptcha) {
       let action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : name;
       let recaptchaToken = await grecaptcha.execute(Main.getRecaptchaSite(), {action});

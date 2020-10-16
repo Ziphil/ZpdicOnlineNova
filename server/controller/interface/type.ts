@@ -31,7 +31,7 @@ import {
 
 
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
-export const SERVER_PATH = {
+export const SERVER_PATHS = {
   createDictionary: "/dictionary/create",
   uploadDictionary: "/dictionary/upload",
   deleteDictionary: "/dictionary/delete",
