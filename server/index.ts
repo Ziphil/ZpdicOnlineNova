@@ -15,11 +15,14 @@ import fs from "fs";
 import mongoose from "mongoose";
 import multer from "multer";
 import {
+  CommissionController,
   DebugController,
   DictionaryController,
+  InvitationController,
   NotificationController,
   OtherController,
-  UserController
+  UserController,
+  WordController
 } from "/server/controller/interface";
 import {
   LogUtil
@@ -94,11 +97,14 @@ export class Main {
   // ルーターの設定を行います。
   // このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。
   private setupRouters(): void {
+    CommissionController.use(this.application);
     DebugController.use(this.application);
     DictionaryController.use(this.application);
+    InvitationController.use(this.application);
     NotificationController.use(this.application);
     OtherController.use(this.application);
     UserController.use(this.application);
+    WordController.use(this.application);
   }
 
   private setupStatic(): void {
