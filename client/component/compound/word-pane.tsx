@@ -14,6 +14,7 @@ import {
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Link from "/client/component/atom/link";
+import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
 import WordEditor from "/client/component/compound/word-editor";
 import {
@@ -120,12 +121,11 @@ export default class WordPane extends Component<Props, State> {
 
   private renderInformations(): ReactNode {
     let nodes = this.props.word.informations.map((information, index) => {
+      let textNode = (this.props.dictionary.settings.enableMarkdown) ? <Markdown source={information.text}/> : <p styleName="text">{information.text}</p>;
       let informationNode = (
         <div styleName="container" key={index}>
           <div styleName="title">{information.title}</div>
-          <p styleName="text">
-            {information.text}
-          </p>
+          {textNode}
         </div>
       );
       return informationNode;
