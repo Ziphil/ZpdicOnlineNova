@@ -14,12 +14,12 @@ import {
   post
 } from "/server/controller/decorator";
 import {
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/interface/type";
+import {
   verifyUser
 } from "/server/controller/middle";
-import {
-  SERVER_PATH,
-  SERVER_PATH_PREFIX
-} from "/server/controller/type";
 import {
   NotificationCreator,
   NotificationModel
@@ -38,7 +38,7 @@ import {
 @controller(SERVER_PATH_PREFIX)
 export class NotificationController extends Controller {
 
-  @post(SERVER_PATH["addNotification"])
+  @post(SERVER_PATHS["addNotification"])
   @before(verifyUser("admin"))
   public async [Symbol()](request: PostRequest<"addNotification">, response: PostResponse<"addNotification">): Promise<void> {
     let type = CastUtil.ensureString(request.body.type);
@@ -49,7 +49,7 @@ export class NotificationController extends Controller {
     Controller.respond(response, body);
   }
 
-  @get(SERVER_PATH["fetchNotifications"])
+  @get(SERVER_PATHS["fetchNotifications"])
   public async [Symbol()](request: GetRequest<"fetchNotifications">, response: GetResponse<"fetchNotifications">): Promise<void> {
     let offset = CastUtil.ensureNumber(request.query.offset);
     let size = CastUtil.ensureNumber(request.query.size);

@@ -3,6 +3,7 @@
 import {
   randomBytes
 } from "crypto";
+import originalRemoveMarkdown from "remove-markdown";
 
 
 export function createRandomString(length: number, addDate?: boolean): string {
@@ -12,4 +13,10 @@ export function createRandomString(length: number, addDate?: boolean): string {
     string += date.getTime();
   }
   return string;
+}
+
+export function removeMarkdown(source: string): string {
+  let options = {gfm: true};
+  let result = originalRemoveMarkdown(source, options);
+  return result;
 }

@@ -9,6 +9,7 @@ import {
 import {
   DetailedDictionary,
   Dictionary,
+  DictionarySettings,
   EditWord,
   Suggestion,
   UserDictionary,
@@ -30,18 +31,19 @@ import {
 
 
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
-export const SERVER_PATH = {
+export const SERVER_PATHS = {
   createDictionary: "/dictionary/create",
   uploadDictionary: "/dictionary/upload",
   deleteDictionary: "/dictionary/delete",
   changeDictionaryName: "/dictionary/edit/name",
-  changeDictionaryParamName: "/dictionary/edit/paramname",
+  changeDictionaryParamName: "/dictionary/edit/param-name",
   changeDictionarySecret: "/dictionary/edit/secret",
   changeDictionaryExplanation: "/dictionary/edit/explanation",
   changeDictionarySnoj: "/dictionary/edit/snoj",
-  addInvitation: "/dictionary/invite",
-  respondInvitation: "/dictionary/invite/respond",
+  changeDictionarySettings: "/dictionary/edit/settings",
   deleteDictionaryAuthorizedUser: "/dictionary/user/delete",
+  addInvitation: "/invitation/add",
+  respondInvitation: "/invitation/respond",
   editWord: "/word/edit",
   deleteWord: "/word/delete",
   addCommission: "/request/add",
@@ -49,13 +51,13 @@ export const SERVER_PATH = {
   searchDictionary: "/dictionary/search",
   downloadDictionary: "/dictionary/download",
   fetchDictionary: "/dictionary/info",
-  suggestDictionaryTitles: "/dictionary/title",
+  suggestDictionaryTitles: "/dictionary/suggest/title",
   fetchDictionaryAuthorizedUsers: "/dictionary/user",
   fetchWholeDictionary: "/dictionary/whole",
   fetchDictionaries: "/dictionary/list",
   fetchAllDictionaries: "/dictionary/list/all",
   fetchDictionaryAggregation: "/dictionary/aggregate",
-  fetchInvitations: "/dictionary/invite/fetch",
+  fetchInvitations: "/invitation/fetch",
   checkDictionaryAuthorization: "/dictionary/check",
   fetchCommissions: "/request/fetch",
   login: "/user/login",
@@ -155,6 +157,26 @@ type ProcessData = {
       }
     }
   },
+  changeDictionarySettings: {
+    get: Noop,
+    post: {
+      request: {number: number, settings: Partial<DictionarySettings>},
+      response: {
+        200: Dictionary,
+        400: CustomError<"noSuchDictionaryNumber">
+      }
+    }
+  },
+  deleteDictionaryAuthorizedUser: {
+    get: Noop,
+    post: {
+      request: {number: number, id: string},
+      response: {
+        200: null,
+        400: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryAuthorizedUser">
+      }
+    }
+  },
   addInvitation: {
     get: Noop,
     post: {
@@ -175,16 +197,6 @@ type ProcessData = {
       }
     }
   },
-  deleteDictionaryAuthorizedUser: {
-    get: Noop,
-    post: {
-      request: {number: number, id: string},
-      response: {
-        200: null,
-        400: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryAuthorizedUser">
-      }
-    }
-  }
   editWord: {
     get: Noop,
     post: {

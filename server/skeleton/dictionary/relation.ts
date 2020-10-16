@@ -11,7 +11,7 @@ export class Relation extends Skeleton {
   public number!: number;
   public name!: string;
 
-  public static empty(): Relation {
+  public static createEmpty(): Relation {
     let title = "";
     let number = -1;
     let name = "";

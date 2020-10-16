@@ -12,6 +12,7 @@ import ChangeDictionaryExplanationForm from "/client/component/compound/dictiona
 import ChangeDictionaryNameForm from "/client/component/compound/dictionary-setting/change-dictionary-name-form";
 import ChangeDictionaryParamNameForm from "/client/component/compound/dictionary-setting/change-dictionary-param-name-form";
 import ChangeDictionarySecretForm from "/client/component/compound/dictionary-setting/change-dictionary-secret-form";
+import ChangeDictionarySettingsForm from "/client/component/compound/dictionary-setting/change-dictionary-settings-form";
 import ChangeDictionarySnojForm from "/client/component/compound/dictionary-setting/change-dictionary-snoj-form";
 import DeleteDictionaryForm from "/client/component/compound/dictionary-setting/delete-dictionary-form";
 import UploadDictionaryForm from "/client/component/compound/dictionary-setting/upload-dictionary-form";
@@ -23,7 +24,7 @@ import {
 import Page from "/client/component/page/page";
 import {
   WithSize
-} from "/server/controller/type";
+} from "/server/controller/interface/type";
 import {
   Commission
 } from "/server/skeleton/commission";
@@ -94,7 +95,11 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let description = this.trans("dictionarySettingPage.changeDictionaryNameForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeDictionaryNameForm number={this.state.dictionary!.number} currentName={this.state.dictionary!.name} onSubmit={this.fetchDictionary.bind(this)}/>
+        <ChangeDictionaryNameForm
+          number={this.state.dictionary!.number}
+          currentName={this.state.dictionary!.name}
+          onSubmit={this.fetchDictionary.bind(this)}
+        />
       </SettingPane>
     );
     return node;
@@ -105,7 +110,11 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let description = this.trans("dictionarySettingPage.changeDictionaryParamNameForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeDictionaryParamNameForm number={this.state.dictionary!.number} currentParamName={this.state.dictionary!.paramName} onSubmit={this.fetchDictionary.bind(this)}/>
+        <ChangeDictionaryParamNameForm
+          number={this.state.dictionary!.number}
+          currentParamName={this.state.dictionary!.paramName}
+          onSubmit={this.fetchDictionary.bind(this)}
+        />
       </SettingPane>
     );
     return node;
@@ -116,7 +125,11 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let description = this.trans("dictionarySettingPage.changeDictionarySecretForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <ChangeDictionarySecretForm number={this.state.dictionary!.number} currentSecret={this.state.dictionary!.secret}/>
+        <ChangeDictionarySecretForm
+          number={this.state.dictionary!.number}
+          currentSecret={this.state.dictionary!.secret}
+          onSubmit={this.fetchDictionary.bind(this)}
+        />
       </SettingPane>
     );
     return node;
@@ -127,7 +140,11 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let description = this.trans("dictionarySettingPage.changeDictionaryExplanationForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description} forceWide={true}>
-        <ChangeDictionaryExplanationForm number={this.state.dictionary!.number} currentExplanation={this.state.dictionary!.explanation ?? ""}/>
+        <ChangeDictionaryExplanationForm
+          number={this.state.dictionary!.number}
+          currentExplanation={this.state.dictionary!.explanation ?? ""}
+          onSubmit={this.fetchDictionary.bind(this)}
+        />
       </SettingPane>
     );
     return node;
@@ -138,7 +155,43 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let description = this.trans("dictionarySettingPage.changeDictionarySnojForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description} forceWide={true}>
-        <ChangeDictionarySnojForm number={this.state.dictionary!.number} currentSnoj={this.state.dictionary!.snoj ?? ""}/>
+        <ChangeDictionarySnojForm
+          number={this.state.dictionary!.number}
+          currentSnoj={this.state.dictionary!.snoj ?? ""}
+          onSubmit={this.fetchDictionary.bind(this)}
+        />
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderChangeDictionaryPronunciationTitleForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.changeDictionaryPronunciationTitleForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionaryPronunciationTitleForm.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <ChangeDictionarySettingsForm
+          number={this.state.dictionary!.number}
+          currentSettings={this.state.dictionary!.settings}
+          propertyName="pronunciationTitle"
+          onSubmit={this.fetchDictionary.bind(this)}
+        />
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderChangeDictionaryEnableMarkdownForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.changeDictionaryEnableMarkdownForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionaryEnableMarkdownForm.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <ChangeDictionarySettingsForm
+          number={this.state.dictionary!.number}
+          currentSettings={this.state.dictionary!.settings}
+          propertyName="enableMarkdown"
+          onSubmit={this.fetchDictionary.bind(this)}
+        />
       </SettingPane>
     );
     return node;
@@ -218,6 +271,8 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       } else if (mode === "setting") {
         contentNodes.push(this.renderChangeDictionaryExplanationForm());
         contentNodes.push(this.renderChangeDictionarySnojForm());
+        contentNodes.push(this.renderChangeDictionaryPronunciationTitleForm());
+        contentNodes.push(this.renderChangeDictionaryEnableMarkdownForm());
       } else if (mode === "access") {
         contentNodes.push(this.renderAddEditInvitationForm());
         contentNodes.push(this.renderAddTransferInvitationForm());

@@ -57,7 +57,7 @@ export default class WordEditor extends Component<Props, State> {
 
   public constructor(props: Props) {
     super(props);
-    let word = cloneDeep(this.props.word) ?? EditWord.empty();
+    let word = cloneDeep(this.props.word) ?? EditWord.createEmpty();
     if (this.props.defaultName) {
       word.name = this.props.defaultName;
     }
@@ -238,13 +238,14 @@ export default class WordEditor extends Component<Props, State> {
   private addEquivalent(): void {
     let word = this.state.word;
     let equivalentStrings = this.state.equivalentStrings;
-    word.equivalents.push(Equivalent.empty());
+    word.equivalents.push(Equivalent.createEmpty());
     equivalentStrings.push("");
   }
 
   private renderInformations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
+    let mode = (this.props.dictionary.settings.enableMarkdown) ? "markdown" as const : undefined;
     let suggest = this.createSuggest("information");
     let innerNodes = word.informations.map((information, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.informationTitle") : undefined;
@@ -253,7 +254,7 @@ export default class WordEditor extends Component<Props, State> {
         <div styleName="inner" key={index}>
           <div styleName="form information">
             <Input className={styles["title"]} value={information.title} label={titleLabel} suggest={suggest} onSet={this.setWord((title) => word.informations[index].title = title)}/>
-            <TextArea className={styles["text"]} value={information.text} label={textLabel} onSet={this.setWord((text) => word.informations[index].text = text)}/>
+            <TextArea className={styles["text"]} value={information.text} label={textLabel} font="monospace" mode={mode} onSet={this.setWord((text) => word.informations[index].text = text)}/>
           </div>
           <div styleName="control-button">
             <ControlGroup>
@@ -268,7 +269,7 @@ export default class WordEditor extends Component<Props, State> {
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.informations.push(Information.empty()))}/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.informations.push(Information.createEmpty()))}/>
       </div>
     );
     let node = (
@@ -306,7 +307,7 @@ export default class WordEditor extends Component<Props, State> {
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.variations.push(Variation.empty()))}/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.variations.push(Variation.createEmpty()))}/>
       </div>
     );
     let node = (
@@ -363,7 +364,7 @@ export default class WordEditor extends Component<Props, State> {
     let word = this.state.word;
     let relationIndex = this.editingRelationIndex!;
     if (word.relations[relationIndex] === undefined) {
-      word.relations[relationIndex] = Relation.empty();
+      word.relations[relationIndex] = Relation.createEmpty();
     }
     word.relations[relationIndex].number = relationWord.number;
     word.relations[relationIndex].name = relationWord.name;
@@ -428,7 +429,6 @@ export default class WordEditor extends Component<Props, State> {
     let node = (
       <Alert
         text={this.trans("wordEditor.alert")}
-        iconLabel="&#xF071;"
         confirmLabel={this.trans("wordEditor.alertConfirm")}
         open={this.state.alertOpen}
         outsideClosable={true}

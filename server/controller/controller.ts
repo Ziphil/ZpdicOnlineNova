@@ -15,7 +15,7 @@ import {
   RequestData,
   ResponseData,
   ResponseDataSep
-} from "/server/controller/type";
+} from "/server/controller/interface/type";
 import {
   Dictionary
 } from "/server/model/dictionary";

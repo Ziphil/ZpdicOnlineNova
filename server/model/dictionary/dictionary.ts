@@ -12,19 +12,25 @@ import {
 import Fuse from "fuse.js";
 import {
   WithSize
-} from "/server/controller/type";
+} from "/server/controller/interface/type";
 import {
   DICTIONARY_AUTHORITIES,
   Deserializer,
   DictionaryAuthority,
   DictionaryAuthorityUtil,
   DictionaryFullAuthority,
+  DictionarySettings,
+  DictionarySettingsCreator,
+  DictionarySettingsModel,
   SearchParameter,
   Serializer,
   Suggestion,
   Word,
   WordModel
 } from "/server/model/dictionary";
+import {
+  DictionarySettingsSchema
+} from "/server/model/dictionary/dictionary-settings";
 import {
   CustomError
 } from "/server/model/error";
@@ -95,6 +101,9 @@ export class DictionarySchema {
   @prop()
   public snoj?: string;
 
+  @prop({required: true, type: DictionarySettingsSchema})
+  public settings!: DictionarySettingsSchema;
+
   @prop()
   public createdDate?: Date;
 
@@ -104,7 +113,7 @@ export class DictionarySchema {
   @prop({required: true, default: {}})
   public externalData!: object;
 
-  public static async createEmpty(name: string, user: User): Promise<Dictionary> {
+  public static async addEmpty(name: string, user: User): Promise<Dictionary> {
     let dictionary = new DictionaryModel({});
     dictionary.user = user;
     dictionary.editUsers = [];
@@ -112,6 +121,7 @@ export class DictionarySchema {
     dictionary.name = name;
     dictionary.status = "ready";
     dictionary.secret = false;
+    dictionary.settings = DictionarySettingsModel.createDefault();
     dictionary.createdDate = new Date();
     dictionary.updatedDate = new Date();
     dictionary.externalData = {};
@@ -156,7 +166,9 @@ export class DictionarySchema {
   // 辞書の内部データも、ファイルから読み込んだものに更新されます。
   public async upload(this: Dictionary, path: string, originalPath: string): Promise<Dictionary> {
     await this.startUpload();
+    let settings = DictionarySettingsModel.createDefault() as any;
     let externalData = {};
+    let anyThis = this as any;
     let promise = new Promise<Dictionary>((resolve, reject) => {
       let stream = Deserializer.create(path, originalPath, this);
       if (stream !== null) {
@@ -169,8 +181,12 @@ export class DictionarySchema {
         });
         stream.on("property", (key, value) => {
           if (value !== undefined) {
-            let anyThis = this as any;
             anyThis[key] = value;
+          }
+        });
+        stream.on("settings", (key, value) => {
+          if (value !== undefined) {
+            settings[key] = value;
           }
         });
         stream.on("external", (key, data) => {
@@ -178,6 +194,7 @@ export class DictionarySchema {
         });
         stream.on("end", () => {
           this.status = "ready";
+          this.settings = settings;
           this.externalData = externalData;
           resolve(this);
         });
@@ -268,6 +285,17 @@ export class DictionarySchema {
     return this;
   }
 
+  public async changeSettings(this: Dictionary, settings: Partial<DictionarySettings>): Promise<Dictionary> {
+    let anySettings = this.settings as any;
+    for (let [key, value] of Object.entries(settings)) {
+      if (value !== undefined) {
+        anySettings[key] = value;
+      }
+    }
+    await this.save();
+    return this;
+  }
+
   public async getWords(): Promise<Array<Word>> {
     let words = await WordModel.find().where("dictionary", this);
     return words;
@@ -302,7 +330,7 @@ export class DictionarySchema {
     }
     this.updatedDate = new Date();
     await this.save();
-    LogUtil.log("dictionary/edit-word", {currentWord, resultWord});
+    LogUtil.log("dictionary/edit-word", {dictionary: {id: this.id, name: this.name}, current: currentWord?.id, result: resultWord.id});
     return resultWord;
   }
 
@@ -314,7 +342,7 @@ export class DictionarySchema {
     } else {
       throw new CustomError("noSuchWordNumber");
     }
-    LogUtil.log("dictionary/delete-word", {word});
+    LogUtil.log("dictionary/delete-word", {dictionary: {id: this.id, name: this.name}, current: word.id});
     return word;
   }
 
@@ -476,9 +504,10 @@ export class DictionaryCreator {
     let secret = raw.secret;
     let explanation = raw.explanation;
     let snoj = raw.snoj;
+    let settings = DictionarySettingsCreator.create(raw.settings);
     let createdDate = raw.createdDate?.toISOString() ?? undefined;
     let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, snoj, createdDate, updatedDate});
+    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, snoj, settings, createdDate, updatedDate});
     return skeleton;
   }
 

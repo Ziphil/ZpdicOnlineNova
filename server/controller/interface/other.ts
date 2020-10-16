@@ -14,12 +14,12 @@ import {
   post
 } from "/server/controller/decorator";
 import {
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/interface/type";
+import {
   verifyRecaptcha
 } from "/server/controller/middle";
-import {
-  SERVER_PATH,
-  SERVER_PATH_PREFIX
-} from "/server/controller/type";
 import {
   UserModel
 } from "/server/model/user";
@@ -37,7 +37,7 @@ import {
 @controller(SERVER_PATH_PREFIX)
 export class OtherController extends Controller {
 
-  @post(SERVER_PATH["contact"])
+  @post(SERVER_PATHS["contact"])
   @before(verifyRecaptcha())
   public async [Symbol()](request: PostRequest<"contact">, response: PostResponse<"contact">): Promise<void> {
     let name = CastUtil.ensureString(request.body.name);

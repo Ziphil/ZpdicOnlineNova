@@ -17,6 +17,7 @@ import {
 export default class Alert extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
+    iconLabel: "\uF071",
     open: false,
     outsideClosable: false,
     confirmLabel: null,
@@ -76,6 +77,7 @@ type Props = {
   onCancel?: (event: MouseEvent<HTMLButtonElement>) => void
 };
 type DefaultProps = {
+  iconLabel: string,
   open: boolean,
   outsideClosable: boolean,
   confirmLabel: string | null,

@@ -1,6 +1,6 @@
 {
   "name": "zpdic",
-  "version": "2.17.3",
+  "version": "2.18.0",
   "author": "Ziphil",
   "description": "",
   "main": "dist/index.js",
@@ -79,6 +79,7 @@
     "react-markdown": "^4.3.1",
     "react-router-dom": "^5.2.0",
     "reflect-metadata": "^0.1.13",
+    "remove-markdown": "^0.3.0",
     "sass-loader": "^9.0.3",
     "source-map-loader": "^1.1.0",
     "stream-json": "^1.7.1",
@@ -123,6 +124,7 @@
     "@types/react-css-modules": "^4.6.2",
     "@types/react-dom": "^16.9.8",
     "@types/react-router-dom": "^5.1.6",
+    "@types/remove-markdown": "^0.1.1",
     "@types/stream-json": "^1.5.1",
     "@types/webpack-bundle-analyzer": "^3.8.0",
     "@types/webpack-node-externals": "^1.7.1"

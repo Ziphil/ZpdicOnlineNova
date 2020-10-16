@@ -10,7 +10,7 @@ export class Variation extends Skeleton {
   public title!: string;
   public name!: string;
 
-  public static empty(): Variation {
+  public static createEmpty(): Variation {
     let title = "";
     let name = "";
     let skeleton = Variation.of({title, name});

@@ -13,7 +13,7 @@ import {
 import Page from "/client/component/page/page";
 import {
   WithSize
-} from "/server/controller/type";
+} from "/server/controller/interface/type";
 import {
   DetailedDictionary
 } from "/server/skeleton/dictionary";

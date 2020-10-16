@@ -15,14 +15,12 @@ import {
 import {
   Deserializer
 } from "/server/model/dictionary/deserializer/deserializer";
-import {
-  LogUtil
-} from "/server/util/log";
 
 
 export class SlimeDeserializer extends Deserializer {
 
   private pronunciationTitle?: string;
+  private enableMarkdown?: boolean;
 
   public start(): void {
     this.readSettings();
@@ -32,11 +30,23 @@ export class SlimeDeserializer extends Deserializer {
     let stream = oboe(createReadStream(this.path));
     stream.on("node:!.*", (data, jsonPath) => {
       if (jsonPath[0] === "zpdic") {
-        if (typeof data["pronunciationTitle"] === "string") {
-          this.pronunciationTitle = data["pronunciationTitle"];
-        }
         if (typeof data["explanation"] === "string") {
           this.emit("property", "explanation", data["explanation"]);
+        }
+        if (Array.isArray(data["punctuations"]) && data["punctuations"].every((punctuation) => typeof punctuation === "string")) {
+          this.emit("settings", "punctuations", data["punctuations"]);
+        }
+        if (typeof data["pronunciationTitle"] === "string") {
+          this.pronunciationTitle = data["pronunciationTitle"];
+          this.emit("settings", "pronunciationTitle", data["pronunciationTitle"]);
+        }
+      } else if (jsonPath[0] === "zpdicOnline") {
+        if (typeof data["explanation"] === "string") {
+          this.emit("property", "explanation", data["explanation"]);
+        }
+        if (typeof data["enableMarkdown"] === "boolean") {
+          this.enableMarkdown = data["enableMarkdown"];
+          this.emit("settings", "enableMarkdown", data["enableMarkdown"]);
         }
       } else if (jsonPath[0] === "snoj") {
         if (typeof data === "string") {
@@ -98,7 +108,11 @@ export class SlimeDeserializer extends Deserializer {
       } else {
         let information = new InformationModel({});
         information.title = rawInformation["title"] ?? "";
-        information.text = rawInformation["text"] ?? "";
+        if (this.enableMarkdown) {
+          information.text = rawInformation["markdown"] ?? rawInformation["text"] ?? "";
+        } else {
+          information.text = rawInformation["text"] ?? "";
+        }
         word.informations.push(information);
       }
     }

@@ -29,6 +29,10 @@ popup:
     The description of the dictionary has been changed.
   dictionarySnojChanged: >-
     The snoj data for akrantiain has been changed.
+  dictionaryPronunciationTitleChanged: >-
+    発音データの分類名を変更しました。
+  dictionaryEnableMarkdownChanged: >-
+    説明欄の Markdown 設定を変更しました。
   dictionaryUploaded: >-
     Your file was successfully uploaded.
     Note that it will take some time before the dictionary data is updated.
@@ -203,6 +207,11 @@ changeDictionarySecretForm:
   caution: >-
     This setting affects only whether or not this dictionary is shown in the public dictionary list.
     Even if you select “Hide” here, everyone who has the link can still view this dictionary.
+changeDictionarySettingsForm:
+  pronunciationTitle: "Title of pronunciation"
+  enableMarkdownTrue: "Enable"
+  enableMarkdownFalse: "Disable"
+  confirm: "Confirm"
 changeDictionarySnojForm:
   snoj: "Snoj data for akrantiain"
   confirm: "Confirm"
@@ -394,6 +403,14 @@ dictionarySettingPage:
       Change the snoj data for akrantiain.
       If you set this data, akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
       When a word has its own pronunciation specified, it will be displayed instead.
+  changeDictionaryPronunciationTitleForm:
+    label: "Change title of pronunciation"
+    description: >-
+      Change the title of the pronunciation data which is used when outputting the dictionary in OTM-JSON format.
+  changeDictionaryEnableMarkdownForm:
+    label: "Enable or disable Markdown"
+    description: >-
+      If you set this enabled, you can write contents of words in Markdown format.
   uploadDictionaryForm:
     label: "Upload"
     description: >-

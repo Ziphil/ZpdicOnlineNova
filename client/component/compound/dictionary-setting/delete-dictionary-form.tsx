@@ -42,7 +42,6 @@ export default class DeleteDictionaryForm extends Component<Props, State> {
         </p>
         <Alert
           text={this.trans("deleteDictionaryForm.alert")}
-          iconLabel="&#xF071;"
           confirmLabel={this.trans("deleteDictionaryForm.confirm")}
           open={this.state.alertOpen}
           outsideClosable={true}

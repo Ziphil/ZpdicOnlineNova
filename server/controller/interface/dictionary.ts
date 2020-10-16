@@ -17,18 +17,13 @@ import {
   post
 } from "/server/controller/decorator";
 import {
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/interface/type";
+import {
   verifyDictionary,
-  verifyRecaptcha,
   verifyUser
 } from "/server/controller/middle";
-import {
-  SERVER_PATH,
-  SERVER_PATH_PREFIX
-} from "/server/controller/type";
-import {
-  CommissionCreator,
-  CommissionModel
-} from "/server/model/commission";
 import {
   DictionaryAuthorityUtil,
   DictionaryCreator,
@@ -41,11 +36,6 @@ import {
   WordCreator,
   WordModel
 } from "/server/model/dictionary";
-import {
-  InvitationCreator,
-  InvitationModel,
-  InvitationTypeUtil
-} from "/server/model/invitation";
 import {
   UserCreator,
   UserModel
@@ -68,17 +58,17 @@ import {
 @controller(SERVER_PATH_PREFIX)
 export class DictionaryController extends Controller {
 
-  @post(SERVER_PATH["createDictionary"])
+  @post(SERVER_PATHS["createDictionary"])
   @before(verifyUser())
   public async [Symbol()](request: PostRequest<"createDictionary">, response: PostResponse<"createDictionary">): Promise<void> {
     let user = request.user!;
     let name = CastUtil.ensureString(request.body.name);
-    let dictionary = await DictionaryModel.createEmpty(name, user);
+    let dictionary = await DictionaryModel.addEmpty(name, user);
     let body = DictionaryCreator.create(dictionary);
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATH["uploadDictionary"])
+  @post(SERVER_PATHS["uploadDictionary"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"uploadDictionary">, response: PostResponse<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary;
@@ -102,7 +92,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["deleteDictionary"])
+  @post(SERVER_PATHS["deleteDictionary"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"deleteDictionary">, response: PostResponse<"deleteDictionary">): Promise<void> {
     let dictionary = request.dictionary;
@@ -115,7 +105,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeDictionaryName"])
+  @post(SERVER_PATHS["changeDictionaryName"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionaryName">, response: PostResponse<"changeDictionaryName">): Promise<void> {
     let dictionary = request.dictionary;
@@ -130,7 +120,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeDictionaryParamName"])
+  @post(SERVER_PATHS["changeDictionaryParamName"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionaryParamName">, response: PostResponse<"changeDictionaryParamName">): Promise<void> {
     let dictionary = request.dictionary;
@@ -160,72 +150,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["addInvitation"])
-  @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: PostRequest<"addInvitation">, response: PostResponse<"addInvitation">): Promise<void> {
-    let dictionary = request.dictionary;
-    let type = InvitationTypeUtil.cast(CastUtil.ensureString(request.body.type));
-    let userName = CastUtil.ensureString(request.body.userName);
-    let user = await UserModel.findOneByName(userName);
-    if (dictionary && user) {
-      try {
-        let invitation = await InvitationModel.add(type, dictionary, user);
-        let body = await InvitationCreator.create(invitation);
-        Controller.respond(response, body);
-      } catch (error) {
-        let body = (() => {
-          if (error.name === "CustomError") {
-            if (error.type === "userCanAlreadyEdit") {
-              return CustomError.ofType("userCanAlreadyEdit");
-            } else if (error.type === "userCanAlreadyOwn") {
-              return CustomError.ofType("userCanAlreadyOwn");
-            } else if (error.type === "editInvitationAlreadyAdded") {
-              return CustomError.ofType("editInvitationAlreadyAdded");
-            } else if (error.type === "transferInvitationAlreadyAdded") {
-              return CustomError.ofType("transferInvitationAlreadyAdded");
-            }
-          }
-        })();
-        Controller.respondError(response, body, error);
-      }
-    } else {
-      let body = (() => {
-        if (dictionary === undefined) {
-          return CustomError.ofType("noSuchDictionaryNumber");
-        } else {
-          return CustomError.ofType("noSuchUser");
-        }
-      })();
-      Controller.respondError(response, body);
-    }
-  }
-
-  @post(SERVER_PATH["respondInvitation"])
-  @before(verifyUser())
-  public async [Symbol()](request: PostRequest<"respondInvitation">, response: PostResponse<"respondInvitation">): Promise<void> {
-    let user = request.user!;
-    let id = CastUtil.ensureString(request.body.id);
-    let accept = CastUtil.ensureBoolean(request.body.accept);
-    let invitation = await InvitationModel.findById(id);
-    if (invitation) {
-      try {
-        invitation.respond(user, accept);
-        let body = await InvitationCreator.create(invitation);
-        Controller.respond(response, body);
-      } catch (error) {
-        if (error.name === "CustomError" && error.type === "forbidden") {
-          Controller.respondForbidden(response);
-        } else {
-          throw error;
-        }
-      }
-    } else {
-      let body = CustomError.ofType("noSuchInvitation");
-      Controller.respondError(response, body);
-    }
-  }
-
-  @post(SERVER_PATH["deleteDictionaryAuthorizedUser"])
+  @post(SERVER_PATHS["deleteDictionaryAuthorizedUser"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"deleteDictionaryAuthorizedUser">, response: PostResponse<"deleteDictionaryAuthorizedUser">): Promise<void> {
     let dictionary = request.dictionary;
@@ -254,7 +179,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeDictionarySecret"])
+  @post(SERVER_PATHS["changeDictionarySecret"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionarySecret">, response: PostResponse<"changeDictionarySecret">): Promise<void> {
     let dictionary = request.dictionary;
@@ -269,7 +194,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeDictionaryExplanation"])
+  @post(SERVER_PATHS["changeDictionaryExplanation"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionaryExplanation">, response: PostResponse<"changeDictionaryExplanation">): Promise<void> {
     let dictionary = request.dictionary;
@@ -284,7 +209,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["changeDictionarySnoj"])
+  @post(SERVER_PATHS["changeDictionarySnoj"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: PostRequest<"changeDictionarySnoj">, response: PostResponse<"changeDictionarySnoj">): Promise<void> {
     let dictionary = request.dictionary;
@@ -299,14 +224,14 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["editWord"])
-  @before(verifyUser(), verifyDictionary("edit"))
-  public async [Symbol()](request: PostRequest<"editWord">, response: PostResponse<"editWord">): Promise<void> {
+  @post(SERVER_PATHS["changeDictionarySettings"])
+  @before(verifyUser(), verifyDictionary("own"))
+  public async [Symbol()](request: PostRequest<"changeDictionarySettings">, response: PostResponse<"changeDictionarySettings">): Promise<void> {
     let dictionary = request.dictionary;
-    let word = request.body.word;
+    let settings = request.body.settings;
     if (dictionary) {
-      let resultWord = await dictionary.editWord(word);
-      let body = WordCreator.create(resultWord);
+      await dictionary.changeSettings(settings);
+      let body = DictionaryCreator.create(dictionary);
       Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
@@ -314,74 +239,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATH["deleteWord"])
-  @before(verifyUser(), verifyDictionary("edit"))
-  public async [Symbol()](request: PostRequest<"deleteWord">, response: PostResponse<"deleteWord">): Promise<void> {
-    let dictionary = request.dictionary;
-    let wordNumber = request.body.wordNumber;
-    if (dictionary) {
-      try {
-        let resultWord = await dictionary.deleteWord(wordNumber);
-        let body = WordCreator.create(resultWord);
-        Controller.respond(response, body);
-      } catch (error) {
-        let body = (() => {
-          if (error.name === "CustomError" && error.type === "noSuchWordNumber") {
-            return CustomError.ofType("noSuchWordNumber");
-          }
-        })();
-        Controller.respondError(response, body, error);
-      }
-    } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
-    }
-  }
-
-  @post(SERVER_PATH["addCommission"])
-  @before(verifyRecaptcha())
-  public async [Symbol()](request: PostRequest<"addCommission">, response: PostResponse<"addCommission">): Promise<void> {
-    let number = CastUtil.ensureNumber(request.body.number);
-    let name = CastUtil.ensureString(request.body.name);
-    let comment = CastUtil.ensureString(request.body.comment);
-    if (name !== "") {
-      let dictionary = await DictionaryModel.findOneByNumber(number);
-      if (dictionary) {
-        let commission = await CommissionModel.add(dictionary, name, comment);
-        let body = CommissionCreator.create(commission);
-        Controller.respond(response, body);
-      } else {
-        let body = CustomError.ofType("noSuchDictionaryNumber");
-        Controller.respondError(response, body);
-      }
-    } else {
-      let body = CustomError.ofType("emptyCommissionName");
-      Controller.respondError(response, body);
-    }
-  }
-
-  @post(SERVER_PATH["deleteCommission"])
-  @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: PostRequest<"deleteCommission">, response: PostResponse<"deleteCommission">): Promise<void> {
-    let dictionary = request.dictionary!;
-    let id = CastUtil.ensureString(request.body.id);
-    if (dictionary) {
-      let commission = await CommissionModel.findOneByDictionaryAndId(dictionary, id);
-      if (commission) {
-        await commission.delete();
-        let body = CommissionCreator.create(commission);
-        Controller.respond(response, body);
-      } else {
-        let body = CustomError.ofType("noSuchCommission");
-        Controller.respondError(response, body);
-      }
-    } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
-    }
-  }
-
-  @get(SERVER_PATH["searchDictionary"])
+  @get(SERVER_PATHS["searchDictionary"])
   public async [Symbol()](request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let search = CastUtil.ensureString(request.query.search);
@@ -405,7 +263,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["downloadDictionary"])
+  @get(SERVER_PATHS["downloadDictionary"])
   public async [Symbol()](request: GetRequest<"downloadDictionary">, response: GetResponse<"downloadDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let fileName = CastUtil.ensureString(request.query.fileName);
@@ -423,7 +281,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchDictionary"])
+  @get(SERVER_PATHS["fetchDictionary"])
   public async [Symbol()](request: GetRequest<"fetchDictionary">, response: GetResponse<"fetchDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let paramName = CastUtil.ensureString(request.query.paramName);
@@ -449,7 +307,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["suggestDictionaryTitles"])
+  @get(SERVER_PATHS["suggestDictionaryTitles"])
   public async [Symbol()](request: GetRequest<"suggestDictionaryTitles">, response: GetResponse<"suggestDictionaryTitles">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let propertyName = CastUtil.ensureString(request.query.propertyName);
@@ -465,7 +323,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchDictionaryAuthorizedUsers"])
+  @get(SERVER_PATHS["fetchDictionaryAuthorizedUsers"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: GetRequest<"fetchDictionaryAuthorizedUsers">, response: GetResponse<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     let dictionary = request.dictionary;
@@ -480,7 +338,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchWholeDictionary"])
+  @get(SERVER_PATHS["fetchWholeDictionary"])
   public async [Symbol()](request: GetRequest<"fetchWholeDictionary">, response: GetResponse<"fetchWholeDictionary">): Promise<void> {
     let number = CastUtil.ensureNumber(request.query.number);
     let dictionary = await DictionaryModel.findOneByNumber(number);
@@ -493,7 +351,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATH["fetchDictionaries"])
+  @get(SERVER_PATHS["fetchDictionaries"])
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"fetchDictionaries">, response: GetResponse<"fetchDictionaries">): Promise<void> {
     let user = request.user!;
@@ -513,7 +371,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @get(SERVER_PATH["fetchAllDictionaries"])
+  @get(SERVER_PATHS["fetchAllDictionaries"])
   public async [Symbol()](request: GetRequest<"fetchAllDictionaries">, response: GetResponse<"fetchAllDictionaries">): Promise<void> {
     let order = CastUtil.ensureString(request.query.order);
     let offset = CastUtil.ensureNumber(request.query.offset);
@@ -537,7 +395,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @get(SERVER_PATH["fetchDictionaryAggregation"])
+  @get(SERVER_PATHS["fetchDictionaryAggregation"])
   public async [Symbol()](request: GetRequest<"fetchDictionaryAggregation">, response: GetResponse<"fetchDictionaryAggregation">): Promise<void> {
     let dictionaryCountPromise = DictionaryModel.find().estimatedDocumentCount();
     let wordCountPromise = WordModel.find().estimatedDocumentCount();
@@ -548,17 +406,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @get(SERVER_PATH["fetchInvitations"])
-  @before(verifyUser())
-  public async [Symbol()](request: GetRequest<"fetchInvitations">, response: GetResponse<"fetchInvitations">): Promise<void> {
-    let user = request.user!;
-    let type = InvitationTypeUtil.cast(CastUtil.ensureString(request.query.type));
-    let invitations = await InvitationModel.findByUser(type, user);
-    let body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
-    Controller.respond(response, body);
-  }
-
-  @get(SERVER_PATH["checkDictionaryAuthorization"])
+  @get(SERVER_PATHS["checkDictionaryAuthorization"])
   @before(verifyUser())
   public async [Symbol()](request: GetRequest<"checkDictionaryAuthorization">, response: GetResponse<"checkDictionaryAuthorization">): Promise<void> {
     let user = request.user!;
@@ -577,25 +425,5 @@ export class DictionaryController extends Controller {
       Controller.respondError(response, body);
     }
   }
-
-  @get(SERVER_PATH["fetchCommissions"])
-  @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: GetRequest<"fetchCommissions">, response: GetResponse<"fetchCommissions">): Promise<void> {
-    let dictionary = request.dictionary;
-    let offset = CastUtil.ensureNumber(request.query.offset);
-    let size = CastUtil.ensureNumber(request.query.size);
-    if (dictionary) {
-      let range = new QueryRange(offset, size);
-      let hitResult = await CommissionModel.findByDictionary(dictionary, range);
-      let hitCommissions = hitResult[0].map(CommissionCreator.create);
-      let hitSize = hitResult[1];
-      let body = [hitCommissions, hitSize] as any;
-      Controller.respond(response, body);
-    } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
-    }
-  }
-
 
 }

@@ -9,6 +9,9 @@ import {
   Word,
   WordModel
 } from "/server/model/dictionary";
+import {
+  removeMarkdown
+} from "/server/util/misc";
 
 
 export class SlimeSerializer extends Serializer {
@@ -38,7 +41,7 @@ export class SlimeSerializer extends Serializer {
         writer.write(",");
         writer.write(externalString);
       }
-      writer.write(",\"version\":1");
+      writer.write(",\"version\":2");
       writer.write("}");
       writer.end(() => {
         this.emit("end");
@@ -66,12 +69,16 @@ export class SlimeSerializer extends Serializer {
     for (let information of word.informations) {
       let rawInformation = {} as any;
       rawInformation["title"] = information.title;
-      rawInformation["text"] = information.text;
+      if (this.dictionary.settings.enableMarkdown) {
+        rawInformation["text"] = removeMarkdown(information.text);
+        rawInformation["markdown"] = information.text;
+      } else {
+        rawInformation["text"] = information.text;
+      }
       raw["contents"].push(rawInformation);
     }
     if (word.pronunciation !== undefined) {
-      let externalData = this.dictionary.externalData as any;
-      let title = externalData?.zpdic?.pronunciationTitle ?? "pronunciation";
+      let title = this.dictionary.settings.pronunciationTitle;
       let rawInformation = {} as any;
       rawInformation["title"] = title;
       rawInformation["text"] = word.pronunciation;
@@ -98,21 +105,19 @@ export class SlimeSerializer extends Serializer {
   }
 
   private createExternalString(): string {
-    let externalData = this.dictionary.externalData as any;
-    if (!("zpdic" in externalData)) {
-      externalData = Object.assign({}, externalData, {zpdic: {}});
-    }
-    if (externalData.zpdic.pronunciationTitle === undefined) {
-      let zpdic = Object.assign({}, externalData.zpdic, {pronunciationTitle: "pronunciation"});
-      externalData = Object.assign({}, externalData, {zpdic});
-    }
-    if (externalData?.zpdic.explanation === undefined) {
-      let zpdic = Object.assign({}, externalData.zpdic, {explanation: this.dictionary.explanation});
-      externalData = Object.assign({}, externalData, {zpdic});
+    let externalData = {} as any;
+    externalData["zpdic"] = {};
+    externalData["zpdicOnline"] = {};
+    externalData = Object.assign({}, externalData, this.dictionary.externalData);
+    if (this.dictionary.explanation !== undefined) {
+      externalData["zpdicOnline"]["explanation"] = this.dictionary.explanation;
     }
     if (this.dictionary.snoj !== undefined) {
-      externalData = Object.assign({}, externalData, {snoj: this.dictionary.snoj});
+      externalData["snoj"] = this.dictionary.snoj;
     }
+    externalData["zpdic"]["punctuations"] = this.dictionary.settings.punctuations;
+    externalData["zpdic"]["pronunciationTitle"] = this.dictionary.settings.pronunciationTitle;
+    externalData["zpdicOnline"]["enableMarkdown"] = this.dictionary.settings.enableMarkdown;
     let string = JSON.stringify(externalData).slice(1, -1);
     return string;
   }

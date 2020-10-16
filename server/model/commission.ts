@@ -9,7 +9,7 @@ import {
 } from "@typegoose/typegoose";
 import {
   WithSize
-} from "/server/controller/type";
+} from "/server/controller/interface/type";
 import {
   Dictionary,
   DictionarySchema

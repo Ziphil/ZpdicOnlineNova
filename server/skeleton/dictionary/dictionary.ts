@@ -4,7 +4,7 @@ import {
   DictionaryAuthority
 } from "/server/model/dictionary";
 import {
-  Word
+  DictionarySettings
 } from "/server/skeleton/dictionary";
 import {
   Skeleton
@@ -24,6 +24,7 @@ export class Dictionary extends Skeleton {
   public secret!: boolean;
   public explanation?: string;
   public snoj?: string;
+  public settings!: DictionarySettings;
   public createdDate?: string;
   public updatedDate?: string;
 
@@ -32,7 +33,6 @@ export class Dictionary extends Skeleton {
 
 export class DetailedDictionary extends Dictionary {
 
-  public words?: Array<Word>;
   public wordSize!: number;
   public user!: User;
 

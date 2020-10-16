@@ -12,7 +12,7 @@ import {
 } from "/client/component/decorator";
 import {
   WithSize
-} from "/server/controller/type";
+} from "/server/controller/interface/type";
 import {
   Notification
 } from "/server/skeleton/notification";
