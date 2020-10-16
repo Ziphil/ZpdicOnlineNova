@@ -29,6 +29,10 @@ popup:
     辞書の説明を変更しました。
   dictionarySnojChanged: >-
     akrantiain 用 snoj データを変更しました。
+  dictionaryPronunciationTitleChanged: >-
+    発音データの分類名を変更しました。
+  dictionaryEnableMarkdownChanged: >-
+    Markdown 設定を変更しました。
   dictionaryUploaded: >-
     辞書のアップロードが完了しました。
     なお、データの反映には時間がかかる場合があります。
@@ -203,6 +207,11 @@ changeDictionarySecretForm:
   caution: >-
     この設定は、辞書一覧ページに表示されるかどうかのみに関わります。
     これを「非表示」にしても、辞書の閲覧は誰でも可能なままです。
+changeDictionarySettingsForm:
+  pronunciationTitle: "発音データの分類名"
+  enableMarkdownTrue: "有効"
+  enableMarkdownFalse: "無効"
+  confirm: "変更"
 changeDictionarySnojForm:
   snoj: "akrantiain 用 snoj データ"
   confirm: "変更"
@@ -394,6 +403,14 @@ dictionarySettingPage:
       akrantiain 用 snoj データの変更します。
       これを設定しておくと、akrantiain を実行することで単語の発音が綴りから自動生成され、単語の横に表示されるようになります。
       単語に個別の発音が指定されているときは、そちらが優先されます。
+  changeDictionaryPronunciationTitleForm:
+    label: "発音データの分類名の変更"
+    description: >-
+      OTM-JSON 形式で出力する際に、発音データを格納しておく説明欄の分類名を設定できます。
+  changeDictionaryEnableMarkdownForm:
+    label: "Markdown 設定の変更"
+    description: >-
+      これを有効にしておくと、単語データの説明欄を Markdown 形式で書くことができるようになります。
   uploadDictionaryForm:
     label: "アップロード"
     description: >-
