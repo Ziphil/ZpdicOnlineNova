@@ -10,7 +10,7 @@ export class Information extends Skeleton {
   public title!: string;
   public text!: string;
 
-  public static empty(): Information {
+  public static createEmpty(): Information {
     let title = "";
     let text = "";
     let skeleton = Information.of({title, text});

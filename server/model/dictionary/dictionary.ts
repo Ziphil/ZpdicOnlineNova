@@ -112,7 +112,7 @@ export class DictionarySchema {
   @prop({required: true, default: {}})
   public externalData!: object;
 
-  public static async createEmpty(name: string, user: User): Promise<Dictionary> {
+  public static async addEmpty(name: string, user: User): Promise<Dictionary> {
     let dictionary = new DictionaryModel({});
     dictionary.user = user;
     dictionary.editUsers = [];

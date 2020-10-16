@@ -57,7 +57,7 @@ export default class WordEditor extends Component<Props, State> {
 
   public constructor(props: Props) {
     super(props);
-    let word = cloneDeep(this.props.word) ?? EditWord.empty();
+    let word = cloneDeep(this.props.word) ?? EditWord.createEmpty();
     if (this.props.defaultName) {
       word.name = this.props.defaultName;
     }
@@ -238,7 +238,7 @@ export default class WordEditor extends Component<Props, State> {
   private addEquivalent(): void {
     let word = this.state.word;
     let equivalentStrings = this.state.equivalentStrings;
-    word.equivalents.push(Equivalent.empty());
+    word.equivalents.push(Equivalent.createEmpty());
     equivalentStrings.push("");
   }
 
@@ -268,7 +268,7 @@ export default class WordEditor extends Component<Props, State> {
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.informations.push(Information.empty()))}/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.informations.push(Information.createEmpty()))}/>
       </div>
     );
     let node = (
@@ -306,7 +306,7 @@ export default class WordEditor extends Component<Props, State> {
     });
     let plusNode = (
       <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.variations.push(Variation.empty()))}/>
+        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.variations.push(Variation.createEmpty()))}/>
       </div>
     );
     let node = (
@@ -363,7 +363,7 @@ export default class WordEditor extends Component<Props, State> {
     let word = this.state.word;
     let relationIndex = this.editingRelationIndex!;
     if (word.relations[relationIndex] === undefined) {
-      word.relations[relationIndex] = Relation.empty();
+      word.relations[relationIndex] = Relation.createEmpty();
     }
     word.relations[relationIndex].number = relationWord.number;
     word.relations[relationIndex].name = relationWord.name;

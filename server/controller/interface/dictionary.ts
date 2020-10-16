@@ -73,7 +73,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: PostRequest<"createDictionary">, response: PostResponse<"createDictionary">): Promise<void> {
     let user = request.user!;
     let name = CastUtil.ensureString(request.body.name);
-    let dictionary = await DictionaryModel.createEmpty(name, user);
+    let dictionary = await DictionaryModel.addEmpty(name, user);
     let body = DictionaryCreator.create(dictionary);
     Controller.respond(response, body);
   }

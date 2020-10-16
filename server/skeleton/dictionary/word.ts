@@ -22,7 +22,7 @@ export class EditWord extends Skeleton {
   public variations!: Array<Variation>;
   public relations!: Array<Relation>;
 
-  public static empty(): EditWord {
+  public static createEmpty(): EditWord {
     let name = "";
     let pronunciation;
     let equivalents = new Array<Equivalent>();
