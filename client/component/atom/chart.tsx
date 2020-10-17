@@ -2,7 +2,7 @@
 
 import {
   ChartAPI,
-  ChartConfiguration,
+  ChartConfiguration as FullChartConfig,
   Data,
   PrimitiveArray,
   generate as generateChart
@@ -27,10 +27,25 @@ export default class Chart extends Component<Props, State> {
   private chart: ChartAPI | null = null;
 
   public componentDidMount(): void {
+    this.drawChart();
+  }
+
+  public componentDidUpdate(previousProps: any): void {
+    if (this.props !== previousProps) {
+      this.drawChart();
+    }
+  }
+
+  public componentWillUnmount(): void {
+    this.chart?.destroy();
+  }
+
+  private drawChart(): void {
     let bindto = findDOMNode(this) as HTMLElement;
     let data = this.props.data;
     let defaultConfig = {
       interaction: {enabled: false},
+      transition: {duration: null},
       grid: {y: {show: true}},
       axis: {x: {tick: {outer: false}}, y: {tick: {outer: false}}},
       point: {r: 3},
@@ -39,10 +54,6 @@ export default class Chart extends Component<Props, State> {
     };
     let config = merge(defaultConfig, this.props.config);
     this.chart = generateChart({bindto, data, ...config});
-  }
-
-  public componentWillUnmount(): void {
-    this.chart?.destroy();
   }
 
   public render(): ReactNode {
@@ -58,7 +69,7 @@ export default class Chart extends Component<Props, State> {
 type Props = {
   className?: string,
   data: ChartData,
-  config?: Omit<ChartConfiguration, "bindto" | "data">
+  config?: ChartConfig
 };
 type State = {
 };
@@ -66,3 +77,4 @@ type State = {
 export type ChartData = Data;
 export type ChartDataRow = PrimitiveArray;
 export type ChartDataColumn = [string, ...PrimitiveArray];
+export type ChartConfig = Omit<FullChartConfig, "bindto" | "data">;

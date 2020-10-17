@@ -1,5 +1,6 @@
 common:
   dateFormat: "dd/LLL/yyyy HH:mm"
+  shortDateFormat: "dd/LLL"
   dateUndefined: "?"
   numberUndefined: "?"
 

@@ -6,9 +6,10 @@ import {
 } from "react";
 import Chart from "/client/component/atom/chart";
 import {
-  ChartDataColumn
+  ChartData
 } from "/client/component/atom/chart";
 import Component from "/client/component/component";
+import Loading from "/client/component/compound/loading";
 import {
   style
 } from "/client/component/decorator";
@@ -20,22 +21,40 @@ import {
 @style(require("./dictionary-statistics-pane.scss"))
 export default class DictionaryStatisticsPane extends Component<Props, State> {
 
+  public state: State = {
+    data: null
+  };
+
   public async componentDidMount(): Promise<void> {
+    let number = this.props.dictionary.number;
+    let from = new Date(Date.now() - 50 * 24 * 60 * 60 * 1000).toString();
+    let response = await this.requestGet("fetchHistories", {number, from});
+    if (response.status === 200 && !("error" in response.data)) {
+      let histories = response.data;
+      let dates = histories.map((history) => new Date(history.date));
+      let wordSizes = histories.map((history) => history.wordSize);
+      let data = {x: "date", columns: [["date", ...dates], ["wordSizes", ...wordSizes]]} as ChartData;
+      this.setState({data});
+    } else {
+      this.setState({data: null});
+    }
   }
 
   public render(): ReactNode {
-    let data = {
-      columns: [
-        ["count", 1023, 1023, 1028, 1035, 1048, 1052, 1050, 1054, 1058, 1060] as ChartDataColumn
-      ]
-    };
+    let styles = this.props.styles!;
+    let padding = 0.3 * 24 * 60 * 60 * 1000;
     let config = {
       padding: {left: 40},
-      axis: {x: {padding: {left: 0.3, right: 0.3}}, y: {tick: {format: this.transNumber.bind(this)}}}
-    };
+      axis: {
+        x: {tick: {format: this.transShortDate.bind(this)}, padding: {left: padding, right: padding}, type: "timeseries"},
+        y: {tick: {format: this.transNumber.bind(this)}}
+      }
+    } as const;
     let node = (
       <div styleName="root">
-        <Chart data={data} config={config}/>
+        <Loading loading={this.state.data === null}>
+          <Chart className={styles["chart"]} data={this.state.data!} config={config}/>
+        </Loading>
       </div>
     );
     return node;
@@ -48,4 +67,5 @@ type Props = {
   dictionary: Dictionary
 };
 type State = {
+  data: ChartData | null
 };

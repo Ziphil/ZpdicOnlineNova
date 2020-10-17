@@ -69,6 +69,16 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
     }
   }
 
+  protected transShortDate(date: Date | number | string | null | undefined): string {
+    if (date !== null && date !== undefined) {
+      let format =  this.props.intl!.formatMessage({id: "common.shortDateFormat"});
+      let locale = this.props.intl!.locale;
+      return DateUtil.format(date, format, locale);
+    } else {
+      return this.props.intl!.formatMessage({id: "common.dateUndefined"});
+    }
+  }
+
   protected transNumber(number: number | null | undefined, digit?: number): string {
     let options = {minimumFractionDigits: digit, maximumFractionDigits: digit};
     if (number !== null && number !== undefined) {

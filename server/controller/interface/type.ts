@@ -19,6 +19,9 @@ import {
   CustomError
 } from "/server/skeleton/error";
 import {
+  History
+} from "/server/skeleton/history";
+import {
   Invitation
 } from "/server/skeleton/invitation";
 import {
@@ -73,6 +76,7 @@ export const SERVER_PATHS = {
   suggestUsers: "/user/suggestion",
   addNotification: "/notification/add",
   fetchNotifications: "/notification/list",
+  fetchHistories: "/history/fetch",
   contact: "/other/contact"
 };
 
@@ -483,6 +487,16 @@ type ProcessData = {
       response: {
         200: WithSize<Notification>,
         400: never
+      }
+    },
+    post: Noop
+  },
+  fetchHistories: {
+    get: {
+      request: {number: number, from: string},
+      response: {
+        200: Array<History>,
+        400: CustomError<"noSuchDictionaryNumber">
       }
     },
     post: Noop

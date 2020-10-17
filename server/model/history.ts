@@ -13,6 +13,9 @@ import {
   DictionarySchema
 } from "/server/model/dictionary";
 import {
+  History as HistorySkeleton
+} from "/server/skeleton/history";
+import {
   LogUtil
 } from "/server/util/log";
 import {
@@ -31,6 +34,11 @@ export class HistorySchema {
 
   @prop({require: true})
   public wordSize!: number;
+
+  public static async findLatest(dictionary: Dictionary, from: Date): Promise<Array<History>> {
+    let histories = await HistoryModel.find().where("dictionary", dictionary).gte("date", from);
+    return histories;
+  }
 
   public static async addAll(): Promise<number> {
     let size = await DictionaryModel.find({}).countDocuments();
@@ -53,6 +61,19 @@ export class HistorySchema {
     history.date = new Date();
     history.wordSize = await dictionary.countWords();
     return history;
+  }
+
+}
+
+
+export class HistoryCreator {
+
+  public static create(raw: History): HistorySkeleton {
+    let id = raw.id;
+    let date = raw.date.toISOString();
+    let wordSize = raw.wordSize;
+    let skeleton = HistorySkeleton.of({id, date, wordSize});
+    return skeleton;
   }
 
 }
