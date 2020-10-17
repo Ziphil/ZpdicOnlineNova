@@ -16,6 +16,7 @@ import ChangeDictionarySettingsForm from "/client/component/compound/dictionary-
 import ChangeDictionarySnojForm from "/client/component/compound/dictionary-setting/change-dictionary-snoj-form";
 import DeleteDictionaryForm from "/client/component/compound/dictionary-setting/delete-dictionary-form";
 import UploadDictionaryForm from "/client/component/compound/dictionary-setting/upload-dictionary-form";
+import DictionaryStatisticsPane from "/client/component/compound/dictionary-statistics-pane";
 import Menu from "/client/component/compound/menu";
 import SettingPane from "/client/component/compound/setting-pane";
 import {
@@ -250,6 +251,15 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
+  private renderDictionaryStatisticsPane(): ReactNode {
+    let node = (
+      <SettingPane key="commissionList">
+        <DictionaryStatisticsPane dictionary={this.state.dictionary!}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
     let number = +this.props.match!.params.number;
     let mode = this.props.match?.params.mode || "general";
@@ -258,7 +268,8 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       {mode: "general", label: this.trans("dictionarySettingPage.general"), iconLabel: "\uF05A", href: "/dashboard/dictionary/" + number},
       {mode: "setting", label: this.trans("dictionarySettingPage.setting"), iconLabel: "\uF013", href: "/dashboard/dictionary/setting/" + number},
       {mode: "access", label: this.trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dashboard/dictionary/access/" + number},
-      {mode: "request", label: this.trans("dictionarySettingPage.commission"), iconLabel: "\uF022", badgeValue: commissionCount, href: "/dashboard/dictionary/request/" + number}
+      {mode: "request", label: this.trans("dictionarySettingPage.commission"), iconLabel: "\uF022", badgeValue: commissionCount, href: "/dashboard/dictionary/request/" + number},
+      {mode: "statistics", label: this.trans("dictionarySettingPage.statistics"), iconLabel: "\uF201", href: "/dashboard/dictionary/statistics/" + number}
     ];
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {
@@ -278,6 +289,8 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderAddTransferInvitationForm());
       } else if (mode === "request") {
         contentNodes.push(this.renderCommissionList());
+      } else if (mode === "statistics") {
+        contentNodes.push(this.renderDictionaryStatisticsPane());
       }
     }
     let node = (

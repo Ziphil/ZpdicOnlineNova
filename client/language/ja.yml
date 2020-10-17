@@ -378,6 +378,7 @@ dictionarySettingPage:
   setting: "設定"
   commission: "造語依頼"
   access: "権限"
+  statistics: "統計"
   changeDictionaryNameForm:
     label: "表示名の変更"
     description: >-

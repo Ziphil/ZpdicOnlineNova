@@ -36,6 +36,7 @@ import {
 
 
 require("../../node_modules/codemirror/lib/codemirror.css");
+require("../../node_modules/c3/c3.css");
 
 let ContactPage = lazy(() => import("/client/component/page/contact-page"));
 let DashboardPage = lazy(() => import("/client/component/page/dashboard-page"));

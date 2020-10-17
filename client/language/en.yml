@@ -378,6 +378,7 @@ dictionarySettingPage:
   setting: "Settings"
   commission: "Requests"
   access: "Permissions"
+  statistics: "Statistics"
   changeDictionaryNameForm:
     label: "Change name"
     description: >-
