@@ -3,9 +3,11 @@
 import {
   ChartAPI,
   ChartConfiguration,
-  Data as ChartData,
+  Data,
+  PrimitiveArray,
   generate as generateChart
 } from "c3";
+import merge from "lodash-es/merge";
 import * as react from "react";
 import {
   ReactNode
@@ -17,9 +19,6 @@ import Component from "/client/component/component";
 import {
   style
 } from "/client/component/decorator";
-import {
-  StyleNameUtil
-} from "/client/util/style-name";
 
 
 @style(require("./chart.scss"))
@@ -30,13 +29,16 @@ export default class Chart extends Component<Props, State> {
   public componentDidMount(): void {
     let bindto = findDOMNode(this) as HTMLElement;
     let data = this.props.data;
-    let config = this.props.config;
     let defaultConfig = {
       interaction: {enabled: false},
+      grid: {y: {show: true}},
+      axis: {x: {tick: {outer: false}}, y: {tick: {outer: false}}},
+      point: {r: 3},
       legend: {show: false},
       tooltip: {show: false}
     };
-    this.chart = generateChart({bindto, data, ...defaultConfig, ...config});
+    let config = merge(defaultConfig, this.props.config);
+    this.chart = generateChart({bindto, data, ...config});
   }
 
   public componentWillUnmount(): void {
@@ -45,7 +47,7 @@ export default class Chart extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (
-      <div className={this.props.className}/>
+      <div styleName="root" className={this.props.className}/>
     );
     return node;
   }
@@ -60,3 +62,7 @@ type Props = {
 };
 type State = {
 };
+
+export type ChartData = Data;
+export type ChartDataRow = PrimitiveArray;
+export type ChartDataColumn = [string, ...PrimitiveArray];

@@ -5,6 +5,9 @@ import {
   ReactNode
 } from "react";
 import Chart from "/client/component/atom/chart";
+import {
+  ChartDataColumn
+} from "/client/component/atom/chart";
 import Component from "/client/component/component";
 import {
   style
@@ -23,18 +26,12 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
   public render(): ReactNode {
     let data = {
       columns: [
-        ["count", 1023, 1023, 1028, 1035, 1048, 1052, 1050, 1054, 1058, 1060] as [string, ...Array<number>],
-        ["difference", 0, 0, 5, 7, 13, 4, 0, 4, 4, 2] as [string, ...Array<number>]
-      ],
-      axes: {
-        difference: "y2" as const
-      },
-      types: {
-        difference: "bar" as const
-      }
+        ["count", 1023, 1023, 1028, 1035, 1048, 1052, 1050, 1054, 1058, 1060] as ChartDataColumn
+      ]
     };
     let config = {
-      axis: {y2: {show: true}}
+      padding: {left: 40},
+      axis: {x: {padding: {left: 0.3, right: 0.3}}, y: {tick: {format: this.transNumber.bind(this)}}}
     };
     let node = (
       <div styleName="root">
