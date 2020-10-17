@@ -30,3 +30,15 @@
 .root :global(.c3-circle) {
   fill: border-color(map-get($colors, information)) !important;
 }
+
+.root :global(.c3-circle)[class~="_expanded_"] {
+  stroke: none;
+}
+
+.root :global(.c3-zptooltip) {
+  padding: 4px 6px;
+  font-size: 80%;
+  border: 1px border-color(map-get($colors, information)) solid;
+  border-radius: $small-border-radius;
+  background-color: white;
+}

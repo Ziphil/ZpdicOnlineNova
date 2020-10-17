@@ -4,6 +4,7 @@ import {
   ChartAPI,
   ChartConfiguration as FullChartConfig,
   Data,
+  DataPoint,
   PrimitiveArray,
   generate as generateChart
 } from "c3";
@@ -43,14 +44,17 @@ export default class Chart extends Component<Props, State> {
   private drawChart(): void {
     let bindto = findDOMNode(this) as HTMLElement;
     let data = this.props.data;
+    let renderTooltip = function (data: Array<DataPoint>, formatTitle: unknown, formatValue: (args: any) => any): string {
+      let valueString = formatValue(data[0].value);
+      return `<div class="c3-zptooltip">${valueString}</div>`;
+    };
     let defaultConfig = {
-      interaction: {enabled: false},
       transition: {duration: null},
       grid: {y: {show: true}},
       axis: {x: {tick: {outer: false}}, y: {tick: {outer: false}}},
       point: {r: 3},
       legend: {show: false},
-      tooltip: {show: false}
+      tooltip: {contents: renderTooltip}
     };
     let config = merge(defaultConfig, this.props.config);
     this.chart = generateChart({bindto, data, ...config});
