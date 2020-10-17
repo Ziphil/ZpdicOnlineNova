@@ -30,7 +30,7 @@ import {
   Commission
 } from "/server/skeleton/commission";
 import {
-  Dictionary
+  DetailedDictionary
 } from "/server/skeleton/dictionary";
 
 
@@ -308,7 +308,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
 type Props = {
 };
 type State = {
-  dictionary: Dictionary | null,
+  dictionary: DetailedDictionary | null,
   commissionCount: number,
   authorized: boolean
 };

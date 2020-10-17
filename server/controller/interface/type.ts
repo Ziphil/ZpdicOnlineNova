@@ -265,7 +265,7 @@ type ProcessData = {
     get: {
       request: {number?: number, paramName?: string},
       response: {
-        200: Dictionary,
+        200: DetailedDictionary,
         400: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
       }
     },
