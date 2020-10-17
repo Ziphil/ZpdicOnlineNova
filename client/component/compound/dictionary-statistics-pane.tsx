@@ -27,7 +27,7 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
 
   public async componentDidMount(): Promise<void> {
     let number = this.props.dictionary.number;
-    let from = new Date(Date.now() - 50 * 24 * 60 * 60 * 1000).toString();
+    let from = new Date(Date.now() - 100 * 24 * 60 * 60 * 1000).toString();
     let response = await this.requestGet("fetchHistories", {number, from});
     if (response.status === 200 && !("error" in response.data)) {
       let histories = response.data;
@@ -44,7 +44,7 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
     let styles = this.props.styles!;
     let padding = 0.3 * 24 * 60 * 60 * 1000;
     let config = {
-      padding: {left: 40},
+      padding: {left: 45},
       axis: {
         x: {tick: {format: this.transShortDate.bind(this)}, padding: {left: padding, right: padding}, type: "timeseries"},
         y: {tick: {format: this.transNumber.bind(this)}}
