@@ -129,6 +129,6 @@
 }
 
 .suggestion-item:hover {
-  background-color: $background-color;
+  background-color: background-color(map-get($colors, information));
   cursor: pointer;
 }
