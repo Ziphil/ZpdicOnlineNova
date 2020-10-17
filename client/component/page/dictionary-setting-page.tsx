@@ -142,7 +142,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       <SettingPane label={label} key={label} description={description} forceWide={true}>
         <ChangeDictionaryExplanationForm
           number={this.state.dictionary!.number}
-          currentExplanation={this.state.dictionary!.explanation ?? ""}
+          currentExplanation={this.state.dictionary!.explanation}
           onSubmit={this.fetchDictionary.bind(this)}
         />
       </SettingPane>
@@ -157,7 +157,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       <SettingPane label={label} key={label} description={description} forceWide={true}>
         <ChangeDictionarySnojForm
           number={this.state.dictionary!.number}
-          currentSnoj={this.state.dictionary!.snoj ?? ""}
+          currentSnoj={this.state.dictionary!.snoj}
           onSubmit={this.fetchDictionary.bind(this)}
         />
       </SettingPane>

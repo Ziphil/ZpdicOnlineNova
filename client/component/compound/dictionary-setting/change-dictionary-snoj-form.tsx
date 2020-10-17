@@ -17,7 +17,7 @@ export default class ChangeDictionarySnojForm extends Component<Props, State> {
 
   public constructor(props: any) {
     super(props);
-    let snoj = this.props.currentSnoj;
+    let snoj = this.props.currentSnoj ?? "";
     this.state = {snoj};
   }
 
@@ -55,7 +55,7 @@ export default class ChangeDictionarySnojForm extends Component<Props, State> {
 
 type Props = {
   number: number,
-  currentSnoj: string,
+  currentSnoj: string | undefined,
   onSubmit?: () => void
 };
 type State = {
