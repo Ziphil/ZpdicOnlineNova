@@ -35,6 +35,11 @@
   stroke: none;
 }
 
+.root :global(.c3-area) {
+  fill: border-color(map-get($colors, information)) !important;
+  opacity: 0.2 !important;
+}
+
 .root :global(.c3-zptooltip) {
   padding: 4px 6px;
   font-size: 80%;

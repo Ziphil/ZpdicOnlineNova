@@ -22,7 +22,9 @@ import {
 export default class DictionaryStatisticsPane extends Component<Props, State> {
 
   public state: State = {
-    data: null
+    data: null,
+    maxAxis: 10,
+    minAxis: 0
   };
 
   public async componentDidMount(): Promise<void> {
@@ -33,8 +35,12 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
       let histories = response.data;
       let dates = histories.map((history) => new Date(history.date));
       let wordSizes = histories.map((history) => history.wordSize);
-      let data = {x: "date", columns: [["date", ...dates], ["wordSizes", ...wordSizes]]} as ChartData;
-      this.setState({data});
+      let maxWordSize = Math.max(...wordSizes);
+      let minWordSize = Math.min(...wordSizes);
+      let maxAxis = maxWordSize + Math.max((maxWordSize - minWordSize) * 0.05, 10);
+      let minAxis = Math.max(minWordSize - Math.max((maxWordSize - minWordSize) * 0.05, 10), 0);
+      let data = {x: "date", columns: [["date", ...dates], ["wordSize", ...wordSizes]], types: {wordSize: "area"}} as ChartData;
+      this.setState({data, maxAxis, minAxis});
     } else {
       this.setState({data: null});
     }
@@ -47,7 +53,7 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
       padding: {left: 45},
       axis: {
         x: {tick: {format: this.transShortDate.bind(this)}, padding: {left: padding, right: padding}, type: "timeseries"},
-        y: {tick: {format: this.transNumber.bind(this)}}
+        y: {tick: {format: this.transNumber.bind(this)}, max: this.state.maxAxis, min: this.state.minAxis, padding: {top: 0, bottom: 0}}
       }
     } as const;
     let node = (
@@ -67,5 +73,7 @@ type Props = {
   dictionary: Dictionary
 };
 type State = {
-  data: ChartData | null
+  data: ChartData | null,
+  maxAxis: number,
+  minAxis: number
 };
