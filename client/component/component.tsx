@@ -25,11 +25,11 @@ import {
   GlobalStore
 } from "/client/component/store";
 import {
-  Main
-} from "/client/index";
-import {
   DateUtil
 } from "/client/util/date";
+import {
+  RECAPTCHA_KEY
+} from "/client/variable";
 import {
   Method,
   ProcessName,
@@ -108,7 +108,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
     let url = SERVER_PATH_PREFIX + SERVER_PATHS[name];
     if (config.useRecaptcha) {
       let action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : name;
-      let recaptchaToken = await grecaptcha.execute(Main.getRecaptchaSite(), {action});
+      let recaptchaToken = await grecaptcha.execute(RECAPTCHA_KEY, {action});
       if (config.params !== undefined) {
         config.params.recaptchaToken = recaptchaToken;
       }
