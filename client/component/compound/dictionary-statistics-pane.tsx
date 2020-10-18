@@ -42,7 +42,7 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
       let data = {x: "date", columns: [["date", ...dates], ["wordSize", ...wordSizes]], types: {wordSize: "area"}} as ChartData;
       this.setState({data, maxAxis, minAxis});
     } else {
-      this.setState({data: null});
+      this.setState({data: null, maxAxis: 10, minAxis: 0});
     }
   }
 
