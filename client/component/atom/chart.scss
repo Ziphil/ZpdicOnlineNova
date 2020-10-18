@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root svg {
+  font: inherit !important;
+}
+
+.root :global(.c3-axis) path,
+.root :global(.c3-axis) line {
+  stroke: $light-border-color;
+}
+
+.root :global(.c3-axis) text {
+  font-size: 80%;
+  fill: $light-border-color;
+}
+
+.root :global(.c3-grid) path,
+.root :global(.c3-grid) line {
+  stroke: $pale-border-color;
+}
+
+.root :global(.c3-line) {
+  stroke: border-color(map-get($colors, information)) !important;
+  stroke-width: 2px;
+}
+
+.root :global(.c3-circle) {
+  fill: border-color(map-get($colors, information)) !important;
+}
+
+.root :global(.c3-circle)[class~="_expanded_"] {
+  stroke: none;
+}
+
+.root :global(.c3-area) {
+  fill: border-color(map-get($colors, information)) !important;
+  opacity: 0.2 !important;
+}
+
+.root :global(.c3-zptooltip) {
+  padding: 4px 6px;
+  font-size: 80%;
+  border: 1px border-color(map-get($colors, information)) solid;
+  border-radius: $small-border-radius;
+  background-color: white;
+}

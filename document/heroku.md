@@ -1,7 +1,7 @@
 ## 環境構築
 
 ### Heroku に登録
-まず、[Heroku](https://heroku.com/) のアカウントを作成してログインします。
+まず、[Heroku](https://heroku.com) のアカウントを作成してログインします。
 [ダッシュボード](https://dashboard.heroku.com)にアクセスし、適当な名前でアプリケーションを作成します。
 ダッシュボードに作成したアプリケーションが追加されるので、それをクリックしてアプリケーションの設定画面に移動します。
 
@@ -19,14 +19,9 @@
 - 見つかったリポジトリの横にある「Connect」ボタンをクリック
 - 「Automatic deploys」欄の「Enable Automatic Deploys」ボタンをクリック
 
-### MongoDB の設定
-以下の順序で Heroku から MongoDB を使えるようにします。
-
-- 「Resource」タブの「Add-ons」欄に「mLab MongoDB」と入力して選択
-- 料金プランを選択して「Provision」ボタンをクリック
-
-この操作を行うと、自動的に MongoDB の URI が環境変数に設定されます。
-「Setting」タブの「Config Vars」欄で、「MONGODB_URI」という名前の環境変数が設定されていれば問題ありません。
+### 環境変数の設定
+「Setting」タブの「Config Vars」欄で環境変数の設定を行います。
+[このドキュメント](variable.md)を参考にして、必要な環境変数の設定をしてください。
 
 ### ドメイン設定
 無料プランでもできました。

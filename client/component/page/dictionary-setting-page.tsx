@@ -6,21 +6,22 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import CommissionList from "/client/component/compound/commission-list";
-import AddEditInvitationForm from "/client/component/compound/dictionary-setting/add-edit-invitation-form";
-import AddTransferInvitationForm from "/client/component/compound/dictionary-setting/add-transfer-invitation-form";
-import ChangeDictionaryExplanationForm from "/client/component/compound/dictionary-setting/change-dictionary-explanation-form";
-import ChangeDictionaryNameForm from "/client/component/compound/dictionary-setting/change-dictionary-name-form";
-import ChangeDictionaryParamNameForm from "/client/component/compound/dictionary-setting/change-dictionary-param-name-form";
-import ChangeDictionarySecretForm from "/client/component/compound/dictionary-setting/change-dictionary-secret-form";
-import ChangeDictionarySettingsForm from "/client/component/compound/dictionary-setting/change-dictionary-settings-form";
-import ChangeDictionarySnojForm from "/client/component/compound/dictionary-setting/change-dictionary-snoj-form";
-import DeleteDictionaryForm from "/client/component/compound/dictionary-setting/delete-dictionary-form";
-import UploadDictionaryForm from "/client/component/compound/dictionary-setting/upload-dictionary-form";
+import DictionaryStatisticsPane from "/client/component/compound/dictionary-statistics-pane";
 import Menu from "/client/component/compound/menu";
 import SettingPane from "/client/component/compound/setting-pane";
 import {
   style
 } from "/client/component/decorator";
+import AddEditInvitationForm from "/client/component/form/add-edit-invitation-form";
+import AddTransferInvitationForm from "/client/component/form/add-transfer-invitation-form";
+import ChangeDictionaryExplanationForm from "/client/component/form/change-dictionary-explanation-form";
+import ChangeDictionaryNameForm from "/client/component/form/change-dictionary-name-form";
+import ChangeDictionaryParamNameForm from "/client/component/form/change-dictionary-param-name-form";
+import ChangeDictionarySecretForm from "/client/component/form/change-dictionary-secret-form";
+import ChangeDictionarySettingsForm from "/client/component/form/change-dictionary-settings-form";
+import ChangeDictionarySnojForm from "/client/component/form/change-dictionary-snoj-form";
+import DeleteDictionaryForm from "/client/component/form/delete-dictionary-form";
+import UploadDictionaryForm from "/client/component/form/upload-dictionary-form";
 import Page from "/client/component/page/page";
 import {
   WithSize
@@ -29,7 +30,7 @@ import {
   Commission
 } from "/server/skeleton/commission";
 import {
-  Dictionary
+  DetailedDictionary
 } from "/server/skeleton/dictionary";
 
 
@@ -142,7 +143,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       <SettingPane label={label} key={label} description={description} forceWide={true}>
         <ChangeDictionaryExplanationForm
           number={this.state.dictionary!.number}
-          currentExplanation={this.state.dictionary!.explanation ?? ""}
+          currentExplanation={this.state.dictionary!.explanation}
           onSubmit={this.fetchDictionary.bind(this)}
         />
       </SettingPane>
@@ -157,7 +158,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       <SettingPane label={label} key={label} description={description} forceWide={true}>
         <ChangeDictionarySnojForm
           number={this.state.dictionary!.number}
-          currentSnoj={this.state.dictionary!.snoj ?? ""}
+          currentSnoj={this.state.dictionary!.snoj}
           onSubmit={this.fetchDictionary.bind(this)}
         />
       </SettingPane>
@@ -250,6 +251,15 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
+  private renderDictionaryStatisticsPane(): ReactNode {
+    let node = (
+      <SettingPane key="commissionList">
+        <DictionaryStatisticsPane dictionary={this.state.dictionary!}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
     let number = +this.props.match!.params.number;
     let mode = this.props.match?.params.mode || "general";
@@ -258,7 +268,8 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       {mode: "general", label: this.trans("dictionarySettingPage.general"), iconLabel: "\uF05A", href: "/dashboard/dictionary/" + number},
       {mode: "setting", label: this.trans("dictionarySettingPage.setting"), iconLabel: "\uF013", href: "/dashboard/dictionary/setting/" + number},
       {mode: "access", label: this.trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dashboard/dictionary/access/" + number},
-      {mode: "request", label: this.trans("dictionarySettingPage.commission"), iconLabel: "\uF022", badgeValue: commissionCount, href: "/dashboard/dictionary/request/" + number}
+      {mode: "request", label: this.trans("dictionarySettingPage.commission"), iconLabel: "\uF022", badgeValue: commissionCount, href: "/dashboard/dictionary/request/" + number},
+      {mode: "statistics", label: this.trans("dictionarySettingPage.statistics"), iconLabel: "\uF201", href: "/dashboard/dictionary/statistics/" + number}
     ];
     let contentNodes = [];
     if (this.state.dictionary && this.state.authorized) {
@@ -278,6 +289,8 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderAddTransferInvitationForm());
       } else if (mode === "request") {
         contentNodes.push(this.renderCommissionList());
+      } else if (mode === "statistics") {
+        contentNodes.push(this.renderDictionaryStatisticsPane());
       }
     }
     let node = (
@@ -295,7 +308,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
 type Props = {
 };
 type State = {
-  dictionary: Dictionary | null,
+  dictionary: DetailedDictionary | null,
   commissionCount: number,
   authorized: boolean
 };

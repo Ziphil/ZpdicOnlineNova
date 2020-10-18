@@ -415,12 +415,16 @@ export class DictionarySchema {
   public async hasAuthority(this: Dictionary, user: User, authority: DictionaryAuthority): Promise<boolean> {
     await this.populate("user").populate("editUsers").execPopulate();
     if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
-      if (authority === "own") {
-        return this.user.id === user.id;
-      } else if (authority === "edit") {
-        return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+      if (user.authority !== "admin") {
+        if (authority === "own") {
+          return this.user.id === user.id;
+        } else if (authority === "edit") {
+          return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+        } else {
+          throw new Error("cannot happen");
+        }
       } else {
-        throw new Error("cannot happen");
+        return true;
       }
     } else {
       throw new Error("cannot happen");

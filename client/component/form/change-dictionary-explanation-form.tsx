@@ -17,7 +17,7 @@ export default class ChangeDictionaryExplanationForm extends Component<Props, St
 
   public constructor(props: any) {
     super(props);
-    let explanation = this.props.currentExplanation;
+    let explanation = this.props.currentExplanation ?? "";
     this.state = {explanation};
   }
 
@@ -55,7 +55,7 @@ export default class ChangeDictionaryExplanationForm extends Component<Props, St
 
 type Props = {
   number: number,
-  currentExplanation: string,
+  currentExplanation: string | undefined,
   onSubmit?: () => void
 };
 type State = {

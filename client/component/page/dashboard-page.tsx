@@ -5,11 +5,6 @@ import {
   ReactNode
 } from "react";
 import Component from "/client/component/component";
-import ChangeUserEmailForm from "/client/component/compound/dashboard/change-user-email-form";
-import ChangeUserPasswordForm from "/client/component/compound/dashboard/change-user-password-form";
-import ChangeUserScreenNameForm from "/client/component/compound/dashboard/change-user-screen-name-form";
-import CreateDictionaryForm from "/client/component/compound/dashboard/create-dictionary-form";
-import DeleteUserForm from "/client/component/compound/dashboard/delete-user-form";
 import DictionaryList from "/client/component/compound/dictionary-list";
 import InvitationList from "/client/component/compound/invitation-list";
 import Menu from "/client/component/compound/menu";
@@ -17,6 +12,11 @@ import SettingPane from "/client/component/compound/setting-pane";
 import {
   style
 } from "/client/component/decorator";
+import ChangeUserEmailForm from "/client/component/form/change-user-email-form";
+import ChangeUserPasswordForm from "/client/component/form/change-user-password-form";
+import ChangeUserScreenNameForm from "/client/component/form/change-user-screen-name-form";
+import CreateDictionaryForm from "/client/component/form/create-dictionary-form";
+import DeleteUserForm from "/client/component/form/delete-user-form";
 import Page from "/client/component/page/page";
 import {
   UserDictionary

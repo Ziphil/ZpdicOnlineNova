@@ -36,6 +36,7 @@ import {
 
 
 require("../../node_modules/codemirror/lib/codemirror.css");
+require("../../node_modules/c3/c3.css");
 
 let ContactPage = lazy(() => import("/client/component/page/contact-page"));
 let DashboardPage = lazy(() => import("/client/component/page/dashboard-page"));
@@ -72,19 +73,19 @@ export class Root extends Component<Props, State> {
           <IntlProvider defaultLocale="ja" locale={this.store.locale} messages={this.store.messages}>
             <Suspense fallback={<EmptyPage/>}>
               <Switch>
-                <GuestRoute exact path="/" redirect="/dashboard" component={TopPage}/>
-                <GuestRoute exact path="/login" redirect="/dashboard" component={LoginPage}/>
-                <GuestRoute exact path="/register" redirect="/dashboard" component={RegisterPage}/>
-                <GuestRoute exact path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
-                <PrivateRoute exact path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-                <PrivateRoute exact path="/dashboard" redirect="/login" component={DashboardPage}/>
-                <Route exact path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
-                <Route exact path="/request/:number(\d+)" component={AddCommissionPage}/>
-                <PrivateRoute exact path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-                <PrivateRoute exact path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-                <Route exact path="/list" component={DictionaryListPage}/>
-                <Route exact path="/notification" component={NotificationPage}/>
-                <Route exact path="/contact" component={ContactPage}/>
+                <GuestRoute exact sensitive path="/" redirect="/dashboard" component={TopPage}/>
+                <GuestRoute exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
+                <GuestRoute exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
+                <GuestRoute exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
+                <PrivateRoute exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+                <PrivateRoute exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
+                <Route exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+                <Route exact sensitive path="/request/:number(\d+)" component={AddCommissionPage}/>
+                <PrivateRoute exact sensitive path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                <PrivateRoute exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                <Route exact sensitive path="/list" component={DictionaryListPage}/>
+                <Route exact sensitive path="/notification" component={NotificationPage}/>
+                <Route exact sensitive path="/contact" component={ContactPage}/>
               </Switch>
             </Suspense>
           </IntlProvider>

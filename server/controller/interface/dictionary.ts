@@ -289,7 +289,7 @@ export class DictionaryController extends Controller {
     if (value !== undefined) {
       let dictionary = await DictionaryModel.findOneByValue(value);
       if (dictionary) {
-        let body = DictionaryCreator.create(dictionary);
+        let body = await DictionaryCreator.createDetailed(dictionary);
         Controller.respond(response, body);
       } else {
         let body = (() => {

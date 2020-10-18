@@ -7,6 +7,9 @@ import {
 import {
   Root
 } from "/client/component/root";
+import {
+  RECAPTCHA_KEY
+} from "/client/variable";
 
 
 export class Main {
@@ -27,20 +30,12 @@ export class Main {
 
   private appendRecaptchaElement(): void {
     let element = document.createElement("script");
-    element.src = "https://www.google.com/recaptcha/api.js?render=" + Main.getRecaptchaSite();
+    element.src = "https://www.google.com/recaptcha/api.js?render=" + RECAPTCHA_KEY;
     document.head.appendChild(element);
   }
 
   private render(): void {
     render(<Root/>, document.getElementById("root"));
-  }
-
-  public static getRecaptchaSite(): string {
-    if (process.env["NODE_ENV"] === "development") {
-      return "6LeWRMkZAAAAADzUAl1LAFr9fT7kdW7yoVn6Qhms";
-    } else {
-      return "6LerQ8kZAAAAAI6vbQV_Rk-AU7-MlTCayfbejh8L";
-    }
   }
 
 }
