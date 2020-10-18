@@ -1,5 +1,6 @@
 //
 
+import dotenv from "dotenv";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
 import {
@@ -9,6 +10,8 @@ import {
   BundleAnalyzerPlugin
 } from "webpack-bundle-analyzer";
 
+
+dotenv.config({path: "./variable.env"});
 
 let config = {
   entry: ["babel-polyfill", "./client/index.tsx"],
@@ -108,7 +111,7 @@ let config = {
       analyzerMode: (!!process.env["ANALYZE"]) ? "static" : "disabled",
       reportFilename: path.join(__dirname, "dist", "client", "stats.html")
     }),
-    new EnvironmentPlugin(["npm_package_version"])
+    new EnvironmentPlugin(["npm_package_version", "RECAPTCHA_KEY"])
   ]
 };
 

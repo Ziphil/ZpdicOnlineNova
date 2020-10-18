@@ -36,11 +36,7 @@ export class Main {
   }
 
   public static getRecaptchaSite(): string {
-    if (process.env["NODE_ENV"] === "development") {
-      return "6LeWRMkZAAAAADzUAl1LAFr9fT7kdW7yoVn6Qhms";
-    } else {
-      return "6LerQ8kZAAAAAI6vbQV_Rk-AU7-MlTCayfbejh8L";
-    }
+    return process.env["RECAPTCHA_KEY"] ?? "";
   }
 
 }
