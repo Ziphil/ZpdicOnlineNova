@@ -6,22 +6,22 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import CommissionList from "/client/component/compound/commission-list";
-import AddEditInvitationForm from "/client/component/compound/dictionary-setting/add-edit-invitation-form";
-import AddTransferInvitationForm from "/client/component/compound/dictionary-setting/add-transfer-invitation-form";
-import ChangeDictionaryExplanationForm from "/client/component/compound/dictionary-setting/change-dictionary-explanation-form";
-import ChangeDictionaryNameForm from "/client/component/compound/dictionary-setting/change-dictionary-name-form";
-import ChangeDictionaryParamNameForm from "/client/component/compound/dictionary-setting/change-dictionary-param-name-form";
-import ChangeDictionarySecretForm from "/client/component/compound/dictionary-setting/change-dictionary-secret-form";
-import ChangeDictionarySettingsForm from "/client/component/compound/dictionary-setting/change-dictionary-settings-form";
-import ChangeDictionarySnojForm from "/client/component/compound/dictionary-setting/change-dictionary-snoj-form";
-import DeleteDictionaryForm from "/client/component/compound/dictionary-setting/delete-dictionary-form";
-import UploadDictionaryForm from "/client/component/compound/dictionary-setting/upload-dictionary-form";
 import DictionaryStatisticsPane from "/client/component/compound/dictionary-statistics-pane";
 import Menu from "/client/component/compound/menu";
 import SettingPane from "/client/component/compound/setting-pane";
 import {
   style
 } from "/client/component/decorator";
+import AddEditInvitationForm from "/client/component/form/add-edit-invitation-form";
+import AddTransferInvitationForm from "/client/component/form/add-transfer-invitation-form";
+import ChangeDictionaryExplanationForm from "/client/component/form/change-dictionary-explanation-form";
+import ChangeDictionaryNameForm from "/client/component/form/change-dictionary-name-form";
+import ChangeDictionaryParamNameForm from "/client/component/form/change-dictionary-param-name-form";
+import ChangeDictionarySecretForm from "/client/component/form/change-dictionary-secret-form";
+import ChangeDictionarySettingsForm from "/client/component/form/change-dictionary-settings-form";
+import ChangeDictionarySnojForm from "/client/component/form/change-dictionary-snoj-form";
+import DeleteDictionaryForm from "/client/component/form/delete-dictionary-form";
+import UploadDictionaryForm from "/client/component/form/upload-dictionary-form";
 import Page from "/client/component/page/page";
 import {
   WithSize
