@@ -23,6 +23,9 @@ JSON Web Token を生成する際に用いるシークレットキーです。
 ### `SENDGRID_KEY`
 Sendgrid の API キーです。
 
+### `RECAPTCHA_KEY`
+reCAPTCHA v3 のサイトキーです。
+この変数の値はビルド時に使用されるので、実行時ではなくビルド時の段階で設定されている状態にしてください。
+
 ### `RECAPTCHA_SECRET`
 reCAPTCHA v3 のシークレットキーです。
-フロントエンド側で用いられるサイトキーに対応するものを指定してください。
