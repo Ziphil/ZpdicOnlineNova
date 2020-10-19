@@ -8,12 +8,8 @@ import {
   createPortal
 } from "react-dom";
 import Component from "/client/component/component";
-import {
-  style
-} from "/client/component/decorator";
 
 
-@style(require("./portal.scss"))
 export default class Portal extends Component<Props, State> {
 
   public render(): ReactNode {
