@@ -53,7 +53,7 @@
 }
 
 .textarea-code *[class~="CodeMirror-selected"] {
-  background: rgba($background-color, 0.9) !important;
+  background: background-color(map-get($colors, information)) !important;
 }
 
 .textarea-code *[class|="cm"] {
