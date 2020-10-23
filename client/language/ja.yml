@@ -266,11 +266,16 @@ header:
   dictionaryList: "辞書一覧"
   notification: "お知らせ"
   contact: "お問い合わせ"
+  language: "言語選択"
 invitationPane:
   createdDate: "招待日時"
   userName: "招待者"
   reject: "拒否"
   accept: "承認"
+languageForm:
+  caution: >-
+    翻訳は必ずしも正確ではありません。
+    もし翻訳に不自然な点を見つけましたら、お問い合せフォームからご連絡ください。
 loginForm:
   userName: "ユーザー ID"
   email: "メールアドレス"
@@ -433,6 +438,8 @@ dictionarySettingPage:
     description: >-
       この辞書を別のユーザーに譲渡します。
       辞書の譲渡後もこのユーザーに編集権限は残るので、単語の編集は引き続き行うことができます。
+languagePage:
+  description: "言語選択"
 loginPage:
   description: "ログイン"
 registerPage:
