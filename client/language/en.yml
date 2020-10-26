@@ -32,9 +32,9 @@ popup:
     akrantiainSource: >-
       The snoj data for akrantiain has been changed.
     pronunciationTitle: >-
-      発音データの分類名を変更しました。
+      The title of the pronunciation data has been changed.
     enableMarkdown: >-
-      説明欄の Markdown 設定を変更しました。
+      Markdown has been enabled/disabled.
   dictionaryUploaded: >-
     Your file was successfully uploaded.
     Note that it will take some time before the dictionary data is updated.
