@@ -28,7 +28,7 @@ popup:
     辞書の一覧表示の設定を変更しました。
   dictionaryExplanationChanged: >-
     辞書の説明を変更しました。
-  dictionarySnojChanged: >-
+  dictionaryAkrantiainSourceChanged: >-
     akrantiain 用 snoj データを変更しました。
   dictionaryPronunciationTitleChanged: >-
     発音データの分類名を変更しました。
@@ -213,8 +213,8 @@ changeDictionarySettingsForm:
   enableMarkdownTrue: "有効"
   enableMarkdownFalse: "無効"
   confirm: "変更"
-changeDictionarySnojForm:
-  snoj: "akrantiain 用 snoj データ"
+changeDictionarySourceForm:
+  akrantiain: "akrantiain 用 snoj データ"
   confirm: "変更"
 deleteDictionaryForm:
   confirm: "削除"
@@ -404,7 +404,7 @@ dictionarySettingPage:
       辞書の説明を変更します。
       一部の Markdown 形式に対応しています。
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
-  changeDictionarySnojForm:
+  changeDictionaryAkrantiainSourceForm:
     label: "akrantiain 用 snoj データの変更"
     description: >-
       akrantiain 用 snoj データの変更します。

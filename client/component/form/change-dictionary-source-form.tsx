@@ -12,21 +12,21 @@ import {
 } from "/client/component/decorator";
 
 
-@style(require("./change-dictionary-snoj-form.scss"))
-export default class ChangeDictionarySnojForm extends Component<Props, State> {
+@style(require("./change-dictionary-source-form.scss"))
+export default class ChangeDictionarySourceForm extends Component<Props, State> {
 
   public constructor(props: any) {
     super(props);
-    let snoj = this.props.currentSnoj ?? "";
-    this.state = {snoj};
+    let source = this.props.currentSource ?? "";
+    this.state = {source};
   }
 
   private async handleClick(): Promise<void> {
     let number = this.props.number;
-    let settings = {akrantiainSource: this.state.snoj};
+    let settings = {akrantiainSource: this.state.source};
     let response = await this.requestPost("changeDictionarySettings", {number, settings});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("dictionarySnojChanged");
+      this.props.store!.addInformationPopup("dictionaryAkrantiainSourceChanged");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
@@ -37,14 +37,14 @@ export default class ChangeDictionarySnojForm extends Component<Props, State> {
     let node = (
       <form styleName="root">
         <TextArea
-          label={this.trans("changeDictionarySnojForm.snoj")}
+          label={this.trans("changeDictionarySourceForm.akrantiain")}
           font="monospace"
           mode="akrantiain"
           nowrap={true}
-          value={this.state.snoj}
-          onSet={(snoj) => this.setState({snoj})}
+          value={this.state.source}
+          onSet={(source) => this.setState({source})}
         />
-        <Button label={this.trans("changeDictionarySnojForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+        <Button label={this.trans("changeDictionarySourceForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
     return node;
@@ -55,9 +55,9 @@ export default class ChangeDictionarySnojForm extends Component<Props, State> {
 
 type Props = {
   number: number,
-  currentSnoj: string | undefined,
+  currentSource: string | undefined,
   onSubmit?: () => void
 };
 type State = {
-  snoj: string;
+  source: string;
 };

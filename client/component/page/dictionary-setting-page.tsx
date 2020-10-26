@@ -19,7 +19,7 @@ import ChangeDictionaryNameForm from "/client/component/form/change-dictionary-n
 import ChangeDictionaryParamNameForm from "/client/component/form/change-dictionary-param-name-form";
 import ChangeDictionarySecretForm from "/client/component/form/change-dictionary-secret-form";
 import ChangeDictionarySettingsForm from "/client/component/form/change-dictionary-settings-form";
-import ChangeDictionarySnojForm from "/client/component/form/change-dictionary-snoj-form";
+import ChangeDictionarySourceForm from "/client/component/form/change-dictionary-source-form";
 import DeleteDictionaryForm from "/client/component/form/delete-dictionary-form";
 import UploadDictionaryForm from "/client/component/form/upload-dictionary-form";
 import Page from "/client/component/page/page";
@@ -151,14 +151,14 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
-  private renderChangeDictionarySnojForm(): ReactNode {
-    let label = this.trans("dictionarySettingPage.changeDictionarySnojForm.label");
-    let description = this.trans("dictionarySettingPage.changeDictionarySnojForm.description");
+  private renderChangeDictionaryAkrantiainSourceForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description} forceWide={true}>
-        <ChangeDictionarySnojForm
+        <ChangeDictionarySourceForm
           number={this.state.dictionary!.number}
-          currentSnoj={this.state.dictionary!.settings.akrantiainSource}
+          currentSource={this.state.dictionary!.settings.akrantiainSource}
           onSubmit={this.fetchDictionary.bind(this)}
         />
       </SettingPane>
@@ -281,7 +281,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderDeleteDictionaryForm());
       } else if (mode === "setting") {
         contentNodes.push(this.renderChangeDictionaryExplanationForm());
-        contentNodes.push(this.renderChangeDictionarySnojForm());
+        contentNodes.push(this.renderChangeDictionaryAkrantiainSourceForm());
         contentNodes.push(this.renderChangeDictionaryPronunciationTitleForm());
         contentNodes.push(this.renderChangeDictionaryEnableMarkdownForm());
       } else if (mode === "access") {

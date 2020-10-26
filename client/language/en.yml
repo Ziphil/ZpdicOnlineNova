@@ -28,7 +28,7 @@ popup:
     The visibility of the dictionary has been changed.
   dictionaryExplanationChanged: >-
     The description of the dictionary has been changed.
-  dictionarySnojChanged: >-
+  dictionaryAkrantiainSourceChanged: >-
     The snoj data for akrantiain has been changed.
   dictionaryPronunciationTitleChanged: >-
     発音データの分類名を変更しました。
@@ -213,8 +213,8 @@ changeDictionarySettingsForm:
   enableMarkdownTrue: "Enable"
   enableMarkdownFalse: "Disable"
   confirm: "Confirm"
-changeDictionarySnojForm:
-  snoj: "Snoj data for akrantiain"
+changeDictionarySourceForm:
+  akrantiain: "Snoj data for akrantiain"
   confirm: "Confirm"
 deleteDictionaryForm:
   confirm: "Delete"
@@ -404,7 +404,7 @@ dictionarySettingPage:
       Change the description of this dictionary.
       You can use some Markdown syntax.
       This will be displayed in the dictionary page before searching.
-  changeDictionarySnojForm:
+  changeDictionaryAkrantiainSourceForm:
     label: "Change snoj data for akrantiain"
     description: >-
       Change the snoj data for akrantiain.
