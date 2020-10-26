@@ -52,6 +52,10 @@ export class SlimeDeserializer extends Deserializer {
         if (typeof data === "string") {
           this.emit("settings", "akrantiainSource", data);
         }
+      } else if (jsonPath[0] === "zatlin") {
+        if (typeof data === "string") {
+          this.emit("settings", "zatlinSource", data);
+        }
       }
       return oboe.drop;
     });

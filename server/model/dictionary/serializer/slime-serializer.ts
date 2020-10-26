@@ -115,6 +115,9 @@ export class SlimeSerializer extends Serializer {
     if (this.dictionary.settings.akrantiainSource !== undefined) {
       externalData["snoj"] = this.dictionary.settings.akrantiainSource;
     }
+    if (this.dictionary.settings.zatlinSource !== undefined) {
+      externalData["zatlin"] = this.dictionary.settings.zatlinSource;
+    }
     externalData["zpdic"]["punctuations"] = this.dictionary.settings.punctuations;
     externalData["zpdic"]["pronunciationTitle"] = this.dictionary.settings.pronunciationTitle;
     externalData["zpdicOnline"]["enableMarkdown"] = this.dictionary.settings.enableMarkdown;
