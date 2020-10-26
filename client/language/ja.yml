@@ -31,6 +31,8 @@ popup:
   dictionarySettingsChanged:
     akrantiainSource: >-
       akrantiain 用 snoj データを変更しました。
+    zatlinSource: >-
+      Zatlin 用ソースコードを変更しました。
     pronunciationTitle: >-
       発音データの分類名を変更しました。
     enableMarkdown: >-
@@ -216,6 +218,7 @@ changeDictionarySettingsForm:
   confirm: "変更"
 changeDictionarySourceForm:
   akrantiain: "akrantiain 用 snoj データ"
+  zatlin: "Zatlin 用ソースコード"
   confirm: "変更"
 deleteDictionaryForm:
   confirm: "削除"
@@ -408,9 +411,14 @@ dictionarySettingPage:
   changeDictionaryAkrantiainSourceForm:
     label: "akrantiain 用 snoj データの変更"
     description: >-
-      akrantiain 用 snoj データの変更します。
+      akrantiain 用の snoj データを設定できます。
       これを設定しておくと、akrantiain を実行することで単語の発音が綴りから自動生成され、単語の横に表示されるようになります。
       単語に個別の発音が指定されているときは、そちらが優先されます。
+  changeDictionaryZatlinSourceForm:
+    label: "Zatlin 用ソースコードの変更"
+    description: >-
+      Zatlin 用のソースコードを設定できます。
+      これを設定しておくと、単語編集画面において単語欄に「生成」ボタンが表示され、Zatlin を実行して綴りを自動生成できるようになります。
   changeDictionaryPronunciationTitleForm:
     label: "発音データの分類名の変更"
     description: >-

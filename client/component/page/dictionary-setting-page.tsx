@@ -167,6 +167,22 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
+  private renderChangeDictionaryZatlinSourceForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description} forceWide={true}>
+        <ChangeDictionarySourceForm
+          number={this.state.dictionary!.number}
+          currentSource={this.state.dictionary!.settings.zatlinSource}
+          languageName="zatlin"
+          onSubmit={this.fetchDictionary.bind(this)}
+        />
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderChangeDictionaryPronunciationTitleForm(): ReactNode {
     let label = this.trans("dictionarySettingPage.changeDictionaryPronunciationTitleForm.label");
     let description = this.trans("dictionarySettingPage.changeDictionaryPronunciationTitleForm.description");
@@ -283,6 +299,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       } else if (mode === "setting") {
         contentNodes.push(this.renderChangeDictionaryExplanationForm());
         contentNodes.push(this.renderChangeDictionaryAkrantiainSourceForm());
+        contentNodes.push(this.renderChangeDictionaryZatlinSourceForm());
         contentNodes.push(this.renderChangeDictionaryPronunciationTitleForm());
         contentNodes.push(this.renderChangeDictionaryEnableMarkdownForm());
       } else if (mode === "access") {
