@@ -99,7 +99,8 @@
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
     "webpack-node-externals": "^2.5.2",
-    "yaml-flat-loader": "^1.0.2"
+    "yaml-flat-loader": "^1.0.2",
+    "zatlin": "^1.1.0"
   },
   "devDependencies": {
     "@types/axios": "^0.14.0",

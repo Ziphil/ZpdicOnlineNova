@@ -10,6 +10,7 @@ import {
 import {
   Controlled as CodeMirror
 } from "react-codemirror2";
+import "zatlin/dist/code-mirror/mode";
 import Label from "/client/component/atom/label";
 import Component from "/client/component/component";
 import {
@@ -54,6 +55,8 @@ export default class TextArea extends Component<Props, State> {
             return {theme: "zpmarkdown", mode: {name: "markdown", xml: false, fencedCodeBlockHighlighting: false}};
           } else if (this.props.mode === "akrantiain") {
             return {theme: "zpakrantiain", mode: {name: "akrantiain"}};
+          } else if (this.props.mode === "zatlin") {
+            return {theme: "zpakrantiain", mode: {name: "zatlin"}};
           }
         })();
         let textAreaNode = (

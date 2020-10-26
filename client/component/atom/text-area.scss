@@ -86,6 +86,10 @@
   color: hsl(280, 70%, 40%);
 }
 
+.textarea-code :global(.cm-s-zpakrantiain .cm-number) {
+  color: hsl(320, 70%, 40%);
+}
+
 .textarea-code :global(.cm-s-zpakrantiain .cm-variable-1) {
   color: hsl(120, 70%, 40%);
 }
