@@ -23,10 +23,11 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
 
   private async handleClick(): Promise<void> {
     let number = this.props.number;
-    let settings = {akrantiainSource: this.state.source};
+    let propertyName = this.props.languageName + "Source";
+    let settings = {[propertyName]: this.state.source};
     let response = await this.requestPost("changeDictionarySettings", {number, settings});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("dictionaryAkrantiainSourceChanged");
+      this.props.store!.addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
@@ -37,9 +38,9 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
     let node = (
       <form styleName="root">
         <TextArea
-          label={this.trans("changeDictionarySourceForm.akrantiain")}
+          label={this.trans(`changeDictionarySourceForm.${this.props.languageName}`)}
           font="monospace"
-          mode="akrantiain"
+          mode={this.props.languageName}
           nowrap={true}
           value={this.state.source}
           onSet={(source) => this.setState({source})}
@@ -56,6 +57,7 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
 type Props = {
   number: number,
   currentSource: string | undefined,
+  languageName: "akrantiain" | "zatlin",
   onSubmit?: () => void
 };
 type State = {

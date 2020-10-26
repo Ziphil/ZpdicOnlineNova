@@ -159,6 +159,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         <ChangeDictionarySourceForm
           number={this.state.dictionary!.number}
           currentSource={this.state.dictionary!.settings.akrantiainSource}
+          languageName="akrantiain"
           onSubmit={this.fetchDictionary.bind(this)}
         />
       </SettingPane>

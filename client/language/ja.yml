@@ -28,12 +28,13 @@ popup:
     辞書の一覧表示の設定を変更しました。
   dictionaryExplanationChanged: >-
     辞書の説明を変更しました。
-  dictionaryAkrantiainSourceChanged: >-
-    akrantiain 用 snoj データを変更しました。
-  dictionaryPronunciationTitleChanged: >-
-    発音データの分類名を変更しました。
-  dictionaryEnableMarkdownChanged: >-
-    Markdown 設定を変更しました。
+  dictionarySettingsChanged:
+    akrantiainSource: >-
+      akrantiain 用 snoj データを変更しました。
+    pronunciationTitle: >-
+      発音データの分類名を変更しました。
+    enableMarkdown: >-
+      Markdown 設定を変更しました。
   dictionaryUploaded: >-
     辞書のアップロードが完了しました。
     なお、データの反映には時間がかかる場合があります。

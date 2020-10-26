@@ -28,12 +28,13 @@ popup:
     The visibility of the dictionary has been changed.
   dictionaryExplanationChanged: >-
     The description of the dictionary has been changed.
-  dictionaryAkrantiainSourceChanged: >-
-    The snoj data for akrantiain has been changed.
-  dictionaryPronunciationTitleChanged: >-
-    発音データの分類名を変更しました。
-  dictionaryEnableMarkdownChanged: >-
-    説明欄の Markdown 設定を変更しました。
+  dictionarySettingsChanged: 
+    akrantiainSource: >-
+      The snoj data for akrantiain has been changed.
+    pronunciationTitle: >-
+      発音データの分類名を変更しました。
+    enableMarkdown: >-
+      説明欄の Markdown 設定を変更しました。
   dictionaryUploaded: >-
     Your file was successfully uploaded.
     Note that it will take some time before the dictionary data is updated.

@@ -31,18 +31,7 @@ export default class ChangeDictionarySettingsForm extends Component<Props, State
     let settings = {[propertyName]: this.state[propertyName]};
     let response = await this.requestPost("changeDictionarySettings", {number, settings});
     if (response.status === 200) {
-      let type = (() => {
-        if (propertyName === "punctuations") {
-          return "dictionaryPunctuationsChanged";
-        } else if (propertyName === "pronunciationTitle") {
-          return "dictionaryPronunciationTitleChanged";
-        } else if (propertyName === "enableMarkdown") {
-          return "dictionaryEnableMarkdownChanged";
-        } else {
-          return "messageNotFound";
-        }
-      })();
-      this.props.store!.addInformationPopup(type);
+      this.props.store!.addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }

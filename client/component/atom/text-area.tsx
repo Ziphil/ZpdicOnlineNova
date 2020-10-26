@@ -86,7 +86,7 @@ type Props = {
   value: string,
   label?: string,
   font: "normal" | "monospace",
-  mode?: "markdown" | "akrantiain",
+  mode?: "markdown" | "akrantiain" | "zatlin",
   nowrap: boolean,
   showRequired?: boolean,
   showOptional?: boolean,
