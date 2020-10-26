@@ -88,9 +88,9 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     if (response.status === 200 && !("error" in response.data)) {
       let dictionary = response.data;
       let akrantiain = (() => {
-        if (dictionary.snoj !== undefined) {
+        if (dictionary.settings.akrantiainSource !== undefined) {
           try {
-            let akrantiain = Akrantiain.load(dictionary.snoj);
+            let akrantiain = Akrantiain.load(dictionary.settings.akrantiainSource);
             return akrantiain;
           } catch (error) {
             console.error(error);

@@ -23,7 +23,6 @@ export class Dictionary extends Skeleton {
   public status!: string;
   public secret!: boolean;
   public explanation?: string;
-  public snoj?: string;
   public settings!: DictionarySettings;
   public createdDate?: string;
   public updatedDate?: string;

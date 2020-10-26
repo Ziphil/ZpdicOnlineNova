@@ -50,7 +50,7 @@ export class SlimeDeserializer extends Deserializer {
         }
       } else if (jsonPath[0] === "snoj") {
         if (typeof data === "string") {
-          this.emit("property", "snoj", data);
+          this.emit("settings", "akrantiainSource", data);
         }
       }
       return oboe.drop;

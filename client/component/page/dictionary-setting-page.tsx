@@ -158,7 +158,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       <SettingPane label={label} key={label} description={description} forceWide={true}>
         <ChangeDictionarySnojForm
           number={this.state.dictionary!.number}
-          currentSnoj={this.state.dictionary!.snoj}
+          currentSnoj={this.state.dictionary!.settings.akrantiainSource}
           onSubmit={this.fetchDictionary.bind(this)}
         />
       </SettingPane>

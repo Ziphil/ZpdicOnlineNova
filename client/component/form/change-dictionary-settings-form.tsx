@@ -94,8 +94,4 @@ type Props = {
   propertyName: keyof DictionarySettings,
   onSubmit?: () => void
 };
-type State = {
-  punctuations: Array<string>,
-  pronunciationTitle: string,
-  enableMarkdown: boolean
-};
+type State = DictionarySettings;

@@ -23,8 +23,8 @@ export default class ChangeDictionarySnojForm extends Component<Props, State> {
 
   private async handleClick(): Promise<void> {
     let number = this.props.number;
-    let snoj = this.state.snoj;
-    let response = await this.requestPost("changeDictionarySnoj", {number, snoj});
+    let settings = {akrantiainSource: this.state.snoj};
+    let response = await this.requestPost("changeDictionarySettings", {number, settings});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("dictionarySnojChanged");
       if (this.props.onSubmit) {

@@ -91,14 +91,13 @@ export type DeserializerEvent = {
   word: [Word],
   words: [Array<Word>],
   property: TupleOf<DictionaryProperty>,
-  settings: TupleOf<DictionarySettings>,
+  settings: TupleOf<Required<DictionarySettings>>,
   external: [string, any],
   end: [],
   error: [Error]
 };
 export type DictionaryProperty = {
-  explanation: string,
-  snoj: string
+  explanation: string
 };
 
 type TupleOf<T> = {[K in keyof T]: [K, T[K]]}[keyof T];
