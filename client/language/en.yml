@@ -344,6 +344,12 @@ wordEditor:
 wordPane:
   edit: "Edit"
   submit: "Select"
+zatlinExecutor:
+  title: "Zatlin"
+  source: "Source code"
+  output: "Output"
+  errorMessage: "Error message"
+  execute: "Execute"
 addCommissionPage:
   description: "Request"
 contactPage:

@@ -344,6 +344,12 @@ wordEditor:
 wordPane:
   edit: "編集"
   submit: "決定"
+zatlinExecutor:
+  title: "Zatlin"
+  source: "ソースコード"
+  output: "出力"
+  errorMessage: "エラーメッセージ"
+  execute: "実行"
 addCommissionPage:
   description: "造語依頼"
 contactPage:

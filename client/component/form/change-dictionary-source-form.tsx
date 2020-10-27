@@ -5,10 +5,11 @@ import {
   Fragment,
   ReactNode
 } from "react";
-import AkrantiainExecutor from "../compound/akrantiain-executor";
 import Button from "/client/component/atom/button";
 import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
+import AkrantiainExecutor from "/client/component/compound/akrantiain-executor";
+import ZatlinExecutor from "/client/component/compound/zatlin-executor";
 import {
   style
 } from "/client/component/decorator";
@@ -46,6 +47,11 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
       if (this.props.languageName === "akrantiain") {
         let executorNode = (
           <AkrantiainExecutor defaultSource={this.state.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
+        );
+        return executorNode;
+      } else if (this.props.languageName === "zatlin") {
+        let executorNode = (
+          <ZatlinExecutor defaultSource={this.state.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
         );
         return executorNode;
       }
