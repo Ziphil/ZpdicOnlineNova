@@ -1,0 +1,31 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.root >* {
+  @include reset-first-margin;
+  margin: 15px 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.source {
+  height: 300px;
+}
+
+.error-message {
+  height: 200px;
+}

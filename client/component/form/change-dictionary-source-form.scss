@@ -23,3 +23,13 @@
 .root >*:nth-child(2) {
   margin: 0px 0px 0px $control-margin;
 }
+
+.button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button >*:nth-child(1) {
+  margin: 0px 0px 8px 0px;
+}

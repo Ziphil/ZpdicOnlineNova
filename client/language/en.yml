@@ -30,7 +30,7 @@ popup:
     The description of the dictionary has been changed.
   dictionarySettingsChanged: 
     akrantiainSource: >-
-      The snoj data for akrantiain has been changed.
+      The snoj data for Akrantiain has been changed.
     zatlinSource: >-
       The source code for Zatlin has been changed.
     pronunciationTitle: >-
@@ -217,9 +217,10 @@ changeDictionarySettingsForm:
   enableMarkdownFalse: "Disable"
   confirm: "Confirm"
 changeDictionarySourceForm:
-  akrantiain: "Snoj data for akrantiain"
+  akrantiain: "Snoj data for Akrantiain"
   zatlin: "Source code for Zatlin"
   confirm: "Confirm"
+  try: "Try"
 deleteDictionaryForm:
   confirm: "Delete"
   caution: >-
@@ -236,6 +237,13 @@ addCommissionForm:
   name: "Word"
   comment: "Comment"
   confirm: "Request"
+akrantiainExecutor:
+  title: "Akrantiain"
+  source: "Snoj data"
+  input: "Input"
+  output: "Output"
+  errorMessage: "Error message"
+  execute: "Execute"
 commissionPane:
   delete: "Delete"
   add: "Create"
@@ -410,10 +418,10 @@ dictionarySettingPage:
       You can use some Markdown syntax.
       This will be displayed in the dictionary page before searching.
   changeDictionaryAkrantiainSourceForm:
-    label: "Change snoj data for akrantiain"
+    label: "Change snoj data for Akrantiain"
     description: >-
-      Change the snoj data for akrantiain.
-      If you set this data, akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
+      Change the snoj data for Akrantiain.
+      If you set this data, Akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
       When a word has its own pronunciation specified, it will be displayed instead.
   changeDictionaryZatlinSourceForm:
     label: "Change source code for Zatlin"

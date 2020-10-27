@@ -30,7 +30,7 @@ popup:
     辞書の説明を変更しました。
   dictionarySettingsChanged:
     akrantiainSource: >-
-      akrantiain 用 snoj データを変更しました。
+      Akrantiain 用 snoj データを変更しました。
     zatlinSource: >-
       Zatlin 用ソースコードを変更しました。
     pronunciationTitle: >-
@@ -217,9 +217,10 @@ changeDictionarySettingsForm:
   enableMarkdownFalse: "無効"
   confirm: "変更"
 changeDictionarySourceForm:
-  akrantiain: "akrantiain 用 snoj データ"
+  akrantiain: "Akrantiain 用 snoj データ"
   zatlin: "Zatlin 用ソースコード"
   confirm: "変更"
+  try: "試す"
 deleteDictionaryForm:
   confirm: "削除"
   caution: >-
@@ -236,6 +237,13 @@ addCommissionForm:
   name: "単語"
   comment: "コメント"
   confirm: "依頼"
+akrantiainExecutor:
+  title: "Akrantiain"
+  source: "snoj データ"
+  input: "入力"
+  output: "出力"
+  errorMessage: "エラーメッセージ"
+  execute: "実行"
 commissionPane:
   delete: "削除"
   add: "造語"
@@ -410,10 +418,10 @@ dictionarySettingPage:
       一部の Markdown 形式に対応しています。
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
   changeDictionaryAkrantiainSourceForm:
-    label: "akrantiain 用 snoj データの変更"
+    label: "Akrantiain 用 snoj データの変更"
     description: >-
-      akrantiain 用の snoj データを設定できます。
-      これを設定しておくと、akrantiain を実行することで単語の発音が綴りから自動生成され、単語の横に表示されるようになります。
+      Akrantiain 用の snoj データを設定できます。
+      これを設定しておくと、Akrantiain を実行することで単語の発音が綴りから自動生成され、単語の横に表示されるようになります。
       単語に個別の発音が指定されているときは、そちらが優先されます。
   changeDictionaryZatlinSourceForm:
     label: "Zatlin 用ソースコードの変更"

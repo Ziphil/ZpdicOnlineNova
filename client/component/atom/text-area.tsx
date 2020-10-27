@@ -27,7 +27,8 @@ export default class TextArea extends Component<Props, State> {
   public static defaultProps: DefaultProps = {
     value: "",
     font: "normal",
-    nowrap: false
+    nowrap: false,
+    readOnly: false
   };
 
   private handleChange(event: ChangeEvent<HTMLTextAreaElement>): void {
@@ -69,7 +70,7 @@ export default class TextArea extends Component<Props, State> {
           {if: this.props.font === "monospace", true: "monospace"},
           {if: this.props.nowrap, true: "nowrap"}
         );
-        let textAreaNode = <textarea styleName={textAreaStyleName} value={this.props.value} onChange={this.handleChange.bind(this)}/>;
+        let textAreaNode = <textarea styleName={textAreaStyleName} value={this.props.value} readOnly={this.props.readOnly} onChange={this.handleChange.bind(this)}/>;
         return textAreaNode;
       }
     })();
@@ -91,6 +92,7 @@ type Props = {
   font: "normal" | "monospace",
   mode?: "markdown" | "akrantiain" | "zatlin",
   nowrap: boolean,
+  readOnly: boolean,
   showRequired?: boolean,
   showOptional?: boolean,
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
@@ -100,7 +102,8 @@ type Props = {
 type DefaultProps = {
   value: string,
   font: "normal" | "monospace",
-  nowrap: boolean
+  nowrap: boolean,
+  readOnly: boolean
 };
 type State = {
 };

@@ -2,8 +2,10 @@
 
 import * as react from "react";
 import {
+  Fragment,
   ReactNode
 } from "react";
+import AkrantiainExecutor from "../compound/akrantiain-executor";
 import Button from "/client/component/atom/button";
 import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
@@ -15,10 +17,15 @@ import {
 @style(require("./change-dictionary-source-form.scss"))
 export default class ChangeDictionarySourceForm extends Component<Props, State> {
 
+  public state: State = {
+    source: undefined as any,
+    executorOpen: false
+  };
+
   public constructor(props: any) {
     super(props);
     let source = this.props.currentSource ?? "";
-    this.state = {source};
+    this.state.source = source;
   }
 
   private async handleClick(): Promise<void> {
@@ -35,18 +42,32 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
   }
 
   public render(): ReactNode {
+    let executorNode = (() => {
+      if (this.props.languageName === "akrantiain") {
+        let executorNode = (
+          <AkrantiainExecutor defaultSource={this.state.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
+        );
+        return executorNode;
+      }
+    })();
     let node = (
-      <form styleName="root">
-        <TextArea
-          label={this.trans(`changeDictionarySourceForm.${this.props.languageName}`)}
-          font="monospace"
-          mode={this.props.languageName}
-          nowrap={true}
-          value={this.state.source}
-          onSet={(source) => this.setState({source})}
-        />
-        <Button label={this.trans("changeDictionarySourceForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
-      </form>
+      <Fragment>
+        <form styleName="root">
+          <TextArea
+            label={this.trans(`changeDictionarySourceForm.${this.props.languageName}`)}
+            value={this.state.source}
+            font="monospace"
+            mode={this.props.languageName}
+            nowrap={true}
+            onSet={(source) => this.setState({source})}
+          />
+          <div styleName="button">
+            <Button label={this.trans("changeDictionarySourceForm.try")} style="link" onClick={() => this.setState({executorOpen: true})}/>
+            <Button label={this.trans("changeDictionarySourceForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+          </div>
+        </form>
+        {executorNode}
+      </Fragment>
     );
     return node;
   }
@@ -61,5 +82,6 @@ type Props = {
   onSubmit?: () => void
 };
 type State = {
-  source: string;
+  source: string,
+  executorOpen: boolean
 };
