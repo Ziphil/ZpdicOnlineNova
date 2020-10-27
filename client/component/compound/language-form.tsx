@@ -9,16 +9,16 @@ import Component from "/client/component/component";
 import {
   style
 } from "/client/component/decorator";
+import {
+  LANGUAGES
+} from "/client/language";
 
 
 @style(require("./language-form.scss"))
 export default class LanguageForm extends Component<Props, State> {
 
   public render(): ReactNode {
-    let specs = [
-      {value: "ja", label: "日本語"},
-      {value: "en", label: "English"}
-    ];
+    let specs = LANGUAGES.map((language) => ({value: language.locale, label: language.name}));
     let node = (
       <form styleName="root">
         <RadioGroup name="language" value={this.props.store!.locale} specs={specs} onSet={(locale) => this.props.store!.changeLocale(locale)}/>

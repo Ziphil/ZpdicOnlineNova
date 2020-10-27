@@ -6,6 +6,9 @@ import {
   observable
 } from "mobx";
 import {
+  LANGUAGES
+} from "/client/language";
+import {
   SERVER_PATHS,
   SERVER_PATH_PREFIX
 } from "/server/controller/interface/type";
@@ -30,15 +33,10 @@ export class GlobalStore {
 
   @action
   public async changeLocale(locale: string): Promise<void> {
+    let language = LANGUAGES.find((language) => language.locale === locale) ?? LANGUAGES[0];
     this.locale = locale;
+    this.messages = await language.fetchMessages();
     localStorage.setItem("locale", locale);
-    if (locale === "ja") {
-      this.messages = await import("../language/ja.yml" as any);
-    } else if (locale === "en") {
-      this.messages = await import("../language/en.yml" as any);
-    } else {
-      this.messages = await import("../language/ja.yml" as any);
-    }
   }
 
   @action
