@@ -98,9 +98,6 @@ export class DictionarySchema {
   @prop()
   public explanation?: string;
 
-  @prop()
-  public snoj?: string;
-
   @prop({required: true, type: DictionarySettingsSchema})
   public settings!: DictionarySettingsSchema;
 
@@ -275,12 +272,6 @@ export class DictionarySchema {
 
   public async changeExplanation(this: Dictionary, explanation: string): Promise<Dictionary> {
     this.explanation = explanation;
-    await this.save();
-    return this;
-  }
-
-  public async changeSnoj(this: Dictionary, snoj: string): Promise<Dictionary> {
-    this.snoj = snoj;
     await this.save();
     return this;
   }
@@ -507,11 +498,10 @@ export class DictionaryCreator {
     let status = raw.status;
     let secret = raw.secret;
     let explanation = raw.explanation;
-    let snoj = raw.snoj;
     let settings = DictionarySettingsCreator.create(raw.settings);
     let createdDate = raw.createdDate?.toISOString() ?? undefined;
     let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, snoj, settings, createdDate, updatedDate});
+    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, settings, createdDate, updatedDate});
     return skeleton;
   }
 

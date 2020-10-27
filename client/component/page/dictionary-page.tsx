@@ -27,6 +27,7 @@ import {
   WithSize
 } from "/server/controller/interface/type";
 import {
+  DetailedDictionary,
   Dictionary,
   NormalSearchParameter,
   SearchModeUtil,
@@ -86,21 +87,8 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     })();
     let response = await this.requestGet("fetchDictionary", {number, paramName});
     if (response.status === 200 && !("error" in response.data)) {
-      let dictionary = response.data;
-      let akrantiain = (() => {
-        if (dictionary.snoj !== undefined) {
-          try {
-            let akrantiain = Akrantiain.load(dictionary.snoj);
-            return akrantiain;
-          } catch (error) {
-            console.error(error);
-            return undefined;
-          }
-        } else {
-          return undefined;
-        }
-      })();
-      this.setState({dictionary, akrantiain});
+      let dictionary = DetailedDictionary.of(response.data);
+      this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
     }
@@ -233,7 +221,6 @@ export default class DictionaryPage extends Component<Props, State, Params> {
           <WordList
             dictionary={this.state.dictionary!}
             words={hitWords}
-            akrantiain={this.state.akrantiain}
             showEditLink={this.state.canEdit}
             offset={0}
             size={40}
@@ -273,7 +260,6 @@ type Props = {
 };
 type State = {
   dictionary: Dictionary | null,
-  akrantiain?: Akrantiain,
   canOwn: boolean,
   canEdit: boolean,
   parameter: NormalSearchParameter,

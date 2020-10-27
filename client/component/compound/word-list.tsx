@@ -1,8 +1,5 @@
 //
 
-import {
-  Akrantiain
-} from "akrantiain";
 import partial from "lodash-es/partial";
 import * as react from "react";
 import {
@@ -40,7 +37,6 @@ export default class WordList extends Component<Props, State> {
         <WordPane
           dictionary={this.props.dictionary}
           word={word}
-          akrantiain={this.props.akrantiain}
           key={word.id}
           style={this.props.style}
           showEditLink={this.props.showEditLink}
@@ -66,7 +62,6 @@ export default class WordList extends Component<Props, State> {
 type Props = {
   dictionary: Dictionary,
   words: Array<Word>,
-  akrantiain?: Akrantiain,
   style: "normal" | "simple",
   showEditLink: boolean,
   showButton: boolean,

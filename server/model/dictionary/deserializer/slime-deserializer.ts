@@ -29,30 +29,7 @@ export class SlimeDeserializer extends Deserializer {
   private readSettings(): void {
     let stream = oboe(createReadStream(this.path));
     stream.on("node:!.*", (data, jsonPath) => {
-      if (jsonPath[0] === "zpdic") {
-        if (typeof data["explanation"] === "string") {
-          this.emit("property", "explanation", data["explanation"]);
-        }
-        if (Array.isArray(data["punctuations"]) && data["punctuations"].every((punctuation) => typeof punctuation === "string")) {
-          this.emit("settings", "punctuations", data["punctuations"]);
-        }
-        if (typeof data["pronunciationTitle"] === "string") {
-          this.pronunciationTitle = data["pronunciationTitle"];
-          this.emit("settings", "pronunciationTitle", data["pronunciationTitle"]);
-        }
-      } else if (jsonPath[0] === "zpdicOnline") {
-        if (typeof data["explanation"] === "string") {
-          this.emit("property", "explanation", data["explanation"]);
-        }
-        if (typeof data["enableMarkdown"] === "boolean") {
-          this.enableMarkdown = data["enableMarkdown"];
-          this.emit("settings", "enableMarkdown", data["enableMarkdown"]);
-        }
-      } else if (jsonPath[0] === "snoj") {
-        if (typeof data === "string") {
-          this.emit("property", "snoj", data);
-        }
-      }
+      this.emitSettings(data, jsonPath[0]);
       return oboe.drop;
     });
     stream.on("done", () => {
@@ -86,6 +63,37 @@ export class SlimeDeserializer extends Deserializer {
     stream.on("fail", (reason) => {
       this.emit("error", reason.thrown);
     });
+  }
+
+  private emitSettings(data: any, path: string): void {
+    if (path === "zpdic") {
+      if (typeof data["explanation"] === "string") {
+        this.emit("property", "explanation", data["explanation"]);
+      }
+      if (Array.isArray(data["punctuations"]) && data["punctuations"].every((punctuation) => typeof punctuation === "string")) {
+        this.emit("settings", "punctuations", data["punctuations"]);
+      }
+      if (typeof data["pronunciationTitle"] === "string") {
+        this.pronunciationTitle = data["pronunciationTitle"];
+        this.emit("settings", "pronunciationTitle", data["pronunciationTitle"]);
+      }
+    } else if (path === "zpdicOnline") {
+      if (typeof data["explanation"] === "string") {
+        this.emit("property", "explanation", data["explanation"]);
+      }
+      if (typeof data["enableMarkdown"] === "boolean") {
+        this.enableMarkdown = data["enableMarkdown"];
+        this.emit("settings", "enableMarkdown", data["enableMarkdown"]);
+      }
+    } else if (path === "snoj") {
+      if (typeof data === "string") {
+        this.emit("settings", "akrantiainSource", data);
+      }
+    } else if (path === "zatlin") {
+      if (typeof data === "string") {
+        this.emit("settings", "zatlinSource", data);
+      }
+    }
   }
 
   private createWord(raw: any): Word {

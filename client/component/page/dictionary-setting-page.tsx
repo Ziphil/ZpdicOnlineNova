@@ -19,7 +19,7 @@ import ChangeDictionaryNameForm from "/client/component/form/change-dictionary-n
 import ChangeDictionaryParamNameForm from "/client/component/form/change-dictionary-param-name-form";
 import ChangeDictionarySecretForm from "/client/component/form/change-dictionary-secret-form";
 import ChangeDictionarySettingsForm from "/client/component/form/change-dictionary-settings-form";
-import ChangeDictionarySnojForm from "/client/component/form/change-dictionary-snoj-form";
+import ChangeDictionarySourceForm from "/client/component/form/change-dictionary-source-form";
 import DeleteDictionaryForm from "/client/component/form/delete-dictionary-form";
 import UploadDictionaryForm from "/client/component/form/upload-dictionary-form";
 import Page from "/client/component/page/page";
@@ -52,7 +52,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let number = +this.props.match!.params.number;
     let response = await this.requestGet("fetchDictionary", {number});
     if (response.status === 200 && !("error" in response.data)) {
-      let dictionary = response.data;
+      let dictionary = DetailedDictionary.of(response.data);
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
@@ -151,14 +151,31 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
-  private renderChangeDictionarySnojForm(): ReactNode {
-    let label = this.trans("dictionarySettingPage.changeDictionarySnojForm.label");
-    let description = this.trans("dictionarySettingPage.changeDictionarySnojForm.description");
+  private renderChangeDictionaryAkrantiainSourceForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description} forceWide={true}>
-        <ChangeDictionarySnojForm
+        <ChangeDictionarySourceForm
           number={this.state.dictionary!.number}
-          currentSnoj={this.state.dictionary!.snoj}
+          currentSource={this.state.dictionary!.settings.akrantiainSource}
+          languageName="akrantiain"
+          onSubmit={this.fetchDictionary.bind(this)}
+        />
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderChangeDictionaryZatlinSourceForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description} forceWide={true}>
+        <ChangeDictionarySourceForm
+          number={this.state.dictionary!.number}
+          currentSource={this.state.dictionary!.settings.zatlinSource}
+          languageName="zatlin"
           onSubmit={this.fetchDictionary.bind(this)}
         />
       </SettingPane>
@@ -281,7 +298,8 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderDeleteDictionaryForm());
       } else if (mode === "setting") {
         contentNodes.push(this.renderChangeDictionaryExplanationForm());
-        contentNodes.push(this.renderChangeDictionarySnojForm());
+        contentNodes.push(this.renderChangeDictionaryAkrantiainSourceForm());
+        contentNodes.push(this.renderChangeDictionaryZatlinSourceForm());
         contentNodes.push(this.renderChangeDictionaryPronunciationTitleForm());
         contentNodes.push(this.renderChangeDictionaryEnableMarkdownForm());
       } else if (mode === "access") {

@@ -42,7 +42,6 @@ export const SERVER_PATHS = {
   changeDictionaryParamName: "/dictionary/edit/param-name",
   changeDictionarySecret: "/dictionary/edit/secret",
   changeDictionaryExplanation: "/dictionary/edit/explanation",
-  changeDictionarySnoj: "/dictionary/edit/snoj",
   changeDictionarySettings: "/dictionary/edit/settings",
   deleteDictionaryAuthorizedUser: "/dictionary/user/delete",
   addInvitation: "/invitation/add",
@@ -145,16 +144,6 @@ type ProcessData = {
     get: Noop,
     post: {
       request: {number: number, explanation: string},
-      response: {
-        200: Dictionary,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
-    }
-  },
-  changeDictionarySnoj: {
-    get: Noop,
-    post: {
-      request: {number: number, snoj: string},
       response: {
         200: Dictionary,
         400: CustomError<"noSuchDictionaryNumber">

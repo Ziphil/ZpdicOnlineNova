@@ -1,8 +1,5 @@
 //
 
-import {
-  Akrantiain
-} from "akrantiain";
 import * as react from "react";
 import {
   Fragment,
@@ -57,16 +54,19 @@ export default class WordPane extends Component<Props, State> {
         } else {
           return "/" + this.props.word.pronunciation + "/";
         }
-      } else if (this.props.akrantiain !== undefined) {
-        try {
-          let pronunciation = this.props.akrantiain.convert(this.props.word.name);
-          return "/" + pronunciation + "/";
-        } catch (error) {
-          console.error(error);
+      } else {
+        let akrantiain = (this.props.dictionary instanceof Dictionary) ? this.props.dictionary.getAkrantiain() : null;
+        if (akrantiain !== null) {
+          try {
+            let pronunciation = this.props.dictionary.getAkrantiain()!.convert(this.props.word.name);
+            return "/" + pronunciation + "/";
+          } catch (error) {
+            console.error(error);
+            return undefined;
+          }
+        } else {
           return undefined;
         }
-      } else {
-        return undefined;
       }
     })();
     let pronunciationNode = (pronunciationText !== undefined) && (() => {
@@ -212,7 +212,6 @@ export default class WordPane extends Component<Props, State> {
 type Props = {
   dictionary: Dictionary,
   word: Word,
-  akrantiain?: Akrantiain,
   style: "normal" | "simple",
   showEditLink: boolean,
   showButton: boolean,

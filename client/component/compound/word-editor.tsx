@@ -10,6 +10,9 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import {
+  Zatlin
+} from "zatlin";
 import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
@@ -128,12 +131,35 @@ export default class WordEditor extends Component<Props, State> {
 
   private renderName(): ReactNode {
     let word = this.state.word;
+    let styles = this.props.styles!;
+    let zatlin = (this.props.dictionary instanceof Dictionary) ? this.props.dictionary.getZatlin() : null;
+    let generateNode = (zatlin !== null) && (
+      <div styleName="control-button">
+        <Button label={this.trans("wordEditor.generate")} onClick={() => this.generateName(zatlin!)}/>
+      </div>
+    );
     let node = (
       <div styleName="container">
-        <Input value={word.name} label={this.trans("wordEditor.name")} onSet={this.setWord((name) => word.name = name)}/>
+        <div styleName="inner">
+          <div styleName="form">
+            <Input className={styles["title"]} value={word.name} label={this.trans("wordEditor.name")} onSet={this.setWord((name) => word.name = name)}/>
+          </div>
+          {generateNode}
+        </div>
       </div>
     );
     return node;
+  }
+
+  private generateName(zatlin: Zatlin): void {
+    let word = this.state.word;
+    try {
+      let name = zatlin!.generate();
+      word.name = name;
+      this.setState({word});
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   private renderPronunciation(): ReactNode {

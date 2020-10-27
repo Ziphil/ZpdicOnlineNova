@@ -17,32 +17,21 @@ import {
 
 
 @style(require("./change-dictionary-settings-form.scss"))
-export default class ChangeDictionarySettingsForm extends Component<Props, State> {
+export default class ChangeDictionarySettingsForm<N extends keyof DictionarySettings> extends Component<Props<N>, State<N>> {
 
   public constructor(props: any) {
     super(props);
-    let settings = this.props.currentSettings;
-    this.state = {...settings};
+    let value = this.props.currentSettings[this.props.propertyName];
+    this.state = {value};
   }
 
   private async handleClick(): Promise<void> {
     let propertyName = this.props.propertyName;
     let number = this.props.number;
-    let settings = {[propertyName]: this.state[propertyName]};
+    let settings = {[propertyName]: this.state.value};
     let response = await this.requestPost("changeDictionarySettings", {number, settings});
     if (response.status === 200) {
-      let type = (() => {
-        if (propertyName === "punctuations") {
-          return "dictionaryPunctuationsChanged";
-        } else if (propertyName === "pronunciationTitle") {
-          return "dictionaryPronunciationTitleChanged";
-        } else if (propertyName === "enableMarkdown") {
-          return "dictionaryEnableMarkdownChanged";
-        } else {
-          return "messageNotFound";
-        }
-      })();
-      this.props.store!.addInformationPopup(type);
+      this.props.store!.addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
@@ -52,7 +41,7 @@ export default class ChangeDictionarySettingsForm extends Component<Props, State
   private renderChangePronunciationTitleForm(): ReactNode {
     let node = (
       <form styleName="root input">
-        <Input label={this.trans("changeDictionarySettingsForm.pronunciationTitle")} value={this.state.pronunciationTitle} onSet={(pronunciationTitle) => this.setState({pronunciationTitle})}/>
+        <Input label={this.trans("changeDictionarySettingsForm.pronunciationTitle")} value={this.state.value} onSet={(value) => this.setState({value})}/>
         <Button label={this.trans("changeDictionarySettingsForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
@@ -64,10 +53,10 @@ export default class ChangeDictionarySettingsForm extends Component<Props, State
       {value: "true", label: this.trans("changeDictionarySettingsForm.enableMarkdownTrue")},
       {value: "false", label: this.trans("changeDictionarySettingsForm.enableMarkdownFalse")}
     ];
-    let secretValue = (this.state.enableMarkdown) ? "true" : "false";
+    let secretValue = (this.state.value) ? "true" : "false";
     let node = (
       <form styleName="root radio">
-        <RadioGroup name="enableMarkdown" specs={specs} value={secretValue} onSet={(value) => this.setState({enableMarkdown: value === "true"})}/>
+        <RadioGroup name="enableMarkdown" specs={specs} value={secretValue} onSet={(valueString) => this.setState({value: valueString === "true"})}/>
         <Button label={this.trans("changeDictionarySettingsForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
       </form>
     );
@@ -88,14 +77,12 @@ export default class ChangeDictionarySettingsForm extends Component<Props, State
 }
 
 
-type Props = {
+type Props<N> = {
   number: number,
   currentSettings: DictionarySettings,
-  propertyName: keyof DictionarySettings,
+  propertyName: N,
   onSubmit?: () => void
 };
-type State = {
-  punctuations: Array<string>,
-  pronunciationTitle: string,
-  enableMarkdown: boolean
+type State<N> = {
+  value: any
 };

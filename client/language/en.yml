@@ -28,12 +28,15 @@ popup:
     The visibility of the dictionary has been changed.
   dictionaryExplanationChanged: >-
     The description of the dictionary has been changed.
-  dictionarySnojChanged: >-
-    The snoj data for akrantiain has been changed.
-  dictionaryPronunciationTitleChanged: >-
-    発音データの分類名を変更しました。
-  dictionaryEnableMarkdownChanged: >-
-    説明欄の Markdown 設定を変更しました。
+  dictionarySettingsChanged: 
+    akrantiainSource: >-
+      The snoj data for Akrantiain has been changed.
+    zatlinSource: >-
+      The source code for Zatlin has been changed.
+    pronunciationTitle: >-
+      The title of the pronunciation data has been changed.
+    enableMarkdown: >-
+      Markdown has been enabled/disabled.
   dictionaryUploaded: >-
     Your file was successfully uploaded.
     Note that it will take some time before the dictionary data is updated.
@@ -213,9 +216,11 @@ changeDictionarySettingsForm:
   enableMarkdownTrue: "Enable"
   enableMarkdownFalse: "Disable"
   confirm: "Confirm"
-changeDictionarySnojForm:
-  snoj: "Snoj data for akrantiain"
+changeDictionarySourceForm:
+  akrantiain: "Snoj data for Akrantiain"
+  zatlin: "Source code for Zatlin"
   confirm: "Confirm"
+  try: "Try"
 deleteDictionaryForm:
   confirm: "Delete"
   caution: >-
@@ -232,6 +237,13 @@ addCommissionForm:
   name: "Word"
   comment: "Comment"
   confirm: "Request"
+akrantiainExecutor:
+  title: "Akrantiain"
+  source: "Snoj data"
+  input: "Input"
+  output: "Output"
+  errorMessage: "Error message"
+  execute: "Execute"
 commissionPane:
   delete: "Delete"
   add: "Create"
@@ -266,11 +278,16 @@ header:
   dictionaryList: "Dictionaries"
   notification: "Notifications"
   contact: "Contact"
+  language: "Languages"
 invitationPane:
   createdDate: "Invited at"
   userName: "Inviter"
   reject: "Reject"
   accept: "Accept"
+languageForm:
+  caution: >-
+    The translation may be incorrect.
+    If you find something strange in the translation, please notify us from the contact form.
 loginForm:
   userName: "User ID"
   email: "Email address"
@@ -317,6 +334,7 @@ wordEditor:
   relationName: "Related word"
   delete: "Delete"
   confirm: "Confirm"
+  generate: "Generate"
   selectRelation: "Select"
   alertConfirm: "Delete"
   alert: >-
@@ -326,6 +344,12 @@ wordEditor:
 wordPane:
   edit: "Edit"
   submit: "Select"
+zatlinExecutor:
+  title: "Zatlin"
+  source: "Source code"
+  output: "Output"
+  errorMessage: "Error message"
+  execute: "Execute"
 addCommissionPage:
   description: "Request"
 contactPage:
@@ -399,12 +423,17 @@ dictionarySettingPage:
       Change the description of this dictionary.
       You can use some Markdown syntax.
       This will be displayed in the dictionary page before searching.
-  changeDictionarySnojForm:
-    label: "Change snoj data for akrantiain"
+  changeDictionaryAkrantiainSourceForm:
+    label: "Change snoj data for Akrantiain"
     description: >-
-      Change the snoj data for akrantiain.
-      If you set this data, akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
+      Change the snoj data for Akrantiain.
+      If you set this data, Akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
       When a word has its own pronunciation specified, it will be displayed instead.
+  changeDictionaryZatlinSourceForm:
+    label: "Change source code for Zatlin"
+    description: >-
+      Change the source code for Zatlin.
+      If you set this code, a “Generate” button will appear in the word editor, which enables you to generate a spelling by executing Zatlin.
   changeDictionaryPronunciationTitleForm:
     label: "Change title of pronunciation"
     description: >-
@@ -433,6 +462,8 @@ dictionarySettingPage:
     description: >-
       Transfer this dictionary to another user.
       After the dictionary is transferred, you still have editing permission and thus you can edit the words.
+languagePage:
+  description: "Choose language"
 loginPage:
   description: "Sign in"
 registerPage:

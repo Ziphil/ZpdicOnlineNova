@@ -11,6 +11,12 @@ import {
 
 export class DictionarySettingsSchema {
 
+  @prop()
+  public akrantiainSource?: string;
+
+  @prop()
+  public zatlinSource?: string;
+
   @prop({required: true, type: String})
   public punctuations!: Array<string>;
 
@@ -34,10 +40,12 @@ export class DictionarySettingsSchema {
 export class DictionarySettingsCreator {
 
   public static create(raw: DictionarySettings): DictionarySettingsSkeleton {
+    let akrantiainSource = raw.akrantiainSource;
+    let zatlinSource = raw.zatlinSource;
     let punctuations = raw.punctuations;
     let pronunciationTitle = raw.pronunciationTitle;
     let enableMarkdown = raw.enableMarkdown;
-    let skeleton = DictionarySettingsSkeleton.of({punctuations, pronunciationTitle, enableMarkdown});
+    let skeleton = DictionarySettingsSkeleton.of({akrantiainSource, zatlinSource, punctuations, pronunciationTitle, enableMarkdown});
     return skeleton;
   }
 

@@ -10,6 +10,7 @@ import {
 import {
   Controlled as CodeMirror
 } from "react-codemirror2";
+import "zatlin/dist/code-mirror/mode";
 import Label from "/client/component/atom/label";
 import Component from "/client/component/component";
 import {
@@ -26,7 +27,8 @@ export default class TextArea extends Component<Props, State> {
   public static defaultProps: DefaultProps = {
     value: "",
     font: "normal",
-    nowrap: false
+    nowrap: false,
+    readOnly: false
   };
 
   private handleChange(event: ChangeEvent<HTMLTextAreaElement>): void {
@@ -54,6 +56,8 @@ export default class TextArea extends Component<Props, State> {
             return {theme: "zpmarkdown", mode: {name: "markdown", xml: false, fencedCodeBlockHighlighting: false}};
           } else if (this.props.mode === "akrantiain") {
             return {theme: "zpakrantiain", mode: {name: "akrantiain"}};
+          } else if (this.props.mode === "zatlin") {
+            return {theme: "zpakrantiain", mode: {name: "zatlin"}};
           }
         })();
         let textAreaNode = (
@@ -66,7 +70,7 @@ export default class TextArea extends Component<Props, State> {
           {if: this.props.font === "monospace", true: "monospace"},
           {if: this.props.nowrap, true: "nowrap"}
         );
-        let textAreaNode = <textarea styleName={textAreaStyleName} value={this.props.value} onChange={this.handleChange.bind(this)}/>;
+        let textAreaNode = <textarea styleName={textAreaStyleName} value={this.props.value} readOnly={this.props.readOnly} onChange={this.handleChange.bind(this)}/>;
         return textAreaNode;
       }
     })();
@@ -86,8 +90,9 @@ type Props = {
   value: string,
   label?: string,
   font: "normal" | "monospace",
-  mode?: "markdown" | "akrantiain",
+  mode?: "markdown" | "akrantiain" | "zatlin",
   nowrap: boolean,
+  readOnly: boolean,
   showRequired?: boolean,
   showOptional?: boolean,
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
@@ -97,7 +102,8 @@ type Props = {
 type DefaultProps = {
   value: string,
   font: "normal" | "monospace",
-  nowrap: boolean
+  nowrap: boolean,
+  readOnly: boolean
 };
 type State = {
 };

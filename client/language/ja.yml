@@ -28,12 +28,15 @@ popup:
     辞書の一覧表示の設定を変更しました。
   dictionaryExplanationChanged: >-
     辞書の説明を変更しました。
-  dictionarySnojChanged: >-
-    akrantiain 用 snoj データを変更しました。
-  dictionaryPronunciationTitleChanged: >-
-    発音データの分類名を変更しました。
-  dictionaryEnableMarkdownChanged: >-
-    Markdown 設定を変更しました。
+  dictionarySettingsChanged:
+    akrantiainSource: >-
+      Akrantiain 用 snoj データを変更しました。
+    zatlinSource: >-
+      Zatlin 用ソースコードを変更しました。
+    pronunciationTitle: >-
+      発音データの分類名を変更しました。
+    enableMarkdown: >-
+      Markdown 設定を変更しました。
   dictionaryUploaded: >-
     辞書のアップロードが完了しました。
     なお、データの反映には時間がかかる場合があります。
@@ -213,9 +216,11 @@ changeDictionarySettingsForm:
   enableMarkdownTrue: "有効"
   enableMarkdownFalse: "無効"
   confirm: "変更"
-changeDictionarySnojForm:
-  snoj: "akrantiain 用 snoj データ"
+changeDictionarySourceForm:
+  akrantiain: "Akrantiain 用 snoj データ"
+  zatlin: "Zatlin 用ソースコード"
   confirm: "変更"
+  try: "試す"
 deleteDictionaryForm:
   confirm: "削除"
   caution: >-
@@ -232,6 +237,13 @@ addCommissionForm:
   name: "単語"
   comment: "コメント"
   confirm: "依頼"
+akrantiainExecutor:
+  title: "Akrantiain"
+  source: "snoj データ"
+  input: "入力"
+  output: "出力"
+  errorMessage: "エラーメッセージ"
+  execute: "実行"
 commissionPane:
   delete: "削除"
   add: "造語"
@@ -266,11 +278,16 @@ header:
   dictionaryList: "辞書一覧"
   notification: "お知らせ"
   contact: "お問い合わせ"
+  language: "言語選択"
 invitationPane:
   createdDate: "招待日時"
   userName: "招待者"
   reject: "拒否"
   accept: "承認"
+languageForm:
+  caution: >-
+    翻訳は必ずしも正確ではありません。
+    もし翻訳に不自然な点を見つけましたら、お問い合せフォームからご連絡ください。
 loginForm:
   userName: "ユーザー ID"
   email: "メールアドレス"
@@ -317,6 +334,7 @@ wordEditor:
   relationName: "関連語"
   delete: "削除"
   confirm: "決定"
+  generate: "生成"
   selectRelation: "変更"
   alertConfirm: "削除"
   alert: >-
@@ -326,6 +344,12 @@ wordEditor:
 wordPane:
   edit: "編集"
   submit: "決定"
+zatlinExecutor:
+  title: "Zatlin"
+  source: "ソースコード"
+  output: "出力"
+  errorMessage: "エラーメッセージ"
+  execute: "実行"
 addCommissionPage:
   description: "造語依頼"
 contactPage:
@@ -399,12 +423,17 @@ dictionarySettingPage:
       辞書の説明を変更します。
       一部の Markdown 形式に対応しています。
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
-  changeDictionarySnojForm:
-    label: "akrantiain 用 snoj データの変更"
+  changeDictionaryAkrantiainSourceForm:
+    label: "Akrantiain 用 snoj データの変更"
     description: >-
-      akrantiain 用 snoj データの変更します。
-      これを設定しておくと、akrantiain を実行することで単語の発音が綴りから自動生成され、単語の横に表示されるようになります。
+      Akrantiain 用の snoj データを設定できます。
+      これを設定しておくと、Akrantiain を実行することで単語の発音が綴りから自動生成され、単語の横に表示されるようになります。
       単語に個別の発音が指定されているときは、そちらが優先されます。
+  changeDictionaryZatlinSourceForm:
+    label: "Zatlin 用ソースコードの変更"
+    description: >-
+      Zatlin 用のソースコードを設定できます。
+      これを設定しておくと、単語編集画面において単語欄に「生成」ボタンが表示され、Zatlin を実行して綴りを自動生成できるようになります。
   changeDictionaryPronunciationTitleForm:
     label: "発音データの分類名の変更"
     description: >-
@@ -433,6 +462,8 @@ dictionarySettingPage:
     description: >-
       この辞書を別のユーザーに譲渡します。
       辞書の譲渡後もこのユーザーに編集権限は残るので、単語の編集は引き続き行うことができます。
+languagePage:
+  description: "言語選択"
 loginPage:
   description: "ログイン"
 registerPage:
