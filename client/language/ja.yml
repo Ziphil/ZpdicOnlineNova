@@ -326,6 +326,7 @@ wordEditor:
   relationName: "関連語"
   delete: "削除"
   confirm: "決定"
+  generate: "生成"
   selectRelation: "変更"
   alertConfirm: "削除"
   alert: >-

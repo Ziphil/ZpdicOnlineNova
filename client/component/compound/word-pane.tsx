@@ -54,16 +54,19 @@ export default class WordPane extends Component<Props, State> {
         } else {
           return "/" + this.props.word.pronunciation + "/";
         }
-      } else if (this.props.dictionary instanceof Dictionary && this.props.dictionary.getAkrantiain() !== null) {
-        try {
-          let pronunciation = this.props.dictionary.getAkrantiain()!.convert(this.props.word.name);
-          return "/" + pronunciation + "/";
-        } catch (error) {
-          console.error(error);
+      } else {
+        let akrantiain = (this.props.dictionary instanceof Dictionary) ? this.props.dictionary.getAkrantiain() : null;
+        if (akrantiain !== null) {
+          try {
+            let pronunciation = this.props.dictionary.getAkrantiain()!.convert(this.props.word.name);
+            return "/" + pronunciation + "/";
+          } catch (error) {
+            console.error(error);
+            return undefined;
+          }
+        } else {
           return undefined;
         }
-      } else {
-        return undefined;
       }
     })();
     let pronunciationNode = (pronunciationText !== undefined) && (() => {

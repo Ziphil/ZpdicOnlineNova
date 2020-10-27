@@ -326,6 +326,7 @@ wordEditor:
   relationName: "Related word"
   delete: "Delete"
   confirm: "Confirm"
+  generate: "Generate"
   selectRelation: "Select"
   alertConfirm: "Delete"
   alert: >-
