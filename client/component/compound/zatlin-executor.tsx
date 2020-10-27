@@ -36,6 +36,13 @@ export default class ZatlinExecutor extends Component<Props, State> {
     this.state.source = source;
   }
 
+  public async componentDidUpdate(previousProps: any): Promise<void> {
+    if (this.props.defaultSource !== previousProps.defaultSource) {
+      let source = this.props.defaultSource ?? "";
+      this.setState({source});
+    }
+  }
+
   private executeAkrantiain(): void {
     try {
       let zatlin = Zatlin.load(this.state.source);
@@ -47,10 +54,16 @@ export default class ZatlinExecutor extends Component<Props, State> {
     }
   }
 
+  private handleClose(event: MouseEvent<HTMLElement>): void {
+    if (this.props.onClose !== undefined) {
+      this.props.onClose(event, this.state.source);
+    }
+  }
+
   public render(): ReactNode {
     let styles = this.props.styles!;
     let node = (
-      <Overlay size="large" title={this.trans("zatlinExecutor.title")} open={this.props.open} onClose={this.props.onClose}>
+      <Overlay size="large" title={this.trans("zatlinExecutor.title")} open={this.props.open} onClose={this.handleClose.bind(this)}>
         <div styleName="root">
           <TextArea
             className={styles["source"]}
@@ -76,7 +89,7 @@ export default class ZatlinExecutor extends Component<Props, State> {
 type Props = {
   defaultSource?: string,
   open: boolean,
-  onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>
+  onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>
 };
 type State = {
   source: string,

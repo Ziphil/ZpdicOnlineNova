@@ -46,12 +46,12 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
     let executorNode = (() => {
       if (this.props.languageName === "akrantiain") {
         let executorNode = (
-          <AkrantiainExecutor defaultSource={this.state.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
+          <AkrantiainExecutor defaultSource={this.state.source} open={this.state.executorOpen} onClose={(event, source) => this.setState({source, executorOpen: false})}/>
         );
         return executorNode;
       } else if (this.props.languageName === "zatlin") {
         let executorNode = (
-          <ZatlinExecutor defaultSource={this.state.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
+          <ZatlinExecutor defaultSource={this.state.source} open={this.state.executorOpen} onClose={(event, source) => this.setState({source, executorOpen: false})}/>
         );
         return executorNode;
       }
