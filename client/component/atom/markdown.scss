@@ -80,6 +80,7 @@
 
 .root pre {
   @include reset-first-margin;
+  margin: 10px 0px 0px 0px;
   padding: 0.12em 0.5em;
   font-family: $monospace-font-family, monospace;
   font-size: 95%;
