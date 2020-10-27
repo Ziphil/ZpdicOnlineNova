@@ -1,10 +1,6 @@
 //
 
 import {
-  createIntl,
-  createIntlCache
-} from "@formatjs/intl";
-import {
   ClientResponse
 } from "@sendgrid/client/src/response";
 import {
@@ -13,24 +9,23 @@ import {
 import {
   send as sendMailOriginal
 } from "@sendgrid/mail";
-
-
-const INTL = createIntl(
-  {locale: "ja", messages: require("../language/ja.yml")},
-  createIntlCache()
-);
+import {
+  INTLS
+} from "/server/language";
 
 
 export class MailUtil {
 
   public static getSubject(type: string, values?: Record<string, string>): string {
-    let title = INTL.formatMessage({id: "mail." + type + ".subject"}, values);
+    let intl = INTLS[0];
+    let title = intl.formatMessage({id: `mail.${type}.subject`}, values);
     return title;
   }
 
   public static getText(type: string, values?: Record<string, string>): string {
-    let text = INTL.formatMessage({id: "mail." + type + ".text"}, values);
-    let footer = INTL.formatMessage({id: "mail.footer"});
+    let intl = INTLS[0];
+    let text = intl.formatMessage({id: `mail.${type}.subject`}, values);
+    let footer = intl.formatMessage({id: "mail.footer"});
     let wholeText = text + "\n" + footer;
     return wholeText;
   }
