@@ -8,6 +8,7 @@
   border-bottom: 1px $light-border-color solid;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .root >* {
