@@ -27,6 +27,7 @@ import {
   WithSize
 } from "/server/controller/interface/type";
 import {
+  DetailedDictionary,
   Dictionary,
   NormalSearchParameter,
   SearchModeUtil,
@@ -86,7 +87,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     })();
     let response = await this.requestGet("fetchDictionary", {number, paramName});
     if (response.status === 200 && !("error" in response.data)) {
-      let dictionary = Dictionary.of(response.data);
+      let dictionary = DetailedDictionary.of(response.data);
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});

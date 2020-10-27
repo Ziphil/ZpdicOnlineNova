@@ -52,7 +52,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let number = +this.props.match!.params.number;
     let response = await this.requestGet("fetchDictionary", {number});
     if (response.status === 200 && !("error" in response.data)) {
-      let dictionary = response.data;
+      let dictionary = DetailedDictionary.of(response.data);
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
