@@ -120,9 +120,9 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
         }
       }
     }
-    let response = await (() => {
+    let response = await (async () => {
       try {
-        return BaseComponent.client.request<ResponseData<N, M>>({url, method, ...config});
+        return await BaseComponent.client.request<ResponseData<N, M>>({url, method, ...config});
       } catch (error) {
         if (error.code === "ECONNABORTED") {
           let data = undefined as any;
