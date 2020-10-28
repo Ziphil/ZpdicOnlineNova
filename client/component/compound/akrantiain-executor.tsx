@@ -1,6 +1,7 @@
 //
 
 import {
+  AKRANTIAIN_VERSION,
   Akrantiain
 } from "akrantiain";
 import * as react from "react";
@@ -63,8 +64,9 @@ export default class AkrantiainExecutor extends Component<Props, State> {
 
   public render(): ReactNode {
     let styles = this.props.styles!;
+    let version = AKRANTIAIN_VERSION;
     let node = (
-      <Overlay size="large" title={this.trans("akrantiainExecutor.title")} open={this.props.open} onClose={this.handleClose.bind(this)}>
+      <Overlay size="large" title={this.trans("akrantiainExecutor.title", {version})} open={this.props.open} onClose={this.handleClose.bind(this)}>
         <div styleName="root">
           <TextArea
             className={styles["source"]}

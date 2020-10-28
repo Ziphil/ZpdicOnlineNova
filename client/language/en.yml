@@ -238,7 +238,7 @@ addCommissionForm:
   comment: "Comment"
   confirm: "Request"
 akrantiainExecutor:
-  title: "Akrantiain"
+  title: "Akrantiain {version}"
   source: "Snoj data"
   input: "Input"
   output: "Output"
@@ -345,7 +345,7 @@ wordPane:
   edit: "Edit"
   submit: "Select"
 zatlinExecutor:
-  title: "Zatlin"
+  title: "Zatlin {version}"
   source: "Source code"
   output: "Output"
   errorMessage: "Error message"

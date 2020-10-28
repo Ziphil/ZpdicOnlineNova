@@ -9,6 +9,7 @@ import {
   AsyncOrSync
 } from "ts-essentials";
 import {
+  ZATLIN_VERSION,
   Zatlin
 } from "zatlin";
 import Button from "/client/component/atom/button";
@@ -62,8 +63,9 @@ export default class ZatlinExecutor extends Component<Props, State> {
 
   public render(): ReactNode {
     let styles = this.props.styles!;
+    let version = ZATLIN_VERSION;
     let node = (
-      <Overlay size="large" title={this.trans("zatlinExecutor.title")} open={this.props.open} onClose={this.handleClose.bind(this)}>
+      <Overlay size="large" title={this.trans("zatlinExecutor.title", {version})} open={this.props.open} onClose={this.handleClose.bind(this)}>
         <div styleName="root">
           <TextArea
             className={styles["source"]}
