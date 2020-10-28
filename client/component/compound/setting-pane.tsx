@@ -60,7 +60,7 @@ export default class SettingPane extends Component<Props, State> {
 type Props = {
   label?: string,
   badgeValue?: string | number,
-  description?: string,
+  description?: ReactNode,
   forceWide: boolean
 };
 type DefaultProps = {
