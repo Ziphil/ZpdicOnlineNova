@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
 import CommissionList from "/client/component/compound/commission-list";
 import DictionaryStatisticsPane from "/client/component/compound/dictionary-statistics-pane";
@@ -153,7 +154,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
 
   private renderChangeDictionaryAkrantiainSourceForm(): ReactNode {
     let label = this.trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.label");
-    let description = this.trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.description");
+    let description = <Markdown source={this.trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.description")} simple={true}/>;
     let node = (
       <SettingPane label={label} key={label} description={description} forceWide={true}>
         <ChangeDictionarySourceForm
@@ -169,7 +170,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
 
   private renderChangeDictionaryZatlinSourceForm(): ReactNode {
     let label = this.trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.label");
-    let description = this.trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.description");
+    let description = <Markdown source={this.trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.description")} simple={true}/>;
     let node = (
       <SettingPane label={label} key={label} description={description} forceWide={true}>
         <ChangeDictionarySourceForm
