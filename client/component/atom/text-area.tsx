@@ -51,7 +51,7 @@ export default class TextArea extends Component<Props, State> {
     let styles = this.props.styles!;
     let textAreaNode = (() => {
       if (this.props.mode !== undefined) {
-        let options = (() => {
+        let individualOptions = (() => {
           if (this.props.mode === "markdown") {
             return {theme: "zpmarkdown", mode: {name: "markdown", xml: false, fencedCodeBlockHighlighting: false}};
           } else if (this.props.mode === "akrantiain") {
@@ -60,6 +60,7 @@ export default class TextArea extends Component<Props, State> {
             return {theme: "zpakrantiain", mode: {name: "zatlin"}};
           }
         })();
+        let options = {...individualOptions, readOnly: this.props.readOnly, lineWrapping: !this.props.nowrap};
         let textAreaNode = (
           <CodeMirror className={styles["textarea-code"]} value={this.props.value} options={options} onBeforeChange={this.handleBeforeChange.bind(this)}/>
         );
