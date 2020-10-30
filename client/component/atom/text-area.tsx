@@ -61,9 +61,7 @@ export default class TextArea extends Component<Props, State> {
           }
         })();
         let options = {...individualOptions, readOnly: this.props.readOnly, lineWrapping: !this.props.nowrap};
-        let textAreaNode = (
-          <CodeMirror className={styles["textarea-code"]} value={this.props.value} options={options} onBeforeChange={this.handleBeforeChange.bind(this)}/>
-        );
+        let textAreaNode = <CodeMirror className={styles["textarea-code"]} value={this.props.value} options={options} onBeforeChange={this.handleBeforeChange.bind(this)}/>;
         return textAreaNode;
       } else {
         let textAreaStyleName = StyleNameUtil.create(
