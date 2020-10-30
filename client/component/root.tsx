@@ -38,15 +38,16 @@ import {
 require("../../node_modules/codemirror/lib/codemirror.css");
 require("../../node_modules/c3/c3.css");
 
+let AddCommissionPage = lazy(() => import("/client/component/page/add-commission-page"));
 let ContactPage = lazy(() => import("/client/component/page/contact-page"));
 let DashboardPage = lazy(() => import("/client/component/page/dashboard-page"));
 let DictionaryListPage = lazy(() => import("/client/component/page/dictionary-list-page"));
 let DictionaryPage = lazy(() => import("/client/component/page/dictionary-page"));
 let DictionarySettingPage = lazy(() => import("/client/component/page/dictionary-setting-page"));
+let DocumentPage = lazy(() => import("/client/component/page/document-page"));
 let LanguagePage = lazy(() => import("/client/component/page/language-page"));
 let LoginPage = lazy(() => import("/client/component/page/login-page"));
 let NotificationPage = lazy(() => import("/client/component/page/notification-page"));
-let AddCommissionPage = lazy(() => import("/client/component/page/add-commission-page"));
 let RegisterPage = lazy(() => import("/client/component/page/register-page"));
 let ResetUserPasswordPage = lazy(() => import("/client/component/page/reset-user-password-page"));
 let TopPage = lazy(() => import("/client/component/page/top-page"));
@@ -87,6 +88,7 @@ export class Root extends Component<Props, State> {
                 <Route exact sensitive path="/list" component={DictionaryListPage}/>
                 <Route exact sensitive path="/notification" component={NotificationPage}/>
                 <Route exact sensitive path="/contact" component={ContactPage}/>
+                <Route exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
                 <Route exact sensitive path="/language" component={LanguagePage}/>
               </Switch>
             </Suspense>

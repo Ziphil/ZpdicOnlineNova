@@ -83,11 +83,19 @@ let config = {
             loader: "yaml-flat-loader"
           }
         ]
+      },
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: "raw-loader"
+          }
+        ]
       }
     ]
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".css", ".yml"],
+    extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".css", ".yml", ".md"],
     alias: {
       "/client": path.resolve(__dirname, "client"),
       "/server": path.resolve(__dirname, "server")

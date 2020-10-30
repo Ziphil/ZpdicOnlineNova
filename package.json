@@ -72,6 +72,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "query-string": "^6.13.6",
+    "raw-loader": "^4.0.2",
     "react": "^16.14.0",
     "react-codemirror2": "^7.2.1",
     "react-css-modules": "^4.7.11",
