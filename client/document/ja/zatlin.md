@@ -19,7 +19,7 @@ Zatlin の処理系はこのメインパターンに沿ってランダムに文�
 cons = "s" | "t" | "k";
 vowel = "a" | "e" | "i"
 last_cons = "z" | "d";
-pattern = consonant vowel last_cons;
+pattern = cons vowel last_cons;
 % pattern;
 ```
 
@@ -138,7 +138,7 @@ foo = "a" | "b";
 そのため、`-` の後に書かれたパターンは「除外パターン」と呼ばれます。
 ```zatlin
 % "abc" | "pqr" | "xyz" - "p";
-#「abc」と「pqr」と「xyz」のいずれかが等確率で生成された後で
+# 「abc」と「pqr」と「xyz」のいずれかが等確率で生成された後で
 # それが「p」を含む「pqr」だった場合はもう一度生成し直す
 # 結果的に「pqr」はこのパターンから生成されずに「abc」か「xyz」が等確率で生成される
 ```
@@ -221,11 +221,11 @@ syll_vowel = V 3 | SV C 2;
 syll_cons = C SV 5 | C SV C 2 | C SV C C 3 | C C SV 5 | C C SV C 2 | C C SV C C 3;
 syll_first = syll_vowel | syll_cons 3;
 syll_rest = syll_cons;
-# 発音が難しい綴り
-# 「h」で終わる単語や調音位置が同じ文字の連続など
-# 後で除外設定のために使う
+# 発音が難しい綴り (後で除外設定のために使う)
+# h と子音の連続や h で終わる単語
 hard_h = C "h" | "h" C | "h" ^;
-hard_cons = sz sz | td td | kg kg | fv fv | (("n" | "h") &1);
+# 調音位置が同じ文字の連続
+hard_cons = sz sz | td td | kg kg | fv fv | ("n" | "h") &1;
 hard = hard_h | hard_cons;
 # 単語
 word = syll_first ("" | syll_rest 3 | syll_rest syll_rest 5) - hard;
