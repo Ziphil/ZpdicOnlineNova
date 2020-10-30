@@ -21,7 +21,8 @@ import {
 export default class Markdown extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
-    simple: false
+    simple: false,
+    allowHeading: false
   };
 
   public render(): ReactNode {
@@ -31,6 +32,9 @@ export default class Markdown extends Component<Props, State> {
         return [allowedTypes, undefined];
       } else {
         let disallowedTypes = ["thematicBreak", "image", "imageReference", "definition", "heading", "html", "virtualHtml"] as Array<NodeType>;
+        if (this.props.allowHeading) {
+          disallowedTypes = disallowedTypes.filter((type) => type !== "heading");
+        }
         return [undefined, disallowedTypes];
       }
     })();
@@ -62,13 +66,15 @@ export default class Markdown extends Component<Props, State> {
 
 type Props = {
   source: string,
-  simple: boolean
+  simple: boolean,
+  allowHeading: boolean
   className?: string
 };
 type DefaultProps = {
-  simple: boolean
+  simple: boolean,
+  allowHeading: boolean
 };
 type State = {
 };
 
-type Renderers = {[nodeType: string]: ElementType};
+type Renderers = {[type: string]: ElementType};
