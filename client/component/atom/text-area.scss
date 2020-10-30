@@ -38,18 +38,28 @@
 }
 
 .textarea-code >div {
-  height: 100%;
   padding: 0em;
   font-family: $monospace-font-family, monospace;
   font-size: 95%;
   font-feature-settings: "palt" 0, "pkna" 0;
   background: transparent;
   box-sizing: border-box;
-  top: 0px ;
+}
+
+.textarea-code.no-fit >div {
+  height: 100%;
+  top: 0px;
   bottom: 0px;
   left: 0px;
   right: 0px;
   position: absolute;
+}
+
+.textarea-code.fit >div {
+  height: auto;
+  left: 0px;
+  right: 0px;
+  position: relative;
 }
 
 .textarea-code *[class~="CodeMirror-selected"] {

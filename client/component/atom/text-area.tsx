@@ -28,7 +28,8 @@ export default class TextArea extends Component<Props, State> {
     value: "",
     font: "normal",
     nowrap: false,
-    readOnly: false
+    readOnly: false,
+    fitHeight: false
   };
 
   private handleChange(event: ChangeEvent<HTMLTextAreaElement>): void {
@@ -51,7 +52,11 @@ export default class TextArea extends Component<Props, State> {
     let styles = this.props.styles!;
     let textAreaNode = (() => {
       if (this.props.mode !== undefined) {
-        let individualOptions = (() => {
+        let textAreaClassName = StyleNameUtil.create(
+          styles["textarea-code"],
+          {if: this.props.fitHeight, true: styles["fit"], false: styles["no-fit"]}
+        );
+        let modeOptions = (() => {
           if (this.props.mode === "markdown") {
             return {theme: "zpmarkdown", mode: {name: "markdown", xml: false, fencedCodeBlockHighlighting: false}};
           } else if (this.props.mode === "akrantiain") {
@@ -60,8 +65,10 @@ export default class TextArea extends Component<Props, State> {
             return {theme: "zpakrantiain", mode: {name: "zatlin"}};
           }
         })();
-        let options = {...individualOptions, readOnly: this.props.readOnly, lineWrapping: !this.props.nowrap};
-        let textAreaNode = <CodeMirror className={styles["textarea-code"]} value={this.props.value} options={options} onBeforeChange={this.handleBeforeChange.bind(this)}/>;
+        let heightOptions = (this.props.fitHeight) ? {viewportMargin: 1 / 0} : {};
+        let otherOptions = {readOnly: this.props.readOnly, lineWrapping: !this.props.nowrap};
+        let options = {...modeOptions, ...heightOptions, ...otherOptions};
+        let textAreaNode = <CodeMirror className={textAreaClassName} value={this.props.value} options={options} onBeforeChange={this.handleBeforeChange.bind(this)}/>;
         return textAreaNode;
       } else {
         let textAreaStyleName = StyleNameUtil.create(
@@ -92,6 +99,7 @@ type Props = {
   mode?: "markdown" | "akrantiain" | "zatlin",
   nowrap: boolean,
   readOnly: boolean,
+  fitHeight: boolean,
   showRequired?: boolean,
   showOptional?: boolean,
   onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
@@ -102,7 +110,8 @@ type DefaultProps = {
   value: string,
   font: "normal" | "monospace",
   nowrap: boolean,
-  readOnly: boolean
+  readOnly: boolean,
+  fitHeight: boolean
 };
 type State = {
 };

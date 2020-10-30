@@ -45,6 +45,7 @@ export default class SourceTester extends Component<Props, State> {
             mode={this.props.languageName}
             nowrap={true}
             readOnly={true}
+            fitHeight={true}
           />
           <Button label={this.trans("sourceTester.try")} style="link" onClick={() => this.setState({executorOpen: true})}/>
         </form>

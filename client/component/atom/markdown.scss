@@ -3,6 +3,23 @@
 @import "/client/component/mixin.scss";
 
 
+.root h1,
+.root h2 {
+  @include reset-first-margin;
+  margin: 20px 0px 20px 0px;
+  font-size: 150%;
+  font-weight: bold;
+  color: $head-color;
+}
+
+.root h3 {
+  @include reset-first-margin;
+  margin: 20px 0px 20px 0px;
+  font-size: 120%;
+  font-weight: bold;
+  color: $head-color;
+}
+
 .root p {
   @include reset-first-margin;
   @include line-height;
