@@ -312,6 +312,8 @@ searchForm:
   part: "Part"
   exact: "Exact"
   regular: "Regexp"
+sourceTester:
+  try: "Try"
 suggestionPane:
   maybe: "Do you mean"
   suggestion: "{title} of {nameNode}?"

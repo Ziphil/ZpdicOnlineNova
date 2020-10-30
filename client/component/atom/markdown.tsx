@@ -38,7 +38,7 @@ export default class Markdown extends Component<Props, State> {
         return [undefined, disallowedTypes];
       }
     })();
-    let renderers = (() => {
+    let customRenderers = (() => {
       if (this.props.simple) {
         let simpleRenderer = function (props: any): ReactElement {
           return props.children;
@@ -48,6 +48,7 @@ export default class Markdown extends Component<Props, State> {
         return {link: Link} as Renderers;
       }
     })();
+    let renderers = {...customRenderers, ...this.props.renderers};
     let innerNode = (
       <ReactMarkdown
         className={this.props.className}
@@ -68,6 +69,7 @@ type Props = {
   source: string,
   simple: boolean,
   allowHeading: boolean
+  renderers?: Renderers
   className?: string
 };
 type DefaultProps = {

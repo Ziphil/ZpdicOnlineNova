@@ -2,10 +2,13 @@
 
 import * as react from "react";
 import {
+  ReactElement,
   ReactNode
 } from "react";
+import ReactMarkdown from "react-markdown";
 import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
+import SourceTester from "/client/component/compound/source-tester";
 import {
   style
 } from "/client/component/decorator";
@@ -41,18 +44,48 @@ export default class DocumentPage extends Component<Props, State, Params> {
       let document = DOCUMENTS[locale].find((document) => document.path === path);
       if (document !== undefined) {
         let source = await document.fetchSource().then((module) => module.default);
-        this.setState({source});
+        let type = document.type;
+        this.setState({source, type});
       } else {
-        this.setState({source: null});
+        this.setState({source: null, type: undefined});
       }
     } else {
-      this.setState({source: null});
+      this.setState({source: null, type: undefined});
     }
   }
 
+  private renderSourceTester(props: {language: string, value: string}): ReactElement {
+    let node = (() => {
+      if (props.language === "akrantiain" || props.language === "zatlin") {
+        let node = (
+          <div className="block">
+            <SourceTester source={props.value} languageName={props.language}/>
+          </div>
+        );
+        return node;
+      } else {
+        if (typeof ReactMarkdown.renderers.code === "function") {
+          let node = ReactMarkdown.renderers.code(props);
+          return node;
+        } else {
+          throw new Error("cannot happen");
+        }
+      }
+    })();
+    return node;
+  }
+
   public render(): ReactNode {
+    let renderers = (() => {
+      let type = this.state.type;
+      if (type === "tester") {
+        return {code: this.renderSourceTester};
+      } else {
+        return undefined;
+      }
+    })();
     let markdownNode = (this.state.source !== null) && (
-      <Markdown source={this.state.source} allowHeading={true}/>
+      <Markdown source={this.state.source} allowHeading={true} renderers={renderers}/>
     );
     let node = (
       <Page>
@@ -69,6 +102,7 @@ type Props = {
 };
 type State = {
   source: string | null
+  type?: string
 };
 type Params = {
   firstPath: string,

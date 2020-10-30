@@ -96,6 +96,11 @@
   font-size: 100%;
 }
 
+.root :global(.block) {
+  @include reset-first-margin;
+  margin: 10px 0px 0px 0px;
+}
+
 .root code {
   padding: 0em 0.1em;
   font-family: $monospace-font-family, monospace;

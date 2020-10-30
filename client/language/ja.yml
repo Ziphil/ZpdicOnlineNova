@@ -312,6 +312,8 @@ searchForm:
   part: "部分"
   exact: "完全"
   regular: "正規"
+sourceTester:
+  try: "試す"
 suggestionPane:
   maybe: "もしかして"
   suggestion: "{nameNode} の{title}?"
