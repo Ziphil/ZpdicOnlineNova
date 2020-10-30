@@ -277,6 +277,7 @@ dictionaryPane:
 header:
   dictionaryList: "Dictionaries"
   notification: "Notifications"
+  document: "Documents"
   contact: "Contact"
   language: "Languages"
 invitationPane:
