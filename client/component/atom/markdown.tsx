@@ -2,10 +2,14 @@
 
 import * as react from "react";
 import {
+  ElementType,
   ReactElement,
   ReactNode
 } from "react";
 import ReactMarkdown from "react-markdown";
+import {
+  NodeType
+} from "react-markdown";
 import Link from "/client/component/atom/link";
 import Component from "/client/component/component";
 import {
@@ -21,33 +25,35 @@ export default class Markdown extends Component<Props, State> {
   };
 
   public render(): ReactNode {
-    let node = (() => {
+    let [allowedTypes, disallowedTypes] = (() => {
+      if (this.props.simple) {
+        let allowedTypes = ["root", "text", "paragraph", "link"] as Array<NodeType>;
+        return [allowedTypes, undefined];
+      } else {
+        let disallowedTypes = ["thematicBreak", "image", "imageReference", "definition", "heading", "html", "virtualHtml"] as Array<NodeType>;
+        return [undefined, disallowedTypes];
+      }
+    })();
+    let renderers = (() => {
       if (this.props.simple) {
         let simpleRenderer = function (props: any): ReactElement {
           return props.children;
         };
-        let node = (
-          <ReactMarkdown
-            className={this.props.className}
-            source={this.props.source}
-            renderers={{paragraph: simpleRenderer, link: Link}}
-            allowedTypes={["root", "text", "paragraph", "link"]}
-          />
-        );
-        return node;
+        return {link: Link, root: simpleRenderer, paragraph: simpleRenderer} as Renderers;
       } else {
-        let node = (
-          <div styleName="root" className={this.props.className}>
-            <ReactMarkdown
-              source={this.props.source}
-              renderers={{link: Link}}
-              disallowedTypes={["thematicBreak", "image", "imageReference", "definition", "heading", "html", "virtualHtml"]}
-            />
-          </div>
-        );
-        return node;
+        return {link: Link} as Renderers;
       }
     })();
+    let innerNode = (
+      <ReactMarkdown
+        className={this.props.className}
+        source={this.props.source}
+        renderers={renderers}
+        allowedTypes={allowedTypes}
+        disallowedTypes={disallowedTypes}
+      />
+    );
+    let node = (this.props.simple) ? innerNode : <div styleName="root" className={this.props.className}>{innerNode}</div>;
     return node;
   }
 
@@ -64,3 +70,5 @@ type DefaultProps = {
 };
 type State = {
 };
+
+type Renderers = {[nodeType: string]: ElementType};
