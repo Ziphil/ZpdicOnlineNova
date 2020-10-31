@@ -55,10 +55,6 @@
   height: auto;
 }
 
-.textarea-code *[class~="CodeMirror-selected"] {
-  background: background-color(map-get($colors, information)) !important;
-}
-
 .textarea-code *[class|="cm"] {
   font-weight: normal !important;
   font-style: normal !important;

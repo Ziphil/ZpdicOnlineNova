@@ -22,10 +22,6 @@
   box-sizing: border-box;
 }
 
-.textarea *[class~="CodeMirror-selected"] {
-  background: background-color(map-get($colors, information)) !important;
-}
-
 .textarea *[class|="cm"] {
   font-weight: normal !important;
   font-style: normal !important;
