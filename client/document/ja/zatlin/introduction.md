@@ -39,7 +39,7 @@ Zatlin に実行してほしいパターンを知らせるには、`%` に続い
 ```
 
 以上をまとめると、ここまでで次のような Zatlin コードができました。
-```zatlin
+```zatlin-try
 vowel = "a" | "e"
 cons = "s" | "t" | "k"
 syll = cons vowel
@@ -76,7 +76,7 @@ cons = "s" 5 | "t" 3 | "k" 2
 このようにすると、重みの合計は 10 なので、「s」と「t」と「k」が選ばれる確率はそれぞれ 5/10, 3/10, 2/10 となります。
 
 以上のように書き換えると、Zatlin コードは次のようになりました。
-```zatlin
+```zatlin-try
 vowel = "a" | "e"
 cons = "s" 5 | "t" 3 | "k" 2
 syll = vowel | cons vowel 2 | cons vowel cons 1.5 | cons vowel cons cons
@@ -123,7 +123,7 @@ CCVCC = cons cons vowel cons cons - "tk" | "kk" | ^ "st"
 パターンの最初と最後の両方に `^` を置くこともでき、その場合は、そのパターンが生成し得る文字列とちょうど一致するもののみが除外されます。
 
 結局、コード全体は次のようになりました。
-```zatlin
+```zatlin-try
 vowel = "a" | "e"
 cons = "s" 5 | "t" 3 | "k" 2
 V = vowel
@@ -163,7 +163,7 @@ CVC = cons (vowel | long) cons
 例えば、`CV` の定義において括弧を外して `cons vowel | long` としてしまうと、`cons vowel` と `long` の 2 択になってしまいます。
 
 以上で、コードは次のようになりました。
-```zatlin
+```zatlin-try
 vowel = "a" | "e"
 long = vowel &1
 cons = "s" 5 | "t" 3 | "k" 2
@@ -248,7 +248,7 @@ word = syll | syll syll 5 | syll syll syll 3 - hard
 ```
 
 以上をまとめると、コードは次のようになりました。
-```zatlin
+```zatlin-try
 short_vowel = "a" 5 | "e" 3 | "i" 2 | "o" 3 | "u" 2
 long_vowel = short_vowel &1
 vowel = short_vowel 3 | long_vowel

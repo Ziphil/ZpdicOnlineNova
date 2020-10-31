@@ -6,6 +6,7 @@ import {
   ReactNode
 } from "react";
 import ReactMarkdown from "react-markdown";
+import Highlight from "/client/component/atom/highlight";
 import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
 import SourceTester from "/client/component/compound/source-tester";
@@ -54,25 +55,25 @@ export default class DocumentPage extends Component<Props, State, Params> {
     }
   }
 
-  private renderSourceTester(props: {language: string, value: string}): ReactElement {
-    let node = (() => {
-      if (props.language === "akrantiain" || props.language === "zatlin") {
-        let node = (
-          <div className="block">
-            <SourceTester source={props.value} languageName={props.language}/>
-          </div>
-        );
+  private renderSourceTester(props: {language: string | null, value: string}): ReactElement {
+    let match = props.language?.match(/^(\w+)(-try)?$/);
+    let language = (match !== null && match !== undefined) ? match[1] : null;
+    if (language === "akrantiain" || language === "zatlin") {
+      let innerNode = (match && match[2]) ? <SourceTester source={props.value} languageName={language}/> : <Highlight value={props.value} mode={language}/>;
+      let node = (
+        <div className="block">
+          {innerNode}
+        </div>
+      );
+      return node;
+    } else {
+      if (typeof ReactMarkdown.renderers.code === "function") {
+        let node = ReactMarkdown.renderers.code(props);
         return node;
       } else {
-        if (typeof ReactMarkdown.renderers.code === "function") {
-          let node = ReactMarkdown.renderers.code(props);
-          return node;
-        } else {
-          throw new Error("cannot happen");
-        }
+        throw new Error("cannot happen");
       }
-    })();
-    return node;
+    }
   }
 
   public render(): ReactNode {
