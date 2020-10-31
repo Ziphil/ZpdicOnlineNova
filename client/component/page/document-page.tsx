@@ -9,6 +9,7 @@ import ReactMarkdown from "react-markdown";
 import Highlight from "/client/component/atom/highlight";
 import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
+import Loading from "/client/component/compound/loading";
 import SourceTester from "/client/component/compound/source-tester";
 import {
   style
@@ -37,6 +38,7 @@ export default class DocumentPage extends Component<Props, State, Params> {
   }
 
   private async fetchSource(): Promise<void> {
+    this.setState({source: null, type: undefined});
     let locale = this.props.store!.locale;
     let firstPath = (this.props.match!.params.firstPath) ? this.props.match!.params.firstPath : "";
     let secondPath = (this.props.match!.params.secondPath) ? "/" + this.props.match!.params.secondPath : "";
@@ -48,10 +50,10 @@ export default class DocumentPage extends Component<Props, State, Params> {
         let type = document.type;
         this.setState({source, type});
       } else {
-        this.setState({source: null, type: undefined});
+        this.setState({source: "", type: undefined});
       }
     } else {
-      this.setState({source: null, type: undefined});
+      this.setState({source: "", type: undefined});
     }
   }
 
@@ -85,12 +87,11 @@ export default class DocumentPage extends Component<Props, State, Params> {
         return undefined;
       }
     })();
-    let markdownNode = (this.state.source !== null) && (
-      <Markdown source={this.state.source} allowHeading={true} renderers={renderers}/>
-    );
     let node = (
       <Page>
-        {markdownNode}
+        <Loading loading={this.state.source === null}>
+          <Markdown source={this.state.source!} allowHeading={true} renderers={renderers}/>
+        </Loading>
       </Page>
     );
     return node;
