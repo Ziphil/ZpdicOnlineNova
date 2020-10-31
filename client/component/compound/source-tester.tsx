@@ -6,7 +6,7 @@ import {
   ReactNode
 } from "react";
 import Button from "/client/component/atom/button";
-import TextArea from "/client/component/atom/text-area";
+import Highlight from "/client/component/atom/highlight";
 import Component from "/client/component/component";
 import AkrantiainExecutor from "/client/component/compound/akrantiain-executor";
 import ZatlinExecutor from "/client/component/compound/zatlin-executor";
@@ -39,14 +39,7 @@ export default class SourceTester extends Component<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <TextArea
-            value={this.props.source}
-            font="monospace"
-            mode={this.props.languageName}
-            nowrap={true}
-            readOnly={true}
-            fitHeight={true}
-          />
+          <Highlight value={this.props.source} mode={this.props.languageName}/>
           <Button label={this.trans("sourceTester.try")} style="link" onClick={() => this.setState({executorOpen: true})}/>
         </form>
         {executorNode}

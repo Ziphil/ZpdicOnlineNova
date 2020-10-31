@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.textarea {
+  padding: 0px;
+  line-height: $text-line-height;
+  border: 1px $pale-border-color solid;
+  border-radius: $small-border-radius;
+  background-color: white;
+  box-sizing: border-box;
+  display: block;
+  flex-grow: 1;
+}
+
+.textarea >div {
+  height: auto;
+  padding: 0em;
+  font-family: $monospace-font-family, monospace;
+  font-size: 95%;
+  font-feature-settings: "palt" 0, "pkna" 0;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.textarea *[class~="CodeMirror-selected"] {
+  background: background-color(map-get($colors, information)) !important;
+}
+
+.textarea *[class|="cm"] {
+  font-weight: normal !important;
+  font-style: normal !important;
+  text-decoration: none !important;
+}
+
+.textarea >div *[class~="CodeMirror-lines"] {
+  padding: 0.12em 0em !important;
+} 
+
+.textarea >div *[class~="CodeMirror-line"] {
+  padding: 0em 0.5em !important;
+}

@@ -63,6 +63,8 @@ export default class TextArea extends Component<Props, State> {
             return {theme: "zpakrantiain", mode: {name: "akrantiain"}};
           } else if (this.props.mode === "zatlin") {
             return {theme: "zpakrantiain", mode: {name: "zatlin"}};
+          } else {
+            return {theme: "zpplain", mode: undefined};
           }
         })();
         let heightOptions = (this.props.fitHeight) ? {viewportMargin: 1 / 0} : {};
@@ -96,7 +98,7 @@ type Props = {
   value: string,
   label?: string,
   font: "normal" | "monospace",
-  mode?: "markdown" | "akrantiain" | "zatlin",
+  mode?: string,
   nowrap: boolean,
   readOnly: boolean,
   fitHeight: boolean,
