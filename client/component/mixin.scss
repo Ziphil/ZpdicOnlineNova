@@ -152,6 +152,12 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   box-sizing: border-box;
 }
 
+@mixin monospace-font {
+  font-family: $monospace-font-family, monospace;
+  font-size: 95%;
+  font-feature-settings: "palt" 0, "pkna" 0;
+}
+
 @mixin icon-font {
   font-family: $icon-font-family;
   font-weight: 900;

@@ -18,9 +18,7 @@
 }
 
 .textarea.monospace {
-  font-family: $monospace-font-family, monospace;
-  font-size: 95%;
-  font-feature-settings: "palt" 0, "pkna" 0;
+  @include monospace-font;
 }
 
 .textarea.nowrap {
@@ -38,10 +36,8 @@
 }
 
 .textarea-code >div {
+  @include monospace-font;
   padding: 0em;
-  font-family: $monospace-font-family, monospace;
-  font-size: 95%;
-  font-feature-settings: "palt" 0, "pkna" 0;
   background: transparent;
   box-sizing: border-box;
 }
@@ -57,9 +53,6 @@
 
 .textarea-code.fit >div {
   height: auto;
-  left: 0px;
-  right: 0px;
-  position: relative;
 }
 
 .textarea-code *[class~="CodeMirror-selected"] {

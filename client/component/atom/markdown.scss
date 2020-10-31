@@ -97,11 +97,9 @@
 
 .root pre {
   @include reset-first-margin;
+  @include monospace-font;
   margin: 10px 0px 0px 0px;
   padding: 0.12em 0.5em;
-  font-family: $monospace-font-family, monospace;
-  font-size: 95%;
-  font-feature-settings: "palt" 0, "pkna" 0;
   line-height: $text-line-height;
   background-color: $strong-background-color;
   border-radius: $small-border-radius;
@@ -119,10 +117,8 @@
 }
 
 .root code {
+  @include monospace-font;
   padding: 0em 0.1em;
-  font-family: $monospace-font-family, monospace;
-  font-size: 95%;
-  font-feature-settings: "palt" 0, "pkna" 0;
   background-color: $strong-background-color;
   border-radius: $small-border-radius;
 }
