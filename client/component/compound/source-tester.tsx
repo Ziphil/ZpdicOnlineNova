@@ -24,12 +24,12 @@ export default class SourceTester extends Component<Props, State> {
 
   public render(): ReactNode {
     let executorNode = (() => {
-      if (this.props.languageName === "akrantiain") {
+      if (this.props.mode === "akrantiain") {
         let executorNode = (
           <AkrantiainExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
         );
         return executorNode;
-      } else if (this.props.languageName === "zatlin") {
+      } else if (this.props.mode === "zatlin") {
         let executorNode = (
           <ZatlinExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
         );
@@ -39,7 +39,7 @@ export default class SourceTester extends Component<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Highlight value={this.props.source} mode={this.props.languageName}/>
+          <Highlight value={this.props.source} mode={this.props.mode}/>
           <Button label={this.trans("sourceTester.try")} onClick={() => this.setState({executorOpen: true})}/>
         </form>
         {executorNode}
@@ -53,7 +53,7 @@ export default class SourceTester extends Component<Props, State> {
 
 type Props = {
   source: string,
-  languageName: "akrantiain" | "zatlin"
+  mode: "akrantiain" | "zatlin"
 };
 type State = {
   executorOpen: boolean

@@ -61,7 +61,7 @@ export default class DocumentPage extends Component<Props, State, Params> {
     let match = props.language?.match(/^(\w+)(-try)?$/);
     let language = (match !== null && match !== undefined) ? match[1] : null;
     if (language === "akrantiain" || language === "zatlin") {
-      let innerNode = (match && match[2]) ? <SourceTester source={props.value} languageName={language}/> : <Highlight value={props.value} mode={language}/>;
+      let innerNode = (match && match[2]) ? <SourceTester source={props.value} mode={language}/> : <Highlight value={props.value} mode={language}/>;
       let node = (
         <div className="block">
           {innerNode}
