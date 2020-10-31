@@ -188,7 +188,7 @@ foo = "a" | "b";
 ```zatlin-try
 start_with_vowel = ^ ("a" | "e" | "i" | "o" | "u");
 % "abc" | "def" | "ijk" | "uvw" - start_with_vowel;
-# 「def」のみが生成される。
+# 「def」のみが生成される
 ```
 
 なお、`^` は連続パターンの先頭か末尾にしか置くことはできません。
