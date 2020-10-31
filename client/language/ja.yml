@@ -432,13 +432,13 @@ dictionarySettingPage:
       Akrantiain 用の snoj データを設定できます。
       これを設定しておくと、Akrantiain を実行することで単語の発音が綴りから自動生成され、単語の横に表示されるようになります。
       単語に個別の発音が指定されているときは、そちらが優先されます。
-      Akrantiain の構文については[こちら](https://sozysozbot.github.io/akrantiain2/manuals/introduction/introduction_ja.html)をご覧ください。
+      Akrantiain の構文については[ドキュメント](/document)をご覧ください。
   changeDictionaryZatlinSourceForm:
     label: "Zatlin 用ソースコードの変更"
     description: >-
       Zatlin 用のソースコードを設定できます。
       これを設定しておくと、単語編集画面において単語欄に「生成」ボタンが表示され、Zatlin を実行して綴りを自動生成できるようになります。
-      Zatlin の構文については[こちら](https://github.com/Ziphil/TypescriptZatlin/blob/master/document/syntax/1.2-ja.md)をご覧ください。
+      Zatlin の構文については[ドキュメント](/document)をご覧ください。
   changeDictionaryPronunciationTitleForm:
     label: "発音データの分類名の変更"
     description: >-

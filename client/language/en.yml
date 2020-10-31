@@ -432,13 +432,13 @@ dictionarySettingPage:
       Change the snoj data for Akrantiain.
       If you set this data, Akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
       When a word has its own pronunciation specified, it will be displayed instead.
-      See [here](https://sozysozbot.github.io/akrantiain2/manuals/introduction/introduction_en.html) for further information about the syntax of Akrantiain.
+      See [the documentation](/document) for further information about the syntax of Akrantiain.
   changeDictionaryZatlinSourceForm:
     label: "Change source code for Zatlin"
     description: >-
       Change the source code for Zatlin.
       If you set this code, a “Generate” button will appear in the word editor, which enables you to generate a spelling by executing Zatlin.
-      See [here](https://github.com/Ziphil/TypescriptZatlin/blob/master/document/syntax/1.2-ja.md) for further information about the syntax of Zatlin (in Japanese).
+      See [the documentation](/document) for further information about the syntax of Zatlin (in Japanese).
   changeDictionaryPronunciationTitleForm:
     label: "Change title of pronunciation"
     description: >-
