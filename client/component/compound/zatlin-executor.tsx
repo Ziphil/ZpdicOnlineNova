@@ -74,11 +74,21 @@ export default class ZatlinExecutor extends Component<Props, State> {
             font="monospace"
             mode="zatlin"
             nowrap={true}
+            fitHeight={true}
             onSet={(source) => this.setState({source})}
           />
           <Button className={styles["button"]} label={this.trans("zatlinExecutor.execute")} onClick={this.executeAkrantiain.bind(this)}/>
           <Input label={this.trans("zatlinExecutor.output")} value={this.state.output} readOnly={true}/>
-          <TextArea className={styles["error-message"]} label={this.trans("zatlinExecutor.errorMessage")} value={this.state.errorMessage} font="monospace" nowrap={true} readOnly={true}/>
+          <TextArea
+            className={styles["error-message"]}
+            label={this.trans("zatlinExecutor.errorMessage")}
+            value={this.state.errorMessage}
+            font="monospace"
+            mode="plain"
+            nowrap={true}
+            readOnly={true}
+            fitHeight={true}
+          />
         </div>
       </Overlay>
     );
