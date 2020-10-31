@@ -1,6 +1,3 @@
-## Zatlin とは
-執筆中です。
-
 ## 基本構文
 Zatlin では、どのような様式の文字列を生成するかを「パターン」と呼ばれる構文で表現します。
 パターンの構文については、後で詳しく解説します。
@@ -16,8 +13,8 @@ Zatlin の処理系はこのメインパターンに沿ってランダムに文�
 定義した変数は別のパターンの中で使用することができます。
 変数を定義する順番によって動作が変化することはなく、後の行で定義される変数を使うこともできます。
 ```zatlin
+vowel = "a" | "e" | "i";
 cons = "s" | "t" | "k";
-vowel = "a" | "e" | "i"
 last_cons = "z" | "d";
 pattern = cons vowel last_cons;
 % pattern;
@@ -204,41 +201,4 @@ start_with_vowel = ^ ("a" | "e" | "i" | "o" | "u");
 ```zatlin
 % ^ "a" | "b" "c" ^;
 # 「a」と「bc」が等確率で生成される
-```
-
-## より複雑な例
-```zatlin
-# 母音
-V = "a" 5 | "e" 3 | "i" 2 | "o" 3 | "u" 2;
-# 子音
-sz = "s" | "z"; td = "t" | "d"; kg = "k" | "g"; fv = "f" | "v";
-C = sz 3 | td 3 | kg 3 | fv 3 | ("n" | "h") 2;
-# 半母音＋母音
-# 「yi」と「wu」と「wo」は半母音なしと区別が難しいので除外
-SV = V 5 | ("y" | "w") V - "yi" | "w" ("u" | "o");
-# 音節
-syll_vowel = V 3 | SV C 2;
-syll_cons = C SV 5 | C SV C 2 | C SV C C 3 | C C SV 5 | C C SV C 2 | C C SV C C 3;
-syll_first = syll_vowel | syll_cons 3;
-syll_rest = syll_cons;
-# 発音が難しい綴り (後で除外設定のために使う)
-# h と子音の連続や h で終わる単語
-hard_h = C "h" | "h" C | "h" ^;
-# 調音位置が同じ文字の連続
-hard_cons = sz sz | td td | kg kg | fv fv | ("n" | "h") &1;
-hard = hard_h | hard_cons;
-# 単語
-word = syll_first ("" | syll_rest 3 | syll_rest syll_rest 5) - hard;
-# メインパターン
-% word;
-```
-以下は生成例です。
-上の欄の右端にある「試す」から実際に Zatlin を実行することも可能なので、試してみてください。
-```
-feve, neksvzutkek, sdo, si, otsokz, vonevsyad, o, usa,
-ozuho, vgedavuf, fuzkoz, insgozvat, e, zvofs, aga, sanse,
-efdi, okisn, fakvkok, onvekyu, sgekvisnyu, duztfti, dkostwi, vovso,
-adsofye, de, fkak, kvwidsaftne, dadve, fazuzyo, kosguknagv, gatskzakwa,
-fakve, faswefak, fkahego, fe, azfkiftsfevz, hyadise, gzesihof, azutza,
-gvyekfe, tof, nosidziz, dfutafa, navde, sasonsfid, atzadev, zgakndfuzv
 ```
