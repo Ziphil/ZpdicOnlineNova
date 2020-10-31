@@ -51,6 +51,9 @@ import {
   CastUtil
 } from "/server/util/cast";
 import {
+  sanitizeFileName
+} from "/server/util/misc";
+import {
   QueryRange
 } from "/server/util/query";
 
@@ -257,7 +260,7 @@ export class DictionaryController extends Controller {
       let date = new Date();
       let id = date.getTime();
       let path = "./dist/download/" + id + ".json";
-      let fullFileName = (fileName || "dictionary") + ".json";
+      let fullFileName = sanitizeFileName(fileName || dictionary.name) + ".json";
       await dictionary.download(path);
       response.download(path, fullFileName);
     } else {
