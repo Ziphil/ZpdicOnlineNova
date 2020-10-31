@@ -12,6 +12,9 @@ import {
   Word,
   WordModel
 } from "/server/model/dictionary";
+import {
+  escapeRegexp
+} from "/server/util/misc";
 
 
 export class NormalSearchParameter extends SearchParameter {
@@ -67,7 +70,7 @@ export class NormalSearchParameter extends SearchParameter {
 
   private createNeedle(overriddenType?: SearchType): string | RegExp {
     let search = this.search;
-    let escapedSearch = search.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
+    let escapedSearch = escapeRegexp(this.search);
     let type = overriddenType ?? this.type;
     if (type === "exact") {
       return search;

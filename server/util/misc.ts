@@ -20,3 +20,8 @@ export function removeMarkdown(source: string): string {
   let result = originalRemoveMarkdown(source, options);
   return result;
 }
+
+export function escapeRegexp(string: string): string {
+  let escapedString = string.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
+  return escapedString;
+}
