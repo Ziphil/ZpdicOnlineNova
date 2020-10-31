@@ -75,12 +75,22 @@ export default class AkrantiainExecutor extends Component<Props, State> {
             font="monospace"
             mode="akrantiain"
             nowrap={true}
+            fitHeight={true}
             onSet={(source) => this.setState({source})}
           />
           <Input label={this.trans("akrantiainExecutor.input")} value={this.state.input} onSet={(input) => this.setState({input})}/>
           <Button className={styles["button"]} label={this.trans("akrantiainExecutor.execute")} onClick={this.executeAkrantiain.bind(this)}/>
           <Input label={this.trans("akrantiainExecutor.output")} value={this.state.output} readOnly={true}/>
-          <TextArea className={styles["error-message"]} label={this.trans("akrantiainExecutor.errorMessage")} value={this.state.errorMessage} font="monospace" nowrap={true} readOnly={true}/>
+          <TextArea
+            className={styles["error-message"]}
+            label={this.trans("akrantiainExecutor.errorMessage")}
+            value={this.state.errorMessage}
+            font="monospace"
+            mode="plain"
+            nowrap={true}
+            readOnly={true}
+            fitHeight={true}
+          />
         </div>
       </Overlay>
     );

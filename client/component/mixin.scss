@@ -91,7 +91,7 @@ $tooltip-line-height: 1.4;
 
 $europian-font-family: "EB Garamond", "Times New Roman";
 $japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝";
-$monospace-font-family: "Courier New", "Courier", "Yu Gothic", "YuGothic", "ＭＳ ゴシック";
+$monospace-font-family: "Inconsolata", "Yu Gothic", "YuGothic", "ＭＳ ゴシック";
 $special-font-family: "Simonetta";
 $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
 
@@ -150,6 +150,12 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   margin: $margin-top $page-horizontal-margin $margin-bottom $page-horizontal-margin;
   padding: 0px;
   box-sizing: border-box;
+}
+
+@mixin monospace-font {
+  font-family: $monospace-font-family, monospace;
+  font-size: 95%;
+  font-feature-settings: "palt" 0, "pkna" 0;
 }
 
 @mixin icon-font {

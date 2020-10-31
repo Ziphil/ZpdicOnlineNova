@@ -24,12 +24,6 @@ export default class Header extends Component<Props, State> {
     let userNameNode = (user !== null) && (
       <HeaderMenuItem label={user.screenName} href="/dashboard"/>
     );
-    let languageNode = (
-      <div styleName="language">
-        <span styleName="icon">&#xF1AB;</span>
-        <span styleName="link" onClick={() => this.props.store!.changeLocale("ja")}>Ja</span> · <span styleName="link" onClick={() => this.props.store!.changeLocale("en")}>En</span>
-      </div>
-    );
     let node = (
       <header styleName="root">
         <div styleName="container">
@@ -40,6 +34,7 @@ export default class Header extends Component<Props, State> {
             <div styleName="menu">
               <HeaderMenuItem label={this.trans("header.dictionaryList")} iconLabel="&#xF02D;" href="/list"/>
               <HeaderMenuItem label={this.trans("header.notification")} iconLabel="&#xF05A;" href="/notification"/>
+              <HeaderMenuItem label={this.trans("header.document")} iconLabel="&#xF15B;" href="/document"/>
               <HeaderMenuItem label={this.trans("header.contact")} iconLabel="&#xF0E0;" href="/contact"/>
               <HeaderMenuItem label={this.trans("header.language")} iconLabel="&#xF1AB;" href="/language"/>
             </div>

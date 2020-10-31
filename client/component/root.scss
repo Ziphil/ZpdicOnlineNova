@@ -1,8 +1,10 @@
 @charset "utf-8";
 
 @import url("https://fonts.googleapis.com/css?family=EB+Garamond:400,600&display=swap&subset=cyrillic,cyrillic-ext,greek,latin-ext,vietnamese");
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Simonetta:400&display=swap");
 @import "/client/component/mixin.scss";
+@import "/client/component/highlight.scss";
 @import "/client/component/atom/portal.scss";
 
 
