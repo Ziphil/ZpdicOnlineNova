@@ -6,6 +6,7 @@ import "/client/declaration";
 export const DOCUMENTS = {
   ja: [
     {path: "", fetchSource: () => import("./ja/index.md")},
+    {path: "zatlin/overview", type: "tester", fetchSource: () => import("./ja/zatlin/overview.md")},
     {path: "zatlin/introduction", type: "tester", fetchSource: () => import("./ja/zatlin/introduction.md")},
     {path: "zatlin/syntax", type: "tester", fetchSource: () => import("./ja/zatlin/syntax.md")}
   ],
