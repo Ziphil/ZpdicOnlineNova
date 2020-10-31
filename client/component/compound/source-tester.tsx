@@ -40,7 +40,7 @@ export default class SourceTester extends Component<Props, State> {
       <Fragment>
         <form styleName="root">
           <Highlight value={this.props.source} mode={this.props.languageName}/>
-          <Button label={this.trans("sourceTester.try")} style="link" onClick={() => this.setState({executorOpen: true})}/>
+          <Button label={this.trans("sourceTester.try")} onClick={() => this.setState({executorOpen: true})}/>
         </form>
         {executorNode}
       </Fragment>
