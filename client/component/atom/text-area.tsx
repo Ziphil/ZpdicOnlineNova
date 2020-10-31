@@ -1,7 +1,5 @@
 //
 
-import "akrantiain/dist/code-mirror/mode";
-import "codemirror/mode/markdown/markdown";
 import * as react from "react";
 import {
   ChangeEvent,
@@ -10,7 +8,6 @@ import {
 import {
   Controlled as CodeMirror
 } from "react-codemirror2";
-import "zatlin/dist/code-mirror/mode";
 import Label from "/client/component/atom/label";
 import Component from "/client/component/component";
 import {
@@ -19,6 +16,11 @@ import {
 import {
   StyleNameUtil
 } from "/client/util/style-name";
+
+
+require("akrantiain/dist/code-mirror/mode");
+require("zatlin/dist/code-mirror/mode");
+require("codemirror/mode/markdown/markdown");
 
 
 @style(require("./text-area.scss"))
