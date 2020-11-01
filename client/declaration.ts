@@ -15,3 +15,10 @@ declare module "*.md" {
   export default data;
 
 }
+
+
+declare module "codemirror" {
+
+  function defineSimpleMode(language: string, definition: {[key: string]: Array<object>}): void;
+
+}

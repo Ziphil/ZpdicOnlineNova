@@ -18,6 +18,9 @@ import Page from "/client/component/page/page";
 import {
   DOCUMENTS
 } from "/client/document";
+import {
+  CodeMirrorUtil
+} from "/client/util/code-mirror";
 
 
 @style(require("./document-page.scss"))
@@ -59,8 +62,9 @@ export default class DocumentPage extends Component<Props, State, Params> {
 
   private renderSourceTester(props: {language: string | null, value: string}): ReactElement {
     let match = props.language?.match(/^(\w+)(-try)?$/);
-    let language = (match !== null && match !== undefined) ? match[1] : null;
-    if (language === "akrantiain" || language === "zatlin") {
+    let language = (match !== null && match !== undefined) ? match[1] : "plain";
+    let modeOptions = CodeMirrorUtil.getModeOptions(language);
+    if (modeOptions.mode !== undefined) {
       let innerNode = (match && match[2]) ? <SourceTester source={props.value} language={language}/> : <Highlight value={props.value} language={language}/>;
       let node = (
         <div className="block">

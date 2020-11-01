@@ -34,6 +34,8 @@ export default class SourceTester extends Component<Props, State> {
           <ZatlinExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
         );
         return executorNode;
+      } else {
+        return undefined;
       }
     })();
     let node = (
@@ -53,7 +55,7 @@ export default class SourceTester extends Component<Props, State> {
 
 type Props = {
   source: string,
-  language: "akrantiain" | "zatlin"
+  language: string
 };
 type State = {
   executorOpen: boolean
