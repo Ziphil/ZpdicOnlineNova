@@ -3,34 +3,21 @@
 @import "/client/component/mixin.scss";
 
 
-.textarea {
-  padding: 0px;
+.root {
   line-height: $text-line-height;
   border-radius: $small-border-radius;
   background-color: white;
   box-sizing: border-box;
   display: block;
   flex-grow: 1;
+  overflow-x: auto;
 }
 
-.textarea >div {
+.root >div {
   @include monospace-font;
   height: auto;
-  padding: 0em;
+  padding: 0.12em 0.5em;
+  white-space: pre;
   background: transparent;
   box-sizing: border-box;
-}
-
-.textarea *[class|="cm"] {
-  font-weight: normal !important;
-  font-style: normal !important;
-  text-decoration: none !important;
-}
-
-.textarea >div *[class~="CodeMirror-lines"] {
-  padding: 0.12em 0em !important;
-} 
-
-.textarea >div *[class~="CodeMirror-line"] {
-  padding: 0em 0.5em !important;
 }

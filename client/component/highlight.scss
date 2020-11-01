@@ -5,6 +5,12 @@
   background: background-color(map-get($colors, information)) !important;
 }
 
+*[class|="cm"] {
+  font-weight: normal !important;
+  font-style: normal !important;
+  text-decoration: none !important;
+}
+
 :global(.cm-s-zpmarkdown .cm-link) {
   color: hsl(180, 70%, 40%);
 }
