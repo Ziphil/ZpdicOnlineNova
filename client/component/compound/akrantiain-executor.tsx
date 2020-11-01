@@ -73,7 +73,7 @@ export default class AkrantiainExecutor extends Component<Props, State> {
             label={this.trans("akrantiainExecutor.source")}
             value={this.state.source}
             font="monospace"
-            mode="akrantiain"
+            language="akrantiain"
             nowrap={true}
             fitHeight={true}
             onSet={(source) => this.setState({source})}
@@ -86,7 +86,7 @@ export default class AkrantiainExecutor extends Component<Props, State> {
             label={this.trans("akrantiainExecutor.errorMessage")}
             value={this.state.errorMessage}
             font="monospace"
-            mode="plain"
+            language="plain"
             nowrap={true}
             readOnly={true}
             fitHeight={true}

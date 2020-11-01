@@ -271,7 +271,7 @@ export default class WordEditor extends Component<Props, State> {
   private renderInformations(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let mode = (this.props.dictionary.settings.enableMarkdown) ? "markdown" as const : undefined;
+    let language = (this.props.dictionary.settings.enableMarkdown) ? "markdown" as const : undefined;
     let suggest = this.createSuggest("information");
     let innerNodes = word.informations.map((information, index) => {
       let titleLabel = (index === 0) ? this.trans("wordEditor.informationTitle") : undefined;
@@ -280,7 +280,7 @@ export default class WordEditor extends Component<Props, State> {
         <div styleName="inner" key={index}>
           <div styleName="form information">
             <Input className={styles["title"]} value={information.title} label={titleLabel} suggest={suggest} onSet={this.setWord((title) => word.informations[index].title = title)}/>
-            <TextArea className={styles["text"]} value={information.text} label={textLabel} font="monospace" mode={mode} onSet={this.setWord((text) => word.informations[index].text = text)}/>
+            <TextArea className={styles["text"]} value={information.text} label={textLabel} font="monospace" language={language} onSet={this.setWord((text) => word.informations[index].text = text)}/>
           </div>
           <div styleName="control-button">
             <ControlGroup>

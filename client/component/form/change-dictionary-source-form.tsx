@@ -31,7 +31,7 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
 
   private async handleClick(): Promise<void> {
     let number = this.props.number;
-    let propertyName = this.props.languageName + "Source";
+    let propertyName = this.props.language + "Source";
     let settings = {[propertyName]: this.state.source};
     let response = await this.requestPost("changeDictionarySettings", {number, settings});
     if (response.status === 200) {
@@ -44,12 +44,12 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
 
   public render(): ReactNode {
     let executorNode = (() => {
-      if (this.props.languageName === "akrantiain") {
+      if (this.props.language === "akrantiain") {
         let executorNode = (
           <AkrantiainExecutor defaultSource={this.state.source} open={this.state.executorOpen} onClose={(event, source) => this.setState({source, executorOpen: false})}/>
         );
         return executorNode;
-      } else if (this.props.languageName === "zatlin") {
+      } else if (this.props.language === "zatlin") {
         let executorNode = (
           <ZatlinExecutor defaultSource={this.state.source} open={this.state.executorOpen} onClose={(event, source) => this.setState({source, executorOpen: false})}/>
         );
@@ -60,10 +60,10 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
       <Fragment>
         <form styleName="root">
           <TextArea
-            label={this.trans(`changeDictionarySourceForm.${this.props.languageName}`)}
+            label={this.trans(`changeDictionarySourceForm.${this.props.language}`)}
             value={this.state.source}
             font="monospace"
-            mode={this.props.languageName}
+            language={this.props.language}
             nowrap={true}
             onSet={(source) => this.setState({source})}
           />
@@ -84,7 +84,7 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
 type Props = {
   number: number,
   currentSource: string | undefined,
-  languageName: "akrantiain" | "zatlin",
+  language: "akrantiain" | "zatlin",
   onSubmit?: () => void
 };
 type State = {

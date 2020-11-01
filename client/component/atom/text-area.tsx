@@ -51,12 +51,12 @@ export default class TextArea extends Component<Props, State> {
   public render(): ReactNode {
     let styles = this.props.styles!;
     let textAreaNode = (() => {
-      if (this.props.mode !== undefined) {
+      if (this.props.language !== undefined) {
         let textAreaClassName = StyleNameUtil.create(
           styles["textarea-code"],
           {if: this.props.fitHeight, true: styles["fit"], false: styles["no-fit"]}
         );
-        let modeOptions = CodeMirrorUtil.getModeOptions(this.props.mode);
+        let modeOptions = CodeMirrorUtil.getModeOptions(this.props.language);
         let heightOptions = (this.props.fitHeight) ? {viewportMargin: 1 / 0} : {};
         let otherOptions = {readOnly: this.props.readOnly, lineWrapping: !this.props.nowrap};
         let options = {...modeOptions, ...heightOptions, ...otherOptions};
@@ -88,7 +88,7 @@ type Props = {
   value: string,
   label?: string,
   font: "normal" | "monospace",
-  mode?: string,
+  language?: string,
   nowrap: boolean,
   readOnly: boolean,
   fitHeight: boolean,

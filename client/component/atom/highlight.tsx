@@ -34,7 +34,7 @@ export default class Highlight extends Component<Props, State> {
 
   private drawHighlight(): void {
     let bindto = findDOMNode(this) as HTMLElement;
-    let modeOptions = CodeMirrorUtil.getModeOptions(this.props.mode);
+    let modeOptions = CodeMirrorUtil.getModeOptions(this.props.language);
     let html = "";
     html += `<div class=\"cm-s-${escapeHtml(modeOptions.theme)}\">`;
     CodeMirror.runMode(this.props.value, modeOptions.mode, (text, style) => {
@@ -62,7 +62,7 @@ export default class Highlight extends Component<Props, State> {
 
 type Props = {
   value: string,
-  mode: string,
+  language: string,
   className?: string
 };
 type DefaultProps = {

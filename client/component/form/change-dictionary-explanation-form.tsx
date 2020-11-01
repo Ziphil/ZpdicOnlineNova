@@ -39,7 +39,7 @@ export default class ChangeDictionaryExplanationForm extends Component<Props, St
         <TextArea
           label={this.trans("changeDictionaryExplanationForm.explanation")}
           font="monospace"
-          mode="markdown"
+          language="markdown"
           nowrap={true}
           value={this.state.explanation}
           onSet={(explanation) => this.setState({explanation})}
