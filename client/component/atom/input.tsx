@@ -33,8 +33,6 @@ export default class Input extends Component<Props, State> {
   public static defaultProps: DefaultProps = {
     value: "",
     type: "text",
-    showRequired: false,
-    showOptional: false,
     useTooltip: true,
     readOnly: false,
     disabled: false
@@ -175,8 +173,8 @@ type Props = {
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
   suggest?: Suggest,
-  showRequired: boolean,
-  showOptional: boolean,
+  showRequired?: boolean,
+  showOptional?: boolean,
   useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean,
@@ -187,8 +185,6 @@ type Props = {
 type DefaultProps = {
   value: string,
   type: "text" | "password" | "flexible",
-  showRequired: boolean,
-  showOptional: boolean,
   useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean
