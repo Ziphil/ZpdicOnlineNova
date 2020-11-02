@@ -63,6 +63,10 @@ export class NormalSearchParameter extends SearchParameter {
       return ["equivalents.names"];
     } else if (mode === "both") {
       return ["name", "equivalents.names"];
+    } else if (mode === "tag") {
+      return ["tags"];
+    } else if (mode === "information") {
+      return ["informations.text"];
     } else {
       return ["name", "equivalents.names", "informations.text"];
     }

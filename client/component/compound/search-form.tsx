@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import RadioGroup from "/client/component/atom/radio-group";
 import Component from "/client/component/component";
@@ -81,6 +82,9 @@ export default class SearchForm extends Component<Props, State> {
         </div>
         <div styleName="radio-wrapper">
           <RadioGroup name="type" value={this.props.parameter.type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
+        </div>
+        <div styleName="radio-wrapper">
+          <Button label={this.trans("searchForm.advancedSearch")} style="link"/>
         </div>
       </form>
     );

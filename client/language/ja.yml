@@ -312,6 +312,7 @@ searchForm:
   part: "部分"
   exact: "完全"
   regular: "正規"
+  advancedSearch: "高度な検索"
 sourceTester:
   try: "試す"
 suggestionPane:

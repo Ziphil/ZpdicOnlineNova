@@ -6,7 +6,7 @@ import {
 } from "/server/util/literal-type";
 
 
-export const SEARCH_MODES = ["name", "equivalent", "both", "content"] as const;
+export const SEARCH_MODES = ["name", "equivalent", "both", "tag", "information", "content"] as const;
 export type SearchMode = LiteralType<typeof SEARCH_MODES>;
 export let SearchModeUtil = LiteralUtilType.create(SEARCH_MODES);
 

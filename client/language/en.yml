@@ -312,6 +312,7 @@ searchForm:
   part: "Part"
   exact: "Exact"
   regular: "Regexp"
+  advancedSearch: "Advanced search"
 sourceTester:
   try: "Try"
 suggestionPane:
