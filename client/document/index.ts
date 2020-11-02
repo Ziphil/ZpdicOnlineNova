@@ -1,7 +1,5 @@
 //
 
-import "/client/declaration";
-
 
 export const DOCUMENTS = {
   ja: [
