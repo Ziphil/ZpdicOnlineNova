@@ -32,6 +32,8 @@ export default class Input extends Component<Props, State> {
   public static defaultProps: DefaultProps = {
     value: "",
     type: "text",
+    showRequired: false,
+    showOptional: false,
     useTooltip: true,
     readOnly: false,
     disabled: false
@@ -82,8 +84,8 @@ export default class Input extends Component<Props, State> {
   private async updateSuggestions(value: string): Promise<void> {
     let suggest = this.props.suggest;
     if (suggest !== undefined) {
-      let suggestions = await suggest(value);
-      this.setState({suggestionSpecs: suggestions});
+      let suggestionSpecs = await suggest(value);
+      this.setState({suggestionSpecs});
     }
   }
 
@@ -182,8 +184,8 @@ type Props = {
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
   suggest?: Suggest,
-  showRequired?: boolean,
-  showOptional?: boolean,
+  showRequired: boolean,
+  showOptional: boolean,
   useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean,
@@ -194,6 +196,8 @@ type Props = {
 type DefaultProps = {
   value: string,
   type: "text" | "password" | "flexible",
+  showRequired: boolean,
+  showOptional: boolean,
   useTooltip: boolean,
   readOnly: boolean,
   disabled: boolean
