@@ -2,25 +2,13 @@
 
 import * as react from "react";
 import {
-  ChangeEvent,
-  FocusEvent,
   MouseEvent,
   ReactNode
 } from "react";
-import {
-  AsyncOrSync
-} from "ts-essentials";
-import Label from "/client/component/atom/label";
 import Component from "/client/component/component";
 import {
   style
 } from "/client/component/decorator";
-import {
-  debounce
-} from "/client/util/decorator";
-import {
-  StyleNameUtil
-} from "/client/util/style-name";
 
 
 @style(require("./suggestion.scss"))
@@ -71,4 +59,3 @@ type State = {
 };
 
 export type SuggestionSpec = {node: ReactNode, replacement: string};
-export type SuggestFunction = (pattern: string) => AsyncOrSync<Array<Suggestion>>;
