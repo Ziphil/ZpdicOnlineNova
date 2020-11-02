@@ -22,10 +22,10 @@
   margin-right: auto;
 }
 
-.source {
+.source >:nth-child(2) *[class~="CodeMirror-scroll"] {
   min-height: 300px;
 }
 
-.error-message {
+.error-message >:nth-child(2) *[class~="CodeMirror-scroll"] {
   min-height: 150px;
 }
