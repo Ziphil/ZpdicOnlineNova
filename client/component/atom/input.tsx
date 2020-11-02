@@ -14,6 +14,7 @@ import Suggestion from "/client/component/atom/suggestion";
 import {
   SuggestionSpec
 } from "/client/component/atom/suggestion";
+import Tooltip from "/client/component/atom/tooltip";
 import Component from "/client/component/component";
 import {
   style
@@ -145,30 +146,19 @@ export default class Input extends Component<Props, State> {
     return node;
   }
 
-  private renderTooltip(): ReactNode {
-    let node = (
-      <div styleName="tooltip">
-        <p styleName="tooltip-text">
-          {this.state.errorMessage}
-        </p>
-      </div>
-    );
-    return node;
-  }
-
   public render(): ReactNode {
     let inputNode = this.renderInput();
     let labelNode = this.renderLabel();
-    let tooltipNode = (this.state.errorMessage !== null) && this.renderTooltip();
     let node = (
       <div styleName="root" className={this.props.className}>
-        <Suggestion specs={this.state.suggestionSpecs} onSet={this.updateValue.bind(this)}>
-          <label styleName="label-wrapper">
-            {labelNode}
-            {inputNode}
-          </label>
-          {tooltipNode}
-        </Suggestion>
+        <Tooltip message={this.state.errorMessage}>
+          <Suggestion specs={this.state.suggestionSpecs} onSet={this.updateValue.bind(this)}>
+            <label styleName="label-wrapper">
+              {labelNode}
+              {inputNode}
+            </label>
+          </Suggestion>
+        </Tooltip>
       </div>
     );
     return node;
