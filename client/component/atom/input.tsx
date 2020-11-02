@@ -102,11 +102,18 @@ export default class Input extends Component<Props, State> {
       "input",
       {if: this.state.errorMessage !== null, true: "error"}
     );
+    let eyeStyleName = StyleNameUtil.create("eye", this.state.type);
+    let eyeNode = (this.props.type === "flexible") && (
+      <span styleName={eyeStyleName} onClick={this.toggleType.bind(this)}/>
+    );
     let prefixNode = (this.props.prefix !== undefined) && (
       <div styleName="prefix">{this.props.prefix}</div>
     );
-    let suffixNode = (this.props.suffix !== undefined) && (
-      <div styleName="suffix">{this.props.suffix}</div>
+    let suffixNode = (this.props.suffix !== undefined || this.props.type === "flexible") && (
+      <div styleName="suffix">
+        {this.props.suffix}
+        {eyeNode}
+      </div>
     );
     let node = (
       <div styleName={styleName}>
@@ -150,11 +157,6 @@ export default class Input extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let eyeNode = (this.props.type === "flexible") && (() => {
-      let buttonStyleName = StyleNameUtil.create("eye", this.state.type);
-      let eyeNode = <span styleName={buttonStyleName} onClick={this.toggleType.bind(this)}/>;
-      return eyeNode;
-    })();
     let inputNode = this.renderInput();
     let labelNode = this.renderLabel();
     let tooltipNode = (this.state.errorMessage !== null) && this.renderTooltip();
@@ -164,7 +166,6 @@ export default class Input extends Component<Props, State> {
           <label styleName="label-wrapper">
             {labelNode}
             {inputNode}
-            {eyeNode}
           </label>
           {tooltipNode}
         </Suggestion>

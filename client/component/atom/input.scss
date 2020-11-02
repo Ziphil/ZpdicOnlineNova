@@ -35,12 +35,11 @@
 
 .eye {
   @include icon-font;
-  width: 1.6em;
-  margin: 0em 0em 0em -2em;
+  width: 1.3em;
+  margin: 0em 0em 0em 0.5em;
   color: $link-color;
   text-align: center;
   display: inline-block;
-  position: relative;
   cursor: pointer;
 }
 
