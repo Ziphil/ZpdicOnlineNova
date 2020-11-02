@@ -22,27 +22,29 @@ export default class SourceTester extends Component<Props, State> {
     executorOpen: false
   };
 
+  private renderExecutor(): ReactNode {
+    if (this.props.language === "akrantiain") {
+      let node = (
+        <AkrantiainExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
+      );
+      return node;
+    } else if (this.props.language === "zatlin") {
+      let node = (
+        <ZatlinExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
+      );
+      return node;
+    } else {
+      return undefined;
+    }
+  }
+
   public render(): ReactNode {
-    let executorNode = (() => {
-      if (this.props.language === "akrantiain") {
-        let executorNode = (
-          <AkrantiainExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
-        );
-        return executorNode;
-      } else if (this.props.language === "zatlin") {
-        let executorNode = (
-          <ZatlinExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
-        );
-        return executorNode;
-      } else {
-        return undefined;
-      }
-    })();
+    let executorNode = this.renderExecutor();
     let node = (
       <Fragment>
         <form styleName="root">
           <Highlight value={this.props.source} language={this.props.language}/>
-          <Button label={this.trans("sourceTester.try")} onClick={() => this.setState({executorOpen: true})}/>
+          <Button label={this.trans("sourceTester.try")} style="link" onClick={() => this.setState({executorOpen: true})}/>
         </form>
         {executorNode}
       </Fragment>
