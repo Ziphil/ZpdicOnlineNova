@@ -1,7 +1,5 @@
 //
 
-import "/client/declaration";
-
 
 export const LANGUAGES = [
   {locale: "ja", name: "日本語", fetchMessages: () => import("./ja.yml")},

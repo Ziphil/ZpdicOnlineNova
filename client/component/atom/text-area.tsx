@@ -14,13 +14,11 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  CodeMirrorUtil
+} from "/client/util/code-mirror";
+import {
   StyleNameUtil
 } from "/client/util/style-name";
-
-
-require("akrantiain/dist/code-mirror/mode");
-require("zatlin/dist/code-mirror/mode");
-require("codemirror/mode/markdown/markdown");
 
 
 @style(require("./text-area.scss"))
@@ -53,22 +51,12 @@ export default class TextArea extends Component<Props, State> {
   public render(): ReactNode {
     let styles = this.props.styles!;
     let textAreaNode = (() => {
-      if (this.props.mode !== undefined) {
+      if (this.props.language !== undefined) {
         let textAreaClassName = StyleNameUtil.create(
           styles["textarea-code"],
           {if: this.props.fitHeight, true: styles["fit"], false: styles["no-fit"]}
         );
-        let modeOptions = (() => {
-          if (this.props.mode === "markdown") {
-            return {theme: "zpmarkdown", mode: {name: "markdown", xml: false, fencedCodeBlockHighlighting: false}};
-          } else if (this.props.mode === "akrantiain") {
-            return {theme: "zpakrantiain", mode: {name: "akrantiain"}};
-          } else if (this.props.mode === "zatlin") {
-            return {theme: "zpakrantiain", mode: {name: "zatlin"}};
-          } else {
-            return {theme: "zpplain", mode: undefined};
-          }
-        })();
+        let modeOptions = CodeMirrorUtil.getModeOptions(this.props.language);
         let heightOptions = (this.props.fitHeight) ? {viewportMargin: 1 / 0} : {};
         let otherOptions = {readOnly: this.props.readOnly, lineWrapping: !this.props.nowrap};
         let options = {...modeOptions, ...heightOptions, ...otherOptions};
@@ -100,7 +88,7 @@ type Props = {
   value: string,
   label?: string,
   font: "normal" | "monospace",
-  mode?: string,
+  language?: string,
   nowrap: boolean,
   readOnly: boolean,
   fitHeight: boolean,

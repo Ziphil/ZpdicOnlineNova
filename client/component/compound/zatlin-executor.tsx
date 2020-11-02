@@ -72,7 +72,7 @@ export default class ZatlinExecutor extends Component<Props, State> {
             label={this.trans("zatlinExecutor.source")}
             value={this.state.source}
             font="monospace"
-            mode="zatlin"
+            language="zatlin"
             nowrap={true}
             fitHeight={true}
             onSet={(source) => this.setState({source})}
@@ -84,7 +84,7 @@ export default class ZatlinExecutor extends Component<Props, State> {
             label={this.trans("zatlinExecutor.errorMessage")}
             value={this.state.errorMessage}
             font="monospace"
-            mode="plain"
+            language="plain"
             nowrap={true}
             readOnly={true}
             fitHeight={true}

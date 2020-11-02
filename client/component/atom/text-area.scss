@@ -55,12 +55,6 @@
   height: auto;
 }
 
-.textarea-code *[class|="cm"] {
-  font-weight: normal !important;
-  font-style: normal !important;
-  text-decoration: none !important;
-}
-
 .textarea-code >div *[class~="CodeMirror-lines"] {
   padding: 0.25em 0em !important;
 } 

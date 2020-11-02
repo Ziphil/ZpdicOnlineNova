@@ -8,8 +8,8 @@ import {
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
-  Suggestion
-} from "/client/component/atom/input";
+  SuggestionSpec
+} from "/client/component/atom/suggestion";
 import Component from "/client/component/component";
 import UserList from "/client/component/compound/user-list";
 import UserSuggestionPane from "/client/component/compound/user-suggestion-pane";
@@ -48,7 +48,7 @@ export default class AddEditInvitationForm extends Component<Props, State> {
     }
   }
 
-  private async suggestUsers(pattern: string): Promise<Array<Suggestion>> {
+  private async suggestUsers(pattern: string): Promise<Array<SuggestionSpec>> {
     let response = await this.requestGet("suggestUsers", {pattern}, {ignoreError: true});
     if (response.status === 200 && !("error" in response.data)) {
       let users = response.data;

@@ -80,3 +80,22 @@ export function createValidate(pattern: RegExp | ((value: string) => boolean), m
     return validate;
   }
 }
+
+export function escapeHtml(string: string): string {
+  let escapedString = string.replace(/["'&<>]/g, (char) => {
+    if (char === "\"") {
+      return "&quot;";
+    } else if (char === "'") {
+      return "&#39;";
+    } else if (char === "&") {
+      return "&amp;";
+    } else if (char === "<") {
+      return "&lt;";
+    } else if (char === ">") {
+      return "&gt;";
+    } else {
+      return char;
+    }
+  });
+  return escapedString;
+}

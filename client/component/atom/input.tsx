@@ -10,6 +10,11 @@ import {
   AsyncOrSync
 } from "ts-essentials";
 import Label from "/client/component/atom/label";
+import Suggestion from "/client/component/atom/suggestion";
+import {
+  SuggestionSpec
+} from "/client/component/atom/suggestion";
+import Tooltip from "/client/component/atom/tooltip";
 import Component from "/client/component/component";
 import {
   style
@@ -35,7 +40,7 @@ export default class Input extends Component<Props, State> {
   public state: State = {
     type: undefined as any,
     errorMessage: null,
-    suggestions: []
+    suggestionSpecs: []
   };
 
   public constructor(props: any) {
@@ -78,8 +83,8 @@ export default class Input extends Component<Props, State> {
   private async updateSuggestions(value: string): Promise<void> {
     let suggest = this.props.suggest;
     if (suggest !== undefined) {
-      let suggestions = await suggest(value);
-      this.setState({suggestions});
+      let suggestionSpecs = await suggest(value);
+      this.setState({suggestionSpecs});
     }
   }
 
@@ -96,11 +101,18 @@ export default class Input extends Component<Props, State> {
       "input",
       {if: this.state.errorMessage !== null, true: "error"}
     );
+    let eyeStyleName = StyleNameUtil.create("eye", this.state.type);
+    let eyeNode = (this.props.type === "flexible") && (
+      <span styleName={eyeStyleName} onClick={this.toggleType.bind(this)}/>
+    );
     let prefixNode = (this.props.prefix !== undefined) && (
       <div styleName="prefix">{this.props.prefix}</div>
     );
-    let suffixNode = (this.props.suffix !== undefined) && (
-      <div styleName="suffix">{this.props.suffix}</div>
+    let suffixNode = (this.props.suffix !== undefined || this.props.type === "flexible") && (
+      <div styleName="suffix">
+        {this.props.suffix}
+        {eyeNode}
+      </div>
     );
     let node = (
       <div styleName={styleName}>
@@ -132,52 +144,19 @@ export default class Input extends Component<Props, State> {
     return node;
   }
 
-  private renderTooltip(): ReactNode {
-    let node = (
-      <div styleName="tooltip">
-        <p styleName="tooltip-text">
-          {this.state.errorMessage}
-        </p>
-      </div>
-    );
-    return node;
-  }
-
-  private renderSuggestions(): ReactNode {
-    let itemNodes = this.state.suggestions.map((suggestion, index) => {
-      let itemNode = (
-        <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={() => this.updateValue(suggestion.replacement)}>
-          {suggestion.node}
-        </div>
-      );
-      return itemNode;
-    });
-    let node = (
-      <div styleName="suggestion">
-        {itemNodes}
-      </div>
-    );
-    return node;
-  }
-
   public render(): ReactNode {
-    let eyeNode = (this.props.type === "flexible") && (() => {
-      let buttonStyleName = StyleNameUtil.create("eye", this.state.type);
-      return <span styleName={buttonStyleName} onClick={this.toggleType.bind(this)}/>;
-    })();
     let inputNode = this.renderInput();
     let labelNode = this.renderLabel();
-    let tooltipNode = (this.state.errorMessage !== null) && this.renderTooltip();
-    let suggestionNode = (this.state.suggestions.length > 0) && this.renderSuggestions();
     let node = (
       <div styleName="root" className={this.props.className}>
-        <label styleName="label-wrapper">
-          {labelNode}
-          {inputNode}
-          {eyeNode}
-        </label>
-        {tooltipNode}
-        {suggestionNode}
+        <Tooltip message={this.state.errorMessage}>
+          <Suggestion specs={this.state.suggestionSpecs} onSet={this.updateValue.bind(this)}>
+            <label styleName="label-wrapper">
+              {labelNode}
+              {inputNode}
+            </label>
+          </Suggestion>
+        </Tooltip>
       </div>
     );
     return node;
@@ -193,7 +172,7 @@ type Props = {
   suffix?: ReactNode,
   type: "text" | "password" | "flexible",
   validate?: (value: string) => string | null,
-  suggest?: SuggestFunction,
+  suggest?: Suggest,
   showRequired?: boolean,
   showOptional?: boolean,
   useTooltip: boolean,
@@ -213,8 +192,7 @@ type DefaultProps = {
 type State = {
   type: "text" | "password",
   errorMessage: string | null,
-  suggestions: Array<Suggestion>
+  suggestionSpecs: Array<SuggestionSpec>
 };
 
-export type Suggestion = {node: ReactNode, replacement: string};
-export type SuggestFunction = (pattern: string) => AsyncOrSync<Array<Suggestion>>;
+export type Suggest = (pattern: string) => AsyncOrSync<Array<SuggestionSpec>>;
