@@ -53,7 +53,6 @@ export default class WordEditor extends Component<Props, State> {
 
   public state: State = {
     word: undefined as any,
-    equivalentStrings: undefined as any,
     relationChooserOpen: false,
     alertOpen: false
   };
@@ -70,14 +69,14 @@ export default class WordEditor extends Component<Props, State> {
       let equivalent = {title: "", names: [this.props.defaultEquivalentName]};
       word.equivalents.push(equivalent);
     }
-    this.state.word = word;
-    this.state.equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
+    let equivalentStrings = word.equivalents.map((equivalent) => equivalent.names.join(", "));
+    this.state.word = {...word, equivalentStrings};
   }
 
   private async editWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
     let number = this.props.dictionary.number;
     let word = this.state.word;
-    let equivalentStrings = this.state.equivalentStrings;
+    let equivalentStrings = this.state.word.equivalentStrings;
     equivalentStrings.forEach((equivalentString, index) => {
       word.equivalents[index].names = equivalentString.split(/\s*,\s*/);
     });
@@ -212,7 +211,7 @@ export default class WordEditor extends Component<Props, State> {
 
   private renderEquivalents(): ReactNode {
     let word = this.state.word;
-    let equivalentStrings = this.state.equivalentStrings;
+    let equivalentStrings = this.state.word.equivalentStrings;
     let styles = this.props.styles!;
     let suggest = this.createSuggest("equivalent");
     let innerNodes = word.equivalents.map((equivalent, index) => {
@@ -222,7 +221,7 @@ export default class WordEditor extends Component<Props, State> {
         <div styleName="inner" key={index}>
           <div styleName="form">
             <Input className={styles["title"]} value={equivalent.title} label={titleLabel} suggest={suggest} onSet={this.setWord((title) => word.equivalents[index].title = title)}/>
-            <Input className={styles["name"]} value={equivalentStrings[index]} label={nameLabel} onSet={this.setEquivalentStrings((string) => equivalentStrings[index] = string)}/>
+            <Input className={styles["name"]} value={equivalentStrings[index]} label={nameLabel} onSet={this.setWord((string) => word.equivalentStrings[index] = string)}/>
           </div>
           <div styleName="control-button">
             <ControlGroup>
@@ -251,21 +250,21 @@ export default class WordEditor extends Component<Props, State> {
 
   private swapEquivalent(index: number, direction: 1 | -1): void {
     let word = this.state.word;
-    let equivalentStrings = this.state.equivalentStrings;
+    let equivalentStrings = this.state.word.equivalentStrings;
     swap(word.equivalents, index, direction);
     swap(equivalentStrings, index, direction);
   }
 
   private deleteEquivalent(index: number): void {
     let word = this.state.word;
-    let equivalentStrings = this.state.equivalentStrings;
+    let equivalentStrings = this.state.word.equivalentStrings;
     deleteAt(word.equivalents, index);
     deleteAt(equivalentStrings, index);
   }
 
   private addEquivalent(): void {
     let word = this.state.word;
-    let equivalentStrings = this.state.equivalentStrings;
+    let equivalentStrings = this.state.word.equivalentStrings;
     word.equivalents.push(Equivalent.createEmpty());
     equivalentStrings.push("");
   }
@@ -409,16 +408,6 @@ export default class WordEditor extends Component<Props, State> {
     return wrapper;
   }
 
-  private setEquivalentStrings<T extends Array<any>>(setter: (...args: T) => void): (...args: T) => void {
-    let outerThis = this;
-    let wrapper = function (...args: T): void {
-      setter(...args);
-      let equivalentStrings = outerThis.state.equivalentStrings;
-      outerThis.setState({equivalentStrings});
-    };
-    return wrapper;
-  }
-
   private renderEditor(): ReactNode {
     let deleteButtonNode = (this.props.word !== null) && (
       <Button label={this.trans("wordEditor.delete")} iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
@@ -495,8 +484,10 @@ type Props = {
   onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
-  word: EditWord,
-  equivalentStrings: Array<string>,
+  word: TemporaryEditWord,
   relationChooserOpen: boolean,
   alertOpen: boolean
 };
+
+
+type TemporaryEditWord = EditWord & {equivalentStrings: Array<string>};
