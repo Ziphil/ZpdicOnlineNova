@@ -28,6 +28,7 @@
 
 .inner,
 .plus {
+  @include reset-first-margin;
   margin: 8px 0px 0px 0px;
   display: flex;
   flex-direction: row;
@@ -36,11 +37,6 @@
     flex-direction: column;
     align-items: stretch;
   }
-}
-
-.inner:first-child,
-.plus:first-child {
-  margin: 0px;
 }
 
 .plus {
