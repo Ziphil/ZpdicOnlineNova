@@ -237,6 +237,15 @@ addCommissionForm:
   name: "単語"
   comment: "コメント"
   confirm: "依頼"
+advancedSearchForm:
+  title: "高度な検索"
+  mode: "検索範囲"
+  name: "単語"
+  equivalent: "訳語"
+  both: "単語＋訳語"
+  tag: "タグ"
+  information: "内容"
+  content: "全文"
 akrantiainExecutor:
   title: "Akrantiain {version}"
   source: "snoj データ"

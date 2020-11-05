@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.label-wrapper {
+  display: block;
+}
+
+.selection {
+  @include button(map-get($colors, primary));
+}

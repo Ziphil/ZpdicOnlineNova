@@ -192,7 +192,7 @@ type DefaultProps = {
 type State = {
   type: "text" | "password",
   errorMessage: string | null,
-  suggestionSpecs: Array<SuggestionSpec>
+  suggestionSpecs: Array<SuggestionSpec<string>>
 };
 
-export type Suggest = (pattern: string) => AsyncOrSync<Array<SuggestionSpec>>;
+export type Suggest = (pattern: string) => AsyncOrSync<Array<SuggestionSpec<string>>>;
