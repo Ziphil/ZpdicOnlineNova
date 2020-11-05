@@ -16,10 +16,12 @@ import {
 export default class Selection<V extends string> extends Component<Props<V>, State<V>> {
 
   private renderSelection(): ReactNode {
+    let text = Array.from(this.props.specs).find((spec) => spec.value === this.props.value)!.text;
     let node = (
-      <div styleName="selection">
-        {this.props.value}
-      </div>
+      <button styleName="selection">
+        <div styleName="text">{text}</div>
+        <div styleName="icon"/>
+      </button>
     );
     return node;
   }

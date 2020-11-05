@@ -240,6 +240,16 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   &:focus-within {
     box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color), $focus-box-shadow-setting focus-box-shadow-color($color);
   }
+  &:disabled,
+  &.disabled {
+    opacity: 0.5;
+  }
+  &:disabled:hover,
+  &:disabled:hover *,
+  &.disabled:hover,
+  &.disabled:hover * {
+    cursor: not-allowed;
+  }
 }
 
 @mixin button($color) {

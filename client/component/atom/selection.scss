@@ -8,5 +8,17 @@
 }
 
 .selection {
-  @include button(map-get($colors, primary));
+  @include input(map-get($colors, primary));
+  display: flex;
+}
+
+.text {
+  margin: 0em 0.5em 0em 0em;
+  flex-grow: 1;
+}
+
+.icon::before {
+  @include icon-font;
+  color: $light-color;
+  content: "\F107";
 }

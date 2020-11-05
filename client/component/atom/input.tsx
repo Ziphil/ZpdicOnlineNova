@@ -99,7 +99,8 @@ export default class Input extends Component<Props, State> {
   private renderInput(): ReactNode {
     let styleName = StyleNameUtil.create(
       "input",
-      {if: this.state.errorMessage !== null, true: "error"}
+      {if: this.state.errorMessage !== null, true: "error"},
+      {if: this.props.disabled, true: "disabled"}
     );
     let eyeStyleName = StyleNameUtil.create("eye", this.state.type);
     let eyeNode = (this.props.type === "flexible") && (
