@@ -17,9 +17,9 @@ import {
   deleteAt
 } from "/client/util/misc";
 import {
+  ADVANCED_SEARCH_MODES,
   AdvancedSearchParameter,
   AdvancedSearchParameterElement,
-  SEARCH_MODES,
   SEARCH_TYPES,
   SearchParameter
 } from "/server/skeleton/dictionary";
@@ -50,9 +50,9 @@ export default class AdvancedSearchForm extends Component<Props, State> {
 
   public render(): ReactNode {
     let elements = this.state.parameter.elements;
+    let modeSpecs = ADVANCED_SEARCH_MODES.map((mode) => ({value: mode, text: this.trans(`advancedSearchForm.${mode}`)}));
+    let typeSpecs = SEARCH_TYPES.map((type) => ({value: type, text: this.trans(`advancedSearchForm.${type}`)}));
     let searchNodes = elements.map((element, index) => {
-      let modeSpecs = SEARCH_MODES.map((mode) => ({value: mode, text: this.trans(`advancedSearchForm.${mode}`)}));
-      let typeSpecs = SEARCH_TYPES.map((type) => ({value: type, text: this.trans(`advancedSearchForm.${type}`)}));
       let modeLabel = (index === 0) ? this.trans("advancedSearchForm.mode") : undefined;
       let titleLabel = (index === 0) ? this.trans("advancedSearchForm.title") : undefined;
       let searchLabel = (index === 0) ? this.trans("advancedSearchForm.search") : undefined;

@@ -5,6 +5,9 @@ import {
   SearchType
 } from "/server/skeleton/dictionary";
 import {
+  SEARCH_MODES
+} from "/server/skeleton/dictionary/search-parameter/search-parameter";
+import {
   Skeleton
 } from "/server/skeleton/skeleton";
 
@@ -20,7 +23,7 @@ export class AdvancedSearchParameterElement extends Skeleton {
 
   public search!: string;
   public title!: string;
-  public mode!: SearchMode;
+  public mode!: AdvancedSearchMode;
   public type!: SearchType;
 
   public static createEmpty(): AdvancedSearchParameterElement {
@@ -33,3 +36,7 @@ export class AdvancedSearchParameterElement extends Skeleton {
   }
 
 }
+
+
+export const ADVANCED_SEARCH_MODES = SEARCH_MODES.filter((mode) => mode !== "both") as Array<AdvancedSearchMode>;
+export type AdvancedSearchMode = Exclude<SearchMode, "both">;

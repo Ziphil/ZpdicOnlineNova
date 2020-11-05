@@ -245,7 +245,6 @@ advancedSearchForm:
   type: "検索方式"
   name: "単語"
   equivalent: "訳語"
-  both: "単語＋訳語"
   tag: "タグ"
   information: "内容"
   content: "全文"
