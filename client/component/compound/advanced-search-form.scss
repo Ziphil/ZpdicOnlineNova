@@ -23,10 +23,22 @@
 }
 
 .form {
+  @include reset-first-margin;
+  margin: 0px 0px 0px 10px;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
-  flex: 1;
+  flex-grow: 1;
+}
+
+.form.left {
+  flex-grow: 0;
+}
+
+.form.right {
+  @include smartphone {
+    margin: 8px 0px 0px 0px;
+  }
 }
 
 .form >* {
@@ -34,18 +46,20 @@
   margin: 0px 0px 0px 10px;
 }
 
-.form >:nth-child(1),
-.form >:nth-child(4) {
+.selection {
   width: 110px;
   flex-basis: 110px;
 }
 
-.form >:nth-child(2) {
+.title {
   flex: 1;
 }
 
-.form >:nth-child(3) {
+.search {
   flex: 2;
+  @include smartphone {
+    flex: 3;
+  }
 }
 
 .button {

@@ -188,7 +188,7 @@ export default class WordEditor extends Component<Props, State> {
             <ControlGroup>
               <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => swap(word.tags, index, -1))}/>
               <Button iconLabel="&#xF063;" disabled={index === word.tags.length - 1} onClick={this.setWord(() => swap(word.tags, index, 1))}/>
-              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => deleteAt(word.tags, index))}/>
+              <Button iconLabel="&#xF068;" onClick={this.setWord(() => deleteAt(word.tags, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -227,7 +227,7 @@ export default class WordEditor extends Component<Props, State> {
             <ControlGroup>
               <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => this.swapEquivalent(index, -1))}/>
               <Button iconLabel="&#xF063;" disabled={index === word.equivalents.length - 1} onClick={this.setWord(() => this.swapEquivalent(index, 1))}/>
-              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => this.deleteEquivalent(index))}/>
+              <Button iconLabel="&#xF068;" onClick={this.setWord(() => this.deleteEquivalent(index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -287,7 +287,7 @@ export default class WordEditor extends Component<Props, State> {
             <ControlGroup>
               <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => swap(word.informations, index, -1))}/>
               <Button iconLabel="&#xF063;" disabled={index === word.informations.length - 1} onClick={this.setWord(() => swap(word.informations, index, 1))}/>
-              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => deleteAt(word.informations, index))}/>
+              <Button iconLabel="&#xF068;" onClick={this.setWord(() => deleteAt(word.informations, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -325,7 +325,7 @@ export default class WordEditor extends Component<Props, State> {
             <ControlGroup>
               <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => swap(word.variations, index, -1))}/>
               <Button iconLabel="&#xF063;" disabled={index === word.variations.length - 1} onClick={this.setWord(() => swap(word.variations, index, 1))}/>
-              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => deleteAt(word.variations, index))}/>
+              <Button iconLabel="&#xF068;" onClick={this.setWord(() => deleteAt(word.variations, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -366,7 +366,7 @@ export default class WordEditor extends Component<Props, State> {
             <ControlGroup>
               <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setWord(() => swap(word.relations, index, -1))}/>
               <Button iconLabel="&#xF063;" disabled={index === word.relations.length - 1} onClick={this.setWord(() => swap(word.relations, index, 1))}/>
-              <Button iconLabel="&#xF00D;" onClick={this.setWord(() => deleteAt(word.relations, index))}/>
+              <Button iconLabel="&#xF068;" onClick={this.setWord(() => deleteAt(word.relations, index))}/>
             </ControlGroup>
           </div>
         </div>

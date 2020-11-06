@@ -49,25 +49,28 @@ export default class AdvancedSearchForm extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    let styles = this.props.styles!;
     let elements = this.state.parameter.elements;
     let modeSpecs = ADVANCED_SEARCH_MODES.map((mode) => ({value: mode, text: this.trans(`advancedSearchForm.${mode}`)}));
     let typeSpecs = SEARCH_TYPES.map((type) => ({value: type, text: this.trans(`advancedSearchForm.${type}`)}));
     let searchNodes = elements.map((element, index) => {
       let modeLabel = (index === 0) ? this.trans("advancedSearchForm.mode") : undefined;
+      let typeLabel = (index === 0) ? this.trans("advancedSearchForm.type") : undefined;
       let titleLabel = (index === 0) ? this.trans("advancedSearchForm.title") : undefined;
       let searchLabel = (index === 0) ? this.trans("advancedSearchForm.search") : undefined;
-      let typeLabel = (index === 0) ? this.trans("advancedSearchForm.type") : undefined;
       let titleDisabled = element.mode === "name" || element.mode === "tag";
       let searchNode = (
         <div styleName="inner" key={index}>
-          <div styleName="form">
-            <Selection value={element.mode} label={modeLabel} specs={modeSpecs} onSet={this.setParameter((mode) => elements[index].mode = mode)}/>
-            <Input value={element.title} label={titleLabel} disabled={titleDisabled} onSet={this.setParameter((title) => elements[index].title = title)}/>
-            <Input value={element.search} label={searchLabel} onSet={this.setParameter((search) => elements[index].search = search)}/>
-            <Selection value={element.type} label={typeLabel} specs={typeSpecs} onSet={this.setParameter((type) => elements[index].type = type)}/>
+          <div styleName="form left">
+            <Selection className={styles["selection"]} value={element.mode} label={modeLabel} specs={modeSpecs} onSet={this.setParameter((mode) => elements[index].mode = mode)}/>
+            <Selection className={styles["selection"]} value={element.type} label={typeLabel} specs={typeSpecs} onSet={this.setParameter((type) => elements[index].type = type)}/>
+          </div>
+          <div styleName="form right">
+            <Input className={styles["title"]} value={element.title} label={titleLabel} disabled={titleDisabled} onSet={this.setParameter((title) => elements[index].title = title)}/>
+            <Input className={styles["search"]} value={element.search} label={searchLabel} onSet={this.setParameter((search) => elements[index].search = search)}/>
           </div>
           <div styleName="button">
-            <Button iconLabel="&#xF00D;" onClick={this.setParameter(() => deleteAt(elements, index))}/>
+            <Button iconLabel="&#xF068;" onClick={this.setParameter(() => deleteAt(elements, index))}/>
           </div>
         </div>
       );
