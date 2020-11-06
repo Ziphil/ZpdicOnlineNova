@@ -34,6 +34,20 @@
   margin: 0px 0px 0px 10px;
 }
 
+.form >:nth-child(1),
+.form >:nth-child(4) {
+  width: 110px;
+  flex-basis: 110px;
+}
+
+.form >:nth-child(2) {
+  flex: 1;
+}
+
+.form >:nth-child(3) {
+  flex: 2;
+}
+
 .button {
   margin: 0px 0px 0px 10px;
   @include smartphone {
