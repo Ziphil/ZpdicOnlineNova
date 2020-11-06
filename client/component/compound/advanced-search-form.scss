@@ -6,7 +6,7 @@
 .inner,
 .plus {
   @include reset-first-margin;
-  margin: 8px 0px 0px 0px;
+  margin: $small-control-vertical-margin 0px 0px 0px;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -24,7 +24,7 @@
 
 .form {
   @include reset-first-margin;
-  margin: 0px 0px 0px 10px;
+  margin: 0px 0px 0px $small-control-margin;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -37,13 +37,13 @@
 
 .form.right {
   @include smartphone {
-    margin: 8px 0px 0px 0px;
+    margin: $small-control-vertical-margin 0px 0px 0px;
   }
 }
 
 .form >* {
   @include reset-first-margin;
-  margin: 0px 0px 0px 10px;
+  margin: 0px 0px 0px $small-control-margin;
 }
 
 .selection {
@@ -63,9 +63,9 @@
 }
 
 .button {
-  margin: 0px 0px 0px 10px;
+  margin: 0px 0px 0px $small-control-margin;
   @include smartphone {
-    margin: 8px 0px 0px 0px;
+    margin: $small-control-vertical-margin 0px 0px 0px;
     align-self: flex-end;
   }
 }
