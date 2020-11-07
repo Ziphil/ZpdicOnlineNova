@@ -398,7 +398,7 @@ export default class WordEditor extends Component<Props, State> {
     this.setState({word, relationChooserOpen: false});
   }
 
-  private setWord<T extends Array<any>>(setter: (...args: T) => void): (...args: T) => void {
+  private setWord<T extends Array<unknown>>(setter: (...args: T) => void): (...args: T) => void {
     let outerThis = this;
     let wrapper = function (...args: T): void {
       setter(...args);

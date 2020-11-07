@@ -38,7 +38,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
     }
   }
 
-  private setParameter<T extends Array<any>>(setter: (...args: T) => void): (...args: T) => void {
+  private setParameter<T extends Array<unknown>>(setter: (...args: T) => void): (...args: T) => void {
     let outerThis = this;
     let wrapper = function (...args: T): void {
       setter(...args);
