@@ -101,7 +101,7 @@ export default class SearchForm extends Component<Props, State> {
             <RadioGroup name="type" value={parameter.type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
           </div>
           <div styleName="radio-wrapper">
-            <Button label={this.trans("searchForm.advancedSearch")} style="link" onClick={() => this.setState({searchFormOpen: true})}/>
+            <Button label={this.trans("searchForm.advancedSearch")} iconLabel="&#xF00E;" style="simple" onClick={() => this.setState({searchFormOpen: true})}/>
           </div>
         </form>
         <AdvancedSearchForm open={this.state.searchFormOpen} onConfirm={this.handleAdvancedSearchConfirm.bind(this)} onClose={() => this.setState({searchFormOpen: false})}/>
