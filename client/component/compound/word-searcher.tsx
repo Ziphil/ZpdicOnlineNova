@@ -53,14 +53,12 @@ export default class WordSearcher extends Component<Props, State> {
   private async updateWordsImmediately(): Promise<void> {
     let number = this.props.dictionary?.number;
     if (number !== undefined) {
-      let search = this.state.parameter.search;
-      let mode = this.state.parameter.mode;
-      let type = this.state.parameter.type;
+      let parameter = this.state.parameter;
       let page = this.state.page;
       let offset = page * 40;
       let size = 40;
       this.setState({loading: true});
-      let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
+      let response = await this.requestPost("searchDictionary", {number, parameter, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
         let hitResult = response.data;
         this.setState({hitResult, loading: true});

@@ -120,14 +120,12 @@ export default class DictionaryPage extends Component<Props, State, Params> {
   private async updateWordsImmediately(deserialize: boolean = true): Promise<void> {
     let number = this.state.dictionary?.number;
     if (number !== undefined) {
-      let search = this.state.parameter.search;
-      let mode = this.state.parameter.mode;
-      let type = this.state.parameter.type;
+      let parameter = this.state.parameter;
       let page = this.state.page;
       let offset = page * 40;
       let size = 40;
       this.setState({loading: true});
-      let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
+      let response = await this.requestPost("searchDictionary", {number, parameter, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
         let hitResult = response.data;
         let showExplanation = false;

@@ -11,6 +11,7 @@ import {
   Dictionary,
   DictionarySettings,
   EditWord,
+  SearchParameter,
   Suggestion,
   UserDictionary,
   Word
@@ -231,14 +232,14 @@ type ProcessData = {
     }
   }
   searchDictionary: {
-    get: {
-      request: {number: number, search: string, mode: string, type: string, offset?: number, size?: number},
+    get: Noop
+    post: {
+      request: {number: number, parameter: SearchParameter, offset?: number, size?: number},
       response: {
         200: {words: WithSize<Word>, suggestions: Array<Suggestion>},
         400: CustomError<"noSuchDictionaryNumber">
       }
-    },
-    post: Noop
+    }
   },
   downloadDictionary: {
     get: {
