@@ -12,6 +12,8 @@ import {
   Word
 } from "/server/model/dictionary";
 import {
+  AdvancedSearchParameter as AdvancedSearchParameterSkeleton,
+  NormalSearchParameter as NormalSearchParameterSkeleton,
   SearchParameter as SearchParameterSkeleton
 } from "/server/skeleton/dictionary";
 export {
@@ -38,11 +40,13 @@ export class SearchParameterCreator {
 
   public static restore(skeleton: SearchParameterSkeleton): SearchParameter {
     if ("elements" in skeleton) {
-      let elements = skeleton.elements.map((element) => new AdvancedSearchParameterElement(element.search, element.title, element.mode, element.type));
+      let castSkeleton = skeleton as AdvancedSearchParameterSkeleton;
+      let elements = castSkeleton.elements.map((element) => new AdvancedSearchParameterElement(element.search, element.title, element.mode, element.type));
       let raw = new AdvancedSearchParameter(elements);
       return raw;
     } else {
-      let raw = new NormalSearchParameter(skeleton.search, skeleton.mode, skeleton.type);
+      let castSkeleton = skeleton as NormalSearchParameterSkeleton;
+      let raw = new NormalSearchParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type);
       return raw;
     }
   }

@@ -5,16 +5,27 @@ import {
   SearchType
 } from "/server/skeleton/dictionary";
 import {
-  SEARCH_MODES
+  SEARCH_MODES,
+  SearchParameter
 } from "/server/skeleton/dictionary/search-parameter/search-parameter";
 import {
   Skeleton
 } from "/server/skeleton/skeleton";
 
 
-export class AdvancedSearchParameter extends Skeleton {
+export class AdvancedSearchParameter extends SearchParameter {
 
   public elements!: Array<AdvancedSearchParameterElement>;
+
+  public static deserialize(queryString: string): AdvancedSearchParameter {
+    let parameter = AdvancedSearchParameter.of({elements: []});
+    return parameter;
+  }
+
+  public serialize(): string {
+    let queryString = "advanced=";
+    return queryString;
+  }
 
 }
 

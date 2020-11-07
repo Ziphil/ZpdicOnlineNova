@@ -27,9 +27,7 @@ import {
   DetailedDictionary,
   Dictionary,
   NormalSearchParameter,
-  SearchModeUtil,
   SearchParameter,
-  SearchTypeUtil,
   Suggestion,
   Word
 } from "/server/skeleton/dictionary";
@@ -143,50 +141,24 @@ export default class DictionaryPage extends Component<Props, State, Params> {
   }
 
   private serializeQuery(first: boolean, callback?: () => void): void {
-    let query = queryParser.parse(this.props.location!.search);
-    let nextState = {} as any;
-    nextState.parameter = NormalSearchParameter.of({search: "", mode: "both", type: "prefix"});
-    if (typeof query.search === "string") {
-      nextState.parameter.search = query.search;
-      nextState.showExplanation = false;
-    } else {
-      nextState.parameter.search = "";
-      nextState.showExplanation = true;
-    }
-    if (typeof query.mode === "string") {
-      nextState.parameter.mode = SearchModeUtil.cast(query.mode);
-    } else {
-      nextState.parameter.mode = "both";
-    }
-    if (typeof query.type === "string") {
-      nextState.parameter.type = SearchTypeUtil.cast(query.type);
-    } else {
-      nextState.parameter.type = "prefix";
-    }
-    if (typeof query.page === "string") {
-      nextState.page = +query.page;
-    } else {
-      nextState.page = 0;
-    }
+    let queryString = this.props.location!.search;
+    let query = queryParser.parse(queryString);
+    let parameter = SearchParameter.deserialize(queryString);
+    let page = (typeof query.page === "string") ? +query.page : 0;
+    let showExplanation = Object.keys(query).length <= 0;
     if (first) {
-      this.state = Object.assign(this.state, nextState);
+      this.state = Object.assign(this.state, {parameter, page, showExplanation});
       if (callback) {
         callback();
       }
     } else {
-      this.setState(nextState, callback);
+      this.setState({parameter, page, showExplanation}, callback);
     }
   }
 
   private deserializeQuery(): void {
-    if (this.state.parameter instanceof NormalSearchParameter) {
-      let search = this.state.parameter.search;
-      let mode = this.state.parameter.mode;
-      let type = this.state.parameter.type;
-      let page = this.state.page;
-      let queryString = queryParser.stringify({search, mode, type, page});
-      this.props.history!.replace({search: queryString});
-    }
+    let queryString = this.state.parameter.serialize() + `&page=${this.state.page}`;
+    this.props.history!.replace({search: queryString});
   }
 
   private async handleParameterSet(parameter: SearchParameter): Promise<void> {
