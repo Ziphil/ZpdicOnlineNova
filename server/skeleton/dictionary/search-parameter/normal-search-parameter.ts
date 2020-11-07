@@ -18,20 +18,19 @@ export class NormalSearchParameter extends SearchParameter {
   public mode!: SearchMode;
   public type!: SearchType;
 
+  public static createEmpty(overriddenObject: Partial<NormalSearchParameter> = {}): NormalSearchParameter {
+    let search = overriddenObject.search ?? "";
+    let mode = overriddenObject.mode ?? "both";
+    let type = overriddenObject.type ?? "prefix";
+    let skeleton = NormalSearchParameter.of({search, mode, type});
+    return skeleton;
+  }
+
   public static deserializeEach(query: Record<string, unknown>): NormalSearchParameter {
-    let search = "";
-    let mode = "both" as SearchMode;
-    let type = "prefix" as SearchType;
-    if (typeof query.search === "string") {
-      search = query.search;
-    }
-    if (typeof query.mode === "string") {
-      mode = SearchModeUtil.cast(query.mode);
-    }
-    if (typeof query.type === "string") {
-      type = SearchTypeUtil.cast(query.type);
-    }
-    let parameter = NormalSearchParameter.of({search, mode, type});
+    let search = (typeof query.search === "string") ? query.search : undefined;
+    let mode = (typeof query.mode === "string") ? SearchModeUtil.cast(query.mode) : undefined;
+    let type = (typeof query.type === "string") ? SearchTypeUtil.cast(query.type) : undefined;
+    let parameter = NormalSearchParameter.createEmpty({search, mode, type});
     return parameter;
   }
 

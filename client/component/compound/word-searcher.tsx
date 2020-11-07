@@ -41,7 +41,7 @@ export default class WordSearcher extends Component<Props, State> {
     showButton: false
   };
   public state: State = {
-    parameter: NormalSearchParameter.of({search: "", mode: "both", type: "prefix"}),
+    parameter: NormalSearchParameter.createEmpty(),
     page: 0,
     hitResult: {words: [[], 0], suggestions: []},
     loading: false

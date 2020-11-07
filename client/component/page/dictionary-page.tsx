@@ -40,7 +40,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     dictionary: null,
     canOwn: false,
     canEdit: false,
-    parameter: NormalSearchParameter.of({search: "", mode: "both", type: "prefix"}),
+    parameter: NormalSearchParameter.createEmpty(),
     page: 0,
     showExplanation: true,
     hitResult: {words: [[], 0], suggestions: []},

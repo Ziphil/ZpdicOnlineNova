@@ -21,4 +21,4 @@ type ExtractOptional<T, P extends keyof T> = undefined extends T[P] ? P : never;
 type RequiredProperties<T> = {[P in keyof T]: T[P] extends (...args: Array<any>) => any ? never : ExtractRequired<T, P>}[keyof T];
 type OptionalProperties<T> = {[P in keyof T]: T[P] extends (...args: Array<any>) => any ? never : ExtractOptional<T, P>}[keyof T];
 
-type Plain<T> = {[P in RequiredProperties<T>]: T[P]} & {[P in OptionalProperties<T>]?: T[P]};
+export type Plain<T> = {[P in RequiredProperties<T>]: T[P]} & {[P in OptionalProperties<T>]?: T[P]};

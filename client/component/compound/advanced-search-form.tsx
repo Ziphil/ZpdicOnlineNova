@@ -29,7 +29,7 @@ import {
 export default class AdvancedSearchForm extends Component<Props, State> {
 
   public state: State = {
-    parameter: AdvancedSearchParameter.of({elements: []})
+    parameter: AdvancedSearchParameter.createEmpty()
   };
 
   private handleClose(event: MouseEvent<HTMLElement>): void {

@@ -18,6 +18,12 @@ export class AdvancedSearchParameter extends SearchParameter {
 
   public elements!: Array<AdvancedSearchParameterElement>;
 
+  public static createEmpty(): AdvancedSearchParameter {
+    let elements = [AdvancedSearchParameterElement.createEmpty()];
+    let skeleton = AdvancedSearchParameter.of({elements});
+    return skeleton;
+  }
+
   public static deserializeEach(query: Record<string, unknown>): AdvancedSearchParameter {
     if (typeof query["advanced"] === "string") {
       let parameter = AdvancedSearchParameter.of(rison.decode(query["advanced"]));

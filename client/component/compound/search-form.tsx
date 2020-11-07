@@ -25,38 +25,47 @@ import {
 export default class SearchForm extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
-    parameter: NormalSearchParameter.of({search: "", mode: "both", type: "prefix"})
+    parameter: NormalSearchParameter.createEmpty()
   };
   public state: State = {
     searchFormOpen: false
   };
 
+  private getNormalSearchParameter(): NormalSearchParameter {
+    let parameter = this.props.parameter;
+    if (parameter instanceof NormalSearchParameter) {
+      return parameter;
+    } else {
+      return NormalSearchParameter.createEmpty();
+    }
+  }
+
   private handleSearchSet(search: string): void {
     if (this.props.onParameterSet) {
-      let oldParameter = this.props.parameter;
-      let mode = (oldParameter instanceof NormalSearchParameter) ? oldParameter.mode : "both";
-      let type = (oldParameter instanceof NormalSearchParameter) ? oldParameter.type : "prefix";
-      let parameter = NormalSearchParameter.of({search, mode, type});
+      let oldParameter = this.getNormalSearchParameter();
+      let mode = oldParameter.mode;
+      let type = oldParameter.type;
+      let parameter = NormalSearchParameter.createEmpty({search, mode, type});
       this.props.onParameterSet(parameter);
     }
   }
 
   private handleModeSet(mode: SearchMode): void {
     if (this.props.onParameterSet) {
-      let oldParameter = this.props.parameter;
-      let search = (oldParameter instanceof NormalSearchParameter) ? oldParameter.search : "";
-      let type = (oldParameter instanceof NormalSearchParameter) ? oldParameter.type : "prefix";
-      let parameter = NormalSearchParameter.of({search, mode, type});
+      let oldParameter = this.getNormalSearchParameter();
+      let search = oldParameter.search;
+      let type = oldParameter.type;
+      let parameter = NormalSearchParameter.createEmpty({search, mode, type});
       this.props.onParameterSet(parameter);
     }
   }
 
   private handleTypeSet(type: SearchType): void {
     if (this.props.onParameterSet) {
-      let oldParameter = this.props.parameter;
-      let search = (oldParameter instanceof NormalSearchParameter) ? oldParameter.search : "";
-      let mode = (oldParameter instanceof NormalSearchParameter) ? oldParameter.mode : "both";
-      let parameter = NormalSearchParameter.of({search, mode, type});
+      let oldParameter = this.getNormalSearchParameter();
+      let search = oldParameter.search;
+      let mode = oldParameter.mode;
+      let parameter = NormalSearchParameter.createEmpty({search, mode, type});
       this.props.onParameterSet(parameter);
     }
   }
@@ -80,19 +89,16 @@ export default class SearchForm extends Component<Props, State> {
       {value: "exact", label: this.trans("searchForm.exact")},
       {value: "regular", label: this.trans("searchForm.regular")}
     ] as const;
-    let parameter = this.props.parameter;
-    let search = (parameter instanceof NormalSearchParameter) ? parameter.search : "";
-    let mode = (parameter instanceof NormalSearchParameter) ? parameter.mode : "both";
-    let type = (parameter instanceof NormalSearchParameter) ? parameter.type : "prefix";
+    let parameter = this.getNormalSearchParameter();
     let node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-          <Input value={search} onSet={this.handleSearchSet.bind(this)}/>
+          <Input value={parameter.search} onSet={this.handleSearchSet.bind(this)}/>
           <div styleName="radio-wrapper">
-            <RadioGroup name="mode" value={mode} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
+            <RadioGroup name="mode" value={parameter.mode} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
           </div>
           <div styleName="radio-wrapper">
-            <RadioGroup name="type" value={type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
+            <RadioGroup name="type" value={parameter.type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
           </div>
           <div styleName="radio-wrapper">
             <Button label={this.trans("searchForm.advancedSearch")} style="link" onClick={() => this.setState({searchFormOpen: true})}/>
