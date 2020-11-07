@@ -82,6 +82,7 @@
     "react-router-dom": "^5.2.0",
     "reflect-metadata": "^0.1.13",
     "remove-markdown": "^0.3.0",
+    "rison": "^0.1.1",
     "sass-loader": "^9.0.3",
     "source-map-loader": "^1.1.2",
     "stream-json": "^1.7.1",
@@ -129,6 +130,7 @@
     "@types/react-dom": "^16.9.9",
     "@types/react-router-dom": "^5.1.6",
     "@types/remove-markdown": "^0.1.1",
+    "@types/rison": "0.0.6",
     "@types/stream-json": "^1.5.1",
     "@types/webpack-bundle-analyzer": "^3.9.0",
     "@types/webpack-node-externals": "^1.7.1"
