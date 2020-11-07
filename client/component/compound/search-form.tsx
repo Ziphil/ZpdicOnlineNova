@@ -93,7 +93,7 @@ export default class SearchForm extends Component<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-          <Input value={parameter.search} onSet={this.handleSearchSet.bind(this)}/>
+          <Input value={parameter.search} prefix={<div styleName="icon"/>} onSet={this.handleSearchSet.bind(this)}/>
           <div styleName="radio-wrapper">
             <RadioGroup name="mode" value={parameter.mode} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
           </div>
