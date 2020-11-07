@@ -19,9 +19,9 @@ export abstract class SearchParameter extends Skeleton {
   public static deserialize(queryString: string): SearchParameter {
     let query = queryParser.parse(queryString);
     if ("advanced" in query) {
-      return AdvancedSearchParameter.deserialize(queryString);
+      return AdvancedSearchParameter.deserializeEach(query);
     } else {
-      return NormalSearchParameter.deserialize(queryString);
+      return NormalSearchParameter.deserializeEach(query);
     }
   }
 

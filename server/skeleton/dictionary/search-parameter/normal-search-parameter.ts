@@ -18,8 +18,7 @@ export class NormalSearchParameter extends SearchParameter {
   public mode!: SearchMode;
   public type!: SearchType;
 
-  public static deserialize(queryString: string): NormalSearchParameter {
-    let query = queryParser.parse(queryString);
+  public static deserializeEach(query: Record<string, unknown>): NormalSearchParameter {
     let search = "";
     let mode = "both" as SearchMode;
     let type = "prefix" as SearchType;

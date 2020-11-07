@@ -1,6 +1,5 @@
 //
 
-import queryParser from "query-string";
 import rison from "rison";
 import {
   SearchMode,
@@ -19,8 +18,7 @@ export class AdvancedSearchParameter extends SearchParameter {
 
   public elements!: Array<AdvancedSearchParameterElement>;
 
-  public static deserialize(queryString: string): AdvancedSearchParameter {
-    let query = queryParser.parse(queryString);
+  public static deserializeEach(query: Record<string, unknown>): AdvancedSearchParameter {
     if (typeof query["advanced"] === "string") {
       let parameter = AdvancedSearchParameter.of(rison.decode(query["advanced"]));
       return parameter;
