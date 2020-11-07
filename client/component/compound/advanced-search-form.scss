@@ -62,10 +62,15 @@
   }
 }
 
-.button {
+.control-button {
   margin: 0px 0px 0px $small-control-margin;
   @include smartphone {
     margin: $small-control-vertical-margin 0px 0px 0px;
     align-self: flex-end;
   }
+}
+
+.confirm-button {
+  margin: 20px 0px 0px 0px;
+  text-align: right;
 }

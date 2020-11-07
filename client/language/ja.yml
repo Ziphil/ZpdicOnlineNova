@@ -253,6 +253,7 @@ advancedSearchForm:
   part: "部分"
   exact: "完全"
   regular: "正規"
+  confirm: "決定"
 akrantiainExecutor:
   title: "Akrantiain {version}"
   source: "snoj データ"

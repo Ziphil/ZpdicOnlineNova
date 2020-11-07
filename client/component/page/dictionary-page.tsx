@@ -1,8 +1,5 @@
 //
 
-import {
-  Akrantiain
-} from "akrantiain";
 import * as queryParser from "query-string";
 import * as react from "react";
 import {
@@ -31,6 +28,7 @@ import {
   Dictionary,
   NormalSearchParameter,
   SearchModeUtil,
+  SearchParameter,
   SearchTypeUtil,
   Suggestion,
   Word
@@ -44,7 +42,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     dictionary: null,
     canOwn: false,
     canEdit: false,
-    parameter: {search: "", mode: "both", type: "prefix"},
+    parameter: NormalSearchParameter.of({search: "", mode: "both", type: "prefix"}),
     page: 0,
     showExplanation: true,
     hitResult: {words: [[], 0], suggestions: []},
@@ -147,7 +145,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
   private serializeQuery(first: boolean, callback?: () => void): void {
     let query = queryParser.parse(this.props.location!.search);
     let nextState = {} as any;
-    nextState.parameter = {search: "", mode: "both", type: "prefix"};
+    nextState.parameter = NormalSearchParameter.of({search: "", mode: "both", type: "prefix"});
     if (typeof query.search === "string") {
       nextState.parameter.search = query.search;
       nextState.showExplanation = false;
@@ -181,15 +179,17 @@ export default class DictionaryPage extends Component<Props, State, Params> {
   }
 
   private deserializeQuery(): void {
-    let search = this.state.parameter.search;
-    let mode = this.state.parameter.mode;
-    let type = this.state.parameter.type;
-    let page = this.state.page;
-    let queryString = queryParser.stringify({search, mode, type, page});
-    this.props.history!.replace({search: queryString});
+    if (this.state.parameter instanceof NormalSearchParameter) {
+      let search = this.state.parameter.search;
+      let mode = this.state.parameter.mode;
+      let type = this.state.parameter.type;
+      let page = this.state.page;
+      let queryString = queryParser.stringify({search, mode, type, page});
+      this.props.history!.replace({search: queryString});
+    }
   }
 
-  private async handleParameterSet(parameter: NormalSearchParameter): Promise<void> {
+  private async handleParameterSet(parameter: SearchParameter): Promise<void> {
     let page = 0;
     this.setState({parameter, page}, async () => {
       await this.updateWords();
@@ -260,7 +260,7 @@ type State = {
   dictionary: Dictionary | null,
   canOwn: boolean,
   canEdit: boolean,
-  parameter: NormalSearchParameter,
+  parameter: SearchParameter,
   page: number,
   showExplanation: boolean,
   hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},

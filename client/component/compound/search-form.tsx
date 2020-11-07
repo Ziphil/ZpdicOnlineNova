@@ -16,6 +16,7 @@ import {
 import {
   NormalSearchParameter,
   SearchMode,
+  SearchParameter,
   SearchType
 } from "/server/skeleton/dictionary";
 
@@ -24,42 +25,45 @@ import {
 export default class SearchForm extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
-    parameter: {search: "", mode: "both", type: "prefix"}
+    parameter: NormalSearchParameter.of({search: "", mode: "both", type: "prefix"})
   };
   public state: State = {
     searchFormOpen: false
   };
 
   private handleSearchSet(search: string): void {
-    if (this.props.onSearchSet) {
-      this.props.onSearchSet(search);
-    }
     if (this.props.onParameterSet) {
-      let mode = this.props.parameter.mode;
-      let type = this.props.parameter.type;
-      this.props.onParameterSet({search, mode, type});
+      let oldParameter = this.props.parameter;
+      let mode = (oldParameter instanceof NormalSearchParameter) ? oldParameter.mode : "both";
+      let type = (oldParameter instanceof NormalSearchParameter) ? oldParameter.type : "prefix";
+      let parameter = NormalSearchParameter.of({search, mode, type});
+      this.props.onParameterSet(parameter);
     }
   }
 
   private handleModeSet(mode: SearchMode): void {
-    if (this.props.onModeSet) {
-      this.props.onModeSet(mode);
-    }
     if (this.props.onParameterSet) {
-      let search = this.props.parameter.search;
-      let type = this.props.parameter.type;
-      this.props.onParameterSet({search, mode, type});
+      let oldParameter = this.props.parameter;
+      let search = (oldParameter instanceof NormalSearchParameter) ? oldParameter.search : "";
+      let type = (oldParameter instanceof NormalSearchParameter) ? oldParameter.type : "prefix";
+      let parameter = NormalSearchParameter.of({search, mode, type});
+      this.props.onParameterSet(parameter);
     }
   }
 
   private handleTypeSet(type: SearchType): void {
-    if (this.props.onTypeSet) {
-      this.props.onTypeSet(type);
-    }
     if (this.props.onParameterSet) {
-      let search = this.props.parameter.search;
-      let mode = this.props.parameter.mode;
-      this.props.onParameterSet({search, mode, type});
+      let oldParameter = this.props.parameter;
+      let search = (oldParameter instanceof NormalSearchParameter) ? oldParameter.search : "";
+      let mode = (oldParameter instanceof NormalSearchParameter) ? oldParameter.mode : "both";
+      let parameter = NormalSearchParameter.of({search, mode, type});
+      this.props.onParameterSet(parameter);
+    }
+  }
+
+  private handleAdvancedSearchConfirm(parameter: SearchParameter): void {
+    if (this.props.onParameterSet) {
+      this.props.onParameterSet(parameter);
     }
   }
 
@@ -76,21 +80,25 @@ export default class SearchForm extends Component<Props, State> {
       {value: "exact", label: this.trans("searchForm.exact")},
       {value: "regular", label: this.trans("searchForm.regular")}
     ] as const;
+    let parameter = this.props.parameter;
+    let search = (parameter instanceof NormalSearchParameter) ? parameter.search : "";
+    let mode = (parameter instanceof NormalSearchParameter) ? parameter.mode : "both";
+    let type = (parameter instanceof NormalSearchParameter) ? parameter.type : "prefix";
     let node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-          <Input value={this.props.parameter.search} onSet={this.handleSearchSet.bind(this)}/>
+          <Input value={search} onSet={this.handleSearchSet.bind(this)}/>
           <div styleName="radio-wrapper">
-            <RadioGroup name="mode" value={this.props.parameter.mode} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
+            <RadioGroup name="mode" value={mode} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
           </div>
           <div styleName="radio-wrapper">
-            <RadioGroup name="type" value={this.props.parameter.type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
+            <RadioGroup name="type" value={type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
           </div>
           <div styleName="radio-wrapper">
             <Button label={this.trans("searchForm.advancedSearch")} style="link" onClick={() => this.setState({searchFormOpen: true})}/>
           </div>
         </form>
-        <AdvancedSearchForm open={this.state.searchFormOpen} onClose={() => this.setState({searchFormOpen: false})}/>
+        <AdvancedSearchForm open={this.state.searchFormOpen} onConfirm={this.handleAdvancedSearchConfirm.bind(this)} onClose={() => this.setState({searchFormOpen: false})}/>
       </Fragment>
     );
     return node;
@@ -100,14 +108,11 @@ export default class SearchForm extends Component<Props, State> {
 
 
 type Props = {
-  parameter: NormalSearchParameter,
-  onSearchSet?: (search: string) => void;
-  onModeSet?: (mode: SearchMode) => void;
-  onTypeSet?: (type: SearchType) => void;
-  onParameterSet?: (parameter: NormalSearchParameter) => void;
+  parameter: SearchParameter,
+  onParameterSet?: (parameter: SearchParameter) => void;
 };
 type DefaultProps = {
-  parameter: NormalSearchParameter
+  parameter: SearchParameter
 };
 type State = {
   searchFormOpen: boolean

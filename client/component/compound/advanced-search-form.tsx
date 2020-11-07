@@ -29,7 +29,7 @@ import {
 export default class AdvancedSearchForm extends Component<Props, State> {
 
   public state: State = {
-    parameter: {elements: []}
+    parameter: AdvancedSearchParameter.of({elements: []})
   };
 
   private handleClose(event: MouseEvent<HTMLElement>): void {
@@ -46,6 +46,16 @@ export default class AdvancedSearchForm extends Component<Props, State> {
       outerThis.setState({parameter});
     };
     return wrapper;
+  }
+
+  private confirmParameter(event: MouseEvent<HTMLButtonElement>): void {
+    let parameter = this.state.parameter;
+    if (this.props.onClose) {
+      this.props.onClose(event);
+    }
+    if (this.props.onConfirm) {
+      this.props.onConfirm(parameter, event);
+    }
   }
 
   public render(): ReactNode {
@@ -69,7 +79,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
             <Input className={styles["title"]} value={element.title} label={titleLabel} disabled={titleDisabled} onSet={this.setParameter((title) => elements[index].title = title)}/>
             <Input className={styles["search"]} value={element.search} label={searchLabel} onSet={this.setParameter((search) => elements[index].search = search)}/>
           </div>
-          <div styleName="button">
+          <div styleName="control-button">
             <Button iconLabel="&#xF068;" onClick={this.setParameter(() => deleteAt(elements, index))}/>
           </div>
         </div>
@@ -82,6 +92,9 @@ export default class AdvancedSearchForm extends Component<Props, State> {
         <div styleName="plus">
           <Button iconLabel="&#xF067;" onClick={this.setParameter(() => elements.push(AdvancedSearchParameterElement.createEmpty()))}/>
         </div>
+        <div styleName="confirm-button">
+          <Button label={this.trans("advancedSearchForm.confirm")} iconLabel="&#xF00C;" style="information" onClick={this.confirmParameter.bind(this)}/>
+        </div>
       </Overlay>
     );
     return node;
@@ -93,7 +106,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
 type Props = {
   open: boolean
   onClose?: (event: MouseEvent<HTMLElement>) => void,
-  onSubmit?: (parameter: SearchParameter, event: MouseEvent<HTMLButtonElement>) => void
+  onConfirm?: (parameter: SearchParameter, event: MouseEvent<HTMLButtonElement>) => void
 };
 type State = {
   parameter: AdvancedSearchParameter

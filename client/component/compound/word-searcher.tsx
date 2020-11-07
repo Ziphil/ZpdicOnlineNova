@@ -27,6 +27,7 @@ import {
   Dictionary,
   EditWord,
   NormalSearchParameter,
+  SearchParameter,
   Suggestion,
   Word
 } from "/server/skeleton/dictionary";
@@ -40,7 +41,7 @@ export default class WordSearcher extends Component<Props, State> {
     showButton: false
   };
   public state: State = {
-    parameter: {search: "", mode: "both", type: "prefix"},
+    parameter: NormalSearchParameter.of({search: "", mode: "both", type: "prefix"}),
     page: 0,
     hitResult: {words: [[], 0], suggestions: []},
     loading: false
@@ -73,7 +74,7 @@ export default class WordSearcher extends Component<Props, State> {
     await this.updateWordsImmediately();
   }
 
-  private async handleParameterSet(parameter: NormalSearchParameter): Promise<void> {
+  private async handleParameterSet(parameter: SearchParameter): Promise<void> {
     let page = 0;
     this.setState({parameter, page}, async () => {
       await this.updateWords();
@@ -146,7 +147,7 @@ type DefaultProps = {
   showButton: boolean
 };
 type State = {
-  parameter: NormalSearchParameter,
+  parameter: SearchParameter,
   page: number,
   hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},
   loading: boolean
