@@ -49,7 +49,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
 
   public constructor(props: any) {
     super(props);
-    this.serializeQuery(true);
+    this.deserializeQuery(true);
   }
 
   public async componentDidMount(): Promise<void> {
@@ -64,7 +64,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
 
   public componentDidUpdate(previousProps: any): void {
     if (this.props.location!.key !== previousProps.location!.key) {
-      this.serializeQuery(false, () => {
+      this.deserializeQuery(false, () => {
         if (!this.state.showExplanation) {
           this.updateWordsImmediately(false);
         }
@@ -113,7 +113,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     await Promise.all([ownPromise, editPromise]);
   }
 
-  private async updateWordsImmediately(deserialize: boolean = true): Promise<void> {
+  private async updateWordsImmediately(serialize: boolean = true): Promise<void> {
     let number = this.state.dictionary?.number;
     if (number !== undefined) {
       let parameter = this.state.parameter;
@@ -129,8 +129,8 @@ export default class DictionaryPage extends Component<Props, State, Params> {
       } else {
         this.setState({hitResult: {words: [[], 0], suggestions: []}, loading: false});
       }
-      if (deserialize) {
-        this.deserializeQuery();
+      if (serialize) {
+        this.serializeQuery();
       }
     }
   }
@@ -140,7 +140,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     await this.updateWordsImmediately();
   }
 
-  private serializeQuery(first: boolean, callback?: () => void): void {
+  private deserializeQuery(first: boolean, callback?: () => void): void {
     let queryString = this.props.location!.search;
     let query = queryParser.parse(queryString);
     let parameter = SearchParameter.deserialize(queryString);
@@ -156,7 +156,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     }
   }
 
-  private deserializeQuery(): void {
+  private serializeQuery(): void {
     let queryString = this.state.parameter.serialize() + `&page=${this.state.page}`;
     this.props.history!.replace({search: queryString});
   }
