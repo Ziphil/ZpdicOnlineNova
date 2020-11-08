@@ -5,15 +5,12 @@ import {
 } from "/client/skeleton/error";
 import {
   Controller,
-  GetRequest,
-  GetResponse,
-  PostRequest,
-  PostResponse
+  Request,
+  Response
 } from "/server/controller/controller";
 import {
   before,
   controller,
-  get,
   post
 } from "/server/controller/decorator";
 import {
@@ -39,7 +36,7 @@ export class OtherController extends Controller {
 
   @post(SERVER_PATHS["contact"])
   @before(verifyRecaptcha())
-  public async [Symbol()](request: PostRequest<"contact">, response: PostResponse<"contact">): Promise<void> {
+  public async [Symbol()](request: Request<"contact">, response: Response<"contact">): Promise<void> {
     let name = CastUtil.ensureString(request.body.name);
     let email = CastUtil.ensureString(request.body.email);
     let subject = CastUtil.ensureString(request.body.subject);

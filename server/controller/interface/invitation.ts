@@ -5,15 +5,12 @@ import {
 } from "/client/skeleton/error";
 import {
   Controller,
-  GetRequest,
-  GetResponse,
-  PostRequest,
-  PostResponse
+  Request,
+  Response
 } from "/server/controller/controller";
 import {
   before,
   controller,
-  get,
   post
 } from "/server/controller/decorator";
 import {
@@ -42,7 +39,7 @@ export class InvitationController extends Controller {
 
   @post(SERVER_PATHS["addInvitation"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: PostRequest<"addInvitation">, response: PostResponse<"addInvitation">): Promise<void> {
+  public async [Symbol()](request: Request<"addInvitation">, response: Response<"addInvitation">): Promise<void> {
     let dictionary = request.dictionary;
     let type = InvitationTypeUtil.cast(CastUtil.ensureString(request.body.type));
     let userName = CastUtil.ensureString(request.body.userName);
@@ -82,7 +79,7 @@ export class InvitationController extends Controller {
 
   @post(SERVER_PATHS["respondInvitation"])
   @before(verifyUser())
-  public async [Symbol()](request: PostRequest<"respondInvitation">, response: PostResponse<"respondInvitation">): Promise<void> {
+  public async [Symbol()](request: Request<"respondInvitation">, response: Response<"respondInvitation">): Promise<void> {
     let user = request.user!;
     let id = CastUtil.ensureString(request.body.id);
     let accept = CastUtil.ensureBoolean(request.body.accept);
@@ -105,11 +102,11 @@ export class InvitationController extends Controller {
     }
   }
 
-  @get(SERVER_PATHS["fetchInvitations"])
+  @post(SERVER_PATHS["fetchInvitations"])
   @before(verifyUser())
-  public async [Symbol()](request: GetRequest<"fetchInvitations">, response: GetResponse<"fetchInvitations">): Promise<void> {
+  public async [Symbol()](request: Request<"fetchInvitations">, response: Response<"fetchInvitations">): Promise<void> {
     let user = request.user!;
-    let type = InvitationTypeUtil.cast(CastUtil.ensureString(request.query.type));
+    let type = InvitationTypeUtil.cast(CastUtil.ensureString(request.body.type));
     let invitations = await InvitationModel.findByUser(type, user);
     let body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
     Controller.respond(response, body);

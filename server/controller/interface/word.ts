@@ -5,15 +5,12 @@ import {
 } from "/client/skeleton/error";
 import {
   Controller,
-  GetRequest,
-  GetResponse,
-  PostRequest,
-  PostResponse
+  Request,
+  Response
 } from "/server/controller/controller";
 import {
   before,
   controller,
-  get,
   post
 } from "/server/controller/decorator";
 import {
@@ -34,7 +31,7 @@ export class WordController extends Controller {
 
   @post(SERVER_PATHS["editWord"])
   @before(verifyUser(), verifyDictionary("edit"))
-  public async [Symbol()](request: PostRequest<"editWord">, response: PostResponse<"editWord">): Promise<void> {
+  public async [Symbol()](request: Request<"editWord">, response: Response<"editWord">): Promise<void> {
     let dictionary = request.dictionary;
     let word = request.body.word;
     if (dictionary) {
@@ -49,7 +46,7 @@ export class WordController extends Controller {
 
   @post(SERVER_PATHS["deleteWord"])
   @before(verifyUser(), verifyDictionary("edit"))
-  public async [Symbol()](request: PostRequest<"deleteWord">, response: PostResponse<"deleteWord">): Promise<void> {
+  public async [Symbol()](request: Request<"deleteWord">, response: Response<"deleteWord">): Promise<void> {
     let dictionary = request.dictionary;
     let wordNumber = request.body.wordNumber;
     if (dictionary) {

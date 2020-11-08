@@ -5,15 +5,12 @@ import {
 } from "/client/skeleton/error";
 import {
   Controller,
-  GetRequest,
-  GetResponse,
-  PostRequest,
-  PostResponse
+  Request,
+  Response
 } from "/server/controller/controller";
 import {
   before,
   controller,
-  get,
   post
 } from "/server/controller/decorator";
 import {
@@ -40,7 +37,7 @@ export class NotificationController extends Controller {
 
   @post(SERVER_PATHS["addNotification"])
   @before(verifyUser("admin"))
-  public async [Symbol()](request: PostRequest<"addNotification">, response: PostResponse<"addNotification">): Promise<void> {
+  public async [Symbol()](request: Request<"addNotification">, response: Response<"addNotification">): Promise<void> {
     let type = CastUtil.ensureString(request.body.type);
     let title = CastUtil.ensureString(request.body.title);
     let text = CastUtil.ensureString(request.body.text);
@@ -49,10 +46,10 @@ export class NotificationController extends Controller {
     Controller.respond(response, body);
   }
 
-  @get(SERVER_PATHS["fetchNotifications"])
-  public async [Symbol()](request: GetRequest<"fetchNotifications">, response: GetResponse<"fetchNotifications">): Promise<void> {
-    let offset = CastUtil.ensureNumber(request.query.offset);
-    let size = CastUtil.ensureNumber(request.query.size);
+  @post(SERVER_PATHS["fetchNotifications"])
+  public async [Symbol()](request: Request<"fetchNotifications">, response: Response<"fetchNotifications">): Promise<void> {
+    let offset = CastUtil.ensureNumber(request.body.offset);
+    let size = CastUtil.ensureNumber(request.body.size);
     let range = new QueryRange(offset, size);
     let hitResult = await NotificationModel.findAll(range);
     let hitNotifications = hitResult[0].map(NotificationCreator.create);

@@ -5,15 +5,12 @@ import {
 } from "/client/skeleton/error";
 import {
   Controller,
-  GetRequest,
-  GetResponse,
-  PostRequest,
-  PostResponse
+  Request,
+  Response
 } from "/server/controller/controller";
 import {
   before,
   controller,
-  get,
   post
 } from "/server/controller/decorator";
 import {
@@ -43,7 +40,7 @@ export class UserController extends Controller {
 
   @post(SERVER_PATHS["login"])
   @before(login(30 * 24 * 60 * 60))
-  public async [Symbol()](request: PostRequest<"login">, response: PostResponse<"login">): Promise<void> {
+  public async [Symbol()](request: Request<"login">, response: Response<"login">): Promise<void> {
     let token = request.token!;
     let user = request.user!;
     let userBody = UserCreator.createDetailed(user);
@@ -53,13 +50,13 @@ export class UserController extends Controller {
 
   @post(SERVER_PATHS["logout"])
   @before(logout())
-  public async [Symbol()](request: PostRequest<"logout">, response: PostResponse<"logout">): Promise<void> {
+  public async [Symbol()](request: Request<"logout">, response: Response<"logout">): Promise<void> {
     Controller.respond(response, null);
   }
 
   @post(SERVER_PATHS["registerUser"])
   @before(verifyRecaptcha())
-  public async [Symbol()](request: PostRequest<"registerUser">, response: PostResponse<"registerUser">): Promise<void> {
+  public async [Symbol()](request: Request<"registerUser">, response: Response<"registerUser">): Promise<void> {
     let name = CastUtil.ensureString(request.body.name);
     let email = CastUtil.ensureString(request.body.email);
     let password = CastUtil.ensureString(request.body.password);
@@ -94,7 +91,7 @@ export class UserController extends Controller {
 
   @post(SERVER_PATHS["changeUserScreenName"])
   @before(verifyUser())
-  public async [Symbol()](request: PostRequest<"changeUserScreenName">, response: PostResponse<"changeUserScreenName">): Promise<void> {
+  public async [Symbol()](request: Request<"changeUserScreenName">, response: Response<"changeUserScreenName">): Promise<void> {
     let user = request.user!;
     let screenName = CastUtil.ensureString(request.body.screenName);
     try {
@@ -108,7 +105,7 @@ export class UserController extends Controller {
 
   @post(SERVER_PATHS["changeUserEmail"])
   @before(verifyUser())
-  public async [Symbol()](request: PostRequest<"changeUserEmail">, response: PostResponse<"changeUserEmail">): Promise<void> {
+  public async [Symbol()](request: Request<"changeUserEmail">, response: Response<"changeUserEmail">): Promise<void> {
     let user = request.user!;
     let email = CastUtil.ensureString(request.body.email);
     try {
@@ -129,7 +126,7 @@ export class UserController extends Controller {
 
   @post(SERVER_PATHS["changeUserPassword"])
   @before(verifyUser())
-  public async [Symbol()](request: PostRequest<"changeUserPassword">, response: PostResponse<"changeUserPassword">): Promise<void> {
+  public async [Symbol()](request: Request<"changeUserPassword">, response: Response<"changeUserPassword">): Promise<void> {
     let user = request.user!;
     let password = CastUtil.ensureString(request.body.password);
     try {
@@ -148,7 +145,7 @@ export class UserController extends Controller {
 
   @post(SERVER_PATHS["issueUserResetToken"])
   @before(verifyRecaptcha())
-  public async [Symbol()](request: PostRequest<"issueUserResetToken">, response: PostResponse<"issueUserResetToken">): Promise<void> {
+  public async [Symbol()](request: Request<"issueUserResetToken">, response: Response<"issueUserResetToken">): Promise<void> {
     let name = CastUtil.ensureString(request.body.name);
     let email = CastUtil.ensureString(request.body.email);
     try {
@@ -171,7 +168,7 @@ export class UserController extends Controller {
   }
 
   @post(SERVER_PATHS["resetUserPassword"])
-  public async [Symbol()](request: PostRequest<"resetUserPassword">, response: PostResponse<"resetUserPassword">): Promise<void> {
+  public async [Symbol()](request: Request<"resetUserPassword">, response: Response<"resetUserPassword">): Promise<void> {
     let key = CastUtil.ensureString(request.body.key);
     let password = CastUtil.ensureString(request.body.password);
     try {
@@ -194,7 +191,7 @@ export class UserController extends Controller {
 
   @post(SERVER_PATHS["deleteUser"])
   @before(verifyUser())
-  public async [Symbol()](request: PostRequest<"deleteUser">, response: PostResponse<"deleteUser">): Promise<void> {
+  public async [Symbol()](request: Request<"deleteUser">, response: Response<"deleteUser">): Promise<void> {
     let user = request.user!;
     try {
       await user.removeWhole();
@@ -204,17 +201,17 @@ export class UserController extends Controller {
     }
   }
 
-  @get(SERVER_PATHS["fetchUser"])
+  @post(SERVER_PATHS["fetchUser"])
   @before(verifyUser())
-  public async [Symbol()](request: GetRequest<"fetchUser">, response: GetResponse<"fetchUser">): Promise<void> {
+  public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
     let user = request.user!;
     let body = UserCreator.createDetailed(user);
     Controller.respond(response, body);
   }
 
-  @get(SERVER_PATHS["suggestUsers"])
-  public async [Symbol()](request: GetRequest<"suggestUsers">, response: GetResponse<"suggestUsers">): Promise<void> {
-    let pattern = CastUtil.ensureString(request.query.pattern);
+  @post(SERVER_PATHS["suggestUsers"])
+  public async [Symbol()](request: Request<"suggestUsers">, response: Response<"suggestUsers">): Promise<void> {
+    let pattern = CastUtil.ensureString(request.body.pattern);
     let users = await UserModel.suggest(pattern);
     let body = users.map(UserCreator.create);
     Controller.respond(response, body);

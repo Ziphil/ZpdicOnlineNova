@@ -5,15 +5,12 @@ import {
 } from "/client/skeleton/error";
 import {
   Controller,
-  GetRequest,
-  GetResponse,
-  PostRequest,
-  PostResponse
+  Request,
+  Response
 } from "/server/controller/controller";
 import {
   before,
   controller,
-  get,
   post
 } from "/server/controller/decorator";
 import {
@@ -45,7 +42,7 @@ export class CommissionController extends Controller {
 
   @post(SERVER_PATHS["addCommission"])
   @before(verifyRecaptcha())
-  public async [Symbol()](request: PostRequest<"addCommission">, response: PostResponse<"addCommission">): Promise<void> {
+  public async [Symbol()](request: Request<"addCommission">, response: Response<"addCommission">): Promise<void> {
     let number = CastUtil.ensureNumber(request.body.number);
     let name = CastUtil.ensureString(request.body.name);
     let comment = CastUtil.ensureString(request.body.comment);
@@ -67,7 +64,7 @@ export class CommissionController extends Controller {
 
   @post(SERVER_PATHS["deleteCommission"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: PostRequest<"deleteCommission">, response: PostResponse<"deleteCommission">): Promise<void> {
+  public async [Symbol()](request: Request<"deleteCommission">, response: Response<"deleteCommission">): Promise<void> {
     let dictionary = request.dictionary!;
     let id = CastUtil.ensureString(request.body.id);
     if (dictionary) {
@@ -86,12 +83,12 @@ export class CommissionController extends Controller {
     }
   }
 
-  @get(SERVER_PATHS["fetchCommissions"])
+  @post(SERVER_PATHS["fetchCommissions"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: GetRequest<"fetchCommissions">, response: GetResponse<"fetchCommissions">): Promise<void> {
+  public async [Symbol()](request: Request<"fetchCommissions">, response: Response<"fetchCommissions">): Promise<void> {
     let dictionary = request.dictionary;
-    let offset = CastUtil.ensureNumber(request.query.offset);
-    let size = CastUtil.ensureNumber(request.query.size);
+    let offset = CastUtil.ensureNumber(request.body.offset);
+    let size = CastUtil.ensureNumber(request.body.size);
     if (dictionary) {
       let range = new QueryRange(offset, size);
       let hitResult = await CommissionModel.findByDictionary(dictionary, range);
