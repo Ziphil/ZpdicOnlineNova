@@ -27,14 +27,14 @@ export default class AddTransferInvitationForm extends Component<Props, State> {
     userName: ""
   };
 
-  private async suggestUsers(pattern: string): Promise<Array<SuggestionSpec>> {
+  private async suggestUsers(pattern: string): Promise<Array<SuggestionSpec<string>>> {
     let response = await this.requestGet("suggestUsers", {pattern}, {ignoreError: true});
     if (response.status === 200 && !("error" in response.data)) {
       let users = response.data;
       let suggestions = users.map((user) => {
-        let node = <UserSuggestionPane user={user}/>;
         let replacement = user.name;
-        return {node, replacement};
+        let node = <UserSuggestionPane user={user}/>;
+        return {replacement, node};
       });
       return suggestions;
     } else {

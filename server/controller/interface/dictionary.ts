@@ -29,9 +29,7 @@ import {
   DictionaryCreator,
   DictionaryFullAuthorityUtil,
   DictionaryModel,
-  NormalSearchParameter,
-  SearchModeUtil,
-  SearchTypeUtil,
+  SearchParameterCreator,
   SuggestionCreator,
   WordCreator,
   WordModel
@@ -227,17 +225,14 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @get(SERVER_PATHS["searchDictionary"])
-  public async [Symbol()](request: GetRequest<"searchDictionary">, response: GetResponse<"searchDictionary">): Promise<void> {
-    let number = CastUtil.ensureNumber(request.query.number);
-    let search = CastUtil.ensureString(request.query.search);
-    let mode = SearchModeUtil.cast(CastUtil.ensureString(request.query.mode));
-    let type = SearchTypeUtil.cast(CastUtil.ensureString(request.query.type));
-    let offset = CastUtil.ensureNumber(request.query.offset);
-    let size = CastUtil.ensureNumber(request.query.size);
+  @post(SERVER_PATHS["searchDictionary"])
+  public async [Symbol()](request: PostRequest<"searchDictionary">, response: PostResponse<"searchDictionary">): Promise<void> {
+    let number = CastUtil.ensureNumber(request.body.number);
+    let parameter = SearchParameterCreator.restore(request.body.parameter);
+    let offset = CastUtil.ensureNumber(request.body.offset);
+    let size = CastUtil.ensureNumber(request.body.size);
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
-      let parameter = new NormalSearchParameter(search, mode, type);
       let range = new QueryRange(offset, size);
       let hitResult = await dictionary.search(parameter, range);
       let hitWords = hitResult.words[0].map(WordCreator.create);

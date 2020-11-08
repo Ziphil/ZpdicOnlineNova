@@ -2,17 +2,22 @@
 
 import * as react from "react";
 import {
+  Fragment,
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import RadioGroup from "/client/component/atom/radio-group";
 import Component from "/client/component/component";
+import AdvancedSearchForm from "/client/component/compound/advanced-search-form";
 import {
   style
 } from "/client/component/decorator";
 import {
+  Dictionary,
   NormalSearchParameter,
   SearchMode,
+  SearchParameter,
   SearchType
 } from "/server/skeleton/dictionary";
 
@@ -21,42 +26,54 @@ import {
 export default class SearchForm extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
-    parameter: {search: "", mode: "both", type: "prefix"}
+    parameter: NormalSearchParameter.createEmpty()
+  };
+  public state: State = {
+    searchFormOpen: false
   };
 
-  private handleSearchSet(search: string): void {
-    this.setState({search});
-    if (this.props.onSearchSet) {
-      this.props.onSearchSet(search);
+  private getNormalSearchParameter(): NormalSearchParameter {
+    let parameter = this.props.parameter;
+    if (parameter instanceof NormalSearchParameter) {
+      return parameter;
+    } else {
+      return NormalSearchParameter.createEmpty();
     }
+  }
+
+  private handleSearchSet(search: string): void {
     if (this.props.onParameterSet) {
-      let mode = this.props.parameter.mode;
-      let type = this.props.parameter.type;
-      this.props.onParameterSet({search, mode, type});
+      let oldParameter = this.getNormalSearchParameter();
+      let mode = oldParameter.mode;
+      let type = oldParameter.type;
+      let parameter = NormalSearchParameter.createEmpty({search, mode, type});
+      this.props.onParameterSet(parameter);
     }
   }
 
   private handleModeSet(mode: SearchMode): void {
-    this.setState({mode});
-    if (this.props.onModeSet) {
-      this.props.onModeSet(mode);
-    }
     if (this.props.onParameterSet) {
-      let search = this.props.parameter.search;
-      let type = this.props.parameter.type;
-      this.props.onParameterSet({search, mode, type});
+      let oldParameter = this.getNormalSearchParameter();
+      let search = oldParameter.search;
+      let type = oldParameter.type;
+      let parameter = NormalSearchParameter.createEmpty({search, mode, type});
+      this.props.onParameterSet(parameter);
     }
   }
 
   private handleTypeSet(type: SearchType): void {
-    this.setState({type});
-    if (this.props.onTypeSet) {
-      this.props.onTypeSet(type);
-    }
     if (this.props.onParameterSet) {
-      let search = this.props.parameter.search;
-      let mode = this.props.parameter.mode;
-      this.props.onParameterSet({search, mode, type});
+      let oldParameter = this.getNormalSearchParameter();
+      let search = oldParameter.search;
+      let mode = oldParameter.mode;
+      let parameter = NormalSearchParameter.createEmpty({search, mode, type});
+      this.props.onParameterSet(parameter);
+    }
+  }
+
+  private handleAdvancedSearchConfirm(parameter: SearchParameter): void {
+    if (this.props.onParameterSet) {
+      this.props.onParameterSet(parameter);
     }
   }
 
@@ -73,16 +90,29 @@ export default class SearchForm extends Component<Props, State> {
       {value: "exact", label: this.trans("searchForm.exact")},
       {value: "regular", label: this.trans("searchForm.regular")}
     ] as const;
+    let parameter = this.getNormalSearchParameter();
     let node = (
-      <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-        <Input value={this.props.parameter.search} onSet={this.handleSearchSet.bind(this)}/>
-        <div styleName="radio-wrapper">
-          <RadioGroup name="mode" value={this.props.parameter.mode} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
-        </div>
-        <div styleName="radio-wrapper">
-          <RadioGroup name="type" value={this.props.parameter.type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
-        </div>
-      </form>
+      <Fragment>
+        <form styleName="root" onSubmit={(event) => event.preventDefault()}>
+          <Input value={parameter.search} prefix={<div styleName="icon"/>} onSet={this.handleSearchSet.bind(this)}/>
+          <div styleName="radio-wrapper">
+            <RadioGroup name="mode" value={parameter.mode} specs={modeSpecs} onSet={this.handleModeSet.bind(this)}/>
+          </div>
+          <div styleName="radio-wrapper">
+            <RadioGroup name="type" value={parameter.type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
+          </div>
+          <div styleName="radio-wrapper">
+            <Button label={this.trans("searchForm.advancedSearch")} iconLabel="&#xF00E;" style="simple" onClick={() => this.setState({searchFormOpen: true})}/>
+          </div>
+        </form>
+        <AdvancedSearchForm
+          dictionary={this.props.dictionary}
+          defaultParameter={this.props.parameter}
+          open={this.state.searchFormOpen}
+          onConfirm={this.handleAdvancedSearchConfirm.bind(this)}
+          onClose={() => this.setState({searchFormOpen: false})}
+        />
+      </Fragment>
     );
     return node;
   }
@@ -91,14 +121,13 @@ export default class SearchForm extends Component<Props, State> {
 
 
 type Props = {
-  parameter: NormalSearchParameter,
-  onSearchSet?: (search: string) => void;
-  onModeSet?: (mode: SearchMode) => void;
-  onTypeSet?: (type: SearchType) => void;
-  onParameterSet?: (parameter: NormalSearchParameter) => void;
+  dictionary: Dictionary,
+  parameter: SearchParameter,
+  onParameterSet?: (parameter: SearchParameter) => void;
 };
 type DefaultProps = {
-  parameter: NormalSearchParameter
+  parameter: SearchParameter
 };
 type State = {
+  searchFormOpen: boolean
 };

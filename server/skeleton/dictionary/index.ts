@@ -1,5 +1,6 @@
 //
 
+export * from "./search-parameter/advanced-search-parameter";
 export * from "./search-parameter/normal-search-parameter";
 export * from "./search-parameter/search-parameter";
 export * from "./dictionary";

@@ -27,6 +27,7 @@ import {
   Dictionary,
   EditWord,
   NormalSearchParameter,
+  SearchParameter,
   Suggestion,
   Word
 } from "/server/skeleton/dictionary";
@@ -40,7 +41,7 @@ export default class WordSearcher extends Component<Props, State> {
     showButton: false
   };
   public state: State = {
-    parameter: {search: "", mode: "both", type: "prefix"},
+    parameter: NormalSearchParameter.createEmpty(),
     page: 0,
     hitResult: {words: [[], 0], suggestions: []},
     loading: false
@@ -53,14 +54,12 @@ export default class WordSearcher extends Component<Props, State> {
   private async updateWordsImmediately(): Promise<void> {
     let number = this.props.dictionary?.number;
     if (number !== undefined) {
-      let search = this.state.parameter.search;
-      let mode = this.state.parameter.mode;
-      let type = this.state.parameter.type;
+      let parameter = this.state.parameter;
       let page = this.state.page;
       let offset = page * 40;
       let size = 40;
       this.setState({loading: true});
-      let response = await this.requestGet("searchDictionary", {number, search, mode, type, offset, size});
+      let response = await this.requestPost("searchDictionary", {number, parameter, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
         let hitResult = response.data;
         this.setState({hitResult, loading: true});
@@ -75,7 +74,7 @@ export default class WordSearcher extends Component<Props, State> {
     await this.updateWordsImmediately();
   }
 
-  private async handleParameterSet(parameter: NormalSearchParameter): Promise<void> {
+  private async handleParameterSet(parameter: SearchParameter): Promise<void> {
     let page = 0;
     this.setState({parameter, page}, async () => {
       await this.updateWords();
@@ -122,10 +121,10 @@ export default class WordSearcher extends Component<Props, State> {
     let innerNode = (this.props.dictionary !== null) && this.renderWordList();
     let node = (
       <div>
-        <div styleName="search-form">
-          <SearchForm parameter={this.state.parameter} onParameterSet={this.handleParameterSet.bind(this)}/>
-        </div>
         <Loading loading={this.props.dictionary === null}>
+          <div styleName="search-form">
+            <SearchForm dictionary={this.props.dictionary} parameter={this.state.parameter} onParameterSet={this.handleParameterSet.bind(this)}/>
+          </div>
           {innerNode}
         </Loading>
       </div>
@@ -148,7 +147,7 @@ type DefaultProps = {
   showButton: boolean
 };
 type State = {
-  parameter: NormalSearchParameter,
+  parameter: SearchParameter,
   page: number,
   hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},
   loading: boolean

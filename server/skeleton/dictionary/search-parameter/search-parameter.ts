@@ -1,12 +1,36 @@
 //
 
+import * as queryParser from "query-string";
+import {
+  AdvancedSearchParameter,
+  NormalSearchParameter
+} from "/server/skeleton/dictionary";
+import {
+  Skeleton
+} from "/server/skeleton/skeleton";
 import {
   LiteralType,
   LiteralUtilType
 } from "/server/util/literal-type";
 
 
-export const SEARCH_MODES = ["name", "equivalent", "both", "content"] as const;
+export abstract class SearchParameter extends Skeleton {
+
+  public static deserialize(queryString: string): SearchParameter {
+    let query = queryParser.parse(queryString);
+    if ("advanced" in query) {
+      return AdvancedSearchParameter.deserializeEach(query);
+    } else {
+      return NormalSearchParameter.deserializeEach(query);
+    }
+  }
+
+  public abstract serialize(): string;
+
+}
+
+
+export const SEARCH_MODES = ["name", "equivalent", "both", "tag", "information", "content"] as const;
 export type SearchMode = LiteralType<typeof SEARCH_MODES>;
 export let SearchModeUtil = LiteralUtilType.create(SEARCH_MODES);
 

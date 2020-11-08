@@ -237,6 +237,23 @@ addCommissionForm:
   name: "Word"
   comment: "Comment"
   confirm: "Request"
+advancedSearchForm:
+  overlayTitle: "Advanced search"
+  search: "Search"
+  title: "Title"
+  mode: "Range"
+  type: "Method"
+  name: "Headword"
+  equivalent: "Translation"
+  tag: "Tag"
+  information: "Content"
+  content: "Whole"
+  prefix: "Prefix"
+  suffix: "Suffix"
+  part: "Part"
+  exact: "Exact"
+  regular: "Regexp"
+  confirm: "Confirm"
 akrantiainExecutor:
   title: "Akrantiain {version}"
   source: "Snoj data"
@@ -312,6 +329,7 @@ searchForm:
   part: "Part"
   exact: "Exact"
   regular: "Regexp"
+  advancedSearch: "Advanced search"
 sourceTester:
   try: "Try"
 suggestionPane:

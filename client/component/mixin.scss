@@ -80,6 +80,8 @@ $large-border-radius: 6px;
 $icon-width: 1.2em;
 $blank-margin: 0.3em;
 $control-margin: 15px;
+$small-control-margin: 10px;
+$small-control-vertical-margin: 8px;
 
 $page-width: 800px;
 $page-horizontal-margin: 30px;
@@ -239,6 +241,16 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   }
   &:focus-within {
     box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color), $focus-box-shadow-setting focus-box-shadow-color($color);
+  }
+  &:disabled,
+  &.disabled {
+    opacity: 0.5;
+  }
+  &:disabled:hover,
+  &:disabled:hover *,
+  &.disabled:hover,
+  &.disabled:hover * {
+    cursor: not-allowed;
   }
 }
 

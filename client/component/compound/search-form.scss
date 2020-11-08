@@ -10,3 +10,13 @@
 .radio-wrapper {
   margin: 10px 0px 0px 0px;
 }
+
+.icon {
+  margin: 0em 0.5em 0em 0em;
+}
+
+.icon::before {
+  @include icon-font;
+  color: $light-color;
+  content: "\F002";
+}

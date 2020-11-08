@@ -1,0 +1,76 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.inner,
+.plus {
+  @include reset-first-margin;
+  margin: $small-control-vertical-margin 0px 0px 0px;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  @include smartphone {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.plus {
+  justify-content: flex-end;
+  display: flex;
+  align-items: flex-end;
+}
+
+.form {
+  @include reset-first-margin;
+  margin: 0px 0px 0px $small-control-margin;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-grow: 1;
+}
+
+.form.left {
+  flex-grow: 0;
+}
+
+.form.right {
+  @include smartphone {
+    margin: $small-control-vertical-margin 0px 0px 0px;
+  }
+}
+
+.form >* {
+  @include reset-first-margin;
+  margin: 0px 0px 0px $small-control-margin;
+}
+
+.selection {
+  width: 110px;
+  flex-basis: 110px;
+}
+
+.title {
+  flex: 1;
+}
+
+.search {
+  flex: 2;
+  @include smartphone {
+    flex: 3;
+  }
+}
+
+.control-button {
+  margin: 0px 0px 0px $small-control-margin;
+  @include smartphone {
+    margin: $small-control-vertical-margin 0px 0px 0px;
+    align-self: flex-end;
+  }
+}
+
+.confirm-button {
+  margin: 20px 0px 0px 0px;
+  text-align: right;
+}
