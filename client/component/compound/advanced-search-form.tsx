@@ -28,9 +28,18 @@ import {
 @style(require("./advanced-search-form.scss"))
 export default class AdvancedSearchForm extends Component<Props, State> {
 
-  public state: State = {
-    parameter: AdvancedSearchParameter.createEmpty()
-  };
+  public constructor(props: Props) {
+    super(props);
+    let parameter = (props.defaultParameter instanceof AdvancedSearchParameter) ? props.defaultParameter : AdvancedSearchParameter.createEmpty();
+    this.state = {parameter};
+  }
+
+  public componentDidUpdate(previousProps: any): void {
+    if (this.props !== previousProps) {
+      let parameter = (this.props.defaultParameter instanceof AdvancedSearchParameter) ? this.props.defaultParameter : AdvancedSearchParameter.createEmpty();
+      this.setState({parameter});
+    }
+  }
 
   private handleClose(event: MouseEvent<HTMLElement>): void {
     if (this.props.onClose) {
@@ -104,6 +113,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
 
 
 type Props = {
+  defaultParameter: SearchParameter,
   open: boolean
   onClose?: (event: MouseEvent<HTMLElement>) => void,
   onConfirm?: (parameter: SearchParameter, event: MouseEvent<HTMLButtonElement>) => void
