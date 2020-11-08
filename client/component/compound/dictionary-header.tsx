@@ -13,12 +13,12 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  Dictionary
+} from "/client/skeleton/dictionary";
+import {
   SERVER_PATHS,
   SERVER_PATH_PREFIX
 } from "/server/controller/interface/type";
-import {
-  Dictionary
-} from "/server/skeleton/dictionary";
 
 
 @style(require("./dictionary-header.scss"))

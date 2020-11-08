@@ -19,7 +19,7 @@ import {
   SearchMode,
   SearchParameter,
   SearchType
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./search-form.scss"))

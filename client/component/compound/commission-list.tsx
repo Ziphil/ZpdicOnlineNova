@@ -16,15 +16,15 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  WithSize
-} from "/server/controller/interface/type";
-import {
   Commission
-} from "/server/skeleton/commission";
+} from "/client/skeleton/commission";
 import {
   Dictionary,
   EditWord
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
+import {
+  WithSize
+} from "/server/controller/interface/type";
 
 
 @style(require("./commission-list.scss"))

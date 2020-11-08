@@ -12,7 +12,7 @@ import {
 import {
   Dictionary,
   Suggestion
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./suggestion-list.scss"))

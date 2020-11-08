@@ -17,7 +17,7 @@ import {
 } from "/client/component/decorator";
 import {
   Dictionary
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./add-transfer-invitation-form.scss"))

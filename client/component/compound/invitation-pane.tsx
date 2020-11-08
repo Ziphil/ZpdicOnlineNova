@@ -16,7 +16,7 @@ import {
 } from "/client/component/decorator";
 import {
   Invitation
-} from "/server/skeleton/invitation";
+} from "/client/skeleton/invitation";
 
 
 @style(require("./invitation-pane.scss"))

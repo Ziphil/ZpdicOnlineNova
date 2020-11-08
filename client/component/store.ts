@@ -9,12 +9,12 @@ import {
   LANGUAGES
 } from "/client/language";
 import {
+  DetailedUser
+} from "/client/skeleton/user";
+import {
   SERVER_PATHS,
   SERVER_PATH_PREFIX
 } from "/server/controller/interface/type";
-import {
-  DetailedUser
-} from "/server/skeleton/user";
 
 
 export class GlobalStore {

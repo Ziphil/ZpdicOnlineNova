@@ -12,7 +12,7 @@ import {
 import Page from "/client/component/page/page";
 import {
   Dictionary
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./add-commission-page.scss"))

@@ -4,14 +4,14 @@ import rison from "rison";
 import {
   SearchMode,
   SearchType
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 import {
   SEARCH_MODES,
   SearchParameter
-} from "/server/skeleton/dictionary/search-parameter/search-parameter";
+} from "/client/skeleton/dictionary/search-parameter/search-parameter";
 import {
   Skeleton
-} from "/server/skeleton/skeleton";
+} from "/client/skeleton/skeleton";
 
 
 export class AdvancedSearchParameter extends SearchParameter {

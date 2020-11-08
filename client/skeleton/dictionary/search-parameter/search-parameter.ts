@@ -4,10 +4,10 @@ import * as queryParser from "query-string";
 import {
   AdvancedSearchParameter,
   NormalSearchParameter
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 import {
   Skeleton
-} from "/server/skeleton/skeleton";
+} from "/client/skeleton/skeleton";
 import {
   LiteralType,
   LiteralUtilType

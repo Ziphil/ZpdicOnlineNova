@@ -1,12 +1,12 @@
 //
 
 import {
+  Suggestion as SuggestionSkeleton
+} from "/client/skeleton/dictionary";
+import {
   Word,
   WordCreator
 } from "/server/model/dictionary";
-import {
-  Suggestion as SuggestionSkeleton
-} from "/server/skeleton/dictionary";
 
 
 export class Suggestion {

@@ -8,6 +8,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  Word as WordSkeleton
+} from "/client/skeleton/dictionary";
+import {
   DictionarySchema,
   EquivalentCreator,
   EquivalentSchema,
@@ -18,9 +21,6 @@ import {
   VariationCreator,
   VariationSchema
 } from "/server/model/dictionary";
-import {
-  Word as WordSkeleton
-} from "/server/skeleton/dictionary";
 
 
 @modelOptions({schemaOptions: {collection: "words"}})

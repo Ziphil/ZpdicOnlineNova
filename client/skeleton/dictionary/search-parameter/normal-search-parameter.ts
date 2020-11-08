@@ -6,10 +6,10 @@ import {
   SearchModeUtil,
   SearchType,
   SearchTypeUtil
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 import {
   SearchParameter
-} from "/server/skeleton/dictionary/search-parameter/search-parameter";
+} from "/client/skeleton/dictionary/search-parameter/search-parameter";
 
 
 export class NormalSearchParameter extends SearchParameter {

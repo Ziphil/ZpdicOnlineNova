@@ -6,7 +6,7 @@ import {
 } from "@typegoose/typegoose";
 import {
   Equivalent as EquivalentSkeleton
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 export class EquivalentSchema {

@@ -2,10 +2,10 @@
 
 import {
   DetailedDictionary
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 import {
   Skeleton
-} from "/server/skeleton/skeleton";
+} from "/client/skeleton/skeleton";
 
 
 export class Invitation extends Skeleton {

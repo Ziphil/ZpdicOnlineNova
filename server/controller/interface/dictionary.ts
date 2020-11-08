@@ -4,6 +4,13 @@ import {
   promises as fs
 } from "fs";
 import {
+  DetailedDictionary,
+  UserDictionary
+} from "/client/skeleton/dictionary";
+import {
+  CustomError
+} from "/client/skeleton/error";
+import {
   Controller,
   GetRequest,
   GetResponse,
@@ -38,13 +45,6 @@ import {
   UserCreator,
   UserModel
 } from "/server/model/user";
-import {
-  DetailedDictionary,
-  UserDictionary
-} from "/server/skeleton/dictionary";
-import {
-  CustomError
-} from "/server/skeleton/error";
 import {
   CastUtil
 } from "/server/util/cast";

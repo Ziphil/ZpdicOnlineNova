@@ -7,17 +7,17 @@ import {
   Zatlin
 } from "zatlin";
 import {
-  DictionaryAuthority
-} from "/server/model/dictionary";
-import {
   DictionarySettings
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 import {
   Skeleton
-} from "/server/skeleton/skeleton";
+} from "/client/skeleton/skeleton";
 import {
   User
-} from "/server/skeleton/user";
+} from "/client/skeleton/user";
+import {
+  DictionaryAuthority
+} from "/server/model/dictionary";
 
 
 export class Dictionary extends Skeleton {

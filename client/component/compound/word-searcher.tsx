@@ -18,19 +18,19 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  debounce
-} from "/client/util/decorator";
-import {
-  WithSize
-} from "/server/controller/interface/type";
-import {
   Dictionary,
   EditWord,
   NormalSearchParameter,
   SearchParameter,
   Suggestion,
   Word
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
+import {
+  debounce
+} from "/client/util/decorator";
+import {
+  WithSize
+} from "/server/controller/interface/type";
 
 
 @style(require("./word-searcher.scss"))

@@ -2,7 +2,7 @@
 
 import {
   Skeleton
-} from "/server/skeleton/skeleton";
+} from "/client/skeleton/skeleton";
 
 
 export class CustomError<E extends string = string> extends Skeleton {

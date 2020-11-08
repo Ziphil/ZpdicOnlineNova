@@ -16,10 +16,10 @@ import {
 } from "/client/component/decorator";
 import {
   Dictionary
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 import {
   User
-} from "/server/skeleton/user";
+} from "/client/skeleton/user";
 
 
 @style(require("./invitation-list.scss"))

@@ -19,11 +19,11 @@ import {
 } from "/client/component/decorator";
 import {
   Commission
-} from "/server/skeleton/commission";
+} from "/client/skeleton/commission";
 import {
   Dictionary,
   EditWord
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./commission-pane.scss"))

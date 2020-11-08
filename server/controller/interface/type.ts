@@ -5,7 +5,7 @@ import {
 } from "ts-essentials";
 import {
   Commission
-} from "/server/skeleton/commission";
+} from "/client/skeleton/commission";
 import {
   DetailedDictionary,
   Dictionary,
@@ -15,23 +15,23 @@ import {
   Suggestion,
   UserDictionary,
   Word
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 import {
   CustomError
-} from "/server/skeleton/error";
+} from "/client/skeleton/error";
 import {
   History
-} from "/server/skeleton/history";
+} from "/client/skeleton/history";
 import {
   Invitation
-} from "/server/skeleton/invitation";
+} from "/client/skeleton/invitation";
 import {
   Notification
-} from "/server/skeleton/notification";
+} from "/client/skeleton/notification";
 import {
   DetailedUser,
   User
-} from "/server/skeleton/user";
+} from "/client/skeleton/user";
 
 
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];

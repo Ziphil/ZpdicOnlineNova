@@ -25,14 +25,14 @@ import DeleteDictionaryForm from "/client/component/form/delete-dictionary-form"
 import UploadDictionaryForm from "/client/component/form/upload-dictionary-form";
 import Page from "/client/component/page/page";
 import {
-  WithSize
-} from "/server/controller/interface/type";
-import {
   Commission
-} from "/server/skeleton/commission";
+} from "/client/skeleton/commission";
 import {
   DetailedDictionary
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
+import {
+  WithSize
+} from "/server/controller/interface/type";
 
 
 @style(require("./dictionary-setting-page.scss"))

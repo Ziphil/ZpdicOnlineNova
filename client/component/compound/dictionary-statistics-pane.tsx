@@ -15,7 +15,7 @@ import {
 } from "/client/component/decorator";
 import {
   DetailedDictionary
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./dictionary-statistics-pane.scss"))

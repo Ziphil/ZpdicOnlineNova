@@ -12,11 +12,11 @@ import {
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
+  DetailedDictionary
+} from "/client/skeleton/dictionary";
+import {
   WithSize
 } from "/server/controller/interface/type";
-import {
-  DetailedDictionary
-} from "/server/skeleton/dictionary";
 
 
 @style(require("./dictionary-list-page.scss"))

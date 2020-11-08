@@ -1,6 +1,9 @@
 //
 
 import {
+  CustomError
+} from "/client/skeleton/error";
+import {
   Controller,
   GetRequest,
   GetResponse,
@@ -24,9 +27,6 @@ import {
 import {
   WordCreator
 } from "/server/model/dictionary";
-import {
-  CustomError
-} from "/server/skeleton/error";
 
 
 @controller(SERVER_PATH_PREFIX)

@@ -11,11 +11,11 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  Notification
+} from "/client/skeleton/notification";
+import {
   WithSize
 } from "/server/controller/interface/type";
-import {
-  Notification
-} from "/server/skeleton/notification";
 
 
 @style(require("./notification-list.scss"))

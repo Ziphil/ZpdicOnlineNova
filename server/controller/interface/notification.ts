@@ -1,6 +1,9 @@
 //
 
 import {
+  CustomError
+} from "/client/skeleton/error";
+import {
   Controller,
   GetRequest,
   GetResponse,
@@ -24,9 +27,6 @@ import {
   NotificationCreator,
   NotificationModel
 } from "/server/model/notification";
-import {
-  CustomError
-} from "/server/skeleton/error";
 import {
   CastUtil
 } from "/server/util/cast";

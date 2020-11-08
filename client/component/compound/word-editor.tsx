@@ -31,13 +31,6 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  deleteAt,
-  swap
-} from "/client/util/misc";
-import {
-  StyleNameUtil
-} from "/client/util/style-name";
-import {
   Dictionary,
   EditWord,
   Equivalent,
@@ -45,7 +38,14 @@ import {
   Relation,
   Variation,
   Word
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
+import {
+  deleteAt,
+  swap
+} from "/client/util/misc";
+import {
+  StyleNameUtil
+} from "/client/util/style-name";
 
 
 @style(require("./word-editor.scss"))

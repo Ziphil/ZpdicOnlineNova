@@ -11,6 +11,15 @@ import {
 } from "@typegoose/typegoose";
 import Fuse from "fuse.js";
 import {
+  DetailedDictionary as DetailedDictionarySkeleton,
+  Dictionary as DictionarySkeleton,
+  EditWord as EditWordSkeleton,
+  UserDictionary as UserDictionarySkeleton
+} from "/client/skeleton/dictionary";
+import {
+  User as UserSkeleton
+} from "/client/skeleton/user";
+import {
   WithSize
 } from "/server/controller/interface/type";
 import {
@@ -45,15 +54,6 @@ import {
 import {
   IDENTIFIER_REGEXP
 } from "/server/model/validation";
-import {
-  DetailedDictionary as DetailedDictionarySkeleton,
-  Dictionary as DictionarySkeleton,
-  EditWord as EditWordSkeleton,
-  UserDictionary as UserDictionarySkeleton
-} from "/server/skeleton/dictionary";
-import {
-  User as UserSkeleton
-} from "/server/skeleton/user";
 import {
   LiteralType,
   LiteralUtilType

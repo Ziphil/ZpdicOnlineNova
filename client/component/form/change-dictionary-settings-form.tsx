@@ -13,7 +13,7 @@ import {
 } from "/client/component/decorator";
 import {
   DictionarySettings
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./change-dictionary-settings-form.scss"))

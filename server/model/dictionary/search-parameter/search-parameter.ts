@@ -5,6 +5,18 @@ import {
   Query
 } from "mongoose";
 import {
+  AdvancedSearchParameter as AdvancedSearchParameterSkeleton,
+  NormalSearchParameter as NormalSearchParameterSkeleton,
+  SearchParameter as SearchParameterSkeleton
+} from "/client/skeleton/dictionary";
+export {
+  AdvancedSearchMode,
+  SearchMode,
+  SearchModeUtil,
+  SearchType,
+  SearchTypeUtil
+} from "/client/skeleton/dictionary";
+import {
   AdvancedSearchParameter,
   AdvancedSearchParameterElement,
   Dictionary,
@@ -13,18 +25,6 @@ import {
   SearchType,
   Word
 } from "/server/model/dictionary";
-import {
-  AdvancedSearchParameter as AdvancedSearchParameterSkeleton,
-  NormalSearchParameter as NormalSearchParameterSkeleton,
-  SearchParameter as SearchParameterSkeleton
-} from "/server/skeleton/dictionary";
-export {
-  AdvancedSearchMode,
-  SearchMode,
-  SearchModeUtil,
-  SearchType,
-  SearchTypeUtil
-} from "/server/skeleton/dictionary";
 import {
   escapeRegexp
 } from "/server/util/misc";

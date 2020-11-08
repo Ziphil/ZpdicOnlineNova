@@ -1,6 +1,9 @@
 //
 
 import {
+  CustomError
+} from "/client/skeleton/error";
+import {
   Controller,
   GetRequest,
   GetResponse,
@@ -25,9 +28,6 @@ import {
   HistoryCreator,
   HistoryModel
 } from "/server/model/history";
-import {
-  CustomError
-} from "/server/skeleton/error";
 import {
   CastUtil
 } from "/server/util/cast";

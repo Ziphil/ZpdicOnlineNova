@@ -18,19 +18,19 @@ import {
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
-  debounce
-} from "/client/util/decorator";
-import {
-  WithSize
-} from "/server/controller/interface/type";
-import {
   DetailedDictionary,
   Dictionary,
   NormalSearchParameter,
   SearchParameter,
   Suggestion,
   Word
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
+import {
+  debounce
+} from "/client/util/decorator";
+import {
+  WithSize
+} from "/server/controller/interface/type";
 
 
 @style(require("./dictionary-page.scss"))

@@ -20,16 +20,16 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  deleteAt
-} from "/client/util/misc";
-import {
   ADVANCED_SEARCH_MODES,
   AdvancedSearchParameter,
   AdvancedSearchParameterElement,
   Dictionary,
   SEARCH_TYPES,
   SearchParameter
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
+import {
+  deleteAt
+} from "/client/util/misc";
 
 
 @style(require("./advanced-search-form.scss"))

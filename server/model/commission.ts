@@ -8,6 +8,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  Commission as CommissionSkeleton
+} from "/client/skeleton/commission";
+import {
   WithSize
 } from "/server/controller/interface/type";
 import {
@@ -17,9 +20,6 @@ import {
 import {
   CustomError
 } from "/server/model/error";
-import {
-  Commission as CommissionSkeleton
-} from "/server/skeleton/commission";
 import {
   QueryRange
 } from "/server/util/query";

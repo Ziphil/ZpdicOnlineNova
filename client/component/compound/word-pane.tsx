@@ -22,7 +22,7 @@ import {
   EditWord,
   Relation,
   Word
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./word-pane.scss"))

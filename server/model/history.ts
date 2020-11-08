@@ -8,13 +8,13 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  History as HistorySkeleton
+} from "/client/skeleton/history";
+import {
   Dictionary,
   DictionaryModel,
   DictionarySchema
 } from "/server/model/dictionary";
-import {
-  History as HistorySkeleton
-} from "/server/skeleton/history";
 import {
   LogUtil
 } from "/server/util/log";

@@ -12,6 +12,10 @@ import {
 } from "bcrypt";
 import Fuse from "fuse.js";
 import {
+  DetailedUser as DetailedUserSkeleton,
+  User as UserSkeleton
+} from "/client/skeleton/user";
+import {
   DictionaryModel
 } from "/server/model/dictionary";
 import {
@@ -26,10 +30,6 @@ import {
   IDENTIFIER_REGEXP,
   validatePassword
 } from "/server/model/validation";
-import {
-  DetailedUser as DetailedUserSkeleton,
-  User as UserSkeleton
-} from "/server/skeleton/user";
 import {
   createRandomString
 } from "/server/util/misc";

@@ -7,11 +7,11 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  Notification as NotificationSkeleton
+} from "/client/skeleton/notification";
+import {
   WithSize
 } from "/server/controller/interface/type";
-import {
-  Notification as NotificationSkeleton
-} from "/server/skeleton/notification";
 import {
   QueryRange
 } from "/server/util/query";

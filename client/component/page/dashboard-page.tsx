@@ -20,10 +20,10 @@ import DeleteUserForm from "/client/component/form/delete-user-form";
 import Page from "/client/component/page/page";
 import {
   UserDictionary
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 import {
   Invitation
-} from "/server/skeleton/invitation";
+} from "/client/skeleton/invitation";
 
 
 @style(require("./dashboard-page.scss"))
