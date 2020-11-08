@@ -253,6 +253,7 @@ advancedSearchForm:
   part: "Part"
   exact: "Exact"
   regular: "Regexp"
+  confirm: "Confirm"
 akrantiainExecutor:
   title: "Akrantiain {version}"
   source: "Snoj data"
