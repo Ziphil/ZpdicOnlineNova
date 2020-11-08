@@ -17,10 +17,10 @@ export {
   SearchTypeUtil
 } from "/client/skeleton/dictionary";
 import {
-  AdvancedSearchParameter,
-  AdvancedSearchParameterElement,
+  AdvancedWordParameter,
+  AdvancedWordParameterElement,
   Dictionary,
-  NormalSearchParameter,
+  NormalWordParameter,
   SearchMode,
   SearchType,
   Word
@@ -30,7 +30,7 @@ import {
 } from "/server/util/misc";
 
 
-export abstract class SearchParameter {
+export abstract class WordParameter {
 
   public abstract createQuery(dictionary: Dictionary): Query<Array<Word>>;
 
@@ -78,15 +78,15 @@ export abstract class SearchParameter {
 
 export class SearchParameterCreator {
 
-  public static restore(skeleton: SearchParameterSkeleton): SearchParameter {
+  public static restore(skeleton: SearchParameterSkeleton): WordParameter {
     if ("elements" in skeleton) {
       let castSkeleton = skeleton as AdvancedSearchParameterSkeleton;
-      let elements = castSkeleton.elements.map((element) => new AdvancedSearchParameterElement(element.search, element.title, element.mode, element.type));
-      let raw = new AdvancedSearchParameter(elements);
+      let elements = castSkeleton.elements.map((element) => new AdvancedWordParameterElement(element.search, element.title, element.mode, element.type));
+      let raw = new AdvancedWordParameter(elements);
       return raw;
     } else {
       let castSkeleton = skeleton as NormalSearchParameterSkeleton;
-      let raw = new NormalSearchParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type);
+      let raw = new NormalWordParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type);
       return raw;
     }
   }

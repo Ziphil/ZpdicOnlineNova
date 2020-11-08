@@ -31,11 +31,11 @@ import {
   DictionarySettings,
   DictionarySettingsCreator,
   DictionarySettingsModel,
-  SearchParameter,
   Serializer,
   Suggestion,
   Word,
-  WordModel
+  WordModel,
+  WordParameter
 } from "/server/model/dictionary";
 import {
   DictionarySettingsSchema
@@ -360,7 +360,7 @@ export class DictionarySchema {
   }
 
   // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
-  public async search(this: Dictionary, parameter: SearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
+  public async search(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     let query = parameter.createQuery(this).sort("name");
     let suggestionAggregate = parameter.createSuggestionAggregate(this);
     let hitSuggestionPromise = suggestionAggregate?.then((suggestions) => {

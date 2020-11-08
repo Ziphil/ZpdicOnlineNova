@@ -12,15 +12,15 @@ import {
   WordModel
 } from "/server/model/dictionary";
 import {
-  SearchParameter
-} from "/server/model/dictionary/search-parameter/search-parameter";
+  WordParameter
+} from "/server/model/dictionary/word-parameter/word-parameter";
 
 
-export class AdvancedSearchParameter extends SearchParameter {
+export class AdvancedWordParameter extends WordParameter {
 
-  public elements: Array<AdvancedSearchParameterElement>;
+  public elements: Array<AdvancedWordParameterElement>;
 
-  public constructor(elements: Array<AdvancedSearchParameterElement>) {
+  public constructor(elements: Array<AdvancedWordParameterElement>) {
     super();
     this.elements = elements;
   }
@@ -38,7 +38,7 @@ export class AdvancedSearchParameter extends SearchParameter {
 }
 
 
-export class AdvancedSearchParameterElement extends SearchParameter {
+export class AdvancedWordParameterElement extends WordParameter {
 
   public search!: string;
   public title!: string;
@@ -54,8 +54,8 @@ export class AdvancedSearchParameterElement extends SearchParameter {
   }
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>> {
-    let keys = SearchParameter.createKeys(this.mode);
-    let needle = SearchParameter.createNeedle(this.search, this.type);
+    let keys = WordParameter.createKeys(this.mode);
+    let needle = WordParameter.createNeedle(this.search, this.type);
     let eachFilters = keys.map((key) => {
       let eachQuery = WordModel.find().where(key, needle);
       if (this.title && (this.mode === "equivalent" || this.mode === "information")) {
