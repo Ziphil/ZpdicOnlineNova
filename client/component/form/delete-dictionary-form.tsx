@@ -22,7 +22,7 @@ export default class DeleteDictionaryForm extends Component<Props, State> {
 
   private async deleteDictionary(): Promise<void> {
     let number = this.props.number;
-    let response = await this.requestPost("deleteDictionary", {number});
+    let response = await this.request("deleteDictionary", {number});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("dictionaryDeleted");
       if (this.props.onSubmit) {

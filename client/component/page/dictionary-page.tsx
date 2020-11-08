@@ -81,7 +81,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
         return [undefined, value] as const;
       }
     })();
-    let response = await this.requestGet("fetchDictionary", {number, paramName});
+    let response = await this.request("fetchDictionary", {number, paramName});
     if (response.status === 200 && !("error" in response.data)) {
       let dictionary = DetailedDictionary.of(response.data);
       this.setState({dictionary});
@@ -95,7 +95,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     let ownPromise = new Promise(async (resolve, reject) => {
       if (number !== undefined) {
         let authority = "own" as const;
-        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
+        let response = await this.request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
         if (response.status === 200) {
           this.setState({canOwn: true}, resolve);
         }
@@ -104,7 +104,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     let editPromise = new Promise(async (resolve, reject) => {
       if (number !== undefined) {
         let authority = "edit" as const;
-        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
+        let response = await this.request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
         if (response.status === 200) {
           this.setState({canEdit: true}, resolve);
         }
@@ -121,7 +121,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
       let offset = page * 40;
       let size = 40;
       this.setState({loading: true});
-      let response = await this.requestPost("searchDictionary", {number, parameter, offset, size});
+      let response = await this.request("searchDictionary", {number, parameter, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
         let hitResult = response.data;
         let showExplanation = false;

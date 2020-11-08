@@ -44,7 +44,7 @@ export default class RegisterForm extends Component<Props, State> {
     let name = this.state.name;
     let email = this.state.email;
     let password = this.state.password;
-    let response = await this.requestPost("registerUser", {name, email, password}, {useRecaptcha: true});
+    let response = await this.request("registerUser", {name, email, password}, {useRecaptcha: true});
     let body = response.data;
     if (response.status === 200) {
       let loginResponse = await this.login({name, password});

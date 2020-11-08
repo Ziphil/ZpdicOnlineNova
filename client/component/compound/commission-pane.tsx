@@ -37,7 +37,7 @@ export default class CommissionPane extends Component<Props, State> {
   private async deleteCommission(event: MouseEvent<HTMLButtonElement>, showPopup?: boolean): Promise<void> {
     let number = this.props.dictionary.number;
     let id = this.props.commission.id;
-    let response = await this.requestPost("deleteCommission", {number, id});
+    let response = await this.request("deleteCommission", {number, id});
     if (response.status === 200) {
       if (showPopup) {
         this.props.store!.addInformationPopup("commissionDeleted");

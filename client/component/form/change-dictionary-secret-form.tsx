@@ -25,7 +25,7 @@ export default class ChangeDictionarySecretForm extends Component<Props, State> 
   private async handleClick(): Promise<void> {
     let number = this.props.number;
     let secret = this.state.secret;
-    let response = await this.requestPost("changeDictionarySecret", {number, secret});
+    let response = await this.request("changeDictionarySecret", {number, secret});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("dictionarySecretChanged");
       if (this.props.onSubmit) {

@@ -21,7 +21,7 @@ export default class DeleteUserForm extends Component<Props, State> {
   };
 
   private async deleteUser(): Promise<void> {
-    let response = await this.requestPost("deleteUser", {});
+    let response = await this.request("deleteUser", {});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("userDeleted");
       await this.logout();

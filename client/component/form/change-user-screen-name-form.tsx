@@ -23,7 +23,7 @@ export default class ChangeUserScreenNameForm extends Component<Props, State> {
 
   private async handleClick(): Promise<void> {
     let screenName = this.state.screenName;
-    let response = await this.requestPost("changeUserScreenName", {screenName});
+    let response = await this.request("changeUserScreenName", {screenName});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("userScreenNameChanged");
       if (this.props.onSubmit) {

@@ -59,7 +59,7 @@ export default class WordSearcher extends Component<Props, State> {
       let offset = page * 40;
       let size = 40;
       this.setState({loading: true});
-      let response = await this.requestPost("searchDictionary", {number, parameter, offset, size});
+      let response = await this.request("searchDictionary", {number, parameter, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
         let hitResult = response.data;
         this.setState({hitResult, loading: true});

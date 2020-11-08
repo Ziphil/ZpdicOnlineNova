@@ -22,7 +22,7 @@ import {
 export default class NotificationList extends Component<Props, State> {
 
   private async provideNotifications(offset?: number, size?: number): Promise<WithSize<Notification>> {
-    let response = await this.requestGet("fetchNotifications", {offset, size});
+    let response = await this.request("fetchNotifications", {offset, size});
     if (response.status === 200) {
       let hitResult = response.data;
       return hitResult;

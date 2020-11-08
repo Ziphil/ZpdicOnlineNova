@@ -29,7 +29,7 @@ export default class ChangeDictionarySettingsForm<N extends keyof DictionarySett
     let propertyName = this.props.propertyName;
     let number = this.props.number;
     let settings = {[propertyName]: this.state.value};
-    let response = await this.requestPost("changeDictionarySettings", {number, settings});
+    let response = await this.request("changeDictionarySettings", {number, settings});
     if (response.status === 200) {
       this.props.store!.addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
       if (this.props.onSubmit) {

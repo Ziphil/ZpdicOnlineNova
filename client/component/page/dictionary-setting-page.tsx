@@ -51,7 +51,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
 
   private async fetchDictionary(): Promise<void> {
     let number = +this.props.match!.params.number;
-    let response = await this.requestGet("fetchDictionary", {number});
+    let response = await this.request("fetchDictionary", {number});
     if (response.status === 200 && !("error" in response.data)) {
       let dictionary = DetailedDictionary.of(response.data);
       this.setState({dictionary});
@@ -63,7 +63,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
   private async fetchCommissionCount(): Promise<void> {
     let number = +this.props.match!.params.number;
     let size = 1;
-    let response = await this.requestGet("fetchCommissions", {number, size});
+    let response = await this.request("fetchCommissions", {number, size});
     if (response.status === 200 && !("error" in response.data)) {
       let commissionCount = response.data[1];
       this.setState({commissionCount});
@@ -74,7 +74,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
 
   private async provideCommissions(offset?: number, size?: number): Promise<WithSize<Commission>> {
     let number = +this.props.match!.params.number;
-    let response = await this.requestGet("fetchCommissions", {number, offset, size});
+    let response = await this.request("fetchCommissions", {number, offset, size});
     if (response.status === 200 && !("error" in response.data)) {
       let hitResult = response.data;
       return hitResult;
@@ -86,7 +86,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
   private async checkAuthorization(): Promise<void> {
     let number = +this.props.match!.params.number;
     let authority = "own" as const;
-    let response = await this.requestGet("checkDictionaryAuthorization", {number, authority});
+    let response = await this.request("checkDictionaryAuthorization", {number, authority});
     if (response.status === 200) {
       this.setState({authorized: true});
     }

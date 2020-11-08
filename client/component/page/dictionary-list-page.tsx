@@ -28,7 +28,7 @@ export default class DictionaryListPage extends Component<Props, State> {
 
   private async provideDictionaries(offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
     let order = this.state.order;
-    let response = await this.requestGet("fetchAllDictionaries", {order, offset, size});
+    let response = await this.request("fetchAllDictionaries", {order, offset, size});
     if (response.status === 200) {
       let hitResult = response.data;
       return hitResult;

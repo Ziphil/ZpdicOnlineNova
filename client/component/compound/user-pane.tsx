@@ -35,7 +35,7 @@ export default class UserPane extends Component<Props, State> {
     if (this.props.dictionary !== undefined) {
       let number = this.props.dictionary.number;
       let id = this.props.user.id;
-      let response = await this.requestPost("deleteDictionaryAuthorizedUser", {number, id});
+      let response = await this.request("deleteDictionaryAuthorizedUser", {number, id});
       if (response.status === 200) {
         this.props.store!.addInformationPopup("dictionaryAuthorizedUserDeleted");
         if (this.props.onSubmit) {

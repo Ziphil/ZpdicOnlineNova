@@ -39,7 +39,7 @@ export default class AddEditInvitationForm extends Component<Props, State> {
   private async fetchAuthorizedUsers(): Promise<void> {
     let number = this.props.dictionary.number;
     let authority = "editOnly";
-    let response = await this.requestGet("fetchDictionaryAuthorizedUsers", {number, authority});
+    let response = await this.request("fetchDictionaryAuthorizedUsers", {number, authority});
     if (response.status === 200 && !("error" in response.data)) {
       let authorizedUsers = response.data;
       this.setState({authorizedUsers});
@@ -49,7 +49,7 @@ export default class AddEditInvitationForm extends Component<Props, State> {
   }
 
   private async suggestUsers(pattern: string): Promise<Array<SuggestionSpec<string>>> {
-    let response = await this.requestGet("suggestUsers", {pattern}, {ignoreError: true});
+    let response = await this.request("suggestUsers", {pattern}, {ignoreError: true});
     if (response.status === 200 && !("error" in response.data)) {
       let users = response.data;
       let suggestions = users.map((user) => {
@@ -67,7 +67,7 @@ export default class AddEditInvitationForm extends Component<Props, State> {
     let number = this.props.number;
     let userName = this.state.userName;
     let type = "edit";
-    let response = await this.requestPost("addInvitation", {number, type, userName});
+    let response = await this.request("addInvitation", {number, type, userName});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("editInvitationAdded");
       if (this.props.onSubmit) {

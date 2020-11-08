@@ -68,7 +68,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
     let outerThis = this;
     let number = this.props.dictionary.number;
     let suggest = async function (pattern: string): Promise<Array<SuggestionSpec<string>>> {
-      let response = await outerThis.requestGet("suggestDictionaryTitles", {number, propertyName, pattern}, {ignoreError: true});
+      let response = await outerThis.request("suggestDictionaryTitles", {number, propertyName, pattern}, {ignoreError: true});
       if (response.status === 200 && !("error" in response.data)) {
         let titles = response.data;
         let suggestions = titles.map((title) => ({replacement: title, node: title}));

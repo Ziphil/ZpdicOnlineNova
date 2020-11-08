@@ -24,7 +24,7 @@ export default class ChangeDictionaryExplanationForm extends Component<Props, St
   private async handleClick(): Promise<void> {
     let number = this.props.number;
     let explanation = this.state.explanation;
-    let response = await this.requestPost("changeDictionaryExplanation", {number, explanation});
+    let response = await this.request("changeDictionaryExplanation", {number, explanation});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("dictionaryExplanationChanged");
       if (this.props.onSubmit) {

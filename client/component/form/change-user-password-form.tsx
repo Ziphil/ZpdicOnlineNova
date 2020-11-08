@@ -30,7 +30,7 @@ export default class ChangeUserPasswordForm extends Component<Props, State> {
 
   private async handleClick(): Promise<void> {
     let password = this.state.password;
-    let response = await this.requestPost("changeUserPassword", {password});
+    let response = await this.request("changeUserPassword", {password});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("userPasswordChanged");
       if (this.props.onSubmit) {

@@ -23,7 +23,7 @@ export default class UploadDictionaryForm extends Component<Props, State> {
     let number = this.props.number;
     let file = this.state.file;
     if (file) {
-      let response = await this.requestPostFile("uploadDictionary", {number, file});
+      let response = await this.requestFile("uploadDictionary", {number, file});
       if (response.status === 200) {
         this.props.store!.addInformationPopup("dictionaryUploaded");
         if (this.props.onSubmit) {
