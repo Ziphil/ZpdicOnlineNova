@@ -24,7 +24,7 @@ export class MailUtil {
 
   public static getText(type: string, values?: Record<string, string>): string {
     let intl = INTLS[0];
-    let text = intl.formatMessage({id: `mail.${type}.subject`}, values);
+    let text = intl.formatMessage({id: `mail.${type}.text`}, values);
     let footer = intl.formatMessage({id: "mail.footer"});
     let wholeText = text + "\n" + footer;
     return wholeText;
