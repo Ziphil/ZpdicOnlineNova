@@ -68,7 +68,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
       let typeLabel = (index === 0) ? this.trans("advancedSearchForm.type") : undefined;
       let titleLabel = (index === 0) ? this.trans("advancedSearchForm.title") : undefined;
       let searchLabel = (index === 0) ? this.trans("advancedSearchForm.search") : undefined;
-      let titleDisabled = element.mode === "name" || element.mode === "tag";
+      let titleDisabled = element.mode !== "equivalent" && element.mode !== "information";
       let searchNode = (
         <div styleName="inner" key={index}>
           <div styleName="form left">

@@ -12,9 +12,6 @@ import {
   Word,
   WordModel
 } from "/server/model/dictionary";
-import {
-  escapeRegexp
-} from "/server/util/misc";
 
 
 export class NormalSearchParameter extends SearchParameter {
@@ -31,10 +28,10 @@ export class NormalSearchParameter extends SearchParameter {
   }
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>> {
-    let keys = this.createKeys();
-    let needle = this.createNeedle();
-    let disjunctQueries = keys.map((key) => WordModel.find().where(key, needle).getFilter());
-    let query = WordModel.find().where("dictionary", dictionary).or(disjunctQueries);
+    let keys = SearchParameter.createKeys(this.mode);
+    let needle = SearchParameter.createNeedle(this.search, this.type);
+    let disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
+    let query = WordModel.find().where("dictionary", dictionary).or(disjunctFilters);
     return query;
   }
 
@@ -42,7 +39,7 @@ export class NormalSearchParameter extends SearchParameter {
     let mode = this.mode;
     let type = this.type;
     if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {
-      let needle = this.createNeedle("exact");
+      let needle = SearchParameter.createNeedle(this.search, "exact");
       let aggregate = WordModel.aggregate();
       aggregate = aggregate.match(WordModel.where("dictionary", dictionary["_id"]).where("variations.name", needle).getFilter());
       aggregate = aggregate.addFields({oldVariations: "$variations"});
@@ -52,44 +49,6 @@ export class NormalSearchParameter extends SearchParameter {
       return aggregate;
     } else {
       return null;
-    }
-  }
-
-  private createKeys(): Array<string> {
-    let mode = this.mode;
-    if (mode === "name") {
-      return ["name"];
-    } else if (mode === "equivalent") {
-      return ["equivalents.names"];
-    } else if (mode === "both") {
-      return ["name", "equivalents.names"];
-    } else if (mode === "tag") {
-      return ["tags"];
-    } else if (mode === "information") {
-      return ["informations.text"];
-    } else {
-      return ["name", "equivalents.names", "informations.text"];
-    }
-  }
-
-  private createNeedle(overriddenType?: SearchType): string | RegExp {
-    let search = this.search;
-    let escapedSearch = escapeRegexp(this.search);
-    let type = overriddenType ?? this.type;
-    if (type === "exact") {
-      return search;
-    } else if (type === "prefix") {
-      return new RegExp("^" + escapedSearch);
-    } else if (type === "suffix") {
-      return new RegExp(escapedSearch + "$");
-    } else if (type === "part") {
-      return new RegExp(escapedSearch);
-    } else {
-      try {
-        return new RegExp(search);
-      } catch (error) {
-        return "";
-      }
     }
   }
 
