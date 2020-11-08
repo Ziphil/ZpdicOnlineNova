@@ -9,9 +9,11 @@ import {
   Word,
   WordMode,
   WordModel,
-  WordParameter,
   WordType
 } from "/server/model/dictionary";
+import {
+  WordParameter
+} from "/server/model/dictionary/word-parameter/word-parameter";
 
 
 export class NormalWordParameter extends WordParameter {

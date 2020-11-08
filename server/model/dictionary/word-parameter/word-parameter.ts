@@ -9,22 +9,17 @@ import {
   NormalWordParameter as NormalWordParameterSkeleton,
   WordParameter as WordParameterSkeleton
 } from "/client/skeleton/dictionary";
-export {
-  AdvancedWordMode as AdvancedWordMode,
-  WordMode as WordMode,
-  WordModeUtil as WordModeUtil,
-  WordType as WordType,
-  WordTypeUtil as WordTypeUtil
-} from "/client/skeleton/dictionary";
 import {
   AdvancedWordParameter,
   AdvancedWordParameterElement,
   Dictionary,
   NormalWordParameter,
-  Word,
-  WordMode,
-  WordType
+  Word
 } from "/server/model/dictionary";
+import {
+  LiteralType,
+  LiteralUtilType
+} from "/server/util/literal-type";
 import {
   escapeRegexp
 } from "/server/util/misc";
@@ -92,3 +87,12 @@ export class SearchParameterCreator {
   }
 
 }
+
+
+export const WORD_MODES = ["name", "equivalent", "both", "tag", "information", "content"] as const;
+export type WordMode = LiteralType<typeof WORD_MODES>;
+export let WordModeUtil = LiteralUtilType.create(WORD_MODES);
+
+export const WORD_TYPES = ["exact", "prefix", "suffix", "part", "regular"] as const;
+export type WordType = LiteralType<typeof WORD_TYPES>;
+export let WordTypeUtil = LiteralUtilType.create(WORD_TYPES);

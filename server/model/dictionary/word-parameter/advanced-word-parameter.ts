@@ -5,13 +5,14 @@ import {
   Query
 } from "mongoose";
 import {
-  AdvancedWordMode,
   Dictionary,
   Word,
+  WordMode,
   WordModel,
   WordType
 } from "/server/model/dictionary";
 import {
+  WORD_MODES,
   WordParameter
 } from "/server/model/dictionary/word-parameter/word-parameter";
 
@@ -73,3 +74,7 @@ export class AdvancedWordParameterElement extends WordParameter {
   }
 
 }
+
+
+export const ADVANCED_WORD_MODES = WORD_MODES.filter((mode) => mode !== "both") as Array<AdvancedWordMode>;
+export type AdvancedWordMode = Exclude<WordMode, "both">;
