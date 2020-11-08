@@ -16,9 +16,9 @@ import {
 import {
   Dictionary,
   NormalWordParameter,
-  SearchMode,
-  SearchType,
-  WordParameter
+  WordMode,
+  WordParameter,
+  WordType
 } from "/client/skeleton/dictionary";
 
 
@@ -51,7 +51,7 @@ export default class SearchForm extends Component<Props, State> {
     }
   }
 
-  private handleModeSet(mode: SearchMode): void {
+  private handleModeSet(mode: WordMode): void {
     if (this.props.onParameterSet) {
       let oldParameter = this.getNormalSearchParameter();
       let search = oldParameter.search;
@@ -61,7 +61,7 @@ export default class SearchForm extends Component<Props, State> {
     }
   }
 
-  private handleTypeSet(type: SearchType): void {
+  private handleTypeSet(type: WordType): void {
     if (this.props.onParameterSet) {
       let oldParameter = this.getNormalSearchParameter();
       let search = oldParameter.search;

@@ -2,10 +2,10 @@
 
 import * as queryParser from "query-string";
 import {
-  SearchMode,
-  SearchModeUtil,
-  SearchType,
-  SearchTypeUtil
+  WordMode,
+  WordModeUtil,
+  WordType,
+  WordTypeUtil
 } from "/client/skeleton/dictionary";
 import {
   WordParameter
@@ -15,8 +15,8 @@ import {
 export class NormalWordParameter extends WordParameter {
 
   public search!: string;
-  public mode!: SearchMode;
-  public type!: SearchType;
+  public mode!: WordMode;
+  public type!: WordType;
 
   public static createEmpty(overriddenObject: Partial<NormalWordParameter> = {}): NormalWordParameter {
     let search = overriddenObject.search ?? "";
@@ -28,8 +28,8 @@ export class NormalWordParameter extends WordParameter {
 
   public static deserializeEach(query: Record<string, unknown>): NormalWordParameter {
     let search = (typeof query.search === "string") ? query.search : undefined;
-    let mode = (typeof query.mode === "string") ? SearchModeUtil.cast(query.mode) : undefined;
-    let type = (typeof query.type === "string") ? SearchTypeUtil.cast(query.type) : undefined;
+    let mode = (typeof query.mode === "string") ? WordModeUtil.cast(query.mode) : undefined;
+    let type = (typeof query.type === "string") ? WordTypeUtil.cast(query.type) : undefined;
     let parameter = NormalWordParameter.createEmpty({search, mode, type});
     return parameter;
   }

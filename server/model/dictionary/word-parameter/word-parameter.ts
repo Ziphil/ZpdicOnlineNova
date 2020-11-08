@@ -5,25 +5,25 @@ import {
   Query
 } from "mongoose";
 import {
-  AdvancedWordParameter as AdvancedSearchParameterSkeleton,
-  NormalWordParameter as NormalSearchParameterSkeleton,
-  WordParameter as SearchParameterSkeleton
+  AdvancedWordParameter as AdvancedWordParameterSkeleton,
+  NormalWordParameter as NormalWordParameterSkeleton,
+  WordParameter as WordParameterSkeleton
 } from "/client/skeleton/dictionary";
 export {
-  AdvancedSearchMode,
-  SearchMode,
-  SearchModeUtil,
-  SearchType,
-  SearchTypeUtil
+  AdvancedWordMode as AdvancedWordMode,
+  WordMode as WordMode,
+  WordModeUtil as WordModeUtil,
+  WordType as WordType,
+  WordTypeUtil as WordTypeUtil
 } from "/client/skeleton/dictionary";
 import {
   AdvancedWordParameter,
   AdvancedWordParameterElement,
   Dictionary,
   NormalWordParameter,
-  SearchMode,
-  SearchType,
-  Word
+  Word,
+  WordMode,
+  WordType
 } from "/server/model/dictionary";
 import {
   escapeRegexp
@@ -38,7 +38,7 @@ export abstract class WordParameter {
   // 何もサジェストする必要がない場合は null を返します。
   public abstract createSuggestionAggregate(dictionary: Dictionary): Aggregate<Array<{title: string, word: Word}>> | null;
 
-  protected static createKeys(mode: SearchMode): Array<string> {
+  protected static createKeys(mode: WordMode): Array<string> {
     if (mode === "name") {
       return ["name"];
     } else if (mode === "equivalent") {
@@ -54,7 +54,7 @@ export abstract class WordParameter {
     }
   }
 
-  protected static createNeedle(search: string, type: SearchType): string | RegExp {
+  protected static createNeedle(search: string, type: WordType): string | RegExp {
     let escapedSearch = escapeRegexp(search);
     if (type === "exact") {
       return search;
@@ -78,14 +78,14 @@ export abstract class WordParameter {
 
 export class SearchParameterCreator {
 
-  public static restore(skeleton: SearchParameterSkeleton): WordParameter {
+  public static restore(skeleton: WordParameterSkeleton): WordParameter {
     if ("elements" in skeleton) {
-      let castSkeleton = skeleton as AdvancedSearchParameterSkeleton;
+      let castSkeleton = skeleton as AdvancedWordParameterSkeleton;
       let elements = castSkeleton.elements.map((element) => new AdvancedWordParameterElement(element.search, element.title, element.mode, element.type));
       let raw = new AdvancedWordParameter(elements);
       return raw;
     } else {
-      let castSkeleton = skeleton as NormalSearchParameterSkeleton;
+      let castSkeleton = skeleton as NormalWordParameterSkeleton;
       let raw = new NormalWordParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type);
       return raw;
     }

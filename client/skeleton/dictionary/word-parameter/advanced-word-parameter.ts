@@ -2,11 +2,11 @@
 
 import rison from "rison";
 import {
-  SearchMode,
-  SearchType
+  WordMode,
+  WordType
 } from "/client/skeleton/dictionary";
 import {
-  SEARCH_MODES,
+  WORD_MODES,
   WordParameter
 } from "/client/skeleton/dictionary/word-parameter/word-parameter";
 import {
@@ -46,8 +46,8 @@ export class AdvancedWordParameterElement extends Skeleton {
 
   public search!: string;
   public title!: string;
-  public mode!: AdvancedSearchMode;
-  public type!: SearchType;
+  public mode!: AdvancedWordMode;
+  public type!: WordType;
 
   public static createEmpty(): AdvancedWordParameterElement {
     let search = "";
@@ -61,5 +61,5 @@ export class AdvancedWordParameterElement extends Skeleton {
 }
 
 
-export const ADVANCED_SEARCH_MODES = SEARCH_MODES.filter((mode) => mode !== "both") as Array<AdvancedSearchMode>;
-export type AdvancedSearchMode = Exclude<SearchMode, "both">;
+export const ADVANCED_WORD_MODES = WORD_MODES.filter((mode) => mode !== "both") as Array<AdvancedWordMode>;
+export type AdvancedWordMode = Exclude<WordMode, "both">;

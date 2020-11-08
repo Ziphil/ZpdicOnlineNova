@@ -20,11 +20,11 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  ADVANCED_SEARCH_MODES,
+  ADVANCED_WORD_MODES,
   AdvancedWordParameter,
   AdvancedWordParameterElement,
   Dictionary,
-  SEARCH_TYPES,
+  WORD_TYPES,
   WordParameter
 } from "/client/skeleton/dictionary";
 import {
@@ -93,8 +93,8 @@ export default class AdvancedSearchForm extends Component<Props, State> {
   public render(): ReactNode {
     let styles = this.props.styles!;
     let elements = this.state.parameter.elements;
-    let modeSpecs = ADVANCED_SEARCH_MODES.map((mode) => ({value: mode, text: this.trans(`advancedSearchForm.${mode}`)}));
-    let typeSpecs = SEARCH_TYPES.map((type) => ({value: type, text: this.trans(`advancedSearchForm.${type}`)}));
+    let modeSpecs = ADVANCED_WORD_MODES.map((mode) => ({value: mode, text: this.trans(`advancedSearchForm.${mode}`)}));
+    let typeSpecs = WORD_TYPES.map((type) => ({value: type, text: this.trans(`advancedSearchForm.${type}`)}));
     let searchNodes = elements.map((element, index) => {
       let modeLabel = (index === 0) ? this.trans("advancedSearchForm.mode") : undefined;
       let typeLabel = (index === 0) ? this.trans("advancedSearchForm.type") : undefined;

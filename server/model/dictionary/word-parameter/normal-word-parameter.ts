@@ -6,21 +6,21 @@ import {
 } from "mongoose";
 import {
   Dictionary,
-  SearchMode,
-  SearchType,
   Word,
+  WordMode,
   WordModel,
-  WordParameter
+  WordParameter,
+  WordType
 } from "/server/model/dictionary";
 
 
 export class NormalWordParameter extends WordParameter {
 
   public search: string;
-  public mode: SearchMode;
-  public type: SearchType;
+  public mode: WordMode;
+  public type: WordType;
 
-  public constructor(search: string, mode: SearchMode, type: SearchType) {
+  public constructor(search: string, mode: WordMode, type: WordType) {
     super();
     this.search = search;
     this.mode = mode;

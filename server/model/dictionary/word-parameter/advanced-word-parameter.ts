@@ -5,11 +5,11 @@ import {
   Query
 } from "mongoose";
 import {
-  AdvancedSearchMode,
+  AdvancedWordMode,
   Dictionary,
-  SearchType,
   Word,
-  WordModel
+  WordModel,
+  WordType
 } from "/server/model/dictionary";
 import {
   WordParameter
@@ -42,10 +42,10 @@ export class AdvancedWordParameterElement extends WordParameter {
 
   public search!: string;
   public title!: string;
-  public mode!: AdvancedSearchMode;
-  public type!: SearchType;
+  public mode!: AdvancedWordMode;
+  public type!: WordType;
 
-  public constructor(search: string, title: string, mode: AdvancedSearchMode, type: SearchType) {
+  public constructor(search: string, title: string, mode: AdvancedWordMode, type: WordType) {
     super();
     this.search = search;
     this.title = title;

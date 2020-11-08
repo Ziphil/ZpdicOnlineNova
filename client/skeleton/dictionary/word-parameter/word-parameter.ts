@@ -30,10 +30,10 @@ export abstract class WordParameter extends Skeleton {
 }
 
 
-export const SEARCH_MODES = ["name", "equivalent", "both", "tag", "information", "content"] as const;
-export type SearchMode = LiteralType<typeof SEARCH_MODES>;
-export let SearchModeUtil = LiteralUtilType.create(SEARCH_MODES);
+export const WORD_MODES = ["name", "equivalent", "both", "tag", "information", "content"] as const;
+export type WordMode = LiteralType<typeof WORD_MODES>;
+export let WordModeUtil = LiteralUtilType.create(WORD_MODES);
 
-export const SEARCH_TYPES = ["exact", "prefix", "suffix", "part", "regular"] as const;
-export type SearchType = LiteralType<typeof SEARCH_TYPES>;
-export let SearchTypeUtil = LiteralUtilType.create(SEARCH_TYPES);
+export const WORD_TYPES = ["exact", "prefix", "suffix", "part", "regular"] as const;
+export type WordType = LiteralType<typeof WORD_TYPES>;
+export let WordTypeUtil = LiteralUtilType.create(WORD_TYPES);
