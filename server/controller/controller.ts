@@ -37,16 +37,16 @@ export class Controller {
   protected setup(): void {
   }
 
-  protected static respond<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, 200>): void {
+  protected static respond<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, "success">): void {
     response.json(body).end();
   }
 
   // ステータスコード 400 でレスポンスボディを送ります。
   // 第 3 引数の error が指定された場合のみ、body として undefined を渡すのが許されます。
   // この場合は、body が undefined ならば error を例外として投げ、そうでないならば通常通り body をレスポンスとして送ります。
-  protected static respondError<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, 400>): void;
-  protected static respondError<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, 400> | undefined, error: any): void;
-  protected static respondError<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, 400> | undefined, error?: any): void {
+  protected static respondError<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, "error">): void;
+  protected static respondError<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, "error"> | undefined, error: any): void;
+  protected static respondError<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, "error"> | undefined, error?: any): void {
     if (body !== undefined) {
       response.status(400).json(body).end();
     } else if (error !== undefined) {
