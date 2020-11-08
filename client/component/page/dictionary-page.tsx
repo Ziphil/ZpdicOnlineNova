@@ -20,10 +20,10 @@ import Page from "/client/component/page/page";
 import {
   DetailedDictionary,
   Dictionary,
-  NormalSearchParameter,
-  SearchParameter,
+  NormalWordParameter,
   Suggestion,
-  Word
+  Word,
+  WordParameter
 } from "/client/skeleton/dictionary";
 import {
   debounce
@@ -40,7 +40,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     dictionary: null,
     canOwn: false,
     canEdit: false,
-    parameter: NormalSearchParameter.createEmpty(),
+    parameter: NormalWordParameter.createEmpty(),
     page: 0,
     showExplanation: true,
     hitResult: {words: [[], 0], suggestions: []},
@@ -143,7 +143,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
   private deserializeQuery(first: boolean, callback?: () => void): void {
     let queryString = this.props.location!.search;
     let query = queryParser.parse(queryString);
-    let parameter = SearchParameter.deserialize(queryString);
+    let parameter = WordParameter.deserialize(queryString);
     let page = (typeof query.page === "string") ? +query.page : 0;
     let showExplanation = Object.keys(query).length <= 0;
     if (first) {
@@ -161,7 +161,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     this.props.history!.replace({search: queryString});
   }
 
-  private async handleParameterSet(parameter: SearchParameter): Promise<void> {
+  private async handleParameterSet(parameter: WordParameter): Promise<void> {
     let page = 0;
     this.setState({parameter, page}, async () => {
       await this.updateWords();
@@ -232,7 +232,7 @@ type State = {
   dictionary: Dictionary | null,
   canOwn: boolean,
   canEdit: boolean,
-  parameter: SearchParameter,
+  parameter: WordParameter,
   page: number,
   showExplanation: boolean,
   hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},

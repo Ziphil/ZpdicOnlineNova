@@ -21,11 +21,11 @@ import {
 } from "/client/component/decorator";
 import {
   ADVANCED_SEARCH_MODES,
-  AdvancedSearchParameter,
-  AdvancedSearchParameterElement,
+  AdvancedWordParameter,
+  AdvancedWordParameterElement,
   Dictionary,
   SEARCH_TYPES,
-  SearchParameter
+  WordParameter
 } from "/client/skeleton/dictionary";
 import {
   deleteAt
@@ -37,13 +37,13 @@ export default class AdvancedSearchForm extends Component<Props, State> {
 
   public constructor(props: Props) {
     super(props);
-    let parameter = (props.defaultParameter instanceof AdvancedSearchParameter) ? props.defaultParameter : AdvancedSearchParameter.createEmpty();
+    let parameter = (props.defaultParameter instanceof AdvancedWordParameter) ? props.defaultParameter : AdvancedWordParameter.createEmpty();
     this.state = {parameter};
   }
 
   public componentDidUpdate(previousProps: any): void {
     if (this.props !== previousProps) {
-      let parameter = (this.props.defaultParameter instanceof AdvancedSearchParameter) ? this.props.defaultParameter : AdvancedSearchParameter.createEmpty();
+      let parameter = (this.props.defaultParameter instanceof AdvancedWordParameter) ? this.props.defaultParameter : AdvancedWordParameter.createEmpty();
       this.setState({parameter});
     }
   }
@@ -123,7 +123,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
       <Overlay size="large" title={this.trans("advancedSearchForm.overlayTitle")} open={this.props.open} onClose={this.handleClose.bind(this)}>
         {searchNodes}
         <div styleName="plus">
-          <Button iconLabel="&#xF067;" onClick={this.setParameter(() => elements.push(AdvancedSearchParameterElement.createEmpty()))}/>
+          <Button iconLabel="&#xF067;" onClick={this.setParameter(() => elements.push(AdvancedWordParameterElement.createEmpty()))}/>
         </div>
         <div styleName="confirm-button">
           <Button label={this.trans("advancedSearchForm.confirm")} iconLabel="&#xF00C;" style="information" onClick={this.confirmParameter.bind(this)}/>
@@ -138,11 +138,11 @@ export default class AdvancedSearchForm extends Component<Props, State> {
 
 type Props = {
   dictionary: Dictionary,
-  defaultParameter: SearchParameter,
+  defaultParameter: WordParameter,
   open: boolean
   onClose?: (event: MouseEvent<HTMLElement>) => void,
-  onConfirm?: (parameter: SearchParameter, event: MouseEvent<HTMLButtonElement>) => void
+  onConfirm?: (parameter: WordParameter, event: MouseEvent<HTMLButtonElement>) => void
 };
 type State = {
-  parameter: AdvancedSearchParameter
+  parameter: AdvancedWordParameter
 };

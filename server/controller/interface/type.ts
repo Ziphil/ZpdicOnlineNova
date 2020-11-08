@@ -11,10 +11,10 @@ import {
   Dictionary,
   DictionarySettings,
   EditWord,
-  SearchParameter,
   Suggestion,
   UserDictionary,
-  Word
+  Word,
+  WordParameter
 } from "/client/skeleton/dictionary";
 import {
   CustomError
@@ -234,7 +234,7 @@ type ProcessData = {
   searchDictionary: {
     get: Noop
     post: {
-      request: {number: number, parameter: SearchParameter, offset?: number, size?: number},
+      request: {number: number, parameter: WordParameter, offset?: number, size?: number},
       response: {
         200: {words: WithSize<Word>, suggestions: Array<Suggestion>},
         400: CustomError<"noSuchDictionaryNumber">

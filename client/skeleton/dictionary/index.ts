@@ -1,8 +1,8 @@
 //
 
-export * from "./search-parameter/advanced-search-parameter";
-export * from "./search-parameter/normal-search-parameter";
-export * from "./search-parameter/search-parameter";
+export * from "./word-parameter/advanced-word-parameter";
+export * from "./word-parameter/normal-word-parameter";
+export * from "./word-parameter/word-parameter";
 export * from "./dictionary";
 export * from "./dictionary-settings";
 export * from "./equivalent";

@@ -7,29 +7,29 @@ import {
 } from "/client/skeleton/dictionary";
 import {
   SEARCH_MODES,
-  SearchParameter
-} from "/client/skeleton/dictionary/search-parameter/search-parameter";
+  WordParameter
+} from "/client/skeleton/dictionary/word-parameter/word-parameter";
 import {
   Skeleton
 } from "/client/skeleton/skeleton";
 
 
-export class AdvancedSearchParameter extends SearchParameter {
+export class AdvancedWordParameter extends WordParameter {
 
-  public elements!: Array<AdvancedSearchParameterElement>;
+  public elements!: Array<AdvancedWordParameterElement>;
 
-  public static createEmpty(): AdvancedSearchParameter {
-    let elements = [AdvancedSearchParameterElement.createEmpty()];
-    let skeleton = AdvancedSearchParameter.of({elements});
+  public static createEmpty(): AdvancedWordParameter {
+    let elements = [AdvancedWordParameterElement.createEmpty()];
+    let skeleton = AdvancedWordParameter.of({elements});
     return skeleton;
   }
 
-  public static deserializeEach(query: Record<string, unknown>): AdvancedSearchParameter {
+  public static deserializeEach(query: Record<string, unknown>): AdvancedWordParameter {
     if (typeof query["advanced"] === "string") {
-      let parameter = AdvancedSearchParameter.of(rison.decode(query["advanced"]));
+      let parameter = AdvancedWordParameter.of(rison.decode(query["advanced"]));
       return parameter;
     } else {
-      let parameter = AdvancedSearchParameter.of({elements: []});
+      let parameter = AdvancedWordParameter.of({elements: []});
       return parameter;
     }
   }
@@ -42,19 +42,19 @@ export class AdvancedSearchParameter extends SearchParameter {
 }
 
 
-export class AdvancedSearchParameterElement extends Skeleton {
+export class AdvancedWordParameterElement extends Skeleton {
 
   public search!: string;
   public title!: string;
   public mode!: AdvancedSearchMode;
   public type!: SearchType;
 
-  public static createEmpty(): AdvancedSearchParameterElement {
+  public static createEmpty(): AdvancedWordParameterElement {
     let search = "";
     let title = "";
     let mode = "name" as const;
     let type = "exact" as const;
-    let skeleton = AdvancedSearchParameterElement.of({search, title, mode, type});
+    let skeleton = AdvancedWordParameterElement.of({search, title, mode, type});
     return skeleton;
   }
 

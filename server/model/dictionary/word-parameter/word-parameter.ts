@@ -5,9 +5,9 @@ import {
   Query
 } from "mongoose";
 import {
-  AdvancedSearchParameter as AdvancedSearchParameterSkeleton,
-  NormalSearchParameter as NormalSearchParameterSkeleton,
-  SearchParameter as SearchParameterSkeleton
+  AdvancedWordParameter as AdvancedSearchParameterSkeleton,
+  NormalWordParameter as NormalSearchParameterSkeleton,
+  WordParameter as SearchParameterSkeleton
 } from "/client/skeleton/dictionary";
 export {
   AdvancedSearchMode,

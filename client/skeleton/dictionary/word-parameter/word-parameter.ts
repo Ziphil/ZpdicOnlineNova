@@ -2,8 +2,8 @@
 
 import * as queryParser from "query-string";
 import {
-  AdvancedSearchParameter,
-  NormalSearchParameter
+  AdvancedWordParameter,
+  NormalWordParameter
 } from "/client/skeleton/dictionary";
 import {
   Skeleton
@@ -14,14 +14,14 @@ import {
 } from "/server/util/literal-type";
 
 
-export abstract class SearchParameter extends Skeleton {
+export abstract class WordParameter extends Skeleton {
 
-  public static deserialize(queryString: string): SearchParameter {
+  public static deserialize(queryString: string): WordParameter {
     let query = queryParser.parse(queryString);
     if ("advanced" in query) {
-      return AdvancedSearchParameter.deserializeEach(query);
+      return AdvancedWordParameter.deserializeEach(query);
     } else {
-      return NormalSearchParameter.deserializeEach(query);
+      return NormalWordParameter.deserializeEach(query);
     }
   }
 

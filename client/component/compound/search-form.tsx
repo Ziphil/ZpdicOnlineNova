@@ -15,10 +15,10 @@ import {
 } from "/client/component/decorator";
 import {
   Dictionary,
-  NormalSearchParameter,
+  NormalWordParameter,
   SearchMode,
-  SearchParameter,
-  SearchType
+  SearchType,
+  WordParameter
 } from "/client/skeleton/dictionary";
 
 
@@ -26,18 +26,18 @@ import {
 export default class SearchForm extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
-    parameter: NormalSearchParameter.createEmpty()
+    parameter: NormalWordParameter.createEmpty()
   };
   public state: State = {
     searchFormOpen: false
   };
 
-  private getNormalSearchParameter(): NormalSearchParameter {
+  private getNormalSearchParameter(): NormalWordParameter {
     let parameter = this.props.parameter;
-    if (parameter instanceof NormalSearchParameter) {
+    if (parameter instanceof NormalWordParameter) {
       return parameter;
     } else {
-      return NormalSearchParameter.createEmpty();
+      return NormalWordParameter.createEmpty();
     }
   }
 
@@ -46,7 +46,7 @@ export default class SearchForm extends Component<Props, State> {
       let oldParameter = this.getNormalSearchParameter();
       let mode = oldParameter.mode;
       let type = oldParameter.type;
-      let parameter = NormalSearchParameter.createEmpty({search, mode, type});
+      let parameter = NormalWordParameter.createEmpty({search, mode, type});
       this.props.onParameterSet(parameter);
     }
   }
@@ -56,7 +56,7 @@ export default class SearchForm extends Component<Props, State> {
       let oldParameter = this.getNormalSearchParameter();
       let search = oldParameter.search;
       let type = oldParameter.type;
-      let parameter = NormalSearchParameter.createEmpty({search, mode, type});
+      let parameter = NormalWordParameter.createEmpty({search, mode, type});
       this.props.onParameterSet(parameter);
     }
   }
@@ -66,12 +66,12 @@ export default class SearchForm extends Component<Props, State> {
       let oldParameter = this.getNormalSearchParameter();
       let search = oldParameter.search;
       let mode = oldParameter.mode;
-      let parameter = NormalSearchParameter.createEmpty({search, mode, type});
+      let parameter = NormalWordParameter.createEmpty({search, mode, type});
       this.props.onParameterSet(parameter);
     }
   }
 
-  private handleAdvancedSearchConfirm(parameter: SearchParameter): void {
+  private handleAdvancedSearchConfirm(parameter: WordParameter): void {
     if (this.props.onParameterSet) {
       this.props.onParameterSet(parameter);
     }
@@ -122,11 +122,11 @@ export default class SearchForm extends Component<Props, State> {
 
 type Props = {
   dictionary: Dictionary,
-  parameter: SearchParameter,
-  onParameterSet?: (parameter: SearchParameter) => void;
+  parameter: WordParameter,
+  onParameterSet?: (parameter: WordParameter) => void;
 };
 type DefaultProps = {
-  parameter: SearchParameter
+  parameter: WordParameter
 };
 type State = {
   searchFormOpen: boolean
