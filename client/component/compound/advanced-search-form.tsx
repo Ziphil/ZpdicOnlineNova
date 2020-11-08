@@ -7,8 +7,14 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
+import {
+  Suggest
+} from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
 import Selection from "/client/component/atom/selection";
+import {
+  SuggestionSpec
+} from "/client/component/atom/suggestion";
 import Component from "/client/component/component";
 import {
   style
@@ -20,6 +26,7 @@ import {
   ADVANCED_SEARCH_MODES,
   AdvancedSearchParameter,
   AdvancedSearchParameterElement,
+  Dictionary,
   SEARCH_TYPES,
   SearchParameter
 } from "/server/skeleton/dictionary";
@@ -47,16 +54,6 @@ export default class AdvancedSearchForm extends Component<Props, State> {
     }
   }
 
-  private setParameter<T extends Array<unknown>>(setter: (...args: T) => void): (...args: T) => void {
-    let outerThis = this;
-    let wrapper = function (...args: T): void {
-      setter(...args);
-      let parameter = outerThis.state.parameter;
-      outerThis.setState({parameter});
-    };
-    return wrapper;
-  }
-
   private confirmParameter(event: MouseEvent<HTMLButtonElement>): void {
     let parameter = this.state.parameter;
     if (this.props.onClose) {
@@ -65,6 +62,32 @@ export default class AdvancedSearchForm extends Component<Props, State> {
     if (this.props.onConfirm) {
       this.props.onConfirm(parameter, event);
     }
+  }
+
+  private createSuggest(propertyName: string): Suggest {
+    let outerThis = this;
+    let number = this.props.dictionary.number;
+    let suggest = async function (pattern: string): Promise<Array<SuggestionSpec<string>>> {
+      let response = await outerThis.requestGet("suggestDictionaryTitles", {number, propertyName, pattern}, {ignoreError: true});
+      if (response.status === 200 && !("error" in response.data)) {
+        let titles = response.data;
+        let suggestions = titles.map((title) => ({replacement: title, node: title}));
+        return suggestions;
+      } else {
+        return [];
+      }
+    };
+    return suggest;
+  }
+
+  private setParameter<T extends Array<unknown>>(setter: (...args: T) => void): (...args: T) => void {
+    let outerThis = this;
+    let wrapper = function (...args: T): void {
+      setter(...args);
+      let parameter = outerThis.state.parameter;
+      outerThis.setState({parameter});
+    };
+    return wrapper;
   }
 
   public render(): ReactNode {
@@ -78,6 +101,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
       let titleLabel = (index === 0) ? this.trans("advancedSearchForm.title") : undefined;
       let searchLabel = (index === 0) ? this.trans("advancedSearchForm.search") : undefined;
       let titleDisabled = element.mode !== "equivalent" && element.mode !== "information";
+      let suggest = (titleDisabled) ? undefined : this.createSuggest(element.mode);
       let searchNode = (
         <div styleName="inner" key={index}>
           <div styleName="form left">
@@ -85,7 +109,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
             <Selection className={styles["selection"]} value={element.type} label={typeLabel} specs={typeSpecs} onSet={this.setParameter((type) => elements[index].type = type)}/>
           </div>
           <div styleName="form right">
-            <Input className={styles["title"]} value={element.title} label={titleLabel} disabled={titleDisabled} onSet={this.setParameter((title) => elements[index].title = title)}/>
+            <Input className={styles["title"]} value={element.title} label={titleLabel} suggest={suggest} disabled={titleDisabled} onSet={this.setParameter((title) => elements[index].title = title)}/>
             <Input className={styles["search"]} value={element.search} label={searchLabel} onSet={this.setParameter((search) => elements[index].search = search)}/>
           </div>
           <div styleName="control-button">
@@ -113,6 +137,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
 
 
 type Props = {
+  dictionary: Dictionary,
   defaultParameter: SearchParameter,
   open: boolean
   onClose?: (event: MouseEvent<HTMLElement>) => void,

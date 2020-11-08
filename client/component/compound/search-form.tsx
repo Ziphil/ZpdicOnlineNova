@@ -14,6 +14,7 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  Dictionary,
   NormalSearchParameter,
   SearchMode,
   SearchParameter,
@@ -104,7 +105,13 @@ export default class SearchForm extends Component<Props, State> {
             <Button label={this.trans("searchForm.advancedSearch")} iconLabel="&#xF00E;" style="simple" onClick={() => this.setState({searchFormOpen: true})}/>
           </div>
         </form>
-        <AdvancedSearchForm defaultParameter={this.props.parameter} open={this.state.searchFormOpen} onConfirm={this.handleAdvancedSearchConfirm.bind(this)} onClose={() => this.setState({searchFormOpen: false})}/>
+        <AdvancedSearchForm
+          dictionary={this.props.dictionary}
+          defaultParameter={this.props.parameter}
+          open={this.state.searchFormOpen}
+          onConfirm={this.handleAdvancedSearchConfirm.bind(this)}
+          onClose={() => this.setState({searchFormOpen: false})}
+        />
       </Fragment>
     );
     return node;
@@ -114,6 +121,7 @@ export default class SearchForm extends Component<Props, State> {
 
 
 type Props = {
+  dictionary: Dictionary,
   parameter: SearchParameter,
   onParameterSet?: (parameter: SearchParameter) => void;
 };

@@ -212,10 +212,10 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     );
     let node = (
       <Page dictionary={this.state.dictionary} showDictionary={true} showEditLink={this.state.canEdit} showSettingLink={this.state.canOwn}>
-        <div styleName="search-form">
-          <SearchForm parameter={this.state.parameter} onParameterSet={this.handleParameterSet.bind(this)}/>
-        </div>
         <Loading loading={this.state.dictionary === null}>
+          <div styleName="search-form">
+            <SearchForm dictionary={this.state.dictionary!} parameter={this.state.parameter} onParameterSet={this.handleParameterSet.bind(this)}/>
+          </div>
           {innerNode}
         </Loading>
       </Page>

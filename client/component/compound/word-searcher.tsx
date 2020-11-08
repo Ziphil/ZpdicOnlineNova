@@ -121,10 +121,10 @@ export default class WordSearcher extends Component<Props, State> {
     let innerNode = (this.props.dictionary !== null) && this.renderWordList();
     let node = (
       <div>
-        <div styleName="search-form">
-          <SearchForm parameter={this.state.parameter} onParameterSet={this.handleParameterSet.bind(this)}/>
-        </div>
         <Loading loading={this.props.dictionary === null}>
+          <div styleName="search-form">
+            <SearchForm dictionary={this.props.dictionary} parameter={this.state.parameter} onParameterSet={this.handleParameterSet.bind(this)}/>
+          </div>
           {innerNode}
         </Loading>
       </div>
