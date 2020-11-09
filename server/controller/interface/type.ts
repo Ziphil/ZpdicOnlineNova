@@ -23,7 +23,8 @@ import {
   History
 } from "/client/skeleton/history";
 import {
-  Invitation
+  Invitation,
+  InvitationType
 } from "/client/skeleton/invitation";
 import {
   Notification
@@ -32,6 +33,10 @@ import {
   DetailedUser,
   User
 } from "/client/skeleton/user";
+import {
+  DictionaryAuthority,
+  DictionaryFullAuthority
+} from "/server/model/dictionary";
 
 
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
@@ -145,7 +150,7 @@ type ServerSpecs = {
     }
   },
   addInvitation: {
-    request: {number: number, type: string, userName: string},
+    request: {number: number, type: InvitationType, userName: string},
     response: {
       success: Invitation,
       error: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "userCanAlreadyOwn" | "editInvitationAlreadyAdded" | "transferInvitationAlreadyAdded">
@@ -215,7 +220,7 @@ type ServerSpecs = {
     }
   },
   fetchDictionaryAuthorizedUsers: {
-    request: {number: number, authority: string},
+    request: {number: number, authority: DictionaryFullAuthority},
     response: {
       success: Array<User>,
       error: CustomError<"noSuchDictionaryNumber">
@@ -250,14 +255,14 @@ type ServerSpecs = {
     }
   },
   fetchInvitations: {
-    request: {type: string},
+    request: {type: InvitationType},
     response: {
       success: Array<Invitation>,
       error: never
     }
   },
   checkDictionaryAuthorization: {
-    request: {number: number, authority: string},
+    request: {number: number, authority: DictionaryAuthority},
     response: {
       success: null,
       error: CustomError<"noSuchDictionaryNumber">

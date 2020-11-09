@@ -24,9 +24,6 @@ import {
   UserModel
 } from "/server/model/user";
 import {
-  CastUtil
-} from "/server/util/cast";
-import {
   MailUtil
 } from "/server/util/mail";
 
@@ -37,10 +34,10 @@ export class OtherController extends Controller {
   @post(SERVER_PATHS["contact"])
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"contact">, response: Response<"contact">): Promise<void> {
-    let name = CastUtil.ensureString(request.body.name);
-    let email = CastUtil.ensureString(request.body.email);
-    let subject = CastUtil.ensureString(request.body.subject);
-    let text = CastUtil.ensureString(request.body.text);
+    let name = request.body.name;
+    let email = request.body.email;
+    let subject = request.body.subject;
+    let text = request.body.text;
     if (text !== "") {
       let user = await UserModel.findOneAdministrator();
       if (user !== null) {

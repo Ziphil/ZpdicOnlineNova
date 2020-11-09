@@ -29,9 +29,7 @@ import {
   verifyUser
 } from "/server/controller/middle";
 import {
-  DictionaryAuthorityUtil,
   DictionaryCreator,
-  DictionaryFullAuthorityUtil,
   DictionaryModel,
   SearchParameterCreator,
   SuggestionCreator,
@@ -42,9 +40,6 @@ import {
   UserCreator,
   UserModel
 } from "/server/model/user";
-import {
-  CastUtil
-} from "/server/util/cast";
 import {
   sanitizeFileName
 } from "/server/util/misc";
@@ -60,7 +55,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser())
   public async [Symbol()](request: Request<"createDictionary">, response: Response<"createDictionary">): Promise<void> {
     let user = request.user!;
-    let name = CastUtil.ensureString(request.body.name);
+    let name = request.body.name;
     let dictionary = await DictionaryModel.addEmpty(name, user);
     let body = DictionaryCreator.create(dictionary);
     Controller.respond(response, body);
@@ -107,7 +102,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryName">, response: Response<"changeDictionaryName">): Promise<void> {
     let dictionary = request.dictionary;
-    let name = CastUtil.ensureString(request.body.name);
+    let name = request.body.name;
     if (dictionary) {
       await dictionary.changeName(name);
       let body = DictionaryCreator.create(dictionary);
@@ -122,7 +117,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryParamName">, response: Response<"changeDictionaryParamName">): Promise<void> {
     let dictionary = request.dictionary;
-    let paramName = CastUtil.ensureString(request.body.paramName);
+    let paramName = request.body.paramName;
     if (dictionary) {
       try {
         await dictionary.changeParamName(paramName);
@@ -152,7 +147,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"deleteDictionaryAuthorizedUser">, response: Response<"deleteDictionaryAuthorizedUser">): Promise<void> {
     let dictionary = request.dictionary;
-    let id = CastUtil.ensureString(request.body.id);
+    let id = request.body.id;
     let user = await UserModel.findById(id);
     if (dictionary) {
       if (user) {
@@ -181,7 +176,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionarySecret">, response: Response<"changeDictionarySecret">): Promise<void> {
     let dictionary = request.dictionary;
-    let secret = CastUtil.ensureBoolean(request.body.secret);
+    let secret = request.body.secret;
     if (dictionary) {
       await dictionary.changeSecret(secret);
       let body = DictionaryCreator.create(dictionary);
@@ -196,7 +191,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryExplanation">, response: Response<"changeDictionaryExplanation">): Promise<void> {
     let dictionary = request.dictionary;
-    let explanation = CastUtil.ensureString(request.body.explanation);
+    let explanation = request.body.explanation;
     if (dictionary) {
       await dictionary.changeExplanation(explanation);
       let body = DictionaryCreator.create(dictionary);
@@ -224,10 +219,10 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["searchDictionary"])
   public async [Symbol()](request: Request<"searchDictionary">, response: Response<"searchDictionary">): Promise<void> {
-    let number = CastUtil.ensureNumber(request.body.number);
+    let number = request.body.number;
     let parameter = SearchParameterCreator.restore(request.body.parameter);
-    let offset = CastUtil.ensureNumber(request.body.offset);
-    let size = CastUtil.ensureNumber(request.body.size);
+    let offset = request.body.offset;
+    let size = request.body.size;
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let range = new QueryRange(offset, size);
@@ -245,8 +240,8 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["downloadDictionary"])
   public async [Symbol()](request: Request<"downloadDictionary">, response: Response<"downloadDictionary">): Promise<void> {
-    let number = CastUtil.ensureNumber(request.body.number);
-    let fileName = CastUtil.ensureString(request.body.fileName);
+    let number = request.body.number;
+    let fileName = request.body.fileName;
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let date = new Date();
@@ -263,8 +258,8 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["fetchDictionary"])
   public async [Symbol()](request: Request<"fetchDictionary">, response: Response<"fetchDictionary">): Promise<void> {
-    let number = CastUtil.ensureNumber(request.body.number);
-    let paramName = CastUtil.ensureString(request.body.paramName);
+    let number = request.body.number;
+    let paramName = request.body.paramName;
     let value = number ?? paramName;
     if (value !== undefined) {
       let dictionary = await DictionaryModel.findOneByValue(value);
@@ -289,9 +284,9 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["suggestDictionaryTitles"])
   public async [Symbol()](request: Request<"suggestDictionaryTitles">, response: Response<"suggestDictionaryTitles">): Promise<void> {
-    let number = CastUtil.ensureNumber(request.body.number);
-    let propertyName = CastUtil.ensureString(request.body.propertyName);
-    let pattern = CastUtil.ensureString(request.body.pattern);
+    let number = request.body.number;
+    let propertyName = request.body.propertyName;
+    let pattern = request.body.pattern;
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let titles = await dictionary.suggestTitles(propertyName, pattern);
@@ -307,7 +302,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchDictionaryAuthorizedUsers">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     let dictionary = request.dictionary;
-    let authority = DictionaryFullAuthorityUtil.cast(CastUtil.ensureString(request.body.authority));
+    let authority = request.body.authority;
     if (dictionary) {
       let users = await dictionary.getAuthorizedUsers(authority);
       let body = users.map(UserCreator.create);
@@ -320,7 +315,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["fetchWholeDictionary"])
   public async [Symbol()](request: Request<"fetchWholeDictionary">, response: Response<"fetchWholeDictionary">): Promise<void> {
-    let number = CastUtil.ensureNumber(request.body.number);
+    let number = request.body.number;
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let body = await DictionaryCreator.createDetailed(dictionary);
@@ -353,9 +348,9 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["fetchAllDictionaries"])
   public async [Symbol()](request: Request<"fetchAllDictionaries">, response: Response<"fetchAllDictionaries">): Promise<void> {
-    let order = CastUtil.ensureString(request.body.order);
-    let offset = CastUtil.ensureNumber(request.body.offset);
-    let size = CastUtil.ensureNumber(request.body.size);
+    let order = request.body.order;
+    let offset = request.body.offset;
+    let size = request.body.size;
     let range = new QueryRange(offset, size);
     let hitResult = await DictionaryModel.findPublic(order, range);
     let hitPromises = hitResult[0].map((hitDictionary) => {
@@ -390,8 +385,8 @@ export class DictionaryController extends Controller {
   @before(verifyUser())
   public async [Symbol()](request: Request<"checkDictionaryAuthorization">, response: Response<"checkDictionaryAuthorization">): Promise<void> {
     let user = request.user!;
-    let number = CastUtil.ensureNumber(request.body.number);
-    let authority = DictionaryAuthorityUtil.cast(CastUtil.ensureString(request.body.authority));
+    let number = request.body.number;
+    let authority = request.body.authority;
     let dictionary = await DictionaryModel.findOneByNumber(number);
     if (dictionary) {
       let hasAuthority = await dictionary.hasAuthority(user, authority);

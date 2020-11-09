@@ -45,7 +45,7 @@ export default class AddTransferInvitationForm extends Component<Props, State> {
   private async handleClick(): Promise<void> {
     let number = this.props.number;
     let userName = this.state.userName;
-    let type = "transfer";
+    let type = "transfer" as const;
     let response = await this.request("addInvitation", {number, type, userName});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("transferInvitationAdded");

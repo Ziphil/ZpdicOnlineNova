@@ -49,7 +49,7 @@ export default class DashboardPage extends Component<Props, State, Params> {
   }
 
   private async fetchEditInvitations(): Promise<void> {
-    let type = "edit";
+    let type = "edit" as const;
     let response = await this.request("fetchInvitations", {type});
     if (response.status === 200) {
       let editInvitations = response.data;
@@ -58,7 +58,7 @@ export default class DashboardPage extends Component<Props, State, Params> {
   }
 
   private async fetchTransferInvitations(): Promise<void> {
-    let type = "transfer";
+    let type = "transfer" as const;
     let response = await this.request("fetchInvitations", {type});
     if (response.status === 200) {
       let transferInvitations = response.data;

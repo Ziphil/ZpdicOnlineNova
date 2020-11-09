@@ -38,7 +38,7 @@ export default class AddEditInvitationForm extends Component<Props, State> {
 
   private async fetchAuthorizedUsers(): Promise<void> {
     let number = this.props.dictionary.number;
-    let authority = "editOnly";
+    let authority = "editOnly" as const;
     let response = await this.request("fetchDictionaryAuthorizedUsers", {number, authority});
     if (response.status === 200 && !("error" in response.data)) {
       let authorizedUsers = response.data;
@@ -66,7 +66,7 @@ export default class AddEditInvitationForm extends Component<Props, State> {
   private async handleClick(): Promise<void> {
     let number = this.props.number;
     let userName = this.state.userName;
-    let type = "edit";
+    let type = "edit" as const;
     let response = await this.request("addInvitation", {number, type, userName});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("editInvitationAdded");
