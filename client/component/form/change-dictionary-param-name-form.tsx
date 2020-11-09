@@ -31,7 +31,7 @@ export default class ChangeDictionaryParamNameForm extends Component<Props, Stat
   private async handleClick(): Promise<void> {
     let number = this.props.number;
     let paramName = this.state.paramName;
-    let response = await this.requestPost("changeDictionaryParamName", {number, paramName});
+    let response = await this.request("changeDictionaryParamName", {number, paramName});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("dictionaryParamNameChanged");
       if (this.props.onSubmit) {

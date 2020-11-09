@@ -8,15 +8,15 @@ import {
 } from "express";
 import * as jwt from "jsonwebtoken";
 import {
+  CustomError
+} from "/client/skeleton/error";
+import {
   DictionaryAuthority,
   DictionaryModel
 } from "/server/model/dictionary";
 import {
   UserModel
 } from "/server/model/user";
-import {
-  CustomError
-} from "/server/skeleton/error";
 import {
   LogUtil
 } from "/server/util/log";

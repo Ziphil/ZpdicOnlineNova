@@ -5,22 +5,23 @@ import {
   Query
 } from "mongoose";
 import {
-  AdvancedSearchMode,
   Dictionary,
-  SearchType,
   Word,
-  WordModel
+  WordMode,
+  WordModel,
+  WordType
 } from "/server/model/dictionary";
 import {
-  SearchParameter
-} from "/server/model/dictionary/search-parameter/search-parameter";
+  WORD_MODES,
+  WordParameter
+} from "/server/model/dictionary/word-parameter/word-parameter";
 
 
-export class AdvancedSearchParameter extends SearchParameter {
+export class AdvancedWordParameter extends WordParameter {
 
-  public elements: Array<AdvancedSearchParameterElement>;
+  public elements: Array<AdvancedWordParameterElement>;
 
-  public constructor(elements: Array<AdvancedSearchParameterElement>) {
+  public constructor(elements: Array<AdvancedWordParameterElement>) {
     super();
     this.elements = elements;
   }
@@ -38,14 +39,14 @@ export class AdvancedSearchParameter extends SearchParameter {
 }
 
 
-export class AdvancedSearchParameterElement extends SearchParameter {
+export class AdvancedWordParameterElement extends WordParameter {
 
   public search!: string;
   public title!: string;
-  public mode!: AdvancedSearchMode;
-  public type!: SearchType;
+  public mode!: AdvancedWordMode;
+  public type!: WordType;
 
-  public constructor(search: string, title: string, mode: AdvancedSearchMode, type: SearchType) {
+  public constructor(search: string, title: string, mode: AdvancedWordMode, type: WordType) {
     super();
     this.search = search;
     this.title = title;
@@ -54,8 +55,8 @@ export class AdvancedSearchParameterElement extends SearchParameter {
   }
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>> {
-    let keys = SearchParameter.createKeys(this.mode);
-    let needle = SearchParameter.createNeedle(this.search, this.type);
+    let keys = WordParameter.createKeys(this.mode);
+    let needle = WordParameter.createNeedle(this.search, this.type);
     let eachFilters = keys.map((key) => {
       let eachQuery = WordModel.find().where(key, needle);
       if (this.title && (this.mode === "equivalent" || this.mode === "information")) {
@@ -73,3 +74,7 @@ export class AdvancedSearchParameterElement extends SearchParameter {
   }
 
 }
+
+
+export const ADVANCED_WORD_MODES = WORD_MODES.filter((mode) => mode !== "both") as Array<AdvancedWordMode>;
+export type AdvancedWordMode = Exclude<WordMode, "both">;

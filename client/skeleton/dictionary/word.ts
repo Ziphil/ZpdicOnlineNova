@@ -5,10 +5,10 @@ import {
   Information,
   Relation,
   Variation
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 import {
   Skeleton
-} from "/server/skeleton/skeleton";
+} from "/client/skeleton/skeleton";
 
 
 export class EditWord extends Skeleton {

@@ -18,19 +18,19 @@ import {
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
+  DetailedDictionary,
+  Dictionary,
+  NormalWordParameter,
+  Suggestion,
+  Word,
+  WordParameter
+} from "/client/skeleton/dictionary";
+import {
   debounce
 } from "/client/util/decorator";
 import {
   WithSize
 } from "/server/controller/interface/type";
-import {
-  DetailedDictionary,
-  Dictionary,
-  NormalSearchParameter,
-  SearchParameter,
-  Suggestion,
-  Word
-} from "/server/skeleton/dictionary";
 
 
 @style(require("./dictionary-page.scss"))
@@ -40,7 +40,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     dictionary: null,
     canOwn: false,
     canEdit: false,
-    parameter: NormalSearchParameter.createEmpty(),
+    parameter: NormalWordParameter.createEmpty(),
     page: 0,
     showExplanation: true,
     hitResult: {words: [[], 0], suggestions: []},
@@ -81,7 +81,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
         return [undefined, value] as const;
       }
     })();
-    let response = await this.requestGet("fetchDictionary", {number, paramName});
+    let response = await this.request("fetchDictionary", {number, paramName});
     if (response.status === 200 && !("error" in response.data)) {
       let dictionary = DetailedDictionary.of(response.data);
       this.setState({dictionary});
@@ -95,7 +95,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     let ownPromise = new Promise(async (resolve, reject) => {
       if (number !== undefined) {
         let authority = "own" as const;
-        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
+        let response = await this.request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
         if (response.status === 200) {
           this.setState({canOwn: true}, resolve);
         }
@@ -104,7 +104,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     let editPromise = new Promise(async (resolve, reject) => {
       if (number !== undefined) {
         let authority = "edit" as const;
-        let response = await this.requestGet("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
+        let response = await this.request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
         if (response.status === 200) {
           this.setState({canEdit: true}, resolve);
         }
@@ -121,7 +121,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
       let offset = page * 40;
       let size = 40;
       this.setState({loading: true});
-      let response = await this.requestPost("searchDictionary", {number, parameter, offset, size});
+      let response = await this.request("searchDictionary", {number, parameter, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
         let hitResult = response.data;
         let showExplanation = false;
@@ -143,7 +143,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
   private deserializeQuery(first: boolean, callback?: () => void): void {
     let queryString = this.props.location!.search;
     let query = queryParser.parse(queryString);
-    let parameter = SearchParameter.deserialize(queryString);
+    let parameter = WordParameter.deserialize(queryString);
     let page = (typeof query.page === "string") ? +query.page : 0;
     let showExplanation = Object.keys(query).length <= 0;
     if (first) {
@@ -161,7 +161,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     this.props.history!.replace({search: queryString});
   }
 
-  private async handleParameterSet(parameter: SearchParameter): Promise<void> {
+  private async handleParameterSet(parameter: WordParameter): Promise<void> {
     let page = 0;
     this.setState({parameter, page}, async () => {
       await this.updateWords();
@@ -214,7 +214,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
       <Page dictionary={this.state.dictionary} showDictionary={true} showEditLink={this.state.canEdit} showSettingLink={this.state.canOwn}>
         <Loading loading={this.state.dictionary === null}>
           <div styleName="search-form">
-            <SearchForm dictionary={this.state.dictionary!} parameter={this.state.parameter} onParameterSet={this.handleParameterSet.bind(this)}/>
+            <SearchForm dictionary={this.state.dictionary!} parameter={this.state.parameter} showAdvancedSearch={true} onParameterSet={this.handleParameterSet.bind(this)}/>
           </div>
           {innerNode}
         </Loading>
@@ -232,7 +232,7 @@ type State = {
   dictionary: Dictionary | null,
   canOwn: boolean,
   canEdit: boolean,
-  parameter: SearchParameter,
+  parameter: WordParameter,
   page: number,
   showExplanation: boolean,
   hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},

@@ -33,7 +33,7 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
     let number = this.props.number;
     let propertyName = this.props.language + "Source";
     let settings = {[propertyName]: this.state.source};
-    let response = await this.requestPost("changeDictionarySettings", {number, settings});
+    let response = await this.request("changeDictionarySettings", {number, settings});
     if (response.status === 200) {
       this.props.store!.addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
       if (this.props.onSubmit) {

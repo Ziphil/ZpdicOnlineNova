@@ -21,7 +21,7 @@ export default class CreateDictionaryForm extends Component<Props, State> {
 
   private async handleClick(): Promise<void> {
     let name = this.state.name ?? this.trans("createDictionaryForm.defaultName");
-    let response = await this.requestPost("createDictionary", {name});
+    let response = await this.request("createDictionary", {name});
     if (response.status === 200) {
       let dictionary = response.data;
       if (this.props.onSubmit) {

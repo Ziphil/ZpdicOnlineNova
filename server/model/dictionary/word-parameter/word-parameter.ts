@@ -5,32 +5,27 @@ import {
   Query
 } from "mongoose";
 import {
-  AdvancedSearchParameter,
-  AdvancedSearchParameterElement,
+  AdvancedWordParameter as AdvancedWordParameterSkeleton,
+  NormalWordParameter as NormalWordParameterSkeleton,
+  WordParameter as WordParameterSkeleton
+} from "/client/skeleton/dictionary";
+import {
+  AdvancedWordParameter,
+  AdvancedWordParameterElement,
   Dictionary,
-  NormalSearchParameter,
-  SearchMode,
-  SearchType,
+  NormalWordParameter,
   Word
 } from "/server/model/dictionary";
 import {
-  AdvancedSearchParameter as AdvancedSearchParameterSkeleton,
-  NormalSearchParameter as NormalSearchParameterSkeleton,
-  SearchParameter as SearchParameterSkeleton
-} from "/server/skeleton/dictionary";
-export {
-  AdvancedSearchMode,
-  SearchMode,
-  SearchModeUtil,
-  SearchType,
-  SearchTypeUtil
-} from "/server/skeleton/dictionary";
+  LiteralType,
+  LiteralUtilType
+} from "/server/util/literal-type";
 import {
   escapeRegexp
 } from "/server/util/misc";
 
 
-export abstract class SearchParameter {
+export abstract class WordParameter {
 
   public abstract createQuery(dictionary: Dictionary): Query<Array<Word>>;
 
@@ -38,7 +33,7 @@ export abstract class SearchParameter {
   // 何もサジェストする必要がない場合は null を返します。
   public abstract createSuggestionAggregate(dictionary: Dictionary): Aggregate<Array<{title: string, word: Word}>> | null;
 
-  protected static createKeys(mode: SearchMode): Array<string> {
+  protected static createKeys(mode: WordMode): Array<string> {
     if (mode === "name") {
       return ["name"];
     } else if (mode === "equivalent") {
@@ -54,7 +49,7 @@ export abstract class SearchParameter {
     }
   }
 
-  protected static createNeedle(search: string, type: SearchType): string | RegExp {
+  protected static createNeedle(search: string, type: WordType): string | RegExp {
     let escapedSearch = escapeRegexp(search);
     if (type === "exact") {
       return search;
@@ -78,17 +73,26 @@ export abstract class SearchParameter {
 
 export class SearchParameterCreator {
 
-  public static restore(skeleton: SearchParameterSkeleton): SearchParameter {
+  public static restore(skeleton: WordParameterSkeleton): WordParameter {
     if ("elements" in skeleton) {
-      let castSkeleton = skeleton as AdvancedSearchParameterSkeleton;
-      let elements = castSkeleton.elements.map((element) => new AdvancedSearchParameterElement(element.search, element.title, element.mode, element.type));
-      let raw = new AdvancedSearchParameter(elements);
+      let castSkeleton = skeleton as AdvancedWordParameterSkeleton;
+      let elements = castSkeleton.elements.map((element) => new AdvancedWordParameterElement(element.search, element.title, element.mode, element.type));
+      let raw = new AdvancedWordParameter(elements);
       return raw;
     } else {
-      let castSkeleton = skeleton as NormalSearchParameterSkeleton;
-      let raw = new NormalSearchParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type);
+      let castSkeleton = skeleton as NormalWordParameterSkeleton;
+      let raw = new NormalWordParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type);
       return raw;
     }
   }
 
 }
+
+
+export const WORD_MODES = ["name", "equivalent", "both", "tag", "information", "content"] as const;
+export type WordMode = LiteralType<typeof WORD_MODES>;
+export let WordModeUtil = LiteralUtilType.create(WORD_MODES);
+
+export const WORD_TYPES = ["exact", "prefix", "suffix", "part", "regular"] as const;
+export type WordType = LiteralType<typeof WORD_TYPES>;
+export let WordTypeUtil = LiteralUtilType.create(WORD_TYPES);

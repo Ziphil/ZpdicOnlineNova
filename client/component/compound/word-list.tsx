@@ -18,7 +18,7 @@ import {
   Dictionary,
   EditWord,
   Word
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./word-list.scss"))

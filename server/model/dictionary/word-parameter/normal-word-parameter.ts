@@ -6,21 +6,23 @@ import {
 } from "mongoose";
 import {
   Dictionary,
-  SearchMode,
-  SearchParameter,
-  SearchType,
   Word,
-  WordModel
+  WordMode,
+  WordModel,
+  WordType
 } from "/server/model/dictionary";
+import {
+  WordParameter
+} from "/server/model/dictionary/word-parameter/word-parameter";
 
 
-export class NormalSearchParameter extends SearchParameter {
+export class NormalWordParameter extends WordParameter {
 
   public search: string;
-  public mode: SearchMode;
-  public type: SearchType;
+  public mode: WordMode;
+  public type: WordType;
 
-  public constructor(search: string, mode: SearchMode, type: SearchType) {
+  public constructor(search: string, mode: WordMode, type: WordType) {
     super();
     this.search = search;
     this.mode = mode;
@@ -28,8 +30,8 @@ export class NormalSearchParameter extends SearchParameter {
   }
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>> {
-    let keys = SearchParameter.createKeys(this.mode);
-    let needle = SearchParameter.createNeedle(this.search, this.type);
+    let keys = WordParameter.createKeys(this.mode);
+    let needle = WordParameter.createNeedle(this.search, this.type);
     let disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
     let query = WordModel.find().where("dictionary", dictionary).or(disjunctFilters);
     return query;
@@ -39,7 +41,7 @@ export class NormalSearchParameter extends SearchParameter {
     let mode = this.mode;
     let type = this.type;
     if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {
-      let needle = SearchParameter.createNeedle(this.search, "exact");
+      let needle = WordParameter.createNeedle(this.search, "exact");
       let aggregate = WordModel.aggregate();
       aggregate = aggregate.match(WordModel.where("dictionary", dictionary["_id"]).where("variations.name", needle).getFilter());
       aggregate = aggregate.addFields({oldVariations: "$variations"});

@@ -9,12 +9,12 @@ import {
   LANGUAGES
 } from "/client/language";
 import {
+  DetailedUser
+} from "/client/skeleton/user";
+import {
   SERVER_PATHS,
   SERVER_PATH_PREFIX
 } from "/server/controller/interface/type";
-import {
-  DetailedUser
-} from "/server/skeleton/user";
 
 
 export class GlobalStore {
@@ -48,7 +48,7 @@ export class GlobalStore {
   @action
   public async fetchUser(): Promise<void> {
     let url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
-    let response = await axios.get(url, {validateStatus: () => true});
+    let response = await axios.post(url, {validateStatus: () => true});
     if (response.status === 200) {
       let user = response.data;
       this.user = user;

@@ -13,7 +13,7 @@ import {
 } from "/client/component/decorator";
 import {
   Dictionary
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./add-commision-form.scss"))
@@ -28,7 +28,7 @@ export default class AddCommissionForm extends Component<Props, State> {
     let number = this.props.dictionary!.number;
     let name = this.state.name;
     let comment = this.state.comment;
-    let response = await this.requestPost("addCommission", {number, name, comment}, {useRecaptcha: true});
+    let response = await this.request("addCommission", {number, name, comment}, {useRecaptcha: true});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("commissionAdded");
       this.setState({name: "", comment: ""});

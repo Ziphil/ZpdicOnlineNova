@@ -10,6 +10,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  Invitation as InvitationSkeleton
+} from "/client/skeleton/invitation";
+import {
   Dictionary,
   DictionaryCreator,
   DictionarySchema
@@ -21,9 +24,6 @@ import {
   User,
   UserSchema
 } from "/server/model/user";
-import {
-  Invitation as InvitationSkeleton
-} from "/server/skeleton/invitation";
 import {
   LiteralType,
   LiteralUtilType

@@ -40,7 +40,7 @@ export default class ResetUserPasswordForm extends Component<Props, State> {
   private async issueResetToken(): Promise<void> {
     let name = this.state.name;
     let email = this.state.email;
-    let response = await this.requestPost("issueUserResetToken", {name, email}, {useRecaptcha: true});
+    let response = await this.request("issueUserResetToken", {name, email}, {useRecaptcha: true});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("userResetTokenIssued");
     }
@@ -49,7 +49,7 @@ export default class ResetUserPasswordForm extends Component<Props, State> {
   private async resetPassword(): Promise<void> {
     let key = this.props.tokenKey!;
     let password = this.state.password;
-    let response = await this.requestPost("resetUserPassword", {key, password});
+    let response = await this.request("resetUserPassword", {key, password});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("userPasswordReset");
     }

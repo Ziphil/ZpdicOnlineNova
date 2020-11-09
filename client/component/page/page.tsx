@@ -13,11 +13,11 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  Dictionary
+} from "/client/skeleton/dictionary";
+import {
   StyleNameUtil
 } from "/client/util/style-name";
-import {
-  Dictionary
-} from "/server/skeleton/dictionary";
 
 
 @style(require("./page.scss"))

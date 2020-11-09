@@ -11,6 +11,15 @@ import {
 } from "@typegoose/typegoose";
 import Fuse from "fuse.js";
 import {
+  DetailedDictionary as DetailedDictionarySkeleton,
+  Dictionary as DictionarySkeleton,
+  EditWord as EditWordSkeleton,
+  UserDictionary as UserDictionarySkeleton
+} from "/client/skeleton/dictionary";
+import {
+  User as UserSkeleton
+} from "/client/skeleton/user";
+import {
   WithSize
 } from "/server/controller/interface/type";
 import {
@@ -22,11 +31,11 @@ import {
   DictionarySettings,
   DictionarySettingsCreator,
   DictionarySettingsModel,
-  SearchParameter,
   Serializer,
   Suggestion,
   Word,
-  WordModel
+  WordModel,
+  WordParameter
 } from "/server/model/dictionary";
 import {
   DictionarySettingsSchema
@@ -45,15 +54,6 @@ import {
 import {
   IDENTIFIER_REGEXP
 } from "/server/model/validation";
-import {
-  DetailedDictionary as DetailedDictionarySkeleton,
-  Dictionary as DictionarySkeleton,
-  EditWord as EditWordSkeleton,
-  UserDictionary as UserDictionarySkeleton
-} from "/server/skeleton/dictionary";
-import {
-  User as UserSkeleton
-} from "/server/skeleton/user";
 import {
   LiteralType,
   LiteralUtilType
@@ -360,7 +360,7 @@ export class DictionarySchema {
   }
 
   // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
-  public async search(this: Dictionary, parameter: SearchParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
+  public async search(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     let query = parameter.createQuery(this).sort("name");
     let suggestionAggregate = parameter.createSuggestionAggregate(this);
     let hitSuggestionPromise = suggestionAggregate?.then((suggestions) => {

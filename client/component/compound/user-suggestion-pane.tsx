@@ -10,7 +10,7 @@ import {
 } from "/client/component/decorator";
 import {
   User
-} from "/server/skeleton/user";
+} from "/client/skeleton/user";
 
 
 @style(require("./user-suggestion-pane.scss"))

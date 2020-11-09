@@ -37,7 +37,7 @@ export default class ContactForm extends Component<Props, State> {
     let email = this.state.email;
     let subject = this.state.subject;
     let text = this.state.text;
-    let response = await this.requestPost("contact", {name, email, subject, text}, {useRecaptcha: true});
+    let response = await this.request("contact", {name, email, subject, text}, {useRecaptcha: true});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("contacted");
       this.setState({text: ""});

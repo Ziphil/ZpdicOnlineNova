@@ -15,7 +15,7 @@ import {
 } from "/client/component/decorator";
 import {
   DetailedDictionary
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./dictionary-statistics-pane.scss"))
@@ -30,7 +30,7 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
   public async componentDidMount(): Promise<void> {
     let number = this.props.dictionary.number;
     let from = new Date(Date.now() - 100 * 24 * 60 * 60 * 1000).toString();
-    let response = await this.requestGet("fetchHistories", {number, from});
+    let response = await this.request("fetchHistories", {number, from});
     if (response.status === 200 && !("error" in response.data)) {
       let histories = response.data;
       let dates = [...histories.map((history) => new Date(history.date)), new Date()];

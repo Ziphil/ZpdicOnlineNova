@@ -18,19 +18,19 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  Dictionary,
+  EditWord,
+  NormalWordParameter,
+  Suggestion,
+  Word,
+  WordParameter
+} from "/client/skeleton/dictionary";
+import {
   debounce
 } from "/client/util/decorator";
 import {
   WithSize
 } from "/server/controller/interface/type";
-import {
-  Dictionary,
-  EditWord,
-  NormalSearchParameter,
-  SearchParameter,
-  Suggestion,
-  Word
-} from "/server/skeleton/dictionary";
 
 
 @style(require("./word-searcher.scss"))
@@ -41,7 +41,7 @@ export default class WordSearcher extends Component<Props, State> {
     showButton: false
   };
   public state: State = {
-    parameter: NormalSearchParameter.createEmpty(),
+    parameter: NormalWordParameter.createEmpty(),
     page: 0,
     hitResult: {words: [[], 0], suggestions: []},
     loading: false
@@ -59,7 +59,7 @@ export default class WordSearcher extends Component<Props, State> {
       let offset = page * 40;
       let size = 40;
       this.setState({loading: true});
-      let response = await this.requestPost("searchDictionary", {number, parameter, offset, size});
+      let response = await this.request("searchDictionary", {number, parameter, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
         let hitResult = response.data;
         this.setState({hitResult, loading: true});
@@ -74,7 +74,7 @@ export default class WordSearcher extends Component<Props, State> {
     await this.updateWordsImmediately();
   }
 
-  private async handleParameterSet(parameter: SearchParameter): Promise<void> {
+  private async handleParameterSet(parameter: WordParameter): Promise<void> {
     let page = 0;
     this.setState({parameter, page}, async () => {
       await this.updateWords();
@@ -147,7 +147,7 @@ type DefaultProps = {
   showButton: boolean
 };
 type State = {
-  parameter: SearchParameter,
+  parameter: WordParameter,
   page: number,
   hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},
   loading: boolean

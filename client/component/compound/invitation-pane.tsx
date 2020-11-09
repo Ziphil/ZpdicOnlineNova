@@ -16,7 +16,7 @@ import {
 } from "/client/component/decorator";
 import {
   Invitation
-} from "/server/skeleton/invitation";
+} from "/client/skeleton/invitation";
 
 
 @style(require("./invitation-pane.scss"))
@@ -25,7 +25,7 @@ export default class InvitationPane extends Component<Props, State> {
   private async respondInvitation(event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
     let id = this.props.invitation.id;
     let invitationType = this.props.invitation.type;
-    let response = await this.requestPost("respondInvitation", {id, accept});
+    let response = await this.request("respondInvitation", {id, accept});
     if (response.status === 200) {
       let type = (() => {
         if (invitationType === "edit") {

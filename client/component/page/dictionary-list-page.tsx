@@ -12,11 +12,11 @@ import {
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
+  DetailedDictionary
+} from "/client/skeleton/dictionary";
+import {
   WithSize
 } from "/server/controller/interface/type";
-import {
-  DetailedDictionary
-} from "/server/skeleton/dictionary";
 
 
 @style(require("./dictionary-list-page.scss"))
@@ -28,7 +28,7 @@ export default class DictionaryListPage extends Component<Props, State> {
 
   private async provideDictionaries(offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
     let order = this.state.order;
-    let response = await this.requestGet("fetchAllDictionaries", {order, offset, size});
+    let response = await this.request("fetchAllDictionaries", {order, offset, size});
     if (response.status === 200) {
       let hitResult = response.data;
       return hitResult;

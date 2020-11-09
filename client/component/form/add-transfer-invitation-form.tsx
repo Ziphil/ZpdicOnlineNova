@@ -17,7 +17,7 @@ import {
 } from "/client/component/decorator";
 import {
   Dictionary
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
 
 
 @style(require("./add-transfer-invitation-form.scss"))
@@ -28,7 +28,7 @@ export default class AddTransferInvitationForm extends Component<Props, State> {
   };
 
   private async suggestUsers(pattern: string): Promise<Array<SuggestionSpec<string>>> {
-    let response = await this.requestGet("suggestUsers", {pattern}, {ignoreError: true});
+    let response = await this.request("suggestUsers", {pattern}, {ignoreError: true});
     if (response.status === 200 && !("error" in response.data)) {
       let users = response.data;
       let suggestions = users.map((user) => {
@@ -45,8 +45,8 @@ export default class AddTransferInvitationForm extends Component<Props, State> {
   private async handleClick(): Promise<void> {
     let number = this.props.number;
     let userName = this.state.userName;
-    let type = "transfer";
-    let response = await this.requestPost("addInvitation", {number, type, userName});
+    let type = "transfer" as const;
+    let response = await this.request("addInvitation", {number, type, userName});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("transferInvitationAdded");
       if (this.props.onSubmit) {

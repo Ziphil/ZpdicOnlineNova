@@ -32,7 +32,7 @@ export default class ChangeUserEmailForm extends Component<Props, State> {
 
   private async handleClick(): Promise<void> {
     let email = this.state.email;
-    let response = await this.requestPost("changeUserEmail", {email});
+    let response = await this.request("changeUserEmail", {email});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("userEmailChanged");
       if (this.props.onSubmit) {

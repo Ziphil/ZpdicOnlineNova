@@ -24,7 +24,7 @@ export default class ChangeDictionaryNameForm extends Component<Props, State> {
   private async handleClick(): Promise<void> {
     let number = this.props.number;
     let name = this.state.name;
-    let response = await this.requestPost("changeDictionaryName", {number, name});
+    let response = await this.request("changeDictionaryName", {number, name});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("dictionaryNameChanged");
       if (this.props.onSubmit) {

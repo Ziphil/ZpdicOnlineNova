@@ -5,33 +5,38 @@ import {
 } from "ts-essentials";
 import {
   Commission
-} from "/server/skeleton/commission";
+} from "/client/skeleton/commission";
 import {
   DetailedDictionary,
   Dictionary,
   DictionarySettings,
   EditWord,
-  SearchParameter,
   Suggestion,
   UserDictionary,
-  Word
-} from "/server/skeleton/dictionary";
+  Word,
+  WordParameter
+} from "/client/skeleton/dictionary";
 import {
   CustomError
-} from "/server/skeleton/error";
+} from "/client/skeleton/error";
 import {
   History
-} from "/server/skeleton/history";
+} from "/client/skeleton/history";
 import {
-  Invitation
-} from "/server/skeleton/invitation";
+  Invitation,
+  InvitationType
+} from "/client/skeleton/invitation";
 import {
   Notification
-} from "/server/skeleton/notification";
+} from "/client/skeleton/notification";
 import {
   DetailedUser,
   User
-} from "/server/skeleton/user";
+} from "/client/skeleton/user";
+import {
+  DictionaryAuthority,
+  DictionaryFullAuthority
+} from "/server/model/dictionary";
 
 
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
@@ -80,425 +85,299 @@ export const SERVER_PATHS = {
   contact: "/other/contact"
 };
 
-type ProcessData = {
+type ServerSpecs = {
   createDictionary: {
-    get: Noop,
-    post: {
-      request: {name: string},
-      response: {
-        200: Dictionary,
-        400: never
-      }
+    request: {name: string},
+    response: {
+      success: Dictionary,
+      error: never
     }
   },
   uploadDictionary: {
-    get: Noop,
-    post: {
-      request: {number: number},
-      response: {
-        200: Dictionary,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
+    request: {number: number},
+    response: {
+      success: Dictionary,
+      error: CustomError<"noSuchDictionaryNumber">
     }
   },
   deleteDictionary: {
-    get: Noop,
-    post: {
-      request: {number: number},
-      response: {
-        200: null,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
+    request: {number: number},
+    response: {
+      success: null,
+      error: CustomError<"noSuchDictionaryNumber">
     }
   },
   changeDictionaryName: {
-    get: Noop,
-    post: {
-      request: {number: number, name: string},
-      response: {
-        200: Dictionary,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
+    request: {number: number, name: string},
+    response: {
+      success: Dictionary,
+      error: CustomError<"noSuchDictionaryNumber">
     }
   },
   changeDictionaryParamName: {
-    get: Noop,
-    post: {
-      request: {number: number, paramName: string},
-      response: {
-        200: Dictionary,
-        400: CustomError<"noSuchDictionaryNumber" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
-      }
+    request: {number: number, paramName: string},
+    response: {
+      success: Dictionary,
+      error: CustomError<"noSuchDictionaryNumber" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
     }
   },
   changeDictionarySecret: {
-    get: Noop,
-    post: {
-      request: {number: number, secret: boolean},
-      response: {
-        200: Dictionary,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
+    request: {number: number, secret: boolean},
+    response: {
+      success: Dictionary,
+      error: CustomError<"noSuchDictionaryNumber">
     }
   },
   changeDictionaryExplanation: {
-    get: Noop,
-    post: {
-      request: {number: number, explanation: string},
-      response: {
-        200: Dictionary,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
+    request: {number: number, explanation: string},
+    response: {
+      success: Dictionary,
+      error: CustomError<"noSuchDictionaryNumber">
     }
   },
   changeDictionarySettings: {
-    get: Noop,
-    post: {
-      request: {number: number, settings: Partial<DictionarySettings>},
-      response: {
-        200: Dictionary,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
+    request: {number: number, settings: Partial<DictionarySettings>},
+    response: {
+      success: Dictionary,
+      error: CustomError<"noSuchDictionaryNumber">
     }
   },
   deleteDictionaryAuthorizedUser: {
-    get: Noop,
-    post: {
-      request: {number: number, id: string},
-      response: {
-        200: null,
-        400: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryAuthorizedUser">
-      }
+    request: {number: number, id: string},
+    response: {
+      success: null,
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryAuthorizedUser">
     }
   },
   addInvitation: {
-    get: Noop,
-    post: {
-      request: {number: number, type: string, userName: string},
-      response: {
-        200: Invitation,
-        400: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "userCanAlreadyOwn" | "editInvitationAlreadyAdded" | "transferInvitationAlreadyAdded">
-      }
+    request: {number: number, type: InvitationType, userName: string},
+    response: {
+      success: Invitation,
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "userCanAlreadyOwn" | "editInvitationAlreadyAdded" | "transferInvitationAlreadyAdded">
     }
   },
   respondInvitation: {
-    get: Noop,
-    post: {
-      request: {id: string, accept: boolean},
-      response: {
-        200: Invitation,
-        400: CustomError<"noSuchInvitation">
-      }
+    request: {id: string, accept: boolean},
+    response: {
+      success: Invitation,
+      error: CustomError<"noSuchInvitation">
     }
   },
   editWord: {
-    get: Noop,
-    post: {
-      request: {number: number, word: EditWord},
-      response: {
-        200: Word,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
+    request: {number: number, word: EditWord},
+    response: {
+      success: Word,
+      error: CustomError<"noSuchDictionaryNumber">
     }
   },
   deleteWord: {
-    get: Noop,
-    post: {
-      request: {number: number, wordNumber: number},
-      response: {
-        200: Word,
-        400: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber">
-      }
+    request: {number: number, wordNumber: number},
+    response: {
+      success: Word,
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber">
     }
   },
   addCommission: {
-    get: Noop,
-    post: {
-      request: WithRecaptcha<{number: number, name: string, comment?: string}>,
-      response: {
-        200: Commission,
-        400: CustomError<"noSuchDictionaryNumber" | "emptyCommissionName">
-      }
+    request: WithRecaptcha<{number: number, name: string, comment?: string}>,
+    response: {
+      success: Commission,
+      error: CustomError<"noSuchDictionaryNumber" | "emptyCommissionName">
     }
   },
   deleteCommission: {
-    get: Noop,
-    post: {
-      request: {number: number, id: string},
-      response: {
-        200: Commission,
-        400: CustomError<"noSuchDictionaryNumber" | "noSuchCommission">
-      }
+    request: {number: number, id: string},
+    response: {
+      success: Commission,
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchCommission">
     }
   }
   searchDictionary: {
-    get: Noop
-    post: {
-      request: {number: number, parameter: SearchParameter, offset?: number, size?: number},
-      response: {
-        200: {words: WithSize<Word>, suggestions: Array<Suggestion>},
-        400: CustomError<"noSuchDictionaryNumber">
-      }
+    request: {number: number, parameter: WordParameter, offset?: number, size?: number},
+    response: {
+      success: {words: WithSize<Word>, suggestions: Array<Suggestion>},
+      error: CustomError<"noSuchDictionaryNumber">
     }
   },
   downloadDictionary: {
-    get: {
-      request: {number: number, fileName?: string},
-      response: {
-        200: never,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
-    },
-    post: Noop
+    request: {number: number, fileName?: string},
+    response: {
+      success: never,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
   },
   fetchDictionary: {
-    get: {
-      request: {number?: number, paramName?: string},
-      response: {
-        200: DetailedDictionary,
-        400: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
-      }
-    },
-    post: Noop
+    request: {number?: number, paramName?: string},
+    response: {
+      success: DetailedDictionary,
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
+    }
   },
   suggestDictionaryTitles: {
-    get: {
-      request: {number: number, propertyName: string, pattern: string},
-      response: {
-        200: Array<string>,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
-    },
-    post: Noop
+    request: {number: number, propertyName: string, pattern: string},
+    response: {
+      success: Array<string>,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
   },
   fetchDictionaryAuthorizedUsers: {
-    get: {
-      request: {number: number, authority: string},
-      response: {
-        200: Array<User>,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
-    },
-    post: Noop
+    request: {number: number, authority: DictionaryFullAuthority},
+    response: {
+      success: Array<User>,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
   },
   fetchWholeDictionary: {
-    get: {
-      request: {number: number},
-      response: {
-        200: DetailedDictionary,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
-    },
-    post: Noop
+    request: {number: number},
+    response: {
+      success: DetailedDictionary,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
   }
   fetchDictionaries: {
-    get: {
-      request: {},
-      response: {
-        200: Array<UserDictionary>,
-        400: never
-      }
-    },
-    post: Noop
+    request: {},
+    response: {
+      success: Array<UserDictionary>,
+      error: never
+    }
   },
   fetchAllDictionaries: {
-    get: {
-      request: {order: string, offset?: number, size?: number},
-      response: {
-        200: WithSize<DetailedDictionary>,
-        400: never
-      }
-    },
-    post: Noop
+    request: {order: string, offset?: number, size?: number},
+    response: {
+      success: WithSize<DetailedDictionary>,
+      error: never
+    }
   },
   fetchDictionaryAggregation: {
-    get: {
-      request: {},
-      response: {
-        200: {dictionaryCount: number, wordCount: number, dictionarySize: number, wordSize: number},
-        400: never
-      }
-    },
-    post: Noop
+    request: {},
+    response: {
+      success: {dictionaryCount: number, wordCount: number, dictionarySize: number, wordSize: number},
+      error: never
+    }
   },
   fetchInvitations: {
-    get: {
-      request: {type: string},
-      response: {
-        200: Array<Invitation>,
-        400: never
-      }
-    },
-    post: Noop
+    request: {type: InvitationType},
+    response: {
+      success: Array<Invitation>,
+      error: never
+    }
   },
   checkDictionaryAuthorization: {
-    get: {
-      request: {number: number, authority: string},
-      response: {
-        200: null,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
-    },
-    post: Noop
+    request: {number: number, authority: DictionaryAuthority},
+    response: {
+      success: null,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
   },
   fetchCommissions: {
-    get: {
-      request: {number: number, offset?: number, size?: number},
-      response: {
-        200: WithSize<Commission>,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
-    },
-    post: Noop
+    request: {number: number, offset?: number, size?: number},
+    response: {
+      success: WithSize<Commission>,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
   },
   login: {
-    get: Noop,
-    post: {
-      request: {name: string, password: string},
-      response: {
-        200: {token: string, user: DetailedUser},
-        400: never
-      }
+    request: {name: string, password: string},
+    response: {
+      success: {token: string, user: DetailedUser},
+      error: never
     }
   },
   logout: {
-    get: Noop,
-    post: {
-      request: {},
-      response: {
-        200: null,
-        400: never
-      }
+    request: {},
+    response: {
+      success: null,
+      error: never
     }
   },
   registerUser: {
-    get: Noop,
-    post: {
-      request: WithRecaptcha<{name: string, email: string, password: string}>,
-      response: {
-        200: User,
-        400: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidUserEmail" | "invalidUserPassword">
-      }
+    request: WithRecaptcha<{name: string, email: string, password: string}>,
+    response: {
+      success: User,
+      error: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidUserEmail" | "invalidUserPassword">
     }
   },
   changeUserScreenName: {
-    get: Noop,
-    post: {
-      request: {screenName: string},
-      response: {
-        200: User,
-        400: never
-      }
+    request: {screenName: string},
+    response: {
+      success: User,
+      error: never
     }
   },
   changeUserEmail: {
-    get: Noop,
-    post: {
-      request: {email: string},
-      response: {
-        200: User,
-        400: CustomError<"duplicateUserEmail" | "invalidUserEmail">
-      }
+    request: {email: string},
+    response: {
+      success: User,
+      error: CustomError<"duplicateUserEmail" | "invalidUserEmail">
     }
   },
   changeUserPassword: {
-    get: Noop,
-    post: {
-      request: {password: string},
-      response: {
-        200: User,
-        400: CustomError<"invalidUserPassword">
-      }
+    request: {password: string},
+    response: {
+      success: User,
+      error: CustomError<"invalidUserPassword">
     }
   },
   issueUserResetToken: {
-    get: Noop,
-    post: {
-      request: WithRecaptcha<{name: string, email: string}>,
-      response: {
-        200: null,
-        400: CustomError<"noSuchUser">
-      }
+    request: WithRecaptcha<{name: string, email: string}>,
+    response: {
+      success: null,
+      error: CustomError<"noSuchUser">
     }
   },
   resetUserPassword: {
-    get: Noop,
-    post: {
-      request: {key: string, password: string},
-      response: {
-        200: User,
-        400: CustomError<"invalidResetToken" | "invalidUserPassword">
-      }
+    request: {key: string, password: string},
+    response: {
+      success: User,
+      error: CustomError<"invalidResetToken" | "invalidUserPassword">
     }
   },
   deleteUser: {
-    get: Noop,
-    post: {
-      request: {},
-      response: {
-        200: null,
-        400: never
-      }
+    request: {},
+    response: {
+      success: null,
+      error: never
     }
   },
   fetchUser: {
-    get: {
-      request: {},
-      response: {
-        200: DetailedUser,
-        400: never
-      }
-    },
-    post: Noop
+    request: {},
+    response: {
+      success: DetailedUser,
+      error: never
+    }
   },
   suggestUsers: {
-    get: {
-      request: {pattern: string},
-      response: {
-        200: Array<User>,
-        400: never
-      }
-    },
-    post: Noop
+    request: {pattern: string},
+    response: {
+      success: Array<User>,
+      error: never
+    }
   },
   addNotification: {
-    get: Noop,
-    post: {
-      request: {type: string, title: string, text: string},
-      response: {
-        200: Notification,
-        400: never
-      }
+    request: {type: string, title: string, text: string},
+    response: {
+      success: Notification,
+      error: never
     }
   },
   fetchNotifications: {
-    get: {
-      request: {offset?: number, size?: number},
-      response: {
-        200: WithSize<Notification>,
-        400: never
-      }
-    },
-    post: Noop
+    request: {offset?: number, size?: number},
+    response: {
+      success: WithSize<Notification>,
+      error: never
+    }
   },
   fetchHistories: {
-    get: {
-      request: {number: number, from: string},
-      response: {
-        200: Array<History>,
-        400: CustomError<"noSuchDictionaryNumber">
-      }
-    },
-    post: Noop
+    request: {number: number, from: string},
+    response: {
+      success: Array<History>,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
   },
   contact: {
-    get: Noop,
-    post: {
-      request: WithRecaptcha<{name: string, email: string, subject: string, text: string}>,
-      response: {
-        200: null,
-        400: CustomError<"emptyContactText" | "administratorNotFound">
-      }
+    request: WithRecaptcha<{name: string, email: string, subject: string, text: string}>,
+    response: {
+      success: null,
+      error: CustomError<"emptyContactText" | "administratorNotFound">
     }
   }
 };
@@ -506,12 +385,9 @@ type ProcessData = {
 export type WithRecaptcha<T> = T & {recaptchaToken: string};
 export type WithSize<T> = [Array<T>, number];
 
-export type Method = "get" | "post";
-export type Status = 200 | 400;
-export type ProcessName = keyof ProcessData;
+export type Status = "success" | "error";
+export type ProcessName = keyof ServerSpecs;
 
-export type RequestData<N extends ProcessName, M extends Method> = ProcessData[N][M]["request"];
-export type ResponseData<N extends ProcessName, M extends Method> = ValueOf<ProcessData[N][M]["response"]>;
-export type ResponseDataSep<N extends ProcessName, M extends Method, S extends Status> = ProcessData[N][M]["response"][S];
-
-type Noop = {request: never, response: never};
+export type RequestData<N extends ProcessName> = ServerSpecs[N]["request"];
+export type ResponseData<N extends ProcessName> = ValueOf<ServerSpecs[N]["response"]>;
+export type ResponseEachData<N extends ProcessName, S extends Status> = ServerSpecs[N]["response"][S];

@@ -31,13 +31,6 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  deleteAt,
-  swap
-} from "/client/util/misc";
-import {
-  StyleNameUtil
-} from "/client/util/style-name";
-import {
   Dictionary,
   EditWord,
   Equivalent,
@@ -45,7 +38,14 @@ import {
   Relation,
   Variation,
   Word
-} from "/server/skeleton/dictionary";
+} from "/client/skeleton/dictionary";
+import {
+  deleteAt,
+  swap
+} from "/client/util/misc";
+import {
+  StyleNameUtil
+} from "/client/util/style-name";
 
 
 @style(require("./word-editor.scss"))
@@ -80,7 +80,7 @@ export default class WordEditor extends Component<Props, State> {
     equivalentStrings.forEach((equivalentString, index) => {
       word.equivalents[index].names = equivalentString.split(/\s*,\s*/);
     });
-    let response = await this.requestPost("editWord", {number, word});
+    let response = await this.request("editWord", {number, word});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("wordEdited");
       if (this.props.onClose) {
@@ -96,7 +96,7 @@ export default class WordEditor extends Component<Props, State> {
     let number = this.props.dictionary.number;
     let wordNumber = this.state.word.number;
     if (wordNumber !== undefined) {
-      let response = await this.requestPost("deleteWord", {number, wordNumber});
+      let response = await this.request("deleteWord", {number, wordNumber});
       if (response.status === 200) {
         this.props.store!.addInformationPopup("wordDeleted");
         if (this.props.onClose) {
@@ -118,7 +118,7 @@ export default class WordEditor extends Component<Props, State> {
     let outerThis = this;
     let number = this.props.dictionary.number;
     let suggest = async function (pattern: string): Promise<Array<SuggestionSpec<string>>> {
-      let response = await outerThis.requestGet("suggestDictionaryTitles", {number, propertyName, pattern}, {ignoreError: true});
+      let response = await outerThis.request("suggestDictionaryTitles", {number, propertyName, pattern}, {ignoreError: true});
       if (response.status === 200 && !("error" in response.data)) {
         let titles = response.data;
         let suggestions = titles.map((title) => ({replacement: title, node: title}));

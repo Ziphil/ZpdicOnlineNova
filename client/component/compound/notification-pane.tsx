@@ -11,7 +11,7 @@ import {
 } from "/client/component/decorator";
 import {
   Notification
-} from "/server/skeleton/notification";
+} from "/client/skeleton/notification";
 
 
 @style(require("./notification-pane.scss"))
