@@ -29,14 +29,14 @@
   box-sizing: border-box;
   @include smartphone {
     width: 100%;
-    padding: 0px;
+    padding: 0px 0px 30px 0px;
     flex-basis: content;
   }
 }
 
 .force-wide .description-wrapper {
   width: 100%;
-  padding: 0px;
+  padding: 0px 0px 30px 0px;
   flex-basis: content;
 }
 
@@ -47,14 +47,12 @@
   box-sizing: border-box;
   @include smartphone {
     width: 100%;
-    padding: 30px 0px 0px 0px;
     flex-basis: content;
   }
 }
 
 .force-wide .content {
   width: 100%;
-  padding: 30px 0px 0px 0px;
   flex-basis: content;
 }
 
