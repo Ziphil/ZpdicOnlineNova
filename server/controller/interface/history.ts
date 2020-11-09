@@ -11,7 +11,7 @@ import {
 import {
   before,
   controller,
-  get
+  post
 } from "/server/controller/decorator";
 import {
   SERVER_PATHS,
@@ -33,7 +33,7 @@ import {
 @controller(SERVER_PATH_PREFIX)
 export class HistoryController extends Controller {
 
-  @get(SERVER_PATHS["fetchHistories"])
+  @post(SERVER_PATHS["fetchHistories"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchHistories">, response: Response<"fetchHistories">): Promise<void> {
     let dictionary = request.dictionary;
