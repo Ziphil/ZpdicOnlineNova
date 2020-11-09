@@ -26,7 +26,8 @@ import {
 export default class SearchForm extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
-    parameter: NormalWordParameter.createEmpty()
+    parameter: NormalWordParameter.createEmpty(),
+    showAdvancedSearch: false
   };
   public state: State = {
     searchFormOpen: false
@@ -91,6 +92,20 @@ export default class SearchForm extends Component<Props, State> {
       {value: "regular", label: this.trans("searchForm.regular")}
     ] as const;
     let parameter = this.getNormalSearchParameter();
+    let advancedSearchButton = (this.props.showAdvancedSearch) && (
+      <div styleName="radio-wrapper">
+        <Button label={this.trans("searchForm.advancedSearch")} iconLabel="&#xF00E;" style="simple" onClick={() => this.setState({searchFormOpen: true})}/>
+      </div>
+    );
+    let advancedSearchNode = (this.props.showAdvancedSearch) && (
+      <AdvancedSearchForm
+        dictionary={this.props.dictionary}
+        defaultParameter={this.props.parameter}
+        open={this.state.searchFormOpen}
+        onConfirm={this.handleAdvancedSearchConfirm.bind(this)}
+        onClose={() => this.setState({searchFormOpen: false})}
+      />
+    );
     let node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
@@ -101,17 +116,9 @@ export default class SearchForm extends Component<Props, State> {
           <div styleName="radio-wrapper">
             <RadioGroup name="type" value={parameter.type} specs={typeSpecs} onSet={this.handleTypeSet.bind(this)}/>
           </div>
-          <div styleName="radio-wrapper">
-            <Button label={this.trans("searchForm.advancedSearch")} iconLabel="&#xF00E;" style="simple" onClick={() => this.setState({searchFormOpen: true})}/>
-          </div>
+          {advancedSearchButton}
         </form>
-        <AdvancedSearchForm
-          dictionary={this.props.dictionary}
-          defaultParameter={this.props.parameter}
-          open={this.state.searchFormOpen}
-          onConfirm={this.handleAdvancedSearchConfirm.bind(this)}
-          onClose={() => this.setState({searchFormOpen: false})}
-        />
+        {advancedSearchNode}
       </Fragment>
     );
     return node;
@@ -123,10 +130,12 @@ export default class SearchForm extends Component<Props, State> {
 type Props = {
   dictionary: Dictionary,
   parameter: WordParameter,
+  showAdvancedSearch: boolean,
   onParameterSet?: (parameter: WordParameter) => void;
 };
 type DefaultProps = {
-  parameter: WordParameter
+  parameter: WordParameter,
+  showAdvancedSearch: boolean
 };
 type State = {
   searchFormOpen: boolean
