@@ -36,7 +36,7 @@ export class HistoryController extends Controller {
     let dictionary = request.dictionary;
     let from = new Date(request.body.from);
     if (dictionary) {
-      let histories = await HistoryModel.findLatest(dictionary, from);
+      let histories = await HistoryModel.fetch(dictionary, from);
       let body = histories.map(HistoryCreator.create);
       Controller.respond(response, body);
     } else {

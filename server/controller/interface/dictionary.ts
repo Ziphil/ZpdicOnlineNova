@@ -90,7 +90,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: Request<"deleteDictionary">, response: Response<"deleteDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {
-      await dictionary.removeWhole();
+      await dictionary.remove();
       Controller.respond(response, null);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
@@ -152,7 +152,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       if (user) {
         try {
-          await dictionary.deleteAuthorizedUser(user);
+          await dictionary.removeAuthorizedUser(user);
           Controller.respond(response, null);
         } catch (error) {
           let body = (() => {
@@ -223,7 +223,7 @@ export class DictionaryController extends Controller {
     let parameter = SearchParameterCreator.restore(request.body.parameter);
     let offset = request.body.offset;
     let size = request.body.size;
-    let dictionary = await DictionaryModel.findOneByNumber(number);
+    let dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       let range = new QueryRange(offset, size);
       let hitResult = await dictionary.search(parameter, range);
@@ -242,7 +242,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: Request<"downloadDictionary">, response: Response<"downloadDictionary">): Promise<void> {
     let number = request.body.number;
     let fileName = request.body.fileName;
-    let dictionary = await DictionaryModel.findOneByNumber(number);
+    let dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       let date = new Date();
       let id = date.getTime();
@@ -262,7 +262,7 @@ export class DictionaryController extends Controller {
     let paramName = request.body.paramName;
     let value = number ?? paramName;
     if (value !== undefined) {
-      let dictionary = await DictionaryModel.findOneByValue(value);
+      let dictionary = await DictionaryModel.fetchOneByValue(value);
       if (dictionary) {
         let body = await DictionaryCreator.createDetailed(dictionary);
         Controller.respond(response, body);
@@ -287,7 +287,7 @@ export class DictionaryController extends Controller {
     let number = request.body.number;
     let propertyName = request.body.propertyName;
     let pattern = request.body.pattern;
-    let dictionary = await DictionaryModel.findOneByNumber(number);
+    let dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       let titles = await dictionary.suggestTitles(propertyName, pattern);
       let body = titles;
@@ -304,7 +304,7 @@ export class DictionaryController extends Controller {
     let dictionary = request.dictionary;
     let authority = request.body.authority;
     if (dictionary) {
-      let users = await dictionary.getAuthorizedUsers(authority);
+      let users = await dictionary.fetchAuthorizedUsers(authority);
       let body = users.map(UserCreator.create);
       Controller.respond(response, body);
     } else {
@@ -316,7 +316,7 @@ export class DictionaryController extends Controller {
   @post(SERVER_PATHS["fetchWholeDictionary"])
   public async [Symbol()](request: Request<"fetchWholeDictionary">, response: Response<"fetchWholeDictionary">): Promise<void> {
     let number = request.body.number;
-    let dictionary = await DictionaryModel.findOneByNumber(number);
+    let dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       let body = await DictionaryCreator.createDetailed(dictionary);
       Controller.respond(response, body);
@@ -330,7 +330,7 @@ export class DictionaryController extends Controller {
   @before(verifyUser())
   public async [Symbol()](request: Request<"fetchDictionaries">, response: Response<"fetchDictionaries">): Promise<void> {
     let user = request.user!;
-    let dictionaries = await DictionaryModel.findByUser(user, "edit");
+    let dictionaries = await DictionaryModel.fetchByUser(user, "edit");
     let promises = dictionaries.map((dictionary) => {
       let promise = new Promise<UserDictionary>(async (resolve, reject) => {
         try {
@@ -352,7 +352,7 @@ export class DictionaryController extends Controller {
     let offset = request.body.offset;
     let size = request.body.size;
     let range = new QueryRange(offset, size);
-    let hitResult = await DictionaryModel.findPublic(order, range);
+    let hitResult = await DictionaryModel.fetch(order, range);
     let hitPromises = hitResult[0].map((hitDictionary) => {
       let promise = new Promise<DetailedDictionary>(async (resolve, reject) => {
         try {
@@ -387,7 +387,7 @@ export class DictionaryController extends Controller {
     let user = request.user!;
     let number = request.body.number;
     let authority = request.body.authority;
-    let dictionary = await DictionaryModel.findOneByNumber(number);
+    let dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       let hasAuthority = await dictionary.hasAuthority(user, authority);
       if (hasAuthority) {

@@ -51,7 +51,7 @@ export class WordController extends Controller {
     let wordNumber = request.body.wordNumber;
     if (dictionary) {
       try {
-        let resultWord = await dictionary.deleteWord(wordNumber);
+        let resultWord = await dictionary.removeWord(wordNumber);
         let body = WordCreator.create(resultWord);
         Controller.respond(response, body);
       } catch (error) {

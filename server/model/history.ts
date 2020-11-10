@@ -35,7 +35,7 @@ export class HistorySchema {
   @prop({require: true})
   public wordSize!: number;
 
-  public static async findLatest(dictionary: Dictionary, from: Date): Promise<Array<History>> {
+  public static async fetch(dictionary: Dictionary, from: Date): Promise<Array<History>> {
     let histories = await HistoryModel.find().where("dictionary", dictionary).gte("date", from);
     return histories;
   }
