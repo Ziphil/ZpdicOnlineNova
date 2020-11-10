@@ -85,9 +85,9 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["deleteDictionary"])
+  @post(SERVER_PATHS["removeDictionary"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: Request<"deleteDictionary">, response: Response<"deleteDictionary">): Promise<void> {
+  public async [Symbol()](request: Request<"removeDictionary">, response: Response<"removeDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {
       await dictionary.remove();
@@ -143,9 +143,9 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["deleteDictionaryAuthorizedUser"])
+  @post(SERVER_PATHS["removeDictionaryAuthorizedUser"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: Request<"deleteDictionaryAuthorizedUser">, response: Response<"deleteDictionaryAuthorizedUser">): Promise<void> {
+  public async [Symbol()](request: Request<"removeDictionaryAuthorizedUser">, response: Response<"removeDictionaryAuthorizedUser">): Promise<void> {
     let dictionary = request.dictionary;
     let id = request.body.id;
     let user = await UserModel.findById(id);
@@ -306,19 +306,6 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       let users = await dictionary.fetchAuthorizedUsers(authority);
       let body = users.map(UserCreator.create);
-      Controller.respond(response, body);
-    } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
-    }
-  }
-
-  @post(SERVER_PATHS["fetchWholeDictionary"])
-  public async [Symbol()](request: Request<"fetchWholeDictionary">, response: Response<"fetchWholeDictionary">): Promise<void> {
-    let number = request.body.number;
-    let dictionary = await DictionaryModel.fetchOneByNumber(number);
-    if (dictionary) {
-      let body = await DictionaryCreator.createDetailed(dictionary);
       Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");

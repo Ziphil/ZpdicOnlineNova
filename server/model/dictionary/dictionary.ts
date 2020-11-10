@@ -328,7 +328,7 @@ export class DictionarySchema {
     } else {
       throw new CustomError("noSuchWordNumber");
     }
-    LogUtil.log("dictionary/delete-word", {dictionary: {id: this.id, name: this.name}, current: word.id});
+    LogUtil.log("dictionary/remove-word", {dictionary: {id: this.id, name: this.name}, current: word.id});
     return word;
   }
 

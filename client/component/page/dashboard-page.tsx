@@ -16,7 +16,7 @@ import ChangeUserEmailForm from "/client/component/form/change-user-email-form";
 import ChangeUserPasswordForm from "/client/component/form/change-user-password-form";
 import ChangeUserScreenNameForm from "/client/component/form/change-user-screen-name-form";
 import CreateDictionaryForm from "/client/component/form/create-dictionary-form";
-import DeleteUserForm from "/client/component/form/delete-user-form";
+import RemoveUserForm from "/client/component/form/remove-user-form";
 import Page from "/client/component/page/page";
 import {
   UserDictionary
@@ -143,12 +143,12 @@ export default class DashboardPage extends Component<Props, State, Params> {
     return node;
   }
 
-  private renderDeleteUserForm(): ReactNode {
-    let label = this.trans("dashboardPage.deleteUserForm.label");
-    let description = this.trans("dashboardPage.deleteUserForm.description");
+  private renderRemoveUserForm(): ReactNode {
+    let label = this.trans("dashboardPage.removeUserForm.label");
+    let description = this.trans("dashboardPage.removeUserForm.description");
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        <DeleteUserForm onSubmit={() => this.pushPath("/", {}, true)}/>
+        <RemoveUserForm onSubmit={() => this.pushPath("/", {}, true)}/>
       </SettingPane>
     );
     return node;
@@ -179,7 +179,7 @@ export default class DashboardPage extends Component<Props, State, Params> {
         contentNodes.push(this.renderChangeUserScreenNameForm());
         contentNodes.push(this.renderChangeUserEmailForm());
         contentNodes.push(this.renderChangeUserPasswordForm());
-        contentNodes.push(this.renderDeleteUserForm());
+        contentNodes.push(this.renderRemoveUserForm());
       }
     }
     let node = (

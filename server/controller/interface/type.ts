@@ -43,44 +43,43 @@ export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_versio
 export const SERVER_PATHS = {
   createDictionary: "/dictionary/create",
   uploadDictionary: "/dictionary/upload",
-  deleteDictionary: "/dictionary/delete",
+  removeDictionary: "/dictionary/remove",
   changeDictionaryName: "/dictionary/edit/name",
   changeDictionaryParamName: "/dictionary/edit/param-name",
   changeDictionarySecret: "/dictionary/edit/secret",
   changeDictionaryExplanation: "/dictionary/edit/explanation",
   changeDictionarySettings: "/dictionary/edit/settings",
-  deleteDictionaryAuthorizedUser: "/dictionary/user/delete",
+  removeDictionaryAuthorizedUser: "/dictionary/user/remove",
   addInvitation: "/invitation/add",
   respondInvitation: "/invitation/respond",
   editWord: "/word/edit",
-  deleteWord: "/word/delete",
-  addCommission: "/request/add",
-  deleteCommission: "/request/delete",
+  removeWord: "/word/remove",
+  addCommission: "/commission/add",
+  removeCommission: "/commission/remove",
   searchDictionary: "/dictionary/search",
   downloadDictionary: "/dictionary/download",
-  fetchDictionary: "/dictionary/info",
+  fetchDictionary: "/dictionary/fetch",
   suggestDictionaryTitles: "/dictionary/suggest/title",
   fetchDictionaryAuthorizedUsers: "/dictionary/user",
-  fetchWholeDictionary: "/dictionary/whole",
   fetchDictionaries: "/dictionary/list",
   fetchAllDictionaries: "/dictionary/list/all",
   fetchDictionaryAggregation: "/dictionary/aggregate",
   fetchInvitations: "/invitation/fetch",
   checkDictionaryAuthorization: "/dictionary/check",
-  fetchCommissions: "/request/fetch",
+  fetchCommissions: "/commission/fetch",
   login: "/user/login",
   logout: "/user/logout",
   registerUser: "/user/register",
-  changeUserScreenName: "/user/edit/name",
+  changeUserScreenName: "/user/edit/screen-name",
   changeUserEmail: "/user/edit/email",
   changeUserPassword: "/user/edit/password",
   issueUserResetToken: "/user/reset/token",
   resetUserPassword: "/user/reset/reset",
-  deleteUser: "/user/delete",
-  fetchUser: "/user/info",
-  suggestUsers: "/user/suggestion",
+  removeUser: "/user/remove",
+  fetchUser: "/user/fetch",
+  suggestUsers: "/user/suggest",
   addNotification: "/notification/add",
-  fetchNotifications: "/notification/list",
+  fetchNotifications: "/notification/fetch",
   fetchHistories: "/history/fetch",
   contact: "/other/contact"
 };
@@ -100,7 +99,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
-  deleteDictionary: {
+  removeDictionary: {
     request: {number: number},
     response: {
       success: null,
@@ -142,7 +141,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
-  deleteDictionaryAuthorizedUser: {
+  removeDictionaryAuthorizedUser: {
     request: {number: number, id: string},
     response: {
       success: null,
@@ -170,7 +169,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
-  deleteWord: {
+  removeWord: {
     request: {number: number, wordNumber: number},
     response: {
       success: Word,
@@ -184,7 +183,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber" | "emptyCommissionName">
     }
   },
-  deleteCommission: {
+  removeCommission: {
     request: {number: number, id: string},
     response: {
       success: Commission,
@@ -226,13 +225,6 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
-  fetchWholeDictionary: {
-    request: {number: number},
-    response: {
-      success: DetailedDictionary,
-      error: CustomError<"noSuchDictionaryNumber">
-    }
-  }
   fetchDictionaries: {
     request: {},
     response: {
@@ -331,7 +323,7 @@ type ServerSpecs = {
       error: CustomError<"invalidResetToken" | "invalidUserPassword">
     }
   },
-  deleteUser: {
+  removeUser: {
     request: {},
     response: {
       success: null,

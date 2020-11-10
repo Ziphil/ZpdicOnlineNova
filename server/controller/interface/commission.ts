@@ -59,9 +59,9 @@ export class CommissionController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["deleteCommission"])
+  @post(SERVER_PATHS["removeCommission"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: Request<"deleteCommission">, response: Response<"deleteCommission">): Promise<void> {
+  public async [Symbol()](request: Request<"removeCommission">, response: Response<"removeCommission">): Promise<void> {
     let dictionary = request.dictionary!;
     let id = request.body.id;
     if (dictionary) {

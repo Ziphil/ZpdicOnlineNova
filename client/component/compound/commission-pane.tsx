@@ -34,22 +34,22 @@ export default class CommissionPane extends Component<Props, State> {
     editorOpen: false
   };
 
-  private async deleteCommission(event: MouseEvent<HTMLButtonElement>, showPopup?: boolean): Promise<void> {
+  private async removeCommission(event: MouseEvent<HTMLButtonElement>, showPopup?: boolean): Promise<void> {
     let number = this.props.dictionary.number;
     let id = this.props.commission.id;
-    let response = await this.request("deleteCommission", {number, id});
+    let response = await this.request("removeCommission", {number, id});
     if (response.status === 200) {
       if (showPopup) {
-        this.props.store!.addInformationPopup("commissionDeleted");
+        this.props.store!.addInformationPopup("commissionRemoved");
       }
-      if (this.props.onDeleteConfirm) {
-        await this.props.onDeleteConfirm(event);
+      if (this.props.onRemoveConfirm) {
+        await this.props.onRemoveConfirm(event);
       }
     }
   }
 
   private async handleEditConfirm(word: EditWord, event: MouseEvent<HTMLButtonElement>): Promise<void> {
-    await this.deleteCommission(event, false);
+    await this.removeCommission(event, false);
     if (this.props.onAddConfirm) {
       await this.props.onAddConfirm(word, event);
     }
@@ -65,17 +65,17 @@ export default class CommissionPane extends Component<Props, State> {
             {this.props.commission.comment}
           </div>
           <div styleName="button">
-            <Button label={this.trans("commissionPane.delete")} iconLabel="&#xF2ED;" style="simple" onClick={() => this.setState({alertOpen: true})}/>
+            <Button label={this.trans("commissionPane.remove")} iconLabel="&#xF2ED;" style="simple" onClick={() => this.setState({alertOpen: true})}/>
             <Button label={this.trans("commissionPane.add")} iconLabel="&#xF067;" style="simple" onClick={() => this.setState({editorOpen: true})}/>
           </div>
         </div>
         <Alert
           text={this.trans("commissionPane.alert")}
-          confirmLabel={this.trans("commissionPane.delete")}
+          confirmLabel={this.trans("commissionPane.remove")}
           open={this.state.alertOpen}
           outsideClosable={true}
           onClose={() => this.setState({alertOpen: false})}
-          onConfirm={this.deleteCommission.bind(this)}
+          onConfirm={this.removeCommission.bind(this)}
         />
         <Suspense fallback="">
           <WordEditor
@@ -98,7 +98,7 @@ export default class CommissionPane extends Component<Props, State> {
 type Props = {
   commission: Commission,
   dictionary: Dictionary,
-  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   onAddConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {

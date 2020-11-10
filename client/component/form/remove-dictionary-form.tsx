@@ -13,18 +13,18 @@ import {
 } from "/client/component/decorator";
 
 
-@style(require("./delete-dictionary-form.scss"))
-export default class DeleteDictionaryForm extends Component<Props, State> {
+@style(require("./remove-dictionary-form.scss"))
+export default class RemoveDictionaryForm extends Component<Props, State> {
 
   public state: State = {
     alertOpen: false
   };
 
-  private async deleteDictionary(): Promise<void> {
+  private async removeDictionary(): Promise<void> {
     let number = this.props.number;
-    let response = await this.request("deleteDictionary", {number});
+    let response = await this.request("removeDictionary", {number});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("dictionaryDeleted");
+      this.props.store!.addInformationPopup("dictionaryRemoved");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
@@ -35,18 +35,18 @@ export default class DeleteDictionaryForm extends Component<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Button label={this.trans("deleteDictionaryForm.confirm")} reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
+          <Button label={this.trans("removeDictionaryForm.confirm")} reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
         </form>
         <p styleName="caution">
-          {this.trans("deleteDictionaryForm.caution")}
+          {this.trans("removeDictionaryForm.caution")}
         </p>
         <Alert
-          text={this.trans("deleteDictionaryForm.alert")}
-          confirmLabel={this.trans("deleteDictionaryForm.confirm")}
+          text={this.trans("removeDictionaryForm.alert")}
+          confirmLabel={this.trans("removeDictionaryForm.confirm")}
           open={this.state.alertOpen}
           outsideClosable={true}
           onClose={() => this.setState({alertOpen: false})}
-          onConfirm={this.deleteDictionary.bind(this)}
+          onConfirm={this.removeDictionary.bind(this)}
         />
       </Fragment>
     );

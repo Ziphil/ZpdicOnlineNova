@@ -44,9 +44,9 @@ export class WordController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["deleteWord"])
+  @post(SERVER_PATHS["removeWord"])
   @before(verifyUser(), verifyDictionary("edit"))
-  public async [Symbol()](request: Request<"deleteWord">, response: Response<"deleteWord">): Promise<void> {
+  public async [Symbol()](request: Request<"removeWord">, response: Response<"removeWord">): Promise<void> {
     let dictionary = request.dictionary;
     let wordNumber = request.body.wordNumber;
     if (dictionary) {

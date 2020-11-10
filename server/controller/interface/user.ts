@@ -186,9 +186,9 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["deleteUser"])
+  @post(SERVER_PATHS["removeUser"])
   @before(verifyUser())
-  public async [Symbol()](request: Request<"deleteUser">, response: Response<"deleteUser">): Promise<void> {
+  public async [Symbol()](request: Request<"removeUser">, response: Response<"removeUser">): Promise<void> {
     let user = request.user!;
     try {
       await user.remove();

@@ -182,7 +182,7 @@ export default class WordPane extends Component<Props, State> {
         open={this.state.editorOpen}
         onClose={() => this.setState({editorOpen: false})}
         onEditConfirm={this.props.onEditConfirm}
-        onDeleteConfirm={this.props.onDeleteConfirm}
+        onRemoveConfirm={this.props.onRemoveConfirm}
       />
     );
     return node;
@@ -217,7 +217,7 @@ type Props = {
   showButton: boolean,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type DefaultProps = {
   style: "normal" | "simple",
