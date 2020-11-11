@@ -101,14 +101,14 @@ export class DictionarySchema {
   @prop({required: true, type: DictionarySettingsSchema})
   public settings!: DictionarySettingsSchema;
 
+  @prop({required: true, default: {}})
+  public externalData!: object;
+
   @prop()
   public createdDate?: Date;
 
   @prop()
   public updatedDate?: Date;
-
-  @prop({required: true, default: {}})
-  public externalData!: object;
 
   public static async addEmpty(name: string, user: User): Promise<Dictionary> {
     let dictionary = new DictionaryModel({});
@@ -119,9 +119,9 @@ export class DictionarySchema {
     dictionary.status = "ready";
     dictionary.secret = false;
     dictionary.settings = DictionarySettingsModel.createDefault();
+    dictionary.externalData = {};
     dictionary.createdDate = new Date();
     dictionary.updatedDate = new Date();
-    dictionary.externalData = {};
     await dictionary.save();
     return dictionary;
   }
