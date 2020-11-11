@@ -23,6 +23,9 @@ import {
   WithSize
 } from "/server/controller/interface/type";
 import {
+  RemovableSchema
+} from "/server/model/base";
+import {
   DICTIONARY_AUTHORITIES,
   Deserializer,
   DictionaryAuthority,
@@ -72,7 +75,7 @@ export let DictionaryStatusUtil = LiteralUtilType.create(DICTIONARY_STATUSES);
 
 
 @modelOptions({schemaOptions: {collection: "dictionaries", minimize: false}})
-export class DictionarySchema {
+export class DictionarySchema extends RemovableSchema {
 
   @prop({required: true, ref: "UserSchema"})
   public user!: Ref<UserSchema>;
@@ -101,14 +104,14 @@ export class DictionarySchema {
   @prop({required: true, type: DictionarySettingsSchema})
   public settings!: DictionarySettingsSchema;
 
+  @prop({required: true, default: {}})
+  public externalData!: object;
+
   @prop()
   public createdDate?: Date;
 
   @prop()
   public updatedDate?: Date;
-
-  @prop({required: true, default: {}})
-  public externalData!: object;
 
   public static async addEmpty(name: string, user: User): Promise<Dictionary> {
     let dictionary = new DictionaryModel({});
@@ -119,39 +122,39 @@ export class DictionarySchema {
     dictionary.status = "ready";
     dictionary.secret = false;
     dictionary.settings = DictionarySettingsModel.createDefault();
+    dictionary.externalData = {};
     dictionary.createdDate = new Date();
     dictionary.updatedDate = new Date();
-    dictionary.externalData = {};
     await dictionary.save();
     return dictionary;
   }
 
-  public static async findPublic(order: string, range?: QueryRange): Promise<WithSize<Dictionary>> {
+  public static async fetch(order: string, range?: QueryRange): Promise<WithSize<Dictionary>> {
     let sortArg = (order === "createdDate") ? "-createdDate -updatedDate -number" : "-updatedDate -number";
-    let query = DictionaryModel.find().ne("secret", true).sort(sortArg);
+    let query = DictionaryModel.findExist().ne("secret", true).sort(sortArg);
     let result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 
-  public static async findOneByNumber(number: number): Promise<Dictionary | null> {
-    let dictionary = await DictionaryModel.findOne().where("number", number);
+  public static async fetchOneByNumber(number: number): Promise<Dictionary | null> {
+    let dictionary = await DictionaryModel.findOneExist().where("number", number);
     return dictionary;
   }
 
-  public static async findOneByValue(value: number | string): Promise<Dictionary | null> {
+  public static async fetchOneByValue(value: number | string): Promise<Dictionary | null> {
     let key = (typeof value === "number") ? "number" : "paramName";
-    let dictionary = await DictionaryModel.findOne().where(key, value);
+    let dictionary = await DictionaryModel.findOneExist().where(key, value);
     return dictionary;
   }
 
-  public static async findByUser(user: User, authority: DictionaryAuthority): Promise<Array<Dictionary>> {
-    let ownQuery = DictionaryModel.find().where("user", user);
-    let editQuery = DictionaryModel.find().where("editUsers", user);
+  public static async fetchByUser(user: User, authority: DictionaryAuthority): Promise<Array<Dictionary>> {
+    let ownQuery = DictionaryModel.findExist().where("user", user);
+    let editQuery = DictionaryModel.findExist().where("editUsers", user);
     let rawQuery = (() => {
       if (authority === "own") {
         return ownQuery;
       } else {
-        return DictionaryModel.find().or([ownQuery.getFilter(), editQuery.getFilter()]);
+        return DictionaryModel.findExist().or([ownQuery.getFilter(), editQuery.getFilter()]);
       }
     })();
     let query = rawQuery.sort("-updatedDate -number");
@@ -216,7 +219,7 @@ export class DictionarySchema {
     this.updatedDate = new Date();
     this.externalData = {};
     await this.save();
-    await WordModel.deleteMany({}).where("dictionary", this);
+    await WordModel.flagRemoveMany().where("dictionary", this);
     LogUtil.log("dictionary/upload", `number: ${this.number}, start uploading`);
   }
 
@@ -238,15 +241,16 @@ export class DictionarySchema {
     await promise;
   }
 
-  public async removeWhole(this: Dictionary): Promise<void> {
-    await WordModel.deleteMany({}).where("dictionary", this);
+  // この辞書を削除 (削除フラグを付加) します。
+  // 削除した辞書を後で削除する直前の状態に戻せるように、この辞書に属する単語データの削除は行いません。
+  public async removeOne(this: Dictionary): Promise<void> {
     await InvitationModel.deleteMany({}).where("dictionary", this);
-    await this.remove();
+    await this.flagRemoveOne();
   }
 
   public async changeParamName(this: Dictionary, paramName: string): Promise<Dictionary> {
     if (paramName !== "") {
-      let formerDictionary = await DictionaryModel.findOne().where("paramName", paramName);
+      let formerDictionary = await DictionaryModel.findOneExist().where("paramName", paramName);
       if (formerDictionary && formerDictionary.id !== this.id) {
         throw new CustomError("duplicateDictionaryParamName");
       }
@@ -287,24 +291,19 @@ export class DictionarySchema {
     return this;
   }
 
-  public async getWords(): Promise<Array<Word>> {
-    let words = await WordModel.find().where("dictionary", this);
-    return words;
-  }
-
   // この辞書に登録されている単語を編集します。
   // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
   // そうでない場合は、渡された単語データを新しいデータとして追加します。
   // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
   public async editWord(this: Dictionary, word: EditWordSkeleton): Promise<Word> {
-    let currentWord = await WordModel.findOne().where("dictionary", this).where("number", word.number);
+    let currentWord = await WordModel.findOneExist().where("dictionary", this).where("number", word.number);
     let resultWord;
     if (currentWord) {
       resultWord = new WordModel(word);
       resultWord.dictionary = this;
       resultWord.createdDate = currentWord.createdDate;
       resultWord.updatedDate = new Date();
-      await currentWord.remove();
+      await currentWord.flagRemoveOne();
       await resultWord.save();
       if (currentWord.name !== resultWord.name) {
         await this.correctRelationsByEdit(resultWord);
@@ -325,20 +324,22 @@ export class DictionarySchema {
     return resultWord;
   }
 
-  public async deleteWord(this: Dictionary, number: number): Promise<Word> {
-    let word = await WordModel.findOne().where("dictionary", this).where("number", number);
+  public async removeWord(this: Dictionary, number: number): Promise<Word> {
+    let word = await WordModel.findOneExist().where("dictionary", this).where("number", number);
     if (word) {
-      await word.remove();
-      await this.correctRelationsByDelete(word);
+      await word.flagRemoveOne();
+      await this.correctRelationsByRemove(word);
     } else {
       throw new CustomError("noSuchWordNumber");
     }
-    LogUtil.log("dictionary/delete-word", {dictionary: {id: this.id, name: this.name}, current: word.id});
+    LogUtil.log("dictionary/remove-word", {dictionary: {id: this.id, name: this.name}, current: word.id});
     return word;
   }
 
+  // 単語データの編集によって単語の綴りが変化した場合に、それによって起こり得る関連語データの不整合を修正します。
+  // この処理では、既存の単語データを上書きするので、編集履歴は残りません。
   private async correctRelationsByEdit(word: Word): Promise<void> {
-    let affectedWords = await WordModel.find().where("dictionary", this).where("relations.number", word.number);
+    let affectedWords = await WordModel.findExist().where("dictionary", this).where("relations.number", word.number);
     for (let affectedWord of affectedWords) {
       for (let relation of affectedWord.relations) {
         if (relation.number === word.number) {
@@ -350,13 +351,21 @@ export class DictionarySchema {
     await Promise.all(promises);
   }
 
-  private async correctRelationsByDelete(word: Word): Promise<void> {
-    let affectedWords = await WordModel.find().where("dictionary", this).where("relations.number", word.number);
+  // 単語データを削除した場合に、それによって起こり得る関連語データの不整合を修正します。
+  // この処理では、修正が必要な既存の単語データを論理削除した上で、関連語データの不整合を修正した新しい単語データを作成します。
+  // そのため、この処理の内容は、修正を行った単語データに編集履歴として残ります。
+  private async correctRelationsByRemove(word: Word): Promise<void> {
+    let affectedWords = await WordModel.findExist().where("dictionary", this).where("relations.number", word.number);
+    let changedWords = [];
     for (let affectedWord of affectedWords) {
-      affectedWord.relations = affectedWord.relations.filter((relation) => relation.number !== word.number);
+      let changedWord = affectedWord.copy();
+      changedWord.relations = affectedWord.relations.filter((relation) => relation.number !== word.number);
+      changedWord.updatedDate = new Date();
+      changedWords.push(changedWord);
     }
-    let promises = affectedWords.map((affectedWord) => affectedWord.save());
-    await Promise.all(promises);
+    let affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagRemoveOne());
+    let changedPromises = changedWords.map((changedWord) => changedWord.save());
+    await Promise.all([...affectedPromises, ...changedPromises]);
   }
 
   // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
@@ -386,7 +395,7 @@ export class DictionarySchema {
         return "";
       }
     })();
-    let titles = await WordModel.where("dictionary", this).distinct(key);
+    let titles = await WordModel.findExist().where("dictionary", this).distinct(key);
     let hitTitles = (() => {
       if (pattern !== "") {
         let fuse = new Fuse(titles, {threshold: 1, distance: 40});
@@ -399,7 +408,7 @@ export class DictionarySchema {
   }
 
   public async countWords(): Promise<number> {
-    let count = await WordModel.countDocuments({}).where("dictionary", this);
+    let count = await WordModel.findExist().where("dictionary", this).count();
     return count;
   }
 
@@ -422,7 +431,7 @@ export class DictionarySchema {
     }
   }
 
-  public async getAuthorities(this: Dictionary, user: User): Promise<Array<DictionaryAuthority>> {
+  public async fetchAuthorities(this: Dictionary, user: User): Promise<Array<DictionaryAuthority>> {
     let promises = DICTIONARY_AUTHORITIES.map((authority) => {
       let promise = this.hasAuthority(user, authority).then((predicate) => {
         return (predicate) ? authority : null;
@@ -434,7 +443,7 @@ export class DictionarySchema {
     return filteredAuthorities;
   }
 
-  public async getAuthorizedUsers(this: Dictionary, authority: DictionaryFullAuthority): Promise<Array<User>> {
+  public async fetchAuthorizedUsers(this: Dictionary, authority: DictionaryFullAuthority): Promise<Array<User>> {
     await this.populate("user").populate("editUsers").execPopulate();
     if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
       if (authority === "own") {
@@ -451,7 +460,7 @@ export class DictionarySchema {
     }
   }
 
-  public async deleteAuthorizedUser(this: Dictionary, user: User): Promise<true> {
+  public async removeAuthorizedUser(this: Dictionary, user: User): Promise<true> {
     await this.populate("editUsers").execPopulate();
     if (isDocumentArray(this.editUsers)) {
       let exist = this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
@@ -535,7 +544,7 @@ export class DictionaryCreator {
 
   public static async createUser(raw: Dictionary, rawUser: User): Promise<UserDictionarySkeleton> {
     let basePromise = DictionaryCreator.createDetailed(raw);
-    let authoritiesPromise = raw.getAuthorities(rawUser);
+    let authoritiesPromise = raw.fetchAuthorities(rawUser);
     let [base, authorities] = await Promise.all([basePromise, authoritiesPromise]);
     let skeleton = UserDictionarySkeleton.of({...base, authorities});
     return skeleton;

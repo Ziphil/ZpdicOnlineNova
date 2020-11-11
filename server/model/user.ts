@@ -87,12 +87,12 @@ export class UserSchema {
     }
   }
 
-  public static async findOneByName(name: string): Promise<User | null> {
+  public static async fetchOneByName(name: string): Promise<User | null> {
     let user = await UserModel.findOne().where("name", name);
     return user;
   }
 
-  public static async findOneAdministrator(): Promise<User | null> {
+  public static async fetchOneAdministrator(): Promise<User | null> {
     let user = await UserModel.findOne().where("authority", "admin");
     return user;
   }
@@ -145,13 +145,13 @@ export class UserSchema {
     }
   }
 
-  public async removeWhole(this: User): Promise<User> {
-    let dictionaries = await DictionaryModel.findByUser(this, "own");
+  public async removeOne(this: User): Promise<User> {
+    let dictionaries = await DictionaryModel.fetchByUser(this, "own");
     let promises = dictionaries.map((dictionary) => {
-      return dictionary.removeWhole();
+      return dictionary.removeOne();
     });
     await Promise.all(promises);
-    await this.remove();
+    await this.deleteOne();
     return this;
   }
 

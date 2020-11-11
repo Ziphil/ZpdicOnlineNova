@@ -38,7 +38,7 @@ export default class CommissionList extends Component<Props, State> {
           commission={commission}
           dictionary={outerThis.props.dictionary}
           key={commission.id}
-          onDeleteConfirm={outerThis.props.onDeleteConfirm}
+          onRemoveConfirm={outerThis.props.onRemoveConfirm}
           onAddConfirm={outerThis.props.onAddConfirm}
         />
       );
@@ -64,7 +64,7 @@ type Props = {
   commissions: Array<Commission> | CommissionProvider | null,
   dictionary: Dictionary
   size: number,
-  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   onAddConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {

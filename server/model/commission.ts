@@ -40,13 +40,13 @@ export class CommissionSchema {
   @prop({required: true})
   public createdDate!: Date;
 
-  public static async findByDictionary(dictionary: Dictionary, range?: QueryRange): Promise<WithSize<Commission>> {
+  public static async fetchByDictionary(dictionary: Dictionary, range?: QueryRange): Promise<WithSize<Commission>> {
     let query = CommissionModel.find().where("dictionary", dictionary).sort("-createdDate");
-    let result = await QueryRange.restrictWithSize(query);
+    let result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 
-  public static async findOneByDictionaryAndId(dictionary: Dictionary, id: string): Promise<Commission | null> {
+  public static async fetchOneByDictionaryAndId(dictionary: Dictionary, id: string): Promise<Commission | null> {
     let commission = await CommissionModel.findById(id).where("dictionary", dictionary);
     return commission;
   }
@@ -61,8 +61,8 @@ export class CommissionSchema {
     return commission;
   }
 
-  public async delete(this: Commission): Promise<void> {
-    await this.remove();
+  public async removeOne(this: Commission): Promise<void> {
+    await this.deleteOne();
   }
 
 }

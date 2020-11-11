@@ -39,7 +39,7 @@ export class InvitationController extends Controller {
     let dictionary = request.dictionary;
     let type = request.body.type;
     let userName = request.body.userName;
-    let user = await UserModel.findOneByName(userName);
+    let user = await UserModel.fetchOneByName(userName);
     if (dictionary && user) {
       try {
         let invitation = await InvitationModel.add(type, dictionary, user);
@@ -103,7 +103,7 @@ export class InvitationController extends Controller {
   public async [Symbol()](request: Request<"fetchInvitations">, response: Response<"fetchInvitations">): Promise<void> {
     let user = request.user!;
     let type = request.body.type;
-    let invitations = await InvitationModel.findByUser(type, user);
+    let invitations = await InvitationModel.fetchByUser(type, user);
     let body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
     Controller.respond(response, body);
   }

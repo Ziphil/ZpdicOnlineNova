@@ -87,7 +87,7 @@ export class InvitationSchema {
     }
   }
 
-  public static async findByUser(type: InvitationType, user: User): Promise<Array<Invitation>> {
+  public static async fetchByUser(type: InvitationType, user: User): Promise<Array<Invitation>> {
     let invitations = await InvitationModel.find().where("type", type).where("user", user).sort("-createdDate");
     return invitations;
   }
@@ -103,7 +103,7 @@ export class InvitationSchema {
           await this.respondTransfer(user);
         }
       }
-      await this.remove();
+      await this.deleteOne();
     } else {
       throw new CustomError("forbidden");
     }

@@ -92,18 +92,18 @@ export default class WordEditor extends Component<Props, State> {
     }
   }
 
-  private async deleteWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+  private async removeWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
     let number = this.props.dictionary.number;
     let wordNumber = this.state.word.number;
     if (wordNumber !== undefined) {
-      let response = await this.request("deleteWord", {number, wordNumber});
+      let response = await this.request("removeWord", {number, wordNumber});
       if (response.status === 200) {
-        this.props.store!.addInformationPopup("wordDeleted");
+        this.props.store!.addInformationPopup("wordRemoved");
         if (this.props.onClose) {
           await this.props.onClose(event);
         }
-        if (this.props.onDeleteConfirm) {
-          await this.props.onDeleteConfirm(event);
+        if (this.props.onRemoveConfirm) {
+          await this.props.onRemoveConfirm(event);
         }
       }
     }
@@ -409,8 +409,8 @@ export default class WordEditor extends Component<Props, State> {
   }
 
   private renderEditor(): ReactNode {
-    let deleteButtonNode = (this.props.word !== null) && (
-      <Button label={this.trans("wordEditor.delete")} iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
+    let removeButtonNode = (this.props.word !== null) && (
+      <Button label={this.trans("wordEditor.remove")} iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
     );
     let confirmButtonNode = (
       <Button label={this.trans("wordEditor.confirm")} iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.editWord.bind(this)}/>
@@ -427,7 +427,7 @@ export default class WordEditor extends Component<Props, State> {
           {this.renderRelations()}
         </div>
         <div styleName="confirm-button">
-          {deleteButtonNode}
+          {removeButtonNode}
           {confirmButtonNode}
         </div>
       </div>
@@ -450,7 +450,7 @@ export default class WordEditor extends Component<Props, State> {
         open={this.state.alertOpen}
         outsideClosable={true}
         onClose={() => this.setState({alertOpen: false})}
-        onConfirm={this.deleteWord.bind(this)}
+        onConfirm={this.removeWord.bind(this)}
       />
     );
     return node;
@@ -481,7 +481,7 @@ type Props = {
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
   onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onDeleteConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
   word: TemporaryEditWord,

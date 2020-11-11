@@ -21,7 +21,7 @@ import ChangeDictionaryParamNameForm from "/client/component/form/change-diction
 import ChangeDictionarySecretForm from "/client/component/form/change-dictionary-secret-form";
 import ChangeDictionarySettingsForm from "/client/component/form/change-dictionary-settings-form";
 import ChangeDictionarySourceForm from "/client/component/form/change-dictionary-source-form";
-import DeleteDictionaryForm from "/client/component/form/delete-dictionary-form";
+import RemoveDictionaryForm from "/client/component/form/remove-dictionary-form";
 import UploadDictionaryForm from "/client/component/form/upload-dictionary-form";
 import Page from "/client/component/page/page";
 import {
@@ -227,12 +227,12 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
-  private renderDeleteDictionaryForm(): ReactNode {
-    let label = this.trans("dictionarySettingPage.deleteDictionaryForm.label");
-    let description = this.trans("dictionarySettingPage.deleteDictionaryForm.description");
+  private renderRemoveDictionaryForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.removeDictionaryForm.label");
+    let description = this.trans("dictionarySettingPage.removeDictionaryForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <DeleteDictionaryForm number={this.state.dictionary!.number} onSubmit={() => this.pushPath("/dashboard", {}, true)}/>
+        <RemoveDictionaryForm number={this.state.dictionary!.number} onSubmit={() => this.pushPath("/dashboard", {}, true)}/>
       </SettingPane>
     );
     return node;
@@ -241,7 +241,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
   private renderCommissionList(): ReactNode {
     let node = (
       <SettingPane key="commissionList">
-        <CommissionList commissions={this.provideCommissions.bind(this)} dictionary={this.state.dictionary!} size={30} onDeleteConfirm={this.fetchCommissionCount.bind(this)}/>
+        <CommissionList commissions={this.provideCommissions.bind(this)} dictionary={this.state.dictionary!} size={30} onRemoveConfirm={this.fetchCommissionCount.bind(this)}/>
       </SettingPane>
     );
     return node;
@@ -296,7 +296,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderChangeDictionaryParamNameForm());
         contentNodes.push(this.renderChangeDictionarySecretForm());
         contentNodes.push(this.renderUploadDictionaryForm());
-        contentNodes.push(this.renderDeleteDictionaryForm());
+        contentNodes.push(this.renderRemoveDictionaryForm());
       } else if (mode === "setting") {
         contentNodes.push(this.renderChangeDictionaryExplanationForm());
         contentNodes.push(this.renderChangeDictionaryAkrantiainSourceForm());

@@ -43,7 +43,7 @@ export default class WordList extends Component<Props, State> {
           showButton={this.props.showButton}
           onSubmit={this.props.onSubmit && partial(this.props.onSubmit, word)}
           onEditConfirm={this.props.onEditConfirm && partial(this.props.onEditConfirm, word)}
-          onDeleteConfirm={this.props.onDeleteConfirm && partial(this.props.onDeleteConfirm, word)}
+          onRemoveConfirm={this.props.onRemoveConfirm && partial(this.props.onRemoveConfirm, word)}
         />
       );
       return wordPane;
@@ -69,7 +69,7 @@ type Props = {
   offset: number,
   onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onDeleteConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void
+  onRemoveConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void
 };
 type DefaultProps = {
   style: "normal" | "simple",

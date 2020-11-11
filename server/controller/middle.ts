@@ -68,7 +68,7 @@ export function verifyDictionary(authority: DictionaryAuthority): RequestHandler
   let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     let user = request.user!;
     let number = parseInt(request.query.number || request.body.number, 10);
-    let dictionary = await DictionaryModel.findOneByNumber(number);
+    let dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       let hasAuthority = await dictionary.hasAuthority(user, authority);
       if (hasAuthority) {

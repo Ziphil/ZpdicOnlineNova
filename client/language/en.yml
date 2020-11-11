@@ -17,7 +17,7 @@ popup:
   userPasswordReset: >-
     Your password has been reset.
     Please sign in again using your new password.
-  userDeleted: >-
+  userRemoved: >-
     This user has been deleted.
     Thank you for using ZpDIC Online.
   dictionaryNameChanged: >-
@@ -40,7 +40,7 @@ popup:
   dictionaryUploaded: >-
     Your file was successfully uploaded.
     Note that it will take some time before the dictionary data is updated.
-  dictionaryDeleted: >-
+  dictionaryRemoved: >-
     The dictionary has been deleted.
   editInvitationAdded: >-
     You invited the user to edit this dictionary.
@@ -58,15 +58,15 @@ popup:
     You are now the owner of the dictionary.
   transferInvitationRefused: >-
     You rejected the transferrence of the dictionary.
-  dictionaryAuthorizedUserDeleted: >-
+  dictionaryAuthorizedUserRemoved: >-
     The user's edit permission has been revoked.
   wordEdited: >-
     The word has been edited.
-  wordDeleted: >-
+  wordRemoved: >-
     The word has been deleted.
   commissionAdded: >-
     Your request has been completed.
-  commissionDeleted: >-
+  commissionRemoved: >-
     The request has been deleted.
   contacted: >-
     Your message has been sent.
@@ -180,7 +180,7 @@ createDictionaryForm:
   defaultName: "New dictionary"
   name: "Name"
   confirm: "Create"
-deleteUserForm:
+removeUserForm:
   confirm: "Delete"
   caution: >-
     Warning: this operation will delete this user permanently, and also delete the dictionaries they own.
@@ -221,7 +221,7 @@ changeDictionarySourceForm:
   zatlin: "Source code for Zatlin"
   confirm: "Confirm"
   try: "Try"
-deleteDictionaryForm:
+removeDictionaryForm:
   confirm: "Delete"
   caution: >-
     Warning: this operation will delete this dictionary permanently.
@@ -262,7 +262,7 @@ akrantiainExecutor:
   errorMessage: "Error message"
   execute: "Execute"
 commissionPane:
-  delete: "Delete"
+  remove: "Delete"
   add: "Create"
   alert: >-
     This request will be deleted.
@@ -336,7 +336,7 @@ suggestionPane:
   maybe: "Do you mean"
   suggestion: "{title} of {nameNode}?"
 userPane:
-  delete: "Delete"
+  remove: "Delete"
   alert: >-
     This user's edit permission will be revoked.
     Are you really sure?
@@ -353,7 +353,7 @@ wordEditor:
   variationName: "Variation"
   relationTitle: "Title"
   relationName: "Related word"
-  delete: "Delete"
+  remove: "Delete"
   confirm: "Confirm"
   generate: "Generate"
   selectRelation: "Select"
@@ -412,7 +412,7 @@ dashboardPage:
     label: "Change password"
     description: >-
       Change your password.
-  deleteUserForm:
+  removeUserForm:
     label: "Delete"
     description: >-
       Delete this user.
@@ -470,7 +470,7 @@ dictionarySettingPage:
     description: >-
       Upload a file and overwrite the current data.
       The supported formats are: OTM-JSON format (with extension .json) and PDIC format (with extension .dic).
-  deleteDictionaryForm:
+  removeDictionaryForm:
     label: "Delete"
     description: >-
       Delete this dictionary.

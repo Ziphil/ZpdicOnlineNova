@@ -11,6 +11,9 @@ import {
   Word as WordSkeleton
 } from "/client/skeleton/dictionary";
 import {
+  RemovableSchema
+} from "/server/model/base";
+import {
   DictionarySchema,
   EquivalentCreator,
   EquivalentSchema,
@@ -24,7 +27,7 @@ import {
 
 
 @modelOptions({schemaOptions: {collection: "words"}})
-export class WordSchema {
+export class WordSchema extends RemovableSchema {
 
   @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;
@@ -58,6 +61,25 @@ export class WordSchema {
 
   @prop()
   public updatedDate?: Date;
+
+  @prop()
+  public removedDate?: Date;
+
+  // この単語データをコピーした新しい単語データを返します。
+  public copy(this: Word): Word {
+    let dictionary = this.dictionary;
+    let number = this.number;
+    let name = this.name;
+    let pronunciation = this.pronunciation;
+    let equivalents = this.equivalents;
+    let tags = this.tags;
+    let informations = this.informations;
+    let variations = this.variations;
+    let relations = this.relations;
+    let createdDate = this.createdDate;
+    let word = new WordModel({dictionary, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate});
+    return word;
+  }
 
 }
 

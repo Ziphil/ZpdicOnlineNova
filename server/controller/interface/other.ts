@@ -39,7 +39,7 @@ export class OtherController extends Controller {
     let subject = request.body.subject;
     let text = request.body.text;
     if (text !== "") {
-      let user = await UserModel.findOneAdministrator();
+      let user = await UserModel.fetchOneAdministrator();
       if (user !== null) {
         let nextSubject = MailUtil.getSubject("contact", {subject});
         let nextText = MailUtil.getText("contact", {name, email, subject, text});

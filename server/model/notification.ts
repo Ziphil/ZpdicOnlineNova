@@ -42,7 +42,7 @@ export class NotificationSchema {
     return notification;
   }
 
-  public static async findAll(range?: QueryRange): Promise<WithSize<Notification>> {
+  public static async fetch(range?: QueryRange): Promise<WithSize<Notification>> {
     let query = NotificationModel.find().sort("-date");
     let result = await QueryRange.restrictWithSize(query, range);
     return result;

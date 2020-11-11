@@ -44,7 +44,7 @@ export class CommissionController extends Controller {
     let name = request.body.name;
     let comment = request.body.comment;
     if (name !== "") {
-      let dictionary = await DictionaryModel.findOneByNumber(number);
+      let dictionary = await DictionaryModel.fetchOneByNumber(number);
       if (dictionary) {
         let commission = await CommissionModel.add(dictionary, name, comment);
         let body = CommissionCreator.create(commission);
@@ -59,15 +59,15 @@ export class CommissionController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["deleteCommission"])
+  @post(SERVER_PATHS["removeCommission"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: Request<"deleteCommission">, response: Response<"deleteCommission">): Promise<void> {
+  public async [Symbol()](request: Request<"removeCommission">, response: Response<"removeCommission">): Promise<void> {
     let dictionary = request.dictionary!;
     let id = request.body.id;
     if (dictionary) {
-      let commission = await CommissionModel.findOneByDictionaryAndId(dictionary, id);
+      let commission = await CommissionModel.fetchOneByDictionaryAndId(dictionary, id);
       if (commission) {
-        await commission.delete();
+        await commission.removeOne();
         let body = CommissionCreator.create(commission);
         Controller.respond(response, body);
       } else {
@@ -88,7 +88,7 @@ export class CommissionController extends Controller {
     let size = request.body.size;
     if (dictionary) {
       let range = new QueryRange(offset, size);
-      let hitResult = await CommissionModel.findByDictionary(dictionary, range);
+      let hitResult = await CommissionModel.fetchByDictionary(dictionary, range);
       let hitCommissions = hitResult[0].map(CommissionCreator.create);
       let hitSize = hitResult[1];
       let body = [hitCommissions, hitSize] as any;

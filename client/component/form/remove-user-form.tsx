@@ -13,17 +13,17 @@ import {
 } from "/client/component/decorator";
 
 
-@style(require("./delete-user-form.scss"))
-export default class DeleteUserForm extends Component<Props, State> {
+@style(require("./remove-user-form.scss"))
+export default class RemoveUserForm extends Component<Props, State> {
 
   public state: State = {
     alertOpen: false
   };
 
-  private async deleteUser(): Promise<void> {
-    let response = await this.request("deleteUser", {});
+  private async removeUser(): Promise<void> {
+    let response = await this.request("removeUser", {});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("userDeleted");
+      this.props.store!.addInformationPopup("userRemoved");
       await this.logout();
       if (this.props.onSubmit) {
         this.props.onSubmit();
@@ -35,18 +35,18 @@ export default class DeleteUserForm extends Component<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Button label={this.trans("deleteUserForm.confirm")} reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
+          <Button label={this.trans("removeUserForm.confirm")} reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
         </form>
         <p styleName="caution">
-          {this.trans("deleteUserForm.caution")}
+          {this.trans("removeUserForm.caution")}
         </p>
         <Alert
-          text={this.trans("deleteUserForm.alert")}
-          confirmLabel={this.trans("deleteUserForm.confirm")}
+          text={this.trans("removeUserForm.alert")}
+          confirmLabel={this.trans("removeUserForm.confirm")}
           open={this.state.alertOpen}
           outsideClosable={true}
           onClose={() => this.setState({alertOpen: false})}
-          onConfirm={this.deleteUser.bind(this)}
+          onConfirm={this.removeUser.bind(this)}
         />
       </Fragment>
     );

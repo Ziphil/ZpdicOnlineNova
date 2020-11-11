@@ -139,6 +139,7 @@ export class SlimeDeserializer extends Deserializer {
       relation.name = rawRelation["entry"]["form"];
       word.relations.push(relation);
     }
+    word.updatedDate = new Date();
     return word;
   }
 
