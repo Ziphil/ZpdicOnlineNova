@@ -14,10 +14,8 @@ import {
 export default class DictionaryAggregationPane extends Component<Props, State> {
 
   public state: State = {
-    dictionaryCount: null,
-    wordCount: null,
-    dictionarySize: null,
-    wordSize: null
+    dictionary: null,
+    word: null
   };
 
   public async componentDidMount(): Promise<void> {
@@ -29,20 +27,23 @@ export default class DictionaryAggregationPane extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let dictionaryCount = this.state.dictionaryCount;
-    let wordCount = this.state.wordCount;
-    let wordSize = (this.state.wordSize !== null) ? this.state.wordSize / 1048576 : null;
+    let dictionary = this.state.dictionary;
+    let word = this.state.word;
     let node = (
       <div styleName="root">
         <div styleName="count-wrapper">
           <div styleName="title">{this.trans("dictionaryAggregationPane.dictionaryCount")}</div>
-          <div styleName="count">{this.transNumber(dictionaryCount)}</div>
-          <div styleName="size"></div>
+          <div styleName="count">
+            <div styleName="exist">{this.transNumber(dictionary?.count)}</div>
+            <div styleName="whole">{this.transNumber(dictionary?.wholeCount)}</div>
+          </div>
         </div>
         <div styleName="count-wrapper">
           <div styleName="title">{this.trans("dictionaryAggregationPane.wordCount")}</div>
-          <div styleName="count">{this.transNumber(wordCount)}</div>
-          <div styleName="size">{this.transNumber(wordSize, 2)} MB</div>
+          <div styleName="count">
+            <div styleName="exist">{this.transNumber(word?.count)}</div>
+            <div styleName="whole">{this.transNumber(word?.wholeCount)}</div>
+          </div>
         </div>
       </div>
     );
@@ -55,8 +56,6 @@ export default class DictionaryAggregationPane extends Component<Props, State> {
 type Props = {
 };
 type State = {
-  dictionaryCount: number | null,
-  wordCount: number | null,
-  dictionarySize: number | null,
-  wordSize: number | null;
+  dictionary: {count: number, wholeCount: number, size: number} | null,
+  word: {count: number, wholeCount: number, size: number} | null
 };

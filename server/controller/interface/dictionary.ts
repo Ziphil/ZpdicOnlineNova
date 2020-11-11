@@ -359,12 +359,18 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["fetchDictionaryAggregation"])
   public async [Symbol()](request: Request<"fetchDictionaryAggregation">, response: Response<"fetchDictionaryAggregation">): Promise<void> {
-    let dictionaryCountPromise = DictionaryModel.find().estimatedDocumentCount();
-    let wordCountPromise = WordModel.find().estimatedDocumentCount();
-    let dictionarySizePromise = DictionaryModel.collection.stats().then((stats) => stats.size);
-    let wordSizePromise = WordModel.collection.stats().then((stats) => stats.size);
-    let [dictionaryCount, wordCount, dictionarySize, wordSize] = await Promise.all([dictionaryCountPromise, wordCountPromise, dictionarySizePromise, wordSizePromise]);
-    let body = {dictionaryCount, wordCount, dictionarySize, wordSize};
+    let dictionaryRawPromises = Promise.all([DictionaryModel.findExist().count(), DictionaryModel.estimatedDocumentCount(), DictionaryModel.collection.stats()]);
+    let dictionaryPromises = dictionaryRawPromises.then(([count, wholeCount, stats]) => {
+      let size = stats.size;
+      return {count, wholeCount, size};
+    });
+    let wordRawPromises = Promise.all([WordModel.findExist().count(), WordModel.estimatedDocumentCount(), WordModel.collection.stats()]);
+    let wordPromises = wordRawPromises.then(([count, wholeCount, stats]) => {
+      let size = stats.size;
+      return {count, wholeCount, size};
+    });
+    let [dictionary, word] = await Promise.all([dictionaryPromises, wordPromises]);
+    let body = {dictionary, word};
     Controller.respond(response, body);
   }
 

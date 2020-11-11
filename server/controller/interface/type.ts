@@ -242,7 +242,7 @@ type ServerSpecs = {
   fetchDictionaryAggregation: {
     request: {},
     response: {
-      success: {dictionaryCount: number, wordCount: number, dictionarySize: number, wordSize: number},
+      success: {dictionary: {count: number, wholeCount: number, size: number}, word: {count: number, wholeCount: number, size: number}},
       error: never
     }
   },
