@@ -122,6 +122,7 @@ export class BinaryDeserializer extends Deserializer {
       let informations = this.createAdditionalInformations(raw, fieldLength);
       word.informations.push(...informations);
     }
+    word.updatedDate = new Date();
     return [word, nameBytes];
   }
 
