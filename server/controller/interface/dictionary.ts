@@ -90,7 +90,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: Request<"removeDictionary">, response: Response<"removeDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {
-      await dictionary.remove();
+      await dictionary.removeOne();
       Controller.respond(response, null);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");

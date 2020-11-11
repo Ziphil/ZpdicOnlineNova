@@ -11,6 +11,9 @@ import {
   Word as WordSkeleton
 } from "/client/skeleton/dictionary";
 import {
+  RemovableSchema
+} from "/server/model/base";
+import {
   DictionarySchema,
   EquivalentCreator,
   EquivalentSchema,
@@ -24,7 +27,7 @@ import {
 
 
 @modelOptions({schemaOptions: {collection: "words"}})
-export class WordSchema {
+export class WordSchema extends RemovableSchema {
 
   @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;
@@ -58,6 +61,9 @@ export class WordSchema {
 
   @prop()
   public updatedDate?: Date;
+
+  @prop()
+  public removedDate?: Date;
 
 }
 

@@ -145,10 +145,10 @@ export class UserSchema {
     }
   }
 
-  public async remove(this: User): Promise<User> {
+  public async removeOne(this: User): Promise<User> {
     let dictionaries = await DictionaryModel.fetchByUser(this, "own");
     let promises = dictionaries.map((dictionary) => {
-      return dictionary.remove();
+      return dictionary.removeOne();
     });
     await Promise.all(promises);
     await this.deleteOne();

@@ -191,7 +191,7 @@ export class UserController extends Controller {
   public async [Symbol()](request: Request<"removeUser">, response: Response<"removeUser">): Promise<void> {
     let user = request.user!;
     try {
-      await user.remove();
+      await user.removeOne();
       Controller.respond(response, null);
     } catch (error) {
       Controller.respondError(response, undefined, error);

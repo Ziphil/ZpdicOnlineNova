@@ -103,7 +103,7 @@ export class InvitationSchema {
           await this.respondTransfer(user);
         }
       }
-      await this.remove();
+      await this.deleteOne();
     } else {
       throw new CustomError("forbidden");
     }
