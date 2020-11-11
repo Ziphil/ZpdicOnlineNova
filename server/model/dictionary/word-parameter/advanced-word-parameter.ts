@@ -28,7 +28,7 @@ export class AdvancedWordParameter extends WordParameter {
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>> {
     let filters = this.elements.map((element) => element.createQuery(dictionary).getFilter());
-    let query = WordModel.find().and(filters);
+    let query = WordModel.findExist().and(filters);
     return query;
   }
 
