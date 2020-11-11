@@ -336,6 +336,8 @@ export class DictionarySchema extends RemovableSchema {
     return word;
   }
 
+  // 単語データの編集によって単語の綴りが変化した場合に、それによって起こり得る関連語データの不整合を修正します。
+  // この処理では、既存の単語データを上書きするので、編集履歴は残りません。
   private async correctRelationsByEdit(word: Word): Promise<void> {
     let affectedWords = await WordModel.findExist().where("dictionary", this).where("relations.number", word.number);
     for (let affectedWord of affectedWords) {
@@ -349,13 +351,21 @@ export class DictionarySchema extends RemovableSchema {
     await Promise.all(promises);
   }
 
+  // 単語データを削除した場合に、それによって起こり得る関連語データの不整合を修正します。
+  // この処理では、修正が必要な既存の単語データを論理削除した上で、関連語データの不整合を修正した新しい単語データを作成します。
+  // そのため、この処理の内容は、修正を行った単語データに編集履歴として残ります。
   private async correctRelationsByRemove(word: Word): Promise<void> {
     let affectedWords = await WordModel.findExist().where("dictionary", this).where("relations.number", word.number);
+    let changedWords = [];
     for (let affectedWord of affectedWords) {
-      affectedWord.relations = affectedWord.relations.filter((relation) => relation.number !== word.number);
+      let changedWord = affectedWord.copy();
+      changedWord.relations = affectedWord.relations.filter((relation) => relation.number !== word.number);
+      changedWord.updatedDate = new Date();
+      changedWords.push(changedWord);
     }
-    let promises = affectedWords.map((affectedWord) => affectedWord.save());
-    await Promise.all(promises);
+    let affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagRemoveOne());
+    let changedPromises = changedWords.map((changedWord) => changedWord.save());
+    await Promise.all([...affectedPromises, ...changedPromises]);
   }
 
   // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
