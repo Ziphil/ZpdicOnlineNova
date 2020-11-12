@@ -33,11 +33,8 @@ export class NotificationSchema {
   public text!: string;
 
   public static async add(type: string, title: string, text: string): Promise<Notification> {
-    let notification = new NotificationModel({});
-    notification.type = type;
-    notification.date = new Date();
-    notification.title = title;
-    notification.text = text;
+    let date = new Date();
+    let notification = new NotificationModel({type, date, title, text});
     await notification.save();
     return notification;
   }

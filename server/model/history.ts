@@ -41,11 +41,11 @@ export class HistorySchema {
   }
 
   public static async addAll(): Promise<number> {
-    let size = await DictionaryModel.find({}).countDocuments();
+    let size = await DictionaryModel.find().countDocuments();
     let pageSize = Math.floor((size - 1) / 100) + 1;
     for (let page = 0 ; page < pageSize ; page ++) {
       let range = new QueryRange(page * 100, 100);
-      let query = DictionaryModel.find({});
+      let query = DictionaryModel.find();
       let dictionaries = await QueryRange.restrict(query, range);
       let promises = dictionaries.map((dictionary) => HistoryModel.create(dictionary));
       let histories = await Promise.all(promises);
@@ -56,10 +56,9 @@ export class HistorySchema {
   }
 
   public static async create(dictionary: Dictionary): Promise<History> {
-    let history = new HistoryModel({});
-    history.dictionary = dictionary;
-    history.date = new Date();
-    history.wordSize = await dictionary.countWords();
+    let date = new Date();
+    let wordSize = await dictionary.countWords();
+    let history = new HistoryModel({dictionary, date, wordSize});
     return history;
   }
 

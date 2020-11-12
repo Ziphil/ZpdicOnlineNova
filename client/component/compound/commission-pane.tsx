@@ -57,13 +57,16 @@ export default class CommissionPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
+    let commentNode = (this.props.commission.comment) && (
+      <div styleName="comment">
+        {this.props.commission.comment}
+      </div>
+    );
     let node = (
       <Fragment>
         <div styleName="root">
           {this.props.commission.name}
-          <div styleName="comment">
-            {this.props.commission.comment}
-          </div>
+          {commentNode}
           <div styleName="button">
             <Button label={this.trans("commissionPane.remove")} iconLabel="&#xF2ED;" style="simple" onClick={() => this.setState({alertOpen: true})}/>
             <Button label={this.trans("commissionPane.add")} iconLabel="&#xF067;" style="simple" onClick={() => this.setState({editorOpen: true})}/>

@@ -52,11 +52,8 @@ export class InvitationSchema {
 
   public static async add(type: InvitationType, dictionary: Dictionary, user: User): Promise<Invitation> {
     await this.assure(type, dictionary, user);
-    let invitation = new InvitationModel({});
-    invitation.type = type;
-    invitation.dictionary = dictionary;
-    invitation.user = user;
-    invitation.createdDate = new Date();
+    let createdDate = new Date();
+    let invitation = new InvitationModel({type, dictionary, user, createdDate});
     await invitation.save();
     return invitation;
   }

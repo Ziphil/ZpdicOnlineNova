@@ -114,17 +114,15 @@ export class DictionarySchema extends RemovableSchema {
   public updatedDate?: Date;
 
   public static async addEmpty(name: string, user: User): Promise<Dictionary> {
-    let dictionary = new DictionaryModel({});
-    dictionary.user = user;
-    dictionary.editUsers = [];
-    dictionary.number = await DictionaryModel.fetchNextNumber();
-    dictionary.name = name;
-    dictionary.status = "ready";
-    dictionary.secret = false;
-    dictionary.settings = DictionarySettingsModel.createDefault();
-    dictionary.externalData = {};
-    dictionary.createdDate = new Date();
-    dictionary.updatedDate = new Date();
+    let editUsers = new Array<User>();
+    let number = await DictionaryModel.fetchNextNumber();
+    let status = "ready";
+    let secret = false;
+    let settings = DictionarySettingsModel.createDefault();
+    let externalData = {};
+    let createdDate = new Date();
+    let updatedDate = new Date();
+    let dictionary = new DictionaryModel({user, editUsers, number, name, status, secret, settings, externalData, createdDate, updatedDate});
     await dictionary.save();
     return dictionary;
   }
@@ -408,7 +406,7 @@ export class DictionarySchema extends RemovableSchema {
   }
 
   public async countWords(): Promise<number> {
-    let count = await WordModel.findExist().where("dictionary", this).count();
+    let count = await WordModel.findExist().where("dictionary", this).countDocuments();
     return count;
   }
 
