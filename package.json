@@ -57,6 +57,7 @@
     "file-loader": "^6.2.0",
     "fuse.js": "^6.4.3",
     "html-webpack-plugin": "^4.5.0",
+    "js-file-download": "^0.4.12",
     "json-loader": "^0.5.7",
     "jsonwebtoken": "^8.5.1",
     "lodash-es": "^4.17.15",

@@ -1,5 +1,6 @@
 //
 
+import downloadFile from "js-file-download";
 import * as react from "react";
 import {
   ReactNode,
@@ -49,10 +50,26 @@ export default class DictionaryHeader extends Component<Props, State> {
     }
   }
 
-  private downloadDictionary(): void {
+  private async downloadDictionary(): Promise<void> {
     if (this.props.dictionary) {
-      let path = SERVER_PATH_PREFIX + SERVER_PATHS["downloadDictionary"] + "?number=" + this.props.dictionary.number;
-      location.replace(path);
+      let number = this.props.dictionary.number;
+      let response = await this.request("downloadDictionary", {number}, {responseType: "blob"});
+      if (response.status === 200 && !("error" in response.data)) {
+        let data = response.data;
+        let disposition = response.headers["content-disposition"];
+        let match = disposition.match(/filename="(.+)"/);
+        let encodedMatch = disposition.match(/filename\*=UTF-8''(.+)$/);
+        let fileName = (() => {
+          if (encodedMatch !== null) {
+            return decodeURIComponent(encodedMatch[1]).replace(/\+/g, " ");
+          } else if (match !== null) {
+            return match[1];
+          } else {
+            return "dictionary.json";
+          }
+        })();
+        downloadFile(data, fileName);
+      }
     }
   }
 
