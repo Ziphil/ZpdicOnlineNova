@@ -200,7 +200,7 @@ type ServerSpecs = {
   downloadDictionary: {
     request: {number: number, fileName?: string},
     response: {
-      success: never,
+      success: any,
       error: CustomError<"noSuchDictionaryNumber">
     }
   },

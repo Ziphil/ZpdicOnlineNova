@@ -97,49 +97,52 @@ export class SlimeDeserializer extends Deserializer {
   }
 
   private createWord(raw: any): Word {
-    let word = new WordModel({});
-    word.dictionary = this.dictionary;
-    word.number = parseInt(raw["entry"]["id"], 10);
-    word.name = raw["entry"]["form"];
-    word.equivalents = [];
+    let dictionary = this.dictionary;
+    let number = parseInt(raw["entry"]["id"], 10);
+    let name = raw["entry"]["form"];
+    let equivalents = [];
     for (let rawEquivalent of raw["translations"] ?? []) {
-      let equivalent = new EquivalentModel({});
-      equivalent.title = rawEquivalent["title"] ?? "";
-      equivalent.names = rawEquivalent["forms"] ?? [];
-      word.equivalents.push(equivalent);
+      let title = rawEquivalent["title"] ?? "";
+      let names = rawEquivalent["forms"] ?? [];
+      let equivalent = new EquivalentModel({title, names});
+      equivalents.push(equivalent);
     }
-    word.tags = raw["tags"] ?? [];
-    word.informations = [];
+    let tags = raw["tags"] ?? [];
+    let pronunciation;
+    let informations = [];
     for (let rawInformation of raw["contents"] ?? []) {
       if (rawInformation["title"] === this.pronunciationTitle) {
-        word.pronunciation = rawInformation["text"] ?? undefined;
+        pronunciation = rawInformation["text"] ?? undefined;
       } else {
-        let information = new InformationModel({});
-        information.title = rawInformation["title"] ?? "";
-        if (this.enableMarkdown) {
-          information.text = rawInformation["markdown"] ?? rawInformation["text"] ?? "";
-        } else {
-          information.text = rawInformation["text"] ?? "";
-        }
-        word.informations.push(information);
+        let title = rawInformation["title"] ?? "";
+        let text = (() => {
+          if (this.enableMarkdown) {
+            return rawInformation["markdown"] ?? rawInformation["text"] ?? "";
+          } else {
+            return rawInformation["text"] ?? "";
+          }
+        })();
+        let information = new InformationModel({title, text});
+        informations.push(information);
       }
     }
-    word.variations = [];
+    let variations = [];
     for (let rawVariation of raw["variations"] ?? []) {
-      let variation = new VariationModel({});
-      variation.title = rawVariation["title"] ?? "";
-      variation.name = rawVariation["form"] ?? "";
-      word.variations.push(variation);
+      let title = rawVariation["title"] ?? "";
+      let name = rawVariation["form"] ?? "";
+      let variation = new VariationModel({title, name});
+      variations.push(variation);
     }
-    word.relations = [];
+    let relations = [];
     for (let rawRelation of raw["relations"] ?? []) {
-      let relation = new RelationModel({});
-      relation.title = rawRelation["title"] ?? "";
-      relation.number = parseInt(rawRelation["entry"]["id"], 10);
-      relation.name = rawRelation["entry"]["form"];
-      word.relations.push(relation);
+      let title = rawRelation["title"] ?? "";
+      let number = parseInt(rawRelation["entry"]["id"], 10);
+      let name = rawRelation["entry"]["form"];
+      let relation = new RelationModel({title, number, name});
+      relations.push(relation);
     }
-    word.updatedDate = new Date();
+    let updatedDate = new Date();
+    let word = new WordModel({dictionary, number, name, pronunciation, equivalents, tags, informations, variations, relations, updatedDate});
     return word;
   }
 

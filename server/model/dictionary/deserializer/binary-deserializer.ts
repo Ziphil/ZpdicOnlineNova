@@ -2,8 +2,11 @@
 
 import {
   Dictionary,
+  Equivalent,
   Information,
   InformationModel,
+  Relation,
+  Variation,
   Word,
   WordModel
 } from "/server/model/dictionary";
@@ -106,31 +109,28 @@ export class BinaryDeserializer extends Deserializer {
     let [rawName, nameBytes] = raw.readBocuString(true);
     let nameTabIndex = rawName.indexOf("\t");
     let name = (nameTabIndex >= 0) ? rawName.substring(nameTabIndex + 1) : rawName;
-    let word = new WordModel({});
     this.count ++;
-    word.dictionary = this.dictionary;
-    word.number = this.count;
-    word.name = name;
-    word.equivalents = [];
-    word.tags = [];
-    word.informations = [];
-    word.variations = [];
-    word.relations = [];
-    let information = this.createInformation(raw);
-    word.informations.push(information);
+    let dictionary = this.dictionary;
+    let number = this.count;
+    let equivalents = new Array<Equivalent>();
+    let tags = new Array<string>();
+    let informations = new Array<Information>();
+    let variations = new Array<Variation>();
+    let relations = new Array<Relation>();
+    informations.push(this.createInformation(raw));
     if ((flag & 0x10) !== 0) {
       let informations = this.createAdditionalInformations(raw, fieldLength);
-      word.informations.push(...informations);
+      informations.push(...informations);
     }
-    word.updatedDate = new Date();
+    let updatedDate = new Date();
+    let word = new WordModel({dictionary, number, name, equivalents, tags, informations, variations, relations, updatedDate});
     return [word, nameBytes];
   }
 
   private createInformation(raw: BocuPullStream): Information {
+    let title = "訳語";
     let text = raw.readBocuString();
-    let information = new InformationModel({});
-    information.title = "訳語";
-    information.text = text;
+    let information = new InformationModel({title, text});
     return information;
   }
 
@@ -141,14 +141,9 @@ export class BinaryDeserializer extends Deserializer {
       let type = flag & 0xF;
       if ((flag & 0x80) === 0) {
         if ((flag & 0x10) === 0) {
-          let information = new InformationModel({});
+          let title = (type === 0x2) ? "発音" : "用例";
           let text = raw.readBocuString();
-          if (type === 0x1) {
-            information.title = "用例";
-          } else if (type === 0x2) {
-            information.title = "発音";
-          }
-          information.text = text;
+          let information = new InformationModel({title, text});
           informations.push(information);
         } else {
           let length = raw.readMaybeUIntLE(fieldLength, -1);

@@ -52,11 +52,8 @@ export class CommissionSchema {
   }
 
   public static async add(dictionary: Dictionary, name: string, comment?: string): Promise<Commission> {
-    let commission = new CommissionModel({});
-    commission.dictionary = dictionary;
-    commission.name = name;
-    commission.comment = (comment === "") ? undefined : comment;
-    commission.createdDate = new Date();
+    let createdDate = new Date();
+    let commission = new CommissionModel({dictionary, name, comment, createdDate});
     await commission.save();
     return commission;
   }
