@@ -175,7 +175,7 @@ export class DictionarySchema extends RemovableSchema {
           WordModel.insertMany(words);
           count += words.length;
           LogUtil.log("dictionary/upload", `uploading: ${count}`);
-          LogUtil.log("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}`).join(" | "));
+          LogUtil.log("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key.toLowerCase()}: ${Math.round(value / 1048576 * 100) / 100}`).join(" | "));
         });
         stream.on("property", (key, value) => {
           if (value !== undefined) {
