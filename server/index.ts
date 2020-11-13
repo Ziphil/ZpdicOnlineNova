@@ -24,7 +24,7 @@ import {
   OtherController,
   UserController,
   WordController
-} from "/server/controller/interface";
+} from "/server/controller/internal";
 import {
   LogUtil
 } from "/server/util/log";

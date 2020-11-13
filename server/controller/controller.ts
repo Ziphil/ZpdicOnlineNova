@@ -14,7 +14,7 @@ import {
   RequestData,
   ResponseData,
   ResponseEachData
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 import {
   Dictionary
 } from "/server/model/dictionary";

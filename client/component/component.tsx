@@ -36,7 +36,7 @@ import {
   ResponseData,
   SERVER_PATHS,
   SERVER_PATH_PREFIX
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 
 
 export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Component<Props<P, Q>, S, H> {

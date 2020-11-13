@@ -12,7 +12,7 @@ import {
 } from "/client/skeleton/commission";
 import {
   WithSize
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 import {
   Dictionary,
   DictionarySchema

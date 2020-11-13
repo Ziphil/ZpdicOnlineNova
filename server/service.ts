@@ -4,7 +4,7 @@ import * as typegoose from "@typegoose/typegoose";
 import mongoose from "mongoose";
 import {
   HistoryController
-} from "/server/controller/interface";
+} from "/server/controller/internal";
 import {
   MongoUtil
 } from "/server/util/mongo";

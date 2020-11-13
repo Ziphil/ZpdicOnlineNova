@@ -16,7 +16,7 @@ import {
 import {
   SERVER_PATHS,
   SERVER_PATH_PREFIX
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 import {
   verifyDictionary,
   verifyUser

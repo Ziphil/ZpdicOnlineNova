@@ -11,7 +11,7 @@ import {
 } from "/client/skeleton/notification";
 import {
   WithSize
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 import {
   QueryRange
 } from "/server/util/query";

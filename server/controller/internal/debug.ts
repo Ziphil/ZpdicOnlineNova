@@ -14,7 +14,7 @@ import {
 } from "/server/controller/decorator";
 import {
   SERVER_PATH_PREFIX
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 
 
 @controller(SERVER_PATH_PREFIX)

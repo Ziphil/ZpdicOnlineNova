@@ -30,7 +30,7 @@ import {
 } from "/client/util/decorator";
 import {
   WithSize
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 
 
 @style(require("./dictionary-page.scss"))

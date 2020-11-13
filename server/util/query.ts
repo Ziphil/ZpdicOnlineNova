@@ -5,7 +5,7 @@ import {
 } from "mongoose";
 import {
   WithSize
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 
 
 export class QueryRange {

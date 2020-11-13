@@ -21,7 +21,7 @@ import {
 } from "/client/skeleton/user";
 import {
   WithSize
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 import {
   RemovableSchema
 } from "/server/model/base";
