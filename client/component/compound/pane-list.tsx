@@ -19,7 +19,7 @@ import {
 } from "/client/util/style-name";
 import {
   WithSize
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 
 
 @style(require("./pane-list.scss"))

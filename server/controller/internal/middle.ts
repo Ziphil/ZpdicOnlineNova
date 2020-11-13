@@ -92,7 +92,7 @@ export function verifyRecaptcha(): RequestHandler {
       let result = await RecaptchaUtil.verify(recaptchaToken);
       let score = result.score;
       let action = result.action;
-      LogUtil.log("middle/verify-recaptcha", {score, action});
+      LogUtil.log("middle/verify-recaptcha", `action: ${action} | score: ${score}`);
       if (result.score >= 0.5) {
         request.recaptchaScore = result.score;
         next();

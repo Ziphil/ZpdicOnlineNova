@@ -4,23 +4,23 @@ import {
   CustomError
 } from "/client/skeleton/error";
 import {
-  Controller,
-  Request,
-  Response
-} from "/server/controller/controller";
-import {
   before,
   controller,
   post
 } from "/server/controller/decorator";
 import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/interface/type";
+  Controller,
+  Request,
+  Response
+} from "/server/controller/internal/controller";
 import {
   verifyDictionary,
   verifyUser
-} from "/server/controller/middle";
+} from "/server/controller/internal/middle";
+import {
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/internal/type";
 import {
   InvitationCreator,
   InvitationModel

@@ -21,7 +21,7 @@ import {
 } from "/client/skeleton/user";
 import {
   WithSize
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 import {
   RemovableSchema
 } from "/server/model/base";
@@ -101,7 +101,7 @@ export class DictionarySchema extends RemovableSchema {
   @prop()
   public explanation?: string;
 
-  @prop({required: true, type: DictionarySettingsSchema})
+  @prop({required: true})
   public settings!: DictionarySettingsSchema;
 
   @prop({required: true, default: {}})
@@ -175,7 +175,7 @@ export class DictionarySchema extends RemovableSchema {
           WordModel.insertMany(words);
           count += words.length;
           LogUtil.log("dictionary/upload", `uploading: ${count}`);
-          LogUtil.log("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(", "));
+          LogUtil.log("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key.toLowerCase()}: ${Math.round(value / 1048576 * 100) / 100}`).join(" | "));
         });
         stream.on("property", (key, value) => {
           if (value !== undefined) {
@@ -218,7 +218,7 @@ export class DictionarySchema extends RemovableSchema {
     this.externalData = {};
     await this.save();
     await WordModel.flagRemoveMany().where("dictionary", this);
-    LogUtil.log("dictionary/upload", `number: ${this.number}, start uploading`);
+    LogUtil.log("dictionary/upload", `start uploading | number: ${this.number}`);
   }
 
   public async download(this: Dictionary, path: string): Promise<void> {
@@ -294,32 +294,37 @@ export class DictionarySchema extends RemovableSchema {
   // そうでない場合は、渡された単語データを新しいデータとして追加します。
   // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
   public async editWord(this: Dictionary, word: EditWordSkeleton): Promise<Word> {
-    let currentWord = await WordModel.findOneExist().where("dictionary", this).where("number", word.number);
-    let resultWord;
-    if (currentWord) {
-      resultWord = new WordModel(word);
-      resultWord.dictionary = this;
-      resultWord.createdDate = currentWord.createdDate;
-      resultWord.updatedDate = new Date();
-      await currentWord.flagRemoveOne();
-      await resultWord.save();
-      if (currentWord.name !== resultWord.name) {
-        await this.correctRelationsByEdit(resultWord);
+    if (this.status !== "saving") {
+      let currentWord = await WordModel.findOneExist().where("dictionary", this).where("number", word.number);
+      let resultWord;
+      if (currentWord) {
+        resultWord = new WordModel(word);
+        resultWord.dictionary = this;
+        resultWord.createdDate = currentWord.createdDate;
+        resultWord.updatedDate = new Date();
+        await currentWord.flagRemoveOne();
+        await resultWord.save();
+        if (currentWord.name !== resultWord.name) {
+          await this.correctRelationsByEdit(resultWord);
+        }
+      } else {
+        if (word.number === undefined) {
+          word.number = await this.fetchNextWordNumber();
+        }
+        resultWord = new WordModel(word);
+        resultWord.dictionary = this;
+        resultWord.createdDate = new Date();
+        resultWord.updatedDate = new Date();
+        await resultWord.save();
       }
+      this.status = "ready";
+      this.updatedDate = new Date();
+      await this.save();
+      LogUtil.log("dictionary/edit-word", `number: ${this.number} | current: ${currentWord?.id} | result: ${resultWord.id}`);
+      return resultWord;
     } else {
-      if (word.number === undefined) {
-        word.number = await this.fetchNextWordNumber();
-      }
-      resultWord = new WordModel(word);
-      resultWord.dictionary = this;
-      resultWord.createdDate = new Date();
-      resultWord.updatedDate = new Date();
-      await resultWord.save();
+      throw new CustomError("dictionarySaving");
     }
-    this.updatedDate = new Date();
-    await this.save();
-    LogUtil.log("dictionary/edit-word", {dictionary: {id: this.id, name: this.name}, current: currentWord?.id, result: resultWord.id});
-    return resultWord;
   }
 
   public async removeWord(this: Dictionary, number: number): Promise<Word> {
@@ -330,7 +335,7 @@ export class DictionarySchema extends RemovableSchema {
     } else {
       throw new CustomError("noSuchWordNumber");
     }
-    LogUtil.log("dictionary/remove-word", {dictionary: {id: this.id, name: this.name}, current: word.id});
+    LogUtil.log("dictionary/remove-word", `number: ${this.number} | current: ${word.id}`);
     return word;
   }
 
@@ -346,6 +351,7 @@ export class DictionarySchema extends RemovableSchema {
       }
     }
     let promises = affectedWords.map((affectedWord) => affectedWord.save());
+    LogUtil.log("dictionary/correct-relations-edit", `number: ${this.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
     await Promise.all(promises);
   }
 
@@ -363,6 +369,7 @@ export class DictionarySchema extends RemovableSchema {
     }
     let affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagRemoveOne());
     let changedPromises = changedWords.map((changedWord) => changedWord.save());
+    LogUtil.log("dictionary/correct-relations-remove", `number: ${this.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
     await Promise.all([...affectedPromises, ...changedPromises]);
   }
 

@@ -13,6 +13,7 @@ import {
 } from "express";
 import fs from "fs";
 import mongoose from "mongoose";
+import morgan from "morgan";
 import multer from "multer";
 import {
   CommissionController,
@@ -24,7 +25,7 @@ import {
   OtherController,
   UserController,
   WordController
-} from "/server/controller/interface";
+} from "/server/controller/internal";
 import {
   LogUtil
 } from "/server/util/log";
@@ -48,6 +49,7 @@ export class Main {
     this.setupBodyParsers();
     this.setupCookie();
     this.setupMulter();
+    this.setupMorgan();
     this.setupMongo();
     this.setupSendgrid();
     this.setupDirectories();
@@ -75,6 +77,19 @@ export class Main {
   // アップロードされたファイルは upload フォルダ内に保存するようにしています。
   private setupMulter(): void {
     let middleware = multer({dest: "./dist/upload/"}).single("file");
+    this.application.use(middleware);
+  }
+
+  // アクエスログを出力する morgan の設定をします。
+  private setupMorgan(): void {
+    let middleware = morgan<Request>((tokens, request, response) => {
+      let method = tokens.method(request, response);
+      let status = tokens.status(request, response);
+      let url = tokens.url(request, response);
+      let time = tokens["total-time"](request, response, 0);
+      let body = JSON.stringify(request.body);
+      return `![request] ${method} ${status} ${url} | time: ${time}ms | body: ${body}`;
+    });
     this.application.use(middleware);
   }
 
@@ -120,7 +135,6 @@ export class Main {
   private setupFallbackHandlers(): void {
     let internalHandler = function (request: Request, response: Response, next: NextFunction): void {
       let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
-      LogUtil.log("index", `not found: ${fullUrl}`);
       response.status(404).end();
     };
     let otherHandler = function (request: Request, response: Response, next: NextFunction): void {
@@ -149,7 +163,7 @@ export class Main {
 
   private listen(): void {
     this.application.listen(+PORT, () => {
-      LogUtil.log("index", `listening on port ${PORT}`);
+      LogUtil.log("index", `listening | port: ${PORT}`);
     });
   }
 

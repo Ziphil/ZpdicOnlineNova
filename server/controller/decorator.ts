@@ -11,7 +11,7 @@ import {
 import "reflect-metadata";
 import {
   Controller
-} from "/server/controller/controller";
+} from "/server/controller/internal/controller";
 
 
 class ControllerMetadata<P extends Params = ParamsDictionary> {

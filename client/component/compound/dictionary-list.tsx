@@ -16,7 +16,7 @@ import {
 } from "/client/skeleton/dictionary";
 import {
   WithSize
-} from "/server/controller/interface/type";
+} from "/server/controller/internal/type";
 
 
 @style(require("./dictionary-list.scss"))
