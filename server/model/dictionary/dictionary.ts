@@ -294,32 +294,37 @@ export class DictionarySchema extends RemovableSchema {
   // そうでない場合は、渡された単語データを新しいデータとして追加します。
   // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
   public async editWord(this: Dictionary, word: EditWordSkeleton): Promise<Word> {
-    let currentWord = await WordModel.findOneExist().where("dictionary", this).where("number", word.number);
-    let resultWord;
-    if (currentWord) {
-      resultWord = new WordModel(word);
-      resultWord.dictionary = this;
-      resultWord.createdDate = currentWord.createdDate;
-      resultWord.updatedDate = new Date();
-      await currentWord.flagRemoveOne();
-      await resultWord.save();
-      if (currentWord.name !== resultWord.name) {
-        await this.correctRelationsByEdit(resultWord);
+    if (this.status !== "saving") {
+      let currentWord = await WordModel.findOneExist().where("dictionary", this).where("number", word.number);
+      let resultWord;
+      if (currentWord) {
+        resultWord = new WordModel(word);
+        resultWord.dictionary = this;
+        resultWord.createdDate = currentWord.createdDate;
+        resultWord.updatedDate = new Date();
+        await currentWord.flagRemoveOne();
+        await resultWord.save();
+        if (currentWord.name !== resultWord.name) {
+          await this.correctRelationsByEdit(resultWord);
+        }
+      } else {
+        if (word.number === undefined) {
+          word.number = await this.fetchNextWordNumber();
+        }
+        resultWord = new WordModel(word);
+        resultWord.dictionary = this;
+        resultWord.createdDate = new Date();
+        resultWord.updatedDate = new Date();
+        await resultWord.save();
       }
+      this.status = "ready";
+      this.updatedDate = new Date();
+      await this.save();
+      LogUtil.log("dictionary/edit-word", {dictionary: {id: this.id, name: this.name}, current: currentWord?.id, result: resultWord.id});
+      return resultWord;
     } else {
-      if (word.number === undefined) {
-        word.number = await this.fetchNextWordNumber();
-      }
-      resultWord = new WordModel(word);
-      resultWord.dictionary = this;
-      resultWord.createdDate = new Date();
-      resultWord.updatedDate = new Date();
-      await resultWord.save();
+      throw new CustomError("dictionarySaving");
     }
-    this.updatedDate = new Date();
-    await this.save();
-    LogUtil.log("dictionary/edit-word", {dictionary: {id: this.id, name: this.name}, current: currentWord?.id, result: resultWord.id});
-    return resultWord;
   }
 
   public async removeWord(this: Dictionary, number: number): Promise<Word> {

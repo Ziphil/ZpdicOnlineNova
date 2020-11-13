@@ -166,7 +166,7 @@ type ServerSpecs = {
     request: {number: number, word: EditWord},
     response: {
       success: Word,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionaryNumber" | "dictionarySaving">
     }
   },
   removeWord: {

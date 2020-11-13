@@ -102,6 +102,9 @@ popup:
   invalidDictionaryParamName: >-
     The URL name is invalid.
     It must be composed of alphanumeric characters, underscores and hyphens, contain at least one non-digit, and have no more than 30 characters.
+  dictionarySaving: >-
+    The upload process is currently in progress.
+    Please wait for a while until the process is completed.
   noSuchWordNumber: >-
     You tried to edit a word which does not exist.
   userCanAlreadyEdit: >-
