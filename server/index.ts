@@ -82,7 +82,14 @@ export class Main {
 
   // アクエスログを出力する morgan の設定をします。
   private setupMorgan(): void {
-    let middleware = morgan("![request] :method :url | status: :status | time: :total-time[1]");
+    let middleware = morgan<Request>((tokens, request, response) => {
+      let method = tokens.method(request, response);
+      let status = tokens.status(request, response);
+      let url = tokens.url(request, response);
+      let time = tokens["total-time"](request, response, 0);
+      let body = JSON.stringify(request.body);
+      return `![request] ${method} ${status} ${url} | time: ${time}ms | body: ${body}`;
+    });
     this.application.use(middleware);
   }
 
