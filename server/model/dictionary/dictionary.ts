@@ -101,7 +101,7 @@ export class DictionarySchema extends RemovableSchema {
   @prop()
   public explanation?: string;
 
-  @prop({required: true, type: DictionarySettingsSchema})
+  @prop({required: true})
   public settings!: DictionarySettingsSchema;
 
   @prop({required: true, default: {}})
