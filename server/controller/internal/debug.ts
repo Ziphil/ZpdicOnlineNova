@@ -6,7 +6,7 @@ import {
 } from "express";
 import {
   Controller
-} from "/server/controller/controller";
+} from "/server/controller/internal/controller";
 import {
   controller,
   get,
