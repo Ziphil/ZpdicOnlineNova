@@ -239,7 +239,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   @if $dye {
     background-color: tint($color, 90%);
   }
-  &:focus-within {
+  &:focus-within:not(:disabled):not(.disabled) {
     box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color), $focus-box-shadow-setting focus-box-shadow-color($color);
   }
   &:disabled,
@@ -268,25 +268,24 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "FontAwesome";
   position: relative;
   cursor: pointer;
   outline: none;
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: hover-color($color);
   }
-  &:focus {
+  &:focus:not(:disabled) {
     box-shadow: $focus-box-shadow-setting focus-box-shadow-color($color);
   }
-  &:active {
+  &:active:not(:disabled) {
     background-color: shade($color, 25%);
     background-image: none;
     box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1);
   }
-  &:active:focus {
+  &:active:focus:not(:disabled) {
     box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1), $focus-box-shadow-setting focus-box-shadow-color($color);
   }
   &:disabled {
     opacity: 0.5;
   }
   &:disabled:hover {
-    background-color: $color;
     cursor: not-allowed;
   }
 }
