@@ -80,7 +80,7 @@ export class BinaryDeserializer extends Deserializer {
         break;
       }
     }
-    LogUtil.log("binary-deserializer/read-words", `data block read: ${this.count}`);
+    LogUtil.log("binary-deserializer/read-words", `data block | read: ${this.count}`);
   }
 
   private parseWords(length: number, fieldLength: number): void {

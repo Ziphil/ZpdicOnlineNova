@@ -175,7 +175,7 @@ export class DictionarySchema extends RemovableSchema {
           WordModel.insertMany(words);
           count += words.length;
           LogUtil.log("dictionary/upload", `uploading: ${count}`);
-          LogUtil.log("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}MB`).join(", "));
+          LogUtil.log("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key}: ${Math.round(value / 1024 / 1024 * 100) / 100}`).join(" | "));
         });
         stream.on("property", (key, value) => {
           if (value !== undefined) {
@@ -218,7 +218,7 @@ export class DictionarySchema extends RemovableSchema {
     this.externalData = {};
     await this.save();
     await WordModel.flagRemoveMany().where("dictionary", this);
-    LogUtil.log("dictionary/upload", `number: ${this.number}, start uploading`);
+    LogUtil.log("dictionary/upload", `start uploading | number: ${this.number}`);
   }
 
   public async download(this: Dictionary, path: string): Promise<void> {
@@ -320,7 +320,7 @@ export class DictionarySchema extends RemovableSchema {
       this.status = "ready";
       this.updatedDate = new Date();
       await this.save();
-      LogUtil.log("dictionary/edit-word", {dictionary: {id: this.id, name: this.name}, current: currentWord?.id, result: resultWord.id});
+      LogUtil.log("dictionary/edit-word", `number: ${this.number} | current: ${currentWord?.id} | result: ${resultWord.id}`);
       return resultWord;
     } else {
       throw new CustomError("dictionarySaving");
@@ -335,7 +335,7 @@ export class DictionarySchema extends RemovableSchema {
     } else {
       throw new CustomError("noSuchWordNumber");
     }
-    LogUtil.log("dictionary/remove-word", {dictionary: {id: this.id, name: this.name}, current: word.id});
+    LogUtil.log("dictionary/remove-word", `number: ${this.number} | current: ${word.id}`);
     return word;
   }
 
@@ -351,6 +351,7 @@ export class DictionarySchema extends RemovableSchema {
       }
     }
     let promises = affectedWords.map((affectedWord) => affectedWord.save());
+    LogUtil.log("dictionary/correct-relations-edit", `number: ${this.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
     await Promise.all(promises);
   }
 
@@ -368,6 +369,7 @@ export class DictionarySchema extends RemovableSchema {
     }
     let affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagRemoveOne());
     let changedPromises = changedWords.map((changedWord) => changedWord.save());
+    LogUtil.log("dictionary/correct-relations-remove", `number: ${this.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
     await Promise.all([...affectedPromises, ...changedPromises]);
   }
 

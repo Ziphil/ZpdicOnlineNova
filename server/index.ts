@@ -13,6 +13,7 @@ import {
 } from "express";
 import fs from "fs";
 import mongoose from "mongoose";
+import morgan from "morgan";
 import multer from "multer";
 import {
   CommissionController,
@@ -48,6 +49,7 @@ export class Main {
     this.setupBodyParsers();
     this.setupCookie();
     this.setupMulter();
+    this.setupMorgan();
     this.setupMongo();
     this.setupSendgrid();
     this.setupDirectories();
@@ -75,6 +77,12 @@ export class Main {
   // アップロードされたファイルは upload フォルダ内に保存するようにしています。
   private setupMulter(): void {
     let middleware = multer({dest: "./dist/upload/"}).single("file");
+    this.application.use(middleware);
+  }
+
+  // アクエスログを出力する morgan の設定をします。
+  private setupMorgan(): void {
+    let middleware = morgan("![request] :method :url | status: :status | time: :total-time[1]");
     this.application.use(middleware);
   }
 
@@ -120,7 +128,6 @@ export class Main {
   private setupFallbackHandlers(): void {
     let internalHandler = function (request: Request, response: Response, next: NextFunction): void {
       let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
-      LogUtil.log("index", `not found: ${fullUrl}`);
       response.status(404).end();
     };
     let otherHandler = function (request: Request, response: Response, next: NextFunction): void {
@@ -149,7 +156,7 @@ export class Main {
 
   private listen(): void {
     this.application.listen(+PORT, () => {
-      LogUtil.log("index", `listening on port ${PORT}`);
+      LogUtil.log("index", `listening | port: ${PORT}`);
     });
   }
 
