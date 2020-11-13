@@ -101,6 +101,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
       let titleLabel = (index === 0) ? this.trans("advancedSearchForm.title") : undefined;
       let searchLabel = (index === 0) ? this.trans("advancedSearchForm.search") : undefined;
       let titleDisabled = element.mode !== "equivalent" && element.mode !== "information";
+      let deleteDisabled = elements.length <= 1;
       let suggest = (titleDisabled) ? undefined : this.createSuggest(element.mode);
       let searchNode = (
         <div styleName="inner" key={index}>
@@ -113,7 +114,7 @@ export default class AdvancedSearchForm extends Component<Props, State> {
             <Input className={styles["search"]} value={element.search} label={searchLabel} onSet={this.setParameter((search) => elements[index].search = search)}/>
           </div>
           <div styleName="control-button">
-            <Button iconLabel="&#xF068;" onClick={this.setParameter(() => deleteAt(elements, index))}/>
+            <Button iconLabel="&#xF068;" disabled={deleteDisabled} onClick={this.setParameter(() => deleteAt(elements, index))}/>
           </div>
         </div>
       );
