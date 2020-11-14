@@ -26,7 +26,7 @@ export default class AddCommissionPage extends Component<Props, State, Params> {
     let number = +this.props.match!.params.number;
     let response = await this.request("fetchDictionary", {number});
     if (response.status === 200 && !("error" in response.data)) {
-      let dictionary = EnhancedDictionary.of<EnhancedDictionary>(response.data);
+      let dictionary = EnhancedDictionary.enhance(response.data);
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});

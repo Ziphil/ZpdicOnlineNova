@@ -1,11 +1,7 @@
 //
 
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
-
-export class Variation extends Skeleton {
+export class Variation {
 
   public title!: string;
   public name!: string;
@@ -13,7 +9,7 @@ export class Variation extends Skeleton {
   public static createEmpty(): Variation {
     let title = "";
     let name = "";
-    let skeleton = Variation.of({title, name});
+    let skeleton = {title, name};
     return skeleton;
   }
 

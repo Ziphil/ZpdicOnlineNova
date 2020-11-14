@@ -29,7 +29,7 @@ export class RelationCreator {
     let title = raw.title;
     let number = raw.number;
     let name = raw.name;
-    let skeleton = RelationSkeleton.of({title, number, name});
+    let skeleton = {title, number, name};
     return skeleton;
   }
 

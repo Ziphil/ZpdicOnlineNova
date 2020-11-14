@@ -18,11 +18,18 @@ export class NormalWordParameter extends WordParameter {
   public mode!: WordMode;
   public type!: WordType;
 
+  private constructor(search: string, mode: WordMode, type: WordType) {
+    super();
+    this.search = search;
+    this.mode = mode;
+    this.type = type;
+  }
+
   public static createEmpty(overriddenObject: Partial<NormalWordParameter> = {}): NormalWordParameter {
     let search = overriddenObject.search ?? "";
     let mode = overriddenObject.mode ?? "both";
     let type = overriddenObject.type ?? "prefix";
-    let skeleton = NormalWordParameter.of({search, mode, type});
+    let skeleton = new NormalWordParameter(search, mode, type);
     return skeleton;
   }
 

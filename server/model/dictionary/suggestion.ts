@@ -27,7 +27,7 @@ export class SuggestionCreator {
   public static create(raw: Suggestion): SuggestionSkeleton {
     let title = raw.title;
     let word = WordCreator.create(raw.word);
-    let skeleton = SuggestionSkeleton.of({title, word});
+    let skeleton = {title, word};
     return skeleton;
   }
 

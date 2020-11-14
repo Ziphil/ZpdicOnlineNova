@@ -1,11 +1,7 @@
 //
 
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
-
-export class Information extends Skeleton {
+export class Information {
 
   public title!: string;
   public text!: string;
@@ -13,7 +9,7 @@ export class Information extends Skeleton {
   public static createEmpty(): Information {
     let title = "";
     let text = "";
-    let skeleton = Information.of({title, text});
+    let skeleton = {title, text};
     return skeleton;
   }
 

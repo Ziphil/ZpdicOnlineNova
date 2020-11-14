@@ -10,20 +10,14 @@ import {
   DictionarySettings
 } from "/client/skeleton/dictionary";
 import {
-  Skeleton
-} from "/client/skeleton/skeleton";
-import {
   User
 } from "/client/skeleton/user";
-import {
-  Plain
-} from "/server/controller/internal/type";
 import {
   DictionaryAuthority
 } from "/server/model/dictionary";
 
 
-export class Dictionary extends Skeleton {
+export class Dictionary {
 
   public id!: string;
   public number!: number;
@@ -58,6 +52,10 @@ export class EnhancedDictionary extends DetailedDictionary {
 
   private akrantiain?: Akrantiain | null;
   private zatlin?: Zatlin | null;
+
+  public static enhance(object: DetailedDictionary): EnhancedDictionary {
+    return Object.assign(Object.create(this.prototype), object);
+  }
 
   public getAkrantiain(): Akrantiain | null {
     if (this.akrantiain === undefined) {

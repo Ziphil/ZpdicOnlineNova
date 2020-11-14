@@ -515,7 +515,7 @@ export class DictionaryCreator {
     let settings = DictionarySettingsCreator.create(raw.settings);
     let createdDate = raw.createdDate?.toISOString() ?? undefined;
     let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, settings, createdDate, updatedDate});
+    let skeleton = {id, number, paramName, name, status, secret, explanation, settings, createdDate, updatedDate};
     return skeleton;
   }
 
@@ -543,7 +543,7 @@ export class DictionaryCreator {
       }
     });
     let [wordSize, user] = await Promise.all([wordSizePromise, userPromise]);
-    let skeleton = DetailedDictionarySkeleton.of({...base, wordSize, user});
+    let skeleton = {...base, wordSize, user};
     return skeleton;
   }
 
@@ -551,7 +551,7 @@ export class DictionaryCreator {
     let basePromise = DictionaryCreator.createDetailed(raw);
     let authoritiesPromise = raw.fetchAuthorities(rawUser);
     let [base, authorities] = await Promise.all([basePromise, authoritiesPromise]);
-    let skeleton = UserDictionarySkeleton.of({...base, authorities});
+    let skeleton = {...base, authorities};
     return skeleton;
   }
 

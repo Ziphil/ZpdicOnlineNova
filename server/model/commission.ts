@@ -72,7 +72,7 @@ export class CommissionCreator {
     let name = raw.name;
     let comment = raw.comment;
     let createdDate = raw.createdDate.toISOString();
-    let skeleton = CommissionSkeleton.of({id, name, comment, createdDate});
+    let skeleton = {id, name, comment, createdDate};
     return skeleton;
 
   }

@@ -1,19 +1,15 @@
 //
 
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
+export class CustomError<E extends string = string> {
 
-export class CustomError<E extends string = string> extends Skeleton {
-
-  public error!: "Error";
+  public error!: "CustomError";
   public type!: E;
   public code?: number;
 
   public static ofType<E extends string>(type: E, code?: number): CustomError<E> {
-    let object = {error: "Error", type, code} as any;
-    let skeleton = this.of(object) as any;
+    let error = "CustomError" as const;
+    let skeleton = {error, type, code};
     return skeleton;
   }
 

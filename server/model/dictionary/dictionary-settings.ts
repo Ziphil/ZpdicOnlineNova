@@ -45,7 +45,7 @@ export class DictionarySettingsCreator {
     let punctuations = raw.punctuations;
     let pronunciationTitle = raw.pronunciationTitle;
     let enableMarkdown = raw.enableMarkdown;
-    let skeleton = DictionarySettingsSkeleton.of({akrantiainSource, zatlinSource, punctuations, pronunciationTitle, enableMarkdown});
+    let skeleton = {akrantiainSource, zatlinSource, punctuations, pronunciationTitle, enableMarkdown};
     return skeleton;
   }
 

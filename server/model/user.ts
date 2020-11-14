@@ -208,14 +208,14 @@ export class UserCreator {
     let id = raw.id;
     let name = raw.name;
     let screenName = raw.screenName;
-    let skeleton = UserSkeleton.of({id, name, screenName});
+    let skeleton = {id, name, screenName};
     return skeleton;
   }
 
   public static createDetailed(raw: User): DetailedUserSkeleton {
     let base = UserCreator.create(raw);
     let email = raw.email;
-    let skeleton = DetailedUserSkeleton.of({...base, email});
+    let skeleton = {...base, email};
     return skeleton;
   }
 

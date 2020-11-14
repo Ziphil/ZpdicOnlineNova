@@ -9,27 +9,30 @@ import {
   WORD_MODES,
   WordParameter
 } from "/client/skeleton/dictionary/word-parameter/word-parameter";
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
 
 export class AdvancedWordParameter extends WordParameter {
 
   public elements!: Array<AdvancedWordParameterElement>;
 
+  private constructor(elements: Array<AdvancedWordParameterElement>) {
+    super();
+    this.elements = elements;
+  }
+
   public static createEmpty(): AdvancedWordParameter {
     let elements = [AdvancedWordParameterElement.createEmpty()];
-    let skeleton = AdvancedWordParameter.of({elements});
+    let skeleton = new AdvancedWordParameter(elements);
     return skeleton;
   }
 
   public static deserializeEach(query: Record<string, unknown>): AdvancedWordParameter {
     if (typeof query["advanced"] === "string") {
-      let parameter = AdvancedWordParameter.of(rison.decode<any>(query["advanced"]));
+      let data = rison.decode(query["advanced"]) as any;
+      let parameter = new AdvancedWordParameter(data.elements);
       return parameter;
     } else {
-      let parameter = AdvancedWordParameter.of({elements: []});
+      let parameter = new AdvancedWordParameter([]);
       return parameter;
     }
   }
@@ -42,7 +45,7 @@ export class AdvancedWordParameter extends WordParameter {
 }
 
 
-export class AdvancedWordParameterElement extends Skeleton {
+export class AdvancedWordParameterElement {
 
   public search!: string;
   public title!: string;
@@ -54,7 +57,7 @@ export class AdvancedWordParameterElement extends Skeleton {
     let title = "";
     let mode = "name" as const;
     let type = "exact" as const;
-    let skeleton = AdvancedWordParameterElement.of({search, title, mode, type});
+    let skeleton = {search, title, mode, type};
     return skeleton;
   }
 

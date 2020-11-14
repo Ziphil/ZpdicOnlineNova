@@ -6,12 +6,9 @@ import {
   Relation,
   Variation
 } from "/client/skeleton/dictionary";
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
 
-export class EditWord extends Skeleton {
+export class EditWord {
 
   public number?: number;
   public name!: string;
@@ -30,7 +27,7 @@ export class EditWord extends Skeleton {
     let informations = new Array<Information>();
     let variations = new Array<Variation>();
     let relations = new Array<Relation>();
-    let skeleton = EditWord.of({name, pronunciation, equivalents, tags, informations, variations, relations});
+    let skeleton = {name, pronunciation, equivalents, tags, informations, variations, relations};
     return skeleton;
   }
 

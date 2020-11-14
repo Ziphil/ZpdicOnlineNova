@@ -82,7 +82,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     })();
     let response = await this.request("fetchDictionary", {number, paramName});
     if (response.status === 200 && !("error" in response.data)) {
-      let dictionary = EnhancedDictionary.of<EnhancedDictionary>(response.data);
+      let dictionary = EnhancedDictionary.enhance(response.data);
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});

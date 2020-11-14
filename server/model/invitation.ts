@@ -140,7 +140,7 @@ export class InvitationCreator {
       let type = raw.type;
       let dictionary = await DictionaryCreator.createDetailed(raw.dictionary);
       let createdDate = raw.createdDate.toISOString();
-      let skeleton = InvitationSkeleton.of({id, type, dictionary, createdDate});
+      let skeleton = {id, type, dictionary, createdDate};
       return skeleton;
     } else {
       throw new Error("cannot happen");

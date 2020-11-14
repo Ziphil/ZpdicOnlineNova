@@ -1,11 +1,7 @@
 //
 
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
-
-export class User extends Skeleton {
+export class User {
 
   public id!: string;
   public name!: string;
