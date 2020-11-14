@@ -20,7 +20,7 @@ export default class UploadDictionaryForm extends Component<Props, State> {
   };
 
   private async handleClick(): Promise<void> {
-    let number = this.props.number;
+    let number = this.props.number.toString();
     let file = this.state.file;
     if (file) {
       let response = await this.requestFile("uploadDictionary", {number, file});

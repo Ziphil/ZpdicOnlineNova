@@ -11,7 +11,7 @@ import {
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
-  Dictionary
+  EnhancedDictionary
 } from "/client/skeleton/dictionary";
 
 
@@ -26,7 +26,7 @@ export default class AddCommissionPage extends Component<Props, State, Params> {
     let number = +this.props.match!.params.number;
     let response = await this.request("fetchDictionary", {number});
     if (response.status === 200 && !("error" in response.data)) {
-      let dictionary = response.data;
+      let dictionary = EnhancedDictionary.of<EnhancedDictionary>(response.data);
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
@@ -51,7 +51,7 @@ export default class AddCommissionPage extends Component<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionary: Dictionary | null
+  dictionary: EnhancedDictionary | null
 };
 type Params = {
   number: string

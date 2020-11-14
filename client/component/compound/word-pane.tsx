@@ -20,6 +20,7 @@ import {
 import {
   Dictionary,
   EditWord,
+  EnhancedDictionary,
   Relation,
   Word
 } from "/client/skeleton/dictionary";
@@ -55,10 +56,10 @@ export default class WordPane extends Component<Props, State> {
           return "/" + this.props.word.pronunciation + "/";
         }
       } else {
-        let akrantiain = (this.props.dictionary instanceof Dictionary) ? this.props.dictionary.getAkrantiain() : null;
+        let akrantiain = this.props.dictionary.getAkrantiain();
         if (akrantiain !== null) {
           try {
-            let pronunciation = this.props.dictionary.getAkrantiain()!.convert(this.props.word.name);
+            let pronunciation = akrantiain.convert(this.props.word.name);
             return "/" + pronunciation + "/";
           } catch (error) {
             console.error(error);
@@ -210,7 +211,7 @@ export default class WordPane extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: Dictionary,
+  dictionary: EnhancedDictionary,
   word: Word,
   style: "normal" | "simple",
   showEditLink: boolean,

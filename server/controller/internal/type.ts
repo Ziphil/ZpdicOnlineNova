@@ -1,9 +1,6 @@
 //
 
 import {
-  ValueOf
-} from "ts-essentials";
-import {
   Commission
 } from "/client/skeleton/commission";
 import {
@@ -93,7 +90,7 @@ type ServerSpecs = {
     }
   },
   uploadDictionary: {
-    request: {number: number},
+    request: {number: string},
     response: {
       success: Dictionary,
       error: CustomError<"noSuchDictionaryNumber">
@@ -380,6 +377,23 @@ export type WithSize<T> = [Array<T>, number];
 export type Status = "success" | "error";
 export type ProcessName = keyof ServerSpecs;
 
-export type RequestData<N extends ProcessName> = ServerSpecs[N]["request"];
-export type ResponseData<N extends ProcessName> = ValueOf<ServerSpecs[N]["response"]>;
-export type ResponseEachData<N extends ProcessName, S extends Status> = ServerSpecs[N]["response"][S];
+export type RequestData<N extends ProcessName> = DeepPlain<ServerSpecs[N]["request"]>;
+export type ResponseData<N extends ProcessName> = DeepPlain<ServerSpecs[N]["response"]["success"]> | DeepPlain<ServerSpecs[N]["response"]["error"]>;
+export type ResponseEachData<N extends ProcessName, S extends Status> = DeepPlain<ServerSpecs[N]["response"][S]>;
+
+type ExtractRequired<T extends object, P extends keyof T> = undefined extends T[P] ? never : P;
+type ExtractOptional<T extends object, P extends keyof T> = undefined extends T[P] ? P : never;
+type RequiredProperties<T extends object> = {[P in keyof T]: T[P] extends (...args: Array<any>) => any ? never : ExtractRequired<T, P>}[keyof T];
+type OptionalProperties<T extends object> = {[P in keyof T]: T[P] extends (...args: Array<any>) => any ? never : ExtractOptional<T, P>}[keyof T];
+type Primitive = string | number | boolean | null;
+
+export type Plain<T> = T extends Primitive ? T
+  : T extends object ? {[P in RequiredProperties<T>]: T[P]} & {[P in OptionalProperties<T>]?: T[P]}
+  : never;
+export type DeepPlain<T> = T extends [infer A] ? [DeepPlain<A>]
+  : T extends [infer A, infer B] ? [DeepPlain<A>, DeepPlain<B>]
+  : T extends [infer A, infer B, infer C] ? [DeepPlain<A>, DeepPlain<B>, DeepPlain<C>]
+  : T extends [infer A, infer B, infer C, infer D] ? [DeepPlain<A>, DeepPlain<B>, DeepPlain<C>, DeepPlain<D>]
+  : T extends Array<infer U> ? Array<DeepPlain<U>>
+  : T extends object ? {[K in keyof Plain<T>]: DeepPlain<Plain<T>[K]>}
+  : Plain<T>;

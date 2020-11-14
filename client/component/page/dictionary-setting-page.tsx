@@ -28,7 +28,7 @@ import {
   Commission
 } from "/client/skeleton/commission";
 import {
-  DetailedDictionary
+  EnhancedDictionary
 } from "/client/skeleton/dictionary";
 import {
   WithSize
@@ -53,7 +53,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let number = +this.props.match!.params.number;
     let response = await this.request("fetchDictionary", {number});
     if (response.status === 200 && !("error" in response.data)) {
-      let dictionary = DetailedDictionary.of(response.data);
+      let dictionary = EnhancedDictionary.of<EnhancedDictionary>(response.data);
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
@@ -327,7 +327,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
 type Props = {
 };
 type State = {
-  dictionary: DetailedDictionary | null,
+  dictionary: EnhancedDictionary | null,
   commissionCount: number,
   authorized: boolean
 };

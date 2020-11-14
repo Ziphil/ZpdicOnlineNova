@@ -16,6 +16,9 @@ import {
   User
 } from "/client/skeleton/user";
 import {
+  Plain
+} from "/server/controller/internal/type";
+import {
   DictionaryAuthority
 } from "/server/model/dictionary";
 
@@ -32,6 +35,26 @@ export class Dictionary extends Skeleton {
   public settings!: DictionarySettings;
   public createdDate?: string;
   public updatedDate?: string;
+
+}
+
+
+export class DetailedDictionary extends Dictionary {
+
+  public wordSize!: number;
+  public user!: User;
+
+}
+
+
+export class UserDictionary extends DetailedDictionary {
+
+  public authorities!: Array<DictionaryAuthority>;
+
+}
+
+
+export class EnhancedDictionary extends DetailedDictionary {
 
   private akrantiain?: Akrantiain | null;
   private zatlin?: Zatlin | null;
@@ -69,20 +92,5 @@ export class Dictionary extends Skeleton {
     }
     return this.zatlin;
   }
-
-}
-
-
-export class DetailedDictionary extends Dictionary {
-
-  public wordSize!: number;
-  public user!: User;
-
-}
-
-
-export class UserDictionary extends DetailedDictionary {
-
-  public authorities!: Array<DictionaryAuthority>;
 
 }

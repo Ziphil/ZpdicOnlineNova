@@ -21,8 +21,8 @@ import {
   Commission
 } from "/client/skeleton/commission";
 import {
-  Dictionary,
-  EditWord
+  EditWord,
+  EnhancedDictionary
 } from "/client/skeleton/dictionary";
 
 
@@ -102,7 +102,7 @@ export default class CommissionPane extends Component<Props, State> {
 
 type Props = {
   commission: Commission,
-  dictionary: Dictionary,
+  dictionary: EnhancedDictionary,
   onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   onAddConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };

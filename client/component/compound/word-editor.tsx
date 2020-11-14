@@ -31,8 +31,8 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  Dictionary,
   EditWord,
+  EnhancedDictionary,
   Equivalent,
   Information,
   Relation,
@@ -133,7 +133,7 @@ export default class WordEditor extends Component<Props, State> {
   private renderName(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let zatlin = (this.props.dictionary instanceof Dictionary) ? this.props.dictionary.getZatlin() : null;
+    let zatlin = this.props.dictionary.getZatlin();
     let generateNode = (zatlin !== null) && (
       <div styleName="control-button">
         <Button label={this.trans("wordEditor.generate")} onClick={() => this.generateName(zatlin!)}/>
@@ -474,7 +474,7 @@ export default class WordEditor extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: Dictionary,
+  dictionary: EnhancedDictionary,
   word: Word | null,
   defaultName?: string,
   defaultEquivalentName?: string,

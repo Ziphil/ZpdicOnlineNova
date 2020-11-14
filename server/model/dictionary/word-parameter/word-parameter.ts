@@ -10,6 +10,9 @@ import {
   WordParameter as WordParameterSkeleton
 } from "/client/skeleton/dictionary";
 import {
+  DeepPlain
+} from "/server/controller/internal/type";
+import {
   AdvancedWordParameter,
   AdvancedWordParameterElement,
   Dictionary,
@@ -73,7 +76,7 @@ export abstract class WordParameter {
 
 export class SearchParameterCreator {
 
-  public static restore(skeleton: WordParameterSkeleton): WordParameter {
+  public static recreate(skeleton: DeepPlain<WordParameterSkeleton>): WordParameter {
     if ("elements" in skeleton) {
       let castSkeleton = skeleton as AdvancedWordParameterSkeleton;
       let elements = castSkeleton.elements.map((element) => new AdvancedWordParameterElement(element.search, element.title, element.mode, element.type));

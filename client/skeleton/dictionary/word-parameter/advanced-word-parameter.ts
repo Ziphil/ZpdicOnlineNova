@@ -26,7 +26,7 @@ export class AdvancedWordParameter extends WordParameter {
 
   public static deserializeEach(query: Record<string, unknown>): AdvancedWordParameter {
     if (typeof query["advanced"] === "string") {
-      let parameter = AdvancedWordParameter.of(rison.decode(query["advanced"]));
+      let parameter = AdvancedWordParameter.of(rison.decode<any>(query["advanced"]));
       return parameter;
     } else {
       let parameter = AdvancedWordParameter.of({elements: []});

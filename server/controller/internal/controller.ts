@@ -9,6 +9,7 @@ import {
   Controller as BaseController
 } from "/server/controller/controller";
 import {
+  DeepPlain,
   ProcessName,
   RequestData,
   ResponseData,

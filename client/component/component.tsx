@@ -31,6 +31,7 @@ import {
   RECAPTCHA_KEY
 } from "/client/variable";
 import {
+  DeepPlain,
   ProcessName,
   RequestData,
   ResponseData,
@@ -125,7 +126,7 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
     }
     let response = await (async () => {
       try {
-        return await BaseComponent.client.request<ResponseData<N>>({url, method, ...config, data});
+        return await BaseComponent.client.request({url, method, ...config, data});
       } catch (error) {
         if (error.code === "ECONNABORTED") {
           let data = undefined as any;
@@ -142,10 +143,10 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
     return response;
   }
 
-  protected async requestFile<N extends ProcessName>(name: N, data: Omit<RequestData<N>, "recaptchaToken"> & {file: Blob}, config: RequestConfigWithRecaptcha): Promise<AxiosResponseSpec<N>>;
-  protected async requestFile<N extends ProcessName>(name: N, data: RequestData<N> & {file: Blob}, config?: RequestConfig): Promise<AxiosResponseSpec<N>>;
-  protected async requestFile<N extends ProcessName>(name: N, data: RequestData<N> & {file: Blob}, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
-    let formData = new FormData();
+  protected async requestFile<N extends ProcessName>(name: N, data: WithFile<Omit<RequestData<N>, "recaptchaToken">>, config: RequestConfigWithRecaptcha): Promise<AxiosResponseSpec<N>>;
+  protected async requestFile<N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config?: RequestConfig): Promise<AxiosResponseSpec<N>>;
+  protected async requestFile<N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
+    let formData = new FormData() as any;
     for (let [key, value] of Object.entries(data)) {
       formData.append(key, value);
     }
@@ -222,6 +223,7 @@ type AdditionalRequestConfig = {
 };
 
 type Props<P, Q> = Partial<RouteComponentProps<Q, any, any> & AdditionalProps> & P;
+type WithFile<T> = T & {file: Blob} & {[key: string]: string | Blob};
 type RequestConfig = AxiosRequestConfig & AdditionalRequestConfig;
 type RequestConfigWithRecaptcha = RequestConfig & {useRecaptcha: true | string};
 type AxiosResponseSpec<N extends ProcessName> = AxiosResponse<ResponseData<N>>;

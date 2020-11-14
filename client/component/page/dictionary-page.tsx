@@ -18,8 +18,7 @@ import {
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
-  DetailedDictionary,
-  Dictionary,
+  EnhancedDictionary,
   NormalWordParameter,
   Suggestion,
   Word,
@@ -83,7 +82,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     })();
     let response = await this.request("fetchDictionary", {number, paramName});
     if (response.status === 200 && !("error" in response.data)) {
-      let dictionary = DetailedDictionary.of(response.data);
+      let dictionary = EnhancedDictionary.of<EnhancedDictionary>(response.data);
       this.setState({dictionary});
     } else {
       this.setState({dictionary: null});
@@ -229,7 +228,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
 type Props = {
 };
 type State = {
-  dictionary: Dictionary | null,
+  dictionary: EnhancedDictionary | null,
   canOwn: boolean,
   canEdit: boolean,
   parameter: WordParameter,

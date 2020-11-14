@@ -15,7 +15,7 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  Dictionary,
+  EnhancedDictionary,
   EditWord,
   Word
 } from "/client/skeleton/dictionary";
@@ -60,7 +60,7 @@ export default class WordList extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: Dictionary,
+  dictionary: EnhancedDictionary,
   words: Array<Word>,
   style: "normal" | "simple",
   showEditLink: boolean,
