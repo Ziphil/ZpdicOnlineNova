@@ -19,7 +19,7 @@ import {
   Commission
 } from "/client/skeleton/commission";
 import {
-  EditWord,
+  EditableWord,
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
 import {
@@ -65,7 +65,7 @@ type Props = {
   dictionary: EnhancedDictionary
   size: number,
   onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onAddConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  onAddConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
 };

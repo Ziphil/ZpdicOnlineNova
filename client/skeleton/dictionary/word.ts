@@ -8,7 +8,7 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-export class EditWord {
+export class EditableWord {
 
   public number?: number;
   public name!: string;
@@ -19,7 +19,7 @@ export class EditWord {
   public variations!: Array<Variation>;
   public relations!: Array<Relation>;
 
-  public static createEmpty(): EditWord {
+  public static createEmpty(): EditableWord {
     let name = "";
     let equivalents = new Array<Equivalent>();
     let tags = new Array<string>();
@@ -33,7 +33,7 @@ export class EditWord {
 }
 
 
-export class Word extends EditWord {
+export class Word extends EditableWord {
 
   public id!: string;
   public number!: number;

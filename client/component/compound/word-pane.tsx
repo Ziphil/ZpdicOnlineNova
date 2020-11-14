@@ -18,7 +18,7 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  EditWord,
+  EditableWord,
   EnhancedDictionary,
   Relation,
   Word
@@ -216,7 +216,7 @@ type Props = {
   showEditLink: boolean,
   showButton: boolean,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type DefaultProps = {

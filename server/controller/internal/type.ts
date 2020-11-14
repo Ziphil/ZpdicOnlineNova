@@ -7,7 +7,7 @@ import {
   DetailedDictionary,
   Dictionary,
   DictionarySettings,
-  EditWord,
+  EditableWord,
   Suggestion,
   UserDictionary,
   Word,
@@ -160,7 +160,7 @@ type ServerSpecs = {
     }
   },
   editWord: {
-    request: {number: number, word: EditWord},
+    request: {number: number, word: EditableWord},
     response: {
       success: Word,
       error: CustomError<"noSuchDictionaryNumber" | "dictionarySaving">

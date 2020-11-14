@@ -21,7 +21,7 @@ import {
   Commission
 } from "/client/skeleton/commission";
 import {
-  EditWord,
+  EditableWord,
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
 
@@ -48,7 +48,7 @@ export default class CommissionPane extends Component<Props, State> {
     }
   }
 
-  private async handleEditConfirm(word: EditWord, event: MouseEvent<HTMLButtonElement>): Promise<void> {
+  private async handleEditConfirm(word: EditableWord, event: MouseEvent<HTMLButtonElement>): Promise<void> {
     await this.removeCommission(event, false);
     if (this.props.onAddConfirm) {
       await this.props.onAddConfirm(word, event);
@@ -104,7 +104,7 @@ type Props = {
   commission: Commission,
   dictionary: EnhancedDictionary,
   onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onAddConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  onAddConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
   alertOpen: boolean,

@@ -31,7 +31,7 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  EditWord,
+  EditableWord,
   EnhancedDictionary,
   Equivalent,
   Information,
@@ -61,7 +61,7 @@ export default class WordEditor extends Component<Props, State> {
 
   public constructor(props: Props) {
     super(props);
-    let word = cloneDeep(this.props.word) ?? EditWord.createEmpty();
+    let word = cloneDeep(this.props.word) ?? EditableWord.createEmpty();
     if (this.props.defaultName) {
       word.name = this.props.defaultName;
     }
@@ -480,7 +480,7 @@ type Props = {
   defaultEquivalentName?: string,
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
-  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
@@ -490,4 +490,4 @@ type State = {
 };
 
 
-type TemporaryEditWord = EditWord & {equivalentStrings: Array<string>};
+type TemporaryEditWord = EditableWord & {equivalentStrings: Array<string>};
