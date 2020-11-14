@@ -18,7 +18,6 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  Dictionary,
   EditWord,
   EnhancedDictionary,
   Relation,
