@@ -13,7 +13,7 @@ import {
 
 export class AdvancedWordParameter extends WordParameter {
 
-  public elements!: Array<AdvancedWordParameterElement>;
+  public elements: Array<AdvancedWordParameterElement>;
 
   private constructor(elements: Array<AdvancedWordParameterElement>) {
     super();

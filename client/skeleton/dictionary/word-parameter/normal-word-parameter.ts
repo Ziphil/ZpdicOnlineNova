@@ -14,9 +14,9 @@ import {
 
 export class NormalWordParameter extends WordParameter {
 
-  public search!: string;
-  public mode!: WordMode;
-  public type!: WordType;
+  public search: string;
+  public mode: WordMode;
+  public type: WordType;
 
   private constructor(search: string, mode: WordMode, type: WordType) {
     super();
