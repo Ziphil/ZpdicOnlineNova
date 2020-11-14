@@ -21,13 +21,12 @@ export class EditWord {
 
   public static createEmpty(): EditWord {
     let name = "";
-    let pronunciation;
     let equivalents = new Array<Equivalent>();
     let tags = new Array<string>();
     let informations = new Array<Information>();
     let variations = new Array<Variation>();
     let relations = new Array<Relation>();
-    let skeleton = {name, pronunciation, equivalents, tags, informations, variations, relations};
+    let skeleton = {name, equivalents, tags, informations, variations, relations};
     return skeleton;
   }
 
