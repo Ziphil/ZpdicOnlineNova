@@ -1,11 +1,7 @@
 //
 
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
-
-export class Relation extends Skeleton {
+export class Relation {
 
   public title!: string;
   public number!: number;
@@ -15,7 +11,7 @@ export class Relation extends Skeleton {
     let title = "";
     let number = -1;
     let name = "";
-    let skeleton = Relation.of({title, number, name});
+    let skeleton = {title, number, name};
     return skeleton;
   }
 

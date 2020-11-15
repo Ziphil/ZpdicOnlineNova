@@ -15,8 +15,8 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  Dictionary,
-  EditWord,
+  EditableWord,
+  EnhancedDictionary,
   Word
 } from "/client/skeleton/dictionary";
 
@@ -60,7 +60,7 @@ export default class WordList extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: Dictionary,
+  dictionary: EnhancedDictionary,
   words: Array<Word>,
   style: "normal" | "simple",
   showEditLink: boolean,
@@ -68,7 +68,7 @@ type Props = {
   size: number,
   offset: number,
   onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   onRemoveConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void
 };
 type DefaultProps = {

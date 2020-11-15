@@ -1,11 +1,7 @@
 //
 
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
-
-export class DictionarySettings extends Skeleton {
+export class DictionarySettings {
 
   public akrantiainSource?: string;
   public zatlinSource?: string;

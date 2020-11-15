@@ -6,12 +6,9 @@ import {
   Relation,
   Variation
 } from "/client/skeleton/dictionary";
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
 
-export class EditWord extends Skeleton {
+export class EditableWord {
 
   public number?: number;
   public name!: string;
@@ -22,22 +19,21 @@ export class EditWord extends Skeleton {
   public variations!: Array<Variation>;
   public relations!: Array<Relation>;
 
-  public static createEmpty(): EditWord {
+  public static createEmpty(): EditableWord {
     let name = "";
-    let pronunciation;
     let equivalents = new Array<Equivalent>();
     let tags = new Array<string>();
     let informations = new Array<Information>();
     let variations = new Array<Variation>();
     let relations = new Array<Relation>();
-    let skeleton = EditWord.of({name, pronunciation, equivalents, tags, informations, variations, relations});
+    let skeleton = {name, equivalents, tags, informations, variations, relations};
     return skeleton;
   }
 
 }
 
 
-export class Word extends EditWord {
+export class Word extends EditableWord {
 
   public id!: string;
   public number!: number;

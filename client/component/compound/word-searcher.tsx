@@ -18,8 +18,8 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  Dictionary,
-  EditWord,
+  EditableWord,
+  EnhancedDictionary,
   NormalWordParameter,
   Suggestion,
   Word,
@@ -136,11 +136,11 @@ export default class WordSearcher extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: Dictionary,
+  dictionary: EnhancedDictionary,
   style: "normal" | "simple",
   showButton: boolean,
   onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: Word, newWord: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type DefaultProps = {
   style: "normal" | "simple",

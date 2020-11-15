@@ -98,7 +98,7 @@ export class WordCreator {
     let relations = raw.relations.map(RelationCreator.create);
     let createdDate = raw.createdDate?.toISOString() ?? undefined;
     let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = WordSkeleton.of({id, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate, updatedDate});
+    let skeleton = {id, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate, updatedDate};
     return skeleton;
   }
 

@@ -1,11 +1,7 @@
 //
 
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
-
-export class Equivalent extends Skeleton {
+export class Equivalent {
 
   public title!: string;
   public names!: Array<string>;
@@ -13,7 +9,7 @@ export class Equivalent extends Skeleton {
   public static createEmpty(): Equivalent {
     let title = "";
     let names = new Array<string>();
-    let skeleton = Equivalent.of({title, names});
+    let skeleton = {title, names};
     return skeleton;
   }
 

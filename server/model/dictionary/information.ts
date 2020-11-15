@@ -25,7 +25,7 @@ export class InformationCreator {
   public static create(raw: Information): InformationSkeleton {
     let title = raw.title;
     let text = raw.text;
-    let skeleton = InformationSkeleton.of({title, text});
+    let skeleton = {title, text};
     return skeleton;
   }
 

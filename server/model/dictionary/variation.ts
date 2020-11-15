@@ -25,7 +25,7 @@ export class VariationCreator {
   public static create(raw: Variation): VariationSkeleton {
     let title = raw.title;
     let name = raw.name;
-    let skeleton = VariationSkeleton.of({title, name});
+    let skeleton = {title, name};
     return skeleton;
   }
 

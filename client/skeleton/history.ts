@@ -1,11 +1,7 @@
 //
 
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
-
-export class History extends Skeleton {
+export class History {
 
   public id!: string;
   public date!: string;

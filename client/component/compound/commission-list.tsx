@@ -19,8 +19,8 @@ import {
   Commission
 } from "/client/skeleton/commission";
 import {
-  Dictionary,
-  EditWord
+  EditableWord,
+  EnhancedDictionary
 } from "/client/skeleton/dictionary";
 import {
   WithSize
@@ -62,10 +62,10 @@ export default class CommissionList extends Component<Props, State> {
 
 type Props = {
   commissions: Array<Commission> | CommissionProvider | null,
-  dictionary: Dictionary
+  dictionary: EnhancedDictionary
   size: number,
   onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onAddConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  onAddConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
 };

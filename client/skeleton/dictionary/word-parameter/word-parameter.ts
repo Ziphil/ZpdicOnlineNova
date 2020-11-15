@@ -6,15 +6,12 @@ import {
   NormalWordParameter
 } from "/client/skeleton/dictionary";
 import {
-  Skeleton
-} from "/client/skeleton/skeleton";
-import {
   LiteralType,
   LiteralUtilType
 } from "/server/util/literal-type";
 
 
-export abstract class WordParameter extends Skeleton {
+export abstract class WordParameter {
 
   public static deserialize(queryString: string): WordParameter {
     let query = queryParser.parse(queryString);

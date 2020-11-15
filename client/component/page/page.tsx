@@ -13,7 +13,7 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  Dictionary
+  EnhancedDictionary
 } from "/client/skeleton/dictionary";
 import {
   StyleNameUtil
@@ -58,13 +58,13 @@ export default class Page extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: Dictionary | null,
+  dictionary: EnhancedDictionary | null,
   showDictionary: boolean,
   showEditLink: boolean,
   showSettingLink: boolean
 };
 type DefaultProps = {
-  dictionary: Dictionary | null,
+  dictionary: EnhancedDictionary | null,
   showDictionary: boolean,
   showEditLink: boolean,
   showSettingLink: boolean

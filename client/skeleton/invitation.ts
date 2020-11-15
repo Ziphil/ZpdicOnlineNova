@@ -4,15 +4,12 @@ import {
   DetailedDictionary
 } from "/client/skeleton/dictionary";
 import {
-  Skeleton
-} from "/client/skeleton/skeleton";
-import {
   LiteralType,
   LiteralUtilType
 } from "/server/util/literal-type";
 
 
-export class Invitation extends Skeleton {
+export class Invitation {
 
   public id!: string;
   public type!: InvitationType;

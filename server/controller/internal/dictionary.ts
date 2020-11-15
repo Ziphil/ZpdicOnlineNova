@@ -220,7 +220,7 @@ export class DictionaryController extends Controller {
   @post(SERVER_PATHS["searchDictionary"])
   public async [Symbol()](request: Request<"searchDictionary">, response: Response<"searchDictionary">): Promise<void> {
     let number = request.body.number;
-    let parameter = SearchParameterCreator.restore(request.body.parameter);
+    let parameter = SearchParameterCreator.recreate(request.body.parameter);
     let offset = request.body.offset;
     let size = request.body.size;
     let dictionary = await DictionaryModel.fetchOneByNumber(number);

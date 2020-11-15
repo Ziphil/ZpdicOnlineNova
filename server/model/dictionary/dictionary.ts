@@ -13,7 +13,7 @@ import Fuse from "fuse.js";
 import {
   DetailedDictionary as DetailedDictionarySkeleton,
   Dictionary as DictionarySkeleton,
-  EditWord as EditWordSkeleton,
+  EditableWord as EditableWordSkeleton,
   UserDictionary as UserDictionarySkeleton
 } from "/client/skeleton/dictionary";
 import {
@@ -293,7 +293,7 @@ export class DictionarySchema extends RemovableSchema {
   // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
   // そうでない場合は、渡された単語データを新しいデータとして追加します。
   // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
-  public async editWord(this: Dictionary, word: EditWordSkeleton): Promise<Word> {
+  public async editWord(this: Dictionary, word: EditableWordSkeleton): Promise<Word> {
     if (this.status !== "saving") {
       let currentWord = await WordModel.findOneExist().where("dictionary", this).where("number", word.number);
       let resultWord;
@@ -515,7 +515,7 @@ export class DictionaryCreator {
     let settings = DictionarySettingsCreator.create(raw.settings);
     let createdDate = raw.createdDate?.toISOString() ?? undefined;
     let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = DictionarySkeleton.of({id, number, paramName, name, status, secret, explanation, settings, createdDate, updatedDate});
+    let skeleton = {id, number, paramName, name, status, secret, explanation, settings, createdDate, updatedDate};
     return skeleton;
   }
 
@@ -543,7 +543,7 @@ export class DictionaryCreator {
       }
     });
     let [wordSize, user] = await Promise.all([wordSizePromise, userPromise]);
-    let skeleton = DetailedDictionarySkeleton.of({...base, wordSize, user});
+    let skeleton = {...base, wordSize, user};
     return skeleton;
   }
 
@@ -551,7 +551,7 @@ export class DictionaryCreator {
     let basePromise = DictionaryCreator.createDetailed(raw);
     let authoritiesPromise = raw.fetchAuthorities(rawUser);
     let [base, authorities] = await Promise.all([basePromise, authoritiesPromise]);
-    let skeleton = UserDictionarySkeleton.of({...base, authorities});
+    let skeleton = {...base, authorities};
     return skeleton;
   }
 

@@ -71,7 +71,7 @@ export class HistoryCreator {
     let id = raw.id;
     let date = raw.date.toISOString();
     let wordSize = raw.wordSize;
-    let skeleton = HistorySkeleton.of({id, date, wordSize});
+    let skeleton = {id, date, wordSize};
     return skeleton;
   }
 

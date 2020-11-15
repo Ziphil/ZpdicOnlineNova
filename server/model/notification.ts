@@ -56,7 +56,7 @@ export class NotificationCreator {
     let date = raw.date.toISOString();
     let title = raw.title;
     let text = raw.text;
-    let skeleton = NotificationSkeleton.of({id, type, date, title, text});
+    let skeleton = {id, type, date, title, text};
     return skeleton;
   }
 

@@ -1,11 +1,7 @@
 //
 
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
-
-export class Notification extends Skeleton {
+export class Notification {
 
   public id!: string;
   public type!: string;

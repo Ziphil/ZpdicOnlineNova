@@ -31,8 +31,8 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  Dictionary,
-  EditWord,
+  EditableWord,
+  EnhancedDictionary,
   Equivalent,
   Information,
   Relation,
@@ -61,7 +61,7 @@ export default class WordEditor extends Component<Props, State> {
 
   public constructor(props: Props) {
     super(props);
-    let word = cloneDeep(this.props.word) ?? EditWord.createEmpty();
+    let word = cloneDeep(this.props.word) ?? EditableWord.createEmpty();
     if (this.props.defaultName) {
       word.name = this.props.defaultName;
     }
@@ -133,7 +133,7 @@ export default class WordEditor extends Component<Props, State> {
   private renderName(): ReactNode {
     let word = this.state.word;
     let styles = this.props.styles!;
-    let zatlin = (this.props.dictionary instanceof Dictionary) ? this.props.dictionary.getZatlin() : null;
+    let zatlin = this.props.dictionary.getZatlin();
     let generateNode = (zatlin !== null) && (
       <div styleName="control-button">
         <Button label={this.trans("wordEditor.generate")} onClick={() => this.generateName(zatlin!)}/>
@@ -474,13 +474,13 @@ export default class WordEditor extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: Dictionary,
+  dictionary: EnhancedDictionary,
   word: Word | null,
   defaultName?: string,
   defaultEquivalentName?: string,
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
-  onEditConfirm?: (word: EditWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
@@ -490,4 +490,4 @@ type State = {
 };
 
 
-type TemporaryEditWord = EditWord & {equivalentStrings: Array<string>};
+type TemporaryEditWord = EditableWord & {equivalentStrings: Array<string>};

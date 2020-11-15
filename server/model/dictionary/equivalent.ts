@@ -25,7 +25,7 @@ export class EquivalentCreator {
   public static create(raw: Equivalent): EquivalentSkeleton {
     let title = raw.title;
     let names = raw.names;
-    let skeleton = EquivalentSkeleton.of({title, names});
+    let skeleton = {title, names};
     return skeleton;
   }
 

@@ -1,11 +1,7 @@
 //
 
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
-
-export class Commission extends Skeleton {
+export class Commission {
 
   public id!: string;
   public name!: string;

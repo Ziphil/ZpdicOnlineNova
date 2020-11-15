@@ -3,12 +3,9 @@
 import {
   Word
 } from "/client/skeleton/dictionary";
-import {
-  Skeleton
-} from "/client/skeleton/skeleton";
 
 
-export class Suggestion extends Skeleton {
+export class Suggestion {
 
   public title!: string;
   public word!: Word;

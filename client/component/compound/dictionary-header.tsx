@@ -14,12 +14,8 @@ import {
   style
 } from "/client/component/decorator";
 import {
-  Dictionary
+  EnhancedDictionary
 } from "/client/skeleton/dictionary";
-import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
 
 
 @style(require("./dictionary-header.scss"))
@@ -130,7 +126,7 @@ export default class DictionaryHeader extends Component<Props, State> {
 
 
 type Props = {
-  dictionary: Dictionary | null,
+  dictionary: EnhancedDictionary | null,
   showEditLink: boolean,
   showSettingLink: boolean,
   showOrderWordLink: boolean,
