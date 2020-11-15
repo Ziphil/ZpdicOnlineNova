@@ -77,7 +77,7 @@ export class Main {
   // アップロードされたファイルは upload フォルダ内に保存するようにしています。
   private setupMulter(): void {
     let middleware = multer({dest: "./dist/upload/"}).single("file");
-    this.application.use(middleware);
+    this.application.use("/internal*", middleware);
   }
 
   // アクエスログを出力する morgan の設定をします。
