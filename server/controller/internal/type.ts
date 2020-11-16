@@ -383,8 +383,8 @@ export type ResponseEachData<N extends ProcessName, S extends Status> = DeepPlai
 
 type ExtractRequired<T extends object, P extends keyof T> = undefined extends T[P] ? never : P;
 type ExtractOptional<T extends object, P extends keyof T> = undefined extends T[P] ? P : never;
-type RequiredProperties<T extends object> = {[P in keyof T]: T[P] extends (...args: Array<any>) => any ? never : ExtractRequired<T, P>}[keyof T];
-type OptionalProperties<T extends object> = {[P in keyof T]: T[P] extends (...args: Array<any>) => any ? never : ExtractOptional<T, P>}[keyof T];
+type RequiredProperties<T extends object> = {[P in keyof T]: T[P] extends Function ? never : ExtractRequired<T, P>}[keyof T];
+type OptionalProperties<T extends object> = {[P in keyof T]: T[P] extends Function ? never : ExtractOptional<T, P>}[keyof T];
 type Primitive = string | number | boolean | null;
 
 export type Plain<T> = T extends Primitive ? T
