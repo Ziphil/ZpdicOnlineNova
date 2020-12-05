@@ -1,0 +1,190 @@
+{
+  "env": {
+    "browser": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "eslint-plugin-jsdoc",
+    "eslint-plugin-import",
+    "@typescript-eslint"
+  ],
+  "rules": {
+    "@typescript-eslint/adjacent-overload-signatures": "warn",
+    "@typescript-eslint/array-type": [
+      "warn",
+      {
+        "default": "generic"
+      }
+    ],
+    "@typescript-eslint/await-thenable": "warn",
+    "@typescript-eslint/ban-types": [
+      "warn",
+      {
+        "types": {
+          "Object": {
+            "message": "Avoid using the `Object` type. Did you mean `object`?"
+          },
+          "Boolean": {
+            "message": "Avoid using the `Boolean` type. Did you mean `boolean`?"
+          },
+          "Number": {
+            "message": "Avoid using the `Number` type. Did you mean `number`?"
+          },
+          "String": {
+            "message": "Avoid using the `String` type. Did you mean `string`?"
+          },
+          "Symbol": {
+            "message": "Avoid using the `Symbol` type. Did you mean `symbol`?"
+          }
+        }
+      }
+    ],
+    "@typescript-eslint/explicit-member-accessibility": [
+      "warn",
+      {
+        "accessibility": "explicit"
+      }
+    ],
+    "@typescript-eslint/indent": [
+      "warn",
+      2,
+      {
+        "FunctionDeclaration": {
+          "parameters": "first"
+        },
+        "FunctionExpression": {
+          "parameters": "first"
+        }
+      }
+    ],
+    "@typescript-eslint/member-delimiter-style": [
+      "warn",
+      {
+        "multiline": {
+          "delimiter": "semi",
+          "requireLast": true
+        },
+        "singleline": {
+          "delimiter": "semi",
+          "requireLast": false
+        }
+      }
+    ],
+    "@typescript-eslint/naming-convention": "warn",
+    "@typescript-eslint/no-empty-interface": "warn",
+    "@typescript-eslint/no-misused-new": "warn",
+    "@typescript-eslint/no-namespace": "warn",
+    "@typescript-eslint/no-parameter-properties": "warn",
+    "@typescript-eslint/no-unnecessary-qualifier": "warn",
+    "@typescript-eslint/no-unused-expressions": "warn",
+    "@typescript-eslint/prefer-for-of": "warn",
+    "@typescript-eslint/prefer-function-type": "warn",
+    "@typescript-eslint/prefer-namespace-keyword": "warn",
+    "@typescript-eslint/quotes": [
+      "warn",
+      "double"
+    ],
+    "@typescript-eslint/semi": [
+      "warn",
+      "always"
+    ],
+    "@typescript-eslint/triple-slash-reference": [
+      "warn",
+      {
+        "path": "always",
+        "types": "prefer-import",
+        "lib": "always"
+      }
+    ],
+    "@typescript-eslint/type-annotation-spacing": "warn",
+    "@typescript-eslint/unified-signatures": "warn",
+    "arrow-body-style": "warn",
+    "arrow-parens": [
+      "warn",
+      "always"
+    ],
+    "brace-style": [
+      "warn",
+      "1tbs"
+    ],
+    "comma-dangle": "warn",
+    "constructor-super": "warn",
+    "curly": "warn",
+    "eol-last": "off",
+    "eqeqeq": [
+      "warn",
+      "always"
+    ],
+    "guard-for-in": "warn",
+    "id-blacklist": "warn",
+    "id-match": "warn",
+    "import/order": "warn",
+    "jsdoc/check-alignment": "warn",
+    "jsdoc/check-indentation": "warn",
+    "jsdoc/newline-after-description": "warn",
+    "new-parens": "warn",
+    "no-bitwise": "warn",
+    "no-caller": "warn",
+    "no-debugger": "warn",
+    "no-eval": "warn",
+    "no-fallthrough": "warn",
+    "no-invalid-this": "off",
+    "no-multiple-empty-lines": [
+      "warn",
+      {
+        "max": 2
+      }
+    ],
+    "no-new-func": "warn",
+    "no-new-wrappers": "warn",
+    "no-shadow": [
+      "off",
+      {
+        "hoist": "all"
+      }
+    ],
+    "no-throw-literal": "warn",
+    "no-trailing-spaces": "warn",
+    "no-undef-init": "warn",
+    "no-underscore-dangle": "warn",
+    "no-unsafe-finally": "warn",
+    "no-unused-labels": "warn",
+    "no-var": "warn",
+    "object-shorthand": "warn",
+    "one-var": [
+      "warn",
+      "never"
+    ],
+    "quote-props": [
+      "warn",
+      "consistent-as-needed"
+    ],
+    "space-before-function-paren": [
+      "warn",
+      {
+        "anonymous": "always",
+        "asyncArrow": "always",
+        "named": "never"
+      }
+    ],
+    "space-in-parens": [
+      "warn",
+      "never"
+    ],
+    "spaced-comment": [
+      "warn",
+      "always",
+      {
+        "markers": [
+          "/"
+        ]
+      }
+    ],
+    "use-isnan": "warn",
+    "yoda": "warn"
+  }
+}
