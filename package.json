@@ -17,7 +17,7 @@
     "start": "node dist/index.js",
     "start:service": "node dist/service.js",
     "postinstall": "npm run build",
-    "lint": "eslint client/**/*.ts server/**/*.ts",
+    "lint": "eslint client/**/*.ts client/**/*.tsx server/**/*.ts",
     "command:tsnode": "ts-node -r tsconfig-paths/register",
     "command:tsc": "tsc"
   },

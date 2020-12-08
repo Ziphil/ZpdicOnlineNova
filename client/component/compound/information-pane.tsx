@@ -27,7 +27,8 @@ export default class InformationPane extends Component<Props, State> {
   public render(): ReactNode {
     let styleName = StyleNameUtil.create("root", this.props.style);
     let itemNodes = this.props.texts.map((text, index) => {
-      return <li key={index}>{text}</li>;
+      let itemNode = <li key={index}>{text}</li>;
+      return itemNode;
     });
     let node = (
       <div styleName={styleName}>
