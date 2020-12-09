@@ -2,9 +2,9 @@
 
 import {
   ChartAPI,
-  ChartConfiguration as FullChartConfig,
   Data,
   DataPoint,
+  ChartConfiguration as FullChartConfig,
   PrimitiveArray,
   generate as generateChart
 } from "c3";
