@@ -52,7 +52,7 @@ export default class Chart extends Component<Props, State> {
       transition: {duration: null},
       grid: {y: {show: true}},
       axis: {x: {tick: {outer: false}}, y: {tick: {outer: false}}},
-      point: {r: 3},
+      point: {r: 0, focus: {expand: {r: 3}}, select: {r: 3}},
       legend: {show: false},
       tooltip: {contents: renderTooltip}
     };
