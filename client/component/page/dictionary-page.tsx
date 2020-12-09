@@ -96,7 +96,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
         let authority = "own" as const;
         let response = await this.request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
         if (response.status === 200) {
-          this.setState({canOwn: true}, resolve);
+          this.setState({canOwn: true}, () => resolve(null));
         }
       }
     });
@@ -105,7 +105,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
         let authority = "edit" as const;
         let response = await this.request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
         if (response.status === 200) {
-          this.setState({canEdit: true}, resolve);
+          this.setState({canEdit: true}, () => resolve(null));
         }
       }
     });
