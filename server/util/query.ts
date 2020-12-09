@@ -1,7 +1,7 @@
 //
 
 import {
-  Query
+  DocumentQuery
 } from "mongoose";
 import {
   WithSize
@@ -18,7 +18,7 @@ export class QueryRange {
     this.size = size;
   }
 
-  public restrict<T, Q extends Query<Array<T>>>(query: Q): Q {
+  public restrict<T, Q extends DocumentQuery<Array<T>, any>>(query: Q): Q {
     if (this.offset !== undefined) {
       query = query.skip(this.offset);
     }
@@ -34,7 +34,7 @@ export class QueryRange {
     return query.slice(start, end);
   }
 
-  public static restrict<T, Q extends Query<Array<T>>>(query: Q, range?: QueryRange): Q {
+  public static restrict<T, Q extends DocumentQuery<Array<T>, any>>(query: Q, range?: QueryRange): Q {
     if (range !== undefined) {
       return range.restrict(query);
     } else {
@@ -50,7 +50,7 @@ export class QueryRange {
     }
   }
 
-  public static restrictWithSize<T>(query: Query<Array<T>>, range?: QueryRange): PromiseLike<WithSize<T>> {
+  public static restrictWithSize<T>(query: DocumentQuery<Array<T>, any>, range?: QueryRange): PromiseLike<WithSize<T>> {
     let anyQuery = query as any;
     let restrictedQuery = QueryRange.restrict(query, range);
     let countQuery = anyQuery.model.countDocuments(query.getFilter());
