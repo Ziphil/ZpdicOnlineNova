@@ -43,14 +43,13 @@ export default class CommissionEditor extends Component<Props, State> {
   }
 
   public render(): ReactNode {
+    let styles = this.props.styles!;
     let node = (
       <Overlay size="large" title={this.trans("commissionEditor.title")} open={this.props.open} onClose={this.props.onClose}>
         <div styleName="root">
           <Input label={this.trans("commissionEditor.name")} value={this.state.name} onSet={(name) => this.setState({name})}/>
-          <TextArea label={this.trans("commissionEditor.comment")} value={this.state.comment} showOptional={true} onSet={(comment) => this.setState({comment})}/>
-          <div styleName="confirm-button">
-            <Button label={this.trans("commissionEditor.confirm")} iconLabel="&#xF022;" style="information" reactive={true} onClick={this.addCommission.bind(this)}/>
-          </div>
+          <TextArea className={styles["comment"]} label={this.trans("commissionEditor.comment")} value={this.state.comment} showOptional={true} onSet={(comment) => this.setState({comment})}/>
+          <Button className={styles["button"]} label={this.trans("commissionEditor.confirm")} iconLabel="&#xF022;" style="information" reactive={true} onClick={this.addCommission.bind(this)}/>
         </div>
       </Overlay>
     );

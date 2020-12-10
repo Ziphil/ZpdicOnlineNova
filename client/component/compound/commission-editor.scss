@@ -1,9 +1,26 @@
 @charset "utf-8";
 
 @import "/client/component/mixin.scss";
-@import "/client/component/compound/login-form.scss";
 
 
-.root >:nth-child(2) {
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.root >* {
+  @include reset-first-margin;
+  margin: 15px 0px 0px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comment {
   height: 300px;
+}
+
+.button {
+  display: block;
+  align-self: flex-end;
 }
