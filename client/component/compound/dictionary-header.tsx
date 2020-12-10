@@ -90,22 +90,16 @@ export default class DictionaryHeader extends Component<Props, State> {
   private renderOverlays(): ReactNode {
     let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
     let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
-    let wordEditorNode = (this.props.dictionary !== null && this.state.wordEditorOpen) && (() => {
-      let wordEditorNode = (
-        <Suspense fallback="">
-          <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.wordEditorOpen} onClose={() => this.setState({wordEditorOpen: false})}/>
-        </Suspense>
-      );
-      return wordEditorNode;
-    })();
-    let commissionEditorNode = (this.props.dictionary !== null && this.state.commissionEditorOpen) && (() => {
-      let commissionEditorNode = (
-        <Suspense fallback="">
-          <CommissionEditor dictionary={this.props.dictionary} open={this.state.commissionEditorOpen} onClose={() => this.setState({commissionEditorOpen: false})}/>
-        </Suspense>
-      );
-      return commissionEditorNode;
-    })();
+    let wordEditorNode = (this.props.dictionary !== null && this.state.wordEditorOpen) && (
+      <Suspense fallback="">
+        <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.wordEditorOpen} onClose={() => this.setState({wordEditorOpen: false})}/>
+      </Suspense>
+    );
+    let commissionEditorNode = (this.props.dictionary !== null && this.state.commissionEditorOpen) && (
+      <Suspense fallback="">
+        <CommissionEditor dictionary={this.props.dictionary} open={this.state.commissionEditorOpen} onClose={() => this.setState({commissionEditorOpen: false})}/>
+      </Suspense>
+    );
     let node = [wordEditorNode, commissionEditorNode];
     return node;
   }
