@@ -30,11 +30,17 @@ ZpDIC の Web アプリ版です。
 
 ## お問い合わせ
 ZpDIC Online に関する機能追加の要望やバグの報告は、以下のいずれかの方法でお願いします。
-どの方法を用いても、最終的にこのリポジトリの issue として追加され、今後の開発の際に検討されます。
+どの方法を用いても、最終的にこのリポジトリのイシューとして追加され、今後の開発の際に検討されます。
 
 - Twitter 上で [@Ziphil](https://twitter.com/Ziphil) へリプライか DM を送信
 - ZpDIC Online 上の[お問い合わせフォーム](http://zpdic.ziphil.com/contact)から送信
-- このリポジトリに issue を直接追加
+- このリポジトリにイシューを直接追加
 
 なお、現在の開発状況はこのリポジトリの[プロジェクト](https://github.com/Ziphil/ZpdicOnlineNova/projects/2)で確認できます。
 機能追加の要望をする際は参考にしてください。
+
+## コントリビューション
+「needs help」タグが付けられたイシューについては、プルリクエストなどによる貢献を受け付けています。
+詳細は各イシューのページをご覧ください。
+
+- [貢献を求めるイシューの一覧](https://github.com/Ziphil/ZpdicOnlineNova/issues?q=is%3Aissue+is%3Aopen+label%3A%22needs+help%22)
