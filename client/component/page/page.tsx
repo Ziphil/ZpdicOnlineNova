@@ -26,7 +26,7 @@ export default class Page extends Component<Props, State> {
   public static defaultProps: DefaultProps = {
     dictionary: null,
     showDictionary: false,
-    showEditLink: false,
+    showAddLink: false,
     showSettingLink: false
   };
 
@@ -36,7 +36,7 @@ export default class Page extends Component<Props, State> {
       {if: this.props.showDictionary, true: "dictionary"}
     );
     let dictionaryHeaderNode = (this.props.showDictionary) && (
-      <DictionaryHeader dictionary={this.props.dictionary} showEditLink={this.props.showEditLink} showSettingLink={this.props.showSettingLink}/>
+      <DictionaryHeader dictionary={this.props.dictionary} showAddLink={this.props.showAddLink} showSettingLink={this.props.showSettingLink}/>
     );
     let node = (
       <div styleName="root" id="page">
@@ -60,13 +60,13 @@ export default class Page extends Component<Props, State> {
 type Props = {
   dictionary: EnhancedDictionary | null,
   showDictionary: boolean,
-  showEditLink: boolean,
+  showAddLink: boolean,
   showSettingLink: boolean
 };
 type DefaultProps = {
   dictionary: EnhancedDictionary | null,
   showDictionary: boolean,
-  showEditLink: boolean,
+  showAddLink: boolean,
   showSettingLink: boolean
 };
 type State = {

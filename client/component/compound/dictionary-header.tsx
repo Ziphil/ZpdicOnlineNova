@@ -22,9 +22,9 @@ import {
 export default class DictionaryHeader extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
-    showEditLink: false,
+    showAddLink: false,
+    showAddCommissionLink: true,
     showSettingLink: false,
-    showOrderWordLink: true,
     showDownloadLink: true,
     preserveQuery: false
   };
@@ -64,14 +64,14 @@ export default class DictionaryHeader extends Component<Props, State> {
   }
 
   private renderButtonNodes(): ReactNode {
-    let addButtonNode = (this.props.showEditLink) && (
+    let addButtonNode = (this.props.showAddLink) && (
       <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({wordEditorOpen: true})}/>
+    );
+    let addCommissionButtonNode = (this.props.showAddCommissionLink) && (
+      <Button label={this.trans("dictionaryHeader.orderWord")} iconLabel="&#xF022;" style="simple" hideLabel={true} onClick={() => this.setState({commissionEditorOpen: true})}/>
     );
     let settingButtonNode = (this.props.showSettingLink) && (
       <Button label={this.trans("dictionaryHeader.setting")} iconLabel="&#xF013;" style="simple" hideLabel={true} onClick={this.jumpSettingPage.bind(this)}/>
-    );
-    let orderWordButtonNode = (this.props.showOrderWordLink) && (
-      <Button label={this.trans("dictionaryHeader.orderWord")} iconLabel="&#xF022;" style="simple" hideLabel={true} onClick={() => this.setState({commissionEditorOpen: true})}/>
     );
     let downloadButtonNode = (this.props.showDownloadLink) && (
       <Button label={this.trans("dictionaryHeader.download")} iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={this.downloadDictionary.bind(this)}/>
@@ -79,8 +79,8 @@ export default class DictionaryHeader extends Component<Props, State> {
     let node = (
       <div styleName="button">
         {addButtonNode}
+        {addCommissionButtonNode}
         {settingButtonNode}
-        {orderWordButtonNode}
         {downloadButtonNode}
       </div>
     );
@@ -141,16 +141,16 @@ export default class DictionaryHeader extends Component<Props, State> {
 
 type Props = {
   dictionary: EnhancedDictionary | null,
-  showEditLink: boolean,
+  showAddLink: boolean,
+  showAddCommissionLink: boolean,
   showSettingLink: boolean,
-  showOrderWordLink: boolean,
   showDownloadLink: boolean,
   preserveQuery: boolean
 };
 type DefaultProps = {
-  showEditLink: boolean,
+  showAddLink: boolean,
+  showAddCommissionLink: boolean,
   showSettingLink: boolean,
-  showOrderWordLink: boolean,
   showDownloadLink: boolean,
   preserveQuery: boolean
 };

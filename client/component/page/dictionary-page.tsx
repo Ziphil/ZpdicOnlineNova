@@ -213,7 +213,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
       (this.state.showExplanation) ? <Markdown source={this.state.dictionary.explanation ?? ""}/> : this.renderWordList()
     );
     let node = (
-      <Page dictionary={this.state.dictionary} showDictionary={true} showEditLink={this.state.canEdit} showSettingLink={this.state.canOwn}>
+      <Page dictionary={this.state.dictionary} showDictionary={true} showAddLink={this.state.canEdit} showSettingLink={this.state.canOwn}>
         <Loading loading={this.state.dictionary === null}>
           <div styleName="search-form">
             <SearchForm dictionary={this.state.dictionary!} parameter={this.state.parameter} showAdvancedSearch={true} onParameterSet={this.handleParameterSet.bind(this)}/>
