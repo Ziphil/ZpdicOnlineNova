@@ -78,9 +78,9 @@ export default class DictionaryHeader extends Component<Props, State> {
     );
     let node = (
       <div styleName="button">
+        {settingButtonNode}
         {addButtonNode}
         {addCommissionButtonNode}
-        {settingButtonNode}
         {downloadButtonNode}
       </div>
     );
