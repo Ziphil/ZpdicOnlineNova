@@ -68,7 +68,7 @@ export default class DictionaryHeader extends Component<Props, State> {
       <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({wordEditorOpen: true})}/>
     );
     let addCommissionButtonNode = (this.props.showAddCommissionLink) && (
-      <Button label={this.trans("dictionaryHeader.orderWord")} iconLabel="&#xF022;" style="simple" hideLabel={true} onClick={() => this.setState({commissionEditorOpen: true})}/>
+      <Button label={this.trans("dictionaryHeader.addCommission")} iconLabel="&#xF022;" style="simple" hideLabel={true} onClick={() => this.setState({commissionEditorOpen: true})}/>
     );
     let settingButtonNode = (this.props.showSettingLink) && (
       <Button label={this.trans("dictionaryHeader.setting")} iconLabel="&#xF013;" style="simple" hideLabel={true} onClick={this.jumpSettingPage.bind(this)}/>

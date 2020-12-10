@@ -282,8 +282,8 @@ dictionaryAggregationPane:
   wordCount: "Words"
 dictionaryHeader:
   add: "Add"
+  addCommission: "Request"
   setting: "Settings"
-  orderWord: "Request"
   download: "Download"
 dictionaryPane:
   wordSize: "{wordSize, plural, one {# word} other {# words}}"
