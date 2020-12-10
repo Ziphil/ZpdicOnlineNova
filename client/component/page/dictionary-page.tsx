@@ -61,8 +61,11 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     await allPromise;
   }
 
-  public componentDidUpdate(previousProps: any): void {
+  public async componentDidUpdate(previousProps: any): Promise<void> {
     if (this.props.location!.key !== previousProps.location!.key) {
+      if (this.props.match!.params.value !== previousProps.match!.params.value) {
+        await this.fetchDictionary();
+      }
       this.deserializeQuery(false, () => {
         if (!this.state.showExplanation) {
           this.updateWordsImmediately(false);
