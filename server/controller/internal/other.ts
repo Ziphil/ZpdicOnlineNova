@@ -31,6 +31,18 @@ import {
 @controller(SERVER_PATH_PREFIX)
 export class OtherController extends Controller {
 
+  @post(SERVER_PATHS["fetchDocument"])
+  public async [Symbol()](request: Request<"fetchDocument">, response: Response<"fetchDocument">): Promise<void> {
+    let locale = request.body.locale;
+    let path = request.body.path;
+    let localPath = `/dist/document/${locale}/${path || "index"}.md`;
+    response.sendFile(process.cwd() + localPath, (error) => {
+      if (error) {
+        response.send("").end();
+      }
+    });
+  }
+
   @post(SERVER_PATHS["contact"])
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"contact">, response: Response<"contact">): Promise<void> {

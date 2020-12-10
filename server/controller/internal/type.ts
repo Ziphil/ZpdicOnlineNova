@@ -81,6 +81,7 @@ export const SERVER_PATHS = {
   addNotification: "/notification/add",
   fetchNotifications: "/notification/fetch",
   fetchHistories: "/history/fetch",
+  fetchDocument: "/document/fetch",
   contact: "/other/contact"
 };
 
@@ -363,6 +364,13 @@ type ServerSpecs = {
     response: {
       success: Array<History>,
       error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
+  fetchDocument: {
+    request: {locale: string, path: string},
+    response: {
+      success: string,
+      error: never
     }
   },
   contact: {
