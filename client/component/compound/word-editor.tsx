@@ -484,10 +484,10 @@ type Props = {
   onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
-  word: TemporaryEditWord,
+  word: TemporaryEditableWord,
   relationChooserOpen: boolean,
   alertOpen: boolean
 };
 
 
-type TemporaryEditWord = EditableWord & {equivalentStrings: Array<string>};
+type TemporaryEditableWord = EditableWord & {equivalentStrings: Array<string>};
