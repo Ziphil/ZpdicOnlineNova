@@ -29,19 +29,13 @@ export default class DictionaryHeader extends Component<Props, State> {
     preserveQuery: false
   };
   public state: State = {
-    editorOpen: false
+    wordEditorOpen: false,
+    commissionEditorOpen: false
   };
 
   private jumpSettingPage(): void {
     if (this.props.dictionary) {
       let path = "/dashboard/dictionary/" + this.props.dictionary.number;
-      this.pushPath(path);
-    }
-  }
-
-  private jumpOrderWordPage(): void {
-    if (this.props.dictionary) {
-      let path = "/request/" + this.props.dictionary.number;
       this.pushPath(path);
     }
   }
@@ -76,28 +70,38 @@ export default class DictionaryHeader extends Component<Props, State> {
         let queryString = this.props.location!.search;
         href += queryString;
       }
-      return <Link href={href} target="self" style="plane">{this.props.dictionary.name}</Link>;
+      let nameNode = <Link href={href} target="self" style="plane">{this.props.dictionary.name}</Link>;
+      return nameNode;
     })();
     let addButtonNode = (this.props.showEditLink) && (
-      <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
+      <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({wordEditorOpen: true})}/>
     );
     let settingButtonNode = (this.props.showSettingLink) && (
       <Button label={this.trans("dictionaryHeader.setting")} iconLabel="&#xF013;" style="simple" hideLabel={true} onClick={this.jumpSettingPage.bind(this)}/>
     );
     let orderWordButtonNode = (this.props.showOrderWordLink) && (
-      <Button label={this.trans("dictionaryHeader.orderWord")} iconLabel="&#xF022;" style="simple" hideLabel={true} onClick={this.jumpOrderWordPage.bind(this)}/>
+      <Button label={this.trans("dictionaryHeader.orderWord")} iconLabel="&#xF022;" style="simple" hideLabel={true} onClick={() => this.setState({commissionEditorOpen: true})}/>
     );
     let downloadButtonNode = (this.props.showDownloadLink) && (
       <Button label={this.trans("dictionaryHeader.download")} iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={this.downloadDictionary.bind(this)}/>
     );
-    let editorNode = (this.props.dictionary && this.state.editorOpen) && (() => {
+    let wordEditorNode = (this.props.dictionary && this.state.wordEditorOpen) && (() => {
       let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
-      let editorNode = (
+      let wordEditorNode = (
         <Suspense fallback="">
-          <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.editorOpen} onClose={() => this.setState({editorOpen: false})}/>
+          <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.wordEditorOpen} onClose={() => this.setState({wordEditorOpen: false})}/>
         </Suspense>
       );
-      return editorNode;
+      return wordEditorNode;
+    })();
+    let commissionEditorNode = (this.props.dictionary && this.state.commissionEditorOpen) && (() => {
+      let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
+      let commissionEditorNode = (
+        <Suspense fallback="">
+          <CommissionEditor dictionary={this.props.dictionary} open={this.state.commissionEditorOpen} onClose={() => this.setState({commissionEditorOpen: false})}/>
+        </Suspense>
+      );
+      return commissionEditorNode;
     })();
     let node = (
       <header styleName="root">
@@ -116,7 +120,8 @@ export default class DictionaryHeader extends Component<Props, State> {
             </div>
           </div>
         </div>
-        {editorNode}
+        {wordEditorNode}
+        {commissionEditorNode}
       </header>
     );
     return node;
@@ -141,5 +146,6 @@ type DefaultProps = {
   preserveQuery: boolean
 };
 type State = {
-  editorOpen: boolean
+  wordEditorOpen: boolean,
+  commissionEditorOpen: boolean
 };
