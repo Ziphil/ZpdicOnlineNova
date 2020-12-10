@@ -377,9 +377,7 @@ export class DictionarySchema extends RemovableSchema {
   public async search(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     let query = parameter.createQuery(this).sort("name");
     let suggestionAggregate = parameter.createSuggestionAggregate(this);
-    let hitSuggestionPromise = suggestionAggregate?.then((suggestions) => {
-      return suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word));
-    });
+    let hitSuggestionPromise = suggestionAggregate?.then((suggestions) => suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word)));
     let [hitWordResult, hitSuggestions] = await Promise.all([QueryRange.restrictWithSize(query, range), hitSuggestionPromise]);
     return {words: hitWordResult, suggestions: hitSuggestions ?? []};
   }
@@ -438,9 +436,7 @@ export class DictionarySchema extends RemovableSchema {
 
   public async fetchAuthorities(this: Dictionary, user: User): Promise<Array<DictionaryAuthority>> {
     let promises = DICTIONARY_AUTHORITIES.map((authority) => {
-      let promise = this.hasAuthority(user, authority).then((predicate) => {
-        return (predicate) ? authority : null;
-      });
+      let promise = this.hasAuthority(user, authority).then((predicate) => (predicate) ? authority : null);
       return promise;
     });
     let authorities = await Promise.all(promises);

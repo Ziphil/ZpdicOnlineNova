@@ -39,7 +39,7 @@ export default class FileInput extends Component<Props, State> {
     let node = (
       <div styleName="root" className={this.props.className}>
         <label styleName="input-wrapper">
-        <Label text={this.props.inputLabel}/>
+          <Label text={this.props.inputLabel}/>
           <input styleName="input" type="text" value={this.state.fileName} readOnly={true}/>
         </label>
         <label styleName="button">

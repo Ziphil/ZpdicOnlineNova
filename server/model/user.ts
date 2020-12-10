@@ -147,9 +147,7 @@ export class UserSchema {
 
   public async removeOne(this: User): Promise<User> {
     let dictionaries = await DictionaryModel.fetchByUser(this, "own");
-    let promises = dictionaries.map((dictionary) => {
-      return dictionary.removeOne();
-    });
+    let promises = dictionaries.map((dictionary) => dictionary.removeOne());
     await Promise.all(promises);
     await this.deleteOne();
     return this;
@@ -186,7 +184,7 @@ export class UserSchema {
 
   // 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
   // データベースへの保存は行わないので、別途保存処理を行ってください。
-  private encryptPassword(password: string): void {
+  private async encryptPassword(password: string): Promise<void> {
     if (!validatePassword(password)) {
       throw new CustomError("invalidUserPassword");
     } else {

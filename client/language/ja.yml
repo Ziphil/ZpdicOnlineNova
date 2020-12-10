@@ -236,10 +236,6 @@ removeDictionaryForm:
 uploadDictionaryForm:
   file: "ファイル"
   confirm: "決定"
-addCommissionForm:
-  name: "単語"
-  comment: "コメント"
-  confirm: "依頼"
 advancedSearchForm:
   overlayTitle: "高度な検索"
   search: "検索内容"
@@ -264,6 +260,11 @@ akrantiainExecutor:
   output: "出力"
   errorMessage: "エラーメッセージ"
   execute: "実行"
+commissionEditor:
+  title: "造語依頼"
+  name: "単語"
+  comment: "コメント"
+  confirm: "依頼"
 commissionPane:
   remove: "削除"
   add: "造語"
@@ -280,9 +281,9 @@ dictionaryAggregationPane:
   dictionaryCount: "総辞書数"
   wordCount: "総単語数"
 dictionaryHeader:
-  add: "追加"
+  add: "新規作成"
+  addCommission: "造語依頼"
   setting: "設定"
-  orderWord: "造語依頼"
   download: "ダウンロード"
 dictionaryPane:
   wordSize: "{wordSize, number} 語"
@@ -356,6 +357,11 @@ wordEditor:
   variationName: "変化形"
   relationTitle: "分類"
   relationName: "関連語"
+  tagAbsent: "タグは登録されていません"
+  equivalentAbsent: "訳語は登録されていません"
+  informationAbsent: "分類は登録されていません"
+  variationAbsent: "変化形は登録されていません"
+  relationAbsent: "関連語は登録されていません"
   remove: "削除"
   confirm: "決定"
   generate: "生成"

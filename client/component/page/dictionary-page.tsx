@@ -61,8 +61,11 @@ export default class DictionaryPage extends Component<Props, State, Params> {
     await allPromise;
   }
 
-  public componentDidUpdate(previousProps: any): void {
+  public async componentDidUpdate(previousProps: any): Promise<void> {
     if (this.props.location!.key !== previousProps.location!.key) {
+      if (this.props.match!.params.value !== previousProps.match!.params.value) {
+        await this.fetchDictionary();
+      }
       this.deserializeQuery(false, () => {
         if (!this.state.showExplanation) {
           this.updateWordsImmediately(false);
@@ -96,7 +99,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
         let authority = "own" as const;
         let response = await this.request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
         if (response.status === 200) {
-          this.setState({canOwn: true}, resolve);
+          this.setState({canOwn: true}, () => resolve(null));
         }
       }
     });
@@ -105,7 +108,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
         let authority = "edit" as const;
         let response = await this.request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
         if (response.status === 200) {
-          this.setState({canEdit: true}, resolve);
+          this.setState({canEdit: true}, () => resolve(null));
         }
       }
     });
@@ -210,7 +213,7 @@ export default class DictionaryPage extends Component<Props, State, Params> {
       (this.state.showExplanation) ? <Markdown source={this.state.dictionary.explanation ?? ""}/> : this.renderWordList()
     );
     let node = (
-      <Page dictionary={this.state.dictionary} showDictionary={true} showEditLink={this.state.canEdit} showSettingLink={this.state.canOwn}>
+      <Page dictionary={this.state.dictionary} showDictionary={true} showAddLink={this.state.canEdit} showSettingLink={this.state.canOwn}>
         <Loading loading={this.state.dictionary === null}>
           <div styleName="search-form">
             <SearchForm dictionary={this.state.dictionary!} parameter={this.state.parameter} showAdvancedSearch={true} onParameterSet={this.handleParameterSet.bind(this)}/>

@@ -48,7 +48,7 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let styles = this.props.styles!;
-    let padding = 0.3 * 24 * 60 * 60 * 1000;
+    let padding = 24 * 60 * 60 * 1000;
     let config = {
       padding: {left: 45},
       axis: {

@@ -1,6 +1,9 @@
 //
 
 import {
+  Jsonify
+} from "jsonify-type";
+import {
   Aggregate,
   Query
 } from "mongoose";
@@ -9,9 +12,6 @@ import {
   NormalWordParameter as NormalWordParameterSkeleton,
   WordParameter as WordParameterSkeleton
 } from "/client/skeleton/dictionary";
-import {
-  DeepPlain
-} from "/server/controller/internal/type";
 import {
   AdvancedWordParameter,
   AdvancedWordParameterElement,
@@ -76,7 +76,7 @@ export abstract class WordParameter {
 
 export class SearchParameterCreator {
 
-  public static recreate(skeleton: DeepPlain<WordParameterSkeleton>): WordParameter {
+  public static recreate(skeleton: Jsonify<WordParameterSkeleton>): WordParameter {
     if ("elements" in skeleton) {
       let castSkeleton = skeleton as AdvancedWordParameterSkeleton;
       let elements = castSkeleton.elements.map((element) => new AdvancedWordParameterElement(element.search, element.title, element.mode, element.type));

@@ -195,11 +195,18 @@ export default class WordEditor extends Component<Props, State> {
       );
       return innerNode;
     });
-    let plusNode = (
-      <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.tags.push(""))}/>
-      </div>
-    );
+    let plusNode = (() => {
+      let absentMessage = (word.tags.length <= 0) ? this.trans("wordEditor.tagAbsent") : "";
+      let plusNode = (
+        <div styleName="plus">
+          <div styleName="absent">{absentMessage}</div>
+          <div styleName="plus-button">
+            <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.tags.push(""))}/>
+          </div>
+        </div>
+      );
+      return plusNode;
+    })();
     let node = (
       <div styleName="container">
         {innerNodes}
@@ -234,11 +241,18 @@ export default class WordEditor extends Component<Props, State> {
       );
       return innerNode;
     });
-    let plusNode = (
-      <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => this.addEquivalent())}/>
-      </div>
-    );
+    let plusNode = (() => {
+      let absentMessage = (word.equivalents.length <= 0) ? this.trans("wordEditor.equivalentAbsent") : "";
+      let plusNode = (
+        <div styleName="plus">
+          <div styleName="absent">{absentMessage}</div>
+          <div styleName="plus-button">
+            <Button iconLabel="&#xF067;" onClick={this.setWord(() => this.addEquivalent())}/>
+          </div>
+        </div>
+      );
+      return plusNode;
+    })();
     let node = (
       <div styleName="container">
         {innerNodes}
@@ -294,11 +308,18 @@ export default class WordEditor extends Component<Props, State> {
       );
       return innerNode;
     });
-    let plusNode = (
-      <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.informations.push(Information.createEmpty()))}/>
-      </div>
-    );
+    let plusNode = (() => {
+      let absentMessage = (word.informations.length <= 0) ? this.trans("wordEditor.informationAbsent") : "";
+      let plusNode = (
+        <div styleName="plus">
+          <div styleName="absent">{absentMessage}</div>
+          <div styleName="plus-button">
+            <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.informations.push(Information.createEmpty()))}/>
+          </div>
+        </div>
+      );
+      return plusNode;
+    })();
     let node = (
       <div styleName="container">
         {innerNodes}
@@ -332,11 +353,18 @@ export default class WordEditor extends Component<Props, State> {
       );
       return innerNode;
     });
-    let plusNode = (
-      <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.variations.push(Variation.createEmpty()))}/>
-      </div>
-    );
+    let plusNode = (() => {
+      let absentMessage = (word.variations.length <= 0) ? this.trans("wordEditor.variationAbsent") : "";
+      let plusNode = (
+        <div styleName="plus">
+          <div styleName="absent">{absentMessage}</div>
+          <div styleName="plus-button">
+            <Button iconLabel="&#xF067;" onClick={this.setWord(() => word.variations.push(Variation.createEmpty()))}/>
+          </div>
+        </div>
+      );
+      return plusNode;
+    })();
     let node = (
       <div styleName="container">
         {innerNodes}
@@ -373,11 +401,18 @@ export default class WordEditor extends Component<Props, State> {
       );
       return innerNode;
     });
-    let plusNode = (
-      <div styleName="plus">
-        <Button iconLabel="&#xF067;" onClick={() => this.openRelationChooser(word.relations.length)}/>
-      </div>
-    );
+    let plusNode = (() => {
+      let absentMessage = (word.relations.length <= 0) ? this.trans("wordEditor.relationAbsent") : "";
+      let plusNode = (
+        <div styleName="plus">
+          <div styleName="absent">{absentMessage}</div>
+          <div styleName="plus-button">
+            <Button iconLabel="&#xF067;" onClick={() => this.openRelationChooser(word.relations.length)}/>
+          </div>
+        </div>
+      );
+      return plusNode;
+    })();
     let node = (
       <div styleName="container">
         {innerNodes}
@@ -484,10 +519,10 @@ type Props = {
   onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
-  word: TemporaryEditWord,
+  word: TemporaryEditableWord,
   relationChooserOpen: boolean,
   alertOpen: boolean
 };
 
 
-type TemporaryEditWord = EditableWord & {equivalentStrings: Array<string>};
+type TemporaryEditableWord = EditableWord & {equivalentStrings: Array<string>};

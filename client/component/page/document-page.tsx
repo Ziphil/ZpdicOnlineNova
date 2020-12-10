@@ -16,9 +16,6 @@ import {
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
-  DOCUMENTS
-} from "/client/document";
-import {
   CodeMirrorUtil
 } from "/client/util/code-mirror";
 
@@ -27,7 +24,8 @@ import {
 export default class DocumentPage extends Component<Props, State, Params> {
 
   public state: State = {
-    source: null
+    source: null,
+    type: undefined
   };
 
   public async componentDidMount(): Promise<void> {
@@ -46,17 +44,12 @@ export default class DocumentPage extends Component<Props, State, Params> {
     let firstPath = (this.props.match!.params.firstPath) ? this.props.match!.params.firstPath : "";
     let secondPath = (this.props.match!.params.secondPath) ? "/" + this.props.match!.params.secondPath : "";
     let path = firstPath + secondPath;
-    if (DOCUMENTS[locale] !== undefined) {
-      let document = DOCUMENTS[locale].find((document) => document.path === path);
-      if (document !== undefined) {
-        let source = await document.fetchSource().then((module) => module.default);
-        let type = document.type;
-        this.setState({source, type});
-      } else {
-        this.setState({source: "", type: undefined});
-      }
+    let response = await this.request("fetchDocument", {locale, path});
+    if (response.status === 200) {
+      let source = response.data;
+      this.setState({source});
     } else {
-      this.setState({source: "", type: undefined});
+      this.setState({source: ""});
     }
   }
 
@@ -83,14 +76,7 @@ export default class DocumentPage extends Component<Props, State, Params> {
   }
 
   public render(): ReactNode {
-    let renderers = (() => {
-      let type = this.state.type;
-      if (type === "tester") {
-        return {code: this.renderSourceTester};
-      } else {
-        return undefined;
-      }
-    })();
+    let renderers = {code: this.renderSourceTester};
     let node = (
       <Page>
         <Loading loading={this.state.source === null}>

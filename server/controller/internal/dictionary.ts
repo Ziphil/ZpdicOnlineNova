@@ -72,7 +72,7 @@ export class DictionaryController extends Controller {
         try {
           await dictionary!.upload(path, originalPath);
           await fs.unlink(path);
-          resolve();
+          resolve(null);
         } catch (error) {
           reject(error);
         }
