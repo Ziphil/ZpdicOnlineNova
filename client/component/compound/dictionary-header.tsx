@@ -63,16 +63,7 @@ export default class DictionaryHeader extends Component<Props, State> {
     }
   }
 
-  public render(): ReactNode {
-    let nameNode = (this.props.dictionary) && (() => {
-      let href = "/dictionary/" + this.props.dictionary.number;
-      if (this.props.preserveQuery) {
-        let queryString = this.props.location!.search;
-        href += queryString;
-      }
-      let nameNode = <Link href={href} target="self" style="plane">{this.props.dictionary.name}</Link>;
-      return nameNode;
-    })();
+  private renderButtonNodes(): ReactNode {
     let addButtonNode = (this.props.showEditLink) && (
       <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({wordEditorOpen: true})}/>
     );
@@ -85,8 +76,21 @@ export default class DictionaryHeader extends Component<Props, State> {
     let downloadButtonNode = (this.props.showDownloadLink) && (
       <Button label={this.trans("dictionaryHeader.download")} iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={this.downloadDictionary.bind(this)}/>
     );
-    let wordEditorNode = (this.props.dictionary && this.state.wordEditorOpen) && (() => {
-      let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
+    let node = (
+      <div styleName="button">
+        {addButtonNode}
+        {settingButtonNode}
+        {orderWordButtonNode}
+        {downloadButtonNode}
+      </div>
+    );
+    return node;
+  }
+
+  private renderOverlays(): ReactNode {
+    let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
+    let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
+    let wordEditorNode = (this.props.dictionary !== null && this.state.wordEditorOpen) && (() => {
       let wordEditorNode = (
         <Suspense fallback="">
           <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.wordEditorOpen} onClose={() => this.setState({wordEditorOpen: false})}/>
@@ -94,8 +98,7 @@ export default class DictionaryHeader extends Component<Props, State> {
       );
       return wordEditorNode;
     })();
-    let commissionEditorNode = (this.props.dictionary && this.state.commissionEditorOpen) && (() => {
-      let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
+    let commissionEditorNode = (this.props.dictionary !== null && this.state.commissionEditorOpen) && (() => {
       let commissionEditorNode = (
         <Suspense fallback="">
           <CommissionEditor dictionary={this.props.dictionary} open={this.state.commissionEditorOpen} onClose={() => this.setState({commissionEditorOpen: false})}/>
@@ -103,25 +106,31 @@ export default class DictionaryHeader extends Component<Props, State> {
       );
       return commissionEditorNode;
     })();
+    let node = [wordEditorNode, commissionEditorNode];
+    return node;
+  }
+
+  public render(): ReactNode {
+    let nameNode = (this.props.dictionary) && (() => {
+      let href = "/dictionary/" + this.props.dictionary.number;
+      if (this.props.preserveQuery) {
+        let queryString = this.props.location!.search;
+        href += queryString;
+      }
+      let nameNode = <Link href={href} target="self" style="plane">{this.props.dictionary.name}</Link>;
+      return nameNode;
+    })();
     let node = (
       <header styleName="root">
         <div styleName="container">
           <div styleName="left">
-            <div styleName="name">
-              {nameNode}
-            </div>
+            <div styleName="name">{nameNode}</div>
           </div>
           <div styleName="right">
-            <div styleName="button">
-              {addButtonNode}
-              {settingButtonNode}
-              {orderWordButtonNode}
-              {downloadButtonNode}
-            </div>
+            {this.renderButtonNodes()}
           </div>
         </div>
-        {wordEditorNode}
-        {commissionEditorNode}
+        {this.renderOverlays()}
       </header>
     );
     return node;
