@@ -22,7 +22,8 @@
     "command:tsc": "tsc"
   },
   "eslintConfig": {
-    "extends": "ziphil"
+    "extends": "ziphil",
+    "ignorePatterns": "webpack-*.ts"
   },
   "nodemonConfig": {
     "watch": [
