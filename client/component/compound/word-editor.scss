@@ -40,9 +40,13 @@
 }
 
 .plus {
-  justify-content: flex-end;
   display: flex;
-  align-items: flex-end;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.absent {
+  color: $light-color;
 }
 
 .form {
