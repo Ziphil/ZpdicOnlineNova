@@ -236,10 +236,6 @@ removeDictionaryForm:
 uploadDictionaryForm:
   file: "File"
   confirm: "Confirm"
-addCommissionForm:
-  name: "Word"
-  comment: "Comment"
-  confirm: "Request"
 advancedSearchForm:
   overlayTitle: "Advanced search"
   search: "Search"
@@ -264,6 +260,11 @@ akrantiainExecutor:
   output: "Output"
   errorMessage: "Error message"
   execute: "Execute"
+commissionEditor:
+  title: "Request word"
+  name: "Word"
+  comment: "Comment"
+  confirm: "Request"
 commissionPane:
   remove: "Delete"
   add: "Create"

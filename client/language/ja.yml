@@ -236,10 +236,6 @@ removeDictionaryForm:
 uploadDictionaryForm:
   file: "ファイル"
   confirm: "決定"
-addCommissionForm:
-  name: "単語"
-  comment: "コメント"
-  confirm: "依頼"
 advancedSearchForm:
   overlayTitle: "高度な検索"
   search: "検索内容"
@@ -264,6 +260,11 @@ akrantiainExecutor:
   output: "出力"
   errorMessage: "エラーメッセージ"
   execute: "実行"
+commissionEditor:
+  title: "造語依頼"
+  name: "単語"
+  comment: "コメント"
+  confirm: "依頼"
 commissionPane:
   remove: "削除"
   add: "造語"
