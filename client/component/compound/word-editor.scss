@@ -4,20 +4,12 @@
 
 
 .container {
-  padding: 20px 0px;
-  border-bottom: 1px $pale-border-color solid; 
-}
-
-.container:first-child {
-  border-top: 1px $light-border-color solid; 
-}
-
-.container:last-child {
-  border-bottom: 1px $light-border-color solid; 
+  @include reset-first-margin;
+  margin: 15px 0px 0px 0px;
 }
 
 .confirm-button {
-  margin: 20px 0px 0px 0px;
+  margin: 15px 0px 0px 0px;
   text-align: right;
 }
 
@@ -41,6 +33,7 @@
 
 .plus {
   display: flex;
+  flex-direction: row;
   align-items: baseline;
   justify-content: space-between;
 }
