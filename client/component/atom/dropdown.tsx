@@ -67,9 +67,7 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
     );
     let node = (
       <div styleName="root" className={this.props.className} onFocus={this.handleFocus.bind(this)} onBlur={this.handleBlur.bind(this)}>
-        <div>
-          {this.props.children}
-        </div>
+        {this.props.children}
         {suggestionNode}
       </div>
     );
