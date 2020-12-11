@@ -12,7 +12,7 @@ import {
 import Label from "/client/component/atom/label";
 import Suggestion from "/client/component/atom/suggestion";
 import {
-  SuggestionSpec
+  SuggestionSpec as DropdownSpec
 } from "/client/component/atom/suggestion";
 import Tooltip from "/client/component/atom/tooltip";
 import Component from "/client/component/component";
@@ -40,7 +40,7 @@ export default class Input extends Component<Props, State> {
   public state: State = {
     type: undefined as any,
     errorMessage: null,
-    suggestionSpecs: []
+    dropdownSpecs: []
   };
 
   public constructor(props: any) {
@@ -84,7 +84,8 @@ export default class Input extends Component<Props, State> {
     let suggest = this.props.suggest;
     if (suggest !== undefined) {
       let suggestionSpecs = await suggest(value);
-      this.setState({suggestionSpecs});
+      let dropdownSpecs = suggestionSpecs.map((suggestionSpec) => ({value: suggestionSpec.replacement, node: suggestionSpec.node}));
+      this.setState({dropdownSpecs});
     }
   }
 
@@ -151,7 +152,7 @@ export default class Input extends Component<Props, State> {
     let node = (
       <div styleName="root" className={this.props.className}>
         <Tooltip message={this.state.errorMessage}>
-          <Suggestion specs={this.state.suggestionSpecs} onSet={this.updateValue.bind(this)}>
+          <Suggestion specs={this.state.dropdownSpecs} onSet={this.updateValue.bind(this)}>
             <label styleName="label-wrapper">
               {labelNode}
               {inputNode}
@@ -193,7 +194,8 @@ type DefaultProps = {
 type State = {
   type: "text" | "password",
   errorMessage: string | null,
-  suggestionSpecs: Array<SuggestionSpec<string>>
+  dropdownSpecs: Array<DropdownSpec<string>>
 };
 
-export type Suggest = (pattern: string) => AsyncOrSync<Array<SuggestionSpec<string>>>;
+export type SuggestionSpec = {replacement: string, node: ReactNode};
+export type Suggest = (pattern: string) => AsyncOrSync<Array<SuggestionSpec>>;

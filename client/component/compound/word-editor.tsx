@@ -18,12 +18,10 @@ import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
 import Input from "/client/component/atom/input";
 import {
-  Suggest
+  Suggest,
+  SuggestionSpec
 } from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
-import {
-  SuggestionSpec
-} from "/client/component/atom/suggestion";
 import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
 import WordSearcher from "/client/component/compound/word-searcher";
@@ -117,7 +115,7 @@ export default class WordEditor extends Component<Props, State> {
   private createSuggest(propertyName: string): Suggest {
     let outerThis = this;
     let number = this.props.dictionary.number;
-    let suggest = async function (pattern: string): Promise<Array<SuggestionSpec<string>>> {
+    let suggest = async function (pattern: string): Promise<Array<SuggestionSpec>> {
       let response = await outerThis.request("suggestDictionaryTitles", {number, propertyName, pattern}, {ignoreError: true});
       if (response.status === 200 && !("error" in response.data)) {
         let titles = response.data;
@@ -524,5 +522,4 @@ type State = {
   alertOpen: boolean
 };
 
-
-type TemporaryEditableWord = EditableWord & {equivalentStrings: Array<string>};
+export type TemporaryEditableWord = EditableWord & {equivalentStrings: Array<string>};

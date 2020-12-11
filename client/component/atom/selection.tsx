@@ -13,7 +13,7 @@ import {
 
 
 @style(require("./selection.scss"))
-export default class Selection<V extends string> extends Component<Props<V>, State<V>> {
+export default class Selection<V> extends Component<Props<V>, State<V>> {
 
   private renderSelection(): ReactNode {
     let text = Array.from(this.props.specs).find((spec) => spec.value === this.props.value)!.text;
@@ -27,7 +27,7 @@ export default class Selection<V extends string> extends Component<Props<V>, Sta
   }
 
   public render(): ReactNode {
-    let suggestionSpecs = Array.from(this.props.specs).map((spec) => ({replacement: spec.value, node: spec.text}));
+    let suggestionSpecs = Array.from(this.props.specs).map((spec) => ({value: spec.value, node: spec.text}));
     let selectionNode = this.renderSelection();
     let node = (
       <div styleName="root" className={this.props.className}>

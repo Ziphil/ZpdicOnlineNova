@@ -12,21 +12,21 @@ import {
 
 
 @style(require("./suggestion.scss"))
-export default class Suggestion<R extends string> extends Component<Props<R>, State<R>> {
+export default class Suggestion<V> extends Component<Props<V>, State<V>> {
 
-  private handleMouseDown(replacement: R, event: MouseEvent<HTMLDivElement>): void {
+  private handleMouseDown(value: V, event: MouseEvent<HTMLDivElement>): void {
     if (this.props.onClick) {
       this.props.onClick(event);
     }
     if (this.props.onSet) {
-      this.props.onSet(replacement);
+      this.props.onSet(value);
     }
   }
 
   public render(): ReactNode {
     let itemNodes = this.props.specs.map((spec, index) => {
       let itemNode = (
-        <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={(event) => this.handleMouseDown(spec.replacement, event)}>
+        <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={(event) => this.handleMouseDown(spec.value, event)}>
           {spec.node}
         </div>
       );
@@ -49,13 +49,13 @@ export default class Suggestion<R extends string> extends Component<Props<R>, St
 }
 
 
-type Props<R> = {
-  specs: Array<SuggestionSpec<R>>
+type Props<V> = {
+  specs: Array<SuggestionSpec<V>>
   onClick?: (event: MouseEvent<HTMLDivElement>) => void,
-  onSet?: (replacement: R) => void,
+  onSet?: (value: V) => void,
   className?: string
 };
-type State<R> = {
+type State<V> = {
 };
 
-export type SuggestionSpec<R> = {replacement: R, node: ReactNode};
+export type SuggestionSpec<V> = {value: V, node: ReactNode};
