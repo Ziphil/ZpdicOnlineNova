@@ -9,11 +9,11 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
-import Label from "/client/component/atom/label";
-import Suggestion from "/client/component/atom/suggestion";
+import Dropdown from "/client/component/atom/dropdown";
 import {
-  SuggestionSpec as DropdownSpec
-} from "/client/component/atom/suggestion";
+  DropdownSpec
+} from "/client/component/atom/dropdown";
+import Label from "/client/component/atom/label";
 import Tooltip from "/client/component/atom/tooltip";
 import Component from "/client/component/component";
 import {
@@ -152,12 +152,12 @@ export default class Input extends Component<Props, State> {
     let node = (
       <div styleName="root" className={this.props.className}>
         <Tooltip message={this.state.errorMessage}>
-          <Suggestion specs={this.state.dropdownSpecs} onSet={this.updateValue.bind(this)}>
+          <Dropdown specs={this.state.dropdownSpecs} onSet={this.updateValue.bind(this)}>
             <label styleName="label-wrapper">
               {labelNode}
               {inputNode}
             </label>
-          </Suggestion>
+          </Dropdown>
         </Tooltip>
       </div>
     );

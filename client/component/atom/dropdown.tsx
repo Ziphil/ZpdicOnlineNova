@@ -11,8 +11,8 @@ import {
 } from "/client/component/decorator";
 
 
-@style(require("./suggestion.scss"))
-export default class Suggestion<V> extends Component<Props<V>, State<V>> {
+@style(require("./dropdown.scss"))
+export default class Dropdown<V> extends Component<Props<V>, State<V>> {
 
   private handleMouseDown(value: V, event: MouseEvent<HTMLDivElement>): void {
     if (this.props.onClick) {
@@ -50,7 +50,7 @@ export default class Suggestion<V> extends Component<Props<V>, State<V>> {
 
 
 type Props<V> = {
-  specs: Array<SuggestionSpec<V>>
+  specs: Array<DropdownSpec<V>>
   onClick?: (event: MouseEvent<HTMLDivElement>) => void,
   onSet?: (value: V) => void,
   className?: string
@@ -58,4 +58,4 @@ type Props<V> = {
 type State<V> = {
 };
 
-export type SuggestionSpec<V> = {value: V, node: ReactNode};
+export type DropdownSpec<V> = {value: V, node: ReactNode};
