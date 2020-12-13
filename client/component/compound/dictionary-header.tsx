@@ -41,6 +41,14 @@ export default class DictionaryHeader extends Component<Props, State> {
     }
   }
 
+  private addSomething(type: "word" | "example"): void {
+    if (type === "word") {
+      this.setState({wordEditorOpen: true});
+    } else {
+      console.warn("not yet implemented");
+    }
+  }
+
   private async downloadDictionary(): Promise<void> {
     if (this.props.dictionary) {
       let number = this.props.dictionary.number;
@@ -64,13 +72,24 @@ export default class DictionaryHeader extends Component<Props, State> {
     }
   }
 
+  private renderAddDropdownNode(type: "word" | "example"): ReactNode {
+    let styles = this.props.styles!;
+    let node = (
+      <div>
+        <span className={styles["icon"]}>{(type === "word") ? "\uF1C2" : "\uF15C"}</span>
+        {this.trans(`dictionaryHeader.add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
+      </div>
+    );
+    return node;
+  }
+
   private renderButtonNodes(): ReactNode {
     let addDropdownSpecs = [
-      {value: "word", node: this.trans("dictionaryHeader.addWord")},
-      {value: "example", node: this.trans("dictionaryHeader.addExample")}
-    ];
+      {value: "word", node: this.renderAddDropdownNode("word")},
+      {value: "example", node: this.renderAddDropdownNode("example")}
+    ] as const;
     let addButtonNode = (this.props.showAddLink) && (
-      <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click">
+      <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={this.addSomething.bind(this)}>
         <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true}/>
       </Dropdown>
     );

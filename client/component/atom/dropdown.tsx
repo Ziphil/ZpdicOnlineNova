@@ -36,6 +36,12 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
     if (this.props.onSet) {
       this.props.onSet(value);
     }
+    if (this.props.autoMode === "click") {
+      this.setState({open: false});
+      if (this.props.onClose) {
+        this.props.onClose(event);
+      }
+    }
   }
 
   private handleClick(event: MouseEvent<HTMLDivElement>): void {
@@ -82,7 +88,7 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
       {if: this.props.fillWidth, true: "fill-width"},
       {if: this.props.restrictHeight, true: "restrict-height"}
     );
-    let itemNodes = this.props.specs.map((spec, index) => {
+    let itemNodes = Array.from(this.props.specs).map((spec, index) => {
       let itemNode = (
         <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={(event) => this.handleMouseDown(spec.value, event)}>
           {spec.node}
@@ -110,7 +116,7 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
 
 
 type Props<V> = {
-  specs: Array<DropdownSpec<V>>,
+  specs: ArrayLike<DropdownSpec<V>>,
   open: boolean,
   autoMode: "focus" | "click" | null,
   showArrow: boolean,
