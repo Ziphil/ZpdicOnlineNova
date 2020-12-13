@@ -21,6 +21,7 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
   public static defaultProps: DefaultProps = {
     open: false,
     autoMode: "focus",
+    showArrow: false,
     fillWidth: true,
     restrictHeight: true
   };
@@ -74,12 +75,13 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
   }
 
   public render(): ReactNode {
+    let open = (this.props.autoMode !== null) ? this.state.open : this.props.open;
     let styleName = StyleNameUtil.create(
-      "root",
+      "suggestion",
+      {if: this.props.showArrow, true: "arrow"},
       {if: this.props.fillWidth, true: "fill-width"},
       {if: this.props.restrictHeight, true: "restrict-height"}
     );
-    let open = (this.props.autoMode !== null) ? this.state.open : this.props.open;
     let itemNodes = this.props.specs.map((spec, index) => {
       let itemNode = (
         <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={(event) => this.handleMouseDown(spec.value, event)}>
@@ -89,12 +91,12 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
       return itemNode;
     });
     let suggestionNode = (open && this.props.specs.length > 0) && (
-      <div styleName="suggestion">
+      <div styleName={styleName}>
         {itemNodes}
       </div>
     );
     let node = (
-      <div styleName={styleName} className={this.props.className}>
+      <div styleName="root" className={this.props.className}>
         <div onClick={this.handleClick.bind(this)} onFocus={this.handleFocus.bind(this)} onBlur={this.handleBlur.bind(this)}>
           {this.props.children}
         </div>
@@ -111,8 +113,9 @@ type Props<V> = {
   specs: Array<DropdownSpec<V>>,
   open: boolean,
   autoMode: "focus" | "click" | null,
+  showArrow: boolean,
   fillWidth: boolean,
-  restrictHeight: boolean
+  restrictHeight: boolean,
   onClick?: (event: MouseEvent<HTMLDivElement>) => void,
   onOpen?: (event: FocusEvent<HTMLDivElement> | MouseEvent<HTMLDivElement>) => void,
   onClose?: (event: FocusEvent<HTMLDivElement> | MouseEvent<unknown>) => void,
@@ -121,7 +124,8 @@ type Props<V> = {
 };
 type DefaultProps = {
   open: boolean,
-  autoMode: "focus" | "click" | null
+  autoMode: "focus" | "click" | null,
+  showArrow: boolean,
   fillWidth: boolean,
   restrictHeight: boolean
 };

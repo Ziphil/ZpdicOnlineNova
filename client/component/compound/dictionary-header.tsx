@@ -70,7 +70,7 @@ export default class DictionaryHeader extends Component<Props, State> {
       {value: "example", node: this.trans("dictionaryHeader.addExample")}
     ];
     let addButtonNode = (this.props.showAddLink) && (
-      <Dropdown specs={addDropdownSpecs} fillWidth={false} restrictHeight={false}>
+      <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click">
         <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true}/>
       </Dropdown>
     );

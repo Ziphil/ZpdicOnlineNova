@@ -15,16 +15,20 @@
   box-sizing: border-box;
   display: block;
   position: absolute;
-  overflow-y: auto;
   z-index: 50;
 }
 
-.root.fill-width .suggestion {
+.suggestion.arrow {
+  margin: 10px 0px 0px 0px;
+}
+
+.suggestion.fill-width {
   width: 100%;
 }
 
-.root.restrict-height .suggestion {
+.suggestion.restrict-height {
   max-height: 150px;
+  overflow-y: auto;
 }
 
 .suggestion-item {
@@ -35,4 +39,24 @@
 .suggestion-item:hover {
   background-color: background-color(map-get($colors, information));
   cursor: pointer;
+}
+
+.suggestion.arrow::before {
+  top: -16px;
+  left: 20px;
+  margin-left: -8px;
+  border: 8px transparent solid;
+  border-bottom: 8px $light-border-color solid;
+  position: absolute;
+  content: "";
+}
+
+.suggestion.arrow::after {
+  top: -15px;
+  left: 20px;
+  margin-left: -8px;
+  border: 8px transparent solid;
+  border-bottom: 8px white solid;
+  position: absolute;
+  content: "";
 }
