@@ -10,6 +10,9 @@ import Component from "/client/component/component";
 import {
   style
 } from "/client/component/decorator";
+import {
+  StyleNameUtil
+} from "/client/util/style-name";
 
 
 @style(require("./dropdown.scss"), {clickOutside: true})
@@ -17,7 +20,9 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
 
   public static defaultProps: DefaultProps = {
     open: false,
-    autoMode: "focus"
+    autoMode: "focus",
+    fillWidth: true,
+    restrictHeight: true
   };
   public state: State<V> = {
     open: false
@@ -69,6 +74,11 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
   }
 
   public render(): ReactNode {
+    let styleName = StyleNameUtil.create(
+      "root",
+      {if: this.props.fillWidth, true: "fill-width"},
+      {if: this.props.restrictHeight, true: "restrict-height"}
+    );
     let open = (this.props.autoMode !== null) ? this.state.open : this.props.open;
     let itemNodes = this.props.specs.map((spec, index) => {
       let itemNode = (
@@ -84,7 +94,7 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
       </div>
     );
     let node = (
-      <div styleName="root" className={this.props.className}>
+      <div styleName={styleName} className={this.props.className}>
         <div onClick={this.handleClick.bind(this)} onFocus={this.handleFocus.bind(this)} onBlur={this.handleBlur.bind(this)}>
           {this.props.children}
         </div>
@@ -101,6 +111,8 @@ type Props<V> = {
   specs: Array<DropdownSpec<V>>,
   open: boolean,
   autoMode: "focus" | "click" | null,
+  fillWidth: boolean,
+  restrictHeight: boolean
   onClick?: (event: MouseEvent<HTMLDivElement>) => void,
   onOpen?: (event: FocusEvent<HTMLDivElement> | MouseEvent<HTMLDivElement>) => void,
   onClose?: (event: FocusEvent<HTMLDivElement> | MouseEvent<unknown>) => void,
@@ -110,6 +122,8 @@ type Props<V> = {
 type DefaultProps = {
   open: boolean,
   autoMode: "focus" | "click" | null
+  fillWidth: boolean,
+  restrictHeight: boolean
 };
 type State<V> = {
   open: boolean
