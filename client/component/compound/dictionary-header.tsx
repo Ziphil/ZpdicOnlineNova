@@ -31,6 +31,7 @@ export default class DictionaryHeader extends Component<Props, State> {
   };
   public state: State = {
     wordEditorOpen: false,
+    exampleEditorOpen: false,
     commissionEditorOpen: false
   };
 
@@ -45,7 +46,7 @@ export default class DictionaryHeader extends Component<Props, State> {
     if (type === "word") {
       this.setState({wordEditorOpen: true});
     } else {
-      console.warn("not yet implemented");
+      this.setState({exampleEditorOpen: true});
     }
   }
 
@@ -115,10 +116,16 @@ export default class DictionaryHeader extends Component<Props, State> {
 
   private renderOverlays(): ReactNode {
     let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
+    let ExampleEditor = lazy(() => import("/client/component/compound/example-editor"));
     let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
     let wordEditorNode = (this.props.dictionary !== null && this.state.wordEditorOpen) && (
       <Suspense fallback="">
         <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.wordEditorOpen} onClose={() => this.setState({wordEditorOpen: false})}/>
+      </Suspense>
+    );
+    let exampleEditorNode = (this.props.dictionary !== null && this.state.exampleEditorOpen) && (
+      <Suspense fallback="">
+        <ExampleEditor dictionary={this.props.dictionary} example={null} open={this.state.exampleEditorOpen} onClose={() => this.setState({exampleEditorOpen: false})}/>
       </Suspense>
     );
     let commissionEditorNode = (this.props.dictionary !== null && this.state.commissionEditorOpen) && (
@@ -126,7 +133,7 @@ export default class DictionaryHeader extends Component<Props, State> {
         <CommissionEditor dictionary={this.props.dictionary} open={this.state.commissionEditorOpen} onClose={() => this.setState({commissionEditorOpen: false})}/>
       </Suspense>
     );
-    let node = [wordEditorNode, commissionEditorNode];
+    let node = [wordEditorNode, exampleEditorNode, commissionEditorNode];
     return node;
   }
 
@@ -176,5 +183,6 @@ type DefaultProps = {
 };
 type State = {
   wordEditorOpen: boolean,
+  exampleEditorOpen: boolean,
   commissionEditorOpen: boolean
 };
