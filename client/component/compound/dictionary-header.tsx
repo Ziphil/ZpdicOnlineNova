@@ -8,6 +8,7 @@ import {
   lazy
 } from "react";
 import Button from "/client/component/atom/button";
+import Dropdown from "/client/component/atom/dropdown";
 import Link from "/client/component/atom/link";
 import Component from "/client/component/component";
 import {
@@ -64,8 +65,14 @@ export default class DictionaryHeader extends Component<Props, State> {
   }
 
   private renderButtonNodes(): ReactNode {
+    let addDropdownSpecs = [
+      {value: "word", node: "Word"},
+      {value: "example", node: "Example"}
+    ];
     let addButtonNode = (this.props.showAddLink) && (
-      <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({wordEditorOpen: true})}/>
+      <Dropdown specs={addDropdownSpecs} autoMode="click">
+        <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true}/>
+      </Dropdown>
     );
     let addCommissionButtonNode = (this.props.showAddCommissionLink) && (
       <Button label={this.trans("dictionaryHeader.addCommission")} iconLabel="&#xF022;" style="simple" hideLabel={true} onClick={() => this.setState({commissionEditorOpen: true})}/>

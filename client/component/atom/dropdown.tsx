@@ -12,7 +12,7 @@ import {
 } from "/client/component/decorator";
 
 
-@style(require("./dropdown.scss"))
+@style(require("./dropdown.scss"), {clickOutside: true})
 export default class Dropdown<V> extends Component<Props<V>, State<V>> {
 
   public static defaultProps: DefaultProps = {
@@ -32,8 +32,26 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
     }
   }
 
+  private handleClick(event: MouseEvent<HTMLDivElement>): void {
+    if (this.props.autoMode === "click") {
+      this.setState({open: true});
+      if (this.props.onOpen) {
+        this.props.onOpen(event);
+      }
+    }
+  }
+
+  private handleClickOutside(event: MouseEvent<unknown>): void {
+    if (this.props.autoMode === "click") {
+      this.setState({open: false});
+      if (this.props.onClose) {
+        this.props.onClose(event);
+      }
+    }
+  }
+
   private handleFocus(event: FocusEvent<HTMLDivElement>): void {
-    if (this.props.autoMode !== null) {
+    if (this.props.autoMode === "focus") {
       this.setState({open: true});
       if (this.props.onOpen) {
         this.props.onOpen(event);
@@ -42,7 +60,7 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
   }
 
   private handleBlur(event: FocusEvent<HTMLDivElement>): void {
-    if (this.props.autoMode !== null) {
+    if (this.props.autoMode === "focus") {
       this.setState({open: false});
       if (this.props.onClose) {
         this.props.onClose(event);
@@ -66,8 +84,10 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
       </div>
     );
     let node = (
-      <div styleName="root" className={this.props.className} onFocus={this.handleFocus.bind(this)} onBlur={this.handleBlur.bind(this)}>
-        {this.props.children}
+      <div styleName="root" className={this.props.className}>
+        <div onClick={this.handleClick.bind(this)} onFocus={this.handleFocus.bind(this)} onBlur={this.handleBlur.bind(this)}>
+          {this.props.children}
+        </div>
         {suggestionNode}
       </div>
     );
@@ -80,16 +100,16 @@ export default class Dropdown<V> extends Component<Props<V>, State<V>> {
 type Props<V> = {
   specs: Array<DropdownSpec<V>>,
   open: boolean,
-  autoMode: "focus" | null,
+  autoMode: "focus" | "click" | null,
   onClick?: (event: MouseEvent<HTMLDivElement>) => void,
-  onOpen?: (event: FocusEvent<HTMLDivElement>) => void,
-  onClose?: (event: FocusEvent<HTMLDivElement>) => void,
+  onOpen?: (event: FocusEvent<HTMLDivElement> | MouseEvent<HTMLDivElement>) => void,
+  onClose?: (event: FocusEvent<HTMLDivElement> | MouseEvent<unknown>) => void,
   onSet?: (value: V) => void,
   className?: string
 };
 type DefaultProps = {
   open: boolean,
-  autoMode: "focus" | null
+  autoMode: "focus" | "click" | null
 };
 type State<V> = {
   open: boolean
