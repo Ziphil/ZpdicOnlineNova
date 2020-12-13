@@ -35,6 +35,12 @@ export default class DictionaryHeader extends Component<Props, State> {
     commissionEditorOpen: false
   };
 
+  public componentDidMount(): void {
+    if (this.props.location!.state?.openCommissionEditor) {
+      this.setState({commissionEditorOpen: true});
+    }
+  }
+
   private jumpSettingPage(): void {
     if (this.props.dictionary) {
       let path = "/dashboard/dictionary/" + this.props.dictionary.number;
