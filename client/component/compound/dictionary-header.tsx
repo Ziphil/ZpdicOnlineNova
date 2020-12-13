@@ -66,8 +66,8 @@ export default class DictionaryHeader extends Component<Props, State> {
 
   private renderButtonNodes(): ReactNode {
     let addDropdownSpecs = [
-      {value: "word", node: "Word"},
-      {value: "example", node: "Example"}
+      {value: "word", node: this.trans("dictionaryHeader.addWord")},
+      {value: "example", node: this.trans("dictionaryHeader.addExample")}
     ];
     let addButtonNode = (this.props.showAddLink) && (
       <Dropdown specs={addDropdownSpecs} autoMode="click">

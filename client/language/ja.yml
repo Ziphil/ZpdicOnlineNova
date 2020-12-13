@@ -282,6 +282,8 @@ dictionaryAggregationPane:
   wordCount: "総単語数"
 dictionaryHeader:
   add: "新規作成"
+  addWord: "単語"
+  addExample: "例文"
   addCommission: "造語依頼"
   setting: "設定"
   download: "ダウンロード"
