@@ -45,7 +45,7 @@ export default class ExampleEditor extends Component<Props, State> {
     alertOpen: false
   };
 
-  private editingRelationIndex: number | null = null;
+  private editingWordIndex: number | null = null;
 
   public constructor(props: Props) {
     super(props);
@@ -85,8 +85,8 @@ export default class ExampleEditor extends Component<Props, State> {
     }
   }
 
-  private openRelationChooser(index: number): void {
-    this.editingRelationIndex = index;
+  private openWordChooser(index: number): void {
+    this.editingWordIndex = index;
     this.setState({wordChooserOpen: true});
   }
 
@@ -113,7 +113,7 @@ export default class ExampleEditor extends Component<Props, State> {
 
   private editWord(word: Word): void {
     let example = this.state.example;
-    let relationIndex = this.editingRelationIndex!;
+    let relationIndex = this.editingWordIndex!;
     if (example.wordNumbers[relationIndex] === undefined) {
       example.wordNumbers[relationIndex] = -1;
     }

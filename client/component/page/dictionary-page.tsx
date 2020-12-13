@@ -37,10 +37,10 @@ export default class DictionaryPage extends Component<Props, State, Params> {
 
   public state: State = {
     dictionary: null,
-    canOwn: false,
-    canEdit: false,
     parameter: NormalWordParameter.createEmpty(),
     page: 0,
+    canOwn: false,
+    canEdit: false,
     showExplanation: true,
     hitResult: {words: [[], 0], suggestions: []},
     loading: false
@@ -232,10 +232,10 @@ type Props = {
 };
 type State = {
   dictionary: EnhancedDictionary | null,
-  canOwn: boolean,
-  canEdit: boolean,
   parameter: WordParameter,
   page: number,
+  canOwn: boolean,
+  canEdit: boolean,
   showExplanation: boolean,
   hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},
   loading: boolean
