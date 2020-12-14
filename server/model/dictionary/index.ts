@@ -14,6 +14,7 @@ export * from "./dictionary-settings";
 export * from "./equivalent";
 export * from "./example";
 export * from "./information";
+export * from "./linked-word";
 export * from "./relation";
 export * from "./suggestion";
 export * from "./variation";

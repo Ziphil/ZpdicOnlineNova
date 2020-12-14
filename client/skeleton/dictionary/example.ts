@@ -1,18 +1,22 @@
 //
 
+import {
+  LinkedWord
+} from "/client/skeleton/dictionary";
+
 
 export class EditableExample {
 
   public number?: number;
-  public wordNumbers!: Array<number>;
+  public words!: Array<LinkedWord>;
   public sentence!: string;
   public translation!: string;
 
   public static createEmpty(): EditableExample {
-    let wordNumbers = new Array<number>();
+    let words = new Array<LinkedWord>();
     let sentence = "";
     let translation = "";
-    let skeleton = {wordNumbers, sentence, translation};
+    let skeleton = {words, sentence, translation};
     return skeleton;
   }
 

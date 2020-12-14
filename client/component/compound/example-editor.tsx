@@ -114,10 +114,8 @@ export default class ExampleEditor extends Component<Props, State> {
   private editWord(word: Word): void {
     let example = this.state.example;
     let relationIndex = this.editingWordIndex!;
-    if (example.wordNumbers[relationIndex] === undefined) {
-      example.wordNumbers[relationIndex] = -1;
-    }
-    example.wordNumbers[relationIndex] = word.number;
+    example.words[relationIndex].number = word.number;
+    example.words[relationIndex].name = word.name;
     this.setState({example, wordChooserOpen: false});
   }
 

@@ -14,7 +14,9 @@ import {
   RemovableSchema
 } from "/server/model/base";
 import {
-  DictionarySchema
+  DictionarySchema,
+  LinkedWord,
+  LinkedWordCreator
 } from "/server/model/dictionary";
 
 
@@ -28,7 +30,7 @@ export class ExampleSchema extends RemovableSchema {
   public number!: number;
 
   @prop({required: true})
-  public wordNumbers!: Array<number>;
+  public words!: Array<LinkedWord>;
 
   @prop({required: true})
   public sentence!: string;
@@ -44,10 +46,10 @@ export class ExampleCreator {
   public static create(raw: Example): ExampleSkeleton {
     let id = raw.id;
     let number = raw.number;
-    let wordNumbers = raw.wordNumbers;
+    let words = raw.words.map(LinkedWordCreator.create);
     let sentence = raw.sentence;
     let translation = raw.translation;
-    let skeleton = {id, number, wordNumbers, sentence, translation};
+    let skeleton = {id, number, words, sentence, translation};
     return skeleton;
   }
 
