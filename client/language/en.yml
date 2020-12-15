@@ -297,6 +297,20 @@ dictionaryPane:
   createdDate: "Created at"
   setting: "Settings"
   download: "Download"
+exampleEditor:
+  title: "Edit example sentence"
+  sentence: "Example sentence"
+  translation: "Translation"
+  wordName: "Included word"
+  wordAbsent: "No included words"
+  remove: "Delete"
+  confirm: "Confirm"
+  selectWord: "Select"
+  alertConfirm: "Delete"
+  alert: >-
+    This example sentence will be deleted permanently.
+    You cannot restore it afterwards.
+    Are you really sure?
 header:
   dictionaryList: "Dictionaries"
   notification: "Notifications"

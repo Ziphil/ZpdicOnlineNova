@@ -297,6 +297,20 @@ dictionaryPane:
   createdDate: "作成日時"
   setting: "設定"
   download: "ダウンロード"
+exampleEditor:
+  title: "例文編集"
+  sentence: "例文"
+  translation: "翻訳"
+  wordName: "使用単語"
+  wordAbsent: "使用単語は登録されていません"
+  remove: "削除"
+  confirm: "決定"
+  selectWord: "変更"
+  alertConfirm: "削除"
+  alert: >-
+    この例文データを永久に削除します。
+    削除した後にデータを戻すことはできません。
+    本当によろしいですか?
 header:
   dictionaryList: "辞書一覧"
   notification: "お知らせ"
