@@ -56,7 +56,7 @@ export class ExampleSchema extends RemovableSchema {
   public updatedDate?: Date;
 
   public static async fetchByWord(word: Word): Promise<Array<Example>> {
-    let query = ExampleModel.findExist().where("dictionary", word.dictionary).where("words", word).sort("-createdDate");
+    let query = ExampleModel.findExist().where("dictionary", word.dictionary).where("words.number", word.number).sort("-createdDate");
     let result = await query.exec();
     return result;
   }
