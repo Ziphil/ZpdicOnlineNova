@@ -174,7 +174,7 @@ type ServerSpecs = {
     request: {number: number, wordNumber: number},
     response: {
       success: Word,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber">
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber" | "dictionarySaving">
     }
   },
   addCommission: {
