@@ -13,6 +13,7 @@ import Fuse from "fuse.js";
 import {
   DetailedDictionary as DetailedDictionarySkeleton,
   Dictionary as DictionarySkeleton,
+  EditableExample as EditableExampleSkeleton,
   EditableWord as EditableWordSkeleton,
   UserDictionary as UserDictionarySkeleton
 } from "/client/skeleton/dictionary";
@@ -34,6 +35,8 @@ import {
   DictionarySettings,
   DictionarySettingsCreator,
   DictionarySettingsModel,
+  Example,
+  ExampleModel,
   Serializer,
   Suggestion,
   Word,
@@ -289,10 +292,6 @@ export class DictionarySchema extends RemovableSchema {
     return this;
   }
 
-  // この辞書に登録されている単語を編集します。
-  // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
-  // そうでない場合は、渡された単語データを新しいデータとして追加します。
-  // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
   public async editWord(this: Dictionary, word: EditableWordSkeleton): Promise<Word> {
     if (this.status !== "saving") {
       let resultWord = await WordModel.editOne(this, word);
@@ -309,6 +308,27 @@ export class DictionarySchema extends RemovableSchema {
     if (this.status !== "saving") {
       let word = await WordModel.removeOne(this, number);
       return word;
+    } else {
+      throw new CustomError("dictionarySaving");
+    }
+  }
+
+  public async editExample(this: Dictionary, example: EditableExampleSkeleton): Promise<Example> {
+    if (this.status !== "saving") {
+      let resultExample = await ExampleModel.editOne(this, example);
+      this.status = "ready";
+      this.updatedDate = new Date();
+      await this.save();
+      return resultExample;
+    } else {
+      throw new CustomError("dictionarySaving");
+    }
+  }
+
+  public async removeExample(this: Dictionary, number: number): Promise<Example> {
+    if (this.status !== "saving") {
+      let example = await ExampleModel.removeOne(this, number);
+      return example;
     } else {
       throw new CustomError("dictionarySaving");
     }

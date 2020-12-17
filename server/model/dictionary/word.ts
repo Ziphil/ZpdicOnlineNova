@@ -70,6 +70,10 @@ export class WordSchema extends RemovableSchema {
   @prop()
   public updatedDate?: Date;
 
+  // 辞書に登録されている単語を編集します。
+  // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
+  // そうでない場合は、渡された単語データを新しいデータとして追加します。
+  // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
   public static async editOne(dictionary: Dictionary, word: EditableWordSkeleton): Promise<Word> {
     let currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", word.number);
     let resultWord;
