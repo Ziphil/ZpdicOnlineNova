@@ -180,7 +180,8 @@ export default class WordPane extends Component<Props, State> {
     let innerNodes = examples.map((example, index) => {
       let innerNode = (
         <li key={index}>
-          {example.sentence} → {example.translation}
+          <span styleName="sentence">{example.sentence}</span>
+          <span styleName="translation">{example.translation}</span>
         </li>
       );
       return innerNode;
