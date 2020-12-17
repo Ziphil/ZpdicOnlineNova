@@ -18,10 +18,10 @@ import {
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
+  DetailedWord,
   EnhancedDictionary,
   NormalWordParameter,
   Suggestion,
-  Word,
   WordParameter
 } from "/client/skeleton/dictionary";
 import {
@@ -237,7 +237,7 @@ type State = {
   canOwn: boolean,
   canEdit: boolean,
   showExplanation: boolean,
-  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},
+  hitResult: {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>},
   loading: boolean
 };
 type Params = {

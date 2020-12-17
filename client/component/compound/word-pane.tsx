@@ -18,6 +18,7 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  DetailedWord,
   EditableWord,
   EnhancedDictionary,
   Relation,
@@ -174,6 +175,27 @@ export default class WordPane extends Component<Props, State> {
     return node;
   }
 
+  private renderExamples(): ReactNode {
+    let examples = ("examples" in this.props.word) ? this.props.word.examples : [];
+    let innerNodes = examples.map((example, index) => {
+      let innerNode = (
+        <li key={index}>
+          {example.sentence} → {example.translation}
+        </li>
+      );
+      return innerNode;
+    });
+    let node = (innerNodes.length > 0) && (
+      <div styleName="container">
+        <div styleName="title">Example</div>
+        <ul styleName="example">
+          {innerNodes}
+        </ul>
+      </div>
+    );
+    return node;
+  }
+
   private renderEditor(): ReactNode {
     let node = (
       <WordEditor
@@ -193,12 +215,14 @@ export default class WordPane extends Component<Props, State> {
     let equivalentNode = this.renderEquivalents();
     let informationNode = (this.props.style === "normal") && this.renderInformations();
     let relationNode = (this.props.style === "normal") && this.renderRelations();
+    let exampleNode = (this.props.style === "normal") && this.renderExamples();
     let editorNode = (!this.props.showButton && this.state.editorOpen) && this.renderEditor();
     let node = (
       <div styleName="root">
         {nameNode}
         {equivalentNode}
         {informationNode}
+        {exampleNode}
         {relationNode}
         {editorNode}
       </div>
@@ -211,7 +235,7 @@ export default class WordPane extends Component<Props, State> {
 
 type Props = {
   dictionary: EnhancedDictionary,
-  word: Word,
+  word: Word | DetailedWord,
   style: "normal" | "simple",
   showEditLink: boolean,
   showButton: boolean,

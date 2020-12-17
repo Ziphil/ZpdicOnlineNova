@@ -15,6 +15,7 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  DetailedWord,
   EditableWord,
   EnhancedDictionary,
   Word
@@ -61,7 +62,7 @@ export default class WordList extends Component<Props, State> {
 
 type Props = {
   dictionary: EnhancedDictionary,
-  words: Array<Word>,
+  words: Array<Word | DetailedWord>,
   style: "normal" | "simple",
   showEditLink: boolean,
   showButton: boolean,
