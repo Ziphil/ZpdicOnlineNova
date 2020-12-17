@@ -70,9 +70,6 @@ export class WordSchema extends RemovableSchema {
   @prop()
   public updatedDate?: Date;
 
-  @prop()
-  public removedDate?: Date;
-
   public static async editOne(dictionary: Dictionary, word: EditableWordSkeleton): Promise<Word> {
     let currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", word.number);
     let resultWord;
