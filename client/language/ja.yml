@@ -64,6 +64,10 @@ popup:
     単語の編集が完了しました。
   wordRemoved: >-
     単語の削除が完了しました。
+  exampleEdited: >-
+    例文の編集が完了しました。
+  exampleRemoved: >-
+    例文の削除が完了しました。
   commissionAdded: >-
     単語の造語依頼が完了しました。
   commissionRemoved: >-
@@ -107,6 +111,8 @@ popup:
     処理が終わるまでもう少々お待ちください。
   noSuchWordNumber: >-
     存在しない単語を編集しようとしました。
+  noSuchExampleNumber: >-
+    存在しない例文を編集しようとしました。
   userCanAlreadyEdit: >-
     そのユーザーはすでに編集権限を保有しています。
   userCanAlreadyOwn: >-

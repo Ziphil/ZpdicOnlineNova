@@ -64,6 +64,10 @@ popup:
     The word has been edited.
   wordRemoved: >-
     The word has been deleted.
+  exampleEdited: >-
+    The example sentence has been edited.
+  exampleRemoved: >-
+    The example sentence has been deleted.
   commissionAdded: >-
     Your request has been completed.
   commissionRemoved: >-
@@ -107,6 +111,8 @@ popup:
     Please wait for a while until the process is completed.
   noSuchWordNumber: >-
     You tried to edit a word which does not exist.
+  noSuchExampleNumber: >-
+    You tried to edit an example sentence which does not exist.
   userCanAlreadyEdit: >-
     This user already has permission.
   userCanAlreadyOwn: >-
