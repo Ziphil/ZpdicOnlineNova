@@ -61,7 +61,7 @@ export class ExampleSchema extends RemovableSchema {
     return result;
   }
 
-  public static async editOne(dictionary: Dictionary, example: EditableExampleSkeleton): Promise<Example> {
+  public static async edit(dictionary: Dictionary, example: EditableExampleSkeleton): Promise<Example> {
     let currentExample = await ExampleModel.findOneExist().where("dictionary", dictionary).where("number", example.number);
     let resultExample;
     if (currentExample) {
@@ -69,7 +69,7 @@ export class ExampleSchema extends RemovableSchema {
       resultExample.dictionary = dictionary;
       resultExample.createdDate = currentExample.createdDate;
       resultExample.updatedDate = new Date();
-      await currentExample.flagRemoveOne();
+      await currentExample.flagDiscarded();
       await resultExample.save();
     } else {
       if (example.number === undefined) {
@@ -85,10 +85,10 @@ export class ExampleSchema extends RemovableSchema {
     return resultExample;
   }
 
-  public static async removeOne(dictionary: Dictionary, number: number): Promise<Example> {
+  public static async discard(dictionary: Dictionary, number: number): Promise<Example> {
     let example = await ExampleModel.findOneExist().where("dictionary", dictionary).where("number", number);
     if (example) {
-      await example.flagRemoveOne();
+      await example.flagDiscarded();
     } else {
       throw new CustomError("noSuchExampleNumber");
     }

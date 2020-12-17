@@ -60,15 +60,17 @@ export class WordController extends Controller {
     let wordNumber = request.body.wordNumber;
     if (dictionary) {
       try {
-        let resultWord = await dictionary.removeWord(wordNumber);
+        let resultWord = await dictionary.discardWord(wordNumber);
         let body = WordCreator.create(resultWord);
         Controller.respond(response, body);
       } catch (error) {
         let body = (() => {
-          if (error.name === "CustomError" && error.type === "noSuchWordNumber") {
-            return CustomError.ofType("noSuchWordNumber");
-          } else if (error.name === "CustomError" && error.type === "dictionarySaving") {
-            return CustomError.ofType("dictionarySaving");
+          if (error.name === "CustomError"){
+            if (error.type === "noSuchWordNumber") {
+              return CustomError.ofType("noSuchWordNumber");
+            } else if (error.type === "dictionarySaving") {
+              return CustomError.ofType("dictionarySaving");
+            }
           }
         })();
         Controller.respondError(response, body, error);

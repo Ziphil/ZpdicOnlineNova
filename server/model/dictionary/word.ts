@@ -77,7 +77,7 @@ export class WordSchema extends RemovableSchema {
   // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
   // そうでない場合は、渡された単語データを新しいデータとして追加します。
   // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
-  public static async editOne(dictionary: Dictionary, word: EditableWordSkeleton): Promise<Word> {
+  public static async edit(dictionary: Dictionary, word: EditableWordSkeleton): Promise<Word> {
     let currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", word.number);
     let resultWord;
     if (currentWord) {
@@ -85,7 +85,7 @@ export class WordSchema extends RemovableSchema {
       resultWord.dictionary = dictionary;
       resultWord.createdDate = currentWord.createdDate;
       resultWord.updatedDate = new Date();
-      await currentWord.flagRemoveOne();
+      await currentWord.flagDiscarded();
       await resultWord.save();
       if (currentWord.name !== resultWord.name) {
         await this.correctRelationsByEdit(dictionary, resultWord);
@@ -104,11 +104,11 @@ export class WordSchema extends RemovableSchema {
     return resultWord;
   }
 
-  public static async removeOne(dictionary: Dictionary, number: number): Promise<Word> {
+  public static async discard(dictionary: Dictionary, number: number): Promise<Word> {
     let word = await WordModel.findOneExist().where("dictionary", dictionary).where("number", number);
     if (word) {
-      await word.flagRemoveOne();
-      await this.correctRelationsByRemove(dictionary, word);
+      await word.flagDiscarded();
+      await this.correctRelationsByDiscard(dictionary, word);
     } else {
       throw new CustomError("noSuchWordNumber");
     }
@@ -135,7 +135,7 @@ export class WordSchema extends RemovableSchema {
   // 単語データを削除した場合に、それによって起こり得る関連語データの不整合を修正します。
   // この処理では、修正が必要な既存の単語データを論理削除した上で、関連語データの不整合を修正した新しい単語データを作成します。
   // そのため、この処理の内容は、修正を行った単語データに編集履歴として残ります。
-  private static async correctRelationsByRemove(dictionary: Dictionary, word: Word): Promise<void> {
+  private static async correctRelationsByDiscard(dictionary: Dictionary, word: Word): Promise<void> {
     let affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("relations.number", word.number);
     let changedWords = [];
     for (let affectedWord of affectedWords) {
@@ -144,7 +144,7 @@ export class WordSchema extends RemovableSchema {
       changedWord.updatedDate = new Date();
       changedWords.push(changedWord);
     }
-    let affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagRemoveOne());
+    let affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagDiscarded());
     let changedPromises = changedWords.map((changedWord) => changedWord.save());
     LogUtil.log("word/correct-relations-remove", `number: ${dictionary.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
     await Promise.all([...affectedPromises, ...changedPromises]);

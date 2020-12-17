@@ -220,7 +220,7 @@ export class DictionarySchema extends RemovableSchema {
     this.updatedDate = new Date();
     this.externalData = {};
     await this.save();
-    await WordModel.flagRemoveMany().where("dictionary", this);
+    await WordModel.updateManyDiscarded().where("dictionary", this);
     LogUtil.log("dictionary/upload", `start uploading | number: ${this.number}`);
   }
 
@@ -246,7 +246,7 @@ export class DictionarySchema extends RemovableSchema {
   // 削除した辞書を後で削除する直前の状態に戻せるように、この辞書に属する単語データの削除は行いません。
   public async removeOne(this: Dictionary): Promise<void> {
     await InvitationModel.deleteMany({}).where("dictionary", this);
-    await this.flagRemoveOne();
+    await this.flagDiscarded();
   }
 
   public async changeParamName(this: Dictionary, paramName: string): Promise<Dictionary> {
@@ -294,7 +294,7 @@ export class DictionarySchema extends RemovableSchema {
 
   public async editWord(this: Dictionary, word: EditableWordSkeleton): Promise<Word> {
     if (this.status !== "saving") {
-      let resultWord = await WordModel.editOne(this, word);
+      let resultWord = await WordModel.edit(this, word);
       this.status = "ready";
       this.updatedDate = new Date();
       await this.save();
@@ -304,9 +304,9 @@ export class DictionarySchema extends RemovableSchema {
     }
   }
 
-  public async removeWord(this: Dictionary, number: number): Promise<Word> {
+  public async discardWord(this: Dictionary, number: number): Promise<Word> {
     if (this.status !== "saving") {
-      let word = await WordModel.removeOne(this, number);
+      let word = await WordModel.discard(this, number);
       return word;
     } else {
       throw new CustomError("dictionarySaving");
@@ -315,7 +315,7 @@ export class DictionarySchema extends RemovableSchema {
 
   public async editExample(this: Dictionary, example: EditableExampleSkeleton): Promise<Example> {
     if (this.status !== "saving") {
-      let resultExample = await ExampleModel.editOne(this, example);
+      let resultExample = await ExampleModel.edit(this, example);
       this.status = "ready";
       this.updatedDate = new Date();
       await this.save();
@@ -325,9 +325,9 @@ export class DictionarySchema extends RemovableSchema {
     }
   }
 
-  public async removeExample(this: Dictionary, number: number): Promise<Example> {
+  public async discardExample(this: Dictionary, number: number): Promise<Example> {
     if (this.status !== "saving") {
-      let example = await ExampleModel.removeOne(this, number);
+      let example = await ExampleModel.discard(this, number);
       return example;
     } else {
       throw new CustomError("dictionarySaving");

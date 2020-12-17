@@ -60,15 +60,17 @@ export class ExampleController extends Controller {
     let exampleNumber = request.body.exampleNumber;
     if (dictionary) {
       try {
-        let resultExample = await dictionary.removeExample(exampleNumber);
+        let resultExample = await dictionary.discardExample(exampleNumber);
         let body = ExampleCreator.create(resultExample);
         Controller.respond(response, body);
       } catch (error) {
         let body = (() => {
-          if (error.name === "CustomError" && error.type === "noSuchExampleNumber") {
-            return CustomError.ofType("noSuchExampleNumber");
-          } else if (error.name === "CustomError" && error.type === "dictionarySaving") {
-            return CustomError.ofType("dictionarySaving");
+          if (error.name === "CustomError") {
+            if (error.type === "noSuchExampleNumber") {
+              return CustomError.ofType("noSuchExampleNumber");
+            } else if (error.type === "dictionarySaving") {
+              return CustomError.ofType("dictionarySaving");
+            }
           }
         })();
         Controller.respondError(response, body, error);
