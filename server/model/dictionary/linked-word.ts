@@ -14,8 +14,6 @@ export class LinkedWordSchema {
   @prop({required: true})
   public number!: number;
 
-  public name?: string;
-
 }
 
 
@@ -23,8 +21,7 @@ export class LinkedWordCreator {
 
   public static create(raw: LinkedWord): LinkedWordSkeleton {
     let number = raw.number;
-    let name = raw.name;
-    let skeleton = {number, name};
+    let skeleton = {number};
     return skeleton;
   }
 

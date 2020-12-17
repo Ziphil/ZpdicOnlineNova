@@ -10,7 +10,9 @@ import {
   DetailedDictionary,
   Dictionary,
   DictionarySettings,
+  EditableExample,
   EditableWord,
+  Example,
   Suggestion,
   UserDictionary,
   Word,
@@ -54,6 +56,8 @@ export const SERVER_PATHS = {
   respondInvitation: "/invitation/respond",
   editWord: "/word/edit",
   removeWord: "/word/remove",
+  editExample: "/examle/edit",
+  removeExample: "/examle/remove",
   addCommission: "/commission/add",
   removeCommission: "/commission/remove",
   searchDictionary: "/dictionary/search",
@@ -175,6 +179,20 @@ type ServerSpecs = {
     response: {
       success: Word,
       error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber" | "dictionarySaving">
+    }
+  },
+  editExample: {
+    request: {number: number, example: EditableExample},
+    response: {
+      success: Example,
+      error: CustomError<"noSuchDictionaryNumber" | "dictionarySaving">
+    }
+  },
+  removeExample: {
+    request: {number: number, exampleNumber: number},
+    response: {
+      success: Example,
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchExampleNumber" | "dictionarySaving">
     }
   },
   addCommission: {

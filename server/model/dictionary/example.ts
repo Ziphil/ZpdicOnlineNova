@@ -17,9 +17,11 @@ import {
 import {
   Dictionary,
   DictionarySchema,
-  LinkedWord,
   LinkedWordCreator
 } from "/server/model/dictionary";
+import {
+  LinkedWordSchema
+} from "/server/model/dictionary/linked-word";
 import {
   CustomError
 } from "/server/model/error";
@@ -37,8 +39,8 @@ export class ExampleSchema extends RemovableSchema {
   @prop({required: true})
   public number!: number;
 
-  @prop({required: true})
-  public words!: Array<LinkedWord>;
+  @prop({required: true, type: LinkedWordSchema})
+  public words!: Array<LinkedWordSchema>;
 
   @prop({required: true})
   public sentence!: string;

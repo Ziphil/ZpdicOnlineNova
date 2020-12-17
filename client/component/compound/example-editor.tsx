@@ -56,7 +56,7 @@ export default class ExampleEditor extends Component<Props, State> {
   private async editExample(event: MouseEvent<HTMLButtonElement>): Promise<void> {
     let number = this.props.dictionary.number;
     let example = this.state.example;
-    let response = await this.request("editExample" as any, {number, example});
+    let response = await this.request("editExample", {number, example});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("exampleEdited");
       if (this.props.onClose) {
@@ -72,7 +72,7 @@ export default class ExampleEditor extends Component<Props, State> {
     let number = this.props.dictionary.number;
     let exampleNumber = this.state.example.number;
     if (exampleNumber !== undefined) {
-      let response = await this.request("removeExample" as any, {number, exampleNumber});
+      let response = await this.request("removeExample", {number, exampleNumber});
       if (response.status === 200) {
         this.props.store!.addInformationPopup("exampleRemoved");
         if (this.props.onClose) {
