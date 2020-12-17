@@ -17,7 +17,8 @@ import {
 import {
   Dictionary,
   DictionarySchema,
-  LinkedWordCreator
+  LinkedWordCreator,
+  Word
 } from "/server/model/dictionary";
 import {
   LinkedWordSchema
@@ -53,6 +54,12 @@ export class ExampleSchema extends RemovableSchema {
 
   @prop()
   public updatedDate?: Date;
+
+  public static async fetchByWord(word: Word): Promise<Array<Example>> {
+    let query = ExampleModel.findExist().where("dictionary", word.dictionary).where("words", word).sort("-createdDate");
+    let result = await query.exec();
+    return result;
+  }
 
   public static async editOne(dictionary: Dictionary, example: EditableExampleSkeleton): Promise<Example> {
     let currentExample = await ExampleModel.findOneExist().where("dictionary", dictionary).where("number", example.number);

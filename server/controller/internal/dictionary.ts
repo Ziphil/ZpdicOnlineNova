@@ -227,7 +227,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       let range = new QueryRange(offset, size);
       let hitResult = await dictionary.search(parameter, range);
-      let hitWords = hitResult.words[0].map(WordCreator.create);
+      let hitWords = await Promise.all(hitResult.words[0].map(WordCreator.createDetailed));
       let hitSize = hitResult.words[1];
       let hitSuggestions = hitResult.suggestions.map(SuggestionCreator.create);
       let body = {words: [hitWords, hitSize], suggestions: hitSuggestions} as any;

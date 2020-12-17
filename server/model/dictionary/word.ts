@@ -8,6 +8,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  DetailedWord as DetailedWordSkeleton,
   EditableWord as EditableWordSkeleton,
   Word as WordSkeleton
 } from "/client/skeleton/dictionary";
@@ -19,6 +20,8 @@ import {
   DictionarySchema,
   EquivalentCreator,
   EquivalentSchema,
+  ExampleCreator,
+  ExampleModel,
   InformationCreator,
   InformationSchema,
   RelationCreator,
@@ -190,6 +193,13 @@ export class WordCreator {
     let createdDate = raw.createdDate?.toISOString() ?? undefined;
     let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
     let skeleton = {id, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate, updatedDate};
+    return skeleton;
+  }
+
+  public static async createDetailed(raw: Word): Promise<DetailedWordSkeleton> {
+    let base = WordCreator.create(raw);
+    let examples = await ExampleModel.fetchByWord(raw).then((rawExamples) => rawExamples.map(ExampleCreator.create));
+    let skeleton = {...base, examples};
     return skeleton;
   }
 

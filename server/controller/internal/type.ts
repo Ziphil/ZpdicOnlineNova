@@ -8,6 +8,7 @@ import {
 } from "/client/skeleton/commission";
 import {
   DetailedDictionary,
+  DetailedWord,
   Dictionary,
   DictionarySettings,
   EditableExample,
@@ -212,7 +213,7 @@ type ServerSpecs = {
   searchDictionary: {
     request: {number: number, parameter: WordParameter, offset?: number, size?: number},
     response: {
-      success: {words: WithSize<Word>, suggestions: Array<Suggestion>},
+      success: {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>},
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
