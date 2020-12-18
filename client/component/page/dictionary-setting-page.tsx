@@ -200,6 +200,22 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
+  private renderChangeDictionaryExampleTitleForm(): ReactNode {
+    let label = this.trans("dictionarySettingPage.changeDictionaryExampleTitleForm.label");
+    let description = this.trans("dictionarySettingPage.changeDictionaryExampleTitleForm.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <ChangeDictionarySettingsForm
+          number={this.state.dictionary!.number}
+          currentSettings={this.state.dictionary!.settings}
+          propertyName="exampleTitle"
+          onSubmit={this.fetchDictionary.bind(this)}
+        />
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderChangeDictionaryEnableMarkdownForm(): ReactNode {
     let label = this.trans("dictionarySettingPage.changeDictionaryEnableMarkdownForm.label");
     let description = this.trans("dictionarySettingPage.changeDictionaryEnableMarkdownForm.description");
@@ -302,6 +318,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderChangeDictionaryAkrantiainSourceForm());
         contentNodes.push(this.renderChangeDictionaryZatlinSourceForm());
         contentNodes.push(this.renderChangeDictionaryPronunciationTitleForm());
+        contentNodes.push(this.renderChangeDictionaryExampleTitleForm());
         contentNodes.push(this.renderChangeDictionaryEnableMarkdownForm());
       } else if (mode === "access") {
         contentNodes.push(this.renderAddEditInvitationForm());

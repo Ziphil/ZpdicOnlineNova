@@ -35,6 +35,8 @@ popup:
       Zatlin 用ソースコードを変更しました。
     pronunciationTitle: >-
       発音データの分類名を変更しました。
+    exampleTitle: >-
+      例文データの分類名を変更しました。
     enableMarkdown: >-
       Markdown 設定を変更しました。
   dictionaryUploaded: >-
@@ -222,6 +224,7 @@ changeDictionarySecretForm:
     これを「非表示」にしても、辞書の閲覧は誰でも可能なままです。
 changeDictionarySettingsForm:
   pronunciationTitle: "発音データの分類名"
+  exampleTitle: "例文データの分類名"
   enableMarkdownTrue: "有効"
   enableMarkdownFalse: "無効"
   confirm: "変更"
@@ -492,6 +495,10 @@ dictionarySettingPage:
     label: "発音データの分類名の変更"
     description: >-
       OTM-JSON 形式で出力する際に、発音データを格納しておく説明欄の分類名を設定できます。
+  changeDictionaryExampleTitleForm:
+    label: "例文データの分類名の変更"
+    description: >-
+      例文データを表示する際の分類名を設定できます。
   changeDictionaryEnableMarkdownForm:
     label: "Markdown の有効化/無効化"
     description: >-

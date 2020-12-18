@@ -34,7 +34,9 @@ popup:
     zatlinSource: >-
       The source code for Zatlin has been changed.
     pronunciationTitle: >-
-      The title of the pronunciation data has been changed.
+      The title of the pronunciation has been changed.
+    exampleTitle: >-
+      The title of the example sentences has been changed.
     enableMarkdown: >-
       Markdown has been enabled/disabled.
   dictionaryUploaded: >-
@@ -222,6 +224,7 @@ changeDictionarySecretForm:
     Even if it is set to “Hide”, anyone with the link can view this dictionary.
 changeDictionarySettingsForm:
   pronunciationTitle: "Title of pronunciation"
+  exampleTitle: "Title of example sentences"
   enableMarkdownTrue: "Enable"
   enableMarkdownFalse: "Disable"
   confirm: "Confirm"
@@ -491,7 +494,11 @@ dictionarySettingPage:
   changeDictionaryPronunciationTitleForm:
     label: "Change title of pronunciation"
     description: >-
-      Change the title of the pronunciation data which is used when outputting the dictionary in OTM-JSON format.
+      Change the title of the pronunciation which is used when outputting the dictionary in OTM-JSON format.
+  changeDictionaryExampleTitleForm:
+    label: "Change title of example sentences"
+    description: >-
+      Change the title of the example sentences which is displayed in the dictionary page.
   changeDictionaryEnableMarkdownForm:
     label: "Enable or disable Markdown"
     description: >-
