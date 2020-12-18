@@ -16,7 +16,7 @@ import ChangeUserEmailForm from "/client/component/form/change-user-email-form";
 import ChangeUserPasswordForm from "/client/component/form/change-user-password-form";
 import ChangeUserScreenNameForm from "/client/component/form/change-user-screen-name-form";
 import CreateDictionaryForm from "/client/component/form/create-dictionary-form";
-import DiscardUserForm from "/client/component/form/remove-user-form";
+import DiscardUserForm from "/client/component/form/discard-user-form";
 import Page from "/client/component/page/page";
 import {
   UserDictionary

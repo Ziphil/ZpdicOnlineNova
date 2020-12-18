@@ -13,7 +13,7 @@ import {
 } from "/client/component/decorator";
 
 
-@style(require("./remove-user-form.scss"))
+@style(require("./discard-user-form.scss"))
 export default class DiscardUserForm extends Component<Props, State> {
 
   public state: State = {

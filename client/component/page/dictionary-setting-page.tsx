@@ -21,7 +21,7 @@ import ChangeDictionaryParamNameForm from "/client/component/form/change-diction
 import ChangeDictionarySecretForm from "/client/component/form/change-dictionary-secret-form";
 import ChangeDictionarySettingsForm from "/client/component/form/change-dictionary-settings-form";
 import ChangeDictionarySourceForm from "/client/component/form/change-dictionary-source-form";
-import DiscardDictionaryForm from "/client/component/form/remove-dictionary-form";
+import DiscardDictionaryForm from "/client/component/form/discard-dictionary-form";
 import UploadDictionaryForm from "/client/component/form/upload-dictionary-form";
 import Page from "/client/component/page/page";
 import {

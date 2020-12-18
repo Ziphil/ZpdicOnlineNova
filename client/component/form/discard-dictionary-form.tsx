@@ -13,7 +13,7 @@ import {
 } from "/client/component/decorator";
 
 
-@style(require("./remove-dictionary-form.scss"))
+@style(require("./discard-dictionary-form.scss"))
 export default class DiscardDictionaryForm extends Component<Props, State> {
 
   public state: State = {
