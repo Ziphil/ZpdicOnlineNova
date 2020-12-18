@@ -46,21 +46,21 @@ export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_versio
 export const SERVER_PATHS = {
   createDictionary: "/dictionary/create",
   uploadDictionary: "/dictionary/upload",
-  removeDictionary: "/dictionary/remove",
+  discardDictionary: "/dictionary/discard",
   changeDictionaryName: "/dictionary/edit/name",
   changeDictionaryParamName: "/dictionary/edit/param-name",
   changeDictionarySecret: "/dictionary/edit/secret",
   changeDictionaryExplanation: "/dictionary/edit/explanation",
   changeDictionarySettings: "/dictionary/edit/settings",
-  removeDictionaryAuthorizedUser: "/dictionary/user/remove",
+  discardDictionaryAuthorizedUser: "/dictionary/user/discard",
   addInvitation: "/invitation/add",
   respondInvitation: "/invitation/respond",
   editWord: "/word/edit",
-  removeWord: "/word/remove",
+  discardWord: "/word/discard",
   editExample: "/examle/edit",
-  removeExample: "/examle/remove",
+  discardExample: "/examle/discard",
   addCommission: "/commission/add",
-  removeCommission: "/commission/remove",
+  discardCommission: "/commission/discard",
   searchDictionary: "/dictionary/search",
   downloadDictionary: "/dictionary/download",
   fetchDictionary: "/dictionary/fetch",
@@ -81,7 +81,7 @@ export const SERVER_PATHS = {
   changeUserPassword: "/user/edit/password",
   issueUserResetToken: "/user/reset/token",
   resetUserPassword: "/user/reset/reset",
-  removeUser: "/user/remove",
+  discardUser: "/user/discard",
   fetchUser: "/user/fetch",
   suggestUsers: "/user/suggest",
   addNotification: "/notification/add",
@@ -106,7 +106,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
-  removeDictionary: {
+  discardDictionary: {
     request: {number: number},
     response: {
       success: null,
@@ -148,7 +148,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
-  removeDictionaryAuthorizedUser: {
+  discardDictionaryAuthorizedUser: {
     request: {number: number, id: string},
     response: {
       success: null,
@@ -176,7 +176,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber" | "dictionarySaving">
     }
   },
-  removeWord: {
+  discardWord: {
     request: {number: number, wordNumber: number},
     response: {
       success: Word,
@@ -190,7 +190,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber" | "dictionarySaving">
     }
   },
-  removeExample: {
+  discardExample: {
     request: {number: number, exampleNumber: number},
     response: {
       success: Example,
@@ -204,7 +204,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber" | "emptyCommissionName">
     }
   },
-  removeCommission: {
+  discardCommission: {
     request: {number: number, id: string},
     response: {
       success: Commission,
@@ -351,7 +351,7 @@ type ServerSpecs = {
       error: CustomError<"invalidResetToken" | "invalidUserPassword">
     }
   },
-  removeUser: {
+  discardUser: {
     request: {},
     response: {
       success: null,

@@ -221,7 +221,7 @@ export default class WordPane extends Component<Props, State> {
         open={this.state.editorOpen}
         onClose={() => this.setState({editorOpen: false})}
         onEditConfirm={this.props.onEditConfirm}
-        onRemoveConfirm={this.props.onRemoveConfirm}
+        onDiscardConfirm={this.props.onDiscardConfirm}
       />
     );
     return node;
@@ -235,7 +235,7 @@ export default class WordPane extends Component<Props, State> {
         open={this.state.editingExample !== null}
         onClose={() => this.setState({editingExample: null})}
         onEditConfirm={this.props.onEditExampleConfirm}
-        onRemoveConfirm={this.props.onRemoveExampleConfirm}
+        onDiscardConfirm={this.props.onDiscardExampleConfirm}
       />
     );
     return node;
@@ -274,9 +274,9 @@ type Props = {
   showButton: boolean,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   onEditExampleConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onRemoveExampleConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onDiscardExampleConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
 };
 type DefaultProps = {
   style: "normal" | "simple",

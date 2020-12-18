@@ -53,9 +53,9 @@ export class ExampleController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["removeExample"])
+  @post(SERVER_PATHS["discardExample"])
   @before(verifyUser(), verifyDictionary("edit"))
-  public async [Symbol()](request: Request<"removeExample">, response: Response<"removeExample">): Promise<void> {
+  public async [Symbol()](request: Request<"discardExample">, response: Response<"discardExample">): Promise<void> {
     let dictionary = request.dictionary;
     let exampleNumber = request.body.exampleNumber;
     if (dictionary) {

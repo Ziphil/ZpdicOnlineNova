@@ -96,18 +96,18 @@ export default class ExampleEditor extends Component<Props, State> {
     }
   }
 
-  private async removeExample(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+  private async discardExample(event: MouseEvent<HTMLButtonElement>): Promise<void> {
     let number = this.props.dictionary.number;
     let exampleNumber = this.state.example.number;
     if (exampleNumber !== undefined) {
-      let response = await this.request("removeExample", {number, exampleNumber});
+      let response = await this.request("discardExample", {number, exampleNumber});
       if (response.status === 200) {
-        this.props.store!.addInformationPopup("exampleRemoved");
+        this.props.store!.addInformationPopup("exampleDiscarded");
         if (this.props.onClose) {
           await this.props.onClose(event);
         }
-        if (this.props.onRemoveConfirm) {
-          await this.props.onRemoveConfirm(event);
+        if (this.props.onDiscardConfirm) {
+          await this.props.onDiscardConfirm(event);
         }
       }
     }
@@ -194,8 +194,8 @@ export default class ExampleEditor extends Component<Props, State> {
   }
 
   private renderEditor(): ReactNode {
-    let removeButtonNode = (this.props.example !== null) && (
-      <Button label={this.trans("exampleEditor.remove")} iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
+    let discardButtonNode = (this.props.example !== null) && (
+      <Button label={this.trans("exampleEditor.discard")} iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
     );
     let confirmButtonNode = (
       <Button label={this.trans("exampleEditor.confirm")} iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.editExample.bind(this)}/>
@@ -208,7 +208,7 @@ export default class ExampleEditor extends Component<Props, State> {
           {this.renderWords()}
         </div>
         <div styleName="confirm-button">
-          {removeButtonNode}
+          {discardButtonNode}
           {confirmButtonNode}
         </div>
       </div>
@@ -242,7 +242,7 @@ export default class ExampleEditor extends Component<Props, State> {
         open={this.state.alertOpen}
         outsideClosable={true}
         onClose={() => this.setState({alertOpen: false})}
-        onConfirm={this.removeExample.bind(this)}
+        onConfirm={this.discardExample.bind(this)}
       />
     );
     return node;
@@ -271,7 +271,7 @@ type Props = {
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
   onEditConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
   example: EditableExample,

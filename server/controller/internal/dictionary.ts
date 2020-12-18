@@ -85,9 +85,9 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["removeDictionary"])
+  @post(SERVER_PATHS["discardDictionary"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: Request<"removeDictionary">, response: Response<"removeDictionary">): Promise<void> {
+  public async [Symbol()](request: Request<"discardDictionary">, response: Response<"discardDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {
       await dictionary.discard();
@@ -143,9 +143,9 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["removeDictionaryAuthorizedUser"])
+  @post(SERVER_PATHS["discardDictionaryAuthorizedUser"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: Request<"removeDictionaryAuthorizedUser">, response: Response<"removeDictionaryAuthorizedUser">): Promise<void> {
+  public async [Symbol()](request: Request<"discardDictionaryAuthorizedUser">, response: Response<"discardDictionaryAuthorizedUser">): Promise<void> {
     let dictionary = request.dictionary;
     let id = request.body.id;
     let user = await UserModel.findById(id);

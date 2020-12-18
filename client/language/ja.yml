@@ -17,7 +17,7 @@ popup:
   userPasswordReset: >-
     パスワードのリセットが完了しました。
     新しいパスワードを用いてログインしてください。
-  userRemoved: >-
+  userDiscarded: >-
     ユーザーが削除しました。
     ZpDIC Online のご利用ありがとうございました。
   dictionaryNameChanged: >-
@@ -42,7 +42,7 @@ popup:
   dictionaryUploaded: >-
     辞書のアップロードが完了しました。
     なお、データの反映には時間がかかる場合があります。
-  dictionaryRemoved: >-
+  dictionaryDiscarded: >-
     辞書を削除しました。
   editInvitationAdded: >-
     編集権限の付与をリクエストしました。
@@ -60,19 +60,19 @@ popup:
     これ以降、該当の辞書の管理者になります。
   transferInvitationRefused: >-
     辞書の譲渡を拒否しました。
-  dictionaryAuthorizedUserRemoved: >-
+  dictionaryAuthorizedUserDiscarded: >-
     該当ユーザーの編集権限を削除しました。
   wordEdited: >-
     単語の編集が完了しました。
-  wordRemoved: >-
+  wordDiscarded: >-
     単語の削除が完了しました。
   exampleEdited: >-
     例文の編集が完了しました。
-  exampleRemoved: >-
+  exampleDiscarded: >-
     例文の削除が完了しました。
   commissionAdded: >-
     単語の造語依頼が完了しました。
-  commissionRemoved: >-
+  commissionDiscarded: >-
     単語の造語依頼を削除しました。
   contacted: >-
     問い合わせ内容を送信しました。
@@ -191,7 +191,7 @@ createDictionaryForm:
   defaultName: "新規辞書"
   name: "名称"
   confirm: "作成"
-removeUserForm:
+discardUserForm:
   confirm: "削除"
   caution: >-
     この操作を行うと、ユーザーが永久に削除され、同時にこのユーザーが所有者である辞書も削除されます。
@@ -233,7 +233,7 @@ changeDictionarySourceForm:
   zatlin: "Zatlin 用ソースコード"
   confirm: "変更"
   try: "試す"
-removeDictionaryForm:
+discardDictionaryForm:
   confirm: "削除"
   caution: >-
     この操作を行うと、辞書データが永久に削除されます。
@@ -275,7 +275,7 @@ commissionEditor:
   comment: "コメント"
   confirm: "依頼"
 commissionPane:
-  remove: "削除"
+  discard: "削除"
   add: "造語"
   alert: >-
     この造語依頼を削除します。
@@ -312,7 +312,7 @@ exampleEditor:
   translation: "翻訳"
   wordName: "使用単語"
   wordAbsent: "使用単語は登録されていません"
-  remove: "削除"
+  discard: "削除"
   confirm: "決定"
   selectWord: "変更"
   alertConfirm: "削除"
@@ -365,7 +365,7 @@ suggestionPane:
   maybe: "もしかして"
   suggestion: "{nameNode} の{title}?"
 userPane:
-  remove: "解除"
+  discard: "解除"
   alert: >-
     このユーザーの編集権限を解除します。
     本当によろしいですか?
@@ -387,7 +387,7 @@ wordEditor:
   informationAbsent: "分類は登録されていません"
   variationAbsent: "変化形は登録されていません"
   relationAbsent: "関連語は登録されていません"
-  remove: "削除"
+  discard: "削除"
   confirm: "決定"
   generate: "生成"
   selectRelation: "変更"
@@ -446,7 +446,7 @@ dashboardPage:
     label: "パスワードの変更"
     description: >-
       パスワードを変更します。
-  removeUserForm:
+  discardUserForm:
     label: "削除"
     description: >-
       このユーザーを削除します。
@@ -508,7 +508,7 @@ dictionarySettingPage:
     description: >-
       ファイルをアップロードし、現在のデータを上書きします。
       OTM-JSON 形式 (拡張子 .json) と PDIC 形式 (拡張子 .dic) に対応しています。
-  removeDictionaryForm:
+  discardDictionaryForm:
     label: "削除"
     description: >-
       この辞書を削除します。

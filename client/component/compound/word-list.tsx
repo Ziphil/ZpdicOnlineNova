@@ -45,9 +45,9 @@ export default class WordList extends Component<Props, State> {
           showButton={this.props.showButton}
           onSubmit={this.props.onSubmit && partial(this.props.onSubmit, word)}
           onEditConfirm={this.props.onEditConfirm && partial(this.props.onEditConfirm, word)}
-          onRemoveConfirm={this.props.onRemoveConfirm && partial(this.props.onRemoveConfirm, word)}
+          onDiscardConfirm={this.props.onDiscardConfirm && partial(this.props.onDiscardConfirm, word)}
           onEditExampleConfirm={this.props.onEditExampleConfirm && partial(this.props.onEditExampleConfirm, word)}
-          onRemoveExampleConfirm={this.props.onRemoveExampleConfirm && partial(this.props.onRemoveExampleConfirm, word)}
+          onDiscardExampleConfirm={this.props.onDiscardExampleConfirm && partial(this.props.onDiscardExampleConfirm, word)}
         />
       );
       return wordPane;
@@ -73,9 +73,9 @@ type Props = {
   offset: number,
   onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onRemoveConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+  onDiscardConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
   onEditExampleConfirm?: (word: Word, example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onRemoveExampleConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onDiscardExampleConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
 };
 type DefaultProps = {
   style: "normal" | "simple",

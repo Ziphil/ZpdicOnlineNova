@@ -14,17 +14,17 @@ import {
 
 
 @style(require("./remove-dictionary-form.scss"))
-export default class RemoveDictionaryForm extends Component<Props, State> {
+export default class DiscardDictionaryForm extends Component<Props, State> {
 
   public state: State = {
     alertOpen: false
   };
 
-  private async removeDictionary(): Promise<void> {
+  private async discardDictionary(): Promise<void> {
     let number = this.props.number;
-    let response = await this.request("removeDictionary", {number});
+    let response = await this.request("discardDictionary", {number});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("dictionaryRemoved");
+      this.props.store!.addInformationPopup("dictionaryDiscarded");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
@@ -35,18 +35,18 @@ export default class RemoveDictionaryForm extends Component<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Button label={this.trans("removeDictionaryForm.confirm")} reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
+          <Button label={this.trans("discardDictionaryForm.confirm")} reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
         </form>
         <p styleName="caution">
-          {this.trans("removeDictionaryForm.caution")}
+          {this.trans("discardDictionaryForm.caution")}
         </p>
         <Alert
-          text={this.trans("removeDictionaryForm.alert")}
-          confirmLabel={this.trans("removeDictionaryForm.confirm")}
+          text={this.trans("discardDictionaryForm.alert")}
+          confirmLabel={this.trans("discardDictionaryForm.confirm")}
           open={this.state.alertOpen}
           outsideClosable={true}
           onClose={() => this.setState({alertOpen: false})}
-          onConfirm={this.removeDictionary.bind(this)}
+          onConfirm={this.discardDictionary.bind(this)}
         />
       </Fragment>
     );
