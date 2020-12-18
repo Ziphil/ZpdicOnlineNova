@@ -198,6 +198,8 @@ export default class DictionaryPage extends Component<Props, State, Params> {
             size={40}
             onEditConfirm={() => this.updateWordsImmediately()}
             onRemoveConfirm={() => this.updateWordsImmediately()}
+            onEditExampleConfirm={() => this.updateWordsImmediately()}
+            onRemoveExampleConfirm={() => this.updateWordsImmediately()}
           />
         </div>
         <div styleName="pagination">

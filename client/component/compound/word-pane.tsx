@@ -20,6 +20,7 @@ import {
 } from "/client/component/decorator";
 import {
   DetailedWord,
+  EditableExample,
   EditableWord,
   EnhancedDictionary,
   Example,
@@ -36,14 +37,14 @@ export default class WordPane extends Component<Props, State> {
     showButton: false
   };
   public state: State = {
-    editorOpen: false,
+    wordEditorOpen: false,
     exampleEditorOpen: null
   };
 
   private renderName(): ReactNode {
     let editButtonNode = (this.props.showEditLink && !this.props.showButton) && (
       <div styleName="button">
-        <Button label={this.trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
+        <Button label={this.trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({wordEditorOpen: true})}/>
       </div>
     );
     let submitButtonNode = (this.props.showButton) && (
@@ -215,8 +216,8 @@ export default class WordPane extends Component<Props, State> {
       <WordEditor
         dictionary={this.props.dictionary}
         word={this.props.word}
-        open={this.state.editorOpen}
-        onClose={() => this.setState({editorOpen: false})}
+        open={this.state.wordEditorOpen}
+        onClose={() => this.setState({wordEditorOpen: false})}
         onEditConfirm={this.props.onEditConfirm}
         onRemoveConfirm={this.props.onRemoveConfirm}
       />
@@ -227,6 +228,8 @@ export default class WordPane extends Component<Props, State> {
         example={this.state.exampleEditorOpen}
         open={this.state.exampleEditorOpen !== null}
         onClose={() => this.setState({exampleEditorOpen: null})}
+        onEditConfirm={this.props.onEditExampleConfirm}
+        onRemoveConfirm={this.props.onRemoveExampleConfirm}
       />
     );
     return [wordNode, exampleNode];
@@ -263,13 +266,15 @@ type Props = {
   showButton: boolean,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onEditExampleConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onRemoveExampleConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
 };
 type DefaultProps = {
   style: "normal" | "simple",
   showButton: boolean
 };
 type State = {
-  editorOpen: boolean,
+  wordEditorOpen: boolean,
   exampleEditorOpen: Example | null
 };

@@ -16,6 +16,7 @@ import {
 } from "/client/component/decorator";
 import {
   DetailedWord,
+  EditableExample,
   EditableWord,
   EnhancedDictionary,
   Word
@@ -45,6 +46,8 @@ export default class WordList extends Component<Props, State> {
           onSubmit={this.props.onSubmit && partial(this.props.onSubmit, word)}
           onEditConfirm={this.props.onEditConfirm && partial(this.props.onEditConfirm, word)}
           onRemoveConfirm={this.props.onRemoveConfirm && partial(this.props.onRemoveConfirm, word)}
+          onEditExampleConfirm={this.props.onEditExampleConfirm && partial(this.props.onEditExampleConfirm, word)}
+          onRemoveExampleConfirm={this.props.onRemoveExampleConfirm && partial(this.props.onRemoveExampleConfirm, word)}
         />
       );
       return wordPane;
@@ -70,7 +73,9 @@ type Props = {
   offset: number,
   onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onRemoveConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void
+  onRemoveConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+  onEditExampleConfirm?: (word: Word, example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onRemoveExampleConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
 };
 type DefaultProps = {
   style: "normal" | "simple",
