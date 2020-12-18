@@ -125,17 +125,17 @@ export default class DictionaryHeader extends Component<Props, State> {
     let ExampleEditor = lazy(() => import("/client/component/compound/example-editor"));
     let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
     let wordEditorNode = (this.props.dictionary !== null && this.state.wordEditorOpen) && (
-      <Suspense fallback="">
+      <Suspense fallback="" key="word">
         <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.wordEditorOpen} onClose={() => this.setState({wordEditorOpen: false})}/>
       </Suspense>
     );
     let exampleEditorNode = (this.props.dictionary !== null && this.state.exampleEditorOpen) && (
-      <Suspense fallback="">
+      <Suspense fallback="" key="example">
         <ExampleEditor dictionary={this.props.dictionary} example={null} open={this.state.exampleEditorOpen} onClose={() => this.setState({exampleEditorOpen: false})}/>
       </Suspense>
     );
     let commissionEditorNode = (this.props.dictionary !== null && this.state.commissionEditorOpen) && (
-      <Suspense fallback="">
+      <Suspense fallback="" key="comission">
         <CommissionEditor dictionary={this.props.dictionary} open={this.state.commissionEditorOpen} onClose={() => this.setState({commissionEditorOpen: false})}/>
       </Suspense>
     );
