@@ -69,6 +69,7 @@ export const SERVER_PATHS = {
   fetchDictionaries: "/dictionary/list",
   fetchAllDictionaries: "/dictionary/list/all",
   fetchDictionaryAggregation: "/dictionary/aggregate",
+  fetchWordNames: "/word/name",
   fetchInvitations: "/invitation/fetch",
   checkDictionaryAuthorization: "/dictionary/check",
   fetchCommissions: "/commission/fetch",
@@ -264,6 +265,13 @@ type ServerSpecs = {
     response: {
       success: {dictionary: {count: number, wholeCount: number, size: number}, word: {count: number, wholeCount: number, size: number}},
       error: never
+    }
+  },
+  fetchWordNames: {
+    request: {number: number, wordNumbers: Array<number>},
+    response: {
+      success: {names: Record<number, string | null>},
+      error: CustomError<"noSuchDictionaryNumber">
     }
   },
   fetchInvitations: {

@@ -81,4 +81,19 @@ export class WordController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["fetchWordNames"])
+  @before(verifyUser(), verifyDictionary("edit"))
+  public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
+    let dictionary = request.dictionary;
+    let wordNumbers = request.body.wordNumbers;
+    if (dictionary) {
+      let names = await dictionary.fetchWordNames(wordNumbers);
+      let body = {names};
+      Controller.respond(response, body);
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
 }
