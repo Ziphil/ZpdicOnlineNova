@@ -214,7 +214,7 @@ export default class WordPane extends Component<Props, State> {
   }
 
   private renderEditor(): ReactNode {
-    let wordNode = (
+    let node = (
       <WordEditor
         dictionary={this.props.dictionary}
         word={this.props.word}
@@ -224,7 +224,11 @@ export default class WordPane extends Component<Props, State> {
         onRemoveConfirm={this.props.onRemoveConfirm}
       />
     );
-    let exampleNode = (
+    return node;
+  }
+
+  private renderExampleEditor(): ReactNode {
+    let node = (
       <ExampleEditor
         dictionary={this.props.dictionary}
         example={this.state.editingExample}
@@ -234,7 +238,7 @@ export default class WordPane extends Component<Props, State> {
         onRemoveConfirm={this.props.onRemoveExampleConfirm}
       />
     );
-    return [wordNode, exampleNode];
+    return node;
   }
 
   public render(): ReactNode {
@@ -243,7 +247,8 @@ export default class WordPane extends Component<Props, State> {
     let informationNode = (this.props.style === "normal") && this.renderInformations();
     let relationNode = (this.props.style === "normal") && this.renderRelations();
     let exampleNode = (this.props.style === "normal") && this.renderExamples();
-    let editorNode = (!this.props.showButton) && this.renderEditor();
+    let editorNode = (!this.props.showButton && this.state.editorOpen) && this.renderEditor();
+    let exampleEditorNode = (!this.props.showButton && this.state.editingExample !== null) && this.renderExampleEditor();
     let node = (
       <div styleName="root">
         {nameNode}
@@ -252,6 +257,7 @@ export default class WordPane extends Component<Props, State> {
         {exampleNode}
         {relationNode}
         {editorNode}
+        {exampleEditorNode}
       </div>
     );
     return node;
