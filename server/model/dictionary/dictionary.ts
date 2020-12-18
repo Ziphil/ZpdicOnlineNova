@@ -244,7 +244,7 @@ export class DictionarySchema extends RemovableSchema {
 
   // この辞書を削除 (削除フラグを付加) します。
   // 削除した辞書を後で削除する直前の状態に戻せるように、この辞書に属する単語データの削除は行いません。
-  public async removeOne(this: Dictionary): Promise<void> {
+  public async discard(this: Dictionary): Promise<void> {
     await InvitationModel.deleteMany({}).where("dictionary", this);
     await this.flagDiscarded();
   }
