@@ -37,7 +37,9 @@
 }
 
 .button {
+  margin: 0px 0px 0px $control-margin;
   display: inline-block;
+  white-space: nowrap;
 }
 
 .button >* {
@@ -67,6 +69,30 @@
   white-space: pre-line;
 }
 
+.example {
+  @include unordered-list("\F0DA", $light-color, 0.4em);
+  @include line-height;
+  margin: 0px 0px 0px 2px;
+  padding: 0px;
+}
+
+.example-content-wrapper {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+}
+
+.example-content {
+  flex-grow: 1;
+}
+
+.sentence::after {
+  @include icon-font;
+  margin: 0em $blank-margin;
+  color: $light-color;
+  content: "\F105";
+}
+
 .box {
   bottom: 0.1em;
   margin: 0em 0.5em 0em 0em;
@@ -87,7 +113,7 @@
 
 .confer {
   @include icon-font;
-  margin: 0em 0.5em 0em 0em;
+  margin: 0em $blank-margin 0em 0em;
   color: $light-color;
 }
 

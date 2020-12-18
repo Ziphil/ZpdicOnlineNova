@@ -7,6 +7,7 @@ export class DictionarySettings {
   public zatlinSource?: string;
   public punctuations!: Array<string>;
   public pronunciationTitle!: string;
+  public exampleTitle!: string;
   public enableMarkdown!: boolean;
 
 }

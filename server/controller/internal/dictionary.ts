@@ -85,12 +85,12 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["removeDictionary"])
+  @post(SERVER_PATHS["discardDictionary"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: Request<"removeDictionary">, response: Response<"removeDictionary">): Promise<void> {
+  public async [Symbol()](request: Request<"discardDictionary">, response: Response<"discardDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     if (dictionary) {
-      await dictionary.removeOne();
+      await dictionary.discard();
       Controller.respond(response, null);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
@@ -143,16 +143,16 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["removeDictionaryAuthorizedUser"])
+  @post(SERVER_PATHS["discardDictionaryAuthorizedUser"])
   @before(verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: Request<"removeDictionaryAuthorizedUser">, response: Response<"removeDictionaryAuthorizedUser">): Promise<void> {
+  public async [Symbol()](request: Request<"discardDictionaryAuthorizedUser">, response: Response<"discardDictionaryAuthorizedUser">): Promise<void> {
     let dictionary = request.dictionary;
     let id = request.body.id;
     let user = await UserModel.findById(id);
     if (dictionary) {
       if (user) {
         try {
-          await dictionary.removeAuthorizedUser(user);
+          await dictionary.discardAuthorizedUser(user);
           Controller.respond(response, null);
         } catch (error) {
           let body = (() => {
@@ -227,7 +227,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       let range = new QueryRange(offset, size);
       let hitResult = await dictionary.search(parameter, range);
-      let hitWords = hitResult.words[0].map(WordCreator.create);
+      let hitWords = await Promise.all(hitResult.words[0].map(WordCreator.createDetailed));
       let hitSize = hitResult.words[1];
       let hitSuggestions = hitResult.suggestions.map(SuggestionCreator.create);
       let body = {words: [hitWords, hitSize], suggestions: hitSuggestions} as any;

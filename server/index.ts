@@ -19,6 +19,7 @@ import {
   CommissionController,
   DebugController,
   DictionaryController,
+  ExampleController,
   HistoryController,
   InvitationController,
   NotificationController,
@@ -116,6 +117,7 @@ export class Main {
     CommissionController.use(this.application);
     DebugController.use(this.application);
     DictionaryController.use(this.application);
+    ExampleController.use(this.application);
     HistoryController.use(this.application);
     InvitationController.use(this.application);
     NotificationController.use(this.application);

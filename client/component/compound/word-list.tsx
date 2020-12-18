@@ -15,6 +15,8 @@ import {
   style
 } from "/client/component/decorator";
 import {
+  DetailedWord,
+  EditableExample,
   EditableWord,
   EnhancedDictionary,
   Word
@@ -43,7 +45,9 @@ export default class WordList extends Component<Props, State> {
           showButton={this.props.showButton}
           onSubmit={this.props.onSubmit && partial(this.props.onSubmit, word)}
           onEditConfirm={this.props.onEditConfirm && partial(this.props.onEditConfirm, word)}
-          onRemoveConfirm={this.props.onRemoveConfirm && partial(this.props.onRemoveConfirm, word)}
+          onDiscardConfirm={this.props.onDiscardConfirm && partial(this.props.onDiscardConfirm, word)}
+          onEditExampleConfirm={this.props.onEditExampleConfirm && partial(this.props.onEditExampleConfirm, word)}
+          onDiscardExampleConfirm={this.props.onDiscardExampleConfirm && partial(this.props.onDiscardExampleConfirm, word)}
         />
       );
       return wordPane;
@@ -61,7 +65,7 @@ export default class WordList extends Component<Props, State> {
 
 type Props = {
   dictionary: EnhancedDictionary,
-  words: Array<Word>,
+  words: Array<Word | DetailedWord>,
   style: "normal" | "simple",
   showEditLink: boolean,
   showButton: boolean,
@@ -69,7 +73,9 @@ type Props = {
   offset: number,
   onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onRemoveConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void
+  onDiscardConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+  onEditExampleConfirm?: (word: Word, example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onDiscardExampleConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
 };
 type DefaultProps = {
   style: "normal" | "simple",

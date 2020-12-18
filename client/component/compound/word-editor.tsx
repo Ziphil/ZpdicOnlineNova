@@ -18,12 +18,10 @@ import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
 import Input from "/client/component/atom/input";
 import {
-  Suggest
+  Suggest,
+  SuggestionSpec
 } from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
-import {
-  SuggestionSpec
-} from "/client/component/atom/suggestion";
 import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
 import WordSearcher from "/client/component/compound/word-searcher";
@@ -92,18 +90,18 @@ export default class WordEditor extends Component<Props, State> {
     }
   }
 
-  private async removeWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+  private async discardWord(event: MouseEvent<HTMLButtonElement>): Promise<void> {
     let number = this.props.dictionary.number;
     let wordNumber = this.state.word.number;
     if (wordNumber !== undefined) {
-      let response = await this.request("removeWord", {number, wordNumber});
+      let response = await this.request("discardWord", {number, wordNumber});
       if (response.status === 200) {
-        this.props.store!.addInformationPopup("wordRemoved");
+        this.props.store!.addInformationPopup("wordDiscarded");
         if (this.props.onClose) {
           await this.props.onClose(event);
         }
-        if (this.props.onRemoveConfirm) {
-          await this.props.onRemoveConfirm(event);
+        if (this.props.onDiscardConfirm) {
+          await this.props.onDiscardConfirm(event);
         }
       }
     }
@@ -117,7 +115,7 @@ export default class WordEditor extends Component<Props, State> {
   private createSuggest(propertyName: string): Suggest {
     let outerThis = this;
     let number = this.props.dictionary.number;
-    let suggest = async function (pattern: string): Promise<Array<SuggestionSpec<string>>> {
+    let suggest = async function (pattern: string): Promise<Array<SuggestionSpec>> {
       let response = await outerThis.request("suggestDictionaryTitles", {number, propertyName, pattern}, {ignoreError: true});
       if (response.status === 200 && !("error" in response.data)) {
         let titles = response.data;
@@ -444,8 +442,8 @@ export default class WordEditor extends Component<Props, State> {
   }
 
   private renderEditor(): ReactNode {
-    let removeButtonNode = (this.props.word !== null) && (
-      <Button label={this.trans("wordEditor.remove")} iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
+    let discardButtonNode = (this.props.word !== null) && (
+      <Button label={this.trans("wordEditor.discard")} iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
     );
     let confirmButtonNode = (
       <Button label={this.trans("wordEditor.confirm")} iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.editWord.bind(this)}/>
@@ -462,7 +460,7 @@ export default class WordEditor extends Component<Props, State> {
           {this.renderRelations()}
         </div>
         <div styleName="confirm-button">
-          {removeButtonNode}
+          {discardButtonNode}
           {confirmButtonNode}
         </div>
       </div>
@@ -485,7 +483,7 @@ export default class WordEditor extends Component<Props, State> {
         open={this.state.alertOpen}
         outsideClosable={true}
         onClose={() => this.setState({alertOpen: false})}
-        onConfirm={this.removeWord.bind(this)}
+        onConfirm={this.discardWord.bind(this)}
       />
     );
     return node;
@@ -516,7 +514,7 @@ type Props = {
   open: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
   onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
 };
 type State = {
   word: TemporaryEditableWord,
@@ -524,5 +522,4 @@ type State = {
   alertOpen: boolean
 };
 
-
-type TemporaryEditableWord = EditableWord & {equivalentStrings: Array<string>};
+export type TemporaryEditableWord = EditableWord & {equivalentStrings: Array<string>};

@@ -8,6 +8,7 @@ import {
   lazy
 } from "react";
 import Button from "/client/component/atom/button";
+import Dropdown from "/client/component/atom/dropdown";
 import Link from "/client/component/atom/link";
 import Component from "/client/component/component";
 import {
@@ -30,13 +31,28 @@ export default class DictionaryHeader extends Component<Props, State> {
   };
   public state: State = {
     wordEditorOpen: false,
+    exampleEditorOpen: false,
     commissionEditorOpen: false
   };
+
+  public componentDidMount(): void {
+    if (this.props.location!.state?.openCommissionEditor) {
+      this.setState({commissionEditorOpen: true});
+    }
+  }
 
   private jumpSettingPage(): void {
     if (this.props.dictionary) {
       let path = "/dashboard/dictionary/" + this.props.dictionary.number;
       this.pushPath(path);
+    }
+  }
+
+  private addSomething(type: "word" | "example"): void {
+    if (type === "word") {
+      this.setState({wordEditorOpen: true});
+    } else {
+      this.setState({exampleEditorOpen: true});
     }
   }
 
@@ -63,9 +79,26 @@ export default class DictionaryHeader extends Component<Props, State> {
     }
   }
 
+  private renderAddDropdownNode(type: "word" | "example"): ReactNode {
+    let styles = this.props.styles!;
+    let node = (
+      <div>
+        <span className={styles["icon"]}>{(type === "word") ? "\uF1C2" : "\uF15C"}</span>
+        {this.trans(`dictionaryHeader.add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
+      </div>
+    );
+    return node;
+  }
+
   private renderButtonNodes(): ReactNode {
+    let addDropdownSpecs = [
+      {value: "word", node: this.renderAddDropdownNode("word")},
+      {value: "example", node: this.renderAddDropdownNode("example")}
+    ] as const;
     let addButtonNode = (this.props.showAddLink) && (
-      <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true} onClick={() => this.setState({wordEditorOpen: true})}/>
+      <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={this.addSomething.bind(this)}>
+        <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true}/>
+      </Dropdown>
     );
     let addCommissionButtonNode = (this.props.showAddCommissionLink) && (
       <Button label={this.trans("dictionaryHeader.addCommission")} iconLabel="&#xF022;" style="simple" hideLabel={true} onClick={() => this.setState({commissionEditorOpen: true})}/>
@@ -89,18 +122,24 @@ export default class DictionaryHeader extends Component<Props, State> {
 
   private renderOverlays(): ReactNode {
     let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
+    let ExampleEditor = lazy(() => import("/client/component/compound/example-editor"));
     let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
     let wordEditorNode = (this.props.dictionary !== null && this.state.wordEditorOpen) && (
-      <Suspense fallback="">
+      <Suspense fallback="" key="word">
         <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.wordEditorOpen} onClose={() => this.setState({wordEditorOpen: false})}/>
       </Suspense>
     );
+    let exampleEditorNode = (this.props.dictionary !== null && this.state.exampleEditorOpen) && (
+      <Suspense fallback="" key="example">
+        <ExampleEditor dictionary={this.props.dictionary} example={null} open={this.state.exampleEditorOpen} onClose={() => this.setState({exampleEditorOpen: false})}/>
+      </Suspense>
+    );
     let commissionEditorNode = (this.props.dictionary !== null && this.state.commissionEditorOpen) && (
-      <Suspense fallback="">
+      <Suspense fallback="" key="comission">
         <CommissionEditor dictionary={this.props.dictionary} open={this.state.commissionEditorOpen} onClose={() => this.setState({commissionEditorOpen: false})}/>
       </Suspense>
     );
-    let node = [wordEditorNode, commissionEditorNode];
+    let node = [wordEditorNode, exampleEditorNode, commissionEditorNode];
     return node;
   }
 
@@ -150,5 +189,6 @@ type DefaultProps = {
 };
 type State = {
   wordEditorOpen: boolean,
+  exampleEditorOpen: boolean,
   commissionEditorOpen: boolean
 };

@@ -6,7 +6,13 @@
 ## 移行に必要な処理
 
 ### ver 2.19.x → ver 2.20.0
-Mongo Shell で以下を実行してください。
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
 ```
-db.dictionaries.updateMany({}, {$rename: {snoj: "settings.akrantiainSource"}});
+db.dictionaries.updateMany({}, {$rename: {"snoj": "settings.akrantiainSource"}});
+```
+
+### ver 2.22.x → ver 2.23.0
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```
+db.dictionaries.updateMany({}, {$set: {"settings.exampleTitle": "Examples"}});
 ```

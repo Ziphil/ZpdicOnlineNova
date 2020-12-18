@@ -12,6 +12,7 @@ import {
   IntlShape,
   injectIntl
 } from "react-intl";
+import clickOutside from "react-onclickoutside";
 import {
   RouteComponentProps
 } from "react-router";
@@ -29,6 +30,9 @@ export function style(style: any, options: DecoratorOptions = {}): ClassDecorato
     if (style !== null && style !== undefined) {
       component = css(style, {allowMultiple: true, handleNotFoundStyleName: "ignore"})(component);
     }
+    if (nextOptions.clickOutside) {
+      component = wrappedClickOutside(component);
+    }
     if (nextOptions.observer) {
       component = wrappedObserver(component);
     }
@@ -44,6 +48,12 @@ export function style(style: any, options: DecoratorOptions = {}): ClassDecorato
     return component;
   };
   return decorator as any;
+}
+
+function wrappedClickOutside<P, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
+  let anyComponent = component as any;
+  let resultComponent = clickOutside(anyComponent) as any;
+  return resultComponent;
 }
 
 function wrappedWithRouter<P extends Partial<RouteComponentProps<any>>, C extends ComponentClass<P>>(component: ComponentClass<P> & C): ComponentClass<P> & C {
@@ -70,12 +80,14 @@ type DecoratorOptions = {
   withRouter?: boolean,
   inject?: boolean,
   injectIntl?: boolean,
-  observer?: boolean
+  observer?: boolean,
+  clickOutside?: boolean
 };
 
 const DEFAULT_DECORATOR_OPTIONS = {
   withRouter: true,
   inject: true,
   injectIntl: true,
-  observer: false
+  observer: false,
+  clickOutside: false
 };

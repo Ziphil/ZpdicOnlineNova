@@ -13,13 +13,17 @@ import Button from "/client/component/atom/button";
 import Link from "/client/component/atom/link";
 import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
+import ExampleEditor from "/client/component/compound/example-editor";
 import WordEditor from "/client/component/compound/word-editor";
 import {
   style
 } from "/client/component/decorator";
 import {
+  DetailedWord,
+  EditableExample,
   EditableWord,
   EnhancedDictionary,
+  Example,
   Relation,
   Word
 } from "/client/skeleton/dictionary";
@@ -33,7 +37,8 @@ export default class WordPane extends Component<Props, State> {
     showButton: false
   };
   public state: State = {
-    editorOpen: false
+    editorOpen: false,
+    editingExample: null
   };
 
   private renderName(): ReactNode {
@@ -47,28 +52,7 @@ export default class WordPane extends Component<Props, State> {
         <Button label={this.trans("wordPane.submit")} iconLabel="&#xF00C;" style="simple" onClick={this.props.onSubmit}/>
       </div>
     );
-    let pronunciationText = (() => {
-      if (this.props.word.pronunciation !== undefined) {
-        if (this.props.word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
-          return this.props.word.pronunciation;
-        } else {
-          return "/" + this.props.word.pronunciation + "/";
-        }
-      } else {
-        let akrantiain = this.props.dictionary.getAkrantiain();
-        if (akrantiain !== null) {
-          try {
-            let pronunciation = akrantiain.convert(this.props.word.name);
-            return "/" + pronunciation + "/";
-          } catch (error) {
-            console.error(error);
-            return undefined;
-          }
-        } else {
-          return undefined;
-        }
-      }
-    })();
+    let pronunciationText = this.generatePronunciation();
     let pronunciationNode = (pronunciationText !== undefined) && (() => {
       let pronunciationNode = <div styleName="pronunciation">{pronunciationText}</div>;
       return pronunciationNode;
@@ -95,6 +79,29 @@ export default class WordPane extends Component<Props, State> {
       </div>
     );
     return node;
+  }
+
+  private generatePronunciation(): string | undefined {
+    if (this.props.word.pronunciation !== undefined) {
+      if (this.props.word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
+        return this.props.word.pronunciation;
+      } else {
+        return "/" + this.props.word.pronunciation + "/";
+      }
+    } else {
+      let akrantiain = this.props.dictionary.getAkrantiain();
+      if (akrantiain !== null) {
+        try {
+          let pronunciation = akrantiain.convert(this.props.word.name);
+          return "/" + pronunciation + "/";
+        } catch (error) {
+          console.error(error);
+          return undefined;
+        }
+      } else {
+        return undefined;
+      }
+    }
   }
 
   private renderEquivalents(): ReactNode {
@@ -174,6 +181,38 @@ export default class WordPane extends Component<Props, State> {
     return node;
   }
 
+  private renderExamples(): ReactNode {
+    let examples = ("examples" in this.props.word) ? this.props.word.examples : [];
+    let innerNodes = examples.map((example, index) => {
+      let editButtonNode = (this.props.showEditLink && !this.props.showButton) && (
+        <div styleName="button">
+          <Button label={this.trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editingExample: example})}/>
+        </div>
+      );
+      let innerNode = (
+        <li key={index}>
+          <div styleName="example-content-wrapper">
+            <div styleName="example-content">
+              <span styleName="sentence">{example.sentence}</span>
+              <span styleName="translation">{example.translation}</span>
+            </div>
+            {editButtonNode}
+          </div>
+        </li>
+      );
+      return innerNode;
+    });
+    let node = (innerNodes.length > 0) && (
+      <div styleName="container">
+        <div styleName="title">{this.props.dictionary.settings.exampleTitle}</div>
+        <ul styleName="example">
+          {innerNodes}
+        </ul>
+      </div>
+    );
+    return node;
+  }
+
   private renderEditor(): ReactNode {
     let node = (
       <WordEditor
@@ -182,7 +221,21 @@ export default class WordPane extends Component<Props, State> {
         open={this.state.editorOpen}
         onClose={() => this.setState({editorOpen: false})}
         onEditConfirm={this.props.onEditConfirm}
-        onRemoveConfirm={this.props.onRemoveConfirm}
+        onDiscardConfirm={this.props.onDiscardConfirm}
+      />
+    );
+    return node;
+  }
+
+  private renderExampleEditor(): ReactNode {
+    let node = (
+      <ExampleEditor
+        dictionary={this.props.dictionary}
+        example={this.state.editingExample}
+        open={this.state.editingExample !== null}
+        onClose={() => this.setState({editingExample: null})}
+        onEditConfirm={this.props.onEditExampleConfirm}
+        onDiscardConfirm={this.props.onDiscardExampleConfirm}
       />
     );
     return node;
@@ -193,14 +246,18 @@ export default class WordPane extends Component<Props, State> {
     let equivalentNode = this.renderEquivalents();
     let informationNode = (this.props.style === "normal") && this.renderInformations();
     let relationNode = (this.props.style === "normal") && this.renderRelations();
+    let exampleNode = (this.props.style === "normal") && this.renderExamples();
     let editorNode = (!this.props.showButton && this.state.editorOpen) && this.renderEditor();
+    let exampleEditorNode = (!this.props.showButton && this.state.editingExample !== null) && this.renderExampleEditor();
     let node = (
       <div styleName="root">
         {nameNode}
         {equivalentNode}
         {informationNode}
+        {exampleNode}
         {relationNode}
         {editorNode}
+        {exampleEditorNode}
       </div>
     );
     return node;
@@ -211,18 +268,21 @@ export default class WordPane extends Component<Props, State> {
 
 type Props = {
   dictionary: EnhancedDictionary,
-  word: Word,
+  word: Word | DetailedWord,
   style: "normal" | "simple",
   showEditLink: boolean,
   showButton: boolean,
   onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
   onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onRemoveConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onEditExampleConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onDiscardExampleConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
 };
 type DefaultProps = {
   style: "normal" | "simple",
   showButton: boolean
 };
 type State = {
-  editorOpen: boolean
+  editorOpen: boolean,
+  editingExample: Example | null
 };

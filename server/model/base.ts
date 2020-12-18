@@ -23,17 +23,17 @@ export class RemovableSchema {
     return this.findOne({}, callback).where({removedDate: undefined});
   }
 
-  public static flagRemoveMany<H>(this: Model<DocumentType<RemovableSchema>, H>): Query<any> & H {
+  public static updateManyDiscarded<H>(this: Model<DocumentType<RemovableSchema>, H>): Query<any> & H {
     let removedDate = new Date();
     return this.updateMany({}, {removedDate});
   }
 
-  public static flagRemoveOne<H>(this: Model<DocumentType<RemovableSchema>, H>): Query<any> & H {
+  public static updateOneDiscarded<H>(this: Model<DocumentType<RemovableSchema>, H>): Query<any> & H {
     let removedDate = new Date();
     return this.updateOne({}, {removedDate});
   }
 
-  public flagRemoveOne(this: DocumentType<RemovableSchema>): Promise<this> {
+  public flagDiscarded(this: DocumentType<RemovableSchema>): Promise<this> {
     let removedDate = new Date();
     return this.update({removedDate}).exec();
   }

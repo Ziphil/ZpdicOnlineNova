@@ -13,6 +13,7 @@ import Fuse from "fuse.js";
 import {
   DetailedDictionary as DetailedDictionarySkeleton,
   Dictionary as DictionarySkeleton,
+  EditableExample as EditableExampleSkeleton,
   EditableWord as EditableWordSkeleton,
   UserDictionary as UserDictionarySkeleton
 } from "/client/skeleton/dictionary";
@@ -34,6 +35,8 @@ import {
   DictionarySettings,
   DictionarySettingsCreator,
   DictionarySettingsModel,
+  Example,
+  ExampleModel,
   Serializer,
   Suggestion,
   Word,
@@ -217,7 +220,7 @@ export class DictionarySchema extends RemovableSchema {
     this.updatedDate = new Date();
     this.externalData = {};
     await this.save();
-    await WordModel.flagRemoveMany().where("dictionary", this);
+    await WordModel.updateManyDiscarded().where("dictionary", this);
     LogUtil.log("dictionary/upload", `start uploading | number: ${this.number}`);
   }
 
@@ -241,9 +244,20 @@ export class DictionarySchema extends RemovableSchema {
 
   // この辞書を削除 (削除フラグを付加) します。
   // 削除した辞書を後で削除する直前の状態に戻せるように、この辞書に属する単語データの削除は行いません。
-  public async removeOne(this: Dictionary): Promise<void> {
+  public async discard(this: Dictionary): Promise<void> {
     await InvitationModel.deleteMany({}).where("dictionary", this);
-    await this.flagRemoveOne();
+    await this.flagDiscarded();
+  }
+
+  public async fetchWordNames<N extends number>(this: Dictionary, numbers: Array<N>): Promise<Record<N, string | null>> {
+    let promises = numbers.map((number) => {
+      let query = WordModel.findOneExist().where("dictionary", this).where("number", number);
+      let promise = query.exec().then((word) => [number, word?.name ?? null] as const);
+      return promise;
+    });
+    let entries = await Promise.all(promises);
+    let names = Object.fromEntries(entries) as any;
+    return names;
   }
 
   public async changeParamName(this: Dictionary, paramName: string): Promise<Dictionary> {
@@ -289,88 +303,46 @@ export class DictionarySchema extends RemovableSchema {
     return this;
   }
 
-  // この辞書に登録されている単語を編集します。
-  // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
-  // そうでない場合は、渡された単語データを新しいデータとして追加します。
-  // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
   public async editWord(this: Dictionary, word: EditableWordSkeleton): Promise<Word> {
     if (this.status !== "saving") {
-      let currentWord = await WordModel.findOneExist().where("dictionary", this).where("number", word.number);
-      let resultWord;
-      if (currentWord) {
-        resultWord = new WordModel(word);
-        resultWord.dictionary = this;
-        resultWord.createdDate = currentWord.createdDate;
-        resultWord.updatedDate = new Date();
-        await currentWord.flagRemoveOne();
-        await resultWord.save();
-        if (currentWord.name !== resultWord.name) {
-          await this.correctRelationsByEdit(resultWord);
-        }
-      } else {
-        if (word.number === undefined) {
-          word.number = await this.fetchNextWordNumber();
-        }
-        resultWord = new WordModel(word);
-        resultWord.dictionary = this;
-        resultWord.createdDate = new Date();
-        resultWord.updatedDate = new Date();
-        await resultWord.save();
-      }
+      let resultWord = await WordModel.edit(this, word);
       this.status = "ready";
       this.updatedDate = new Date();
       await this.save();
-      LogUtil.log("dictionary/edit-word", `number: ${this.number} | current: ${currentWord?.id} | result: ${resultWord.id}`);
       return resultWord;
     } else {
       throw new CustomError("dictionarySaving");
     }
   }
 
-  public async removeWord(this: Dictionary, number: number): Promise<Word> {
-    let word = await WordModel.findOneExist().where("dictionary", this).where("number", number);
-    if (word) {
-      await word.flagRemoveOne();
-      await this.correctRelationsByRemove(word);
+  public async discardWord(this: Dictionary, number: number): Promise<Word> {
+    if (this.status !== "saving") {
+      let word = await WordModel.discard(this, number);
+      return word;
     } else {
-      throw new CustomError("noSuchWordNumber");
+      throw new CustomError("dictionarySaving");
     }
-    LogUtil.log("dictionary/remove-word", `number: ${this.number} | current: ${word.id}`);
-    return word;
   }
 
-  // 単語データの編集によって単語の綴りが変化した場合に、それによって起こり得る関連語データの不整合を修正します。
-  // この処理では、既存の単語データを上書きするので、編集履歴は残りません。
-  private async correctRelationsByEdit(word: Word): Promise<void> {
-    let affectedWords = await WordModel.findExist().where("dictionary", this).where("relations.number", word.number);
-    for (let affectedWord of affectedWords) {
-      for (let relation of affectedWord.relations) {
-        if (relation.number === word.number) {
-          relation.name = word.name;
-        }
-      }
+  public async editExample(this: Dictionary, example: EditableExampleSkeleton): Promise<Example> {
+    if (this.status !== "saving") {
+      let resultExample = await ExampleModel.edit(this, example);
+      this.status = "ready";
+      this.updatedDate = new Date();
+      await this.save();
+      return resultExample;
+    } else {
+      throw new CustomError("dictionarySaving");
     }
-    let promises = affectedWords.map((affectedWord) => affectedWord.save());
-    LogUtil.log("dictionary/correct-relations-edit", `number: ${this.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
-    await Promise.all(promises);
   }
 
-  // 単語データを削除した場合に、それによって起こり得る関連語データの不整合を修正します。
-  // この処理では、修正が必要な既存の単語データを論理削除した上で、関連語データの不整合を修正した新しい単語データを作成します。
-  // そのため、この処理の内容は、修正を行った単語データに編集履歴として残ります。
-  private async correctRelationsByRemove(word: Word): Promise<void> {
-    let affectedWords = await WordModel.findExist().where("dictionary", this).where("relations.number", word.number);
-    let changedWords = [];
-    for (let affectedWord of affectedWords) {
-      let changedWord = affectedWord.copy();
-      changedWord.relations = affectedWord.relations.filter((relation) => relation.number !== word.number);
-      changedWord.updatedDate = new Date();
-      changedWords.push(changedWord);
+  public async discardExample(this: Dictionary, number: number): Promise<Example> {
+    if (this.status !== "saving") {
+      let example = await ExampleModel.discard(this, number);
+      return example;
+    } else {
+      throw new CustomError("dictionarySaving");
     }
-    let affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagRemoveOne());
-    let changedPromises = changedWords.map((changedWord) => changedWord.save());
-    LogUtil.log("dictionary/correct-relations-remove", `number: ${this.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
-    await Promise.all([...affectedPromises, ...changedPromises]);
   }
 
   // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
@@ -461,7 +433,7 @@ export class DictionarySchema extends RemovableSchema {
     }
   }
 
-  public async removeAuthorizedUser(this: Dictionary, user: User): Promise<true> {
+  public async discardAuthorizedUser(this: Dictionary, user: User): Promise<true> {
     await this.populate("editUsers").execPopulate();
     if (isDocumentArray(this.editUsers)) {
       let exist = this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
@@ -474,15 +446,6 @@ export class DictionarySchema extends RemovableSchema {
       }
     } else {
       throw new Error("cannot happen");
-    }
-  }
-
-  private async fetchNextWordNumber(): Promise<number> {
-    let words = await WordModel.find().where("dictionary", this).select("number").sort("-number").limit(1);
-    if (words.length > 0) {
-      return words[0].number + 1;
-    } else {
-      return 1;
     }
   }
 

@@ -9,7 +9,7 @@ import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
   SuggestionSpec
-} from "/client/component/atom/suggestion";
+} from "/client/component/atom/input";
 import Component from "/client/component/component";
 import UserSuggestionPane from "/client/component/compound/user-suggestion-pane";
 import {
@@ -27,7 +27,7 @@ export default class AddTransferInvitationForm extends Component<Props, State> {
     userName: ""
   };
 
-  private async suggestUsers(pattern: string): Promise<Array<SuggestionSpec<string>>> {
+  private async suggestUsers(pattern: string): Promise<Array<SuggestionSpec>> {
     let response = await this.request("suggestUsers", {pattern}, {ignoreError: true});
     if (response.status === 200 && !("error" in response.data)) {
       let users = response.data;

@@ -13,18 +13,18 @@ import {
 } from "/client/component/decorator";
 
 
-@style(require("./remove-user-form.scss"))
-export default class RemoveUserForm extends Component<Props, State> {
+@style(require("./discard-dictionary-form.scss"))
+export default class DiscardDictionaryForm extends Component<Props, State> {
 
   public state: State = {
     alertOpen: false
   };
 
-  private async removeUser(): Promise<void> {
-    let response = await this.request("removeUser", {});
+  private async discardDictionary(): Promise<void> {
+    let number = this.props.number;
+    let response = await this.request("discardDictionary", {number});
     if (response.status === 200) {
-      this.props.store!.addInformationPopup("userRemoved");
-      await this.logout();
+      this.props.store!.addInformationPopup("dictionaryDiscarded");
       if (this.props.onSubmit) {
         this.props.onSubmit();
       }
@@ -35,18 +35,18 @@ export default class RemoveUserForm extends Component<Props, State> {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Button label={this.trans("removeUserForm.confirm")} reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
+          <Button label={this.trans("discardDictionaryForm.confirm")} reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
         </form>
         <p styleName="caution">
-          {this.trans("removeUserForm.caution")}
+          {this.trans("discardDictionaryForm.caution")}
         </p>
         <Alert
-          text={this.trans("removeUserForm.alert")}
-          confirmLabel={this.trans("removeUserForm.confirm")}
+          text={this.trans("discardDictionaryForm.alert")}
+          confirmLabel={this.trans("discardDictionaryForm.confirm")}
           open={this.state.alertOpen}
           outsideClosable={true}
           onClose={() => this.setState({alertOpen: false})}
-          onConfirm={this.removeUser.bind(this)}
+          onConfirm={this.discardDictionary.bind(this)}
         />
       </Fragment>
     );
@@ -57,6 +57,7 @@ export default class RemoveUserForm extends Component<Props, State> {
 
 
 type Props = {
+  number: number,
   onSubmit?: () => void
 };
 type State = {

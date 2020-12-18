@@ -31,13 +31,13 @@ export default class UserPane extends Component<Props, State> {
     alertOpen: false
   };
 
-  private async removeAuthorizedUser(event: MouseEvent<HTMLButtonElement>): Promise<void> {
+  private async discardAuthorizedUser(event: MouseEvent<HTMLButtonElement>): Promise<void> {
     if (this.props.dictionary !== undefined) {
       let number = this.props.dictionary.number;
       let id = this.props.user.id;
-      let response = await this.request("removeDictionaryAuthorizedUser", {number, id});
+      let response = await this.request("discardDictionaryAuthorizedUser", {number, id});
       if (response.status === 200) {
-        this.props.store!.addInformationPopup("dictionaryAuthorizedUserRemoved");
+        this.props.store!.addInformationPopup("dictionaryAuthorizedUserDiscarded");
         if (this.props.onSubmit) {
           await this.props.onSubmit(event);
         }
@@ -61,16 +61,16 @@ export default class UserPane extends Component<Props, State> {
             </div>
           </div>
           <div styleName="setting">
-            <Button label={this.trans("userPane.remove")} iconLabel="&#xF05E;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
+            <Button label={this.trans("userPane.discard")} iconLabel="&#xF05E;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
           </div>
         </WhitePane>
         <Alert
           text={this.trans("userPane.alert")}
-          confirmLabel={this.trans("userPane.remove")}
+          confirmLabel={this.trans("userPane.discard")}
           open={this.state.alertOpen}
           outsideClosable={true}
           onClose={() => this.setState({alertOpen: false})}
-          onConfirm={this.removeAuthorizedUser.bind(this)}
+          onConfirm={this.discardAuthorizedUser.bind(this)}
         />
       </Fragment>
     );

@@ -86,10 +86,12 @@
   flex-grow: 1;
 }
 
-.relation-input {
+.relation-input,
+.word-input {
   align-items: flex-end;
 }
 
-.relation-input >*:nth-child(1) {
+.relation-input >*:nth-child(1),
+.word-input >*:nth-child(1) {
   flex-grow: 1;
 }

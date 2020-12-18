@@ -2,6 +2,7 @@
 
 import {
   Equivalent,
+  Example,
   Information,
   Relation,
   Variation
@@ -39,5 +40,12 @@ export class Word extends EditableWord {
   public number!: number;
   public createdDate?: string;
   public updatedDate?: string;
+
+}
+
+
+export class DetailedWord extends Word {
+
+  public examples!: Array<Example>;
 
 }

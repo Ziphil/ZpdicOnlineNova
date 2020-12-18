@@ -18,10 +18,10 @@ import {
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
 import {
+  DetailedWord,
   EnhancedDictionary,
   NormalWordParameter,
   Suggestion,
-  Word,
   WordParameter
 } from "/client/skeleton/dictionary";
 import {
@@ -37,10 +37,10 @@ export default class DictionaryPage extends Component<Props, State, Params> {
 
   public state: State = {
     dictionary: null,
-    canOwn: false,
-    canEdit: false,
     parameter: NormalWordParameter.createEmpty(),
     page: 0,
+    canOwn: false,
+    canEdit: false,
     showExplanation: true,
     hitResult: {words: [[], 0], suggestions: []},
     loading: false
@@ -197,7 +197,9 @@ export default class DictionaryPage extends Component<Props, State, Params> {
             offset={0}
             size={40}
             onEditConfirm={() => this.updateWordsImmediately()}
-            onRemoveConfirm={() => this.updateWordsImmediately()}
+            onDiscardConfirm={() => this.updateWordsImmediately()}
+            onEditExampleConfirm={() => this.updateWordsImmediately()}
+            onDiscardExampleConfirm={() => this.updateWordsImmediately()}
           />
         </div>
         <div styleName="pagination">
@@ -232,12 +234,12 @@ type Props = {
 };
 type State = {
   dictionary: EnhancedDictionary | null,
-  canOwn: boolean,
-  canEdit: boolean,
   parameter: WordParameter,
   page: number,
+  canOwn: boolean,
+  canEdit: boolean,
   showExplanation: boolean,
-  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},
+  hitResult: {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>},
   loading: boolean
 };
 type Params = {

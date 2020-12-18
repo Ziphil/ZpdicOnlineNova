@@ -8,9 +8,12 @@ import {
 } from "/client/skeleton/commission";
 import {
   DetailedDictionary,
+  DetailedWord,
   Dictionary,
   DictionarySettings,
+  EditableExample,
   EditableWord,
+  Example,
   Suggestion,
   UserDictionary,
   Word,
@@ -43,19 +46,21 @@ export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_versio
 export const SERVER_PATHS = {
   createDictionary: "/dictionary/create",
   uploadDictionary: "/dictionary/upload",
-  removeDictionary: "/dictionary/remove",
+  discardDictionary: "/dictionary/discard",
   changeDictionaryName: "/dictionary/edit/name",
   changeDictionaryParamName: "/dictionary/edit/param-name",
   changeDictionarySecret: "/dictionary/edit/secret",
   changeDictionaryExplanation: "/dictionary/edit/explanation",
   changeDictionarySettings: "/dictionary/edit/settings",
-  removeDictionaryAuthorizedUser: "/dictionary/user/remove",
+  discardDictionaryAuthorizedUser: "/dictionary/user/discard",
   addInvitation: "/invitation/add",
   respondInvitation: "/invitation/respond",
   editWord: "/word/edit",
-  removeWord: "/word/remove",
+  discardWord: "/word/discard",
+  editExample: "/examle/edit",
+  discardExample: "/examle/discard",
   addCommission: "/commission/add",
-  removeCommission: "/commission/remove",
+  discardCommission: "/commission/discard",
   searchDictionary: "/dictionary/search",
   downloadDictionary: "/dictionary/download",
   fetchDictionary: "/dictionary/fetch",
@@ -64,6 +69,7 @@ export const SERVER_PATHS = {
   fetchDictionaries: "/dictionary/list",
   fetchAllDictionaries: "/dictionary/list/all",
   fetchDictionaryAggregation: "/dictionary/aggregate",
+  fetchWordNames: "/word/name",
   fetchInvitations: "/invitation/fetch",
   checkDictionaryAuthorization: "/dictionary/check",
   fetchCommissions: "/commission/fetch",
@@ -75,7 +81,7 @@ export const SERVER_PATHS = {
   changeUserPassword: "/user/edit/password",
   issueUserResetToken: "/user/reset/token",
   resetUserPassword: "/user/reset/reset",
-  removeUser: "/user/remove",
+  discardUser: "/user/discard",
   fetchUser: "/user/fetch",
   suggestUsers: "/user/suggest",
   addNotification: "/notification/add",
@@ -100,7 +106,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
-  removeDictionary: {
+  discardDictionary: {
     request: {number: number},
     response: {
       success: null,
@@ -142,7 +148,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
-  removeDictionaryAuthorizedUser: {
+  discardDictionaryAuthorizedUser: {
     request: {number: number, id: string},
     response: {
       success: null,
@@ -170,11 +176,25 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber" | "dictionarySaving">
     }
   },
-  removeWord: {
+  discardWord: {
     request: {number: number, wordNumber: number},
     response: {
       success: Word,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber">
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber" | "dictionarySaving">
+    }
+  },
+  editExample: {
+    request: {number: number, example: EditableExample},
+    response: {
+      success: Example,
+      error: CustomError<"noSuchDictionaryNumber" | "dictionarySaving">
+    }
+  },
+  discardExample: {
+    request: {number: number, exampleNumber: number},
+    response: {
+      success: Example,
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchExampleNumber" | "dictionarySaving">
     }
   },
   addCommission: {
@@ -184,7 +204,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber" | "emptyCommissionName">
     }
   },
-  removeCommission: {
+  discardCommission: {
     request: {number: number, id: string},
     response: {
       success: Commission,
@@ -194,7 +214,7 @@ type ServerSpecs = {
   searchDictionary: {
     request: {number: number, parameter: WordParameter, offset?: number, size?: number},
     response: {
-      success: {words: WithSize<Word>, suggestions: Array<Suggestion>},
+      success: {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>},
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
@@ -245,6 +265,13 @@ type ServerSpecs = {
     response: {
       success: {dictionary: {count: number, wholeCount: number, size: number}, word: {count: number, wholeCount: number, size: number}},
       error: never
+    }
+  },
+  fetchWordNames: {
+    request: {number: number, wordNumbers: Array<number>},
+    response: {
+      success: {names: Record<number, string | null>},
+      error: CustomError<"noSuchDictionaryNumber">
     }
   },
   fetchInvitations: {
@@ -324,7 +351,7 @@ type ServerSpecs = {
       error: CustomError<"invalidResetToken" | "invalidUserPassword">
     }
   },
-  removeUser: {
+  discardUser: {
     request: {},
     response: {
       success: null,

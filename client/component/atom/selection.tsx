@@ -4,8 +4,8 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Dropdown from "/client/component/atom/dropdown";
 import Label from "/client/component/atom/label";
-import Suggestion from "/client/component/atom/suggestion";
 import Component from "/client/component/component";
 import {
   style
@@ -13,7 +13,7 @@ import {
 
 
 @style(require("./selection.scss"))
-export default class Selection<V extends string> extends Component<Props<V>, State<V>> {
+export default class Selection<V> extends Component<Props<V>, State<V>> {
 
   private renderSelection(): ReactNode {
     let text = Array.from(this.props.specs).find((spec) => spec.value === this.props.value)!.text;
@@ -27,16 +27,16 @@ export default class Selection<V extends string> extends Component<Props<V>, Sta
   }
 
   public render(): ReactNode {
-    let suggestionSpecs = Array.from(this.props.specs).map((spec) => ({replacement: spec.value, node: spec.text}));
+    let dropdownSpecs = Array.from(this.props.specs).map((spec) => ({value: spec.value, node: spec.text}));
     let selectionNode = this.renderSelection();
     let node = (
       <div styleName="root" className={this.props.className}>
-        <Suggestion specs={suggestionSpecs} onSet={this.props.onSet}>
+        <Dropdown specs={dropdownSpecs} onSet={this.props.onSet}>
           <label styleName="label-wrapper">
             <Label text={this.props.label} showRequired={this.props.showRequired} showOptional={this.props.showOptional}/>
             {selectionNode}
           </label>
-        </Suggestion>
+        </Dropdown>
       </div>
     );
     return node;

@@ -48,6 +48,16 @@ export default class ChangeDictionarySettingsForm<N extends keyof DictionarySett
     return node;
   }
 
+  private renderChangeExampleTitleForm(): ReactNode {
+    let node = (
+      <form styleName="root input">
+        <Input label={this.trans("changeDictionarySettingsForm.exampleTitle")} value={this.state.value} onSet={(value) => this.setState({value})}/>
+        <Button label={this.trans("changeDictionarySettingsForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+      </form>
+    );
+    return node;
+  }
+
   private renderChangeEnableMarkdownForm(): ReactNode {
     let specs = [
       {value: "true", label: this.trans("changeDictionarySettingsForm.enableMarkdownTrue")},
@@ -69,6 +79,8 @@ export default class ChangeDictionarySettingsForm<N extends keyof DictionarySett
       return undefined;
     } else if (propertyName === "pronunciationTitle") {
       return this.renderChangePronunciationTitleForm();
+    } else if (propertyName === "exampleTitle") {
+      return this.renderChangeExampleTitleForm();
     } else if (propertyName === "enableMarkdown") {
       return this.renderChangeEnableMarkdownForm();
     }

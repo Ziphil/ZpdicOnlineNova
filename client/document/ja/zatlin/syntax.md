@@ -207,14 +207,14 @@ start_with_vowel = ^ ("a" | "e" | "i" | "o" | "u");
 以下は、拡張した BNF 記法で記された Zatlin の構文です。
 以下の `zatlin` が Zatlin コードの全体の定義になります。
 ```bnf
-zatlin ::= blank_or_break sentence+ blank_or_break eof
+zatlin ::= blank_or_break sentence+ eof
 sentence ::= definition | main_pattern | comment
 definition ::= identifier blank '=' blank compound blank semicolon
 main_pattern ::= '%' blank compound blank semicolon
-compound ::= disjunction (blank '-' blank disjunction)?
+compound ::= disjunction blank ('-' blank disjunction)?
 disjunction ::= weighted_sequence (blank '|' blank weighted_sequence)*
 weighted_sequence ::= sequence (blank weight)?
-sequence ::= (circumflex blank)? sequence_pattern (blank circumflex)?
+sequence ::= circumflex? blank sequence_pattern blank circumflex?
 sequence_pattern ::= quote | backref | identifier | '(' blank compound blank ')'
 quote ::= '"' (quote_escape | quote_content)* '"'
 quote_escape ::= '\\' ('u' [A-Fa-f0-9] [A-Fa-f0-9] [A-Fa-f0-9] [A-Fa-f0-9] | '\\' | '"')
@@ -222,12 +222,12 @@ quote_content ::= [^\\"]
 backref ::= '&' [0-9]+
 circumflex ::= '^'
 comment ::= '#' [^\n]* blank_or_break
-semicolon ::= ';' blank_or_break | break blank_or_break | (?= '#' | eof)
+semicolon ::= ';' blank_or_break | break blank_or_break | comment
 identifier ::= [a-zA-Z] [a-zA-Z0-9_]*
 weight ::= [0-9]+ '.'? [0-9]* | '.' [0-9]+
-blank_or_break ::= [\s]*
+blank_or_break ::= [\s]* eof?
 blank ::= [^\S\n]*
-break ::= '\n'
+break ::= '\n' | eof
 ```
 
 使用している拡張は以下の通りです。
@@ -236,4 +236,3 @@ break ::= '\n'
 - `foo+` — `foo` の 1 回以上の繰り返し
 - `foo?` — `foo` の 0 回以上 1 回以下の繰り返し (`foo` は省略可能)
 - `[0-9]` など — 正規表現の文字クラス
-- `(?= foo)` — `foo` の先読み
