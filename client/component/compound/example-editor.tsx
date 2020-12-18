@@ -53,10 +53,31 @@ export default class ExampleEditor extends Component<Props, State> {
     this.state.example = example;
   }
 
-  public componentDidUpdate(previousProps: Props): void {
+  public async componentDidMount(): Promise<void> {
+    await this.fetchWordNames();
+  }
+
+  public async componentDidUpdate(previousProps: Props): Promise<void> {
     if (this.props.example !== previousProps.example) {
       let example = cloneDeep(this.props.example) ?? EditableExample.createEmpty();
-      this.setState({example});
+      this.setState({example}, () => {
+        this.fetchWordNames();
+      });
+    }
+  }
+
+  private async fetchWordNames(): Promise<void> {
+    let number = this.props.dictionary.number;
+    let wordNumbers = this.state.example.words.map((word) => word.number);
+    let response = await this.request("fetchWordNames", {number, wordNumbers}, {ignoreError: true});
+    if (response.status === 200 && !("error" in response.data)) {
+      let names = response.data.names;
+      let example = this.state.example;
+      this.setExample(() => {
+        for (let word of example.words) {
+          word.name = names[word.number] ?? undefined;
+        }
+      })();
     }
   }
 
