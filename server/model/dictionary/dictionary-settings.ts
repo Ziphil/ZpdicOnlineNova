@@ -24,13 +24,17 @@ export class DictionarySettingsSchema {
   public pronunciationTitle!: string;
 
   @prop({required: true})
+  public exampleTitle!: string;
+
+  @prop({required: true})
   public enableMarkdown!: boolean;
 
   public static createDefault(): DictionarySettings {
-    let settings = new DictionarySettingsModel({});
-    settings.punctuations = [",", "、"];
-    settings.pronunciationTitle = "pronunciation";
-    settings.enableMarkdown = false;
+    let punctuations = [",", "、"];
+    let pronunciationTitle = "Pronunciation";
+    let exampleTitle = "Examples";
+    let enableMarkdown = false;
+    let settings = new DictionarySettingsModel({punctuations, pronunciationTitle, exampleTitle, enableMarkdown});
     return settings;
   }
 
@@ -44,8 +48,9 @@ export class DictionarySettingsCreator {
     let zatlinSource = raw.zatlinSource;
     let punctuations = raw.punctuations;
     let pronunciationTitle = raw.pronunciationTitle;
+    let exampleTitle = raw.exampleTitle;
     let enableMarkdown = raw.enableMarkdown;
-    let skeleton = {akrantiainSource, zatlinSource, punctuations, pronunciationTitle, enableMarkdown};
+    let skeleton = {akrantiainSource, zatlinSource, punctuations, pronunciationTitle, exampleTitle, enableMarkdown};
     return skeleton;
   }
 
