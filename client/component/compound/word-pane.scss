@@ -37,7 +37,9 @@
 }
 
 .button {
+  margin: 0px 0px 0px $control-margin;
   display: inline-block;
+  white-space: nowrap;
 }
 
 .button >* {
@@ -72,6 +74,15 @@
   @include line-height;
   margin: 0px 0px 0px 2px;
   padding: 0px;
+}
+
+.example-content-wrapper {
+  width: 100%;
+  display: inline-flex;
+}
+
+.example-content {
+  flex-grow: 1;
 }
 
 .sentence::after {

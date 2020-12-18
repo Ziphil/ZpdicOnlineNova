@@ -53,6 +53,13 @@ export default class ExampleEditor extends Component<Props, State> {
     this.state.example = example;
   }
 
+  public componentDidUpdate(previousProps: Props): void {
+    if (this.props.example !== previousProps.example) {
+      let example = cloneDeep(this.props.example) ?? EditableExample.createEmpty();
+      this.setState({example});
+    }
+  }
+
   private async editExample(event: MouseEvent<HTMLButtonElement>): Promise<void> {
     let number = this.props.dictionary.number;
     let example = this.state.example;
@@ -119,7 +126,7 @@ export default class ExampleEditor extends Component<Props, State> {
         <div styleName="inner" key={index}>
           <div styleName="form">
             <ControlGroup className={StyleNameUtil.create(styles["name"], styles["word-input"])}>
-              <Input value={word.name} label={nameLabel} readOnly={true}/>
+              <Input value={word.name ?? "?"} label={nameLabel} readOnly={true}/>
               <Button label={this.trans("exampleEditor.selectWord")} onClick={() => this.openWordChooser(index)}/>
             </ControlGroup>
           </div>

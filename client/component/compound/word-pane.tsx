@@ -13,6 +13,7 @@ import Button from "/client/component/atom/button";
 import Link from "/client/component/atom/link";
 import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
+import ExampleEditor from "/client/component/compound/example-editor";
 import WordEditor from "/client/component/compound/word-editor";
 import {
   style
@@ -21,6 +22,7 @@ import {
   DetailedWord,
   EditableWord,
   EnhancedDictionary,
+  Example,
   Relation,
   Word
 } from "/client/skeleton/dictionary";
@@ -34,7 +36,8 @@ export default class WordPane extends Component<Props, State> {
     showButton: false
   };
   public state: State = {
-    editorOpen: false
+    editorOpen: false,
+    exampleEditorOpen: null
   };
 
   private renderName(): ReactNode {
@@ -178,10 +181,20 @@ export default class WordPane extends Component<Props, State> {
   private renderExamples(): ReactNode {
     let examples = ("examples" in this.props.word) ? this.props.word.examples : [];
     let innerNodes = examples.map((example, index) => {
+      let editButtonNode = (this.props.showEditLink && !this.props.showButton) && (
+        <div styleName="button">
+          <Button label={this.trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({exampleEditorOpen: example})}/>
+        </div>
+      );
       let innerNode = (
         <li key={index}>
-          <span styleName="sentence">{example.sentence}</span>
-          <span styleName="translation">{example.translation}</span>
+          <div styleName="example-content-wrapper">
+            <div styleName="example-content">
+              <span styleName="sentence">{example.sentence}</span>
+              <span styleName="translation">{example.translation}</span>
+            </div>
+            {editButtonNode}
+          </div>
         </li>
       );
       return innerNode;
@@ -198,7 +211,7 @@ export default class WordPane extends Component<Props, State> {
   }
 
   private renderEditor(): ReactNode {
-    let node = (
+    let wordNode = (
       <WordEditor
         dictionary={this.props.dictionary}
         word={this.props.word}
@@ -208,7 +221,15 @@ export default class WordPane extends Component<Props, State> {
         onRemoveConfirm={this.props.onRemoveConfirm}
       />
     );
-    return node;
+    let exampleNode = (
+      <ExampleEditor
+        dictionary={this.props.dictionary}
+        example={this.state.exampleEditorOpen}
+        open={this.state.exampleEditorOpen !== null}
+        onClose={() => this.setState({exampleEditorOpen: null})}
+      />
+    );
+    return [wordNode, exampleNode];
   }
 
   public render(): ReactNode {
@@ -217,7 +238,7 @@ export default class WordPane extends Component<Props, State> {
     let informationNode = (this.props.style === "normal") && this.renderInformations();
     let relationNode = (this.props.style === "normal") && this.renderRelations();
     let exampleNode = (this.props.style === "normal") && this.renderExamples();
-    let editorNode = (!this.props.showButton && this.state.editorOpen) && this.renderEditor();
+    let editorNode = (!this.props.showButton) && this.renderEditor();
     let node = (
       <div styleName="root">
         {nameNode}
@@ -249,5 +270,6 @@ type DefaultProps = {
   showButton: boolean
 };
 type State = {
-  editorOpen: boolean
+  editorOpen: boolean,
+  exampleEditorOpen: Example | null
 };
