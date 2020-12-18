@@ -28,6 +28,9 @@ import {
   WordController
 } from "/server/controller/internal";
 import {
+  SERVER_PATHS
+} from "/server/controller/internal/type";
+import {
   LogUtil
 } from "/server/util/log";
 import {
@@ -88,7 +91,7 @@ export class Main {
       let status = tokens.status(request, response);
       let url = tokens.url(request, response);
       let time = tokens["total-time"](request, response, 0);
-      let body = JSON.stringify(request.body);
+      let body = (url && url.includes(SERVER_PATHS["login"])) ? "***" : JSON.stringify(request.body);
       return `![request] ${method} ${status} ${url} | time: ${time}ms | body: ${body}`;
     });
     this.application.use(middleware);
