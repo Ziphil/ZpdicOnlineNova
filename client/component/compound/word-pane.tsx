@@ -37,14 +37,14 @@ export default class WordPane extends Component<Props, State> {
     showButton: false
   };
   public state: State = {
-    wordEditorOpen: false,
-    exampleEditorOpen: null
+    editorOpen: false,
+    editingExample: null
   };
 
   private renderName(): ReactNode {
     let editButtonNode = (this.props.showEditLink && !this.props.showButton) && (
       <div styleName="button">
-        <Button label={this.trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({wordEditorOpen: true})}/>
+        <Button label={this.trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
       </div>
     );
     let submitButtonNode = (this.props.showButton) && (
@@ -184,7 +184,7 @@ export default class WordPane extends Component<Props, State> {
     let innerNodes = examples.map((example, index) => {
       let editButtonNode = (this.props.showEditLink && !this.props.showButton) && (
         <div styleName="button">
-          <Button label={this.trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({exampleEditorOpen: example})}/>
+          <Button label={this.trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editingExample: example})}/>
         </div>
       );
       let innerNode = (
@@ -216,8 +216,8 @@ export default class WordPane extends Component<Props, State> {
       <WordEditor
         dictionary={this.props.dictionary}
         word={this.props.word}
-        open={this.state.wordEditorOpen}
-        onClose={() => this.setState({wordEditorOpen: false})}
+        open={this.state.editorOpen}
+        onClose={() => this.setState({editorOpen: false})}
         onEditConfirm={this.props.onEditConfirm}
         onRemoveConfirm={this.props.onRemoveConfirm}
       />
@@ -225,9 +225,9 @@ export default class WordPane extends Component<Props, State> {
     let exampleNode = (
       <ExampleEditor
         dictionary={this.props.dictionary}
-        example={this.state.exampleEditorOpen}
-        open={this.state.exampleEditorOpen !== null}
-        onClose={() => this.setState({exampleEditorOpen: null})}
+        example={this.state.editingExample}
+        open={this.state.editingExample !== null}
+        onClose={() => this.setState({editingExample: null})}
         onEditConfirm={this.props.onEditExampleConfirm}
         onRemoveConfirm={this.props.onRemoveExampleConfirm}
       />
@@ -275,6 +275,6 @@ type DefaultProps = {
   showButton: boolean
 };
 type State = {
-  wordEditorOpen: boolean,
-  exampleEditorOpen: Example | null
+  editorOpen: boolean,
+  editingExample: Example | null
 };
