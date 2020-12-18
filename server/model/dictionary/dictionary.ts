@@ -252,14 +252,11 @@ export class DictionarySchema extends RemovableSchema {
   public async fetchWordNames<N extends number>(this: Dictionary, numbers: Array<N>): Promise<Record<N, string | null>> {
     let promises = numbers.map((number) => {
       let query = WordModel.findOneExist().where("dictionary", this).where("number", number);
-      let promise = query.exec().then((word) => [number, word] as const);
+      let promise = query.exec().then((word) => [number, word?.name ?? null] as const);
       return promise;
     });
     let entries = await Promise.all(promises);
-    let names = {} as Record<N, string | null>;
-    for (let [number, word] of entries) {
-      names[number] = word?.name ?? null;
-    }
+    let names = Object.fromEntries(entries) as any;
     return names;
   }
 
