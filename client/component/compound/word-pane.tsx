@@ -188,7 +188,7 @@ export default class WordPane extends Component<Props, State> {
     });
     let node = (innerNodes.length > 0) && (
       <div styleName="container">
-        <div styleName="title">Example</div>
+        <div styleName="title">{this.props.dictionary.settings.exampleTitle}</div>
         <ul styleName="example">
           {innerNodes}
         </ul>
