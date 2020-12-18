@@ -92,7 +92,7 @@ export class ExampleSchema extends RemovableSchema {
     } else {
       throw new CustomError("noSuchExampleNumber");
     }
-    LogUtil.log("word/remove", `number: ${dictionary.number} | current: ${example.id}`);
+    LogUtil.log("word/discard", `number: ${dictionary.number} | current: ${example.id}`);
     return example;
   }
 

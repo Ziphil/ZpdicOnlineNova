@@ -152,7 +152,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       if (user) {
         try {
-          await dictionary.removeAuthorizedUser(user);
+          await dictionary.discardAuthorizedUser(user);
           Controller.respond(response, null);
         } catch (error) {
           let body = (() => {

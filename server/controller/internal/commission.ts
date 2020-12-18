@@ -67,7 +67,7 @@ export class CommissionController extends Controller {
     if (dictionary) {
       let commission = await CommissionModel.fetchOneByDictionaryAndId(dictionary, id);
       if (commission) {
-        await commission.removeOne();
+        await commission.discard();
         let body = CommissionCreator.create(commission);
         Controller.respond(response, body);
       } else {

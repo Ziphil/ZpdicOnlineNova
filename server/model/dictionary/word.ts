@@ -112,7 +112,7 @@ export class WordSchema extends RemovableSchema {
     } else {
       throw new CustomError("noSuchWordNumber");
     }
-    LogUtil.log("word/remove", `number: ${dictionary.number} | current: ${word.id}`);
+    LogUtil.log("word/discard", `number: ${dictionary.number} | current: ${word.id}`);
     return word;
   }
 
@@ -146,7 +146,7 @@ export class WordSchema extends RemovableSchema {
     }
     let affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagDiscarded());
     let changedPromises = changedWords.map((changedWord) => changedWord.save());
-    LogUtil.log("word/correct-relations-remove", `number: ${dictionary.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
+    LogUtil.log("word/correct-relations-discard", `number: ${dictionary.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
     await Promise.all([...affectedPromises, ...changedPromises]);
   }
 

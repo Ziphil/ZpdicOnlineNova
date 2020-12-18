@@ -433,7 +433,7 @@ export class DictionarySchema extends RemovableSchema {
     }
   }
 
-  public async removeAuthorizedUser(this: Dictionary, user: User): Promise<true> {
+  public async discardAuthorizedUser(this: Dictionary, user: User): Promise<true> {
     await this.populate("editUsers").execPopulate();
     if (isDocumentArray(this.editUsers)) {
       let exist = this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;

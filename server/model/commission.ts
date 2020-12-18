@@ -58,7 +58,7 @@ export class CommissionSchema {
     return commission;
   }
 
-  public async removeOne(this: Commission): Promise<void> {
+  public async discard(this: Commission): Promise<void> {
     await this.deleteOne();
   }
 
