@@ -312,6 +312,7 @@ exampleEditor:
   sentence: "例文"
   translation: "翻訳"
   wordName: "使用単語"
+  wordNameUndefined: "?"
   wordAbsent: "使用単語は登録されていません"
   discard: "削除"
   confirm: "決定"

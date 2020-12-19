@@ -312,6 +312,7 @@ exampleEditor:
   sentence: "Example sentence"
   translation: "Translation"
   wordName: "Included word"
+  wordNameUndefined: "?"
   wordAbsent: "No included words"
   discard: "Delete"
   confirm: "Confirm"
