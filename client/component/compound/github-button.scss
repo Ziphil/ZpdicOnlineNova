@@ -20,6 +20,7 @@
 .icon {
   @include icon-font;
   font-size: 250%;
+  font-weight: normal;
   color: $light-border-color;
 }
 
@@ -65,7 +66,7 @@
 }
 
 .text {
-  margin: 5px 0px 0px 0px;
+  margin: 8px 0px 0px 0px;
   color: $link-color;
   text-decoration: underline;
 }
