@@ -31,12 +31,18 @@
 
 .border {
   border-top: 1px $pale-border-color solid;
-  margin: 40px auto 0px auto;
-  padding: 40px 0px 0px 0px;
+  margin: 30px auto 0px auto;
+  padding: 30px 0px 0px 0px;
 }
 
 .aggregation {
   margin: 50px auto 0px auto;
+}
+
+.notification >div >div >div {
+  margin: 0px !important;
+  padding: 0px !important;
+  border: none !important;
 }
 
 .github {
