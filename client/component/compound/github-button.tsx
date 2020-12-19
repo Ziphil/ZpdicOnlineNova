@@ -34,7 +34,7 @@ export default class GithubButton extends Component<Props, State> {
     let node = (
       <a styleName="root" href={url} target="_blank">
         <div styleName="icon-wrapper">
-          <div styleName="icon">&#xF113;</div>
+          <div styleName="icon">&#xF09B;</div>
           <div styleName="star-wrapper">
             <span styleName="star">&#xF005;</span>
             <span styleName="count">{this.transNumber(this.state.starCount)}</span>

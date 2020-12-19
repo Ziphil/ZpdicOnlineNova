@@ -91,8 +91,9 @@ export class Main {
       let status = tokens.status(request, response);
       let url = tokens.url(request, response);
       let time = tokens["total-time"](request, response, 0);
-      let body = (url && url.includes(SERVER_PATHS["login"])) ? "***" : JSON.stringify(request.body);
-      return `![request] ${method} ${status} ${url} | time: ${time}ms | body: ${body}`;
+      let body = ("password" in request.body) ? {...request.body, password: "***"} : request.body;
+      let bodyString = JSON.stringify(body);
+      return `![request] ${method} ${status} ${url} | time: ${time}ms | body: ${bodyString}`;
     });
     this.application.use(middleware);
   }
