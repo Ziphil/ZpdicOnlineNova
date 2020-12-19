@@ -27,7 +27,6 @@ export default class GithubButton extends Component<Props, State> {
     } else {
       this.setState({starCount: null});
     }
-
   }
 
   public render(): ReactNode {

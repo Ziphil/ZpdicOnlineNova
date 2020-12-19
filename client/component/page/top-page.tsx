@@ -5,6 +5,7 @@ import {
   ReactNode
 } from "react";
 import Component from "/client/component/component";
+import ContributorList from "/client/component/compound/contributor-list";
 import DictionaryAggregationPane from "/client/component/compound/dictionary-aggregation-pane";
 import FeaturePane from "/client/component/compound/feature-pane";
 import FormPane from "/client/component/compound/form-pane";
@@ -41,6 +42,7 @@ export default class TopPage extends Component<Props, State> {
         </div>
         <div styleName="github border">
           <GithubButton/>
+          <ContributorList/>
         </div>
       </Page>
     );

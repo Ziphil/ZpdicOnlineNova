@@ -286,6 +286,8 @@ contactForm:
   subject: "Subject"
   text: "Content"
   confirm: "Send"
+contributorList:
+  title: "Special thanks to"
 dictionaryAggregationPane:
   dictionaryCount: "Dictionaries"
   wordCount: "Words"

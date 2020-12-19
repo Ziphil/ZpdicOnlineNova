@@ -286,6 +286,8 @@ contactForm:
   subject: "件名"
   text: "内容"
   confirm: "送信"
+contributorList:
+  title: "Special thanks to"
 dictionaryAggregationPane:
   dictionaryCount: "総辞書数"
   wordCount: "総単語数"
