@@ -1,6 +1,9 @@
 //
 
 import {
+  ReturnModelType
+} from "@typegoose/typegoose";
+import {
   promises as fs
 } from "fs";
 import {
@@ -28,6 +31,9 @@ import {
   SERVER_PATHS,
   SERVER_PATH_PREFIX
 } from "/server/controller/internal/type";
+import {
+  RemovableSchema
+} from "/server/model/base";
 import {
   DictionaryCreator,
   DictionaryModel,
@@ -360,22 +366,15 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["fetchDictionaryAggregation"])
   public async [Symbol()](request: Request<"fetchDictionaryAggregation">, response: Response<"fetchDictionaryAggregation">): Promise<void> {
-    let dictionaryRawPromises = Promise.all([DictionaryModel.findExist().countDocuments(), DictionaryModel.estimatedDocumentCount(), DictionaryModel.collection.stats()]);
-    let dictionaryPromises = dictionaryRawPromises.then(([count, wholeCount, stats]) => {
-      let size = stats.size;
-      return {count, wholeCount, size};
+    let models = [DictionaryModel, WordModel, ExampleModel] as Array<ReturnModelType<typeof RemovableSchema>>;
+    let promises = models.map((model) => {
+      let promise = Promise.all([model.findExist().countDocuments(), model.estimatedDocumentCount(), model.collection.stats()]).then(([count, wholeCount, stats]) => {
+        let size = stats.size;
+        return {count, wholeCount, size};
+      });
+      return promise;
     });
-    let wordRawPromises = Promise.all([WordModel.findExist().countDocuments(), WordModel.estimatedDocumentCount(), WordModel.collection.stats()]);
-    let wordPromises = wordRawPromises.then(([count, wholeCount, stats]) => {
-      let size = stats.size;
-      return {count, wholeCount, size};
-    });
-    let exampleRawPromises = Promise.all([ExampleModel.findExist().countDocuments(), ExampleModel.estimatedDocumentCount(), ExampleModel.collection.stats()]);
-    let examplePromises = exampleRawPromises.then(([count, wholeCount, stats]) => {
-      let size = stats.size;
-      return {count, wholeCount, size};
-    });
-    let [dictionary, word, example] = await Promise.all([dictionaryPromises, wordPromises, examplePromises]);
+    let [dictionary, word, example] = await Promise.all(promises);
     let body = {dictionary, word, example};
     Controller.respond(response, body);
   }
