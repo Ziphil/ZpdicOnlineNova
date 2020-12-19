@@ -20,15 +20,20 @@ export default class ContributorList extends Component<Props, State> {
   };
 
   public async componentDidMount(): Promise<void> {
-    let ids = ["lynn", "bluebear94"];
-    let promises = ids.map(async (id) => {
-      let url = "https://api.github.com/users/" + id;
+    let rawContributors = [
+      {id: "lynn"},
+      {id: "bluebear94", name: "bluebear94"}
+    ];
+    let promises = rawContributors.map(async (rawContributor) => {
+      let url = "https://api.github.com/users/" + rawContributor.id;
       let response = await axios.get(url, {validateStatus: () => true});
       if (response.status === 200) {
-        let name = response.data["name"];
+        let id = rawContributor.id;
+        let name = rawContributor.name ?? response.data["name"];
         let avatarUrl = response.data["avatar_url"];
         return {id, name, avatarUrl};
       } else {
+        let id = rawContributor.id;
         let name = "@" + id;
         return {id, name};
       }
