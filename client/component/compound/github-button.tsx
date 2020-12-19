@@ -22,7 +22,7 @@ export default class GithubButton extends Component<Props, State> {
     let url = "https://api.github.com/repos/Ziphil/ZpdicOnlineNova";
     let response = await axios.get(url, {validateStatus: () => true});
     if (response.status === 200 && "stargazers_count" in response.data) {
-      let starCount = response.data["stargazers_count"];
+      let starCount = +response.data["stargazers_count"];
       this.setState({starCount});
     } else {
       this.setState({starCount: null});
