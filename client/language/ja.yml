@@ -289,9 +289,9 @@ contactForm:
 contributorList:
   title: "Special thanks to"
 dictionaryAggregationPane:
-  dictionaryCount: "総辞書数"
-  wordCount: "総単語数"
-  exampleCount: "総例文数"
+  dictionaryCount: "辞書数"
+  wordCount: "単語数"
+  exampleCount: "例文数"
 dictionaryHeader:
   add: "新規作成"
   addWord: "単語"
