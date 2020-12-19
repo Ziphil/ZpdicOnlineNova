@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  display: flex;
+  flex-direction: row;
+  @include smartphone {
+    flex-direction: column;
+  }
+}
+
+.item {
+  @include reset-first-margin;
+  width: 100%;
+  margin: 0px 0px 0px 40px;
+  @include smartphone {
+    margin: 20px 0px 0px 0px;
+ }
+}
+
+.head-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @include smartphone {
+    flex-direction: row;
+    align-items: baseline;
+  }
+}
+
+.head {
+  margin: 10px 0px 0px 0px;
+  font-size: 150%;
+  font-weight: bold;
+  color: $head-color;
+  text-align: center;
+  @include smartphone {
+    flex-direction: row;
+  }
+}
+
+.icon {
+  @include icon-font;
+  font-size: 200%;
+  color: $head-color;
+  text-align: center;
+  @include smartphone {
+    margin: 0px 10px 0px 0px;
+    font-size: 150%;
+  }
+}
+
+.text {
+  @include line-height;
+  margin: 20px 0px 0px 0px;
+  text-align: justify;
+}
