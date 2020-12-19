@@ -338,6 +338,8 @@ featurePane:
     text: >-
       Multiple users can edit the same dictionary at the same time by giving them permission to edit.
       Collaborative creation of a constructed language can be easily realised.
+githubButton:
+  text: "View on GitHub"
 header:
   dictionaryList: "Dictionaries"
   notification: "Notifications"
