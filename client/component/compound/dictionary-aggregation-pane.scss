@@ -11,32 +11,29 @@
 }
 
 .count-wrapper {
-  @include reset-first-margin;
-  margin: 0px 0px 0px 80px;
   color: $logo-color;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, auto);
+  grid-gap: 5px 0px;
+  align-items: baseline;
 }
 
 .title {
-  margin: 0px 0px 3px 0px;
+  margin: 0px 30px 0px 0px;
+  text-align: right;
 }
 
-.exist {
-  margin: 0px 0px 3px 0px;
-  padding: 0px 5px 3px 5px;
+.count {
   font-size: 48px;
-  border-bottom: 1px $logo-color solid;
+  text-align: right;
 }
 
-.whole {
-  padding: 0px 5px;
+.slash {
+  margin: 0px 5px 0px 5px;
   font-size: 24px;
 }
 
-.size {
-  padding: 0px 5px;
-  font-size: 20px;
+.whole-count {
+  font-size: 24px;
+  text-align: left;
 }

@@ -4,6 +4,9 @@ import {
   Jsonify
 } from "jsonify-type";
 import {
+  Aggregation
+} from "/client/skeleton/aggregation";
+import {
   Commission
 } from "/client/skeleton/commission";
 import {
@@ -263,7 +266,7 @@ type ServerSpecs = {
   fetchDictionaryAggregation: {
     request: {},
     response: {
-      success: {dictionary: {count: number, wholeCount: number, size: number}, word: {count: number, wholeCount: number, size: number}},
+      success: {dictionary: Aggregation, word: Aggregation, example: Aggregation},
       error: never
     }
   },

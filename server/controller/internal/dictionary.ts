@@ -31,6 +31,7 @@ import {
 import {
   DictionaryCreator,
   DictionaryModel,
+  ExampleModel,
   SearchParameterCreator,
   SuggestionCreator,
   WordCreator,
@@ -369,8 +370,13 @@ export class DictionaryController extends Controller {
       let size = stats.size;
       return {count, wholeCount, size};
     });
-    let [dictionary, word] = await Promise.all([dictionaryPromises, wordPromises]);
-    let body = {dictionary, word};
+    let exampleRawPromises = Promise.all([ExampleModel.findExist().countDocuments(), ExampleModel.estimatedDocumentCount(), ExampleModel.collection.stats()]);
+    let examplePromises = exampleRawPromises.then(([count, wholeCount, stats]) => {
+      let size = stats.size;
+      return {count, wholeCount, size};
+    });
+    let [dictionary, word, example] = await Promise.all([dictionaryPromises, wordPromises, examplePromises]);
+    let body = {dictionary, word, example};
     Controller.respond(response, body);
   }
 
