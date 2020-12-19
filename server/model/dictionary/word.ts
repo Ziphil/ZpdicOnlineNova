@@ -13,7 +13,7 @@ import {
   Word as WordSkeleton
 } from "/client/skeleton/dictionary";
 import {
-  RemovableSchema
+  DiscardableSchema
 } from "/server/model/base";
 import {
   Dictionary,
@@ -38,7 +38,7 @@ import {
 
 
 @modelOptions({schemaOptions: {collection: "words"}})
-export class WordSchema extends RemovableSchema {
+export class WordSchema extends DiscardableSchema {
 
   @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;

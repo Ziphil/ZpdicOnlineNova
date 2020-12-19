@@ -1,0 +1,75 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  color: $light-border-color;
+  text-decoration: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; 
+}
+
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  @include icon-font;
+  font-size: 250%;
+  color: $light-border-color;
+}
+
+.star-wrapper {
+  height: 35px;
+  margin: 0px 0px 0px 15px;
+  padding: 0px 10px;
+  font-size: 150%;
+  line-height: 35px;
+  border: 1px $light-border-color solid;
+  border-radius: $large-border-radius;
+  display: inline-block;
+  position: relative;
+}
+
+.star-wrapper::before {
+  top: 9px;
+  left: -8px;
+  margin-left: -8px;
+  border: 8px transparent solid;
+  border-right: 8px $light-border-color solid;
+  position: absolute;
+  content: "";
+}
+
+.star-wrapper::after {
+  top: 9px;
+  left: -7px;
+  margin-left: -8px;
+  border: 8px transparent solid;
+  border-right: 8px $background-color solid;
+  position: absolute;
+  content: "";
+}
+
+.star {
+  @include icon-font;
+  font-size: 80%;
+}
+
+.count {
+  margin: 0em 0em 0em 0.2em;
+}
+
+.text {
+  margin: 5px 0px 0px 0px;
+  color: $link-color;
+  text-decoration: underline;
+}
+
+.root:hover .text {
+  color: $link-hover-color;
+}

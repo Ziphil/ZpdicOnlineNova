@@ -24,7 +24,7 @@ import {
   WithSize
 } from "/server/controller/internal/type";
 import {
-  RemovableSchema
+  DiscardableSchema
 } from "/server/model/base";
 import {
   DICTIONARY_AUTHORITIES,
@@ -78,7 +78,7 @@ export let DictionaryStatusUtil = LiteralUtilType.create(DICTIONARY_STATUSES);
 
 
 @modelOptions({schemaOptions: {collection: "dictionaries", minimize: false}})
-export class DictionarySchema extends RemovableSchema {
+export class DictionarySchema extends DiscardableSchema {
 
   @prop({required: true, ref: "UserSchema"})
   public user!: Ref<UserSchema>;

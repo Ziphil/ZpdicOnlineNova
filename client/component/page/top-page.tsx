@@ -5,8 +5,11 @@ import {
   ReactNode
 } from "react";
 import Component from "/client/component/component";
+import ContributorList from "/client/component/compound/contributor-list";
 import DictionaryAggregationPane from "/client/component/compound/dictionary-aggregation-pane";
+import FeaturePane from "/client/component/compound/feature-pane";
 import FormPane from "/client/component/compound/form-pane";
+import GithubButton from "/client/component/compound/github-button";
 import LoginForm from "/client/component/compound/login-form";
 import Logo from "/client/component/compound/logo";
 import NotificationList from "/client/component/compound/notification-list";
@@ -35,8 +38,15 @@ export default class TopPage extends Component<Props, State> {
         <div styleName="aggregation">
           <DictionaryAggregationPane/>
         </div>
-        <div styleName="notification">
-          <NotificationList size={3} showPagination={false}/>
+        <div styleName="feature border">
+          <FeaturePane/>
+        </div>
+        <div styleName="notification border">
+          <NotificationList size={1} showPagination={false}/>
+        </div>
+        <div styleName="github border">
+          <GithubButton/>
+          <ContributorList/>
         </div>
       </Page>
     );

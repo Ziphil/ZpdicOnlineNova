@@ -8,6 +8,9 @@ import Component from "/client/component/component";
 import {
   style
 } from "/client/component/decorator";
+import {
+  Aggregation
+} from "/client/skeleton/aggregation";
 
 
 @style(require("./dictionary-aggregation-pane.scss"))
@@ -15,7 +18,8 @@ export default class DictionaryAggregationPane extends Component<Props, State> {
 
   public state: State = {
     dictionary: null,
-    word: null
+    word: null,
+    example: null
   };
 
   public async componentDidMount(): Promise<void> {
@@ -29,21 +33,22 @@ export default class DictionaryAggregationPane extends Component<Props, State> {
   public render(): ReactNode {
     let dictionary = this.state.dictionary;
     let word = this.state.word;
+    let example = this.state.example;
     let node = (
       <div styleName="root">
         <div styleName="count-wrapper">
           <div styleName="title">{this.trans("dictionaryAggregationPane.dictionaryCount")}</div>
-          <div styleName="count">
-            <div styleName="exist">{this.transNumber(dictionary?.count)}</div>
-            <div styleName="whole">{this.transNumber(dictionary?.wholeCount)}</div>
-          </div>
-        </div>
-        <div styleName="count-wrapper">
+          <div styleName="count">{this.transNumber(dictionary?.count)}</div>
+          <div styleName="slash">/</div>
+          <div styleName="whole-count">{this.transNumber(dictionary?.wholeCount)}</div>
           <div styleName="title">{this.trans("dictionaryAggregationPane.wordCount")}</div>
-          <div styleName="count">
-            <div styleName="exist">{this.transNumber(word?.count)}</div>
-            <div styleName="whole">{this.transNumber(word?.wholeCount)}</div>
-          </div>
+          <div styleName="count">{this.transNumber(word?.count)}</div>
+          <div styleName="slash">/</div>
+          <div styleName="whole-count">{this.transNumber(word?.wholeCount)}</div>
+          <div styleName="title">{this.trans("dictionaryAggregationPane.exampleCount")}</div>
+          <div styleName="count">{this.transNumber(example?.count)}</div>
+          <div styleName="slash">/</div>
+          <div styleName="whole-count">{this.transNumber(example?.wholeCount)}</div>
         </div>
       </div>
     );
@@ -56,6 +61,7 @@ export default class DictionaryAggregationPane extends Component<Props, State> {
 type Props = {
 };
 type State = {
-  dictionary: {count: number, wholeCount: number, size: number} | null,
-  word: {count: number, wholeCount: number, size: number} | null
+  dictionary: Aggregation | null,
+  word: Aggregation | null,
+  example: Aggregation | null
 };

@@ -286,9 +286,12 @@ contactForm:
   subject: "Subject"
   text: "Content"
   confirm: "Send"
+contributorList:
+  title: "Special thanks to"
 dictionaryAggregationPane:
   dictionaryCount: "Dictionaries"
   wordCount: "Words"
+  exampleCount: "Sentences"
 dictionaryHeader:
   add: "Add"
   addWord: "Word"
@@ -311,6 +314,7 @@ exampleEditor:
   sentence: "Example sentence"
   translation: "Translation"
   wordName: "Included word"
+  wordNameUndefined: "?"
   wordAbsent: "No included words"
   discard: "Delete"
   confirm: "Confirm"
@@ -320,6 +324,24 @@ exampleEditor:
     This example sentence will be deleted permanently.
     You cannot restore it afterwards.
     Are you really sure?
+featurePane:
+  dictionary:
+    title: "Manage"
+    text: >-
+      You can create a dictionary in your browser and release it as an online dictionary immediately.
+      You can edit it anywhere as long as you have a browser, without any additional applications.
+  search:
+    title: "Search"
+    text: >-
+      You can search as you type, either by headword or by translation.
+      Advanced searches by multiple conditions are also possible.
+  user:
+    title: "Collaborate"
+    text: >-
+      Multiple users can edit the same dictionary at the same time by giving them permission to edit.
+      Collaborative creation of a constructed language can be easily realised.
+githubButton:
+  text: "View on GitHub"
 header:
   dictionaryList: "Dictionaries"
   notification: "Notifications"

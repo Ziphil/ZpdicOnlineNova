@@ -147,7 +147,7 @@ export default class ExampleEditor extends Component<Props, State> {
         <div styleName="inner" key={index}>
           <div styleName="form">
             <ControlGroup className={StyleNameUtil.create(styles["name"], styles["word-input"])}>
-              <Input value={word.name ?? "?"} label={nameLabel} readOnly={true}/>
+              <Input value={word.name ?? this.trans("exampleEditor.wordNameUndefined")} label={nameLabel} readOnly={true}/>
               <Button label={this.trans("exampleEditor.selectWord")} onClick={() => this.openWordChooser(index)}/>
             </ControlGroup>
           </div>

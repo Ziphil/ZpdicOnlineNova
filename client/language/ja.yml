@@ -286,9 +286,12 @@ contactForm:
   subject: "件名"
   text: "内容"
   confirm: "送信"
+contributorList:
+  title: "Special thanks to"
 dictionaryAggregationPane:
-  dictionaryCount: "総辞書数"
-  wordCount: "総単語数"
+  dictionaryCount: "辞書数"
+  wordCount: "単語数"
+  exampleCount: "例文数"
 dictionaryHeader:
   add: "新規作成"
   addWord: "単語"
@@ -311,6 +314,7 @@ exampleEditor:
   sentence: "例文"
   translation: "翻訳"
   wordName: "使用単語"
+  wordNameUndefined: "?"
   wordAbsent: "使用単語は登録されていません"
   discard: "削除"
   confirm: "決定"
@@ -320,6 +324,24 @@ exampleEditor:
     この例文データを永久に削除します。
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
+featurePane:
+  dictionary:
+    title: "辞書管理"
+    text: >-
+      ブラウザ上で辞書を作成し、すぐにオンライン辞書として公開することができます。
+      特別なアプリケーションなしで、ブラウザさえあればどこからでも編集することができます。
+  search:
+    title: "辞書検索"
+    text: >-
+      見出し語からでも訳語からでも、リアルタイムで検索することができます。
+      複数の条件を組み合わせた複雑な検索も可能です。
+  user:
+    title: "共同編集"
+    text: >-
+      別のユーザーに編集権限を付与して、複数人で同じ辞書を同時に編集することができます。
+      人工言語の共同制作も簡単に実現できます。
+githubButton:
+  text: "View on GitHub"
 header:
   dictionaryList: "辞書一覧"
   notification: "お知らせ"
