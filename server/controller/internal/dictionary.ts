@@ -32,7 +32,7 @@ import {
   SERVER_PATH_PREFIX
 } from "/server/controller/internal/type";
 import {
-  RemovableSchema
+  DiscardableSchema
 } from "/server/model/base";
 import {
   DictionaryCreator,
@@ -366,7 +366,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["fetchDictionaryAggregation"])
   public async [Symbol()](request: Request<"fetchDictionaryAggregation">, response: Response<"fetchDictionaryAggregation">): Promise<void> {
-    let models = [DictionaryModel, WordModel, ExampleModel] as Array<ReturnModelType<typeof RemovableSchema>>;
+    let models = [DictionaryModel, WordModel, ExampleModel] as Array<ReturnModelType<typeof DiscardableSchema>>;
     let promises = models.map((model) => {
       let promise = Promise.all([model.findExist().countDocuments(), model.estimatedDocumentCount(), model.collection.stats()]).then(([count, wholeCount, stats]) => {
         let size = stats.size;

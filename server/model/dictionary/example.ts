@@ -12,7 +12,7 @@ import {
   Example as ExampleSkeleton
 } from "/client/skeleton/dictionary";
 import {
-  RemovableSchema
+  DiscardableSchema
 } from "/server/model/base";
 import {
   Dictionary,
@@ -32,7 +32,7 @@ import {
 
 
 @modelOptions({schemaOptions: {collection: "examples"}})
-export class ExampleSchema extends RemovableSchema {
+export class ExampleSchema extends DiscardableSchema {
 
   @prop({required: true, ref: "DictionarySchema"})
   public dictionary!: Ref<DictionarySchema>;

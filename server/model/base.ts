@@ -10,7 +10,7 @@ import {
 } from "mongoose";
 
 
-export class RemovableSchema {
+export class DiscardableSchema {
 
   @prop()
   public removedDate?: Date;
@@ -23,17 +23,17 @@ export class RemovableSchema {
     return this.findOne({}, callback).where({removedDate: undefined});
   }
 
-  public static updateManyDiscarded<H>(this: Model<DocumentType<RemovableSchema>, H>): Query<any> & H {
+  public static updateManyDiscarded<H>(this: Model<DocumentType<DiscardableSchema>, H>): Query<any> & H {
     let removedDate = new Date();
     return this.updateMany({}, {removedDate});
   }
 
-  public static updateOneDiscarded<H>(this: Model<DocumentType<RemovableSchema>, H>): Query<any> & H {
+  public static updateOneDiscarded<H>(this: Model<DocumentType<DiscardableSchema>, H>): Query<any> & H {
     let removedDate = new Date();
     return this.updateOne({}, {removedDate});
   }
 
-  public flagDiscarded(this: DocumentType<RemovableSchema>): Promise<this> {
+  public flagDiscarded(this: DocumentType<DiscardableSchema>): Promise<this> {
     let removedDate = new Date();
     return this.update({removedDate}).exec();
   }
