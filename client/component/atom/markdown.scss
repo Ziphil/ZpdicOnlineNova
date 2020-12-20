@@ -128,11 +128,16 @@
 }
 
 .root em,
-.root strong,
+.root strong {
+  font-weight: normal;
+  font-style: italic;
+  text-decoration: none;
+}
+
 .root del {
   font-weight: normal;
-  font-style: normal;
-  text-decoration: none;
+  font-style: italic;
+  text-decoration: line-through;
 }
 
 .root a {

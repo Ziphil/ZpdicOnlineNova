@@ -18,7 +18,7 @@ export default class FeaturePane extends Component<Props, State> {
       <div styleName="root">
         <div styleName="item">
           <div styleName="head-wrapper">
-            <div styleName="icon">&#xF02D;</div>
+            <div styleName="icon">&#xF044;</div>
             <h1 styleName="head">{this.trans("featurePane.dictionary.title")}</h1>
           </div>
           <p styleName="text">{this.trans("featurePane.dictionary.text")}</p>
