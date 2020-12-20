@@ -326,7 +326,7 @@ exampleEditor:
     Are you really sure?
 featurePane:
   dictionary:
-    title: "Manage"
+    title: "Edit"
     text: >-
       You can create a dictionary in your browser and release it as an online dictionary immediately.
       You can edit it anywhere as long as you have a browser, without any additional applications.
