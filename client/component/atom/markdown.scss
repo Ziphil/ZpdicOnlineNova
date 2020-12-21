@@ -131,12 +131,11 @@
 .root strong {
   font-weight: normal;
   font-style: italic;
-  text-decoration: none;
 }
 
 .root del {
-  font-weight: normal;
-  font-style: italic;
+  font-weight: inherit;
+  font-style: inherit;
   text-decoration: line-through;
 }
 
