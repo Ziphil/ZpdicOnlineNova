@@ -25,29 +25,33 @@ export default class Markdown extends Component<Props, State> {
     allowHeading: false
   };
 
+  private getAllowedTypes(): [Array<NodeType> | undefined, Array<NodeType> | undefined] {
+    if (this.props.simple) {
+      let allowedTypes = ["root", "text", "paragraph", "link"] as Array<NodeType>;
+      return [allowedTypes, undefined];
+    } else {
+      let disallowedTypes = ["thematicBreak", "image", "imageReference", "definition", "heading", "html", "virtualHtml"] as Array<NodeType>;
+      if (this.props.allowHeading) {
+        disallowedTypes = disallowedTypes.filter((type) => type !== "heading");
+      }
+      return [undefined, disallowedTypes];
+    }
+  }
+
+  private getCustomRenderers(): Renderers {
+    if (this.props.simple) {
+      let simpleRenderer = function (props: any): ReactElement {
+        return props.children;
+      };
+      return {link: Link, root: simpleRenderer, paragraph: simpleRenderer};
+    } else {
+      return {link: Link};
+    }
+  }
+
   public render(): ReactNode {
-    let [allowedTypes, disallowedTypes] = (() => {
-      if (this.props.simple) {
-        let allowedTypes = ["root", "text", "paragraph", "link"] as Array<NodeType>;
-        return [allowedTypes, undefined];
-      } else {
-        let disallowedTypes = ["thematicBreak", "image", "imageReference", "definition", "heading", "html", "virtualHtml"] as Array<NodeType>;
-        if (this.props.allowHeading) {
-          disallowedTypes = disallowedTypes.filter((type) => type !== "heading");
-        }
-        return [undefined, disallowedTypes];
-      }
-    })();
-    let customRenderers = (() => {
-      if (this.props.simple) {
-        let simpleRenderer = function (props: any): ReactElement {
-          return props.children;
-        };
-        return {link: Link, root: simpleRenderer, paragraph: simpleRenderer} as Renderers;
-      } else {
-        return {link: Link} as Renderers;
-      }
-    })();
+    let [allowedTypes, disallowedTypes] = this.getAllowedTypes();
+    let customRenderers = this.getCustomRenderers();
     let renderers = {...customRenderers, ...this.props.renderers};
     let innerNode = (
       <ReactMarkdown
