@@ -47,6 +47,10 @@
   padding: 0px;
 }
 
+.root li >input[type="checkbox"] {
+  display: none;
+}
+
 .root table {
   @include reset-first-margin;
   margin: 10px auto 0px auto;
