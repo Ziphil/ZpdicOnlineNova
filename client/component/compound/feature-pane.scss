@@ -47,13 +47,13 @@
   color: $head-color;
   text-align: center;
   @include smartphone {
-    margin: 0px 10px 0px 0px;
+    margin: 0em $blank-margin 0em 0em;
     font-size: 120%;
   }
 }
 
 .text {
   @include line-height;
-  margin: 20px 0px 0px 0px;
+  margin: 15px 0px 0px 0px;
   text-align: justify;
 }

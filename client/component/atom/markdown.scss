@@ -6,7 +6,7 @@
 .root h1,
 .root h2 {
   @include reset-first-margin;
-  margin: 30px 0px 15px 0px;
+  margin: 20px 0px 15px 0px;
   font-size: 150%;
   font-weight: bold;
   color: $head-color;
@@ -14,14 +14,14 @@
 
 .root h3 {
   @include reset-first-margin;
-  margin: 25px 0px 15px 0px;
+  margin: 20px 0px 15px 0px;
   font-size: 120%;
   font-weight: bold;
   color: $head-color;
 }
 
 .root h2 +h3 {
-  margin-top: 20px;
+  margin-top: 0px;
 }
 
 .root p {
@@ -45,6 +45,17 @@
   @include line-height;
   margin: 10px 0px 0px 0px;
   padding: 0px;
+}
+
+.root li ul::before,
+.root li ul::after,
+.root li ol::before,
+.root li ol::after {
+  display: none;
+}
+
+.root li >input[type="checkbox"] {
+  display: none;
 }
 
 .root table {
@@ -131,13 +142,21 @@
 .root strong {
   font-weight: normal;
   font-style: italic;
-  text-decoration: none;
 }
 
 .root del {
-  font-weight: normal;
-  font-style: italic;
+  font-weight: inherit;
+  font-style: inherit;
   text-decoration: line-through;
+}
+
+.root img {
+  max-width: 100%;
+  height: auto;
+  margin-top: - (1 - $text-line-height) * 0.5em;
+  margin-bottom: - (1 - $text-line-height) * 0.5em;
+  line-height: 0;
+  vertical-align: bottom;
 }
 
 .root a {
