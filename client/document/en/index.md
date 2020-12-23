@@ -9,4 +9,4 @@
 
 - [About](document/zatlin/overview)
 - [Introduction](document/zatlin/introduction)
-- ~~Complete specification~~
+- [Complete specification](document/zatlin/syntax)
