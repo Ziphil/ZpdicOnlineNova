@@ -47,6 +47,13 @@
   padding: 0px;
 }
 
+.root li ul::before,
+.root li ul::after,
+.root li ol::before,
+.root li ol::after {
+  display: none;
+}
+
 .root li >input[type="checkbox"] {
   display: none;
 }
