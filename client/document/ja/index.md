@@ -1,5 +1,4 @@
 ## 組み込みアプリケーション
-
 ### Akrantiain
 
 - [Akrantiain とは](document/akrantiain/overview)
