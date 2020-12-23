@@ -30,7 +30,7 @@ export default class Markdown extends Component<Props, State> {
       let allowedTypes = ["root", "text", "paragraph", "link"] as Array<NodeType>;
       return [allowedTypes, undefined];
     } else {
-      let disallowedTypes = ["thematicBreak", "image", "imageReference", "definition", "heading", "html", "virtualHtml"] as Array<NodeType>;
+      let disallowedTypes = ["thematicBreak", "definition", "heading", "html", "virtualHtml"] as Array<NodeType>;
       if (this.props.allowHeading) {
         disallowedTypes = disallowedTypes.filter((type) => type !== "heading");
       }

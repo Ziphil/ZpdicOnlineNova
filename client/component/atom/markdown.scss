@@ -143,6 +143,15 @@
   text-decoration: line-through;
 }
 
+.root img {
+  max-width: 100%;
+  height: auto;
+  margin-top: - (1 - $text-line-height) * 0.5em;
+  margin-bottom: - (1 - $text-line-height) * 0.5em;
+  line-height: 0;
+  vertical-align: bottom;
+}
+
 .root a {
   color: $link-color;
   text-decoration: underline;
