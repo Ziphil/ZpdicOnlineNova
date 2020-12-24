@@ -27,7 +27,7 @@ export default class Overlay extends Component<Props, State> {
 
   private renderHeader(): ReactNode {
     if (this.props.title !== undefined) {
-      let backButtonNode = (this.props.page !== undefined && this.props.page > 0) && (
+      let backButtonNode = (this.props.page !== undefined && ((this.props.showBack === undefined && this.props.page > 0) || this.props.showBack)) && (
         <Button label={this.trans("overlay.back")} iconLabel="&#xF04A;" style="simple" hideLabel={true} onClick={this.props.onBack}/>
       );
       let closeButtonNode = (
@@ -84,6 +84,7 @@ type Props = {
   outsideClosable: boolean,
   title?: string,
   page?: number,
+  showBack?: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => void,
   onBack?: (event: MouseEvent<HTMLButtonElement>) => void
 };
