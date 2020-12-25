@@ -61,8 +61,8 @@ export default class CommissionList extends Component<Props, State> {
 
 
 type Props = {
+  dictionary: EnhancedDictionary,
   commissions: Array<Commission> | CommissionProvider | null,
-  dictionary: EnhancedDictionary
   size: number,
   onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   onAddConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
