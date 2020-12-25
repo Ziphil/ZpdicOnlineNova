@@ -3,15 +3,18 @@
 import {
   S3 as StorageApi
 } from "aws-sdk";
+import {
+  AWS_STORAGE_BUCKET
+} from "/server/variable";
 
 
 export class AwsUtil {
 
-  public static getUploadResourceUrl(name: string, type: string): Promise<string> {
+  public static getUploadResourceUrl(path: string, type: string): Promise<string> {
     let api = new StorageApi();
     let params = Object.fromEntries([
-      ["Bucket", process.env["AWS_BUCKET"]],
-      ["Key", name],
+      ["Bucket", AWS_STORAGE_BUCKET],
+      ["Key", path],
       ["ContentType", type],
       ["Expires", 60],
       ["ACL", "public-read"]

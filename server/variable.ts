@@ -12,3 +12,7 @@ export const COOKIE_SECRET = process.env["COOKIE_SECRET"] || "cookie-zpdic";
 export const JWT_SECRET = process.env["JWT_SECRET"] || "jwt-secret";
 export const SENDGRID_KEY = process.env["SENDGRID_KEY"] || "dummy";
 export const RECAPTCHA_SECRET = process.env["RECAPTCHA_SECRET"] || "dummy";
+export const AWS_KEY = process.env["AWS_KEY"] || "dummy";
+export const AWS_SECRET = process.env["AWS_SECRET"] || "dummy";
+export const AWS_REGION = process.env["AWS_REGION"] || "ap-northeast-1";
+export const AWS_STORAGE_BUCKET = process.env["AWS_STORAGE_BUCKET"] || "dummy";
