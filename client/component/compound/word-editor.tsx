@@ -24,6 +24,7 @@ import {
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
+import ResourceList from "/client/component/compound/resource-list";
 import WordSearcher from "/client/component/compound/word-searcher";
 import {
   style
@@ -52,6 +53,7 @@ export default class WordEditor extends Component<Props, State> {
   public state: State = {
     word: undefined as any,
     relationChooserOpen: false,
+    resourceListOpen: false,
     alertOpen: false
   };
 
@@ -443,7 +445,7 @@ export default class WordEditor extends Component<Props, State> {
 
   private renderEditor(): ReactNode {
     let discardButtonNode = (this.props.word !== null) && (
-      <Button label={this.trans("wordEditor.discard")} iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
+      <Button label={this.trans("wordEditor.discard")} iconLabel="&#xF2ED;" style="caution" onClick={() => this.setState({alertOpen: true})}/>
     );
     let confirmButtonNode = (
       <Button label={this.trans("wordEditor.confirm")} iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.editWord.bind(this)}/>
@@ -459,9 +461,14 @@ export default class WordEditor extends Component<Props, State> {
           {this.renderVariations()}
           {this.renderRelations()}
         </div>
-        <div styleName="confirm-button">
-          {discardButtonNode}
-          {confirmButtonNode}
+        <div styleName="confirm-button-wrapper">
+          <div styleName="confirm-button">
+            <Button label={this.trans("wordEditor.resource")} iconLabel="&#xF15B;" onClick={() => this.setState({resourceListOpen: true})}/>
+          </div>
+          <div styleName="confirm-button">
+            {discardButtonNode}
+            {confirmButtonNode}
+          </div>
         </div>
       </div>
     );
@@ -471,6 +478,13 @@ export default class WordEditor extends Component<Props, State> {
   private renderRelationChooser(): ReactNode {
     let node = (
       <WordSearcher dictionary={this.props.dictionary} style="simple" showButton={true} onSubmit={this.editRelation.bind(this)}/>
+    );
+    return node;
+  }
+
+  private renderResourceList(): ReactNode {
+    let node = (
+      <ResourceList dictionary={this.props.dictionary}/>
     );
     return node;
   }
@@ -490,12 +504,22 @@ export default class WordEditor extends Component<Props, State> {
   }
 
   public render(): ReactNode {
-    let page = (this.state.relationChooserOpen) ? 1 : 0;
+    let page = (this.state.resourceListOpen) ? 2 : (this.state.relationChooserOpen) ? 1 : 0;
+    let showBack = this.state.relationChooserOpen ||this.state.resourceListOpen;
     let node = (
       <Fragment>
-        <Overlay size="large" title={this.trans("wordEditor.title")} page={page} open={this.props.open} onClose={this.props.onClose} onBack={() => this.setState({relationChooserOpen: false})}>
+        <Overlay
+          size="large"
+          title={this.trans("wordEditor.title")}
+          open={this.props.open}
+          page={page}
+          showBack={showBack}
+          onClose={this.props.onClose}
+          onBack={() => this.setState({relationChooserOpen: false, resourceListOpen: false})}
+        >
           {this.renderEditor()}
           {this.renderRelationChooser()}
+          {this.renderResourceList()}
         </Overlay>
         {this.renderAlert()}
       </Fragment>
@@ -519,6 +543,7 @@ type Props = {
 type State = {
   word: TemporaryEditableWord,
   relationChooserOpen: boolean,
+  resourceListOpen: boolean,
   alertOpen: boolean
 };
 

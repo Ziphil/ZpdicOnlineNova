@@ -8,9 +8,10 @@
   margin: 15px 0px 0px 0px;
 }
 
-.confirm-button {
+.confirm-button-wrapper {
   margin: 15px 0px 0px 0px;
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
 }
 
 .confirm-button >* {
