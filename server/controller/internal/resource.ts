@@ -32,11 +32,12 @@ export class ResourceController extends Controller {
   @post(SERVER_PATHS["fetchUploadResourceUrl"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchUploadResourceUrl">, response: Response<"fetchUploadResourceUrl">): Promise<void> {
-    let dictionary = request.dictionary;
+    let dictionary = request.dictionary!;
     let name = request.body.name;
     let type = request.body.type;
     try {
-      let url = await AwsUtil.getUploadResourceUrl(name, type);
+      let path = `resource/${dictionary.number}/${name}`;
+      let url = await AwsUtil.getUploadResourceUrl(path, type);
       let body = {url};
       Controller.respond(response, body);
     } catch (error) {
