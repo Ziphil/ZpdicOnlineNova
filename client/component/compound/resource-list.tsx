@@ -27,7 +27,18 @@ export default class ResourceList extends Component<Props, State> {
       let response = await this.request("fetchUploadResourceUrl", {number, name, type});
       if (response.status === 200 && !("error" in response.data)) {
         let url = response.data.url;
-        console.log(url);
+        let client = new XMLHttpRequest();
+        client.open("PUT", url);
+        client.onreadystatechange = function (): void {
+          if (client.readyState === 4) {
+            if (client.status === 200) {
+              console.log("Done");
+            } else {
+              console.log("Weird");
+            }
+          }
+        };
+        client.send(file);
       }
     }
   }
