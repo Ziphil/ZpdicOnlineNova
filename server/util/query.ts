@@ -42,6 +42,14 @@ export class QueryRange {
     }
   }
 
+  public static restrictWithSize<T>(query: Query<Array<T>>, range?: QueryRange): PromiseLike<WithSize<T>> {
+    let anyQuery = query as any;
+    let restrictedQuery = QueryRange.restrict(query, range);
+    let countQuery = anyQuery.model.countDocuments(query.getFilter());
+    let promise = Promise.all([restrictedQuery, countQuery]);
+    return promise;
+  }
+
   public static restrictArray<T>(query: Array<T>, range?: QueryRange): Array<T> {
     if (range !== undefined) {
       return range.restrictArray(query);
@@ -50,12 +58,12 @@ export class QueryRange {
     }
   }
 
-  public static restrictWithSize<T>(query: Query<Array<T>>, range?: QueryRange): PromiseLike<WithSize<T>> {
-    let anyQuery = query as any;
-    let restrictedQuery = QueryRange.restrict(query, range);
-    let countQuery = anyQuery.model.countDocuments(query.getFilter());
-    let promise = Promise.all([restrictedQuery, countQuery]);
-    return promise;
+  public static restrictArrayWithSize<T>(query: Array<T>, range?: QueryRange): WithSize<T> {
+    if (range !== undefined) {
+      return [range.restrictArray(query), query.length];
+    } else {
+      return [query, query.length];
+    }
   }
 
 }

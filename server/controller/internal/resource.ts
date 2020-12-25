@@ -24,10 +24,30 @@ import {
 import {
   AwsUtil
 } from "/server/util/aws";
+import {
+  QueryRange
+} from "/server/util/query";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class ResourceController extends Controller {
+
+  @post(SERVER_PATHS["fetchResources"])
+  @before(verifyUser(), verifyDictionary("own"))
+  public async [Symbol()](request: Request<"fetchResources">, response: Response<"fetchResources">): Promise<void> {
+    let dictionary = request.dictionary!;
+    let offset = request.body.offset;
+    let size = request.body.size;
+    try {
+      let path = `resource/${dictionary.number}`;
+      let range = new QueryRange(offset, size);
+      let names = QueryRange.restrictArrayWithSize(await AwsUtil.getFileNames(path), range);
+      let body = names;
+      Controller.respond(response, body);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   @post(SERVER_PATHS["fetchUploadResourceUrl"])
   @before(verifyUser(), verifyDictionary("own"))
@@ -37,7 +57,7 @@ export class ResourceController extends Controller {
     let type = request.body.type;
     try {
       let path = `resource/${dictionary.number}/${name}`;
-      let url = await AwsUtil.getUploadResourceUrl(path, type);
+      let url = await AwsUtil.getUploadFileUrl(path, type);
       let body = {url};
       Controller.respond(response, body);
     } catch (error) {
