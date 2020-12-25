@@ -5,4 +5,24 @@
 
 .form {
   display: flex;
+  align-items: flex-end;
+}
+
+.form >*:nth-child(1) {
+  flex-grow: 1;
+}
+
+.form >*:nth-child(2) {
+  margin: 0px 0px 0px $control-margin;
+}
+
+.list {
+  margin: 20px 0px 0px 0px;
+}
+
+.image {
+  max-width: 15%;
+  height: auto;
+  margin: 0px 10px 0px 0px;
+  vertical-align: middle;
 }
