@@ -406,7 +406,7 @@ wordEditor:
   relationName: "関連語"
   tagAbsent: "タグは登録されていません"
   equivalentAbsent: "訳語は登録されていません"
-  informationAbsent: "分類は登録されていません"
+  informationAbsent: "内容は登録されていません"
   variationAbsent: "変化形は登録されていません"
   relationAbsent: "関連語は登録されていません"
   discard: "削除"
