@@ -34,7 +34,7 @@ export default class Header extends Component<Props, State> {
             <div styleName="menu">
               <HeaderMenuItem label={this.trans("header.dictionaryList")} iconLabel="&#xF02D;" href="/list"/>
               <HeaderMenuItem label={this.trans("header.notification")} iconLabel="&#xF05A;" href="/notification"/>
-              <HeaderMenuItem label={this.trans("header.document")} iconLabel="&#xF15B;" href="/document"/>
+              <HeaderMenuItem label={this.trans("header.document")} iconLabel="&#xF518;" href="/document"/>
               <HeaderMenuItem label={this.trans("header.contact")} iconLabel="&#xF0E0;" href="/contact"/>
               <HeaderMenuItem label={this.trans("header.language")} iconLabel="&#xF1AB;" href="/language"/>
             </div>
