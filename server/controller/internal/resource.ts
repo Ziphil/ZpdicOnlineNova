@@ -1,9 +1,6 @@
 //
 
 import {
-  S3
-} from "aws-sdk";
-import {
   CustomError
 } from "/client/skeleton/error";
 import {
@@ -24,6 +21,9 @@ import {
   SERVER_PATHS,
   SERVER_PATH_PREFIX
 } from "/server/controller/internal/type";
+import {
+  AwsUtil
+} from "/server/util/aws";
 
 
 @controller(SERVER_PATH_PREFIX)
@@ -35,23 +35,13 @@ export class ResourceController extends Controller {
     let dictionary = request.dictionary;
     let name = request.body.name;
     let type = request.body.type;
-    let api = new S3();
-    let params = Object.fromEntries([
-      ["Bucket", process.env["AWS_BUCKET"]],
-      ["Key", name],
-      ["Expires", 60],
-      ["ContentType", type],
-      ["ACL", "public-read"]
-    ]);
-    api.getSignedUrl("putObject", params, (error, url) => {
-      if (!error) {
-        let body = {url};
-        console.log(body);
-        Controller.respond(response, body);
-      } else {
-        console.error(error);
-      }
-    });
+    try {
+      let url = await AwsUtil.getUploadResourceUrl(name, type);
+      let body = {url};
+      Controller.respond(response, body);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 }

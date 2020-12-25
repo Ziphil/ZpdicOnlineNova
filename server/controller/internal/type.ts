@@ -302,7 +302,7 @@ type ServerSpecs = {
   fetchUploadResourceUrl: {
     request: {number: number, name: string, type: string},
     response: {
-      success: any,
+      success: {url: string},
       error: CustomError<string>
     }
   },
