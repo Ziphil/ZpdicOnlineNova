@@ -76,6 +76,7 @@ export const SERVER_PATHS = {
   fetchInvitations: "/invitation/fetch",
   checkDictionaryAuthorization: "/dictionary/check",
   fetchCommissions: "/commission/fetch",
+  fetchUploadResourceUrl: "/resource/upload",
   login: "/user/login",
   logout: "/user/logout",
   registerUser: "/user/register",
@@ -296,6 +297,13 @@ type ServerSpecs = {
     response: {
       success: WithSize<Commission>,
       error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
+  fetchUploadResourceUrl: {
+    request: {number: number, name: string, type: string},
+    response: {
+      success: any,
+      error: CustomError<string>
     }
   },
   login: {
