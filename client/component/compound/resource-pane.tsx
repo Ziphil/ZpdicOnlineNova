@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Button from "/client/component/atom/button";
 import Component from "/client/component/component";
 import {
   style
@@ -23,8 +24,15 @@ export default class ResourcePane extends Component<Props, State> {
     let url = AwsUtil.getFileUrl(`resource/${this.props.dictionary.number}/${this.props.resource}`);
     let node = (
       <div styleName="root">
-        <img styleName="image" src={url}/>
         {this.props.resource}
+        <div styleName="button-wrapper">
+          <div styleName="image">
+            <img src={url}/>
+          </div>
+          <div styleName="button">
+            <Button label={this.trans("resourcePane.discard")} iconLabel="&#xF2ED;" style="simple"/>
+          </div>
+        </div>
       </div>
     );
     return node;

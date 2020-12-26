@@ -3,11 +3,20 @@
 @import "/client/component/mixin.scss";
 
 
-.image {
+.root {
+  @include unordered-list-item("\F0DA", $light-color, 0.4em);
+}
+
+.button-wrapper {
+  margin: 10px 0px 0px 0px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.image >img {
   width: auto;
   height: auto;
   max-width: 40px;
   max-height: 40px;
-  margin: 0px 10px 0px 0px;
-  vertical-align: middle;
 }
