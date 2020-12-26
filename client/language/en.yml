@@ -371,6 +371,11 @@ resetUserPasswordForm:
   newPassword: "New password"
   issue: "Confirm"
   reset: "Reset"
+resourceList:
+  file: "File to upload"
+  confirm: "Confirm"
+resourcePane:
+  discard: "Delete"
 searchForm:
   both: "Both"
   name: "Headword"
@@ -412,6 +417,7 @@ wordEditor:
   discard: "Delete"
   confirm: "Confirm"
   generate: "Generate"
+  resource: "Resources"
   selectRelation: "Select"
   alertConfirm: "Delete"
   alert: >-

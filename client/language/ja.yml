@@ -371,6 +371,11 @@ resetUserPasswordForm:
   newPassword: "新しいパスワード"
   issue: "送信"
   reset: "変更"
+resourceList:
+  file: "アップロードファイル"
+  confirm: "決定"
+resourcePane:
+  discard: "削除"
 searchForm:
   both: "単語＋訳語"
   name: "単語"
@@ -412,6 +417,7 @@ wordEditor:
   discard: "削除"
   confirm: "決定"
   generate: "生成"
+  resource: "リソース"
   selectRelation: "変更"
   alertConfirm: "削除"
   alert: >-
