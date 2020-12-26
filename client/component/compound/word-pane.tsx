@@ -27,6 +27,9 @@ import {
   Relation,
   Word
 } from "/client/skeleton/dictionary";
+import {
+  AwsUtil
+} from "/client/util/aws";
 
 
 @style(require("./word-pane.scss"))
@@ -128,7 +131,8 @@ export default class WordPane extends Component<Props, State> {
 
   private renderInformations(): ReactNode {
     let nodes = this.props.word.informations.map((information, index) => {
-      let textNode = (this.props.dictionary.settings.enableMarkdown) ? <Markdown source={information.text}/> : <p styleName="text">{information.text}</p>;
+      let homePath = AwsUtil.getFileUrl(`resource/${this.props.dictionary.number}/`);
+      let textNode = (this.props.dictionary.settings.enableMarkdown) ? <Markdown source={information.text} homePath={homePath}/> : <p styleName="text">{information.text}</p>;
       let informationNode = (
         <div styleName="container" key={index}>
           <div styleName="title">{information.title}</div>
