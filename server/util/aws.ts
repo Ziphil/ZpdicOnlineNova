@@ -1,7 +1,7 @@
 //
 
 import {
-  S3 as StorageApi
+  S3 as StorageClient
 } from "aws-sdk";
 import {
   AWS_STORAGE_BUCKET
@@ -11,7 +11,7 @@ import {
 export class AwsUtil {
 
   public static getUploadFileUrl(path: string, type: string): Promise<string> {
-    let api = new StorageApi();
+    let client = new StorageClient();
     let params = Object.fromEntries([
       ["Bucket", AWS_STORAGE_BUCKET],
       ["Key", path],
@@ -20,7 +20,7 @@ export class AwsUtil {
       ["ACL", "public-read"]
     ]);
     let promise = new Promise<string>((resolve, reject) => {
-      api.getSignedUrl("putObject", params, (error, url) => {
+      client.getSignedUrl("putObject", params, (error, url) => {
         if (!error) {
           resolve(url);
         } else {
@@ -32,14 +32,14 @@ export class AwsUtil {
   }
 
   public static getFileNames(path: string): Promise<Array<string>> {
-    let api = new StorageApi();
+    let client = new StorageClient();
     let modifiedPath = (path.endsWith("/")) ? path : path + "/";
     let params = Object.fromEntries([
       ["Bucket", AWS_STORAGE_BUCKET],
       ["Prefix", modifiedPath]
     ]);
     let promise = new Promise<Array<string>>((resolve, reject) => {
-      api.listObjectsV2(params, (error, data) => {
+      client.listObjectsV2(params, (error, data) => {
         if (!error) {
           if (data["Contents"] !== undefined) {
             let names = data["Contents"].map((object) => (object["Key"] ?? "").replace(modifiedPath, ""));
