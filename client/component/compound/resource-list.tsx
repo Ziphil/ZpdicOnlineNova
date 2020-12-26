@@ -16,6 +16,9 @@ import {
   Dictionary
 } from "/client/skeleton/dictionary";
 import {
+  AwsUtil
+} from "/client/util/aws";
+import {
   WithSize
 } from "/server/controller/internal/type";
 
@@ -52,21 +55,11 @@ export default class ResourceList extends Component<Props, State> {
       let response = await this.request("fetchUploadResourceUrl", {number, name, type});
       if (response.status === 200 && !("error" in response.data)) {
         let url = response.data.url;
-        let client = new XMLHttpRequest();
-        let outerThis = this;
-        client.open("PUT", url);
-        client.onreadystatechange = function (): void {
-          if (client.readyState === 4) {
-            if (client.status === 200) {
-              console.log("Done");
-              outerThis.provideResources = outerThis.provideResources.bind(outerThis);
-              outerThis.setState({file: null});
-            } else {
-              console.log("Weird");
-            }
-          }
-        };
-        client.send(file);
+        try {
+          AwsUtil.uploadFile(url, file);
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   }

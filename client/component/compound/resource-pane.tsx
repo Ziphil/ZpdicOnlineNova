@@ -11,13 +11,16 @@ import {
 import {
   Dictionary
 } from "/client/skeleton/dictionary";
+import {
+  AwsUtil
+} from "/client/util/aws";
 
 
 @style(require("./resource-pane.scss"))
 export default class ResourcePane extends Component<Props, State> {
 
   public render(): ReactNode {
-    let url = `https://zpdic-test.s3.amazonaws.com/resource/${this.props.dictionary.number}/${this.props.resource}`;
+    let url = AwsUtil.getFileUrl(`resource/${this.props.dictionary.number}/${this.props.resource}`);
     let node = (
       <div styleName="root">
         <img styleName="image" src={url}/>
