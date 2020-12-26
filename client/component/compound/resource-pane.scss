@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.image {
+  width: auto;
+  height: auto;
+  max-width: 40px;
+  max-height: 40px;
+  margin: 0px 10px 0px 0px;
+  vertical-align: middle;
+}

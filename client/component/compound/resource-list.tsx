@@ -8,6 +8,7 @@ import Button from "/client/component/atom/button";
 import FileInput from "/client/component/atom/file-input";
 import Component from "/client/component/component";
 import PaneList from "/client/component/compound/pane-list";
+import ResourcePane from "/client/component/compound/resource-pane";
 import {
   style
 } from "/client/component/decorator";
@@ -72,14 +73,9 @@ export default class ResourceList extends Component<Props, State> {
 
   public render(): ReactNode {
     let outerThis = this;
-    let styles = this.props.styles!;
     let renderer = function (resource: string): ReactNode {
-      let url = `https://zpdic-test.s3.amazonaws.com/resource/${outerThis.props.dictionary.number}/${resource}`;
       let node = (
-        <div>
-          <img className={styles["image"]} src={url}/>
-          {resource}
-        </div>
+        <ResourcePane dictionary={outerThis.props.dictionary} resource={resource}/>
       );
       return node;
     };
