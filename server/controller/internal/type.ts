@@ -304,14 +304,14 @@ type ServerSpecs = {
     request: {number: number, offset?: number, size?: number},
     response: {
       success: WithSize<string>,
-      error: CustomError<string>
+      error: CustomError<"noSuchDictionaryNumber" | "awsError">
     }
   },
   fetchUploadResourceUrl: {
     request: WithRecaptcha<{number: number, name: string, type: string}>,
     response: {
       success: {url: string},
-      error: CustomError<string>
+      error: CustomError<"noSuchDictionaryNumber" | "awsError">
     }
   },
   login: {

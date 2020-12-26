@@ -39,14 +39,20 @@ export class ResourceController extends Controller {
     let dictionary = request.dictionary!;
     let offset = request.body.offset;
     let size = request.body.size;
-    try {
-      let path = `resource/${dictionary.number}`;
-      let range = new QueryRange(offset, size);
-      let names = QueryRange.restrictArrayWithSize(await AwsUtil.getFileNames(path), range);
-      let body = names;
-      Controller.respond(response, body);
-    } catch (error) {
-      console.log(error);
+    if (dictionary) {
+      try {
+        let path = `resource/${dictionary.number}`;
+        let range = new QueryRange(offset, size);
+        let names = QueryRange.restrictArrayWithSize(await AwsUtil.getFileNames(path), range);
+        let body = names;
+        Controller.respond(response, body);
+      } catch (error) {
+        let body = CustomError.ofType("awsError");
+        Controller.respondError(response, body);
+      }
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
     }
   }
 
@@ -56,13 +62,19 @@ export class ResourceController extends Controller {
     let dictionary = request.dictionary!;
     let name = request.body.name;
     let type = request.body.type;
-    try {
-      let path = `resource/${dictionary.number}/${name}`;
-      let url = await AwsUtil.getUploadFileUrl(path, type);
-      let body = {url};
-      Controller.respond(response, body);
-    } catch (error) {
-      console.log(error);
+    if (dictionary) {
+      try {
+        let path = `resource/${dictionary.number}/${name}`;
+        let url = await AwsUtil.getUploadFileUrl(path, type);
+        let body = {url};
+        Controller.respond(response, body);
+      } catch (error) {
+        let body = CustomError.ofType("awsError");
+        Controller.respondError(response, body);
+      }
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
     }
   }
 

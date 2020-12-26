@@ -160,6 +160,9 @@ popup:
   recaptchaRejected: >-
     Failed to authenticate by reCAPTCHA.
     Please try again.
+  awsError: >-
+    Something failed.
+    Please try again.
   messageNotFound: >-
     There is no message configured for this popup.
     Please notify the administrator.
