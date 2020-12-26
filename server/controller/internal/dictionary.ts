@@ -25,6 +25,7 @@ import {
 } from "/server/controller/internal/controller";
 import {
   verifyDictionary,
+  verifyRecaptcha,
   verifyUser
 } from "/server/controller/internal/middle";
 import {
@@ -69,7 +70,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATHS["uploadDictionary"])
-  @before(verifyUser(), verifyDictionary("own"))
+  @before(verifyRecaptcha(), verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"uploadDictionary">, response: Response<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary;
     let path = request.file.path;

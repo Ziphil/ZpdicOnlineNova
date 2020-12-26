@@ -105,7 +105,7 @@ type ServerSpecs = {
     }
   },
   uploadDictionary: {
-    request: {number: string},
+    request: WithRecaptcha<{number: string}>,
     response: {
       success: Dictionary,
       error: CustomError<"noSuchDictionaryNumber">
@@ -308,7 +308,7 @@ type ServerSpecs = {
     }
   },
   fetchUploadResourceUrl: {
-    request: {number: number, name: string, type: string},
+    request: WithRecaptcha<{number: number, name: string, type: string}>,
     response: {
       success: {url: string},
       error: CustomError<string>

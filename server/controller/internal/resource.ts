@@ -15,6 +15,7 @@ import {
 } from "/server/controller/internal/controller";
 import {
   verifyDictionary,
+  verifyRecaptcha,
   verifyUser
 } from "/server/controller/internal/middle";
 import {
@@ -50,7 +51,7 @@ export class ResourceController extends Controller {
   }
 
   @post(SERVER_PATHS["fetchUploadResourceUrl"])
-  @before(verifyUser(), verifyDictionary("own"))
+  @before(verifyRecaptcha(), verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchUploadResourceUrl">, response: Response<"fetchUploadResourceUrl">): Promise<void> {
     let dictionary = request.dictionary!;
     let name = request.body.name;
