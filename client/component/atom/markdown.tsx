@@ -25,7 +25,7 @@ export default class Markdown extends Component<Props, State> {
     allowHeading: false
   };
 
-  private getAllowedTypes(): [Array<NodeType> | undefined, Array<NodeType> | undefined] {
+  private getAllowedTypes(): [Array<NodeType>?, Array<NodeType>?] {
     if (this.props.simple) {
       let allowedTypes = ["root", "text", "paragraph", "link"] as Array<NodeType>;
       return [allowedTypes, undefined];
@@ -72,8 +72,8 @@ export default class Markdown extends Component<Props, State> {
 type Props = {
   source: string,
   simple: boolean,
-  allowHeading: boolean
-  renderers?: Renderers
+  allowHeading: boolean,
+  renderers?: Renderers,
   className?: string
 };
 type DefaultProps = {
@@ -83,4 +83,4 @@ type DefaultProps = {
 type State = {
 };
 
-type Renderers = {[type: string]: ElementType};
+export type Renderers = {[type: string]: ElementType};
