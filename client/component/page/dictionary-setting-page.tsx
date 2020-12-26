@@ -9,6 +9,7 @@ import Component from "/client/component/component";
 import CommissionList from "/client/component/compound/commission-list";
 import DictionaryStatisticsPane from "/client/component/compound/dictionary-statistics-pane";
 import Menu from "/client/component/compound/menu";
+import ResourceList from "/client/component/compound/resource-list";
 import SettingPane from "/client/component/compound/setting-pane";
 import {
   style
@@ -263,6 +264,15 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
+  private renderResourceList(): ReactNode {
+    let node = (
+      <SettingPane key="resourceList">
+        <ResourceList dictionary={this.state.dictionary!} size={20}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderAddEditInvitationForm(): ReactNode {
     let label = this.trans("dictionarySettingPage.addEditInvitationForm.label");
     let description = this.trans("dictionarySettingPage.addEditInvitationForm.description");
@@ -303,6 +313,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       {mode: "setting", label: this.trans("dictionarySettingPage.setting"), iconLabel: "\uF013", href: "/dashboard/dictionary/setting/" + number},
       {mode: "access", label: this.trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dashboard/dictionary/access/" + number},
       {mode: "request", label: this.trans("dictionarySettingPage.commission"), iconLabel: "\uF022", badgeValue: commissionCount, href: "/dashboard/dictionary/request/" + number},
+      {mode: "resource", label: this.trans("dictionarySettingPage.resource"), iconLabel: "\uF15B", href: "/dashboard/dictionary/resource/" + number},
       {mode: "statistics", label: this.trans("dictionarySettingPage.statistics"), iconLabel: "\uF201", href: "/dashboard/dictionary/statistics/" + number}
     ];
     let contentNodes = [];
@@ -325,6 +336,8 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderAddTransferInvitationForm());
       } else if (mode === "request") {
         contentNodes.push(this.renderCommissionList());
+      } else if (mode === "resource") {
+        contentNodes.push(this.renderResourceList());
       } else if (mode === "statistics") {
         contentNodes.push(this.renderDictionaryStatisticsPane());
       }

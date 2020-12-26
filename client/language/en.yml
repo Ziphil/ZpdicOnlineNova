@@ -478,8 +478,9 @@ dictionaryListPage:
 dictionarySettingPage:
   general: "General"
   setting: "Settings"
-  commission: "Requests"
   access: "Permissions"
+  commission: "Requests"
+  resource: "Resources"
   statistics: "Statistics"
   changeDictionaryNameForm:
     label: "Change name"

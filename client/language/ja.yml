@@ -478,8 +478,9 @@ dictionaryListPage:
 dictionarySettingPage:
   general: "一般"
   setting: "設定"
-  commission: "造語依頼"
   access: "権限"
+  commission: "造語依頼"
+  resource: "リソース"
   statistics: "統計"
   changeDictionaryNameForm:
     label: "表示名の変更"
