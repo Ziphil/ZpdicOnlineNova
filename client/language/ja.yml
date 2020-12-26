@@ -378,6 +378,8 @@ resourceList:
   file: "アップロードファイル"
   confirm: "決定"
 resourcePane:
+  code: "埋め込み用コード"
+  copy: "コピー"
   discard: "削除"
 searchForm:
   both: "単語＋訳語"

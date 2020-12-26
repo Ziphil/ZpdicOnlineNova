@@ -68,7 +68,7 @@ export default class ResourceList extends Component<Props, State> {
     let outerThis = this;
     let renderer = function (resource: string): ReactNode {
       let node = (
-        <ResourcePane dictionary={outerThis.props.dictionary} resource={resource}/>
+        <ResourcePane dictionary={outerThis.props.dictionary} resource={resource} showCode={outerThis.props.showCode}/>
       );
       return node;
     };
@@ -91,7 +91,8 @@ export default class ResourceList extends Component<Props, State> {
 
 type Props = {
   dictionary: Dictionary,
-  size: number
+  size: number,
+  showCode?: boolean
 };
 type State = {
   file: File | null

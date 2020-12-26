@@ -7,6 +7,31 @@
   @include unordered-list-item("\F0DA", $light-color, 0.4em);
 }
 
+.code-outer {
+  margin: 10px 0px 0px 0px;
+}
+
+.code-wrapper {
+  display: flex;
+  align-items: baseline;
+}
+
+.code {
+  @include monospace-font;
+  margin: 0px;
+  padding: 0.12em 0.5em;
+  line-height: $text-line-height;
+  background-color: $strong-background-color;
+  border-radius: $small-border-radius;
+  overflow: hidden;
+  flex-grow: 1;
+}
+
+.copy-button {
+  margin: 0px 0px 0px $control-margin;
+  white-space: nowrap;
+}
+
 .button-wrapper {
   margin: 10px 0px 0px 0px;
   display: flex;
