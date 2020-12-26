@@ -26,6 +26,11 @@ export default class ResourceList extends Component<Props, State> {
     file: null
   };
 
+  public constructor(props: Props) {
+    super(props);
+    this.provideResources = this.provideResources.bind(this);
+  }
+
   private async provideResources(offset?: number, size?: number): Promise<WithSize<string>> {
     let number = this.props.dictionary.number;
     let response = await this.request("fetchResources", {number, offset, size});
@@ -53,6 +58,7 @@ export default class ResourceList extends Component<Props, State> {
           if (client.readyState === 4) {
             if (client.status === 200) {
               console.log("Done");
+              outerThis.provideResources = outerThis.provideResources.bind(outerThis);
               outerThis.setState({file: null});
             } else {
               console.log("Weird");
@@ -84,7 +90,7 @@ export default class ResourceList extends Component<Props, State> {
           <Button label={this.trans("resourceList.confirm")} reactive={true} onClick={this.uploadFile.bind(this)}/>
         </div>
         <div styleName="list">
-          <PaneList items={this.provideResources.bind(this)} size={this.props.size} column={2} method="table" style="spaced" border={true} renderer={renderer}/>
+          <PaneList items={this.provideResources} size={this.props.size} column={2} method="table" style="spaced" border={true} renderer={renderer}/>
         </div>
       </div>
     );
