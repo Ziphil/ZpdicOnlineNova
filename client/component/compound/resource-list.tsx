@@ -27,12 +27,14 @@ import {
 export default class ResourceList extends Component<Props, State> {
 
   public state: State = {
-    file: null
+    file: null,
+    resources: null
   };
 
   public constructor(props: Props) {
     super(props);
     this.provideResources = this.provideResources.bind(this);
+    this.state.resources = this.provideResources;
   }
 
   private async provideResources(offset?: number, size?: number): Promise<WithSize<string>> {
@@ -56,7 +58,8 @@ export default class ResourceList extends Component<Props, State> {
       if (response.status === 200 && !("error" in response.data)) {
         let url = response.data.url;
         try {
-          AwsUtil.uploadFile(url, file);
+          await AwsUtil.uploadFile(url, file);
+          this.setState({resources: this.provideResources.bind(this)});
         } catch (error) {
           console.log(error);
         }
@@ -79,7 +82,7 @@ export default class ResourceList extends Component<Props, State> {
           <Button label={this.trans("resourceList.confirm")} reactive={true} onClick={this.uploadFile.bind(this)}/>
         </div>
         <div styleName="list">
-          <PaneList items={this.provideResources} size={this.props.size} column={2} method="table" style="spaced" border={true} renderer={renderer}/>
+          <PaneList items={this.state.resources} size={this.props.size} column={2} method="table" style="spaced" border={true} renderer={renderer}/>
         </div>
       </div>
     );
@@ -95,5 +98,6 @@ type Props = {
   showCode?: boolean
 };
 type State = {
-  file: File | null
+  file: File | null,
+  resources: any
 };
