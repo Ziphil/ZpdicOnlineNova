@@ -78,6 +78,7 @@ export const SERVER_PATHS = {
   fetchCommissions: "/commission/fetch",
   fetchResources: "/resource/fetch",
   fetchUploadResourceUrl: "/resource/upload",
+  discardResource: "/resource/discard",
   login: "/user/login",
   logout: "/user/logout",
   registerUser: "/user/register",
@@ -311,6 +312,13 @@ type ServerSpecs = {
     request: WithRecaptcha<{number: number, name: string, type: string}>,
     response: {
       success: {url: string},
+      error: CustomError<"noSuchDictionaryNumber" | "awsError">
+    }
+  },
+  discardResource: {
+    request: {number: number, name: string},
+    response: {
+      success: null,
       error: CustomError<"noSuchDictionaryNumber" | "awsError">
     }
   },

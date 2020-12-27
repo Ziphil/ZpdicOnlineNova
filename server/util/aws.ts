@@ -31,6 +31,24 @@ export class AwsUtil {
     return promise;
   }
 
+  public static deleteFile(path: string): Promise<void> {
+    let client = new StorageClient();
+    let params = Object.fromEntries([
+      ["Bucket", AWS_STORAGE_BUCKET],
+      ["Key", path]
+    ]);
+    let promise = new Promise<void>((resolve, reject) => {
+      client.deleteObject(params, (error, data) => {
+        if (!error) {
+          resolve();
+        } else {
+          reject(error);
+        }
+      });
+    });
+    return promise;
+  }
+
   public static getFileNames(path: string): Promise<Array<string>> {
     let client = new StorageClient();
     let modifiedPath = (path.endsWith("/")) ? path : path + "/";
