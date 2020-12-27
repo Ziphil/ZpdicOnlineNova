@@ -59,9 +59,10 @@ export default class ResourceList extends Component<Props, State> {
         let url = response.data.url;
         try {
           await AwsUtil.uploadFile(url, file);
+          this.props.store!.addInformationPopup("resourceUploaded");
           this.setState({resources: this.provideResources.bind(this)});
         } catch (error) {
-          console.log(error);
+          this.props.store!.addInformationPopup("awsError");
         }
       }
     }
