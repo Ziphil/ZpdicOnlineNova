@@ -60,25 +60,25 @@ export const SERVER_PATHS = {
   respondInvitation: "/invitation/respond",
   editWord: "/word/edit",
   discardWord: "/word/discard",
-  editExample: "/examle/edit",
-  discardExample: "/examle/discard",
+  editExample: "/example/edit",
+  discardExample: "/example/discard",
   addCommission: "/commission/add",
   discardCommission: "/commission/discard",
+  fetchCommissions: "/commission/fetch",
   searchDictionary: "/dictionary/search",
   downloadDictionary: "/dictionary/download",
-  fetchDictionary: "/dictionary/fetch",
   suggestDictionaryTitles: "/dictionary/suggest/title",
   fetchDictionaryAuthorizedUsers: "/dictionary/user",
+  checkDictionaryAuthorization: "/dictionary/check",
+  fetchDictionary: "/dictionary/fetch",
   fetchDictionaries: "/dictionary/list",
   fetchAllDictionaries: "/dictionary/list/all",
   fetchDictionaryAggregation: "/dictionary/aggregate",
   fetchWordNames: "/word/name",
   fetchInvitations: "/invitation/fetch",
-  checkDictionaryAuthorization: "/dictionary/check",
-  fetchCommissions: "/commission/fetch",
-  fetchResources: "/resource/fetch",
   fetchUploadResourceUrl: "/resource/upload",
   discardResource: "/resource/discard",
+  fetchResources: "/resource/fetch",
   login: "/user/login",
   logout: "/user/logout",
   registerUser: "/user/register",
@@ -216,7 +216,14 @@ type ServerSpecs = {
       success: Commission,
       error: CustomError<"noSuchDictionaryNumber" | "noSuchCommission">
     }
-  }
+  },
+  fetchCommissions: {
+    request: {number: number, offset?: number, size?: number},
+    response: {
+      success: WithSize<Commission>,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
   searchDictionary: {
     request: {number: number, parameter: WordParameter, offset?: number, size?: number},
     response: {
@@ -231,13 +238,6 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
-  fetchDictionary: {
-    request: {number?: number, paramName?: string},
-    response: {
-      success: DetailedDictionary,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
-    }
-  },
   suggestDictionaryTitles: {
     request: {number: number, propertyName: string, pattern: string},
     response: {
@@ -250,6 +250,20 @@ type ServerSpecs = {
     response: {
       success: Array<User>,
       error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
+  checkDictionaryAuthorization: {
+    request: {number: number, authority: DictionaryAuthority},
+    response: {
+      success: null,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
+  fetchDictionary: {
+    request: {number?: number, paramName?: string},
+    response: {
+      success: DetailedDictionary,
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
     }
   },
   fetchDictionaries: {
@@ -287,27 +301,6 @@ type ServerSpecs = {
       error: never
     }
   },
-  checkDictionaryAuthorization: {
-    request: {number: number, authority: DictionaryAuthority},
-    response: {
-      success: null,
-      error: CustomError<"noSuchDictionaryNumber">
-    }
-  },
-  fetchCommissions: {
-    request: {number: number, offset?: number, size?: number},
-    response: {
-      success: WithSize<Commission>,
-      error: CustomError<"noSuchDictionaryNumber">
-    }
-  },
-  fetchResources: {
-    request: {number: number, offset?: number, size?: number},
-    response: {
-      success: WithSize<string>,
-      error: CustomError<"noSuchDictionaryNumber" | "awsError">
-    }
-  },
   fetchUploadResourceUrl: {
     request: WithRecaptcha<{number: number, name: string, type: string}>,
     response: {
@@ -319,6 +312,13 @@ type ServerSpecs = {
     request: {number: number, name: string},
     response: {
       success: null,
+      error: CustomError<"noSuchDictionaryNumber" | "awsError">
+    }
+  },
+  fetchResources: {
+    request: {number: number, offset?: number, size?: number},
+    response: {
+      success: WithSize<string>,
       error: CustomError<"noSuchDictionaryNumber" | "awsError">
     }
   },
