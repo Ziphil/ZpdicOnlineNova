@@ -70,6 +70,10 @@ popup:
     例文の編集が完了しました。
   exampleDiscarded: >-
     例文の削除が完了しました。
+  resourceUploaded: >-
+    リソースのアップロードが完了しました。
+  resourceDiscarded: >-
+    リソースを削除しました。
   commissionAdded: >-
     単語の造語依頼が完了しました。
   commissionDiscarded: >-
@@ -381,6 +385,9 @@ resourcePane:
   code: "埋め込み用コード"
   copy: "コピー"
   discard: "削除"
+  alert: >-
+    このリソースを削除します。
+    よろしいですか?
 searchForm:
   both: "単語＋訳語"
   name: "単語"

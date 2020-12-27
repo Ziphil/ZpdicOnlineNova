@@ -70,6 +70,10 @@ popup:
     The example sentence has been edited.
   exampleDiscarded: >-
     The example sentence has been deleted.
+  resourceUploaded: >-
+    The resource has been uploaded.
+  resourceDiscarded: >-
+    The resource has been deleted.
   commissionAdded: >-
     Your request has been completed.
   commissionDiscarded: >-
@@ -381,6 +385,9 @@ resourcePane:
   code: "Code to embed"
   copy: "Copy"
   discard: "Delete"
+  alert: >-
+    This resource will be deleted.
+    Are you really sure?
 searchForm:
   both: "Both"
   name: "Headword"
