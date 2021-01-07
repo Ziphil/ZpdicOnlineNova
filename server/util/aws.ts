@@ -21,7 +21,7 @@ export class AwsUtil {
         ["starts-with", "$key", path],
         ["starts-with", "$Content-Type", "image/"],
         ["eq", "$acl", "public-read"],
-        ["content-length-range", 0, 128 * 1024]
+        ["content-length-range", 0, 1024 * 1024]
       ]]
     ]);
     let promise = new Promise<PresignedPost>((resolve, reject) => {

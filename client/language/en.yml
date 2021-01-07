@@ -124,7 +124,7 @@ popup:
     You can upload up to 10 files to one dictionary.
   resourceSizeTooLarge: >-
     The file is too large.
-    You cannot upload files larger than 128 KB.
+    You cannot upload files larger than 1 MB.
   unsupportedResourceType: >-
     This file type is not supported.
   userCanAlreadyEdit: >-

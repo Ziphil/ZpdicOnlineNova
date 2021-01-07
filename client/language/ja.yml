@@ -124,7 +124,7 @@ popup:
     1 つの辞書にアップロードできるファイルは 10 個までです。
   resourceSizeTooLarge: >-
     ファイルのサイズが大きすぎます。
-    128 KB より大きなファイルはアップロードすることができません。
+    1 MB より大きなファイルはアップロードすることができません。
   unsupportedResourceType: >-
     サポートされていないファイルの形式です。
   userCanAlreadyEdit: >-
