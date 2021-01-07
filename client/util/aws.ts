@@ -13,6 +13,7 @@ export class AwsUtil {
     for (let [key, value] of Object.entries(post.fields)) {
       formData.append(key, value);
     }
+    formData.append("Content-Type", file.type);
     formData.append("file", file);
     await axios.post(post.url, formData);
   }

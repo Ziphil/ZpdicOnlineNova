@@ -19,6 +19,7 @@ export class AwsUtil {
       ["Conditions", [
         ["eq", "$bucket", AWS_STORAGE_BUCKET],
         ["starts-with", "$key", path],
+        ["starts-with", "$Content-Type", "image/"],
         ["eq", "$acl", "public-read"],
         ["content-length-range", 0, 128 * 1024]
       ]]
