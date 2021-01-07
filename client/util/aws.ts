@@ -1,5 +1,6 @@
 //
 
+import axios from "axios";
 import {
   AWS_STORAGE_BUCKET
 } from "/client/variable";
@@ -7,7 +8,16 @@ import {
 
 export class AwsUtil {
 
-  public static uploadFile(url: string, file: Blob): Promise<void> {
+  public static async uploadFile(post: PresignedPost, file: Blob): Promise<void> {
+    let formData = new FormData();
+    for (let [key, value] of Object.entries(post.fields)) {
+      formData.append(key, value);
+    }
+    formData.append("file", file);
+    await axios.post(post.url, formData);
+  }
+
+  public static uploadFileByUrl(url: string, file: Blob): Promise<void> {
     let promise = new Promise<void>((resolve, reject) => {
       let client = new XMLHttpRequest();
       client.open("PUT", url);
@@ -31,3 +41,6 @@ export class AwsUtil {
   }
 
 }
+
+
+export type PresignedPost = {url: string, fields: Record<string, string>};

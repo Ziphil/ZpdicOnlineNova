@@ -304,7 +304,7 @@ type ServerSpecs = {
   fetchUploadResourceUrl: {
     request: WithRecaptcha<{number: number, name: string, type: string}>,
     response: {
-      success: {url: string},
+      success: {url: string, fields: Record<string, string>},
       error: CustomError<"noSuchDictionaryNumber" | "awsError">
     }
   },

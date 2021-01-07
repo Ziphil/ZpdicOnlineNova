@@ -56,9 +56,9 @@ export default class ResourceList extends Component<Props, State> {
       let type = file.type;
       let response = await this.request("fetchUploadResourceUrl", {number, name, type}, {useRecaptcha: true});
       if (response.status === 200 && !("error" in response.data)) {
-        let url = response.data.url;
+        let post = response.data;
         try {
-          await AwsUtil.uploadFile(url, file);
+          await AwsUtil.uploadFile(post, file);
           this.props.store!.addInformationPopup("resourceUploaded");
           this.setState({resources: this.provideResources.bind(this)});
         } catch (error) {

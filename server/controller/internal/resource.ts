@@ -42,8 +42,8 @@ export class ResourceController extends Controller {
     if (dictionary) {
       try {
         let path = `resource/${dictionary.number}/${name}`;
-        let url = await AwsUtil.getUploadFileUrl(path, type);
-        let body = {url};
+        let post = await AwsUtil.getUploadFilePost(path);
+        let body = post;
         Controller.respond(response, body);
       } catch (error) {
         let body = CustomError.ofType("awsError");

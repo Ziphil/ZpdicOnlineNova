@@ -10,6 +10,35 @@ import {
 
 export class AwsUtil {
 
+  public static getUploadFilePost(path: string): Promise<PresignedPost> {
+    let client = new StorageClient();
+    let params = Object.fromEntries([
+      ["Bucket", AWS_STORAGE_BUCKET],
+      ["Fields", {key: path}],
+      ["Expires", 60],
+      ["Conditions", [
+        ["eq", "$bucket", AWS_STORAGE_BUCKET],
+        ["starts-with", "$key", path],
+        ["eq", "$acl", "public-read"],
+        ["content-length-range", 0, 128 * 1024]
+      ]]
+    ]);
+    let promise = new Promise<PresignedPost>((resolve, reject) => {
+      client.createPresignedPost(params, (error, data) => {
+        if (!error) {
+          let url = data.url;
+          let additionalFields = {acl: "public-read"};
+          let fields = {...data.fields, ...additionalFields};
+          let nextData = {url, fields};
+          resolve(nextData);
+        } else {
+          reject(error);
+        }
+      });
+    });
+    return promise;
+  }
+
   public static getUploadFileUrl(path: string, type: string): Promise<string> {
     let client = new StorageClient();
     let params = Object.fromEntries([
@@ -74,3 +103,6 @@ export class AwsUtil {
   }
 
 }
+
+
+export type PresignedPost = {url: string, fields: Record<string, string>};
