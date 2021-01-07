@@ -12,6 +12,7 @@ import {
 import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import Label from "/client/component/atom/label";
+import TextArea from "/client/component/atom/text-area";
 import Component from "/client/component/component";
 import {
   style
@@ -52,10 +53,7 @@ export default class ResourcePane extends Component<Props, State> {
     let codeNode = (this.props.showCode) && (
       <div styleName="code-outer">
         <div styleName="code-wrapper">
-          <pre styleName="code">![](&lt;{shortUrl}&gt;)</pre>
-          <div styleName="copy-button">
-            <Button label={this.trans("resourcePane.copy")} iconLabel="&#xF0C5;" style="simple" hideLabel={true}/>
-          </div>
+          <TextArea value={`![](<${shortUrl}>)`} language="plain" font="monospace" fitHeight={true} readOnly={true}/>
         </div>
       </div>
     );
