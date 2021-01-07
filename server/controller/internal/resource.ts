@@ -38,13 +38,19 @@ export class ResourceController extends Controller {
   public async [Symbol()](request: Request<"fetchUploadResourcePost">, response: Response<"fetchUploadResourcePost">): Promise<void> {
     let dictionary = request.dictionary!;
     let name = request.body.name;
-    let type = request.body.type;
     if (dictionary) {
       try {
+        let directoryPath = `resource/${dictionary.number}`;
         let path = `resource/${dictionary.number}/${name}`;
-        let post = await AwsUtil.getUploadFilePost(path);
-        let body = post;
-        Controller.respond(response, body);
+        let names = await AwsUtil.getFileNames(directoryPath);
+        if (names.length < 10) {
+          let post = await AwsUtil.getUploadFilePost(path);
+          let body = post;
+          Controller.respond(response, body);
+        } else {
+          let body = CustomError.ofType("resourceCountExceeded");
+          Controller.respondError(response, body);
+        }
       } catch (error) {
         let body = CustomError.ofType("awsError");
         Controller.respondError(response, body);

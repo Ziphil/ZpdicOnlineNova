@@ -305,7 +305,7 @@ type ServerSpecs = {
     request: WithRecaptcha<{number: number, name: string, type: string}>,
     response: {
       success: {url: string, fields: Record<string, string>},
-      error: CustomError<"noSuchDictionaryNumber" | "awsError">
+      error: CustomError<"noSuchDictionaryNumber" | "resourceCountExceeded" | "awsError">
     }
   },
   discardResource: {

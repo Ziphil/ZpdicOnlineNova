@@ -119,6 +119,9 @@ popup:
     You tried to edit a word which does not exist.
   noSuchExampleNumber: >-
     You tried to edit an example sentence which does not exist.
+  resourceCountExceeded: >-
+    No more files can be uploaded.
+    You can upload up to 10 files to one dictionary.
   resourceSizeTooLarge: >-
     The file is too large.
     You cannot upload files larger than 128 KB.
