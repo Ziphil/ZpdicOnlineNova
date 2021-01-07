@@ -119,6 +119,11 @@ popup:
     存在しない単語を編集しようとしました。
   noSuchExampleNumber: >-
     存在しない例文を編集しようとしました。
+  resourceSizeTooLarge: >-
+    ファイルのサイズが大きすぎます。
+    128 KB より大きなファイルはアップロードすることができません。
+  unsupportedResourceType: >-
+    サポートされていないファイルの形式です。
   userCanAlreadyEdit: >-
     そのユーザーはすでに編集権限を保有しています。
   userCanAlreadyOwn: >-

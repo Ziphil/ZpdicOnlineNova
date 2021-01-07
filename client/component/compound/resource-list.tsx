@@ -62,7 +62,19 @@ export default class ResourceList extends Component<Props, State> {
           this.props.store!.addInformationPopup("resourceUploaded");
           this.setState({resources: this.provideResources.bind(this)});
         } catch (error) {
-          this.props.store!.addErrorPopup("awsError");
+          if (error.name === "AwsError") {
+            let code = error.data["Code"]["_text"];
+            let message = error.data["Message"]["_text"];
+            if (code === "EntityTooLarge") {
+              this.props.store!.addErrorPopup("resourceSizeTooLarge");
+            } else if (code === "AccessDenied" && message.includes("Policy Condition failed") && message.includes("$Content-Type")) {
+              this.props.store!.addErrorPopup("unsupportedResourceType");
+            } else {
+              this.props.store!.addErrorPopup("awsError");
+            }
+          } else {
+            this.props.store!.addErrorPopup("awsError");
+          }
         }
       }
     }

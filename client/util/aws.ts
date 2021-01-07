@@ -2,6 +2,9 @@
 
 import axios from "axios";
 import {
+  xml2js as parseXml
+} from "xml-js";
+import {
   AWS_STORAGE_BUCKET
 } from "/client/variable";
 
@@ -15,7 +18,16 @@ export class AwsUtil {
     }
     formData.append("Content-Type", file.type);
     formData.append("file", file);
-    await axios.post(post.url, formData);
+    let response = await axios.post(post.url, formData, {validateStatus: () => true});
+    if (response.status === 400 || response.status === 403) {
+      let result = parseXml(response.data, {compact: true}) as any;
+      let errorData = result["Error"];
+      if (typeof errorData === "object") {
+        throw new AwsError(errorData);
+      } else {
+        throw new Error();
+      }
+    }
   }
 
   public static uploadFileByUrl(url: string, file: Blob): Promise<void> {
@@ -39,6 +51,19 @@ export class AwsUtil {
   public static getFileUrl(path: string): string {
     let url = `https://${AWS_STORAGE_BUCKET}.s3.amazonaws.com/${path}`;
     return url;
+  }
+
+}
+
+
+export class AwsError extends Error {
+
+  public name: "AwsError" = "AwsError";
+  public data: any;
+
+  public constructor(data: any) {
+    super(data["Message"] ?? "");
+    this.data = data;
   }
 
 }
