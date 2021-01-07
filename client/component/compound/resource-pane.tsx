@@ -50,10 +50,11 @@ export default class ResourcePane extends Component<Props, State> {
   public render(): ReactNode {
     let url = AwsUtil.getFileUrl(`resource/${this.props.dictionary.number}/${this.props.resource}`);
     let shortUrl = "~" + this.props.resource;
+    let code = `![](<${shortUrl}>)`;
     let codeNode = (this.props.showCode) && (
       <div styleName="code-outer">
         <div styleName="code-wrapper">
-          <TextArea value={`![](<${shortUrl}>)`} language="plain" font="monospace" fitHeight={true} readOnly={true}/>
+          <TextArea value={code} language="plain" font="monospace" fitHeight={true} readOnly={true}/>
         </div>
       </div>
     );
