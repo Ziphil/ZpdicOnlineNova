@@ -76,7 +76,7 @@ export const SERVER_PATHS = {
   fetchDictionaryAggregation: "/dictionary/aggregate",
   fetchWordNames: "/word/name",
   fetchInvitations: "/invitation/fetch",
-  fetchUploadResourceUrl: "/resource/upload",
+  fetchUploadResourcePost: "/resource/upload",
   discardResource: "/resource/discard",
   fetchResources: "/resource/fetch",
   login: "/user/login",
@@ -301,7 +301,7 @@ type ServerSpecs = {
       error: never
     }
   },
-  fetchUploadResourceUrl: {
+  fetchUploadResourcePost: {
     request: WithRecaptcha<{number: number, name: string, type: string}>,
     response: {
       success: {url: string, fields: Record<string, string>},

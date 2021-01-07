@@ -33,9 +33,9 @@ import {
 @controller(SERVER_PATH_PREFIX)
 export class ResourceController extends Controller {
 
-  @post(SERVER_PATHS["fetchUploadResourceUrl"])
+  @post(SERVER_PATHS["fetchUploadResourcePost"])
   @before(verifyRecaptcha(), verifyUser(), verifyDictionary("own"))
-  public async [Symbol()](request: Request<"fetchUploadResourceUrl">, response: Response<"fetchUploadResourceUrl">): Promise<void> {
+  public async [Symbol()](request: Request<"fetchUploadResourcePost">, response: Response<"fetchUploadResourcePost">): Promise<void> {
     let dictionary = request.dictionary!;
     let name = request.body.name;
     let type = request.body.type;
