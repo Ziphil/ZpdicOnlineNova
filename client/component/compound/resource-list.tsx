@@ -62,7 +62,7 @@ export default class ResourceList extends Component<Props, State> {
           this.props.store!.addInformationPopup("resourceUploaded");
           this.setState({resources: this.provideResources.bind(this)});
         } catch (error) {
-          this.props.store!.addInformationPopup("awsError");
+          this.props.store!.addErrorPopup("awsError");
         }
       }
     }
