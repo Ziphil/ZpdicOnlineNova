@@ -59,8 +59,9 @@ export default class ResourceList extends Component<Props, State> {
         let post = response.data;
         try {
           await AwsUtil.uploadFile(post, file);
+          let resources = this.provideResources.bind(this);
           this.props.store!.addInformationPopup("resourceUploaded");
-          this.setState({resources: this.provideResources.bind(this)});
+          this.setState({resources, file: null});
         } catch (error) {
           if (error.name === "AwsError") {
             let code = error.data["Code"]["_text"];
@@ -91,7 +92,7 @@ export default class ResourceList extends Component<Props, State> {
     let node = (
       <div styleName="root">
         <div styleName="form">
-          <FileInput inputLabel={this.trans("resourceList.file")} onSet={(file) => this.setState({file})}/>
+          <FileInput inputLabel={this.trans("resourceList.file")} file={this.state.file} onSet={(file) => this.setState({file})}/>
           <Button label={this.trans("resourceList.confirm")} reactive={true} onClick={this.uploadFile.bind(this)}/>
         </div>
         <div styleName="list">
