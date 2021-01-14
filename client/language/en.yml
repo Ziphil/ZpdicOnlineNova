@@ -70,6 +70,10 @@ popup:
     The example sentence has been edited.
   exampleDiscarded: >-
     The example sentence has been deleted.
+  resourceUploaded: >-
+    The resource has been uploaded.
+  resourceDiscarded: >-
+    The resource has been deleted.
   commissionAdded: >-
     Your request has been completed.
   commissionDiscarded: >-
@@ -115,6 +119,14 @@ popup:
     You tried to edit a word which does not exist.
   noSuchExampleNumber: >-
     You tried to edit an example sentence which does not exist.
+  resourceCountExceeded: >-
+    No more files can be uploaded.
+    You can upload up to 10 files to one dictionary.
+  resourceSizeTooLarge: >-
+    The file is too large.
+    You cannot upload files larger than 1 MB.
+  unsupportedResourceType: >-
+    This file type is not supported.
   userCanAlreadyEdit: >-
     This user already has permission.
   userCanAlreadyOwn: >-
@@ -159,6 +171,9 @@ popup:
     Please try again.
   recaptchaRejected: >-
     Failed to authenticate by reCAPTCHA.
+    Please try again.
+  awsError: >-
+    Something failed.
     Please try again.
   messageNotFound: >-
     There is no message configured for this popup.
@@ -340,6 +355,13 @@ featurePane:
     text: >-
       Multiple users can edit the same dictionary at the same time by giving them permission to edit.
       Collaborative creation of a constructed language can be easily realised.
+giftPane:
+  sendGift: "Send gift"
+  information: >-
+    ZpDIC Online is being developed and maintained by an individual.
+    Your support is needed to sustain and improve the service.
+    If you like this application, please send a gift to the developer from the button below.
+    It may speed up the development.
 githubButton:
   text: "View on GitHub"
 header:
@@ -371,6 +393,25 @@ resetUserPasswordForm:
   newPassword: "New password"
   issue: "Confirm"
   reset: "Reset"
+resourceList:
+  file: "File to upload"
+  confirm: "Confirm"
+  experimantalCaution: >-
+    The file upload feature is currently experimental.
+    In future updates, this feature may be significantly changed or the uploaded files may be deleted.
+  markdownCaution: >-
+    To use this feature, you need to enable Markdown from the dictionary settings page.
+  instruction: >-
+    Select an image file and click “Confirm” to upload the file.
+    The uploaded file will be added in the image list below.
+    Copy the code below a file name and paste it into a content field to display the image.
+resourcePane:
+  code: "Code to embed"
+  copy: "Copy"
+  discard: "Delete"
+  alert: >-
+    This resource will be deleted.
+    Are you really sure?
 searchForm:
   both: "Both"
   name: "Headword"
@@ -412,6 +453,7 @@ wordEditor:
   discard: "Delete"
   confirm: "Confirm"
   generate: "Generate"
+  resource: "Images"
   selectRelation: "Select"
   alertConfirm: "Delete"
   alert: >-
@@ -478,8 +520,9 @@ dictionaryListPage:
 dictionarySettingPage:
   general: "General"
   setting: "Settings"
-  commission: "Requests"
   access: "Permissions"
+  commission: "Requests"
+  resource: "Images"
   statistics: "Statistics"
   changeDictionaryNameForm:
     label: "Change name"

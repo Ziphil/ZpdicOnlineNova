@@ -38,11 +38,31 @@ Windows 10 であれば、以下の操作で変更できます。
 
 ### SendGrid への登録
 [SendGrid](https://sendgrid.kke.co.jp) のアカウントを作成します。
-Web API 用のアクセスキーを作成し、メモしておきます。
+Web API 用のアクセスキーを新たに作成し、メモしておきます。
 
 ### reCAPTCHA v3 への登録
 [reCAPTCHA v3](https://www.google.com/recaptcha) にサイトを登録します。
 サイトキーとシークレットキーを確認し、メモしておきます。
+
+### Amazon Web Service への登録
+[Amazon Web Service](https://aws.amazon.com/jp) に登録し、ZpDIC Online で利用する IAM ユーザーを作成します。
+このユーザーで API を利用するためのアクセスキーを新たに作成し、作成されたキー ID とシークレットキーを確認し、メモしておきます。
+このユーザーのアクセス権限は、`AmazonS3FullAccess` ポリシーがあれば十分です。
+
+マネジメントコンソールから S3 バケットを作成します。
+作成したバケットのページに移動したら、「アクセス許可」タブを開きます。
+まず、「ブロックパブリックアクセス」項目を編集し、全てのチェックボックスをオフにします。
+さらに、「Cross-Origin Resource Sharing」項目を以下のように編集します。
+```json
+[
+  {
+    "AllowedHeaders": ["*"],
+    "AllowedMethods": ["GET", "HEAD", "POST", "PUT"],
+    "AllowedOrigins": ["(ZpDIC Online を公開する URL)"],
+    "ExposeHeaders": []
+  }
+]
+```
 
 ### 環境変数の設定
 [このドキュメント](variable.md)を参考にして、必要な環境変数の設定をしてください。
@@ -72,3 +92,4 @@ npm run develop
 - [深い階層の URL に直接遷移したときの 404 エラーの対処法](https://github.com/webpack/webpack-dev-server/issues/978)
 - [認証情報を Local Storage に保存してはいけないことについて](https://techracho.bpsinc.jp/hachi8833/2019_10_09/80851)
 - [簡単に HTTP リクエストを送れる GUI ツール](https://www.postman.com)
+- [S3 に直接ファイルをアップロードする方法](https://devcenter.heroku.com/articles/s3-upload-node)

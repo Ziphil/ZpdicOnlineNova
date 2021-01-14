@@ -35,3 +35,16 @@ reCAPTCHA v3 のサイトキーです。
 
 ### `RECAPTCHA_SECRET`
 reCAPTCHA v3 のシークレットキーです。
+
+### `AWS_KEY`
+Amazon Web Service のアクセスキー ID です。
+
+### `AWS_SECRET`
+Amazon Web Service のシークレットキーです。
+
+### `AWS_REGION`
+Amazon Web Service のリージョンです。
+設定されていない場合は `ap-northeast-1` が用いられます。
+
+### `AWS_STORAGE_BUCKET`
+ストレージとして使用する Amazon Web Service 内の S3 のバケット名です。

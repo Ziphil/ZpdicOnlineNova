@@ -39,7 +39,7 @@ export default class CommissionPane extends Component<Props, State> {
     let id = this.props.commission.id;
     let response = await this.request("discardCommission", {number, id});
     if (response.status === 200) {
-      if (showPopup) {
+      if (showPopup === undefined || showPopup) {
         this.props.store!.addInformationPopup("commissionDiscarded");
       }
       if (this.props.onDiscardConfirm) {

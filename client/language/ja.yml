@@ -70,6 +70,10 @@ popup:
     例文の編集が完了しました。
   exampleDiscarded: >-
     例文の削除が完了しました。
+  resourceUploaded: >-
+    リソースのアップロードが完了しました。
+  resourceDiscarded: >-
+    リソースを削除しました。
   commissionAdded: >-
     単語の造語依頼が完了しました。
   commissionDiscarded: >-
@@ -115,6 +119,14 @@ popup:
     存在しない単語を編集しようとしました。
   noSuchExampleNumber: >-
     存在しない例文を編集しようとしました。
+  resourceCountExceeded: >-
+    これ以上ファイルをアップロードすることはできません。
+    1 つの辞書にアップロードできるファイルは 10 個までです。
+  resourceSizeTooLarge: >-
+    ファイルのサイズが大きすぎます。
+    1 MB より大きなファイルはアップロードすることができません。
+  unsupportedResourceType: >-
+    サポートされていないファイルの形式です。
   userCanAlreadyEdit: >-
     そのユーザーはすでに編集権限を保有しています。
   userCanAlreadyOwn: >-
@@ -159,6 +171,9 @@ popup:
     もう一度お試しください。
   recaptchaRejected: >-
     reCAPTCHA による認証に失敗しました。
+    もう一度お試しください。
+  awsError: >-
+    エラーが発生しました。
     もう一度お試しください。
   messageNotFound: >-
     ポップアップ用のメッセージが設定されていません。
@@ -340,6 +355,13 @@ featurePane:
     text: >-
       別のユーザーに編集権限を付与して、複数人で同じ辞書を同時に編集することができます。
       人工言語の共同制作も簡単に実現できます。
+giftPane:
+  sendGift: "ギフトを送る"
+  information: >-
+    ZpDIC Online は個人によって開発および保守されています。
+    サービスの持続および向上には、皆様の支援が必要です。
+    もしこのアプリが気に入りましたら、下記のボタンから開発者にギフトをお送りください。
+    開発が速まるかもしれません。
 githubButton:
   text: "View on GitHub"
 header:
@@ -371,6 +393,24 @@ resetUserPasswordForm:
   newPassword: "新しいパスワード"
   issue: "送信"
   reset: "変更"
+resourceList:
+  file: "アップロードファイル"
+  confirm: "決定"
+  experimantalCaution: >-
+    ファイルのアップロード機能は現在試験運用中です。
+    将来のアップデートで、機能が大幅に変更されたり、アップロードしたデータが削除されたりする可能性があります。
+  markdownCaution: >-
+    この機能を利用するには、辞書の設定ページから Markdown を有効にする必要があります。
+  instruction: >-
+    画像ファイルを選択して「決定」をクリックすると、ファイルがアップロードされて画像リストに追加されます。
+    ファイル名の下に表示されているコードをコピーし、単語の内容欄にペーストすることで、そのコードの箇所に該当の画像が表示されます。
+resourcePane:
+  code: "埋め込み用コード"
+  copy: "コピー"
+  discard: "削除"
+  alert: >-
+    このリソースを削除します。
+    よろしいですか?
 searchForm:
   both: "単語＋訳語"
   name: "単語"
@@ -406,12 +446,13 @@ wordEditor:
   relationName: "関連語"
   tagAbsent: "タグは登録されていません"
   equivalentAbsent: "訳語は登録されていません"
-  informationAbsent: "分類は登録されていません"
+  informationAbsent: "内容は登録されていません"
   variationAbsent: "変化形は登録されていません"
   relationAbsent: "関連語は登録されていません"
   discard: "削除"
   confirm: "決定"
   generate: "生成"
+  resource: "画像"
   selectRelation: "変更"
   alertConfirm: "削除"
   alert: >-
@@ -478,8 +519,9 @@ dictionaryListPage:
 dictionarySettingPage:
   general: "一般"
   setting: "設定"
-  commission: "造語依頼"
   access: "権限"
+  commission: "造語依頼"
+  resource: "画像"
   statistics: "統計"
   changeDictionaryNameForm:
     label: "表示名の変更"

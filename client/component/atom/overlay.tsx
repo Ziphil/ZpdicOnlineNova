@@ -25,23 +25,15 @@ export default class Overlay extends Component<Props, State> {
     outsideClosable: false
   };
 
-  public render(): ReactNode {
-    let contentStyleName = StyleNameUtil.create("content-wrapper", this.props.size);
-    let displayedChildren = (() => {
-      if (this.props.page !== undefined && Array.isArray(this.props.children)) {
-        return this.props.children[this.props.page];
-      } else {
-        return this.props.children;
-      }
-    })();
-    let headerNode = (this.props.title !== undefined) && (() => {
-      let backButtonNode = (this.props.page !== undefined && this.props.page > 0) && (
+  private renderHeader(): ReactNode {
+    if (this.props.title !== undefined) {
+      let backButtonNode = (this.props.page !== undefined && ((this.props.showBack === undefined && this.props.page > 0) || this.props.showBack)) && (
         <Button label={this.trans("overlay.back")} iconLabel="&#xF04A;" style="simple" hideLabel={true} onClick={this.props.onBack}/>
       );
       let closeButtonNode = (
         <Button label={this.trans("overlay.close")} iconLabel="&#xF00D;" style="simple" hideLabel={true} onClick={this.props.onClose}/>
       );
-      let headerNode = (
+      let node = (
         <div styleName="header">
           <div styleName="left">
             <div styleName="title">{this.props.title}</div>
@@ -52,14 +44,30 @@ export default class Overlay extends Component<Props, State> {
           </div>
         </div>
       );
-      return headerNode;
-    })();
+      return node;
+    } else {
+      return null;
+    }
+  }
+
+  private renderChildren(): ReactNode {
+    if (this.props.page !== undefined && Array.isArray(this.props.children)) {
+      return this.props.children[this.props.page];
+    } else {
+      return this.props.children;
+    }
+  }
+
+  public render(): ReactNode {
+    let contentStyleName = StyleNameUtil.create("content-wrapper", this.props.size);
+    let headerNode = this.renderHeader();
+    let childrenNode = this.renderChildren();
     let node = (
       <Modal open={this.props.open} outsideClosable={this.props.outsideClosable} onClose={this.props.onClose}>
         <div styleName={contentStyleName}>
           {headerNode}
           <div styleName="content">
-            {displayedChildren}
+            {childrenNode}
           </div>
         </div>
       </Modal>
@@ -76,6 +84,7 @@ type Props = {
   outsideClosable: boolean,
   title?: string,
   page?: number,
+  showBack?: boolean,
   onClose?: (event: MouseEvent<HTMLElement>) => void,
   onBack?: (event: MouseEvent<HTMLButtonElement>) => void
 };

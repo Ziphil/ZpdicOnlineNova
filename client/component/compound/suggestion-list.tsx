@@ -30,7 +30,7 @@ export default class SuggestionList extends Component<Props, State> {
       );
       return suggestionPane;
     });
-    let node = (
+    let node = (suggestionPanes.length > 0) && (
       <ul styleName="root">
         {suggestionPanes}
       </ul>

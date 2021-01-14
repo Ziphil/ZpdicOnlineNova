@@ -25,7 +25,12 @@ export default class Markdown extends Component<Props, State> {
     allowHeading: false
   };
 
-  private getAllowedTypes(): [Array<NodeType> | undefined, Array<NodeType> | undefined] {
+  public constructor(props: Props) {
+    super(props);
+    this.transformUri = this.transformUri.bind(this);
+  }
+
+  private getAllowedTypes(): [Array<NodeType>?, Array<NodeType>?] {
     if (this.props.simple) {
       let allowedTypes = ["root", "text", "paragraph", "link"] as Array<NodeType>;
       return [allowedTypes, undefined];
@@ -49,6 +54,14 @@ export default class Markdown extends Component<Props, State> {
     }
   }
 
+  private transformUri(uri: string, children?: ReactNode, title?: string): string {
+    let nextUri = ReactMarkdown.uriTransformer(uri);
+    if (this.props.homePath !== undefined) {
+      nextUri = nextUri.replace(/^~/, this.props.homePath);
+    }
+    return nextUri;
+  }
+
   public render(): ReactNode {
     let [allowedTypes, disallowedTypes] = this.getAllowedTypes();
     let customRenderers = this.getCustomRenderers();
@@ -60,6 +73,8 @@ export default class Markdown extends Component<Props, State> {
         renderers={renderers}
         allowedTypes={allowedTypes}
         disallowedTypes={disallowedTypes}
+        transformLinkUri={this.transformUri}
+        transformImageUri={this.transformUri}
       />
     );
     let node = (this.props.simple) ? innerNode : <div styleName="root" className={this.props.className}>{innerNode}</div>;
@@ -72,8 +87,9 @@ export default class Markdown extends Component<Props, State> {
 type Props = {
   source: string,
   simple: boolean,
-  allowHeading: boolean
-  renderers?: Renderers
+  allowHeading: boolean,
+  homePath?: string,
+  renderers?: Renderers,
   className?: string
 };
 type DefaultProps = {
@@ -83,4 +99,4 @@ type DefaultProps = {
 type State = {
 };
 
-type Renderers = {[type: string]: ElementType};
+export type Renderers = {[type: string]: ElementType};

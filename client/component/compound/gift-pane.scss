@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.information {
+  @include line-height;
+  text-align: justify;
+}
+
+.button {
+  margin: 15px 0px 0px 0px;
+  text-align: center;
+}

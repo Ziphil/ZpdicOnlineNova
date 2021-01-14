@@ -5,13 +5,17 @@
 
 ## 移行に必要な処理
 
-### ver 2.19.x → ver 2.20.0
+### → ver 2.19.0
+ver 2.19.0 以前からのマイグレーションには何らかの処理は必要ですが、行うべき処理の内容を忘れました。
+新しく環境を構築し直してください。
+
+### ver 2.19.1 → ver 2.20.0
 Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
 ```
 db.dictionaries.updateMany({}, {$rename: {"snoj": "settings.akrantiainSource"}});
 ```
 
-### ver 2.22.x → ver 2.23.0
+### ver 2.22.9 → ver 2.23.0
 Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
 ```
 db.dictionaries.updateMany({}, {$set: {"settings.exampleTitle": "Examples"}});

@@ -2,6 +2,7 @@
 
 import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
+import aws from "aws-sdk";
 import parser from "body-parser";
 import cookieParser from "cookie-parser";
 import express from "express";
@@ -24,12 +25,10 @@ import {
   InvitationController,
   NotificationController,
   OtherController,
+  ResourceController,
   UserController,
   WordController
 } from "/server/controller/internal";
-import {
-  SERVER_PATHS
-} from "/server/controller/internal/type";
 import {
   LogUtil
 } from "/server/util/log";
@@ -56,6 +55,7 @@ export class Main {
     this.setupMorgan();
     this.setupMongo();
     this.setupSendgrid();
+    this.setupAws();
     this.setupDirectories();
     this.setupRouters();
     this.setupStatic();
@@ -110,6 +110,12 @@ export class Main {
     sendgrid.setApiKey(SENDGRID_KEY);
   }
 
+  private setupAws(): void {
+    let credentials = {accessKeyId: process.env["AWS_KEY"]!, secretAccessKey: process.env["AWS_SECRET"]!};
+    let region = process.env["AWS_REGION"];
+    aws.config.update({credentials, region});
+  }
+
   // 内部処理で用いるディレクトリを用意します。
   private setupDirectories(): void {
     fs.mkdirSync("./dist/download", {recursive: true});
@@ -126,6 +132,7 @@ export class Main {
     InvitationController.use(this.application);
     NotificationController.use(this.application);
     OtherController.use(this.application);
+    ResourceController.use(this.application);
     UserController.use(this.application);
     WordController.use(this.application);
   }

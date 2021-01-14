@@ -45,12 +45,16 @@
   border: none !important;
 }
 
-.github {
+.github-inner {
   display: flex;
   align-items: flex-start;
   justify-content: center;
 }
 
-.github >*:nth-child(1) {
+.github-inner >*:nth-child(1) {
   margin: 0px 50px 0px 0px;
+}
+
+.gift {
+  margin: 20px 0px 0px 0px;
 }

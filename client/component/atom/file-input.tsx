@@ -23,6 +23,19 @@ export default class FileInput extends Component<Props, State> {
     fileName: ""
   };
 
+  public constructor(props: Props) {
+    super(props);
+    let fileName = this.props.file?.name ?? "";
+    this.state.fileName = fileName;
+  }
+
+  public componentDidUpdate(previousProps: any): void {
+    if (this.props.file !== previousProps.file) {
+      let fileName = this.props.file?.name ?? "";
+      this.setState({fileName});
+    }
+  }
+
   private handleChange(event: ChangeEvent<HTMLInputElement>): void {
     let files = event.target.files;
     if (files && files.length > 0) {
