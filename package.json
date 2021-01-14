@@ -1,6 +1,6 @@
 {
   "name": "zpdic",
-  "version": "2.24.0",
+  "version": "2.25.0",
   "author": "Ziphil",
   "description": "",
   "main": "dist/index.js",
