@@ -446,7 +446,7 @@ wordEditor:
   discard: "Delete"
   confirm: "Confirm"
   generate: "Generate"
-  resource: "Resources"
+  resource: "Images"
   selectRelation: "Select"
   alertConfirm: "Delete"
   alert: >-
@@ -515,7 +515,7 @@ dictionarySettingPage:
   setting: "Settings"
   access: "Permissions"
   commission: "Requests"
-  resource: "Resources"
+  resource: "Images"
   statistics: "Statistics"
   changeDictionaryNameForm:
     label: "Change name"
