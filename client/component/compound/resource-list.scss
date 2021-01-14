@@ -26,3 +26,15 @@
   margin: 0px 10px 0px 0px;
   vertical-align: middle;
 }
+
+.caution,
+.instruction {
+  @include line-height;
+  margin: 0px 0px 20px 0px;
+  font-size: 90%;
+  text-align: justify;
+}
+
+.caution {
+  color: map-get($colors, error);
+}

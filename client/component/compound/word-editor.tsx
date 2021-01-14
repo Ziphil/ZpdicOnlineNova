@@ -484,7 +484,7 @@ export default class WordEditor extends Component<Props, State> {
 
   private renderResourceList(): ReactNode {
     let node = (
-      <ResourceList dictionary={this.props.dictionary} size={10} showCode={true}/>
+      <ResourceList dictionary={this.props.dictionary} size={10} showCode={true} showInstruction={true}/>
     );
     return node;
   }

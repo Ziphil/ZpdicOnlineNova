@@ -389,6 +389,15 @@ resetUserPasswordForm:
 resourceList:
   file: "File to upload"
   confirm: "Confirm"
+  experimantalCaution: >-
+    The file upload feature is currently experimental.
+    In future updates, this feature may be significantly changed or the uploaded files may be deleted.
+  markdownCaution: >-
+    To use this feature, you need to enable Markdown from the dictionary settings page.
+  instruction: >-
+    Select an image file and click “Confirm” to upload the file.
+    The uploaded file will be added in the image list below.
+    Copy the code below a file name and paste it into a content field to display the image.
 resourcePane:
   code: "Code to embed"
   copy: "Copy"

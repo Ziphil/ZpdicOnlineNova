@@ -26,6 +26,9 @@ import {
 @style(require("./resource-list.scss"))
 export default class ResourceList extends Component<Props, State> {
 
+  public static defaultProps: DefaultProps = {
+    showInstruction: false
+  };
   public state: State = {
     file: null,
     resources: null
@@ -89,8 +92,18 @@ export default class ResourceList extends Component<Props, State> {
       );
       return node;
     };
+    let instructionText = (this.props.dictionary.settings.enableMarkdown) ? this.trans("resourceList.instruction") : this.trans("resourceList.markdownCaution");
+    let instructionNode = (this.props.showInstruction) && (
+      <div styleName="instruction">
+        {instructionText}
+      </div>
+    );
     let node = (
       <div styleName="root">
+        <div styleName="caution">
+          {this.trans("resourceList.experimantalCaution")}
+        </div>
+        {instructionNode}
         <div styleName="form">
           <FileInput inputLabel={this.trans("resourceList.file")} file={this.state.file} onSet={(file) => this.setState({file})}/>
           <Button label={this.trans("resourceList.confirm")} reactive={true} onClick={this.uploadFile.bind(this)}/>
@@ -109,7 +122,11 @@ export default class ResourceList extends Component<Props, State> {
 type Props = {
   dictionary: Dictionary,
   size: number,
-  showCode?: boolean
+  showCode?: boolean,
+  showInstruction: boolean
+};
+type DefaultProps = {
+  showInstruction: boolean
 };
 type State = {
   file: File | null,
