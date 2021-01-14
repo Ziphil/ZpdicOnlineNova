@@ -9,6 +9,7 @@ import ContributorList from "/client/component/compound/contributor-list";
 import DictionaryAggregationPane from "/client/component/compound/dictionary-aggregation-pane";
 import FeaturePane from "/client/component/compound/feature-pane";
 import FormPane from "/client/component/compound/form-pane";
+import GiftPane from "/client/component/compound/gift-pane";
 import GithubButton from "/client/component/compound/github-button";
 import LoginForm from "/client/component/compound/login-form";
 import Logo from "/client/component/compound/logo";
@@ -45,8 +46,13 @@ export default class TopPage extends Component<Props, State> {
           <NotificationList size={1} showPagination={false}/>
         </div>
         <div styleName="github border">
-          <GithubButton/>
-          <ContributorList/>
+          <div styleName="github-inner">
+            <GithubButton/>
+            <ContributorList/>
+          </div>
+          <div styleName="gift">
+            <GiftPane/>
+          </div>
         </div>
       </Page>
     );

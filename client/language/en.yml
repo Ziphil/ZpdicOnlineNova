@@ -355,6 +355,13 @@ featurePane:
     text: >-
       Multiple users can edit the same dictionary at the same time by giving them permission to edit.
       Collaborative creation of a constructed language can be easily realised.
+giftPane:
+  sendGift: "Send gift"
+  information: >-
+    ZpDIC Online is being developed and maintained by an individual.
+    Your support is needed to sustain and improve the service.
+    If you like this application, please send a gift to the developer from the button below.
+    It may speed up the development.
 githubButton:
   text: "View on GitHub"
 header:
