@@ -6,7 +6,7 @@
 
 .caution {
   @include line-height;
-  margin: 20px 0px 0px 0px;
+  margin: $large-margin 0px 0px 0px;
   font-size: 90%;
   color: map-get($colors, error);
   text-align: justify;

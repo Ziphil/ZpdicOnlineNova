@@ -5,9 +5,9 @@
 
 .root {
   @include white-pane;
-  padding: 20px 25px;
+  padding: $large-margin $large-margin;
 }
 
 .error {
-  margin: 0px 0px 20px 0px;
+  margin: 0px 0px $large-margin 0px;
 }

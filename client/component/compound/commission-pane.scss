@@ -9,12 +9,12 @@
 
 .comment {
   @include line-height($tooltip-line-height);
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0px 0px 0px;
   font-size: 80%;
 }
 
 .button {
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0px 0px 0px;
   text-align: right;
 }
 

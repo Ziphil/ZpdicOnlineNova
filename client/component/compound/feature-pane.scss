@@ -17,7 +17,7 @@
   margin: 0px 0px 0px 40px;
   @include smartphone {
     margin: 20px 0px 0px 0px;
- }
+  }
 }
 
 .head-wrapper {
@@ -54,6 +54,6 @@
 
 .text {
   @include line-height;
-  margin: 15px 0px 0px 0px;
+  margin: $medium-margin 0px 0px 0px;
   text-align: justify;
 }

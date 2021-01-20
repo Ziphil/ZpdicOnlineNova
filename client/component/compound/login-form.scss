@@ -12,16 +12,16 @@
 
 .root >* {
   @include reset-first-margin;
-  margin: 15px 0px 0px 0px;
+  margin: $control-vertical-margin 0px 0px 0px;
 }
 
 .button-group {
-  margin: 15px 0px 0px 0px;
+  margin: $large-margin 0px 0px 0px;
 }
 
 .row {
   @include reset-first-margin;
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0px 0px 0px;
   text-align: center;
   flex-direction: row;
   align-items: center;

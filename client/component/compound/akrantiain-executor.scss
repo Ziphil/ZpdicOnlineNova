@@ -11,12 +11,13 @@
 
 .root >* {
   @include reset-first-margin;
-  margin: 15px 0px 0px 0px;
+  margin: $control-vertical-margin 0px 0px 0px;
   display: flex;
   flex-direction: column;
 }
 
 .button {
+  margin: $large-margin 0px 0px 0px;
   display: block;
   margin-left: auto;
   margin-right: auto;

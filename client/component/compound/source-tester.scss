@@ -9,10 +9,10 @@
 }
 
 .root >*:nth-child(1) {
+  min-width: 0px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  min-width: 0;
 }
 
 .root >*:nth-child(1) >*:nth-child(2) {

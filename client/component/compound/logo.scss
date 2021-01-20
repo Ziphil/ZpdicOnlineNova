@@ -33,7 +33,7 @@
 }
 
 .version {
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0px 0px 0px;
   font-size: 20px;
   @include smartphone {
     display: none;

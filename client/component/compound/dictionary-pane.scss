@@ -15,17 +15,17 @@
 }
 
 .status {
-  margin: 0px 0px 0px 20px;
+  margin: 0px 0px 0px $large-margin;
   white-space: nowrap;
 }
 
 .information {
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0px 0px 0px;
   font-size: 80%;
 }
 
 .information-item {
-  margin: 5px 0px 0px 0px;
+  margin: $tiny-margin 0px 0px 0px;
 }
 
 .information-item:first-child {

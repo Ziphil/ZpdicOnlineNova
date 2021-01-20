@@ -4,7 +4,7 @@
 
 
 .root {
-  padding: 20px 0px;
+  padding: $large-margin 0px;
   border-bottom: 1px $invert-border-color solid;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .name-wrapper {
-  margin: 0px 0px 15px 0px;
+  margin: 0px 0px $medium-margin 0px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -48,7 +48,7 @@
 }
 
 .pronunciation {
-  margin: 0em 0.75em 0em 0em;
+  margin: 0em 0.5em * (120% / 80%) 0em 0em;
   color: $head-color;
   font-size: 80%;
   display: inline-block;
@@ -59,7 +59,7 @@
 }
 
 .container {
-  margin: 15px 0px 0px 0px;
+  margin: $medium-margin 0px 0px 0px;
 }
 
 .text {
@@ -104,7 +104,7 @@
 }
 
 .title {
-  margin: 10px 0px 10px 0px;
+  margin: $paragraph-margin 0px;
   font-size: 80%;
   font-weight: bold;
   color: $light-color;

@@ -6,10 +6,10 @@
 .search-form {
   width: 100%;
   max-width: 600px;
-  margin: 0px auto 30px auto;
+  margin: 0px auto $huge-margin auto;
 }
 
 .pagination {
-  margin: 20px 0px 0px 0px;
+  margin: $large-margin 0px 0px 0px;
   text-align: center;
 }

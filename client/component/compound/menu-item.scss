@@ -3,8 +3,11 @@
 @import "/client/component/mixin.scss";
 
 
+$menu-item-vertical-padding: 10px;
+$menu-item-horizontal-padding: 15px;
+
 .root {
-  padding: 0px 15px 10px 15px;
+  padding: 0px $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
   color: $light-color;
   text-decoration: none;
   text-align: right;

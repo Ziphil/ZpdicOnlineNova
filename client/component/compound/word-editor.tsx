@@ -147,6 +147,14 @@ export default class WordEditor extends Component<Props, State> {
           </div>
           {generateNode}
         </div>
+        <div styleName="inner large">
+          <Input
+            className={styles["title"]}
+            value={word.pronunciation}
+            label={this.trans("wordEditor.pronunciation")}
+            onSet={this.setWord((pronunciation) => word.pronunciation = pronunciation || undefined)}
+          />
+        </div>
       </div>
     );
     return node;
@@ -161,16 +169,6 @@ export default class WordEditor extends Component<Props, State> {
     } catch (error) {
       console.log(error);
     }
-  }
-
-  private renderPronunciation(): ReactNode {
-    let word = this.state.word;
-    let node = (
-      <div styleName="container">
-        <Input value={word.pronunciation} label={this.trans("wordEditor.pronunciation")} onSet={this.setWord((pronunciation) => word.pronunciation = pronunciation || undefined)}/>
-      </div>
-    );
-    return node;
   }
 
   private renderTags(): ReactNode {
@@ -454,7 +452,6 @@ export default class WordEditor extends Component<Props, State> {
       <div>
         <div styleName="editor">
           {this.renderName()}
-          {this.renderPronunciation()}
           {this.renderTags()}
           {this.renderEquivalents()}
           {this.renderInformations()}

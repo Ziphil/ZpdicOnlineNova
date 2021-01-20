@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-$header-size: 50px;
+$overlay-header-height: 50px;
 
 .content-wrapper {
   width: 100%;
@@ -22,7 +22,7 @@ $header-size: 50px;
 
 .header {
   width: 100%;
-  height: $header-size;
+  height: $overlay-header-height;
   padding: 0px $huge-margin;
   border-bottom: 1px $light-border-color solid;
   border-radius: $large-border-radius $large-border-radius 0px 0px;
@@ -54,5 +54,5 @@ $header-size: 50px;
 }
 
 .content-wrapper.large .header +.content {
-  height: calc(100% - #{$header-size});
+  height: calc(100% - #{$overlay-header-height});
 }

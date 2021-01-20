@@ -8,7 +8,7 @@
 }
 
 .code-outer {
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0px 0px 0px;
 }
 
 .code-wrapper {
@@ -33,7 +33,7 @@
 }
 
 .button-wrapper {
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0px 0px 0px;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -42,6 +42,6 @@
 .image >img {
   width: auto;
   height: auto;
-  max-width: 40px;
-  max-height: 40px;
+  max-width: 50px;
+  max-height: 50px;
 }

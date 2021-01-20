@@ -5,11 +5,11 @@
 
 .div-pane {
   display: grid;
-  grid-gap: 0px 20px;
+  grid-gap: 0px $large-margin;
 }
 
 .div-pane.spaced { 
-  grid-gap: 20px 20px;
+  grid-gap: $large-margin $large-margin;
 }
 
 .table-pane {
@@ -19,7 +19,7 @@
 }
 
 .table-pane .spacer {
-  width: 20px;
+  width: $large-margin;
 }
 
 .table-pane .spacer.border {
@@ -32,7 +32,7 @@
 }
 
 .table-pane.spaced tr >td {
-  padding-top: 20px;
+  padding-top: $large-margin;
 }
 
 .table-pane.spaced tr:first-child >td {
@@ -40,7 +40,7 @@
 }
 
 .pagination {
-  margin: 20px 0px 0px 0px;
+  margin: $large-margin 0px 0px 0px;
   text-align: center;
 }
 

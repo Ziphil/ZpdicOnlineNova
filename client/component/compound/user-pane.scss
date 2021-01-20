@@ -10,14 +10,14 @@
 }
 
 .left {
-  margin: 0px 0px 0px 10px;
+  margin: 0px 0px 0px $small-margin;
 }
 
 .image {
   width: 40px;
   height: 40px;
   border: 1px $light-border-color solid;
-  border-radius: $small-border-radius;
+  border-radius: 50%;
   background-image: linear-gradient(-45deg, transparent 33%, $light-border-color 33%, $light-border-color 50%, transparent 50%, transparent 83%, $light-border-color 83%);
   background-size: 4px 4px;
   box-sizing: border-box;
@@ -28,7 +28,7 @@
 }
 
 .name {
-  margin: 5px 0px 0px 0px;
+  margin: $tiny-margin 0px 0px 0px;
   font-size: 80%;
 }
 

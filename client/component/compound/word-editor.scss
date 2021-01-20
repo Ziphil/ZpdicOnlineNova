@@ -5,11 +5,11 @@
 
 .container {
   @include reset-first-margin;
-  margin: 15px 0px 0px 0px;
+  margin: $large-margin 0px 0px 0px;
 }
 
 .confirm-button-wrapper {
-  margin: 15px 0px 0px 0px;
+  margin: $large-margin 0px 0px 0px;
   display: flex;
   justify-content: space-between;
 }
@@ -30,6 +30,10 @@
     flex-direction: column;
     align-items: stretch;
   }
+}
+
+.inner.large {
+  margin: $control-vertical-margin 0px 0px 0px;
 }
 
 .plus {

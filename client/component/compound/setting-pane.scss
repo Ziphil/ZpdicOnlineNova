@@ -3,8 +3,11 @@
 @import "/client/component/mixin.scss";
 
 
+$setting-pane-vertical-padding: 40px;
+$setting-pane-horizontal-padding: 50px;
+
 .root {
-  padding: 40px 0px 40px 0px;
+  padding: $setting-pane-vertical-padding 0px $setting-pane-vertical-padding 0px;
   border-bottom: 1px $invert-border-color solid; 
   display: flex;
   flex-direction: row;
@@ -22,21 +25,21 @@
 }
 
 .description-wrapper {
-  padding: 0px 50px 0px 0px;
+  padding: 0px $setting-pane-horizontal-padding 0px 0px;
   flex-basis: 35%;
   flex-grow: 0;
   flex-shrink: 0;
   box-sizing: border-box;
   @include smartphone {
     width: 100%;
-    padding: 0px 0px 30px 0px;
+    padding: 0px 0px $large-margin 0px;
     flex-basis: content;
   }
 }
 
 .force-wide .description-wrapper {
   width: 100%;
-  padding: 0px 0px 30px 0px;
+  padding: 0px 0px $large-margin 0px;
   flex-basis: content;
 }
 
@@ -71,7 +74,7 @@
 
 .description {
   @include line-height;
-  margin: 15px 0px 0px 0px;
+  margin: $medium-margin 0px 0px 0px;
   font-size: 90%;
   text-align: justify;
 }

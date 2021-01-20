@@ -17,20 +17,13 @@
 }
 
 .list {
-  margin: 20px 0px 0px 0px;
-}
-
-.image {
-  max-width: 15%;
-  height: auto;
-  margin: 0px 10px 0px 0px;
-  vertical-align: middle;
+  margin: $large-margin 0px 0px 0px;
 }
 
 .caution,
 .instruction {
   @include line-height;
-  margin: 0px 0px 20px 0px;
+  margin: 0px 0px $large-margin 0px;
   font-size: 90%;
   text-align: justify;
 }
