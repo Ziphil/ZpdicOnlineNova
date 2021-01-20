@@ -57,38 +57,45 @@ $background-color: background-color(map-get($colors, primary));
 $strong-background-color: darken($background-color, 10%);
 $header-background-color: darken(map-get($colors, primary), 10%);
 
-$head-color: map-get($colors, primary);
 $light-color: map-get($colors, primary);
 $light-border-color: border-color(map-get($colors, primary));
 $dark-border-color: border-color(map-get($colors, primary), false);
-$pale-border-color: rgba($light-border-color, 0.3);
-
-$logo-color: darken(map-get($colors, primary), 20%);
-$footer-color: map-get($colors, primary);
+$invert-border-color: rgba($light-border-color, 0.3);
 
 $link-color: map-get($colors, secondary);
 $link-hover-color: hover-color($link-color, false);
-
 $pale-link-color: $background-color;
 $pale-link-hover-color: hover-color($pale-link-color, false, false);
 
-$focus-box-shadow-setting: 0px 0px 0px 2px;
-$inset-box-shadow-setting: 0px 2px 3px;
-$small-border-radius: 3px;
-$large-border-radius: 6px;
+$logo-color: darken(map-get($colors, primary), 20%);
+$head-color: map-get($colors, primary);
+$footer-color: map-get($colors, primary);
+
+$huge-margin: 30px;
+$large-margin: 20px;
+$medium-margin: 15px;
+$small-margin: 10px;
+
+$control-vertical-margin: 15px;
+$control-horizontal-margin: 15px;
+$small-control-horizontal-margin: 10px;
+$small-control-vertical-margin: 8px;
 
 $icon-width: 1.2em;
 $blank-margin: 0.3em;
-$control-margin: 15px;
-$small-control-margin: 10px;
-$small-control-vertical-margin: 8px;
 
 $page-width: 800px;
 $page-horizontal-margin: 30px;
 
+$focus-box-shadow-setting: 0px 0px 0px 2px;
+$inset-box-shadow-setting: 0px 2px 3px;
+
+$small-border-radius: 3px;
+$large-border-radius: 6px;
+
 $font-size: 16px;
 
-$text-line-height: 1.6;
+$line-height: 1.6;
 $tooltip-line-height: 1.4;
 
 $europian-font-family: "EB Garamond", "Times New Roman";
@@ -120,7 +127,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   }
 }
 
-@mixin line-height($line-height: $text-line-height) {
+@mixin line-height($line-height: $line-height) {
   line-height: $line-height;
   &::before {
     width: 0px;
@@ -229,7 +236,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   padding: 0.12em 0.5em;
   font-family: inherit;
   font-size: inherit;
-  line-height: $text-line-height;
+  line-height: $line-height;
   border: 1px border-color($color) solid;
   border-radius: $small-border-radius;
   background-color: white;
@@ -258,7 +265,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   padding: 0.12em 0.8em;
   font-family: inherit;
   font-size: inherit;
-  line-height: $text-line-height;
+  line-height: $line-height;
   color: white;
   border: 1px border-color($color, false) solid;
   border-radius: $small-border-radius;

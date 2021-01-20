@@ -19,7 +19,7 @@
 
 .root :global(.c3-grid) path,
 .root :global(.c3-grid) line {
-  stroke: $pale-border-color;
+  stroke: $invert-border-color;
 }
 
 .root :global(.c3-line) {

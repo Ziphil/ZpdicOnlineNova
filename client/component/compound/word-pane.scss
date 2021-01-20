@@ -5,7 +5,7 @@
 
 .root {
   padding: 20px 0px;
-  border-bottom: 1px $pale-border-color solid;
+  border-bottom: 1px $invert-border-color solid;
 }
 
 .root:first-child {
@@ -37,14 +37,14 @@
 }
 
 .button {
-  margin: 0px 0px 0px $control-margin;
+  margin: 0px 0px 0px $control-horizontal-margin;
   display: inline-block;
   white-space: nowrap;
 }
 
 .button >* {
   @include reset-first-margin;
-  margin: 0px 0px 0px $control-margin;
+  margin: 0px 0px 0px $control-horizontal-margin;
 }
 
 .pronunciation {

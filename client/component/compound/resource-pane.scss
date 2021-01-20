@@ -20,7 +20,7 @@
   @include monospace-font;
   margin: 0px;
   padding: 0.12em 0.5em;
-  line-height: $text-line-height;
+  line-height: $line-height;
   background-color: $strong-background-color;
   border-radius: $small-border-radius;
   overflow: hidden;
@@ -28,7 +28,7 @@
 }
 
 .copy-button {
-  margin: 0px 0px 0px $control-margin;
+  margin: 0px 0px 0px $control-horizontal-margin;
   white-space: nowrap;
 }
 

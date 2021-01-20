@@ -24,7 +24,7 @@
 
 .form {
   @include reset-first-margin;
-  margin: 0px 0px 0px $small-control-margin;
+  margin: 0px 0px 0px $small-control-horizontal-margin;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -43,7 +43,7 @@
 
 .form >* {
   @include reset-first-margin;
-  margin: 0px 0px 0px $small-control-margin;
+  margin: 0px 0px 0px $small-control-horizontal-margin;
 }
 
 .selection {
@@ -63,7 +63,7 @@
 }
 
 .control-button {
-  margin: 0px 0px 0px $small-control-margin;
+  margin: 0px 0px 0px $small-control-horizontal-margin;
   @include smartphone {
     margin: $small-control-vertical-margin 0px 0px 0px;
     align-self: flex-end;

@@ -69,7 +69,7 @@
 
 .root tr >* {
   padding: 0.12em 0.5em;
-  line-height: $text-line-height;
+  line-height: $line-height;
   text-align: left;
   border-bottom: 1px $light-border-color solid;
   border-right: 1px $light-border-color solid;
@@ -115,7 +115,7 @@
   @include monospace-font;
   margin: 10px 0px 0px 0px;
   padding: 0.12em 0.5em;
-  line-height: $text-line-height;
+  line-height: $line-height;
   background-color: $strong-background-color;
   border-radius: $small-border-radius;
   overflow: hidden;
@@ -153,8 +153,8 @@
 .root img {
   max-width: 100%;
   height: auto;
-  margin-top: - (1 - $text-line-height) * 0.5em;
-  margin-bottom: - (1 - $text-line-height) * 0.5em;
+  margin-top: - (1 - $line-height) * 0.5em;
+  margin-bottom: - (1 - $line-height) * 0.5em;
   line-height: 0;
   vertical-align: bottom;
 }

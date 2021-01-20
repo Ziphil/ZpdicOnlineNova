@@ -5,7 +5,7 @@
 
 .root {
   padding: 40px 0px 40px 0px;
-  border-bottom: 1px $pale-border-color solid; 
+  border-bottom: 1px $invert-border-color solid; 
   display: flex;
   flex-direction: row;
   @include smartphone {
