@@ -8,7 +8,7 @@
 }
 
 .tooltip {
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0px 0px 0px;
   padding: 6px 8px;
   font-size: 80%;
   color: map-get($colors, error);

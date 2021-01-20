@@ -6,7 +6,7 @@
 .root h1,
 .root h2 {
   @include reset-first-margin;
-  margin: 20px 0px 15px 0px;
+  margin: $huge-margin 0px $medium-margin 0px;
   font-size: 150%;
   font-weight: bold;
   color: $head-color;
@@ -14,7 +14,7 @@
 
 .root h3 {
   @include reset-first-margin;
-  margin: 20px 0px 15px 0px;
+  margin: $huge-margin 0px $medium-margin 0px;
   font-size: 120%;
   font-weight: bold;
   color: $head-color;
@@ -27,7 +27,7 @@
 .root p {
   @include reset-first-margin;
   @include line-height;
-  margin: 10px 0px 0px 0px;
+  margin: $paragraph-margin 0px 0px 0px;
   text-align: justify;
 }
 
@@ -35,7 +35,7 @@
   @include unordered-list("\F0DA", $light-color, 0.4em);
   @include reset-first-margin;
   @include line-height;
-  margin: 10px 0px 0px 2px;
+  margin: $paragraph-margin 0px 0px 2px;
   padding: 0px;
 }
 
@@ -43,7 +43,7 @@
   @include ordered-list($light-color);
   @include reset-first-margin;
   @include line-height;
-  margin: 10px 0px 0px 0px;
+  margin: $paragraph-margin 0px 0px 0px;
   padding: 0px;
 }
 
@@ -60,7 +60,7 @@
 
 .root table {
   @include reset-first-margin;
-  margin: 10px auto 0px auto;
+  margin: $paragraph-margin auto 0px auto;
   padding: 0px;
   border-collapse: separate;
   border-spacing: 0px;
@@ -106,14 +106,14 @@
 
 .root blockquote {
   @include reset-first-margin;
-  margin: 10px 0px 0px 0px;
+  margin: $paragraph-margin 0px 0px 0px;
   padding: 0px;
 }
 
 .root pre {
   @include reset-first-margin;
   @include monospace-font;
-  margin: 10px 0px 0px 0px;
+  margin: $paragraph-margin 0px 0px 0px;
   padding: 0.12em 0.5em;
   line-height: $line-height;
   background-color: $strong-background-color;
@@ -128,7 +128,7 @@
 
 .root :global(.block) {
   @include reset-first-margin;
-  margin: 10px 0px 0px 0px;
+  margin: $paragraph-margin 0px 0px 0px;
 }
 
 .root code {

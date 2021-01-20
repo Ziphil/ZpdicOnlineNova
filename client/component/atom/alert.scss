@@ -7,7 +7,7 @@
   width: 100%;
   max-width: 500px;
   margin: 0px auto;
-  padding: 20px 20px;
+  padding: $large-margin $large-margin;
   background-color: $background-color;
   border-radius: $large-border-radius;
   box-sizing: border-box;
@@ -31,12 +31,12 @@
 
 .text {
   @include line-height;
-  margin: 0px 0px 0px 15px;
+  margin: 0px 0px 0px $medium-margin;
   text-align: justify;
 }
 
 .button {
-  margin: 20px 0px 0px 0px;
+  margin: $large-margin 0px 0px 0px;
   text-align: right;
 }
 
