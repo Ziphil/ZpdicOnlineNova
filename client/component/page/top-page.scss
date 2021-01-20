@@ -25,14 +25,14 @@
   @include smartphone {
     width: 100%;
     max-width: 400px;
-    margin: 30px 0px 0px 0px;
+    margin: $huge-margin 0px 0px 0px;
   }
 }
 
 .border {
   border-top: 1px $invert-border-color solid;
-  margin: 30px auto 0px auto;
-  padding: 30px 0px 0px 0px;
+  margin: $huge-margin auto 0px auto;
+  padding: $huge-margin 0px 0px 0px;
 }
 
 .aggregation {
@@ -56,5 +56,5 @@
 }
 
 .gift {
-  margin: 20px 0px 0px 0px;
+  margin: $large-margin 0px 0px 0px;
 }

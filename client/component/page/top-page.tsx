@@ -39,13 +39,13 @@ export default class TopPage extends Component<Props, State> {
         <div styleName="aggregation">
           <DictionaryAggregationPane/>
         </div>
-        <div styleName="feature border">
+        <div styleName="border feature">
           <FeaturePane/>
         </div>
-        <div styleName="notification border">
+        <div styleName="border notification">
           <NotificationList size={1} showPagination={false}/>
         </div>
-        <div styleName="github border">
+        <div styleName="border github">
           <div styleName="github-inner">
             <GithubButton/>
             <ContributorList/>
