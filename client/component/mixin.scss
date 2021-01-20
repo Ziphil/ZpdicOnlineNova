@@ -1,13 +1,7 @@
 @charset "utf-8";
 
+@import "/client/component/function.scss";
 
-@function tint($color, $percent) {
-  @return mix(white, $color, $percent);
-}
-
-@function shade($color, $percent) {
-  @return mix(black, $color, $percent);
-}
 
 @function background-color($color) {
   @return tint($color, 83%);
@@ -107,16 +101,6 @@ $japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "H
 $monospace-font-family: "Inconsolata", "Yu Gothic", "YuGothic", "ＭＳ ゴシック";
 $special-font-family: "Simonetta";
 $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 Brands", "FontAwesome";
-
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 
 @mixin smartphone {
