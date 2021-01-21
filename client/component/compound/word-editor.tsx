@@ -134,6 +134,8 @@ export default class WordEditor extends Component<Props, State> {
     let word = this.state.word;
     let styles = this.props.styles!;
     let zatlin = this.props.dictionary.getZatlin();
+    let nameLabel = this.trans("wordEditor.name");
+    let pronunciationLabel = this.trans("wordEditor.pronunciation");
     let generateNode = (zatlin !== null) && (
       <div styleName="control-button">
         <Button label={this.trans("wordEditor.generate")} onClick={() => this.generateName(zatlin!)}/>
@@ -143,17 +145,14 @@ export default class WordEditor extends Component<Props, State> {
       <div styleName="container">
         <div styleName="inner">
           <div styleName="form">
-            <Input className={styles["title"]} value={word.name} label={this.trans("wordEditor.name")} onSet={this.setWord((name) => word.name = name)}/>
+            <Input className={styles["title"]} value={word.name} label={nameLabel} onSet={this.setWord((name) => word.name = name)}/>
           </div>
           {generateNode}
         </div>
         <div styleName="inner large">
-          <Input
-            className={styles["title"]}
-            value={word.pronunciation}
-            label={this.trans("wordEditor.pronunciation")}
-            onSet={this.setWord((pronunciation) => word.pronunciation = pronunciation || undefined)}
-          />
+          <div styleName="form">
+            <Input className={styles["title"]} value={word.pronunciation} label={pronunciationLabel} onSet={this.setWord((pronunciation) => word.pronunciation = pronunciation || undefined)}/>
+          </div>
         </div>
       </div>
     );
