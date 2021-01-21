@@ -10,12 +10,12 @@
 }
 
 .spacer {
-  @include page(130px);
+  @include page(150u);
   flex: 1;
 }
 
 .spacer.dictionary {
-  @include page(180px);
+  @include page(300u);
 }
 
 .content {

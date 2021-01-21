@@ -11,7 +11,7 @@
 
 .textarea {
   @include input(map-get($colors, primary));
-  padding: 0.25em $input-horizontal-margin;
+  padding: 0.25em $input-horizontal-padding;
   display: block;
   resize: none;
   flex-grow: 1;
@@ -60,5 +60,5 @@
 } 
 
 .textarea-code >div *[class~="CodeMirror-line"] {
-  padding: 0em $input-horizontal-margin !important;
+  padding: 0em $input-horizontal-padding !important;
 }
