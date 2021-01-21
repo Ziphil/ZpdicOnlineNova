@@ -18,8 +18,8 @@
 
 .input-inner {
   width: 100%;
-  margin: 0px;
-  padding: 0px;
+  margin: 0u;
+  padding: 0u;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -37,7 +37,7 @@
 .eye {
   @include icon-font;
   width: 1.3em;
-  margin: 0em 0em 0em 0.5em;
+  margin: 0em 0em 0em $input-horizontal-padding;
   color: $link-color;
   text-align: center;
   display: inline-block;

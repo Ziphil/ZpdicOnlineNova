@@ -8,11 +8,17 @@
 @import "/client/component/atom/portal.scss";
 
 
+html {
+  font-size: $root-size;
+  @media screen and (max-width: 580px) {
+    font-size: $root-size * 0.75;
+  }
+}
+
 body {
-  margin: 0px;
-  padding: 0px;
+  margin: 0u;
+  padding: 0u;
   font-family: $europian-font-family, $japanese-font-family, serif;
-  font-size: $font-size;
   font-feature-settings: "palt" 1, "pkna" 1;
   line-height: 1;
   background-color: $background-color;

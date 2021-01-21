@@ -19,12 +19,12 @@
 
 .root :global(.c3-grid) path,
 .root :global(.c3-grid) line {
-  stroke: $pale-border-color;
+  stroke: $invert-border-color;
 }
 
 .root :global(.c3-line) {
   stroke: border-color(map-get($colors, information)) !important;
-  stroke-width: 2px;
+  stroke-width: 6u;
 }
 
 .root :global(.c3-circle) {
@@ -41,9 +41,10 @@
 }
 
 .root :global(.c3-zptooltip) {
-  padding: 4px 6px;
+  padding: $tooltip-vertical-padding $tooltip-horizontal-padding;
   font-size: 80%;
-  border: 1px border-color(map-get($colors, information)) solid;
+  line-height: $tooltip-line-height;
+  border: 3u border-color(map-get($colors, information)) solid;
   border-radius: $small-border-radius;
   background-color: white;
 }

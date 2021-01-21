@@ -10,16 +10,16 @@
 }
 
 .spacer {
-  @include page(130px);
+  @include page($header-height);
   flex: 1;
 }
 
 .spacer.dictionary {
-  @include page(180px);
+  @include page($header-height + $dictionary-header-height);
 }
 
 .content {
   width: 100%;
   max-width: $page-width;
-  margin: 0px auto;
+  margin: 0u auto;
 }

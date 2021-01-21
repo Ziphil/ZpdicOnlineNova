@@ -11,16 +11,17 @@
 
 .root >* {
   @include reset-first-margin;
-  margin: 15px 0px 0px 0px;
+  margin: $control-vertical-margin 0u 0u 0u;
   display: flex;
   flex-direction: column;
 }
 
 .comment {
-  height: 300px;
+  height: 900u;
 }
 
 .button {
+  margin: $large-margin 0u 0u 0u;
   display: block;
   align-self: flex-end;
 }

@@ -5,24 +5,24 @@
 
 .container {
   @include reset-first-margin;
-  margin: 15px 0px 0px 0px;
+  margin: $large-margin 0u 0u 0u;
 }
 
 .confirm-button-wrapper {
-  margin: 15px 0px 0px 0px;
+  margin: $large-margin 0u 0u 0u;
   display: flex;
   justify-content: space-between;
 }
 
 .confirm-button >* {
   @include reset-first-margin;
-  margin: 0px 0px 0px $control-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
 }
 
 .inner,
 .plus {
   @include reset-first-margin;
-  margin: $small-control-vertical-margin 0px 0px 0px;
+  margin: $small-control-vertical-margin 0u 0u 0u;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -30,6 +30,10 @@
     flex-direction: column;
     align-items: stretch;
   }
+}
+
+.inner.large {
+  margin: $control-vertical-margin 0u 0u 0u;
 }
 
 .plus {
@@ -52,17 +56,17 @@
 
 .form >* {
   @include reset-first-margin;
-  margin: 0px 0px 0px $small-control-margin;
+  margin: 0u 0u 0u $small-control-horizontal-margin;
 }
 
 .form.information {
-  height: 200px;
+  height: 600u;
 }
 
 .control-button {
-  margin: 0px 0px 0px $small-control-margin;
+  margin: 0u 0u 0u $small-control-horizontal-margin;
   @include smartphone {
-    margin: $small-control-vertical-margin 0px 0px 0px;
+    margin: $small-control-vertical-margin 0u 0u 0u;
     align-self: flex-end;
   }
 }

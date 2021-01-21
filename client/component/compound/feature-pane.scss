@@ -3,6 +3,8 @@
 @import "/client/component/mixin.scss";
 
 
+$feature-item-horizontal-margin: 120u;
+
 .root {
   display: flex;
   flex-direction: row;
@@ -14,10 +16,10 @@
 .item {
   @include reset-first-margin;
   width: 100%;
-  margin: 0px 0px 0px 40px;
+  margin: 0u 0u 0u $feature-item-horizontal-margin;
   @include smartphone {
-    margin: 20px 0px 0px 0px;
- }
+    margin: $large-margin 0u 0u 0u;
+  }
 }
 
 .head-wrapper {
@@ -31,7 +33,7 @@
 }
 
 .head {
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0u 0u 0u;
   font-size: 120%;
   font-weight: bold;
   color: $head-color;
@@ -54,6 +56,6 @@
 
 .text {
   @include line-height;
-  margin: 15px 0px 0px 0px;
+  margin: $medium-margin 0u 0u 0u;
   text-align: justify;
 }

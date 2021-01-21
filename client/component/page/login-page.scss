@@ -4,8 +4,8 @@
 
 
 .description {
-  margin: 0px 0px 30px 0px;
-  font-size: 22px;
+  margin: 0u 0u $huge-margin 0u;
+  font-size: 150%;
   font-weight: bold;
   color: $light-color;
   text-align: center;
@@ -13,6 +13,6 @@
 
 .form {
   width: 100%;
-  max-width: 400px;
-  margin: 0px auto;
+  max-width: 1200u;
+  margin: 0u auto;
 }

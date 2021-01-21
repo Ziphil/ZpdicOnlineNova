@@ -8,7 +8,7 @@
 }
 
 .code-outer {
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0u 0u 0u;
 }
 
 .code-wrapper {
@@ -18,9 +18,9 @@
 
 .code {
   @include monospace-font;
-  margin: 0px;
-  padding: 0.12em 0.5em;
-  line-height: $text-line-height;
+  margin: 0u;
+  padding: $box-vertical-padding $box-horizontal-padding;
+  line-height: $line-height;
   background-color: $strong-background-color;
   border-radius: $small-border-radius;
   overflow: hidden;
@@ -28,12 +28,12 @@
 }
 
 .copy-button {
-  margin: 0px 0px 0px $control-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
   white-space: nowrap;
 }
 
 .button-wrapper {
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0u 0u 0u;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -42,6 +42,6 @@
 .image >img {
   width: auto;
   height: auto;
-  max-width: 40px;
-  max-height: 40px;
+  max-width: 150u;
+  max-height: 150u;
 }

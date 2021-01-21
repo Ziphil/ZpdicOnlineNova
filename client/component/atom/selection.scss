@@ -18,11 +18,11 @@
   overflow-x: hidden;
 }
 
-.icon {
-  margin: 0em 0em 0em 0.5em;
+.arrow {
+  margin: 0em 0em 0em $input-horizontal-padding;
 }
 
-.icon::before {
+.arrow::before {
   @include icon-font;
   color: $light-color;
   content: "\F107";

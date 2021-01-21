@@ -16,17 +16,17 @@
 }
 
 .button.left {
-  margin: 0px -1px 0px 0px;
-  border-radius: $small-border-radius 0px 0px $small-border-radius;
+  margin: 0u -3u 0u 0u;
+  border-radius: $small-border-radius 0u 0u $small-border-radius;
 }
 
 .button.right {
-  border-radius: 0px $small-border-radius $small-border-radius 0px;
+  border-radius: 0u $small-border-radius $small-border-radius 0u;
 }
 
 .button.middle {
-  margin: 0px -1px 0px 0px;
-  border-radius: 0px;
+  margin: 0u -3u 0u 0u;
+  border-radius: 0u;
 }
 
 .button.only-icon {
@@ -61,7 +61,7 @@
 }
 
 .icon +.label {
-  margin: 0px 0px 0px $blank-margin;
+  margin: 0em 0em 0em $blank-margin;
 }
 
 .hide-label >.label {
@@ -71,8 +71,8 @@
 }
 
 .spinner-wrapper {
-  top: 0px;
-  left: 0px;
+  top: 0u;
+  left: 0u;
   width: 100%;
   height: 100%;
   display: flex;

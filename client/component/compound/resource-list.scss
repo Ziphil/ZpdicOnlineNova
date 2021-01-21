@@ -13,24 +13,17 @@
 }
 
 .form >*:nth-child(2) {
-  margin: 0px 0px 0px $control-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
 }
 
 .list {
-  margin: 20px 0px 0px 0px;
-}
-
-.image {
-  max-width: 15%;
-  height: auto;
-  margin: 0px 10px 0px 0px;
-  vertical-align: middle;
+  margin: $large-margin 0u 0u 0u;
 }
 
 .caution,
 .instruction {
   @include line-height;
-  margin: 0px 0px 20px 0px;
+  margin: 0u 0u $large-margin 0u;
   font-size: 90%;
   text-align: justify;
 }

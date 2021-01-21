@@ -4,10 +4,10 @@
 
 
 .root {
-  top: 50px;
-  left: 0px;
+  top: 150u;
+  left: 0u;
   width: calc(100% - #{$page-horizontal-margin} * 2);
-  margin: 0px $page-horizontal-margin;
+  margin: 0u $page-horizontal-margin;
   position: fixed;
   pointer-events: none;
   z-index: 300;
@@ -15,11 +15,11 @@
 
 .pane-wrapper {
   width: 100%;
-  max-width: 600px;
-  margin: 15px auto 0px auto;
+  max-width: $page-width * 3 / 4;
+  margin: $medium-margin auto 0u auto;
   pointer-events: auto;
 }
 
 .pane-wrapper:first-child { 
-  margin: 0px auto;
+  margin: 0u auto;
 }

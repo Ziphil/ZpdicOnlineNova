@@ -10,20 +10,20 @@
 }
 
 .left {
-  margin: 0px 0px 0px 10px;
+  margin: 0u 0u 0u $small-margin;
 }
 
 .image {
-  width: 30px;
-  height: 30px;
-  border: 1px $light-border-color solid;
-  border-radius: $small-border-radius;
+  width: 96u;
+  height: 96u;
+  border: 3u $light-border-color solid;
+  border-radius: 50%;
   background-image: linear-gradient(-45deg, transparent 33%, $light-border-color 33%, $light-border-color 50%, transparent 50%, transparent 83%, $light-border-color 83%);
-  background-size: 4px 4px;
+  background-size: 12u 12u;
   box-sizing: border-box;
 }
 
 .name {
-  margin: 0em 0em 0em 0.3em;
+  margin: 0em 0em 0em $blank-margin;
   font-size: 80%;
 }

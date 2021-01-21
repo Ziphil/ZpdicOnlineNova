@@ -11,30 +11,29 @@
 }
 
 .title {
-  margin: 0px;
+  margin: 0u;
   font-family: $special-font-family;
-  font-size: 120px;
+  font-size: 750%; 
   @include smartphone {
-    font-size: 96px;
+    font-size: 750% * 4 / 5;
   }
 }
 
 .subtitle {
-  left: 60px;
-  margin: -5px 0px 0px 0px;
+  left: 1.2em;
+  margin: -15u 0u 0u 0u;
   font-family: $special-font-family;
-  font-size: 50px;
+  font-size: 320%;
   letter-spacing: 0.2em;
   position: relative;
   @include smartphone {
-    left: 48px;
-    font-size: 40px;
+    font-size: 320% * 4 / 5;
   }
 }
 
 .version {
-  margin: 10px 0px 0px 0px;
-  font-size: 20px;
+  margin: $small-margin 0u 0u 0u;
+  font-size: 120%;
   @include smartphone {
     display: none;
   }

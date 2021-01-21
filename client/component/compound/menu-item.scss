@@ -3,29 +3,32 @@
 @import "/client/component/mixin.scss";
 
 
+$menu-item-vertical-padding: 32u;
+$menu-item-horizontal-padding: 48u;
+
 .root {
-  padding: 0px 15px 10px 15px;
+  padding: 0u $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
   color: $light-color;
   text-decoration: none;
   text-align: right;
-  border-bottom: 5px transparent solid;
+  border-bottom: 16u transparent solid;
   display: block;
   cursor: pointer;
 }
 
 .root:hover {
-  border-bottom: 5px $light-border-color solid;
+  border-bottom: 16u $light-border-color solid;
 }
 
 .root.highlight {
-  margin-bottom: -1px;
+  margin-bottom: -3u;
   font-weight: bold;
   color: $link-color;
-  border-bottom: 6px $link-color solid;
+  border-bottom: 19u $link-color solid;
 }
 
 .text {
-  margin: 0px 0px 0px $blank-margin;
+  margin: 0u 0u 0u $blank-margin;
   @include smartphone {
     display: none;
   }
@@ -36,5 +39,5 @@
 }
 
 .badge {
-  margin: 0px 0px 0px $blank-margin;
+  margin: 0u 0u 0u $blank-margin;
 }

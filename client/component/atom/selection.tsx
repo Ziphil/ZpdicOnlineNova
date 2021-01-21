@@ -20,7 +20,7 @@ export default class Selection<V> extends Component<Props<V>, State<V>> {
     let node = (
       <button styleName="selection">
         <div styleName="text">{text}</div>
-        <div styleName="icon"/>
+        <div styleName="arrow"/>
       </button>
     );
     return node;

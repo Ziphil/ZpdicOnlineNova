@@ -4,7 +4,7 @@
 
 
 .root {
-  padding: 12px 20px;
+  padding: $small-margin $large-margin;
   position: relative;
 }
 
@@ -37,10 +37,10 @@
 .root.error .button-box,
 .root.information .button-box,
 .button {
-  right: -10px;
-  top: -10px;
-  width: 25px;
-  height: 25px;
+  right: -32u;
+  top: -32u;
+  width: 76u;
+  height: 76u;
   text-align: center;
   border-radius: 50%;
   box-sizing: border-box;
@@ -70,10 +70,10 @@
 }
 
 .overlay {
-  top: 0px;
-  right: 0px;
-  width: 15px;
-  height: 15px;
+  top: 0u;
+  right: 0u;
+  width: 76u - 32u + 3u;
+  height: 76u - 32u + 3u;
   position: absolute;
 }
 

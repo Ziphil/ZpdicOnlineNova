@@ -8,11 +8,11 @@
 }
 
 .radio-wrapper {
-  margin: 10px 0px 0px 0px;
+  margin: $small-margin 0u 0u 0u;
 }
 
 .icon {
-  margin: 0em 0.5em 0em 0em;
+  margin: 0em $input-horizontal-padding 0em 0em;
 }
 
 .icon::before {

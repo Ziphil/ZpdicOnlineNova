@@ -14,20 +14,20 @@
 }
 
 .list {
-  margin: 10px 0px 0px 0px;
-  padding: 0px;
+  margin: $small-margin 0u 0u 0u;
+  padding: 0u;
   list-style-type: none;
 }
 
 .item {
   @include reset-first-margin;
-  margin: 5px 0px 0px 0px;
+  margin: $tiny-margin 0u 0u 0u;
 }
 
 .avatar {
   margin: 0em $blank-margin 0em 0em;
-  width: 24px;
-  height: 24px;
+  width: 1.5em;
+  height: 1.5em;
   border-radius: 50%;
-  vertical-align: -6px;
+  vertical-align: -0.4em;
 }
