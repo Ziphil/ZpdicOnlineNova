@@ -10,7 +10,7 @@
 
 html {
   font-size: $root-size;
-  @include smartphone {
+  @media screen and (max-width: 580px) {
     font-size: $root-size * 0.75;
   }
 }
