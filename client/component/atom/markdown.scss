@@ -6,7 +6,7 @@
 .root h1,
 .root h2 {
   @include reset-first-margin;
-  margin: $huge-margin 0px $medium-margin 0px;
+  margin: $huge-margin 0u $medium-margin 0u;
   font-size: 150%;
   font-weight: bold;
   color: $head-color;
@@ -14,20 +14,20 @@
 
 .root h3 {
   @include reset-first-margin;
-  margin: $huge-margin 0px $medium-margin 0px;
+  margin: $huge-margin 0u $medium-margin 0u;
   font-size: 120%;
   font-weight: bold;
   color: $head-color;
 }
 
 .root h2 +h3 {
-  margin-top: 0px;
+  margin-top: 0u;
 }
 
 .root p {
   @include reset-first-margin;
   @include line-height;
-  margin: $paragraph-margin 0px 0px 0px;
+  margin: $paragraph-margin 0u 0u 0u;
   text-align: justify;
 }
 
@@ -35,16 +35,16 @@
   @include unordered-list("\F0DA", $light-color, 0.4em);
   @include reset-first-margin;
   @include line-height;
-  margin: $paragraph-margin 0px 0px 2px;
-  padding: 0px;
+  margin: $paragraph-margin 0u 0u 6u;
+  padding: 0u;
 }
 
 .root ol {
   @include ordered-list($light-color);
   @include reset-first-margin;
   @include line-height;
-  margin: $paragraph-margin 0px 0px 0px;
-  padding: 0px;
+  margin: $paragraph-margin 0u 0u 0u;
+  padding: 0u;
 }
 
 .root li ul::before,
@@ -60,19 +60,19 @@
 
 .root table {
   @include reset-first-margin;
-  margin: $paragraph-margin auto 0px auto;
-  padding: 0px;
+  margin: $paragraph-margin auto 0u auto;
+  padding: 0u;
   border-collapse: separate;
-  border-spacing: 0px;
+  border-spacing: 0u;
   border-radius: $small-border-radius;
 }
 
 .root tr >* {
-  padding: 0.12em 0.5em;
+  padding: $box-vertical-padding $box-horizontal-padding;
   line-height: $line-height;
   text-align: left;
-  border-bottom: 1px $light-border-color solid;
-  border-right: 1px $light-border-color solid;
+  border-bottom: 3u $light-border-color solid;
+  border-right: 3u $light-border-color solid;
 }
 
 .root tr >th {
@@ -81,11 +81,11 @@
 }
 
 .root thead tr:first-child >* {
-  border-top: 1px $light-border-color solid;
+  border-top: 3u $light-border-color solid;
 }
 
 .root tr >*:first-child {
-  border-left: 1px $light-border-color solid;
+  border-left: 3u $light-border-color solid;
 }
 
 .root thead tr:first-child >*:first-child {
@@ -106,15 +106,15 @@
 
 .root blockquote {
   @include reset-first-margin;
-  margin: $paragraph-margin 0px 0px 0px;
-  padding: 0px;
+  margin: $paragraph-margin 0u 0u 0u;
+  padding: 0u;
 }
 
 .root pre {
   @include reset-first-margin;
   @include monospace-font;
-  margin: $paragraph-margin 0px 0px 0px;
-  padding: 0.12em 0.5em;
+  margin: $paragraph-margin 0u 0u 0u;
+  padding: $box-vertical-padding $box-horizontal-padding;
   line-height: $line-height;
   background-color: $strong-background-color;
   border-radius: $small-border-radius;
@@ -128,7 +128,7 @@
 
 .root :global(.block) {
   @include reset-first-margin;
-  margin: $paragraph-margin 0px 0px 0px;
+  margin: $paragraph-margin 0u 0u 0u;
 }
 
 .root code {
@@ -153,8 +153,8 @@
 .root img {
   max-width: 100%;
   height: auto;
-  margin-top: - (1 - $line-height) * 0.5em;
-  margin-bottom: - (1 - $line-height) * 0.5em;
+  margin-top: - ((1 - $line-height) / 2) * 1em;
+  margin-bottom: - ((1 - $line-height) / 2) * 1em;
   line-height: 0;
   vertical-align: bottom;
 }

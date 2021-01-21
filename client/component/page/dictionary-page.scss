@@ -5,15 +5,15 @@
 
 .search-form {
   width: 100%;
-  max-width: 600px;
-  margin: 0px auto $huge-margin auto;
+  max-width: $page-width * 3 / 4;
+  margin: 0u auto $huge-margin auto;
 }
 
 .suggestion-list {
-  margin: 0px 0px $large-margin 0px;
+  margin: 0u 0u $large-margin 0u;
 }
 
 .pagination {
-  margin: $large-margin 0px 0px 0px;
+  margin: $large-margin 0u 0u 0u;
   text-align: center;
 }

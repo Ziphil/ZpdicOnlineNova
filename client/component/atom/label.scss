@@ -3,10 +3,10 @@
 @import "/client/component/mixin.scss";
 
 
-$label-bottom-margin: 5px;
+$label-bottom-margin: 16u;
 
 .root {
-  margin: 0px 0px $label-bottom-margin 0px;
+  margin: 0u 0u $label-bottom-margin 0u;
   font-size: 80%;
   color: map-get($colors, primary);
 }

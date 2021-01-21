@@ -5,10 +5,10 @@
 
 .root {
   width: 100%;
-  height: 50px;
-  top: 70px;
-  left: 0px;
-  border-bottom: 1px $light-border-color solid;
+  height: $dictionary-header-height;
+  top: $header-height;
+  left: 0u;
+  border-bottom: 3u $light-border-color solid;
   background-color: $strong-background-color;
   position: absolute;
   z-index: 80;
@@ -23,7 +23,7 @@
 }
 
 .right {
-  margin: 0px 0px 0px 30px;
+  margin: 0u 0u 0u $huge-margin;
 }
 
 .name {
@@ -36,13 +36,13 @@
 
 .button >* {
   @include reset-first-margin;
-  margin: 0px 0px 0px $control-horizontal-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
   display: inline-block;
 }
 
 .icon {
   @include icon-font;
-  margin: 0px $blank-margin 0px 0px;
+  margin: 0u $blank-margin 0u 0u;
   font-weight: 400;
   color: $light-border-color;
   text-decoration: none;

@@ -16,7 +16,7 @@
 .root >div {
   @include monospace-font;
   height: auto;
-  padding: 0.12em 0.5em;
+  padding: $box-vertical-padding $box-horizontal-padding;
   white-space: pre;
   background: transparent;
   box-sizing: border-box;

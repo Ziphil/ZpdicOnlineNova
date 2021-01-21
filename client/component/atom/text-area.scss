@@ -11,7 +11,7 @@
 
 .textarea {
   @include input(map-get($colors, primary));
-  padding: 0.25em $input-horizontal-padding;
+  padding: $textarea-vertical-padding $input-horizontal-padding;
   display: block;
   resize: none;
   flex-grow: 1;
@@ -28,7 +28,7 @@
 
 .textarea-code {
   @include input(map-get($colors, primary));
-  padding: 0px;
+  padding: 0u;
   display: block;
   resize: none;
   flex-grow: 1;
@@ -44,10 +44,10 @@
 
 .textarea-code.no-fit >div {
   height: 100%;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
+  top: 0u;
+  bottom: 0u;
+  left: 0u;
+  right: 0u;
   position: absolute;
 }
 
@@ -56,7 +56,7 @@
 }
 
 .textarea-code >div *[class~="CodeMirror-lines"] {
-  padding: 0.25em 0em !important;
+  padding: $textarea-vertical-padding 0em !important;
 } 
 
 .textarea-code >div *[class~="CodeMirror-line"] {

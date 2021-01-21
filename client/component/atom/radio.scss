@@ -18,7 +18,7 @@
   left: 0em;
   width: 1em;
   height: 1em;
-  border: 1px $light-border-color solid;
+  border: 3u $light-border-color solid;
   border-radius: 50%;
   background-color: white;
   box-shadow: $inset-box-shadow-setting input-box-shadow-color(map-get($colors, primary)) inset;
@@ -30,14 +30,14 @@
 }
 
 .radio:hover +.label::before {
-  border: 1px $light-color solid;
+  border: 3u $light-color solid;
 }
 
 .radio:checked +.label::after {
-  top: calc(0.1em + 4px);
-  left: 4px;
-  width: calc(1em - 8px);
-  height: calc(1em - 8px);
+  top: calc(0.1em + 12u);
+  left: 12u;
+  width: calc(1em - 24u);
+  height: calc(1em - 24u);
   border-radius: 50%;
   background-color: map-get($colors, primary);
   background-image: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25));

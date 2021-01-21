@@ -4,16 +4,16 @@
 
 
 .root {
-  padding: $large-margin 0px;
-  border-bottom: 1px $invert-border-color solid;
+  padding: $large-margin 0u;
+  border-bottom: 3u $invert-border-color solid;
 }
 
 .root:first-child {
-  border-top: 1px $light-border-color solid;
+  border-top: 3u $light-border-color solid;
 }
 
 .root:last-child {
-  border-bottom: 1px $light-border-color solid;
+  border-bottom: 3u $light-border-color solid;
 }
 
 .head-wrapper {
@@ -32,18 +32,18 @@
 }
 
 .head-right {
-  margin: 0px 0px 0px $small-margin;
+  margin: 0u 0u 0u $small-margin;
 }
 
 .date {
-  margin: 0px;
+  margin: 0u;
   font-size: 80%;
   color: $head-color;
 }
 
 .head {
-  margin: $tiny-margin 0px 0px 0px;
-  padding: 0px;
+  margin: $tiny-margin 0u 0u 0u;
+  padding: 0u;
   font-size: 120%;
   font-weight: bold;
   color: $head-color;
@@ -56,5 +56,5 @@
 }
 
 .content {
-  margin: $medium-margin 0px 0px 0px;
+  margin: $medium-margin 0u 0u 0u;
 }

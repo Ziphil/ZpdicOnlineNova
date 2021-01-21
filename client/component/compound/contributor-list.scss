@@ -14,14 +14,14 @@
 }
 
 .list {
-  margin: $small-margin 0px 0px 0px;
-  padding: 0px;
+  margin: $small-margin 0u 0u 0u;
+  padding: 0u;
   list-style-type: none;
 }
 
 .item {
   @include reset-first-margin;
-  margin: $tiny-margin 0px 0px 0px;
+  margin: $tiny-margin 0u 0u 0u;
 }
 
 .avatar {

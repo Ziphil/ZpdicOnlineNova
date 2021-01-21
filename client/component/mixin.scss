@@ -79,20 +79,31 @@ $small-control-horizontal-margin: 32u;
 $small-control-vertical-margin: 24u;
 $paragraph-margin: 32u;
 
-$icon-width: 1.2em;
-$blank-margin: 0.3em;
+$page-width: 2400u;
+$page-top-margin: 180u;
+$page-bottom-margin: 240u;
+$page-horizontal-margin: 96u;
+
+$header-height: 210u;
+$dictionary-header-height: 150u;
+$footer-height: 150u;
+
+$box-vertical-padding: 0.12em;
+$box-horizontal-padding: 0.5em;
 $input-vertical-padding: 0.12em;
 $input-horizontal-padding: 0.5em;
+$textarea-vertical-padding: 0.25em;
 $button-hotizontal-padding: 0.8em;
+$tooltip-vertical-padding: 0.25em;
+$tooltip-horizontal-padding: 0.5em;
 
-$page-width: 2400u;
-$page-vertical-margin: 240u;
-$page-horizontal-margin: 96u;
+$icon-width: 1.2em;
+$blank-margin: 0.3em;
 
 $focus-box-shadow-setting: 0u 0u 0u 6u;
 $inset-box-shadow-setting: 0u 6u 8u;
 
-$small-border-radius: 8u;
+$small-border-radius: 10u;
 $large-border-radius: 16u;
 
 $line-height: 1.6;
@@ -146,8 +157,8 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 
 @mixin page($additional-top-margin) {
   width: calc(100% - #{$page-horizontal-margin} * 2);
-  margin-top: $page-vertical-margin + $additional-top-margin;
-  margin-bottom: $page-vertical-margin;
+  margin-top: $page-top-margin + $additional-top-margin;
+  margin-bottom: $page-bottom-margin;
   margin-right: $page-horizontal-margin;
   margin-left: $page-horizontal-margin;
   padding: 0u;

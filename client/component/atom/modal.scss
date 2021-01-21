@@ -14,8 +14,8 @@
 .spacer {
   width: calc(100% - #{$page-horizontal-margin} * 2);
   height: 100%;
-  margin: 0px $page-horizontal-margin 0px $page-horizontal-margin;
-  padding: 0px;
+  margin: 0u $page-horizontal-margin 0u $page-horizontal-margin;
+  padding: 0u;
   box-sizing: border-box;
   display: flex;
   align-items: center;

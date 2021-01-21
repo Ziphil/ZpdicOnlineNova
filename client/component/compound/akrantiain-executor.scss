@@ -11,22 +11,22 @@
 
 .root >* {
   @include reset-first-margin;
-  margin: $control-vertical-margin 0px 0px 0px;
+  margin: $control-vertical-margin 0u 0u 0u;
   display: flex;
   flex-direction: column;
 }
 
 .button {
-  margin: $large-margin 0px 0px 0px;
+  margin: $large-margin 0u 0u 0u;
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
 .source >:nth-child(2) *[class~="CodeMirror-scroll"] {
-  min-height: 300px;
+  min-height: 900u;
 }
 
 .error-message >:nth-child(2) *[class~="CodeMirror-scroll"] {
-  min-height: 150px;
+  min-height: 450u;
 }

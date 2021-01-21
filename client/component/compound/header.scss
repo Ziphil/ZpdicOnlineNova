@@ -5,10 +5,10 @@
 
 .root {
   width: 100%;
-  height: 70px;
-  top: 0px;
-  left: 0px;
-  border-bottom: 1px $dark-border-color solid;
+  height: $header-height;
+  top: 0u;
+  left: 0u;
+  border-bottom: 3u $dark-border-color solid;
   background-color: $header-background-color;
   position: absolute;
   z-index: 100;
@@ -28,20 +28,20 @@
 }
 
 .title {
-  margin: 0px 30px 0px 0px;
+  margin: 0u $huge-margin 0u 0u;
   font-family: $special-font-family;
-  font-size: 40px;
+  font-size: 250%;
   color: $background-color;
   line-height: 1;
 }
 
 .menu {
-  margin: 0px 30px 0px 0px;
+  margin: 0u $huge-margin 0u 0u;
 }
 
 .menu >* {
   @include reset-first-margin;
-  margin: 0px 0px 0px $control-horizontal-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
 }
 
 .language {
@@ -51,7 +51,7 @@
 
 .language .icon {
   @include icon-font;
-  margin: 0px $blank-margin 0px 0px;
+  margin: 0u $blank-margin 0u 0u;
 }
 
 .language .link {
@@ -66,7 +66,7 @@
 }
 
 .right {
-  margin: 0px 0px 0px 30px;
+  margin: 0u 0u 0u $huge-margin;
 }
 
 .name {

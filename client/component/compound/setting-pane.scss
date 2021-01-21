@@ -3,12 +3,12 @@
 @import "/client/component/mixin.scss";
 
 
-$setting-pane-vertical-padding: 40px;
-$setting-pane-horizontal-padding: 50px;
+$setting-pane-vertical-padding: 120u;
+$setting-pane-horizontal-padding: 150u;
 
 .root {
-  padding: $setting-pane-vertical-padding 0px $setting-pane-vertical-padding 0px;
-  border-bottom: 1px $invert-border-color solid; 
+  padding: $setting-pane-vertical-padding 0u $setting-pane-vertical-padding 0u;
+  border-bottom: 3u $invert-border-color solid; 
   display: flex;
   flex-direction: row;
   @include smartphone {
@@ -21,25 +21,25 @@ $setting-pane-horizontal-padding: 50px;
 }
 
 .root:last-child {
-  border-bottom: 1px $light-border-color solid;
+  border-bottom: 3u $light-border-color solid;
 }
 
 .description-wrapper {
-  padding: 0px $setting-pane-horizontal-padding 0px 0px;
+  padding: 0u $setting-pane-horizontal-padding 0u 0u;
   flex-basis: 35%;
   flex-grow: 0;
   flex-shrink: 0;
   box-sizing: border-box;
   @include smartphone {
     width: 100%;
-    padding: 0px 0px $large-margin 0px;
+    padding: 0u 0u $large-margin 0u;
     flex-basis: content;
   }
 }
 
 .force-wide .description-wrapper {
   width: 100%;
-  padding: 0px 0px $large-margin 0px;
+  padding: 0u 0u $large-margin 0u;
   flex-basis: content;
 }
 
@@ -74,7 +74,7 @@ $setting-pane-horizontal-padding: 50px;
 
 .description {
   @include line-height;
-  margin: $medium-margin 0px 0px 0px;
+  margin: $medium-margin 0u 0u 0u;
   font-size: 90%;
   text-align: justify;
 }

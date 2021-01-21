@@ -15,21 +15,21 @@
 }
 
 .status {
-  margin: 0px 0px 0px $large-margin;
+  margin: 0u 0u 0u $large-margin;
   white-space: nowrap;
 }
 
 .information {
-  margin: $small-margin 0px 0px 0px;
+  margin: $small-margin 0u 0u 0u;
   font-size: 80%;
 }
 
 .information-item {
-  margin: $tiny-margin 0px 0px 0px;
+  margin: $tiny-margin 0u 0u 0u;
 }
 
 .information-item:first-child {
-  margin: 0px;
+  margin: 0u;
 }
 
 .setting {
@@ -37,9 +37,9 @@
 }
 
 .setting >* {
-  margin: 0px 0px 0px $control-horizontal-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
 }
 
 .setting >*:first-child {
-  margin: 0px;
+  margin: 0u;
 }

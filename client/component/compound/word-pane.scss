@@ -4,20 +4,20 @@
 
 
 .root {
-  padding: $large-margin 0px;
-  border-bottom: 1px $invert-border-color solid;
+  padding: $large-margin 0u;
+  border-bottom: 3u $invert-border-color solid;
 }
 
 .root:first-child {
-  border-top: 1px $light-border-color solid;
+  border-top: 3u $light-border-color solid;
 }
 
 .root:last-child {
-  border-bottom: 1px $light-border-color solid;
+  border-bottom: 3u $light-border-color solid;
 }
 
 .name-wrapper {
-  margin: 0px 0px $medium-margin 0px;
+  margin: 0u 0u $medium-margin 0u;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -33,18 +33,18 @@
 }
 
 .right {
-  margin: 0px 0px 0px 20px;
+  margin: 0u 0u 0u $large-margin;
 }
 
 .button {
-  margin: 0px 0px 0px $control-horizontal-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
   display: inline-block;
   white-space: nowrap;
 }
 
 .button >* {
   @include reset-first-margin;
-  margin: 0px 0px 0px $control-horizontal-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
 }
 
 .pronunciation {
@@ -59,12 +59,12 @@
 }
 
 .container {
-  margin: $medium-margin 0px 0px 0px;
+  margin: $medium-margin 0u 0u 0u;
 }
 
 .text {
   @include line-height;
-  margin: 0px;
+  margin: 0u;
   text-align: justify;
   white-space: pre-line;
 }
@@ -72,8 +72,8 @@
 .example {
   @include unordered-list("\F0DA", $light-color, 0.4em);
   @include line-height;
-  margin: 0px 0px 0px 2px;
-  padding: 0px;
+  margin: 0u 0u 0u 6u;
+  padding: 0u;
 }
 
 .example-content-wrapper {
@@ -98,13 +98,13 @@
   margin: 0em 0.5em 0em 0em;
   padding: 0em 0.2em;
   font-size: 70%;
-  border: 1px $light-border-color solid;
+  border: 3u $light-border-color solid;
   border-radius: $small-border-radius;
   position: relative;
 }
 
 .title {
-  margin: $paragraph-margin 0px;
+  margin: $paragraph-margin 0u;
   font-size: 80%;
   font-weight: bold;
   color: $light-color;
