@@ -133,14 +133,14 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   &::before {
     width: 0u;
     height: 0u;
-    margin-top: ((1 - $line-height) / 2) * 1em;
+    margin-top: - line-intrusion($line-height);
     display: block;
     content: "";
   }
   &::after {
     width: 0u;
     height: 0u;
-    margin-bottom: ((1 - $line-height) / 2) * 1em;
+    margin-bottom: - line-intrusion($line-height);
     display: block;
     content: "";
   }

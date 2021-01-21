@@ -153,8 +153,8 @@
 .root img {
   max-width: 100%;
   height: auto;
-  margin-top: - ((1 - $line-height) / 2) * 1em;
-  margin-bottom: - ((1 - $line-height) / 2) * 1em;
+  margin-top: line-intrusion($line-height);
+  margin-bottom: line-intrusion($line-height);
   line-height: 0;
   vertical-align: bottom;
 }
