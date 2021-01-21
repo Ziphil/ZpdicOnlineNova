@@ -58,6 +58,9 @@ let config = {
             options: {modules: {localIdentName: "[name]_[local]_[hash:base64:5]"}, url: false}
           },
           {
+            loader: "./loader/convert-unit.ts"
+          },
+          {
             loader: "sass-loader"
           }
         ]
