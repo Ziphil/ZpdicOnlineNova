@@ -9,6 +9,7 @@ import Button from "/client/component/atom/button";
 import Highlight from "/client/component/atom/highlight";
 import Component from "/client/component/component";
 import AkrantiainExecutor from "/client/component/compound/akrantiain-executor";
+import RegexpExecutor from "/client/component/compound/regexp-executor";
 import ZatlinExecutor from "/client/component/compound/zatlin-executor";
 import {
   style
@@ -31,6 +32,11 @@ export default class SourceTester extends Component<Props, State> {
     } else if (this.props.language === "zatlin") {
       let node = (
         <ZatlinExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
+      );
+      return node;
+    } else if (this.props.language === "regexp") {
+      let node = (
+        <RegexpExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
       );
       return node;
     } else {

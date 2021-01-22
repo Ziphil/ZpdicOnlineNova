@@ -387,6 +387,12 @@ loginForm:
   resetPassword: "Forgot password"
 notificationPane:
   fixed: "Fixed"
+regexpExecutor:
+  title: "Regular expression"
+  source: "Regular expression"
+  target: "Target text"
+  result: "Result"
+  execute: "Execute"
 registerForm:
   confirm: "Sign up"
 resetUserPasswordForm:

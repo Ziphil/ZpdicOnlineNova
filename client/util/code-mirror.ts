@@ -14,7 +14,23 @@ CodeMirror.defineSimpleMode("bnf", {
     {regex: /'([^'\\]|\\.)*?'/, token: "string"},
     {regex: /\[([^\[\]\\]|\\.)*?\]/, token: "string"},
     {regex: /[a-zA-Z][a-zA-Z0-9_]*/, token: "variable-1"},
-    {regex: /(\+|\*|\?=?)/, token: "operator"}
+    {regex: /\+|\*|\?=?/, token: "operator"}
+  ]
+});
+
+CodeMirror.defineSimpleMode("regexp", {
+  start: [
+    {regex: /\[/, token: "variable-1", next: "characterClass"},
+    {regex: /\\./, token: "keyword"},
+    {regex: /\.|\^|\$/, token: "operator"},
+    {regex: /\+|\*|\?|\|/, token: "operator"},
+    {regex: /\{\d+(,\d*)?\}/, token: "operator"},
+    {regex: /\(|\)/, token: "bracket"}
+  ],
+  characterClass: [
+    {regex: /\\./, token: "keyword"},
+    {regex: /[^\\\]]+/, token: "variable-1"},
+    {regex: /\]/, token: "variable-1", next: "start"}
   ]
 });
 
@@ -30,6 +46,8 @@ export class CodeMirrorUtil {
       return {theme: "zpmarkdown", mode: {name: "markdown", xml: false, fencedCodeBlockHighlighting: false}};
     } else if (language === "bnf") {
       return {theme: "zpbnf", mode: {name: "bnf"}};
+    } else if (language === "regexp") {
+      return {theme: "zpregexp", mode: {name: "regexp"}};
     } else {
       return {theme: "zpplain", mode: undefined};
     }

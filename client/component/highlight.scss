@@ -23,8 +23,13 @@
   color: hsl(280, 70%, 40%);
 }
 
+:global(.cm-s-zpregexp .cm-keyword) {
+  color: hsl(60, 70%, 40%);
+}
+
 :global(.cm-s-zpakrantiain .cm-string),
-:global(.cm-s-zpbnf .cm-string) {
+:global(.cm-s-zpbnf .cm-string),
+:global(.cm-s-zpregexp .cm-variable-1) {
   color: hsl(280, 70%, 40%);
 }
 
@@ -46,10 +51,12 @@
 }
 
 :global(.cm-s-zpakrantiain .cm-operator),
-:global(.cm-s-zpbnf .cm-operator) {
+:global(.cm-s-zpbnf .cm-operator),
+:global(.cm-s-zpregexp .cm-operator) {
   color: hsl(30, 70%, 40%);
 }
 
-:global(.cm-s-zpakrantiain .cm-comment) {
+:global(.cm-s-zpakrantiain .cm-comment),
+:global(.cm-s-zpregexp .cm-bracket) {
   color: hsl(0, 0%, 60%);
 }

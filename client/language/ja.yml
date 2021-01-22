@@ -387,6 +387,12 @@ loginForm:
   resetPassword: "パスワードを忘れた"
 notificationPane:
   fixed: "対応済み"
+regexpExecutor:
+  title: "正規表現"
+  source: "正規表現"
+  target: "検索対象"
+  result: "実行結果"
+  execute: "実行"
 registerForm:
   confirm: "新規登録"
 resetUserPasswordForm:
