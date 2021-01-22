@@ -44,7 +44,7 @@ export default class ZatlinExecutor extends Component<Props, State> {
     }
   }
 
-  private executeAkrantiain(): void {
+  private executeZatlin(): void {
     try {
       let zatlin = Zatlin.load(this.state.source);
       let output = zatlin.generate();
@@ -77,7 +77,7 @@ export default class ZatlinExecutor extends Component<Props, State> {
             fitHeight={true}
             onSet={(source) => this.setState({source})}
           />
-          <Button className={styles["button"]} label={this.trans("zatlinExecutor.execute")} onClick={this.executeAkrantiain.bind(this)}/>
+          <Button className={styles["button"]} label={this.trans("zatlinExecutor.execute")} onClick={this.executeZatlin.bind(this)}/>
           <Input label={this.trans("zatlinExecutor.output")} value={this.state.output} readOnly={true}/>
           <TextArea
             className={styles["error-message"]}
