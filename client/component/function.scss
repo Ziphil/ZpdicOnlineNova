@@ -10,7 +10,7 @@
 }
 
 @function line-intrusion($line-height) {
-  @return (($line-height - 1) / 2) * 1em
+  @return (($line-height - 1) / 2) * 1em;
 }
 
 @keyframes spin {
