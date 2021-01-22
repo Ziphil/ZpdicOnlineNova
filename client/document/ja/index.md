@@ -14,3 +14,4 @@
 ## その他のドキュメント
 
 - [利用可能な Markdown 構文](document/other/markdown)
+- [正規表現入門](document/other/regexp)
