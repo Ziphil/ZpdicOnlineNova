@@ -67,10 +67,11 @@ export default class RegexpExecutor extends Component<Props, State> {
     let result = this.state.result;
     if (result !== null) {
       let target = result.target;
+      let length = result.matches.length;
       let currentIndex = 0;
-      innerNodes.push((result.matches.length > 0) ? result.matches.length.toString() : "No");
-      innerNodes.push((result.matches.length === 1) ? " match:\n" : " matches:\n");
+      innerNodes.push((length > 0) ? "matched" : "not matched");
       if (result.matches.length > 0) {
+        innerNodes.push((length === 1) ? ` (${length} match):\n` : ` (${length} matches):\n`);
         innerNodes.push("  ");
         for (let index = 0 ; index < result.matches.length ; index ++) {
           let range = result.matches[index].range;
