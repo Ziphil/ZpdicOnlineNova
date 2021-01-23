@@ -17,6 +17,10 @@ import Component from "/client/component/component";
 import {
   style
 } from "/client/component/decorator";
+import {
+  RegexpExecResult,
+  RegexpUtil
+} from "/client/util/regexp";
 
 
 @style(require("./regexp-executor.scss"))
@@ -25,7 +29,7 @@ export default class RegexpExecutor extends Component<Props, State> {
   public state: State = {
     source: undefined as any,
     target: "",
-    result: {target: "", ranges: []},
+    result: null,
     errorMessage: ""
   };
 
@@ -44,15 +48,7 @@ export default class RegexpExecutor extends Component<Props, State> {
 
   private executeRegexp(): void {
     try {
-      let regexp = new RegExp(this.state.source, "g");
-      let target = this.state.target;
-      let match = null as RegExpExecArray | null;
-      let result = {target, ranges: []} as HitResult;
-      while ((match = regexp.exec(target)) !== null) {
-        let start = match.index;
-        let end = regexp.lastIndex;
-        result.ranges.push({start, end});
-      }
+      let result = RegexpUtil.exec(this.state.source, this.state.target);
       this.setState({result, errorMessage: ""});
     } catch (error) {
       let errorMessage = error.message.trim() ?? "Unknown error";
@@ -68,16 +64,16 @@ export default class RegexpExecutor extends Component<Props, State> {
 
   private renderResult(): ReactNode {
     let innerNodes = [];
-    if (this.state.result !== null) {
-      let target = this.state.result.target;
-      let ranges = this.state.result.ranges;
+    let result = this.state.result;
+    if (result !== null) {
+      let target = result.target;
       let currentIndex = 0;
-      innerNodes.push((ranges.length > 0) ? ranges.length.toString() : "No");
-      innerNodes.push((ranges.length === 1) ? " match:\n" : " matches:\n");
-      if (ranges.length > 0) {
+      innerNodes.push((result.matches.length > 0) ? result.matches.length.toString() : "No");
+      innerNodes.push((result.matches.length === 1) ? " match:\n" : " matches:\n");
+      if (result.matches.length > 0) {
         innerNodes.push("  ");
-        for (let index = 0 ; index < ranges.length ; index ++) {
-          let range = ranges[index];
+        for (let index = 0 ; index < result.matches.length ; index ++) {
+          let range = result.matches[index].range;
           let rangeNode = (
             <span styleName="hit" key={index}>
               {target.substring(range.start, range.end).replaceAll("\n", "\n  ")}
@@ -148,9 +144,6 @@ type Props = {
 type State = {
   source: string,
   target: string,
-  result: HitResult | null,
+  result: RegexpExecResult | null,
   errorMessage: string
 };
-
-export type HitResult = {target: string, ranges: Array<HitRange>};
-export type HitRange = {start: number, end: number};
