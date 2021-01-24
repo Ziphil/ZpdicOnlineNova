@@ -83,15 +83,15 @@ export class Root extends Component<Props, State> {
                     <Authenticator type="guest" exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
                     <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
                     <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
-                    <Route exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
-                    <Route exact sensitive path="/request/:number(\d+)" component={AddCommissionPage}/>
+                    <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+                    <Authenticator type="none" exact sensitive path="/request/:number(\d+)" component={AddCommissionPage}/>
                     <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
                     <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-                    <Route exact sensitive path="/list" component={DictionaryListPage}/>
-                    <Route exact sensitive path="/notification" component={NotificationPage}/>
-                    <Route exact sensitive path="/contact" component={ContactPage}/>
-                    <Route exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
-                    <Route exact sensitive path="/language" component={LanguagePage}/>
+                    <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
+                    <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
+                    <Authenticator type="none" exact sensitive path="/contact" component={ContactPage}/>
+                    <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
+                    <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
                   </Switch>
                 </ScrollTop>
               </ErrorBoundary>
