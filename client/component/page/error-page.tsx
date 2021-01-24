@@ -11,13 +11,15 @@ import {
 import Page from "/client/component/page/page";
 
 
-@style(require("./empty-page.scss"))
-export default class EmptyPage extends Component<Props, State> {
+@style(require("./error-page.scss"))
+export default class ErrorPage extends Component<Props, State> {
 
   public render(): ReactNode {
     let node = (
       <Page>
-        {this.props.error}
+        <div styleName="root">
+          Weird
+        </div>
       </Page>
     );
     return node;
