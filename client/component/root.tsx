@@ -33,6 +33,7 @@ import {
   GuestRoute,
   PrivateRoute
 } from "/client/component/util/authentication";
+import ScrollTop from "/client/component/util/scroll-top";
 
 
 require("../../node_modules/codemirror/lib/codemirror.css");
@@ -73,25 +74,27 @@ export class Root extends Component<Props, State> {
       <Router history={this.history}>
         <Provider store={this.store}>
           <IntlProvider defaultLocale="ja" locale={this.store.locale} messages={this.store.messages}>
-            <Suspense fallback={<EmptyPage/>}>
-              <Switch>
-                <GuestRoute exact sensitive path="/" redirect="/dashboard" component={TopPage}/>
-                <GuestRoute exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
-                <GuestRoute exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
-                <GuestRoute exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
-                <PrivateRoute exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-                <PrivateRoute exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
-                <Route exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
-                <Route exact sensitive path="/request/:number(\d+)" component={AddCommissionPage}/>
-                <PrivateRoute exact sensitive path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-                <PrivateRoute exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-                <Route exact sensitive path="/list" component={DictionaryListPage}/>
-                <Route exact sensitive path="/notification" component={NotificationPage}/>
-                <Route exact sensitive path="/contact" component={ContactPage}/>
-                <Route exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
-                <Route exact sensitive path="/language" component={LanguagePage}/>
-              </Switch>
-            </Suspense>
+            <ScrollTop>
+              <Suspense fallback={<EmptyPage/>}>
+                <Switch>
+                  <GuestRoute exact sensitive path="/" redirect="/dashboard" component={TopPage}/>
+                  <GuestRoute exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
+                  <GuestRoute exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
+                  <GuestRoute exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
+                  <PrivateRoute exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+                  <PrivateRoute exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
+                  <Route exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+                  <Route exact sensitive path="/request/:number(\d+)" component={AddCommissionPage}/>
+                  <PrivateRoute exact sensitive path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                  <PrivateRoute exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                  <Route exact sensitive path="/list" component={DictionaryListPage}/>
+                  <Route exact sensitive path="/notification" component={NotificationPage}/>
+                  <Route exact sensitive path="/contact" component={ContactPage}/>
+                  <Route exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
+                  <Route exact sensitive path="/language" component={LanguagePage}/>
+                </Switch>
+              </Suspense>
+            </ScrollTop>
           </IntlProvider>
         </Provider>
       </Router>
