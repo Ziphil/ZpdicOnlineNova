@@ -27,12 +27,12 @@ import {
 } from "/client/component/decorator";
 import EmptyPage from "/client/component/page/empty-page";
 import {
-  GuestRoute,
-  PrivateRoute
-} from "/client/component/routing/authentication";
-import {
   GlobalStore
 } from "/client/component/store";
+import {
+  GuestRoute,
+  PrivateRoute
+} from "/client/component/util/authentication";
 
 
 require("../../node_modules/codemirror/lib/codemirror.css");
