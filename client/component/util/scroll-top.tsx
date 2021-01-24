@@ -4,9 +4,6 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
-import {
-  RouteProps
-} from "react-router-dom";
 import Component from "/client/component/component";
 import {
   style
@@ -14,9 +11,9 @@ import {
 
 
 @style(null, {withRouter: true, inject: false, injectIntl: false, observer: false})
-export default class ScrollTop extends Component<RouteProps, {}> {
+export default class ScrollTop extends Component<Props, State> {
 
-  public componentDidUpdate(props: RouteProps): void {
+  public componentDidUpdate(props: any): void {
     if (this.props.location !== props.location) {
       window.scrollTo(0, 0);
     }
@@ -27,3 +24,9 @@ export default class ScrollTop extends Component<RouteProps, {}> {
   }
 
 }
+
+
+type Props = {
+};
+type State = {
+};
