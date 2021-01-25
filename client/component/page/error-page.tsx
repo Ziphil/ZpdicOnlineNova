@@ -26,6 +26,7 @@ export default class ErrorPage extends Component<Props, State> {
     let node = (
       <Page>
         <div styleName="root">
+          <div styleName="icon">&#xF12A;</div>
           <div styleName="description">
             {this.trans("errorPage.description")}
           </div>

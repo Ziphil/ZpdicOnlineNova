@@ -3,6 +3,14 @@
 @import "/client/component/mixin.scss";
 
 
+.icon {
+  @include icon-font;
+  margin: 0u 0u $large-margin 0u;
+  font-size: 300%;
+  color: $light-color;
+  text-align: center;
+}
+
 .description {
   @include line-height;
   margin: 0u;
