@@ -27,6 +27,7 @@ import {
 } from "/client/component/decorator";
 import EmptyPage from "/client/component/page/empty-page";
 import ErrorPage from "/client/component/page/error-page";
+import NotFoundPage from "/client/component/page/not-found-page";
 import {
   GlobalStore
 } from "/client/component/store";
@@ -47,7 +48,6 @@ let DictionarySettingPage = lazy(() => import("/client/component/page/dictionary
 let DocumentPage = lazy(() => import("/client/component/page/document-page"));
 let LanguagePage = lazy(() => import("/client/component/page/language-page"));
 let LoginPage = lazy(() => import("/client/component/page/login-page"));
-let NotFoundPage = lazy(() => import("/client/component/page/not-found-page"));
 let NotificationPage = lazy(() => import("/client/component/page/notification-page"));
 let RegisterPage = lazy(() => import("/client/component/page/register-page"));
 let ResetUserPasswordPage = lazy(() => import("/client/component/page/reset-user-password-page"));
