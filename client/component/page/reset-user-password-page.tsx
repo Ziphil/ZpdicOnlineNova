@@ -30,7 +30,7 @@ export default class ResetUserPasswordPage extends Component<Props, State> {
   public render(): ReactNode {
     let node = (
       <Page>
-        <div styleName="description">{this.trans("resetUserPasswordPage.description")}</div>
+        <div styleName="title">{this.trans("resetUserPasswordPage.title")}</div>
         <div styleName="form">
           <ResetUserPasswordForm tokenKey={this.state.tokenKey}/>
         </div>

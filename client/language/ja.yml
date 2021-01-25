@@ -474,10 +474,8 @@ zatlinExecutor:
   output: "出力"
   errorMessage: "エラーメッセージ"
   execute: "実行"
-addCommissionPage:
-  description: "造語依頼"
 contactPage:
-  description: "お問い合わせ"
+  title: "お問い合わせ"
 dashboardPage:
   dictionary: "辞書"
   notification: "通知"
@@ -597,10 +595,10 @@ errorPage:
   description: >-
     原因不明のエラーが発生しました。
 languagePage:
-  description: "言語選択"
+  title: "言語選択"
 loginPage:
-  description: "ログイン"
+  title: "ログイン"
 registerPage:
-  desciption: "新規登録"
+  title: "新規登録"
 resetUserPasswordPage:
-  description: "パスワードリセット"
+  title: "パスワードリセット"

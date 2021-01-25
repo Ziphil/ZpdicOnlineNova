@@ -475,10 +475,8 @@ zatlinExecutor:
   output: "Output"
   errorMessage: "Error message"
   execute: "Execute"
-addCommissionPage:
-  description: "Request"
 contactPage:
-  description: "Contact"
+  title: "Contact"
 dashboardPage:
   dictionary: "Dictionaries"
   notification: "Notifications"
@@ -598,10 +596,10 @@ errorPage:
   description: >-
     An unexpected error has occurred.
 languagePage:
-  description: "Choose language"
+  title: "Choose language"
 loginPage:
-  description: "Sign in"
+  title: "Sign in"
 registerPage:
-  desciption: "Sign up"
+  title: "Sign up"
 resetUserPasswordPage:
-  description: "Reset password"
+  title: "Reset password"

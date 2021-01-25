@@ -18,7 +18,7 @@ export default class LoginPage extends Component<Props, State> {
   public render(): ReactNode {
     let node = (
       <Page>
-        <div styleName="description">{this.trans("loginPage.description")}</div>
+        <div styleName="title">{this.trans("loginPage.title")}</div>
         <div styleName="form">
           <LoginForm showRegister={false}/>
         </div>
