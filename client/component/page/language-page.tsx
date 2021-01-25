@@ -18,7 +18,7 @@ export default class LanguagePage extends Component<Props, State> {
   public render(): ReactNode {
     let node = (
       <Page>
-        <div styleName="description">{this.trans("languagePage.description")}</div>
+        <div styleName="title">{this.trans("languagePage.title")}</div>
         <div styleName="form">
           <LanguageForm/>
         </div>

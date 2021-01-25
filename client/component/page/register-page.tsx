@@ -18,7 +18,7 @@ export default class RegisterPage extends Component<Props, State> {
   public render(): ReactNode {
     let node = (
       <Page>
-        <div styleName="description">{this.trans("registerPage.desciption")}</div>
+        <div styleName="title">{this.trans("registerPage.title")}</div>
         <div styleName="form">
           <RegisterForm/>
         </div>

@@ -14,3 +14,4 @@
 ## Other documentations
 
 - ~~Available Markdown syntaxes~~
+- ~~Introduction to regular expressions~~

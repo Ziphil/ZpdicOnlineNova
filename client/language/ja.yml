@@ -387,6 +387,12 @@ loginForm:
   resetPassword: "パスワードを忘れた"
 notificationPane:
   fixed: "対応済み"
+regexpExecutor:
+  title: "正規表現"
+  source: "正規表現"
+  target: "検索対象"
+  result: "実行結果"
+  execute: "実行"
 registerForm:
   confirm: "新規登録"
 resetUserPasswordForm:
@@ -468,10 +474,8 @@ zatlinExecutor:
   output: "出力"
   errorMessage: "エラーメッセージ"
   execute: "実行"
-addCommissionPage:
-  description: "造語依頼"
 contactPage:
-  description: "お問い合わせ"
+  title: "お問い合わせ"
 dashboardPage:
   dictionary: "辞書"
   notification: "通知"
@@ -587,11 +591,19 @@ dictionarySettingPage:
     description: >-
       この辞書を別のユーザーに譲渡します。
       辞書の譲渡後もこのユーザーに編集権限は残るので、単語の編集は引き続き行うことができます。
+errorPage:
+  description: >-
+    原因不明のエラーが発生しました。
 languagePage:
-  description: "言語選択"
+  title: "言語選択"
 loginPage:
-  description: "ログイン"
+  title: "ログイン"
+notFoundPage:
+  description: >-
+    参照しようとしたページが見つかりませんでした。
+    指定した URL が正しいか確認してください。
+    もしくは、お探しのページは削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
 registerPage:
-  desciption: "新規登録"
+  title: "新規登録"
 resetUserPasswordPage:
-  description: "パスワードリセット"
+  title: "パスワードリセット"

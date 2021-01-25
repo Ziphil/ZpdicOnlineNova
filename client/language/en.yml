@@ -387,6 +387,12 @@ loginForm:
   resetPassword: "Forgot password"
 notificationPane:
   fixed: "Fixed"
+regexpExecutor:
+  title: "Regular expression"
+  source: "Regular expression"
+  target: "Target text"
+  result: "Result"
+  execute: "Execute"
 registerForm:
   confirm: "Sign up"
 resetUserPasswordForm:
@@ -469,10 +475,8 @@ zatlinExecutor:
   output: "Output"
   errorMessage: "Error message"
   execute: "Execute"
-addCommissionPage:
-  description: "Request"
 contactPage:
-  description: "Contact"
+  title: "Contact"
 dashboardPage:
   dictionary: "Dictionaries"
   notification: "Notifications"
@@ -588,11 +592,19 @@ dictionarySettingPage:
     description: >-
       Transfer this dictionary to another user.
       After the dictionary is transferred, you still have editing permission and thus you can edit the words.
+errorPage:
+  description: >-
+    An unexpected error has occurred.
 languagePage:
-  description: "Choose language"
+  title: "Choose language"
 loginPage:
-  description: "Sign in"
+  title: "Sign in"
+notFoundPage:
+  description: >-
+    The page you requested could not be found.
+    Please make sure that you type the correct address.
+    It is also possible that the page you are looking for has been deleted or moved to another location.
 registerPage:
-  desciption: "Sign up"
+  title: "Sign up"
 resetUserPasswordPage:
-  description: "Reset password"
+  title: "Reset password"
