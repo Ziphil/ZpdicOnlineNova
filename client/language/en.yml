@@ -594,6 +594,9 @@ dictionarySettingPage:
     description: >-
       Transfer this dictionary to another user.
       After the dictionary is transferred, you still have editing permission and thus you can edit the words.
+errorPage:
+  description: >-
+    An unexpected error has occurred.
 languagePage:
   description: "Choose language"
 loginPage:

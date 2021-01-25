@@ -593,6 +593,9 @@ dictionarySettingPage:
     description: >-
       この辞書を別のユーザーに譲渡します。
       辞書の譲渡後もこのユーザーに編集権限は残るので、単語の編集は引き続き行うことができます。
+errorPage:
+  description: >-
+    原因不明のエラーが発生しました。
 languagePage:
   description: "言語選択"
 loginPage:

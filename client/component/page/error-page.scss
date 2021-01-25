@@ -1,3 +1,20 @@
 @charset "utf-8";
 
 @import "/client/component/mixin.scss";
+
+
+.description {
+  @include line-height;
+  margin: 0u;
+  text-align: justify;
+}
+
+.message {
+  @include monospace-font;
+  margin: $paragraph-margin 0u 0u 0u;
+  padding: $box-vertical-padding $box-horizontal-padding;
+  line-height: $line-height;
+  background-color: $strong-background-color;
+  border-radius: $small-border-radius;
+  overflow: hidden;
+}
