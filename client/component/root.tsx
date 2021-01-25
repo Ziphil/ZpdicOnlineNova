@@ -47,6 +47,7 @@ let DictionarySettingPage = lazy(() => import("/client/component/page/dictionary
 let DocumentPage = lazy(() => import("/client/component/page/document-page"));
 let LanguagePage = lazy(() => import("/client/component/page/language-page"));
 let LoginPage = lazy(() => import("/client/component/page/login-page"));
+let NotFoundPage = lazy(() => import("/client/component/page/not-found-page"));
 let NotificationPage = lazy(() => import("/client/component/page/notification-page"));
 let RegisterPage = lazy(() => import("/client/component/page/register-page"));
 let ResetUserPasswordPage = lazy(() => import("/client/component/page/reset-user-password-page"));
@@ -92,6 +93,7 @@ export class Root extends Component<Props, State> {
                     <Authenticator type="none" exact sensitive path="/contact" component={ContactPage}/>
                     <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
                     <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
+                    <Authenticator type="none" component={NotFoundPage}/>
                   </Switch>
                 </ScrollTop>
               </ErrorBoundary>

@@ -599,6 +599,11 @@ languagePage:
   title: "Choose language"
 loginPage:
   title: "Sign in"
+notFoundPage:
+  description: >-
+    The page you requested could not be found.
+    Please make sure that you type the correct address.
+    It is also possible that the page you are looking for has been deleted or moved to another location.
 registerPage:
   title: "Sign up"
 resetUserPasswordPage:

@@ -598,6 +598,11 @@ languagePage:
   title: "言語選択"
 loginPage:
   title: "ログイン"
+notFoundPage:
+  description: >-
+    参照しようとしたページが見つかりませんでした。
+    指定した URL が正しいか確認してください。
+    もしくは、お探しのページは削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
 registerPage:
   title: "新規登録"
 resetUserPasswordPage:
