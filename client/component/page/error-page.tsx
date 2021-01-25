@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  ErrorInfo,
   ReactNode
 } from "react";
 import Component from "/client/component/component";
@@ -15,13 +16,10 @@ import Page from "/client/component/page/page";
 export default class ErrorPage extends Component<Props, State> {
 
   private getMessage(): string {
-    let error = this.props.error;
-    if (error instanceof Error) {
-      let message = error.message + "\n" + error.stack;
-      return message;
-    } else {
-      return error.toString();
-    }
+    let message = "";
+    message += this.props.error.stack + "\n";
+    message += this.props.errorInfo.componentStack;
+    return message;
   }
 
   public render(): ReactNode {
@@ -44,7 +42,8 @@ export default class ErrorPage extends Component<Props, State> {
 
 
 type Props = {
-  error: any
+  error: Error,
+  errorInfo: ErrorInfo
 };
 type State = {
 };

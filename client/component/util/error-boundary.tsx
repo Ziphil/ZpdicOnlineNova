@@ -3,6 +3,7 @@
 import * as react from "react";
 import {
   ComponentType,
+  ErrorInfo,
   ReactNode,
   createElement
 } from "react";
@@ -12,21 +13,27 @@ import {
 } from "/client/component/decorator";
 
 
-@style(null, {withRouter: false, inject: false, injectIntl: false, observer: false})
+@style(null, {withRouter: true, inject: false, injectIntl: false, observer: false})
 export default class ErrorBoundary extends Component<Props, State> {
 
   public state: State = {
-    error: null
+    error: null,
+    errorInfo: null
   };
 
-  public componentDidCatch(error: any, info: any): void {
-    this.setState({error});
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo): void {
+    this.setState({error, errorInfo});
+  }
+
+  public componentDidUpdate(props: any): void {
+    if (this.props.location !== props.location) {
+      this.setState({error: null, errorInfo: null});
+    }
   }
 
   public render(): ReactNode {
-    let error = this.state.error;
-    if (error !== null) {
-      let node = createElement(this.props.component, {error});
+    if (this.state.error !== null) {
+      let node = createElement(this.props.component, this.state);
       return node;
     } else {
       return this.props.children;
@@ -37,8 +44,9 @@ export default class ErrorBoundary extends Component<Props, State> {
 
 
 type Props = {
-  component: ComponentType<{error: any}>
+  component: ComponentType<State>
 };
 type State = {
-  error: any | null;
+  error: Error | null,
+  errorInfo: ErrorInfo | null
 };
