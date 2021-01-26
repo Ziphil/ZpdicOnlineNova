@@ -17,7 +17,7 @@ mail:
     subject: "お問い合わせ: {subject}"
     text: |
       お問い合せフォームからお問い合わせです。
-      ・ 名前: {name} ({signedIn, select, true {認証済み: @{userName}} false {未認証}})
+      ・ 名前: {name} ({signedIn, select, true {認証済み: @{userName}} false {匿名}})
       ・ メールアドレス: {email}
       ・ 件名: {subject}
       {text}
