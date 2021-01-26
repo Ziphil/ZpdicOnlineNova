@@ -316,6 +316,8 @@ dictionaryHeader:
   download: "Download"
 dictionaryPane:
   wordSize: "{wordSize, plural, one {# word} other {# words}}"
+  wordSizeTokipona: "{wordSize, number, ::.00} TP"
+  wordSizeLogTokipona: "{wordSize, number, ::.00} logTP"
   wordSizeUndefined: "? words"
   saving: "Saving"
   error: "Error"

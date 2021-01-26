@@ -316,6 +316,8 @@ dictionaryHeader:
   download: "ダウンロード"
 dictionaryPane:
   wordSize: "{wordSize, number} 語"
+  wordSizeTokipona: "{wordSize, number, ::.00} TP"
+  wordSizeLogTokipona: "{wordSize, number, ::.00} logTP"
   wordSizeUndefined: "? 語"
   saving: "保存中"
   error: "エラー"
