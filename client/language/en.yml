@@ -316,6 +316,8 @@ dictionaryHeader:
   download: "Download"
 dictionaryPane:
   wordSize: "{wordSize, plural, one {# word} other {# words}}"
+  wordSizeTokipona: "{wordSize, number, ::.00} TP"
+  wordSizeLogTokipona: "{wordSize, number, ::.00} logTP"
   wordSizeUndefined: "? words"
   saving: "Saving"
   error: "Error"
@@ -477,6 +479,9 @@ zatlinExecutor:
   execute: "Execute"
 contactPage:
   title: "Contact"
+  explanation: >-
+    If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
+    Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
 dashboardPage:
   dictionary: "Dictionaries"
   notification: "Notifications"

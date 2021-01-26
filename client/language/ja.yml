@@ -316,6 +316,8 @@ dictionaryHeader:
   download: "ダウンロード"
 dictionaryPane:
   wordSize: "{wordSize, number} 語"
+  wordSizeTokipona: "{wordSize, number, ::.00} TP"
+  wordSizeLogTokipona: "{wordSize, number, ::.00} logTP"
   wordSizeUndefined: "? 語"
   saving: "保存中"
   error: "エラー"
@@ -476,6 +478,9 @@ zatlinExecutor:
   execute: "実行"
 contactPage:
   title: "お問い合わせ"
+  explanation: >-
+    匿名でのお問い合わせをご希望の場合は、ログアウトした状態で名前欄を空欄にした上で送信してください。
+    なお、辞書の設定や編集などに関わるような、ユーザーの権限が必要になる内容に関するお問い合わせの場合、匿名では対応できない場合がありますのでご了承ください。
 dashboardPage:
   dictionary: "辞書"
   notification: "通知"

@@ -34,9 +34,9 @@ import {
 // なお、引数に権限を表す文字列が指定された場合、追加でユーザーが指定の権限を保持しているかチェックし、権限がなかった場合、ステータスコード 403 を返して終了します。
 export function verifyUser(authority?: string): RequestHandler {
   let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
-    let token = String(request.signedCookies.authorization || request.headers.authorization);
+    let token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
-      if (!error) {
+      if (!error && data && "id" in data) {
         let anyData = data as any;
         let user = await UserModel.findById(anyData.id).exec();
         if (user) {
@@ -52,6 +52,33 @@ export function verifyUser(authority?: string): RequestHandler {
         }
       } else {
         response.status(401).end();
+      }
+    });
+  };
+  return handler;
+}
+
+// リクエストのヘッダーに書き込まれたトークンを利用してユーザーのチェックを行います。
+// 基本的に verifyUser 関数とほぼ同じ動作をしますが、認証に失敗した場合にエラーステータスを返すのではなく次の動作に移行します。
+export function checkUser(authority?: string): RequestHandler {
+  let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
+    let token = (request.signedCookies.authorization || request.headers.authorization) + "";
+    jwt.verify(token, JWT_SECRET, async (error, data) => {
+      if (!error && data && "id" in data) {
+        let anyData = data as any;
+        let user = await UserModel.findById(anyData.id).exec();
+        if (user) {
+          if (!authority || user.authority === authority) {
+            request.user = user;
+            next();
+          } else {
+            next();
+          }
+        } else {
+          next();
+        }
+      } else {
+        next();
       }
     });
   };

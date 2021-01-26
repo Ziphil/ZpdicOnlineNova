@@ -11,6 +11,15 @@
   text-align: center;
 }
 
+.explanation {
+  @include line-height;
+  width: 100%;
+  max-width: 1200u;
+  margin: 0u auto $large-margin auto;
+  font-size: 90%;
+  text-align: justify;
+}
+
 .form {
   width: 100%;
   max-width: 1200u;

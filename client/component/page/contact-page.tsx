@@ -19,6 +19,9 @@ export default class ContactPage extends Component<Props, State> {
     let node = (
       <Page>
         <div styleName="title">{this.trans("contactPage.title")}</div>
+        <div styleName="explanation">
+          {this.trans("contactPage.explanation")}
+        </div>
         <div styleName="form">
           <ContactForm/>
         </div>

@@ -1,25 +1,25 @@
 mail:
   registerUser:
-    subject: "ユーザー登録完了のお知らせ"
+    subject: "User registration completed"
     text: |
-      ZpDIC Online へのご登録ありがとうございます。
-      アカウントの作成が完了しましたのでご連絡いたします。
-      ・ ユーザー ID: {name}
+      Thank you for signing up for ZpDIC Online.
+      We are pleased to inform you that your account has been created.
+      ・ Your user ID: {name}
   issueUserResetToken:
-    subject: "パスワードリセットのお知らせ"
+    subject: "Password reset"
     text: |
-      ZpDIC Online をご利用いただきありがとうございます。
-      以下の URL にアクセスし、パスワードリセットの手続きを進めてください。
-      なお、この URL の有効期限は 1 時間です。
-      有効期限が過ぎた場合は、この URL を用いてのパスワードリセットはできなくなりますので、改めて手続きを行ってください。
+      Thank you for using ZpDIC Online.
+      Please access the following URL to reset your password.
+      Note that this URL will expire in one hour.
+      After it expires, you will not be able to reset your password using this URL, and you will have to go through the procedure again.
       ・ {url}
   contact:
-    subject: "お問い合わせ: {subject}"
+    subject: "Contact: {subject}"
     text: |
-      お問合せフォームからお問い合わせです。
-      ・ 名前: {name}
-      ・ メールアドレス: {email}
-      ・ 件名: {subject}
+      This is an inquiry from the contact form.
+      ・ Name: {name} ({signedIn, select, true {authenticated: @{userName}} false {anonymous}})
+      ・ Email address: {email}
+      ・ Subject: {subject}
       {text}
   footer: |
     ────────────────────

@@ -4,8 +4,10 @@
 @import "/client/component/page/login-page.scss";
 
 
-.form {
-  width: 100%;
+.explanation {
   max-width: 1800u;
-  margin: 0u auto;
+}
+
+.form {
+  max-width: 1800u;
 }

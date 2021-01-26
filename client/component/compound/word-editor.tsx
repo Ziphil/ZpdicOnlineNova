@@ -78,7 +78,7 @@ export default class WordEditor extends Component<Props, State> {
     let word = this.state.word;
     let equivalentStrings = this.state.word.equivalentStrings;
     equivalentStrings.forEach((equivalentString, index) => {
-      word.equivalents[index].names = equivalentString.split(/\s*,\s*/);
+      word.equivalents[index].names = equivalentString.split(/\s*(?:,|、|・)\s*/);
     });
     let response = await this.request("editWord", {number, word});
     if (response.status === 200) {

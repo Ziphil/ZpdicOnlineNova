@@ -65,7 +65,7 @@ export class AdvancedWordParameterElement extends WordParameter {
       let eachFilter = eachQuery.getFilter();
       return eachFilter;
     });
-    let query = WordModel.find().where("dictionary", dictionary).or(eachFilters);
+    let query = WordModel.findExist().where("dictionary", dictionary).or(eachFilters);
     return query;
   }
 

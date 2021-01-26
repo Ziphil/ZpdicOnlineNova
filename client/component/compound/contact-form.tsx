@@ -40,15 +40,16 @@ export default class ContactForm extends Component<Props, State> {
     let response = await this.request("contact", {name, email, subject, text}, {useRecaptcha: true});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("contacted");
-      this.setState({text: ""});
+      this.setState({subject: "", text: ""});
     }
   }
 
   public render(): ReactNode {
+    let disabled = this.props.store!.user !== null;
     let node = (
       <form styleName="root">
-        <Input label={this.trans("contactForm.name")} value={this.state.name} showOptional={true} onSet={(name) => this.setState({name})}/>
-        <Input label={this.trans("contactForm.email")} value={this.state.email} showOptional={true} onSet={(email) => this.setState({email})}/>
+        <Input label={this.trans("contactForm.name")} value={this.state.name} disabled={disabled} showOptional={true} onSet={(name) => this.setState({name})}/>
+        <Input label={this.trans("contactForm.email")} value={this.state.email} disabled={disabled} showOptional={true} onSet={(email) => this.setState({email})}/>
         <Input label={this.trans("contactForm.subject")} value={this.state.subject} showOptional={true} onSet={(subject) => this.setState({subject})}/>
         <TextArea label={this.trans("contactForm.text")} value={this.state.text} onSet={(text) => this.setState({text})}/>
         <div styleName="button-group">

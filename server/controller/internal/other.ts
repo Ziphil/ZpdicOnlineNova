@@ -14,6 +14,7 @@ import {
   Response
 } from "/server/controller/internal/controller";
 import {
+  checkUser,
   verifyRecaptcha
 } from "/server/controller/internal/middle";
 import {
@@ -44,18 +45,21 @@ export class OtherController extends Controller {
   }
 
   @post(SERVER_PATHS["contact"])
-  @before(verifyRecaptcha())
+  @before(checkUser(), verifyRecaptcha())
   public async [Symbol()](request: Request<"contact">, response: Response<"contact">): Promise<void> {
+    let user = request.user;
     let name = request.body.name;
     let email = request.body.email;
     let subject = request.body.subject;
     let text = request.body.text;
+    let signedIn = (user !== undefined).toString();
+    let userName = user?.name ?? "";
     if (text !== "") {
-      let user = await UserModel.fetchOneAdministrator();
-      if (user !== null) {
+      let administrator = await UserModel.fetchOneAdministrator();
+      if (administrator !== null) {
         let nextSubject = MailUtil.getSubject("contact", {subject});
-        let nextText = MailUtil.getText("contact", {name, email, subject, text});
-        MailUtil.send(user.email, nextSubject, nextText);
+        let nextText = MailUtil.getText("contact", {userName, email, subject, text, signedIn, name});
+        MailUtil.send(administrator.email, nextSubject, nextText);
         Controller.respond(response, null);
       } else {
         let body = CustomError.ofType("administratorNotFound");
