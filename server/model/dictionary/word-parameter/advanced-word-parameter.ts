@@ -1,7 +1,6 @@
 //
 
 import {
-  Aggregate,
   Query
 } from "mongoose";
 import {
@@ -32,7 +31,7 @@ export class AdvancedWordParameter extends WordParameter {
     return query;
   }
 
-  public createSuggestionAggregate(dictionary: Dictionary): Aggregate<Array<{title: string, word: Word}>> | null {
+  public createSuggestionQuery(dictionary: Dictionary): null {
     return null;
   }
 
@@ -69,7 +68,7 @@ export class AdvancedWordParameterElement extends WordParameter {
     return query;
   }
 
-  public createSuggestionAggregate(dictionary: Dictionary): Aggregate<Array<{title: string, word: Word}>> | null {
+  public createSuggestionQuery(dictionary: Dictionary): null {
     return null;
   }
 

@@ -30,11 +30,11 @@ import {
 
 export abstract class WordParameter {
 
-  public abstract createQuery(dictionary: Dictionary): Query<Array<Word>>;
+  public abstract createQuery(dictionary: Dictionary): Query<Array<Word>> | Aggregate<Array<Word>>;
 
   // この検索パラメータからサジェストされる単語を検索するためのクエリを返します。
   // 何もサジェストする必要がない場合は null を返します。
-  public abstract createSuggestionAggregate(dictionary: Dictionary): Aggregate<Array<{title: string, word: Word}>> | null;
+  public abstract createSuggestionQuery(dictionary: Dictionary): Aggregate<Array<RawSuggestion>> | null;
 
   protected static createKeys(mode: WordMode): Array<string> {
     if (mode === "name") {
@@ -99,3 +99,5 @@ export let WordModeUtil = LiteralUtilType.create(WORD_MODES);
 export const WORD_TYPES = ["exact", "prefix", "suffix", "part", "regular"] as const;
 export type WordType = LiteralType<typeof WORD_TYPES>;
 export let WordTypeUtil = LiteralUtilType.create(WORD_TYPES);
+
+export type RawSuggestion = {title: string, word: Word};

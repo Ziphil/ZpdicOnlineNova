@@ -6,6 +6,7 @@ import {
 } from "mongoose";
 import {
   Dictionary,
+  RawSuggestion,
   Word,
   WordMode,
   WordModel,
@@ -37,7 +38,7 @@ export class NormalWordParameter extends WordParameter {
     return query;
   }
 
-  public createSuggestionAggregate(dictionary: Dictionary): Aggregate<Array<{title: string, word: Word}>> | null {
+  public createSuggestionQuery(dictionary: Dictionary): Aggregate<Array<RawSuggestion>> | null {
     let mode = this.mode;
     let type = this.type;
     if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {
