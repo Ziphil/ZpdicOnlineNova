@@ -2,6 +2,7 @@
 
 import {
   Aggregate,
+  Model,
   Query
 } from "mongoose";
 import {
@@ -72,13 +73,13 @@ export class QueryRange {
     return result;
   }
 
-  private static count<T>(query: QueryLike<T>): PromiseLike<number> {
-    let anyQuery = query as any;
+  private static count<T>(query: QueryLike<Array<T>>): PromiseLike<number> {
+    let model = QueryRange.getModel(query);
     if (query instanceof Query) {
-      let promise = anyQuery.model.countDocuments(query.getFilter());
+      let promise = model.countDocuments(query.getFilter());
       return promise;
     } else if (query instanceof Aggregate) {
-      let rawPromise = anyQuery.model().aggregate(query.pipeline()).count("count").exec() as Promise<any>;
+      let rawPromise = model.aggregate(query.pipeline()).count("count").exec() as Promise<any>;
       let promise = rawPromise.then((object) => object.count);
       return promise;
     } else {
@@ -89,6 +90,17 @@ export class QueryRange {
   private static countArray<T>(query: Array<T>): number {
     let size = query.length;
     return size;
+  }
+
+  private static getModel<T>(query: QueryLike<Array<T>>): Model<any> {
+    let anyQuery = query as any;
+    if (query instanceof Query) {
+      return anyQuery.model;
+    } else if (query instanceof Aggregate) {
+      return anyQuery.model();
+    } else {
+      throw new Error("cannot happen");
+    }
   }
 
 }
