@@ -10,6 +10,7 @@ import {
   Word,
   WordMode,
   WordModel,
+  WordOrder,
   WordType
 } from "/server/model/dictionary";
 import {
@@ -22,19 +23,22 @@ export class NormalWordParameter extends WordParameter {
   public search: string;
   public mode: WordMode;
   public type: WordType;
+  public order: WordOrder;
 
-  public constructor(search: string, mode: WordMode, type: WordType) {
+  public constructor(search: string, mode: WordMode, type: WordType, order?: WordOrder) {
     super();
     this.search = search;
     this.mode = mode;
     this.type = type;
+    this.order = order ?? {mode: "unicode", direction: 1};
   }
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>> {
     let keys = WordParameter.createKeys(this.mode);
     let needle = WordParameter.createNeedle(this.search, this.type);
+    let sortKey = WordParameter.createSortKey(this.order);
     let disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
-    let query = WordModel.findExist().where("dictionary", dictionary).or(disjunctFilters);
+    let query = WordModel.findExist().where("dictionary", dictionary).or(disjunctFilters).sort(sortKey);
     return query;
   }
 

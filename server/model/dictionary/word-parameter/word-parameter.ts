@@ -71,6 +71,22 @@ export abstract class WordParameter {
     }
   }
 
+  protected static createSortKey(order: WordOrder): string {
+    let mode = order.mode;
+    let directionChar = (order.direction === 1) ? "" : "-";
+    if (mode === "unicode") {
+      return directionChar + "name _id";
+    } else if (mode === "custom") {
+      return directionChar + "sortString _id";
+    } else if (mode === "updatedDate") {
+      return directionChar + "updatedDate _id";
+    } else if (mode === "createdDate") {
+      return directionChar + "createdDate _id";
+    } else {
+      throw new Error("cannot happen");
+    }
+  }
+
 }
 
 
@@ -100,4 +116,9 @@ export const WORD_TYPES = ["exact", "prefix", "suffix", "part", "regular"] as co
 export type WordType = LiteralType<typeof WORD_TYPES>;
 export let WordTypeUtil = LiteralUtilType.create(WORD_TYPES);
 
+export const WORD_ORDER_MODES = ["unicode", "custom", "updatedDate", "createdDate"] as const;
+export type WordOrderMode = LiteralType<typeof WORD_ORDER_MODES>;
+export let WordOrderModeUtil = LiteralUtilType.create(WORD_ORDER_MODES);
+
+export type WordOrder = {mode: WordOrderMode, direction: 1 | -1};
 export type RawSuggestion = {title: string, word: Word};
