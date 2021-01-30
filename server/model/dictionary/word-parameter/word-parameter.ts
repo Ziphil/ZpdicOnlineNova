@@ -73,7 +73,7 @@ export abstract class WordParameter {
 
   protected static createSortKey(order: WordOrder): string {
     let mode = order.mode;
-    let directionChar = (order.direction === 1) ? "" : "-";
+    let directionChar = (order.direction === "ascending") ? "" : "-";
     if (mode === "unicode") {
       return directionChar + "name _id";
     } else if (mode === "custom") {
@@ -100,7 +100,7 @@ export class SearchParameterCreator {
       return raw;
     } else {
       let castSkeleton = skeleton as NormalWordParameterSkeleton;
-      let raw = new NormalWordParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type);
+      let raw = new NormalWordParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type, castSkeleton.order);
       return raw;
     }
   }
@@ -120,5 +120,9 @@ export const WORD_ORDER_MODES = ["unicode", "custom", "updatedDate", "createdDat
 export type WordOrderMode = LiteralType<typeof WORD_ORDER_MODES>;
 export let WordOrderModeUtil = LiteralUtilType.create(WORD_ORDER_MODES);
 
-export type WordOrder = {mode: WordOrderMode, direction: 1 | -1};
+export const WORD_ORDER_DIRECTIONS = ["ascending", "descending"] as const;
+export type WordOrderDirection = LiteralType<typeof WORD_ORDER_DIRECTIONS>;
+export let WordOrderDirectionUtil = LiteralUtilType.create(WORD_ORDER_DIRECTIONS);
+
+export type WordOrder = {mode: WordOrderMode, direction: WordOrderDirection};
 export type RawSuggestion = {title: string, word: Word};

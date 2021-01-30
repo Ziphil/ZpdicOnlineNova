@@ -34,3 +34,13 @@ export let WordModeUtil = LiteralUtilType.create(WORD_MODES);
 export const WORD_TYPES = ["exact", "prefix", "suffix", "part", "regular"] as const;
 export type WordType = LiteralType<typeof WORD_TYPES>;
 export let WordTypeUtil = LiteralUtilType.create(WORD_TYPES);
+
+export const WORD_ORDER_MODES = ["unicode", "custom", "updatedDate", "createdDate"] as const;
+export type WordOrderMode = LiteralType<typeof WORD_ORDER_MODES>;
+export let WordOrderModeUtil = LiteralUtilType.create(WORD_ORDER_MODES);
+
+export const WORD_ORDER_DIRECTIONS = ["ascending", "descending"] as const;
+export type WordOrderDirection = LiteralType<typeof WORD_ORDER_DIRECTIONS>;
+export let WordOrderDirectionUtil = LiteralUtilType.create(WORD_ORDER_DIRECTIONS);
+
+export type WordOrder = {mode: WordOrderMode, direction: WordOrderDirection};

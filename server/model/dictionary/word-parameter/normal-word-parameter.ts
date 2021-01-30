@@ -25,12 +25,12 @@ export class NormalWordParameter extends WordParameter {
   public type: WordType;
   public order: WordOrder;
 
-  public constructor(search: string, mode: WordMode, type: WordType, order?: WordOrder) {
+  public constructor(search: string, mode: WordMode, type: WordType, order: WordOrder) {
     super();
     this.search = search;
     this.mode = mode;
     this.type = type;
-    this.order = order ?? {mode: "unicode", direction: 1};
+    this.order = order;
   }
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>> {

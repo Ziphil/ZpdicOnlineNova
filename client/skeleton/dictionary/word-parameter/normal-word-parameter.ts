@@ -4,6 +4,9 @@ import * as queryParser from "query-string";
 import {
   WordMode,
   WordModeUtil,
+  WordOrder,
+  WordOrderDirectionUtil,
+  WordOrderModeUtil,
   WordType,
   WordTypeUtil
 } from "/client/skeleton/dictionary";
@@ -17,19 +20,22 @@ export class NormalWordParameter extends WordParameter {
   public search: string;
   public mode: WordMode;
   public type: WordType;
+  public order: WordOrder;
 
-  private constructor(search: string, mode: WordMode, type: WordType) {
+  private constructor(search: string, mode: WordMode, type: WordType, order: WordOrder) {
     super();
     this.search = search;
     this.mode = mode;
     this.type = type;
+    this.order = order;
   }
 
   public static createEmpty(overriddenObject: Partial<NormalWordParameter> = {}): NormalWordParameter {
     let search = overriddenObject.search ?? "";
     let mode = overriddenObject.mode ?? "both";
     let type = overriddenObject.type ?? "prefix";
-    let skeleton = new NormalWordParameter(search, mode, type);
+    let order = overriddenObject.order ?? {mode: "unicode", direction: "ascending"};
+    let skeleton = new NormalWordParameter(search, mode, type, order);
     return skeleton;
   }
 
@@ -37,12 +43,15 @@ export class NormalWordParameter extends WordParameter {
     let search = (typeof query.search === "string") ? query.search : undefined;
     let mode = (typeof query.mode === "string") ? WordModeUtil.cast(query.mode) : undefined;
     let type = (typeof query.type === "string") ? WordTypeUtil.cast(query.type) : undefined;
-    let parameter = NormalWordParameter.createEmpty({search, mode, type});
+    let orderMode = (typeof query.orderMode === "string") ? WordOrderModeUtil.cast(query.orderMode) : undefined;
+    let orderDirection = (typeof query.orderDirection === "string") ? WordOrderDirectionUtil.cast(query.orderDirection) : undefined;
+    let order = (orderMode !== undefined && orderDirection !== undefined) ? {mode: orderMode, direction: orderDirection} : undefined;
+    let parameter = NormalWordParameter.createEmpty({search, mode, type, order});
     return parameter;
   }
 
   public serialize(): string {
-    let query = {search: this.search, mode: this.mode, type: this.type};
+    let query = {search: this.search, mode: this.mode, type: this.type, orderMode: this.order.mode, orderDirection: this.order.direction};
     let queryString = queryParser.stringify(query);
     return queryString;
   }
