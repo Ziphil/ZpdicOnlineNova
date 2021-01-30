@@ -15,3 +15,4 @@
 
 - ~~Available Markdown syntaxes~~
 - ~~Introduction to regular expressions~~
+- [Privacy policy](document/other/privacy)
