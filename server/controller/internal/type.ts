@@ -424,7 +424,7 @@ type ServerSpecs = {
     request: {locale: string, path: string},
     response: {
       success: string,
-      error: never
+      error: CustomError<"noSuchDocument">
     }
   },
   contact: {

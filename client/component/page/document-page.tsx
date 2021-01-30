@@ -14,6 +14,7 @@ import SourceTester from "/client/component/compound/source-tester";
 import {
   style
 } from "/client/component/decorator";
+import NotFoundPage from "/client/component/page/not-found-page";
 import Page from "/client/component/page/page";
 import {
   CodeMirrorUtil
@@ -25,7 +26,7 @@ export default class DocumentPage extends Component<Props, State, Params> {
 
   public state: State = {
     source: null,
-    type: undefined
+    found: true
   };
 
   public async componentDidMount(): Promise<void> {
@@ -39,17 +40,17 @@ export default class DocumentPage extends Component<Props, State, Params> {
   }
 
   private async fetchSource(): Promise<void> {
-    this.setState({source: null, type: undefined});
+    this.setState({source: null, found: true});
     let locale = this.props.store!.locale;
     let firstPath = (this.props.match!.params.firstPath) ? this.props.match!.params.firstPath : "";
     let secondPath = (this.props.match!.params.secondPath) ? "/" + this.props.match!.params.secondPath : "";
     let path = firstPath + secondPath;
-    let response = await this.request("fetchDocument", {locale, path});
-    if (response.status === 200) {
+    let response = await this.request("fetchDocument", {locale, path}, {ignoreError: true});
+    if (response.status === 200 && typeof response.data === "string") {
       let source = response.data;
       this.setState({source});
     } else {
-      this.setState({source: ""});
+      this.setState({source: "", found: false});
     }
   }
 
@@ -76,15 +77,22 @@ export default class DocumentPage extends Component<Props, State, Params> {
   }
 
   public render(): ReactNode {
-    let renderers = {code: this.renderSourceTester};
-    let node = (
-      <Page>
-        <Loading loading={this.state.source === null}>
-          <Markdown source={this.state.source!} allowHeading={true} renderers={renderers}/>
-        </Loading>
-      </Page>
-    );
-    return node;
+    if (this.state.found) {
+      let renderers = {code: this.renderSourceTester};
+      let node = (
+        <Page>
+          <Loading loading={this.state.source === null}>
+            <Markdown source={this.state.source!} allowHeading={true} renderers={renderers}/>
+          </Loading>
+        </Page>
+      );
+      return node;
+    } else {
+      let node = (
+        <NotFoundPage/>
+      );
+      return node;
+    }
   }
 
 }
@@ -93,8 +101,8 @@ export default class DocumentPage extends Component<Props, State, Params> {
 type Props = {
 };
 type State = {
-  source: string | null
-  type?: string
+  source: string | null,
+  found: boolean
 };
 type Params = {
   firstPath: string,

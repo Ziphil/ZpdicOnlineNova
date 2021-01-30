@@ -39,7 +39,8 @@ export class OtherController extends Controller {
     let localPath = `/dist/document/${locale}/${path || "index"}.md`;
     response.sendFile(process.cwd() + localPath, (error) => {
       if (error) {
-        response.send("").end();
+        let body = CustomError.ofType("noSuchDocument");
+        Controller.respondError(response, body);
       }
     });
   }
