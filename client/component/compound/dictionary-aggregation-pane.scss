@@ -13,7 +13,7 @@
 .count-wrapper {
   color: $logo-color;
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(2, auto);
   grid-gap: $tiny-margin 0u;
   align-items: baseline;
 }
@@ -32,10 +32,12 @@
 .slash {
   margin: 0em 0.2em;
   font-size: 120%;
+  display: none;
 }
 
 .whole-count {
   font-size: 120%;
   font-weight: bold;
   text-align: left;
+  display: none;
 }
