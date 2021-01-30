@@ -11,6 +11,25 @@
   margin: $small-margin 0u 0u 0u;
 }
 
+.selection-wrapper {
+  margin: $small-margin 0u 0u 0u;
+  display: flex;
+  justify-content: center;
+}
+
+.selection-wrapper >* {
+  @include reset-first-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
+}
+
+.order-mode {
+  width: 450u;
+}
+
+.order-direction {
+  width: 360u;
+}
+
 .icon {
   margin: 0em $input-horizontal-padding 0em 0em;
 }

@@ -90,9 +90,10 @@ export class ResourceController extends Controller {
     if (dictionary) {
       try {
         let path = `resource/${dictionary.number}`;
+        let names = await AwsUtil.getFileNames(path);
         let range = new QueryRange(offset, size);
-        let names = QueryRange.restrictArrayWithSize(await AwsUtil.getFileNames(path), range);
-        let body = names;
+        let result = QueryRange.restrictArrayWithSize(names, range);
+        let body = result;
         Controller.respond(response, body);
       } catch (error) {
         let body = CustomError.ofType("awsError");

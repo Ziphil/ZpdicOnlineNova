@@ -429,6 +429,12 @@ searchForm:
   part: "Part"
   exact: "Exact"
   regular: "Regexp"
+  unicode: "By Unicode"
+  custom: "By custom order"
+  updatedDate: "By update date"
+  createdDate: "By creation date"
+  ascending: "Ascending"
+  descending: "Descending"
   advancedSearch: "Advanced search"
 sourceTester:
   try: "Try"
@@ -479,6 +485,8 @@ zatlinExecutor:
   execute: "Execute"
 contactPage:
   title: "Contact"
+  privacy: >-
+    Please read and agree to the [privacy policy](/document/other/privacy) before submitting your inquiry.
   explanation: >-
     If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
     Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
@@ -611,5 +619,7 @@ notFoundPage:
     It is also possible that the page you are looking for has been deleted or moved to another location.
 registerPage:
   title: "Sign up"
+  privacy: >-
+    In order to use this application, you must read and agree to the [privacy policy](/document/other/privacy).
 resetUserPasswordPage:
   title: "Reset password"

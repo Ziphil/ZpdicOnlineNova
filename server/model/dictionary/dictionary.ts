@@ -347,11 +347,12 @@ export class DictionarySchema extends DiscardableSchema {
 
   // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
   public async search(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
-    let query = parameter.createQuery(this).sort("name");
-    let suggestionAggregate = parameter.createSuggestionAggregate(this);
-    let hitSuggestionPromise = suggestionAggregate?.then((suggestions) => suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word)));
-    let [hitWordResult, hitSuggestions] = await Promise.all([QueryRange.restrictWithSize(query, range), hitSuggestionPromise]);
-    return {words: hitWordResult, suggestions: hitSuggestions ?? []};
+    let query = parameter.createQuery(this);
+    let suggestionQuery = parameter.createSuggestionQuery(this);
+    let wordPromise = QueryRange.restrictWithSize(query, range);
+    let suggestionPromise = suggestionQuery?.then((suggestions) => suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word))) ?? Promise.resolve([]);
+    let [words, suggestions] = await Promise.all([wordPromise, suggestionPromise]);
+    return {words, suggestions};
   }
 
   public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {
