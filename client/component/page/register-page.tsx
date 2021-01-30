@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
 import RegisterForm from "/client/component/compound/register-form";
 import {
@@ -19,6 +20,11 @@ export default class RegisterPage extends Component<Props, State> {
     let node = (
       <Page>
         <div styleName="title">{this.trans("registerPage.title")}</div>
+        <div styleName="explanation">
+          <p>
+            <Markdown source={this.trans("registerPage.privacy")} simple={true}/>
+          </p>
+        </div>
         <div styleName="form">
           <RegisterForm/>
         </div>

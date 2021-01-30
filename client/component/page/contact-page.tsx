@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   ReactNode
 } from "react";
+import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
 import ContactForm from "/client/component/compound/contact-form";
 import {
@@ -20,7 +21,12 @@ export default class ContactPage extends Component<Props, State> {
       <Page>
         <div styleName="title">{this.trans("contactPage.title")}</div>
         <div styleName="explanation">
-          {this.trans("contactPage.explanation")}
+          <p>
+            <Markdown source={this.trans("contactPage.privacy")} simple={true}/>
+          </p>
+          <p>
+            <Markdown source={this.trans("contactPage.explanation")} simple={true}/>
+          </p>
         </div>
         <div styleName="form">
           <ContactForm/>
