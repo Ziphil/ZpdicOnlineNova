@@ -31,6 +31,7 @@ export default class SearchForm extends Component<Props, State> {
 
   public static defaultProps: DefaultProps = {
     parameter: NormalWordParameter.createEmpty(),
+    showOrder: false,
     showAdvancedSearch: false
   };
   public state: State = {
@@ -76,6 +77,12 @@ export default class SearchForm extends Component<Props, State> {
     let orderModeSpecs = orderMode.map((orderMode) => ({value: orderMode, text: this.trans(`searchForm.${orderMode}`)}));
     let orderDirectionSpecs = WORD_ORDER_DIRECTIONS.map((orderDirection) => ({value: orderDirection, text: this.trans(`searchForm.${orderDirection}`)}));
     let parameter = this.getNormalSearchParameter();
+    let orderNode = (this.props.showOrder) && (
+      <div styleName="selection-wrapper">
+        <Selection className={styles["order-mode"]} value={parameter.order.mode} specs={orderModeSpecs} onSet={(orderMode) => this.handleParameterSet({orderMode})}/>
+        <Selection className={styles["order-direction"]} value={parameter.order.direction} specs={orderDirectionSpecs} onSet={(orderDirection) => this.handleParameterSet({orderDirection})}/>
+      </div>
+    );
     let advancedSearchButton = (this.props.showAdvancedSearch) && (
       <div styleName="radio-wrapper">
         <Button label={this.trans("searchForm.advancedSearch")} iconLabel="&#xF00E;" style="simple" onClick={() => this.setState({searchFormOpen: true})}/>
@@ -100,10 +107,7 @@ export default class SearchForm extends Component<Props, State> {
           <div styleName="radio-wrapper">
             <RadioGroup name="type" value={parameter.type} specs={typeSpecs} onSet={(type) => this.handleParameterSet({type})}/>
           </div>
-          <div styleName="selection-wrapper">
-            <Selection className={styles["order-mode"]} value={parameter.order.mode} specs={orderModeSpecs} onSet={(orderMode) => this.handleParameterSet({orderMode})}/>
-            <Selection className={styles["order-direction"]} value={parameter.order.direction} specs={orderDirectionSpecs} onSet={(orderDirection) => this.handleParameterSet({orderDirection})}/>
-          </div>
+          {orderNode}
           {advancedSearchButton}
         </form>
         {advancedSearchNode}
@@ -118,11 +122,13 @@ export default class SearchForm extends Component<Props, State> {
 type Props = {
   dictionary: Dictionary,
   parameter: WordParameter,
+  showOrder: boolean,
   showAdvancedSearch: boolean,
   onParameterSet?: (parameter: WordParameter) => void;
 };
 type DefaultProps = {
   parameter: WordParameter,
+  showOrder: boolean,
   showAdvancedSearch: boolean
 };
 type State = {
