@@ -429,6 +429,12 @@ searchForm:
   part: "Part"
   exact: "Exact"
   regular: "Regexp"
+  unicode: "By Unicode"
+  custom: "By custom order"
+  updatedDate: "By update date"
+  createdDate: "By creation date"
+  ascending: "Ascending"
+  descending: "Descending"
   advancedSearch: "Advanced search"
 sourceTester:
   try: "Try"

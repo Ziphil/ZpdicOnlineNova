@@ -33,6 +33,7 @@
 
 .suggestion-item {
   padding: $input-vertical-padding + line-intrusion($line-height) $input-horizontal-padding;
+  text-align: left;
   outline: none;
 }
 
