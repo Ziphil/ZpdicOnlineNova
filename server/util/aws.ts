@@ -10,7 +10,7 @@ import {
 
 export class AwsUtil {
 
-  public static getUploadFilePost(path: string, configs?: PresignedPostConfigs): Promise<PresignedPost> {
+  public static getUploadFilePost(path: string, configs: PresignedPostConfigs): Promise<PresignedPost> {
     let client = new StorageClient();
     let nextConfigs = Object.assign({}, DEFAULT_PRESIGNED_POST_CONFIGS, configs);
     let conditions = [] as PresignedPostConditions;
@@ -45,7 +45,7 @@ export class AwsUtil {
     return promise;
   }
 
-  public static getUploadFileUrl(path: string, configs?: PresignedUrlConfigs): Promise<string> {
+  public static getUploadFileUrl(path: string, configs: PresignedUrlConfigs): Promise<string> {
     let client = new StorageClient();
     let nextConfigs = Object.assign({}, DEFAULT_PRESIGNED_URL_CONFIGS, configs);
     let params = Object.fromEntries([
@@ -127,12 +127,11 @@ const DEFAULT_PRESIGNED_POST_CONFIGS = {
 };
 
 type PresignedUrlConfigs = {
-  contentType?: string,
+  contentType: string,
   expires?: number,
   acl?: "private" | "public-read" | "public-read-write"
 };
 const DEFAULT_PRESIGNED_URL_CONFIGS = {
-  contentType: "",
   expires: 60,
   acl: "public-read"
 };
