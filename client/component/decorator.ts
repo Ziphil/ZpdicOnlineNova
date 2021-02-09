@@ -83,7 +83,6 @@ type DecoratorOptions = {
   observer?: boolean,
   clickOutside?: boolean
 };
-
 const DEFAULT_DECORATOR_OPTIONS = {
   withRouter: true,
   inject: true,
