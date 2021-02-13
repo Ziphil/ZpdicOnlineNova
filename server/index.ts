@@ -36,6 +36,9 @@ import {
   MongoUtil
 } from "/server/util/mongo";
 import {
+  AWS_KEY,
+  AWS_REGION,
+  AWS_SECRET,
   COOKIE_SECRET,
   MONGO_URI,
   PORT,
@@ -111,8 +114,8 @@ export class Main {
   }
 
   private setupAws(): void {
-    let credentials = {accessKeyId: process.env["AWS_KEY"]!, secretAccessKey: process.env["AWS_SECRET"]!};
-    let region = process.env["AWS_REGION"];
+    let credentials = {accessKeyId: AWS_KEY, secretAccessKey: AWS_SECRET};
+    let region = AWS_REGION;
     aws.config.update({credentials, region});
   }
 
