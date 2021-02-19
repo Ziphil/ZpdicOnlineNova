@@ -30,7 +30,7 @@ class ControllerMetadata<P extends Params = ParamsDictionary> {
 
 
 export function controller<P extends Params = ParamsDictionary>(path: string): ClassDecorator {
-  let decorator = function (clazz: Function | (new() => Controller)): void {
+  let decorator = function (clazz: Function): void {
     let originalSetup = clazz.prototype.setup;
     clazz.prototype.setup = function (this: Controller): void {
       let anyThis = this as any;
