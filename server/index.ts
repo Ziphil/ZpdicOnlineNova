@@ -87,7 +87,7 @@ export class Main {
     this.application.use("/internal*", middleware);
   }
 
-  // アクエスログを出力する morgan の設定をします。
+  // アクセスログを出力する morgan の設定をします。
   private setupMorgan(): void {
     let middleware = morgan<Request>((tokens, request, response) => {
       let method = tokens.method(request, response);
