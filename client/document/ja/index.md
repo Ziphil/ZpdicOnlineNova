@@ -13,6 +13,7 @@
 
 ## その他のドキュメント
 
+- [ダウンロード JSON ファイルの仕様](document/other/json-spec)
 - [利用可能な Markdown 構文](document/other/markdown)
 - [正規表現入門](document/other/regexp)
 - [プライバシーポリシー](document/other/privacy)
