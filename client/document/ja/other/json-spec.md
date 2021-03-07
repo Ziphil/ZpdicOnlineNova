@@ -1,11 +1,11 @@
 ## JSON ファイルの仕様
-辞典データのダウンロード機能でダウンロードできる JSON ファイルの仕様は以下の通りです。
-この仕様は [CDDL 形式](https://tools.ietf.org/html/rfc8610)で書かれています。
-[OneToMany-JSON 形式](https://conlinguistics.wikia.org/ja/wiki/OTM-JSON)の version 2 と互換性があります。
+ダウンロード機能でダウンロードできる JSON ファイル、およびアップロード機能において期待する JSON ファイルの仕様は、以下の通りです。
+このファイルの形式は [OneToMany-JSON 形式](https://conlinguistics.wikia.org/ja/wiki/OTM-JSON)の version 2 と互換性があります。
+なお、以下の仕様は [CDDL 形式](https://tools.ietf.org/html/rfc8610)で書かれています。
 ```cddl
 json = {
   "words": [* word]  ; 単語データ
-  "versions": 2
+  "version": 2
   settings           ; 設定データ
   * text => any
 }
@@ -66,5 +66,5 @@ settings = (
 )
 ```
 
-`* text => any` となっている箇所には、ファイルアップロード機能を利用した場合にそこにあったデータがそのまま保持されて出力されます。
+`* text => any` となっている箇所には、アップロード機能を利用した場合にそこにあったデータがそのまま保持されて出力されます。
 ZpDIC Online 上で辞書を作成した場合は、この箇所には何も出力されません。
