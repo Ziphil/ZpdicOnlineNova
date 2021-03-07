@@ -14,7 +14,6 @@ export class Controller {
   public constructor() {
     this.router = Router();
     this.path = "/";
-    this.setup();
   }
 
   protected setup(): void {
@@ -24,6 +23,7 @@ export class Controller {
   // このときに生成したインスタンスを返します。
   public static use<C extends Controller>(this: new() => C, application: Express): C {
     let controller = new this();
+    controller.setup();
     application.use(controller.path, controller.router);
     return controller;
   }

@@ -20,8 +20,10 @@
   justify-content: space-between;
 }
 
-.container a {
+.container a,
+.container .link {
   color: $footer-color;
+  text-decoration: underline;
 }
 
 .left {
@@ -31,6 +33,7 @@
 }
 
 .copyright {
+  @include line-height($tooltip-line-height);
 }
 
 .right {

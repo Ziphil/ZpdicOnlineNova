@@ -44,7 +44,8 @@ export class ResourceController extends Controller {
         let path = `resource/${dictionary.number}/${name}`;
         let names = await AwsUtil.getFileNames(directoryPath);
         if (names.length < 10) {
-          let post = await AwsUtil.getUploadFilePost(path);
+          let configs = {contentType: "image/", sizeLimit: 1024 * 1024};
+          let post = await AwsUtil.getUploadFilePost(path, configs);
           let body = post;
           Controller.respond(response, body);
         } else {
