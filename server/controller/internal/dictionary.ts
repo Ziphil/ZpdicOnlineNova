@@ -39,10 +39,10 @@ import {
   DictionaryCreator,
   DictionaryModel,
   ExampleModel,
-  SearchParameterCreator,
   SuggestionCreator,
   WordCreator,
-  WordModel
+  WordModel,
+  WordParameterCreator
 } from "/server/model/dictionary";
 import {
   UserCreator,
@@ -228,7 +228,7 @@ export class DictionaryController extends Controller {
   @post(SERVER_PATHS["searchDictionary"])
   public async [Symbol()](request: Request<"searchDictionary">, response: Response<"searchDictionary">): Promise<void> {
     let number = request.body.number;
-    let parameter = SearchParameterCreator.recreate(request.body.parameter);
+    let parameter = WordParameterCreator.recreate(request.body.parameter);
     let offset = request.body.offset;
     let size = request.body.size;
     let dictionary = await DictionaryModel.fetchOneByNumber(number);

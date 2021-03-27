@@ -90,7 +90,7 @@ export abstract class WordParameter {
 }
 
 
-export class SearchParameterCreator {
+export class WordParameterCreator {
 
   public static recreate(skeleton: Jsonify<WordParameterSkeleton>): WordParameter {
     if ("elements" in skeleton) {
