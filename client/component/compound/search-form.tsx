@@ -38,18 +38,9 @@ export default class SearchForm extends Component<Props, State> {
     searchFormOpen: false
   };
 
-  private getNormalWordParameter(): NormalWordParameter {
-    let parameter = this.props.parameter;
-    if (parameter instanceof NormalWordParameter) {
-      return parameter;
-    } else {
-      return NormalWordParameter.createEmpty();
-    }
-  }
-
   private handleParameterSet(nextParameter: {search?: string, mode?: WordMode, type?: WordType, orderMode?: WordOrderMode, orderDirection?: WordOrderDirection}): void {
     if (this.props.onParameterSet) {
-      let oldParameter = this.getNormalWordParameter();
+      let oldParameter = WordParameter.getNormal(this.props.parameter);
       let search = nextParameter.search ?? oldParameter.search;
       let mode = nextParameter.mode ?? oldParameter.mode;
       let type = nextParameter.type ?? oldParameter.type;
@@ -76,7 +67,7 @@ export default class SearchForm extends Component<Props, State> {
     let typeSpecs = types.map((type) => ({value: type, label: this.trans(`searchForm.${type}`)}));
     let orderModeSpecs = orderMode.map((orderMode) => ({value: orderMode, text: this.trans(`searchForm.${orderMode}`)}));
     let orderDirectionSpecs = WORD_ORDER_DIRECTIONS.map((orderDirection) => ({value: orderDirection, text: this.trans(`searchForm.${orderDirection}`)}));
-    let parameter = this.getNormalWordParameter();
+    let parameter = WordParameter.getNormal(this.props.parameter);
     let orderNode = (this.props.showOrder) && (
       <div styleName="selection-wrapper">
         <Selection className={styles["order-mode"]} value={parameter.order.mode} specs={orderModeSpecs} onSet={(orderMode) => this.handleParameterSet({orderMode})}/>

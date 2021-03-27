@@ -24,6 +24,14 @@ export abstract class WordParameter {
 
   public abstract serialize(): string;
 
+  public static getNormal(parameter: WordParameter): NormalWordParameter {
+    if (parameter instanceof NormalWordParameter) {
+      return parameter;
+    } else {
+      return NormalWordParameter.createEmpty();
+    }
+  }
+
 }
 
 
