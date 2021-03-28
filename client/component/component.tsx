@@ -222,10 +222,10 @@ type AdditionalRequestConfig = {
 };
 
 type Props<P, Q> = Partial<RouteComponentProps<Q, any, any> & AdditionalProps> & P;
+
 type WithFile<T> = T & {file: Blob} & {[key: string]: string | Blob};
 type RequestConfig = AxiosRequestConfig & AdditionalRequestConfig;
 type RequestConfigWithRecaptcha = RequestConfig & {useRecaptcha: true | string};
 type AxiosResponseSpec<N extends ProcessName> = AxiosResponse<ResponseData<N>>;
-
 type StylesRecord = {[key: string]: string | undefined};
 type FormatFunction<T, R> = (parts: Array<string | T>) => R;
