@@ -303,6 +303,9 @@ contactForm:
   confirm: "Send"
 contributorList:
   title: "Special thanks to"
+dashboardButtonForm:
+  dashboard: "Go to user page"
+  logout: "Sign out"
 dictionaryAggregationPane:
   dictionaryCount: "Dictionaries"
   wordCount: "Words"

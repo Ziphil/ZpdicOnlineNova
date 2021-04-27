@@ -34,10 +34,10 @@ export default class DashboardButtonForm extends Component<Props, State> {
     let node = (
       <form styleName="root">
         <div styleName="row">
-          <Button label="ユーザーページへ" iconLabel="&#xE065;" onClick={this.jumpDashboard.bind(this)}/>
+          <Button label={this.trans("dashboardButtonForm.dashboard")} iconLabel="&#xE065;" style="information" onClick={this.jumpDashboard.bind(this)}/>
         </div>
         <div styleName="row">
-          <Button label="ログアウト" iconLabel="&#xF2F5;" style="simple" onClick={this.performLogout.bind(this)}/>
+          <Button label={this.trans("dashboardButtonForm.logout")} iconLabel="&#xF2F5;" style="simple" onClick={this.performLogout.bind(this)}/>
         </div>
       </form>
     );

@@ -303,6 +303,9 @@ contactForm:
   confirm: "送信"
 contributorList:
   title: "Special thanks to"
+dashboardButtonForm:
+  dashboard: "ユーザーページへ"
+  logout: "ログアウト"
 dictionaryAggregationPane:
   dictionaryCount: "辞書数"
   wordCount: "単語数"
