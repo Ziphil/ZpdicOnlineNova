@@ -6,6 +6,7 @@ import {
 } from "react";
 import Component from "/client/component/component";
 import ContributorList from "/client/component/compound/contributor-list";
+import DashboardButtonForm from "/client/component/compound/dashboard-button-form";
 import DictionaryAggregationPane from "/client/component/compound/dictionary-aggregation-pane";
 import FeaturePane from "/client/component/compound/feature-pane";
 import FormPane from "/client/component/compound/form-pane";
@@ -18,21 +19,37 @@ import {
   style
 } from "/client/component/decorator";
 import Page from "/client/component/page/page";
+import {
+  StyleNameUtil
+} from "/client/util/style-name";
 
 
 @style(require("./top-page.scss"))
 export default class TopPage extends Component<Props, State> {
 
   public render(): ReactNode {
+    let loginFormStyleName = StyleNameUtil.create(
+      "login-form",
+      {if: this.props.store!.user === null, false: "hidden"}
+    );
+    let dashboardButtonFormStyleName = StyleNameUtil.create(
+      "dashboard-button-form",
+      {if: this.props.store!.user === null, true: "hidden"}
+    );
     let node = (
       <Page>
-        <div styleName="logo-wrapper">
+        <div styleName="top">
           <div styleName="logo">
             <Logo/>
           </div>
-          <div styleName="login-form">
+          <div styleName="login-form-wrapper">
             <FormPane>
-              <LoginForm showRegister={true}/>
+              <div styleName={loginFormStyleName}>
+                <LoginForm showRegister={true}/>
+              </div>
+              <div styleName={dashboardButtonFormStyleName}>
+                <DashboardButtonForm/>
+              </div>
             </FormPane>
           </div>
         </div>

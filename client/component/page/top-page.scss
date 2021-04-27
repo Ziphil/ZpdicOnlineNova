@@ -7,7 +7,7 @@ $logo-horizontal-margin: 300u;
 $github-horizontal-margin: 150u;
 $top-content-vertical-margin: 150u;
 
-.logo-wrapper {
+.top {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -24,12 +24,38 @@ $top-content-vertical-margin: 150u;
   }
 }
 
-.login-form {
+.login-form-wrapper {
   flex-grow: 1;
   @include smartphone {
     width: 100%;
     max-width: $page-width / 2;
     margin: $huge-margin 0u 0u 0u;
+  }
+}
+
+.login-form-wrapper >* >* {
+  position: relative;
+}
+
+.dashboard-button-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: absolute;
+  top: 0u;
+  bottom: 0u;
+  left: 0u;
+  right: 0u;
+  @include smartphone {
+    position: relative;
+  }
+}
+
+.login-form.hidden,
+.dashboard-button-form.hidden {
+  visibility: hidden;
+  @include smartphone {
+    display: none;
   }
 }
 
