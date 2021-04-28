@@ -290,6 +290,20 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["fetchWordNameFrequencies"])
+  public async [Symbol()](request: Request<"fetchWordNameFrequencies">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
+    let number = request.body.number;
+    let dictionary = await DictionaryModel.fetchOneByNumber(number);
+    if (dictionary) {
+      let [wholeFrequency, frequencies] = await dictionary.calcWordNameFrequencies();
+      let body = [wholeFrequency, Object.fromEntries(frequencies.entries())];
+      Controller.respond(response, body);
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
   @post(SERVER_PATHS["suggestDictionaryTitles"])
   public async [Symbol()](request: Request<"suggestDictionaryTitles">, response: Response<"suggestDictionaryTitles">): Promise<void> {
     let number = request.body.number;
