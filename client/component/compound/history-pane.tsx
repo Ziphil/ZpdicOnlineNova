@@ -18,8 +18,8 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-@style(require("./dictionary-statistics-pane.scss"))
-export default class DictionaryStatisticsPane extends Component<Props, State> {
+@style(require("./history-pane.scss"))
+export default class HistoryPane extends Component<Props, State> {
 
   public state: State = {
     data: null,

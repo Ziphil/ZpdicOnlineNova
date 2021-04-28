@@ -607,6 +607,11 @@ dictionarySettingPage:
     description: >-
       この辞書を別のユーザーに譲渡します。
       辞書の譲渡後もこのユーザーに編集権限は残るので、単語の編集は引き続き行うことができます。
+  historyPane:
+    label: "単語数履歴"
+    description: >-
+      この辞書の直近 100 日間の単語数の履歴です。
+      単語数は毎日 23 時 30 分頃 (JST, UTC+9) に記録されます。
 errorPage:
   description: >-
     原因不明のエラーが発生しました。

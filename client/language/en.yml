@@ -608,6 +608,11 @@ dictionarySettingPage:
     description: >-
       Transfer this dictionary to another user.
       After the dictionary is transferred, you still have editing permission and thus you can edit the words.
+  historyPane:
+    label: "Word count history"
+    description: >-
+      This is the history of the number of words in this dictionary for the last 100 days.
+      The word count is recorded every day at around 14:30 (UTC).
 errorPage:
   description: >-
     An unexpected error has occurred.
