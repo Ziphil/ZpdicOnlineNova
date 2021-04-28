@@ -476,6 +476,8 @@ wordEditor:
     この単語データを永久に削除します。
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
+wordNameFrequencyPane:
+  others: "その他"
 wordPane:
   edit: "編集"
   submit: "決定"

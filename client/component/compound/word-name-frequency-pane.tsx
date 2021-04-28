@@ -29,10 +29,13 @@ export default class WordNameFrequencyPane extends Component<Props, State> {
     let number = this.props.dictionary.number;
     let response = await this.request("fetchWordNameFrequencies", {number});
     if (response.status === 200 && !("error" in response.data)) {
-      let [wholeFrequency, frequencies] = response.data;
-      let columns = Object.entries<any>(frequencies).map(([char, frequency]) => [char, frequency.all]);
-      columns.sort((firstColumn, secondColumn) => secondColumn[1] - firstColumn[1]);
-      let data = {columns, type: "pie"} as ChartData;
+      let [, frequencies] = response.data;
+      let rawColumns = Object.entries<any>(frequencies).map(([char, frequency]) => [char, frequency.all]).sort((firstColumn, secondColumn) => secondColumn[1] - firstColumn[1]);
+      let formerColumns = rawColumns.slice(0, 20);
+      let otherColumn = (rawColumns.length > 20) ? [this.trans("wordNameFrequencyPane.others"), rawColumns.slice(20, -1).reduce((sum, column) => sum + column[1], 0)] : [];
+      let columns = [...formerColumns, otherColumn];
+      let colors = Object.fromEntries([[this.trans("wordNameFrequencyPane.others"), "hsl(30, 40%, 50%)"]]);
+      let data = {columns, colors, type: "pie", order: null} as ChartData;
       this.setState({data});
     } else {
       this.setState({data: null});

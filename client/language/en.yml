@@ -477,6 +477,8 @@ wordEditor:
     This word will be deleted permanently.
     You cannot restore it afterwards.
     Are you really sure?
+wordNameFrequencyPane:
+  others: "Others"
 wordPane:
   edit: "Edit"
   submit: "Select"
