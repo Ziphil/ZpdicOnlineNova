@@ -58,7 +58,8 @@ export default class Chart extends Component<Props, State> {
       point: {r: 0, focus: {expand: {r: 3}}, select: {r: 3}},
       pie: {expand: false, label: {format: formatPieLabel}},
       legend: {show: false, position: "right"},
-      tooltip: {contents: renderTooltip}
+      tooltip: {contents: renderTooltip},
+      color: {pattern: ["hsl(200, 60%, 45%)", "hsl(140, 45%, 50%)", "hsl(260, 30%, 50%)", "hsl(60, 45%, 50%)", "hsl(330, 30%, 50%)"]}
     };
     let config = merge(defaultConfig, this.props.config);
     this.chart = generateChart({bindto, data, ...config});
