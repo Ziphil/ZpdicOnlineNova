@@ -11,6 +11,7 @@ import HistoryPane from "/client/component/compound/history-pane";
 import Menu from "/client/component/compound/menu";
 import ResourceList from "/client/component/compound/resource-list";
 import SettingPane from "/client/component/compound/setting-pane";
+import WordNameFrequencyPane from "/client/component/compound/word-name-frequency-pane";
 import {
   style
 } from "/client/component/decorator";
@@ -306,6 +307,17 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
+  private renderWordNameFrequencyPane(): ReactNode {
+    let label = this.trans("dictionarySettingPage.wordNameFrequencyPane.label");
+    let description = this.trans("dictionarySettingPage.wordNameFrequencyPane.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <WordNameFrequencyPane dictionary={this.state.dictionary!}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   public render(): ReactNode {
     let number = +this.props.match!.params.number;
     let mode = this.props.match?.params.mode || "general";
@@ -342,6 +354,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
         contentNodes.push(this.renderResourceList());
       } else if (mode === "statistics") {
         contentNodes.push(this.renderHistoryPane());
+        contentNodes.push(this.renderWordNameFrequencyPane());
       }
     }
     let node = (
