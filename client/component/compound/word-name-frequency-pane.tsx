@@ -42,6 +42,7 @@ export default class WordNameFrequencyPane extends Component<Props, State> {
   public render(): ReactNode {
     let styles = this.props.styles!;
     let config = {
+      padding: {top: 0, bottom: 0, left: 0, right: 0},
       legend: {show: true}
     };
     let node = (
