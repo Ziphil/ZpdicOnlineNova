@@ -44,6 +44,9 @@ export default class Chart extends Component<Props, State> {
   private drawChart(): void {
     let bindto = findDOMNode(this) as HTMLElement;
     let data = this.props.data;
+    let formatPieLabel = function (value: number, ratio: number, id: string): string {
+      return id;
+    };
     let renderTooltip = function (data: Array<DataPoint>, formatTitle: unknown, formatValue: (args: any) => any): string {
       let valueString = formatValue(data[0].value);
       return `<div class="c3-zptooltip">${valueString}</div>`;
@@ -53,7 +56,7 @@ export default class Chart extends Component<Props, State> {
       grid: {y: {show: true}},
       axis: {x: {tick: {outer: false}}, y: {tick: {outer: false}}},
       point: {r: 0, focus: {expand: {r: 3}}, select: {r: 3}},
-      pie: {expand: false},
+      pie: {expand: false, label: {format: formatPieLabel}},
       legend: {show: false, position: "right"},
       tooltip: {contents: renderTooltip}
     };
