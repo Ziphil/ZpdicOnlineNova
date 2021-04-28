@@ -12,8 +12,13 @@
   stroke: $light-border-color;
 }
 
-.root :global(.c3-axis) text {
+.root :global(.c3-axis) text,
+.root :global(.c3-chart-arc) text,
+.root :global(.c3-legend-item) {
   font-size: 80%;
+}
+
+.root :global(.c3-axis) text {
   fill: $light-border-color;
 }
 
@@ -38,6 +43,14 @@
 .root :global(.c3-area) {
   fill: border-color(map-get($colors, information)) !important;
   opacity: 0.2 !important;
+}
+
+.root :global(.c3-chart-arc) path {
+  stroke: $background-color;
+}
+
+.root :global(.c3-target.c3-defocused) {
+  opacity: 0.5 !important;
 }
 
 .root :global(.c3-zptooltip) {

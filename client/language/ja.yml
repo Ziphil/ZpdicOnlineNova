@@ -612,6 +612,10 @@ dictionarySettingPage:
     description: >-
       この辞書の直近 100 日間の単語数の履歴です。
       単語数は毎日 23 時 30 分頃 (JST, UTC+9) に記録されます。
+  wordNameFrequencyPane:
+    label: "文字頻度"
+    description: >-
+      見出し語に使われている各文字の出現頻度です。
 errorPage:
   description: >-
     原因不明のエラーが発生しました。

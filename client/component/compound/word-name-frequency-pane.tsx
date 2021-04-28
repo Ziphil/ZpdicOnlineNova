@@ -30,6 +30,10 @@ export default class WordNameFrequencyPane extends Component<Props, State> {
     let response = await this.request("fetchWordNameFrequencies", {number});
     if (response.status === 200 && !("error" in response.data)) {
       let [wholeFrequency, frequencies] = response.data;
+      let columns = Object.entries<any>(frequencies).map(([char, frequency]) => [char, frequency.all]);
+      columns.sort((firstColumn, secondColumn) => secondColumn[1] - firstColumn[1]);
+      let data = {columns, type: "pie"} as ChartData;
+      this.setState({data});
     } else {
       this.setState({data: null});
     }
@@ -37,10 +41,13 @@ export default class WordNameFrequencyPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let styles = this.props.styles!;
+    let config = {
+      legend: {show: true}
+    };
     let node = (
       <div styleName="root">
         <Loading loading={this.state.data === null}>
-          Not yet implemented
+          <Chart className={styles["chart"]} data={this.state.data!} config={config}/>
         </Loading>
       </div>
     );

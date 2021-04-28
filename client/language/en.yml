@@ -611,8 +611,12 @@ dictionarySettingPage:
   historyPane:
     label: "Word count history"
     description: >-
-      This is the history of the number of words in this dictionary for the last 100 days.
+      The history of the number of words in this dictionary for the last 100 days.
       The word count is recorded every day at around 14:30 (UTC).
+  wordNameFrequencyPane:
+    label: "Character frequency"
+    description: >-
+      The frequency of occurrence of each letter used in the headwords.
 errorPage:
   description: >-
     An unexpected error has occurred.

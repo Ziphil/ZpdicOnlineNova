@@ -53,7 +53,8 @@ export default class Chart extends Component<Props, State> {
       grid: {y: {show: true}},
       axis: {x: {tick: {outer: false}}, y: {tick: {outer: false}}},
       point: {r: 0, focus: {expand: {r: 3}}, select: {r: 3}},
-      legend: {show: false},
+      pie: {expand: false},
+      legend: {show: false, position: "right"},
       tooltip: {contents: renderTooltip}
     };
     let config = merge(defaultConfig, this.props.config);
