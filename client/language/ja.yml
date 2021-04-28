@@ -306,10 +306,6 @@ contributorList:
 dashboardButtonForm:
   dashboard: "ユーザーページへ"
   logout: "ログアウト"
-dictionaryAggregationPane:
-  dictionaryCount: "辞書数"
-  wordCount: "単語数"
-  exampleCount: "例文数"
 dictionaryHeader:
   add: "新規作成"
   addWord: "単語"
@@ -392,6 +388,10 @@ loginForm:
   resetPassword: "パスワードを忘れた"
 notificationPane:
   fixed: "対応済み"
+overallAggregationPane:
+  dictionaryCount: "辞書数"
+  wordCount: "単語数"
+  exampleCount: "例文数"
 regexpExecutor:
   title: "正規表現"
   source: "正規表現"

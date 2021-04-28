@@ -306,10 +306,6 @@ contributorList:
 dashboardButtonForm:
   dashboard: "Go to user page"
   logout: "Sign out"
-dictionaryAggregationPane:
-  dictionaryCount: "Dictionaries"
-  wordCount: "Words"
-  exampleCount: "Sentences"
 dictionaryHeader:
   add: "Add"
   addWord: "Word"
@@ -392,6 +388,10 @@ loginForm:
   resetPassword: "Forgot password"
 notificationPane:
   fixed: "Fixed"
+overallAggregationPane:
+  dictionaryCount: "Dictionaries"
+  wordCount: "Words"
+  exampleCount: "Sentences"
 regexpExecutor:
   title: "Regular expression"
   source: "Regular expression"
