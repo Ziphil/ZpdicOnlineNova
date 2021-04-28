@@ -7,7 +7,6 @@ import {
 import Component from "/client/component/component";
 import ContributorList from "/client/component/compound/contributor-list";
 import DashboardButtonForm from "/client/component/compound/dashboard-button-form";
-import DictionaryAggregationPane from "/client/component/compound/dictionary-aggregation-pane";
 import FeaturePane from "/client/component/compound/feature-pane";
 import FormPane from "/client/component/compound/form-pane";
 import GiftPane from "/client/component/compound/gift-pane";
@@ -15,6 +14,7 @@ import GithubButton from "/client/component/compound/github-button";
 import LoginForm from "/client/component/compound/login-form";
 import Logo from "/client/component/compound/logo";
 import NotificationList from "/client/component/compound/notification-list";
+import OverallAggregationPane from "/client/component/compound/overall-aggregation-pane";
 import {
   style
 } from "/client/component/decorator";
@@ -54,7 +54,7 @@ export default class TopPage extends Component<Props, State> {
           </div>
         </div>
         <div styleName="aggregation">
-          <DictionaryAggregationPane/>
+          <OverallAggregationPane/>
         </div>
         <div styleName="border feature">
           <FeaturePane/>

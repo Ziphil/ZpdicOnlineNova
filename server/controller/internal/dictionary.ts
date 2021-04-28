@@ -365,8 +365,8 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATHS["fetchDictionaryAggregation"])
-  public async [Symbol()](request: Request<"fetchDictionaryAggregation">, response: Response<"fetchDictionaryAggregation">): Promise<void> {
+  @post(SERVER_PATHS["fetchOverallAggregation"])
+  public async [Symbol()](request: Request<"fetchOverallAggregation">, response: Response<"fetchOverallAggregation">): Promise<void> {
     let models = [DictionaryModel, WordModel, ExampleModel] as Array<ReturnModelType<typeof DiscardableSchema>>;
     let promises = models.map((model) => {
       let promise = Promise.all([model.findExist().countDocuments(), model.estimatedDocumentCount(), model.collection.stats()]).then(([count, wholeCount, stats]) => {

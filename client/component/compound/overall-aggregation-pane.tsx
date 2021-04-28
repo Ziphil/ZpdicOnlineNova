@@ -13,8 +13,8 @@ import {
 } from "/client/skeleton/aggregation";
 
 
-@style(require("./dictionary-aggregation-pane.scss"))
-export default class DictionaryAggregationPane extends Component<Props, State> {
+@style(require("./overall-aggregation-pane.scss"))
+export default class OverallAggregationPane extends Component<Props, State> {
 
   public state: State = {
     dictionary: null,
@@ -23,7 +23,7 @@ export default class DictionaryAggregationPane extends Component<Props, State> {
   };
 
   public async componentDidMount(): Promise<void> {
-    let response = await this.request("fetchDictionaryAggregation", {}, {ignoreError: true});
+    let response = await this.request("fetchOverallAggregation", {}, {ignoreError: true});
     if (response.status === 200) {
       let body = response.data;
       this.setState(body);

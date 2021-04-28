@@ -73,7 +73,7 @@ export const SERVER_PATHS = {
   fetchDictionary: "/dictionary/fetch",
   fetchDictionaries: "/dictionary/list",
   fetchAllDictionaries: "/dictionary/list/all",
-  fetchDictionaryAggregation: "/dictionary/aggregate",
+  fetchOverallAggregation: "/dictionary/aggregate",
   fetchWordNames: "/word/name",
   fetchInvitations: "/invitation/fetch",
   fetchUploadResourcePost: "/resource/upload",
@@ -280,7 +280,7 @@ type ServerSpecs = {
       error: never
     }
   },
-  fetchDictionaryAggregation: {
+  fetchOverallAggregation: {
     request: {},
     response: {
       success: {dictionary: Aggregation, word: Aggregation, example: Aggregation},
