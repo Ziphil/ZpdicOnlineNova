@@ -389,7 +389,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async calcWordNameFrequencies(): Promise<any> {
-    let query = WordModel.findExist().where("dictionary", this);
+    let query = WordModel.findExist().where("dictionary", this).select("name").lean().cursor();
     let frequencies = new Map<string, any>();
     let wholeFrequency = {all: 0, word: 0};
     for await (let word of query) {
