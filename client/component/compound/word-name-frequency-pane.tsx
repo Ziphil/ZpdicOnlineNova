@@ -33,8 +33,8 @@ export default class WordNameFrequencyPane extends Component<Props, State> {
       let [, frequencies] = response.data;
       let rawColumns = Object.entries<any>(frequencies).map(([char, frequency]) => [char, frequency.all]).sort((firstColumn, secondColumn) => secondColumn[1] - firstColumn[1]);
       let formerColumns = rawColumns.slice(0, 20);
-      let otherColumn = (rawColumns.length > 20) ? [this.trans("wordNameFrequencyPane.others"), rawColumns.slice(20, -1).reduce((sum, column) => sum + column[1], 0)] : [];
-      let columns = [...formerColumns, otherColumn];
+      let otherColumns = (rawColumns.length > 20) ? [[this.trans("wordNameFrequencyPane.others"), rawColumns.slice(20, -1).reduce((sum, column) => sum + column[1], 0)]] : [];
+      let columns = [...formerColumns, ...otherColumns];
       let colors = Object.fromEntries([[this.trans("wordNameFrequencyPane.others"), "hsl(30, 40%, 50%)"]]);
       let data = {columns, colors, type: "pie", order: null} as ChartData;
       this.setState({data});
