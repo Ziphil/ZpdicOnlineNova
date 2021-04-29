@@ -478,6 +478,8 @@ wordEditor:
     You cannot restore it afterwards.
     Are you really sure?
 wordNameFrequencyPane:
+  value: "{value, number} / {total, number}"
+  percent: "{percent, number, ::.000}%"
   others: "Others"
 wordPane:
   edit: "Edit"

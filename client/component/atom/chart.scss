@@ -51,7 +51,7 @@
   padding: $tooltip-vertical-padding $tooltip-horizontal-padding;
   font-size: 80%;
   line-height: $tooltip-line-height;
-  border: 3u border-color(map-get($colors, information)) solid;
+  border: 3u transparent solid;
   border-radius: $small-border-radius;
   background-color: white;
 }

@@ -6,6 +6,7 @@ import {
 } from "react";
 import Chart from "/client/component/atom/chart";
 import {
+  ChartConfig,
   ChartData
 } from "/client/component/atom/chart";
 import Component from "/client/component/component";
@@ -46,8 +47,14 @@ export default class WordNameFrequencyPane extends Component<Props, State> {
     let styles = this.props.styles!;
     let config = {
       padding: {top: 0, bottom: 0, left: 0, right: 0},
-      legend: {show: true}
-    };
+      legend: {show: true},
+      customTooltip: {
+        format: {
+          value: (value, total) => this.trans("wordNameFrequencyPane.value", {value, total}),
+          percent: (percent) => this.trans("wordNameFrequencyPane.percent", {percent})
+        }
+      }
+    } as ChartConfig;
     let node = (
       <div styleName="root">
         <Loading loading={this.state.data === null}>

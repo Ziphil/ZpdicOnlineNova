@@ -477,6 +477,8 @@ wordEditor:
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
 wordNameFrequencyPane:
+  value: "{value, number} / {total, number}"
+  percent: "{percent, number, ::.000}%"
   others: "その他"
 wordPane:
   edit: "編集"
