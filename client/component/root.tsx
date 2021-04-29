@@ -78,7 +78,7 @@ export class Root extends Component<Props, State> {
               <ErrorBoundary component={ErrorPage}>
                 <ScrollTop>
                   <Switch>
-                    <Authenticator type="guest" exact sensitive path="/" redirect="/dashboard" component={TopPage}/>
+                    <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
                     <Authenticator type="guest" exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
                     <Authenticator type="guest" exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
                     <Authenticator type="guest" exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>

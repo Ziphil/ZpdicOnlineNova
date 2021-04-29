@@ -388,6 +388,27 @@ export class DictionarySchema extends DiscardableSchema {
     return count;
   }
 
+  public async calcWordNameFrequencies(): Promise<any> {
+    let query = WordModel.findExist().where("dictionary", this).select("name").lean().cursor();
+    let frequencies = new Map<string, any>();
+    let wholeFrequency = {all: 0, word: 0};
+    for await (let word of query) {
+      let countedChars = new Set<string>();
+      for (let char of word.name) {
+        let data = frequencies.get(char) ?? {all: 0, word: 0};
+        if (!countedChars.has(char)) {
+          data.word ++;
+          countedChars.add(char);
+        }
+        data.all ++;
+        wholeFrequency.all ++;
+        frequencies.set(char, data);
+      }
+      wholeFrequency.word ++;
+    }
+    return [wholeFrequency, frequencies];
+  }
+
   public async hasAuthority(this: Dictionary, user: User, authority: DictionaryAuthority): Promise<boolean> {
     await this.populate("user").populate("editUsers").execPopulate();
     if (isDocument(this.user) && isDocumentArray(this.editUsers)) {

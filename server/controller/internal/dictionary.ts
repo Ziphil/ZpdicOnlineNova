@@ -290,6 +290,20 @@ export class DictionaryController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["fetchWordNameFrequencies"])
+  public async [Symbol()](request: Request<"fetchWordNameFrequencies">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
+    let number = request.body.number;
+    let dictionary = await DictionaryModel.fetchOneByNumber(number);
+    if (dictionary) {
+      let [wholeFrequency, frequencies] = await dictionary.calcWordNameFrequencies();
+      let body = [wholeFrequency, Object.fromEntries(frequencies.entries())];
+      Controller.respond(response, body);
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
   @post(SERVER_PATHS["suggestDictionaryTitles"])
   public async [Symbol()](request: Request<"suggestDictionaryTitles">, response: Response<"suggestDictionaryTitles">): Promise<void> {
     let number = request.body.number;
@@ -365,8 +379,8 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATHS["fetchDictionaryAggregation"])
-  public async [Symbol()](request: Request<"fetchDictionaryAggregation">, response: Response<"fetchDictionaryAggregation">): Promise<void> {
+  @post(SERVER_PATHS["fetchOverallAggregation"])
+  public async [Symbol()](request: Request<"fetchOverallAggregation">, response: Response<"fetchOverallAggregation">): Promise<void> {
     let models = [DictionaryModel, WordModel, ExampleModel] as Array<ReturnModelType<typeof DiscardableSchema>>;
     let promises = models.map((model) => {
       let promise = Promise.all([model.findExist().countDocuments(), model.estimatedDocumentCount(), model.collection.stats()]).then(([count, wholeCount, stats]) => {

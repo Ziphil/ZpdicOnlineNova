@@ -13,8 +13,8 @@ import {
 } from "/client/skeleton/aggregation";
 
 
-@style(require("./dictionary-aggregation-pane.scss"))
-export default class DictionaryAggregationPane extends Component<Props, State> {
+@style(require("./overall-aggregation-pane.scss"))
+export default class OverallAggregationPane extends Component<Props, State> {
 
   public state: State = {
     dictionary: null,
@@ -23,7 +23,7 @@ export default class DictionaryAggregationPane extends Component<Props, State> {
   };
 
   public async componentDidMount(): Promise<void> {
-    let response = await this.request("fetchDictionaryAggregation", {}, {ignoreError: true});
+    let response = await this.request("fetchOverallAggregation", {}, {ignoreError: true});
     if (response.status === 200) {
       let body = response.data;
       this.setState(body);
@@ -37,15 +37,15 @@ export default class DictionaryAggregationPane extends Component<Props, State> {
     let node = (
       <div styleName="root">
         <div styleName="count-wrapper">
-          <div styleName="title">{this.trans("dictionaryAggregationPane.dictionaryCount")}</div>
+          <div styleName="title">{this.trans("overallAggregationPane.dictionaryCount")}</div>
           <div styleName="count">{this.transNumber(dictionary?.count)}</div>
           <div styleName="slash">/</div>
           <div styleName="whole-count">{this.transNumber(dictionary?.wholeCount)}</div>
-          <div styleName="title">{this.trans("dictionaryAggregationPane.wordCount")}</div>
+          <div styleName="title">{this.trans("overallAggregationPane.wordCount")}</div>
           <div styleName="count">{this.transNumber(word?.count)}</div>
           <div styleName="slash">/</div>
           <div styleName="whole-count">{this.transNumber(word?.wholeCount)}</div>
-          <div styleName="title">{this.trans("dictionaryAggregationPane.exampleCount")}</div>
+          <div styleName="title">{this.trans("overallAggregationPane.exampleCount")}</div>
           <div styleName="count">{this.transNumber(example?.count)}</div>
           <div styleName="slash">/</div>
           <div styleName="whole-count">{this.transNumber(example?.wholeCount)}</div>

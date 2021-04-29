@@ -71,9 +71,10 @@ export const SERVER_PATHS = {
   fetchDictionaryAuthorizedUsers: "/dictionary/user",
   checkDictionaryAuthorization: "/dictionary/check",
   fetchDictionary: "/dictionary/fetch",
+  fetchWordNameFrequencies: "/dictionary/fetch/frequency",
   fetchDictionaries: "/dictionary/list",
   fetchAllDictionaries: "/dictionary/list/all",
-  fetchDictionaryAggregation: "/dictionary/aggregate",
+  fetchOverallAggregation: "/dictionary/aggregate",
   fetchWordNames: "/word/name",
   fetchInvitations: "/invitation/fetch",
   fetchUploadResourcePost: "/resource/upload",
@@ -266,6 +267,13 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
     }
   },
+  fetchWordNameFrequencies: {
+    request: {number: number},
+    response: {
+      success: any,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
   fetchDictionaries: {
     request: {},
     response: {
@@ -280,7 +288,7 @@ type ServerSpecs = {
       error: never
     }
   },
-  fetchDictionaryAggregation: {
+  fetchOverallAggregation: {
     request: {},
     response: {
       success: {dictionary: Aggregation, word: Aggregation, example: Aggregation},

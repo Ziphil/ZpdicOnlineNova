@@ -12,8 +12,13 @@
   stroke: $light-border-color;
 }
 
-.root :global(.c3-axis) text {
+.root :global(.c3-axis) text,
+.root :global(.c3-chart-arc) text,
+.root :global(.c3-legend-item) {
   font-size: 80%;
+}
+
+.root :global(.c3-axis) text {
   fill: $light-border-color;
 }
 
@@ -23,12 +28,7 @@
 }
 
 .root :global(.c3-line) {
-  stroke: border-color(map-get($colors, information)) !important;
   stroke-width: 6u;
-}
-
-.root :global(.c3-circle) {
-  fill: border-color(map-get($colors, information)) !important;
 }
 
 .root :global(.c3-circle)[class~="_expanded_"] {
@@ -36,15 +36,22 @@
 }
 
 .root :global(.c3-area) {
-  fill: border-color(map-get($colors, information)) !important;
   opacity: 0.2 !important;
+}
+
+.root :global(.c3-chart-arc) path {
+  stroke: $background-color;
+}
+
+.root :global(.c3-target.c3-defocused) {
+  opacity: 0.5 !important;
 }
 
 .root :global(.c3-zptooltip) {
   padding: $tooltip-vertical-padding $tooltip-horizontal-padding;
   font-size: 80%;
   line-height: $tooltip-line-height;
-  border: 3u border-color(map-get($colors, information)) solid;
+  border: 3u transparent solid;
   border-radius: $small-border-radius;
   background-color: white;
 }

@@ -7,10 +7,11 @@ import {
 import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
 import CommissionList from "/client/component/compound/commission-list";
-import DictionaryStatisticsPane from "/client/component/compound/dictionary-statistics-pane";
+import HistoryPane from "/client/component/compound/history-pane";
 import Menu from "/client/component/compound/menu";
 import ResourceList from "/client/component/compound/resource-list";
 import SettingPane from "/client/component/compound/setting-pane";
+import WordNameFrequencyPane from "/client/component/compound/word-name-frequency-pane";
 import {
   style
 } from "/client/component/decorator";
@@ -295,10 +296,23 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
-  private renderDictionaryStatisticsPane(): ReactNode {
+  private renderHistoryPane(): ReactNode {
+    let label = this.trans("dictionarySettingPage.historyPane.label");
+    let description = this.trans("dictionarySettingPage.historyPane.description");
     let node = (
-      <SettingPane key="commissionList">
-        <DictionaryStatisticsPane dictionary={this.state.dictionary!}/>
+      <SettingPane label={label} key={label} description={description} forceWide={true}>
+        <HistoryPane dictionary={this.state.dictionary!}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
+  private renderWordNameFrequencyPane(): ReactNode {
+    let label = this.trans("dictionarySettingPage.wordNameFrequencyPane.label");
+    let description = this.trans("dictionarySettingPage.wordNameFrequencyPane.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <WordNameFrequencyPane dictionary={this.state.dictionary!}/>
       </SettingPane>
     );
     return node;
@@ -339,7 +353,8 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       } else if (mode === "resource") {
         contentNodes.push(this.renderResourceList());
       } else if (mode === "statistics") {
-        contentNodes.push(this.renderDictionaryStatisticsPane());
+        contentNodes.push(this.renderHistoryPane());
+        contentNodes.push(this.renderWordNameFrequencyPane());
       }
     }
     let node = (

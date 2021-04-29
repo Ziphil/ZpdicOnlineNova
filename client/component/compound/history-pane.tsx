@@ -6,6 +6,7 @@ import {
 } from "react";
 import Chart from "/client/component/atom/chart";
 import {
+  ChartConfig,
   ChartData
 } from "/client/component/atom/chart";
 import Component from "/client/component/component";
@@ -18,8 +19,8 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-@style(require("./dictionary-statistics-pane.scss"))
-export default class DictionaryStatisticsPane extends Component<Props, State> {
+@style(require("./history-pane.scss"))
+export default class HistoryPane extends Component<Props, State> {
 
   public state: State = {
     data: null,
@@ -55,7 +56,7 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
         x: {tick: {format: this.transShortDate.bind(this)}, padding: {left: padding, right: padding}, type: "timeseries"},
         y: {tick: {format: this.transNumber.bind(this)}, max: this.state.maxAxis, min: this.state.minAxis, padding: {top: 0, bottom: 0}}
       }
-    } as const;
+    } as ChartConfig;
     let node = (
       <div styleName="root">
         <Loading loading={this.state.data === null}>

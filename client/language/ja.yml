@@ -303,10 +303,9 @@ contactForm:
   confirm: "送信"
 contributorList:
   title: "Special thanks to"
-dictionaryAggregationPane:
-  dictionaryCount: "辞書数"
-  wordCount: "単語数"
-  exampleCount: "例文数"
+dashboardButtonForm:
+  dashboard: "ユーザーページへ"
+  logout: "ログアウト"
 dictionaryHeader:
   add: "新規作成"
   addWord: "単語"
@@ -389,6 +388,10 @@ loginForm:
   resetPassword: "パスワードを忘れた"
 notificationPane:
   fixed: "対応済み"
+overallAggregationPane:
+  dictionaryCount: "辞書数"
+  wordCount: "単語数"
+  exampleCount: "例文数"
 regexpExecutor:
   title: "正規表現"
   source: "正規表現"
@@ -473,6 +476,10 @@ wordEditor:
     この単語データを永久に削除します。
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
+wordNameFrequencyPane:
+  value: "{value, number} / {total, number}"
+  percent: "{percent, number, ::.000}%"
+  others: "その他"
 wordPane:
   edit: "編集"
   submit: "決定"
@@ -604,6 +611,15 @@ dictionarySettingPage:
     description: >-
       この辞書を別のユーザーに譲渡します。
       辞書の譲渡後もこのユーザーに編集権限は残るので、単語の編集は引き続き行うことができます。
+  historyPane:
+    label: "単語数履歴"
+    description: >-
+      この辞書の直近 100 日間の単語数の履歴です。
+      単語数は毎日 23 時 30 分頃 (JST, UTC+9) に記録されます。
+  wordNameFrequencyPane:
+    label: "文字頻度"
+    description: >-
+      見出し語に使われている各文字の出現頻度です。
 errorPage:
   description: >-
     原因不明のエラーが発生しました。

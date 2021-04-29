@@ -303,10 +303,9 @@ contactForm:
   confirm: "Send"
 contributorList:
   title: "Special thanks to"
-dictionaryAggregationPane:
-  dictionaryCount: "Dictionaries"
-  wordCount: "Words"
-  exampleCount: "Sentences"
+dashboardButtonForm:
+  dashboard: "Go to user page"
+  logout: "Sign out"
 dictionaryHeader:
   add: "Add"
   addWord: "Word"
@@ -389,6 +388,10 @@ loginForm:
   resetPassword: "Forgot password"
 notificationPane:
   fixed: "Fixed"
+overallAggregationPane:
+  dictionaryCount: "Dictionaries"
+  wordCount: "Words"
+  exampleCount: "Sentences"
 regexpExecutor:
   title: "Regular expression"
   source: "Regular expression"
@@ -474,6 +477,10 @@ wordEditor:
     This word will be deleted permanently.
     You cannot restore it afterwards.
     Are you really sure?
+wordNameFrequencyPane:
+  value: "{value, number} / {total, number}"
+  percent: "{percent, number, ::.000}%"
+  others: "Others"
 wordPane:
   edit: "Edit"
   submit: "Select"
@@ -605,6 +612,15 @@ dictionarySettingPage:
     description: >-
       Transfer this dictionary to another user.
       After the dictionary is transferred, you still have editing permission and thus you can edit the words.
+  historyPane:
+    label: "Word count history"
+    description: >-
+      The history of the number of words in this dictionary for the last 100 days.
+      The word count is recorded every day at around 14:30 (UTC).
+  wordNameFrequencyPane:
+    label: "Character frequency"
+    description: >-
+      The frequency of occurrence of each letter used in the headwords.
 errorPage:
   description: >-
     An unexpected error has occurred.
