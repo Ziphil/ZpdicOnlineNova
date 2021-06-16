@@ -3,7 +3,6 @@
 import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
 import aws from "aws-sdk";
-import parser from "body-parser";
 import cookieParser from "cookie-parser";
 import express from "express";
 import {
@@ -69,8 +68,8 @@ export class Main {
 
   // リクエストボディをパースするミドルウェアの設定をします。
   private setupBodyParsers(): void {
-    let urlencodedParser = parser.urlencoded({extended: false});
-    let jsonParser = parser.json();
+    let urlencodedParser = express.urlencoded({extended: false});
+    let jsonParser = express.json();
     this.application.use(urlencodedParser);
     this.application.use(jsonParser);
   }
