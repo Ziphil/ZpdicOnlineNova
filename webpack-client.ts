@@ -110,6 +110,7 @@ let config = {
     contentBase: path.join(__dirname, "dist", "client"),
     proxy: {
       "/internal": "http://localhost:8050",
+      "/external": "http://localhost:8050",
       "/static": "http://localhost:8050"
     }
   },
