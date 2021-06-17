@@ -53,12 +53,11 @@ export default class DictionaryPage extends Component<Props, State, Params> {
 
   public async componentDidMount(): Promise<void> {
     await this.fetchDictionary();
-    let promises = [this.checkAuthorization()];
-    if (!this.state.showExplanation) {
-      promises.push(this.updateWordsImmediately(false));
+    if (this.state.showExplanation) {
+      await Promise.all([this.checkAuthorization()]);
+    } else {
+      await Promise.all([this.checkAuthorization(), this.updateWordsImmediately(false)]);
     }
-    let allPromise = Promise.all(promises);
-    await allPromise;
   }
 
   public async componentDidUpdate(previousProps: any): Promise<void> {
