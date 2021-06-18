@@ -75,7 +75,7 @@ export function after<P extends Params = ParamsDictionary>(...middlewares: Array
   return decorator;
 }
 
-function findControllerSpec(target: object, name: string | symbol): RequestHandlerSpec {
+function findHandlerSpec(target: object, name: string | symbol): RequestHandlerSpec {
   let metadata = Reflect.getMetadata(KEY, target) as Metadata;
   if (!metadata) {
     metadata = [];
@@ -90,13 +90,13 @@ function findControllerSpec(target: object, name: string | symbol): RequestHandl
 }
 
 function setPath(target: object, name: string | symbol, method: MethodType, path: string): void {
-  let spec = findControllerSpec(target, name);
+  let spec = findHandlerSpec(target, name);
   spec.method = method;
   spec.path = path;
 }
 
 function pushMiddlewares<P extends Params = ParamsDictionary>(target: object, name: string | symbol, timing: string, ...middlewares: Array<RequestHandler<P>>): void {
-  let spec = findControllerSpec(target, name);
+  let spec = findHandlerSpec(target, name);
   if (timing === "before") {
     spec.befores.push(...middlewares);
   } else if (timing === "after") {
