@@ -31,14 +31,14 @@ export function controller(path: string): ClassDecorator {
     let originalSetup = clazz.prototype.setup;
     clazz.prototype.setup = function (this: Controller): void {
       let anyThis = this as any;
-      let array = Reflect.getMetadata(KEY, clazz.prototype) as Metadata;
-      for (let metadata of array) {
+      let metadata = Reflect.getMetadata(KEY, clazz.prototype) as Metadata;
+      for (let spec of metadata) {
         let handler = function (request: Request, response: Response, next: NextFunction): void {
-          Promise.resolve(anyThis[metadata.name](request, response, next)).catch((error) => {
+          Promise.resolve(anyThis[spec.name](request, response, next)).catch((error) => {
             next(error);
           });
         };
-        this.router[metadata.method](metadata.path, ...metadata.befores, handler, ...metadata.afters);
+        this.router[spec.method](spec.path, ...spec.befores, handler, ...spec.afters);
       }
       this.path = path;
       originalSetup();
@@ -81,7 +81,7 @@ function findControllerSpec(target: object, name: string | symbol): RequestHandl
     metadata = [];
     Reflect.defineMetadata(KEY, metadata, target);
   }
-  let spec = metadata.find((candidate) => candidate.name === name);
+  let spec = metadata.find((spec) => spec.name === name);
   if (spec === undefined) {
     spec = {name, path: "/", method: "get", befores: [], afters: []};
     metadata.push(spec);
@@ -90,16 +90,16 @@ function findControllerSpec(target: object, name: string | symbol): RequestHandl
 }
 
 function setPath(target: object, name: string | symbol, method: MethodType, path: string): void {
-  let metadata = findControllerSpec(target, name);
-  metadata.method = method;
-  metadata.path = path;
+  let spec = findControllerSpec(target, name);
+  spec.method = method;
+  spec.path = path;
 }
 
 function pushMiddlewares<P extends Params = ParamsDictionary>(target: object, name: string | symbol, timing: string, ...middlewares: Array<RequestHandler<P>>): void {
-  let metadata = findControllerSpec(target, name);
+  let spec = findControllerSpec(target, name);
   if (timing === "before") {
-    metadata.befores.push(...middlewares);
+    spec.befores.push(...middlewares);
   } else if (timing === "after") {
-    metadata.afters.push(...middlewares);
+    spec.afters.push(...middlewares);
   }
 }
