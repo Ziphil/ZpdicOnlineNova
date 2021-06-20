@@ -20,6 +20,7 @@ import {
   Suggestion,
   UserDictionary,
   Word,
+  WordNameFrequencies,
   WordParameter
 } from "/client/skeleton/dictionary";
 import {
@@ -270,7 +271,7 @@ type ServerSpecs = {
   fetchWordNameFrequencies: {
     request: {number: number},
     response: {
-      success: any,
+      success: WordNameFrequencies,
       error: CustomError<"noSuchDictionaryNumber">
     }
   },

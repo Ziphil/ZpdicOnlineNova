@@ -295,8 +295,7 @@ export class DictionaryController extends Controller {
     let number = request.body.number;
     let dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
-      let [wholeFrequency, frequencies] = await dictionary.calcWordNameFrequencies();
-      let body = [wholeFrequency, Object.fromEntries(frequencies.entries())];
+      let body = await dictionary.calcWordNameFrequencies();
       Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");

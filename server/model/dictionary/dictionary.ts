@@ -15,7 +15,9 @@ import {
   Dictionary as DictionarySkeleton,
   EditableExample as EditableExampleSkeleton,
   EditableWord as EditableWordSkeleton,
-  UserDictionary as UserDictionarySkeleton
+  UserDictionary as UserDictionarySkeleton,
+  WordNameFrequencies,
+  WordNameFrequency
 } from "/client/skeleton/dictionary";
 import {
   User as UserSkeleton
@@ -388,25 +390,26 @@ export class DictionarySchema extends DiscardableSchema {
     return count;
   }
 
-  public async calcWordNameFrequencies(): Promise<any> {
+  public async calcWordNameFrequencies(): Promise<WordNameFrequencies> {
     let query = WordModel.findExist().where("dictionary", this).select("name").lean().cursor();
-    let frequencies = new Map<string, any>();
     let wholeFrequency = {all: 0, word: 0};
+    let charFrequencies = new Map<string, WordNameFrequency>();
     for await (let word of query) {
       let countedChars = new Set<string>();
       for (let char of word.name) {
-        let data = frequencies.get(char) ?? {all: 0, word: 0};
+        let frequency = charFrequencies.get(char) ?? {all: 0, word: 0};
         if (!countedChars.has(char)) {
-          data.word ++;
+          frequency.word ++;
           countedChars.add(char);
         }
-        data.all ++;
+        frequency.all ++;
         wholeFrequency.all ++;
-        frequencies.set(char, data);
+        charFrequencies.set(char, frequency);
       }
       wholeFrequency.word ++;
     }
-    return [wholeFrequency, frequencies];
+    let frequencies = {whole: wholeFrequency, char: Array.from(charFrequencies.entries())};
+    return frequencies;
   }
 
   public async hasAuthority(this: Dictionary, user: User, authority: DictionaryAuthority): Promise<boolean> {
