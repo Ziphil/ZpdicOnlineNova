@@ -431,6 +431,7 @@ searchForm:
   part: "部分"
   exact: "完全"
   regular: "正規"
+  ignoreCase: "大小文字を区別しない"
   unicode: "Unicode 順"
   custom: "独自順序順"
   updatedDate: "更新日時順"

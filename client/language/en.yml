@@ -432,6 +432,7 @@ searchForm:
   part: "Part"
   exact: "Exact"
   regular: "Regexp"
+  ignoreCase: "Ignore case"
   unicode: "By Unicode"
   custom: "By custom order"
   updatedDate: "By update date"
