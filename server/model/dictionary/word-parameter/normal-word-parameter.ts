@@ -14,6 +14,7 @@ import {
   WordType
 } from "/server/model/dictionary";
 import {
+  WordIgnoreOptions,
   WordParameter
 } from "/server/model/dictionary/word-parameter/word-parameter";
 
@@ -24,18 +25,20 @@ export class NormalWordParameter extends WordParameter {
   public mode: WordMode;
   public type: WordType;
   public order: WordOrder;
+  public ignoreOptions: WordIgnoreOptions;
 
-  public constructor(search: string, mode: WordMode, type: WordType, order: WordOrder) {
+  public constructor(search: string, mode: WordMode, type: WordType, order: WordOrder, ignoreOptions: WordIgnoreOptions) {
     super();
     this.search = search;
     this.mode = mode;
     this.type = type;
     this.order = order;
+    this.ignoreOptions = ignoreOptions;
   }
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>> {
     let keys = WordParameter.createKeys(this.mode);
-    let needle = WordParameter.createNeedle(this.search, this.type);
+    let needle = WordParameter.createNeedle(this.search, this.type, this.ignoreOptions);
     let sortKey = WordParameter.createSortKey(this.order);
     let disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
     let query = WordModel.findExist().where("dictionary", dictionary).or(disjunctFilters).sort(sortKey);
@@ -46,7 +49,7 @@ export class NormalWordParameter extends WordParameter {
     let mode = this.mode;
     let type = this.type;
     if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {
-      let needle = WordParameter.createNeedle(this.search, "exact");
+      let needle = WordParameter.createNeedle(this.search, "exact", {case: false});
       let aggregate = WordModel.aggregate();
       aggregate = aggregate.match(WordModel.findExist().where("dictionary", dictionary["_id"]).where("variations.name", needle).getFilter());
       aggregate = aggregate.addFields({oldVariations: "$variations"});

@@ -52,3 +52,4 @@ export type WordOrderDirection = LiteralType<typeof WORD_ORDER_DIRECTIONS>;
 export let WordOrderDirectionUtil = LiteralUtilType.create(WORD_ORDER_DIRECTIONS);
 
 export type WordOrder = {mode: WordOrderMode, direction: WordOrderDirection};
+export type WordIgnoreOptions = {case: boolean};
