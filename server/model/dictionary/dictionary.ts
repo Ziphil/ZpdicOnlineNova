@@ -11,11 +11,19 @@ import {
 } from "@typegoose/typegoose";
 import Fuse from "fuse.js";
 import {
+  QueryCursor
+} from "mongoose";
+import {
   DetailedDictionary as DetailedDictionarySkeleton,
   Dictionary as DictionarySkeleton,
+  DictionaryStatistics,
   EditableExample as EditableExampleSkeleton,
   EditableWord as EditableWordSkeleton,
-  UserDictionary as UserDictionarySkeleton
+  StringLengths,
+  UserDictionary as UserDictionarySkeleton,
+  WholeAverage,
+  WordNameFrequencies,
+  WordNameFrequency
 } from "/client/skeleton/dictionary";
 import {
   User as UserSkeleton
@@ -388,25 +396,69 @@ export class DictionarySchema extends DiscardableSchema {
     return count;
   }
 
-  public async calcWordNameFrequencies(): Promise<any> {
+  public async calcWordNameFrequencies(): Promise<WordNameFrequencies> {
     let query = WordModel.findExist().where("dictionary", this).select("name").lean().cursor();
-    let frequencies = new Map<string, any>();
     let wholeFrequency = {all: 0, word: 0};
+    let charFrequencies = new Map<string, WordNameFrequency>();
     for await (let word of query) {
       let countedChars = new Set<string>();
       for (let char of word.name) {
-        let data = frequencies.get(char) ?? {all: 0, word: 0};
+        let frequency = charFrequencies.get(char) ?? {all: 0, word: 0};
         if (!countedChars.has(char)) {
-          data.word ++;
+          frequency.word ++;
           countedChars.add(char);
         }
-        data.all ++;
+        frequency.all ++;
         wholeFrequency.all ++;
-        frequencies.set(char, data);
+        charFrequencies.set(char, frequency);
       }
       wholeFrequency.word ++;
     }
-    return [wholeFrequency, frequencies];
+    let frequencies = {whole: wholeFrequency, char: Array.from(charFrequencies.entries())};
+    return frequencies;
+  }
+
+  public async calcStatistics(): Promise<DictionaryStatistics> {
+    let wordQuery = WordModel.findExist().where("dictionary", this).select(["name", "equivalents", "informations"]).lean().cursor();
+    let exampleQuery = ExampleModel.findExist().where("dictionary", this).select(["sentence"]).lean().cursor();
+    let rawWordCount = 0;
+    let wholeWordNameLengths = {kept: 0, nfd: 0, nfc: 0};
+    let wholeEquivalentNameCount = 0;
+    let wholeInformationCount = 0;
+    let wholeInformationTextLengths = {kept: 0, nfd: 0, nfc: 0};
+    let wholeExampleCount = 0;
+    for await (let word of wordQuery) {
+      rawWordCount ++;
+      wholeWordNameLengths.kept += word.name.length;
+      wholeWordNameLengths.nfd += word.name.normalize("NFD").length;
+      wholeWordNameLengths.nfc += word.name.normalize("NFC").length;
+      for (let equivalent of word.equivalents) {
+        wholeEquivalentNameCount += equivalent.names.length;
+      }
+      for (let information of word.informations) {
+        wholeInformationCount ++;
+        wholeInformationTextLengths.kept += information.text.length;
+        wholeInformationTextLengths.nfd += information.text.normalize("NFD").length;
+        wholeInformationTextLengths.nfc += information.text.normalize("NFC").length;
+      }
+    }
+    for await (let example of exampleQuery) {
+      wholeExampleCount ++;
+    }
+    let calcWithRatio = function <V extends number | StringLengths>(value: V): WholeAverage<V> {
+      if (typeof value === "number") {
+        return {whole: value, average: value / rawWordCount} as any;
+      } else {
+        return {whole: value, average: {kept: value.kept / rawWordCount, nfd: value.nfd / rawWordCount, nfc: value.nfc / rawWordCount}} as any;
+      }
+    };
+    let wordCount = {raw: rawWordCount, tokipona: rawWordCount / 120, coverage: Math.log10(rawWordCount) * 0.2 + 0.2};
+    let wordNameLengths = calcWithRatio(wholeWordNameLengths);
+    let equivalentNameCount = calcWithRatio(wholeEquivalentNameCount);
+    let informationCount = calcWithRatio(wholeInformationCount);
+    let informationTextLengths = calcWithRatio(wholeInformationTextLengths);
+    let exampleCount = calcWithRatio(wholeExampleCount);
+    return {wordCount, wordNameLengths, equivalentNameCount, informationCount, informationTextLengths, exampleCount};
   }
 
   public async hasAuthority(this: Dictionary, user: User, authority: DictionaryAuthority): Promise<boolean> {

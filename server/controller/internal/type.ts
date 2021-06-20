@@ -14,12 +14,14 @@ import {
   DetailedWord,
   Dictionary,
   DictionarySettings,
+  DictionaryStatistics,
   EditableExample,
   EditableWord,
   Example,
   Suggestion,
   UserDictionary,
   Word,
+  WordNameFrequencies,
   WordParameter
 } from "/client/skeleton/dictionary";
 import {
@@ -72,6 +74,7 @@ export const SERVER_PATHS = {
   checkDictionaryAuthorization: "/dictionary/check",
   fetchDictionary: "/dictionary/fetch",
   fetchWordNameFrequencies: "/dictionary/fetch/frequency",
+  fetchDictionaryStatistics: "/dictionary/fetch/statistics",
   fetchDictionaries: "/dictionary/list",
   fetchAllDictionaries: "/dictionary/list/all",
   fetchOverallAggregation: "/dictionary/aggregate",
@@ -270,10 +273,17 @@ type ServerSpecs = {
   fetchWordNameFrequencies: {
     request: {number: number},
     response: {
-      success: any,
+      success: WordNameFrequencies,
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
+  fetchDictionaryStatistics: {
+    request: {number: number},
+    response: {
+      success: DictionaryStatistics,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
+  }
   fetchDictionaries: {
     request: {},
     response: {

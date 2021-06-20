@@ -7,6 +7,7 @@ import {
 import Markdown from "/client/component/atom/markdown";
 import Component from "/client/component/component";
 import CommissionList from "/client/component/compound/commission-list";
+import DictionaryStatisticsPane from "/client/component/compound/dictionary-statistics-pane";
 import HistoryPane from "/client/component/compound/history-pane";
 import Menu from "/client/component/compound/menu";
 import ResourceList from "/client/component/compound/resource-list";
@@ -296,6 +297,17 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     return node;
   }
 
+  private renderDictionaryStatisticsPane(): ReactNode {
+    let label = this.trans("dictionarySettingPage.dictionaryStatisticsPane.label");
+    let description = this.trans("dictionarySettingPage.dictionaryStatisticsPane.description");
+    let node = (
+      <SettingPane label={label} key={label} description={description}>
+        <DictionaryStatisticsPane dictionary={this.state.dictionary!}/>
+      </SettingPane>
+    );
+    return node;
+  }
+
   private renderHistoryPane(): ReactNode {
     let label = this.trans("dictionarySettingPage.historyPane.label");
     let description = this.trans("dictionarySettingPage.historyPane.description");
@@ -353,6 +365,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
       } else if (mode === "resource") {
         contentNodes.push(this.renderResourceList());
       } else if (mode === "statistics") {
+        contentNodes.push(this.renderDictionaryStatisticsPane());
         contentNodes.push(this.renderHistoryPane());
         contentNodes.push(this.renderWordNameFrequencyPane());
       }

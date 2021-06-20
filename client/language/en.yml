@@ -325,6 +325,55 @@ dictionaryPane:
   createdDate: "Created at"
   setting: "Settings"
   download: "Download"
+dictionaryStatisticsPane:
+  wordCount: "Words"
+  wordCountRaw: 
+    value: "{value, number}"
+    unit: " {value, plural, one {word} other {words}}"
+  wordCountTokipona: 
+    value: "{value, number, ::.00}"
+    unit: " TP"
+  wordCountCoverage: 
+    value: "{value, number, ::.000}"
+    unit: " %EC"
+  wordNameLengthAverage:
+    title: "Average headword length"
+    value: "{value, number, ::.00}"
+    unit: " {value, plural, one {char/word} other {chars/word}}"
+  equivalentNameCountWhole:
+    title: "Translations"
+    value: "{value, number}"
+    unit: " {value, plural, one {term} other {terms}}"
+  equivalentNameCountAverage:
+    title: "Average translations"
+    value: "{value, number, ::.00}"
+    unit: " {value, plural, one {term/word} other {terms/word}}"
+  informationCountWhole:
+    title: "Contents"
+    value: "{value, number}"
+    unit: " {value, plural, one {item} other {items}}"
+  informationCountAverage:
+    title: "Average contents"
+    value: "{value, number, ::.00}"
+    unit: " {value, plural, one {item/word} other {items/word}}"
+  informationTextLengthWhole:
+    title: "Content length"
+    value: "{value, number}"
+    unit: " {value, plural, one {char} other {chars}}"
+  informationTextLengthAverage:
+    title: "Average content length"
+    value: "{value, number, ::.00}"
+    unit: " {value, plural, one {char/word} other {chars/word}}"
+  exampleCountWhole:
+    title: "Examples"
+    value: "{value, number}"
+    unit: " {value, plural, one {sentence} other {sentences}}"
+  exampleCountAverage:
+    title: "Average examples"
+    value: "{value, number, ::.00}"
+    unit: " {value, plural, one {sentence/word} other {sentences/word}}"
+  nfd: "(NFD)"
+  nfc: "(NFC)"
 exampleEditor:
   title: "Edit example sentence"
   sentence: "Example sentence"
@@ -613,6 +662,11 @@ dictionarySettingPage:
     description: >-
       Transfer this dictionary to another user.
       After the dictionary is transferred, you still have editing permission and thus you can edit the words.
+  dictionaryStatisticsPane:
+    label: "Statistics"
+    description: >-
+      The statistical information of this dictionary.
+      In the items on character length, the value using the data as is and that calculated after Unicode normalization are both shown.
   historyPane:
     label: "Word count history"
     description: >-
