@@ -14,6 +14,7 @@ import {
   DetailedWord,
   Dictionary,
   DictionarySettings,
+  DictionaryStatistics,
   EditableExample,
   EditableWord,
   Example,
@@ -73,6 +74,7 @@ export const SERVER_PATHS = {
   checkDictionaryAuthorization: "/dictionary/check",
   fetchDictionary: "/dictionary/fetch",
   fetchWordNameFrequencies: "/dictionary/fetch/frequency",
+  fetchDictionaryStatistics: "/dictionary/fetch/statistics",
   fetchDictionaries: "/dictionary/list",
   fetchAllDictionaries: "/dictionary/list/all",
   fetchOverallAggregation: "/dictionary/aggregate",
@@ -275,6 +277,13 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
+  fetchDictionaryStatistics: {
+    request: {number: number},
+    response: {
+      success: DictionaryStatistics,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
+  }
   fetchDictionaries: {
     request: {},
     response: {

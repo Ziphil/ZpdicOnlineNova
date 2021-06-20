@@ -11,11 +11,17 @@ import {
 } from "@typegoose/typegoose";
 import Fuse from "fuse.js";
 import {
+  QueryCursor
+} from "mongoose";
+import {
   DetailedDictionary as DetailedDictionarySkeleton,
   Dictionary as DictionarySkeleton,
+  DictionaryStatistics,
   EditableExample as EditableExampleSkeleton,
   EditableWord as EditableWordSkeleton,
+  StringLengths,
   UserDictionary as UserDictionarySkeleton,
+  WholeAndRatio,
   WordNameFrequencies,
   WordNameFrequency
 } from "/client/skeleton/dictionary";
@@ -410,6 +416,49 @@ export class DictionarySchema extends DiscardableSchema {
     }
     let frequencies = {whole: wholeFrequency, char: Array.from(charFrequencies.entries())};
     return frequencies;
+  }
+
+  public async calcStatistics(): Promise<DictionaryStatistics> {
+    let wordQuery = WordModel.findExist().where("dictionary", this).lean().cursor() as QueryCursor<Word>;
+    let exampleQuery = ExampleModel.findExist().where("dictionary", this).lean().cursor() as QueryCursor<Example>;
+    let rawWordCount = 0;
+    let wholeWordNameLengths = {kept: 0, nfd: 0, nfc: 0};
+    let wholeEquivalentNameCount = 0;
+    let wholeInformationCount = 0;
+    let wholeInformationTextLengths = {kept: 0, nfd: 0, nfc: 0};
+    let wholeExampleCount = 0;
+    for await (let word of wordQuery) {
+      rawWordCount ++;
+      wholeWordNameLengths.kept += word.name.length;
+      wholeWordNameLengths.nfd += word.name.normalize("NFD").length;
+      wholeWordNameLengths.nfc += word.name.normalize("NFC").length;
+      for (let equivalent of word.equivalents) {
+        wholeEquivalentNameCount += equivalent.names.length;
+      }
+      for (let information of word.informations) {
+        wholeInformationCount ++;
+        wholeInformationTextLengths.kept += information.text.length;
+        wholeInformationTextLengths.nfd += information.text.normalize("NFD").length;
+        wholeInformationTextLengths.nfc += information.text.normalize("NFC").length;
+      }
+    }
+    for await (let example of exampleQuery) {
+      wholeExampleCount ++;
+    }
+    let calcWithRatio = function <V extends number | StringLengths>(value: V): WholeAndRatio<V> {
+      if (typeof value === "number") {
+        return {whole: value, ratio: value / rawWordCount} as any;
+      } else {
+        return {whole: value, ratio: {kept: value.kept / rawWordCount, nfd: value.nfd / rawWordCount, nfc: value.nfc / rawWordCount}} as any;
+      }
+    };
+    let wordCount = {raw: rawWordCount, tokipona: rawWordCount / 120, coverage: Math.log10(rawWordCount) * 0.2 + 0.2};
+    let wordNameLengths = calcWithRatio(wholeWordNameLengths);
+    let equivalentNameCount = calcWithRatio(wholeEquivalentNameCount);
+    let informationCount = calcWithRatio(wholeInformationCount);
+    let informationTextLengths = calcWithRatio(wholeInformationTextLengths);
+    let exampleCount = calcWithRatio(wholeExampleCount);
+    return {wordCount, wordNameLengths, equivalentNameCount, informationCount, informationTextLengths, exampleCount};
   }
 
   public async hasAuthority(this: Dictionary, user: User, authority: DictionaryAuthority): Promise<boolean> {
