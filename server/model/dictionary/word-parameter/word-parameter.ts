@@ -52,19 +52,27 @@ export abstract class WordParameter {
     }
   }
 
-  protected static createNeedle(search: string, type: WordType): string | RegExp {
+  protected static createNeedle(search: string, type: WordType, ignoreOptions: WordIgnoreOptions): string | RegExp {
     let escapedSearch = escapeRegexp(search);
     if (type === "exact") {
-      return search;
+      if (ignoreOptions.case) {
+        return new RegExp("^" + escapedSearch + "$", "i");
+      } else {
+        return search;
+      }
     } else if (type === "prefix") {
-      return new RegExp("^" + escapedSearch);
+      let flags = (ignoreOptions.case) ? "i" : undefined;
+      return new RegExp("^" + escapedSearch, flags);
     } else if (type === "suffix") {
-      return new RegExp(escapedSearch + "$");
+      let flags = (ignoreOptions.case) ? "i" : undefined;
+      return new RegExp(escapedSearch + "$", flags);
     } else if (type === "part") {
-      return new RegExp(escapedSearch);
+      let flags = (ignoreOptions.case) ? "i" : undefined;
+      return new RegExp(escapedSearch, flags);
     } else {
       try {
-        return new RegExp(search);
+        let flags = (ignoreOptions.case) ? "i" : undefined;
+        return new RegExp(search, flags);
       } catch (error) {
         return "";
       }
@@ -100,7 +108,7 @@ export class WordParameterCreator {
       return raw;
     } else {
       let castSkeleton = skeleton as NormalWordParameterSkeleton;
-      let raw = new NormalWordParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type, castSkeleton.order);
+      let raw = new NormalWordParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type, castSkeleton.order, castSkeleton.ignoreOptions);
       return raw;
     }
   }
@@ -125,4 +133,5 @@ export type WordOrderDirection = LiteralType<typeof WORD_ORDER_DIRECTIONS>;
 export let WordOrderDirectionUtil = LiteralUtilType.create(WORD_ORDER_DIRECTIONS);
 
 export type WordOrder = {mode: WordOrderMode, direction: WordOrderDirection};
+export type WordIgnoreOptions = {case: boolean};
 export type RawSuggestion = {title: string, word: Word};

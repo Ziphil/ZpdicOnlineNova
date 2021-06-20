@@ -207,9 +207,12 @@ export default class ExampleEditor extends Component<Props, State> {
           {this.renderTranslation()}
           {this.renderWords()}
         </div>
-        <div styleName="confirm-button">
-          {discardButtonNode}
-          {confirmButtonNode}
+        <div styleName="confirm-button-wrapper">
+          <div/>
+          <div styleName="confirm-button">
+            {discardButtonNode}
+            {confirmButtonNode}
+          </div>
         </div>
       </div>
     );

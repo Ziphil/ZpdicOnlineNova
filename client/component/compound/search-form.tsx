@@ -6,6 +6,7 @@ import {
   ReactNode
 } from "react";
 import Button from "/client/component/atom/button";
+import Checkbox from "/client/component/atom/checkbox";
 import Input from "/client/component/atom/input";
 import RadioGroup from "/client/component/atom/radio-group";
 import Selection from "/client/component/atom/selection";
@@ -38,7 +39,7 @@ export default class SearchForm extends Component<Props, State> {
     searchFormOpen: false
   };
 
-  private handleParameterSet(nextParameter: {search?: string, mode?: WordMode, type?: WordType, orderMode?: WordOrderMode, orderDirection?: WordOrderDirection}): void {
+  private handleParameterSet(nextParameter: {search?: string, mode?: WordMode, type?: WordType, orderMode?: WordOrderMode, orderDirection?: WordOrderDirection, ignoreCase?: boolean}): void {
     if (this.props.onParameterSet) {
       let oldParameter = WordParameter.getNormal(this.props.parameter);
       let search = nextParameter.search ?? oldParameter.search;
@@ -47,7 +48,9 @@ export default class SearchForm extends Component<Props, State> {
       let orderMode = nextParameter.orderMode ?? oldParameter.order.mode;
       let orderDirection = nextParameter.orderDirection ?? oldParameter.order.direction;
       let order = {mode: orderMode, direction: orderDirection};
-      let parameter = NormalWordParameter.createEmpty({search, mode, type, order});
+      let ignoreCase = nextParameter.ignoreCase ?? oldParameter.ignoreOptions.case;
+      let ignoreOptions = {case: ignoreCase};
+      let parameter = NormalWordParameter.createEmpty({search, mode, type, order, ignoreOptions});
       this.props.onParameterSet(parameter);
     }
   }
@@ -69,10 +72,15 @@ export default class SearchForm extends Component<Props, State> {
     let orderDirectionSpecs = WORD_ORDER_DIRECTIONS.map((orderDirection) => ({value: orderDirection, text: this.trans(`searchForm.${orderDirection}`)}));
     let parameter = WordParameter.getNormal(this.props.parameter);
     let orderNode = (this.props.showOrder) && (
-      <div styleName="selection-wrapper">
-        <Selection className={styles["order-mode"]} value={parameter.order.mode} specs={orderModeSpecs} onSet={(orderMode) => this.handleParameterSet({orderMode})}/>
-        <Selection className={styles["order-direction"]} value={parameter.order.direction} specs={orderDirectionSpecs} onSet={(orderDirection) => this.handleParameterSet({orderDirection})}/>
-      </div>
+      <Fragment>
+        <div styleName="selection-wrapper">
+          <Checkbox name="ignoreCase" value="true" label={this.trans("searchForm.ignoreCase")} checked={parameter.ignoreOptions.case} onSet={(ignoreCase) => this.handleParameterSet({ignoreCase})}/>
+        </div>
+        <div styleName="selection-wrapper">
+          <Selection className={styles["order-mode"]} value={parameter.order.mode} specs={orderModeSpecs} onSet={(orderMode) => this.handleParameterSet({orderMode})}/>
+          <Selection className={styles["order-direction"]} value={parameter.order.direction} specs={orderDirectionSpecs} onSet={(orderDirection) => this.handleParameterSet({orderDirection})}/>
+        </div>
+      </Fragment>
     );
     let advancedSearchButton = (this.props.showAdvancedSearch) && (
       <div styleName="radio-wrapper">

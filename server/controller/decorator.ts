@@ -11,37 +11,34 @@ import {
 import "reflect-metadata";
 import {
   Controller
-} from "/server/controller/internal/controller";
+} from "/server/controller/controller";
 
 
-class ControllerMetadata<P extends Params = ParamsDictionary> {
+const KEY = Symbol("controller");
 
-  public name: string | symbol;
-  public path: string = "/";
-  public method: MethodType = "get";
-  public befores: Array<RequestHandler<P>> = [];
-  public afters: Array<RequestHandler<P>> = [];
+type Metadata = Array<RequestHandlerSpec>;
+type MethodType = "get" | "post";
+type RequestHandlerSpec = {
+  name: string | symbol,
+  path: string;
+  method: MethodType;
+  befores: Array<RequestHandler<any>>;
+  afters: Array<RequestHandler<any>>;
+};
 
-  public constructor(name: string | symbol) {
-    this.name = name;
-  }
-
-}
-
-
-export function controller<P extends Params = ParamsDictionary>(path: string): ClassDecorator {
+export function controller(path: string): ClassDecorator {
   let decorator = function (clazz: Function): void {
     let originalSetup = clazz.prototype.setup;
     clazz.prototype.setup = function (this: Controller): void {
       let anyThis = this as any;
-      let array = getMetadataArray<P>(clazz.prototype);
-      for (let metadata of array) {
-        let handler = function (request: Request<P>, response: Response, next: NextFunction): void {
-          Promise.resolve(anyThis[metadata.name](request, response, next)).catch((error) => {
+      let metadata = Reflect.getMetadata(KEY, clazz.prototype) as Metadata;
+      for (let spec of metadata) {
+        let handler = function (request: Request, response: Response, next: NextFunction): void {
+          Promise.resolve(anyThis[spec.name](request, response, next)).catch((error) => {
             next(error);
           });
         };
-        this.router[metadata.method](metadata.path, ...metadata.befores, handler, ...metadata.afters);
+        this.router[spec.method](spec.path, ...spec.befores, handler, ...spec.afters);
       }
       this.path = path;
       originalSetup();
@@ -78,45 +75,31 @@ export function after<P extends Params = ParamsDictionary>(...middlewares: Array
   return decorator;
 }
 
-const KEY = Symbol("controller");
-
-function findMetadata<P extends Params = ParamsDictionary>(target: object, name: string | symbol): ControllerMetadata<P> {
-  let array = Reflect.getMetadata(KEY, target);
-  if (!array) {
-    array = [];
-    Reflect.defineMetadata(KEY, array, target);
-  }
-  let metadata = null;
-  for (let candidate of array) {
-    if (candidate.name === name) {
-      metadata = candidate;
-    }
-  }
+function findHandlerSpec(target: object, name: string | symbol): RequestHandlerSpec {
+  let metadata = Reflect.getMetadata(KEY, target) as Metadata;
   if (!metadata) {
-    metadata = new ControllerMetadata<P>(name);
-    array.push(metadata);
+    metadata = [];
+    Reflect.defineMetadata(KEY, metadata, target);
   }
-  return metadata;
+  let spec = metadata.find((spec) => spec.name === name);
+  if (spec === undefined) {
+    spec = {name, path: "/", method: "get", befores: [], afters: []};
+    metadata.push(spec);
+  }
+  return spec;
 }
 
 function setPath(target: object, name: string | symbol, method: MethodType, path: string): void {
-  let metadata = findMetadata(target, name);
-  metadata.method = method;
-  metadata.path = path;
+  let spec = findHandlerSpec(target, name);
+  spec.method = method;
+  spec.path = path;
 }
 
 function pushMiddlewares<P extends Params = ParamsDictionary>(target: object, name: string | symbol, timing: string, ...middlewares: Array<RequestHandler<P>>): void {
-  let metadata = findMetadata<P>(target, name);
+  let spec = findHandlerSpec(target, name);
   if (timing === "before") {
-    metadata.befores.push(...middlewares);
+    spec.befores.push(...middlewares);
   } else if (timing === "after") {
-    metadata.afters.push(...middlewares);
+    spec.afters.push(...middlewares);
   }
 }
-
-function getMetadataArray<P extends Params = ParamsDictionary>(target: object): Array<ControllerMetadata<P>> {
-  let array = Reflect.getMetadata(KEY, target);
-  return array;
-}
-
-type MethodType = "get" | "post";

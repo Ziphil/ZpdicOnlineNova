@@ -55,7 +55,7 @@ export class AdvancedWordParameterElement extends WordParameter {
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>> {
     let keys = WordParameter.createKeys(this.mode);
-    let needle = WordParameter.createNeedle(this.search, this.type);
+    let needle = WordParameter.createNeedle(this.search, this.type, {case: false});
     let eachFilters = keys.map((key) => {
       let eachQuery = WordModel.find().where(key, needle);
       if (this.title && (this.mode === "equivalent" || this.mode === "information")) {
