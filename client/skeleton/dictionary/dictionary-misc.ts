@@ -9,11 +9,11 @@ export type WordNameFrequency = {all: number, word: number};
 
 export type DictionaryStatistics = {
   wordCount: {raw: number, tokipona: number, coverage: number},
-  wordNameLengths: WholeAndRatio<StringLengths>,
-  equivalentNameCount: WholeAndRatio<number>,
-  informationCount: WholeAndRatio<number>,
-  informationTextLengths: WholeAndRatio<StringLengths>,
-  exampleCount: WholeAndRatio<number>
+  wordNameLengths: WholeAverage<StringLengths>,
+  equivalentNameCount: WholeAverage<number>,
+  informationCount: WholeAverage<number>,
+  informationTextLengths: WholeAverage<StringLengths>,
+  exampleCount: WholeAverage<number>
 };
 export type StringLengths = {kept: number, nfd: number, nfc: number};
-export type WholeAndRatio<T> = {whole: T, ratio: T};
+export type WholeAverage<T> = {whole: T, average: T};

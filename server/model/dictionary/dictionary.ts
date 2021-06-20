@@ -21,7 +21,7 @@ import {
   EditableWord as EditableWordSkeleton,
   StringLengths,
   UserDictionary as UserDictionarySkeleton,
-  WholeAndRatio,
+  WholeAverage,
   WordNameFrequencies,
   WordNameFrequency
 } from "/client/skeleton/dictionary";
@@ -445,11 +445,11 @@ export class DictionarySchema extends DiscardableSchema {
     for await (let example of exampleQuery) {
       wholeExampleCount ++;
     }
-    let calcWithRatio = function <V extends number | StringLengths>(value: V): WholeAndRatio<V> {
+    let calcWithRatio = function <V extends number | StringLengths>(value: V): WholeAverage<V> {
       if (typeof value === "number") {
-        return {whole: value, ratio: value / rawWordCount} as any;
+        return {whole: value, average: value / rawWordCount} as any;
       } else {
-        return {whole: value, ratio: {kept: value.kept / rawWordCount, nfd: value.nfd / rawWordCount, nfc: value.nfc / rawWordCount}} as any;
+        return {whole: value, average: {kept: value.kept / rawWordCount, nfd: value.nfd / rawWordCount, nfc: value.nfc / rawWordCount}} as any;
       }
     };
     let wordCount = {raw: rawWordCount, tokipona: rawWordCount / 120, coverage: Math.log10(rawWordCount) * 0.2 + 0.2};

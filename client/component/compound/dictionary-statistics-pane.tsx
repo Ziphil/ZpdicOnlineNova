@@ -63,17 +63,17 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
               <div styleName="title">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.title")}</div>
               <div styleName="value-list">
                 <div styleName="value-wrapper">
-                  <span styleName="value">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.value", {value: statistics?.wordNameLengths.ratio.kept})}</span>
-                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.unit", {value: statistics?.wordNameLengths.ratio.kept})}</span>
+                  <span styleName="value">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.value", {value: statistics?.wordNameLengths.average.kept})}</span>
+                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.unit", {value: statistics?.wordNameLengths.average.kept})}</span>
                 </div>
                 <div styleName="value-wrapper">
-                  <span styleName="value">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.value", {value: statistics?.wordNameLengths.ratio.nfd})}</span>
-                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.unit", {value: statistics?.wordNameLengths.ratio.nfd})}</span>
+                  <span styleName="value">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.value", {value: statistics?.wordNameLengths.average.nfd})}</span>
+                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.unit", {value: statistics?.wordNameLengths.average.nfd})}</span>
                   <span styleName="note">{this.trans("dictionaryStatisticsPane.nfd")}</span>
                 </div>
                 <div styleName="value-wrapper">
-                  <span styleName="value">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.value", {value: statistics?.wordNameLengths.ratio.nfc})}</span>
-                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.unit", {value: statistics?.wordNameLengths.ratio.nfc})}</span>
+                  <span styleName="value">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.value", {value: statistics?.wordNameLengths.average.nfc})}</span>
+                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.wordNameLengthAverage.unit", {value: statistics?.wordNameLengths.average.nfc})}</span>
                   <span styleName="note">{this.trans("dictionaryStatisticsPane.nfc")}</span>
                 </div>
               </div>
@@ -93,8 +93,8 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
               <div styleName="title">{this.trans("dictionaryStatisticsPane.equivalentNameCountAverage.title")}</div>
               <div styleName="value-list">
                 <div styleName="value-wrapper">
-                  <span styleName="value">{this.trans("dictionaryStatisticsPane.equivalentNameCountAverage.value", {value: statistics?.equivalentNameCount.ratio})}</span>
-                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.equivalentNameCountAverage.unit", {value: statistics?.equivalentNameCount.ratio})}</span>
+                  <span styleName="value">{this.trans("dictionaryStatisticsPane.equivalentNameCountAverage.value", {value: statistics?.equivalentNameCount.average})}</span>
+                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.equivalentNameCountAverage.unit", {value: statistics?.equivalentNameCount.average})}</span>
                 </div>
               </div>
             </div>
@@ -113,8 +113,8 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
               <div styleName="title">{this.trans("dictionaryStatisticsPane.informationCountAverage.title")}</div>
               <div styleName="value-list">
                 <div styleName="value-wrapper">
-                  <span styleName="value">{this.trans("dictionaryStatisticsPane.informationCountAverage.value", {value: statistics?.informationCount.ratio})}</span>
-                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.informationCountAverage.unit", {value: statistics?.informationCount.ratio})}</span>
+                  <span styleName="value">{this.trans("dictionaryStatisticsPane.informationCountAverage.value", {value: statistics?.informationCount.average})}</span>
+                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.informationCountAverage.unit", {value: statistics?.informationCount.average})}</span>
                 </div>
               </div>
             </div>
@@ -143,17 +143,17 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
               <div styleName="title">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.title")}</div>
               <div styleName="value-list">
                 <div styleName="value-wrapper">
-                  <span styleName="value">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.value", {value: statistics?.informationTextLengths.ratio.kept})}</span>
-                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.unit", {value: statistics?.informationTextLengths.ratio.kept})}</span>
+                  <span styleName="value">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.value", {value: statistics?.informationTextLengths.average.kept})}</span>
+                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.unit", {value: statistics?.informationTextLengths.average.kept})}</span>
                 </div>
                 <div styleName="value-wrapper">
-                  <span styleName="value">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.value", {value: statistics?.informationTextLengths.ratio.nfd})}</span>
-                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.unit", {value: statistics?.informationTextLengths.ratio.nfd})}</span>
+                  <span styleName="value">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.value", {value: statistics?.informationTextLengths.average.nfd})}</span>
+                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.unit", {value: statistics?.informationTextLengths.average.nfd})}</span>
                   <span styleName="note">{this.trans("dictionaryStatisticsPane.nfd")}</span>
                 </div>
                 <div styleName="value-wrapper">
-                  <span styleName="value">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.value", {value: statistics?.informationTextLengths.ratio.nfc})}</span>
-                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.unit", {value: statistics?.informationTextLengths.ratio.nfc})}</span>
+                  <span styleName="value">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.value", {value: statistics?.informationTextLengths.average.nfc})}</span>
+                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.informationTextLengthAverage.unit", {value: statistics?.informationTextLengths.average.nfc})}</span>
                   <span styleName="note">{this.trans("dictionaryStatisticsPane.nfc")}</span>
                 </div>
               </div>
@@ -173,8 +173,8 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
               <div styleName="title">{this.trans("dictionaryStatisticsPane.exampleCountAverage.title")}</div>
               <div styleName="value-list">
                 <div styleName="value-wrapper">
-                  <span styleName="value">{this.trans("dictionaryStatisticsPane.exampleCountAverage.value", {value: statistics?.exampleCount.ratio})}</span>
-                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.exampleCountAverage.unit", {value: statistics?.exampleCount.ratio})}</span>
+                  <span styleName="value">{this.trans("dictionaryStatisticsPane.exampleCountAverage.value", {value: statistics?.exampleCount.average})}</span>
+                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.exampleCountAverage.unit", {value: statistics?.exampleCount.average})}</span>
                 </div>
               </div>
             </div>
