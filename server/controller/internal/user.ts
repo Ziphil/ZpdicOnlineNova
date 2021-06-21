@@ -59,7 +59,7 @@ export class UserController extends Controller {
     let password = request.body.password;
     try {
       let {user, key} = await UserModel.register(name, email, password);
-      let url = `${request.protocol}://${request.hostname}/activate?key=${key}`;
+      let url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
       let body = UserCreator.create(user);
       let subject = MailUtil.getSubject("registerUser");
       let text = MailUtil.getText("registerUser", {name, url});
@@ -148,7 +148,7 @@ export class UserController extends Controller {
     let email = request.body.email;
     try {
       let {user, key} = await UserModel.issueResetToken(name, email);
-      let url = `${request.protocol}://${request.hostname}/reset?key=${key}`;
+      let url = `${request.protocol}://${request.get("host")}/reset?key=${key}`;
       let subject = MailUtil.getSubject("issueUserResetToken");
       let text = MailUtil.getText("issueUserResetToken", {url});
       MailUtil.send(user.email, subject, text);
