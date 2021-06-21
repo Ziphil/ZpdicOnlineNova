@@ -147,7 +147,7 @@ export class UserController extends Controller {
     let user = request.user!;
     try {
       let key = await user.issueActivateToken();
-      let url = `${request.protocol}://${request.get("host")}/reset?key=${key}`;
+      let url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
       let subject = MailUtil.getSubject("issueUserActivateToken");
       let text = MailUtil.getText("issueUserActivateToken", {url});
       MailUtil.send(user.email, subject, text);
