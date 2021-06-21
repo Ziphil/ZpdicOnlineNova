@@ -13,5 +13,6 @@ export class User {
 export class DetailedUser extends User {
 
   public email!: string;
+  public activated!: boolean;
 
 }

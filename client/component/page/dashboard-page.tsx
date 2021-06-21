@@ -183,7 +183,7 @@ export default class DashboardPage extends Component<Props, State, Params> {
         contentNodes.push(this.renderDiscardUserForm());
       }
     }
-    let activateUserForm = (true) && (
+    let activateUserForm = (!this.props.store!.user?.activated) && (
       <div styleName="activate">
         <ActivateUserForm/>
       </div>

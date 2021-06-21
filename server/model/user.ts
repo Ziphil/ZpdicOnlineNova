@@ -246,7 +246,8 @@ export class UserCreator {
   public static createDetailed(raw: User): DetailedUserSkeleton {
     let base = UserCreator.create(raw);
     let email = raw.email;
-    let skeleton = {...base, email};
+    let activated = raw.activated;
+    let skeleton = {...base, email, activated};
     return skeleton;
   }
 
