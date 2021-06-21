@@ -187,6 +187,25 @@ export class UserController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["activateUser"])
+  public async [Symbol()](request: Request<"activateUser">, response: Response<"activateUser">): Promise<void> {
+    let key = request.body.key;
+    try {
+      let user = await UserModel.activate(key);
+      let body = UserCreator.create(user);
+      Controller.respond(response, body);
+    } catch (error) {
+      let body = (() => {
+        if (error.name === "CustomError") {
+          if (error.type === "invalidActivateToken") {
+            return CustomError.ofType("invalidActivateToken");
+          }
+        }
+      })();
+      Controller.respondError(response, body, error);
+    }
+  }
+
   @post(SERVER_PATHS["discardUser"])
   @before(verifyUser())
   public async [Symbol()](request: Request<"discardUser">, response: Response<"discardUser">): Promise<void> {

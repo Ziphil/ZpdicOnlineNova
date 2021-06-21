@@ -91,6 +91,7 @@ export const SERVER_PATHS = {
   changeUserPassword: "/user/edit/password",
   issueUserResetToken: "/user/reset/token",
   resetUserPassword: "/user/reset/reset",
+  activateUser: "/user/activate",
   discardUser: "/user/discard",
   fetchUser: "/user/fetch",
   suggestUsers: "/user/suggest",
@@ -394,6 +395,13 @@ type ServerSpecs = {
     response: {
       success: User,
       error: CustomError<"invalidResetToken" | "invalidUserPassword">
+    }
+  },
+  activateUser: {
+    request: {key: string},
+    response: {
+      success: User,
+      error: CustomError<"invalidActivateToken">
     }
   },
   discardUser: {

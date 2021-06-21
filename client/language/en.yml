@@ -5,6 +5,8 @@ common:
   numberUndefined: "?"
 
 popup:
+  userActivated: >-
+    The user has been activated.
   userScreenNameChanged: >-
     Your nickname has been changed.
   userEmailChanged: >-
@@ -100,6 +102,8 @@ popup:
     There is no user with this email address.
   invalidResetToken: >-
     Failed to reset your password.
+  invalidActivateToken: >-
+    Failed to activate the user.
   loginFailed: >-
     Failed to sign in.
   noSuchDictionaryNumber: >-

@@ -39,16 +39,20 @@ export class ResetTokenSchema {
     return name;
   }
 
-  public validate(key: string): boolean {
+  public compare(key: string): boolean {
     let secret = key.substring(23, 53);
     return compareSync(secret, this.hash);
   }
 
-  public checkTime(timeout: number): boolean {
-    let createdDate = this.date;
-    let currentDate = new Date();
-    let elapsedMinute = (currentDate.getTime() - createdDate.getTime()) / (60 * 1000);
-    return elapsedMinute < timeout;
+  public checkTime(timeout?: number): boolean {
+    if (timeout !== undefined) {
+      let createdDate = this.date;
+      let currentDate = new Date();
+      let elapsedMinute = (currentDate.getTime() - createdDate.getTime()) / (60 * 1000);
+      return elapsedMinute < timeout;
+    } else {
+      return true;
+    }
   }
 
 }

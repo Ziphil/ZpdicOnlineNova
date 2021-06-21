@@ -127,7 +127,7 @@ export class UserSchema {
   public static async resetPassword(key: string, password: string, timeout: number): Promise<User> {
     let name = ResetTokenModel.getName(key);
     let user = await UserModel.findOne().where("resetToken.name", name);
-    if (user && user.resetToken && user.resetToken.validate(key)) {
+    if (user && user.resetToken && user.resetToken.compare(key)) {
       if (user.resetToken.checkTime(timeout)) {
         user.resetToken = undefined;
         await user.changePassword(password);
@@ -143,10 +143,10 @@ export class UserSchema {
     }
   }
 
-  public static async activate(key: string, timeout: number): Promise<User> {
+  public static async activate(key: string, timeout?: number): Promise<User> {
     let name = ResetTokenModel.getName(key);
     let user = await UserModel.findOne().where("activateToken.name", name);
-    if (user && user.resetToken && user.resetToken.validate(key)) {
+    if (user && user.resetToken && user.resetToken.compare(key)) {
       if (user.resetToken.checkTime(timeout)) {
         user.activated = true;
         user.activateToken = undefined;

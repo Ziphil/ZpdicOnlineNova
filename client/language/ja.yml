@@ -5,6 +5,8 @@ common:
   numberUndefined: "?"
 
 popup: 
+  userActivated: >-
+    ユーザーをアクティベートしました。
   userScreenNameChanged: >-
     ニックネームを変更しました。
   userEmailChanged: >-
@@ -100,6 +102,8 @@ popup:
     そのメールアドレスのユーザーは存在しません。
   invalidResetToken: >-
     パスワードのリセットに失敗しました。
+  invalidActivateToken: >-
+    ユーザーのアクティベートに失敗しました。
   loginFailed: >-
     ログインに失敗しました。
   noSuchDictionaryNumber: >-
