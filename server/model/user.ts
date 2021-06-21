@@ -22,7 +22,6 @@ import {
   CustomError
 } from "/server/model/error";
 import {
-  ResetToken,
   ResetTokenModel,
   ResetTokenSchema
 } from "/server/model/reset-token";
@@ -31,9 +30,6 @@ import {
   IDENTIFIER_REGEXP,
   validatePassword
 } from "/server/model/validation";
-import {
-  createRandomString
-} from "/server/util/misc";
 
 
 @modelOptions({schemaOptions: {collection: "users"}})
@@ -72,7 +68,7 @@ export class UserSchema {
       throw new CustomError("duplicateUserEmail");
     } else {
       let screenName = "@" + name;
-      let [activateToken, key] = UserModel.createResetToken();
+      let [activateToken, key] = ResetTokenModel.build();
       let user = new UserModel({name, screenName, email, activateToken});
       await user.encryptPassword(password);
       await user.validate();
@@ -112,7 +108,7 @@ export class UserSchema {
   public static async issueResetToken(name: string, email: string): Promise<{user: User, key: string}> {
     let user = await UserModel.findOne().where("name", name).where("email", email);
     if (user && user.authority !== "admin") {
-      let [resetToken, key] = UserModel.createResetToken();
+      let [resetToken, key] = ResetTokenModel.build();
       user.resetToken = resetToken;
       await user.save();
       return {user, key};
@@ -125,14 +121,10 @@ export class UserSchema {
   // パスワードのリセットに成功した場合と、トークンの有効期限が切れていた場合は、再び同じトークンを使えないようトークンを削除します。
   // パスワードが不正 (文字数が少ないなど) だった場合は、トークンは削除しません。
   public static async resetPassword(key: string, password: string, timeout: number): Promise<User> {
-    let name = key.substring(0, 23);
-    let secret = key.substring(23, 53);
+    let name = ResetTokenModel.getName(key);
     let user = await UserModel.findOne().where("resetToken.name", name);
-    if (user && user.resetToken && compareSync(secret, user.resetToken.hash)) {
-      let createdDate = user.resetToken.date;
-      let currentDate = new Date();
-      let elapsedMinute = (currentDate.getTime() - createdDate.getTime()) / (60 * 1000);
-      if (elapsedMinute < timeout) {
+    if (user && user.resetToken && user.resetToken.validate(key)) {
+      if (user.resetToken.checkTime(timeout)) {
         await user.changePassword(password);
         await user.purgeResetToken();
         return user;
@@ -143,16 +135,6 @@ export class UserSchema {
     } else {
       throw new CustomError("invalidResetToken");
     }
-  }
-
-  private static createResetToken(): [ResetToken, string] {
-    let name = createRandomString(10, true);
-    let secret = createRandomString(30, false);
-    let key = name + secret;
-    let hash = hashSync(secret, 10);
-    let date = new Date();
-    let resetToken = new ResetTokenModel({name, hash, date});
-    return [resetToken, key];
   }
 
   public async discard(this: User): Promise<User> {

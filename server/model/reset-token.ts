@@ -4,6 +4,13 @@ import {
   getModelForClass,
   prop
 } from "@typegoose/typegoose";
+import {
+  compareSync,
+  hashSync
+} from "bcrypt";
+import {
+  createRandomString
+} from "/server/util/misc";
 
 
 export class ResetTokenSchema {
@@ -16,6 +23,33 @@ export class ResetTokenSchema {
 
   @prop({required: true})
   public date!: Date;
+
+  public static build(): [ResetToken, string] {
+    let name = createRandomString(10, true);
+    let secret = createRandomString(30, false);
+    let key = name + secret;
+    let hash = hashSync(secret, 10);
+    let date = new Date();
+    let resetToken = new ResetTokenModel({name, hash, date});
+    return [resetToken, key];
+  }
+
+  public static getName(key: string): string {
+    let name = key.substring(0, 23);
+    return name;
+  }
+
+  public validate(key: string): boolean {
+    let secret = key.substring(23, 53);
+    return compareSync(secret, this.hash);
+  }
+
+  public checkTime(timeout: number): boolean {
+    let createdDate = this.date;
+    let currentDate = new Date();
+    let elapsedMinute = (currentDate.getTime() - createdDate.getTime()) / (60 * 1000);
+    return elapsedMinute < timeout;
+  }
 
 }
 
