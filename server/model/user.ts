@@ -141,6 +141,23 @@ export class UserSchema {
     }
   }
 
+  public static async activate(key: string, timeout: number): Promise<User> {
+    let name = ResetTokenModel.getName(key);
+    let user = await UserModel.findOne().where("activateToken.name", name);
+    if (user && user.resetToken && user.resetToken.validate(key)) {
+      if (user.resetToken.checkTime(timeout)) {
+        user.activated = true;
+        user.activateToken = undefined;
+        await user.save();
+        return user;
+      } else {
+        throw new CustomError("invalidActivateToken");
+      }
+    } else {
+      throw new CustomError("invalidActivateToken");
+    }
+  }
+
   public async discard(this: User): Promise<User> {
     let dictionaries = await DictionaryModel.fetchByUser(this, "own");
     let promises = dictionaries.map((dictionary) => dictionary.discard());
