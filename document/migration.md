@@ -20,3 +20,13 @@ Mongo Shell で該当のデータベースを選択した後、以下を実行�
 ```
 db.dictionaries.updateMany({}, {$set: {"settings.exampleTitle": "Examples"}});
 ```
+
+### ver 2.30.0 → ver 2.31.0
+ユーザーのメールアドレスを照合するようにし、照合済みかどうかを `activated` プロパティで保持するように変更しました。
+すでに存在する全てのユーザーを照合済みとしたい場合は、Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```
+db.users.updateMany({}, {$set: {"activated": true}});
+```
+
+ユーザーごとに照合済みかどうかを変えたい場合は、個別に `activated` プロパティの設定をしてください。
+ただし、全てのユーザーが `activated` プロパティをもつようにしてください。

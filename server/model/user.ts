@@ -47,6 +47,9 @@ export class UserSchema {
   @prop({required: true})
   public hash!: string;
 
+  @prop({required: true})
+  public activated!: boolean;
+
   @prop()
   public resetToken?: ResetTokenSchema;
 
@@ -68,8 +71,9 @@ export class UserSchema {
       throw new CustomError("duplicateUserEmail");
     } else {
       let screenName = "@" + name;
+      let activated = false;
       let [activateToken, key] = ResetTokenModel.build();
-      let user = new UserModel({name, screenName, email, activateToken});
+      let user = new UserModel({name, screenName, email, activated, activateToken});
       await user.encryptPassword(password);
       await user.validate();
       await user.save();
