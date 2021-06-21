@@ -47,7 +47,7 @@ export class HistorySchema {
       let range = new QueryRange(page * 100, 100);
       let query = DictionaryModel.find();
       let dictionaries = await QueryRange.restrict(query, range);
-      let promises = dictionaries.map((dictionary) => HistoryModel.create(dictionary));
+      let promises = dictionaries.map((dictionary) => HistoryModel.build(dictionary));
       let histories = await Promise.all(promises);
       await HistoryModel.insertMany(histories);
       LogUtil.log("history/add-all", `saved: ${page * 100 + dictionaries.length}`);
@@ -55,7 +55,7 @@ export class HistorySchema {
     return size;
   }
 
-  public static async create(dictionary: Dictionary): Promise<History> {
+  public static async build(dictionary: Dictionary): Promise<History> {
     let date = new Date();
     let wordSize = await dictionary.countWords();
     let history = new HistoryModel({dictionary, date, wordSize});
