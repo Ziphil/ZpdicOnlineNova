@@ -251,7 +251,7 @@ export default class DictionarySettingPage extends Component<Props, State, Param
     let description = this.trans("dictionarySettingPage.discardDictionaryForm.description");
     let node = (
       <SettingPane label={label} key={label} description={description}>
-        <DiscardDictionaryForm number={this.state.dictionary!.number} onSubmit={() => this.pushPath("/dashboard", {}, true)}/>
+        <DiscardDictionaryForm number={this.state.dictionary!.number} onSubmit={() => this.pushPath("/dashboard", undefined, true)}/>
       </SettingPane>
     );
     return node;

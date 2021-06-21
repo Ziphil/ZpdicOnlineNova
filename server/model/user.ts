@@ -30,9 +30,6 @@ import {
   IDENTIFIER_REGEXP,
   validatePassword
 } from "/server/model/validation";
-import {
-  createRandomString
-} from "/server/util/misc";
 
 
 @modelOptions({schemaOptions: {collection: "users"}})
@@ -50,8 +47,14 @@ export class UserSchema {
   @prop({required: true})
   public hash!: string;
 
+  @prop({required: true})
+  public activated!: boolean;
+
   @prop()
   public resetToken?: ResetTokenSchema;
+
+  @prop()
+  public activateToken?: ResetTokenSchema;
 
   @prop()
   public authority?: string;
@@ -59,7 +62,7 @@ export class UserSchema {
   // 渡された情報からユーザーを作成し、データベースに保存します。
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
   // 渡されたパスワードは自動的にハッシュ化されます。
-  public static async register(name: string, email: string, password: string): Promise<User> {
+  public static async register(name: string, email: string, password: string): Promise<{user: User, key: string}> {
     let formerNameUser = await UserModel.findOne().where("name", name);
     let formerEmailUser = await UserModel.findOne().where("email", email);
     if (formerNameUser) {
@@ -68,11 +71,13 @@ export class UserSchema {
       throw new CustomError("duplicateUserEmail");
     } else {
       let screenName = "@" + name;
-      let user = new UserModel({name, screenName, email});
+      let activated = false;
+      let user = new UserModel({name, screenName, email, activated});
+      let key = await user.issueActivateToken();
       await user.encryptPassword(password);
       await user.validate();
-      let result = await user.save();
-      return result;
+      await user.save();
+      return {user, key};
     }
   }
 
@@ -106,18 +111,28 @@ export class UserSchema {
 
   public static async issueResetToken(name: string, email: string): Promise<{user: User, key: string}> {
     let user = await UserModel.findOne().where("name", name).where("email", email);
-    if (user && user.authority !== "admin") {
-      let name = createRandomString(10, true);
-      let secret = createRandomString(30, false);
-      let key = name + secret;
-      let hash = hashSync(secret, 10);
-      let date = new Date();
-      let resetToken = new ResetTokenModel({name, hash, date});
-      user.resetToken = resetToken;
-      await user.save();
+    if (user) {
+      let key = await user.issueResetToken();
       return {user, key};
     } else {
       throw new CustomError("noSuchUser");
+    }
+  }
+
+  public static async activate(key: string, timeout?: number): Promise<User> {
+    let name = ResetTokenModel.getName(key);
+    let user = await UserModel.findOne().where("activateToken.name", name);
+    if (user && user.activateToken && user.activateToken.checkKey(key)) {
+      if (user.activateToken.checkTime(timeout)) {
+        user.activated = true;
+        user.activateToken = undefined;
+        await user.save();
+        return user;
+      } else {
+        throw new CustomError("invalidActivateToken");
+      }
+    } else {
+      throw new CustomError("invalidActivateToken");
     }
   }
 
@@ -125,19 +140,17 @@ export class UserSchema {
   // パスワードのリセットに成功した場合と、トークンの有効期限が切れていた場合は、再び同じトークンを使えないようトークンを削除します。
   // パスワードが不正 (文字数が少ないなど) だった場合は、トークンは削除しません。
   public static async resetPassword(key: string, password: string, timeout: number): Promise<User> {
-    let name = key.substring(0, 23);
-    let secret = key.substring(23, 53);
+    let name = ResetTokenModel.getName(key);
     let user = await UserModel.findOne().where("resetToken.name", name);
-    if (user && user.resetToken && compareSync(secret, user.resetToken.hash)) {
-      let createdDate = user.resetToken.date;
-      let currentDate = new Date();
-      let elapsedMinute = (currentDate.getTime() - createdDate.getTime()) / (60 * 1000);
-      if (elapsedMinute < timeout) {
+    if (user && user.resetToken && user.resetToken.checkKey(key)) {
+      if (user.resetToken.checkTime(timeout)) {
+        user.resetToken = undefined;
         await user.changePassword(password);
-        await user.purgeResetToken();
+        await user.save();
         return user;
       } else {
-        await user.purgeResetToken();
+        user.resetToken = undefined;
+        await user.save();
         throw new CustomError("invalidResetToken");
       }
     } else {
@@ -151,6 +164,32 @@ export class UserSchema {
     await Promise.all(promises);
     await this.deleteOne();
     return this;
+  }
+
+  public async issueActivateToken(this: User): Promise<string> {
+    if (this.authority !== "admin") {
+      if (!this.activated) {
+        let [activateToken, key] = ResetTokenModel.build();
+        this.activateToken = activateToken;
+        await this.save();
+        return key;
+      } else {
+        throw new CustomError("userAlreadyActivated");
+      }
+    } else {
+      throw new CustomError("noSuchUser");
+    }
+  }
+
+  public async issueResetToken(this: User): Promise<string> {
+    if (this.authority !== "admin") {
+      let [resetToken, key] = ResetTokenModel.build();
+      this.resetToken = resetToken;
+      await this.save();
+      return key;
+    } else {
+      throw new CustomError("noSuchUser");
+    }
   }
 
   public async changeScreenName(this: User, screenName: string): Promise<User> {
@@ -172,12 +211,6 @@ export class UserSchema {
 
   public async changePassword(this: User, password: string): Promise<User> {
     this.encryptPassword(password);
-    await this.save();
-    return this;
-  }
-
-  public async purgeResetToken(this: User): Promise<User> {
-    this.resetToken = undefined;
     await this.save();
     return this;
   }
@@ -213,7 +246,8 @@ export class UserCreator {
   public static createDetailed(raw: User): DetailedUserSkeleton {
     let base = UserCreator.create(raw);
     let email = raw.email;
-    let skeleton = {...base, email};
+    let activated = raw.activated;
+    let skeleton = {...base, email, activated};
     return skeleton;
   }
 

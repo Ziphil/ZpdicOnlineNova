@@ -5,6 +5,7 @@ import {
   ReactNode
 } from "react";
 import Component from "/client/component/component";
+import ActivateUserForm from "/client/component/compound/activate-user-form";
 import DictionaryList from "/client/component/compound/dictionary-list";
 import InvitationList from "/client/component/compound/invitation-list";
 import Menu from "/client/component/compound/menu";
@@ -148,7 +149,7 @@ export default class DashboardPage extends Component<Props, State, Params> {
     let description = this.trans("dashboardPage.discardUserForm.description");
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        <DiscardUserForm onSubmit={() => this.pushPath("/", {}, true)}/>
+        <DiscardUserForm onSubmit={() => this.pushPath("/", undefined, true)}/>
       </SettingPane>
     );
     return node;
@@ -182,8 +183,14 @@ export default class DashboardPage extends Component<Props, State, Params> {
         contentNodes.push(this.renderDiscardUserForm());
       }
     }
+    let activateUserForm = (!this.props.store!.user?.activated) && (
+      <div styleName="activate">
+        <ActivateUserForm/>
+      </div>
+    );
     let node = (
       <Page>
+        {activateUserForm}
         <Menu mode={mode} specs={menuSpecs}/>
         {contentNodes}
       </Page>
