@@ -3,7 +3,7 @@ mail:
     subject: "User registration completed"
     text: |
       Thank you for signing up for ZpDIC Online.
-      We are pleased to inform you that your account has been created.
+      Please access the following URL to activate your user.
       ・ Your user ID: {name}
   issueUserResetToken:
     subject: "Password reset"
