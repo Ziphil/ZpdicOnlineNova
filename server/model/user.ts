@@ -72,8 +72,8 @@ export class UserSchema {
     } else {
       let screenName = "@" + name;
       let activated = false;
-      let [activateToken, key] = ResetTokenModel.build();
-      let user = new UserModel({name, screenName, email, activated, activateToken});
+      let user = new UserModel({name, screenName, email, activated});
+      let key = await user.issueActivateToken();
       await user.encryptPassword(password);
       await user.validate();
       await user.save();
@@ -111,10 +111,8 @@ export class UserSchema {
 
   public static async issueResetToken(name: string, email: string): Promise<{user: User, key: string}> {
     let user = await UserModel.findOne().where("name", name).where("email", email);
-    if (user && user.authority !== "admin") {
-      let [resetToken, key] = ResetTokenModel.build();
-      user.resetToken = resetToken;
-      await user.save();
+    if (user) {
+      let key = await user.issueResetToken();
       return {user, key};
     } else {
       throw new CustomError("noSuchUser");
@@ -166,6 +164,28 @@ export class UserSchema {
     await Promise.all(promises);
     await this.deleteOne();
     return this;
+  }
+
+  public async issueActivateToken(this: User): Promise<string> {
+    if (this.authority !== "admin") {
+      let [activateToken, key] = ResetTokenModel.build();
+      this.activateToken = activateToken;
+      await this.save();
+      return key;
+    } else {
+      throw new CustomError("noSuchUser");
+    }
+  }
+
+  public async issueResetToken(this: User): Promise<string> {
+    if (this.authority !== "admin") {
+      let [resetToken, key] = ResetTokenModel.build();
+      this.resetToken = resetToken;
+      await this.save();
+      return key;
+    } else {
+      throw new CustomError("noSuchUser");
+    }
   }
 
   public async changeScreenName(this: User, screenName: string): Promise<User> {
