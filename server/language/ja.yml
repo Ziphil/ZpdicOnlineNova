@@ -4,6 +4,7 @@ mail:
     text: |
       ZpDIC Online へのご登録ありがとうございます。
       以下の URL にアクセスし、ユーザーのアクティベートを行ってください。
+      URL の有効期限は 1 時間です。
       ・ {url}
   issueUserActivateToken:
     subject: "アクティベート用 URL のお知らせ"

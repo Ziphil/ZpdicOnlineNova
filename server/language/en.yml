@@ -4,6 +4,7 @@ mail:
     text: |
       Thank you for signing up for ZpDIC Online.
       Please access the following URL to activate the user.
+      This URL will expire in one hour.
       ・ {url}
   issueUserActivateToken:
     subject: "Notice on the URL for user activation"

@@ -194,7 +194,7 @@ export class UserController extends Controller {
   public async [Symbol()](request: Request<"activateUser">, response: Response<"activateUser">): Promise<void> {
     let key = request.body.key;
     try {
-      let user = await UserModel.activate(key);
+      let user = await UserModel.activate(key, 60);
       let body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
