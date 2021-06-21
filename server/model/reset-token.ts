@@ -39,7 +39,7 @@ export class ResetTokenSchema {
     return name;
   }
 
-  public compare(key: string): boolean {
+  public checkKey(key: string): boolean {
     let secret = key.substring(23, 53);
     return compareSync(secret, this.hash);
   }
