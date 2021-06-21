@@ -146,8 +146,8 @@ export class UserSchema {
   public static async activate(key: string, timeout?: number): Promise<User> {
     let name = ResetTokenModel.getName(key);
     let user = await UserModel.findOne().where("activateToken.name", name);
-    if (user && user.resetToken && user.resetToken.compare(key)) {
-      if (user.resetToken.checkTime(timeout)) {
+    if (user && user.activateToken && user.activateToken.compare(key)) {
+      if (user.activateToken.checkTime(timeout)) {
         user.activated = true;
         user.activateToken = undefined;
         await user.save();
