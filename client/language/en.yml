@@ -13,6 +13,9 @@ popup:
     Your email address has been changed.
   userPasswordChanged: >-
     Your password has been changed.
+  userActivateTokenIssued: >-
+    We have sent an email with a URL for activating this user.
+    Please follow the instructions in the email.
   userResetTokenIssued: >-
     We have sent an email with a URL for resetting your password.
     Please follow the instructions in the email.
@@ -100,10 +103,12 @@ popup:
     This user does not exist.
   noSuchUserEmail: >-
     There is no user with this email address.
-  invalidResetToken: >-
-    Failed to reset your password.
+  userAlreadyActivated: >-
+    This user has been already activated.
   invalidActivateToken: >-
     Failed to activate the user.
+  invalidResetToken: >-
+    Failed to reset your password.
   loginFailed: >-
     Failed to sign in.
   noSuchDictionaryNumber: >-
@@ -264,6 +269,12 @@ discardDictionaryForm:
 uploadDictionaryForm:
   file: "File"
   confirm: "Confirm"
+activateUserForm:
+  send: "Send"
+  caution: >-
+    This user has not yet been activated.
+    Unactivated users will not be able to do anything after a certain period of time.
+    To activate, click the button on the right and follow the instructions in the email you receive.
 advancedSearchForm:
   overlayTitle: "Advanced search"
   search: "Search"

@@ -141,6 +141,31 @@ export class UserController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["issueUserActivateToken"])
+  @before(verifyRecaptcha(), verifyUser())
+  public async [Symbol()](request: Request<"issueUserActivateToken">, response: Response<"issueUserActivateToken">): Promise<void> {
+    let user = request.user!;
+    try {
+      let key = await user.issueActivateToken();
+      let url = `${request.protocol}://${request.get("host")}/reset?key=${key}`;
+      let subject = MailUtil.getSubject("issueUserActivateToken");
+      let text = MailUtil.getText("issueUserActivateToken", {url});
+      MailUtil.send(user.email, subject, text);
+      Controller.respond(response, null);
+    } catch (error) {
+      let body = (() => {
+        if (error.name === "CustomError") {
+          if (error.type === "noSuchUser") {
+            return CustomError.ofType("noSuchUser");
+          } else if (error.type === "userAlreadyActivated") {
+            return CustomError.ofType("userAlreadyActivated");
+          }
+        }
+      })();
+      Controller.respondError(response, body, error);
+    }
+  }
+
   @post(SERVER_PATHS["issueUserResetToken"])
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"issueUserResetToken">, response: Response<"issueUserResetToken">): Promise<void> {
@@ -165,6 +190,25 @@ export class UserController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["activateUser"])
+  public async [Symbol()](request: Request<"activateUser">, response: Response<"activateUser">): Promise<void> {
+    let key = request.body.key;
+    try {
+      let user = await UserModel.activate(key);
+      let body = UserCreator.create(user);
+      Controller.respond(response, body);
+    } catch (error) {
+      let body = (() => {
+        if (error.name === "CustomError") {
+          if (error.type === "invalidActivateToken") {
+            return CustomError.ofType("invalidActivateToken");
+          }
+        }
+      })();
+      Controller.respondError(response, body, error);
+    }
+  }
+
   @post(SERVER_PATHS["resetUserPassword"])
   public async [Symbol()](request: Request<"resetUserPassword">, response: Response<"resetUserPassword">): Promise<void> {
     let key = request.body.key;
@@ -180,25 +224,6 @@ export class UserController extends Controller {
             return CustomError.ofType("invalidResetToken");
           } else if (error.type === "invalidUserPassword") {
             return CustomError.ofType("invalidUserPassword");
-          }
-        }
-      })();
-      Controller.respondError(response, body, error);
-    }
-  }
-
-  @post(SERVER_PATHS["activateUser"])
-  public async [Symbol()](request: Request<"activateUser">, response: Response<"activateUser">): Promise<void> {
-    let key = request.body.key;
-    try {
-      let user = await UserModel.activate(key);
-      let body = UserCreator.create(user);
-      Controller.respond(response, body);
-    } catch (error) {
-      let body = (() => {
-        if (error.name === "CustomError") {
-          if (error.type === "invalidActivateToken") {
-            return CustomError.ofType("invalidActivateToken");
           }
         }
       })();

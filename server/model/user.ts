@@ -119,6 +119,23 @@ export class UserSchema {
     }
   }
 
+  public static async activate(key: string, timeout?: number): Promise<User> {
+    let name = ResetTokenModel.getName(key);
+    let user = await UserModel.findOne().where("activateToken.name", name);
+    if (user && user.activateToken && user.activateToken.checkKey(key)) {
+      if (user.activateToken.checkTime(timeout)) {
+        user.activated = true;
+        user.activateToken = undefined;
+        await user.save();
+        return user;
+      } else {
+        throw new CustomError("invalidActivateToken");
+      }
+    } else {
+      throw new CustomError("invalidActivateToken");
+    }
+  }
+
   // 与えられたリセットトークンのキーを用いてパスワードをリセットします。
   // パスワードのリセットに成功した場合と、トークンの有効期限が切れていた場合は、再び同じトークンを使えないようトークンを削除します。
   // パスワードが不正 (文字数が少ないなど) だった場合は、トークンは削除しません。
@@ -141,23 +158,6 @@ export class UserSchema {
     }
   }
 
-  public static async activate(key: string, timeout?: number): Promise<User> {
-    let name = ResetTokenModel.getName(key);
-    let user = await UserModel.findOne().where("activateToken.name", name);
-    if (user && user.activateToken && user.activateToken.checkKey(key)) {
-      if (user.activateToken.checkTime(timeout)) {
-        user.activated = true;
-        user.activateToken = undefined;
-        await user.save();
-        return user;
-      } else {
-        throw new CustomError("invalidActivateToken");
-      }
-    } else {
-      throw new CustomError("invalidActivateToken");
-    }
-  }
-
   public async discard(this: User): Promise<User> {
     let dictionaries = await DictionaryModel.fetchByUser(this, "own");
     let promises = dictionaries.map((dictionary) => dictionary.discard());
@@ -168,10 +168,14 @@ export class UserSchema {
 
   public async issueActivateToken(this: User): Promise<string> {
     if (this.authority !== "admin") {
-      let [activateToken, key] = ResetTokenModel.build();
-      this.activateToken = activateToken;
-      await this.save();
-      return key;
+      if (!this.activated) {
+        let [activateToken, key] = ResetTokenModel.build();
+        this.activateToken = activateToken;
+        await this.save();
+        return key;
+      } else {
+        throw new CustomError("userAlreadyActivated");
+      }
     } else {
       throw new CustomError("noSuchUser");
     }

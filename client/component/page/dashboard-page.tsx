@@ -5,6 +5,7 @@ import {
   ReactNode
 } from "react";
 import Component from "/client/component/component";
+import ActivateUserForm from "/client/component/compound/activate-user-form";
 import DictionaryList from "/client/component/compound/dictionary-list";
 import InvitationList from "/client/component/compound/invitation-list";
 import Menu from "/client/component/compound/menu";
@@ -182,8 +183,14 @@ export default class DashboardPage extends Component<Props, State, Params> {
         contentNodes.push(this.renderDiscardUserForm());
       }
     }
+    let activateUserForm = (true) && (
+      <div styleName="activate">
+        <ActivateUserForm/>
+      </div>
+    );
     let node = (
       <Page>
+        {activateUserForm}
         <Menu mode={mode} specs={menuSpecs}/>
         {contentNodes}
       </Page>

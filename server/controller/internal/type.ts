@@ -89,9 +89,10 @@ export const SERVER_PATHS = {
   changeUserScreenName: "/user/edit/screen-name",
   changeUserEmail: "/user/edit/email",
   changeUserPassword: "/user/edit/password",
+  issueUserActivateToken: "/user/activate/token",
   issueUserResetToken: "/user/reset/token",
+  activateUser: "/user/activate/activate",
   resetUserPassword: "/user/reset/reset",
-  activateUser: "/user/activate",
   discardUser: "/user/discard",
   fetchUser: "/user/fetch",
   suggestUsers: "/user/suggest",
@@ -381,6 +382,13 @@ type ServerSpecs = {
     response: {
       success: User,
       error: CustomError<"invalidUserPassword">
+    }
+  },
+  issueUserActivateToken: {
+    request: WithRecaptcha<{}>,
+    response: {
+      success: null,
+      error: CustomError<"noSuchUser" | "userAlreadyActivated">
     }
   },
   issueUserResetToken: {

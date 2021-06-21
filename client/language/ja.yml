@@ -13,6 +13,9 @@ popup:
     メールアドレスを変更しました。
   userPasswordChanged: >-
     パスワードを変更しました。
+  userActivateTokenIssued: >-
+    アクティベート用の URL を記載したメールを送信しました。
+    メールの指示に従って操作を進めてください。
   userResetTokenIssued: >-
     パスワードリセット用の URL を記載したメールを送信しました。
     メールの指示に従って操作を進めてください。
@@ -100,10 +103,12 @@ popup:
     そのユーザーは存在しません。
   noSuchUserEmail: >-
     そのメールアドレスのユーザーは存在しません。
-  invalidResetToken: >-
-    パスワードのリセットに失敗しました。
+  userAlreadyActivated: >-
+    このユーザーはすでにアクティベートされています。
   invalidActivateToken: >-
     ユーザーのアクティベートに失敗しました。
+  invalidResetToken: >-
+    パスワードのリセットに失敗しました。
   loginFailed: >-
     ログインに失敗しました。
   noSuchDictionaryNumber: >-
@@ -264,6 +269,12 @@ discardDictionaryForm:
 uploadDictionaryForm:
   file: "ファイル"
   confirm: "決定"
+activateUserForm:
+  send: "送信"
+  caution: >-
+    このユーザーはまだアクティベートされていません。
+    アクティベートされていないユーザーは、一定期間が経過すると全ての操作ができなくなります。
+    アクティベートするには、右のボタンをクリックして受信したメールの指示に従ってください。
 advancedSearchForm:
   overlayTitle: "高度な検索"
   search: "検索内容"

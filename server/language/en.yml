@@ -3,8 +3,15 @@ mail:
     subject: "User registration completed"
     text: |
       Thank you for signing up for ZpDIC Online.
-      Please access the following URL to activate your user.
-      ・ Your user ID: {name}
+      Please access the following URL to activate the user.
+      ・ {url}
+  issueUserActivateToken:
+    subject: "Notice on the URL for user activation"
+    text: |
+      Please access the following URL to activate the user.
+      Note that this URL will expire in one hour.
+      After it expires, you will not be able to activate the user using this URL, and you will have to go through the procedure again.
+      ・ {url}
   issueUserResetToken:
     subject: "Password reset"
     text: |
