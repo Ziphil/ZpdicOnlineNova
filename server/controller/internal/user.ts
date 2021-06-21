@@ -58,7 +58,7 @@ export class UserController extends Controller {
     let email = request.body.email;
     let password = request.body.password;
     try {
-      let user = await UserModel.register(name, email, password);
+      let {user, key} = await UserModel.register(name, email, password);
       let body = UserCreator.create(user);
       let subject = MailUtil.getSubject("registerUser");
       let text = MailUtil.getText("registerUser", {name});

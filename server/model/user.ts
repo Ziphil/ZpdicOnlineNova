@@ -22,6 +22,7 @@ import {
   CustomError
 } from "/server/model/error";
 import {
+  ResetToken,
   ResetTokenModel,
   ResetTokenSchema
 } from "/server/model/reset-token";
@@ -54,12 +55,15 @@ export class UserSchema {
   public resetToken?: ResetTokenSchema;
 
   @prop()
+  public activateToken?: ResetTokenSchema;
+
+  @prop()
   public authority?: string;
 
   // 渡された情報からユーザーを作成し、データベースに保存します。
   // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
   // 渡されたパスワードは自動的にハッシュ化されます。
-  public static async register(name: string, email: string, password: string): Promise<User> {
+  public static async register(name: string, email: string, password: string): Promise<{user: User, key: string}> {
     let formerNameUser = await UserModel.findOne().where("name", name);
     let formerEmailUser = await UserModel.findOne().where("email", email);
     if (formerNameUser) {
@@ -68,11 +72,12 @@ export class UserSchema {
       throw new CustomError("duplicateUserEmail");
     } else {
       let screenName = "@" + name;
-      let user = new UserModel({name, screenName, email});
+      let [activateToken, key] = UserModel.createResetToken();
+      let user = new UserModel({name, screenName, email, activateToken});
       await user.encryptPassword(password);
       await user.validate();
-      let result = await user.save();
-      return result;
+      await user.save();
+      return {user, key};
     }
   }
 
@@ -107,12 +112,7 @@ export class UserSchema {
   public static async issueResetToken(name: string, email: string): Promise<{user: User, key: string}> {
     let user = await UserModel.findOne().where("name", name).where("email", email);
     if (user && user.authority !== "admin") {
-      let name = createRandomString(10, true);
-      let secret = createRandomString(30, false);
-      let key = name + secret;
-      let hash = hashSync(secret, 10);
-      let date = new Date();
-      let resetToken = new ResetTokenModel({name, hash, date});
+      let [resetToken, key] = UserModel.createResetToken();
       user.resetToken = resetToken;
       await user.save();
       return {user, key};
@@ -143,6 +143,16 @@ export class UserSchema {
     } else {
       throw new CustomError("invalidResetToken");
     }
+  }
+
+  private static createResetToken(): [ResetToken, string] {
+    let name = createRandomString(10, true);
+    let secret = createRandomString(30, false);
+    let key = name + secret;
+    let hash = hashSync(secret, 10);
+    let date = new Date();
+    let resetToken = new ResetTokenModel({name, hash, date});
+    return [resetToken, key];
   }
 
   public async discard(this: User): Promise<User> {
