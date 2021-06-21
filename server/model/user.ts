@@ -129,11 +129,13 @@ export class UserSchema {
     let user = await UserModel.findOne().where("resetToken.name", name);
     if (user && user.resetToken && user.resetToken.validate(key)) {
       if (user.resetToken.checkTime(timeout)) {
+        user.resetToken = undefined;
         await user.changePassword(password);
-        await user.purgeResetToken();
+        await user.save();
         return user;
       } else {
-        await user.purgeResetToken();
+        user.resetToken = undefined;
+        await user.save();
         throw new CustomError("invalidResetToken");
       }
     } else {
@@ -185,12 +187,6 @@ export class UserSchema {
 
   public async changePassword(this: User, password: string): Promise<User> {
     this.encryptPassword(password);
-    await this.save();
-    return this;
-  }
-
-  public async purgeResetToken(this: User): Promise<User> {
-    this.resetToken = undefined;
     await this.save();
     return this;
   }
