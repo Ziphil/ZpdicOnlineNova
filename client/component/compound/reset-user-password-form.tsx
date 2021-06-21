@@ -43,6 +43,7 @@ export default class ResetUserPasswordForm extends Component<Props, State> {
     let response = await this.request("issueUserResetToken", {name, email}, {useRecaptcha: true});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("userResetTokenIssued");
+      this.pushPath("/", undefined, true);
     }
   }
 
@@ -52,6 +53,7 @@ export default class ResetUserPasswordForm extends Component<Props, State> {
     let response = await this.request("resetUserPassword", {key, password});
     if (response.status === 200) {
       this.props.store!.addInformationPopup("userPasswordReset");
+      this.pushPath("/", undefined, true);
     }
   }
 

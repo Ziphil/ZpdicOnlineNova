@@ -148,7 +148,7 @@ export default class DashboardPage extends Component<Props, State, Params> {
     let description = this.trans("dashboardPage.discardUserForm.description");
     let node = (
       <SettingPane label={label} description={description} key={label}>
-        <DiscardUserForm onSubmit={() => this.pushPath("/", {}, true)}/>
+        <DiscardUserForm onSubmit={() => this.pushPath("/", undefined, true)}/>
       </SettingPane>
     );
     return node;
