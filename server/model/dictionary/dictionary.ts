@@ -429,17 +429,17 @@ export class DictionarySchema extends DiscardableSchema {
     let wholeExampleCount = 0;
     for await (let word of wordQuery) {
       rawWordCount ++;
-      wholeWordNameLengths.kept += word.name.length;
-      wholeWordNameLengths.nfd += word.name.normalize("NFD").length;
-      wholeWordNameLengths.nfc += word.name.normalize("NFC").length;
+      wholeWordNameLengths.kept += [...word.name].length;
+      wholeWordNameLengths.nfd += [...word.name.normalize("NFD")].length;
+      wholeWordNameLengths.nfc += [...word.name.normalize("NFC")].length;
       for (let equivalent of word.equivalents) {
         wholeEquivalentNameCount += equivalent.names.length;
       }
       for (let information of word.informations) {
         wholeInformationCount ++;
-        wholeInformationTextLengths.kept += information.text.length;
-        wholeInformationTextLengths.nfd += information.text.normalize("NFD").length;
-        wholeInformationTextLengths.nfc += information.text.normalize("NFC").length;
+        wholeInformationTextLengths.kept += [...information.text].length;
+        wholeInformationTextLengths.nfd += [...information.text.normalize("NFD")].length;
+        wholeInformationTextLengths.nfc += [...information.text.normalize("NFC")].length;
       }
     }
     for await (let example of exampleQuery) {
