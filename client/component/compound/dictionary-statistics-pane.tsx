@@ -56,8 +56,8 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
                   <span styleName="unit">{this.trans("dictionaryStatisticsPane.wordCountLogTokipona.unit", {value: statistics?.wordCount.logTokipona})}</span>
                 </div>
                 <div styleName="value-wrapper" style={{display: "none"}}>
-                  <span styleName="value">{this.trans("dictionaryStatisticsPane.wordCountCoverage.value", {value: statistics?.wordCount.coverage! * 100})}</span>
-                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.wordCountCoverage.unit", {value: statistics?.wordCount.coverage! * 100})}</span>
+                  <span styleName="value">{this.trans("dictionaryStatisticsPane.wordCountCoverage.value", {value: statistics?.wordCount.coverage})}</span>
+                  <span styleName="unit">{this.trans("dictionaryStatisticsPane.wordCountCoverage.unit", {value: statistics?.wordCount.coverage})}</span>
                 </div>
               </div>
             </div>

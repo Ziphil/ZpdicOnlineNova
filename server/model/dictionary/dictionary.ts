@@ -452,7 +452,7 @@ export class DictionarySchema extends DiscardableSchema {
         return {whole: value, average: {kept: value.kept / rawWordCount, nfd: value.nfd / rawWordCount, nfc: value.nfc / rawWordCount}} as any;
       }
     };
-    let wordCount = {raw: rawWordCount, tokipona: rawWordCount / 120, logTokipona: Math.log10(rawWordCount / 120), coverage: Math.log10(rawWordCount) * 0.2 + 0.2};
+    let wordCount = {raw: rawWordCount, tokipona: rawWordCount / 120, logTokipona: Math.log10(rawWordCount / 120), coverage: Math.log10(rawWordCount) * 20 + 20};
     let wordNameLengths = calcWithRatio(wholeWordNameLengths);
     let equivalentNameCount = calcWithRatio(wholeEquivalentNameCount);
     let informationCount = calcWithRatio(wholeInformationCount);
