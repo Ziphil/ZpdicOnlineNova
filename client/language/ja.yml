@@ -348,6 +348,9 @@ dictionaryStatisticsPane:
   wordCountTokipona: 
     value: "{value, number, ::.00}"
     unit: " TP"
+  wordCountLogTokipona: 
+    value: "{value, number, ::.000}"
+    unit: " logTP"
   wordCountCoverage: 
     value: "{value, number, ::.000}"
     unit: " %EC"
