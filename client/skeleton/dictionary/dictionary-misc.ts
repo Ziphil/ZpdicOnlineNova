@@ -8,7 +8,7 @@ export type WordNameFrequencies = {
 export type WordNameFrequency = {all: number, word: number};
 
 export type DictionaryStatistics = {
-  wordCount: {raw: number, tokipona: number, coverage: number},
+  wordCount: {raw: number, tokipona: number, logTokipona: number, coverage: number},
   wordNameLengths: WholeAverage<StringLengths>,
   equivalentNameCount: WholeAverage<number>,
   informationCount: WholeAverage<number>,
