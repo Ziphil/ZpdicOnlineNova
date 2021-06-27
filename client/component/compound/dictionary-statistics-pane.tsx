@@ -27,7 +27,6 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
     let response = await this.request("fetchDictionaryStatistics", {number});
     if (response.status === 200 && !("error" in response.data)) {
       let statistics = response.data;
-      console.log(statistics);
       this.setState({statistics});
     } else {
       this.setState({statistics: null});
@@ -36,6 +35,7 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
 
   public render(): ReactNode {
     let statistics = this.state.statistics;
+    let wordCountLogToloponaType = (statistics?.wordCount.logTokipona! === null) ? "Infinity" : (statistics?.wordCount.logTokipona! < 0) ? "Negative" : "Positive";
     let node = (
       <div styleName="root">
         <Loading loading={this.state.statistics === null}>
@@ -52,7 +52,7 @@ export default class DictionaryStatisticsPane extends Component<Props, State> {
                   <span styleName="unit">{this.trans("dictionaryStatisticsPane.wordCountTokipona.unit", {value: statistics?.wordCount.tokipona})}</span>
                 </div>
                 <div styleName="value-wrapper">
-                  <span styleName="value">{this.trans("dictionaryStatisticsPane.wordCountLogTokipona.value", {value: statistics?.wordCount.logTokipona})}</span>
+                  <span styleName="value">{this.trans(`dictionaryStatisticsPane.wordCountLogTokipona.value${wordCountLogToloponaType}`, {value: statistics?.wordCount.logTokipona})}</span>
                   <span styleName="unit">{this.trans("dictionaryStatisticsPane.wordCountLogTokipona.unit", {value: statistics?.wordCount.logTokipona})}</span>
                 </div>
                 <div styleName="value-wrapper" style={{display: "none"}}>
