@@ -349,7 +349,9 @@ dictionaryStatisticsPane:
     value: "{value, number, ::.00}"
     unit: " TP"
   wordCountLogTokipona: 
-    value: "{value, number, ::.000}"
+    valuePositive: "{value, number, ::.000}"
+    valueNegative: "−{value, number, ::sign-never .000}"
+    valueInfinity: "−∞"
     unit: " logTP"
   wordCountCoverage: 
     value: "{value, number, ::.000}"
