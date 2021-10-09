@@ -1,5 +1,6 @@
 //
 
+import downloadFile from "js-file-download";
 import * as react from "react";
 import {
   MouseEvent,
@@ -34,12 +35,28 @@ export default class DictionaryPane extends Component<Props, State> {
     this.pushPath(path);
   }
 
-  private downloadDictionary(event: MouseEvent<HTMLElement>): void {
+  private async downloadDictionary(event: MouseEvent<HTMLElement>): Promise<void> {
     event.preventDefault();
     event.stopPropagation();
     if (this.props.dictionary) {
-      let path = "/api/dictionary/download?number=" + this.props.dictionary.number;
-      location.replace(path);
+      let number = this.props.dictionary.number;
+      let response = await this.request("downloadDictionary", {number}, {responseType: "blob"});
+      if (response.status === 200 && !("error" in response.data)) {
+        let data = response.data;
+        let disposition = response.headers["content-disposition"];
+        let match = disposition.match(/filename="(.+)"/);
+        let encodedMatch = disposition.match(/filename\*=UTF-8''(.+)$/);
+        let fileName = (() => {
+          if (encodedMatch !== null) {
+            return decodeURIComponent(encodedMatch[1]).replace(/\+/g, " ");
+          } else if (match !== null) {
+            return match[1];
+          } else {
+            return "dictionary.json";
+          }
+        })();
+        downloadFile(data, fileName);
+      }
     }
   }
 
