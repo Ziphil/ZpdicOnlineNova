@@ -44,7 +44,7 @@
     "@typegoose/typegoose": "^7.4.5",
     "akrantiain": "^1.2.1",
     "aws-sdk": "^2.817.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "bcrypt": "^5.0.0",
     "c3": "^0.7.20",
     "codemirror": "^5.58.3",
