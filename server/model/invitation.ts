@@ -90,7 +90,7 @@ export class InvitationSchema {
   }
 
   public async respond(this: Invitation, user: User, accept: boolean): Promise<void> {
-    await this.populate("user").execPopulate();
+    await this.populate("user");
     if (isDocument(this.user) && this.user.id === user.id) {
       if (accept) {
         let type = this.type;
@@ -107,7 +107,7 @@ export class InvitationSchema {
   }
 
   private async respondEdit(this: Invitation, user: User): Promise<void> {
-    await this.populate("dictionary").execPopulate();
+    await this.populate("dictionary");
     if (isDocument(this.dictionary)) {
       this.dictionary.editUsers = [...this.dictionary.editUsers, user];
       await this.dictionary.save();
@@ -115,9 +115,9 @@ export class InvitationSchema {
   }
 
   private async respondTransfer(this: Invitation, user: User): Promise<void> {
-    await this.populate("dictionary").execPopulate();
+    await this.populate("dictionary");
     if (isDocument(this.dictionary)) {
-      await this.dictionary.populate("user").populate("editUsers").execPopulate();
+      await this.dictionary.populate(["user", "editUsers"]);
       if (isDocument(this.dictionary.user) && isDocumentArray(this.dictionary.editUsers)) {
         let previousUser = this.dictionary.user;
         let nextEditUsers = this.dictionary.editUsers.filter((editUser) => editUser.id !== user.id && editUser.id !== previousUser.id);
@@ -134,7 +134,7 @@ export class InvitationSchema {
 export class InvitationCreator {
 
   public static async create(raw: Invitation): Promise<InvitationSkeleton> {
-    await raw.populate("dictionary").execPopulate();
+    await raw.populate("dictionary");
     if (isDocument(raw.dictionary)) {
       let id = raw.id;
       let type = raw.type;

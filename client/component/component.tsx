@@ -51,9 +51,9 @@ export default class BaseComponent<P = {}, S = {}, Q = {}, H = any> extends Comp
   protected initialize(): void {
   }
 
-  protected trans(id: string | number, values?: Record<string, Primitive | FormatFunction<string, string>>): string;
-  protected trans(id: string | number, values?: Record<string, Primitive | ReactNode | FormatFunction<ReactNode, ReactNode>>): ReactNode;
-  protected trans(id: string | number, values?: Record<string, any>): ReactNode {
+  protected trans(id: string, values?: Record<string, Primitive | FormatFunction<string, string>>): string;
+  protected trans(id: string, values?: Record<string, Primitive | ReactNode | FormatFunction<ReactNode, ReactNode>>): ReactNode;
+  protected trans(id: string, values?: Record<string, any>): ReactNode {
     let defaultMessage = "[?]";
     return this.props.intl!.formatMessage({id, defaultMessage}, values);
   }

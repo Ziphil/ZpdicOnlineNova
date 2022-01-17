@@ -469,7 +469,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async hasAuthority(this: Dictionary, user: User, authority: DictionaryAuthority): Promise<boolean> {
-    await this.populate("user").populate("editUsers").execPopulate();
+    await this.populate(["user", "editUsers"]);
     if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
       if (user.authority !== "admin") {
         if (authority === "own") {
@@ -498,7 +498,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async fetchAuthorizedUsers(this: Dictionary, authority: DictionaryFullAuthority): Promise<Array<User>> {
-    await this.populate("user").populate("editUsers").execPopulate();
+    await this.populate(["user", "editUsers"]);
     if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
       if (authority === "own") {
         return [this.user];
@@ -515,7 +515,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async discardAuthorizedUser(this: Dictionary, user: User): Promise<true> {
-    await this.populate("editUsers").execPopulate();
+    await this.populate("editUsers");
     if (isDocumentArray(this.editUsers)) {
       let exist = this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
       if (exist) {
@@ -571,7 +571,7 @@ export class DictionaryCreator {
     });
     let userPromise = new Promise<UserSkeleton>(async (resolve, reject) => {
       try {
-        await raw.populate("user").execPopulate();
+        await raw.populate("user");
         if (isDocument(raw.user)) {
           let user = UserCreator.create(raw.user);
           resolve(user);

@@ -36,7 +36,7 @@ export class NormalWordParameter extends WordParameter {
     this.ignoreOptions = ignoreOptions;
   }
 
-  public createQuery(dictionary: Dictionary): Query<Array<Word>> {
+  public createQuery(dictionary: Dictionary): Query<Array<Word>, Word> {
     let keys = WordParameter.createKeys(this.mode);
     let needle = WordParameter.createNeedle(this.search, this.type, this.ignoreOptions);
     let sortKey = WordParameter.createSortKey(this.order);

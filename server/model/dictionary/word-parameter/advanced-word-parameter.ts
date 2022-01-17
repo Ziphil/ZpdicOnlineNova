@@ -25,7 +25,7 @@ export class AdvancedWordParameter extends WordParameter {
     this.elements = elements;
   }
 
-  public createQuery(dictionary: Dictionary): Query<Array<Word>> {
+  public createQuery(dictionary: Dictionary): Query<Array<Word>, Word> {
     let filters = this.elements.map((element) => element.createQuery(dictionary).getFilter());
     let query = WordModel.findExist().and(filters);
     return query;
@@ -53,7 +53,7 @@ export class AdvancedWordParameterElement extends WordParameter {
     this.type = type;
   }
 
-  public createQuery(dictionary: Dictionary): Query<Array<Word>> {
+  public createQuery(dictionary: Dictionary): Query<Array<Word>, Word> {
     let keys = WordParameter.createKeys(this.mode);
     let needle = WordParameter.createNeedle(this.search, this.type, {case: false});
     let eachFilters = keys.map((key) => {

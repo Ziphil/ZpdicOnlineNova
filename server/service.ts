@@ -23,7 +23,7 @@ export class Service {
 
   private setupMongo(): void {
     MongoUtil.setCheckRequired("String");
-    mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+    mongoose.connect(MONGO_URI);
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }
 

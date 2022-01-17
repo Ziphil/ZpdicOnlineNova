@@ -36,7 +36,8 @@ export class HistorySchema {
   public wordSize!: number;
 
   public static async fetch(dictionary: Dictionary, from: Date): Promise<Array<History>> {
-    let histories = await HistoryModel.find().where("dictionary", dictionary).gte("date", from);
+    let anyFrom = from as any;
+    let histories = await HistoryModel.find().where("dictionary", dictionary).gte("date", anyFrom);
     return histories;
   }
 
