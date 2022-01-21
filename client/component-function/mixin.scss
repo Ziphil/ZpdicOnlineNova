@@ -51,6 +51,8 @@ $background-color: background-color(map-get($colors, primary));
 $strong-background-color: darken($background-color, 10%);
 $header-background-color: darken(map-get($colors, primary), 10%);
 
+$text-color: hsl(30, 40%, 20%);
+
 $light-color: map-get($colors, primary);
 $light-border-color: border-color(map-get($colors, primary));
 $dark-border-color: border-color(map-get($colors, primary), false);
@@ -109,9 +111,9 @@ $large-border-radius: 16u;
 $line-height: 1.6;
 $tooltip-line-height: 1.4;
 
-$european-font-family: "EB Garamond", "Times New Roman";
-$japanese-font-family: "Yu Mincho", "YuMincho", "ヒラギノ明朝 ProN W3", "Hiragino Mincho ProN", "ＭＳ Ｐ明朝";
-$monospace-font-family: "Inconsolata", "Yu Gothic", "YuGothic", "ＭＳ ゴシック";
+$european-font-family: "Alegreya Sans", "Arial";
+$japanese-font-family: "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", "YuGothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック";
+$monospace-font-family: "Inconsolata", "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", "YuGothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ ゴシック";
 $special-font-family: "Simonetta";
 $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 Brands", "FontAwesome";
 
