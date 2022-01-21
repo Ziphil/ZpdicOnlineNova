@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  top: 150u;
+  left: 0u;
+  width: calc(100% - #{$page-horizontal-margin} * 2);
+  margin: 0u $page-horizontal-margin;
+  position: fixed;
+  pointer-events: none;
+  z-index: 300;
+}
+
+.pane-wrapper {
+  width: 100%;
+  max-width: $page-width * 3 / 4;
+  margin: $medium-margin auto 0u auto;
+  pointer-events: auto;
+}
+
+.pane-wrapper:first-child { 
+  margin: 0u auto;
+}

@@ -1,0 +1,40 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  color: $logo-color;
+  text-align: center;
+  font-variant-numeric: lining-nums;
+  font-feature-settings: "lnum" 1;
+}
+
+.title {
+  margin: 0u;
+  font-family: $special-font-family;
+  font-size: 750%; 
+  @include smartphone {
+    font-size: 750% * 4 / 5;
+  }
+}
+
+.subtitle {
+  left: 1.2em;
+  margin: -15u 0u 0u 0u;
+  font-family: $special-font-family;
+  font-size: 320%;
+  letter-spacing: 0.2em;
+  position: relative;
+  @include smartphone {
+    font-size: 320% * 4 / 5;
+  }
+}
+
+.version {
+  margin: $small-margin 0u 0u 0u;
+  font-size: 120%;
+  @include smartphone {
+    display: none;
+  }
+}

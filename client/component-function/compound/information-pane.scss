@@ -1,0 +1,86 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  padding: $small-margin $medium-margin;
+  position: relative;
+}
+
+.root.error {
+  @include color-pane(map-get($colors, error));
+}
+
+.root.information {
+  @include color-pane(map-get($colors, information));
+}
+
+.root.error .list {
+  @include unordered-list("\F06A", inherit, 1em);
+  @include line-height;
+}
+
+.root.information .list {
+  @include unordered-list("\F05A", inherit, 1em);
+  @include line-height;
+}
+
+.root.error .button-box {
+  @include color-pane(map-get($colors, error));
+}
+
+.root.information .button-box {
+  @include color-pane(map-get($colors, information));
+}
+
+.root.error .button-box,
+.root.information .button-box,
+.button {
+  right: -32u;
+  top: -32u;
+  width: 76u;
+  height: 76u;
+  text-align: center;
+  border-radius: 50%;
+  box-sizing: border-box;
+  position: absolute;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.root.error .button >button >span {
+  color: map-get($colors, error);
+}
+
+.root.information .button >button >span {
+  color: map-get($colors, information);
+}
+
+.root.error .button:hover >button >span {
+  color: hover-color(map-get($colors, error), false);
+}
+
+.root.information .button:hover >button >span {
+  color: hover-color(map-get($colors, information), false);
+}
+
+.overlay {
+  top: 0u;
+  right: 0u;
+  width: 76u - 32u + 3u;
+  height: 76u - 32u + 3u;
+  position: absolute;
+}
+
+.root.error .overlay {
+  background-color: background-color(map-get($colors, error));
+}
+
+.root.information .overlay {
+  background-color: background-color(map-get($colors, information));
+}

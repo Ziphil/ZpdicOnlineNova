@@ -4,9 +4,7 @@ import * as react from "react";
 import {
   render
 } from "react-dom";
-import {
-  Root
-} from "/client/component/root";
+import Root from "/client/component-function/root";
 import {
   RECAPTCHA_KEY
 } from "/client/variable";

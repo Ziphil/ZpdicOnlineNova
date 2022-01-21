@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  position: relative;
+}
+
+.tooltip {
+  margin: $small-margin 0u 0u 0u;
+  padding: $tooltip-vertical-padding $tooltip-horizontal-padding;
+  font-size: 80%;
+  color: map-get($colors, error);
+  background-color: background-color(map-get($colors, error));
+  border: 3u border-color(map-get($colors, error)) solid;
+  border-radius: $small-border-radius;
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  z-index: 50;
+}
+
+:focus-within +.tooltip {
+  display: block;
+}
+
+.tooltip::before {
+  top: -48u;
+  left: 48u;
+  margin-left: -24u;
+  border: 24u transparent solid;
+  border-bottom: 24u border-color(map-get($colors, error)) solid;
+  position: absolute;
+  content: "";
+}
+
+.tooltip::after {
+  top: -45u;
+  left: 48u;
+  margin-left: -24u;
+  border: 24u transparent solid;
+  border-bottom: 24u background-color(map-get($colors, error)) solid;
+  position: absolute;
+  content: "";
+}
+
+.tooltip-text {
+  margin: 0u;
+  line-height: $tooltip-line-height;
+  text-align: justify;
+}

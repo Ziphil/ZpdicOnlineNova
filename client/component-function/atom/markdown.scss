@@ -1,0 +1,170 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root h1,
+.root h2 {
+  @include reset-first-margin;
+  margin: $large-margin 0u $medium-margin 0u;
+  font-size: 150%;
+  font-weight: bold;
+  color: $head-color;
+}
+
+.root h3 {
+  @include reset-first-margin;
+  margin: $large-margin 0u $medium-margin 0u;
+  font-size: 120%;
+  font-weight: bold;
+  color: $head-color;
+}
+
+.root h2 +h3 {
+  margin-top: 0u;
+}
+
+.root p {
+  @include reset-first-margin;
+  @include line-height;
+  margin: $paragraph-margin 0u 0u 0u;
+  text-align: justify;
+}
+
+.root ul {
+  @include unordered-list("\F0DA", $light-color, 0.4em);
+  @include reset-first-margin;
+  @include line-height;
+  margin: $paragraph-margin 0u 0u 6u;
+  padding: 0u;
+}
+
+.root ol {
+  @include ordered-list($light-color);
+  @include reset-first-margin;
+  @include line-height;
+  margin: $paragraph-margin 0u 0u 0u;
+  padding: 0u;
+}
+
+.root li ul::before,
+.root li ul::after,
+.root li ol::before,
+.root li ol::after {
+  display: none;
+}
+
+.root li >input[type="checkbox"] {
+  display: none;
+}
+
+.root table {
+  @include reset-first-margin;
+  margin: $paragraph-margin auto 0u auto;
+  padding: 0u;
+  border-collapse: separate;
+  border-spacing: 0u;
+  border-radius: $small-border-radius;
+}
+
+.root tr >* {
+  padding: $box-vertical-padding $box-horizontal-padding;
+  line-height: $line-height;
+  text-align: left;
+  border-bottom: 3u $light-border-color solid;
+  border-right: 3u $light-border-color solid;
+}
+
+.root tr >th {
+  font-weight: normal;
+  background-color: $strong-background-color;
+}
+
+.root thead tr:first-child >* {
+  border-top: 3u $light-border-color solid;
+}
+
+.root tr >*:first-child {
+  border-left: 3u $light-border-color solid;
+}
+
+.root thead tr:first-child >*:first-child {
+  border-top-left-radius: $small-border-radius;
+}
+
+.root thead tr:first-child >*:last-child {
+  border-top-right-radius: $small-border-radius;
+}
+
+.root tbody tr:last-child >*:first-child {
+  border-bottom-left-radius: $small-border-radius;
+}
+
+.root tbody tr:last-child >*:last-child {
+  border-bottom-right-radius: $small-border-radius;
+}
+
+.root blockquote {
+  @include reset-first-margin;
+  margin: $paragraph-margin 0u 0u 0u;
+  padding: 0u;
+}
+
+.root pre {
+  @include reset-first-margin;
+  @include monospace-font;
+  margin: $paragraph-margin 0u 0u 0u;
+  padding: $box-vertical-padding $box-horizontal-padding;
+  line-height: $line-height;
+  background-color: $strong-background-color;
+  border-radius: $small-border-radius;
+  overflow: hidden;
+}
+
+.root pre >code {
+  padding: 0em;
+  font-size: 100%;
+}
+
+.root :global(.block) {
+  @include reset-first-margin;
+  margin: $paragraph-margin 0u 0u 0u;
+}
+
+.root code {
+  @include monospace-font;
+  padding: 0em 0.1em;
+  background-color: $strong-background-color;
+  border-radius: $small-border-radius;
+}
+
+.root em,
+.root strong {
+  font-weight: normal;
+  font-style: italic;
+}
+
+.root del {
+  font-weight: inherit;
+  font-style: inherit;
+  text-decoration: line-through;
+}
+
+.root img {
+  max-width: 100%;
+  height: auto;
+  margin-top: line-intrusion($line-height);
+  margin-bottom: line-intrusion($line-height);
+  line-height: 0;
+  vertical-align: bottom;
+}
+
+.root a {
+  color: $link-color;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.root a:hover {
+  color: $link-hover-color;
+}

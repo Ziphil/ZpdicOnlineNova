@@ -1,0 +1,61 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+$feature-item-horizontal-margin: 120u;
+
+.root {
+  display: flex;
+  flex-direction: row;
+  @include smartphone {
+    flex-direction: column;
+  }
+}
+
+.item {
+  @include reset-first-margin;
+  width: 100%;
+  margin: 0u 0u 0u $feature-item-horizontal-margin;
+  @include smartphone {
+    margin: $large-margin 0u 0u 0u;
+  }
+}
+
+.head-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  @include smartphone {
+    flex-direction: row;
+    align-items: baseline;
+  }
+}
+
+.head {
+  margin: $small-margin 0u 0u 0u;
+  font-size: 120%;
+  font-weight: bold;
+  color: $head-color;
+  text-align: center;
+  @include smartphone {
+    flex-direction: row;
+  }
+}
+
+.icon {
+  @include icon-font;
+  font-size: 150%;
+  color: $head-color;
+  text-align: center;
+  @include smartphone {
+    margin: 0em $blank-margin 0em 0em;
+    font-size: 120%;
+  }
+}
+
+.text {
+  @include line-height;
+  margin: $medium-margin 0u 0u 0u;
+  text-align: justify;
+}

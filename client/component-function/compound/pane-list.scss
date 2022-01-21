@@ -1,0 +1,49 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.div-pane {
+  display: grid;
+  grid-gap: 0u $large-margin;
+}
+
+.div-pane.spaced { 
+  grid-gap: $large-margin $large-margin;
+}
+
+.table-pane {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table-pane .spacer {
+  width: $large-margin;
+}
+
+.table-pane .spacer.border {
+  border-left: 3u $invert-border-color solid;
+}
+
+.table-pane tr >td {
+  padding: 0u;
+  vertical-align: top;
+}
+
+.table-pane.spaced tr >td {
+  padding-top: $large-margin;
+}
+
+.table-pane.spaced tr:first-child >td {
+  padding-top: 0u;
+}
+
+.pagination {
+  margin: $large-margin 0u 0u 0u;
+  text-align: center;
+}
+
+.pagination.empty {
+  margin: 0u;
+}

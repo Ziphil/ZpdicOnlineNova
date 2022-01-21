@@ -22,8 +22,14 @@
     "command:tsc": "tsc"
   },
   "eslintConfig": {
-    "extends": "ziphil",
-    "ignorePatterns": "webpack-*.ts"
+    "extends": [
+      "ziphil",
+      "plugin:react-hooks/recommended"
+    ],
+    "ignorePatterns": "webpack-*.ts",
+    "rules": {
+      "arrow-body-style": "off"
+    }
   },
   "nodemonConfig": {
     "watch": [
@@ -73,7 +79,7 @@
     "react": "^17.0.2",
     "react-codemirror2": "^7.2.1",
     "react-css-modules": "^4.7.11",
-    "react-dom": "^16.14.0",
+    "react-dom": "^17.0.2",
     "react-intl": "^5.24.3",
     "react-markdown": "^4.3.1",
     "react-onclickoutside": "^6.12.1",
@@ -133,6 +139,7 @@
     "eslint-config-ziphil": "^1.2.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsdoc": "^30.7.13",
+    "eslint-plugin-react-hooks": "^4.3.0",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^4.5.2",
     "json-loader": "^0.5.7",

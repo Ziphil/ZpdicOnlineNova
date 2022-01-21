@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.count-wrapper {
+  color: $logo-color;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  grid-gap: $tiny-margin 0u;
+  align-items: baseline;
+}
+
+.title {
+  margin: 0u $huge-margin 0u 0u;
+  text-align: right;
+}
+
+.count {
+  font-size: 250%;
+  font-weight: bold;
+  text-align: right;
+}
+
+.slash {
+  margin: 0em 0.2em;
+  font-size: 120%;
+  display: none;
+}
+
+.whole-count {
+  font-size: 120%;
+  font-weight: bold;
+  text-align: left;
+  display: none;
+}

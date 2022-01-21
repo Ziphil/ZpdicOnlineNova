@@ -11,6 +11,7 @@
     "lib": ["es2015", "esnext", "dom"],
     "jsx": "react",
     "jsxFactory": "react.createElement",
+    "jsxFragmentFactory": "react.Fragment",
     "moduleResolution": "node",
     "sourceMap": true,
     "strict": true,

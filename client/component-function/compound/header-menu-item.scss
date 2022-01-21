@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  color: $pale-link-color;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.root:hover {
+  color: $pale-link-hover-color;
+}
+
+.text {
+  @include smartphone {
+    display: none;
+  }
+}
+
+.icon {
+  @include icon-font;
+  margin: 0u $blank-margin 0u 0u;
+}

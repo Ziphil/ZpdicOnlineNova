@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  width: 100%;
+  text-align: center;
+}
+
+.spinner {
+  @include icon-font;
+  width: 1em;
+  height: 1em;
+  font-size: 96u;
+  color: $light-color;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: spin 1s steps(8, end) infinite;
+}
+
+.spinner::before {
+  content: "\F110";
+}
