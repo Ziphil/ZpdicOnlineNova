@@ -13,8 +13,6 @@ import {
 } from "react-intl";
 import {
   BrowserRouter,
-  Route,
-  Router,
   Switch
 } from "react-router-dom";
 import {
@@ -24,6 +22,8 @@ import {
   useDefaultLocale,
   useDefaultUser
 } from "/client/component-function/hook";
+import Authenticator from "/client/component-function/util/authenticator";
+import ScrollTop from "/client/component-function/util/scroll-top";
 
 
 let TopPage = lazy(() => import("/client/component-function/page/top-page"));
@@ -47,7 +47,11 @@ const Root = create(
         <BrowserRouter>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError}>
             <Suspense fallback={"Error"}>
-              <TopPage/>
+              <ScrollTop>
+                <Switch>
+                  <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
+                </Switch>
+              </ScrollTop>
             </Suspense>
           </IntlProvider>
         </BrowserRouter>
