@@ -26,6 +26,7 @@ import Authenticator from "/client/component-function/util/authenticator";
 import ScrollTop from "/client/component-function/util/scroll-top";
 
 
+let NotificationPage = lazy(() => import("/client/component-function/page/notification-page"));
 let TopPage = lazy(() => import("/client/component-function/page/top-page"));
 
 
@@ -46,10 +47,11 @@ const Root = create(
       <StrictMode>
         <BrowserRouter>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError}>
-            <Suspense fallback={"Error"}>
+            <Suspense fallback={"Suspended"}>
               <ScrollTop>
                 <Switch>
                   <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
+                  <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
                 </Switch>
               </ScrollTop>
             </Suspense>
