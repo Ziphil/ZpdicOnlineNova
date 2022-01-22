@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root.input {
+  display: flex;
+  align-items: flex-end;
+}
+
+.root.radio {
+  display: flex;
+  align-items: baseline;
+}
+
+.root.input >*:nth-child(1) {
+  flex-grow: 1;
+}
+
+.root.input >*:nth-child(2) {
+  margin: 0u 0u 0u $control-horizontal-margin;
+}
+
+.root.radio >*:nth-child(2) {
+  margin: 0u 0u 0u $control-horizontal-margin;
+}

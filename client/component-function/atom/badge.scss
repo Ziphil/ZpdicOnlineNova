@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  bottom: 0.1em;
+  margin-top: -0.2em !important;
+  margin-bottom: -0.2em !important;
+  padding: 0.2em 0.4em;
+  font-size: 80%;
+  font-weight: normal;
+  color: $background-color;
+  border-radius: 1em;
+  background-color: $head-color;
+  display: inline-block;
+  position: relative;
+}
+
+.root.highlight {
+  background-color: $link-color;
+}

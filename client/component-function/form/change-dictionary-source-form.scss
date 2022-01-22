@@ -1,0 +1,35 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  height: 900u;
+  display: flex;
+  align-items: flex-end;
+}
+
+.root >*:nth-child(1) {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.root >*:nth-child(1) >*:nth-child(2) {
+  flex-grow: 1;
+}
+
+.root >*:nth-child(2) {
+  margin: 0u 0u 0u $control-horizontal-margin;
+}
+
+.button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button >*:nth-child(1) {
+  margin: 0u 0u 24u 0u;
+}

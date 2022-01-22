@@ -32,7 +32,7 @@ const TopPage = create(
   }: {
   }): ReactElement {
 
-    let user = useUser();
+    let [user] = useUser();
 
     let loginFormStyleName = StyleNameUtil.create(
       "login-form",

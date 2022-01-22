@@ -28,7 +28,7 @@ const Authenticator = create(
     redirect?: string
   } & RouteProps): ReactElement {
 
-    let user = useUser();
+    let [user] = useUser();
 
     if (type === "private" && redirect !== undefined) {
       let node = (user !== null) ? <Route {...props}/> : <Redirect to={redirect}/>;

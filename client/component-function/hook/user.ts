@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import {
+  useCallback,
   useState
 } from "react";
 import {
@@ -37,7 +38,21 @@ export function useDefaultUser(): {user: DetailedUser | null, ready: boolean} {
   return {user, ready};
 }
 
-export function useUser(): DetailedUser | null {
-  let [user] = useRawUser();
-  return user;
+export function useUser(): [DetailedUser | null, UserCallbacks] {
+  let [user, setUser] = useRawUser();
+  let fetchUser = useCallback(async function (): Promise<void> {
+    let url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
+    let response = await axios.post(url, {}, {validateStatus: () => true});
+    if (response.status === 200) {
+      let user = response.data;
+      setUser(user);
+    } else {
+      setUser(null);
+    }
+  }, [setUser]);
+  return [user, {fetchUser}];
 }
+
+type UserCallbacks = {
+  fetchUser: () => Promise<void>
+};

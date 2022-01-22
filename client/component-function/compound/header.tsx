@@ -22,7 +22,7 @@ const Header = create(
   }): ReactElement {
 
     let [, {trans}] = useIntl();
-    let user = useUser();
+    let [user] = useUser();
 
     let userNameNode = (user !== null) && (
       <HeaderMenuItem label={user.screenName} href="/dashboard"/>
