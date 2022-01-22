@@ -1,0 +1,58 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+$overlay-header-height: 150u;
+
+.content-wrapper {
+  width: 100%;
+  max-width: $page-width;
+  max-height: 90%;
+  margin: 0u auto;
+  background-color: $background-color;
+  border-radius: $large-border-radius;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.content-wrapper.large {
+  height: 90%;
+}
+
+.header {
+  width: 100%;
+  height: $overlay-header-height;
+  padding: 0u $huge-margin;
+  border-bottom: 3u $light-border-color solid;
+  border-radius: $large-border-radius $large-border-radius 0u 0u;
+  background-color: $strong-background-color;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.title {
+  font-weight: bold;
+}
+
+.right >* {
+  @include reset-first-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
+}
+
+.content {
+  padding: $huge-margin $huge-margin;
+  box-sizing: border-box;
+}
+
+.content-wrapper.large .content {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.content-wrapper.large .header +.content {
+  height: calc(100% - #{$overlay-header-height});
+}

@@ -22,10 +22,12 @@ import {
   useDefaultLocale,
   useDefaultUser
 } from "/client/component-function/hook";
+import NotFoundPage from "/client/component-function/page/not-found-page";
 import Authenticator from "/client/component-function/util/authenticator";
 import ScrollTop from "/client/component-function/util/scroll-top";
 
 
+let DocumentPage = lazy(() => import("/client/component-function/page/document-page"));
 let NotificationPage = lazy(() => import("/client/component-function/page/notification-page"));
 let TopPage = lazy(() => import("/client/component-function/page/top-page"));
 
@@ -52,6 +54,8 @@ const Root = create(
                 <Switch>
                   <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
                   <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
+                  <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
+                  <Authenticator type="none" component={NotFoundPage}/>
                 </Switch>
               </ScrollTop>
             </Suspense>

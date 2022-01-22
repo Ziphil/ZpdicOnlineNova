@@ -1,0 +1,32 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.root >* {
+  @include reset-first-margin;
+  margin: $control-vertical-margin 0u 0u 0u;
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  margin: $large-margin 0u 0u 0u;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.source >:nth-child(2) *[class~="CodeMirror-scroll"] {
+  min-height: 900u;
+}
+
+.error-message >:nth-child(2) *[class~="CodeMirror-scroll"] {
+  min-height: 450u;
+}
