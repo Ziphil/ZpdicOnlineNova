@@ -22,10 +22,14 @@ import {
   useDefaultLocale,
   useDefaultUser
 } from "/client/component-function/hook";
+import EmptyPage from "/client/component-function/page/empty-page";
 import NotFoundPage from "/client/component-function/page/not-found-page";
 import Authenticator from "/client/component-function/util/authenticator";
 import ScrollTop from "/client/component-function/util/scroll-top";
 
+
+require("../../node_modules/codemirror/lib/codemirror.css");
+require("../../node_modules/c3/c3.css");
 
 let DocumentPage = lazy(() => import("/client/component-function/page/document-page"));
 let NotificationPage = lazy(() => import("/client/component-function/page/notification-page"));
@@ -49,7 +53,7 @@ const Root = create(
       <StrictMode>
         <BrowserRouter>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError}>
-            <Suspense fallback={"Suspended"}>
+            <Suspense fallback={<EmptyPage/>}>
               <ScrollTop>
                 <Switch>
                   <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
