@@ -13,17 +13,17 @@
 .title {
   margin: 0u;
   font-family: $special-font-family;
-  font-size: 750%; 
+  font-size: 800%; 
   @include smartphone {
     font-size: 750% * 4 / 5;
   }
 }
 
 .subtitle {
-  left: 1.2em;
-  margin: -15u 0u 0u 0u;
+  left: 1.15em;
+  margin: -8u 0u 0u 0u;
   font-family: $special-font-family;
-  font-size: 320%;
+  font-size: 350%;
   letter-spacing: 0.2em;
   position: relative;
   @include smartphone {
