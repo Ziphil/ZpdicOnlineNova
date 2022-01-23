@@ -31,6 +31,7 @@ import ScrollTop from "/client/component-function/util/scroll-top";
 require("../../node_modules/codemirror/lib/codemirror.css");
 require("../../node_modules/c3/c3.css");
 
+let DashboardPage = lazy(() => import("/client/component-function/page/dashboard-page"));
 let DocumentPage = lazy(() => import("/client/component-function/page/document-page"));
 let NotificationPage = lazy(() => import("/client/component-function/page/notification-page"));
 let TopPage = lazy(() => import("/client/component-function/page/top-page"));
@@ -57,6 +58,8 @@ const Root = create(
               <ScrollTop>
                 <Switch>
                   <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
+                  <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+                  <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
                   <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
                   <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
                   <Authenticator type="none" component={NotFoundPage}/>

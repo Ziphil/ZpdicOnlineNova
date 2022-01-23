@@ -14,7 +14,7 @@ export function create<C extends FunctionComponent<any>>(...args: [any, C] | [an
   if (css !== null && css !== undefined) {
     component = cssModules(css, {allowMultiple: true, handleNotFoundStyleName: "ignore"})(component);
   }
-  component.displayName = name ?? "Unknown";
+  component.displayName = name ?? "<unknown>";
   return component;
 }
 

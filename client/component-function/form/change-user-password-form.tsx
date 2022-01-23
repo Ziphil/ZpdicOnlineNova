@@ -23,38 +23,36 @@ import {
   PopupUtil
 } from "/client/util/popup";
 import {
-  EMAIL_REGEXP
+  validatePassword as rawValidatePassword
 } from "/server/model/validation";
 
 
-const ChangeUserEmailForm = create(
-  require("./change-user-email-form.scss"), "ChangeUserEmailForm",
+const ChangeUserPasswordForm = create(
+  require("./change-user-password-form.scss"), "ChangeUserPasswordForm",
   function ({
-    currentEmail,
     onSubmit
   }: {
-    currentEmail: string,
     onSubmit?: () => void
   }): ReactElement {
 
-    let [email, setEmail] = useState(currentEmail);
+    let [password, setPassword] = useState("");
     let [intl, {trans}] = useIntl();
     let {request} = useRequest();
     let [, {addInformationPopup}] = usePopup();
 
     let handleClick = useCallback(async function (): Promise<void> {
-      let response = await request("changeUserEmail", {email});
+      let response = await request("changeUserPassword", {password});
       if (response.status === 200) {
-        addInformationPopup("userEmailChanged");
+        addInformationPopup("userPasswordChanged");
         onSubmit?.();
       }
-    }, [email, request, onSubmit, addInformationPopup]);
+    }, [password, request, onSubmit, addInformationPopup]);
 
-    let validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(intl, "invalidUserEmail"));
+    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
     let node = (
       <form styleName="root">
-        <Input label={trans("changeUserEmailForm.email")} value={email} validate={validate} useTooltip={true} onSet={(email) => setEmail(email)}/>
-        <Button label={trans("changeUserEmailForm.confirm")} reactive={true} onClick={handleClick}/>
+        <Input label={trans("changeUserPasswordForm.password")} type="flexible" value={password} validate={validate} useTooltip={true} onSet={(password) => setPassword(password)}/>
+        <Button label={trans("changeUserPasswordForm.confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;
@@ -63,4 +61,4 @@ const ChangeUserEmailForm = create(
 );
 
 
-export default ChangeUserEmailForm;
+export default ChangeUserPasswordForm;
