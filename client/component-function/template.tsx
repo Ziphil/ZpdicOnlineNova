@@ -25,7 +25,7 @@ const Component = create(
   }: {
   }): ReactElement {
 
-    let [intl, {trans}] = useIntl();
+    let [, {trans}] = useIntl();
     let {request} = useRequest();
     let [, {addInformationPopup}] = usePopup();
 
