@@ -1,0 +1,102 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.container {
+  @include reset-first-margin;
+  margin: $large-margin 0u 0u 0u;
+}
+
+.confirm-button-wrapper {
+  margin: $large-margin 0u 0u 0u;
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-button >* {
+  @include reset-first-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
+}
+
+.inner,
+.plus {
+  @include reset-first-margin;
+  margin: $small-control-vertical-margin 0u 0u 0u;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  @include smartphone {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.inner.large {
+  margin: $control-vertical-margin 0u 0u 0u;
+}
+
+.plus {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.absent {
+  color: $light-color;
+}
+
+.form {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex: 1;
+}
+
+.form >* {
+  @include reset-first-margin;
+  margin: 0u 0u 0u $small-control-horizontal-margin;
+}
+
+.form.information {
+  height: 600u;
+}
+
+.control-button {
+  margin: 0u 0u 0u $small-control-horizontal-margin;
+  @include smartphone {
+    margin: $small-control-vertical-margin 0u 0u 0u;
+    align-self: flex-end;
+  }
+}
+
+.title {
+  flex: 1;
+  align-self: flex-start;
+}
+
+.name {
+  flex: 3;
+}
+
+.text {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex: 3;
+}
+
+.text >textarea {
+  flex-grow: 1;
+}
+
+.relation-input,
+.word-input {
+  align-items: flex-end;
+}
+
+.relation-input >*:nth-child(1),
+.word-input >*:nth-child(1) {
+  flex-grow: 1;
+}

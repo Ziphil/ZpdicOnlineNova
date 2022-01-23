@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  display: flex;
+  flex-direction: row;
+}
+
+.root >:first-child {
+  margin: 0u -3u 0u 0u;
+  border-radius: $small-border-radius 0u 0u $small-border-radius;
+}
+
+.root >:last-child {
+  border-radius: 0u $small-border-radius $small-border-radius 0u;
+}
+
+.root >:not(:first-child):not(:last-child) {
+  margin: 0u -3u 0u 0u;
+  border-radius: 0u;
+}
