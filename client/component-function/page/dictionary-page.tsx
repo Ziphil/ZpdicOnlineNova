@@ -134,7 +134,9 @@ const DictionaryPage = create(
       }
     }, [dictionary?.number, getParameter, getPage, request, serializeQuery]);
 
-    let updateWords = useDebounce(updateWordsImmediately, 500, [updateWordsImmediately]);
+    let updateWords = useDebounce(async function (overrides: {parameter?: WordParameter, page?: number}, options?: UpdateWordsOptions): Promise<void> {
+      await updateWordsImmediately(overrides, options);
+    }, 500, [updateWordsImmediately]);
 
     let deserializeQuery = useCallback(function (update?: boolean): void {
       let queryString = location.search;

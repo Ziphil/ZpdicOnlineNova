@@ -79,7 +79,7 @@ const WordSearcher = create(
 
     let updateWords = useDebounce(async function (overrides?: {parameter?: WordParameter, page?: number}): Promise<void> {
       await updateWordsImmediately(overrides);
-    }, 500, []);
+    }, 500, [updateWordsImmediately]);
 
     let handleParameterSet = useCallback(async function (parameter: WordParameter): Promise<void> {
       let page = 0;

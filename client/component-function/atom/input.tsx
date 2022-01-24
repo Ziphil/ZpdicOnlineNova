@@ -85,7 +85,7 @@ const Input = create(
         let dropdownSpecs = suggestionSpecs.map((suggestionSpec) => ({value: suggestionSpec.replacement, node: suggestionSpec.node}));
         setDropdownSpecs(dropdownSpecs);
       }
-    }, 500, [suggest, setDropdownSpecs]);
+    }, 500, [suggest]);
 
     let handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
       let value = event.target.value;
@@ -105,7 +105,7 @@ const Input = create(
       } else {
         setCurrentType("text");
       }
-    }, [currentType, setCurrentType]);
+    }, [currentType]);
 
     let node = (
       <div styleName="root" className={className}>
