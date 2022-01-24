@@ -102,7 +102,7 @@ const DashboardPage = create(
         <ActivateUserForm/>
       </div>
     );
-    let contentNode = (user) && <DashboardPageDictionaryForms {...{dictionaries, editInvitations, transferInvitations, mode, fetchEditInvitations, fetchTransferInvitations}}/>;
+    let contentNode = (user) && <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode, fetchEditInvitations, fetchTransferInvitations}}/>;
     let node = (
       <Page>
         {activateUserForm}
@@ -116,7 +116,7 @@ const DashboardPage = create(
 );
 
 
-const DashboardPageDictionaryForms = create(
+const DashboardPageForms = create(
   require("./dashboard-page.scss"),
   function ({
     dictionaries,
