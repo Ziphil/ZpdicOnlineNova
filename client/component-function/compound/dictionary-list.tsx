@@ -34,7 +34,7 @@ const DictionaryList = create(
     showUser?: boolean,
     showUpdatedDate?: boolean,
     showCreatedDate?: boolean,
-    showLinks: boolean,
+    showLinks?: boolean,
     size: number
   }): ReactElement {
 

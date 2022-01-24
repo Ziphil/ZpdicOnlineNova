@@ -32,6 +32,7 @@ require("../../node_modules/codemirror/lib/codemirror.css");
 require("../../node_modules/c3/c3.css");
 
 let DashboardPage = lazy(() => import("/client/component-function/page/dashboard-page"));
+let DictionaryListPage = lazy(() => import("/client/component-function/page/dictionary-list-page"));
 let DictionaryPage = lazy(() => import("/client/component-function/page/dictionary-page"));
 let DocumentPage = lazy(() => import("/client/component-function/page/document-page"));
 let LanguagePage = lazy(() => import("/client/component-function/page/language-page"));
@@ -63,6 +64,7 @@ const Root = create(
                   <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
                   <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
                   <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+                  <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
                   <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
                   <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
                   <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
