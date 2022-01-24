@@ -227,7 +227,7 @@ const DictionaryHeaderOverlays = create(
   }): ReactElement {
 
     let node = (
-      <>{console.error("not implemented")}</>
+      <></>
     );
     return node;
 
