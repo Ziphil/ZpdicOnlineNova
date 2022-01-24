@@ -1,6 +1,7 @@
 //
 
 import {
+  Dispatch,
   SetStateAction,
   useCallback,
   useEffect,
@@ -8,6 +9,11 @@ import {
   useState
 } from "react";
 
+
+export function useNullableState<S>(initialState?: (S | null) | (() => S | null)): [S | null, Dispatch<SetStateAction<S | null>>] {
+  let [state, setState] = useState(initialState ?? null);
+  return [state, setState];
+}
 
 export function useStateWithCallback<S>(initialState: S | (() => S)): [S, DispatchWithCallback<SetStateAction<S>, S>] {
   let [state, setState] = useState(initialState);
