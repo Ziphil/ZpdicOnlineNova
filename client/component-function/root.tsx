@@ -32,7 +32,7 @@ require("../../node_modules/codemirror/lib/codemirror.css");
 require("../../node_modules/c3/c3.css");
 
 let DashboardPage = lazy(() => import("/client/component-function/page/dashboard-page"));
-let DictionaryPage = lazy(() => import("/client/component/page/dictionary-page"));
+let DictionaryPage = lazy(() => import("/client/component-function/page/dictionary-page"));
 let DocumentPage = lazy(() => import("/client/component-function/page/document-page"));
 let LanguagePage = lazy(() => import("/client/component-function/page/language-page"));
 let NotificationPage = lazy(() => import("/client/component-function/page/notification-page"));

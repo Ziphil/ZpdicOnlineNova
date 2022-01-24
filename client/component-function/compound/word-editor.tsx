@@ -83,7 +83,7 @@ const WordEditor = create(
     let [relationChooserOpen, setRelationChooserOpen] = useState(false);
     let [resourceListOpen, setResourceListOpen] = useState(false);
     let [alertOpen, setAlertOpen] = useState(false);
-    let editingRelationIndex = useRef<number>();
+    let editingRelationIndexRef = useRef<number>();
     let [, {trans}] = useIntl();
     let {request} = useRequest();
     let [, {addInformationPopup}] = usePopup();
@@ -99,12 +99,12 @@ const WordEditor = create(
     }, []);
 
     let openRelationChooser = useCallback(function (index: number): void {
-      editingRelationIndex.current = index;
+      editingRelationIndexRef.current = index;
       setRelationChooserOpen(true);
     }, []);
 
     let editRelation = useCallback(function (relationWord: Word): void {
-      let relationIndex = editingRelationIndex.current!;
+      let relationIndex = editingRelationIndexRef.current!;
       if (tempWord.relations[relationIndex] === undefined) {
         tempWord.relations[relationIndex] = Relation.createEmpty();
       }
@@ -214,7 +214,7 @@ const WordEditorEditor = create(
     mutateWord: MutateWordCallback,
     createSuggest: (propertyName: string) => Suggest,
     openRelationChooser: (index: number) => void,
-    editWord: (event: MouseEvent<HTMLButtonElement>) => Promise<void>
+    editWord: (event: MouseEvent<HTMLButtonElement>) => Promise<void>,
     setAlertOpen: Dispatch<SetStateAction<boolean>>,
     setResourceListOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
