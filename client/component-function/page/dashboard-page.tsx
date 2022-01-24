@@ -141,10 +141,16 @@ const DashboardPageForms = create(
     if (mode === "dictionary") {
       let node = (
         <Fragment>
-          <SettingPane label={trans("dashboardPage.dictionaryList.label")} description={trans("dashboardPage.dictionaryList.description")}>
+          <SettingPane
+            label={trans("dashboardPage.dictionaryList.label")}
+            description={trans("dashboardPage.dictionaryList.description")}
+          >
             <DictionaryList dictionaries={dictionaries} showLinks={true} size={8}/>
           </SettingPane>
-          <SettingPane label={trans("dashboardPage.createDictionaryForm.label")} description={trans("dashboardPage.createDictionaryForm.description")}>
+          <SettingPane
+            label={trans("dashboardPage.createDictionaryForm.label")}
+            description={trans("dashboardPage.createDictionaryForm.description")}
+          >
             <CreateDictionaryForm/>
           </SettingPane>
         </Fragment>
@@ -153,10 +159,16 @@ const DashboardPageForms = create(
     } else if (mode === "notification") {
       let node = (
         <Fragment>
-          <SettingPane label={trans("dashboardPage.editInvitationList.label")} description={trans("dashboardPage.editInvitationList.description")}>
+          <SettingPane
+            label={trans("dashboardPage.editInvitationList.label")}
+            description={trans("dashboardPage.editInvitationList.description")}
+          >
             <InvitationList invitations={editInvitations} size={8} onSubmit={fetchEditInvitations}/>
           </SettingPane>
-          <SettingPane label={trans("dashboardPage.transferInvitationList.label")} description={trans("dashboardPage.transferInvitationList.description")}>
+          <SettingPane
+            label={trans("dashboardPage.transferInvitationList.label")}
+            description={trans("dashboardPage.transferInvitationList.description")}
+          >
             <InvitationList invitations={transferInvitations} size={8} onSubmit={fetchTransferInvitations}/>
           </SettingPane>
         </Fragment>
@@ -165,16 +177,28 @@ const DashboardPageForms = create(
     } else if (mode === "account") {
       let node = (
         <Fragment>
-          <SettingPane label={trans("dashboardPage.changeUserScreenNameForm.label")} description={trans("dashboardPage.changeUserScreenNameForm.description")}>
+          <SettingPane
+            label={trans("dashboardPage.changeUserScreenNameForm.label")}
+            description={trans("dashboardPage.changeUserScreenNameForm.description")}
+          >
             <ChangeUserScreenNameForm currentScreenName={user!.screenName} onSubmit={fetchUser}/>
           </SettingPane>
-          <SettingPane label={trans("dashboardPage.changeUserEmailForm.label")} description={trans("dashboardPage.changeUserEmailForm.description")}>
+          <SettingPane
+            label={trans("dashboardPage.changeUserEmailForm.label")}
+            description={trans("dashboardPage.changeUserEmailForm.description")}
+          >
             <ChangeUserEmailForm currentEmail={user!.email} onSubmit={fetchUser}/>
           </SettingPane>
-          <SettingPane label={trans("dashboardPage.changeUserPasswordForm.label")} description={trans("dashboardPage.changeUserPasswordForm.description")}>
+          <SettingPane
+            label={trans("dashboardPage.changeUserPasswordForm.label")}
+            description={trans("dashboardPage.changeUserPasswordForm.description")}
+          >
             <ChangeUserPasswordForm/>
           </SettingPane>
-          <SettingPane label={trans("dashboardPage.discardUserForm.label")} description={trans("dashboardPage.discardUserForm.description")}>
+          <SettingPane
+            label={trans("dashboardPage.discardUserForm.label")}
+            description={trans("dashboardPage.discardUserForm.description")}
+          >
             <DiscardUserForm onSubmit={() => pushPath("/", undefined, true)}/>
           </SettingPane>
         </Fragment>
