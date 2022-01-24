@@ -14,7 +14,9 @@ import {
   useLocation,
   useParams
 } from "react-router-dom";
-import { useMount, useSetState } from "react-use";
+import {
+  useGetSet
+} from "react-use";
 import Markdown from "/client/component-function/atom/markdown";
 import Loading from "/client/component-function/compound/loading";
 import PaginationButton from "/client/component-function/compound/pagination-button";
@@ -47,13 +49,12 @@ const DictionaryPage = create(
   }: {
   }): ReactElement {
 
-    let initialState = des();
     let [dictionary, setDictionary] = useState<EnhancedDictionary | null>(null);
-    let [parameter, setParameter] = useState(initialState.parameter);
-    let [page, setPage] = useState(initialState.page);
+    let [getParameter, setParameter] = useGetSet<WordParameter>(NormalWordParameter.createEmpty());
+    let [getPage, setPage] = useGetSet(0);
     let [canOwn, setCanOwn] = useState(false);
     let [canEdit, setCanEdit] = useState(false);
-    let [showExplanation, setShowExplanation] = useState(initialState.showExplanation);
+    let [showExplanation, setShowExplanation] = useState(true);
     let [hitResult, setHitResult] = useState<DictionaryHitResult>({words: [[], 0], suggestions: []});
     let [loading, setLoading] = useState(false);
     let {request} = useRequest();
@@ -77,7 +78,7 @@ const DictionaryPage = create(
       } else {
         setDictionary(null);
       }
-    }, [params.value, request, setDictionary]);
+    }, [params.value, request]);
 
     let checkAuthorization = useCallback(async function (): Promise<void> {
       let number = dictionary?.number;
@@ -103,38 +104,37 @@ const DictionaryPage = create(
     }, [dictionary?.number, request]);
 
     let serializeQuery = useCallback(function (): void {
-      let queryString = parameter.serialize() + `&page=${page}`;
+      let queryString = getParameter().serialize() + `&page=${getPage()}`;
       history.replace({search: queryString});
-    }, [page, parameter, history]);
+    }, [getPage, getParameter, history]);
 
-    let updateWordsImmediately = useCallback(async function (overrides: {parameter?: WordParameter, page?: number}, serialize: boolean): Promise<void> {
+    let updateWordsImmediately = useCallback(async function (overrides: {parameter?: WordParameter, page?: number}, options?: UpdateWordsOptions): Promise<void> {
       let number = dictionary?.number;
       if (number !== undefined) {
-        let usedParameter = overrides?.parameter ?? parameter;
-        let usedPage = overrides?.page ?? page;
+        let usedParameter = overrides?.parameter ?? getParameter();
+        let usedPage = overrides?.page ?? getPage();
         let offset = usedPage * 40;
         let size = 40;
         setLoading(true);
         let response = await request("searchDictionary", {number, parameter: usedParameter, offset, size});
         if (response.status === 200 && !("error" in response.data)) {
           let hitResult = response.data;
-          let showExplanation = false;
+          if (!options?.keepShowExplanation) {
+            setShowExplanation(false);
+          }
           setHitResult(hitResult);
-          setShowExplanation(showExplanation);
           setLoading(false);
         } else {
           setHitResult({words: [[], 0], suggestions: []});
           setLoading(false);
         }
-        if (serialize) {
+        if (options?.serialize) {
           serializeQuery();
         }
       }
-    }, [dictionary?.number, parameter, page, request, serializeQuery]);
+    }, [dictionary?.number, getParameter, getPage, request, serializeQuery]);
 
-    let updateWords = useDebounce(async function (overrides: {parameter?: WordParameter, page?: number}, serialize: boolean): Promise<void> {
-      await updateWordsImmediately(overrides, serialize);
-    }, 500, [updateWordsImmediately]);
+    let updateWords = useDebounce(updateWordsImmediately, 500, [updateWordsImmediately]);
 
     let deserializeQuery = useCallback(function (update?: boolean): void {
       let {parameter, page, showExplanation} = des();
@@ -142,9 +142,7 @@ const DictionaryPage = create(
       setPage(page);
       setShowExplanation(showExplanation);
       if (update) {
-        if (!showExplanation) {
-          updateWordsImmediately({}, false);
-        }
+        updateWordsImmediately({parameter, page}, {serialize: false, keepShowExplanation: true});
       }
     }, [updateWordsImmediately]);
 
@@ -152,33 +150,29 @@ const DictionaryPage = create(
       let page = 0;
       setParameter(parameter);
       setPage(page);
-      await updateWords({parameter, page}, true);
+      await updateWords({parameter, page}, {serialize: true});
     }, [updateWords]);
 
     let handlePageSet = useCallback(async function (page: number): Promise<void> {
       setPage(page);
       window.scrollTo(0, 0);
-      await updateWordsImmediately({page}, true);
+      await updateWordsImmediately({page}, {serialize: true});
     }, [updateWordsImmediately]);
 
-    useMount(async () => {
-      await fetchDictionary();
-      if (showExplanation) {
-        await Promise.all([checkAuthorization()]);
-      } else {
-        await Promise.all([checkAuthorization(), updateWordsImmediately({}, false)]);
-      }
-    });
+    useEffect(() => {
+      fetchDictionary();
+    }, [params.value]);
 
     useEffect(() => {
       deserializeQuery(true);
     }, [location.key]);
 
     useEffect(() => {
-      fetchDictionary();
-    }, [params.value]);
+      checkAuthorization();
+      updateWordsImmediately({}, {serialize: true, keepShowExplanation: true});
+    }, [dictionary]);
 
-    let wordListProps = {dictionary, page, canEdit, hitResult, updateWordsImmediately, handlePageSet};
+    let wordListProps = {dictionary, getPage, canEdit, hitResult, updateWordsImmediately, handlePageSet};
     let innerNode = (dictionary !== null) && (
       (showExplanation) ? <Markdown source={dictionary.explanation ?? ""}/> : <DictionaryPageWordList {...wordListProps}/>
     );
@@ -186,7 +180,7 @@ const DictionaryPage = create(
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <Loading loading={dictionary === null}>
           <div styleName="search-form">
-            <SearchForm dictionary={dictionary!} parameter={parameter} showOrder={true} showAdvancedSearch={true} onParameterSet={handleParameterSet}/>
+            <SearchForm dictionary={dictionary!} parameter={getParameter()} showOrder={true} showAdvancedSearch={true} onParameterSet={handleParameterSet}/>
           </div>
           {innerNode}
         </Loading>
@@ -202,17 +196,17 @@ const DictionaryPageWordList = create(
   require("./dictionary-page.scss"),
   function ({
     dictionary,
-    page,
+    getPage,
     canEdit,
     hitResult,
     updateWordsImmediately,
     handlePageSet
   }: {
     dictionary: EnhancedDictionary | null,
-    page: number,
+    getPage: () => number,
     canEdit: boolean,
     hitResult: DictionaryHitResult,
-    updateWordsImmediately: (overrides: {}, serialize: boolean) => Promise<void>,
+    updateWordsImmediately: (overrides: {}) => Promise<void>,
     handlePageSet: (page: number) => Promise<void>
   }): ReactElement {
 
@@ -234,14 +228,14 @@ const DictionaryPageWordList = create(
             showEditLink={canEdit}
             offset={0}
             size={40}
-            onEditConfirm={() => updateWordsImmediately({}, false)}
-            onDiscardConfirm={() => updateWordsImmediately({}, false)}
-            onEditExampleConfirm={() => updateWordsImmediately({}, false)}
-            onDiscardExampleConfirm={() => updateWordsImmediately({}, false)}
+            onEditConfirm={() => updateWordsImmediately({})}
+            onDiscardConfirm={() => updateWordsImmediately({})}
+            onEditExampleConfirm={() => updateWordsImmediately({})}
+            onDiscardExampleConfirm={() => updateWordsImmediately({})}
           />
         </div>
         <div styleName="pagination">
-          <PaginationButton page={page} minPage={0} maxPage={maxPage} onSet={handlePageSet}/>
+          <PaginationButton page={getPage()} minPage={0} maxPage={maxPage} onSet={handlePageSet}/>
         </div>
       </Fragment>
     );
@@ -261,5 +255,6 @@ function des(): {parameter: WordParameter, page: number, showExplanation: boolea
 }
 
 export type DictionaryHitResult = {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>};
+export type UpdateWordsOptions = {serialize?: boolean, keepShowExplanation?: boolean};
 
 export default DictionaryPage;
