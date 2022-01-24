@@ -137,7 +137,11 @@ const DictionaryPage = create(
     let updateWords = useDebounce(updateWordsImmediately, 500, [updateWordsImmediately]);
 
     let deserializeQuery = useCallback(function (update?: boolean): void {
-      let {parameter, page, showExplanation} = des();
+      let queryString = location.search;
+      let query = queryParser.parse(queryString);
+      let parameter = WordParameter.deserialize(queryString);
+      let page = (typeof query.page === "string") ? +query.page : 0;
+      let showExplanation = Object.keys(query).length <= 0;
       setParameter(parameter);
       setPage(page);
       setShowExplanation(showExplanation);
@@ -244,15 +248,6 @@ const DictionaryPageWordList = create(
   }
 );
 
-
-function des(): {parameter: WordParameter, page: number, showExplanation: boolean} {
-  let queryString = location.search;
-  let query = queryParser.parse(queryString);
-  let parameter = WordParameter.deserialize(queryString);
-  let page = (typeof query.page === "string") ? +query.page : 0;
-  let showExplanation = Object.keys(query).length <= 0;
-  return {parameter, page, showExplanation};
-}
 
 export type DictionaryHitResult = {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>};
 export type UpdateWordsOptions = {serialize?: boolean, keepShowExplanation?: boolean};
