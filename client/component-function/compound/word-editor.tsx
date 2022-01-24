@@ -92,7 +92,7 @@ const WordEditor = create(
       let wrapper = function (...args: T): void {
         setTempWord((tempWord) => {
           setter(tempWord, ...args);
-          return tempWord;
+          return {...tempWord};
         });
       };
       return wrapper;

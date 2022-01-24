@@ -78,7 +78,7 @@ const ExampleEditor = create(
       let wrapper = function (...args: T): void {
         setTempExample((tempExample) => {
           setter(tempExample, ...args);
-          return tempExample;
+          return {...tempExample};
         });
       };
       return wrapper;
