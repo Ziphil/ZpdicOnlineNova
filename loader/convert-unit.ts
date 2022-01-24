@@ -31,7 +31,7 @@ function convertUnit(dimension: Dimension): {value: number, unit: string} | null
     let unit = "rem";
     return {value, unit};
   } else if (dimension.unit === "rpx") {
-    let value = parseFloat(dimension.value) / 16;
+    let value = parseFloat(dimension.value) / 15;
     let unit = "rem";
     return {value, unit};
   } else {
