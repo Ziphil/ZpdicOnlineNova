@@ -170,10 +170,6 @@ const DictionaryPage = create(
     }, [params.value]);
 
     useEffect(() => {
-      deserializeQuery(true);
-    }, [location.key]);
-
-    useEffect(() => {
       checkAuthorization();
       updateWordsImmediately({}, {serialize: true, keepShowExplanation: true});
     }, [dictionary]);
