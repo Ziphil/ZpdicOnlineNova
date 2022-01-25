@@ -160,7 +160,7 @@ const DictionarySettingPageForms = create(
         <Fragment>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryNameForm.label")}
-            description={"dictionarySettingPage.changeDictionaryNameForm.description"}
+            description={trans("dictionarySettingPage.changeDictionaryNameForm.description")}
           >
             <ChangeDictionaryNameForm number={dictionary.number} currentName={dictionary.name} onSubmit={fetchDictionary}
             />

@@ -32,7 +32,7 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
+let WordEditor = lazy(() => import("/client/component-function/compound/word-editor"));
 
 
 const CommissionPane = create(
