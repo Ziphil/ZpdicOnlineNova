@@ -8,9 +8,9 @@
 }
 
 .head {
+  @include bold-font;
   color: $head-color;
   font-size: 80%;
-  font-weight: bold;
 }
 
 .list {

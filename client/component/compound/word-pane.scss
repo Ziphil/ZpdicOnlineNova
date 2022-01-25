@@ -25,9 +25,9 @@
 }
 
 .name {
+  @include bold-font;
   margin: 0em 0.5em 0em 0em;
   font-size: 120%;
-  font-weight: bold;
   color: $head-color;
   display: inline-block;
 }
@@ -104,9 +104,9 @@
 }
 
 .title {
+  @include bold-font;
   margin: $paragraph-margin 0u;
   font-size: 80%;
-  font-weight: bold;
   color: $light-color;
   display: block;
 }

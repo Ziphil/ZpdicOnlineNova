@@ -4,8 +4,8 @@
 
 
 .title {
+  @include bold-font;
   font-size: 80%;
-  font-weight: bold;
   color: $light-color;
 }
 

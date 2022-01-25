@@ -35,7 +35,7 @@ $overlay-header-height: 150u;
 }
 
 .title {
-  font-weight: bold;
+  @include bold-font;
 }
 
 .right >* {

@@ -64,7 +64,7 @@ $setting-pane-horizontal-padding: 150u;
 }
 
 .label {
-  font-weight: bold;
+  @include bold-font;
   color: $head-color;
 }
 

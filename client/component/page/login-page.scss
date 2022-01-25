@@ -4,9 +4,9 @@
 
 
 .title {
+  @include bold-font;
   margin: 0u 0u $huge-margin 0u;
   font-size: 150%;
-  font-weight: bold;
   color: $light-color;
   text-align: center;
 }

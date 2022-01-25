@@ -24,7 +24,7 @@
 }
 
 .screen-name {
-  font-weight: bold;
+  @include bold-font;
 }
 
 .name {

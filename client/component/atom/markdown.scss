@@ -6,17 +6,17 @@
 .root h1,
 .root h2 {
   @include reset-first-margin;
+  @include bold-font;
   margin: $large-margin 0u $medium-margin 0u;
   font-size: 150%;
-  font-weight: bold;
   color: $head-color;
 }
 
 .root h3 {
   @include reset-first-margin;
+  @include bold-font;
   margin: $large-margin 0u $medium-margin 0u;
   font-size: 120%;
-  font-weight: bold;
   color: $head-color;
 }
 

@@ -21,8 +21,8 @@ $menu-item-horizontal-padding: 48u;
 }
 
 .root.highlight {
+  @include bold-font;
   margin-bottom: -3u;
-  font-weight: bold;
   color: $link-color;
   border-bottom: 19u $link-color solid;
 }

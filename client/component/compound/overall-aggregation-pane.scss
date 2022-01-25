@@ -24,8 +24,8 @@
 }
 
 .count {
+  @include bold-font;
   font-size: 250%;
-  font-weight: bold;
   letter-spacing: 0.05em;
   text-align: right;
 }
@@ -37,8 +37,8 @@
 }
 
 .whole-count {
+  @include bold-font;
   font-size: 120%;
-  font-weight: bold;
   text-align: left;
   display: none;
 }

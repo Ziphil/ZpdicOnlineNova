@@ -113,6 +113,8 @@ $tooltip-line-height: 1.4;
 
 $european-font-family: "Alegreya Sans", "Arial";
 $japanese-font-family: "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", "YuGothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック";
+$european-bold-font-family: "Alegreya Sans", "Arial";
+$japanese-bold-font-family: "游ゴシック", "Yu Gothic", "游ゴシック体", "YuGothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック";
 $monospace-font-family: "Inconsolata", "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", "YuGothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ ゴシック";
 $special-font-family: "Simonetta";
 $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 Brands", "FontAwesome";
@@ -128,6 +130,11 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   @media screen and (max-width: #{$page-width + 300u}) {
     @content;
   }
+}
+
+@mixin bold-font {
+  font-family: $european-bold-font-family, $japanese-bold-font-family, sans-serif;
+  font-weight: bold;
 }
 
 @mixin line-height($line-height: $line-height) {

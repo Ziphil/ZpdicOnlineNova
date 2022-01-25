@@ -11,7 +11,7 @@
 }
 
 .name {
-  font-weight: bold;
+  @include bold-font;
 }
 
 .status {
