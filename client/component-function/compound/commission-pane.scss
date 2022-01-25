@@ -1,0 +1,24 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  @include unordered-list-item("\F0DA", $light-color, 0.4em);
+}
+
+.comment {
+  @include line-height($tooltip-line-height);
+  margin: $small-margin 0u 0u 0u;
+  font-size: 80%;
+}
+
+.button {
+  margin: $small-margin 0u 0u 0u;
+  text-align: right;
+}
+
+.button >* {
+  @include reset-first-margin;
+  margin: 0u 0u 0u $control-horizontal-margin;
+}

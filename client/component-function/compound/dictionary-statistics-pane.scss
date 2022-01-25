@@ -1,0 +1,34 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.title {
+  font-size: 80%;
+  font-weight: bold;
+  color: $light-color;
+}
+
+.row {
+  @include reset-first-margin;
+  margin: $medium-margin 0u 0u 0u;
+  display: flex;
+}
+
+.item {
+  flex: 1;
+}
+
+.value-wrapper {
+  margin: $tiny-margin 0u 0u 0u;
+}
+
+.value {
+  font-size: 120%;
+}
+
+.note {
+  margin: 0u 0u 0u 24u;
+  font-size: 90%;
+  color: $light-color;
+}

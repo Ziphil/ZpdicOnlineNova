@@ -38,7 +38,7 @@ const DocumentPage = create(
 
     let [source, setSource] = useState<string | null>(null);
     let [found, setFound] = useState(true);
-    let params = useParams<DocumentPageParams>();
+    let params = useParams<{firstPath: string, secondPath: string}>();
     let location = useLocation();
     let [locale] = useLocale();
     let {request} = useRequest();
@@ -106,7 +106,5 @@ const DocumentPage = create(
   }
 );
 
-
-export type DocumentPageParams = {firstPath: string, secondPath: string};
 
 export default DocumentPage;
