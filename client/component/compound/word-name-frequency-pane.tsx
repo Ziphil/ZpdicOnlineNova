@@ -37,7 +37,7 @@ const WordNameFrequencyPane = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let [data, setData] = useState<ChartData | null>();
+    let [data, setData] = useState<ChartData | null>(null);
     let [, {trans}] = useIntl();
     let {request} = useRequest();
 
