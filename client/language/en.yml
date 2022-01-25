@@ -697,6 +697,7 @@ dictionarySettingPage:
     description: >-
       The frequency of occurrence of each letter used in the headwords.
 errorPage:
+  back: "Back to top page"
   description: >-
     An unexpected error has occurred.
 languagePage:

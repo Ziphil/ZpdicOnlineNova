@@ -2,15 +2,16 @@
 
 import * as react from "react";
 import {
-  ErrorInfo,
   ReactElement,
-  useMemo
+  useCallback
 } from "react";
+import Button from "/client/component/atom/button";
 import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useIntl,
+  usePath
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 
@@ -19,20 +20,20 @@ const ErrorPage = create(
   require("./error-page.scss"), "ErrorPage",
   function ({
     error,
-    errorInfo
+    resetErrorBoundary
   }: {
-    error: Error,
-    errorInfo: ErrorInfo
+    error: Error;
+    resetErrorBoundary: (...args: Array<unknown>) => void
   }): ReactElement {
 
     let [, {trans}] = useIntl();
+    let {pushPath} = usePath();
 
-    let message = useMemo(() => {
-      let message = "";
-      message += error.stack + "\n";
-      message += errorInfo.componentStack;
-      return message;
-    }, [error, errorInfo]);
+    let handleClick = useCallback(function (): void {
+      resetErrorBoundary();
+      pushPath("/");
+    }, [resetErrorBoundary, pushPath]);
+
     let node = (
       <Page>
         <div styleName="root">
@@ -41,8 +42,11 @@ const ErrorPage = create(
             {trans("errorPage.description")}
           </div>
           <pre styleName="message">
-            {message}
+            {error.stack}
           </pre>
+          <div styleName="button">
+            <Button label={trans("errorPage.back")} iconLabel="&#xF0A8;" onClick={handleClick}/>
+          </div>
         </div>
       </Page>
     );

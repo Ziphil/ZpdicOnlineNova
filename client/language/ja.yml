@@ -696,6 +696,7 @@ dictionarySettingPage:
     description: >-
       見出し語に使われている各文字の出現頻度です。
 errorPage:
+  back: "トップページに戻る"
   description: >-
     原因不明のエラーが発生しました。
 languagePage:
