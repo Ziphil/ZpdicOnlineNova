@@ -54,27 +54,25 @@ const Root = create(
     }, []);
 
     let node = (ready) && (
-      <StrictMode>
-        <BrowserRouter>
-          <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError}>
-            <Suspense fallback={<EmptyPage/>}>
-              <ScrollTop>
-                <Switch>
-                  <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
-                  <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-                  <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
-                  <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
-                  <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
-                  <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
-                  <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
-                  <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
-                  <Authenticator type="none" component={NotFoundPage}/>
-                </Switch>
-              </ScrollTop>
-            </Suspense>
-          </IntlProvider>
-        </BrowserRouter>
-      </StrictMode>
+      <BrowserRouter>
+        <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError}>
+          <Suspense fallback={<EmptyPage/>}>
+            <ScrollTop>
+              <Switch>
+                <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
+                <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+                <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
+                <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+                <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
+                <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
+                <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
+                <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
+                <Authenticator type="none" component={NotFoundPage}/>
+              </Switch>
+            </ScrollTop>
+          </Suspense>
+        </IntlProvider>
+      </BrowserRouter>
     );
     return node || null;
 
