@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+@import url("https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap&subset=cyrillic,cyrillic-ext,greek,latin-ext,vietnamese");
+@import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inconsolata&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Simonetta:400&display=swap");
+@import "/client/component/mixin.scss";
+@import "/client/component/highlight.scss";
+@import "/client/component/atom/portal.scss";
+
+
+html {
+  font-size: $root-size;
+  @media screen and (max-width: 580px) {
+    font-size: $root-size * 0.7;
+  }
+}
+
+body {
+  margin: 0u;
+  padding: 0u;
+  font-family: $european-font-family, $japanese-font-family, sans-serif;
+  font-feature-settings: "palt" 1, "pkna" 1, "lnum" 1;
+  color: $text-color;
+  line-height: 1;
+  background-color: $background-color;
+  overflow-x: auto;
+  overflow-y: scroll;
+  text-decoration-skip-ink: none;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+:global(.grecaptcha-badge) {
+  visibility: hidden;
+}
