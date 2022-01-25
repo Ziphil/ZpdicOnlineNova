@@ -31,6 +31,8 @@ import ScrollTop from "/client/component-function/util/scroll-top";
 require("../../node_modules/codemirror/lib/codemirror.css");
 require("../../node_modules/c3/c3.css");
 
+let ActivateUserPage = lazy(() => import("/client/component-function/page/activate-user-page"));
+let ContactPage = lazy(() => import("/client/component-function/page/contact-page"));
 let DashboardPage = lazy(() => import("/client/component-function/page/dashboard-page"));
 let DictionaryListPage = lazy(() => import("/client/component-function/page/dictionary-list-page"));
 let DictionaryPage = lazy(() => import("/client/component-function/page/dictionary-page"));
@@ -67,6 +69,7 @@ const Root = create(
                 <Authenticator type="guest" exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
                 <Authenticator type="guest" exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
                 <Authenticator type="guest" exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
+                <Authenticator type="none" exact sensitive path="/activate" component={ActivateUserPage}/>
                 <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
                 <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
                 <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
@@ -74,6 +77,7 @@ const Root = create(
                 <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
                 <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
                 <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
+                <Authenticator type="none" exact sensitive path="/contact" component={ContactPage}/>
                 <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
                 <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
                 <Authenticator type="none" component={NotFoundPage}/>
