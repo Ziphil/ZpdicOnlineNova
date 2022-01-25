@@ -4,8 +4,11 @@ import downloadFile from "js-file-download";
 import * as react from "react";
 import {
   Dispatch,
+  Fragment,
   ReactElement,
   SetStateAction,
+  Suspense,
+  lazy,
   useCallback,
   useState
 } from "react";
@@ -29,6 +32,11 @@ import {
 import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
+
+
+let WordEditor = lazy(() => import("/client/component-function/compound/word-editor"));
+let ExampleEditor = lazy(() => import("/client/component-function/compound/example-editor"));
+let CommissionEditor = lazy(() => import("/client/component-function/compound/commission-editor"));
 
 
 const DictionaryHeader = create(
@@ -226,8 +234,27 @@ const DictionaryHeaderOverlays = create(
     setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
+    let wordEditorNode = (dictionary !== null && wordEditorOpen) && (
+      <Suspense fallback="">
+        <WordEditor dictionary={dictionary} word={null} open={wordEditorOpen} onClose={() => setWordEditorOpen(false)}/>
+      </Suspense>
+    );
+    let exampleEditorNode = (dictionary !== null && exampleEditorOpen) && (
+      <Suspense fallback="">
+        <ExampleEditor dictionary={dictionary} example={null} open={exampleEditorOpen} onClose={() => setExampleEditorOpen(false)}/>
+      </Suspense>
+    );
+    let commissionEditorNode = (dictionary !== null && commissionEditorOpen) && (
+      <Suspense fallback="">
+        <CommissionEditor dictionary={dictionary} open={commissionEditorOpen} onClose={() => setCommissionEditorOpen(false)}/>
+      </Suspense>
+    );
     let node = (
-      <></>
+      <Fragment>
+        {wordEditorNode}
+        {exampleEditorNode}
+        {commissionEditorNode}
+      </Fragment>
     );
     return node;
 
