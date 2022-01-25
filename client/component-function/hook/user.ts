@@ -22,7 +22,7 @@ export let useRawUser = createGlobalState<DetailedUser | null>(null);
 
 export function useDefaultUser(): {user: DetailedUser | null, ready: boolean} {
   let [user, setUser] = useRawUser();
-  let [ready, setReady] = useState(true);
+  let [ready, setReady] = useState(false);
   useMount(async () => {
     let url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
     let response = await axios.post(url, {}, {validateStatus: () => true});
