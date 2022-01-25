@@ -25,14 +25,14 @@ const ResetUserPasswordPage = create(
   }: {
   }): ReactElement {
 
+    let [, {trans}] = useIntl();
     let location = useLocation();
+
     let tokenKey = useMemo(() => {
       let query = queryParser.parse(location.search ?? "");
       let tokenKey = (typeof query.key === "string") ? query.key : null;
       return tokenKey;
     }, [location]);
-    let [, {trans}] = useIntl();
-
     let node = (
       <Page>
         <div styleName="title">{trans("resetUserPasswordPage.title")}</div>
