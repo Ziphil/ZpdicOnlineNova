@@ -80,7 +80,7 @@ const ZatlinExecutor = create(
             language="zatlin"
             nowrap={true}
             fitHeight={true}
-            onSet={() => setSource(source)}
+            onSet={(source) => setSource(source)}
           />
           <Button className={styles!["button"]} label={trans("zatlinExecutor.execute")} onClick={executeZatlin}/>
           <Input label={trans("zatlinExecutor.output")} value={output} readOnly={true}/>
