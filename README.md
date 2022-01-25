@@ -13,6 +13,20 @@ ZpDIC の Web アプリ版です。
 
 (*>△<) ＜応援ください!
 
+## お問い合わせ
+ZpDIC Online に関する開発状況や追加予定の機能などは、以下のダッシュボードをご覧ください。
+
+- [開発ダッシュボード](https://ziphil.notion.site/ZpDIC-Online-987030f6505e4cf1ba8fe08121584d93)
+
+ZpDIC Online に関するご意見やご要望は、ZpDIC Online 上の[お問い合わせフォーム](http://zpdic.ziphil.com/contact)から送信していただくか、このリポジトリにイシューとして追加してください。
+どちらの方法を用いても、最終的に開発ダッシュボードの項目として追加され、今後の開発の参考にさせていただきます。
+
+## コントリビューション
+「needs help」タグが付けられたイシューについては、プルリクエストなどによる貢献を受け付けています。
+詳細は各イシューのページをご覧ください。
+
+- [貢献を求めるイシューの一覧](https://github.com/Ziphil/ZpdicOnlineNova/issues?q=is%3Aissue+is%3Aopen+label%3A%22needs+help%22)
+
 ## 使い方
 以下は、環境構築やデプロイのために行うべき操作の概要です。
 備忘録として残しておきます。
@@ -27,20 +41,3 @@ ZpDIC の Web アプリ版です。
 
 なお、これらのドキュメントの内容は備忘録にすぎず、クローンサイトの公開を推奨するものではありません。
 管理者である Ziphil の許可を得ずに、このリポジトリのプログラムをそのままもしくはわずかだけを改変し、それを利用して Web アプリケーションを公開することを禁じます。
-
-## お問い合わせ
-ZpDIC Online に関する機能追加の要望やバグの報告は、以下のいずれかの方法でお願いします。
-どの方法を用いても、最終的にこのリポジトリのイシューとして追加され、今後の開発の際に検討されます。
-
-- Twitter 上で [@Ziphil](https://twitter.com/Ziphil) へリプライか DM を送信
-- ZpDIC Online 上の[お問い合わせフォーム](http://zpdic.ziphil.com/contact)から送信
-- このリポジトリにイシューを直接追加
-
-なお、現在の開発状況はこのリポジトリの[プロジェクト](https://github.com/Ziphil/ZpdicOnlineNova/projects/2)で確認できます。
-機能追加の要望をする際は参考にしてください。
-
-## コントリビューション
-「needs help」タグが付けられたイシューについては、プルリクエストなどによる貢献を受け付けています。
-詳細は各イシューのページをご覧ください。
-
-- [貢献を求めるイシューの一覧](https://github.com/Ziphil/ZpdicOnlineNova/issues?q=is%3Aissue+is%3Aopen+label%3A%22needs+help%22)
