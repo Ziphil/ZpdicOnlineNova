@@ -37,7 +37,10 @@ let DictionaryPage = lazy(() => import("/client/component-function/page/dictiona
 let DictionarySettingPage = lazy(() => import("/client/component-function/page/dictionary-setting-page"));
 let DocumentPage = lazy(() => import("/client/component-function/page/document-page"));
 let LanguagePage = lazy(() => import("/client/component-function/page/language-page"));
+let LoginPage = lazy(() => import("/client/component-function/page/login-page"));
 let NotificationPage = lazy(() => import("/client/component-function/page/notification-page"));
+let RegisterPage = lazy(() => import("/client/component-function/page/register-page"));
+let ResetUserPasswordPage = lazy(() => import("/client/component-function/page/reset-user-password-page"));
 let TopPage = lazy(() => import("/client/component-function/page/top-page"));
 
 
@@ -61,6 +64,9 @@ const Root = create(
             <ScrollTop>
               <Switch>
                 <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
+                <Authenticator type="guest" exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
+                <Authenticator type="guest" exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
+                <Authenticator type="guest" exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
                 <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
                 <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
                 <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
