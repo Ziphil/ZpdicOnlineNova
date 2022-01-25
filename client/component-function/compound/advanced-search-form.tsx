@@ -62,7 +62,7 @@ const AdvancedSearchForm = create(
       let wrapper = function (...args: T): void {
         setParameter((parameter) => {
           setter(parameter, ...args);
-          return parameter;
+          return Object.assign(AdvancedWordParameter.createEmpty(), parameter);
         });
       };
       return wrapper;
