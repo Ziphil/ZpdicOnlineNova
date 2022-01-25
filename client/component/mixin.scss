@@ -108,8 +108,8 @@ $inset-box-shadow-setting: 0u 6u 8u;
 $small-border-radius: 10u;
 $large-border-radius: 16u;
 
-$line-height: 1.6;
-$tooltip-line-height: 1.4;
+$line-height: 26px / $root-size;
+$tooltip-line-height: 22px / $root-size;
 
 $european-font-family: "Alegreya Sans", "Arial";
 $japanese-font-family: "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", "YuGothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック";
