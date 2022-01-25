@@ -11,7 +11,7 @@
 
 .container {
   @include header-container;
-  font-size: 75%;
+  font-size: 70%;
   color: $footer-color;
   line-height: 1;
   border-top: 3u border-color($footer-color) solid;
