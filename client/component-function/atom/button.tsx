@@ -51,10 +51,6 @@ const Button = create(
     let [loading, setLoading] = useState(false);
     let [promise, setPromise] = useState<CancelablePromise<void> | null>(null);
 
-    useUnmount(() => {
-      promise?.cancel();
-    });
-
     let handleClick = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       event.preventDefault();
       if (reactive) {
@@ -80,6 +76,10 @@ const Button = create(
         }
       }
     }, [reactive, onClick]);
+
+    useUnmount(() => {
+      promise?.cancel();
+    });
 
     let styleName = StyleNameUtil.create(
       "root",

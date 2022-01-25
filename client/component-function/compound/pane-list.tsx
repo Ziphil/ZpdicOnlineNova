@@ -51,10 +51,6 @@ const PaneList = create(
     let [hitResult, setHitResult] = useState<WithSize<T>>([[], 0]);
     let [loading, setLoading] = useState(false);
 
-    useEffect(() => {
-      handlePageSet(page);
-    }, [items]);
-
     let handlePageSet = useCallback(async function (page: number): Promise<void> {
       let offset = size * page;
       if (typeof items === "function") {
@@ -76,6 +72,10 @@ const PaneList = create(
         }
       }
     }, [items, size]);
+
+    useEffect(() => {
+      handlePageSet(page);
+    }, [items]);
 
     let panesProps = {renderer, column, style, border, hitResult};
     let panes = (method === "div") ? <PaneListDivPanes {...panesProps}/> : <PaneListTablePanes {...panesProps}/>;

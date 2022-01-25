@@ -44,7 +44,6 @@ const DictionaryPage = create(
   }: {
   }): ReactElement {
 
-
     let [dictionary, setDictionary] = useState<EnhancedDictionary | null>(null);
     let [getQuery, setQuery] = useQueryState(serializeQuery, deserializeQuery);
     let [hitResult, setHitResult] = useState<DictionaryHitResult>({words: [[], 0], suggestions: []});
