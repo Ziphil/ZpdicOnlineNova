@@ -343,55 +343,60 @@ dictionaryPane:
 dictionaryStatisticsPane:
   wordCount: "単語数"
   wordCountRaw: 
-    value: "{value, number}"
-    unit: " 語"
+    value: "{value, number} "
+    unit: "語"
   wordCountTokipona: 
-    value: "{value, number, ::.00}"
-    unit: " TP"
+    value: "{value, number, ::.00} "
+    unit: "TP"
+  wordCountCtwi: 
+    valuePositive: "{value, number, ::.00} "
+    valueNegative: "−{value, number, ::sign-never .00} "
+    valueInfinity: "−∞ "
+    unit: "CTP"
   wordCountLogTokipona: 
-    valuePositive: "{value, number, ::.000}"
-    valueNegative: "−{value, number, ::sign-never .000}"
-    valueInfinity: "−∞"
-    unit: " logTP"
+    valuePositive: "{value, number, ::.000} "
+    valueNegative: "−{value, number, ::sign-never .000} "
+    valueInfinity: "−∞ "
+    unit: "logTP"
   wordCountCoverage: 
-    value: "{value, number, ::.000}"
-    unit: " %EC"
+    value: "{value, number, ::.000} "
+    unit: "%EC"
   wordNameLengthAverage:
     title: "平均単語長"
-    value: "{value, number, ::.00}"
-    unit: " 文字/語"
+    value: "{value, number, ::.00} "
+    unit: "文字/語"
   equivalentNameCountWhole:
     title: "訳語数"
-    value: "{value, number}"
-    unit: " 個"
+    value: "{value, number} "
+    unit: "個"
   equivalentNameCountAverage:
     title: "平均訳語数"
-    value: "{value, number, ::.00}"
-    unit: " 個/語"
+    value: "{value, number, ::.00} "
+    unit: "個/語"
   informationCountWhole:
     title: "内容数"
-    value: "{value, number}"
-    unit: " 項目"
+    value: "{value, number} "
+    unit: "項目"
   informationCountAverage:
     title: "平均内容数"
-    value: "{value, number, ::.00}"
-    unit: " 項目/語"
+    value: "{value, number, ::.00} "
+    unit: "項目/語"
   informationTextLengthWhole:
     title: "内容長"
-    value: "{value, number}"
-    unit: " 文字"
+    value: "{value, number} "
+    unit: "文字"
   informationTextLengthAverage:
     title: "平均内容長"
-    value: "{value, number, ::.00}"
-    unit: " 文字/語"
+    value: "{value, number, ::.00} "
+    unit: "文字/語"
   exampleCountWhole:
     title: "例文数"
-    value: "{value, number}"
-    unit: " 文"
+    value: "{value, number} "
+    unit: "文"
   exampleCountAverage:
     title: "平均例文数"
-    value: "{value, number, ::.00}"
-    unit: " 文/語"
+    value: "{value, number, ::.00} "
+    unit: "文/語"
   nfd: "(NFD)"
   nfc: "(NFC)"
 exampleEditor:

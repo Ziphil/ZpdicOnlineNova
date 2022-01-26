@@ -343,55 +343,60 @@ dictionaryPane:
 dictionaryStatisticsPane:
   wordCount: "Words"
   wordCountRaw: 
-    value: "{value, number}"
-    unit: " {value, plural, one {word} other {words}}"
+    value: "{value, number} "
+    unit: "{value, plural, one {word} other {words}} "
   wordCountTokipona: 
-    value: "{value, number, ::.00}"
-    unit: " TP"
+    value: "{value, number, ::.00} "
+    unit: "TP"
+  wordCountCtwi: 
+    valuePositive: "{value, number, ::.00} "
+    valueNegative: "−{value, number, ::sign-never .00} "
+    valueInfinity: "−∞ "
+    unit: "CTP"
   wordCountLogTokipona: 
-    valuePositive: "{value, number, ::.000}"
-    valueNegative: "−{value, number, ::sign-never .000}"
-    valueInfinity: "−∞"
-    unit: " logTP"
+    valuePositive: "{value, number, ::.000} "
+    valueNegative: "−{value, number, ::sign-never .000} "
+    valueInfinity: "−∞ "
+    unit: "logTP"
   wordCountCoverage: 
-    value: "{value, number, ::.000}"
-    unit: " %EC"
+    value: "{value, number, ::.000} "
+    unit: "%EC"
   wordNameLengthAverage:
     title: "Average headword length"
-    value: "{value, number, ::.00}"
-    unit: " {value, plural, one {char/word} other {chars/word}}"
+    value: "{value, number, ::.00} "
+    unit: "{value, plural, one {char/word} other {chars/word}}"
   equivalentNameCountWhole:
     title: "Translations"
-    value: "{value, number}"
-    unit: " {value, plural, one {term} other {terms}}"
+    value: "{value, number} "
+    unit: "{value, plural, one {term} other {terms}}"
   equivalentNameCountAverage:
     title: "Average translations"
-    value: "{value, number, ::.00}"
-    unit: " {value, plural, one {term/word} other {terms/word}}"
+    value: "{value, number, ::.00} "
+    unit: "{value, plural, one {term/word} other {terms/word}}"
   informationCountWhole:
     title: "Contents"
-    value: "{value, number}"
-    unit: " {value, plural, one {item} other {items}}"
+    value: "{value, number} "
+    unit: "{value, plural, one {item} other {items}}"
   informationCountAverage:
     title: "Average contents"
-    value: "{value, number, ::.00}"
-    unit: " {value, plural, one {item/word} other {items/word}}"
+    value: "{value, number, ::.00} "
+    unit: "{value, plural, one {item/word} other {items/word}}"
   informationTextLengthWhole:
     title: "Content length"
-    value: "{value, number}"
-    unit: " {value, plural, one {char} other {chars}}"
+    value: "{value, number} "
+    unit: "{value, plural, one {char} other {chars}}"
   informationTextLengthAverage:
     title: "Average content length"
-    value: "{value, number, ::.00}"
-    unit: " {value, plural, one {char/word} other {chars/word}}"
+    value: "{value, number, ::.00} "
+    unit: "{value, plural, one {char/word} other {chars/word}}"
   exampleCountWhole:
     title: "Examples"
-    value: "{value, number}"
-    unit: " {value, plural, one {sentence} other {sentences}}"
+    value: "{value, number} "
+    unit: "{value, plural, one {sentence} other {sentences}}"
   exampleCountAverage:
     title: "Average examples"
-    value: "{value, number, ::.00}"
-    unit: " {value, plural, one {sentence/word} other {sentences/word}}"
+    value: "{value, number, ::.00} "
+    unit: "{value, plural, one {sentence/word} other {sentences/word}}"
   nfd: "(NFD)"
   nfc: "(NFC)"
 exampleEditor:

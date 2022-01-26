@@ -456,8 +456,9 @@ export class DictionarySchema extends DiscardableSchema {
       let raw = rawWordCount;
       let tokipona = rawWordCount / 120;
       let logTokipona = (rawWordCount <= 0) ? null : Math.log10(rawWordCount / 120);
+      let ctwi = (rawWordCount <= 0) ? null : (Math.log(rawWordCount) / Math.log(120)) * 120;
       let coverage = Math.log10(rawWordCount) * 20 + 20;
-      return {raw, tokipona, logTokipona, coverage};
+      return {raw, tokipona, logTokipona, ctwi, coverage};
     };
     let wordCount = calcWordCount(rawWordCount);
     let wordNameLengths = calcWithRatio(wholeWordNameLengths);

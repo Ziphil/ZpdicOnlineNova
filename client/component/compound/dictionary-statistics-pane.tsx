@@ -46,6 +46,7 @@ const DictionaryStatisticsPane = create(
     });
 
     let wordCountLogTokiponaType = (statistics?.wordCount.logTokipona! === null) ? "Infinity" : (statistics?.wordCount.logTokipona! < 0) ? "Negative" : "Positive";
+    let wordCountCtwiType = (statistics?.wordCount.ctwi! === null) ? "Infinity" : (statistics?.wordCount.ctwi! < 0) ? "Negative" : "Positive";
     let node = (
       <div styleName="root">
         <Loading loading={statistics === null}>
@@ -62,12 +63,8 @@ const DictionaryStatisticsPane = create(
                   <span styleName="unit">{trans("dictionaryStatisticsPane.wordCountTokipona.unit", {value: statistics?.wordCount.tokipona})}</span>
                 </div>
                 <div styleName="value-wrapper">
-                  <span styleName="value">{trans(`dictionaryStatisticsPane.wordCountLogTokipona.value${wordCountLogTokiponaType}`, {value: statistics?.wordCount.logTokipona})}</span>
-                  <span styleName="unit">{trans("dictionaryStatisticsPane.wordCountLogTokipona.unit", {value: statistics?.wordCount.logTokipona})}</span>
-                </div>
-                <div styleName="value-wrapper" style={{display: "none"}}>
-                  <span styleName="value">{trans("dictionaryStatisticsPane.wordCountCoverage.value", {value: statistics?.wordCount.coverage})}</span>
-                  <span styleName="unit">{trans("dictionaryStatisticsPane.wordCountCoverage.unit", {value: statistics?.wordCount.coverage})}</span>
+                  <span styleName="value">{trans(`dictionaryStatisticsPane.wordCountCtwi.value${wordCountCtwiType}`, {value: statistics?.wordCount.ctwi})}</span>
+                  <span styleName="unit">{trans("dictionaryStatisticsPane.wordCountCtwi.unit", {value: statistics?.wordCount.ctwi})}</span>
                 </div>
               </div>
             </div>
