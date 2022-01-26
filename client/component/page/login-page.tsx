@@ -2,35 +2,38 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
 import LoginForm from "/client/component/compound/login-form";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import Page from "/client/component/page/page";
 
 
-@style(require("./login-page.scss"))
-export default class LoginPage extends Component<Props, State> {
+const LoginPage = create(
+  require("./login-page.scss"), "LoginPage",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public render(): ReactNode {
+    let [, {trans}] = useIntl();
+
     let node = (
       <Page>
-        <div styleName="title">{this.trans("loginPage.title")}</div>
+        <div styleName="title">{trans("loginPage.title")}</div>
         <div styleName="form">
           <LoginForm showRegister={false}/>
         </div>
       </Page>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default LoginPage;

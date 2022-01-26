@@ -4,19 +4,24 @@ import * as react from "react";
 import {
   Fragment,
   MouseEvent,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import {
   AsyncOrSync
 } from "ts-essentials";
-import Component from "/client/component/component";
 import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
 import SearchForm from "/client/component/compound/search-form";
 import WordList from "/client/component/compound/word-list";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useDebounce,
+  useRequest
+} from "/client/component/hook";
 import {
   EditableWord,
   EnhancedDictionary,
@@ -26,129 +31,140 @@ import {
   WordParameter
 } from "/client/skeleton/dictionary";
 import {
-  debounce
-} from "/client/util/decorator";
-import {
   WithSize
 } from "/server/controller/internal/type";
 
 
-@style(require("./word-searcher.scss"))
-export default class WordSearcher extends Component<Props, State> {
+const WordSearcher = create(
+  require("./word-searcher.scss"), "WordSearcher",
+  function ({
+    dictionary,
+    style = "normal",
+    showButton = false,
+    onSubmit,
+    onEditConfirm
+  }: {
+    dictionary: EnhancedDictionary | null,
+    style?: "normal" | "simple",
+    showButton?: boolean,
+    onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+    onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    style: "normal",
-    showButton: false
-  };
-  public state: State = {
-    parameter: NormalWordParameter.createEmpty(),
-    page: 0,
-    hitResult: {words: [[], 0], suggestions: []},
-    loading: false
-  };
+    let [parameter, setParameter] = useState<WordParameter>(NormalWordParameter.createEmpty());
+    let [page, setPage] = useState(0);
+    let [hitResult, setHitResult] = useState<DictionaryHitResult>({words: [[], 0], suggestions: []});
+    let [loading, setLoading] = useState(false);
+    let {request} = useRequest();
 
-  public async componentDidMount(): Promise<void> {
-    this.updateWordsImmediately();
-  }
-
-  private async updateWordsImmediately(): Promise<void> {
-    let number = this.props.dictionary?.number;
-    if (number !== undefined) {
-      let parameter = this.state.parameter;
-      let page = this.state.page;
-      let offset = page * 40;
-      let size = 40;
-      this.setState({loading: true});
-      let response = await this.request("searchDictionary", {number, parameter, offset, size});
-      if (response.status === 200 && !("error" in response.data)) {
-        let hitResult = response.data;
-        this.setState({hitResult, loading: true});
-      } else {
-        this.setState({hitResult: {words: [[], 0], suggestions: []}, loading: true});
+    let updateWordsImmediately = useCallback(async function (overrides?: {parameter?: WordParameter, page?: number}): Promise<void> {
+      let number = dictionary?.number;
+      if (number !== undefined) {
+        let usedParameter = overrides?.parameter ?? parameter;
+        let usedPage = overrides?.page ?? page;
+        let offset = usedPage * 40;
+        let size = 40;
+        setLoading(true);
+        let response = await request("searchDictionary", {number, parameter: usedParameter, offset, size});
+        if (response.status === 200 && !("error" in response.data)) {
+          let hitResult = response.data;
+          setHitResult(hitResult);
+          setLoading(false);
+        } else {
+          setHitResult({words: [[], 0], suggestions: []});
+          setLoading(false);
+        }
       }
-    }
-  }
+    }, [dictionary?.number, parameter, page, request]);
 
-  @debounce(500)
-  private async updateWords(): Promise<void> {
-    await this.updateWordsImmediately();
-  }
+    let updateWords = useDebounce(async function (overrides?: {parameter?: WordParameter, page?: number}): Promise<void> {
+      await updateWordsImmediately(overrides);
+    }, 500, [updateWordsImmediately]);
 
-  private async handleParameterSet(parameter: WordParameter): Promise<void> {
-    let page = 0;
-    this.setState({parameter, page}, async () => {
-      await this.updateWords();
-    });
-  }
+    let handleParameterSet = useCallback(async function (parameter: WordParameter): Promise<void> {
+      let page = 0;
+      setParameter(parameter);
+      setPage(page);
+      await updateWords({parameter, page});
+    }, [updateWords]);
 
-  private handlePageSet(page: number): void {
-    this.setState({page}, async () => {
-      await this.updateWordsImmediately();
-    });
-  }
+    let handlePageSet = useCallback(async function (page: number): Promise<void> {
+      setPage(page);
+      await updateWordsImmediately({page});
+    }, [updateWordsImmediately]);
 
-  private renderWordList(): ReactNode {
-    let [hitWords, hitSize] = this.state.hitResult.words;
-    let maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
-    let node = (
-      <Fragment>
-        <div styleName="word-list">
-          <WordList
-            dictionary={this.props.dictionary!}
-            words={hitWords}
-            style={this.props.style}
-            showButton={this.props.showButton}
-            offset={0}
-            size={40}
-            onSubmit={this.props.onSubmit}
-            onEditConfirm={this.props.onEditConfirm}
-          />
-        </div>
-        <div styleName="pagination">
-          <PaginationButton
-            page={this.state.page}
-            minPage={0}
-            maxPage={maxPage}
-            onSet={this.handlePageSet.bind(this)}
-          />
-        </div>
-      </Fragment>
-    );
-    return node;
-  }
-
-  public render(): ReactNode {
-    let innerNode = (this.props.dictionary !== null) && this.renderWordList();
+    let innerProps = {dictionary, style, showButton, page, hitResult, onSubmit, onEditConfirm, handlePageSet};
+    let innerNode = (dictionary !== null) && <WordSearcherWordList {...innerProps}/>;
     let node = (
       <div>
-        <Loading loading={this.props.dictionary === null}>
+        <Loading loading={dictionary === null}>
           <div styleName="search-form">
-            <SearchForm dictionary={this.props.dictionary} parameter={this.state.parameter} onParameterSet={this.handleParameterSet.bind(this)}/>
+            <SearchForm dictionary={dictionary!} parameter={parameter} onParameterSet={handleParameterSet}/>
           </div>
           {innerNode}
         </Loading>
       </div>
     );
     return node;
+
   }
+);
 
-}
+
+const WordSearcherWordList = create(
+  require("./word-searcher.scss"),
+  function ({
+    dictionary,
+    style,
+    showButton,
+    page,
+    hitResult,
+    onSubmit,
+    onEditConfirm,
+    handlePageSet
+  }: {
+    dictionary: EnhancedDictionary | null,
+    style: "normal" | "simple",
+    showButton: boolean,
+    page: number,
+    hitResult: DictionaryHitResult,
+    onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+    onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    handlePageSet: (page: number) => Promise<void>
+  }): ReactElement {
+
+    let [hitWords, hitSize] = hitResult.words;
+    let maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
+    let node = (
+      <Fragment>
+        <div styleName="word-list">
+          <WordList
+            dictionary={dictionary!}
+            words={hitWords}
+            style={style}
+            showButton={showButton}
+            offset={0}
+            size={40}
+            onSubmit={onSubmit}
+            onEditConfirm={onEditConfirm}
+          />
+        </div>
+        <div styleName="pagination">
+          <PaginationButton
+            page={page}
+            minPage={0}
+            maxPage={maxPage}
+            onSet={handlePageSet}
+          />
+        </div>
+      </Fragment>
+    );
+    return node;
+
+  }
+);
 
 
-type Props = {
-  dictionary: EnhancedDictionary,
-  style: "normal" | "simple",
-  showButton: boolean,
-  onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
-};
-type DefaultProps = {
-  style: "normal" | "simple",
-  showButton: boolean
-};
-type State = {
-  parameter: WordParameter,
-  page: number,
-  hitResult: {words: WithSize<Word>, suggestions: Array<Suggestion>},
-  loading: boolean
-};
+export type DictionaryHitResult = {words: WithSize<Word>, suggestions: Array<Suggestion>};
+
+export default WordSearcher;

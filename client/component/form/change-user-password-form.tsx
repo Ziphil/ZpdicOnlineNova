@@ -2,14 +2,20 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 import {
   createValidate
 } from "/client/util/misc";
@@ -21,41 +27,38 @@ import {
 } from "/server/model/validation";
 
 
-@style(require("./change-user-password-form.scss"))
-export default class ChangeUserPasswordForm extends Component<Props, State> {
+const ChangeUserPasswordForm = create(
+  require("./change-user-password-form.scss"), "ChangeUserPasswordForm",
+  function ({
+    onSubmit
+  }: {
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public state: State = {
-    password: ""
-  };
+    let [password, setPassword] = useState("");
+    let [intl, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async handleClick(): Promise<void> {
-    let password = this.state.password;
-    let response = await this.request("changeUserPassword", {password});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("userPasswordChanged");
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let handleClick = useCallback(async function (): Promise<void> {
+      let response = await request("changeUserPassword", {password});
+      if (response.status === 200) {
+        addInformationPopup("userPasswordChanged");
+        onSubmit?.();
       }
-    }
-  }
+    }, [password, request, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
-    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidUserPassword"));
+    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
     let node = (
       <form styleName="root">
-        <Input label={this.trans("changeUserPasswordForm.password")} type="flexible" value={this.state.password} validate={validate} useTooltip={true} onSet={(password) => this.setState({password})}/>
-        <Button label={this.trans("changeUserPasswordForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+        <Input label={trans("changeUserPasswordForm.password")} type="flexible" value={password} validate={validate} useTooltip={true} onSet={(password) => setPassword(password)}/>
+        <Button label={trans("changeUserPasswordForm.confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  onSubmit?: () => void
-};
-type State = {
-  password: string
-};
+export default ChangeUserPasswordForm;

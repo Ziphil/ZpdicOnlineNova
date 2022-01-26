@@ -3,55 +3,63 @@
 import * as react from "react";
 import {
   Fragment,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import TextArea from "/client/component/atom/text-area";
-import Component from "/client/component/component";
 import AkrantiainExecutor from "/client/component/compound/akrantiain-executor";
 import ZatlinExecutor from "/client/component/compound/zatlin-executor";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 
 
-@style(require("./change-dictionary-source-form.scss"))
-export default class ChangeDictionarySourceForm extends Component<Props, State> {
+const ChangeDictionarySourceForm = create(
+  require("./change-dictionary-source-form.scss"), "ChangeDictionarySourceForm",
+  function ({
+    number,
+    currentSource,
+    language,
+    onSubmit
+  }: {
+    number: number,
+    currentSource: string | undefined,
+    language: "akrantiain" | "zatlin",
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public state: State = {
-    source: undefined as any,
-    executorOpen: false
-  };
+    let [source, setSource] = useState(currentSource ?? "");
+    let [executorOpen, setExecutorOpen] = useState(false);
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  public constructor(props: any) {
-    super(props);
-    let source = this.props.currentSource ?? "";
-    this.state.source = source;
-  }
-
-  private async handleClick(): Promise<void> {
-    let number = this.props.number;
-    let propertyName = this.props.language + "Source";
-    let settings = {[propertyName]: this.state.source};
-    let response = await this.request("changeDictionarySettings", {number, settings});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let handleClick = useCallback(async function (): Promise<void> {
+      let propertyName = language + "Source";
+      let settings = {[propertyName]: source};
+      let response = await request("changeDictionarySettings", {number, settings});
+      if (response.status === 200) {
+        addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
+        onSubmit?.();
       }
-    }
-  }
+    }, [number, language, source, request, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
     let executorNode = (() => {
-      if (this.props.language === "akrantiain") {
+      if (language === "akrantiain") {
         let executorNode = (
-          <AkrantiainExecutor defaultSource={this.state.source} open={this.state.executorOpen} onClose={(event, source) => this.setState({source, executorOpen: false})}/>
+          <AkrantiainExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
         );
         return executorNode;
-      } else if (this.props.language === "zatlin") {
+      } else if (language === "zatlin") {
         let executorNode = (
-          <ZatlinExecutor defaultSource={this.state.source} open={this.state.executorOpen} onClose={(event, source) => this.setState({source, executorOpen: false})}/>
+          <ZatlinExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
         );
         return executorNode;
       }
@@ -60,34 +68,25 @@ export default class ChangeDictionarySourceForm extends Component<Props, State> 
       <Fragment>
         <form styleName="root">
           <TextArea
-            label={this.trans(`changeDictionarySourceForm.${this.props.language}`)}
-            value={this.state.source}
+            label={trans(`changeDictionarySourceForm.${language}`)}
+            value={source}
             font="monospace"
-            language={this.props.language}
+            language={language}
             nowrap={true}
-            onSet={(source) => this.setState({source})}
+            onSet={(source) => setSource(source)}
           />
           <div styleName="button">
-            <Button label={this.trans("changeDictionarySourceForm.try")} style="link" onClick={() => this.setState({executorOpen: true})}/>
-            <Button label={this.trans("changeDictionarySourceForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+            <Button label={trans("changeDictionarySourceForm.try")} style="link" onClick={() => setExecutorOpen(true)}/>
+            <Button label={trans("changeDictionarySourceForm.confirm")} reactive={true} onClick={handleClick}/>
           </div>
         </form>
         {executorNode}
       </Fragment>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  number: number,
-  currentSource: string | undefined,
-  language: "akrantiain" | "zatlin",
-  onSubmit?: () => void
-};
-type State = {
-  source: string,
-  executorOpen: boolean
-};
+export default ChangeDictionarySourceForm;

@@ -3,44 +3,58 @@
 import * as queryParser from "query-string";
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
+import {
+  useLocation
+} from "react-router-dom";
+import {
+  useMount
+} from "react-use";
 import Loading from "/client/component/compound/loading";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  usePath,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 import Page from "/client/component/page/page";
 
 
-@style(require("./activate-user-page.scss"))
-export default class ActivateUserPage extends Component<Props, State> {
+const ActivateUserPage = create(
+  require("./activate-user-page.scss"), "ActivateUserPage",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public async componentDidMount(): Promise<void> {
-    let query = queryParser.parse(this.props.location!.search);
-    let key = (typeof query.key === "string") ? query.key : "";
-    let response = await this.request("activateUser", {key});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("userActivated");
-      this.pushPath("/dashboard", undefined, true);
-    } else {
-      this.pushPath("/", undefined, true);
-    }
-  }
+    let location = useLocation();
+    let {pushPath} = usePath();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  public render(): ReactNode {
+    useMount(async () => {
+      let query = queryParser.parse(location.search);
+      let key = (typeof query.key === "string") ? query.key : "";
+      let response = await request("activateUser", {key});
+      if (response.status === 200) {
+        addInformationPopup("userActivated");
+        pushPath("/dashboard", undefined, true);
+      } else {
+        pushPath("/", undefined, true);
+      }
+    });
+
     let node = (
       <Page>
         <Loading loading={true}/>
       </Page>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default ActivateUserPage;

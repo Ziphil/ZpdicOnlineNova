@@ -3,7 +3,10 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState
 } from "react";
 import {
   AsyncOrSync
@@ -13,58 +16,106 @@ import Input from "/client/component/atom/input";
 import Label from "/client/component/atom/label";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  StylesRecord,
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import {
   RegexpExecResult,
   RegexpUtil
 } from "/client/util/regexp";
 
 
-@style(require("./regexp-executor.scss"))
-export default class RegexpExecutor extends Component<Props, State> {
+const RegexpExecutor = create(
+  require("./regexp-executor.scss"), "RegexpExecutor",
+  function ({
+    defaultSource,
+    open,
+    onClose,
+    styles
+  }: {
+    defaultSource?: string,
+    open: boolean,
+    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>,
+    styles?: StylesRecord
+  }): ReactElement {
 
-  public state: State = {
-    source: undefined as any,
-    target: "",
-    result: null,
-    errorMessage: ""
-  };
+    let [source, setSource] = useState(defaultSource ?? "");
+    let [target, setTarget] = useState("");
+    let [result, setResult] = useState<RegexpExecResult | null>(null);
+    let [errorMessage, setErrorMessage] = useState("");
+    let [, {trans}] = useIntl();
 
-  public constructor(props: Props) {
-    super(props);
-    let source = this.props.defaultSource ?? "";
-    this.state.source = source;
+    let executeRegexp = useCallback(function (): void {
+      try {
+        let result = RegexpUtil.exec(source, target);
+        setResult(result);
+        setErrorMessage("");
+      } catch (error) {
+        let errorMessage = error.message.trim() ?? "Unknown error";
+        setResult(null);
+        setErrorMessage(errorMessage);
+      }
+    }, [source, target]);
+
+    let handleClose = useCallback(function (event: MouseEvent<HTMLElement>): void {
+      onClose?.(event, source);
+    }, [onClose, source]);
+
+    useEffect(() => {
+      setSource(defaultSource ?? "");
+    }, [defaultSource]);
+
+    let node = (
+      <Overlay size="large" title={trans("regexpExecutor.title")} open={open} onClose={handleClose}>
+        <div styleName="root">
+          <TextArea
+            className={styles!["source"]}
+            label={trans("regexpExecutor.source")}
+            value={source}
+            font="monospace"
+            language="regexp"
+            nowrap={true}
+            fitHeight={true}
+            onSet={(source) => setSource(source)}
+          />
+          <TextArea
+            className={styles!["target"]}
+            label={trans("regexpExecutor.target")}
+            value={target}
+            font="monospace"
+            language="plain"
+            nowrap={true}
+            fitHeight={true}
+            onSet={(target) => setTarget(target)}
+          />
+          <Button className={styles!["button"]} label={trans("regexpExecutor.execute")} onClick={executeRegexp}/>
+          <RegexpExecutorResult {...{result, errorMessage}}/>
+        </div>
+      </Overlay>
+    );
+    return node;
+
   }
+);
 
-  public async componentDidUpdate(previousProps: any): Promise<void> {
-    if (this.props.defaultSource !== previousProps.defaultSource) {
-      let source = this.props.defaultSource ?? "";
-      this.setState({source});
-    }
-  }
 
-  private executeRegexp(): void {
-    try {
-      let result = RegexpUtil.exec(this.state.source, this.state.target);
-      this.setState({result, errorMessage: ""});
-    } catch (error) {
-      let errorMessage = error.message.trim() ?? "Unknown error";
-      this.setState({errorMessage, result: null});
-    }
-  }
+const RegexpExecutorResult = create(
+  require("./regexp-executor.scss"),
+  function ({
+    result,
+    errorMessage
+  }: {
+    result: RegexpExecResult | null,
+    errorMessage: string
+  }): ReactElement {
 
-  private handleClose(event: MouseEvent<HTMLElement>): void {
-    if (this.props.onClose !== undefined) {
-      this.props.onClose(event, this.state.source);
-    }
-  }
+    let [, {trans}] = useIntl();
 
-  private renderResult(): ReactNode {
     let innerNodes = [];
-    let result = this.state.result;
     if (result !== null) {
       let target = result.target;
       let length = result.matches.length;
@@ -87,64 +138,20 @@ export default class RegexpExecutor extends Component<Props, State> {
         innerNodes.push(target.substring(currentIndex, target.length).replace("\n", "\n  "));
       }
     } else {
-      innerNodes.push(this.state.errorMessage);
+      innerNodes.push(errorMessage);
     }
     let node = (
       <div styleName="error-message">
-        <Label text={this.trans("regexpExecutor.result")}/>
+        <Label text={trans("regexpExecutor.result")}/>
         <div styleName="result-input">
           {innerNodes}
         </div>
       </div>
     );
     return node;
+
   }
-
-  public render(): ReactNode {
-    let styles = this.props.styles!;
-    let resultNode = this.renderResult();
-    let node = (
-      <Overlay size="large" title={this.trans("regexpExecutor.title")} open={this.props.open} onClose={this.handleClose.bind(this)}>
-        <div styleName="root">
-          <TextArea
-            className={styles["source"]}
-            label={this.trans("regexpExecutor.source")}
-            value={this.state.source}
-            font="monospace"
-            language="regexp"
-            nowrap={true}
-            fitHeight={true}
-            onSet={(source) => this.setState({source})}
-          />
-          <TextArea
-            className={styles["target"]}
-            label={this.trans("regexpExecutor.target")}
-            value={this.state.target}
-            font="monospace"
-            language="plain"
-            nowrap={true}
-            fitHeight={true}
-            onSet={(target) => this.setState({target})}
-          />
-          <Button className={styles["button"]} label={this.trans("regexpExecutor.execute")} onClick={this.executeRegexp.bind(this)}/>
-          {resultNode}
-        </div>
-      </Overlay>
-    );
-    return node;
-  }
-
-}
+);
 
 
-type Props = {
-  defaultSource?: string,
-  open: boolean,
-  onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>
-};
-type State = {
-  source: string,
-  target: string,
-  result: RegexpExecResult | null,
-  errorMessage: string
-};
+export default RegexpExecutor;

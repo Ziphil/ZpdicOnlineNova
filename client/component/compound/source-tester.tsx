@@ -2,69 +2,88 @@
 
 import * as react from "react";
 import {
+  Dispatch,
   Fragment,
-  ReactNode
+  ReactElement,
+  SetStateAction,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import Highlight from "/client/component/atom/highlight";
-import Component from "/client/component/component";
 import AkrantiainExecutor from "/client/component/compound/akrantiain-executor";
 import RegexpExecutor from "/client/component/compound/regexp-executor";
 import ZatlinExecutor from "/client/component/compound/zatlin-executor";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 
 
-@style(require("./source-tester.scss"))
-export default class SourceTester extends Component<Props, State> {
+const SourceTester = create(
+  require("./source-tester.scss"), "SourceTester",
+  function ({
+    source,
+    language
+  }: {
+    source: string,
+    language: string
+  }): ReactElement {
 
-  public state: State = {
-    executorOpen: false
-  };
+    let [executorOpen, setExecutorOpen] = useState(false);
+    let [, {trans}] = useIntl();
 
-  private renderExecutor(): ReactNode {
-    if (this.props.language === "akrantiain") {
-      let node = (
-        <AkrantiainExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
-      );
-      return node;
-    } else if (this.props.language === "zatlin") {
-      let node = (
-        <ZatlinExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
-      );
-      return node;
-    } else if (this.props.language === "regexp") {
-      let node = (
-        <RegexpExecutor defaultSource={this.props.source} open={this.state.executorOpen} onClose={() => this.setState({executorOpen: false})}/>
-      );
-      return node;
-    } else {
-      return undefined;
-    }
-  }
-
-  public render(): ReactNode {
-    let executorNode = this.renderExecutor();
     let node = (
       <Fragment>
         <form styleName="root">
-          <Highlight value={this.props.source} language={this.props.language}/>
-          <Button label={this.trans("sourceTester.try")} style="link" onClick={() => this.setState({executorOpen: true})}/>
+          <Highlight value={source} language={language}/>
+          <Button label={trans("sourceTester.try")} style="link" onClick={() => setExecutorOpen(true)}/>
         </form>
-        {executorNode}
+        <SourceTesterExecutor {...{source, language, executorOpen, setExecutorOpen}}/>
       </Fragment>
     );
     return node;
+
   }
+);
 
-}
+
+const SourceTesterExecutor = create(
+  require("./source-tester.scss"),
+  function ({
+    source,
+    language,
+    executorOpen,
+    setExecutorOpen
+  }: {
+    source: string,
+    language: string,
+    executorOpen: boolean,
+    setExecutorOpen: Dispatch<SetStateAction<boolean>>
+  }): ReactElement | null {
+
+    if (language === "akrantiain") {
+      let node = (
+        <AkrantiainExecutor defaultSource={source} open={executorOpen} onClose={() => setExecutorOpen(false)}/>
+      );
+      return node;
+    } else if (language === "zatlin") {
+      let node = (
+        <ZatlinExecutor defaultSource={source} open={executorOpen} onClose={() => setExecutorOpen(false)}/>
+      );
+      return node;
+    } else if (language === "regexp") {
+      let node = (
+        <RegexpExecutor defaultSource={source} open={executorOpen} onClose={() => setExecutorOpen(false)}/>
+      );
+      return node;
+    } else {
+      return null;
+    }
+
+  }
+);
 
 
-type Props = {
-  source: string,
-  language: string
-};
-type State = {
-  executorOpen: boolean
-};
+export default SourceTester;

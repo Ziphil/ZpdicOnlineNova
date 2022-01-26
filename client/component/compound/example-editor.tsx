@@ -3,10 +3,18 @@
 import cloneDeep from "lodash-es/cloneDeep";
 import * as react from "react";
 import {
+  Dispatch,
   Fragment,
   MouseEvent,
-  ReactNode
+  ReactElement,
+  SetStateAction,
+  useCallback,
+  useRef,
+  useState
 } from "react";
+import {
+  useUpdateEffect
+} from "react-use";
 import {
   AsyncOrSync
 } from "ts-essentials";
@@ -15,11 +23,17 @@ import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
 import Input from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
-import Component from "/client/component/component";
 import WordSearcher from "/client/component/compound/word-searcher";
 import {
-  style
-} from "/client/component/decorator";
+  StylesRecord,
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest,
+  useStateWithCallback
+} from "/client/component/hook";
 import {
   EditableExample,
   EnhancedDictionary,
@@ -36,126 +50,260 @@ import {
 } from "/client/util/style-name";
 
 
-@style(require("./example-editor.scss"))
-export default class ExampleEditor extends Component<Props, State> {
+const ExampleEditor = create(
+  require("./example-editor.scss"), "ExampleEditor",
+  function ({
+    dictionary,
+    example,
+    open,
+    onClose,
+    onEditConfirm,
+    onDiscardConfirm
+  }: {
+    dictionary: EnhancedDictionary,
+    example: Example | null,
+    open: boolean,
+    onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
+    onEditConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  }): ReactElement {
 
-  public state: State = {
-    example: undefined as any,
-    wordChooserOpen: false,
-    alertOpen: false
-  };
+    let [tempExample, setTempExample] = useStateWithCallback(cloneDeep(example) ?? EditableExample.createEmpty());
+    let [wordChooserOpen, setWordChooserOpen] = useState(false);
+    let [alertOpen, setAlertOpen] = useState(false);
+    let editingWordIndexRef = useRef<number>();
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private editingWordIndex: number | null = null;
+    let mutateExample = useCallback(function <T extends Array<unknown>>(setter: (tempExample: EditableExample, ...args: T) => void): (...args: T) => void {
+      let wrapper = function (...args: T): void {
+        setTempExample((tempExample) => {
+          setter(tempExample, ...args);
+          return {...tempExample};
+        });
+      };
+      return wrapper;
+    }, [setTempExample]);
 
-  public constructor(props: Props) {
-    super(props);
-    let example = cloneDeep(this.props.example) ?? EditableExample.createEmpty();
-    this.state.example = example;
-  }
+    let openWordChooser = useCallback(function (index: number): void {
+      editingWordIndexRef.current = index;
+      setWordChooserOpen(true);
+    }, []);
 
-  public async componentDidMount(): Promise<void> {
-    await this.fetchWordNames();
-  }
-
-  public async componentDidUpdate(previousProps: Props): Promise<void> {
-    if (this.props.example !== previousProps.example) {
-      let example = cloneDeep(this.props.example) ?? EditableExample.createEmpty();
-      this.setState({example}, () => {
-        this.fetchWordNames();
-      });
-    }
-  }
-
-  private async fetchWordNames(): Promise<void> {
-    let number = this.props.dictionary.number;
-    let wordNumbers = this.state.example.words.map((word) => word.number);
-    let response = await this.request("fetchWordNames", {number, wordNumbers}, {ignoreError: true});
-    if (response.status === 200 && !("error" in response.data)) {
-      let names = response.data.names;
-      let example = this.state.example;
-      this.setExample(() => {
-        for (let word of example.words) {
-          word.name = names[word.number] ?? undefined;
-        }
-      })();
-    }
-  }
-
-  private async editExample(event: MouseEvent<HTMLButtonElement>): Promise<void> {
-    let number = this.props.dictionary.number;
-    let example = this.state.example;
-    let response = await this.request("editExample", {number, example});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("exampleEdited");
-      if (this.props.onClose) {
-        await this.props.onClose(event);
+    let editWord = useCallback(function (word: Word): void {
+      let wordIndex = editingWordIndexRef.current!;
+      if (tempExample.words[wordIndex] === undefined) {
+        tempExample.words[wordIndex] = LinkedWord.createEmpty();
       }
-      if (this.props.onEditConfirm) {
-        await this.props.onEditConfirm(example, event);
-      }
-    }
-  }
+      tempExample.words[wordIndex].number = word.number;
+      tempExample.words[wordIndex].name = word.name;
+      setTempExample(tempExample);
+      setWordChooserOpen(false);
+    }, [tempExample, setTempExample]);
 
-  private async discardExample(event: MouseEvent<HTMLButtonElement>): Promise<void> {
-    let number = this.props.dictionary.number;
-    let exampleNumber = this.state.example.number;
-    if (exampleNumber !== undefined) {
-      let response = await this.request("discardExample", {number, exampleNumber});
+    let editExample = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
+      let number = dictionary.number;
+      let response = await request("editExample", {number, example: tempExample});
       if (response.status === 200) {
-        this.props.store!.addInformationPopup("exampleDiscarded");
-        if (this.props.onClose) {
-          await this.props.onClose(event);
-        }
-        if (this.props.onDiscardConfirm) {
-          await this.props.onDiscardConfirm(event);
+        addInformationPopup("exampleEdited");
+        await onClose?.(event);
+        await onEditConfirm?.(tempExample, event);
+      }
+    }, [dictionary, tempExample, request, onClose, onEditConfirm, addInformationPopup]);
+
+    let discardExample = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
+      let number = dictionary.number;
+      let exampleNumber = tempExample.number;
+      if (exampleNumber !== undefined) {
+        let response = await request("discardExample", {number, exampleNumber});
+        if (response.status === 200) {
+          addInformationPopup("exampleDiscarded");
+          await onClose?.(event);
+          await onDiscardConfirm?.(event);
         }
       }
-    }
-  }
+    }, [dictionary, tempExample, request, onClose, onDiscardConfirm, addInformationPopup]);
 
-  private openWordChooser(index: number): void {
-    this.editingWordIndex = index;
-    this.setState({wordChooserOpen: true});
-  }
+    let fetchWordNames = useCallback(async function (): Promise<void> {
+      let number = dictionary.number;
+      let wordNumbers = tempExample.words.map((word) => word.number);
+      let response = await request("fetchWordNames", {number, wordNumbers}, {ignoreError: true});
+      if (response.status === 200 && !("error" in response.data)) {
+        let names = response.data.names;
+        mutateExample((tempExample) => {
+          for (let word of tempExample.words) {
+            word.name = names[word.number] ?? undefined;
+          }
+        })();
+      }
+    }, [dictionary.number, tempExample, request, mutateExample]);
 
-  private renderSentence(): ReactNode {
-    let example = this.state.example;
+    useUpdateEffect(() => {
+      let tempExample = cloneDeep(example) ?? EditableExample.createEmpty();
+      setTempExample(tempExample, () => {
+        fetchWordNames();
+      });
+    }, [example]);
+
+    let page = (wordChooserOpen) ? 1 : 0;
+    let editorProps = {dictionary, example, tempExample, mutateExample, openWordChooser, editExample, setAlertOpen};
     let node = (
-      <div styleName="container">
-        <Input value={example.sentence} label={this.trans("exampleEditor.sentence")} onSet={this.setExample((sentence) => example.sentence = sentence)}/>
+      <Fragment>
+        <Overlay size="large" title={trans("exampleEditor.title")} page={page} open={open} onClose={onClose} onBack={() => setWordChooserOpen(false)}>
+          <ExampleEditorEditor {...editorProps}/>
+          <WordSearcher dictionary={dictionary} style="simple" showButton={true} onSubmit={editWord}/>
+        </Overlay>
+        <Alert
+          text={trans("exampleEditor.alert")}
+          confirmLabel={trans("exampleEditor.alertConfirm")}
+          open={alertOpen}
+          outsideClosable={true}
+          onClose={() => setAlertOpen(false)}
+          onConfirm={discardExample}
+        />
+      </Fragment>
+    );
+    return node;
+
+  }
+);
+
+
+const ExampleEditorEditor = create(
+  require("./example-editor.scss"),
+  function ({
+    dictionary,
+    example,
+    tempExample,
+    mutateExample,
+    openWordChooser,
+    editExample,
+    setAlertOpen
+  }: {
+    dictionary: EnhancedDictionary,
+    example: Example | null,
+    tempExample: EditableExample,
+    mutateExample: MutateExampleCallback,
+    openWordChooser: (index: number) => void,
+    editExample: (event: MouseEvent<HTMLButtonElement>) => Promise<void>,
+    setAlertOpen: Dispatch<SetStateAction<boolean>>
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+
+    let discardButtonNode = (example !== null) && (
+      <Button label={trans("exampleEditor.discard")} iconName="trash-alt" style="caution" reactive={true} onClick={() => setAlertOpen(true)}/>
+    );
+    let confirmButtonNode = (
+      <Button label={trans("exampleEditor.confirm")} iconName="check" style="information" reactive={true} onClick={editExample}/>
+    );
+    let innerProps = {dictionary, tempExample, mutateExample};
+    let node = (
+      <div>
+        <div styleName="editor">
+          <ExampleEditorSentence {...innerProps}/>
+          <ExampleEditorTranslation {...innerProps}/>
+          <ExampleEditorWords {...innerProps} {...{openWordChooser}}/>
+        </div>
+        <div styleName="confirm-button-wrapper">
+          <div/>
+          <div styleName="confirm-button">
+            {discardButtonNode}
+            {confirmButtonNode}
+          </div>
+        </div>
       </div>
     );
     return node;
-  }
 
-  private renderTranslation(): ReactNode {
-    let example = this.state.example;
+  }
+);
+
+
+const ExampleEditorSentence = create(
+  require("./example-editor.scss"),
+  function ({
+    dictionary,
+    tempExample,
+    mutateExample
+  }: {
+    dictionary: EnhancedDictionary,
+    tempExample: EditableExample,
+    mutateExample: MutateExampleCallback
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+
     let node = (
       <div styleName="container">
-        <Input value={example.translation} label={this.trans("exampleEditor.translation")} onSet={this.setExample((translation) => example.translation = translation)}/>
+        <Input value={tempExample.sentence} label={trans("exampleEditor.sentence")} onSet={mutateExample((tempExample, sentence) => tempExample.sentence = sentence)}/>
       </div>
     );
     return node;
-  }
 
-  private renderWords(): ReactNode {
-    let example = this.state.example;
-    let styles = this.props.styles!;
-    let innerNodes = example.words.map((word, index) => {
-      let nameLabel = (index === 0) ? this.trans("exampleEditor.wordName") : undefined;
+  }
+);
+
+
+const ExampleEditorTranslation = create(
+  require("./example-editor.scss"),
+  function ({
+    dictionary,
+    tempExample,
+    mutateExample
+  }: {
+    dictionary: EnhancedDictionary,
+    tempExample: EditableExample,
+    mutateExample: MutateExampleCallback
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+
+    let node = (
+      <div styleName="container">
+        <Input value={tempExample.translation} label={trans("exampleEditor.translation")} onSet={mutateExample((tempExample, translation) => tempExample.translation = translation)}/>
+      </div>
+    );
+    return node;
+
+  }
+);
+
+
+const ExampleEditorWords = create(
+  require("./example-editor.scss"),
+  function ({
+    dictionary,
+    tempExample,
+    mutateExample,
+    openWordChooser,
+    styles
+  }: {
+    dictionary: EnhancedDictionary,
+    tempExample: EditableExample,
+    mutateExample: MutateExampleCallback,
+    openWordChooser: (index: number) => void,
+    styles?: StylesRecord
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+
+    let innerNodes = tempExample.words.map((word, index) => {
+      let nameLabel = (index === 0) ? trans("exampleEditor.wordName") : undefined;
       let innerNode = (
         <div styleName="inner" key={index}>
           <div styleName="form">
-            <ControlGroup className={StyleNameUtil.create(styles["name"], styles["word-input"])}>
-              <Input value={word.name ?? this.trans("exampleEditor.wordNameUndefined")} label={nameLabel} readOnly={true}/>
-              <Button label={this.trans("exampleEditor.selectWord")} onClick={() => this.openWordChooser(index)}/>
+            <ControlGroup className={StyleNameUtil.create(styles!["name"], styles!["word-input"])}>
+              <Input value={word.name ?? trans("exampleEditor.wordNameUndefined")} label={nameLabel} readOnly={true}/>
+              <Button label={trans("exampleEditor.selectWord")} onClick={() => openWordChooser(index)}/>
             </ControlGroup>
           </div>
           <div styleName="control-button">
             <ControlGroup>
-              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={this.setExample(() => swap(example.words, index, -1))}/>
-              <Button iconLabel="&#xF063;" disabled={index === example.words.length - 1} onClick={this.setExample(() => swap(example.words, index, 1))}/>
-              <Button iconLabel="&#xF068;" onClick={this.setExample(() => deleteAt(example.words, index))}/>
+              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateExample((tempExample) => swap(tempExample.words, index, -1))}/>
+              <Button iconName="arrow-down" disabled={index === tempExample.words.length - 1} onClick={mutateExample((tempExample) => swap(tempExample.words, index, 1))}/>
+              <Button iconName="minus" onClick={mutateExample((tempExample) => deleteAt(tempExample.words, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -163,12 +311,12 @@ export default class ExampleEditor extends Component<Props, State> {
       return innerNode;
     });
     let plusNode = (() => {
-      let absentMessage = (example.words.length <= 0) ? this.trans("exampleEditor.wordAbsent") : "";
+      let absentMessage = (tempExample.words.length <= 0) ? trans("exampleEditor.wordAbsent") : "";
       let plusNode = (
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconLabel="&#xF067;" onClick={() => this.openWordChooser(example.words.length)}/>
+            <Button iconName="plus" onClick={() => openWordChooser(tempExample.words.length)}/>
           </div>
         </div>
       );
@@ -181,103 +329,11 @@ export default class ExampleEditor extends Component<Props, State> {
       </div>
     );
     return node;
+
   }
-
-  private setExample<T extends Array<unknown>>(setter: (...args: T) => void): (...args: T) => void {
-    let outerThis = this;
-    let wrapper = function (...args: T): void {
-      setter(...args);
-      let example = outerThis.state.example;
-      outerThis.setState({example});
-    };
-    return wrapper;
-  }
-
-  private renderEditor(): ReactNode {
-    let discardButtonNode = (this.props.example !== null) && (
-      <Button label={this.trans("exampleEditor.discard")} iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
-    );
-    let confirmButtonNode = (
-      <Button label={this.trans("exampleEditor.confirm")} iconLabel="&#xF00C;" style="information" reactive={true} onClick={this.editExample.bind(this)}/>
-    );
-    let node = (
-      <div>
-        <div styleName="editor">
-          {this.renderSentence()}
-          {this.renderTranslation()}
-          {this.renderWords()}
-        </div>
-        <div styleName="confirm-button-wrapper">
-          <div/>
-          <div styleName="confirm-button">
-            {discardButtonNode}
-            {confirmButtonNode}
-          </div>
-        </div>
-      </div>
-    );
-    return node;
-  }
-
-  private editWord(word: Word): void {
-    let example = this.state.example;
-    let wordIndex = this.editingWordIndex!;
-    if (example.words[wordIndex] === undefined) {
-      example.words[wordIndex] = LinkedWord.createEmpty();
-    }
-    example.words[wordIndex].number = word.number;
-    example.words[wordIndex].name = word.name;
-    this.setState({example, wordChooserOpen: false});
-  }
-
-  private renderWordChooser(): ReactNode {
-    let node = (
-      <WordSearcher dictionary={this.props.dictionary} style="simple" showButton={true} onSubmit={this.editWord.bind(this)}/>
-    );
-    return node;
-  }
-
-  private renderAlert(): ReactNode {
-    let node = (
-      <Alert
-        text={this.trans("exampleEditor.alert")}
-        confirmLabel={this.trans("exampleEditor.alertConfirm")}
-        open={this.state.alertOpen}
-        outsideClosable={true}
-        onClose={() => this.setState({alertOpen: false})}
-        onConfirm={this.discardExample.bind(this)}
-      />
-    );
-    return node;
-  }
-
-  public render(): ReactNode {
-    let page = (this.state.wordChooserOpen) ? 1 : 0;
-    let node = (
-      <Fragment>
-        <Overlay size="large" title={this.trans("exampleEditor.title")} page={page} open={this.props.open} onClose={this.props.onClose} onBack={() => this.setState({wordChooserOpen: false})}>
-          {this.renderEditor()}
-          {this.renderWordChooser()}
-        </Overlay>
-        {this.renderAlert()}
-      </Fragment>
-    );
-    return node;
-  }
-
-}
+);
 
 
-type Props = {
-  dictionary: EnhancedDictionary,
-  example: Example | null,
-  open: boolean,
-  onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
-  onEditConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
-};
-type State = {
-  example: EditableExample,
-  wordChooserOpen: boolean,
-  alertOpen: boolean
-};
+export type MutateExampleCallback = <T extends Array<unknown>>(setter: (tempExample: EditableExample, ...args: T) => void) => (...args: T) => void;
+
+export default ExampleEditor;

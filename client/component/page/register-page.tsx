@@ -2,27 +2,33 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
 import Markdown from "/client/component/atom/markdown";
-import Component from "/client/component/component";
 import RegisterForm from "/client/component/compound/register-form";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import Page from "/client/component/page/page";
 
 
-@style(require("./register-page.scss"))
-export default class RegisterPage extends Component<Props, State> {
+const RegisterPage = create(
+  require("./register-page.scss"), "RegisterPage",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public render(): ReactNode {
+    let [, {trans}] = useIntl();
+
     let node = (
       <Page>
-        <div styleName="title">{this.trans("registerPage.title")}</div>
+        <div styleName="title">{trans("registerPage.title")}</div>
         <div styleName="explanation">
           <p>
-            <Markdown source={this.trans("registerPage.privacy")} simple={true}/>
+            <Markdown source={trans("registerPage.privacy")} simple={true}/>
           </p>
         </div>
         <div styleName="form">
@@ -31,12 +37,9 @@ export default class RegisterPage extends Component<Props, State> {
       </Page>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default RegisterPage;

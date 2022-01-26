@@ -2,59 +2,79 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
 import Dropdown from "/client/component/atom/dropdown";
+import Icon from "/client/component/atom/icon";
 import Label from "/client/component/atom/label";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  StylesRecord,
+  create
+} from "/client/component/create";
 
 
-@style(require("./selection.scss"))
-export default class Selection<V> extends Component<Props<V>, State<V>> {
+const Selection = create(
+  require("./selection.scss"), "Selection",
+  function <V>({
+    value,
+    label,
+    specs,
+    showRequired,
+    showOptional,
+    onSet,
+    className
+  }: {
+    value: V,
+    label?: string,
+    specs: ArrayLike<SelectionSpec<V>>,
+    showRequired?: boolean,
+    showOptional?: boolean,
+    onSet?: (value: V) => void,
+    className?: string
+  }): ReactElement {
 
-  private renderSelection(): ReactNode {
-    let text = Array.from(this.props.specs).find((spec) => spec.value === this.props.value)!.text;
+    let dropdownSpecs = Array.from(specs).map((spec) => ({value: spec.value, node: spec.text}));
     let node = (
-      <button styleName="selection">
-        <div styleName="text">{text}</div>
-        <div styleName="arrow"/>
-      </button>
-    );
-    return node;
-  }
-
-  public render(): ReactNode {
-    let dropdownSpecs = Array.from(this.props.specs).map((spec) => ({value: spec.value, node: spec.text}));
-    let selectionNode = this.renderSelection();
-    let node = (
-      <div styleName="root" className={this.props.className}>
-        <Dropdown specs={dropdownSpecs} onSet={this.props.onSet}>
+      <div styleName="root" className={className}>
+        <Dropdown specs={dropdownSpecs} onSet={onSet}>
           <label styleName="label-wrapper">
-            <Label text={this.props.label} showRequired={this.props.showRequired} showOptional={this.props.showOptional}/>
-            {selectionNode}
+            <Label text={label} showRequired={showRequired} showOptional={showOptional}/>
+            <SelectionSelection {...{value, specs}}/>
           </label>
         </Dropdown>
       </div>
     );
     return node;
+
   }
+);
 
-}
 
+const SelectionSelection = create(
+  require("./selection.scss"),
+  function <V>({
+    value,
+    specs,
+    styles
+  }: {
+    value: V,
+    specs: ArrayLike<SelectionSpec<V>>,
+    styles?: StylesRecord
+  }): ReactElement {
 
-type Props<V> = {
-  value: V,
-  label?: string,
-  specs: ArrayLike<SelectionSpec<V>>,
-  showRequired?: boolean,
-  showOptional?: boolean,
-  onSet?: (value: V) => void,
-  className?: string
-};
-type State<V> = {
-};
+    let text = Array.from(specs).find((spec) => spec.value === value)!.text;
+    let node = (
+      <button styleName="selection">
+        <div styleName="text">{text}</div>
+        <Icon className={styles!["arrow"]} name="angle-down"/>
+      </button>
+    );
+    return node;
+
+  }
+);
+
 
 export type SelectionSpec<V> = {value: V, text: string};
+
+export default Selection;

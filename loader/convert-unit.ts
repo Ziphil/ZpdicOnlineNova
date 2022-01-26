@@ -27,7 +27,7 @@ function convert(this: any, source: string) {
 
 function convertUnit(dimension: Dimension): {value: number, unit: string} | null {
   if (dimension.unit === "u") {
-    let value = parseFloat(dimension.value) / 48;
+    let value = parseFloat(dimension.value) / 51.2;
     let unit = "rem";
     return {value, unit};
   } else if (dimension.unit === "rpx") {

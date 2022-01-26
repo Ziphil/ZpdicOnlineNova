@@ -3,16 +3,17 @@
 import * as react from "react";
 import {
   ChangeEvent,
-  ReactNode
+  ReactElement,
+  useCallback
 } from "react";
 import {
   Controlled as CodeMirror
 } from "react-codemirror2";
 import Label from "/client/component/atom/label";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  StylesRecord,
+  create
+} from "/client/component/create";
 import {
   CodeMirrorUtil
 } from "/client/util/code-mirror";
@@ -21,95 +22,127 @@ import {
 } from "/client/util/style-name";
 
 
-@style(require("./text-area.scss"))
-export default class TextArea extends Component<Props, State> {
+const TextArea = create(
+  require("./text-area.scss"), "TextArea",
+  function ({
+    value = "",
+    label,
+    font = "normal",
+    language,
+    nowrap = false,
+    readOnly = false,
+    fitHeight = false,
+    showRequired,
+    showOptional,
+    onChange,
+    onSet,
+    className,
+    styles
+  }: {
+    value?: string,
+    label?: string,
+    font?: "normal" | "monospace",
+    language?: string,
+    nowrap?: boolean,
+    readOnly?: boolean,
+    fitHeight?: boolean,
+    showRequired?: boolean,
+    showOptional?: boolean,
+    onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
+    onSet?: (value: string) => void,
+    className?: string,
+    styles?: StylesRecord
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    value: "",
-    font: "normal",
-    nowrap: false,
-    readOnly: false,
-    fitHeight: false
-  };
+    let handleBeforeChange = useCallback(function (editor: any, data: any, value: string): void {
+      onSet?.(value);
+    }, [onSet]);
 
-  private handleBeforeChange(editor: any, data: any, value: string): void {
-    if (this.props.onSet) {
-      this.props.onSet(value);
-    }
-  }
+    let handleChange = useCallback(function (event: ChangeEvent<HTMLTextAreaElement>): void {
+      let value = event.target.value;
+      onChange?.(event);
+      onSet?.(value);
+    }, [onChange, onSet]);
 
-  private handleChange(event: ChangeEvent<HTMLTextAreaElement>): void {
-    let value = event.target.value;
-    if (this.props.onChange) {
-      this.props.onChange(event);
-    }
-    if (this.props.onSet) {
-      this.props.onSet(value);
-    }
-  }
-
-  private renderCodeMirror(): ReactNode {
-    let styles = this.props.styles!;
-    let className = StyleNameUtil.create(
-      styles["textarea-code"],
-      {if: this.props.fitHeight, true: styles["fit"], false: styles["no-fit"]}
-    );
-    let modeOptions = CodeMirrorUtil.getModeOptions(this.props.language!);
-    let heightOptions = (this.props.fitHeight) ? {viewportMargin: 1 / 0} : {};
-    let otherOptions = {readOnly: this.props.readOnly, lineWrapping: !this.props.nowrap};
-    let options = {...modeOptions, ...heightOptions, ...otherOptions};
+    let innerProps = {value, font, language, nowrap, readOnly, fitHeight, styles, handleChange, handleBeforeChange};
+    let innerNode = (language !== undefined) ? <TextAreaCodeMirror {...innerProps}/> : <TextAreaTextArea {...innerProps}/>;
     let node = (
-      <CodeMirror className={className} value={this.props.value} options={options} onBeforeChange={this.handleBeforeChange.bind(this)}/>
-    );
-    return node;
-  }
-
-  private renderTextArea(): ReactNode {
-    let styleName = StyleNameUtil.create(
-      "textarea",
-      {if: this.props.font === "monospace", true: "monospace"},
-      {if: this.props.nowrap, true: "nowrap"}
-    );
-    let node = (
-      <textarea styleName={styleName} value={this.props.value} readOnly={this.props.readOnly} onChange={this.handleChange.bind(this)}/>
-    );
-    return node;
-  }
-
-  public render(): ReactNode {
-    let innerNode = (this.props.language !== undefined) ? this.renderCodeMirror() : this.renderTextArea();
-    let node = (
-      <label styleName="root" className={this.props.className}>
-        <Label text={this.props.label} showRequired={this.props.showRequired} showOptional={this.props.showOptional}/>
+      <label styleName="root" className={className}>
+        <Label text={label} showRequired={showRequired} showOptional={showOptional}/>
         {innerNode}
       </label>
     );
     return node;
+
   }
+);
 
-}
+
+const TextAreaCodeMirror = create(
+  require("./text-area.scss"),
+  function ({
+    value,
+    language,
+    nowrap,
+    readOnly,
+    fitHeight,
+    styles,
+    handleBeforeChange
+  }: {
+    value: string,
+    language?: string,
+    nowrap: boolean,
+    readOnly: boolean,
+    fitHeight: boolean,
+    styles?: StylesRecord,
+    handleBeforeChange: (editor: any, data: any, value: string) => void
+  }): ReactElement {
+
+    let className = StyleNameUtil.create(
+      styles!["textarea-code"],
+      {if: fitHeight, true: styles!["fit"], false: styles!["no-fit"]}
+    );
+    let modeOptions = CodeMirrorUtil.getModeOptions(language!);
+    let heightOptions = (fitHeight) ? {viewportMargin: 1 / 0} : {};
+    let otherOptions = {readOnly, lineWrapping: !nowrap};
+    let options = {...modeOptions, ...heightOptions, ...otherOptions};
+    let node = (
+      <CodeMirror className={className} value={value} options={options} onBeforeChange={handleBeforeChange}/>
+    );
+    return node;
+
+  }
+);
 
 
-type Props = {
-  value: string,
-  label?: string,
-  font: "normal" | "monospace",
-  language?: string,
-  nowrap: boolean,
-  readOnly: boolean,
-  fitHeight: boolean,
-  showRequired?: boolean,
-  showOptional?: boolean,
-  onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
-  onSet?: (value: string) => void,
-  className?: string
-};
-type DefaultProps = {
-  value: string,
-  font: "normal" | "monospace",
-  nowrap: boolean,
-  readOnly: boolean,
-  fitHeight: boolean
-};
-type State = {
-};
+const TextAreaTextArea = create(
+  require("./text-area.scss"),
+  function ({
+    value,
+    font,
+    nowrap,
+    readOnly,
+    handleChange
+  }: {
+    value: string,
+    font: "normal" | "monospace",
+    nowrap: boolean,
+    readOnly: boolean,
+    handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
+  }): ReactElement {
+
+    let styleName = StyleNameUtil.create(
+      "textarea",
+      {if: font === "monospace", true: "monospace"},
+      {if: nowrap, true: "nowrap"}
+    );
+    let node = (
+      <textarea styleName={styleName} value={value} readOnly={readOnly} onChange={handleChange}/>
+    );
+    return node;
+
+  }
+);
+
+
+export default TextArea;

@@ -3,7 +3,10 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState
 } from "react";
 import {
   AsyncOrSync
@@ -16,73 +19,75 @@ import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  StylesRecord,
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 
 
-@style(require("./zatlin-executor.scss"))
-export default class ZatlinExecutor extends Component<Props, State> {
+const ZatlinExecutor = create(
+  require("./zatlin-executor.scss"), "ZatlinExecutor",
+  function ({
+    defaultSource,
+    open,
+    onClose,
+    styles
+  }: {
+    defaultSource?: string,
+    open: boolean,
+    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>,
+    styles?: StylesRecord
+  }): ReactElement {
 
-  public state: State = {
-    source: undefined as any,
-    output: "",
-    errorMessage: ""
-  };
+    let [source, setSource] = useState(defaultSource ?? "");
+    let [output, setOutput] = useState("");
+    let [errorMessage, setErrorMessage] = useState("");
+    let [, {trans}] = useIntl();
 
-  public constructor(props: Props) {
-    super(props);
-    let source = this.props.defaultSource ?? "";
-    this.state.source = source;
-  }
+    let executeZatlin = useCallback(function (): void {
+      try {
+        let zatlin = Zatlin.load(source);
+        let output = zatlin.generate();
+        setOutput(output);
+        setErrorMessage("");
+      } catch (error) {
+        let errorMessage = error.message.trim() ?? "Unknown error";
+        setOutput("");
+        setErrorMessage(errorMessage);
+      }
+    }, [source]);
 
-  public async componentDidUpdate(previousProps: any): Promise<void> {
-    if (this.props.defaultSource !== previousProps.defaultSource) {
-      let source = this.props.defaultSource ?? "";
-      this.setState({source});
-    }
-  }
+    let handleClose = useCallback(function (event: MouseEvent<HTMLElement>): void {
+      onClose?.(event, source);
+    }, [onClose, source]);
 
-  private executeZatlin(): void {
-    try {
-      let zatlin = Zatlin.load(this.state.source);
-      let output = zatlin.generate();
-      this.setState({output, errorMessage: ""});
-    } catch (error) {
-      let errorMessage = error.message.trim() ?? "Unknown error";
-      this.setState({errorMessage, output: ""});
-    }
-  }
+    useEffect(() => {
+      setSource(defaultSource ?? "");
+    }, [defaultSource]);
 
-  private handleClose(event: MouseEvent<HTMLElement>): void {
-    if (this.props.onClose !== undefined) {
-      this.props.onClose(event, this.state.source);
-    }
-  }
-
-  public render(): ReactNode {
-    let styles = this.props.styles!;
     let version = ZATLIN_VERSION;
     let node = (
-      <Overlay size="large" title={this.trans("zatlinExecutor.title", {version})} open={this.props.open} onClose={this.handleClose.bind(this)}>
+      <Overlay size="large" title={trans("zatlinExecutor.title", {version})} open={open} onClose={handleClose}>
         <div styleName="root">
           <TextArea
-            className={styles["source"]}
-            label={this.trans("zatlinExecutor.source")}
-            value={this.state.source}
+            className={styles!["source"]}
+            label={trans("zatlinExecutor.source")}
+            value={source}
             font="monospace"
             language="zatlin"
             nowrap={true}
             fitHeight={true}
-            onSet={(source) => this.setState({source})}
+            onSet={(source) => setSource(source)}
           />
-          <Button className={styles["button"]} label={this.trans("zatlinExecutor.execute")} onClick={this.executeZatlin.bind(this)}/>
-          <Input label={this.trans("zatlinExecutor.output")} value={this.state.output} readOnly={true}/>
+          <Button className={styles!["button"]} label={trans("zatlinExecutor.execute")} onClick={executeZatlin}/>
+          <Input label={trans("zatlinExecutor.output")} value={output} readOnly={true}/>
           <TextArea
-            className={styles["error-message"]}
-            label={this.trans("zatlinExecutor.errorMessage")}
-            value={this.state.errorMessage}
+            className={styles!["error-message"]}
+            label={trans("zatlinExecutor.errorMessage")}
+            value={errorMessage}
             font="monospace"
             language="plain"
             nowrap={true}
@@ -93,18 +98,9 @@ export default class ZatlinExecutor extends Component<Props, State> {
       </Overlay>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  defaultSource?: string,
-  open: boolean,
-  onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>
-};
-type State = {
-  source: string,
-  output: string,
-  errorMessage: string
-};
+export default ZatlinExecutor;

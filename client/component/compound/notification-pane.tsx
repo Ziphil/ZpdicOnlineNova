@@ -2,28 +2,38 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
 import Markdown from "/client/component/atom/markdown";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  StylesRecord,
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import {
   Notification
 } from "/client/skeleton/notification";
 
 
-@style(require("./notification-pane.scss"))
-export default class NotificationPane extends Component<Props, State> {
+const NotificationPane = create(
+  require("./notification-pane.scss"), "NotificationPane",
+  function ({
+    notification,
+    styles
+  }: {
+    notification: Notification,
+    styles?: StylesRecord
+  }): ReactElement {
 
-  public render(): ReactNode {
-    let styles = this.props.styles!;
-    let fixedNode = (this.props.notification.type === "bugFixed") && (
-      <span styleName="fixed">({this.trans("notificationPane.fixed")})</span>
+    let [, {trans, transDate}] = useIntl();
+
+    let fixedNode = (notification.type === "bugFixed") && (
+      <span styleName="fixed">({trans("notificationPane.fixed")})</span>
     );
     let iconString = (() => {
-      let type = this.props.notification.type;
+      let type = notification.type;
       if (type === "update") {
         return "\uF005";
       } else if (type === "bug") {
@@ -39,24 +49,20 @@ export default class NotificationPane extends Component<Props, State> {
         <div styleName="head-wrapper">
           <div styleName="icon">{iconString}</div>
           <div styleName="head-right">
-            <div styleName="date">{this.transDate(this.props.notification.date)}</div>
+            <div styleName="date">{transDate(notification.date)}</div>
             <h1 styleName="head">
               {fixedNode}
-              {this.props.notification.title}
+              {notification.title}
             </h1>
           </div>
         </div>
-        <Markdown className={styles["content"]} source={this.props.notification.text}/>
+        <Markdown className={styles!["content"]} source={notification.text}/>
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  notification: Notification
-};
-type State = {
-};
+export default NotificationPane;

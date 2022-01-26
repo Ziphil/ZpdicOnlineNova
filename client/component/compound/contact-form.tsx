@@ -2,74 +2,78 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
+import {
+  useMount
+} from "react-use";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import TextArea from "/client/component/atom/text-area";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest,
+  useUser
+} from "/client/component/hook";
 
 
-@style(require("./contact-form.scss"))
-export default class ContactForm extends Component<Props, State> {
+const ContactForm = create(
+  require("./contact-form.scss"), "ContactForm",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public state: State = {
-    name: "",
-    email: "",
-    subject: "",
-    text: ""
-  };
+    let [name, setName] = useState("");
+    let [email, setEmail] = useState("");
+    let [subject, setSubject] = useState("");
+    let [text, setText] = useState("");
+    let [, {trans}] = useIntl();
+    let [user] = useUser();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  public async componentDidMount(): Promise<void> {
-    let user = this.props.store!.user;
-    if (user !== null) {
-      let name = user.screenName;
-      let email = user.email;
-      this.setState({name, email});
-    }
-  }
+    let performSend = useCallback(async function (): Promise<void> {
+      let response = await request("contact", {name, email, subject, text}, {useRecaptcha: true});
+      if (response.status === 200) {
+        addInformationPopup("contacted");
+        setSubject("");
+        setText("");
+      }
+    }, [name, email, subject, text, request, addInformationPopup]);
 
-  private async performSend(): Promise<void> {
-    let name = this.state.name;
-    let email = this.state.email;
-    let subject = this.state.subject;
-    let text = this.state.text;
-    let response = await this.request("contact", {name, email, subject, text}, {useRecaptcha: true});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("contacted");
-      this.setState({subject: "", text: ""});
-    }
-  }
+    useMount(() => {
+      if (user !== null) {
+        let name = user.screenName;
+        let email = user.email;
+        setName(name);
+        setEmail(email);
+      }
+    });
 
-  public render(): ReactNode {
-    let disabled = this.props.store!.user !== null;
+    let disabled = user !== null;
     let node = (
       <form styleName="root">
-        <Input label={this.trans("contactForm.name")} value={this.state.name} disabled={disabled} showOptional={true} onSet={(name) => this.setState({name})}/>
-        <Input label={this.trans("contactForm.email")} value={this.state.email} disabled={disabled} showOptional={true} onSet={(email) => this.setState({email})}/>
-        <Input label={this.trans("contactForm.subject")} value={this.state.subject} showOptional={true} onSet={(subject) => this.setState({subject})}/>
-        <TextArea label={this.trans("contactForm.text")} value={this.state.text} onSet={(text) => this.setState({text})}/>
+        <Input label={trans("contactForm.name")} value={name} disabled={disabled} showOptional={true} onSet={(name) => setName(name)}/>
+        <Input label={trans("contactForm.email")} value={email} disabled={disabled} showOptional={true} onSet={(email) => setEmail(email)}/>
+        <Input label={trans("contactForm.subject")} value={subject} showOptional={true} onSet={(subject) => setSubject(subject)}/>
+        <TextArea label={trans("contactForm.text")} value={text} onSet={(text) => setText(text)}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={this.trans("contactForm.confirm")} iconLabel="&#xF0E0;" style="information" reactive={true} onClick={this.performSend.bind(this)}/>
+            <Button label={trans("contactForm.confirm")} iconName="envelope" style="information" reactive={true} onClick={performSend}/>
           </div>
         </div>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-  name: string,
-  email: string,
-  subject: string,
-  text: string
-};
+export default ContactForm;

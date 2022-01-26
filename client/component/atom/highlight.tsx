@@ -4,15 +4,14 @@ import CodeMirror from "codemirror";
 import "codemirror/addon/runmode/runmode";
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useEffect,
+  useRef
 } from "react";
 import {
-  findDOMNode
-} from "react-dom";
-import Component from "/client/component/component";
-import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 import {
   CodeMirrorUtil
 } from "/client/util/code-mirror";
@@ -21,52 +20,50 @@ import {
 } from "/client/util/misc";
 
 
-@style(require("./highlight.scss"))
-export default class Highlight extends Component<Props, State> {
+const Highlight = create(
+  require("./highlight.scss"), "Highlight",
+  function ({
+    value = "",
+    language,
+    className
+  }: {
+    value?: string,
+    language: string,
+    className?: string
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    value: ""
-  };
+    let rootRef = useRef<HTMLDivElement>(null);
 
-  public componentDidMount(): void {
-    this.drawHighlight();
-  }
-
-  private drawHighlight(): void {
-    let bindto = findDOMNode(this) as HTMLElement;
-    let modeOptions = CodeMirrorUtil.getModeOptions(this.props.language);
-    let html = "";
-    html += `<div class=\"cm-s-${escapeHtml(modeOptions.theme)}\">`;
-    CodeMirror.runMode(this.props.value, modeOptions.mode, (text, style) => {
-      if (text === "\n") {
-        html += "<br>";
-      } else if (style) {
-        html += `<span class="cm-${escapeHtml(style)}">${escapeHtml(text)}</span>`;
-      } else {
-        html += escapeHtml(text);
+    let drawHighlight = useCallback(function (): void {
+      if (rootRef.current !== null) {
+        let modeOptions = CodeMirrorUtil.getModeOptions(language);
+        let html = "";
+        html += `<div class=\"cm-s-${escapeHtml(modeOptions.theme)}\">`;
+        CodeMirror.runMode(value, modeOptions.mode, (text, style) => {
+          if (text === "\n") {
+            html += "<br>";
+          } else if (style) {
+            html += `<span class="cm-${escapeHtml(style)}">${escapeHtml(text)}</span>`;
+          } else {
+            html += escapeHtml(text);
+          }
+        });
+        html += "</div>";
+        rootRef.current.innerHTML = html;
       }
-    });
-    html += "</div>";
-    bindto.innerHTML = html;
-  }
+    }, [language, value]);
 
-  public render(): ReactNode {
+    useEffect(() => {
+      drawHighlight();
+    }, [rootRef]);
+
     let node = (
-      <div styleName="root" className={this.props.className}/>
+      <div styleName="root" className={className} ref={rootRef}/>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  value: string,
-  language: string,
-  className?: string
-};
-type DefaultProps = {
-  value: string
-};
-type State = {
-};
+export default Highlight;

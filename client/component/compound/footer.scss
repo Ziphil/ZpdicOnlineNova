@@ -14,7 +14,7 @@
   font-size: 70%;
   color: $footer-color;
   line-height: 1;
-  border-top: 3u border-color($footer-color) solid;
+  border-top: 1rpx border-color($footer-color) solid;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -37,6 +37,6 @@
 }
 
 .right {
-  margin: 0u 0u 0u $huge-margin;
+  margin: 0rpx 0rpx 0rpx $huge-margin;
   text-align: right;
 }

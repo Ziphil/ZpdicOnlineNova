@@ -4,99 +4,87 @@ import * as react from "react";
 import {
   ElementType,
   ReactElement,
-  ReactNode
+  ReactNode,
+  useCallback,
+  useMemo
 } from "react";
 import ReactMarkdown from "react-markdown";
 import {
   NodeType
 } from "react-markdown";
 import Link from "/client/component/atom/link";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 
 
-@style(require("./markdown.scss"))
-export default class Markdown extends Component<Props, State> {
+const Markdown = create(
+  require("./markdown.scss"), "Markdown",
+  function ({
+    source,
+    simple = false,
+    allowHeading = false,
+    homePath,
+    renderers,
+    className
+  }: {
+    source: string,
+    simple?: boolean,
+    allowHeading?: boolean,
+    homePath?: string,
+    renderers?: Renderers,
+    className?: string
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    simple: false,
-    allowHeading: false
-  };
-
-  public constructor(props: Props) {
-    super(props);
-    this.transformUri = this.transformUri.bind(this);
-  }
-
-  private getAllowedTypes(): [Array<NodeType>?, Array<NodeType>?] {
-    if (this.props.simple) {
-      let allowedTypes = ["root", "text", "paragraph", "link"] as Array<NodeType>;
-      return [allowedTypes, undefined];
-    } else {
-      let disallowedTypes = ["thematicBreak", "definition", "heading", "html", "virtualHtml"] as Array<NodeType>;
-      if (this.props.allowHeading) {
-        disallowedTypes = disallowedTypes.filter((type) => type !== "heading");
+    let transformUri = useCallback(function (uri: string, children?: ReactNode, title?: string): string {
+      let nextUri = ReactMarkdown.uriTransformer(uri);
+      if (homePath !== undefined) {
+        nextUri = nextUri.replace(/^~/, homePath);
       }
-      return [undefined, disallowedTypes];
-    }
-  }
+      return nextUri;
+    }, [homePath]);
 
-  private getCustomRenderers(): Renderers {
-    if (this.props.simple) {
-      let simpleRenderer = function (props: any): ReactElement {
-        return props.children;
-      };
-      return {link: Link, root: simpleRenderer, paragraph: simpleRenderer};
-    } else {
-      return {link: Link};
-    }
-  }
-
-  private transformUri(uri: string, children?: ReactNode, title?: string): string {
-    let nextUri = ReactMarkdown.uriTransformer(uri);
-    if (this.props.homePath !== undefined) {
-      nextUri = nextUri.replace(/^~/, this.props.homePath);
-    }
-    return nextUri;
-  }
-
-  public render(): ReactNode {
-    let [allowedTypes, disallowedTypes] = this.getAllowedTypes();
-    let customRenderers = this.getCustomRenderers();
-    let renderers = {...customRenderers, ...this.props.renderers};
+    let [allowedTypes, disallowedTypes] = useMemo(() => {
+      if (simple) {
+        let allowedTypes = ["root", "text", "paragraph", "link"] as Array<NodeType>;
+        return [allowedTypes, undefined];
+      } else {
+        let disallowedTypes = ["thematicBreak", "definition", "heading", "html", "virtualHtml"] as Array<NodeType>;
+        if (allowHeading) {
+          disallowedTypes = disallowedTypes.filter((type) => type !== "heading");
+        }
+        return [undefined, disallowedTypes];
+      }
+    }, [simple, allowHeading]);
+    let customRenderers = useMemo(() => {
+      if (simple) {
+        let simpleRenderer = function (props: any): ReactElement {
+          return props.children;
+        };
+        return {link: Link, root: simpleRenderer, paragraph: simpleRenderer};
+      } else {
+        return {link: Link};
+      }
+    }, [simple]);
+    let allRenderers = {...customRenderers, ...renderers} as Renderers;
     let innerNode = (
       <ReactMarkdown
-        className={this.props.className}
-        source={this.props.source}
-        renderers={renderers}
+        className={className}
+        source={source}
+        renderers={allRenderers}
         allowedTypes={allowedTypes}
         disallowedTypes={disallowedTypes}
-        transformLinkUri={this.transformUri}
-        transformImageUri={this.transformUri}
+        transformLinkUri={transformUri}
+        transformImageUri={transformUri}
       />
     );
-    let node = (this.props.simple) ? innerNode : <div styleName="root" className={this.props.className}>{innerNode}</div>;
+    let node = (simple) ? innerNode : <div styleName="root" className={className}>{innerNode}</div>;
     return node;
+
   }
+);
 
-}
-
-
-type Props = {
-  source: string,
-  simple: boolean,
-  allowHeading: boolean,
-  homePath?: string,
-  renderers?: Renderers,
-  className?: string
-};
-type DefaultProps = {
-  simple: boolean,
-  allowHeading: boolean
-};
-type State = {
-};
 
 export type Renderers = {[type: string]: ElementType};
+
+export default Markdown;

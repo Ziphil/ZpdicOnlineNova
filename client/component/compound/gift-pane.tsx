@@ -2,42 +2,45 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback
 } from "react";
 import Button from "/client/component/atom/button";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 
 
-@style(require("./gift-pane.scss"))
-export default class GiftPane extends Component<Props, State> {
+const GiftPane = create(
+  require("./gift-pane.scss"), "GiftPane",
+  function ({
+  }: {
+  }): ReactElement {
 
-  private jumpAmazon(): void {
-    let url = "https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L?ref_=wl_share";
-    window.open(url);
-  }
+    let [, {trans}] = useIntl();
 
-  public render(): ReactNode {
+    let jumpAmazon = useCallback(function (): void {
+      let url = "https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L?ref_=wl_share";
+      window.open(url);
+    }, []);
+
     let node = (
       <div styleName="root">
         <div styleName="information">
-          {this.trans("giftPane.information")}
+          {trans("giftPane.information")}
         </div>
         <div styleName="button">
-          <Button label={this.trans("giftPane.sendGift")} iconLabel="&#xF06B;" onClick={this.jumpAmazon}/>
+          <Button label={trans("giftPane.sendGift")} iconName="gift" onClick={jumpAmazon}/>
         </div>
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-  starCount: number | null
-};
+export default GiftPane;

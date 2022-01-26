@@ -2,61 +2,58 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@style(require("./label.scss"))
-export default class Label extends Component<Props, State> {
+const Label = create(
+  require("./label.scss"), "Label",
+  function ({
+    text,
+    style = "normal",
+    showRequired = false,
+    showOptional = false,
+    className
+  }: {
+    text?: string,
+    style?: "normal" | "error",
+    showRequired?: boolean,
+    showOptional?: boolean,
+    className?: string
+  }): ReactElement | null {
 
-  public static defaultProps: DefaultProps = {
-    style: "normal",
-    showRequired: false,
-    showOptional: false
-  };
+    let [, {trans}] = useIntl();
 
-  public render(): ReactNode {
     let styleName = StyleNameUtil.create(
       "root",
-      {if: this.props.style === "error", true: "error"}
+      {if: style === "error", true: "error"}
     );
-    let requiredNode = (this.props.showRequired) && (
-      <span styleName="required">({this.trans("label.required")})</span>
+    let requiredNode = (showRequired) && (
+      <span styleName="required">({trans("label.required")})</span>
     );
-    let optionalNode = (this.props.showOptional) && (
-      <span styleName="optional">({this.trans("label.optional")})</span>
+    let optionalNode = (showOptional) && (
+      <span styleName="optional">({trans("label.optional")})</span>
     );
-    let node = (this.props.text !== undefined) && (
-      <div styleName={styleName} className={this.props.className}>
-        {this.props.text}
+    let node = (text !== undefined) && (
+      <div styleName={styleName} className={className}>
+        {text}
         {requiredNode}
         {optionalNode}
       </div>
     );
-    return node;
+    return node || null;
+
   }
+);
 
-}
 
-
-type Props = {
-  text?: string,
-  style: "normal" | "error",
-  showRequired: boolean,
-  showOptional: boolean,
-  className?: string
-};
-type DefaultProps = {
-  style: "normal" | "error",
-  showRequired: boolean,
-  showOptional: boolean
-};
-type State = {
-};
+export default Label;

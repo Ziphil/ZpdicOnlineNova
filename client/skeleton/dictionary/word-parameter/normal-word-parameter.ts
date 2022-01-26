@@ -33,12 +33,12 @@ export class NormalWordParameter extends WordParameter {
     this.ignoreOptions = ignoreOptions;
   }
 
-  public static createEmpty(overriddenObject: Partial<NormalWordParameter> = {}): NormalWordParameter {
-    let search = overriddenObject.search ?? "";
-    let mode = overriddenObject.mode ?? "both";
-    let type = overriddenObject.type ?? "prefix";
-    let order = overriddenObject.order ?? {mode: "unicode", direction: "ascending"};
-    let ignoreOptions = overriddenObject.ignoreOptions ?? {case: false};
+  public static createEmpty(overrides: Partial<NormalWordParameter> = {}): NormalWordParameter {
+    let search = overrides.search ?? "";
+    let mode = overrides.mode ?? "both";
+    let type = overrides.type ?? "prefix";
+    let order = overrides.order ?? {mode: "unicode", direction: "ascending"};
+    let ignoreOptions = overrides.ignoreOptions ?? {case: false};
     let skeleton = new NormalWordParameter(search, mode, type, order, ignoreOptions);
     return skeleton;
   }

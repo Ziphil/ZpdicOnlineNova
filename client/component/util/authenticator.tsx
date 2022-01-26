@@ -2,43 +2,47 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
 import {
   Redirect,
   Route,
   RouteProps
 } from "react-router-dom";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useUser
+} from "/client/component/hook";
 
 
-@style(null, {withRouter: false, inject: true, injectIntl: false, observer: true})
-export default class Authenticator extends Component<RouteProps & Props, State> {
+const Authenticator = create(
+  null, "Authenticator",
+  function ({
+    type,
+    redirect,
+    ...props
+  }: {
+    type: "private" | "guest" | "none",
+    redirect?: string
+  } & RouteProps): ReactElement {
 
-  public render(): ReactNode {
-    let type = this.props.type;
-    let redirect = this.props.redirect;
+    let [user] = useUser();
+
     if (type === "private" && redirect !== undefined) {
-      let node = (this.props.store!.user) ? <Route {...this.props}/> : <Redirect to={redirect}/>;
+      let node = (user !== null) ? <Route {...props}/> : <Redirect to={redirect}/>;
       return node;
     } else if (type === "guest" && redirect !== undefined) {
-      let node = (!this.props.store!.user) ? <Route {...this.props}/> : <Redirect to={redirect}/>;
+      let node = (user === null) ? <Route {...props}/> : <Redirect to={redirect}/>;
       return node;
     } else {
-      let node = <Route {...this.props}/>;
+      let node = <Route {...props}/>;
       return node;
     }
+
   }
+);
 
-}
 
-
-type Props = {
-  type: "private" | "guest" | "none",
-  redirect?: string
-};
-type State = {
-};
+export default Authenticator;

@@ -2,31 +2,47 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback
 } from "react";
-import Component from "/client/component/component";
+import {
+  IconName
+} from "/client/component/atom/icon";
 import MenuItem from "/client/component/compound/menu-item";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useLogout,
+  usePath
+} from "/client/component/hook";
 
 
-@style(require("./menu.scss"))
-export default class Menu extends Component<Props, State> {
+const Menu = create(
+  require("./menu.scss"), "Menu",
+  function ({
+    mode,
+    specs
+  }: {
+    mode: string,
+    specs: ReadonlyArray<{mode: string, label: string, iconName: IconName, badgeValue?: string | number, href: string}>
+  }): ReactElement {
 
-  private async performLogout(): Promise<void> {
-    let response = await this.logout();
-    if (response.status === 200) {
-      this.pushPath("/");
-    }
-  }
+    let {pushPath} = usePath();
+    let logout = useLogout();
 
-  public render(): ReactNode {
-    let itemNodes = this.props.specs.map((spec, index) => {
-      let highlight = spec.mode === this.props.mode;
+    let performLogout = useCallback(async function (): Promise<void> {
+      let response = await logout();
+      if (response.status === 200) {
+        pushPath("/");
+      }
+    }, [pushPath, logout]);
+
+    let itemNodes = specs.map((spec, index) => {
+      let highlight = spec.mode === mode;
       let href = (spec.mode !== "logout") ? spec.href : undefined;
-      let onClick = (spec.mode === "logout") ? this.performLogout.bind(this) : undefined;
-      return <MenuItem label={spec.label} iconLabel={spec.iconLabel} badgeValue={spec.badgeValue} href={href} highlight={highlight} onClick={onClick} key={index}/>;
+      let onClick = (spec.mode === "logout") ? performLogout : undefined;
+      return <MenuItem label={spec.label} iconName={spec.iconName} badgeValue={spec.badgeValue} href={href} highlight={highlight} onClick={onClick} key={index}/>;
     });
     let node = (
       <nav styleName="root">
@@ -34,14 +50,9 @@ export default class Menu extends Component<Props, State> {
       </nav>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  mode: string,
-  specs: Array<{mode: string, label: string, iconLabel: string, badgeValue?: string | number, href: string}>
-};
-type State = {
-};
+export default Menu;

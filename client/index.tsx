@@ -1,12 +1,16 @@
 //
 
+import {
+  library as fontawesomeLibrary
+} from "@fortawesome/fontawesome-svg-core";
+import {
+  fas as iconFas
+} from "@fortawesome/free-solid-svg-icons";
 import * as react from "react";
 import {
   render
 } from "react-dom";
-import {
-  Root
-} from "/client/component/root";
+import Root from "/client/component/root";
 import {
   RECAPTCHA_KEY
 } from "/client/variable";
@@ -26,6 +30,7 @@ export class Main {
     element.rel = "stylesheet";
     element.media = "all";
     document.head.appendChild(element);
+    fontawesomeLibrary.add(iconFas);
   }
 
   private appendRecaptchaElement(): void {

@@ -3,81 +3,70 @@
 import * as react from "react";
 import {
   ChangeEvent,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useEffect,
+  useState
 } from "react";
 import Label from "/client/component/atom/label";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 
 
-@style(require("./file-input.scss"))
-export default class FileInput extends Component<Props, State> {
+const FileInput = create(
+  require("./file-input.scss"), "FileInput",
+  function ({
+    file = null,
+    inputLabel,
+    buttonLabel = null,
+    onSet,
+    className
+  }: {
+    file?: File | null,
+    inputLabel?: string,
+    buttonLabel?: string | null,
+    onSet?: (file: File | null) => void,
+    className?: string
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    file: null,
-    buttonLabel: null
-  };
-  public state: State = {
-    fileName: ""
-  };
+    let [fileName, setFileName] = useState("");
+    let [, {trans}] = useIntl();
 
-  public constructor(props: Props) {
-    super(props);
-    let fileName = this.props.file?.name ?? "";
-    this.state.fileName = fileName;
-  }
-
-  public componentDidUpdate(previousProps: any): void {
-    if (this.props.file !== previousProps.file) {
-      let fileName = this.props.file?.name ?? "";
-      this.setState({fileName});
-    }
-  }
-
-  private handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    let files = event.target.files;
-    if (files && files.length > 0) {
-      let file = files[0];
-      let fileName = file.name;
-      this.setState({fileName});
-      if (this.props.onSet) {
-        this.props.onSet(file);
+    let handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+      let files = event.target.files;
+      if (files && files.length > 0) {
+        let file = files[0];
+        let fileName = file.name;
+        setFileName(fileName);
+        onSet?.(file);
       }
-    }
-  }
+    }, [onSet]);
 
-  public render(): ReactNode {
+    useEffect(() => {
+      let fileName = file?.name ?? "";
+      setFileName(fileName);
+    }, [file]);
+
     let node = (
-      <div styleName="root" className={this.props.className}>
+      <div styleName="root" className={className}>
         <label styleName="input-wrapper">
-          <Label text={this.props.inputLabel}/>
-          <input styleName="input" type="text" value={this.state.fileName} readOnly={true}/>
+          <Label text={inputLabel}/>
+          <input styleName="input" type="text" value={fileName} readOnly={true}/>
         </label>
         <label styleName="button">
-          {this.props.buttonLabel ?? this.trans("fileInput.button")}
-          <input styleName="file" type="file" onChange={this.handleChange.bind(this)}/>
+          {buttonLabel ?? trans("fileInput.button")}
+          <input styleName="file" type="file" onChange={handleChange}/>
         </label>
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  file: File | null,
-  inputLabel?: string,
-  buttonLabel: string | null,
-  onSet?: (file: File | null) => void,
-  className?: string
-};
-type DefaultProps = {
-  file: File | null,
-  buttonLabel: string | null
-};
-type State = {
-  fileName: string
-};
+export default FileInput;

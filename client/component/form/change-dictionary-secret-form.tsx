@@ -3,65 +3,67 @@
 import * as react from "react";
 import {
   Fragment,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import RadioGroup from "/client/component/atom/radio-group";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 
 
-@style(require("./change-dictionary-secret-form.scss"))
-export default class ChangeDictionarySecretForm extends Component<Props, State> {
+const ChangeDictionarySecretForm = create(
+  require("./change-dictionary-secret-form.scss"), "ChangeDictionarySecretForm",
+  function ({
+    number,
+    currentSecret,
+    onSubmit
+  }: {
+    number: number,
+    currentSecret: boolean,
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public constructor(props: any) {
-    super(props);
-    let secret = this.props.currentSecret;
-    this.state = {secret};
-  }
+    let [secret, setSecret] = useState(currentSecret);
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async handleClick(): Promise<void> {
-    let number = this.props.number;
-    let secret = this.state.secret;
-    let response = await this.request("changeDictionarySecret", {number, secret});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("dictionarySecretChanged");
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let handleClick = useCallback(async function (): Promise<void> {
+      let response = await request("changeDictionarySecret", {number, secret});
+      if (response.status === 200) {
+        addInformationPopup("dictionarySecretChanged");
+        onSubmit?.();
       }
-    }
-  }
+    }, [number, secret, request, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
     let specs = [
-      {value: "public", label: this.trans("changeDictionarySecretForm.public")},
-      {value: "secret", label: this.trans("changeDictionarySecretForm.secret")}
+      {value: "public", label: trans("changeDictionarySecretForm.public")},
+      {value: "secret", label: trans("changeDictionarySecretForm.secret")}
     ];
-    let secretValue = (this.state.secret) ? "secret" : "public";
+    let secretValue = (secret) ? "secret" : "public";
     let node = (
       <Fragment>
         <form styleName="root">
-          <RadioGroup name="secret" specs={specs} value={secretValue} onSet={(value) => this.setState({secret: value === "secret"})}/>
-          <Button label={this.trans("changeDictionarySecretForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+          <RadioGroup name="secret" specs={specs} value={secretValue} onSet={(value) => setSecret(value === "secret")}/>
+          <Button label={trans("changeDictionarySecretForm.confirm")} reactive={true} onClick={handleClick}/>
         </form>
         <p styleName="caution">
-          {this.trans("changeDictionarySecretForm.caution")}
+          {trans("changeDictionarySecretForm.caution")}
         </p>
       </Fragment>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  number: number,
-  currentSecret: boolean,
-  onSubmit?: () => void
-};
-type State = {
-  secret: boolean;
-};
+export default ChangeDictionarySecretForm;

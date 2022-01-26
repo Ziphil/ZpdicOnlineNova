@@ -2,16 +2,23 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import FileInput from "/client/component/atom/file-input";
-import Component from "/client/component/component";
 import PaneList from "/client/component/compound/pane-list";
 import ResourcePane from "/client/component/compound/resource-pane";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 import {
   Dictionary
 } from "/client/skeleton/dictionary";
@@ -23,77 +30,78 @@ import {
 } from "/server/controller/internal/type";
 
 
-@style(require("./resource-list.scss"))
-export default class ResourceList extends Component<Props, State> {
+const ResouceList = create(
+  require("./resource-list.scss"), "ResouceList",
+  function ({
+    dictionary,
+    size,
+    showCode,
+    showInstruction = false
+  }: {
+    dictionary: Dictionary,
+    size: number,
+    showCode?: boolean,
+    showInstruction?: boolean
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    showInstruction: false
-  };
-  public state: State = {
-    file: null,
-    resources: null
-  };
+    let [file, setFile] = useState<File | null>(null);
+    let [dummy, setDummy] = useState({});
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup, addErrorPopup}] = usePopup();
 
-  public constructor(props: Props) {
-    super(props);
-    this.provideResources = this.provideResources.bind(this);
-    this.state.resources = this.provideResources;
-  }
-
-  private async provideResources(offset?: number, size?: number): Promise<WithSize<string>> {
-    let number = this.props.dictionary.number;
-    let response = await this.request("fetchResources", {number, offset, size});
-    if (response.status === 200 && !("error" in response.data)) {
-      let resources = response.data;
-      return resources;
-    } else {
-      return [[], 0];
-    }
-  }
-
-  private async uploadFile(): Promise<void> {
-    let number = this.props.dictionary.number;
-    let file = this.state.file;
-    if (file) {
-      let name = file.name;
-      let type = file.type;
-      let response = await this.request("fetchUploadResourcePost", {number, name, type}, {useRecaptcha: true});
+    let provideResources = useCallback(async function (offset?: number, size?: number): Promise<WithSize<string>> {
+      let number = dictionary.number;
+      let response = await request("fetchResources", {number, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
-        let post = response.data;
-        try {
-          await AwsUtil.uploadFile(post, file);
-          let resources = this.provideResources.bind(this);
-          this.props.store!.addInformationPopup("resourceUploaded");
-          this.setState({resources, file: null});
-        } catch (error) {
-          if (error.name === "AwsError") {
-            let code = error.data["Code"]["_text"];
-            let message = error.data["Message"]["_text"];
-            if (code === "EntityTooLarge") {
-              this.props.store!.addErrorPopup("resourceSizeTooLarge");
-            } else if (code === "AccessDenied" && message.includes("Policy Condition failed") && message.includes("$Content-Type")) {
-              this.props.store!.addErrorPopup("unsupportedResourceType");
+        let resources = response.data;
+        return resources;
+      } else {
+        return [[], 0];
+      }
+    }, [dictionary.number, dummy, request]);
+
+    let uploadFile = useCallback(async function (): Promise<void> {
+      let number = dictionary.number;
+      if (file) {
+        let name = file.name;
+        let type = file.type;
+        let response = await request("fetchUploadResourcePost", {number, name, type}, {useRecaptcha: true});
+        if (response.status === 200 && !("error" in response.data)) {
+          let post = response.data;
+          try {
+            await AwsUtil.uploadFile(post, file);
+            addInformationPopup("resourceUploaded");
+            setFile(null);
+            setDummy({});
+          } catch (error) {
+            if (error.name === "AwsError") {
+              let code = error.data["Code"]["_text"];
+              let message = error.data["Message"]["_text"];
+              if (code === "EntityTooLarge") {
+                addErrorPopup("resourceSizeTooLarge");
+              } else if (code === "AccessDenied" && message.includes("Policy Condition failed") && message.includes("$Content-Type")) {
+                addErrorPopup("unsupportedResourceType");
+              } else {
+                addErrorPopup("awsError");
+              }
             } else {
-              this.props.store!.addErrorPopup("awsError");
+              addErrorPopup("awsError");
             }
-          } else {
-            this.props.store!.addErrorPopup("awsError");
           }
         }
       }
-    }
-  }
+    }, [dictionary.number, file, request, addInformationPopup, addErrorPopup]);
 
-  public render(): ReactNode {
-    let outerThis = this;
-    let renderer = function (resource: string): ReactNode {
+    let renderResource = useCallback(function (resource: string): ReactNode {
       let node = (
-        <ResourcePane dictionary={outerThis.props.dictionary} resource={resource} showCode={outerThis.props.showCode}/>
+        <ResourcePane dictionary={dictionary} resource={resource} showCode={showCode} onDiscardConfirm={() => setDummy({})}/>
       );
       return node;
-    };
-    let instructionText = (this.props.dictionary.settings.enableMarkdown) ? this.trans("resourceList.instruction") : this.trans("resourceList.markdownCaution");
-    let instructionNode = (this.props.showInstruction) && (
+    }, [dictionary, showCode]);
+
+    let instructionText = (dictionary.settings.enableMarkdown) ? trans("resourceList.instruction") : trans("resourceList.markdownCaution");
+    let instructionNode = (showInstruction) && (
       <div styleName="instruction">
         {instructionText}
       </div>
@@ -101,34 +109,22 @@ export default class ResourceList extends Component<Props, State> {
     let node = (
       <div styleName="root">
         <div styleName="caution">
-          {this.trans("resourceList.experimantalCaution")}
+          {trans("resourceList.experimantalCaution")}
         </div>
         {instructionNode}
         <div styleName="form">
-          <FileInput inputLabel={this.trans("resourceList.file")} file={this.state.file} onSet={(file) => this.setState({file})}/>
-          <Button label={this.trans("resourceList.confirm")} reactive={true} onClick={this.uploadFile.bind(this)}/>
+          <FileInput inputLabel={trans("resourceList.file")} file={file} onSet={(file) => setFile(file)}/>
+          <Button label={trans("resourceList.confirm")} reactive={true} onClick={uploadFile}/>
         </div>
         <div styleName="list">
-          <PaneList items={this.state.resources} size={this.props.size} column={2} method="table" style="spaced" border={true} renderer={renderer}/>
+          <PaneList items={provideResources} size={size} column={2} method="table" style="spaced" border={true} renderer={renderResource}/>
         </div>
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  dictionary: Dictionary,
-  size: number,
-  showCode?: boolean,
-  showInstruction: boolean
-};
-type DefaultProps = {
-  showInstruction: boolean
-};
-type State = {
-  file: File | null,
-  resources: any
-};
+export default ResouceList;

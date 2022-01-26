@@ -2,49 +2,58 @@
 
 import * as react from "react";
 import {
-  ErrorInfo,
-  ReactNode
+  ReactElement,
+  useCallback
 } from "react";
-import Component from "/client/component/component";
+import Button from "/client/component/atom/button";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePath
+} from "/client/component/hook";
 import Page from "/client/component/page/page";
 
 
-@style(require("./error-page.scss"))
-export default class ErrorPage extends Component<Props, State> {
+const ErrorPage = create(
+  require("./error-page.scss"), "ErrorPage",
+  function ({
+    error,
+    resetErrorBoundary
+  }: {
+    error: Error;
+    resetErrorBoundary: (...args: Array<unknown>) => void
+  }): ReactElement {
 
-  private getMessage(): string {
-    let message = "";
-    message += this.props.error.stack + "\n";
-    message += this.props.errorInfo.componentStack;
-    return message;
-  }
+    let [, {trans}] = useIntl();
+    let {pushPath} = usePath();
 
-  public render(): ReactNode {
+    let handleClick = useCallback(function (): void {
+      resetErrorBoundary();
+      pushPath("/");
+    }, [resetErrorBoundary, pushPath]);
+
     let node = (
       <Page>
         <div styleName="root">
           <div styleName="icon">&#xF12A;</div>
           <div styleName="description">
-            {this.trans("errorPage.description")}
+            {trans("errorPage.description")}
           </div>
           <pre styleName="message">
-            {this.getMessage()}
+            {error.stack}
           </pre>
+          <div styleName="button">
+            <Button label={trans("errorPage.back")} iconName="arrow-circle-left" onClick={handleClick}/>
+          </div>
         </div>
       </Page>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  error: Error,
-  errorInfo: ErrorInfo
-};
-type State = {
-};
+export default ErrorPage;

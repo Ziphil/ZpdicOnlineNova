@@ -5,8 +5,9 @@ import {
   prop
 } from "@typegoose/typegoose";
 import {
+  HydratedDocument,
   Model,
-  Query
+  QueryWithHelpers
 } from "mongoose";
 
 
@@ -15,25 +16,25 @@ export class DiscardableSchema {
   @prop()
   public removedDate?: Date;
 
-  public static findExist<S, H>(this: Model<DocumentType<S>, H>, callback?: (error: any, result: Array<DocumentType<S>>) => void): Query<Array<DocumentType<S>>> & H {
+  public static findExist<T, H>(this: Model<T, H>, callback?: (error: any, result: Array<T>) => void): QueryWithHelpers<Array<HydratedDocument<T>>, HydratedDocument<T>, H, T> {
     return this.find({}, callback).where({removedDate: undefined});
   }
 
-  public static findOneExist<S, H>(this: Model<DocumentType<S>, H>, callback?: (error: any, result: DocumentType<S> | null) => void): Query<DocumentType<S> | null> & H {
+  public static findOneExist<T, H>(this: Model<T, H>, callback?: (error: any, result: T | null) => void): QueryWithHelpers<HydratedDocument<T> | null, HydratedDocument<T>, H, T> {
     return this.findOne({}, callback).where({removedDate: undefined});
   }
 
-  public static updateManyDiscarded<H>(this: Model<DocumentType<DiscardableSchema>, H>): Query<any> & H {
+  public static updateManyDiscarded<T extends DocumentType<DiscardableSchema>, H>(this: Model<T, H>): QueryWithHelpers<any, HydratedDocument<T>, H, T> {
     let removedDate = new Date();
     return this.updateMany({}, {removedDate});
   }
 
-  public static updateOneDiscarded<H>(this: Model<DocumentType<DiscardableSchema>, H>): Query<any> & H {
+  public static updateOneDiscarded<T extends DocumentType<DiscardableSchema>, H>(this: Model<T, H>): QueryWithHelpers<any, HydratedDocument<T>, H, T> {
     let removedDate = new Date();
     return this.updateOne({}, {removedDate});
   }
 
-  public flagDiscarded(this: DocumentType<DiscardableSchema>): Promise<this> {
+  public flagDiscarded<T extends DocumentType<DiscardableSchema>>(this: T): Promise<this> {
     let removedDate = new Date();
     return this.update({removedDate}).exec();
   }

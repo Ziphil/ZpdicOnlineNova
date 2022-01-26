@@ -8,20 +8,20 @@
 }
 
 .head {
+  @include bold-font;
   color: $head-color;
   font-size: 80%;
-  font-weight: bold;
 }
 
 .list {
-  margin: $small-margin 0u 0u 0u;
-  padding: 0u;
+  margin: $small-margin 0rpx 0rpx 0rpx;
+  padding: 0rpx;
   list-style-type: none;
 }
 
 .item {
   @include reset-first-margin;
-  margin: $tiny-margin 0u 0u 0u;
+  margin: $tiny-margin 0rpx 0rpx 0rpx;
 }
 
 .avatar {

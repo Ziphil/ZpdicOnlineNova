@@ -2,35 +2,38 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
 import LanguageForm from "/client/component/compound/language-form";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import Page from "/client/component/page/page";
 
 
-@style(require("./language-page.scss"))
-export default class LanguagePage extends Component<Props, State> {
+const LanguagePage = create(
+  require("./language-page.scss"), "LanguagePage",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public render(): ReactNode {
+    let [, {trans}] = useIntl();
+
     let node = (
       <Page>
-        <div styleName="title">{this.trans("languagePage.title")}</div>
+        <div styleName="title">{trans("languagePage.title")}</div>
         <div styleName="form">
           <LanguageForm/>
         </div>
       </Page>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default LanguagePage;

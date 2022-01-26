@@ -11,25 +11,25 @@
 }
 
 .name {
-  font-weight: bold;
+  @include bold-font;
 }
 
 .status {
-  margin: 0u 0u 0u $large-margin;
+  margin: 0rpx 0rpx 0rpx $large-margin;
   white-space: nowrap;
 }
 
 .information {
-  margin: $small-margin 0u 0u 0u;
+  margin: $small-margin 0rpx 0rpx 0rpx;
   font-size: 80%;
 }
 
 .information-item {
-  margin: $tiny-margin 0u 0u 0u;
+  margin: $tiny-margin 0rpx 0rpx 0rpx;
 }
 
 .information-item:first-child {
-  margin: 0u;
+  margin: 0rpx;
 }
 
 .setting {
@@ -37,9 +37,9 @@
 }
 
 .setting >* {
-  margin: 0u 0u 0u $control-horizontal-margin;
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }
 
 .setting >*:first-child {
-  margin: 0u;
+  margin: 0rpx;
 }

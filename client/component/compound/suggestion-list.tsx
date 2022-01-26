@@ -2,28 +2,32 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
 import SuggestionPane from "/client/component/compound/suggestion-pane";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 import {
   Dictionary,
   Suggestion
 } from "/client/skeleton/dictionary";
 
 
-@style(require("./suggestion-list.scss"))
-export default class SuggestionList extends Component<Props, State> {
+const SuggestionList = create(
+  require("./suggestion-list.scss"), "SuggestionList",
+  function ({
+    dictionary,
+    suggestions
+  }: {
+    dictionary: Dictionary,
+    suggestions: Array<Suggestion>
+  }): ReactElement | null {
 
-  public render(): ReactNode {
-    let displayedSuggestions = this.props.suggestions;
-    let suggestionPanes = displayedSuggestions.map((suggestion, index) => {
+    let suggestionPanes = suggestions.map((suggestion, index) => {
       let suggestionPane = (
         <SuggestionPane
-          dictionary={this.props.dictionary}
+          dictionary={dictionary}
           suggestion={suggestion}
           key={index}
         />
@@ -35,15 +39,10 @@ export default class SuggestionList extends Component<Props, State> {
         {suggestionPanes}
       </ul>
     );
-    return node;
+    return node || null;
+
   }
+);
 
-}
 
-
-type Props = {
-  dictionary: Dictionary,
-  suggestions: Array<Suggestion>
-};
-type State = {
-};
+export default SuggestionList;

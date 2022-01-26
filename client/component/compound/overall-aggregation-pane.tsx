@@ -2,66 +2,68 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useState
 } from "react";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  useMount
+} from "react-use";
+import {
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  useRequest
+} from "/client/component/hook";
 import {
   Aggregation
 } from "/client/skeleton/aggregation";
 
 
-@style(require("./overall-aggregation-pane.scss"))
-export default class OverallAggregationPane extends Component<Props, State> {
+const OverallAggregationPane = create(
+  require("./overall-aggregation-pane.scss"), "OverallAggregationPane",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public state: State = {
-    dictionary: null,
-    word: null,
-    example: null
-  };
+    let [dictionary, setDictionary] = useState<Aggregation | null>(null);
+    let [word, setWord] = useState<Aggregation | null>(null);
+    let [example, setExample] = useState<Aggregation | null>(null);
+    let [, {trans, transNumber}] = useIntl();
+    let {request} = useRequest();
 
-  public async componentDidMount(): Promise<void> {
-    let response = await this.request("fetchOverallAggregation", {}, {ignoreError: true});
-    if (response.status === 200) {
-      let body = response.data;
-      this.setState(body);
-    }
-  }
+    useMount(async () => {
+      let response = await request("fetchOverallAggregation", {}, {ignoreError: true});
+      if (response.status === 200) {
+        let body = response.data;
+        setDictionary(body.dictionary);
+        setWord(body.word);
+        setExample(body.example);
+      }
+    });
 
-  public render(): ReactNode {
-    let dictionary = this.state.dictionary;
-    let word = this.state.word;
-    let example = this.state.example;
     let node = (
       <div styleName="root">
         <div styleName="count-wrapper">
-          <div styleName="title">{this.trans("overallAggregationPane.dictionaryCount")}</div>
-          <div styleName="count">{this.transNumber(dictionary?.count)}</div>
+          <div styleName="title">{trans("overallAggregationPane.dictionaryCount")}</div>
+          <div styleName="count">{transNumber(dictionary?.count)}</div>
           <div styleName="slash">/</div>
-          <div styleName="whole-count">{this.transNumber(dictionary?.wholeCount)}</div>
-          <div styleName="title">{this.trans("overallAggregationPane.wordCount")}</div>
-          <div styleName="count">{this.transNumber(word?.count)}</div>
+          <div styleName="whole-count">{transNumber(dictionary?.wholeCount)}</div>
+          <div styleName="title">{trans("overallAggregationPane.wordCount")}</div>
+          <div styleName="count">{transNumber(word?.count)}</div>
           <div styleName="slash">/</div>
-          <div styleName="whole-count">{this.transNumber(word?.wholeCount)}</div>
-          <div styleName="title">{this.trans("overallAggregationPane.exampleCount")}</div>
-          <div styleName="count">{this.transNumber(example?.count)}</div>
+          <div styleName="whole-count">{transNumber(word?.wholeCount)}</div>
+          <div styleName="title">{trans("overallAggregationPane.exampleCount")}</div>
+          <div styleName="count">{transNumber(example?.count)}</div>
           <div styleName="slash">/</div>
-          <div styleName="whole-count">{this.transNumber(example?.wholeCount)}</div>
+          <div styleName="whole-count">{transNumber(example?.wholeCount)}</div>
         </div>
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-  dictionary: Aggregation | null,
-  word: Aggregation | null,
-  example: Aggregation | null
-};
+export default OverallAggregationPane;

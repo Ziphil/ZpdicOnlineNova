@@ -2,54 +2,47 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@style(require("./badge.scss"))
-export default class Badge extends Component<Props, State> {
+const Badge = create(
+  require("./badge.scss"), "Badge",
+  function ({
+    value,
+    style = "normal",
+    className
+  }: {
+    value: string | number,
+    style?: "normal" | "highlight",
+    className?: string
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    style: "normal"
-  };
+    let [, {transNumber}] = useIntl();
 
-  public render(): ReactNode {
     let styleName = StyleNameUtil.create(
       "root",
-      {if: this.props.style === "highlight", true: "highlight"}
+      {if: style === "highlight", true: "highlight"}
     );
-    let value = (() => {
-      if (typeof this.props.value === "number") {
-        return this.transNumber(this.props.value);
-      } else {
-        return this.props.value;
-      }
-    })();
+    let actualValue = (typeof value === "number") ? transNumber(value) : value;
     let node = (
-      <span styleName={styleName} className={this.props.className}>
-        {value}
+      <span styleName={styleName} className={className}>
+        {actualValue}
       </span>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  value: string | number,
-  style: "normal" | "highlight",
-  className?: string
-};
-type DefaultProps = {
-  style: "normal" | "highlight"
-};
-type State = {
-};
+export default Badge;

@@ -5,7 +5,7 @@
 
 .icon {
   @include icon-font;
-  margin: 0u 0u $huge-margin 0u;
+  margin: 0rpx 0rpx $huge-margin 0rpx;
   font-size: 300%;
   color: $light-color;
   text-align: center;
@@ -13,16 +13,21 @@
 
 .description {
   @include line-height;
-  margin: 0u;
+  margin: 0rpx;
   text-align: justify;
 }
 
 .message {
   @include monospace-font;
-  margin: $paragraph-margin 0u 0u 0u;
+  margin: $paragraph-margin 0rpx 0rpx 0rpx;
   padding: $box-vertical-padding $box-horizontal-padding;
   line-height: $line-height;
   background-color: $strong-background-color;
   border-radius: $small-border-radius;
   overflow: hidden;
+}
+
+.button {
+  margin: $large-margin 0rpx 0rpx 0rpx;
+  text-align: center;
 }

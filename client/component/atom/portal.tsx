@@ -2,30 +2,35 @@
 
 import * as react from "react";
 import {
+  ReactElement,
   ReactNode
 } from "react";
 import {
   createPortal
 } from "react-dom";
-import Component from "/client/component/component";
+import {
+  create
+} from "/client/component/create";
 
 
-export default class Portal extends Component<Props, State> {
+const Portal = create(
+  null, "Portal",
+  function ({
+    children
+  }: {
+    children?: ReactNode
+  }): ReactElement {
 
-  public render(): ReactNode {
     let container = document.getElementById("page") ?? document.body;
     let node = (
       <div className="portal">
-        {this.props.children}
+        {children}
       </div>
     );
     return createPortal(node, container);
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default Portal;

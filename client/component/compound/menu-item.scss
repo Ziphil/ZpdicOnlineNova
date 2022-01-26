@@ -7,28 +7,28 @@ $menu-item-vertical-padding: 32u;
 $menu-item-horizontal-padding: 48u;
 
 .root {
-  padding: 0u $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
+  padding: 0rpx $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
   color: $light-color;
   text-decoration: none;
   text-align: right;
-  border-bottom: 16u transparent solid;
+  border-bottom: 5rpx transparent solid;
   display: block;
   cursor: pointer;
 }
 
 .root:hover {
-  border-bottom: 16u $light-border-color solid;
+  border-bottom: 5rpx $light-border-color solid;
 }
 
 .root.highlight {
-  margin-bottom: -3u;
-  font-weight: bold;
+  @include bold-font;
+  margin-bottom: -1rpx;
   color: $link-color;
-  border-bottom: 19u $link-color solid;
+  border-bottom: 6rpx $link-color solid;
 }
 
 .text {
-  margin: 0u 0u 0u $blank-margin;
+  margin: 0rpx 0rpx 0rpx $blank-margin;
   @include smartphone {
     display: none;
   }
@@ -39,5 +39,5 @@ $menu-item-horizontal-padding: 48u;
 }
 
 .badge {
-  margin: 0u 0u 0u $blank-margin;
+  margin: 0rpx 0rpx 0rpx $blank-margin;
 }

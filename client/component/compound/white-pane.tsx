@@ -4,29 +4,42 @@ import * as react from "react";
 import {
   Fragment,
   MouseEvent,
-  ReactNode
+  ReactElement,
+  ReactNode,
+  useCallback
 } from "react";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  usePath
+} from "/client/component/hook";
 
 
-@style(require("./white-pane.scss"))
-export default class WhitePane extends Component<Props, State> {
+const WhitePane = create(
+  require("./white-pane.scss"), "WhitePane",
+  function ({
+    clickable,
+    href,
+    onClick,
+    children
+  }: {
+    clickable: boolean,
+    href?: string,
+    onClick?: (event: MouseEvent<HTMLAnchorElement>) => void,
+    children?: ReactNode
+  }): ReactElement {
 
-  private handleClickAnchor(event: MouseEvent<HTMLAnchorElement>): void {
-    event.preventDefault();
-    let path = event.currentTarget.attributes.getNamedItem("href")!.value;
-    this.pushPath(path);
-    if (this.props.onClick) {
-      this.props.onClick(event);
-    }
-  }
+    let {pushPath} = usePath();
 
-  public render(): ReactNode {
+    let handleClickAnchor = useCallback(function (event: MouseEvent<HTMLAnchorElement>): void {
+      event.preventDefault();
+      let path = event.currentTarget.attributes.getNamedItem("href")!.value;
+      pushPath(path);
+      onClick?.(event);
+    }, [onClick, pushPath]);
+
     let innerNode = (() => {
-      let children = this.props.children;
       if (Array.isArray(children)) {
         let actualChildren = children.filter((child) => child !== null && child !== undefined && child !== false);
         if (actualChildren.length >= 2) {
@@ -46,9 +59,9 @@ export default class WhitePane extends Component<Props, State> {
       }
     })();
     let node = (() => {
-      if (this.props.clickable) {
+      if (clickable) {
         let node = (
-          <a styleName="root hoverable" href={this.props.href} onClick={this.handleClickAnchor.bind(this)}>
+          <a styleName="root hoverable" href={href} onClick={handleClickAnchor}>
             {innerNode}
           </a>
         );
@@ -63,15 +76,9 @@ export default class WhitePane extends Component<Props, State> {
       }
     })();
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  clickable: boolean,
-  href?: string,
-  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void
-};
-type State = {
-};
+export default WhitePane;

@@ -3,63 +3,67 @@
 import * as react from "react";
 import {
   Fragment,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 
 
-@style(require("./discard-dictionary-form.scss"))
-export default class DiscardDictionaryForm extends Component<Props, State> {
+const DiscardDictionaryForm = create(
+  require("./discard-dictionary-form.scss"), "DiscardDictionaryForm",
+  function ({
+    number,
+    onSubmit
+  }: {
+    number: number,
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public state: State = {
-    alertOpen: false
-  };
+    let [alertOpen, setAlertOpen] = useState(false);
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async discardDictionary(): Promise<void> {
-    let number = this.props.number;
-    let response = await this.request("discardDictionary", {number});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("dictionaryDiscarded");
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let discardDictionary = useCallback(async function (): Promise<void> {
+      let response = await request("discardDictionary", {number});
+      if (response.status === 200) {
+        addInformationPopup("dictionaryDiscarded");
+        onSubmit?.();
       }
-    }
-  }
+    }, [number, request, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Button label={this.trans("discardDictionaryForm.confirm")} reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
+          <Button label={trans("discardDictionaryForm.confirm")} reactive={true} style="caution" onClick={() => setAlertOpen(true)}/>
         </form>
         <p styleName="caution">
-          {this.trans("discardDictionaryForm.caution")}
+          {trans("discardDictionaryForm.caution")}
         </p>
         <Alert
-          text={this.trans("discardDictionaryForm.alert")}
-          confirmLabel={this.trans("discardDictionaryForm.confirm")}
-          open={this.state.alertOpen}
+          text={trans("discardDictionaryForm.alert")}
+          confirmLabel={trans("discardDictionaryForm.confirm")}
+          open={alertOpen}
           outsideClosable={true}
-          onClose={() => this.setState({alertOpen: false})}
-          onConfirm={this.discardDictionary.bind(this)}
+          onClose={() => setAlertOpen(false)}
+          onConfirm={discardDictionary}
         />
       </Fragment>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  number: number,
-  onSubmit?: () => void
-};
-type State = {
-  alertOpen: boolean
-};
+export default DiscardDictionaryForm;

@@ -2,32 +2,36 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
 import Loading from "/client/component/compound/loading";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import Page from "/client/component/page/page";
+import {
+  StyleNameUtil
+} from "/client/util/style-name";
 
 
-@style(require("./empty-page.scss"))
-export default class EmptyPage extends Component<Props, State> {
+const EmptyPage = create(
+  require("./empty-page.scss"), "EmptyPage",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public render(): ReactNode {
     let node = (
       <Page>
         <Loading loading={true}/>
       </Page>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default EmptyPage;

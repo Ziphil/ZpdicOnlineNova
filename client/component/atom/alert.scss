@@ -6,7 +6,7 @@
 .content {
   width: 100%;
   max-width: 1500u;
-  margin: 0u auto;
+  margin: 0rpx auto;
   padding: $large-margin $large-margin;
   background-color: $background-color;
   border-radius: $large-border-radius;
@@ -31,16 +31,16 @@
 
 .text {
   @include line-height;
-  margin: 0u 0u 0u $medium-margin;
+  margin: 0rpx 0rpx 0rpx $medium-margin;
   text-align: justify;
 }
 
 .button {
-  margin: $large-margin 0u 0u 0u;
+  margin: $large-margin 0rpx 0rpx 0rpx;
   text-align: right;
 }
 
 .button >* {
   @include reset-first-margin;
-  margin: 0u 0u 0u $control-horizontal-margin;
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }

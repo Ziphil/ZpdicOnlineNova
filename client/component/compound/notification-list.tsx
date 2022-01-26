@@ -2,14 +2,18 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  ReactNode,
+  useCallback
 } from "react";
-import Component from "/client/component/component";
 import NotificationPane from "/client/component/compound/notification-pane";
 import PaneList from "/client/component/compound/pane-list";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useRequest
+} from "/client/component/hook";
 import {
   Notification
 } from "/client/skeleton/notification";
@@ -18,35 +22,38 @@ import {
 } from "/server/controller/internal/type";
 
 
-@style(require("./notification-list.scss"))
-export default class NotificationList extends Component<Props, State> {
+const NotificationList = create(
+  require("./notification-list.scss"), "NotificationList",
+  function ({
+    size,
+    showPagination
+  }: {
+    size: number,
+    showPagination: boolean
+  }): ReactElement {
 
-  private async provideNotifications(offset?: number, size?: number): Promise<WithSize<Notification>> {
-    let response = await this.request("fetchNotifications", {offset, size});
-    if (response.status === 200) {
-      let hitResult = response.data;
-      return hitResult;
-    } else {
-      return [[], 0];
-    }
-  }
+    let {request} = useRequest();
 
-  public render(): ReactNode {
+    let provideNotifications = useCallback(async function (offset?: number, size?: number): Promise<WithSize<Notification>> {
+      let response = await request("fetchNotifications", {offset, size});
+      if (response.status === 200) {
+        let hitResult = response.data;
+        return hitResult;
+      } else {
+        return [[], 0];
+      }
+    }, [request]);
+
     let renderer = function (notification: Notification): ReactNode {
       return <NotificationPane notification={notification} key={notification.id}/>;
     };
     let node = (
-      <PaneList items={this.provideNotifications.bind(this)} size={this.props.size} showPagination={this.props.showPagination} style="compact" renderer={renderer}/>
+      <PaneList items={provideNotifications} size={size} showPagination={showPagination} style="compact" renderer={renderer}/>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  size: number,
-  showPagination: boolean
-};
-type State = {
-};
+export default NotificationList;

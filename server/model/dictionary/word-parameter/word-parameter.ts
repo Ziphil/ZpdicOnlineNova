@@ -30,7 +30,7 @@ import {
 
 export abstract class WordParameter {
 
-  public abstract createQuery(dictionary: Dictionary): Query<Array<Word>> | Aggregate<Array<Word>>;
+  public abstract createQuery(dictionary: Dictionary): Query<Array<Word>, Word> | Aggregate<Array<Word>>;
 
   // この検索パラメータからサジェストされる単語を検索するためのクエリを返します。
   // 何もサジェストする必要がない場合は null を返します。

@@ -5,24 +5,24 @@
 
 .container {
   @include reset-first-margin;
-  margin: $large-margin 0u 0u 0u;
+  margin: $large-margin 0rpx 0rpx 0rpx;
 }
 
 .confirm-button-wrapper {
-  margin: $large-margin 0u 0u 0u;
+  margin: $large-margin 0rpx 0rpx 0rpx;
   display: flex;
   justify-content: space-between;
 }
 
 .confirm-button >* {
   @include reset-first-margin;
-  margin: 0u 0u 0u $control-horizontal-margin;
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }
 
 .inner,
 .plus {
   @include reset-first-margin;
-  margin: $small-control-vertical-margin 0u 0u 0u;
+  margin: $small-control-vertical-margin 0rpx 0rpx 0rpx;
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -33,7 +33,7 @@
 }
 
 .inner.large {
-  margin: $control-vertical-margin 0u 0u 0u;
+  margin: $control-vertical-margin 0rpx 0rpx 0rpx;
 }
 
 .plus {
@@ -56,7 +56,7 @@
 
 .form >* {
   @include reset-first-margin;
-  margin: 0u 0u 0u $small-control-horizontal-margin;
+  margin: 0rpx 0rpx 0rpx $small-control-horizontal-margin;
 }
 
 .form.information {
@@ -64,9 +64,9 @@
 }
 
 .control-button {
-  margin: 0u 0u 0u $small-control-horizontal-margin;
+  margin: 0rpx 0rpx 0rpx $small-control-horizontal-margin;
   @include smartphone {
-    margin: $small-control-vertical-margin 0u 0u 0u;
+    margin: $small-control-vertical-margin 0rpx 0rpx 0rpx;
     align-self: flex-end;
   }
 }

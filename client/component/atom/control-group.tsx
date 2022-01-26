@@ -2,31 +2,33 @@
 
 import * as react from "react";
 import {
+  ReactElement,
   ReactNode
 } from "react";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 
 
-@style(require("./control-group.scss"))
-export default class ControlGroup extends Component<Props, State> {
+const ControlGroup = create(
+  require("./control-group.scss"), "ControlGroup",
+  function ({
+    className,
+    children
+  }: {
+    className?: string,
+    children?: ReactNode
+  }): ReactElement {
 
-  public render(): ReactNode {
     let node = (
-      <div styleName="root" className={this.props.className}>
-        {this.props.children}
+      <div styleName="root" className={className}>
+        {children}
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  className?: string
-};
-type State = {
-};
+export default ControlGroup;

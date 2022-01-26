@@ -3,52 +3,61 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactNode
+  ReactElement,
+  useCallback
 } from "react";
-import Component from "/client/component/component";
+import Icon from "/client/component/atom/icon";
 import {
-  style
-} from "/client/component/decorator";
+  IconName
+} from "/client/component/atom/icon";
+import {
+  StylesRecord,
+  create
+} from "/client/component/create";
+import {
+  usePath
+} from "/client/component/hook";
 
 
-@style(require("./header-menu-item.scss"))
-export default class HeaderMenuItem extends Component<Props, State> {
+const HeaderMenuItem = create(
+  require("./header-menu-item.scss"), "HeaderMenuItem",
+  function ({
+    label,
+    iconName,
+    href,
+    onClick,
+    styles
+  }: {
+    label: string,
+    iconName?: IconName,
+    href: string,
+    onClick?: (event: MouseEvent<HTMLElement>) => void,
+    styles?: StylesRecord
+  }): ReactElement {
 
-  public state: State = {
-    userName: ""
-  };
+    let {pushPath} = usePath();
 
-  private handleClick(event: MouseEvent<HTMLElement>): void {
-    event.preventDefault();
-    if (this.props.onClick) {
-      this.props.onClick(event);
-    }
-    if (this.props.href) {
-      this.pushPath(this.props.href);
-    }
-  }
+    let handleClick = useCallback(function (event: MouseEvent<HTMLElement>): void {
+      event.preventDefault();
+      onClick?.(event);
+      if (href) {
+        pushPath(href);
+      }
+    }, [href, onClick, pushPath]);
 
-  public render(): ReactNode {
-    let iconNode = (this.props.iconLabel !== undefined) && (
-      <span styleName="icon">{this.props.iconLabel}</span>
+    let iconNode = (iconName !== undefined) && (
+      <Icon className={styles!["icon"]} name={iconName}/>
     );
     let node = (
-      <a styleName="root" href={this.props.href} onClick={this.handleClick.bind(this)}>
+      <a styleName="root" href={href} onClick={handleClick}>
         {iconNode}
-        <span styleName="text">{this.props.label}</span>
+        <span styleName="text">{label}</span>
       </a>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  label: string,
-  iconLabel?: string,
-  href: string,
-  onClick?: (event: MouseEvent<HTMLElement>) => void;
-};
-type State = {
-};
+export default HeaderMenuItem;

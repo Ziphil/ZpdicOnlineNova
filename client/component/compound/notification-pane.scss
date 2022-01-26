@@ -4,16 +4,16 @@
 
 
 .root {
-  padding: $large-margin 0u;
-  border-bottom: 3u $invert-border-color solid;
+  padding: $large-margin 0rpx;
+  border-bottom: 1rpx $invert-border-color solid;
 }
 
 .root:first-child {
-  border-top: 3u $light-border-color solid;
+  border-top: 1rpx $light-border-color solid;
 }
 
 .root:last-child {
-  border-bottom: 3u $light-border-color solid;
+  border-bottom: 1rpx $light-border-color solid;
 }
 
 .head-wrapper {
@@ -32,20 +32,20 @@
 }
 
 .head-right {
-  margin: 0u 0u 0u $small-margin;
+  margin: 0rpx 0rpx 0rpx $small-margin;
 }
 
 .date {
-  margin: 0u;
+  margin: 0rpx;
   font-size: 80%;
   color: $head-color;
 }
 
 .head {
-  margin: $tiny-margin 0u 0u 0u;
-  padding: 0u;
+  @include bold-font;
+  margin: $tiny-margin 0rpx 0rpx 0rpx;
+  padding: 0rpx;
   font-size: 120%;
-  font-weight: bold;
   color: $head-color;
 }
 
@@ -56,5 +56,5 @@
 }
 
 .content {
-  margin: $medium-margin 0u 0u 0u;
+  margin: $medium-margin 0rpx 0rpx 0rpx;
 }

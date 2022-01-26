@@ -3,15 +3,24 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
+import {
+  useUnmount
+} from "react-use";
 import {
   AsyncOrSync
 } from "ts-essentials";
-import Component from "/client/component/component";
+import Icon from "/client/component/atom/icon";
 import {
-  style
-} from "/client/component/decorator";
+  IconName
+} from "/client/component/atom/icon";
+import {
+  StylesRecord,
+  create
+} from "/client/component/create";
 import {
   CancelablePromise
 } from "/client/util/cancelable";
@@ -20,104 +29,94 @@ import {
 } from "/client/util/style-name";
 
 
-@style(require("./button.scss"))
-export default class Button extends Component<Props, State> {
+const Button = create(
+  require("./button.scss"), "Button",
+  function ({
+    label,
+    iconName,
+    position = "alone",
+    style = "normal",
+    hideLabel = false,
+    reactive = false,
+    disabled = false,
+    onClick,
+    className,
+    styles
+  }: {
+    label?: string,
+    iconName?: IconName,
+    position?: "alone" | "left" | "right" | "middle",
+    style?: "normal" | "caution" | "information" | "simple" | "link",
+    hideLabel?: boolean,
+    reactive?: boolean,
+    disabled?: boolean,
+    onClick?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    className?: string,
+    styles?: StylesRecord
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    position: "alone",
-    style: "normal",
-    hideLabel: false,
-    reactive: false,
-    disabled: false
-  };
-  public state: State = {
-    loading: false
-  };
+    let [loading, setLoading] = useState(false);
+    let [promise, setPromise] = useState<CancelablePromise<void> | null>(null);
 
-  private promise: CancelablePromise<void> | null = null;
-
-  public componentWillUnmount(): void {
-    this.promise?.cancel();
-  }
-
-  private handleClick(event: MouseEvent<HTMLButtonElement>): void {
-    event.preventDefault();
-    let onClick = this.props.onClick;
-    if (this.props.reactive) {
-      this.setState({loading: true});
-      if (onClick) {
-        let result = onClick(event);
-        if (typeof result === "object" && typeof result.then === "function") {
-          let promise = new CancelablePromise(result);
-          this.promise = promise;
-          promise.then(() => {
-            this.setState({loading: false});
-          }).catch((error) => {
-          });
+    let handleClick = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
+      event.preventDefault();
+      if (reactive) {
+        setLoading(true);
+        if (onClick) {
+          let result = onClick(event);
+          if (typeof result === "object" && typeof result.then === "function") {
+            let nextPromise = new CancelablePromise(result);
+            setPromise(nextPromise);
+            nextPromise.then(() => {
+              setLoading(false);
+            }, (error) => {
+            });
+          } else {
+            setLoading(false);
+          }
         } else {
-          this.setState({loading: false});
+          setLoading(false);
         }
       } else {
-        this.setState({loading: false});
+        if (onClick) {
+          onClick(event);
+        }
       }
-    } else {
-      if (onClick) {
-        onClick(event);
-      }
-    }
-  }
+    }, [reactive, onClick]);
 
-  public render(): ReactNode {
+    useUnmount(() => {
+      promise?.cancel();
+    });
+
     let styleName = StyleNameUtil.create(
       "root",
-      {if: this.props.label === undefined, true: "only-icon"},
-      {if: this.props.position !== "alone", true: this.props.position},
-      {if: this.props.style === "simple" || this.props.style === "link", true: "simple", false: "button"},
-      {if: this.props.style === "link", true: "link"},
-      {if: this.props.style === "caution", true: "caution"},
-      {if: this.props.style === "information", true: "information"},
-      {if: this.props.hideLabel, true: "hide-label"},
-      {if: this.state.loading, true: "loading"}
+      {if: label === undefined, true: "only-icon"},
+      {if: position !== "alone", true: position},
+      {if: style === "simple" || style === "link", true: "simple", false: "button"},
+      {if: style === "link", true: "link"},
+      {if: style === "caution", true: "caution"},
+      {if: style === "information", true: "information"},
+      {if: hideLabel, true: "hide-label"},
+      {if: loading, true: "loading"}
     );
-    let labelNode = (this.props.label !== undefined) && <span styleName="label">{this.props.label}</span>;
-    let iconNode = (this.props.iconLabel !== undefined) && <span styleName="icon">{this.props.iconLabel}</span>;
-    let spinnerNode = (this.props.reactive) && (
+    let labelNode = (label !== undefined) && <span styleName="label">{label}</span>;
+    let iconNode = (iconName !== undefined) && <Icon className={styles!["icon"]} name={iconName}/>;
+    let spinnerNode = (reactive) && (
       <span styleName="spinner-wrapper">
-        <span styleName="spinner"/>
+        <Icon name="spinner" pulse={true}/>
       </span>
     );
-    let disabled = this.props.disabled || this.state.loading;
     let node = (
-      <button styleName={styleName} className={this.props.className} disabled={disabled} onClick={this.handleClick.bind(this)}>
+      <button styleName={styleName} className={className} disabled={disabled || loading} onClick={handleClick}>
         {iconNode}
         {labelNode}
         {spinnerNode}
       </button>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  label?: string,
-  iconLabel?: string,
-  position: "alone" | "left" | "right" | "middle",
-  style: "normal" | "caution" | "information" | "simple" | "link",
-  hideLabel: boolean,
-  reactive: boolean,
-  disabled: boolean,
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  className?: string
-};
-type DefaultProps = {
-  position: "alone" | "left" | "right" | "middle",
-  style: "normal" | "caution" | "information" | "simple" | "link",
-  hideLabel: boolean,
-  reactive: boolean,
-  disabled: boolean
-};
-type State = {
-  loading: boolean
-};
+export default Button;

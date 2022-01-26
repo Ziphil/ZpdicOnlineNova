@@ -2,53 +2,55 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 
 
-@style(require("./change-user-screen-name-form.scss"))
-export default class ChangeUserScreenNameForm extends Component<Props, State> {
+const ChangeUserScreenNameForm = create(
+  require("./change-user-screen-name-form.scss"), "ChangeUserScreenNameForm",
+  function ({
+    currentScreenName,
+    onSubmit
+  }: {
+    currentScreenName: string | undefined,
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public constructor(props: Props) {
-    super(props);
-    let screenName = this.props.currentScreenName ?? "";
-    this.state = {screenName};
-  }
+    let [screenName, setScreenName] = useState(currentScreenName ?? "");
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async handleClick(): Promise<void> {
-    let screenName = this.state.screenName;
-    let response = await this.request("changeUserScreenName", {screenName});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("userScreenNameChanged");
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let handleClick = useCallback(async function (): Promise<void> {
+      let response = await request("changeUserScreenName", {screenName});
+      if (response.status === 200) {
+        addInformationPopup("userScreenNameChanged");
+        onSubmit?.();
       }
-    }
-  }
+    }, [screenName, request, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label={this.trans("changeUserScreenNameForm.screenName")} value={this.state.screenName} onSet={(screenName) => this.setState({screenName})}/>
-        <Button label={this.trans("changeUserScreenNameForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+        <Input label={trans("changeUserScreenNameForm.screenName")} value={screenName} onSet={(screenName) => setScreenName(screenName)}/>
+        <Button label={trans("changeUserScreenNameForm.confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  currentScreenName: string | undefined,
-  onSubmit?: () => void
-};
-type State = {
-  screenName: string
-};
+export default ChangeUserScreenNameForm;

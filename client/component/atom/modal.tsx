@@ -3,45 +3,42 @@
 import * as react from "react";
 import {
   MouseEvent,
+  ReactElement,
   ReactNode
 } from "react";
 import Portal from "/client/component/atom/portal";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 
 
-@style(require("./modal.scss"))
-export default class Modal extends Component<Props, State> {
+const Modal = create(
+  require("./modal.scss"), "Modal",
+  function ({
+    open,
+    outsideClosable = false,
+    onClose,
+    children
+  }: {
+    open: boolean,
+    outsideClosable: boolean,
+    onClose?: (event: MouseEvent<HTMLElement>) => void,
+    children?: ReactNode
+  }): ReactElement | null {
 
-  public static defaultProps: DefaultProps = {
-    outsideClosable: false
-  };
-
-  public render(): ReactNode {
-    let onBackgroundClick = (this.props.outsideClosable) ? this.props.onClose : undefined;
-    let node = (this.props.open) && (
+    let onBackgroundClick = (outsideClosable) ? onClose : undefined;
+    let node = (open) && (
       <Portal>
         <div styleName="background" onClick={onBackgroundClick}/>
         <div styleName="spacer">
-          {this.props.children}
+          {children}
         </div>
       </Portal>
     );
-    return node;
+    return node || null;
+
   }
+);
 
-}
 
-
-type Props = {
-  open: boolean,
-  outsideClosable: boolean,
-  onClose?: (event: MouseEvent<HTMLElement>) => void
-};
-type DefaultProps = {
-  outsideClosable: boolean
-};
-type State = {
-};
+export default Modal;

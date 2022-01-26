@@ -2,52 +2,55 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback
 } from "react";
 import Button from "/client/component/atom/button";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  useLogout,
+  usePath
+} from "/client/component/hook";
 
 
-@style(require("./dashboard-button-form.scss"))
-export default class DashboardButtonForm extends Component<Props, State> {
+const DashboardButtonForm = create(
+  require("./dashboard-button-form.scss"), "DashboardButtonForm",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public state: State = {
-    name: "",
-    password: ""
-  };
+    let [, {trans}] = useIntl();
+    let {pushPath} = usePath();
+    let logout = useLogout();
 
-  private async performLogout(): Promise<void> {
-    let response = await this.logout();
-    if (response.status === 200) {
-      this.pushPath("/");
-    }
-  }
+    let performLogout = useCallback(async function (): Promise<void> {
+      let response = await logout();
+      if (response.status === 200) {
+        pushPath("/");
+      }
+    }, [pushPath, logout]);
 
-  private async jumpDashboard(): Promise<void> {
-    this.pushPath("/dashboard");
-  }
+    let jumpDashboard = useCallback(async function (): Promise<void> {
+      pushPath("/dashboard");
+    }, [pushPath]);
 
-  public render(): ReactNode {
     let node = (
       <form styleName="root">
         <div styleName="row">
-          <Button label={this.trans("dashboardButtonForm.dashboard")} iconLabel="&#xE065;" style="information" onClick={this.jumpDashboard.bind(this)}/>
+          <Button label={trans("dashboardButtonForm.dashboard")} iconName="house-user" style="information" onClick={jumpDashboard}/>
         </div>
         <div styleName="row">
-          <Button label={this.trans("dashboardButtonForm.logout")} iconLabel="&#xF2F5;" style="simple" onClick={this.performLogout.bind(this)}/>
+          <Button label={trans("dashboardButtonForm.logout")} iconName="sign-out-alt" style="simple" onClick={performLogout}/>
         </div>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default DashboardButtonForm;

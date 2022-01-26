@@ -2,40 +2,43 @@
 
 import * as react from "react";
 import {
+  ReactElement,
   ReactNode
 } from "react";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 
 
-@style(require("./tooltip.scss"))
-export default class Tooltip extends Component<Props, State> {
+const Tooltip = create(
+  require("./tooltip.scss"), "Tooltip",
+  function ({
+    message,
+    className,
+    children
+  }: {
+    message: string | null
+    className?: string,
+    children?: ReactNode
+  }): ReactElement {
 
-  public render(): ReactNode {
-    let tooltipNode = (this.props.message !== null) && (
+    let tooltipNode = (message !== null) && (
       <div styleName="tooltip">
         <p styleName="tooltip-text">
-          {this.props.message}
+          {message}
         </p>
       </div>
     );
     let node = (
-      <div styleName="root" className={this.props.className}>
-        {this.props.children}
+      <div styleName="root" className={className}>
+        {children}
         {tooltipNode}
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  message: string | null
-  className?: string
-};
-type State = {
-};
+export default Tooltip;

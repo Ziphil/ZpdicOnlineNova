@@ -4,18 +4,24 @@ import * as react from "react";
 import {
   Fragment,
   MouseEvent,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import {
   AsyncOrSync
 } from "ts-essentials";
 import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
-import Component from "/client/component/component";
 import WhitePane from "/client/component/compound/white-pane";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 import {
   Dictionary
 } from "/client/skeleton/dictionary";
@@ -24,28 +30,35 @@ import {
 } from "/client/skeleton/user";
 
 
-@style(require("./user-pane.scss"))
-export default class UserPane extends Component<Props, State> {
+const UserPane = create(
+  require("./user-pane.scss"), "UserPane",
+  function ({
+    user,
+    dictionary,
+    onSubmit
+  }: {
+    user: User,
+    dictionary?: Dictionary,
+    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  }): ReactElement {
 
-  public state: State = {
-    alertOpen: false
-  };
+    let [alertOpen, setAlertOpen] = useState(false);
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async discardAuthorizedUser(event: MouseEvent<HTMLButtonElement>): Promise<void> {
-    if (this.props.dictionary !== undefined) {
-      let number = this.props.dictionary.number;
-      let id = this.props.user.id;
-      let response = await this.request("discardDictionaryAuthorizedUser", {number, id});
-      if (response.status === 200) {
-        this.props.store!.addInformationPopup("dictionaryAuthorizedUserDiscarded");
-        if (this.props.onSubmit) {
-          await this.props.onSubmit(event);
+    let discardAuthorizedUser = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
+      if (dictionary !== undefined) {
+        let number = dictionary.number;
+        let id = user.id;
+        let response = await request("discardDictionaryAuthorizedUser", {number, id});
+        if (response.status === 200) {
+          addInformationPopup("dictionaryAuthorizedUserDiscarded");
+          await onSubmit?.(event);
         }
       }
-    }
-  }
+    }, [dictionary, user, request, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
     let node = (
       <Fragment>
         <WhitePane clickable={false}>
@@ -55,36 +68,29 @@ export default class UserPane extends Component<Props, State> {
                 <div styleName="image"/>
               </div>
               <div styleName="left">
-                <div styleName="screen-name">{this.props.user.screenName}</div>
-                <div styleName="name">@{this.props.user.name}</div>
+                <div styleName="screen-name">{user.screenName}</div>
+                <div styleName="name">@{user.name}</div>
               </div>
             </div>
           </div>
           <div styleName="setting">
-            <Button label={this.trans("userPane.discard")} iconLabel="&#xF05E;" style="caution" reactive={true} onClick={() => this.setState({alertOpen: true})}/>
+            <Button label={trans("userPane.discard")} iconName="ban" style="caution" reactive={true} onClick={() => setAlertOpen(true)}/>
           </div>
         </WhitePane>
         <Alert
-          text={this.trans("userPane.alert")}
-          confirmLabel={this.trans("userPane.discard")}
-          open={this.state.alertOpen}
+          text={trans("userPane.alert")}
+          confirmLabel={trans("userPane.discard")}
+          open={alertOpen}
           outsideClosable={true}
-          onClose={() => this.setState({alertOpen: false})}
-          onConfirm={this.discardAuthorizedUser.bind(this)}
+          onClose={() => setAlertOpen(false)}
+          onConfirm={discardAuthorizedUser}
         />
       </Fragment>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  user: User,
-  dictionary?: Dictionary,
-  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
-};
-type State = {
-  alertOpen: boolean
-};
+export default UserPane;

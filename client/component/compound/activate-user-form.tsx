@@ -2,46 +2,52 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 
 
-@style(require("./activate-user-form.scss"))
-export default class ActivateUserForm extends Component<Props, State> {
+const ActivateUserForm = create(
+  require("./activate-user-form.scss"), "ActivateUserForm",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public state: State = {
-  };
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async issueActivateToken(): Promise<void> {
-    let response = await this.request("issueUserActivateToken", {}, {useRecaptcha: true});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("userActivateTokenIssued");
-    }
-  }
+    let issueActivateToken = useCallback(async function (): Promise<void> {
+      let response = await request("issueUserActivateToken", {}, {useRecaptcha: true});
+      if (response.status === 200) {
+        addInformationPopup("userActivateTokenIssued");
+      }
+    }, [request, addInformationPopup]);
 
-  public render(): ReactNode {
     let node = (
       <form styleName="root">
         <div styleName="caution">
-          {this.trans("activateUserForm.caution")}
+          {trans("activateUserForm.caution")}
         </div>
         <div styleName="button">
-          <Button label={this.trans("activateUserForm.send")} reactive={false} onClick={this.issueActivateToken.bind(this)}/>
+          <Button label={trans("activateUserForm.send")} reactive={false} onClick={issueActivateToken}/>
         </div>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default ActivateUserForm;

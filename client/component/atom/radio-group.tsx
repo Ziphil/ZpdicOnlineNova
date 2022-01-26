@@ -3,51 +3,52 @@
 import * as react from "react";
 import {
   ChangeEvent,
-  ReactNode
+  ReactElement,
+  useCallback
 } from "react";
 import Radio from "/client/component/atom/radio";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 
 
-@style(require("./radio-group.scss"))
-export default class RadioGroup<V extends string> extends Component<Props<V>, State<V>> {
+const RadioGroup = create(
+  require("./radio-group.scss"), "RadioGroup",
+  function <V extends string>({
+    value,
+    name,
+    specs,
+    onChange,
+    onSet,
+    className
+  }: {
+    value: V | null,
+    name: string,
+    specs: ArrayLike<{value: V, label: string}>,
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
+    onSet?: (value: V) => void,
+    className?: string
+  }): ReactElement {
 
-  private handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    let value = event.target.value as V;
-    if (this.props.onChange) {
-      this.props.onChange(event);
-    }
-    if (this.props.onSet) {
-      this.props.onSet(value);
-    }
-  }
+    let handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+      let value = event.target.value as V;
+      onChange?.(event);
+      onSet?.(value);
+    }, [onChange, onSet]);
 
-  public render(): ReactNode {
-    let radioNodes = Array.from(this.props.specs).map((spec, index) => {
-      let checked = spec.value === this.props.value;
-      return <Radio name={this.props.name} value={spec.value} label={spec.label} checked={checked} onChange={this.handleChange.bind(this)} key={index}/>;
+    let radioNodes = Array.from(specs).map((spec, index) => {
+      let checked = spec.value === value;
+      return <Radio name={name} value={spec.value} label={spec.label} checked={checked} onChange={handleChange} key={index}/>;
     });
     let node = (
-      <div styleName="root" className={this.props.className}>
+      <div styleName="root" className={className}>
         {radioNodes}
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props<V> = {
-  value: V | null,
-  name: string,
-  specs: ArrayLike<{value: V, label: string}>,
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
-  onSet?: (value: V) => void,
-  className?: string
-};
-type State<V> = {
-};
+export default RadioGroup;

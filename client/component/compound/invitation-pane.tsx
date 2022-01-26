@@ -3,49 +3,62 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactNode
+  ReactElement,
+  useCallback
 } from "react";
 import {
   AsyncOrSync
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
-import Component from "/client/component/component";
 import WhitePane from "/client/component/compound/white-pane";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 import {
   Invitation
 } from "/client/skeleton/invitation";
 
 
-@style(require("./invitation-pane.scss"))
-export default class InvitationPane extends Component<Props, State> {
+const InvitationPane = create(
+  require("./invitation-pane.scss"), "InvitationPane",
+  function ({
+    invitation,
+    onSubmit
+  }: {
+    invitation: Invitation
+    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  }): ReactElement {
 
-  private async respondInvitation(event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
-    let id = this.props.invitation.id;
-    let invitationType = this.props.invitation.type;
-    let response = await this.request("respondInvitation", {id, accept});
-    if (response.status === 200) {
-      let type = (() => {
-        if (invitationType === "edit") {
-          return (accept) ? "editInvitationAccepted" : "editInvitationRefused";
-        } else if (invitationType === "transfer") {
-          return (accept) ? "transferInvitationAccepted" : "transferInvitationRefused";
-        } else {
-          return "messageNotFound";
-        }
-      })();
-      this.props.store!.addInformationPopup(type);
-      if (this.props.onSubmit) {
-        await this.props.onSubmit(event);
+    let [, {trans, transDate}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
+
+    let respondInvitation = useCallback(async function (event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
+      let id = invitation.id;
+      let invitationType = invitation.type;
+      let response = await request("respondInvitation", {id, accept});
+      if (response.status === 200) {
+        let type = (() => {
+          if (invitationType === "edit") {
+            return (accept) ? "editInvitationAccepted" : "editInvitationRefused";
+          } else if (invitationType === "transfer") {
+            return (accept) ? "transferInvitationAccepted" : "transferInvitationRefused";
+          } else {
+            return "messageNotFound";
+          }
+        })();
+        addInformationPopup(type);
+        await onSubmit?.(event);
       }
-    }
-  }
+    }, [invitation, request, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
-    let name = this.props.invitation.dictionary.name;
-    let createdDate = this.props.invitation.createdDate;
+    let name = invitation.dictionary.name;
+    let createdDate = invitation.createdDate;
     let node = (
       <WhitePane clickable={false}>
         <div>
@@ -55,25 +68,20 @@ export default class InvitationPane extends Component<Props, State> {
             </div>
           </div>
           <div styleName="information">
-            <div styleName="information-item">{this.trans("invitationPane.createdDate")} — {this.transDate(createdDate)}</div>
-            <div styleName="information-item">{this.trans("invitationPane.userName")} — {this.props.invitation.dictionary.user.screenName}</div>
+            <div styleName="information-item">{trans("invitationPane.createdDate")} — {transDate(createdDate)}</div>
+            <div styleName="information-item">{trans("invitationPane.userName")} — {invitation.dictionary.user.screenName}</div>
           </div>
         </div>
         <div styleName="setting">
-          <Button label={this.trans("invitationPane.reject")} iconLabel="&#xF05E;" style="caution" reactive={true} onClick={(event) => this.respondInvitation(event, false)}/>
-          <Button label={this.trans("invitationPane.accept")} iconLabel="&#xF164;" style="information" reactive={true} onClick={(event) => this.respondInvitation(event, true)}/>
+          <Button label={trans("invitationPane.reject")} iconName="ban" style="caution" reactive={true} onClick={(event) => respondInvitation(event, false)}/>
+          <Button label={trans("invitationPane.accept")} iconName="thumbs-up" style="information" reactive={true} onClick={(event) => respondInvitation(event, true)}/>
         </div>
       </WhitePane>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  invitation: Invitation
-  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
-};
-type State = {
-};
+export default InvitationPane;

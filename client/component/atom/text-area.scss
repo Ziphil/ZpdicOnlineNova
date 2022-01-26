@@ -28,7 +28,7 @@
 
 .textarea-code {
   @include input(map-get($colors, primary));
-  padding: 0u;
+  padding: 0rpx;
   display: block;
   resize: none;
   flex-grow: 1;
@@ -44,10 +44,10 @@
 
 .textarea-code.no-fit >div {
   height: 100%;
-  top: 0u;
-  bottom: 0u;
-  left: 0u;
-  right: 0u;
+  top: 0rpx;
+  bottom: 0rpx;
+  left: 0rpx;
+  right: 0rpx;
   position: absolute;
 }
 

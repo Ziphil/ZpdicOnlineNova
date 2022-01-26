@@ -3,85 +3,75 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactNode
+  ReactElement,
+  useCallback
 } from "react";
 import Button from "/client/component/atom/button";
 import Modal from "/client/component/atom/modal";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 
 
-@style(require("./alert.scss"))
-export default class Alert extends Component<Props, State> {
+const Alert = create(
+  require("./alert.scss"), "Alert",
+  function ({
+    text,
+    iconLabel = "\uF071",
+    confirmLabel = null,
+    cancelLabel = null,
+    open = false,
+    outsideClosable = false,
+    onClose,
+    onConfirm,
+    onCancel
+  }: {
+    text: string,
+    iconLabel?: string,
+    confirmLabel?: string | null,
+    cancelLabel?: string | null,
+    open?: boolean,
+    outsideClosable?: boolean,
+    onClose?: (event: MouseEvent<HTMLElement>) => void,
+    onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void,
+    onCancel?: (event: MouseEvent<HTMLButtonElement>) => void
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    iconLabel: "\uF071",
-    open: false,
-    outsideClosable: false,
-    confirmLabel: null,
-    cancelLabel: null
-  };
+    let [, {trans}] = useIntl();
 
-  private handleConfirm(event: MouseEvent<HTMLButtonElement>): void {
-    if (this.props.onClose) {
-      this.props.onClose(event);
-    }
-    if (this.props.onConfirm) {
-      this.props.onConfirm(event);
-    }
-  }
+    let handleConfirm = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
+      onClose?.(event);
+      onConfirm?.(event);
+    }, [onClose, onConfirm]);
 
-  private handleCancel(event: MouseEvent<HTMLButtonElement>): void {
-    if (this.props.onClose) {
-      this.props.onClose(event);
-    }
-    if (this.props.onCancel) {
-      this.props.onCancel(event);
-    }
-  }
+    let handleCancel = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
+      onClose?.(event);
+      onCancel?.(event);
+    }, [onClose, onCancel]);
 
-  public render(): ReactNode {
-    let cancelLabel = this.props.cancelLabel ?? this.trans("alert.cancel");
-    let confirmLabel = this.props.confirmLabel ?? this.trans("alert.confirm");
+    let actualCancelLabel = cancelLabel ?? trans("alert.cancel");
+    let actualConfirmLabel = confirmLabel ?? trans("alert.confirm");
     let node = (
-      <Modal open={this.props.open} outsideClosable={this.props.outsideClosable} onClose={this.props.onClose}>
+      <Modal open={open} outsideClosable={outsideClosable} onClose={onClose}>
         <div styleName="content">
           <div styleName="text-wrapper">
-            <div styleName="icon">{this.props.iconLabel}</div>
-            <p styleName="text">{this.props.text}</p>
+            <div styleName="icon">{iconLabel}</div>
+            <p styleName="text">{text}</p>
           </div>
           <div styleName="button">
-            <Button label={cancelLabel} onClick={this.handleCancel.bind(this)}/>
-            <Button label={confirmLabel} style="caution" onClick={this.handleConfirm.bind(this)}/>
+            <Button label={actualCancelLabel} onClick={handleCancel}/>
+            <Button label={actualConfirmLabel} style="caution" onClick={handleConfirm}/>
           </div>
         </div>
       </Modal>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  text: string,
-  iconLabel: string,
-  confirmLabel: string | null,
-  cancelLabel: string | null,
-  open: boolean,
-  outsideClosable: boolean,
-  onClose?: (event: MouseEvent<HTMLElement>) => void,
-  onConfirm?: (event: MouseEvent<HTMLButtonElement>) => void,
-  onCancel?: (event: MouseEvent<HTMLButtonElement>) => void
-};
-type DefaultProps = {
-  iconLabel: string,
-  open: boolean,
-  outsideClosable: boolean,
-  confirmLabel: string | null,
-  cancelLabel: string | null
-};
-type State = {
-};
+export default Alert;

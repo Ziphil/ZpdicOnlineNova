@@ -2,75 +2,77 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  useLogin,
+  usePath,
+  usePopup
+} from "/client/component/hook";
 
 
-@style(require("./login-form.scss"))
-export default class LoginForm extends Component<Props, State> {
+const LoginForm = create(
+  require("./login-form.scss"), "LoginForm",
+  function ({
+    showRegister
+  }: {
+    showRegister: boolean
+  }): ReactElement {
 
-  public state: State = {
-    name: "",
-    password: ""
-  };
+    let [name, setName] = useState("");
+    let [password, setPassword] = useState("");
+    let login = useLogin();
+    let [, {trans}] = useIntl();
+    let {pushPath, replacePath} = usePath();
+    let [, {addErrorPopup}] = usePopup();
 
-  private async performLogin(): Promise<void> {
-    let name = this.state.name;
-    let password = this.state.password;
-    let response = await this.login({name, password}, {ignoreError: true});
-    if (response.status === 200) {
-      this.replacePath("/dashboard");
-    } else {
-      this.props.store!.addErrorPopup("loginFailed");
-    }
-  }
+    let performLogin = useCallback(async function (): Promise<void> {
+      let response = await login({name, password}, {ignoreError: true});
+      if (response.status === 200) {
+        replacePath("/dashboard");
+      } else {
+        addErrorPopup("loginFailed");
+      }
+    }, [name, password, login, replacePath, addErrorPopup]);
 
-  private async jumpRegister(): Promise<void> {
-    let name = this.state.name;
-    let password = this.state.password;
-    this.pushPath("/register", {name, password});
-  }
+    let jumpRegister = useCallback(async function (): Promise<void> {
+      pushPath("/register", {name, password});
+    }, [name, password, pushPath]);
 
-  private async jumpResetPassword(): Promise<void> {
-    let name = this.state.name;
-    this.pushPath("/reset", {name});
-  }
+    let jumpResetPassword = useCallback(async function (): Promise<void> {
+      pushPath("/reset", {name});
+    }, [name, pushPath]);
 
-  public render(): ReactNode {
-    let registerNode = (this.props.showRegister) && (
-      <Button label={this.trans("registerForm.confirm")} iconLabel="&#xF234;" style="simple" onClick={this.jumpRegister.bind(this)}/>
+    let registerNode = (showRegister) && (
+      <Button label={trans("registerForm.confirm")} iconName="user-plus" style="simple" onClick={jumpRegister}/>
     );
     let node = (
       <form styleName="root">
-        <Input label={this.trans("loginForm.userName")} value={this.state.name} onSet={(name) => this.setState({name})}/>
-        <Input label={this.trans("loginForm.password")} type="flexible" value={this.state.password} onSet={(password) => this.setState({password})}/>
+        <Input label={trans("loginForm.userName")} value={name} onSet={(name) => setName(name)}/>
+        <Input label={trans("loginForm.password")} type="flexible" value={password} onSet={(password) => setPassword(password)}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={this.trans("loginForm.confirm")} iconLabel="&#xF2F6;" style="information" reactive={true} onClick={this.performLogin.bind(this)}/>
+            <Button label={trans("loginForm.confirm")} iconName="sign-in-alt" style="information" reactive={true} onClick={performLogin}/>
             {registerNode}
           </div>
           <div styleName="row">
-            <Button label={this.trans("loginForm.resetPassword")} iconLabel="&#xF128;" style="simple" onClick={this.jumpResetPassword.bind(this)}/>
+            <Button label={trans("loginForm.resetPassword")} iconName="question" style="simple" onClick={jumpResetPassword}/>
           </div>
         </div>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  showRegister: boolean
-};
-type State = {
-  name: string,
-  password: string
-};
+export default LoginForm;

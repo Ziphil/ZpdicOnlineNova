@@ -2,55 +2,57 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 
 
-@style(require("./change-dictionary-name-form.scss"))
-export default class ChangeDictionaryNameForm extends Component<Props, State> {
+const ChangeDictionaryNameForm = create(
+  require("./change-dictionary-name-form.scss"), "ChangeDictionaryNameForm",
+  function ({
+    number,
+    currentName,
+    onSubmit
+  }: {
+    number: number,
+    currentName: string,
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public constructor(props: any) {
-    super(props);
-    let name = this.props.currentName;
-    this.state = {name};
-  }
+    let [name, setName] = useState(currentName);
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async handleClick(): Promise<void> {
-    let number = this.props.number;
-    let name = this.state.name;
-    let response = await this.request("changeDictionaryName", {number, name});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("dictionaryNameChanged");
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let handleClick = useCallback(async function (): Promise<void> {
+      let response = await request("changeDictionaryName", {number, name});
+      if (response.status === 200) {
+        addInformationPopup("dictionaryNameChanged");
+        onSubmit?.();
       }
-    }
-  }
+    }, [number, name, request, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <Input label={this.trans("changeDictionaryNameForm.name")} value={this.state.name} onSet={(name) => this.setState({name})}/>
-        <Button label={this.trans("changeDictionaryNameForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+        <Input label={trans("changeDictionaryNameForm.name")} value={name} onSet={(name) => setName(name)}/>
+        <Button label={trans("changeDictionaryNameForm.confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  number: number,
-  currentName: string,
-  onSubmit?: () => void
-};
-type State = {
-  name: string;
-};
+export default ChangeDictionaryNameForm;

@@ -4,7 +4,10 @@ import * as react from "react";
 import {
   ChangeEvent,
   FocusEvent,
-  ReactNode
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useState
 } from "react";
 import {
   AsyncOrSync
@@ -15,104 +18,161 @@ import {
 } from "/client/component/atom/dropdown";
 import Label from "/client/component/atom/label";
 import Tooltip from "/client/component/atom/tooltip";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 import {
-  debounce
-} from "/client/util/decorator";
+  useDebounce
+} from "/client/component/hook";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@style(require("./input.scss"))
-export default class Input extends Component<Props, State> {
+const Input = create(
+  require("./input.scss"), "Input",
+  function ({
+    value = "",
+    label,
+    prefix,
+    suffix,
+    type = "text",
+    validate,
+    suggest,
+    showRequired,
+    showOptional,
+    useTooltip = true,
+    readOnly = false,
+    disabled = false,
+    onChange,
+    onSet,
+    className
+  }: {
+    value?: string,
+    label?: string,
+    prefix?: ReactNode,
+    suffix?: ReactNode,
+    type?: "text" | "password" | "flexible",
+    validate?: (value: string) => string | null,
+    suggest?: Suggest,
+    showRequired?: boolean,
+    showOptional?: boolean,
+    useTooltip?: boolean,
+    readOnly?: boolean,
+    disabled?: boolean,
+    onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
+    onSet?: (value: string) => void,
+    className?: string
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    value: "",
-    type: "text",
-    useTooltip: true,
-    readOnly: false,
-    disabled: false
-  };
-  public state: State = {
-    type: undefined as any,
-    errorMessage: null,
-    dropdownSpecs: []
-  };
+    let [currentType, setCurrentType] = useState((type === "flexible") ? "password" : type);
+    let [errorMessage, setErrorMessage] = useState<string | null>(null);
+    let [dropdownSpecs, setDropdownSpecs] = useState<Array<DropdownSpec<string>>>([]);
 
-  public constructor(props: any) {
-    super(props);
-    let type = this.props.type;
-    if (type === "flexible") {
-      type = "password";
-    }
-    this.state.type = type;
+    let updateValue = useCallback(function (value: string): void {
+      if (validate !== undefined) {
+        let errorMessage = validate(value);
+        setErrorMessage(errorMessage);
+      } else {
+        setErrorMessage(null);
+      }
+      onSet?.(value);
+    }, [validate, onSet]);
+
+    let updateSuggestions = useDebounce(async function (value: string): Promise<void> {
+      if (suggest !== undefined) {
+        let suggestionSpecs = await suggest(value);
+        let dropdownSpecs = suggestionSpecs.map((suggestionSpec) => ({value: suggestionSpec.replacement, node: suggestionSpec.node}));
+        setDropdownSpecs(dropdownSpecs);
+      }
+    }, 500, [suggest]);
+
+    let handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+      let value = event.target.value;
+      updateValue(value);
+      updateSuggestions(value);
+      onChange?.(event);
+    }, [onChange, updateValue, updateSuggestions]);
+
+    let handleFocus = useCallback(function (event: FocusEvent<HTMLInputElement>): void {
+      let value = event.target.value;
+      updateSuggestions(value);
+    }, [updateSuggestions]);
+
+    let toggleType = useCallback(function (): void {
+      if (currentType === "text") {
+        setCurrentType("password");
+      } else {
+        setCurrentType("text");
+      }
+    }, [currentType]);
+
+    let node = (
+      <div styleName="root" className={className}>
+        <Tooltip message={errorMessage}>
+          <Dropdown specs={dropdownSpecs} onSet={updateValue}>
+            <label styleName="label-wrapper">
+              <Label
+                text={label}
+                style={(errorMessage === null) ? "normal" : "error"}
+                showRequired={showRequired}
+                showOptional={showOptional}
+              />
+              <InputInput {...{value, prefix, suffix, type, currentType, readOnly, disabled, errorMessage, handleChange, handleFocus, toggleType}}/>
+            </label>
+          </Dropdown>
+        </Tooltip>
+      </div>
+    );
+    return node;
+
   }
+);
 
-  private handleChange(event: ChangeEvent<HTMLInputElement>): void {
-    let value = event.target.value;
-    this.updateValue(value);
-    this.updateSuggestions(value);
-    if (this.props.onChange) {
-      this.props.onChange(event);
-    }
-  }
 
-  private handleFocus(event: FocusEvent<HTMLInputElement>): void {
-    let value = event.target.value;
-    this.updateSuggestions(value);
-  }
+const InputInput = create(
+  require("./input.scss"),
+  function ({
+    value,
+    prefix,
+    suffix,
+    type,
+    currentType,
+    readOnly,
+    disabled,
+    errorMessage,
+    handleChange,
+    handleFocus,
+    toggleType
+  }: {
+    value: string,
+    prefix?: ReactNode,
+    suffix?: ReactNode,
+    type: "text" | "password" | "flexible",
+    currentType: "text" | "password",
+    readOnly: boolean,
+    disabled: boolean,
+    errorMessage: string | null,
+    handleChange: (event: ChangeEvent<HTMLInputElement>) => void,
+    handleFocus: (event: FocusEvent<HTMLInputElement>) => void,
+    toggleType: () => void
+  }): ReactElement {
 
-  private updateValue(value: string): void {
-    let validate = this.props.validate;
-    if (validate !== undefined) {
-      let errorMessage = validate(value);
-      this.setState({errorMessage});
-    } else {
-      this.setState({errorMessage: null});
-    }
-    if (this.props.onSet) {
-      this.props.onSet(value);
-    }
-  }
-
-  @debounce(500)
-  private async updateSuggestions(value: string): Promise<void> {
-    let suggest = this.props.suggest;
-    if (suggest !== undefined) {
-      let suggestionSpecs = await suggest(value);
-      let dropdownSpecs = suggestionSpecs.map((suggestionSpec) => ({value: suggestionSpec.replacement, node: suggestionSpec.node}));
-      this.setState({dropdownSpecs});
-    }
-  }
-
-  private toggleType(): void {
-    if (this.state.type === "text") {
-      this.setState({type: "password"});
-    } else {
-      this.setState({type: "text"});
-    }
-  }
-
-  private renderInput(): ReactNode {
     let styleName = StyleNameUtil.create(
       "input",
-      {if: this.state.errorMessage !== null, true: "error"},
-      {if: this.props.disabled, true: "disabled"}
+      {if: errorMessage !== null, true: "error"},
+      {if: disabled, true: "disabled"}
     );
-    let eyeStyleName = StyleNameUtil.create("eye", this.state.type);
-    let eyeNode = (this.props.type === "flexible") && (
-      <span styleName={eyeStyleName} onClick={this.toggleType.bind(this)}/>
+    let eyeStyleName = StyleNameUtil.create("eye", currentType);
+    let eyeNode = (type === "flexible") && (
+      <span styleName={eyeStyleName} onClick={toggleType}/>
     );
-    let prefixNode = (this.props.prefix !== undefined) && (
-      <div styleName="prefix">{this.props.prefix}</div>
+    let prefixNode = (prefix !== undefined) && (
+      <div styleName="prefix">{prefix}</div>
     );
-    let suffixNode = (this.props.suffix !== undefined || this.props.type === "flexible") && (
+    let suffixNode = (suffix !== undefined || type === "flexible") && (
       <div styleName="suffix">
-        {this.props.suffix}
+        {suffix}
         {eyeNode}
       </div>
     );
@@ -121,81 +181,23 @@ export default class Input extends Component<Props, State> {
         {prefixNode}
         <input
           styleName="input-inner"
-          type={this.state.type}
-          value={this.props.value}
-          readOnly={this.props.readOnly}
-          disabled={this.props.disabled}
-          onChange={this.handleChange.bind(this)}
-          onFocus={this.handleFocus.bind(this)}
+          type={currentType}
+          value={value}
+          readOnly={readOnly}
+          disabled={disabled}
+          onChange={handleChange}
+          onFocus={handleFocus}
         />
         {suffixNode}
       </div>
     );
     return node;
+
   }
+);
 
-  private renderLabel(): ReactNode {
-    let node = (
-      <Label
-        text={this.props.label}
-        style={(this.state.errorMessage === null) ? "normal" : "error"}
-        showRequired={this.props.showRequired}
-        showOptional={this.props.showOptional}
-      />
-    );
-    return node;
-  }
-
-  public render(): ReactNode {
-    let inputNode = this.renderInput();
-    let labelNode = this.renderLabel();
-    let node = (
-      <div styleName="root" className={this.props.className}>
-        <Tooltip message={this.state.errorMessage}>
-          <Dropdown specs={this.state.dropdownSpecs} onSet={this.updateValue.bind(this)}>
-            <label styleName="label-wrapper">
-              {labelNode}
-              {inputNode}
-            </label>
-          </Dropdown>
-        </Tooltip>
-      </div>
-    );
-    return node;
-  }
-
-}
-
-
-type Props = {
-  value: string,
-  label?: string,
-  prefix?: ReactNode,
-  suffix?: ReactNode,
-  type: "text" | "password" | "flexible",
-  validate?: (value: string) => string | null,
-  suggest?: Suggest,
-  showRequired?: boolean,
-  showOptional?: boolean,
-  useTooltip: boolean,
-  readOnly: boolean,
-  disabled: boolean,
-  onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
-  onSet?: (value: string) => void,
-  className?: string
-};
-type DefaultProps = {
-  value: string,
-  type: "text" | "password" | "flexible",
-  useTooltip: boolean,
-  readOnly: boolean,
-  disabled: boolean
-};
-type State = {
-  type: "text" | "password",
-  errorMessage: string | null,
-  dropdownSpecs: Array<DropdownSpec<string>>
-};
 
 export type SuggestionSpec = {replacement: string, node: ReactNode};
 export type Suggest = (pattern: string) => AsyncOrSync<Array<SuggestionSpec>>;
+
+export default Input;

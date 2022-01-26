@@ -7,8 +7,8 @@
   width: 100%;
   height: $dictionary-header-height;
   top: $header-height;
-  left: 0u;
-  border-bottom: 3u $light-border-color solid;
+  left: 0rpx;
+  border-bottom: 1rpx $light-border-color solid;
   background-color: $strong-background-color;
   position: absolute;
   z-index: 80;
@@ -23,11 +23,11 @@
 }
 
 .right {
-  margin: 0u 0u 0u $huge-margin;
+  margin: 0rpx 0rpx 0rpx $huge-margin;
 }
 
 .name {
-  font-weight: bold;
+  @include bold-font;
 }
 
 .button {
@@ -36,13 +36,13 @@
 
 .button >* {
   @include reset-first-margin;
-  margin: 0u 0u 0u $control-horizontal-margin;
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
   display: inline-block;
 }
 
 .icon {
   @include icon-font;
-  margin: 0u $blank-margin 0u 0u;
+  margin: 0rpx $blank-margin 0rpx 0rpx;
   font-weight: 400;
   color: $light-border-color;
   text-decoration: none;

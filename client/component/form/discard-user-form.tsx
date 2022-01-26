@@ -3,62 +3,68 @@
 import * as react from "react";
 import {
   Fragment,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  useLogout,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 
 
-@style(require("./discard-user-form.scss"))
-export default class DiscardUserForm extends Component<Props, State> {
+const DiscardUserForm = create(
+  require("./discard-user-form.scss"), "DiscardUserForm",
+  function ({
+    onSubmit
+  }: {
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public state: State = {
-    alertOpen: false
-  };
+    let [alertOpen, setAlertOpen] = useState(false);
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let logout = useLogout();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async discardUser(): Promise<void> {
-    let response = await this.request("discardUser", {});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("userDiscarded");
-      await this.logout();
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let discardUser = useCallback(async function (): Promise<void> {
+      let response = await request("discardUser", {});
+      if (response.status === 200) {
+        addInformationPopup("userDiscarded");
+        await logout();
+        onSubmit?.();
       }
-    }
-  }
+    }, [request, logout, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
     let node = (
       <Fragment>
         <form styleName="root">
-          <Button label={this.trans("discardUserForm.confirm")} reactive={true} style="caution" onClick={() => this.setState({alertOpen: true})}/>
+          <Button label={trans("discardUserForm.confirm")} reactive={true} style="caution" onClick={() => setAlertOpen(true)}/>
         </form>
         <p styleName="caution">
-          {this.trans("discardUserForm.caution")}
+          {trans("discardUserForm.caution")}
         </p>
         <Alert
-          text={this.trans("discardUserForm.alert")}
-          confirmLabel={this.trans("discardUserForm.confirm")}
-          open={this.state.alertOpen}
+          text={trans("discardUserForm.alert")}
+          confirmLabel={trans("discardUserForm.confirm")}
+          open={alertOpen}
           outsideClosable={true}
-          onClose={() => this.setState({alertOpen: false})}
-          onConfirm={this.discardUser.bind(this)}
+          onClose={() => setAlertOpen(false)}
+          onConfirm={discardUser}
         />
       </Fragment>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  onSubmit?: () => void
-};
-type State = {
-  alertOpen: boolean
-};
+export default DiscardUserForm;

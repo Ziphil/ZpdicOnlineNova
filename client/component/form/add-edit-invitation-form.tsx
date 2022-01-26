@@ -3,19 +3,28 @@
 import * as react from "react";
 import {
   Fragment,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
+import {
+  useMount
+} from "react-use";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
   SuggestionSpec
 } from "/client/component/atom/input";
-import Component from "/client/component/component";
 import UserList from "/client/component/compound/user-list";
 import UserSuggestionPane from "/client/component/compound/user-suggestion-pane";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 import {
   Dictionary
 } from "/client/skeleton/dictionary";
@@ -24,88 +33,85 @@ import {
 } from "/client/skeleton/user";
 
 
-@style(require("./add-edit-invitation-form.scss"))
-export default class AddEditInvitationForm extends Component<Props, State> {
+const AddEditInvitationForm = create(
+  require("./add-edit-invitation-form.scss"), "AddEditInvitationForm",
+  function ({
+    number,
+    dictionary,
+    onSubmit
+  }: {
+    number: number,
+    dictionary: Dictionary,
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public state: State = {
-    userName: "",
-    authorizedUsers: null
-  };
+    let [userName, setUserName] = useState("");
+    let [authorizedUsers, setAuthorizedUsers] = useState<Array<User> | null>(null);
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  public async componentDidMount(): Promise<void> {
-    await this.fetchAuthorizedUsers();
-  }
-
-  private async fetchAuthorizedUsers(): Promise<void> {
-    let number = this.props.dictionary.number;
-    let authority = "editOnly" as const;
-    let response = await this.request("fetchDictionaryAuthorizedUsers", {number, authority});
-    if (response.status === 200 && !("error" in response.data)) {
-      let authorizedUsers = response.data;
-      this.setState({authorizedUsers});
-    } else {
-      this.setState({authorizedUsers: null});
-    }
-  }
-
-  private async suggestUsers(pattern: string): Promise<Array<SuggestionSpec>> {
-    let response = await this.request("suggestUsers", {pattern}, {ignoreError: true});
-    if (response.status === 200 && !("error" in response.data)) {
-      let users = response.data;
-      let suggestions = users.map((user) => {
-        let replacement = user.name;
-        let node = <UserSuggestionPane user={user}/>;
-        return {replacement, node};
-      });
-      return suggestions;
-    } else {
-      return [];
-    }
-  }
-
-  private async handleClick(): Promise<void> {
-    let number = this.props.number;
-    let userName = this.state.userName;
-    let type = "edit" as const;
-    let response = await this.request("addInvitation", {number, type, userName});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("editInvitationAdded");
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let fetchAuthorizedUsers = useCallback(async function (): Promise<void> {
+      let number = dictionary.number;
+      let authority = "editOnly" as const;
+      let response = await request("fetchDictionaryAuthorizedUsers", {number, authority});
+      if (response.status === 200 && !("error" in response.data)) {
+        let authorizedUsers = response.data;
+        setAuthorizedUsers(authorizedUsers);
+      } else {
+        setAuthorizedUsers(null);
       }
-    }
-  }
+    }, [dictionary.number, request]);
 
-  public render(): ReactNode {
+    let suggestUsers = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
+      let response = await request("suggestUsers", {pattern}, {ignoreError: true});
+      if (response.status === 200 && !("error" in response.data)) {
+        let users = response.data;
+        let suggestions = users.map((user) => {
+          let replacement = user.name;
+          let node = <UserSuggestionPane user={user}/>;
+          return {replacement, node};
+        });
+        return suggestions;
+      } else {
+        return [];
+      }
+    }, [request]);
+
+    let handleClick = useCallback(async function (): Promise<void> {
+      let type = "edit" as const;
+      let response = await request("addInvitation", {number, type, userName});
+      if (response.status === 200) {
+        addInformationPopup("editInvitationAdded");
+        onSubmit?.();
+      }
+    }, [number, userName, request, onSubmit, addInformationPopup]);
+
+    useMount(async () => {
+      await fetchAuthorizedUsers();
+    });
+
     let node = (
       <Fragment>
         <form styleName="root">
           <Input
-            label={this.trans("addEditInvitationForm.userName")}
-            value={this.state.userName}
+            label={trans("addEditInvitationForm.userName")}
+            value={userName}
             prefix="@"
-            suggest={this.suggestUsers.bind(this)}
-            onSet={(userName) => this.setState({userName})}
+            suggest={suggestUsers}
+            onSet={(userName) => setUserName(userName)}
           />
-          <Button label={this.trans("addEditInvitationForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+          <Button label={trans("addEditInvitationForm.confirm")} reactive={true} onClick={handleClick}/>
         </form>
         <div styleName="user">
-          <UserList users={this.state.authorizedUsers} dictionary={this.props.dictionary} size={8} onSubmit={this.fetchAuthorizedUsers.bind(this)}/>
+          <UserList users={authorizedUsers} dictionary={dictionary} size={8} onSubmit={fetchAuthorizedUsers}/>
         </div>
       </Fragment>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  number: number,
-  dictionary: Dictionary,
-  onSubmit?: () => void
-};
-type State = {
-  userName: string,
-  authorizedUsers: Array<User> | null
-};
+export default AddEditInvitationForm;

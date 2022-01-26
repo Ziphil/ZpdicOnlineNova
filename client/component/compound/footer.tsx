@@ -2,20 +2,23 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
 import Link from "/client/component/atom/link";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  StylesRecord,
+  create
+} from "/client/component/create";
 
 
-@style(require("./footer.scss"))
-export default class Footer extends Component<Props, State> {
+const Footer = create(
+  require("./footer.scss"), "Footer",
+  function ({
+    styles
+  }: {
+    styles?: StylesRecord
+  }): ReactElement {
 
-  public render(): ReactNode {
-    let styles = this.props.styles!;
     let date = new Date();
     let yearString = date.getFullYear().toString();
     let node = (
@@ -24,7 +27,7 @@ export default class Footer extends Component<Props, State> {
           <div styleName="left">
             <div styleName="copyright">
               © 2020–{yearString} Ziphil<br/>
-              <Link className={styles["link"]} href="/document/other/privacy" style="plane">Privacy Policy</Link> · <Link className={styles["link"]} href="/contact" style="plane">Contact</Link>
+              <Link className={styles!["link"]} href="/document/other/privacy" style="plane">Privacy Policy</Link> · <Link className={styles!["link"]} href="/contact" style="plane">Contact</Link>
             </div>
           </div>
           <div styleName="right">
@@ -37,12 +40,9 @@ export default class Footer extends Component<Props, State> {
       </footer>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default Footer;

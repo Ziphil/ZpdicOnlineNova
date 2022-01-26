@@ -2,79 +2,89 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useState
 } from "react";
+import {
+  useMount
+} from "react-use";
 import Chart from "/client/component/atom/chart";
 import {
   ChartConfig,
   ChartData
 } from "/client/component/atom/chart";
-import Component from "/client/component/component";
 import Loading from "/client/component/compound/loading";
 import {
-  style
-} from "/client/component/decorator";
+  StylesRecord,
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  useRequest
+} from "/client/component/hook";
 import {
   DetailedDictionary
 } from "/client/skeleton/dictionary";
 
 
-@style(require("./history-pane.scss"))
-export default class HistoryPane extends Component<Props, State> {
+const HistoryPane = create(
+  require("./history-pane.scss"), "HistoryPane",
+  function ({
+    dictionary,
+    styles
+  }: {
+    dictionary: DetailedDictionary,
+    styles?: StylesRecord
+  }): ReactElement {
 
-  public state: State = {
-    data: null,
-    maxAxis: 10,
-    minAxis: 0
-  };
+    let [data, setData] = useState<ChartData | null>(null);
+    let [maxAxis, setMaxAxis] = useState(10);
+    let [minAxis, setMinAxis] = useState(0);
+    let [, {transNumber, transShortDate}] = useIntl();
+    let {request} = useRequest();
 
-  public async componentDidMount(): Promise<void> {
-    let number = this.props.dictionary.number;
-    let from = new Date(Date.now() - 100 * 24 * 60 * 60 * 1000).toString();
-    let response = await this.request("fetchHistories", {number, from});
-    if (response.status === 200 && !("error" in response.data)) {
-      let histories = response.data;
-      let dates = [...histories.map((history) => new Date(history.date)), new Date()];
-      let wordSizes = [...histories.map((history) => history.wordSize), this.props.dictionary.wordSize];
-      let maxWordSize = Math.max(...wordSizes);
-      let minWordSize = Math.min(...wordSizes);
-      let maxAxis = maxWordSize + Math.max((maxWordSize - minWordSize) * 0.05, 10);
-      let minAxis = Math.max(minWordSize - Math.max((maxWordSize - minWordSize) * 0.05, 10), 0);
-      let data = {x: "date", columns: [["date", ...dates], ["wordSize", ...wordSizes]], types: {wordSize: "area"}} as ChartData;
-      this.setState({data, maxAxis, minAxis});
-    } else {
-      this.setState({data: null, maxAxis: 10, minAxis: 0});
-    }
-  }
+    useMount(async () => {
+      let number = dictionary.number;
+      let from = new Date(Date.now() - 100 * 24 * 60 * 60 * 1000).toString();
+      let response = await request("fetchHistories", {number, from});
+      if (response.status === 200 && !("error" in response.data)) {
+        let histories = response.data;
+        let dates = [...histories.map((history) => new Date(history.date)), new Date()];
+        let wordSizes = [...histories.map((history) => history.wordSize), dictionary.wordSize];
+        let maxWordSize = Math.max(...wordSizes);
+        let minWordSize = Math.min(...wordSizes);
+        let maxAxis = maxWordSize + Math.max((maxWordSize - minWordSize) * 0.05, 10);
+        let minAxis = Math.max(minWordSize - Math.max((maxWordSize - minWordSize) * 0.05, 10), 0);
+        let data = {x: "date", columns: [["date", ...dates], ["wordSize", ...wordSizes]], types: {wordSize: "area"}} as ChartData;
+        setData(data);
+        setMaxAxis(maxAxis);
+        setMinAxis(minAxis);
+      } else {
+        setData(null);
+        setMaxAxis(10);
+        setMinAxis(0);
+      }
+    });
 
-  public render(): ReactNode {
-    let styles = this.props.styles!;
     let padding = 24 * 60 * 60 * 1000;
     let config = {
       padding: {left: 45},
       axis: {
-        x: {tick: {format: this.transShortDate.bind(this)}, padding: {left: padding, right: padding}, type: "timeseries"},
-        y: {tick: {format: this.transNumber.bind(this)}, max: this.state.maxAxis, min: this.state.minAxis, padding: {top: 0, bottom: 0}}
+        x: {tick: {format: transShortDate}, padding: {left: padding, right: padding}, type: "timeseries"},
+        y: {tick: {format: transNumber}, max: maxAxis, min: minAxis, padding: {top: 0, bottom: 0}}
       }
     } as ChartConfig;
     let node = (
       <div styleName="root">
-        <Loading loading={this.state.data === null}>
-          <Chart className={styles["chart"]} data={this.state.data!} config={config}/>
+        <Loading loading={data === null}>
+          <Chart className={styles!["chart"]} data={data!} config={config}/>
         </Loading>
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  dictionary: DetailedDictionary
-};
-type State = {
-  data: ChartData | null,
-  maxAxis: number,
-  minAxis: number
-};
+export default HistoryPane;

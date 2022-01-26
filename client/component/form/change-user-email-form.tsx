@@ -2,14 +2,20 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 import {
   createValidate
 } from "/client/util/misc";
@@ -21,44 +27,40 @@ import {
 } from "/server/model/validation";
 
 
-@style(require("./change-user-email-form.scss"))
-export default class ChangeUserEmailForm extends Component<Props, State> {
+const ChangeUserEmailForm = create(
+  require("./change-user-email-form.scss"), "ChangeUserEmailForm",
+  function ({
+    currentEmail,
+    onSubmit
+  }: {
+    currentEmail: string,
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public constructor(props: any) {
-    super(props);
-    let email = this.props.currentEmail;
-    this.state = {email};
-  }
+    let [email, setEmail] = useState(currentEmail);
+    let [intl, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async handleClick(): Promise<void> {
-    let email = this.state.email;
-    let response = await this.request("changeUserEmail", {email});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("userEmailChanged");
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let handleClick = useCallback(async function (): Promise<void> {
+      let response = await request("changeUserEmail", {email});
+      if (response.status === 200) {
+        addInformationPopup("userEmailChanged");
+        onSubmit?.();
       }
-    }
-  }
+    }, [email, request, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
-    let validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidUserEmail"));
+    let validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(intl, "invalidUserEmail"));
     let node = (
       <form styleName="root">
-        <Input label={this.trans("changeUserEmailForm.email")} value={this.state.email} validate={validate} useTooltip={true} onSet={(email) => this.setState({email})}/>
-        <Button label={this.trans("changeUserEmailForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+        <Input label={trans("changeUserEmailForm.email")} value={email} validate={validate} useTooltip={true} onSet={(email) => setEmail(email)}/>
+        <Button label={trans("changeUserEmailForm.confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  currentEmail: string,
-  onSubmit?: () => void
-};
-type State = {
-  email: string
-};
+export default ChangeUserEmailForm;

@@ -3,47 +3,48 @@
 import * as queryParser from "query-string";
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useMemo
 } from "react";
-import Component from "/client/component/component";
+import {
+  useLocation
+} from "react-use";
 import ResetUserPasswordForm from "/client/component/compound/reset-user-password-form";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import Page from "/client/component/page/page";
 
 
-@style(require("./reset-user-password-page.scss"))
-export default class ResetUserPasswordPage extends Component<Props, State> {
+const ResetUserPasswordPage = create(
+  require("./reset-user-password-page.scss"), "ResetUserPasswordPage",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public constructor(props: Props) {
-    super(props);
-    this.serializeQuery();
-  }
+    let [, {trans}] = useIntl();
+    let location = useLocation();
 
-  private serializeQuery(): void {
-    let query = queryParser.parse(this.props.location!.search);
-    let tokenKey = (typeof query.key === "string") ? query.key : null;
-    this.state = {tokenKey};
-  }
-
-  public render(): ReactNode {
+    let tokenKey = useMemo(() => {
+      let query = queryParser.parse(location.search ?? "");
+      let tokenKey = (typeof query.key === "string") ? query.key : null;
+      return tokenKey;
+    }, [location]);
     let node = (
       <Page>
-        <div styleName="title">{this.trans("resetUserPasswordPage.title")}</div>
+        <div styleName="title">{trans("resetUserPasswordPage.title")}</div>
         <div styleName="form">
-          <ResetUserPasswordForm tokenKey={this.state.tokenKey}/>
+          <ResetUserPasswordForm tokenKey={tokenKey}/>
         </div>
       </Page>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-  tokenKey: string | null;
-};
+export default ResetUserPasswordPage;

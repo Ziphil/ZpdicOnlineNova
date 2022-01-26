@@ -11,14 +11,17 @@
     "lib": ["es2015", "esnext", "dom"],
     "jsx": "react",
     "jsxFactory": "react.createElement",
+    "jsxFragmentFactory": "react.Fragment",
     "moduleResolution": "node",
     "sourceMap": true,
     "strict": true,
     "allowSyntheticDefaultImports": true,
+    "downlevelIteration": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "removeComments": true
+    "removeComments": true,
+    "useUnknownInCatchVariables": false
   },
   "include": [
     "client/**/*",

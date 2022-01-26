@@ -72,7 +72,7 @@ export class AwsUtil {
     let params = Object.fromEntries([
       ["Bucket", AWS_STORAGE_BUCKET],
       ["Key", path]
-    ]);
+    ]) as any;
     let promise = new Promise<void>((resolve, reject) => {
       client.deleteObject(params, (error, data) => {
         if (!error) {
@@ -91,7 +91,7 @@ export class AwsUtil {
     let params = Object.fromEntries([
       ["Bucket", AWS_STORAGE_BUCKET],
       ["Prefix", modifiedPath]
-    ]);
+    ]) as any;
     let promise = new Promise<Array<string>>((resolve, reject) => {
       client.listObjectsV2(params, (error, data) => {
         if (!error) {

@@ -3,59 +3,75 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactNode
+  ReactElement,
+  useCallback
 } from "react";
 import Badge from "/client/component/atom/badge";
-import Component from "/client/component/component";
+import Icon from "/client/component/atom/icon";
 import {
-  style
-} from "/client/component/decorator";
+  IconName
+} from "/client/component/atom/icon";
+import {
+  StylesRecord,
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePath
+} from "/client/component/hook";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@style(require("./menu-item.scss"))
-export default class MenuItem extends Component<Props, State> {
+const MenuItem = create(
+  require("./menu-item.scss"), "MenuItem",
+  function ({
+    label,
+    iconName,
+    badgeValue,
+    highlight,
+    href,
+    onClick,
+    styles
+  }: {
+    label: string,
+    iconName: IconName,
+    badgeValue?: string | number,
+    highlight: boolean,
+    href?: string,
+    onClick?: (event: MouseEvent<HTMLElement>) => void,
+    styles?: StylesRecord
+  }): ReactElement {
 
-  private handleClick(event: MouseEvent<HTMLElement>): void {
-    event.preventDefault();
-    if (this.props.onClick) {
-      this.props.onClick(event);
-    }
-    if (this.props.href) {
-      this.pushPath(this.props.href);
-    }
-  }
+    let {pushPath} = usePath();
 
-  public render(): ReactNode {
+    let handleClick = useCallback(function (event: MouseEvent<HTMLElement>): void {
+      event.preventDefault();
+      onClick?.(event);
+      if (href) {
+        pushPath(href);
+      }
+    }, [href, onClick, pushPath]);
+
     let styleName = StyleNameUtil.create(
       "root",
-      {if: this.props.highlight, true: "highlight"}
+      {if: highlight, true: "highlight"}
     );
-    let badgeNode = (this.props.badgeValue) && (
-      <Badge className={this.props.styles!["badge"]} value={this.props.badgeValue} style={(this.props.highlight) ? "highlight" : "normal"}/>
+    let badgeNode = (badgeValue) && (
+      <Badge className={styles!["badge"]} value={badgeValue} style={(highlight) ? "highlight" : "normal"}/>
     );
     let node = (
-      <a styleName={styleName} href={this.props.href} onClick={this.handleClick.bind(this)}>
-        <span styleName="icon">{this.props.iconLabel}</span>
-        <span styleName="text">{this.props.label}</span>
+      <a styleName={styleName} href={href} onClick={handleClick}>
+        <Icon className={styles!["icon"]} name={iconName}/>
+        <span styleName="text">{label}</span>
         {badgeNode}
       </a>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  label: string,
-  iconLabel: string,
-  badgeValue?: string | number,
-  highlight: boolean,
-  href?: string,
-  onClick?: (event: MouseEvent<HTMLElement>) => void;
-};
-type State = {
-};
+export default MenuItem;

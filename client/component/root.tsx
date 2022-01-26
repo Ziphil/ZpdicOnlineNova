@@ -1,45 +1,40 @@
 //
 
-import {
-  History,
-  createBrowserHistory
-} from "history";
-import {
-  Provider
-} from "mobx-react";
 import * as react from "react";
 import {
-  ReactNode,
+  ReactElement,
+  StrictMode,
   Suspense,
-  lazy
+  lazy,
+  useCallback
 } from "react";
+import {
+  ErrorBoundary
+} from "react-error-boundary";
 import {
   IntlProvider
 } from "react-intl";
 import {
-  Route,
-  Router,
+  BrowserRouter,
   Switch
 } from "react-router-dom";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useDefaultLocale,
+  useDefaultUser
+} from "/client/component/hook";
 import EmptyPage from "/client/component/page/empty-page";
 import ErrorPage from "/client/component/page/error-page";
 import NotFoundPage from "/client/component/page/not-found-page";
-import {
-  GlobalStore
-} from "/client/component/store";
 import Authenticator from "/client/component/util/authenticator";
-import ErrorBoundary from "/client/component/util/error-boundary";
 import ScrollTop from "/client/component/util/scroll-top";
 
 
 require("../../node_modules/codemirror/lib/codemirror.css");
 require("../../node_modules/c3/c3.css");
 
-let AddCommissionPage = lazy(() => import("/client/component/page/add-commission-page"));
 let ActivateUserPage = lazy(() => import("/client/component/page/activate-user-page"));
 let ContactPage = lazy(() => import("/client/component/page/contact-page"));
 let DashboardPage = lazy(() => import("/client/component/page/dashboard-page"));
@@ -55,63 +50,53 @@ let ResetUserPasswordPage = lazy(() => import("/client/component/page/reset-user
 let TopPage = lazy(() => import("/client/component/page/top-page"));
 
 
-@style(require("./root.scss"), {withRouter: false, inject: false, injectIntl: false, observer: true})
-export class Root extends Component<Props, State> {
+const Root = create(
+  require("./root.scss"), "Root",
+  function ({
+  }: {
+  }): ReactElement | null {
 
-  private store: GlobalStore = new GlobalStore();
-  private history: History = createBrowserHistory();
+    let {ready} = useDefaultUser();
+    let {locale, messages} = useDefaultLocale("ja");
 
-  public state: State = {
-    ready: false
-  };
+    let handleIntlError = useCallback(function (error: Error): void {
+      console.error(error.name);
+    }, []);
 
-  public async componentDidMount(): Promise<void> {
-    await Promise.all([this.store.fetchUser(), this.store.defaultLocale()]);
-    this.setState({ready: true});
-  }
-
-  public render(): ReactNode {
-    let node = (this.state.ready) && (
-      <Router history={this.history}>
-        <Provider store={this.store}>
-          <IntlProvider defaultLocale="ja" locale={this.store.locale} messages={this.store.messages}>
-            <Suspense fallback={<EmptyPage/>}>
-              <ErrorBoundary component={ErrorPage}>
-                <ScrollTop>
-                  <Switch>
-                    <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
-                    <Authenticator type="guest" exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
-                    <Authenticator type="guest" exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
-                    <Authenticator type="guest" exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
-                    <Authenticator type="none" exact sensitive path="/activate" component={ActivateUserPage}/>
-                    <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-                    <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
-                    <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
-                    <Authenticator type="none" exact sensitive path="/request/:number(\d+)" component={AddCommissionPage}/>
-                    <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-                    <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-                    <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
-                    <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
-                    <Authenticator type="none" exact sensitive path="/contact" component={ContactPage}/>
-                    <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
-                    <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
-                    <Authenticator type="none" component={NotFoundPage}/>
-                  </Switch>
-                </ScrollTop>
-              </ErrorBoundary>
-            </Suspense>
-          </IntlProvider>
-        </Provider>
-      </Router>
+    let node = (ready) && (
+      <BrowserRouter>
+        <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError}>
+          <Suspense fallback={<EmptyPage/>}>
+            <ErrorBoundary fallbackRender={(props) => <ErrorPage {...props}/>}>
+              <ScrollTop>
+                <Switch>
+                  <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
+                  <Authenticator type="guest" exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
+                  <Authenticator type="guest" exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
+                  <Authenticator type="guest" exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
+                  <Authenticator type="none" exact sensitive path="/activate" component={ActivateUserPage}/>
+                  <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+                  <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
+                  <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+                  <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                  <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                  <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
+                  <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
+                  <Authenticator type="none" exact sensitive path="/contact" component={ContactPage}/>
+                  <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
+                  <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
+                  <Authenticator type="none" component={NotFoundPage}/>
+                </Switch>
+              </ScrollTop>
+            </ErrorBoundary>
+          </Suspense>
+        </IntlProvider>
+      </BrowserRouter>
     );
-    return node;
+    return node || null;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-  ready: boolean
-};
+export default Root;

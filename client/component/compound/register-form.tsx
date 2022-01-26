@@ -2,14 +2,28 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
+import {
+  useLocation
+} from "react-router-dom";
+import {
+  useMount
+} from "react-use";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  useLogin,
+  usePath,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 import {
   createValidate
 } from "/client/util/misc";
@@ -23,65 +37,63 @@ import {
 } from "/server/model/validation";
 
 
-@style(require("./register-form.scss"))
-export default class RegisterForm extends Component<Props, State> {
+const RegisterForm = create(
+  require("./register-form.scss"), "RegisterForm",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public state: State = {
-    name: "",
-    email: "",
-    password: ""
-  };
+    let [name, setName] = useState("");
+    let [email, setEmail] = useState("");
+    let [password, setPassword] = useState("");
+    let {request} = useRequest();
+    let login = useLogin();
+    let [intl, {trans}] = useIntl();
+    let {replacePath} = usePath();
+    let location = useLocation<any>();
+    let [, {addErrorPopup}] = usePopup();
 
-  public componentDidMount(): void {
-    let name = this.props.location!.state?.name;
-    let password = this.props.location!.state?.password;
-    if (name !== undefined && password !== undefined) {
-      this.setState({name, password});
-    }
-  }
-
-  private async performRegister(): Promise<void> {
-    let name = this.state.name;
-    let email = this.state.email;
-    let password = this.state.password;
-    let response = await this.request("registerUser", {name, email, password}, {useRecaptcha: true});
-    let body = response.data;
-    if (response.status === 200) {
-      let loginResponse = await this.login({name, password});
-      if (loginResponse.status === 200) {
-        this.replacePath("/dashboard");
-      } else {
-        this.props.store!.addErrorPopup("loginFailed");
+    let performRegister = useCallback(async function (): Promise<void> {
+      let response = await request("registerUser", {name, email, password}, {useRecaptcha: true});
+      let body = response.data;
+      if (response.status === 200) {
+        let loginResponse = await login({name, password});
+        if (loginResponse.status === 200) {
+          replacePath("/dashboard");
+        } else {
+          addErrorPopup("loginFailed");
+        }
       }
-    }
-  }
+    }, [name, email, password, request, login, replacePath, addErrorPopup]);
 
-  public render(): ReactNode {
-    let validateName = createValidate(IDENTIFIER_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidUserName"));
-    let validateEmail = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(this.props.intl!, "invalidUserEmail"));
-    let validatePassword = createValidate(rawValidatePassword, PopupUtil.getMessage(this.props.intl!, "invalidUserPassword"));
+    useMount(() => {
+      let name = location.state?.name;
+      let password = location.state?.password;
+      if (name !== undefined && password !== undefined) {
+        setName(name);
+        setPassword(password);
+      }
+    });
+
+    let validateName = createValidate(IDENTIFIER_REGEXP, PopupUtil.getMessage(intl, "invalidUserName"));
+    let validateEmail = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(intl, "invalidUserEmail"));
+    let validatePassword = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
     let node = (
       <form styleName="root">
-        <Input label={this.trans("loginForm.userName")} value={this.state.name} validate={validateName} onSet={(name) => this.setState({name})}/>
-        <Input label={this.trans("loginForm.email")} value={this.state.email} validate={validateEmail} onSet={(email) => this.setState({email})}/>
-        <Input label={this.trans("loginForm.password")} type="flexible" value={this.state.password} validate={validatePassword} onSet={(password) => this.setState({password})}/>
+        <Input label={trans("loginForm.userName")} value={name} validate={validateName} onSet={(name) => setName(name)}/>
+        <Input label={trans("loginForm.email")} value={email} validate={validateEmail} onSet={(email) => setEmail(email)}/>
+        <Input label={trans("loginForm.password")} type="flexible" value={password} validate={validatePassword} onSet={(password) => setPassword(password)}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={this.trans("registerForm.confirm")} iconLabel="&#xF234;" style="information" reactive={true} onClick={this.performRegister.bind(this)}/>
+            <Button label={trans("registerForm.confirm")} iconName="user-plus" style="information" reactive={true} onClick={performRegister}/>
           </div>
         </div>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-  name: string,
-  email: string,
-  password: string
-};
+export default RegisterForm;

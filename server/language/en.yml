@@ -25,7 +25,7 @@ mail:
     subject: "Contact: {subject}"
     text: |
       This is an inquiry from the contact form.
-      ・ Name: {name} ({signedIn, select, true {authenticated: @{userName}} false {anonymous}})
+      ・ Name: {name} ({signedIn, select, true {authenticated: @{userName}} false {anonymous} other {}})
       ・ Email address: {email}
       ・ Subject: {subject}
       {text}

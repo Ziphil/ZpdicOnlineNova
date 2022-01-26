@@ -3,14 +3,17 @@
 import * as react from "react";
 import {
   Fragment,
-  ReactNode
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState
 } from "react";
-import Component from "/client/component/component";
 import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 import {
   slices
 } from "/client/util/misc";
@@ -22,99 +25,134 @@ import {
 } from "/server/controller/internal/type";
 
 
-@style(require("./pane-list.scss"))
-export default class PaneList<T> extends Component<Props<T>, State<T>> {
+const PaneList = create(
+  require("./pane-list.scss"), "PaneList",
+  function <T>({
+    items,
+    renderer,
+    column = 1,
+    size,
+    method = "div",
+    style = "spaced",
+    border = false,
+    showPagination = true
+  }: {
+    items: Array<T> | ItemProvider<T> | null,
+    renderer: (item: T) => ReactNode,
+    column?: number,
+    size: number,
+    method?: "div" | "table",
+    style?: "spaced" | "compact",
+    border?: boolean,
+    showPagination?: boolean
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    column: 1,
-    method: "div",
-    style: "spaced",
-    border: false,
-    showPagination: true
-  };
-  public state: State<T> = {
-    page: 0,
-    hitResult: [[], 0],
-    loading: false
-  };
+    let [page, setPage] = useState(0);
+    let [hitResult, setHitResult] = useState<WithSize<T>>([[], 0]);
+    let [loading, setLoading] = useState(false);
 
-  public async componentDidMount(): Promise<void> {
-    let page = this.state.page;
-    await this.handlePageSet(page);
-  }
-
-  public async componentDidUpdate(previousProps: any): Promise<void> {
-    if (this.props.items !== previousProps.items) {
-      let page = this.state.page;
-      await this.handlePageSet(page);
-    }
-  }
-
-  private async handlePageSet(page: number): Promise<void> {
-    let offset = this.props.size * page;
-    let size = this.props.size;
-    let items = this.props.items;
-    if (typeof items === "function") {
-      this.setState({loading: true});
-      let hitResult = await items(offset, size);
-      this.setState({page, hitResult, loading: false});
-    } else {
-      if (items !== null) {
-        let hitItems = items.slice(offset, offset + size);
-        let hitSize = items.length;
-        let hitResult = [hitItems, hitSize] as WithSize<T>;
-        this.setState({page, hitResult, loading: false});
+    let handlePageSet = useCallback(async function (page: number): Promise<void> {
+      let offset = size * page;
+      if (typeof items === "function") {
+        setLoading(true);
+        let hitResult = await items(offset, size);
+        setPage(page);
+        setHitResult(hitResult);
+        setLoading(false);
       } else {
-        this.setState({loading: true});
+        if (items !== null) {
+          let hitItems = items.slice(offset, offset + size);
+          let hitSize = items.length;
+          let hitResult = [hitItems, hitSize] as WithSize<T>;
+          setPage(page);
+          setHitResult(hitResult);
+          setLoading(false);
+        } else {
+          setLoading(true);
+        }
       }
-    }
-  }
+    }, [items, size]);
 
-  private renderPagenationButton(): ReactNode {
-    let [hitItems, hitSize] = this.state.hitResult;
-    let maxPage = Math.max(Math.ceil(hitSize / this.props.size) - 1, 0);
-    let styleName = StyleNameUtil.create(
-      "pagination",
-      {if: hitItems.length <= 0, true: "empty"}
-    );
+    useEffect(() => {
+      handlePageSet(page);
+    }, [items]);
+
+    let panesProps = {renderer, column, style, border, hitResult};
+    let panes = (method === "div") ? <PaneListDivPanes {...panesProps}/> : <PaneListTablePanes {...panesProps}/>;
+    let pagenationButtonNode = (showPagination) && <PaneListPaginationButton {...{size, page, hitResult, handlePageSet}}/>;
     let node = (
-      <div styleName={styleName}>
-        <PaginationButton page={this.state.page} minPage={0} maxPage={maxPage} onSet={(page) => this.handlePageSet(page)}/>
+      <div styleName="root">
+        <Loading loading={loading}>
+          {panes}
+          {pagenationButtonNode}
+        </Loading>
       </div>
     );
     return node;
-  }
 
-  private renderDivPanes(): ReactNode {
-    let [hitItems, hitSize] = this.state.hitResult;
+  }
+);
+
+
+const PaneListDivPanes = create(
+  require("./pane-list.scss"),
+  function <T>({
+    renderer,
+    column,
+    style,
+    hitResult
+  }: {
+    renderer: (item: T) => ReactNode,
+    column: number,
+    style: "spaced" | "compact",
+    hitResult: WithSize<T>
+  }): ReactElement {
+
+    let [hitItems, hitSize] = hitResult;
     let styleName = StyleNameUtil.create(
       "div-pane",
-      {if: this.props.style === "spaced", true: "spaced"}
+      {if: style === "spaced", true: "spaced"}
     );
-    let style = {gridTemplateColumns: `repeat(${this.props.column}, 1fr)`};
-    let panes = hitItems.map(this.props.renderer);
+    let panes = hitItems.map(renderer);
     let node = (
-      <div styleName={styleName} style={style}>
+      <div styleName={styleName} style={{gridTemplateColumns: `repeat(${column}, 1fr)`}}>
         {panes}
       </div>
     );
     return node;
-  }
 
-  private renderTablePanes(): ReactNode {
-    let [hitItems, hitSize] = this.state.hitResult;
+  }
+);
+
+
+const PaneListTablePanes = create(
+  require("./pane-list.scss"),
+  function <T>({
+    renderer,
+    column,
+    style,
+    border,
+    hitResult
+  }: {
+    renderer: (item: T) => ReactNode,
+    column: number,
+    style: "spaced" | "compact",
+    border: boolean,
+    hitResult: WithSize<T>
+  }): ReactElement {
+
+    let [hitItems, hitSize] = hitResult;
     let styleName = StyleNameUtil.create(
       "table-pane",
-      {if: this.props.style === "spaced", true: "spaced"}
+      {if: style === "spaced", true: "spaced"}
     );
-    let column = this.props.column;
     let rowPanes = slices(hitItems, column, true).map((rowItems, index) => {
       let cellPanes = rowItems.map((item, index) => {
-        let innerPane = (item !== undefined) ? this.props.renderer(item) : undefined;
+        let innerPane = (item !== undefined) ? renderer(item) : undefined;
         let spacerNode = (index !== 0) && (
           <td styleName="spacer"/>
         );
-        let borderSpacerNode = (this.props.border && index !== 0) && (
+        let borderSpacerNode = (border && index !== 0) && (
           <td styleName="spacer border"/>
         );
         let cellPane = (
@@ -137,46 +175,42 @@ export default class PaneList<T> extends Component<Props<T>, State<T>> {
       </table>
     );
     return node;
-  }
 
-  public render(): ReactNode {
-    let panes = (this.props.method === "div") ? this.renderDivPanes() : this.renderTablePanes();
-    let pagenationButtonNode = this.props.showPagination && this.renderPagenationButton();
+  }
+);
+
+
+const PaneListPaginationButton = create(
+  require("./pane-list.scss"),
+  function <T>({
+    size,
+    page,
+    hitResult,
+    handlePageSet
+  }: {
+    size: number,
+    page: number,
+    hitResult: WithSize<T>,
+    handlePageSet: (page: number) => Promise<void>
+  }): ReactElement {
+
+    let [hitItems, hitSize] = hitResult;
+    let maxPage = Math.max(Math.ceil(hitSize / size) - 1, 0);
+    let styleName = StyleNameUtil.create(
+      "pagination",
+      {if: hitItems.length <= 0, true: "empty"}
+    );
     let node = (
-      <div styleName="root">
-        <Loading loading={this.state.loading}>
-          {panes}
-          {pagenationButtonNode}
-        </Loading>
+      <div styleName={styleName}>
+        <PaginationButton page={page} minPage={0} maxPage={maxPage} onSet={(page) => handlePageSet(page)}/>
       </div>
     );
     return node;
+
   }
+);
 
-}
-
-
-type Props<T> = {
-  items: Array<T> | ItemProvider<T> | null,
-  renderer: (item: T) => ReactNode,
-  column: number,
-  size: number,
-  method: "div" | "table",
-  style: "spaced" | "compact",
-  border: boolean,
-  showPagination: boolean
-};
-type DefaultProps = {
-  column: number,
-  method: "div" | "table",
-  style: "spaced" | "compact",
-  border: boolean,
-  showPagination: boolean
-};
-type State<T> = {
-  page: number,
-  hitResult: WithSize<T>,
-  loading: boolean
-};
 
 export type ItemProvider<T> = (offset?: number, size?: number) => Promise<WithSize<T>>;
+
+export default PaneList;

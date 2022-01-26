@@ -2,46 +2,52 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback
 } from "react";
 import Button from "/client/component/atom/button";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 
 
-@style(require("./pagination-button.scss"))
-export default class PaginationButton extends Component<Props, State> {
+const PaginationButton = create(
+  require("./pagination-button.scss"), "PaginationButton",
+  function ({
+    page,
+    minPage,
+    maxPage,
+    onSet
+  }: {
+    page: number,
+    minPage: number
+    maxPage: number
+    onSet?: (page: number) => void
+  }): ReactElement {
 
-  private movePreviousPage(): void {
-    let page = this.props.page - 1;
-    if (page < this.props.minPage) {
-      page = this.props.minPage;
-    }
-    this.movePage(page);
-  }
+    let movePage = useCallback(function (page: number): void {
+      onSet?.(page);
+    }, [onSet]);
 
-  private moveNextPage(): void {
-    let page = this.props.page + 1;
-    if (page > this.props.maxPage) {
-      page = this.props.maxPage;
-    }
-    this.movePage(page);
-  }
+    let movePreviousPage = useCallback(function (): void {
+      let movedPage = page - 1;
+      if (movedPage < minPage) {
+        movedPage = minPage;
+      }
+      movePage(movedPage);
+    }, [page, minPage, movePage]);
 
-  private movePage(page: number): void {
-    this.setState({page});
-    if (this.props.onSet) {
-      this.props.onSet(page);
-    }
-  }
+    let moveNextPage = useCallback(function (): void {
+      let movedPage = page + 1;
+      if (movedPage > maxPage) {
+        movedPage = maxPage;
+      }
+      movePage(movedPage);
+    }, [page, maxPage, movePage]);
 
-  public render(): ReactNode {
-    let outerThis = this;
-    let calculateButtonSpecs = function (direction: 1 | -1): Array<{page: number, redundant: boolean, current: boolean}> {
-      let targetPage = (direction === -1) ? outerThis.props.minPage : outerThis.props.maxPage;
-      let currentPage = outerThis.props.page;
+    let calculateButtonSpecs = useCallback(function (direction: 1 | -1): Array<{page: number, redundant: boolean, current: boolean}> {
+      let targetPage = (direction === -1) ? minPage : maxPage;
+      let currentPage = page;
       let buttonSpecs = [];
       let difference = 2;
       for (let i = 0 ; i < 4 ; i ++) {
@@ -56,10 +62,11 @@ export default class PaginationButton extends Component<Props, State> {
         buttonSpecs.push({page: targetPage, redundant: false, current: false});
       }
       return buttonSpecs;
-    };
+    }, [page, minPage, maxPage]);
+
     let wholeButtonSpecs = [
       ...calculateButtonSpecs(-1).reverse(),
-      {page: this.props.page, redundant: false, current: true},
+      {page, redundant: false, current: true},
       ...calculateButtonSpecs(1)
     ];
     let buttonNodes = wholeButtonSpecs.map((spec, index) => {
@@ -78,31 +85,24 @@ export default class PaginationButton extends Component<Props, State> {
       let styleName = (spec.redundant) ? "redundant" : "";
       let buttonNode = (
         <div styleName={styleName} key={index}>
-          <Button label={(spec.page + 1).toString()} position={position} disabled={disabled} onClick={() => this.movePage(spec.page)}/>
+          <Button label={(spec.page + 1).toString()} position={position} disabled={disabled} onClick={() => movePage(spec.page)}/>
         </div>
       );
       return buttonNode;
     });
     let node = (
       <div styleName="root">
-        <Button iconLabel="&#xF060;" disabled={this.props.page <= this.props.minPage} onClick={this.movePreviousPage.bind(this)}/>
+        <Button iconName="arrow-left" disabled={page <= minPage} onClick={movePreviousPage}/>
         <div styleName="button-group">
           {buttonNodes}
         </div>
-        <Button iconLabel="&#xF061;" disabled={this.props.page >= this.props.maxPage} onClick={this.moveNextPage.bind(this)}/>
+        <Button iconName="arrow-right" disabled={page >= maxPage} onClick={moveNextPage}/>
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  page: number,
-  minPage: number
-  maxPage: number
-  onSet?: (page: number) => void
-};
-type State = {
-};
+export default PaginationButton;

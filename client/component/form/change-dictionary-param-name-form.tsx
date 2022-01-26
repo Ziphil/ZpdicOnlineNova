@@ -3,14 +3,20 @@
 import * as react from "react";
 import {
   Fragment,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 import {
   PopupUtil
 } from "/client/util/popup";
@@ -19,38 +25,40 @@ import {
 } from "/server/model/validation";
 
 
-@style(require("./change-dictionary-param-name-form.scss"))
-export default class ChangeDictionaryParamNameForm extends Component<Props, State> {
+const ChangeDictionaryParamNameForm = create(
+  require("./change-dictionary-param-name-form.scss"), "ChangeDictionaryParamNameForm",
+  function ({
+    number,
+    currentParamName,
+    onSubmit
+  }: {
+    number: number,
+    currentParamName: string | undefined,
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public constructor(props: any) {
-    super(props);
-    let paramName = this.props.currentParamName ?? "";
-    this.state = {paramName};
-  }
+    let [paramName, setParamName] = useState(currentParamName ?? "");
+    let [intl, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async handleClick(): Promise<void> {
-    let number = this.props.number;
-    let paramName = this.state.paramName;
-    let response = await this.request("changeDictionaryParamName", {number, paramName});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("dictionaryParamNameChanged");
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let handleClick = useCallback(async function (): Promise<void> {
+      let response = await request("changeDictionaryParamName", {number, paramName});
+      if (response.status === 200) {
+        addInformationPopup("dictionaryParamNameChanged");
+        onSubmit?.();
       }
-    }
-  }
+    }, [number, paramName, request, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
-    let outerThis = this;
-    let nextUrl = "http://zpdic.ziphil.com/dictionary/" + (this.state.paramName || this.props.number);
+    let nextUrl = "http://zpdic.ziphil.com/dictionary/" + (paramName || number);
     let validate = function (value: string): string | null {
-      return (value === "" || value.match(IDENTIFIER_REGEXP)) ? null : PopupUtil.getMessage(outerThis.props.intl!, "invalidDictionaryParamName");
+      return (value === "" || value.match(IDENTIFIER_REGEXP)) ? null : PopupUtil.getMessage(intl, "invalidDictionaryParamName");
     };
     let node = (
       <Fragment>
         <form styleName="root">
-          <Input label={this.trans("changeDictionaryParamNameForm.paramName")} value={this.state.paramName} validate={validate} onSet={(paramName) => this.setState({paramName})}/>
-          <Button label={this.trans("changeDictionaryParamNameForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+          <Input label={trans("changeDictionaryParamNameForm.paramName")} value={paramName} validate={validate} onSet={(paramName) => setParamName(paramName)}/>
+          <Button label={trans("changeDictionaryParamNameForm.confirm")} reactive={true} onClick={handleClick}/>
         </form>
         <p styleName="url">
           {nextUrl}
@@ -58,16 +66,9 @@ export default class ChangeDictionaryParamNameForm extends Component<Props, Stat
       </Fragment>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  number: number,
-  currentParamName: string | undefined,
-  onSubmit?: () => void
-};
-type State = {
-  paramName: string;
-};
+export default ChangeDictionaryParamNameForm;

@@ -3,78 +3,78 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactNode
+  ReactElement,
+  ReactNode,
+  useCallback
 } from "react";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  usePath
+} from "/client/component/hook";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@style(require("./link.scss"))
-export default class Link extends Component<Props, State> {
+let Link = create(
+  require("./link.scss"), "Link",
+  function ({
+    href,
+    target = "auto",
+    style = "normal",
+    onClick,
+    className,
+    children
+  }: {
+    href: string,
+    target?: "self" | "blank" | "auto",
+    style?: "plane" | "normal",
+    onClick?: (event: MouseEvent<HTMLAnchorElement>) => void,
+    className?: string,
+    children?: ReactNode
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    target: "auto",
-    style: "normal"
-  };
+    let {pushPath} = usePath();
 
-  private handleClick(event: MouseEvent<HTMLAnchorElement>): void {
-    event.preventDefault();
-    let href = this.props.href;
-    if (this.props.onClick) {
-      this.props.onClick(event);
-    }
-    if (href) {
-      let target = (() => {
-        if (this.props.target === "auto") {
-          if (href.includes(location.host) || (!href.startsWith("http") && !href.startsWith("//"))) {
-            return "self";
+    let handleClick = useCallback(function (event: MouseEvent<HTMLAnchorElement>): void {
+      event.preventDefault();
+      onClick?.(event);
+      if (href) {
+        let actualTarget = (() => {
+          if (target === "auto") {
+            if (href.includes(location.host) || (!href.startsWith("http") && !href.startsWith("//"))) {
+              return "self";
+            } else {
+              return "blank";
+            }
           } else {
-            return "blank";
+            return target;
           }
+        })();
+        if (actualTarget === "self") {
+          let shortHref = href.replace(/^(\w+?):\/\//, "").replace(location.host, "");
+          pushPath(shortHref);
         } else {
-          return this.props.target;
+          window.open(href);
         }
-      })();
-      if (target === "self") {
-        let shortHref = href.replace(/^(\w+?):\/\//, "").replace(location.host, "");
-        this.pushPath(shortHref);
-      } else {
-        window.open(href);
       }
-    }
-  }
+    }, [href, target, onClick, pushPath]);
 
-  public render(): ReactNode {
     let styleName = StyleNameUtil.create(
       "root",
-      {if: this.props.style === "plane", true: "plane"}
+      {if: style === "plane", true: "plane"}
     );
     let node = (
-      <a styleName={styleName} className={this.props.className} href={this.props.href} onClick={this.handleClick.bind(this)}>
-        {this.props.children}
+      <a styleName={styleName} className={className} href={href} onClick={handleClick}>
+        {children}
       </a>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  href: string,
-  target: "self" | "blank" | "auto",
-  style: "plane" | "normal",
-  onClick?: (event: MouseEvent<HTMLAnchorElement>) => void,
-  className?: string
-};
-type DefaultProps = {
-  target: "self" | "blank" | "auto",
-  style: "plane" | "normal"
-};
-type State = {
-};
+export default Link;

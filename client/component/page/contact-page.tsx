@@ -2,30 +2,36 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
 import Markdown from "/client/component/atom/markdown";
-import Component from "/client/component/component";
 import ContactForm from "/client/component/compound/contact-form";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import Page from "/client/component/page/page";
 
 
-@style(require("./contact-page.scss"))
-export default class ContactPage extends Component<Props, State> {
+const ContactPage = create(
+  require("./contact-page.scss"), "ContactPage",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public render(): ReactNode {
+    let [, {trans}] = useIntl();
+
     let node = (
       <Page>
-        <div styleName="title">{this.trans("contactPage.title")}</div>
+        <div styleName="title">{trans("contactPage.title")}</div>
         <div styleName="explanation">
           <p>
-            <Markdown source={this.trans("contactPage.privacy")} simple={true}/>
+            <Markdown source={trans("contactPage.privacy")} simple={true}/>
           </p>
           <p>
-            <Markdown source={this.trans("contactPage.explanation")} simple={true}/>
+            <Markdown source={trans("contactPage.explanation")} simple={true}/>
           </p>
         </div>
         <div styleName="form">
@@ -34,12 +40,9 @@ export default class ContactPage extends Component<Props, State> {
       </Page>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default ContactPage;

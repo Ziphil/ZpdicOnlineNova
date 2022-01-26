@@ -2,14 +2,20 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import RadioGroup from "/client/component/atom/radio-group";
-import Component from "/client/component/component";
 import DictionaryList from "/client/component/compound/dictionary-list";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
   DetailedDictionary
@@ -19,47 +25,44 @@ import {
 } from "/server/controller/internal/type";
 
 
-@style(require("./dictionary-list-page.scss"))
-export default class DictionaryListPage extends Component<Props, State> {
+const DictionaryListPage = create(
+  require("./dictionary-list-page.scss"), "DictionaryListPage",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public state: State = {
-    order: "updatedDate"
-  };
+    let [order, setOrder] = useState("updatedDate");
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
 
-  private async provideDictionaries(offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
-    let order = this.state.order;
-    let response = await this.request("fetchAllDictionaries", {order, offset, size});
-    if (response.status === 200) {
-      let hitResult = response.data;
-      return hitResult;
-    } else {
-      return [[], 0];
-    }
-  }
+    let provideDictionaries = useCallback(async function (offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
+      let response = await request("fetchAllDictionaries", {order, offset, size});
+      if (response.status === 200) {
+        let hitResult = response.data;
+        return hitResult;
+      } else {
+        return [[], 0];
+      }
+    }, [order, request]);
 
-  public render(): ReactNode {
     let specs = [
-      {value: "updatedDate", label: this.trans("dictionaryListPage.updatedDate")},
-      {value: "createdDate", label: this.trans("dictionaryListPage.createdDate")}
+      {value: "updatedDate", label: trans("dictionaryListPage.updatedDate")},
+      {value: "createdDate", label: trans("dictionaryListPage.createdDate")}
     ];
     let node = (
       <Page>
         <div styleName="search-form">
-          <RadioGroup name="order" value={this.state.order} specs={specs} onSet={(order) => this.setState({order})}/>
+          <RadioGroup name="order" value={order} specs={specs} onSet={(order) => setOrder(order)}/>
         </div>
         <div styleName="list">
-          <DictionaryList dictionaries={this.provideDictionaries.bind(this)} showCreatedDate={true} size={20}/>
+          <DictionaryList dictionaries={provideDictionaries} showCreatedDate={true} size={20}/>
         </div>
       </Page>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-  order: string
-};
+export default DictionaryListPage;

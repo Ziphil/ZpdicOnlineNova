@@ -14,11 +14,11 @@
 }
 
 .checkbox +.label::before {
-  top: 0.1em;
+  top: 0em;
   left: 0em;
   width: 1em;
   height: 1em;
-  border: 3u $light-border-color solid;
+  border: 1rpx $light-border-color solid;
   border-radius: $small-border-radius;
   background-color: white;
   box-shadow: $inset-box-shadow-setting input-box-shadow-color(map-get($colors, primary)) inset;
@@ -30,12 +30,12 @@
 }
 
 .checkbox:hover +.label::before {
-  border: 3u $light-color solid;
+  border: 1rpx $light-color solid;
 }
 
 .checkbox:checked +.label::after {
   @include icon-font;
-  top: 0.3em;
+  top: 0.25em;
   left: 0.15em;
   font-size: 80%;
   color: map-get($colors, primary);

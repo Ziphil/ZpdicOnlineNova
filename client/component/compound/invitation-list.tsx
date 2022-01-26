@@ -3,43 +3,46 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactNode
+  ReactElement,
+  ReactNode,
+  useCallback
 } from "react";
 import {
   AsyncOrSync
 } from "ts-essentials";
-import Component from "/client/component/component";
 import InvitationPane from "/client/component/compound/invitation-pane";
 import PaneList from "/client/component/compound/pane-list";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 import {
   Invitation
 } from "/client/skeleton/invitation";
 
 
-@style(require("./invitation-list.scss"))
-export default class InvitationList extends Component<Props, State> {
+const InvitationList = create(
+  require("./invitation-list.scss"), "InvitationList",
+  function ({
+    invitations,
+    size,
+    onSubmit
+  }: {
+    invitations: Array<Invitation> | null,
+    size: number,
+    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  }): ReactElement {
 
-  public render(): ReactNode {
-    let outerThis = this;
-    let renderer = function (invitation: Invitation): ReactNode {
-      return <InvitationPane invitation={invitation} key={invitation.id} onSubmit={outerThis.props.onSubmit}/>;
-    };
+    let rendererInvitation = useCallback(function (invitation: Invitation): ReactNode {
+      return <InvitationPane invitation={invitation} key={invitation.id} onSubmit={onSubmit}/>;
+    }, [onSubmit]);
+
     let node = (
-      <PaneList items={this.props.invitations} size={this.props.size} renderer={renderer}/>
+      <PaneList items={invitations} size={size} renderer={rendererInvitation}/>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  invitations: Array<Invitation> | null,
-  size: number,
-  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
-};
-type State = {
-};
+export default InvitationList;

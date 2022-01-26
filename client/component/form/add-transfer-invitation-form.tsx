@@ -3,84 +3,88 @@
 import * as react from "react";
 import {
   Fragment,
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
   SuggestionSpec
 } from "/client/component/atom/input";
-import Component from "/client/component/component";
 import UserSuggestionPane from "/client/component/compound/user-suggestion-pane";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 import {
   Dictionary
 } from "/client/skeleton/dictionary";
 
 
-@style(require("./add-transfer-invitation-form.scss"))
-export default class AddTransferInvitationForm extends Component<Props, State> {
+const AddTransferInvitationForm = create(
+  require("./add-transfer-invitation-form.scss"), "AddTransferInvitationForm",
+  function ({
+    number,
+    dictionary,
+    onSubmit
+  }: {
+    number: number,
+    dictionary: Dictionary,
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public state: State = {
-    userName: ""
-  };
+    let [userName, setUserName] = useState("");
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async suggestUsers(pattern: string): Promise<Array<SuggestionSpec>> {
-    let response = await this.request("suggestUsers", {pattern}, {ignoreError: true});
-    if (response.status === 200 && !("error" in response.data)) {
-      let users = response.data;
-      let suggestions = users.map((user) => {
-        let replacement = user.name;
-        let node = <UserSuggestionPane user={user}/>;
-        return {replacement, node};
-      });
-      return suggestions;
-    } else {
-      return [];
-    }
-  }
-
-  private async handleClick(): Promise<void> {
-    let number = this.props.number;
-    let userName = this.state.userName;
-    let type = "transfer" as const;
-    let response = await this.request("addInvitation", {number, type, userName});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("transferInvitationAdded");
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let suggestUsers = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
+      let response = await request("suggestUsers", {pattern}, {ignoreError: true});
+      if (response.status === 200 && !("error" in response.data)) {
+        let users = response.data;
+        let suggestions = users.map((user) => {
+          let replacement = user.name;
+          let node = <UserSuggestionPane user={user}/>;
+          return {replacement, node};
+        });
+        return suggestions;
+      } else {
+        return [];
       }
-    }
-  }
+    }, [request]);
 
-  public render(): ReactNode {
+    let handleClick = useCallback(async function (): Promise<void> {
+      let type = "transfer" as const;
+      let response = await request("addInvitation", {number, type, userName});
+      if (response.status === 200) {
+        addInformationPopup("transferInvitationAdded");
+        onSubmit?.();
+      }
+    }, [number, userName, request, onSubmit, addInformationPopup]);
+
     let node = (
       <Fragment>
         <form styleName="root">
           <Input
-            label={this.trans("addTransferInvitationForm.userName")}
-            value={this.state.userName}
+            label={trans("addTransferInvitationForm.userName")}
+            value={userName}
             prefix="@"
-            suggest={this.suggestUsers.bind(this)}
-            onSet={(userName) => this.setState({userName})}
+            suggest={suggestUsers}
+            onSet={(userName) => setUserName(userName)}
           />
-          <Button label={this.trans("addTransferInvitationForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+          <Button label={trans("addTransferInvitationForm.confirm")} reactive={true} onClick={handleClick}/>
         </form>
       </Fragment>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  number: number,
-  dictionary: Dictionary,
-  onSubmit?: () => void
-};
-type State = {
-  userName: string
-};
+export default AddTransferInvitationForm;

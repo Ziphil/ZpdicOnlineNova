@@ -3,17 +3,18 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactNode
+  ReactElement,
+  ReactNode,
+  useCallback
 } from "react";
 import {
   AsyncOrSync
 } from "ts-essentials";
-import Component from "/client/component/component";
 import PaneList from "/client/component/compound/pane-list";
 import UserPane from "/client/component/compound/user-pane";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 import {
   Dictionary
 } from "/client/skeleton/dictionary";
@@ -22,28 +23,31 @@ import {
 } from "/client/skeleton/user";
 
 
-@style(require("./invitation-list.scss"))
-export default class UserList extends Component<Props, State> {
+const UserList = create(
+  require("./user-list.scss"), "UserList",
+  function ({
+    users,
+    dictionary,
+    size,
+    onSubmit
+  }: {
+    users: Array<User> | null,
+    dictionary?: Dictionary,
+    size: number,
+    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  }): ReactElement {
 
-  public render(): ReactNode {
-    let outerThis = this;
-    let renderer = function (user: User): ReactNode {
-      return <UserPane user={user} dictionary={outerThis.props.dictionary} key={user.id} onSubmit={outerThis.props.onSubmit}/>;
-    };
+    let renderUser = useCallback(function (user: User): ReactNode {
+      return <UserPane user={user} dictionary={dictionary} key={user.id} onSubmit={onSubmit}/>;
+    }, [dictionary, onSubmit]);
+
     let node = (
-      <PaneList items={this.props.users} size={this.props.size} column={2} renderer={renderer}/>
+      <PaneList items={users} size={size} column={2} renderer={renderUser}/>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  users: Array<User> | null,
-  dictionary?: Dictionary,
-  size: number,
-  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
-};
-type State = {
-};
+export default UserList;

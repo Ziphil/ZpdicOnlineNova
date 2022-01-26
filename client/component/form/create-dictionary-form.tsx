@@ -2,52 +2,56 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePath,
+  useRequest
+} from "/client/component/hook";
 
 
-@style(require("./create-dictionary-form.scss"))
-export default class CreateDictionaryForm extends Component<Props, State> {
+const CreateDictionaryForm = create(
+  require("./create-dictionary-form.scss"), "CreateDictionaryForm",
+  function ({
+    onSubmit
+  }: {
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public state: State = {
-    name: null
-  };
+    let [name, setName] = useState<string | null>(null);
+    let [intl, {trans}] = useIntl();
+    let {request} = useRequest();
+    let {pushPath} = usePath();
 
-  private async handleClick(): Promise<void> {
-    let name = this.state.name ?? this.trans("createDictionaryForm.defaultName");
-    let response = await this.request("createDictionary", {name});
-    if (response.status === 200) {
-      let dictionary = response.data;
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let handleClick = useCallback(async function (): Promise<void> {
+      let actualName = name ?? trans("createDictionaryForm.defaultName");
+      let response = await request("createDictionary", {name: actualName});
+      if (response.status === 200) {
+        let dictionary = response.data;
+        onSubmit?.();
+        pushPath("/dashboard/dictionary/" + dictionary.number);
       }
-      this.pushPath("/dashboard/dictionary/" + dictionary.number);
-    }
-  }
+    }, [name, request, trans, onSubmit, pushPath]);
 
-  public render(): ReactNode {
-    let name = this.state.name ?? this.trans("createDictionaryForm.defaultName");
+    let actualName = name ?? trans("createDictionaryForm.defaultName");
     let node = (
       <form styleName="root">
-        <Input label={this.trans("createDictionaryForm.name")} value={name} onSet={(name) => this.setState({name})}/>
-        <Button label={this.trans("createDictionaryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+        <Input label={trans("createDictionaryForm.name")} value={actualName} onSet={(name) => setName(name)}/>
+        <Button label={trans("createDictionaryForm.confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  onSubmit?: () => void
-};
-type State = {
-  name: string | null;
-};
+export default CreateDictionaryForm;

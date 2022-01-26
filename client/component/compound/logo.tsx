@@ -2,21 +2,22 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 import {
   VERSION
 } from "/client/variable";
 
 
-@style(require("./logo.scss"))
-export default class Logo extends Component<Props, State> {
+const Logo = create(
+  require("./logo.scss"), "Logo",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public render(): ReactNode {
     let node = (
       <div styleName="root">
         <div styleName="title">ZpDIC</div>
@@ -25,12 +26,9 @@ export default class Logo extends Component<Props, State> {
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default Logo;

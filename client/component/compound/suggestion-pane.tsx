@@ -2,42 +2,46 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
 import Link from "/client/component/atom/link";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import {
   Dictionary,
   Suggestion
 } from "/client/skeleton/dictionary";
 
 
-@style(require("./suggestion-pane.scss"))
-export default class SuggestionPane extends Component<Props, State> {
+const SuggestionPane = create(
+  require("./suggestion-pane.scss"), "SuggestionPane",
+  function ({
+    dictionary,
+    suggestion
+  }: {
+    dictionary: Dictionary,
+    suggestion: Suggestion
+  }): ReactElement {
 
-  public render(): ReactNode {
-    let suggestion = this.props.suggestion;
-    let href = "/dictionary/" + this.props.dictionary.number + "?search=" + encodeURIComponent(suggestion.word.name) + "&mode=name&type=exact&page=0";
+    let [, {trans}] = useIntl();
+
+    let href = "/dictionary/" + dictionary.number + "?search=" + encodeURIComponent(suggestion.word.name) + "&mode=name&type=exact&page=0";
     let nameNode = <Link href={href} target="self">{suggestion.word.name}</Link>;
     let title = suggestion.title;
     let node = (
       <li styleName="root">
-        <span styleName="maybe">{this.trans("suggestionPane.maybe")}</span>
-        {this.trans("suggestionPane.suggestion", {nameNode, title})}
+        <span styleName="maybe">{trans("suggestionPane.maybe")}</span>
+        {trans("suggestionPane.suggestion", {nameNode, title})}
       </li>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  dictionary: Dictionary,
-  suggestion: Suggestion
-};
-type State = {
-};
+export default SuggestionPane;

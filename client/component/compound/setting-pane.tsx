@@ -2,42 +2,50 @@
 
 import * as react from "react";
 import {
+  ReactElement,
   ReactNode
 } from "react";
 import Badge from "/client/component/atom/badge";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@style(require("./setting-pane.scss"))
-export default class SettingPane extends Component<Props, State> {
+const SettingPane = create(
+  require("./setting-pane.scss"), "SettingPane",
+  function ({
+    label,
+    badgeValue,
+    description,
+    forceWide = false,
+    children
+  }: {
+    label?: string,
+    badgeValue?: string | number,
+    description?: ReactNode,
+    forceWide?: boolean,
+    children?: ReactNode
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    forceWide: false
-  };
-
-  public render(): ReactNode {
     let styleName = StyleNameUtil.create([
       "root",
-      {if: this.props.forceWide, true: "force-wide"}
+      {if: forceWide, true: "force-wide"}
     ]);
-    let badgeNode = (this.props.badgeValue) && (
-      <Badge value={this.props.badgeValue}/>
+    let badgeNode = (badgeValue) && (
+      <Badge value={badgeValue}/>
     );
-    let descriptionNode = (this.props.description) && (
+    let descriptionNode = (description) && (
       <p styleName="description">
-        {this.props.description}
+        {description}
       </p>
     );
-    let descriptionWrapperNode = (this.props.label || this.props.description) && (
+    let descriptionWrapperNode = (label || description) && (
       <div styleName="description-wrapper">
         <div styleName="label">
-          {this.props.label}
+          {label}
           {badgeNode}
         </div>
         {descriptionNode}
@@ -47,24 +55,14 @@ export default class SettingPane extends Component<Props, State> {
       <div styleName={styleName}>
         {descriptionWrapperNode}
         <div styleName="content">
-          {this.props.children}
+          {children}
         </div>
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  label?: string,
-  badgeValue?: string | number,
-  description?: ReactNode,
-  forceWide: boolean
-};
-type DefaultProps = {
-  forceWide: boolean
-};
-type State = {
-};
+export default SettingPane;

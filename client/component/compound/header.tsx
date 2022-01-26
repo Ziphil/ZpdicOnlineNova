@@ -2,25 +2,28 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
 import Link from "/client/component/atom/link";
-import Component from "/client/component/component";
 import HeaderMenuItem from "/client/component/compound/header-menu-item";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  useUser
+} from "/client/component/hook";
 
 
-@style(require("./header.scss"))
-export default class Header extends Component<Props, State> {
+const Header = create(
+  require("./header.scss"), "Header",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public state: State = {
-    userName: null
-  };
+    let [, {trans}] = useIntl();
+    let [user] = useUser();
 
-  public render(): ReactNode {
-    let user = this.props.store!.user;
     let userNameNode = (user !== null) && (
       <HeaderMenuItem label={user.screenName} href="/dashboard"/>
     );
@@ -32,11 +35,11 @@ export default class Header extends Component<Props, State> {
               <Link href="/" target="self" style="plane">ZpDIC</Link>
             </div>
             <div styleName="menu">
-              <HeaderMenuItem label={this.trans("header.dictionaryList")} iconLabel="&#xF02D;" href="/list"/>
-              <HeaderMenuItem label={this.trans("header.notification")} iconLabel="&#xF05A;" href="/notification"/>
-              <HeaderMenuItem label={this.trans("header.document")} iconLabel="&#xF518;" href="/document"/>
-              <HeaderMenuItem label={this.trans("header.contact")} iconLabel="&#xF0E0;" href="/contact"/>
-              <HeaderMenuItem label={this.trans("header.language")} iconLabel="&#xF1AB;" href="/language"/>
+              <HeaderMenuItem label={trans("header.dictionaryList")} iconName="book" href="/list"/>
+              <HeaderMenuItem label={trans("header.notification")} iconName="info-circle" href="/notification"/>
+              <HeaderMenuItem label={trans("header.document")} iconName="book-open" href="/document"/>
+              <HeaderMenuItem label={trans("header.contact")} iconName="envelope" href="/contact"/>
+              <HeaderMenuItem label={trans("header.language")} iconName="language" href="/language"/>
             </div>
           </div>
           <div styleName="right">
@@ -46,12 +49,9 @@ export default class Header extends Component<Props, State> {
       </header>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default Header;

@@ -2,20 +2,21 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
 import NotificationList from "/client/component/compound/notification-list";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 import Page from "/client/component/page/page";
 
 
-@style(require("./notification-page.scss"))
-export default class NotificationPage extends Component<Props, State> {
+const NotificationPage = create(
+  require("./notification-page.scss"), "NotificationPage",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public render(): ReactNode {
     let node = (
       <Page>
         <div styleName="list">
@@ -24,12 +25,9 @@ export default class NotificationPage extends Component<Props, State> {
       </Page>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default NotificationPage;

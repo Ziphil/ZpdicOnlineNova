@@ -2,27 +2,35 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
 import InformationPane from "/client/component/compound/information-pane";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup
+} from "/client/component/hook";
 import {
   PopupUtil
 } from "/client/util/popup";
 
 
-@style(require("./popup-information-pane.scss"), {observer: true})
-export default class PopupInformationPane extends Component<Props, State> {
+const PopupInformationPane = create(
+  require("./popup-information-pane.scss"), "PopupInformationPane",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public render(): ReactNode {
-    let specs = Array.from(this.props.store!.popupSpecs);
+    let [intl] = useIntl();
+    let [popupSpecs, {clearPopup}] = usePopup();
+
+    let specs = Array.from(popupSpecs);
     let specNodes = specs.reverse().map((spec) => {
       let specNode = (
         <div styleName="pane-wrapper" key={spec.id}>
-          <InformationPane texts={[PopupUtil.getMessage(this.props.intl!, spec.type)]} style={spec.style} onClose={() => this.props.store!.clearPopup(spec.id)}/>
+          <InformationPane texts={[PopupUtil.getMessage(intl, spec.type)]} style={spec.style} onClose={() => clearPopup(spec.id)}/>
         </div>
       );
       return specNode;
@@ -33,12 +41,9 @@ export default class PopupInformationPane extends Component<Props, State> {
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default PopupInformationPane;

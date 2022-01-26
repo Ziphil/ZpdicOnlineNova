@@ -4,14 +4,14 @@
 
 
 .title {
+  @include bold-font;
   font-size: 80%;
-  font-weight: bold;
   color: $light-color;
 }
 
 .row {
   @include reset-first-margin;
-  margin: $medium-margin 0u 0u 0u;
+  margin: $medium-margin 0rpx 0rpx 0rpx;
   display: flex;
 }
 
@@ -20,15 +20,19 @@
 }
 
 .value-wrapper {
-  margin: $tiny-margin 0u 0u 0u;
+  margin: $tiny-margin 0rpx 0rpx 0rpx;
 }
 
 .value {
   font-size: 120%;
 }
 
+.unit {
+  font-size: 80%;
+}
+
 .note {
-  margin: 0u 0u 0u 24u;
+  margin: 0rpx 0rpx 0rpx 24u;
   font-size: 90%;
   color: $light-color;
 }

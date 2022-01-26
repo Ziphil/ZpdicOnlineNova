@@ -2,40 +2,39 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 import {
   User
 } from "/client/skeleton/user";
 
 
-@style(require("./user-suggestion-pane.scss"))
-export default class UserSuggestionPane extends Component<Props, State> {
+const UserSuggestionPane = create(
+  require("./user-suggestion-pane.scss"), "UserSuggestionPane",
+  function ({
+    user
+  }: {
+    user: User
+  }): ReactElement {
 
-  public render(): ReactNode {
     let node = (
       <div styleName="root">
         <div styleName="right">
           <div styleName="image"/>
         </div>
         <div styleName="left">
-          <span styleName="screen-name">{this.props.user.screenName}</span>
-          <span styleName="name">@{this.props.user.name}</span>
+          <span styleName="screen-name">{user.screenName}</span>
+          <span styleName="name">@{user.name}</span>
         </div>
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  user: User
-};
-type State = {
-};
+export default UserSuggestionPane;

@@ -2,9 +2,13 @@
 
 import * as react from "react";
 import {
+  Dispatch,
   Fragment,
   MouseEvent,
-  ReactNode
+  ReactElement,
+  SetStateAction,
+  useMemo,
+  useState
 } from "react";
 import {
   AsyncOrSync
@@ -12,12 +16,14 @@ import {
 import Button from "/client/component/atom/button";
 import Link from "/client/component/atom/link";
 import Markdown from "/client/component/atom/markdown";
-import Component from "/client/component/component";
 import ExampleEditor from "/client/component/compound/example-editor";
 import WordEditor from "/client/component/compound/word-editor";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import {
   DetailedWord,
   EditableExample,
@@ -32,36 +38,136 @@ import {
 } from "/client/util/aws";
 
 
-@style(require("./word-pane.scss"))
-export default class WordPane extends Component<Props, State> {
+const WordPane = create(
+  require("./word-pane.scss"), "WordPane",
+  function ({
+    dictionary,
+    word,
+    style = "normal",
+    showEditLink,
+    showButton = false,
+    onSubmit,
+    onEditConfirm,
+    onDiscardConfirm,
+    onEditExampleConfirm,
+    onDiscardExampleConfirm
+  }: {
+    dictionary: EnhancedDictionary,
+    word: Word | DetailedWord,
+    style?: "normal" | "simple",
+    showEditLink: boolean,
+    showButton?: boolean,
+    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
+    onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    onEditExampleConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    onDiscardExampleConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+  }): ReactElement {
 
-  public static defaultProps: DefaultProps = {
-    style: "normal",
-    showButton: false
-  };
-  public state: State = {
-    editorOpen: false,
-    editingExample: null
-  };
+    let [editorOpen, setEditorOpen] = useState(false);
+    let [editingExample, setEditingExample] = useState<Example | null>(null);
 
-  private renderName(): ReactNode {
-    let editButtonNode = (this.props.showEditLink && !this.props.showButton) && (
-      <div styleName="button">
-        <Button label={this.trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editorOpen: true})}/>
+    let innerProps = {dictionary, word, showEditLink, showButton};
+    let nameNode = <WordPaneName {...innerProps} {...{onSubmit, setEditorOpen}}/>;
+    let equivalentNode = <WordPaneEquivalents {...innerProps}/>;
+    let informationNode = (style === "normal") && <WordPaneInformations {...innerProps}/>;
+    let relationNode = (style === "normal") && <WordPaneRelations {...innerProps}/>;
+    let exampleNode = (style === "normal") && <WordPaneExamples {...innerProps} {...{setEditingExample}}/>;
+    let editorNode = (!showButton && editorOpen) && (
+      <WordEditor
+        dictionary={dictionary}
+        word={word}
+        open={editorOpen}
+        onClose={() => setEditorOpen(false)}
+        onEditConfirm={onEditConfirm}
+        onDiscardConfirm={onDiscardConfirm}
+      />
+    );
+    let exampleEditorNode = (!showButton && editingExample !== null) && (
+      <ExampleEditor
+        dictionary={dictionary}
+        example={editingExample}
+        open={editingExample !== null}
+        onClose={() => setEditingExample(null)}
+        onEditConfirm={onEditExampleConfirm}
+        onDiscardConfirm={onDiscardExampleConfirm}
+      />
+    );
+    let node = (
+      <div styleName="root">
+        {nameNode}
+        {equivalentNode}
+        {informationNode}
+        {exampleNode}
+        {relationNode}
+        {editorNode}
+        {exampleEditorNode}
       </div>
     );
-    let submitButtonNode = (this.props.showButton) && (
+    return node;
+
+  }
+);
+
+
+const WordPaneName = create(
+  require("./word-pane.scss"),
+  function ({
+    dictionary,
+    word,
+    showEditLink,
+    showButton,
+    onSubmit,
+    setEditorOpen
+  }: {
+    dictionary: EnhancedDictionary,
+    word: Word | DetailedWord,
+    showEditLink: boolean,
+    showButton: boolean,
+    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
+    setEditorOpen: Dispatch<SetStateAction<boolean>>
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+
+    let pronunciationText = useMemo(() => {
+      if (word.pronunciation !== undefined) {
+        if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
+          return word.pronunciation;
+        } else {
+          return "/" + word.pronunciation + "/";
+        }
+      } else {
+        let akrantiain = dictionary.getAkrantiain();
+        if (akrantiain !== null) {
+          try {
+            let pronunciation = akrantiain.convert(word.name);
+            return "/" + pronunciation + "/";
+          } catch (error) {
+            console.error(error);
+            return undefined;
+          }
+        } else {
+          return undefined;
+        }
+      }
+    }, [dictionary, word]);
+    let editButtonNode = (showEditLink && !showButton) && (
       <div styleName="button">
-        <Button label={this.trans("wordPane.submit")} iconLabel="&#xF00C;" style="simple" onClick={this.props.onSubmit}/>
+        <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={() => setEditorOpen(true)}/>
       </div>
     );
-    let pronunciationText = this.generatePronunciation();
+    let submitButtonNode = (showButton) && (
+      <div styleName="button">
+        <Button label={trans("wordPane.submit")} iconName="check" style="simple" onClick={onSubmit}/>
+      </div>
+    );
     let pronunciationNode = (pronunciationText !== undefined) && (() => {
       let pronunciationNode = <div styleName="pronunciation">{pronunciationText}</div>;
       return pronunciationNode;
     })();
-    let tagNode = (this.props.word.tags.length > 0) && (() => {
-      let tagBoxNodes = this.props.word.tags.map((tag, index) => {
+    let tagNode = (word.tags.length > 0) && (() => {
+      let tagBoxNodes = word.tags.map((tag, index) => {
         let tagBoxNode = (tag !== "") && <span styleName="box" key={index}>{tag}</span>;
         return tagBoxNode;
       });
@@ -71,7 +177,7 @@ export default class WordPane extends Component<Props, State> {
     let node = (
       <div styleName="name-wrapper">
         <div styleName="left">
-          <div styleName="name">{this.props.word.name}</div>
+          <div styleName="name">{word.name}</div>
           {pronunciationNode}
           {tagNode}
         </div>
@@ -82,33 +188,20 @@ export default class WordPane extends Component<Props, State> {
       </div>
     );
     return node;
-  }
 
-  private generatePronunciation(): string | undefined {
-    if (this.props.word.pronunciation !== undefined) {
-      if (this.props.word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
-        return this.props.word.pronunciation;
-      } else {
-        return "/" + this.props.word.pronunciation + "/";
-      }
-    } else {
-      let akrantiain = this.props.dictionary.getAkrantiain();
-      if (akrantiain !== null) {
-        try {
-          let pronunciation = akrantiain.convert(this.props.word.name);
-          return "/" + pronunciation + "/";
-        } catch (error) {
-          console.error(error);
-          return undefined;
-        }
-      } else {
-        return undefined;
-      }
-    }
   }
+);
 
-  private renderEquivalents(): ReactNode {
-    let innerNodes = this.props.word.equivalents.map((equivalent, index) => {
+
+const WordPaneEquivalents = create(
+  require("./word-pane.scss"),
+  function ({
+    word
+  }: {
+    word: Word | DetailedWord
+  }): ReactElement | null {
+
+    let innerNodes = word.equivalents.map((equivalent, index) => {
       let titleNode = (equivalent.title !== "") && <span styleName="box">{equivalent.title}</span>;
       let innerNode = (
         <span styleName="equivalent" key={index}>
@@ -126,13 +219,25 @@ export default class WordPane extends Component<Props, State> {
         </p>
       </div>
     );
-    return node;
-  }
+    return node || null;
 
-  private renderInformations(): ReactNode {
-    let nodes = this.props.word.informations.map((information, index) => {
-      let homePath = AwsUtil.getFileUrl(`resource/${this.props.dictionary.number}/`);
-      let textNode = (this.props.dictionary.settings.enableMarkdown) ? <Markdown source={information.text} homePath={homePath}/> : <p styleName="text">{information.text}</p>;
+  }
+);
+
+
+const WordPaneInformations = create(
+  require("./word-pane.scss"),
+  function ({
+    dictionary,
+    word
+  }: {
+    dictionary: EnhancedDictionary,
+    word: Word | DetailedWord
+  }): ReactElement {
+
+    let innerNodes = word.informations.map((information, index) => {
+      let homePath = AwsUtil.getFileUrl(`resource/${dictionary.number}/`);
+      let textNode = (dictionary.settings.enableMarkdown) ? <Markdown source={information.text} homePath={homePath}/> : <p styleName="text">{information.text}</p>;
       let informationNode = (
         <div styleName="container" key={index}>
           <div styleName="title">{information.title}</div>
@@ -141,12 +246,29 @@ export default class WordPane extends Component<Props, State> {
       );
       return informationNode;
     });
-    return nodes;
-  }
+    let node = (
+      <Fragment>
+        {innerNodes}
+      </Fragment>
+    );
+    return node;
 
-  private renderRelations(): ReactNode {
+  }
+);
+
+
+const WordPaneRelations = create(
+  require("./word-pane.scss"),
+  function ({
+    dictionary,
+    word
+  }: {
+    dictionary: EnhancedDictionary,
+    word: Word | DetailedWord
+  }): ReactElement | null {
+
     let groupedRelations = new Map<string, Array<Relation>>();
-    for (let relation of this.props.word.relations) {
+    for (let relation of word.relations) {
       let title = relation.title;
       if (groupedRelations.get(title) === undefined) {
         groupedRelations.set(title, []);
@@ -156,7 +278,7 @@ export default class WordPane extends Component<Props, State> {
     let innerNodes = Array.from(groupedRelations).map(([title, relations], index) => {
       let titleNode = (title !== "") && <span styleName="box">{title}</span>;
       let relationNodes = relations.map((relation, relationIndex) => {
-        let href = "/dictionary/" + this.props.dictionary.number + "?search=" + encodeURIComponent(relation.name) + "&mode=name&type=exact&page=0";
+        let href = "/dictionary/" + dictionary.number + "?search=" + encodeURIComponent(relation.name) + "&mode=name&type=exact&page=0";
         let relationNode = (
           <Fragment key={relationIndex}>
             {(relationIndex === 0) ? "" : ", "}
@@ -182,15 +304,35 @@ export default class WordPane extends Component<Props, State> {
         </p>
       </div>
     );
-    return node;
-  }
+    return node || null;
 
-  private renderExamples(): ReactNode {
-    let examples = ("examples" in this.props.word) ? this.props.word.examples : [];
+  }
+);
+
+
+const WordPaneExamples = create(
+  require("./word-pane.scss"),
+  function ({
+    dictionary,
+    word,
+    showEditLink,
+    showButton,
+    setEditingExample
+  }: {
+    dictionary: EnhancedDictionary,
+    word: Word | DetailedWord,
+    showEditLink: boolean,
+    showButton: boolean,
+    setEditingExample: Dispatch<SetStateAction<Example | null>>
+  }): ReactElement | null {
+
+    let [, {trans}] = useIntl();
+
+    let examples = ("examples" in word) ? word.examples : [];
     let innerNodes = examples.map((example, index) => {
-      let editButtonNode = (this.props.showEditLink && !this.props.showButton) && (
+      let editButtonNode = (showEditLink && !showButton) && (
         <div styleName="button">
-          <Button label={this.trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => this.setState({editingExample: example})}/>
+          <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={() => setEditingExample(example)}/>
         </div>
       );
       let innerNode = (
@@ -208,85 +350,16 @@ export default class WordPane extends Component<Props, State> {
     });
     let node = (innerNodes.length > 0) && (
       <div styleName="container">
-        <div styleName="title">{this.props.dictionary.settings.exampleTitle}</div>
+        <div styleName="title">{dictionary.settings.exampleTitle}</div>
         <ul styleName="example">
           {innerNodes}
         </ul>
       </div>
     );
-    return node;
+    return node || null;
+
   }
-
-  private renderEditor(): ReactNode {
-    let node = (
-      <WordEditor
-        dictionary={this.props.dictionary}
-        word={this.props.word}
-        open={this.state.editorOpen}
-        onClose={() => this.setState({editorOpen: false})}
-        onEditConfirm={this.props.onEditConfirm}
-        onDiscardConfirm={this.props.onDiscardConfirm}
-      />
-    );
-    return node;
-  }
-
-  private renderExampleEditor(): ReactNode {
-    let node = (
-      <ExampleEditor
-        dictionary={this.props.dictionary}
-        example={this.state.editingExample}
-        open={this.state.editingExample !== null}
-        onClose={() => this.setState({editingExample: null})}
-        onEditConfirm={this.props.onEditExampleConfirm}
-        onDiscardConfirm={this.props.onDiscardExampleConfirm}
-      />
-    );
-    return node;
-  }
-
-  public render(): ReactNode {
-    let nameNode = this.renderName();
-    let equivalentNode = this.renderEquivalents();
-    let informationNode = (this.props.style === "normal") && this.renderInformations();
-    let relationNode = (this.props.style === "normal") && this.renderRelations();
-    let exampleNode = (this.props.style === "normal") && this.renderExamples();
-    let editorNode = (!this.props.showButton && this.state.editorOpen) && this.renderEditor();
-    let exampleEditorNode = (!this.props.showButton && this.state.editingExample !== null) && this.renderExampleEditor();
-    let node = (
-      <div styleName="root">
-        {nameNode}
-        {equivalentNode}
-        {informationNode}
-        {exampleNode}
-        {relationNode}
-        {editorNode}
-        {exampleEditorNode}
-      </div>
-    );
-    return node;
-  }
-
-}
+);
 
 
-type Props = {
-  dictionary: EnhancedDictionary,
-  word: Word | DetailedWord,
-  style: "normal" | "simple",
-  showEditLink: boolean,
-  showButton: boolean,
-  onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
-  onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onEditExampleConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onDiscardExampleConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-};
-type DefaultProps = {
-  style: "normal" | "simple",
-  showButton: boolean
-};
-type State = {
-  editorOpen: boolean,
-  editingExample: Example | null
-};
+export default WordPane;

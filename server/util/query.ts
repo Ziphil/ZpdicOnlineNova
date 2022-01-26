@@ -20,7 +20,7 @@ export class QueryRange {
     this.size = size;
   }
 
-  public restrict<T>(query: Query<Array<T>>): Query<Array<T>>;
+  public restrict<T, D>(query: Query<Array<T>, D>): Query<Array<T>, D>;
   public restrict<T>(query: Aggregate<Array<T>>): Aggregate<Array<T>>;
   public restrict<T>(query: QueryLike<Array<T>>): QueryLike<Array<T>>;
   public restrict<T>(query: QueryLike<Array<T>>): QueryLike<Array<T>> {
@@ -40,7 +40,7 @@ export class QueryRange {
     return result;
   }
 
-  public static restrict<T>(query: Query<Array<T>>, range?: QueryRange): Query<Array<T>>;
+  public static restrict<T, D>(query: Query<Array<T>, D>, range?: QueryRange): Query<Array<T>, D>;
   public static restrict<T>(query: Aggregate<Array<T>>, range?: QueryRange): Aggregate<Array<T>>;
   public static restrict<T>(query: QueryLike<Array<T>>, range?: QueryRange): QueryLike<Array<T>>;
   public static restrict<T>(query: QueryLike<Array<T>>, range?: QueryRange): QueryLike<Array<T>> {
@@ -106,4 +106,4 @@ export class QueryRange {
 }
 
 
-type QueryLike<T> = Query<T> | Aggregate<T>;
+type QueryLike<T> = Query<T, any> | Aggregate<T>;

@@ -3,30 +3,31 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactNode
+  ReactElement
 } from "react";
 import Button from "/client/component/atom/button";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 import {
   StyleNameUtil
 } from "/client/util/style-name";
 
 
-@style(require("./information-pane.scss"))
-export default class InformationPane extends Component<Props, State> {
+const InformationPane = create(
+  require("./information-pane.scss"), "InformationPane",
+  function ({
+    texts,
+    style,
+    onClose
+  }: {
+    texts: Array<string>,
+    style: "error" | "information",
+    onClose?: (event: MouseEvent<HTMLButtonElement>) => void
+  }): ReactElement {
 
-  private handleClick(event: MouseEvent<HTMLButtonElement>): void {
-    if (this.props.onClose) {
-      this.props.onClose(event);
-    }
-  }
-
-  public render(): ReactNode {
-    let styleName = StyleNameUtil.create("root", this.props.style);
-    let itemNodes = this.props.texts.map((text, index) => {
+    let styleName = StyleNameUtil.create("root", style);
+    let itemNodes = texts.map((text, index) => {
       let itemNode = <li key={index}>{text}</li>;
       return itemNode;
     });
@@ -38,20 +39,14 @@ export default class InformationPane extends Component<Props, State> {
         <div styleName="button-box"/>
         <div styleName="overlay"/>
         <div styleName="button">
-          <Button iconLabel="&#xF00D;" style="simple" onClick={this.handleClick.bind(this)}/>
+          <Button iconName="times" style="simple" onClick={onClose}/>
         </div>
       </div>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  texts: Array<string>,
-  style: "error" | "information",
-  onClose?: (event: MouseEvent<HTMLButtonElement>) => void
-};
-type State = {
-};
+export default InformationPane;

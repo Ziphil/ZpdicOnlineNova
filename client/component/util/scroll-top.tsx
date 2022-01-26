@@ -2,31 +2,42 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  Fragment,
+  ReactElement,
+  ReactNode,
+  useEffect
 } from "react";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  useLocation
+} from "react-router-dom";
+import {
+  create
+} from "/client/component/create";
 
 
-@style(null, {withRouter: true, inject: false, injectIntl: false, observer: false})
-export default class ScrollTop extends Component<Props, State> {
+const ScrollTop = create(
+  null, "ScrollTop",
+  function ({
+    children
+  }: {
+    children?: ReactNode
+  }): ReactElement {
 
-  public componentDidUpdate(props: any): void {
-    if (this.props.location !== props.location) {
+    let location = useLocation();
+
+    useEffect(() => {
       window.scrollTo(0, 0);
-    }
+    }, [location]);
+
+    let node = (
+      <Fragment>
+        {children}
+      </Fragment>
+    );
+    return node;
+
   }
-
-  public render(): ReactNode {
-    return this.props.children;
-  }
-
-}
+);
 
 
-type Props = {
-};
-type State = {
-};
+export default ScrollTop;

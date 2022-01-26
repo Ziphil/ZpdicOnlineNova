@@ -2,36 +2,39 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement
 } from "react";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import Page from "/client/component/page/page";
 
 
-@style(require("./not-found-page.scss"))
-export default class NotFoundPage extends Component<Props, State> {
+const NotFoundPage = create(
+  require("./not-found-page.scss"), "NotFoundPage",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public render(): ReactNode {
+    let [, {trans}] = useIntl();
+
     let node = (
       <Page>
         <div styleName="root">
           <div styleName="icon">&#xF128;</div>
           <div styleName="description">
-            {this.trans("notFoundPage.description")}
+            {trans("notFoundPage.description")}
           </div>
         </div>
       </Page>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-};
-type State = {
-};
+export default NotFoundPage;

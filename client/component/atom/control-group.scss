@@ -9,15 +9,15 @@
 }
 
 .root >:first-child {
-  margin: 0u -3u 0u 0u;
-  border-radius: $small-border-radius 0u 0u $small-border-radius;
+  margin: 0rpx -1rpx 0rpx 0rpx;
+  border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
 }
 
 .root >:last-child {
-  border-radius: 0u $small-border-radius $small-border-radius 0u;
+  border-radius: 0rpx $small-border-radius $small-border-radius 0rpx;
 }
 
 .root >:not(:first-child):not(:last-child) {
-  margin: 0u -3u 0u 0u;
-  border-radius: 0u;
+  margin: 0rpx -1rpx 0rpx 0rpx;
+  border-radius: 0rpx;
 }

@@ -3,111 +3,180 @@
 import downloadFile from "js-file-download";
 import * as react from "react";
 import {
-  ReactNode,
+  Dispatch,
+  Fragment,
+  ReactElement,
+  SetStateAction,
   Suspense,
-  lazy
+  lazy,
+  useCallback,
+  useState
 } from "react";
+import {
+  useLocation
+} from "react-router-dom";
+import {
+  useMount
+} from "react-use";
 import Button from "/client/component/atom/button";
 import Dropdown from "/client/component/atom/dropdown";
 import Link from "/client/component/atom/link";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePath,
+  useRequest
+} from "/client/component/hook";
 import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
 
 
-@style(require("./dictionary-header.scss"))
-export default class DictionaryHeader extends Component<Props, State> {
+let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
+let ExampleEditor = lazy(() => import("/client/component/compound/example-editor"));
+let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
 
-  public static defaultProps: DefaultProps = {
-    showAddLink: false,
-    showAddCommissionLink: true,
-    showSettingLink: false,
-    showDownloadLink: true,
-    preserveQuery: false
-  };
-  public state: State = {
-    wordEditorOpen: false,
-    exampleEditorOpen: false,
-    commissionEditorOpen: false
-  };
 
-  public componentDidMount(): void {
-    if (this.props.location!.state?.openCommissionEditor) {
-      this.setState({commissionEditorOpen: true});
-    }
-  }
+const DictionaryHeader = create(
+  require("./dictionary-header.scss"), "DictionaryHeader",
+  function ({
+    dictionary,
+    showAddLink = false,
+    showAddCommissionLink = true,
+    showSettingLink = false,
+    showDownloadLink = true,
+    preserveQuery = false
+  }: {
+    dictionary: EnhancedDictionary | null,
+    showAddLink?: boolean,
+    showAddCommissionLink?: boolean,
+    showSettingLink?: boolean,
+    showDownloadLink?: boolean,
+    preserveQuery?: boolean
+  }): ReactElement {
 
-  private jumpSettingPage(): void {
-    if (this.props.dictionary) {
-      let path = "/dashboard/dictionary/" + this.props.dictionary.number;
-      this.pushPath(path);
-    }
-  }
+    let location = useLocation<any>();
+    let [wordEditorOpen, setWordEditorOpen] = useState(false);
+    let [exampleEditorOpen, setExampleEditorOpen] = useState(false);
+    let [commissionEditorOpen, setCommissionEditorOpen] = useState(false);
 
-  private addSomething(type: "word" | "example"): void {
-    if (type === "word") {
-      this.setState({wordEditorOpen: true});
-    } else {
-      this.setState({exampleEditorOpen: true});
-    }
-  }
-
-  private async downloadDictionary(): Promise<void> {
-    if (this.props.dictionary) {
-      let number = this.props.dictionary.number;
-      let response = await this.request("downloadDictionary", {number}, {responseType: "blob"});
-      if (response.status === 200 && !("error" in response.data)) {
-        let data = response.data;
-        let disposition = response.headers["content-disposition"];
-        let match = disposition.match(/filename="(.+)"/);
-        let encodedMatch = disposition.match(/filename\*=UTF-8''(.+)$/);
-        let fileName = (() => {
-          if (encodedMatch !== null) {
-            return decodeURIComponent(encodedMatch[1]).replace(/\+/g, " ");
-          } else if (match !== null) {
-            return match[1];
-          } else {
-            return "dictionary.json";
-          }
-        })();
-        downloadFile(data, fileName);
+    useMount(() => {
+      if (location.state?.openCommissionEditor) {
+        setCommissionEditorOpen(true);
       }
-    }
-  }
+    });
 
-  private renderAddDropdownNode(type: "word" | "example"): ReactNode {
-    let styles = this.props.styles!;
+    let nameNode = (dictionary) && (() => {
+      let href = "/dictionary/" + dictionary.number;
+      if (preserveQuery) {
+        let queryString = location!.search;
+        href += queryString;
+      }
+      let nameNode = <Link href={href} target="self" style="plane">{dictionary.name}</Link>;
+      return nameNode;
+    })();
     let node = (
-      <div>
-        <span className={styles["icon"]}>{(type === "word") ? "\uF1C2" : "\uF15C"}</span>
-        {this.trans(`dictionaryHeader.add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
-      </div>
+      <header styleName="root">
+        <div styleName="container">
+          <div styleName="left">
+            <div styleName="name">{nameNode}</div>
+          </div>
+          <div styleName="right">
+            <DictionaryHeaderButtons {...{dictionary, showAddLink, showAddCommissionLink, showSettingLink, showDownloadLink, setWordEditorOpen, setExampleEditorOpen, setCommissionEditorOpen}}/>
+          </div>
+        </div>
+        <DictionaryHeaderOverlays {...{dictionary, wordEditorOpen, exampleEditorOpen, commissionEditorOpen, setWordEditorOpen, setExampleEditorOpen, setCommissionEditorOpen}}/>
+      </header>
     );
     return node;
-  }
 
-  private renderButtonNodes(): ReactNode {
+  }
+);
+
+
+const DictionaryHeaderButtons = create(
+  require("./dictionary-header.scss"),
+  function ({
+    dictionary,
+    showAddLink,
+    showAddCommissionLink,
+    showSettingLink,
+    showDownloadLink,
+    setWordEditorOpen,
+    setExampleEditorOpen,
+    setCommissionEditorOpen
+  }: {
+    dictionary: EnhancedDictionary | null,
+    showAddLink: boolean,
+    showAddCommissionLink: boolean,
+    showSettingLink: boolean,
+    showDownloadLink: boolean,
+    setWordEditorOpen: Dispatch<SetStateAction<boolean>>,
+    setExampleEditorOpen: Dispatch<SetStateAction<boolean>>,
+    setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+    let {pushPath} = usePath();
+    let {request} = useRequest();
+
+    let addSomething = useCallback(function (type: "word" | "example"): void {
+      if (type === "word") {
+        setWordEditorOpen(true);
+      } else {
+        setExampleEditorOpen(true);
+      }
+    }, [setWordEditorOpen, setExampleEditorOpen]);
+
+    let jumpSettingPage = useCallback(function (): void {
+      if (dictionary) {
+        let path = "/dashboard/dictionary/" + dictionary.number;
+        pushPath(path);
+      }
+    }, [dictionary, pushPath]);
+
+    let downloadDictionary = useCallback(async function (): Promise<void> {
+      if (dictionary) {
+        let number = dictionary.number;
+        let response = await request("downloadDictionary", {number}, {responseType: "blob"});
+        if (response.status === 200 && !("error" in response.data)) {
+          let data = response.data;
+          let disposition = response.headers["content-disposition"];
+          let match = disposition.match(/filename="(.+)"/);
+          let encodedMatch = disposition.match(/filename\*=UTF-8''(.+)$/);
+          let fileName = (() => {
+            if (encodedMatch !== null) {
+              return decodeURIComponent(encodedMatch[1]).replace(/\+/g, " ");
+            } else if (match !== null) {
+              return match[1];
+            } else {
+              return "dictionary.json";
+            }
+          })();
+          downloadFile(data, fileName);
+        }
+      }
+    }, [dictionary, request]);
+
     let addDropdownSpecs = [
-      {value: "word", node: this.renderAddDropdownNode("word")},
-      {value: "example", node: this.renderAddDropdownNode("example")}
+      {value: "word", node: <DictionaryHeaderAddDropdown type="word"/>},
+      {value: "example", node: <DictionaryHeaderAddDropdown type="example"/>}
     ] as const;
-    let addButtonNode = (this.props.showAddLink) && (
-      <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={this.addSomething.bind(this)}>
-        <Button label={this.trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true}/>
+    let addButtonNode = (showAddLink) && (
+      <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={addSomething}>
+        <Button label={trans("dictionaryHeader.add")} iconName="plus" style="simple" hideLabel={true}/>
       </Dropdown>
     );
-    let addCommissionButtonNode = (this.props.showAddCommissionLink) && (
-      <Button label={this.trans("dictionaryHeader.addCommission")} iconLabel="&#xF022;" style="simple" hideLabel={true} onClick={() => this.setState({commissionEditorOpen: true})}/>
+    let addCommissionButtonNode = (showAddCommissionLink) && (
+      <Button label={trans("dictionaryHeader.addCommission")} iconName="list-alt" style="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
     );
-    let settingButtonNode = (this.props.showSettingLink) && (
-      <Button label={this.trans("dictionaryHeader.setting")} iconLabel="&#xF013;" style="simple" hideLabel={true} onClick={this.jumpSettingPage.bind(this)}/>
+    let settingButtonNode = (showSettingLink) && (
+      <Button label={trans("dictionaryHeader.setting")} iconName="cog" style="simple" hideLabel={true} onClick={jumpSettingPage}/>
     );
-    let downloadButtonNode = (this.props.showDownloadLink) && (
-      <Button label={this.trans("dictionaryHeader.download")} iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={this.downloadDictionary.bind(this)}/>
+    let downloadButtonNode = (showDownloadLink) && (
+      <Button label={trans("dictionaryHeader.download")} iconName="download" style="simple" hideLabel={true} onClick={downloadDictionary}/>
     );
     let node = (
       <div styleName="button">
@@ -118,77 +187,79 @@ export default class DictionaryHeader extends Component<Props, State> {
       </div>
     );
     return node;
-  }
 
-  private renderOverlays(): ReactNode {
-    let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
-    let ExampleEditor = lazy(() => import("/client/component/compound/example-editor"));
-    let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
-    let wordEditorNode = (this.props.dictionary !== null && this.state.wordEditorOpen) && (
-      <Suspense fallback="" key="word">
-        <WordEditor dictionary={this.props.dictionary} word={null} open={this.state.wordEditorOpen} onClose={() => this.setState({wordEditorOpen: false})}/>
-      </Suspense>
-    );
-    let exampleEditorNode = (this.props.dictionary !== null && this.state.exampleEditorOpen) && (
-      <Suspense fallback="" key="example">
-        <ExampleEditor dictionary={this.props.dictionary} example={null} open={this.state.exampleEditorOpen} onClose={() => this.setState({exampleEditorOpen: false})}/>
-      </Suspense>
-    );
-    let commissionEditorNode = (this.props.dictionary !== null && this.state.commissionEditorOpen) && (
-      <Suspense fallback="" key="comission">
-        <CommissionEditor dictionary={this.props.dictionary} open={this.state.commissionEditorOpen} onClose={() => this.setState({commissionEditorOpen: false})}/>
-      </Suspense>
-    );
-    let node = [wordEditorNode, exampleEditorNode, commissionEditorNode];
-    return node;
   }
+);
 
-  public render(): ReactNode {
-    let nameNode = (this.props.dictionary) && (() => {
-      let href = "/dictionary/" + this.props.dictionary.number;
-      if (this.props.preserveQuery) {
-        let queryString = this.props.location!.search;
-        href += queryString;
-      }
-      let nameNode = <Link href={href} target="self" style="plane">{this.props.dictionary.name}</Link>;
-      return nameNode;
-    })();
+
+const DictionaryHeaderAddDropdown = create(
+  require("./dictionary-header.scss"),
+  function ({
+    type
+  }: {
+    type: "word" | "example"
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+
     let node = (
-      <header styleName="root">
-        <div styleName="container">
-          <div styleName="left">
-            <div styleName="name">{nameNode}</div>
-          </div>
-          <div styleName="right">
-            {this.renderButtonNodes()}
-          </div>
-        </div>
-        {this.renderOverlays()}
-      </header>
+      <div>
+        <span styleName="icon">{(type === "word") ? "\uF1C2" : "\uF15C"}</span>
+        {trans(`dictionaryHeader.add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
+      </div>
     );
     return node;
+
   }
+);
 
-}
+
+const DictionaryHeaderOverlays = create(
+  require("./dictionary-header.scss"),
+  function ({
+    dictionary,
+    wordEditorOpen,
+    exampleEditorOpen,
+    commissionEditorOpen,
+    setWordEditorOpen,
+    setExampleEditorOpen,
+    setCommissionEditorOpen
+  }: {
+    dictionary: EnhancedDictionary | null,
+    wordEditorOpen: boolean,
+    exampleEditorOpen: boolean,
+    commissionEditorOpen: boolean,
+    setWordEditorOpen: Dispatch<SetStateAction<boolean>>,
+    setExampleEditorOpen: Dispatch<SetStateAction<boolean>>,
+    setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
+  }): ReactElement {
+
+    let wordEditorNode = (dictionary !== null && wordEditorOpen) && (
+      <Suspense fallback="">
+        <WordEditor dictionary={dictionary} word={null} open={wordEditorOpen} onClose={() => setWordEditorOpen(false)}/>
+      </Suspense>
+    );
+    let exampleEditorNode = (dictionary !== null && exampleEditorOpen) && (
+      <Suspense fallback="">
+        <ExampleEditor dictionary={dictionary} example={null} open={exampleEditorOpen} onClose={() => setExampleEditorOpen(false)}/>
+      </Suspense>
+    );
+    let commissionEditorNode = (dictionary !== null && commissionEditorOpen) && (
+      <Suspense fallback="">
+        <CommissionEditor dictionary={dictionary} open={commissionEditorOpen} onClose={() => setCommissionEditorOpen(false)}/>
+      </Suspense>
+    );
+    let node = (
+      <Fragment>
+        {wordEditorNode}
+        {exampleEditorNode}
+        {commissionEditorNode}
+      </Fragment>
+    );
+    return node;
+
+  }
+);
 
 
-type Props = {
-  dictionary: EnhancedDictionary | null,
-  showAddLink: boolean,
-  showAddCommissionLink: boolean,
-  showSettingLink: boolean,
-  showDownloadLink: boolean,
-  preserveQuery: boolean
-};
-type DefaultProps = {
-  showAddLink: boolean,
-  showAddCommissionLink: boolean,
-  showSettingLink: boolean,
-  showDownloadLink: boolean,
-  preserveQuery: boolean
-};
-type State = {
-  wordEditorOpen: boolean,
-  exampleEditorOpen: boolean,
-  commissionEditorOpen: boolean
-};
+export default DictionaryHeader;

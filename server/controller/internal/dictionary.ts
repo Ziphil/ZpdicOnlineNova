@@ -73,8 +73,8 @@ export class DictionaryController extends Controller {
   @before(verifyRecaptcha(), verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"uploadDictionary">, response: Response<"uploadDictionary">): Promise<void> {
     let dictionary = request.dictionary;
-    let path = request.file.path;
-    let originalPath = request.file.originalname;
+    let path = request.file!.path;
+    let originalPath = request.file!.originalname;
     if (dictionary) {
       let promise = new Promise(async (resolve, reject) => {
         try {
@@ -393,7 +393,7 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["fetchOverallAggregation"])
   public async [Symbol()](request: Request<"fetchOverallAggregation">, response: Response<"fetchOverallAggregation">): Promise<void> {
-    let models = [DictionaryModel, WordModel, ExampleModel] as Array<ReturnModelType<typeof DiscardableSchema>>;
+    let models = [DictionaryModel, WordModel, ExampleModel] as Array<any>;
     let promises = models.map((model) => {
       let promise = Promise.all([model.findExist().countDocuments(), model.estimatedDocumentCount(), model.collection.stats()]).then(([count, wholeCount, stats]) => {
         let size = stats.size;

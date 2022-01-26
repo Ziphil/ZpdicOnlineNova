@@ -2,54 +2,58 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import FileInput from "/client/component/atom/file-input";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 
 
-@style(require("./upload-dictionary-form.scss"))
-export default class UploadDictionaryForm extends Component<Props, State> {
+const UploadDictionaryForm = create(
+  require("./upload-dictionary-form.scss"), "UploadDictionaryForm",
+  function ({
+    number,
+    onSubmit
+  }: {
+    number: number,
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public state: State = {
-    file: null
-  };
+    let [file, setFile] = useState<File | null>(null);
+    let [, {trans}] = useIntl();
+    let {requestFile} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async handleClick(): Promise<void> {
-    let number = this.props.number.toString();
-    let file = this.state.file;
-    if (file) {
-      let response = await this.requestFile("uploadDictionary", {number, file}, {useRecaptcha: true});
-      if (response.status === 200) {
-        this.props.store!.addInformationPopup("dictionaryUploaded");
-        if (this.props.onSubmit) {
-          this.props.onSubmit();
+    let handleClick = useCallback(async function (): Promise<void> {
+      let numberString = number.toString();
+      if (file) {
+        let response = await requestFile("uploadDictionary", {number: numberString, file}, {useRecaptcha: true});
+        if (response.status === 200) {
+          addInformationPopup("dictionaryUploaded");
+          onSubmit?.();
         }
       }
-    }
-  }
+    }, [number, file, requestFile, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
     let node = (
       <form styleName="root">
-        <FileInput inputLabel={this.trans("uploadDictionaryForm.file")} onSet={(file) => this.setState({file})}/>
-        <Button label={this.trans("uploadDictionaryForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+        <FileInput inputLabel={trans("uploadDictionaryForm.file")} onSet={(file) => setFile(file)}/>
+        <Button label={trans("uploadDictionaryForm.confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  number: number,
-  onSubmit?: () => void
-};
-type State = {
-  file: File | null
-};
+export default UploadDictionaryForm;

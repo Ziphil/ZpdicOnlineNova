@@ -3,13 +3,19 @@
 import axios from "axios";
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useState
 } from "react";
-import Link from "/client/component/atom/link";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  useMount
+} from "react-use";
+import Link from "/client/component/atom/link";
+import {
+  create
+} from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 
 
 const RAW_CONTRIBUTORS = [
@@ -19,39 +25,40 @@ const RAW_CONTRIBUTORS = [
 ];
 
 
-@style(require("./contributor-list.scss"))
-export default class ContributorList extends Component<Props, State> {
+const ContributorList = create(
+  require("./contributor-list.scss"), "ContributorList",
+  function ({
+  }: {
+  }): ReactElement {
 
-  public state: State = {
-    contributors: []
-  };
+    let [contributors, setContributors] = useState<Array<Contributor>>([]);
+    let [, {trans}] = useIntl();
 
-  public async componentDidMount(): Promise<void> {
-    let promises = RAW_CONTRIBUTORS.map(async (rawContributor) => {
-      if ("github" in rawContributor) {
-        let url = "https://api.github.com/users/" + rawContributor.github;
-        let response = await axios.get(url, {validateStatus: () => true});
-        if (response.status === 200) {
-          let id = rawContributor.github;
-          let name = rawContributor.name ?? response.data["name"];
-          let url = "https://github.com/" + id;
-          let avatarUrl = response.data["avatar_url"];
-          return {name, url, avatarUrl};
+    useMount(async () => {
+      let promises = RAW_CONTRIBUTORS.map(async (rawContributor) => {
+        if ("github" in rawContributor) {
+          let url = "https://api.github.com/users/" + rawContributor.github;
+          let response = await axios.get(url, {validateStatus: () => true});
+          if (response.status === 200) {
+            let id = rawContributor.github;
+            let name = rawContributor.name ?? response.data["name"];
+            let url = "https://github.com/" + id;
+            let avatarUrl = response.data["avatar_url"];
+            return {name, url, avatarUrl};
+          } else {
+            let name = "@" + rawContributor.github;
+            let url = "https://github.com/" + rawContributor.github;
+            return {name, url};
+          }
         } else {
-          let name = "@" + rawContributor.github;
-          let url = "https://github.com/" + rawContributor.github;
-          return {name, url};
+          return rawContributor;
         }
-      } else {
-        return rawContributor;
-      }
+      });
+      let contributors = await Promise.all(promises);
+      setContributors(contributors);
     });
-    let contributors = await Promise.all(promises);
-    this.setState({contributors});
-  }
 
-  public render(): ReactNode {
-    let contributorNodes = this.state.contributors.map((contributor) => {
+    let contributorNodes = contributors.map((contributor) => {
       let avatarNode = (contributor.avatarUrl !== undefined) && <img styleName="avatar" src={contributor.avatarUrl}/>;
       let contributorNode = (
         <li styleName="item" key={contributor.name}>
@@ -63,23 +70,19 @@ export default class ContributorList extends Component<Props, State> {
     });
     let node = (
       <div styleName="root">
-        <div styleName="head">{this.trans("contributorList.title")}</div>
+        <div styleName="head">{trans("contributorList.title")}</div>
         <ul styleName="list">
           {contributorNodes}
         </ul>
       </div>
     );
     return node;
+
   }
+);
 
-}
-
-
-type Props = {
-};
-type State = {
-  contributors: Array<Contributor>
-};
 
 export type Contributor = {name: string, url: string, avatarUrl?: string};
 export type RawContributor = {github: string, name?: string} | {name: string, url: string, avatarUrl?: string};
+
+export default ContributorList;

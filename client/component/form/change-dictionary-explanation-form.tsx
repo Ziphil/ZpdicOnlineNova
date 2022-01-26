@@ -2,62 +2,64 @@
 
 import * as react from "react";
 import {
-  ReactNode
+  ReactElement,
+  useCallback,
+  useState
 } from "react";
 import Button from "/client/component/atom/button";
 import TextArea from "/client/component/atom/text-area";
-import Component from "/client/component/component";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
+import {
+  useIntl,
+  usePopup,
+  useRequest
+} from "/client/component/hook";
 
 
-@style(require("./change-dictionary-explanation-form.scss"))
-export default class ChangeDictionaryExplanationForm extends Component<Props, State> {
+const ChangeDictionaryExplanationForm = create(
+  require("./change-dictionary-explanation-form.scss"), "ChangeDictionaryExplanationForm",
+  function ({
+    number,
+    currentExplanation,
+    onSubmit
+  }: {
+    number: number,
+    currentExplanation: string | undefined,
+    onSubmit?: () => void
+  }): ReactElement {
 
-  public constructor(props: any) {
-    super(props);
-    let explanation = this.props.currentExplanation ?? "";
-    this.state = {explanation};
-  }
+    let [explanation, setExplanation] = useState(currentExplanation ?? "");
+    let [, {trans}] = useIntl();
+    let {request} = useRequest();
+    let [, {addInformationPopup}] = usePopup();
 
-  private async handleClick(): Promise<void> {
-    let number = this.props.number;
-    let explanation = this.state.explanation;
-    let response = await this.request("changeDictionaryExplanation", {number, explanation});
-    if (response.status === 200) {
-      this.props.store!.addInformationPopup("dictionaryExplanationChanged");
-      if (this.props.onSubmit) {
-        this.props.onSubmit();
+    let handleClick = useCallback(async function (): Promise<void> {
+      let response = await request("changeDictionaryExplanation", {number, explanation});
+      if (response.status === 200) {
+        addInformationPopup("dictionaryExplanationChanged");
+        onSubmit?.();
       }
-    }
-  }
+    }, [number, explanation, request, onSubmit, addInformationPopup]);
 
-  public render(): ReactNode {
     let node = (
       <form styleName="root">
         <TextArea
-          label={this.trans("changeDictionaryExplanationForm.explanation")}
+          label={trans("changeDictionaryExplanationForm.explanation")}
           font="monospace"
           language="markdown"
           nowrap={true}
-          value={this.state.explanation}
-          onSet={(explanation) => this.setState({explanation})}
+          value={explanation}
+          onSet={(explanation) => setExplanation(explanation)}
         />
-        <Button label={this.trans("changeDictionaryExplanationForm.confirm")} reactive={true} onClick={this.handleClick.bind(this)}/>
+        <Button label={trans("changeDictionaryExplanationForm.confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;
+
   }
+);
 
-}
 
-
-type Props = {
-  number: number,
-  currentExplanation: string | undefined,
-  onSubmit?: () => void
-};
-type State = {
-  explanation: string;
-};
+export default ChangeDictionaryExplanationForm;

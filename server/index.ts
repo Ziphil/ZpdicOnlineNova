@@ -104,7 +104,7 @@ export class Main {
   // typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。
   private setupMongo(): void {
     MongoUtil.setCheckRequired("String");
-    mongoose.connect(MONGO_URI, {useNewUrlParser: true, useUnifiedTopology: true});
+    mongoose.connect(MONGO_URI);
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }
 

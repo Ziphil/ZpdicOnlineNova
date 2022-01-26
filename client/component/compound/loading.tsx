@@ -3,40 +3,45 @@
 import * as react from "react";
 import {
   Fragment,
+  ReactElement,
   ReactNode
 } from "react";
-import Component from "/client/component/component";
+import Icon from "/client/component/atom/icon";
 import {
-  style
-} from "/client/component/decorator";
+  create
+} from "/client/component/create";
 
 
-@style(require("./loading.scss"))
-export default class Loading extends Component<Props, State> {
+const Loading = create(
+  require("./loading.scss"), "Loading",
+  function ({
+    loading,
+    children
+  }: {
+    loading: boolean,
+    children?: ReactNode
+  }): ReactElement {
 
-  public render(): ReactNode {
-    if (this.props.loading) {
+    if (loading) {
       let node = (
         <div styleName="root">
-          <span styleName="spinner"/>
+          <span styleName="spinner">
+            <Icon name="spinner" pulse={true}/>
+          </span>
         </div>
       );
       return node;
     } else {
       let node = (
         <Fragment>
-          {this.props.children}
+          {children}
         </Fragment>
       );
       return node;
     }
+
   }
+);
 
-}
 
-
-type Props = {
-  loading: boolean
-};
-type State = {
-};
+export default Loading;
