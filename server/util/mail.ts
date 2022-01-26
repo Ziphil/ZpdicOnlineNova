@@ -6,9 +6,7 @@ import {
 import {
   EmailData
 } from "@sendgrid/helpers/classes/email-address";
-import {
-  send as sendMailOriginal
-} from "@sendgrid/mail";
+import sendgrid from "@sendgrid/mail";
 import {
   INTLS
 } from "/server/language";
@@ -34,7 +32,7 @@ export class MailUtil {
     let from = {name: "ZpDIC Online", email: "zpdic@ziphil.com"};
     let trackingSettings = {clickTracking: {enable: false, enableText: false}};
     let message = {to, from, subject, text, trackingSettings};
-    let response = await sendMailOriginal(message);
+    let response = await sendgrid.send(message);
     return response[0];
   }
 
