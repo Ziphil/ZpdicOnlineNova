@@ -249,6 +249,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   padding: $input-vertical-padding $input-horizontal-padding;
   font-family: inherit;
   font-size: inherit;
+  color: inherit;
   line-height: $line-height;
   border: 1rpx border-color($color) solid;
   border-radius: $small-border-radius;
@@ -278,8 +279,8 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   padding: $input-vertical-padding $button-hotizontal-padding;
   font-family: inherit;
   font-size: inherit;
-  line-height: $line-height;
   color: white;
+  line-height: $line-height;
   border: 1rpx border-color($color, false) solid;
   border-radius: $small-border-radius;
   background-color: $color;
