@@ -79,6 +79,7 @@ export const SERVER_PATHS = {
   fetchAllDictionaries: "/dictionary/list/all",
   fetchOverallAggregation: "/dictionary/aggregate",
   fetchWordNames: "/word/name",
+  fetchExamples: "/example/list",
   fetchInvitations: "/invitation/fetch",
   fetchUploadResourcePost: "/resource/upload",
   discardResource: "/resource/discard",
@@ -311,6 +312,13 @@ type ServerSpecs = {
     request: {number: number, wordNumbers: Array<number>},
     response: {
       success: {names: Record<number, string | null>},
+      error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
+  fetchExamples: {
+    request: {number: number, offset?: number, size?: number},
+    response: {
+      success: WithSize<Example>,
       error: CustomError<"noSuchDictionaryNumber">
     }
   },

@@ -22,7 +22,8 @@ import {
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
-  EnhancedDictionary
+  EnhancedDictionary,
+  Example
 } from "/client/skeleton/dictionary";
 import {
   StyleNameUtil
@@ -35,27 +36,20 @@ const ExamplePage = create(
   }: {
   }): ReactElement {
 
-    let [dictionary, setDictionary] = useState<EnhancedDictionary | null>(null);
+    let [examples, setExamples] = useState<Array<Example> | null>(null);
     let {request} = useRequest();
-    let params = useParams<{value: string}>();
+    let params = useParams<{number: string}>();
 
     let fetchDictionary = useCallback(async function (): Promise<void> {
-      let value = params.value;
-      let [number, paramName] = (() => {
-        if (value.match(/^\d+$/)) {
-          return [+value, undefined] as const;
-        } else {
-          return [undefined, value] as const;
-        }
-      })();
-      let response = await request("fetchDictionary", {number, paramName});
+      let number = +params.number;
+      let response = await request("fetchExamples", {number});
       if (response.status === 200 && !("error" in response.data)) {
-        let dictionary = EnhancedDictionary.enhance(response.data);
-        setDictionary(dictionary);
+        let examples = response.data[0];
+        setExamples(examples);
       } else {
-        setDictionary(null);
+        setExamples(null);
       }
-    }, [params.value, request]);
+    }, [params.number, request]);
 
     useMount(() => {
       fetchDictionary();
@@ -64,7 +58,7 @@ const ExamplePage = create(
     let node = (
       <Page>
         <div styleName="list">
-          <ExampleList examples={[]} size={50}/>
+          <ExampleList examples={examples} size={50}/>
         </div>
       </Page>
     );

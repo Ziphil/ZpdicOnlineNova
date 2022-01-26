@@ -22,8 +22,13 @@ import {
   SERVER_PATH_PREFIX
 } from "/server/controller/internal/type";
 import {
-  ExampleCreator
+  DictionaryModel,
+  ExampleCreator,
+  ExampleModel
 } from "/server/model/dictionary";
+import {
+  QueryRange
+} from "/server/util/query";
 
 
 @controller(SERVER_PATH_PREFIX)
@@ -75,6 +80,26 @@ export class ExampleController extends Controller {
         })();
         Controller.respondError(response, body, error);
       }
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
+  @post(SERVER_PATHS["fetchExamples"])
+  @before()
+  public async [Symbol()](request: Request<"fetchExamples">, response: Response<"fetchExamples">): Promise<void> {
+    let number = request.body.number;
+    let offset = request.body.offset;
+    let size = request.body.size;
+    let dictionary = await DictionaryModel.fetchOneByNumber(number);
+    if (dictionary) {
+      let range = new QueryRange(offset, size);
+      let hitResult = await ExampleModel.fetchByDictionary(dictionary, range);
+      let hitExamples = hitResult[0].map(ExampleCreator.create);
+      let hitSize = hitResult[1];
+      let body = [hitExamples, hitSize] as any;
+      Controller.respond(response, body);
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);

@@ -79,7 +79,7 @@ const Root = create(
                   <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
                   <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
                   <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
-                  <Authenticator type="none" exact sensitive path="/example/:value([a-zA-Z0-9_-]+)" component={ExamplePage}/>
+                  <Authenticator type="none" exact sensitive path="/example/:number(\d+)" component={ExamplePage}/>
                   <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
                   <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
                   <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
