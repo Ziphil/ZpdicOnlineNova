@@ -11,20 +11,20 @@ $menu-item-horizontal-padding: 48u;
   color: $light-color;
   text-decoration: none;
   text-align: right;
-  border-bottom: 16u transparent solid;
+  border-bottom: 5rpx transparent solid;
   display: block;
   cursor: pointer;
 }
 
 .root:hover {
-  border-bottom: 16u $light-border-color solid;
+  border-bottom: 5rpx $light-border-color solid;
 }
 
 .root.highlight {
   @include bold-font;
   margin-bottom: -1rpx;
   color: $link-color;
-  border-bottom: 19u $link-color solid;
+  border-bottom: 6rpx $link-color solid;
 }
 
 .text {

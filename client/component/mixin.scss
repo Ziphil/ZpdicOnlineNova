@@ -51,7 +51,7 @@ $background-color: background-color(map-get($colors, primary));
 $strong-background-color: darken($background-color, 10%);
 $header-background-color: darken(map-get($colors, primary), 10%);
 
-$text-color: hsl(30, 40%, 20%);
+$text-color: hsl(30, 40%, 22%);
 
 $light-color: map-get($colors, primary);
 $light-border-color: border-color(map-get($colors, primary));
