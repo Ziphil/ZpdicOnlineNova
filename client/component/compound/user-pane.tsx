@@ -74,7 +74,7 @@ const UserPane = create(
             </div>
           </div>
           <div styleName="setting">
-            <Button label={trans("userPane.discard")} iconLabel="&#xF05E;" style="caution" reactive={true} onClick={() => setAlertOpen(true)}/>
+            <Button label={trans("userPane.discard")} iconName="ban" style="caution" reactive={true} onClick={() => setAlertOpen(true)}/>
           </div>
         </WhitePane>
         <Alert

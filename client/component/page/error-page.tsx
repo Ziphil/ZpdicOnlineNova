@@ -45,7 +45,7 @@ const ErrorPage = create(
             {error.stack}
           </pre>
           <div styleName="button">
-            <Button label={trans("errorPage.back")} iconLabel="&#xF0A8;" onClick={handleClick}/>
+            <Button label={trans("errorPage.back")} iconName="arrow-circle-left" onClick={handleClick}/>
           </div>
         </div>
       </Page>

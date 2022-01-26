@@ -193,10 +193,10 @@ const ExampleEditorEditor = create(
     let [, {trans}] = useIntl();
 
     let discardButtonNode = (example !== null) && (
-      <Button label={trans("exampleEditor.discard")} iconLabel="&#xF2ED;" style="caution" reactive={true} onClick={() => setAlertOpen(true)}/>
+      <Button label={trans("exampleEditor.discard")} iconName="trash-alt" style="caution" reactive={true} onClick={() => setAlertOpen(true)}/>
     );
     let confirmButtonNode = (
-      <Button label={trans("exampleEditor.confirm")} iconLabel="&#xF00C;" style="information" reactive={true} onClick={editExample}/>
+      <Button label={trans("exampleEditor.confirm")} iconName="check" style="information" reactive={true} onClick={editExample}/>
     );
     let innerProps = {dictionary, tempExample, mutateExample};
     let node = (
@@ -301,9 +301,9 @@ const ExampleEditorWords = create(
           </div>
           <div styleName="control-button">
             <ControlGroup>
-              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={mutateExample((tempExample) => swap(tempExample.words, index, -1))}/>
-              <Button iconLabel="&#xF063;" disabled={index === tempExample.words.length - 1} onClick={mutateExample((tempExample) => swap(tempExample.words, index, 1))}/>
-              <Button iconLabel="&#xF068;" onClick={mutateExample((tempExample) => deleteAt(tempExample.words, index))}/>
+              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateExample((tempExample) => swap(tempExample.words, index, -1))}/>
+              <Button iconName="arrow-down" disabled={index === tempExample.words.length - 1} onClick={mutateExample((tempExample) => swap(tempExample.words, index, 1))}/>
+              <Button iconName="minus" onClick={mutateExample((tempExample) => deleteAt(tempExample.words, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -316,7 +316,7 @@ const ExampleEditorWords = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconLabel="&#xF067;" onClick={() => openWordChooser(tempExample.words.length)}/>
+            <Button iconName="plus" onClick={() => openWordChooser(tempExample.words.length)}/>
           </div>
         </div>
       );

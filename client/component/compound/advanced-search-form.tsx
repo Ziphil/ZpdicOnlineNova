@@ -114,7 +114,7 @@ const AdvancedSearchForm = create(
             <Input className={styles!["search"]} value={element.search} label={searchLabel} onSet={mutateParameter((parameter, search) => elements[index].search = search)}/>
           </div>
           <div styleName="control-button">
-            <Button iconLabel="&#xF068;" disabled={deleteDisabled} onClick={mutateParameter((parameter) => deleteAt(elements, index))}/>
+            <Button iconName="minus" disabled={deleteDisabled} onClick={mutateParameter((parameter) => deleteAt(elements, index))}/>
           </div>
         </div>
       );
@@ -124,10 +124,10 @@ const AdvancedSearchForm = create(
       <Overlay size="large" title={trans("advancedSearchForm.overlayTitle")} open={open} onClose={handleClose}>
         {searchNodes}
         <div styleName="plus">
-          <Button iconLabel="&#xF067;" onClick={mutateParameter((parameter) => elements.push(AdvancedWordParameterElement.createEmpty()))}/>
+          <Button iconName="plus" onClick={mutateParameter((parameter) => elements.push(AdvancedWordParameterElement.createEmpty()))}/>
         </div>
         <div styleName="confirm-button">
-          <Button label={trans("advancedSearchForm.confirm")} iconLabel="&#xF00C;" style="information" onClick={confirmParameter}/>
+          <Button label={trans("advancedSearchForm.confirm")} iconName="check" style="information" onClick={confirmParameter}/>
         </div>
       </Overlay>
     );

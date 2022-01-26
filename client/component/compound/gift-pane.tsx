@@ -33,7 +33,7 @@ const GiftPane = create(
           {trans("giftPane.information")}
         </div>
         <div styleName="button">
-          <Button label={trans("giftPane.sendGift")} iconLabel="&#xF06B;" onClick={jumpAmazon}/>
+          <Button label={trans("giftPane.sendGift")} iconName="gift" onClick={jumpAmazon}/>
         </div>
       </div>
     );

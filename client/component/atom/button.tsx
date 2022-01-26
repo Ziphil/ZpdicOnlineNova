@@ -34,7 +34,6 @@ const Button = create(
   function ({
     label,
     iconName,
-    iconLabel,
     position = "alone",
     style = "normal",
     hideLabel = false,
@@ -46,7 +45,6 @@ const Button = create(
   }: {
     label?: string,
     iconName?: IconName,
-    iconLabel?: string,
     position?: "alone" | "left" | "right" | "middle",
     style?: "normal" | "caution" | "information" | "simple" | "link",
     hideLabel?: boolean,
@@ -102,7 +100,7 @@ const Button = create(
       {if: loading, true: "loading"}
     );
     let labelNode = (label !== undefined) && <span styleName="label">{label}</span>;
-    let iconNode = (iconName !== undefined) ? <Icon className={styles!["icon"]} name={iconName}/> : (iconLabel !== undefined) && <span styleName="icon">{iconLabel}</span>;
+    let iconNode = (iconName !== undefined) && <Icon className={styles!["icon"]} name={iconName}/>;
     let spinnerNode = (reactive) && (
       <span styleName="spinner-wrapper">
         <Icon name="spinner" pulse={true}/>

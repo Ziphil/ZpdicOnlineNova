@@ -52,7 +52,7 @@ const LoginForm = create(
     }, [name, pushPath]);
 
     let registerNode = (showRegister) && (
-      <Button label={trans("registerForm.confirm")} iconLabel="&#xF234;" style="simple" onClick={jumpRegister}/>
+      <Button label={trans("registerForm.confirm")} iconName="user-plus" style="simple" onClick={jumpRegister}/>
     );
     let node = (
       <form styleName="root">
@@ -60,11 +60,11 @@ const LoginForm = create(
         <Input label={trans("loginForm.password")} type="flexible" value={password} onSet={(password) => setPassword(password)}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={trans("loginForm.confirm")} iconLabel="&#xF2F6;" style="information" reactive={true} onClick={performLogin}/>
+            <Button label={trans("loginForm.confirm")} iconName="sign-in-alt" style="information" reactive={true} onClick={performLogin}/>
             {registerNode}
           </div>
           <div styleName="row">
-            <Button label={trans("loginForm.resetPassword")} iconLabel="&#xF128;" style="simple" onClick={jumpResetPassword}/>
+            <Button label={trans("loginForm.resetPassword")} iconName="question" style="simple" onClick={jumpResetPassword}/>
           </div>
         </div>
       </form>

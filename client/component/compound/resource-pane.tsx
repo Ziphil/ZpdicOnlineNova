@@ -79,7 +79,7 @@ const ResourcePane = create(
               <img src={url}/>
             </div>
             <div styleName="button">
-              <Button label={trans("resourcePane.discard")} iconLabel="&#xF2ED;" style="simple" onClick={() => setAlertOpen(true)}/>
+              <Button label={trans("resourcePane.discard")} iconName="trash-alt" style="simple" onClick={() => setAlertOpen(true)}/>
             </div>
           </div>
         </div>

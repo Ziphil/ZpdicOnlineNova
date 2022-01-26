@@ -62,7 +62,7 @@ const CommissionEditor = create(
         <div styleName="root">
           <Input label={trans("commissionEditor.name")} value={name} onSet={(name) => setName(name)}/>
           <TextArea className={styles!["comment"]} label={trans("commissionEditor.comment")} value={comment} showOptional={true} onSet={(comment) => setComment(comment)}/>
-          <Button className={styles!["button"]} label={trans("commissionEditor.confirm")} iconLabel="&#xF022;" style="information" reactive={true} onClick={addCommission}/>
+          <Button className={styles!["button"]} label={trans("commissionEditor.confirm")} iconName="list-alt" style="information" reactive={true} onClick={addCommission}/>
         </div>
       </Overlay>
     );

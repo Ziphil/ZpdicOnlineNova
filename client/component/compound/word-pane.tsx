@@ -154,12 +154,12 @@ const WordPaneName = create(
     }, [dictionary, word]);
     let editButtonNode = (showEditLink && !showButton) && (
       <div styleName="button">
-        <Button label={trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => setEditorOpen(true)}/>
+        <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={() => setEditorOpen(true)}/>
       </div>
     );
     let submitButtonNode = (showButton) && (
       <div styleName="button">
-        <Button label={trans("wordPane.submit")} iconLabel="&#xF00C;" style="simple" onClick={onSubmit}/>
+        <Button label={trans("wordPane.submit")} iconName="check" style="simple" onClick={onSubmit}/>
       </div>
     );
     let pronunciationNode = (pronunciationText !== undefined) && (() => {
@@ -332,7 +332,7 @@ const WordPaneExamples = create(
     let innerNodes = examples.map((example, index) => {
       let editButtonNode = (showEditLink && !showButton) && (
         <div styleName="button">
-          <Button label={trans("wordPane.edit")} iconLabel="&#xF044;" style="simple" hideLabel={true} onClick={() => setEditingExample(example)}/>
+          <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={() => setEditingExample(example)}/>
         </div>
       );
       let innerNode = (

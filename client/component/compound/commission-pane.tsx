@@ -85,8 +85,8 @@ const CommissionPane = create(
           {name}
           {commentNode}
           <div styleName="button">
-            <Button label={trans("commissionPane.discard")} iconLabel="&#xF2ED;" style="simple" onClick={() => setAlertOpen(true)}/>
-            <Button label={trans("commissionPane.add")} iconLabel="&#xF067;" style="simple" onClick={() => setEditorOpen(true)}/>
+            <Button label={trans("commissionPane.discard")} iconName="trash-alt" style="simple" onClick={() => setAlertOpen(true)}/>
+            <Button label={trans("commissionPane.add")} iconName="plus" style="simple" onClick={() => setEditorOpen(true)}/>
           </div>
         </div>
         <Alert

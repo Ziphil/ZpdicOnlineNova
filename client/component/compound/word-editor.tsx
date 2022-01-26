@@ -222,10 +222,10 @@ const WordEditorEditor = create(
     let [, {trans}] = useIntl();
 
     let discardButtonNode = (word !== null) && (
-      <Button label={trans("wordEditor.discard")} iconLabel="&#xF2ED;" style="caution" onClick={() => setAlertOpen(true)}/>
+      <Button label={trans("wordEditor.discard")} iconName="trash-alt" style="caution" onClick={() => setAlertOpen(true)}/>
     );
     let confirmButtonNode = (
-      <Button label={trans("wordEditor.confirm")} iconLabel="&#xF00C;" style="information" reactive={true} onClick={editWord}/>
+      <Button label={trans("wordEditor.confirm")} iconName="check" style="information" reactive={true} onClick={editWord}/>
     );
     let innerProps = {dictionary, tempWord, mutateWord, createSuggest};
     let node = (
@@ -240,7 +240,7 @@ const WordEditorEditor = create(
         </div>
         <div styleName="confirm-button-wrapper">
           <div styleName="confirm-button">
-            <Button label={trans("wordEditor.resource")} iconLabel="&#xF15B;" onClick={() => setResourceListOpen(true)}/>
+            <Button label={trans("wordEditor.resource")} iconName="file" onClick={() => setResourceListOpen(true)}/>
           </div>
           <div styleName="confirm-button">
             {discardButtonNode}
@@ -337,9 +337,9 @@ const WordEditorTags = create(
           </div>
           <div styleName="control-button">
             <ControlGroup>
-              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.tags, index, -1))}/>
-              <Button iconLabel="&#xF063;" disabled={index === tempWord.tags.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.tags, index, 1))}/>
-              <Button iconLabel="&#xF068;" onClick={mutateWord((tempWord) => deleteAt(tempWord.tags, index))}/>
+              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.tags, index, -1))}/>
+              <Button iconName="arrow-down" disabled={index === tempWord.tags.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.tags, index, 1))}/>
+              <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.tags, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -352,7 +352,7 @@ const WordEditorTags = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconLabel="&#xF067;" onClick={mutateWord((tempWord) => tempWord.tags.push(""))}/>
+            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.tags.push(""))}/>
           </div>
         </div>
       );
@@ -419,9 +419,9 @@ const WordEditorEquivalents = create(
           </div>
           <div styleName="control-button">
             <ControlGroup>
-              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={mutateWord((tempWord) => swapEquivalent(tempWord, index, -1))}/>
-              <Button iconLabel="&#xF063;" disabled={index === tempWord.equivalents.length - 1} onClick={mutateWord((tempWord) => swapEquivalent(tempWord, index, 1))}/>
-              <Button iconLabel="&#xF068;" onClick={mutateWord((tempWord) => deleteEquivalent(tempWord, index))}/>
+              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateWord((tempWord) => swapEquivalent(tempWord, index, -1))}/>
+              <Button iconName="arrow-down" disabled={index === tempWord.equivalents.length - 1} onClick={mutateWord((tempWord) => swapEquivalent(tempWord, index, 1))}/>
+              <Button iconName="minus" onClick={mutateWord((tempWord) => deleteEquivalent(tempWord, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -434,7 +434,7 @@ const WordEditorEquivalents = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconLabel="&#xF067;" onClick={mutateWord((tempWord) => addEquivalent(tempWord))}/>
+            <Button iconName="plus" onClick={mutateWord((tempWord) => addEquivalent(tempWord))}/>
           </div>
         </div>
       );
@@ -483,9 +483,9 @@ const WordEditorInformations = create(
           </div>
           <div styleName="control-button">
             <ControlGroup>
-              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.informations, index, -1))}/>
-              <Button iconLabel="&#xF063;" disabled={index === tempWord.informations.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.informations, index, 1))}/>
-              <Button iconLabel="&#xF068;" onClick={mutateWord((tempWord) => deleteAt(tempWord.informations, index))}/>
+              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.informations, index, -1))}/>
+              <Button iconName="arrow-down" disabled={index === tempWord.informations.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.informations, index, 1))}/>
+              <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.informations, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -498,7 +498,7 @@ const WordEditorInformations = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconLabel="&#xF067;" onClick={mutateWord((tempWord) => tempWord.informations.push(Information.createEmpty()))}/>
+            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.informations.push(Information.createEmpty()))}/>
           </div>
         </div>
       );
@@ -546,9 +546,9 @@ const WordEditorVariations = create(
           </div>
           <div styleName="control-button">
             <ControlGroup>
-              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.variations, index, -1))}/>
-              <Button iconLabel="&#xF063;" disabled={index === tempWord.variations.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.variations, index, 1))}/>
-              <Button iconLabel="&#xF068;" onClick={mutateWord((tempWord) => deleteAt(tempWord.variations, index))}/>
+              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.variations, index, -1))}/>
+              <Button iconName="arrow-down" disabled={index === tempWord.variations.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.variations, index, 1))}/>
+              <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.variations, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -561,7 +561,7 @@ const WordEditorVariations = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconLabel="&#xF067;" onClick={mutateWord((tempWord) => tempWord.variations.push(Variation.createEmpty()))}/>
+            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.variations.push(Variation.createEmpty()))}/>
           </div>
         </div>
       );
@@ -614,9 +614,9 @@ const WordEditorRelations = create(
           </div>
           <div styleName="control-button">
             <ControlGroup>
-              <Button iconLabel="&#xF062;" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.relations, index, -1))}/>
-              <Button iconLabel="&#xF063;" disabled={index === tempWord.relations.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.relations, index, 1))}/>
-              <Button iconLabel="&#xF068;" onClick={mutateWord((tempWord) => deleteAt(tempWord.relations, index))}/>
+              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.relations, index, -1))}/>
+              <Button iconName="arrow-down" disabled={index === tempWord.relations.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.relations, index, 1))}/>
+              <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.relations, index))}/>
             </ControlGroup>
           </div>
         </div>
@@ -629,7 +629,7 @@ const WordEditorRelations = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconLabel="&#xF067;" onClick={() => openRelationChooser(tempWord.relations.length)}/>
+            <Button iconName="plus" onClick={() => openRelationChooser(tempWord.relations.length)}/>
           </div>
         </div>
       );
