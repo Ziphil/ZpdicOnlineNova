@@ -18,7 +18,7 @@
   left: 0em;
   width: 1em;
   height: 1em;
-  border: 3u $light-border-color solid;
+  border: 1rpx $light-border-color solid;
   border-radius: $small-border-radius;
   background-color: white;
   box-shadow: $inset-box-shadow-setting input-box-shadow-color(map-get($colors, primary)) inset;
@@ -30,7 +30,7 @@
 }
 
 .checkbox:hover +.label::before {
-  border: 3u $light-color solid;
+  border: 1rpx $light-color solid;
 }
 
 .checkbox:checked +.label::after {

@@ -11,7 +11,7 @@
 
 .root >* {
   @include reset-first-margin;
-  margin: $control-vertical-margin 0u 0u 0u;
+  margin: $control-vertical-margin 0rpx 0rpx 0rpx;
   display: flex;
   flex-direction: column;
 }
@@ -21,7 +21,7 @@
 }
 
 .button {
-  margin: $large-margin 0u 0u 0u;
+  margin: $large-margin 0rpx 0rpx 0rpx;
   display: block;
   align-self: flex-end;
 }

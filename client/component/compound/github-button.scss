@@ -26,11 +26,11 @@
 
 .star-wrapper {
   height: 112u;
-  margin: 0u 0u 0u 48u;
-  padding: 0u 32u;
+  margin: 0rpx 0rpx 0rpx 48u;
+  padding: 0rpx 32u;
   font-size: 150%;
   line-height: 112u;
-  border: 3u $light-border-color solid;
+  border: 1rpx $light-border-color solid;
   border-radius: $large-border-radius;
   display: inline-block;
   position: relative;
@@ -66,7 +66,7 @@
 }
 
 .text {
-  margin: $small-margin 0u 0u 0u;
+  margin: $small-margin 0rpx 0rpx 0rpx;
   color: $link-color;
   text-decoration: underline;
 }

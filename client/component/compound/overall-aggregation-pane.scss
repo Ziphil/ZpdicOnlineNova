@@ -14,12 +14,12 @@
   color: $logo-color;
   display: grid;
   grid-template-columns: repeat(2, auto);
-  grid-gap: $tiny-margin 0u;
+  grid-gap: $tiny-margin 0rpx;
   align-items: baseline;
 }
 
 .title {
-  margin: 0u $huge-margin 0u 0u;
+  margin: 0rpx $huge-margin 0rpx 0rpx;
   text-align: right;
 }
 

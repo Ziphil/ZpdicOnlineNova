@@ -8,18 +8,18 @@
 }
 
 .radio-wrapper {
-  margin: $small-margin 0u 0u 0u;
+  margin: $small-margin 0rpx 0rpx 0rpx;
 }
 
 .selection-wrapper {
-  margin: $small-margin 0u 0u 0u;
+  margin: $small-margin 0rpx 0rpx 0rpx;
   display: flex;
   justify-content: center;
 }
 
 .selection-wrapper >* {
   @include reset-first-margin;
-  margin: 0u 0u 0u $control-horizontal-margin;
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }
 
 .order-mode {

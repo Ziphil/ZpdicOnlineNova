@@ -9,7 +9,7 @@
 }
 
 .root >*:nth-child(1) {
-  min-width: 0u;
+  min-width: 0rpx;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
@@ -20,7 +20,7 @@
 }
 
 .root >*:nth-child(2) {
-  margin: 0u 0u 0u $control-horizontal-margin;
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
   flex-grow: 0;
   flex-shrink: 0;
 }

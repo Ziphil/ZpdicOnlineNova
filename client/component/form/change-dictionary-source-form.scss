@@ -21,7 +21,7 @@
 }
 
 .root >*:nth-child(2) {
-  margin: 0u 0u 0u $control-horizontal-margin;
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }
 
 .button {
@@ -31,5 +31,5 @@
 }
 
 .button >*:nth-child(1) {
-  margin: 0u 0u 24u 0u;
+  margin: 0rpx 0rpx 24u 0rpx;
 }

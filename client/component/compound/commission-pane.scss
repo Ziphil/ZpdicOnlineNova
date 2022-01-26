@@ -9,16 +9,16 @@
 
 .comment {
   @include line-height($tooltip-line-height);
-  margin: $small-margin 0u 0u 0u;
+  margin: $small-margin 0rpx 0rpx 0rpx;
   font-size: 80%;
 }
 
 .button {
-  margin: $small-margin 0u 0u 0u;
+  margin: $small-margin 0rpx 0rpx 0rpx;
   text-align: right;
 }
 
 .button >* {
   @include reset-first-margin;
-  margin: 0u 0u 0u $control-horizontal-margin;
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }

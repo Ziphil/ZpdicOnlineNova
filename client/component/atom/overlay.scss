@@ -9,7 +9,7 @@ $overlay-header-height: 150u;
   width: 100%;
   max-width: $page-width;
   max-height: 90%;
-  margin: 0u auto;
+  margin: 0rpx auto;
   background-color: $background-color;
   border-radius: $large-border-radius;
   box-sizing: border-box;
@@ -23,9 +23,9 @@ $overlay-header-height: 150u;
 .header {
   width: 100%;
   height: $overlay-header-height;
-  padding: 0u $huge-margin;
-  border-bottom: 3u $light-border-color solid;
-  border-radius: $large-border-radius $large-border-radius 0u 0u;
+  padding: 0rpx $huge-margin;
+  border-bottom: 1rpx $light-border-color solid;
+  border-radius: $large-border-radius $large-border-radius 0rpx 0rpx;
   background-color: $strong-background-color;
   display: flex;
   flex-direction: row;
@@ -40,7 +40,7 @@ $overlay-header-height: 150u;
 
 .right >* {
   @include reset-first-margin;
-  margin: 0u 0u 0u $control-horizontal-margin;
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }
 
 .content {

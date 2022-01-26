@@ -6,7 +6,7 @@
 $label-bottom-margin: 16u;
 
 .root {
-  margin: 0u 0u $label-bottom-margin 0u;
+  margin: 0rpx 0rpx $label-bottom-margin 0rpx;
   font-size: 80%;
   color: map-get($colors, primary);
 }

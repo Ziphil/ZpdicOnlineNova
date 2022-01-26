@@ -102,8 +102,8 @@ $tooltip-horizontal-padding: 0.5em;
 $icon-width: 1.2em;
 $blank-margin: 0.3em;
 
-$focus-box-shadow-setting: 0u 0u 0u 6u;
-$inset-box-shadow-setting: 0u 6u 8u;
+$focus-box-shadow-setting: 0rpx 0rpx 0rpx 6u;
+$inset-box-shadow-setting: 0rpx 6u 8u;
 
 $small-border-radius: 10u;
 $large-border-radius: 16u;
@@ -140,15 +140,15 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 @mixin line-height($line-height: $line-height) {
   line-height: $line-height;
   &::before {
-    width: 0u;
-    height: 0u;
+    width: 0rpx;
+    height: 0rpx;
     margin-top: - line-intrusion($line-height);
     display: block;
     content: "";
   }
   &::after {
-    width: 0u;
-    height: 0u;
+    width: 0rpx;
+    height: 0rpx;
     margin-bottom: - line-intrusion($line-height);
     display: block;
     content: "";
@@ -159,7 +159,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   @each $direction in $directions {
     $property-name: "margin-" + $direction;
     &:first-child {
-      #{$property-name}: 0u;
+      #{$property-name}: 0rpx;
     }
   }
 }
@@ -170,7 +170,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   margin-bottom: $page-bottom-margin;
   margin-right: $page-horizontal-margin;
   margin-left: $page-horizontal-margin;
-  padding: 0u;
+  padding: 0rpx;
   box-sizing: border-box;
 }
 
@@ -200,8 +200,8 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 }
 
 @mixin unordered-list($icon, $icon-color, $marker-width) {
-  margin: 0u;
-  padding: 0u;
+  margin: 0rpx;
+  padding: 0rpx;
   list-style-type: none;
   >li {
     @include unordered-list-item($icon, $icon-color, $marker-width);
@@ -223,7 +223,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     color: $number-color;
     line-height: 1;
     text-align: center;
-    border: 3u $number-color solid;
+    border: 1rpx $number-color solid;
     border-radius: 50%;
     content: counter(list);
     display: inline-block;
@@ -232,8 +232,8 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 }
 
 @mixin ordered-list($number-color) {
-  margin: 0u;
-  padding: 0u;
+  margin: 0rpx;
+  padding: 0rpx;
   list-style-type: none;
   >li {
     @include ordered-list-item($number-color);
@@ -250,7 +250,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   font-family: inherit;
   font-size: inherit;
   line-height: $line-height;
-  border: 3u border-color($color) solid;
+  border: 1rpx border-color($color) solid;
   border-radius: $small-border-radius;
   background-color: white;
   box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color);
@@ -280,7 +280,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   font-size: inherit;
   line-height: $line-height;
   color: white;
-  border: 3u border-color($color, false) solid;
+  border: 1rpx border-color($color, false) solid;
   border-radius: $small-border-radius;
   background-color: $color;
   background-image: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25));
@@ -312,7 +312,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 
 @mixin white-pane($hover: false) {
   color: inherit;
-  border: 3u rgba(white, 0.8) solid;
+  border: 1rpx rgba(white, 0.8) solid;
   border-radius: $large-border-radius;
   background-color: rgba(white, 0.5);
   @if $hover {
@@ -324,7 +324,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 
 @mixin color-pane($color, $hover: false) {
   color: $color;
-  border: 3u border-color($color) solid;
+  border: 1rpx border-color($color) solid;
   border-radius: $large-border-radius;
   background-color: background-color($color);
   @if $hover {
@@ -335,14 +335,14 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 }
 
 @mixin header-container {
-  margin: 0u 150u;
+  margin: 0rpx 150u;
   height: 100%;
   @include intermediate {
     width: $page-width;
-    margin: 0u auto;
+    margin: 0rpx auto;
   }
   @include smartphone {
     width: calc(100% - #{$page-horizontal-margin * 2});
-    margin: 0u auto;
+    margin: 0rpx auto;
   }
 }

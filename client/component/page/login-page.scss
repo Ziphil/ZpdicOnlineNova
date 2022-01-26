@@ -5,7 +5,7 @@
 
 .title {
   @include bold-font;
-  margin: 0u 0u $huge-margin 0u;
+  margin: 0rpx 0rpx $huge-margin 0rpx;
   font-size: 150%;
   color: $light-color;
   text-align: center;
@@ -14,19 +14,19 @@
 .explanation {
   width: 100%;
   max-width: 1200u;
-  margin: 0u auto $large-margin auto;
+  margin: 0rpx auto $large-margin auto;
   font-size: 90%;
 }
 
 .explanation p {
   @include reset-first-margin;
   @include line-height;
-  margin: $paragraph-margin 0u 0u 0u;
+  margin: $paragraph-margin 0rpx 0rpx 0rpx;
   text-align: justify;
 }
 
 .form {
   width: 100%;
   max-width: 1200u;
-  margin: 0u auto;
+  margin: 0rpx auto;
 }

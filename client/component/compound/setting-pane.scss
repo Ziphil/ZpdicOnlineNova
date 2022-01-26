@@ -7,8 +7,8 @@ $setting-pane-vertical-padding: 96u;
 $setting-pane-horizontal-padding: 150u;
 
 .root {
-  padding: $setting-pane-vertical-padding 0u $setting-pane-vertical-padding 0u;
-  border-bottom: 3u $invert-border-color solid; 
+  padding: $setting-pane-vertical-padding 0rpx $setting-pane-vertical-padding 0rpx;
+  border-bottom: 1rpx $invert-border-color solid; 
   display: flex;
   flex-direction: row;
   @include smartphone {
@@ -21,25 +21,25 @@ $setting-pane-horizontal-padding: 150u;
 }
 
 .root:last-child {
-  border-bottom: 3u $light-border-color solid;
+  border-bottom: 1rpx $light-border-color solid;
 }
 
 .description-wrapper {
-  padding: 0u $setting-pane-horizontal-padding 0u 0u;
+  padding: 0rpx $setting-pane-horizontal-padding 0rpx 0rpx;
   flex-basis: 35%;
   flex-grow: 0;
   flex-shrink: 0;
   box-sizing: border-box;
   @include smartphone {
     width: 100%;
-    padding: 0u 0u $large-margin 0u;
+    padding: 0rpx 0rpx $large-margin 0rpx;
     flex-basis: content;
   }
 }
 
 .force-wide .description-wrapper {
   width: 100%;
-  padding: 0u 0u $large-margin 0u;
+  padding: 0rpx 0rpx $large-margin 0rpx;
   flex-basis: content;
 }
 
@@ -74,7 +74,7 @@ $setting-pane-horizontal-padding: 150u;
 
 .description {
   @include line-height;
-  margin: $medium-margin 0u 0u 0u;
+  margin: $medium-margin 0rpx 0rpx 0rpx;
   font-size: 90%;
   text-align: justify;
 }
