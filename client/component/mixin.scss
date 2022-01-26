@@ -90,9 +90,9 @@ $header-height: 210u;
 $dictionary-header-height: 150u;
 $footer-height: 150u;
 
-$box-vertical-padding: 0.0625em; 
+$box-vertical-padding: 0.125em;
 $box-horizontal-padding: 0.5em;
-$input-vertical-padding: 0.0625em;
+$input-vertical-padding: 0.125em;
 $input-horizontal-padding: 0.5em;
 $textarea-vertical-padding: 0.25em;
 $button-hotizontal-padding: 0.8em;
@@ -108,7 +108,7 @@ $inset-box-shadow-setting: 0rpx 2rpx 3rpx;
 $small-border-radius: 3rpx;
 $large-border-radius: 5rpx;
 
-$line-height: 26px / $root-size;
+$line-height: 24px / $root-size;
 $tooltip-line-height: 22px / $root-size;
 
 $european-font-family: "Alegreya Sans", "Arial";
