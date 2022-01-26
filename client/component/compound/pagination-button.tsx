@@ -92,11 +92,11 @@ const PaginationButton = create(
     });
     let node = (
       <div styleName="root">
-        <Button iconLabel="&#xF060;" disabled={page <= minPage} onClick={movePreviousPage}/>
+        <Button iconName="arrow-left" disabled={page <= minPage} onClick={movePreviousPage}/>
         <div styleName="button-group">
           {buttonNodes}
         </div>
-        <Button iconLabel="&#xF061;" disabled={page >= maxPage} onClick={moveNextPage}/>
+        <Button iconName="arrow-right" disabled={page >= maxPage} onClick={moveNextPage}/>
       </div>
     );
     return node;

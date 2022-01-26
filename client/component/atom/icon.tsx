@@ -32,7 +32,9 @@ const Icon = create(
   }): ReactElement {
 
     let node = (
-      <FontAwesomeIcon className={className} icon={name} flip={flip} spin={spin} pulse={pulse}/>
+      <span styleName="root" className={className}>
+        <FontAwesomeIcon icon={name} flip={flip} spin={spin} pulse={pulse}/>
+      </span>
     );
     return node;
 
