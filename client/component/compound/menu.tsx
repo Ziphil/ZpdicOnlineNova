@@ -5,6 +5,9 @@ import {
   ReactElement,
   useCallback
 } from "react";
+import {
+  IconName
+} from "/client/component/atom/icon";
 import MenuItem from "/client/component/compound/menu-item";
 import {
   create
@@ -22,7 +25,7 @@ const Menu = create(
     specs
   }: {
     mode: string,
-    specs: Array<{mode: string, label: string, iconLabel: string, badgeValue?: string | number, href: string}>
+    specs: ReadonlyArray<{mode: string, label: string, iconName: IconName, badgeValue?: string | number, href: string}>
   }): ReactElement {
 
     let {pushPath} = usePath();
@@ -39,7 +42,7 @@ const Menu = create(
       let highlight = spec.mode === mode;
       let href = (spec.mode !== "logout") ? spec.href : undefined;
       let onClick = (spec.mode === "logout") ? performLogout : undefined;
-      return <MenuItem label={spec.label} iconLabel={spec.iconLabel} badgeValue={spec.badgeValue} href={href} highlight={highlight} onClick={onClick} key={index}/>;
+      return <MenuItem label={spec.label} iconName={spec.iconName} badgeValue={spec.badgeValue} href={href} highlight={highlight} onClick={onClick} key={index}/>;
     });
     let node = (
       <nav styleName="root">

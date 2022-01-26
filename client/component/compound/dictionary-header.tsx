@@ -166,17 +166,17 @@ const DictionaryHeaderButtons = create(
     ] as const;
     let addButtonNode = (showAddLink) && (
       <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={addSomething}>
-        <Button label={trans("dictionaryHeader.add")} iconLabel="&#xF067;" style="simple" hideLabel={true}/>
+        <Button label={trans("dictionaryHeader.add")} iconName="plus" style="simple" hideLabel={true}/>
       </Dropdown>
     );
     let addCommissionButtonNode = (showAddCommissionLink) && (
-      <Button label={trans("dictionaryHeader.addCommission")} iconLabel="&#xF022;" style="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
+      <Button label={trans("dictionaryHeader.addCommission")} iconName="list-alt" style="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
     );
     let settingButtonNode = (showSettingLink) && (
-      <Button label={trans("dictionaryHeader.setting")} iconLabel="&#xF013;" style="simple" hideLabel={true} onClick={jumpSettingPage}/>
+      <Button label={trans("dictionaryHeader.setting")} iconName="cog" style="simple" hideLabel={true} onClick={jumpSettingPage}/>
     );
     let downloadButtonNode = (showDownloadLink) && (
-      <Button label={trans("dictionaryHeader.download")} iconLabel="&#xF019;" style="simple" hideLabel={true} onClick={downloadDictionary}/>
+      <Button label={trans("dictionaryHeader.download")} iconName="download" style="simple" hideLabel={true} onClick={downloadDictionary}/>
     );
     let node = (
       <div styleName="button">

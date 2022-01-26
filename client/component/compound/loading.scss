@@ -1,6 +1,5 @@
 @charset "utf-8";
 
-@import "/client/component/animation.scss";
 @import "/client/component/mixin.scss";
 
 
@@ -10,17 +9,11 @@
 }
 
 .spinner {
-  @include icon-font;
   width: 1em;
   height: 1em;
-  font-size: 96u;
+  font-size: 32rpx;
   color: $light-color;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  animation: spin 1s steps(8, end) infinite;
-}
-
-.spinner::before {
-  content: "\F110";
 }

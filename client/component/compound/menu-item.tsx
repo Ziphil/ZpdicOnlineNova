@@ -7,6 +7,10 @@ import {
   useCallback
 } from "react";
 import Badge from "/client/component/atom/badge";
+import Icon from "/client/component/atom/icon";
+import {
+  IconName
+} from "/client/component/atom/icon";
 import {
   StylesRecord,
   create
@@ -24,7 +28,7 @@ const MenuItem = create(
   require("./menu-item.scss"), "MenuItem",
   function ({
     label,
-    iconLabel,
+    iconName,
     badgeValue,
     highlight,
     href,
@@ -32,7 +36,7 @@ const MenuItem = create(
     styles
   }: {
     label: string,
-    iconLabel: string,
+    iconName: IconName,
     badgeValue?: string | number,
     highlight: boolean,
     href?: string,
@@ -59,7 +63,7 @@ const MenuItem = create(
     );
     let node = (
       <a styleName={styleName} href={href} onClick={handleClick}>
-        <span styleName="icon">{iconLabel}</span>
+        <Icon className={styles!["icon"]} name={iconName}/>
         <span styleName="text">{label}</span>
         {badgeNode}
       </a>

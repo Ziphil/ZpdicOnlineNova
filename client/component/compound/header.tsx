@@ -35,11 +35,11 @@ const Header = create(
               <Link href="/" target="self" style="plane">ZpDIC</Link>
             </div>
             <div styleName="menu">
-              <HeaderMenuItem label={trans("header.dictionaryList")} iconLabel="&#xF02D;" href="/list"/>
-              <HeaderMenuItem label={trans("header.notification")} iconLabel="&#xF05A;" href="/notification"/>
-              <HeaderMenuItem label={trans("header.document")} iconLabel="&#xF518;" href="/document"/>
-              <HeaderMenuItem label={trans("header.contact")} iconLabel="&#xF0E0;" href="/contact"/>
-              <HeaderMenuItem label={trans("header.language")} iconLabel="&#xF1AB;" href="/language"/>
+              <HeaderMenuItem label={trans("header.dictionaryList")} iconName="book" href="/list"/>
+              <HeaderMenuItem label={trans("header.notification")} iconName="info-circle" href="/notification"/>
+              <HeaderMenuItem label={trans("header.document")} iconName="book-open" href="/document"/>
+              <HeaderMenuItem label={trans("header.contact")} iconName="envelope" href="/contact"/>
+              <HeaderMenuItem label={trans("header.language")} iconName="language" href="/language"/>
             </div>
           </div>
           <div styleName="right">

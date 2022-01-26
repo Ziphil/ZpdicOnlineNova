@@ -6,7 +6,12 @@ import {
   ReactElement,
   useCallback
 } from "react";
+import Icon from "/client/component/atom/icon";
 import {
+  IconName
+} from "/client/component/atom/icon";
+import {
+  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -18,14 +23,16 @@ const HeaderMenuItem = create(
   require("./header-menu-item.scss"), "HeaderMenuItem",
   function ({
     label,
-    iconLabel,
+    iconName,
     href,
-    onClick
+    onClick,
+    styles
   }: {
     label: string,
-    iconLabel?: string,
+    iconName?: IconName,
     href: string,
-    onClick?: (event: MouseEvent<HTMLElement>) => void
+    onClick?: (event: MouseEvent<HTMLElement>) => void,
+    styles?: StylesRecord
   }): ReactElement {
 
     let {pushPath} = usePath();
@@ -38,8 +45,8 @@ const HeaderMenuItem = create(
       }
     }, [href, onClick, pushPath]);
 
-    let iconNode = (iconLabel !== undefined) && (
-      <span styleName="icon">{iconLabel}</span>
+    let iconNode = (iconName !== undefined) && (
+      <Icon className={styles!["icon"]} name={iconName}/>
     );
     let node = (
       <a styleName="root" href={href} onClick={handleClick}>

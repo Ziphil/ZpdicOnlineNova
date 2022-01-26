@@ -105,13 +105,13 @@ const DictionarySettingPage = create(
     let mode = params.mode || "general";
     let actualCommissionCount = (commissionCount > 0) ? commissionCount : undefined;
     let menuSpecs = [
-      {mode: "general", label: trans("dictionarySettingPage.general"), iconLabel: "\uF05A", href: "/dashboard/dictionary/" + number},
-      {mode: "setting", label: trans("dictionarySettingPage.setting"), iconLabel: "\uF013", href: "/dashboard/dictionary/setting/" + number},
-      {mode: "access", label: trans("dictionarySettingPage.access"), iconLabel: "\uF0C0", href: "/dashboard/dictionary/access/" + number},
-      {mode: "request", label: trans("dictionarySettingPage.commission"), iconLabel: "\uF022", badgeValue: actualCommissionCount, href: "/dashboard/dictionary/request/" + number},
-      {mode: "resource", label: trans("dictionarySettingPage.resource"), iconLabel: "\uF15B", href: "/dashboard/dictionary/resource/" + number},
-      {mode: "statistics", label: trans("dictionarySettingPage.statistics"), iconLabel: "\uF201", href: "/dashboard/dictionary/statistics/" + number}
-    ];
+      {mode: "general", label: trans("dictionarySettingPage.general"), iconName: "info-circle", href: "/dashboard/dictionary/" + number},
+      {mode: "setting", label: trans("dictionarySettingPage.setting"), iconName: "cog", href: "/dashboard/dictionary/setting/" + number},
+      {mode: "access", label: trans("dictionarySettingPage.access"), iconName: "users", href: "/dashboard/dictionary/access/" + number},
+      {mode: "request", label: trans("dictionarySettingPage.commission"), iconName: "list-alt", badgeValue: actualCommissionCount, href: "/dashboard/dictionary/request/" + number},
+      {mode: "resource", label: trans("dictionarySettingPage.resource"), iconName: "file", href: "/dashboard/dictionary/resource/" + number},
+      {mode: "statistics", label: trans("dictionarySettingPage.statistics"), iconName: "chart-line", href: "/dashboard/dictionary/statistics/" + number}
+    ] as const;
     let contentNodes = (dictionary && authorized) && <DictionarySettingPageForms {...{dictionary, mode, fetchDictionary, fetchCommissionCount}}/>;
     let node = (
       <Page dictionary={dictionary} showDictionary={true}>

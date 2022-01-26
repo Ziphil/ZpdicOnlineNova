@@ -6,6 +6,7 @@ import {
   ReactElement,
   ReactNode
 } from "react";
+import Icon from "/client/component/atom/icon";
 import {
   create
 } from "/client/component/create";
@@ -24,7 +25,9 @@ const Loading = create(
     if (loading) {
       let node = (
         <div styleName="root">
-          <span styleName="spinner"/>
+          <span styleName="spinner">
+            <Icon name="spinner" pulse={true}/>
+          </span>
         </div>
       );
       return node;

@@ -13,7 +13,12 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import Icon from "/client/component/atom/icon";
 import {
+  IconName
+} from "/client/component/atom/icon";
+import {
+  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -28,6 +33,7 @@ const Button = create(
   require("./button.scss"), "Button",
   function ({
     label,
+    iconName,
     iconLabel,
     position = "alone",
     style = "normal",
@@ -35,9 +41,11 @@ const Button = create(
     reactive = false,
     disabled = false,
     onClick,
-    className
+    className,
+    styles
   }: {
     label?: string,
+    iconName?: IconName,
     iconLabel?: string,
     position?: "alone" | "left" | "right" | "middle",
     style?: "normal" | "caution" | "information" | "simple" | "link",
@@ -45,7 +53,8 @@ const Button = create(
     reactive?: boolean,
     disabled?: boolean,
     onClick?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-    className?: string
+    className?: string,
+    styles?: StylesRecord
   }): ReactElement {
 
     let [loading, setLoading] = useState(false);
@@ -93,7 +102,7 @@ const Button = create(
       {if: loading, true: "loading"}
     );
     let labelNode = (label !== undefined) && <span styleName="label">{label}</span>;
-    let iconNode = (iconLabel !== undefined) && <span styleName="icon">{iconLabel}</span>;
+    let iconNode = (iconName !== undefined) ? <Icon className={styles!["icon"]} name={iconName}/> : (iconLabel !== undefined) && <span styleName="icon">{iconLabel}</span>;
     let spinnerNode = (reactive) && (
       <span styleName="spinner-wrapper">
         <span styleName="spinner"/>

@@ -92,11 +92,11 @@ const DashboardPage = create(
     let transferNotificationCount = transferInvitations?.length ?? 0;
     let notificationCount = editNotificationCount + transferNotificationCount;
     let menuSpecs = [
-      {mode: "dictionary", label: trans("dashboardPage.dictionary"), iconLabel: "\uF02D", badgeValue: dictionaryCount || undefined, href: "/dashboard"},
-      {mode: "notification", label: trans("dashboardPage.notification"), iconLabel: "\uF0F3", badgeValue: notificationCount || undefined, href: "/dashboard/notification"},
-      {mode: "account", label: trans("dashboardPage.account"), iconLabel: "\uF2C2", href: "/dashboard/account"},
-      {mode: "logout", label: trans("dashboardPage.logout"), iconLabel: "\uF2F5", href: "/"}
-    ];
+      {mode: "dictionary", label: trans("dashboardPage.dictionary"), iconName: "book", badgeValue: dictionaryCount || undefined, href: "/dashboard"},
+      {mode: "notification", label: trans("dashboardPage.notification"), iconName: "bell", badgeValue: notificationCount || undefined, href: "/dashboard/notification"},
+      {mode: "account", label: trans("dashboardPage.account"), iconName: "id-card", href: "/dashboard/account"},
+      {mode: "logout", label: trans("dashboardPage.logout"), iconName: "sign-out-alt", href: "/"}
+    ] as const;
     let activateUserForm = (!user?.activated) && (
       <div styleName="activate">
         <ActivateUserForm/>
