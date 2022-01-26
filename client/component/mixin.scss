@@ -102,11 +102,11 @@ $tooltip-horizontal-padding: 0.5em;
 $icon-width: 1.2em;
 $blank-margin: 0.3em;
 
-$focus-box-shadow-setting: 0rpx 0rpx 0rpx 6u;
-$inset-box-shadow-setting: 0rpx 6u 8u;
+$focus-box-shadow-setting: 0rpx 0rpx 0rpx 2rpx;
+$inset-box-shadow-setting: 0rpx 2rpx 3rpx;
 
-$small-border-radius: 10u;
-$large-border-radius: 16u;
+$small-border-radius: 3rpx;
+$large-border-radius: 5rpx;
 
 $line-height: 26px / $root-size;
 $tooltip-line-height: 22px / $root-size;
