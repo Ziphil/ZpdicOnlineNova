@@ -45,7 +45,7 @@ const ResouceList = create(
   }): ReactElement {
 
     let [file, setFile] = useState<File | null>(null);
-    let [resources, setResources] = useState<any>(null);
+    let [dummy, setDummy] = useState({});
     let [, {trans}] = useIntl();
     let {request} = useRequest();
     let [, {addInformationPopup, addErrorPopup}] = usePopup();
@@ -59,7 +59,7 @@ const ResouceList = create(
       } else {
         return [[], 0];
       }
-    }, [dictionary.number, request]);
+    }, [dictionary.number, dummy, request]);
 
     let uploadFile = useCallback(async function (): Promise<void> {
       let number = dictionary.number;
@@ -71,10 +71,9 @@ const ResouceList = create(
           let post = response.data;
           try {
             await AwsUtil.uploadFile(post, file);
-            let resources = provideResources;
             addInformationPopup("resourceUploaded");
             setFile(null);
-            setResources(resources);
+            setDummy({});
           } catch (error) {
             if (error.name === "AwsError") {
               let code = error.data["Code"]["_text"];
@@ -92,11 +91,11 @@ const ResouceList = create(
           }
         }
       }
-    }, [dictionary.number, file, request, provideResources, addInformationPopup, addErrorPopup]);
+    }, [dictionary.number, file, request, addInformationPopup, addErrorPopup]);
 
     let renderResource = useCallback(function (resource: string): ReactNode {
       let node = (
-        <ResourcePane dictionary={dictionary} resource={resource} showCode={showCode}/>
+        <ResourcePane dictionary={dictionary} resource={resource} showCode={showCode} onDiscardConfirm={() => setDummy({})}/>
       );
       return node;
     }, [dictionary, showCode]);
@@ -118,7 +117,7 @@ const ResouceList = create(
           <Button label={trans("resourceList.confirm")} reactive={true} onClick={uploadFile}/>
         </div>
         <div styleName="list">
-          <PaneList items={resources} size={size} column={2} method="table" style="spaced" border={true} renderer={renderResource}/>
+          <PaneList items={provideResources} size={size} column={2} method="table" style="spaced" border={true} renderer={renderResource}/>
         </div>
       </div>
     );
