@@ -14,7 +14,7 @@
 }
 
 .checkbox +.label::before {
-  top: 0.1em;
+  top: 0em;
   left: 0em;
   width: 1em;
   height: 1em;
@@ -35,7 +35,7 @@
 
 .checkbox:checked +.label::after {
   @include icon-font;
-  top: 0.3em;
+  top: 0.25em;
   left: 0.15em;
   font-size: 80%;
   color: map-get($colors, primary);
