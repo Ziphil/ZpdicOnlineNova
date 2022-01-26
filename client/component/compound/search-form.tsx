@@ -9,6 +9,7 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import Checkbox from "/client/component/atom/checkbox";
+import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
 import RadioGroup from "/client/component/atom/radio-group";
 import Selection from "/client/component/atom/selection";
@@ -37,6 +38,7 @@ const SearchForm = create(
   function ({
     dictionary,
     parameter = NormalWordParameter.createEmpty(),
+    searching = false,
     showOrder = false,
     showAdvancedSearch = false,
     onParameterSet,
@@ -44,6 +46,7 @@ const SearchForm = create(
   }: {
     dictionary: Dictionary,
     parameter?: WordParameter,
+    searching?: boolean,
     showOrder?: boolean,
     showAdvancedSearch?: boolean,
     onParameterSet?: (parameter: WordParameter) => void,
@@ -94,7 +97,7 @@ const SearchForm = create(
     );
     let advancedSearchButton = (showAdvancedSearch) && (
       <div styleName="radio-wrapper">
-        <Button label={trans("searchForm.advancedSearch")} iconLabel="&#xF00E;" style="simple" onClick={() => setSearchFormOpen(true)}/>
+        <Button label={trans("searchForm.advancedSearch")} iconName="search-plus" style="simple" onClick={() => setSearchFormOpen(true)}/>
       </div>
     );
     let advancedSearchNode = (showAdvancedSearch) && (
@@ -106,10 +109,11 @@ const SearchForm = create(
         onClose={() => setSearchFormOpen(false)}
       />
     );
+    let iconNode = (searching) ? <Icon className={styles!["icon"]} name="spinner" pulse={true}/> : <Icon className={styles!["icon"]} name="search"/>;
     let node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-          <Input value={actualParameter.search} prefix={<div styleName="icon"/>} onSet={(search) => handleParameterSet({search})}/>
+          <Input value={actualParameter.search} prefix={iconNode} onSet={(search) => handleParameterSet({search})}/>
           <div styleName="radio-wrapper">
             <RadioGroup name="mode" value={actualParameter.mode} specs={modeSpecs} onSet={(mode) => handleParameterSet({mode})}/>
           </div>

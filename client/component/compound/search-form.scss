@@ -32,10 +32,5 @@
 
 .icon {
   margin: 0em $input-horizontal-padding 0em 0em;
-}
-
-.icon::before {
-  @include icon-font;
   color: $light-color;
-  content: "\F002";
 }

@@ -9,8 +9,9 @@
 
 .selection {
   @include input(map-get($colors, primary));
-  cursor: pointer;
+  align-items: center;
   display: flex;
+  cursor: pointer;
 }
 
 .text {
@@ -21,10 +22,5 @@
 
 .arrow {
   margin: 0em 0em 0em $input-horizontal-padding;
-}
-
-.arrow::before {
-  @include icon-font;
   color: $light-color;
-  content: "\F107";
 }

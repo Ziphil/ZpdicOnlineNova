@@ -91,17 +91,3 @@
 .loading >.icon {
   visibility: hidden;
 }
-
-.spinner {
-  @include icon-font;
-  width: 1em;
-  height: 1em;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  animation: spin 1s steps(8, end) infinite;
-}
-
-.spinner::before {
-  content: "\F110";
-}

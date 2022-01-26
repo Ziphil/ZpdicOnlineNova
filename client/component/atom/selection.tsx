@@ -5,8 +5,10 @@ import {
   ReactElement
 } from "react";
 import Dropdown from "/client/component/atom/dropdown";
+import Icon from "/client/component/atom/icon";
 import Label from "/client/component/atom/label";
 import {
+  StylesRecord,
   create
 } from "/client/component/create";
 
@@ -52,17 +54,19 @@ const SelectionSelection = create(
   require("./selection.scss"),
   function <V>({
     value,
-    specs
+    specs,
+    styles
   }: {
     value: V,
-    specs: ArrayLike<SelectionSpec<V>>
+    specs: ArrayLike<SelectionSpec<V>>,
+    styles?: StylesRecord
   }): ReactElement {
 
     let text = Array.from(specs).find((spec) => spec.value === value)!.text;
     let node = (
       <button styleName="selection">
         <div styleName="text">{text}</div>
-        <div styleName="arrow"/>
+        <Icon className={styles!["arrow"]} name="angle-down"/>
       </button>
     );
     return node;

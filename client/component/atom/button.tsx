@@ -105,7 +105,7 @@ const Button = create(
     let iconNode = (iconName !== undefined) ? <Icon className={styles!["icon"]} name={iconName}/> : (iconLabel !== undefined) && <span styleName="icon">{iconLabel}</span>;
     let spinnerNode = (reactive) && (
       <span styleName="spinner-wrapper">
-        <span styleName="spinner"/>
+        <Icon name="spinner" pulse={true}/>
       </span>
     );
     let node = (

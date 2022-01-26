@@ -49,7 +49,7 @@ const DictionaryPage = create(
     let [hitResult, setHitResult] = useState<DictionaryHitResult>({words: [[], 0], suggestions: []});
     let [canOwn, setCanOwn] = useState(false);
     let [canEdit, setCanEdit] = useState(false);
-    let [loading, setLoading] = useState(false);
+    let [searching, setSearching] = useState(false);
     let {request} = useRequest();
     let params = useParams<{value: string}>();
 
@@ -102,15 +102,15 @@ const DictionaryPage = create(
         let usedPage = overrides?.page ?? query.page;
         let offset = usedPage * 40;
         let size = 40;
-        setLoading(true);
+        setSearching(true);
         let response = await request("searchDictionary", {number, parameter: usedParameter, offset, size});
         if (response.status === 200 && !("error" in response.data)) {
           let hitResult = response.data;
           setHitResult(hitResult);
-          setLoading(false);
+          setSearching(false);
         } else {
           setHitResult({words: [[], 0], suggestions: []});
-          setLoading(false);
+          setSearching(false);
         }
       }
     }, [dictionary?.number, getQuery, request]);
@@ -150,7 +150,7 @@ const DictionaryPage = create(
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <Loading loading={dictionary === null}>
           <div styleName="search-form">
-            <SearchForm dictionary={dictionary!} parameter={getQuery().parameter} showOrder={true} showAdvancedSearch={true} onParameterSet={handleParameterSet}/>
+            <SearchForm dictionary={dictionary!} parameter={getQuery().parameter} searching={searching} showOrder={true} showAdvancedSearch={true} onParameterSet={handleParameterSet}/>
           </div>
           {innerNode}
         </Loading>
