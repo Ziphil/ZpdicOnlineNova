@@ -9,6 +9,7 @@
 
 .selection {
   @include input(map-get($colors, primary));
+  cursor: pointer;
   display: flex;
 }
 
