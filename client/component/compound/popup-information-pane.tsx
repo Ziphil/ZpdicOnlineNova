@@ -26,8 +26,7 @@ const PopupInformationPane = create(
     let [intl] = useIntl();
     let [popupSpecs, {clearPopup}] = usePopup();
 
-    let specs = Array.from(popupSpecs);
-    let specNodes = specs.reverse().map((spec) => {
+    let specNodes = popupSpecs.map((spec) => {
       let specNode = (
         <div styleName="pane-wrapper" key={spec.id}>
           <InformationPane texts={[PopupUtil.getMessage(intl, spec.type)]} style={spec.style} onClose={() => clearPopup(spec.id)}/>
