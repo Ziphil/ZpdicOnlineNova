@@ -9,12 +9,10 @@ import {
   ReactElement,
   SetStateAction,
   useCallback,
+  useEffect,
   useRef,
   useState
 } from "react";
-import {
-  useUpdateEffect
-} from "react-use";
 import {
   AsyncOrSync
 } from "ts-essentials";
@@ -139,7 +137,7 @@ const ExampleEditor = create(
       }
     }, [dictionary.number, tempExample, request, mutateExample]);
 
-    useUpdateEffect(() => {
+    useEffect(() => {
       let tempExample = cloneDeep(example) ?? EditableExample.createEmpty();
       setTempExample(tempExample, () => {
         fetchWordNames();
