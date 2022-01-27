@@ -99,7 +99,7 @@ const ExamplePage = create(
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <Loading loading={dictionary === null || examples === null}>
           <div styleName="list">
-            <ExampleList examples={examples} dictionary={dictionary!} size={50}/>
+            <ExampleList examples={examples} dictionary={dictionary!} size={40}/>
           </div>
         </Loading>
       </Page>
