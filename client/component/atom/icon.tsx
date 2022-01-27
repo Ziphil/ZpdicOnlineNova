@@ -22,21 +22,33 @@ const Icon = create(
     flip = undefined,
     spin,
     pulse,
+    slashed = false,
     className
   }: {
     name: IconName,
     flip?: "horizontal" | "vertical" | "both" | undefined,
     spin?: boolean,
     pulse?: boolean,
+    slashed?: boolean
     className?: string
   }): ReactElement {
 
-    let node = (
-      <span styleName="root" className={className}>
-        <FontAwesomeIcon icon={name} flip={flip} spin={spin} pulse={pulse}/>
-      </span>
-    );
-    return node;
+    if (slashed) {
+      let node = (
+        <span styleName="root stack" className={className}>
+          <FontAwesomeIcon icon="slash" transform="down-2 left-2" mask={name} fixedWidth={true}/>
+          <FontAwesomeIcon icon="slash"/>
+        </span>
+      );
+      return node;
+    } else {
+      let node = (
+        <span styleName="root" className={className}>
+          <FontAwesomeIcon icon={name} flip={flip} spin={spin} pulse={pulse}/>
+        </span>
+      );
+      return node;
+    }
 
   }
 );

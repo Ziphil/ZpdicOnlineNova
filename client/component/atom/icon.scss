@@ -6,3 +6,13 @@
 .root {
   line-height: 0;
 }
+
+.root.stack {
+  position: relative;
+}
+
+.root.stack :not(:first-child) {
+  top: 0em;
+  left: 0em;
+  position: absolute;
+}
