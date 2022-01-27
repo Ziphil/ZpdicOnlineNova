@@ -109,7 +109,7 @@ const DictionarySettingPage = create(
       {mode: "setting", label: trans("dictionarySettingPage.setting"), iconName: "cog", href: "/dashboard/dictionary/setting/" + number},
       {mode: "access", label: trans("dictionarySettingPage.access"), iconName: "users", href: "/dashboard/dictionary/access/" + number},
       {mode: "request", label: trans("dictionarySettingPage.commission"), iconName: "list-alt", badgeValue: actualCommissionCount, href: "/dashboard/dictionary/request/" + number},
-      {mode: "resource", label: trans("dictionarySettingPage.resource"), iconName: "file", href: "/dashboard/dictionary/resource/" + number},
+      {mode: "resource", label: trans("dictionarySettingPage.resource"), iconName: "image", href: "/dashboard/dictionary/resource/" + number},
       {mode: "statistics", label: trans("dictionarySettingPage.statistics"), iconName: "chart-line", href: "/dashboard/dictionary/statistics/" + number}
     ] as const;
     let contentNodes = (dictionary && authorized) && <DictionarySettingPageForms {...{dictionary, mode, fetchDictionary, fetchCommissionCount}}/>;
