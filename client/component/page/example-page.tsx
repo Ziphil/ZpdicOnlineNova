@@ -71,7 +71,7 @@ const ExamplePage = create(
 
     let node = (
       <Page>
-        <Loading loading={dictionary === null && examples === null}>
+        <Loading loading={dictionary === null || examples === null}>
           <div styleName="list">
             <ExampleList examples={examples} dictionary={dictionary!} size={50}/>
           </div>
