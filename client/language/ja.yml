@@ -398,8 +398,9 @@ dictionaryStatisticsPane:
     title: "平均例文数"
     value: "{value, number, ::.00} "
     unit: "文/語"
-  nfd: "(NFD)"
-  nfc: "(NFC)"
+  kept: "そのまま"
+  nfd: "NFD"
+  nfc: "NFC"
 exampleEditor:
   title: "例文編集"
   sentence: "例文"
@@ -691,7 +692,7 @@ dictionarySettingPage:
     label: "統計情報"
     description: >-
       この辞書の統計情報です。
-      文字数に関する項目では、そのままのデータで集計したものと Unicode 正規化した後に集計したものの両方を表示しています。
+      文字数に関する項目では、そのままのデータで集計したものと Unicode 正規化した後に集計したものの両方を表示できます。
   historyPane:
     label: "単語数履歴"
     description: >-
