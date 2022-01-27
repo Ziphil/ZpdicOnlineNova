@@ -20,6 +20,7 @@ import {
 } from "react-use";
 import Button from "/client/component/atom/button";
 import Dropdown from "/client/component/atom/dropdown";
+import Icon from "/client/component/atom/icon";
 import Link from "/client/component/atom/link";
 import {
   create
@@ -221,7 +222,9 @@ const DictionaryHeaderAddDropdown = create(
 
     let node = (
       <div>
-        <span styleName="icon">{(type === "word") ? "\uF1C2" : "\uF15C"}</span>
+        <span styleName="icon">
+          <Icon name={(type === "word") ? "file-word" : "file-alt"}/>
+        </span>
         {trans(`dictionaryHeader.add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
       </div>
     );
