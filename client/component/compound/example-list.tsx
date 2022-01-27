@@ -10,12 +10,13 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import ExamplePane from "/client/component/compound/example-pane";
 import PaneList from "/client/component/compound/pane-list";
 import {
   create
 } from "/client/component/create";
 import {
-  Dictionary,
+  EnhancedDictionary,
   Example
 } from "/client/skeleton/dictionary";
 
@@ -29,17 +30,20 @@ const ExampleList = create(
     onSubmit
   }: {
     examples: Array<Example> | null,
-    dictionary?: Dictionary,
+    dictionary: EnhancedDictionary,
     size: number,
     onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
     let renderExample = useCallback(function (example: Example): ReactNode {
-      return <>{example.sentence} → {example.translation}</>;
-    }, []);
+      let node = (
+        <ExamplePane example={example} dictionary={dictionary}/>
+      );
+      return node;
+    }, [dictionary]);
 
     let node = (
-      <PaneList items={examples} size={size} column={2} renderer={renderExample}/>
+      <PaneList items={examples} size={size} column={2} method="table" style="spaced" border={true} renderer={renderExample}/>
     );
     return node;
 

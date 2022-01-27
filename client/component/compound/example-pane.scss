@@ -1,0 +1,24 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.example-wrapper {
+  @include line-height;
+  text-align: justify;
+}
+
+.example {
+  @include unordered-list-item("\F0DA", $light-color, 0.4em);
+}
+
+.example-separator::before {
+  margin: 0em $blank-margin;
+  color: $light-color;
+  content: "—";
+}
+
+.button {
+  margin: $small-margin 0rpx 0rpx 0rpx;
+  text-align: right;
+}
