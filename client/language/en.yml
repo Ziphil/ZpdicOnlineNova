@@ -202,6 +202,11 @@ label:
 overlay:
   back: "Back"
   close: "Close"
+changeUserNameForm:
+  screenName: "User ID"
+  confirm: "Confirm"
+  caution: >-
+    Currently you cannot change your user ID.
 changeUserScreenNameForm:
   screenName: "Nickname"
   confirm: "Confirm"
@@ -218,10 +223,10 @@ createDictionaryForm:
 discardUserForm:
   confirm: "Delete"
   caution: >-
-    Warning: this operation will delete this user permanently, and also delete the dictionaries they own.
+    This operation will delete this user permanently, and also delete the dictionaries you own.
     Once you delete them, you cannot restore them.
   alert: >-
-    This user will be deleted permanently, and the dictionaries they own will be also deleted.
+    This user will be deleted permanently, and the dictionaries you own will be also deleted.
     You cannot restore them afterwards.
     Are you really sure?
 addEditInvitationForm:
@@ -260,7 +265,7 @@ changeDictionarySourceForm:
 discardDictionaryForm:
   confirm: "Delete"
   caution: >-
-    Warning: this operation will delete this dictionary permanently.
+    This operation will delete this dictionary permanently.
     Once you delete this dictionary, you cannot restore it.
   alert: >-
     This dictionary will be deleted permanently.
@@ -587,7 +592,7 @@ dashboardPage:
     label: "Dictionaries"
     description: >-
       This is a list of your dictionaries.
-      This also includes those which you do not own but you are permitted to edit.
+      This also includes those which you do not own but are permitted to edit.
   editInvitationList:
     label: "Permission invitations"
     description: >-
@@ -602,6 +607,10 @@ dashboardPage:
     label: "Create new dictionary"
     description: >-
       Create a new empty dictionary.
+  changeUserNameForm:
+    label: "User ID"
+    description: >-
+      This is your user ID.
   changeUserScreenNameForm:
     label: "Change nickname"
     description: >-

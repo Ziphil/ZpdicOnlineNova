@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  display: flex;
+  align-items: flex-end;
+}
+
+.root >*:nth-child(1) {
+  flex-grow: 1;
+}
+
+.root >*:nth-child(2) {
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
+}
+
+.caution {
+  @include line-height;
+  margin: $large-margin 0rpx 0rpx 0rpx;
+  font-size: 90%;
+  color: map-get($colors, error);
+  text-align: justify;
+}

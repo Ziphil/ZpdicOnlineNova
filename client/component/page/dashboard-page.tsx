@@ -22,6 +22,7 @@ import {
   create
 } from "/client/component/create";
 import ChangeUserEmailForm from "/client/component/form/change-user-email-form";
+import ChangeUserNameForm from "/client/component/form/change-user-name-form";
 import ChangeUserPasswordForm from "/client/component/form/change-user-password-form";
 import ChangeUserScreenNameForm from "/client/component/form/change-user-screen-name-form";
 import CreateDictionaryForm from "/client/component/form/create-dictionary-form";
@@ -177,6 +178,12 @@ const DashboardPageForms = create(
     } else if (mode === "account") {
       let node = (
         <Fragment>
+          <SettingPane
+            label={trans("dashboardPage.changeUserNameForm.label")}
+            description={trans("dashboardPage.changeUserNameForm.description")}
+          >
+            <ChangeUserNameForm currentName={user!.name} onSubmit={fetchUser}/>
+          </SettingPane>
           <SettingPane
             label={trans("dashboardPage.changeUserScreenNameForm.label")}
             description={trans("dashboardPage.changeUserScreenNameForm.description")}

@@ -202,6 +202,11 @@ label:
 overlay:
   back: "戻る"
   close: "閉じる"
+changeUserNameForm:
+  screenName: "ユーザー ID"
+  confirm: "変更"
+  caution: >-
+    現在はユーザー ID を変更することはできません。
 changeUserScreenNameForm:
   screenName: "ニックネーム"
   confirm: "変更"
@@ -601,6 +606,10 @@ dashboardPage:
     label: "新規作成"
     description: >-
       空の辞書を作成します。
+  changeUserNameForm:
+    label: "ユーザー ID の確認"
+    description: >-
+      このユーザーの ID です。
   changeUserScreenNameForm:
     label: "ニックネームの変更"
     description: >-
