@@ -424,6 +424,9 @@ exampleEditor:
     本当によろしいですか?
 examplePane:
   edit: "編集"
+  caution: >-
+    この例文には単語が紐付けられていません。
+    このままでは辞書の項目に表示されないので、単語を紐付けてください。
 featurePane:
   dictionary:
     title: "辞書編集"

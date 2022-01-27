@@ -38,6 +38,11 @@ const ExamplePane = create(
     let [editorOpen, setEditorOpen] = useState(false);
     let [, {trans}] = useIntl();
 
+    let cautionNode = (example.words.length <= 0) && (
+      <div styleName="caution">
+        {trans("examplePane.caution")}
+      </div>
+    );
     let node = (
       <Fragment>
         <WhitePane clickable={false}>
@@ -47,6 +52,7 @@ const ExamplePane = create(
               <span styleName="example-separator"/>
               <span styleName="translation">{example.translation}</span>
             </div>
+            {cautionNode}
           </div>
           <div styleName="button">
             <Button label={trans("examplePane.edit")} iconName="edit" style="simple" onClick={() => setEditorOpen(true)}/>

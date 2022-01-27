@@ -424,6 +424,9 @@ exampleEditor:
     Are you really sure?
 examplePane:
   edit: "Edit"
+  caution: >-
+    This example sentence has no words associated with it.
+    It will not appear in the dictionary, so please associate some word with it.
 featurePane:
   dictionary:
     title: "Edit"
