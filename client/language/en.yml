@@ -203,7 +203,7 @@ overlay:
   back: "Back"
   close: "Close"
 changeUserNameForm:
-  screenName: "User ID"
+  name: "User ID"
   confirm: "Confirm"
   caution: >-
     Currently you cannot change your user ID.

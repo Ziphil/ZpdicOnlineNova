@@ -203,7 +203,7 @@ overlay:
   back: "戻る"
   close: "閉じる"
 changeUserNameForm:
-  screenName: "ユーザー ID"
+  name: "ユーザー ID"
   confirm: "変更"
   caution: >-
     現在はユーザー ID を変更することはできません。
