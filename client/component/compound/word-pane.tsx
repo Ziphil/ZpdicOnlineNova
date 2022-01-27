@@ -340,6 +340,7 @@ const WordPaneExamples = create(
           <div styleName="example-content-wrapper">
             <div styleName="example-content">
               <span styleName="sentence">{example.sentence}</span>
+              <span styleName="example-separator"/>
               <span styleName="translation">{example.translation}</span>
             </div>
             {editButtonNode}
