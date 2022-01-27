@@ -450,6 +450,7 @@ header:
   document: "Documents"
   contact: "Contact"
   language: "Languages"
+  dashboard: "User page"
 invitationPane:
   createdDate: "Invited at"
   userName: "Inviter"

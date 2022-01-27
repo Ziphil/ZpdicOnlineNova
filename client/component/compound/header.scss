@@ -28,15 +28,10 @@
 }
 
 .title {
-  margin: 0rpx $huge-margin 0rpx 0rpx;
   font-family: $special-font-family;
   font-size: 250%;
   color: $background-color;
   line-height: 1;
-}
-
-.menu {
-  margin: 0rpx $huge-margin 0rpx 0rpx;
 }
 
 .menu >* {
@@ -71,4 +66,9 @@
 
 .name {
   color: $background-color;
+}
+
+.separator {
+  border-right: 1rpx rgba($background-color, 0.5) solid;
+  display: inline;
 }

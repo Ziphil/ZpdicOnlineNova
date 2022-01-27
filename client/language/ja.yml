@@ -450,6 +450,7 @@ header:
   document: "ドキュメント"
   contact: "お問い合わせ"
   language: "言語選択"
+  dashboard: "ユーザーページ"
 invitationPane:
   createdDate: "招待日時"
   userName: "招待者"

@@ -14,6 +14,7 @@
 }
 
 .text {
+  margin: 0rpx 0rpx 0rpx $blank-margin;
   @include smartphone {
     display: none;
   }
@@ -21,5 +22,4 @@
 
 .icon {
   @include icon-font;
-  margin: 0rpx $blank-margin 0rpx 0rpx;
 }
