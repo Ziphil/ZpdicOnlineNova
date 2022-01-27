@@ -43,7 +43,7 @@ const ExampleList = create(
     }, [dictionary]);
 
     let node = (
-      <PaneList items={examples} size={size} column={2} method="table" style="spaced" border={true} renderer={renderExample}/>
+      <PaneList items={examples} size={size} column={2} renderer={renderExample}/>
     );
     return node;
 

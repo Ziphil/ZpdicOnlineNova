@@ -60,10 +60,10 @@ const CommissionList = create(
     let node = (
       <Fragment>
         <div styleName="normal">
-          <PaneList items={commissions} size={size} column={3} method="table" style="spaced" border={true} renderer={renderCommission}/>
+          <PaneList items={commissions} size={size} column={3} renderer={renderCommission}/>
         </div>
         <div styleName="smartphone">
-          <PaneList items={commissions} size={size} column={2} method="table" style="spaced" border={true} renderer={renderCommission}/>
+          <PaneList items={commissions} size={size} column={2} renderer={renderCommission}/>
         </div>
       </Fragment>
     );

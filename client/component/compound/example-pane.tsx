@@ -3,18 +3,13 @@
 import * as react from "react";
 import {
   Fragment,
-  MouseEvent,
   ReactElement,
-  ReactNode,
   Suspense,
   lazy,
-  useCallback,
   useState
 } from "react";
-import {
-  AsyncOrSync
-} from "ts-essentials";
 import Button from "/client/component/atom/button";
+import WhitePane from "/client/component/compound/white-pane";
 import {
   create
 } from "/client/component/create";
@@ -45,7 +40,7 @@ const ExamplePane = create(
 
     let node = (
       <Fragment>
-        <div styleName="root">
+        <WhitePane clickable={false}>
           <div styleName="example-wrapper">
             <div styleName="example">
               <span styleName="sentence">{example.sentence}</span>
@@ -56,7 +51,7 @@ const ExamplePane = create(
           <div styleName="button">
             <Button label={trans("examplePane.edit")} iconName="edit" style="simple" onClick={() => setEditorOpen(true)}/>
           </div>
-        </div>
+        </WhitePane>
         <Suspense fallback="">
           <ExampleEditor
             dictionary={dictionary}

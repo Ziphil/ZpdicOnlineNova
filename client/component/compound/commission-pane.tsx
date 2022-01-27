@@ -15,6 +15,7 @@ import {
 } from "ts-essentials";
 import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
+import WhitePane from "/client/component/compound/white-pane";
 import {
   create
 } from "/client/component/create";
@@ -81,14 +82,16 @@ const CommissionPane = create(
     );
     let node = (
       <Fragment>
-        <div styleName="root">
-          {name}
-          {commentNode}
+        <WhitePane clickable={false}>
+          <div>
+            <div styleName="name">{name}</div>
+            {commentNode}
+          </div>
           <div styleName="button">
             <Button label={trans("commissionPane.discard")} iconName="trash-alt" style="simple" onClick={() => setAlertOpen(true)}/>
             <Button label={trans("commissionPane.add")} iconName="plus" style="simple" onClick={() => setEditorOpen(true)}/>
           </div>
-        </div>
+        </WhitePane>
         <Alert
           text={trans("commissionPane.alert")}
           confirmLabel={trans("commissionPane.discard")}

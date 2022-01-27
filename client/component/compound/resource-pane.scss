@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.root {
+.resource {
   @include unordered-list-item("\F0DA", $light-color, 0.4em);
 }
 
@@ -32,16 +32,20 @@
   white-space: nowrap;
 }
 
-.button-wrapper {
+.button {
   margin: $small-margin 0rpx 0rpx 0rpx;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
+  text-align: right;
+}
+
+.image {
+  margin: $small-margin 0rpx 0rpx 0rpx;
+  line-height: 0;
 }
 
 .image >img {
   width: auto;
   height: auto;
-  max-width: 150u;
-  max-height: 150u;
+  max-width: 100%;
+  max-height: 75rpx;
+  line-height: 0;
 }

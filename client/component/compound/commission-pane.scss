@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.root {
+.name {
   @include unordered-list-item("\F0DA", $light-color, 0.4em);
 }
 

@@ -6,6 +6,7 @@
 .div-pane {
   display: grid;
   grid-gap: 0rpx $large-margin;
+  align-items: start;
 }
 
 .div-pane.spaced { 
