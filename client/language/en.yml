@@ -416,6 +416,8 @@ exampleEditor:
     This example sentence will be deleted permanently.
     You cannot restore it afterwards.
     Are you really sure?
+examplePane:
+  edit: "Edit"
 featurePane:
   dictionary:
     title: "Edit"

@@ -416,6 +416,8 @@ exampleEditor:
     この例文データを永久に削除します。
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
+examplePane:
+  edit: "編集"
 featurePane:
   dictionary:
     title: "辞書編集"
