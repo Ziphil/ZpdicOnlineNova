@@ -45,6 +45,7 @@ const DictionaryHeader = create(
     dictionary,
     showAddLink = false,
     showAddCommissionLink = true,
+    showExampleLink = true,
     showSettingLink = false,
     showDownloadLink = true,
     preserveQuery = false
@@ -52,6 +53,7 @@ const DictionaryHeader = create(
     dictionary: EnhancedDictionary | null,
     showAddLink?: boolean,
     showAddCommissionLink?: boolean,
+    showExampleLink?: boolean,
     showSettingLink?: boolean,
     showDownloadLink?: boolean,
     preserveQuery?: boolean
@@ -77,6 +79,8 @@ const DictionaryHeader = create(
       let nameNode = <Link href={href} target="self" style="plane">{dictionary.name}</Link>;
       return nameNode;
     })();
+    let buttonsProps = {dictionary, showAddLink, showAddCommissionLink, showExampleLink, showSettingLink, showDownloadLink, setWordEditorOpen, setExampleEditorOpen, setCommissionEditorOpen};
+    let overlaysProps = {dictionary, wordEditorOpen, exampleEditorOpen, commissionEditorOpen, setWordEditorOpen, setExampleEditorOpen, setCommissionEditorOpen};
     let node = (
       <header styleName="root">
         <div styleName="container">
@@ -84,10 +88,10 @@ const DictionaryHeader = create(
             <div styleName="name">{nameNode}</div>
           </div>
           <div styleName="right">
-            <DictionaryHeaderButtons {...{dictionary, showAddLink, showAddCommissionLink, showSettingLink, showDownloadLink, setWordEditorOpen, setExampleEditorOpen, setCommissionEditorOpen}}/>
+            <DictionaryHeaderButtons {...buttonsProps}/>
           </div>
         </div>
-        <DictionaryHeaderOverlays {...{dictionary, wordEditorOpen, exampleEditorOpen, commissionEditorOpen, setWordEditorOpen, setExampleEditorOpen, setCommissionEditorOpen}}/>
+        <DictionaryHeaderOverlays {...overlaysProps}/>
       </header>
     );
     return node;
@@ -102,6 +106,7 @@ const DictionaryHeaderButtons = create(
     dictionary,
     showAddLink,
     showAddCommissionLink,
+    showExampleLink,
     showSettingLink,
     showDownloadLink,
     setWordEditorOpen,
@@ -111,6 +116,7 @@ const DictionaryHeaderButtons = create(
     dictionary: EnhancedDictionary | null,
     showAddLink: boolean,
     showAddCommissionLink: boolean,
+    showExampleLink: boolean,
     showSettingLink: boolean,
     showDownloadLink: boolean,
     setWordEditorOpen: Dispatch<SetStateAction<boolean>>,
@@ -129,6 +135,13 @@ const DictionaryHeaderButtons = create(
         setExampleEditorOpen(true);
       }
     }, [setWordEditorOpen, setExampleEditorOpen]);
+
+    let jumpExamplePage = useCallback(function (): void {
+      if (dictionary) {
+        let path = "/example/" + dictionary.number;
+        pushPath(path);
+      }
+    }, [dictionary, pushPath]);
 
     let jumpSettingPage = useCallback(function (): void {
       if (dictionary) {
@@ -172,6 +185,9 @@ const DictionaryHeaderButtons = create(
     let addCommissionButtonNode = (showAddCommissionLink) && (
       <Button label={trans("dictionaryHeader.addCommission")} iconName="list-alt" style="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
     );
+    let exampleButtonNode = (showExampleLink) && (
+      <Button label={trans("dictionaryHeader.example")} iconName="file-alt" style="simple" hideLabel={true} onClick={jumpExamplePage}/>
+    );
     let settingButtonNode = (showSettingLink) && (
       <Button label={trans("dictionaryHeader.setting")} iconName="cog" style="simple" hideLabel={true} onClick={jumpSettingPage}/>
     );
@@ -183,6 +199,7 @@ const DictionaryHeaderButtons = create(
         {settingButtonNode}
         {addButtonNode}
         {addCommissionButtonNode}
+        {exampleButtonNode}
         {downloadButtonNode}
       </div>
     );

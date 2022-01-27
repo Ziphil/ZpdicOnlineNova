@@ -39,6 +39,8 @@ const ExamplePage = create(
 
     let [dictionary, setDictionary] = useState<EnhancedDictionary | null>(null);
     let [examples, setExamples] = useState<Array<Example> | null>(null);
+    let [canOwn, setCanOwn] = useState(false);
+    let [canEdit, setCanEdit] = useState(false);
     let {request} = useRequest();
     let params = useParams<{number: string}>();
 
@@ -64,13 +66,37 @@ const ExamplePage = create(
       }
     }, [params.number, request]);
 
+    let checkAuthorization = useCallback(async function (): Promise<void> {
+      let number = +params.number;
+      let ownPromise = (async () => {
+        if (number !== undefined) {
+          let authority = "own" as const;
+          let response = await request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
+          if (response.status === 200) {
+            setCanOwn(true);
+          }
+        }
+      })();
+      let editPromise = (async () => {
+        if (number !== undefined) {
+          let authority = "edit" as const;
+          let response = await request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
+          if (response.status === 200) {
+            setCanEdit(true);
+          }
+        }
+      })();
+      await Promise.all([ownPromise, editPromise]);
+    }, [dictionary?.number, request]);
+
     useMount(() => {
       fetchDictionary();
       fetchExamples();
+      checkAuthorization();
     });
 
     let node = (
-      <Page>
+      <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <Loading loading={dictionary === null || examples === null}>
           <div styleName="list">
             <ExampleList examples={examples} dictionary={dictionary!} size={50}/>

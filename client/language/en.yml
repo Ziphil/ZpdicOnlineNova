@@ -327,6 +327,7 @@ dictionaryHeader:
   addWord: "Word"
   addExample: "Example"
   addCommission: "Request"
+  example: "Examples"
   setting: "Settings"
   download: "Download"
 dictionaryPane:

@@ -327,6 +327,7 @@ dictionaryHeader:
   addWord: "単語"
   addExample: "例文"
   addCommission: "造語依頼"
+  example: "例文一覧"
   setting: "設定"
   download: "ダウンロード"
 dictionaryPane:
