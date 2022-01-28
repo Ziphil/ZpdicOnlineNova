@@ -155,8 +155,8 @@ const WordPaneName = create(
       }
     }, [dictionary, word]);
     let submitDropdownSpecs = [
-      {value: "oneway", node: <WordPaneSubmitDropdownNode value="oneway"/>},
-      {value: "mutual", node: <WordPaneSubmitDropdownNode value="mutual"/>}
+      {value: "oneway", node: <WordPaneSubmitDropdownNode direction="oneway"/>},
+      {value: "mutual", node: <WordPaneSubmitDropdownNode direction="mutual"/>}
     ] as const;
     let editButtonNode = (showEditLink && !showButton) && (
       <div styleName="button">
@@ -377,19 +377,19 @@ const WordPaneExamples = create(
 const WordPaneSubmitDropdownNode = create(
   require("./word-pane.scss"),
   function ({
-    value
+    direction
   }: {
-    value: "oneway" | "mutual"
+    direction: "oneway" | "mutual"
   }): ReactElement {
 
     let [, {trans}] = useIntl();
 
     let node = (
       <div>
-        <span styleName="icon">
-          <Icon name={(value === "oneway") ? "long-arrow-alt-right" : "exchange-alt"}/>
+        <span styleName="dropdown-icon">
+          <Icon name={(direction === "oneway") ? "long-arrow-alt-right" : "exchange-alt"}/>
         </span>
-        {trans(`wordPane.${value}`)}
+        {trans(`wordPane.${direction}`)}
       </div>
     );
     return node;
