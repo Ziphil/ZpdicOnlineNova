@@ -81,8 +81,8 @@ const SearchForm = create(
     let orderMode = ["unicode", "updatedDate", "createdDate"] as const;
     let modeSpecs = modes.map((mode) => ({value: mode, label: trans(`searchForm.${mode}`)}));
     let typeSpecs = types.map((type) => ({value: type, label: trans(`searchForm.${type}`)}));
-    let orderModeSpecs = orderMode.map((orderMode) => ({value: orderMode, text: trans(`searchForm.${orderMode}`)}));
-    let orderDirectionSpecs = WORD_ORDER_DIRECTIONS.map((orderDirection) => ({value: orderDirection, text: trans(`searchForm.${orderDirection}`)}));
+    let orderModeSpecs = orderMode.map((orderMode) => ({value: orderMode, node: trans(`searchForm.${orderMode}`)}));
+    let orderDirectionSpecs = WORD_ORDER_DIRECTIONS.map((orderDirection) => ({value: orderDirection, node: <SearchFormOrderModeDropdownNode orderDirection={orderDirection}/>}));
     let actualParameter = WordParameter.getNormal(parameter);
     let orderNode = (showOrder) && (
       <Fragment>
@@ -125,6 +125,30 @@ const SearchForm = create(
         </form>
         {advancedSearchNode}
       </Fragment>
+    );
+    return node;
+
+  }
+);
+
+
+const SearchFormOrderModeDropdownNode = create(
+  require("./search-form.scss"),
+  function ({
+    orderDirection
+  }: {
+    orderDirection: "ascending" | "descending"
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+
+    let node = (
+      <div>
+        <span styleName="order-direction-icon">
+          <Icon name={(orderDirection === "ascending") ? "sort-numeric-down" : "sort-numeric-down-alt"}/>
+        </span>
+        {trans(`searchForm.${orderDirection}`)}
+      </div>
     );
     return node;
 

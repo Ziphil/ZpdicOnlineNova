@@ -530,7 +530,7 @@ searchForm:
   custom: "独自順序順"
   updatedDate: "更新日時順"
   createdDate: "作成日時順"
-  ascending: "昇順 (通常)"
+  ascending: "昇順"
   descending: "降順"
   advancedSearch: "高度な検索"
 sourceTester:

@@ -531,8 +531,8 @@ searchForm:
   custom: "By custom order"
   updatedDate: "By update date"
   createdDate: "By creation date"
-  ascending: "Ascending"
-  descending: "Descending"
+  ascending: "Asc"
+  descending: "Desc"
   advancedSearch: "Advanced search"
 sourceTester:
   try: "Try"

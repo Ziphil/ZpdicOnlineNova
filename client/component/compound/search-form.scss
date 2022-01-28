@@ -23,11 +23,16 @@
 }
 
 .order-mode {
-  width: 450u;
+  width: 150rpx;
 }
 
 .order-direction {
-  width: 360u;
+  width: 120rpx;
+}
+
+.order-direction-icon {
+  margin: 0rpx $blank-margin 0rpx 0rpx;
+  color: $light-color;
 }
 
 .icon {
