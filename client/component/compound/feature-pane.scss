@@ -39,18 +39,19 @@ $feature-item-horizontal-margin: 120u;
   color: $head-color;
   text-align: center;
   @include smartphone {
+    margin: 0rpx;
     flex-direction: row;
   }
 }
 
 .icon {
   @include icon-font;
-  font-size: 150%;
+  font-size: 32rpx;
   color: $head-color;
   text-align: center;
   @include smartphone {
     margin: 0em $blank-margin 0em 0em;
-    font-size: 120%;
+    font-size: 24rpx;
   }
 }
 
