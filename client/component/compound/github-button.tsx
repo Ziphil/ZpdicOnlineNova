@@ -37,18 +37,24 @@ const GithubButton = create(
       }
     });
 
-    let url = "https://github.com/Ziphil/ZpdicOnlineNova";
+    let githubUrl = "https://github.com/Ziphil/ZpdicOnlineNova";
+    let dashboardUrl = "https://ziphil.notion.site/ZpDIC-Online-987030f6505e4cf1ba8fe08121584d93";
     let node = (
-      <a styleName="root" href={url} target="_blank">
-        <div styleName="icon-wrapper">
-          <div styleName="icon">&#xF09B;</div>
-          <div styleName="star-wrapper">
-            <span styleName="star">&#xF005;</span>
-            <span styleName="count">{transNumber(starCount)}</span>
+      <div styleName="root">
+        <a styleName="github" href={githubUrl} target="_blank">
+          <div styleName="icon-wrapper">
+            <div styleName="icon">&#xF09B;</div>
+            <div styleName="star-wrapper">
+              <span styleName="star">&#xF005;</span>
+              <span styleName="count">{transNumber(starCount)}</span>
+            </div>
           </div>
+          <div styleName="text">{trans("githubButton.github")}</div>
+        </a>
+        <div styleName="dashboard">
+          <a styleName="text" href={dashboardUrl} target="_blank">{trans("githubButton.dashboard")}</a>
         </div>
-        <div styleName="text">{trans("githubButton.text")}</div>
-      </a>
+      </div>
     );
     return node;
 

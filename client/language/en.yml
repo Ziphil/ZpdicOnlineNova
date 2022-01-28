@@ -454,7 +454,8 @@ giftPane:
     If you like this application, please send a gift to the developer from the button below.
     It may speed up the development.
 githubButton:
-  text: "View on GitHub"
+  github: "View on GitHub"
+  dashboard: "Dev dashboard"
 header:
   dictionaryList: "Dictionaries"
   notification: "Notifications"
