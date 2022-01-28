@@ -124,6 +124,8 @@ popup:
   dictionarySaving: >-
     現在アップロード処理中です。
     処理が終わるまでもう少々お待ちください。
+  failAddRelations: >-
+    双方向関連語の登録に失敗しました。
   dictionarySizeTooLarge: >-
     ファイルのサイズが大きすぎます。
     2 MB より大きなファイルはアップロードすることができません。

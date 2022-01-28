@@ -132,6 +132,20 @@ const WordEditor = create(
       return suggest;
     }, [dictionary.number, request]);
 
+    let addRelations = useCallback(async function (editedWord: Word): Promise<void> {
+      let number = dictionary.number;
+      let specs = tempWord.relations.filter((relation) => relation.mutual).map((relation) => {
+        let inverseRelation = Relation.createEmpty();
+        inverseRelation.number = editedWord.number;
+        inverseRelation.name = editedWord.name;
+        inverseRelation.title = relation.title;
+        return {wordNumber: relation.number, relation: inverseRelation};
+      });
+      if (specs.length > 0) {
+        await request("addRelations", {number, specs});
+      }
+    }, [dictionary, tempWord, request]);
+
     let editWord = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
       let number = dictionary.number;
       let equivalentStrings = tempWord.equivalentStrings;
@@ -141,21 +155,12 @@ const WordEditor = create(
       let response = await request("editWord", {number, word: tempWord});
       if (response.status === 200 && !("error" in response.data)) {
         let editedWord = response.data;
-        let specs = tempWord.relations.filter((relation) => relation.mutual).map((relation) => {
-          let inverseRelation = Relation.createEmpty();
-          inverseRelation.number = editedWord.number;
-          inverseRelation.name = editedWord.name;
-          inverseRelation.title = relation.title;
-          return {wordNumber: relation.number, relation: inverseRelation};
-        });
-        if (specs.length > 0) {
-          await request("addRelations", {number, specs});
-        }
+        await addRelations(editedWord);
         addInformationPopup("wordEdited");
         await onClose?.(event);
         await onEditConfirm?.(tempWord, event);
       }
-    }, [dictionary, tempWord, request, onClose, onEditConfirm, addInformationPopup]);
+    }, [dictionary, tempWord, request, onClose, onEditConfirm, addInformationPopup, addRelations]);
 
     let discardWord = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
       let number = dictionary.number;

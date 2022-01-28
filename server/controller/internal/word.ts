@@ -100,11 +100,7 @@ export class WordController extends Controller {
       } catch (error) {
         let body = (() => {
           if (error.name === "CustomError"){
-            if (error.type === "noSuchWordNumber") {
-              return CustomError.ofType("noSuchWordNumber");
-            } else if (error.type === "dictionarySaving") {
-              return CustomError.ofType("dictionarySaving");
-            }
+            return CustomError.ofType("failAddRelations");
           }
         })();
         Controller.respondError(response, body, error);

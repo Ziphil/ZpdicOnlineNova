@@ -124,6 +124,8 @@ popup:
   dictionarySaving: >-
     The upload is currently being processed.
     Please wait for a while until the process is completed.
+  failAddRelations: >-
+    Failed to register mutual relations.
   dictionarySizeTooLarge: >-
     The file is too large.
     You cannot upload files larger than 2 MB.

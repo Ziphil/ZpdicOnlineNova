@@ -202,7 +202,7 @@ type ServerSpecs = {
     request: {number: number, specs: Array<{wordNumber: number, relation: Relation}>},
     response: {
       success: null,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber" | "dictionarySaving">
+      error: CustomError<"noSuchDictionaryNumber" | "failAddRelations">
     }
   },
   editExample: {
