@@ -81,6 +81,40 @@ export class WordController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["addRelations"])
+  @before(verifyUser(), verifyDictionary("edit"))
+  public async [Symbol()](request: Request<"addRelations">, response: Response<"addRelations">): Promise<void> {
+    let dictionary = request.dictionary;
+    let specs = request.body.specs;
+    if (dictionary) {
+      try {
+        let promises = specs.map(async ({wordNumber, relation}) => {
+          await dictionary!.addRelation(wordNumber, relation);
+        });
+        let results = await Promise.allSettled(promises);
+        let rejectedResult = results.find((result) => result.status === "rejected") as PromiseRejectedResult | undefined;
+        if (rejectedResult !== undefined) {
+          throw rejectedResult.reason;
+        }
+        Controller.respond(response, null);
+      } catch (error) {
+        let body = (() => {
+          if (error.name === "CustomError"){
+            if (error.type === "noSuchWordNumber") {
+              return CustomError.ofType("noSuchWordNumber");
+            } else if (error.type === "dictionarySaving") {
+              return CustomError.ofType("dictionarySaving");
+            }
+          }
+        })();
+        Controller.respondError(response, body, error);
+      }
+    } else {
+      let body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
   @post(SERVER_PATHS["fetchWordNames"])
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {

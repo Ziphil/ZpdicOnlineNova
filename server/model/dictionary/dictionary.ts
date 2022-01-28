@@ -45,6 +45,7 @@ import {
   DictionarySettingsModel,
   Example,
   ExampleModel,
+  Relation,
   Serializer,
   Suggestion,
   Word,
@@ -257,6 +258,12 @@ export class DictionarySchema extends DiscardableSchema {
     await this.flagDiscarded();
   }
 
+  public async fetchOneWordByNumber(this: Dictionary, number: number): Promise<Word | null> {
+    let query = WordModel.findOneExist().where("dictionary", this).where("number", number);
+    let word = await query.exec();
+    return word;
+  }
+
   public async fetchWordNames<N extends number>(this: Dictionary, numbers: Array<N>): Promise<Record<N, string | null>> {
     let promises = numbers.map((number) => {
       let query = WordModel.findOneExist().where("dictionary", this).where("number", number);
@@ -326,6 +333,15 @@ export class DictionarySchema extends DiscardableSchema {
   public async discardWord(this: Dictionary, number: number): Promise<Word> {
     if (this.status !== "saving") {
       let word = await WordModel.discard(this, number);
+      return word;
+    } else {
+      throw new CustomError("dictionarySaving");
+    }
+  }
+
+  public async addRelation(this: Dictionary, number: number, relation: Relation): Promise<Word | null> {
+    if (this.status !== "saving") {
+      let word = await WordModel.addRelation(this, number, relation);
       return word;
     } else {
       throw new CustomError("dictionarySaving");

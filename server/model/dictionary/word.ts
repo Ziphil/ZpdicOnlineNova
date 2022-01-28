@@ -24,6 +24,7 @@ import {
   ExampleModel,
   InformationCreator,
   InformationSchema,
+  Relation,
   RelationCreator,
   RelationSchema,
   VariationCreator,
@@ -114,6 +115,27 @@ export class WordSchema extends DiscardableSchema {
     }
     LogUtil.log("word/discard", `number: ${dictionary.number} | current: ${word.id}`);
     return word;
+  }
+
+  public static async addRelation(dictionary: Dictionary, number: number, relation: Relation): Promise<Word | null> {
+    let currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", number);
+    if (currentWord) {
+      let existRelation = currentWord.relations.some((existingRelation) => existingRelation.number === relation.number);
+      if (!existRelation) {
+        let resultWord = currentWord.copy();
+        resultWord.relations.push(relation);
+        resultWord.createdDate = currentWord.createdDate;
+        resultWord.updatedDate = new Date();
+        await currentWord.flagDiscarded();
+        await resultWord.save();
+        LogUtil.log("word/addRelation", `number: ${dictionary.number} | current: ${currentWord?.id} | result: ${resultWord.id}`);
+        return resultWord;
+      } else {
+        return null;
+      }
+    } else {
+      throw new CustomError("noSuchWordNumber");
+    }
   }
 
   // 単語データの編集によって単語の綴りが変化した場合に、それによって起こり得る関連語データの不整合を修正します。
