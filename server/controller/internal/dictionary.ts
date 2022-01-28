@@ -76,17 +76,22 @@ export class DictionaryController extends Controller {
     let path = request.file!.path;
     let originalPath = request.file!.originalname;
     if (dictionary) {
-      let promise = new Promise(async (resolve, reject) => {
-        try {
-          await dictionary!.upload(path, originalPath);
-          await fs.unlink(path);
-          resolve(null);
-        } catch (error) {
-          reject(error);
-        }
-      });
-      let body = DictionaryCreator.create(dictionary);
-      Controller.respond(response, body);
+      if (request.file!.size <= 2 * 1024 * 1024) {
+        let promise = new Promise(async (resolve, reject) => {
+          try {
+            await dictionary!.upload(path, originalPath);
+            await fs.unlink(path);
+            resolve(null);
+          } catch (error) {
+            reject(error);
+          }
+        });
+        let body = DictionaryCreator.create(dictionary);
+        Controller.respond(response, body);
+      } else {
+        let body = CustomError.ofType("dictionarySizeTooLarge");
+        Controller.respondError(response, body);
+      }
     } else {
       let body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);

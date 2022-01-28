@@ -116,7 +116,7 @@ type ServerSpecs = {
     request: WithRecaptcha<{number: string}>,
     response: {
       success: Dictionary,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionaryNumber" | "dictionarySizeTooLarge">
     }
   },
   discardDictionary: {

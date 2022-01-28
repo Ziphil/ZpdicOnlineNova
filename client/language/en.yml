@@ -124,6 +124,9 @@ popup:
   dictionarySaving: >-
     The upload is currently being processed.
     Please wait for a while until the process is completed.
+  dictionarySizeTooLarge: >-
+    The file is too large.
+    You cannot upload files larger than 2 MB.
   noSuchWordNumber: >-
     You tried to edit a word which does not exist.
   noSuchExampleNumber: >-

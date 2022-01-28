@@ -124,6 +124,9 @@ popup:
   dictionarySaving: >-
     現在アップロード処理中です。
     処理が終わるまでもう少々お待ちください。
+  dictionarySizeTooLarge: >-
+    ファイルのサイズが大きすぎます。
+    2 MB より大きなファイルはアップロードすることができません。
   noSuchWordNumber: >-
     存在しない単語を編集しようとしました。
   noSuchExampleNumber: >-
