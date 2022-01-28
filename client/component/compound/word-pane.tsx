@@ -168,7 +168,7 @@ const WordPaneName = create(
         <div styleName="dropdown-button">
           <Button label={trans("wordPane.submit")} iconName="check" position="left" hideLabel={true} onClick={(event) => onSubmit?.("oneway", event)}/>
           <Dropdown specs={submitDropdownSpecs} placement="right" fillWidth={false} onSet={(direction) => onSubmit?.(direction)}>
-            <Button iconName="angle-down" position="right"/>
+            <Button iconName="ellipsis-h" position="right"/>
           </Dropdown>
         </div>
       </div>
