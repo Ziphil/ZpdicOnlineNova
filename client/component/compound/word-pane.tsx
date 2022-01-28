@@ -387,7 +387,7 @@ const WordPaneSubmitDropdownNode = create(
     let node = (
       <div>
         <span styleName="dropdown-icon">
-          <Icon name={(direction === "oneway") ? "long-arrow-alt-right" : "exchange-alt"}/>
+          <Icon name={(direction === "oneway") ? "arrow-right-long" : "arrow-right-arrow-left"}/>
         </span>
         {trans(`wordPane.${direction}`)}
       </div>

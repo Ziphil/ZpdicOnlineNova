@@ -184,7 +184,7 @@ const DictionaryHeaderButtons = create(
       </Dropdown>
     );
     let addCommissionButtonNode = (showAddCommissionLink) && (
-      <Button label={trans("dictionaryHeader.addCommission")} iconName="list-alt" style="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
+      <Button label={trans("dictionaryHeader.addCommission")} iconName="list-check" style="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
     );
     let exampleButtonNode = (showExampleLink) && (
       <Button label={trans("dictionaryHeader.example")} iconName="file-alt" style="simple" hideLabel={true} onClick={jumpExamplePage}/>

@@ -36,7 +36,7 @@ const Icon = create(
     if (slashed) {
       let node = (
         <span styleName="root stack" className={className}>
-          <FontAwesomeIcon icon="slash" transform="down-2 left-2" mask={name} fixedWidth={true}/>
+          <FontAwesomeIcon icon="slash" transform="down-2 left-2" mask={name as any} fixedWidth={true}/>
           <FontAwesomeIcon icon="slash"/>
         </span>
       );
@@ -44,7 +44,7 @@ const Icon = create(
     } else {
       let node = (
         <span styleName="root" className={className}>
-          <FontAwesomeIcon icon={name} flip={flip} spin={spin} pulse={pulse}/>
+          <FontAwesomeIcon icon={name as any} flip={flip} spin={spin} pulse={pulse}/>
         </span>
       );
       return node;
@@ -54,6 +54,6 @@ const Icon = create(
 );
 
 
-export type IconName = FontAwesomeIconName;
+export type IconName = string;
 
 export default Icon;

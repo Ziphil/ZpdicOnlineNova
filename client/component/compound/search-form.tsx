@@ -145,7 +145,7 @@ const SearchFormOrderModeDropdownNode = create(
     let node = (
       <div>
         <span styleName="order-direction-icon">
-          <Icon name={(orderDirection === "ascending") ? "sort-numeric-down" : "sort-numeric-down-alt"}/>
+          <Icon name={(orderDirection === "ascending") ? "arrow-down-a-z" : "arrow-down-z-a"}/>
         </span>
         {trans(`searchForm.${orderDirection}`)}
       </div>
