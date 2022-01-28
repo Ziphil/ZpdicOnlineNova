@@ -6,6 +6,7 @@ import {
   ReactElement,
   useCallback,
   useEffect,
+  useRef,
   useState
 } from "react";
 import Label from "/client/component/atom/label";
@@ -41,6 +42,7 @@ const FileInput = create(
 
     let [fileName, setFileName] = useState("");
     let [errorMessage, setErrorMessage] = useState<string | null>(null);
+    let inputRef = useRef<HTMLInputElement>(null);
     let [, {trans}] = useIntl();
 
     let handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
@@ -56,6 +58,7 @@ const FileInput = create(
         }
         setFileName(fileName);
         onSet?.(file);
+        inputRef.current?.focus();
       }
     }, [validate, onSet]);
 
@@ -80,7 +83,7 @@ const FileInput = create(
           <div>
             <label styleName="input-wrapper">
               <Label text={inputLabel} style={(errorMessage === null) ? "normal" : "error"}/>
-              <input styleName={inputStyleName} type="text" value={fileName} readOnly={true}/>
+              <input styleName={inputStyleName} type="text" value={fileName} readOnly={true} ref={inputRef}/>
             </label>
             <label styleName="button">
               {buttonLabel ?? trans("fileInput.button")}

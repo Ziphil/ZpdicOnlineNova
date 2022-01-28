@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.root >* >* {
+.root >* >*:first-child {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
