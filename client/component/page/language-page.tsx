@@ -23,7 +23,7 @@ const LanguagePage = create(
     let [, {trans}] = useIntl();
 
     let node = (
-      <Page>
+      <Page title={trans("languagePage.title")}>
         <div styleName="title">{trans("languagePage.title")}</div>
         <div styleName="form">
           <LanguageForm/>

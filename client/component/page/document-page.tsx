@@ -7,6 +7,9 @@ import {
   useEffect,
   useState
 } from "react";
+import {
+  Helmet
+} from "react-helmet";
 import ReactMarkdown from "react-markdown";
 import {
   useLocation,
@@ -88,8 +91,12 @@ const DocumentPage = create(
 
     if (found) {
       let renderers = {code: renderSourceTester};
+      let title = source?.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
       let node = (
         <Page>
+          <Helmet>
+            <title>{(title) ? `${title} — ZpDIC Online` : "ZpDIC Online"}</title>
+          </Helmet>
           <Loading loading={source === null}>
             <Markdown source={source!} allowHeading={true} renderers={renderers}/>
           </Loading>

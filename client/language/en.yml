@@ -595,6 +595,7 @@ contactPage:
     If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
     Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
 dashboardPage:
+  title: "User page"
   dictionary: "Dictionaries"
   notification: "Notifications"
   account: "Account"
@@ -640,6 +641,7 @@ dashboardPage:
     description: >-
       Delete this user.
 dictionaryListPage:
+  title: "Dictionaries"
   updatedDate: "Sort by update date"
   createdDate: "Sort by creation date"
 dictionarySettingPage:
@@ -740,6 +742,8 @@ notFoundPage:
     The page you requested could not be found.
     Please make sure that you type the correct address.
     It is also possible that the page you are looking for has been deleted or moved to another location.
+notificationPage:
+  title: "Notifications"
 registerPage:
   title: "Sign up"
   privacy: >-

@@ -1,3 +1,6 @@
+<!-- title: Complete specification -->
+
+
 ## Basic syntax
 In Zatlin, one describes what forms of strings to generate by using a syntax called “pattern”.
 The syntax of patterns will be explained in detail later.

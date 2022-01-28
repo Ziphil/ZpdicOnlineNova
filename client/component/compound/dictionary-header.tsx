@@ -13,6 +13,9 @@ import {
   useState
 } from "react";
 import {
+  Helmet
+} from "react-helmet";
+import {
   useLocation
 } from "react-router-dom";
 import {
@@ -84,6 +87,9 @@ const DictionaryHeader = create(
     let overlaysProps = {dictionary, wordEditorOpen, exampleEditorOpen, commissionEditorOpen, setWordEditorOpen, setExampleEditorOpen, setCommissionEditorOpen};
     let node = (
       <header styleName="root">
+        <Helmet>
+          <title>{(dictionary) ? `${dictionary.name} — ZpDIC Online` : "ZpDIC Online"}</title>
+        </Helmet>
         <div styleName="container">
           <div styleName="left">
             <div styleName="name">{nameNode}</div>

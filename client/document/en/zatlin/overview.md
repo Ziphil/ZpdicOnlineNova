@@ -1,3 +1,6 @@
+<!-- title: About Zatlin -->
+
+
 ## About Zatlin
 Zatlin is a system for automatically generating spellings of words in constructed languages.
 By writing spelling patterns that you want to generate according to a specific format and letting Zatlin process them, you can randomly generate spellings according to the pattern.

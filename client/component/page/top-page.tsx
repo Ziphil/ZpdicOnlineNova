@@ -43,7 +43,7 @@ const TopPage = create(
       {if: user === null, true: "hidden"}
     );
     let node = (
-      <Page>
+      <Page title="">
         <div styleName="top">
           <div styleName="logo">
             <Logo/>

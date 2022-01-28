@@ -23,7 +23,7 @@ const LoginPage = create(
     let [, {trans}] = useIntl();
 
     let node = (
-      <Page>
+      <Page title={trans("loginPage.title")}>
         <div styleName="title">{trans("loginPage.title")}</div>
         <div styleName="form">
           <LoginForm showRegister={false}/>

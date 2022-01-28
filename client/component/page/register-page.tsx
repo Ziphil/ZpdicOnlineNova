@@ -24,7 +24,7 @@ const RegisterPage = create(
     let [, {trans}] = useIntl();
 
     let node = (
-      <Page>
+      <Page title={trans("registerPage.title")}>
         <div styleName="title">{trans("registerPage.title")}</div>
         <div styleName="explanation">
           <p>

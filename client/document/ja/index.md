@@ -1,3 +1,6 @@
+<!-- title: ドキュメント -->
+
+
 ## 組み込みアプリケーション
 ### Akrantiain
 
@@ -7,7 +10,7 @@
 ### Zatlin
 
 - [Zatlin とは](document/zatlin/overview)
-- [入門](document/zatlin/introduction)
+- [Zatlin 入門](document/zatlin/introduction)
 - [構文の詳細](document/zatlin/syntax)
 - [エラーの種類と対処法](document/zatlin/error)
 

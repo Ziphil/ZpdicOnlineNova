@@ -1,3 +1,6 @@
+<!-- title: Privacy policy -->
+
+
 ## Overview
 This privacy policy explains the policies to which ZpDIC Online (hereinafter referred to as “this application”) adheres when handling personal information of the users of this application (hereinafter referred to as “users”) in its various services.
 
