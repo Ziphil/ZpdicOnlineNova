@@ -14,6 +14,8 @@ import {
   AsyncOrSync
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
+import Dropdown from "/client/component/atom/dropdown";
+import Icon from "/client/component/atom/icon";
 import Link from "/client/component/atom/link";
 import Markdown from "/client/component/atom/markdown";
 import ExampleEditor from "/client/component/compound/example-editor";
@@ -57,7 +59,7 @@ const WordPane = create(
     style?: "normal" | "simple",
     showEditLink: boolean,
     showButton?: boolean,
-    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
+    onSubmit?: () => void,
     onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onEditExampleConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
@@ -124,7 +126,7 @@ const WordPaneName = create(
     word: Word | DetailedWord,
     showEditLink: boolean,
     showButton: boolean,
-    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => void,
+    onSubmit?: () => void,
     setEditorOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
@@ -152,6 +154,10 @@ const WordPaneName = create(
         }
       }
     }, [dictionary, word]);
+    let submitDropdownSpecs = [
+      {value: "oneway", node: <WordPaneSubmitDropdownNode value="oneway"/>},
+      {value: "mutual", node: <WordPaneSubmitDropdownNode value="mutual"/>}
+    ];
     let editButtonNode = (showEditLink && !showButton) && (
       <div styleName="button">
         <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={() => setEditorOpen(true)}/>
@@ -159,7 +165,12 @@ const WordPaneName = create(
     );
     let submitButtonNode = (showButton) && (
       <div styleName="button">
-        <Button label={trans("wordPane.submit")} iconName="check" style="simple" onClick={onSubmit}/>
+        <div styleName="dropdown-button">
+          <Button label={trans("wordPane.submit")} iconName="check" position="left" hideLabel={true} onClick={onSubmit}/>
+          <Dropdown specs={submitDropdownSpecs} placement="right" fillWidth={false} onClick={onSubmit}>
+            <Button iconName="ellipsis-h" position="right"/>
+          </Dropdown>
+        </div>
       </div>
     );
     let pronunciationNode = (pronunciationText !== undefined) && (() => {
@@ -358,6 +369,30 @@ const WordPaneExamples = create(
       </div>
     );
     return node || null;
+
+  }
+);
+
+
+const WordPaneSubmitDropdownNode = create(
+  require("./word-pane.scss"),
+  function ({
+    value
+  }: {
+    value: "oneway" | "mutual"
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+
+    let node = (
+      <div>
+        <span styleName="icon">
+          <Icon name={(value === "oneway") ? "long-arrow-alt-right" : "exchange-alt"}/>
+        </span>
+        {trans(`wordPane.${value}`)}
+      </div>
+    );
+    return node;
 
   }
 );

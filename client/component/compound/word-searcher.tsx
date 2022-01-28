@@ -47,7 +47,7 @@ const WordSearcher = create(
     dictionary: EnhancedDictionary | null,
     style?: "normal" | "simple",
     showButton?: boolean,
-    onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+    onSubmit?: (word: Word) => void,
     onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
@@ -128,7 +128,7 @@ const WordSearcherWordList = create(
     showButton: boolean,
     page: number,
     hitResult: DictionaryHitResult,
-    onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+    onSubmit?: (word: Word) => void,
     onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     handlePageSet: (page: number) => Promise<void>
   }): ReactElement {

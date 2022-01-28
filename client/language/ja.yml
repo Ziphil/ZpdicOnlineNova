@@ -576,6 +576,8 @@ wordNameFrequencyPane:
 wordPane:
   edit: "編集"
   submit: "決定"
+  oneway: "一方向で登録"
+  mutual: "双方向で登録"
 zatlinExecutor:
   title: "Zatlin {version}"
   source: "ソースコード"

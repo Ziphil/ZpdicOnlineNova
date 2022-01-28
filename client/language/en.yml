@@ -577,6 +577,8 @@ wordNameFrequencyPane:
 wordPane:
   edit: "Edit"
   submit: "Select"
+  oneway: "Make one-way"
+  mutual: "Make mutual"
 zatlinExecutor:
   title: "Zatlin {version}"
   source: "Source code"

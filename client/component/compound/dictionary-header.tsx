@@ -175,8 +175,8 @@ const DictionaryHeaderButtons = create(
     }, [dictionary, request]);
 
     let addDropdownSpecs = [
-      {value: "word", node: <DictionaryHeaderAddDropdown type="word"/>},
-      {value: "example", node: <DictionaryHeaderAddDropdown type="example"/>}
+      {value: "word", node: <DictionaryHeaderAddDropdownNode type="word"/>},
+      {value: "example", node: <DictionaryHeaderAddDropdownNode type="example"/>}
     ] as const;
     let addButtonNode = (showAddLink) && (
       <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={addSomething}>
@@ -210,7 +210,7 @@ const DictionaryHeaderButtons = create(
 );
 
 
-const DictionaryHeaderAddDropdown = create(
+const DictionaryHeaderAddDropdownNode = create(
   require("./dictionary-header.scss"),
   function ({
     type

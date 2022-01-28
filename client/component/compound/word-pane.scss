@@ -47,6 +47,15 @@
   margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }
 
+.dropdown-button {
+  display: flex;
+}
+
+.icon {
+  margin: 0rpx $blank-margin 0rpx 0rpx;
+  color: $light-color;
+}
+
 .pronunciation {
   margin: 0em 0.5em * (120% / 80%) 0em 0em;
   color: $head-color;
