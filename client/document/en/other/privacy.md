@@ -27,7 +27,7 @@ In this application, the user may be asked to send the following information whe
 
 This information will be sent as an email to the developers of this application in order to respond to your inquiry.
 At this time, this application may compare the submitted information with those in the database managed by this application in order to identify the user.
-In addition, in order to smoothly develop this application, the content of the inquiry may be made public as an issue in the [GitHub repository](https://github.com/Ziphil/ZpdicOnlineNova) of this application.
+In addition, in order to smoothly develop this application, the content of the inquiry may be made public in the [development dashboard](https://ziphil.notion.site/ZpDIC-Online-987030f6505e4cf1ba8fe08121584d93) of this application.
 In such cases, only the content of the inquiry will be disclosed, and personal information such as email addresses will never be made public.
 
 These personal information will be used to reply to your questions or to contact you with necessary information via email, and will not be used for any purpose other than those for which you provided the information.
@@ -64,7 +64,7 @@ This data collection is subject to the Google's [Privacy Policy](https://policie
 This reCAPTCHA is used to determine whether the visitor of this application is a human or a robot, and to protect this application and its users from malicious spam.
 This application does not use any information collected by reCAPTCHA and Google.
 
-## Disclosure or deletion of personal information
+## Management of personal information
 This application manages personal information appropriately, and will not disclose or delete it except in the following cases:
 
 - When there is consent from the individual
@@ -87,4 +87,4 @@ If you have any questions regarding the privacy policy of this application, plea
 - email address — ziphil.shaleiras❖gmail.com (❖ → @)
 
 ## Enactment date
-This privacy policy is effective as of 30 January 2021.
+This privacy policy was enacted on 30 January 2021, and partially revised on 28 January 2022.

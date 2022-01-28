@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   ReactElement
 } from "react";
+import Icon from "/client/component/atom/icon";
 import {
   create
 } from "/client/component/create";
@@ -24,21 +25,21 @@ const FeaturePane = create(
       <div styleName="root">
         <div styleName="item">
           <div styleName="head-wrapper">
-            <div styleName="icon">&#xF044;</div>
+            <div styleName="icon"><Icon name="edit"/></div>
             <h1 styleName="head">{trans("featurePane.dictionary.title")}</h1>
           </div>
           <p styleName="text">{trans("featurePane.dictionary.text")}</p>
         </div>
         <div styleName="item">
           <div styleName="head-wrapper">
-            <div styleName="icon">&#xF002;</div>
+            <div styleName="icon"><Icon name="search"/></div>
             <h1 styleName="head">{trans("featurePane.search.title")}</h1>
           </div>
           <p styleName="text">{trans("featurePane.search.text")}</p>
         </div>
         <div styleName="item">
           <div styleName="head-wrapper">
-            <div styleName="icon">&#xF0C0;</div>
+            <div styleName="icon"><Icon name="users"/></div>
             <h1 styleName="head">{trans("featurePane.user.title")}</h1>
           </div>
           <p styleName="text">{trans("featurePane.user.text")}</p>
