@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.root {
+.root >* >* {
   display: flex;
   flex-direction: row;
   align-items: flex-end;
@@ -15,6 +15,11 @@
 
 .input {
   @include input(map-get($colors, primary));
+  border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+}
+
+.input.error {
+  @include input(map-get($colors, error));
   border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
 }
 
