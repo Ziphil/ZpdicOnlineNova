@@ -18,6 +18,14 @@
   z-index: 50;
 }
 
+.suggestion.left {
+  left: 0rpx;
+}
+
+.suggestion.right {
+  right: 0rpx;
+}
+
 .suggestion.arrow {
   margin: $small-margin 0rpx 0rpx 0rpx;
 }

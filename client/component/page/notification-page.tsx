@@ -8,6 +8,9 @@ import NotificationList from "/client/component/compound/notification-list";
 import {
   create
 } from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import Page from "/client/component/page/page";
 
 
@@ -17,8 +20,10 @@ const NotificationPage = create(
   }: {
   }): ReactElement {
 
+    let [, {trans}] = useIntl();
+
     let node = (
-      <Page>
+      <Page title={trans("notificationPage.title")}>
         <div styleName="list">
           <NotificationList size={10} showPagination={true}/>
         </div>

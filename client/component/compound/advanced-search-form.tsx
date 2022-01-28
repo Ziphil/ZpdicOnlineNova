@@ -93,8 +93,8 @@ const AdvancedSearchForm = create(
     }, [dictionary.number, request]);
 
     let elements = parameter.elements;
-    let modeSpecs = ADVANCED_WORD_MODES.map((mode) => ({value: mode, text: trans(`advancedSearchForm.${mode}`)}));
-    let typeSpecs = WORD_TYPES.map((type) => ({value: type, text: trans(`advancedSearchForm.${type}`)}));
+    let modeSpecs = ADVANCED_WORD_MODES.map((mode) => ({value: mode, node: trans(`advancedSearchForm.${mode}`)}));
+    let typeSpecs = WORD_TYPES.map((type) => ({value: type, node: trans(`advancedSearchForm.${type}`)}));
     let searchNodes = elements.map((element, index) => {
       let modeLabel = (index === 0) ? trans("advancedSearchForm.mode") : undefined;
       let typeLabel = (index === 0) ? trans("advancedSearchForm.type") : undefined;

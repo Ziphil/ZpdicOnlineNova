@@ -124,6 +124,8 @@ popup:
   dictionarySaving: >-
     現在アップロード処理中です。
     処理が終わるまでもう少々お待ちください。
+  failAddRelations: >-
+    双方向関連語の登録に失敗しました。
   dictionarySizeTooLarge: >-
     ファイルのサイズが大きすぎます。
     2 MB より大きなファイルはアップロードすることができません。
@@ -528,7 +530,7 @@ searchForm:
   custom: "独自順序順"
   updatedDate: "更新日時順"
   createdDate: "作成日時順"
-  ascending: "昇順 (通常)"
+  ascending: "昇順"
   descending: "降順"
   advancedSearch: "高度な検索"
 sourceTester:
@@ -576,6 +578,8 @@ wordNameFrequencyPane:
 wordPane:
   edit: "編集"
   submit: "決定"
+  oneway: "一方向で登録"
+  mutual: "双方向で登録"
 zatlinExecutor:
   title: "Zatlin {version}"
   source: "ソースコード"
@@ -590,6 +594,7 @@ contactPage:
     匿名でのお問い合わせをご希望の場合は、ログアウトした状態で名前欄を空欄にした上で送信してください。
     なお、辞書の設定や編集などに関わるような、ユーザーの権限が必要になる内容に関するお問い合わせの場合、匿名では対応できない場合がありますのでご了承ください。
 dashboardPage:
+  title: "ユーザーページ"
   dictionary: "辞書"
   notification: "通知"
   account: "アカウント"
@@ -635,6 +640,7 @@ dashboardPage:
     description: >-
       このユーザーを削除します。
 dictionaryListPage:
+  title: "辞書一覧"
   updatedDate: "更新日時順"
   createdDate: "作成日時順"
 dictionarySettingPage:
@@ -735,6 +741,8 @@ notFoundPage:
     参照しようとしたページが見つかりませんでした。
     指定した URL が正しいか確認してください。
     もしくは、お探しのページは削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
+notificationPage:
+  title: "お知らせ"
 registerPage:
   title: "新規登録"
   privacy: >-

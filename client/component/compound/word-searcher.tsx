@@ -9,6 +9,9 @@ import {
   useState
 } from "react";
 import {
+  useMount
+} from "react-use";
+import {
   AsyncOrSync
 } from "ts-essentials";
 import Loading from "/client/component/compound/loading";
@@ -47,7 +50,7 @@ const WordSearcher = create(
     dictionary: EnhancedDictionary | null,
     style?: "normal" | "simple",
     showButton?: boolean,
-    onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+    onSubmit?: (word: Word, direction: "oneway" | "mutual") => void,
     onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
@@ -93,6 +96,10 @@ const WordSearcher = create(
       await updateWordsImmediately({page});
     }, [updateWordsImmediately]);
 
+    useMount(async () => {
+      await updateWordsImmediately();
+    });
+
     let innerProps = {dictionary, style, showButton, page, hitResult, onSubmit, onEditConfirm, handlePageSet};
     let innerNode = (dictionary !== null) && <WordSearcherWordList {...innerProps}/>;
     let node = (
@@ -128,7 +135,7 @@ const WordSearcherWordList = create(
     showButton: boolean,
     page: number,
     hitResult: DictionaryHitResult,
-    onSubmit?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
+    onSubmit?: (word: Word, direction: "oneway" | "mutual") => void,
     onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     handlePageSet: (page: number) => Promise<void>
   }): ReactElement {

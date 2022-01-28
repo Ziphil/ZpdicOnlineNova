@@ -13,6 +13,9 @@ import {
   useState
 } from "react";
 import {
+  Helmet
+} from "react-helmet";
+import {
   useLocation
 } from "react-router-dom";
 import {
@@ -84,6 +87,9 @@ const DictionaryHeader = create(
     let overlaysProps = {dictionary, wordEditorOpen, exampleEditorOpen, commissionEditorOpen, setWordEditorOpen, setExampleEditorOpen, setCommissionEditorOpen};
     let node = (
       <header styleName="root">
+        <Helmet>
+          <title>{(dictionary) ? `${dictionary.name} — ZpDIC Online` : "ZpDIC Online"}</title>
+        </Helmet>
         <div styleName="container">
           <div styleName="left">
             <div styleName="name">{nameNode}</div>
@@ -175,8 +181,8 @@ const DictionaryHeaderButtons = create(
     }, [dictionary, request]);
 
     let addDropdownSpecs = [
-      {value: "word", node: <DictionaryHeaderAddDropdown type="word"/>},
-      {value: "example", node: <DictionaryHeaderAddDropdown type="example"/>}
+      {value: "word", node: <DictionaryHeaderAddDropdownNode type="word"/>},
+      {value: "example", node: <DictionaryHeaderAddDropdownNode type="example"/>}
     ] as const;
     let addButtonNode = (showAddLink) && (
       <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={addSomething}>
@@ -184,7 +190,7 @@ const DictionaryHeaderButtons = create(
       </Dropdown>
     );
     let addCommissionButtonNode = (showAddCommissionLink) && (
-      <Button label={trans("dictionaryHeader.addCommission")} iconName="list-alt" style="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
+      <Button label={trans("dictionaryHeader.addCommission")} iconName="list-check" style="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
     );
     let exampleButtonNode = (showExampleLink) && (
       <Button label={trans("dictionaryHeader.example")} iconName="file-alt" style="simple" hideLabel={true} onClick={jumpExamplePage}/>
@@ -210,7 +216,7 @@ const DictionaryHeaderButtons = create(
 );
 
 
-const DictionaryHeaderAddDropdown = create(
+const DictionaryHeaderAddDropdownNode = create(
   require("./dictionary-header.scss"),
   function ({
     type

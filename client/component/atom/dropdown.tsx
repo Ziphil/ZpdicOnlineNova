@@ -22,6 +22,7 @@ let Dropdown = create(
   function <V>({
     specs,
     open = false,
+    placement = "left",
     autoMode = "focus",
     showArrow = false,
     fillWidth = true,
@@ -35,6 +36,7 @@ let Dropdown = create(
   }: {
     specs: ArrayLike<DropdownSpec<V>>,
     open?: boolean,
+    placement?: "left" | "right",
     autoMode?: "focus" | "click" | null,
     showArrow?: boolean,
     fillWidth?: boolean,
@@ -89,6 +91,7 @@ let Dropdown = create(
     let actualOpen = (autoMode !== null) ? currentOpen : open;
     let styleName = StyleNameUtil.create(
       "suggestion",
+      placement,
       {if: showArrow, true: "arrow"},
       {if: fillWidth, true: "fill-width"},
       {if: restrictHeight, true: "restrict-height"}

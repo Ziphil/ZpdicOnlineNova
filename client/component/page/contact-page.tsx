@@ -24,7 +24,7 @@ const ContactPage = create(
     let [, {trans}] = useIntl();
 
     let node = (
-      <Page>
+      <Page title={trans("contactPage.title")}>
         <div styleName="title">{trans("contactPage.title")}</div>
         <div styleName="explanation">
           <p>

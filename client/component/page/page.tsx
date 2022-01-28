@@ -5,6 +5,9 @@ import {
   ReactElement,
   ReactNode
 } from "react";
+import {
+  Helmet
+} from "react-helmet";
 import DictionaryHeader from "/client/component/compound/dictionary-header";
 import Footer from "/client/component/compound/footer";
 import Header from "/client/component/compound/header";
@@ -23,12 +26,14 @@ import {
 const Page = create(
   require("./page.scss"), "Page",
   function ({
+    title,
     dictionary = null,
     showDictionary = false,
     showAddLink = false,
     showSettingLink = false,
     children
   }: {
+    title?: string,
     dictionary?: EnhancedDictionary | null,
     showDictionary?: boolean,
     showAddLink?: boolean,
@@ -45,6 +50,9 @@ const Page = create(
     );
     let node = (
       <div styleName="root" id="page">
+        <Helmet>
+          <title>{(title) ? `${title} — ZpDIC Online` : "ZpDIC Online"}</title>
+        </Helmet>
         <PopupInformationPane/>
         <Header/>
         {dictionaryHeaderNode}

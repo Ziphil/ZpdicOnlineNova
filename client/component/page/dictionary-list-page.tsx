@@ -50,7 +50,7 @@ const DictionaryListPage = create(
       {value: "createdDate", label: trans("dictionaryListPage.createdDate")}
     ];
     let node = (
-      <Page>
+      <Page title={trans("dictionaryListPage.title")}>
         <div styleName="search-form">
           <RadioGroup name="order" value={order} specs={specs} onSet={(order) => setOrder(order)}/>
         </div>

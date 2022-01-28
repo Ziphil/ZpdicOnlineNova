@@ -2,7 +2,8 @@
 
 import * as react from "react";
 import {
-  ReactElement
+  ReactElement,
+  ReactNode
 } from "react";
 import Dropdown from "/client/component/atom/dropdown";
 import Icon from "/client/component/atom/icon";
@@ -33,10 +34,9 @@ const Selection = create(
     className?: string
   }): ReactElement {
 
-    let dropdownSpecs = Array.from(specs).map((spec) => ({value: spec.value, node: spec.text}));
     let node = (
       <div styleName="root" className={className}>
-        <Dropdown specs={dropdownSpecs} onSet={onSet}>
+        <Dropdown specs={specs} onSet={onSet}>
           <label styleName="label-wrapper">
             <Label text={label} showRequired={showRequired} showOptional={showOptional}/>
             <SelectionSelection {...{value, specs}}/>
@@ -62,10 +62,10 @@ const SelectionSelection = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let text = Array.from(specs).find((spec) => spec.value === value)!.text;
+    let innerNode = Array.from(specs).find((spec) => spec.value === value)!.node;
     let node = (
       <button styleName="selection">
-        <div styleName="text">{text}</div>
+        <div styleName="text">{innerNode}</div>
         <Icon className={styles!["arrow"]} name="angle-down"/>
       </button>
     );
@@ -75,6 +75,6 @@ const SelectionSelection = create(
 );
 
 
-export type SelectionSpec<V> = {value: V, text: string};
+export type SelectionSpec<V> = {value: V, node: ReactNode};
 
 export default Selection;

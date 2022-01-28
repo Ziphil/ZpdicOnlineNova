@@ -18,6 +18,7 @@ import {
   EditableExample,
   EditableWord,
   Example,
+  Relation,
   Suggestion,
   UserDictionary,
   Word,
@@ -62,6 +63,7 @@ export const SERVER_PATHS = {
   respondInvitation: "/invitation/respond",
   editWord: "/word/edit",
   discardWord: "/word/discard",
+  addRelations: "/word/relation",
   editExample: "/example/edit",
   discardExample: "/example/discard",
   addCommission: "/commission/add",
@@ -194,6 +196,13 @@ type ServerSpecs = {
     response: {
       success: Word,
       error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber" | "dictionarySaving">
+    }
+  },
+  addRelations: {
+    request: {number: number, specs: Array<{wordNumber: number, relation: Relation}>},
+    response: {
+      success: null,
+      error: CustomError<"noSuchDictionaryNumber" | "failAddRelations">
     }
   },
   editExample: {

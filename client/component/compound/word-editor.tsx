@@ -103,16 +103,19 @@ const WordEditor = create(
       setRelationChooserOpen(true);
     }, []);
 
-    let editRelation = useCallback(function (relationWord: Word): void {
-      let relationIndex = editingRelationIndexRef.current!;
-      if (tempWord.relations[relationIndex] === undefined) {
-        tempWord.relations[relationIndex] = Relation.createEmpty();
-      }
-      tempWord.relations[relationIndex].number = relationWord.number;
-      tempWord.relations[relationIndex].name = relationWord.name;
-      setTempWord(tempWord);
+    let editRelation = useCallback(function (relationWord: Word, direction: "oneway" | "mutual"): void {
+      setTempWord((tempWord) => {
+        let relationIndex = editingRelationIndexRef.current!;
+        if (tempWord.relations[relationIndex] === undefined) {
+          tempWord.relations[relationIndex] = Relation.createEmpty();
+        }
+        tempWord.relations[relationIndex].number = relationWord.number;
+        tempWord.relations[relationIndex].name = relationWord.name;
+        tempWord.relations[relationIndex].mutual = direction === "mutual";
+        return {...tempWord};
+      });
       setRelationChooserOpen(false);
-    }, [tempWord]);
+    }, []);
 
     let createSuggest = useCallback(function (propertyName: string): Suggest {
       let number = dictionary.number;
@@ -129,6 +132,20 @@ const WordEditor = create(
       return suggest;
     }, [dictionary.number, request]);
 
+    let addRelations = useCallback(async function (editedWord: Word): Promise<void> {
+      let number = dictionary.number;
+      let specs = tempWord.relations.filter((relation) => relation.mutual).map((relation) => {
+        let inverseRelation = Relation.createEmpty();
+        inverseRelation.number = editedWord.number;
+        inverseRelation.name = editedWord.name;
+        inverseRelation.title = relation.title;
+        return {wordNumber: relation.number, relation: inverseRelation};
+      });
+      if (specs.length > 0) {
+        await request("addRelations", {number, specs});
+      }
+    }, [dictionary, tempWord, request]);
+
     let editWord = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
       let number = dictionary.number;
       let equivalentStrings = tempWord.equivalentStrings;
@@ -136,12 +153,14 @@ const WordEditor = create(
         tempWord.equivalents[index].names = equivalentString.split(/\s*(?:,|、|・)\s*/);
       });
       let response = await request("editWord", {number, word: tempWord});
-      if (response.status === 200) {
+      if (response.status === 200 && !("error" in response.data)) {
+        let editedWord = response.data;
+        await addRelations(editedWord);
         addInformationPopup("wordEdited");
         await onClose?.(event);
         await onEditConfirm?.(tempWord, event);
       }
-    }, [dictionary, tempWord, request, onClose, onEditConfirm, addInformationPopup]);
+    }, [dictionary, tempWord, request, onClose, onEditConfirm, addInformationPopup, addRelations]);
 
     let discardWord = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
       let number = dictionary.number;
@@ -660,7 +679,7 @@ function createTempWord(word: EditableWord | null, defaultName?: string, default
   return {...tempWord, equivalentStrings};
 }
 
-export type TempEditableWord = EditableWord & {equivalentStrings: Array<string>};
+export type TempEditableWord = Omit<EditableWord, "relations"> & {equivalentStrings: Array<string>, relations: Array<Relation & {mutual?: boolean}>};
 export type MutateWordCallback = <T extends Array<unknown>>(setter: (tempWord: TempEditableWord, ...args: T) => void) => (...args: T) => void;
 
 export default WordEditor;

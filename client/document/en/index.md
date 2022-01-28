@@ -1,13 +1,16 @@
+<!-- title: Documents -->
+
+
 ## Embedded applications
 ### Akrantiain
 
-- [About](document/akrantiain/overview)
-- [Introduction](document/akrantiain/introduction)
+- [About Akrantiain](document/akrantiain/overview)
+- [Akrantiain introduction](document/akrantiain/introduction)
 
 ### Zatlin
 
-- [About](document/zatlin/overview)
-- [Introduction](document/zatlin/introduction)
+- [About Akrantiain](document/zatlin/overview)
+- [Zatlin introduction](document/zatlin/introduction)
 - [Complete specification](document/zatlin/syntax)
 - ~~Errors~~
 

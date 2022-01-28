@@ -1,3 +1,6 @@
+<!-- title: About Akrantiain -->
+
+
 ## About Akrantiain
 Akrantiain is a system for automatically generating phonetic symbols from the spelling of words in constructed languages.
 By writing spelling rules according to a specific format and letting Akrantiain process them, you can generate phonetic symbols.

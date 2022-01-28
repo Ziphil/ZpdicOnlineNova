@@ -34,7 +34,7 @@ const ResetUserPasswordPage = create(
       return tokenKey;
     }, [location]);
     let node = (
-      <Page>
+      <Page title={trans("resetUserPasswordPage.title")}>
         <div styleName="title">{trans("resetUserPasswordPage.title")}</div>
         <div styleName="form">
           <ResetUserPasswordForm tokenKey={tokenKey}/>

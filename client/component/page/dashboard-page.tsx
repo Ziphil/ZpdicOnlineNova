@@ -105,7 +105,7 @@ const DashboardPage = create(
     );
     let contentNode = (user) && <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode, fetchEditInvitations, fetchTransferInvitations}}/>;
     let node = (
-      <Page>
+      <Page title={trans("dashboardPage.title")}>
         {activateUserForm}
         <Menu mode={mode} specs={menuSpecs}/>
         {contentNode}

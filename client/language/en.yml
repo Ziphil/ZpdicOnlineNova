@@ -124,6 +124,8 @@ popup:
   dictionarySaving: >-
     The upload is currently being processed.
     Please wait for a while until the process is completed.
+  failAddRelations: >-
+    Failed to register mutual relations.
   dictionarySizeTooLarge: >-
     The file is too large.
     You cannot upload files larger than 2 MB.
@@ -529,8 +531,8 @@ searchForm:
   custom: "By custom order"
   updatedDate: "By update date"
   createdDate: "By creation date"
-  ascending: "Ascending"
-  descending: "Descending"
+  ascending: "Asc"
+  descending: "Desc"
   advancedSearch: "Advanced search"
 sourceTester:
   try: "Try"
@@ -577,6 +579,8 @@ wordNameFrequencyPane:
 wordPane:
   edit: "Edit"
   submit: "Select"
+  oneway: "Make one-way"
+  mutual: "Make mutual"
 zatlinExecutor:
   title: "Zatlin {version}"
   source: "Source code"
@@ -591,6 +595,7 @@ contactPage:
     If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
     Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
 dashboardPage:
+  title: "User page"
   dictionary: "Dictionaries"
   notification: "Notifications"
   account: "Account"
@@ -636,6 +641,7 @@ dashboardPage:
     description: >-
       Delete this user.
 dictionaryListPage:
+  title: "Dictionaries"
   updatedDate: "Sort by update date"
   createdDate: "Sort by creation date"
 dictionarySettingPage:
@@ -736,6 +742,8 @@ notFoundPage:
     The page you requested could not be found.
     Please make sure that you type the correct address.
     It is also possible that the page you are looking for has been deleted or moved to another location.
+notificationPage:
+  title: "Notifications"
 registerPage:
   title: "Sign up"
   privacy: >-
