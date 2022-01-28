@@ -59,7 +59,7 @@ const WordPane = create(
     style?: "normal" | "simple",
     showEditLink: boolean,
     showButton?: boolean,
-    onSubmit?: () => void,
+    onSubmit?: (direction: "oneway" | "mutual", event?: MouseEvent<HTMLButtonElement>) => void,
     onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onEditExampleConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
@@ -126,7 +126,7 @@ const WordPaneName = create(
     word: Word | DetailedWord,
     showEditLink: boolean,
     showButton: boolean,
-    onSubmit?: () => void,
+    onSubmit?: (direction: "oneway" | "mutual", event?: MouseEvent<HTMLButtonElement>) => void,
     setEditorOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
@@ -157,7 +157,7 @@ const WordPaneName = create(
     let submitDropdownSpecs = [
       {value: "oneway", node: <WordPaneSubmitDropdownNode value="oneway"/>},
       {value: "mutual", node: <WordPaneSubmitDropdownNode value="mutual"/>}
-    ];
+    ] as const;
     let editButtonNode = (showEditLink && !showButton) && (
       <div styleName="button">
         <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={() => setEditorOpen(true)}/>
@@ -166,8 +166,8 @@ const WordPaneName = create(
     let submitButtonNode = (showButton) && (
       <div styleName="button">
         <div styleName="dropdown-button">
-          <Button label={trans("wordPane.submit")} iconName="check" position="left" hideLabel={true} onClick={onSubmit}/>
-          <Dropdown specs={submitDropdownSpecs} placement="right" fillWidth={false} onClick={onSubmit}>
+          <Button label={trans("wordPane.submit")} iconName="check" position="left" hideLabel={true} onClick={(event) => onSubmit?.("oneway", event)}/>
+          <Dropdown specs={submitDropdownSpecs} placement="right" fillWidth={false} onSet={(direction) => onSubmit?.(direction)}>
             <Button iconName="ellipsis-h" position="right"/>
           </Dropdown>
         </div>

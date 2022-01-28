@@ -103,16 +103,19 @@ const WordEditor = create(
       setRelationChooserOpen(true);
     }, []);
 
-    let editRelation = useCallback(function (relationWord: Word): void {
-      let relationIndex = editingRelationIndexRef.current!;
-      if (tempWord.relations[relationIndex] === undefined) {
-        tempWord.relations[relationIndex] = Relation.createEmpty();
-      }
-      tempWord.relations[relationIndex].number = relationWord.number;
-      tempWord.relations[relationIndex].name = relationWord.name;
-      setTempWord(tempWord);
+    let editRelation = useCallback(function (relationWord: Word, direction: "oneway" | "mutual"): void {
+      setTempWord((tempWord) => {
+        let relationIndex = editingRelationIndexRef.current!;
+        if (tempWord.relations[relationIndex] === undefined) {
+          tempWord.relations[relationIndex] = Relation.createEmpty();
+        }
+        tempWord.relations[relationIndex].number = relationWord.number;
+        tempWord.relations[relationIndex].name = relationWord.name;
+        tempWord.relations[relationIndex].mutual = direction === "mutual";
+        return {...tempWord};
+      });
       setRelationChooserOpen(false);
-    }, [tempWord]);
+    }, []);
 
     let createSuggest = useCallback(function (propertyName: string): Suggest {
       let number = dictionary.number;
@@ -660,7 +663,7 @@ function createTempWord(word: EditableWord | null, defaultName?: string, default
   return {...tempWord, equivalentStrings};
 }
 
-export type TempEditableWord = EditableWord & {equivalentStrings: Array<string>};
+export type TempEditableWord = EditableWord & {equivalentStrings: Array<string>, relations: Array<Relation & {mutual?: boolean}>};
 export type MutateWordCallback = <T extends Array<unknown>>(setter: (tempWord: TempEditableWord, ...args: T) => void) => (...args: T) => void;
 
 export default WordEditor;

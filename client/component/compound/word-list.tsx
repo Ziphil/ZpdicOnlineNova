@@ -45,7 +45,7 @@ const WordList = create(
     showButton?: boolean,
     size: number,
     offset: number,
-    onSubmit?: (word: Word) => void,
+    onSubmit?: (word: Word, direction: "oneway" | "mutual", event?: MouseEvent<HTMLButtonElement>) => void,
     onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onDiscardConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => void,
     onEditExampleConfirm?: (word: Word, example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
