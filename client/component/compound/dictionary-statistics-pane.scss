@@ -9,6 +9,10 @@
   color: $light-color;
 }
 
+.row-wrapper {
+  margin: $large-margin 0rpx 0rpx 0rpx;
+}
+
 .row {
   @include reset-first-margin;
   margin: $medium-margin 0rpx 0rpx 0rpx;

@@ -124,6 +124,9 @@ popup:
   dictionarySaving: >-
     現在アップロード処理中です。
     処理が終わるまでもう少々お待ちください。
+  dictionarySizeTooLarge: >-
+    ファイルのサイズが大きすぎます。
+    2 MB より大きなファイルはアップロードすることができません。
   noSuchWordNumber: >-
     存在しない単語を編集しようとしました。
   noSuchExampleNumber: >-
@@ -202,6 +205,11 @@ label:
 overlay:
   back: "戻る"
   close: "閉じる"
+changeUserNameForm:
+  name: "ユーザー ID"
+  confirm: "変更"
+  caution: >-
+    現在はユーザー ID を変更することはできません。
 changeUserScreenNameForm:
   screenName: "ニックネーム"
   confirm: "変更"
@@ -327,6 +335,7 @@ dictionaryHeader:
   addWord: "単語"
   addExample: "例文"
   addCommission: "造語依頼"
+  example: "例文一覧"
   setting: "設定"
   download: "ダウンロード"
 dictionaryPane:
@@ -398,8 +407,9 @@ dictionaryStatisticsPane:
     title: "平均例文数"
     value: "{value, number, ::.00} "
     unit: "文/語"
-  nfd: "(NFD)"
-  nfc: "(NFC)"
+  kept: "そのまま"
+  nfd: "NFD"
+  nfc: "NFC"
 exampleEditor:
   title: "例文編集"
   sentence: "例文"
@@ -415,6 +425,11 @@ exampleEditor:
     この例文データを永久に削除します。
     削除した後にデータを戻すことはできません。
     本当によろしいですか?
+examplePane:
+  edit: "編集"
+  caution: >-
+    この例文には単語が紐付けられていません。
+    このままでは辞書の項目に表示されないので、単語を紐付けてください。
 featurePane:
   dictionary:
     title: "辞書編集"
@@ -446,6 +461,7 @@ header:
   document: "ドキュメント"
   contact: "お問い合わせ"
   language: "言語選択"
+  dashboard: "ユーザーページ"
 invitationPane:
   createdDate: "招待日時"
   userName: "招待者"
@@ -596,6 +612,10 @@ dashboardPage:
     label: "新規作成"
     description: >-
       空の辞書を作成します。
+  changeUserNameForm:
+    label: "ユーザー ID の確認"
+    description: >-
+      このユーザーの ID です。
   changeUserScreenNameForm:
     label: "ニックネームの変更"
     description: >-
@@ -691,7 +711,7 @@ dictionarySettingPage:
     label: "統計情報"
     description: >-
       この辞書の統計情報です。
-      文字数に関する項目では、そのままのデータで集計したものと Unicode 正規化した後に集計したものの両方を表示しています。
+      文字数に関する項目では、そのままのデータで集計したものと Unicode 正規化した後に集計したものの両方を表示できます。
   historyPane:
     label: "単語数履歴"
     description: >-

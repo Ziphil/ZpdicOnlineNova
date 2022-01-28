@@ -117,7 +117,7 @@ const ResouceList = create(
           <Button label={trans("resourceList.confirm")} reactive={true} onClick={uploadFile}/>
         </div>
         <div styleName="list">
-          <PaneList items={provideResources} size={size} column={2} method="table" style="spaced" border={true} renderer={renderResource}/>
+          <PaneList items={provideResources} size={size} column={2} renderer={renderResource}/>
         </div>
       </div>
     );

@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   ReactElement
 } from "react";
+import Icon from "/client/component/atom/icon";
 import Markdown from "/client/component/atom/markdown";
 import {
   StylesRecord,
@@ -32,22 +33,24 @@ const NotificationPane = create(
     let fixedNode = (notification.type === "bugFixed") && (
       <span styleName="fixed">({trans("notificationPane.fixed")})</span>
     );
-    let iconString = (() => {
+    let [iconName, iconSlashed] = (() => {
       let type = notification.type;
       if (type === "update") {
-        return "\uF005";
+        return ["medal", false] as const;
       } else if (type === "bug") {
-        return "\uE074";
+        return ["bug", false] as const;
       } else if (type === "bugFixed") {
-        return "\uE075";
+        return ["bug", true] as const;
       } else {
-        return "\uF05A";
+        return ["info-circle", false] as const;
       }
     })();
     let node = (
       <div styleName="root">
         <div styleName="head-wrapper">
-          <div styleName="icon">{iconString}</div>
+          <div styleName="icon">
+            <Icon name={iconName} slashed={iconSlashed}/>
+          </div>
           <div styleName="head-right">
             <div styleName="date">{transDate(notification.date)}</div>
             <h1 styleName="head">

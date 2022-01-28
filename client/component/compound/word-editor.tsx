@@ -240,7 +240,7 @@ const WordEditorEditor = create(
         </div>
         <div styleName="confirm-button-wrapper">
           <div styleName="confirm-button">
-            <Button label={trans("wordEditor.resource")} iconName="file" onClick={() => setResourceListOpen(true)}/>
+            <Button label={trans("wordEditor.resource")} iconName="image" onClick={() => setResourceListOpen(true)}/>
           </div>
           <div styleName="confirm-button">
             {discardButtonNode}

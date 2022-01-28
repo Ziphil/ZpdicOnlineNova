@@ -3,23 +3,29 @@
 @import "/client/component/mixin.scss";
 
 
-.name {
+.example-wrapper {
+  @include line-height;
+  text-align: justify;
+}
+
+.example {
   @include unordered-list-item("\F0DA", $light-color, 0.4em);
 }
 
-.comment {
+.example-separator::before {
+  margin: 0em $blank-margin;
+  color: $light-color;
+  content: "—";
+}
+
+.caution {
   @include line-height($tooltip-line-height);
   margin: $small-margin 0rpx 0rpx 0rpx;
   font-size: 80%;
-  text-align: justify;
+  color: map-get($colors, error);
 }
 
 .button {
   margin: $small-margin 0rpx 0rpx 0rpx;
   text-align: right;
-}
-
-.button >* {
-  @include reset-first-margin;
-  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }

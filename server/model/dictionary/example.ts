@@ -12,6 +12,9 @@ import {
   Example as ExampleSkeleton
 } from "/client/skeleton/dictionary";
 import {
+  WithSize
+} from "/server/controller/internal/type";
+import {
   DiscardableSchema
 } from "/server/model/base";
 import {
@@ -29,6 +32,9 @@ import {
 import {
   LogUtil
 } from "/server/util/log";
+import {
+  QueryRange
+} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "examples"}})
@@ -54,6 +60,12 @@ export class ExampleSchema extends DiscardableSchema {
 
   @prop()
   public updatedDate?: Date;
+
+  public static async fetchByDictionary(dictionary: Dictionary, range?: QueryRange): Promise<WithSize<Example>> {
+    let query = ExampleModel.findExist().where("dictionary", dictionary).sort("-createdDate");
+    let result = await QueryRange.restrictWithSize(query, range);
+    return result;
+  }
 
   public static async fetchByWord(word: Word): Promise<Array<Example>> {
     let query = ExampleModel.findExist().where("dictionary", word.dictionary).where("words.number", word.number).sort("-createdDate");

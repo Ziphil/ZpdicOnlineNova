@@ -6,21 +6,55 @@
 .root {
   display: flex;
   flex-direction: row;
-  justify-content: center;
 }
 
-.root >* {
-  @include reset-first-margin;
-  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
-}
-
-.button-group {
+.leftmost,
+.rightmost,
+.cemter {
+  flex-grow: 0;
+  flex-shrink: 0;
+  flex-basis: 0rpx;
   display: flex;
-  flex-direction: row;
 }
 
-.redundant {
+.left,
+.right {
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 0rpx;
+  display: flex;
+  align-items: center;
+}
+
+.left {
+  justify-content: flex-end;
+}
+
+.right {
+  justify-content: flex-start;
+}
+
+.button >* {
+  width: 2.25em;
+  padding-left: 0em;
+  padding-right: 0em;
+}
+
+.icon {
+  width: initial;
+  margin: 0rpx $small-margin;
+  color: $light-color;
+}
+
+.desktop {
   @include smartphone {
     display: none;
+  }
+}
+
+.smartphone {
+  display: none;
+  @include smartphone {
+    display: block;
   }
 }

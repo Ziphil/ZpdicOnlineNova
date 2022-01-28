@@ -86,11 +86,10 @@
   flex-grow: 1;
 }
 
-.sentence::after {
-  @include icon-font;
+.example-separator::before {
   margin: 0em $blank-margin;
   color: $light-color;
-  content: "\F105";
+  content: "—";
 }
 
 .box {

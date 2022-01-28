@@ -2,11 +2,15 @@
 
 import * as react from "react";
 import {
+  Fragment,
   ReactElement,
+  ReactNode,
   useCallback
 } from "react";
 import Button from "/client/component/atom/button";
+import Icon from "/client/component/atom/icon";
 import {
+  StylesRecord,
   create
 } from "/client/component/create";
 
@@ -17,12 +21,14 @@ const PaginationButton = create(
     page,
     minPage,
     maxPage,
-    onSet
+    onSet,
+    styles
   }: {
     page: number,
     minPage: number
     maxPage: number
-    onSet?: (page: number) => void
+    onSet?: (page: number) => void,
+    styles?: StylesRecord
   }): ReactElement {
 
     let movePage = useCallback(function (page: number): void {
@@ -45,7 +51,7 @@ const PaginationButton = create(
       movePage(movedPage);
     }, [page, maxPage, movePage]);
 
-    let calculateButtonSpecs = useCallback(function (direction: 1 | -1): Array<{page: number, redundant: boolean, current: boolean}> {
+    let calculateButtonSpecs = useCallback(function (direction: 1 | -1): Array<{page: number}> {
       let targetPage = (direction === -1) ? minPage : maxPage;
       let currentPage = page;
       let buttonSpecs = [];
@@ -53,50 +59,93 @@ const PaginationButton = create(
       for (let i = 0 ; i < 4 ; i ++) {
         let nextPage = currentPage + (difference - 1) * direction;
         if ((direction === -1 && nextPage > targetPage) || (direction === 1 && nextPage < targetPage)) {
-          let redundant = i > 0;
-          buttonSpecs.push({page: nextPage, redundant, current: false});
+          buttonSpecs.push({page: nextPage});
+        } else {
+          break;
         }
         difference *= 2;
-      }
-      if ((direction === -1 && currentPage !== targetPage) || (direction === 1 && currentPage !== targetPage)) {
-        buttonSpecs.push({page: targetPage, redundant: false, current: false});
       }
       return buttonSpecs;
     }, [page, minPage, maxPage]);
 
-    let wholeButtonSpecs = [
-      ...calculateButtonSpecs(-1).reverse(),
-      {page, redundant: false, current: true},
-      ...calculateButtonSpecs(1)
-    ];
-    let buttonNodes = wholeButtonSpecs.map((spec, index) => {
-      let position = (() => {
-        if (index === 0 && index === wholeButtonSpecs.length - 1) {
-          return "alone" as const;
-        } else if (index === 0) {
-          return "left" as const;
-        } else if (index === wholeButtonSpecs.length - 1) {
-          return "right" as const;
-        } else {
-          return "middle" as const;
-        }
-      })();
-      let disabled = spec.current;
-      let styleName = (spec.redundant) ? "redundant" : "";
-      let buttonNode = (
-        <div styleName={styleName} key={index}>
-          <Button label={(spec.page + 1).toString()} position={position} disabled={disabled} onClick={() => movePage(spec.page)}/>
+    let createButtonNode = useCallback(function (specs: Array<{page: number}>, direction: 1 | -1): Array<ReactNode> {
+      let buttonNodes = specs.map((spec, index) => {
+        let position = (() => {
+          if (direction === 1) {
+            if (index === specs.length - 1) {
+              return "right" as const;
+            } else {
+              return "middle" as const;
+            }
+          } else {
+            if (index === 0) {
+              return "left" as const;
+            } else {
+              return "middle" as const;
+            }
+          }
+        })();
+        let buttonNode = (
+          <Button className={styles!["desktop"]} key={spec.page} label={(spec.page + 1).toString()} position={position} onClick={() => movePage(spec.page)}/>
+        );
+        return buttonNode;
+      });
+      return buttonNodes;
+    }, [movePage, styles]);
+
+    let leftButtonSpecs = calculateButtonSpecs(-1).reverse();
+    let rightButtonSpecs = calculateButtonSpecs(1);
+    let leftButtonNodes = createButtonNode(leftButtonSpecs, -1);
+    let rightButtonNodes = createButtonNode(rightButtonSpecs, 1);
+    let centerButtonPosition = (() => {
+      if (leftButtonSpecs.length === 0 && rightButtonSpecs.length === 0) {
+        return "alone" as const;
+      } else if (leftButtonSpecs.length > 0 && rightButtonSpecs.length === 0) {
+        return "right" as const;
+      } else if (leftButtonSpecs.length === 0 && rightButtonSpecs.length > 0) {
+        return "left" as const;
+      } else {
+        return "middle" as const;
+      }
+    })();
+    let minPageButtonNode = (page > minPage) && (
+      <Fragment>
+        <Button label={(minPage + 1).toString()} onClick={() => movePage(minPage)}/>
+        <div styleName="icon">
+          <Icon name="ellipsis-h"/>
         </div>
-      );
-      return buttonNode;
-    });
+      </Fragment>
+    );
+    let maxPageButtonNode = (page < maxPage) && (
+      <Fragment>
+        <div styleName="icon">
+          <Icon name="ellipsis-h"/>
+        </div>
+        <Button label={(maxPage + 1).toString()} onClick={() => movePage(maxPage)}/>
+      </Fragment>
+    );
     let node = (
       <div styleName="root">
-        <Button iconName="arrow-left" disabled={page <= minPage} onClick={movePreviousPage}/>
-        <div styleName="button-group">
-          {buttonNodes}
+        <div styleName="button leftmost">
+          <Button iconName="arrow-left" disabled={page <= minPage} onClick={movePreviousPage}/>
         </div>
-        <Button iconName="arrow-right" disabled={page >= maxPage} onClick={moveNextPage}/>
+        <div styleName="button left">
+          {minPageButtonNode}
+          {leftButtonNodes}
+        </div>
+        <div styleName="button center desktop">
+          <Button label={(page + 1).toString()} position={centerButtonPosition} disabled={true}/>
+        </div>
+        <div styleName="button center smartphone">
+          <Button label={(page + 1).toString()} position="alone" disabled={true}/>
+        </div>
+        <div styleName="button right">
+          {rightButtonNodes}
+          {maxPageButtonNode}
+        </div>
+        <div styleName="button rightmost">
+          <Button iconName="arrow-right" disabled={page >= maxPage} onClick={moveNextPage}/>
+        </div>
       </div>
     );
     return node;

@@ -23,16 +23,14 @@
 }
 
 .head-wrapper .icon {
-  @include icon-font;
-  width: $icon-width;
-  font-size: 150%;
+  font-size: 32rpx;
   color: $head-color;
   text-align: center;
   display: inline-block;
 }
 
 .head-right {
-  margin: 0rpx 0rpx 0rpx $small-margin;
+  margin: 0rpx 0rpx 0rpx $medium-margin;
 }
 
 .date {

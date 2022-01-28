@@ -124,6 +124,9 @@ popup:
   dictionarySaving: >-
     The upload is currently being processed.
     Please wait for a while until the process is completed.
+  dictionarySizeTooLarge: >-
+    The file is too large.
+    You cannot upload files larger than 2 MB.
   noSuchWordNumber: >-
     You tried to edit a word which does not exist.
   noSuchExampleNumber: >-
@@ -202,6 +205,11 @@ label:
 overlay:
   back: "Back"
   close: "Close"
+changeUserNameForm:
+  name: "User ID"
+  confirm: "Confirm"
+  caution: >-
+    Currently you cannot change your user ID.
 changeUserScreenNameForm:
   screenName: "Nickname"
   confirm: "Confirm"
@@ -218,10 +226,10 @@ createDictionaryForm:
 discardUserForm:
   confirm: "Delete"
   caution: >-
-    Warning: this operation will delete this user permanently, and also delete the dictionaries they own.
+    This operation will delete this user permanently, and also delete the dictionaries you own.
     Once you delete them, you cannot restore them.
   alert: >-
-    This user will be deleted permanently, and the dictionaries they own will be also deleted.
+    This user will be deleted permanently, and the dictionaries you own will be also deleted.
     You cannot restore them afterwards.
     Are you really sure?
 addEditInvitationForm:
@@ -260,7 +268,7 @@ changeDictionarySourceForm:
 discardDictionaryForm:
   confirm: "Delete"
   caution: >-
-    Warning: this operation will delete this dictionary permanently.
+    This operation will delete this dictionary permanently.
     Once you delete this dictionary, you cannot restore it.
   alert: >-
     This dictionary will be deleted permanently.
@@ -327,6 +335,7 @@ dictionaryHeader:
   addWord: "Word"
   addExample: "Example"
   addCommission: "Request"
+  example: "Examples"
   setting: "Settings"
   download: "Download"
 dictionaryPane:
@@ -398,8 +407,9 @@ dictionaryStatisticsPane:
     title: "Average examples"
     value: "{value, number, ::.00} "
     unit: "{value, plural, one {sentence/word} other {sentences/word}}"
-  nfd: "(NFD)"
-  nfc: "(NFC)"
+  kept: "As is"
+  nfd: "NFD"
+  nfc: "NFC"
 exampleEditor:
   title: "Edit example sentence"
   sentence: "Example sentence"
@@ -415,6 +425,11 @@ exampleEditor:
     This example sentence will be deleted permanently.
     You cannot restore it afterwards.
     Are you really sure?
+examplePane:
+  edit: "Edit"
+  caution: >-
+    This example sentence has no words associated with it.
+    It will not appear in the dictionary, so please associate some word with it.
 featurePane:
   dictionary:
     title: "Edit"
@@ -434,7 +449,7 @@ featurePane:
 giftPane:
   sendGift: "Send gift"
   information: >-
-    ZpDIC Online is being developed and maintained by an individual.
+    ZpDIC Online is being developed and maintained by an individual developer.
     Your support is needed to sustain and improve the service.
     If you like this application, please send a gift to the developer from the button below.
     It may speed up the development.
@@ -446,6 +461,7 @@ header:
   document: "Documents"
   contact: "Contact"
   language: "Languages"
+  dashboard: "User page"
 invitationPane:
   createdDate: "Invited at"
   userName: "Inviter"
@@ -582,7 +598,7 @@ dashboardPage:
     label: "Dictionaries"
     description: >-
       This is a list of your dictionaries.
-      This also includes those which you do not own but you are permitted to edit.
+      This also includes those which you do not own but are permitted to edit.
   editInvitationList:
     label: "Permission invitations"
     description: >-
@@ -597,6 +613,10 @@ dashboardPage:
     label: "Create new dictionary"
     description: >-
       Create a new empty dictionary.
+  changeUserNameForm:
+    label: "User ID"
+    description: >-
+      This is your user ID.
   changeUserScreenNameForm:
     label: "Change nickname"
     description: >-
@@ -692,7 +712,7 @@ dictionarySettingPage:
     label: "Statistics"
     description: >-
       The statistical information of this dictionary.
-      In the items on character length, the value using the data as is and that calculated after Unicode normalization are both shown.
+      In the items on character length, you can see the value using the data as is and also those calculated after Unicode normalisation.
   historyPane:
     label: "Word count history"
     description: >-

@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  Fragment,
   ReactElement
 } from "react";
 import Link from "/client/component/atom/link";
@@ -25,7 +26,10 @@ const Header = create(
     let [user] = useUser();
 
     let userNameNode = (user !== null) && (
-      <HeaderMenuItem label={user.screenName} href="/dashboard"/>
+      <Fragment>
+        <div styleName="separator"/>
+        <HeaderMenuItem label={trans("header.dashboard")} iconName="house-user" href="/dashboard"/>
+      </Fragment>
     );
     let node = (
       <header styleName="root">
@@ -34,16 +38,16 @@ const Header = create(
             <div styleName="title">
               <Link href="/" target="self" style="plane">ZpDIC</Link>
             </div>
+          </div>
+          <div styleName="right">
             <div styleName="menu">
               <HeaderMenuItem label={trans("header.dictionaryList")} iconName="book" href="/list"/>
               <HeaderMenuItem label={trans("header.notification")} iconName="info-circle" href="/notification"/>
               <HeaderMenuItem label={trans("header.document")} iconName="book-open" href="/document"/>
               <HeaderMenuItem label={trans("header.contact")} iconName="envelope" href="/contact"/>
               <HeaderMenuItem label={trans("header.language")} iconName="language" href="/language"/>
+              {userNameNode}
             </div>
-          </div>
-          <div styleName="right">
-            {userNameNode}
           </div>
         </div>
       </header>

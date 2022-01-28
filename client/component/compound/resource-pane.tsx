@@ -14,6 +14,7 @@ import {
 import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import TextArea from "/client/component/atom/text-area";
+import WhitePane from "/client/component/compound/white-pane";
 import {
   create
 } from "/client/component/create";
@@ -71,18 +72,18 @@ const ResourcePane = create(
     );
     let node = (
       <Fragment>
-        <div styleName="root">
-          {resource}
-          {codeNode}
-          <div styleName="button-wrapper">
+        <WhitePane clickable={false}>
+          <div>
+            <div styleName="resource">{resource}</div>
+            {codeNode}
             <div styleName="image">
               <img src={url}/>
             </div>
-            <div styleName="button">
-              <Button label={trans("resourcePane.discard")} iconName="trash-alt" style="simple" onClick={() => setAlertOpen(true)}/>
-            </div>
           </div>
-        </div>
+          <div styleName="button">
+            <Button label={trans("resourcePane.discard")} iconName="trash-alt" style="simple" onClick={() => setAlertOpen(true)}/>
+          </div>
+        </WhitePane>
         <Alert
           text={trans("resourcePane.alert")}
           confirmLabel={trans("resourcePane.discard")}

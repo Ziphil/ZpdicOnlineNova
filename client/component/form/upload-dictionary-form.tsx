@@ -16,6 +16,9 @@ import {
   usePopup,
   useRequest
 } from "/client/component/hook";
+import {
+  PopupUtil
+} from "/client/util/popup";
 
 
 const UploadDictionaryForm = create(
@@ -29,7 +32,7 @@ const UploadDictionaryForm = create(
   }): ReactElement {
 
     let [file, setFile] = useState<File | null>(null);
-    let [, {trans}] = useIntl();
+    let [intl, {trans}] = useIntl();
     let {requestFile} = useRequest();
     let [, {addInformationPopup}] = usePopup();
 
@@ -44,9 +47,16 @@ const UploadDictionaryForm = create(
       }
     }, [number, file, requestFile, onSubmit, addInformationPopup]);
 
+    let validate = function (file: File): string | null {
+      if (file.size <= 2 * 1024 * 1024) {
+        return null;
+      } else {
+        return PopupUtil.getMessage(intl, "dictionarySizeTooLarge");
+      }
+    };
     let node = (
       <form styleName="root">
-        <FileInput inputLabel={trans("uploadDictionaryForm.file")} onSet={(file) => setFile(file)}/>
+        <FileInput inputLabel={trans("uploadDictionaryForm.file")} validate={validate} onSet={(file) => setFile(file)}/>
         <Button label={trans("uploadDictionaryForm.confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
