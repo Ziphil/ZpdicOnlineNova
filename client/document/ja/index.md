@@ -5,7 +5,7 @@
 ### Akrantiain
 
 - [Akrantiain とは](document/akrantiain/overview)
-- [入門](document/akrantiain/introduction)
+- [Akrantiain 入門](document/akrantiain/introduction)
 
 ### Zatlin
 
