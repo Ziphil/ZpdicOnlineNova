@@ -9,6 +9,12 @@ import {
   useCallback
 } from "react";
 import {
+  DndProvider
+} from "react-dnd";
+import {
+  HTML5Backend as DndBackend
+} from "react-dnd-html5-backend";
+import {
   ErrorBoundary
 } from "react-error-boundary";
 import {
@@ -67,31 +73,33 @@ const Root = create(
     let node = (ready) && (
       <BrowserRouter>
         <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError}>
-          <Suspense fallback={<EmptyPage/>}>
-            <ErrorBoundary fallbackRender={(props) => <ErrorPage {...props}/>}>
-              <ScrollTop>
-                <Switch>
-                  <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
-                  <Authenticator type="guest" exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
-                  <Authenticator type="guest" exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
-                  <Authenticator type="guest" exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
-                  <Authenticator type="none" exact sensitive path="/activate" component={ActivateUserPage}/>
-                  <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-                  <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
-                  <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
-                  <Authenticator type="none" exact sensitive path="/example/:number(\d+)" component={ExamplePage}/>
-                  <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-                  <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-                  <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
-                  <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
-                  <Authenticator type="none" exact sensitive path="/contact" component={ContactPage}/>
-                  <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
-                  <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
-                  <Authenticator type="none" component={NotFoundPage}/>
-                </Switch>
-              </ScrollTop>
-            </ErrorBoundary>
-          </Suspense>
+          <DndProvider backend={DndBackend}>
+            <Suspense fallback={<EmptyPage/>}>
+              <ErrorBoundary fallbackRender={ErrorPage}>
+                <ScrollTop>
+                  <Switch>
+                    <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
+                    <Authenticator type="guest" exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
+                    <Authenticator type="guest" exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
+                    <Authenticator type="guest" exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
+                    <Authenticator type="none" exact sensitive path="/activate" component={ActivateUserPage}/>
+                    <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+                    <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
+                    <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+                    <Authenticator type="none" exact sensitive path="/example/:number(\d+)" component={ExamplePage}/>
+                    <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                    <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                    <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
+                    <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
+                    <Authenticator type="none" exact sensitive path="/contact" component={ContactPage}/>
+                    <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
+                    <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
+                    <Authenticator type="none" component={NotFoundPage}/>
+                  </Switch>
+                </ScrollTop>
+              </ErrorBoundary>
+            </Suspense>
+          </DndProvider>
         </IntlProvider>
       </BrowserRouter>
     );
