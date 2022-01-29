@@ -20,12 +20,14 @@ const Label = create(
   function ({
     text,
     style = "normal",
+    position = "top",
     showRequired = false,
     showOptional = false,
     className
   }: {
     text?: string,
     style?: "normal" | "error",
+    position?: "top" | "left",
     showRequired?: boolean,
     showOptional?: boolean,
     className?: string
@@ -35,6 +37,7 @@ const Label = create(
 
     let styleName = StyleNameUtil.create(
       "root",
+      position,
       {if: style === "error", true: "error"}
     );
     let requiredNode = (showRequired) && (

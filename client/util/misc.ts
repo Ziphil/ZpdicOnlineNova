@@ -15,6 +15,11 @@ export function swap<T>(array: Array<T>, index: number, direction: 1 | -1): Arra
   return array;
 }
 
+export function moveAt<T>(array: Array<T>, fromIndex: number, toIndex: number): Array<T> {
+  array.splice(toIndex, 0, array.splice(fromIndex, 1)[0]);
+  return array;
+}
+
 export function deleteAt<T>(array: Array<T>, index: number): Array<T> {
   if (index >= 0 && index < array.length) {
     array.splice(index, 1);

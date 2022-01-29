@@ -6,6 +6,9 @@
 .container {
   @include reset-first-margin;
   margin: $large-margin 0rpx 0rpx 0rpx;
+  display: flex;
+  flex-direction: column;
+  gap: $small-control-vertical-margin;
 }
 
 .confirm-button-wrapper {
@@ -19,19 +22,6 @@
   margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }
 
-.inner,
-.plus {
-  @include reset-first-margin;
-  margin: $small-control-vertical-margin 0rpx 0rpx 0rpx;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  @include smartphone {
-    flex-direction: column;
-    align-items: stretch;
-  }
-}
-
 .inner.large {
   margin: $control-vertical-margin 0rpx 0rpx 0rpx;
 }
@@ -43,23 +33,54 @@
   justify-content: space-between;
 }
 
-.absent {
+.container-item {
+  display: flex;
+  flex-direction: row;
+}
+
+.container-item.dragging {
+  opacity: 0.3;
+}
+
+.handle {
+  width: 10rpx;
+  margin: 0rpx $small-margin 0rpx 0rpx;
+  border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+  background-color: $strong-background-color;
+  display: flex;
+  align-items: center;
+  cursor: move;
+}
+
+.handle-icon {
   color: $light-color;
 }
 
-.form {
+.form-wrapper {
   display: flex;
+  flex-grow: 1;
   flex-direction: row;
   align-items: flex-end;
-  flex: 1;
-  @include smartphone {
-    flex: auto;
-  }
 }
 
-.form >* {
-  @include reset-first-margin;
-  margin: 0rpx 0rpx 0rpx $small-control-horizontal-margin;
+.form {
+  display: grid;
+  flex-grow: 1;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: $small-control-vertical-margin 0rpx;
+}
+
+.form >label {
+  display: contents;
+}
+
+.title {
+  max-width: 200rpx;
+}
+
+.absent {
+  color: $light-color;
 }
 
 .form.information {

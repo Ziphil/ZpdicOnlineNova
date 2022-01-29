@@ -1,17 +1,25 @@
 //
 
 import cloneDeep from "lodash-es/cloneDeep";
+import {
+  nanoid
+} from "nanoid";
 import * as react from "react";
 import {
   Dispatch,
   Fragment,
   MouseEvent,
   ReactElement,
+  RefObject,
   SetStateAction,
   useCallback,
   useRef,
   useState
 } from "react";
+import {
+  useDrag,
+  useDrop
+} from "react-dnd";
 import {
   AsyncOrSync
 } from "ts-essentials";
@@ -21,11 +29,13 @@ import {
 import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
+import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
 import {
   Suggest,
   SuggestionSpec
 } from "/client/component/atom/input";
+import Label from "/client/component/atom/label";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import ResourceList from "/client/component/compound/resource-list";
@@ -50,6 +60,7 @@ import {
 } from "/client/skeleton/dictionary";
 import {
   deleteAt,
+  moveAt,
   swap
 } from "/client/util/misc";
 import {
@@ -406,14 +417,14 @@ const WordEditorEquivalents = create(
 
     let [, {trans}] = useIntl();
 
-    let innerNodes = tempWord.equivalents.map((equivalent, index) => <WordEditorEquivalent {...{dictionary, equivalent, index, mutateWord, createSuggest, styles}}/>);
+    let innerNodes = tempWord.equivalents.map((equivalent, index) => <WordEditorEquivalent key={equivalent.id} {...{dictionary, equivalent, index, mutateWord, createSuggest, styles}}/>);
     let plusNode = (() => {
       let absentMessage = (tempWord.equivalents.length <= 0) ? trans("wordEditor.equivalentAbsent") : "";
       let plusNode = (
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.equivalents.push({...Equivalent.createEmpty(), string: ""}))}/>
+            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.equivalents.push({...Equivalent.createEmpty(), id: nanoid(), string: ""}))}/>
           </div>
         </div>
       );
@@ -450,18 +461,32 @@ const WordEditorEquivalent = create(
   }): ReactElement {
 
     let [, {trans}] = useIntl();
+    let [rootRef, handleRef, dragging] = useDragDrop(`equivalent-${dictionary.id}`, index, mutateWord);
 
-    let titleLabel = (index === 0) ? trans("wordEditor.equivalentTitle") : undefined;
-    let nameLabel = (index === 0) ? trans("wordEditor.equivalentNames") : undefined;
     let suggest = createSuggest("equivalent");
+    let styleName = StyleNameUtil.create([
+      "container-item",
+      {if: dragging, true: "dragging"}
+    ]);
     let node = (
-      <div styleName="inner" key={index}>
-        <div styleName="form">
-          <Input className={styles!["title"]} value={equivalent.title} label={titleLabel} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.equivalents[index].title = title)}/>
-          <Input className={styles!["name"]} value={equivalent.string} label={nameLabel} onSet={mutateWord((tempWord, string) => tempWord.equivalents[index].string = string)}/>
+      <div styleName={styleName} ref={rootRef}>
+        <div styleName="handle" ref={handleRef}>
+          <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
         </div>
-        <div styleName="control-button">
-          <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.equivalents, index))}/>
+        <div styleName="form-wrapper">
+          <div styleName="form">
+            <label>
+              <Label text={trans("wordEditor.equivalentTitle")} position="left"/>
+              <Input className={styles!["title"]} value={equivalent.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.equivalents[index].title = title)}/>
+            </label>
+            <label>
+              <Label text={trans("wordEditor.equivalentNames")} position="left"/>
+              <Input className={styles!["name"]} value={equivalent.string} onSet={mutateWord((tempWord, string) => tempWord.equivalents[index].string = string)}/>
+            </label>
+          </div>
+          <div styleName="control-button">
+            <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.equivalents, index))}/>
+          </div>
         </div>
       </div>
     );
@@ -675,13 +700,37 @@ function createTempWord(word: EditableWord | null, defaultName?: string, default
     let equivalent = {title: "", names: [defaultEquivalentName]};
     tempWord.equivalents.push(equivalent);
   }
-  let equivalents = tempWord.equivalents.map((equivalent) => ({...equivalent, string: equivalent.names.join(", ")}));
+  let equivalents = tempWord.equivalents.map((equivalent) => ({...equivalent, id: nanoid(), string: equivalent.names.join(", ")}));
   return {...tempWord, equivalents};
+}
+
+function useDragDrop(type: string, index: number, mutateWord: MutateWordCallback): [RefObject<never>, RefObject<never>, boolean] {
+  let rootRef = useRef<never>(null);
+  let handleRef = useRef<never>(null);
+  let [{dragging}, connectDrag, connectPreview] = useDrag({
+    type,
+    item: {index},
+    collect: (monitor) => ({dragging: monitor.isDragging()})
+  });
+  let [, connectDrop] = useDrop<{index: number}, unknown, unknown>({
+    accept: type,
+    hover: (item) => {
+      let draggingIndex = item.index;
+      let hoverIndex = index;
+      if (draggingIndex !== hoverIndex) {
+        mutateWord((tempWord) => moveAt(tempWord.equivalents, draggingIndex, hoverIndex))();
+        item.index = hoverIndex;
+      }
+    }
+  });
+  connectDrag(handleRef);
+  connectDrop(connectPreview(rootRef));
+  return [rootRef, handleRef, dragging];
 }
 
 export type MutateWordCallback = <T extends Array<unknown>>(setter: (tempWord: TempEditableWord, ...args: T) => void) => (...args: T) => void;
 export type TempEditableWord = Omit<EditableWord, "equivalents" | "relations"> & {equivalents: Array<TempEquivalent>, relations: Array<TempRelation>};
-export type TempEquivalent = Equivalent & {string: string};
+export type TempEquivalent = Equivalent & {id: string, string: string};
 export type TempRelation = Relation & {mutual?: boolean};
 
 export default WordEditor;
