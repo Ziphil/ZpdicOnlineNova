@@ -18,25 +18,19 @@ import {
 } from "/client/component/hook";
 
 
-const RAW_CONTRIBUTORS = [
-  {name: "lynn", url: {github: "lynn"}, avatarUrl: {github: "lynn"}},
-  {name: "bluebear94", url: {github: "bluebear94"}, avatarUrl: {github: "bluebear94"}},
-  {name: "nymwa", url: {github: "nymwa"}, avatarUrl: {github: "nymwa"}},
-  {name: "川音リオ", url: {twitter: "KawaneRio"}, avatarUrl: "https://pbs.twimg.com/profile_images/1085673171083091969/t3IjudoH_400x400.jpg"}
-];
-
-
 const ContributorList = create(
   require("./contributor-list.scss"), "ContributorList",
   function ({
+    rawContributors
   }: {
+    rawContributors: Array<RawContributor>
   }): ReactElement {
 
     let [contributors, setContributors] = useState<Array<Contributor>>([]);
     let [, {trans}] = useIntl();
 
     useMount(async () => {
-      let promises = RAW_CONTRIBUTORS.map(async (rawContributor) => {
+      let promises = rawContributors.map(async (rawContributor) => {
         let name = rawContributor.name;
         let url = resolveUrl(rawContributor.url);
         let avatarUrl = await resolveAvatarUrl(rawContributor.avatarUrl);

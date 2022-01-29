@@ -34,6 +34,12 @@ const TopPage = create(
 
     let [user] = useUser();
 
+    let rawContributors = [
+      {name: "lynn", url: {github: "lynn"}, avatarUrl: {github: "lynn"}},
+      {name: "bluebear94", url: {github: "bluebear94"}, avatarUrl: {github: "bluebear94"}},
+      {name: "nymwa", url: {github: "nymwa"}, avatarUrl: {github: "nymwa"}},
+      {name: "川音リオ", url: {twitter: "KawaneRio"}, avatarUrl: "https://pbs.twimg.com/profile_images/1085673171083091969/t3IjudoH_400x400.jpg"}
+    ];
     let loginFormStyleName = StyleNameUtil.create(
       "login-form",
       {if: user === null, false: "hidden"}
@@ -71,7 +77,7 @@ const TopPage = create(
         <div styleName="border github">
           <div styleName="github-inner">
             <GithubButton/>
-            <ContributorList/>
+            <ContributorList rawContributors={rawContributors}/>
           </div>
           <div styleName="gift">
             <GiftPane/>
