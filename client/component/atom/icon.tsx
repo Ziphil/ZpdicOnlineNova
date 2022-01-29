@@ -33,10 +33,11 @@ const Icon = create(
     className?: string
   }): ReactElement {
 
+    let fullName = (name === "github") ? ["fa-brands", "fa-github"] : name as any;
     if (slashed) {
       let node = (
         <span styleName="root stack" className={className}>
-          <FontAwesomeIcon icon="slash" transform="down-2 left-2" mask={name as any} fixedWidth={true}/>
+          <FontAwesomeIcon icon="slash" transform="down-2 left-2" mask={fullName} fixedWidth={true}/>
           <FontAwesomeIcon icon="slash"/>
         </span>
       );
@@ -44,7 +45,7 @@ const Icon = create(
     } else {
       let node = (
         <span styleName="root" className={className}>
-          <FontAwesomeIcon icon={name as any} flip={flip} spin={spin} pulse={pulse}/>
+          <FontAwesomeIcon icon={fullName} flip={flip} spin={spin} pulse={pulse}/>
         </span>
       );
       return node;

@@ -24,18 +24,17 @@
 }
 
 .icon {
-  @include icon-font;
-  font-size: 250%;
-  font-weight: normal;
+  font-size: 40rpx;
   color: $light-border-color;
+  line-height: 0;
 }
 
 .star-wrapper {
-  height: 112u;
+  height: 36rpx;
   margin: 0rpx 0rpx 0rpx 48u;
   padding: 0rpx 32u;
-  font-size: 150%;
-  line-height: 112u;
+  font-size: 24rpx;
+  line-height: 36rpx;
   border: 1rpx $light-border-color solid;
   border-radius: $large-border-radius;
   display: inline-block;
@@ -43,28 +42,27 @@
 }
 
 .star-wrapper::before {
-  top: 33u;
-  left: -24u;
-  margin-left: -24u;
-  border: 24u transparent solid;
-  border-right: 24u $light-border-color solid;
+  top: 10rpx;
+  left: -8rpx;
+  margin-left: -8rpx;
+  border: 8rpx transparent solid;
+  border-right: 8rpx $light-border-color solid;
   position: absolute;
   content: "";
 }
 
 .star-wrapper::after {
-  top: 33u;
-  left: -21u;
-  margin-left: -24u;
-  border: 24u transparent solid;
-  border-right: 24u $background-color solid;
+  top: 10rpx;
+  left: -7rpx;
+  margin-left: -8rpx;
+  border: 8rpx transparent solid;
+  border-right: 8rpx $background-color solid;
   position: absolute;
   content: "";
 }
 
 .star {
-  @include icon-font;
-  font-size: 80%;
+  font-size: 20rpx;
 }
 
 .count {

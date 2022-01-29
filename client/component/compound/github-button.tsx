@@ -9,6 +9,7 @@ import {
 import {
   useMount
 } from "react-use";
+import Icon from "/client/component/atom/icon";
 import {
   create
 } from "/client/component/create";
@@ -43,9 +44,9 @@ const GithubButton = create(
       <div styleName="root">
         <a styleName="github" href={githubUrl} target="_blank">
           <div styleName="icon-wrapper">
-            <div styleName="icon">&#xF09B;</div>
+            <div styleName="icon"><Icon name="github"/></div>
             <div styleName="star-wrapper">
-              <span styleName="star">&#xF005;</span>
+              <span styleName="star"><Icon name="star"/></span>
               <span styleName="count">{transNumber(starCount)}</span>
             </div>
           </div>
