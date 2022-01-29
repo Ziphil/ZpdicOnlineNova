@@ -12,9 +12,8 @@
 }
 
 .spacer {
-  width: calc(100% - #{$page-horizontal-margin} * 2);
   height: 100%;
-  margin: 0rpx $page-horizontal-margin 0rpx $page-horizontal-margin;
+  margin: 0rpx $page-horizontal-margin;
   padding: 0rpx;
   box-sizing: border-box;
   display: flex;
@@ -23,6 +22,9 @@
   position: relative;
   pointer-events: none;
   z-index: 220;
+  @include smartphone {
+    margin: 0rpx $page-small-horizontal-margin;
+  }
 }
 
 .spacer >* {
