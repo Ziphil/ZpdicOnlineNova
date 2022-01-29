@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   ReactElement
 } from "react";
+import Icon from "/client/component/atom/icon";
 import {
   create
 } from "/client/component/create";
@@ -24,7 +25,7 @@ const NotFoundPage = create(
     let node = (
       <Page>
         <div styleName="root">
-          <div styleName="icon">&#xF128;</div>
+          <div styleName="icon"><Icon name="ghost"/></div>
           <div styleName="description">
             {trans("notFoundPage.description")}
           </div>

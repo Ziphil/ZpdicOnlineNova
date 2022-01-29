@@ -4,9 +4,8 @@
 
 
 .icon {
-  @include icon-font;
   margin: 0rpx 0rpx $huge-margin 0rpx;
-  font-size: 300%;
+  font-size: 64rpx;
   color: $light-color;
   text-align: center;
 }
