@@ -160,9 +160,7 @@ const WordEditor = create(
 
     let editWord = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
       let number = dictionary.number;
-      let tags = tempWord.tags.map((tag) => tag.string);
-      let equivalents = tempWord.equivalents.map((equivalent) => ({...equivalent, names: equivalent.string.split(/\s*(?:,|、|・)\s*/)}));
-      let word = {...tempWord, tags, equivalents};
+      let word = recreateWord(tempWord);
       let response = await request("editWord", {number, word});
       if (response.status === 200 && !("error" in response.data)) {
         let editedWord = response.data;
@@ -860,6 +858,13 @@ function createTempWord(word: EditableWord | null, defaultName?: string, default
   let variations = tempWord.variations.map((variation) => ({...variation, id: nanoid()}));
   let relations = tempWord.relations.map((relation) => ({...relation, id: nanoid()}));
   return {...tempWord, tags, equivalents, informations, variations, relations};
+}
+
+function recreateWord(tempWord: TempEditableWord): EditableWord {
+  let tags = tempWord.tags.map((tag) => tag.string);
+  let equivalents = tempWord.equivalents.map((equivalent) => ({...equivalent, names: equivalent.string.split(/\s*(?:,|、|・)\s*/)}));
+  let word = {...tempWord, tags, equivalents};
+  return word;
 }
 
 function useDragDrop(type: string, index: number, move: (draggingIndex: number, hoverIndex: number) => void): [RefObject<never>, RefObject<never>, boolean] {
