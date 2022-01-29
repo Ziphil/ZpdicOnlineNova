@@ -16,12 +16,10 @@
 .list {
   margin: $small-margin 0rpx 0rpx 0rpx;
   padding: 0rpx;
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: $tiny-margin $large-margin;
   list-style-type: none;
-}
-
-.item {
-  @include reset-first-margin;
-  margin: $tiny-margin 0rpx 0rpx 0rpx;
 }
 
 .avatar {

@@ -4,6 +4,9 @@ import {
   library as fontawesomeLibrary
 } from "@fortawesome/fontawesome-svg-core";
 import {
+  faGithub as iconFaGithub
+} from "@fortawesome/free-brands-svg-icons";
+import {
   fas as iconFas
 } from "@fortawesome/free-solid-svg-icons";
 import * as react from "react";
@@ -30,7 +33,7 @@ export class Main {
     element.rel = "stylesheet";
     element.media = "all";
     document.head.appendChild(element);
-    fontawesomeLibrary.add(iconFas);
+    fontawesomeLibrary.add(iconFas, iconFaGithub);
   }
 
   private appendRecaptchaElement(): void {

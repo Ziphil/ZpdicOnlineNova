@@ -18,41 +18,23 @@ import {
 } from "/client/component/hook";
 
 
-const RAW_CONTRIBUTORS = [
-  {github: "lynn"},
-  {github: "bluebear94", name: "bluebear94"},
-  {github: "nymwa", name: "nymwa"}
-];
-
-
 const ContributorList = create(
   require("./contributor-list.scss"), "ContributorList",
   function ({
+    rawContributors
   }: {
+    rawContributors: Array<RawContributor>
   }): ReactElement {
 
     let [contributors, setContributors] = useState<Array<Contributor>>([]);
     let [, {trans}] = useIntl();
 
     useMount(async () => {
-      let promises = RAW_CONTRIBUTORS.map(async (rawContributor) => {
-        if ("github" in rawContributor) {
-          let url = "https://api.github.com/users/" + rawContributor.github;
-          let response = await axios.get(url, {validateStatus: () => true});
-          if (response.status === 200) {
-            let id = rawContributor.github;
-            let name = rawContributor.name ?? response.data["name"];
-            let url = "https://github.com/" + id;
-            let avatarUrl = response.data["avatar_url"];
-            return {name, url, avatarUrl};
-          } else {
-            let name = "@" + rawContributor.github;
-            let url = "https://github.com/" + rawContributor.github;
-            return {name, url};
-          }
-        } else {
-          return rawContributor;
-        }
+      let promises = rawContributors.map(async (rawContributor) => {
+        let name = rawContributor.name;
+        let url = resolveUrl(rawContributor.url);
+        let avatarUrl = await resolveAvatarUrl(rawContributor.avatarUrl);
+        return {name, url, avatarUrl};
       });
       let contributors = await Promise.all(promises);
       setContributors(contributors);
@@ -60,10 +42,11 @@ const ContributorList = create(
 
     let contributorNodes = contributors.map((contributor) => {
       let avatarNode = (contributor.avatarUrl !== undefined) && <img styleName="avatar" src={contributor.avatarUrl}/>;
+      let nameNode = (contributor.url !== undefined) ? <Link href={contributor.url}>{contributor.name}</Link> : contributor.name;
       let contributorNode = (
         <li styleName="item" key={contributor.name}>
           {avatarNode}
-          <Link href={contributor.url}>{contributor.name}</Link>
+          {nameNode}
         </li>
       );
       return contributorNode;
@@ -82,7 +65,40 @@ const ContributorList = create(
 );
 
 
-export type Contributor = {name: string, url: string, avatarUrl?: string};
-export type RawContributor = {github: string, name?: string} | {name: string, url: string, avatarUrl?: string};
+async function resolveAvatarUrl(rawAvatarUrl?: string | {github: string}): Promise<string | undefined> {
+  if (rawAvatarUrl !== undefined) {
+    if (typeof rawAvatarUrl === "string") {
+      return rawAvatarUrl;
+    } else {
+      let url = "https://api.github.com/users/" + rawAvatarUrl.github;
+      let response = await axios.get(url, {validateStatus: () => true});
+      if (response.status === 200) {
+        let avatarUrl = response.data["avatar_url"];
+        return avatarUrl;
+      } else {
+        return undefined;
+      }
+    }
+  } else {
+    return undefined;
+  }
+}
+
+function resolveUrl(rawUrl?: string | {github: string} | {twitter: string}): string | undefined {
+  if (rawUrl !== undefined) {
+    if (typeof rawUrl === "string") {
+      return rawUrl;
+    } else if ("github" in rawUrl) {
+      return "https://github.com/" + rawUrl.github;
+    } else if ("twitter" in rawUrl) {
+      return "https://twitter.com/" + rawUrl.twitter;
+    }
+  } else {
+    return undefined;
+  }
+}
+
+export type Contributor = {name: string, url?: string, avatarUrl?: string};
+export type RawContributor = {name: string, url?: string | {github: string} | {twitter: string}, avatarUrl?: string | {github: string}};
 
 export default ContributorList;

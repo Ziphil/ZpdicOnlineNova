@@ -6,6 +6,7 @@ import {
   useCallback
 } from "react";
 import Button from "/client/component/atom/button";
+import Icon from "/client/component/atom/icon";
 import {
   create
 } from "/client/component/create";
@@ -37,7 +38,7 @@ const ErrorPage = create(
     let node = (
       <Page>
         <div styleName="root">
-          <div styleName="icon">&#xF12A;</div>
+          <div styleName="icon"><Icon name="bomb"/></div>
           <div styleName="description">
             {trans("errorPage.description")}
           </div>
