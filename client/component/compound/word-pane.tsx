@@ -19,7 +19,7 @@ import Icon from "/client/component/atom/icon";
 import Link from "/client/component/atom/link";
 import Markdown from "/client/component/atom/markdown";
 import ExampleEditor from "/client/component/compound/example-editor";
-import WordEditor from "/client/component/compound/word-editor";
+import WordEditor from "/client/component/compound/word-editor-beta";
 import {
   create
 } from "/client/component/create";
