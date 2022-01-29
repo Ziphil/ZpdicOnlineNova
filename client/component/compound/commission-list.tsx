@@ -17,6 +17,9 @@ import {
   create
 } from "/client/component/create";
 import {
+  useMediaQuery
+} from "/client/component/hook/media-query";
+import {
   Commission
 } from "/client/skeleton/commission";
 import {
@@ -44,6 +47,8 @@ const CommissionList = create(
     onAddConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
+    let {smartphone} = useMediaQuery();
+
     let renderCommission = useCallback(function (commission: Commission): ReactNode {
       let node = (
         <CommissionPane
@@ -57,15 +62,11 @@ const CommissionList = create(
       return node;
     }, [dictionary, onDiscardConfirm, onAddConfirm]);
 
+    let column = (smartphone) ? 2 : 3;
     let node = (
-      <Fragment>
-        <div styleName="normal">
-          <PaneList items={commissions} size={size} column={3} renderer={renderCommission}/>
-        </div>
-        <div styleName="smartphone">
-          <PaneList items={commissions} size={size} column={2} renderer={renderCommission}/>
-        </div>
-      </Fragment>
+      <div styleName="root">
+        <PaneList items={commissions} size={size} column={column} renderer={renderCommission}/>
+      </div>
     );
     return node;
 

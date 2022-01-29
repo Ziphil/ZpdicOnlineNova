@@ -89,6 +89,7 @@
     "react-intl": "^5.24.3",
     "react-markdown": "^4.3.1",
     "react-onclickoutside": "^6.12.1",
+    "react-responsive": "^9.0.0-beta.6",
     "react-router-dom": "^5.3.0",
     "react-use": "^17.3.2",
     "remove-markdown": "^0.3.0",

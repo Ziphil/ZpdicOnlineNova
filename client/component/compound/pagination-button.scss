@@ -45,16 +45,3 @@
   margin: 0rpx $small-margin;
   color: $light-color;
 }
-
-.desktop {
-  @include smartphone {
-    display: none;
-  }
-}
-
-.smartphone {
-  display: none;
-  @include smartphone {
-    display: block;
-  }
-}
