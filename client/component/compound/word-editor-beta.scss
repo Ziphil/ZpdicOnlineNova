@@ -11,28 +11,6 @@
   gap: $small-control-vertical-margin;
 }
 
-.confirm-button-wrapper {
-  margin: $large-margin 0rpx 0rpx 0rpx;
-  display: flex;
-  justify-content: space-between;
-}
-
-.confirm-button >* {
-  @include reset-first-margin;
-  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
-}
-
-.inner.large {
-  margin: $control-vertical-margin 0rpx 0rpx 0rpx;
-}
-
-.plus {
-  display: flex;
-  flex-direction: row;
-  align-items: baseline;
-  justify-content: space-between;
-}
-
 .container-item {
   display: flex;
   flex-direction: row;
@@ -71,6 +49,10 @@
   gap: $small-control-vertical-margin 0rpx;
 }
 
+.form.information {
+  grid-template-rows: auto 150rpx;
+}
+
 .form >label {
   display: contents;
 }
@@ -79,40 +61,23 @@
   max-width: 200rpx;
 }
 
+.text {
+  height: 100%;
+}
+
+.plus {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
 .absent {
   color: $light-color;
 }
 
-.form.information {
-  height: 600u;
-}
-
 .control-button {
   margin: 0rpx 0rpx 0rpx $small-control-horizontal-margin;
-  @include smartphone {
-    margin: $small-control-vertical-margin 0rpx 0rpx 0rpx;
-    align-self: flex-end;
-  }
-}
-
-.title {
-  flex: 1;
-  align-self: flex-start;
-}
-
-.name {
-  flex: 3;
-}
-
-.text {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  flex: 3;
-}
-
-.text >textarea {
-  flex-grow: 1;
 }
 
 .relation-input,
@@ -123,4 +88,15 @@
 .relation-input >*:nth-child(1),
 .word-input >*:nth-child(1) {
   flex-grow: 1;
+}
+
+.confirm-button-wrapper {
+  margin: $large-margin 0rpx 0rpx 0rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-button {
+  display: flex;
+  gap: $control-horizontal-margin;
 }

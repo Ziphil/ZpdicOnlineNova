@@ -118,8 +118,9 @@ const WordEditor = create(
       setTempWord((tempWord) => {
         let relationIndex = editingRelationIndexRef.current!;
         if (tempWord.relations[relationIndex] === undefined) {
-          tempWord.relations[relationIndex] = Relation.createEmpty();
+          tempWord.relations[relationIndex] = {...Relation.createEmpty(), id: nanoid()};
         }
+        tempWord.relations[relationIndex].id = relationWord.id;
         tempWord.relations[relationIndex].number = relationWord.number;
         tempWord.relations[relationIndex].name = relationWord.name;
         tempWord.relations[relationIndex].mutual = direction === "mutual";
@@ -159,16 +160,16 @@ const WordEditor = create(
 
     let editWord = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
       let number = dictionary.number;
-      tempWord.equivalents.forEach((equivalent) => {
-        equivalent.names = equivalent.string.split(/\s*(?:,|、|・)\s*/);
-      });
-      let response = await request("editWord", {number, word: tempWord});
+      let tags = tempWord.tags.map((tag) => tag.string);
+      let equivalents = tempWord.equivalents.map((equivalent) => ({...equivalent, names: equivalent.string.split(/\s*(?:,|、|・)\s*/)}));
+      let word = {...tempWord, tags, equivalents};
+      let response = await request("editWord", {number, word});
       if (response.status === 200 && !("error" in response.data)) {
         let editedWord = response.data;
         await addRelations(editedWord);
         addInformationPopup("wordEdited");
         await onClose?.(event);
-        await onEditConfirm?.(tempWord, event);
+        await onEditConfirm?.(word, event);
       }
     }, [dictionary, tempWord, request, onClose, onEditConfirm, addInformationPopup, addRelations]);
 
@@ -356,32 +357,14 @@ const WordEditorTags = create(
 
     let [, {trans}] = useIntl();
 
-    let suggest = createSuggest("tag");
-    let innerNodes = tempWord.tags.map((tag, index) => {
-      let label = (index === 0) ? trans("wordEditor.tag") : undefined;
-      let innerNode = (
-        <div styleName="inner" key={index}>
-          <div styleName="form">
-            <Input className={styles!["title"]} value={tag} label={label} suggest={suggest} onSet={mutateWord((tempWord, tag) => tempWord.tags[index] = tag)}/>
-          </div>
-          <div styleName="control-button">
-            <ControlGroup>
-              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.tags, index, -1))}/>
-              <Button iconName="arrow-down" disabled={index === tempWord.tags.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.tags, index, 1))}/>
-              <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.tags, index))}/>
-            </ControlGroup>
-          </div>
-        </div>
-      );
-      return innerNode;
-    });
+    let innerNodes = tempWord.tags.map((tag, index) => <WordEditorTag key={tag.id} {...{dictionary, tag, index, mutateWord, createSuggest, styles}}/>);
     let plusNode = (() => {
       let absentMessage = (tempWord.tags.length <= 0) ? trans("wordEditor.tagAbsent") : "";
       let plusNode = (
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.tags.push(""))}/>
+            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.tags.push({id: nanoid(), string: ""}))}/>
           </div>
         </div>
       );
@@ -391,6 +374,57 @@ const WordEditorTags = create(
       <div styleName="container">
         {innerNodes}
         {plusNode}
+      </div>
+    );
+    return node;
+
+  }
+);
+
+
+const WordEditorTag = create(
+  require("./word-editor-beta.scss"),
+  function ({
+    dictionary,
+    tag,
+    index,
+    mutateWord,
+    createSuggest,
+    styles
+  }: {
+    dictionary: EnhancedDictionary,
+    tag: TempTag,
+    index: number,
+    mutateWord: MutateWordCallback,
+    createSuggest: (propertyName: string) => Suggest
+    styles?: StylesRecord
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+    let [rootRef, handleRef, dragging] = useDragDrop(
+      `tag-${dictionary.id}`,
+      index,
+      mutateWord((tempWord, draggingIndex, hoverIndex) => moveAt(tempWord.tags, draggingIndex, hoverIndex))
+    );
+
+    let suggest = createSuggest("tag");
+    let styleName = StyleNameUtil.create([
+      "container-item",
+      {if: dragging, true: "dragging"}
+    ]);
+    let node = (
+      <div styleName={styleName} ref={rootRef}>
+        <div styleName="handle" ref={handleRef}>
+          <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
+        </div>
+        <div styleName="form-wrapper">
+          <div styleName="form">
+            <Input className={styles!["title"]} value={tag.string} suggest={suggest} onSet={mutateWord((tempWord, tag) => tempWord.tags[index].string = tag)}/>
+          </div>
+          <div styleName="control-button">
+            <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.tags, index))}/>
+          </div>
+        </div>
       </div>
     );
     return node;
@@ -461,7 +495,11 @@ const WordEditorEquivalent = create(
   }): ReactElement {
 
     let [, {trans}] = useIntl();
-    let [rootRef, handleRef, dragging] = useDragDrop(`equivalent-${dictionary.id}`, index, mutateWord);
+    let [rootRef, handleRef, dragging] = useDragDrop(
+      `equivalent-${dictionary.id}`,
+      index,
+      mutateWord((tempWord, draggingIndex, hoverIndex) => moveAt(tempWord.equivalents, draggingIndex, hoverIndex))
+    );
 
     let suggest = createSuggest("equivalent");
     let styleName = StyleNameUtil.create([
@@ -514,35 +552,14 @@ const WordEditorInformations = create(
 
     let [, {trans}] = useIntl();
 
-    let language = (dictionary.settings.enableMarkdown) ? "markdown" as const : undefined;
-    let suggest = createSuggest("information");
-    let innerNodes = tempWord.informations.map((information, index) => {
-      let titleLabel = (index === 0) ? trans("wordEditor.informationTitle") : undefined;
-      let textLabel = (index === 0) ? trans("wordEditor.informationText") : undefined;
-      let innerNode = (
-        <div styleName="inner" key={index}>
-          <div styleName="form information">
-            <Input className={styles!["title"]} value={information.title} label={titleLabel} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.informations[index].title = title)}/>
-            <TextArea className={styles!["text"]} value={information.text} label={textLabel} font="monospace" language={language} onSet={mutateWord((tempWord, text) => tempWord.informations[index].text = text)}/>
-          </div>
-          <div styleName="control-button">
-            <ControlGroup>
-              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.informations, index, -1))}/>
-              <Button iconName="arrow-down" disabled={index === tempWord.informations.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.informations, index, 1))}/>
-              <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.informations, index))}/>
-            </ControlGroup>
-          </div>
-        </div>
-      );
-      return innerNode;
-    });
+    let innerNodes = tempWord.informations.map((information, index) => <WordEditorInformation key={information.id} {...{dictionary, information, index, mutateWord, createSuggest, styles}}/>);
     let plusNode = (() => {
       let absentMessage = (tempWord.informations.length <= 0) ? trans("wordEditor.informationAbsent") : "";
       let plusNode = (
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.informations.push(Information.createEmpty()))}/>
+            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.informations.push({...Information.createEmpty(), id: nanoid()}))}/>
           </div>
         </div>
       );
@@ -552,6 +569,65 @@ const WordEditorInformations = create(
       <div styleName="container">
         {innerNodes}
         {plusNode}
+      </div>
+    );
+    return node;
+
+  }
+);
+
+
+const WordEditorInformation = create(
+  require("./word-editor-beta.scss"),
+  function ({
+    dictionary,
+    information,
+    index,
+    mutateWord,
+    createSuggest,
+    styles
+  }: {
+    dictionary: EnhancedDictionary,
+    information: TempInformation,
+    index: number,
+    mutateWord: MutateWordCallback,
+    createSuggest: (propertyName: string) => Suggest
+    styles?: StylesRecord
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+    let [rootRef, handleRef, dragging] = useDragDrop(
+      `information-${dictionary.id}`,
+      index,
+      mutateWord((tempWord, draggingIndex, hoverIndex) => moveAt(tempWord.informations, draggingIndex, hoverIndex))
+    );
+
+    let language = (dictionary.settings.enableMarkdown) ? "markdown" as const : undefined;
+    let suggest = createSuggest("information");
+    let styleName = StyleNameUtil.create([
+      "container-item",
+      {if: dragging, true: "dragging"}
+    ]);
+    let node = (
+      <div styleName={styleName} ref={rootRef}>
+        <div styleName="handle" ref={handleRef}>
+          <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
+        </div>
+        <div styleName="form-wrapper">
+          <div styleName="form information">
+            <label>
+              <Label text={trans("wordEditor.informationTitle")} position="left"/>
+              <Input className={styles!["title"]} value={information.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.informations[index].title = title)}/>
+            </label>
+            <label>
+              <Label text={trans("wordEditor.informationText")} position="left"/>
+              <TextArea className={styles!["text"]} value={information.text} font="monospace" language={language} onSet={mutateWord((tempWord, text) => tempWord.informations[index].text = text)}/>
+            </label>
+          </div>
+          <div styleName="control-button">
+            <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.informations, index))}/>
+          </div>
+        </div>
       </div>
     );
     return node;
@@ -578,34 +654,14 @@ const WordEditorVariations = create(
 
     let [, {trans}] = useIntl();
 
-    let suggest = createSuggest("variation");
-    let innerNodes = tempWord.variations.map((variation, index) => {
-      let titleLabel = (index === 0) ? trans("wordEditor.variationTitle") : undefined;
-      let nameLabel = (index === 0) ? trans("wordEditor.variationName") : undefined;
-      let innerNode = (
-        <div styleName="inner" key={index}>
-          <div styleName="form">
-            <Input className={styles!["title"]} value={variation.title} label={titleLabel} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.variations[index].title = title)}/>
-            <Input className={styles!["name"]} value={variation.name} label={nameLabel} onSet={mutateWord((tempWord, name) => tempWord.variations[index].name = name)}/>
-          </div>
-          <div styleName="control-button">
-            <ControlGroup>
-              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.variations, index, -1))}/>
-              <Button iconName="arrow-down" disabled={index === tempWord.variations.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.variations, index, 1))}/>
-              <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.variations, index))}/>
-            </ControlGroup>
-          </div>
-        </div>
-      );
-      return innerNode;
-    });
+    let innerNodes = tempWord.variations.map((variation, index) => <WordEditorVariation key={variation.id} {...{dictionary, variation, index, mutateWord, createSuggest, styles}}/>);
     let plusNode = (() => {
       let absentMessage = (tempWord.variations.length <= 0) ? trans("wordEditor.variationAbsent") : "";
       let plusNode = (
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.variations.push(Variation.createEmpty()))}/>
+            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.variations.push({...Variation.createEmpty(), id: nanoid()}))}/>
           </div>
         </div>
       );
@@ -615,6 +671,64 @@ const WordEditorVariations = create(
       <div styleName="container">
         {innerNodes}
         {plusNode}
+      </div>
+    );
+    return node;
+
+  }
+);
+
+
+const WordEditorVariation = create(
+  require("./word-editor-beta.scss"),
+  function ({
+    dictionary,
+    variation,
+    index,
+    mutateWord,
+    createSuggest,
+    styles
+  }: {
+    dictionary: EnhancedDictionary,
+    variation: TempVariation,
+    index: number,
+    mutateWord: MutateWordCallback,
+    createSuggest: (propertyName: string) => Suggest
+    styles?: StylesRecord
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+    let [rootRef, handleRef, dragging] = useDragDrop(
+      `variation-${dictionary.id}`,
+      index,
+      mutateWord((tempWord, draggingIndex, hoverIndex) => moveAt(tempWord.variations, draggingIndex, hoverIndex))
+    );
+
+    let suggest = createSuggest("variation");
+    let styleName = StyleNameUtil.create([
+      "container-item",
+      {if: dragging, true: "dragging"}
+    ]);
+    let node = (
+      <div styleName={styleName} ref={rootRef}>
+        <div styleName="handle" ref={handleRef}>
+          <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
+        </div>
+        <div styleName="form-wrapper">
+          <div styleName="form">
+            <label>
+              <Label text={trans("wordEditor.variationTitle")} position="left"/>
+              <Input className={styles!["title"]} value={variation.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.variations[index].title = title)}/>
+            </label>
+            <label>
+              <Label text={trans("wordEditor.variationName")} position="left"/>
+              <Input className={styles!["name"]} value={variation.name} onSet={mutateWord((tempWord, name) => tempWord.variations[index].name = name)}/>
+            </label>
+          </div>
+          <div styleName="control-button">
+            <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.variations, index))}/>
+          </div>
+        </div>
       </div>
     );
     return node;
@@ -643,30 +757,7 @@ const WordEditorRelations = create(
 
     let [, {trans}] = useIntl();
 
-    let suggest = createSuggest("relation");
-    let innerNodes = tempWord.relations.map((relation, index) => {
-      let titleLabel = (index === 0) ? trans("wordEditor.relationTitle") : undefined;
-      let nameLabel = (index === 0) ? trans("wordEditor.relationName") : undefined;
-      let innerNode = (
-        <div styleName="inner" key={index}>
-          <div styleName="form">
-            <Input className={styles!["title"]} value={relation.title} label={titleLabel} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.relations[index].title = title)}/>
-            <ControlGroup className={StyleNameUtil.create(styles!["name"], styles!["relation-input"])}>
-              <Input value={relation.name} label={nameLabel} readOnly={true}/>
-              <Button label={trans("wordEditor.selectRelation")} onClick={() => openRelationChooser(index)}/>
-            </ControlGroup>
-          </div>
-          <div styleName="control-button">
-            <ControlGroup>
-              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateWord((tempWord) => swap(tempWord.relations, index, -1))}/>
-              <Button iconName="arrow-down" disabled={index === tempWord.relations.length - 1} onClick={mutateWord((tempWord) => swap(tempWord.relations, index, 1))}/>
-              <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.relations, index))}/>
-            </ControlGroup>
-          </div>
-        </div>
-      );
-      return innerNode;
-    });
+    let innerNodes = tempWord.relations.map((relation, index) => <WordEditorRelation key={relation.id} {...{dictionary, relation, index, mutateWord, createSuggest, openRelationChooser, styles}}/>);
     let plusNode = (() => {
       let absentMessage = (tempWord.relations.length <= 0) ? trans("wordEditor.relationAbsent") : "";
       let plusNode = (
@@ -691,6 +782,69 @@ const WordEditorRelations = create(
 );
 
 
+const WordEditorRelation = create(
+  require("./word-editor-beta.scss"),
+  function ({
+    dictionary,
+    relation,
+    index,
+    mutateWord,
+    openRelationChooser,
+    createSuggest,
+    styles
+  }: {
+    dictionary: EnhancedDictionary,
+    relation: TempRelation,
+    index: number,
+    mutateWord: MutateWordCallback,
+    createSuggest: (propertyName: string) => Suggest,
+    openRelationChooser: (index: number) => void,
+    styles?: StylesRecord
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+    let [rootRef, handleRef, dragging] = useDragDrop(
+      `relation-${dictionary.id}`,
+      index,
+      mutateWord((tempWord, draggingIndex, hoverIndex) => moveAt(tempWord.relations, draggingIndex, hoverIndex))
+    );
+
+    let suggest = createSuggest("relation");
+    let styleName = StyleNameUtil.create([
+      "container-item",
+      {if: dragging, true: "dragging"}
+    ]);
+    let node = (
+      <div styleName={styleName} ref={rootRef}>
+        <div styleName="handle" ref={handleRef}>
+          <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
+        </div>
+        <div styleName="form-wrapper">
+          <div styleName="form">
+            <label>
+              <Label text={trans("wordEditor.relationTitle")} position="left"/>
+              <Input className={styles!["title"]} value={relation.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.relations[index].title = title)}/>
+            </label>
+            <label>
+              <Label text={trans("wordEditor.relationName")} position="left"/>
+              <ControlGroup className={StyleNameUtil.create(styles!["name"], styles!["relation-input"])}>
+                <Input value={relation.name} readOnly={true}/>
+                <Button label={trans("wordEditor.selectRelation")} onClick={() => openRelationChooser(index)}/>
+              </ControlGroup>
+            </label>
+          </div>
+          <div styleName="control-button">
+            <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.relations, index))}/>
+          </div>
+        </div>
+      </div>
+    );
+    return node;
+
+  }
+);
+
+
 function createTempWord(word: EditableWord | null, defaultName?: string, defaultEquivalentName?: string): TempEditableWord {
   let tempWord = cloneDeep(word) ?? EditableWord.createEmpty();
   if (defaultName) {
@@ -700,11 +854,15 @@ function createTempWord(word: EditableWord | null, defaultName?: string, default
     let equivalent = {title: "", names: [defaultEquivalentName]};
     tempWord.equivalents.push(equivalent);
   }
+  let tags = tempWord.tags.map((tag) => ({id: nanoid(), string: tag}));
   let equivalents = tempWord.equivalents.map((equivalent) => ({...equivalent, id: nanoid(), string: equivalent.names.join(", ")}));
-  return {...tempWord, equivalents};
+  let informations = tempWord.informations.map((information) => ({...information, id: nanoid()}));
+  let variations = tempWord.variations.map((variation) => ({...variation, id: nanoid()}));
+  let relations = tempWord.relations.map((relation) => ({...relation, id: nanoid()}));
+  return {...tempWord, tags, equivalents, informations, variations, relations};
 }
 
-function useDragDrop(type: string, index: number, mutateWord: MutateWordCallback): [RefObject<never>, RefObject<never>, boolean] {
+function useDragDrop(type: string, index: number, move: (draggingIndex: number, hoverIndex: number) => void): [RefObject<never>, RefObject<never>, boolean] {
   let rootRef = useRef<never>(null);
   let handleRef = useRef<never>(null);
   let [{dragging}, connectDrag, connectPreview] = useDrag({
@@ -718,7 +876,7 @@ function useDragDrop(type: string, index: number, mutateWord: MutateWordCallback
       let draggingIndex = item.index;
       let hoverIndex = index;
       if (draggingIndex !== hoverIndex) {
-        mutateWord((tempWord) => moveAt(tempWord.equivalents, draggingIndex, hoverIndex))();
+        move(draggingIndex, hoverIndex);
         item.index = hoverIndex;
       }
     }
@@ -728,9 +886,19 @@ function useDragDrop(type: string, index: number, mutateWord: MutateWordCallback
   return [rootRef, handleRef, dragging];
 }
 
-export type MutateWordCallback = <T extends Array<unknown>>(setter: (tempWord: TempEditableWord, ...args: T) => void) => (...args: T) => void;
-export type TempEditableWord = Omit<EditableWord, "equivalents" | "relations"> & {equivalents: Array<TempEquivalent>, relations: Array<TempRelation>};
+export type TempEditableWord = Omit<EditableWord, "tags" | "equivalents" | "informations" | "variations" | "relations"> & {
+  tags: Array<TempTag>,
+  equivalents: Array<TempEquivalent>,
+  informations: Array<TempInformation>,
+  variations: Array<TempVariation>,
+  relations: Array<TempRelation>
+};
+export type TempTag = {id: string, string: string};
 export type TempEquivalent = Equivalent & {id: string, string: string};
-export type TempRelation = Relation & {mutual?: boolean};
+export type TempInformation = Information & {id: string};
+export type TempVariation = Variation & {id: string};
+export type TempRelation = Relation & {id: string, mutual?: boolean};
+
+export type MutateWordCallback = <T extends Array<unknown>>(setter: (tempWord: TempEditableWord, ...args: T) => void) => (...args: T) => void;
 
 export default WordEditor;
