@@ -52,6 +52,9 @@
   flex-direction: row;
   align-items: flex-end;
   flex: 1;
+  @include smartphone {
+    flex: auto;
+  }
 }
 
 .form >* {
