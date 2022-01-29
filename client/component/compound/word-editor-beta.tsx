@@ -364,7 +364,7 @@ const WordEditorTags = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.tags.push({id: nanoid(), string: ""}))}/>
+            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.tags.push({id: nanoid(), string: ""}))}/>
           </div>
         </div>
       );
@@ -559,7 +559,7 @@ const WordEditorInformations = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.informations.push({...Information.createEmpty(), id: nanoid()}))}/>
+            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.informations.push({...Information.createEmpty(), id: nanoid()}))}/>
           </div>
         </div>
       );
@@ -661,7 +661,7 @@ const WordEditorVariations = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconName="plus" onClick={mutateWord((tempWord) => tempWord.variations.push({...Variation.createEmpty(), id: nanoid()}))}/>
+            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.variations.push({...Variation.createEmpty(), id: nanoid()}))}/>
           </div>
         </div>
       );
@@ -764,7 +764,7 @@ const WordEditorRelations = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconName="plus" onClick={() => openRelationChooser(tempWord.relations.length)}/>
+            <Button label={trans("wordEditor.add")} iconName="plus" onClick={() => openRelationChooser(tempWord.relations.length)}/>
           </div>
         </div>
       );
