@@ -3,9 +3,20 @@
 @import "/client/component/mixin.scss";
 
 
-.container {
-  @include reset-first-margin;
-  margin: $large-margin 0rpx 0rpx 0rpx;
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: $paragraph-margin;
+}
+
+.head {
+  @include bold-font;
+  margin: 0rpx 0rpx $paragraph-margin 0rpx;
+  font-size: 80%;
+  color: $light-color;
+}
+
+.container-inner {
   display: flex;
   flex-direction: column;
   gap: $small-control-vertical-margin;
@@ -14,10 +25,9 @@
 .container-item {
   display: flex;
   flex-direction: row;
-}
-
-.container-item.dragging {
-  opacity: 0.3;
+  &.dragging {
+    opacity: 0.3;
+  }
 }
 
 .handle {
@@ -47,14 +57,19 @@
   grid-template-columns: auto 1fr;
   align-items: center;
   gap: $small-control-vertical-margin 0rpx;
+  &.information {
+    grid-template-rows: auto 150rpx;
+  }
+  >label {
+    display: contents;
+  }
 }
 
-.form.information {
-  grid-template-rows: auto 150rpx;
-}
-
-.form >label {
-  display: contents;
+.generate-wrapper {
+  display: flex;
+  & >:nth-child(1) {
+    flex-grow: 1;
+  }
 }
 
 .title {

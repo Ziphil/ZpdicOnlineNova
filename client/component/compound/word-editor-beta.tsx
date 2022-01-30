@@ -309,8 +309,6 @@ const WordEditorName = create(
     }, [mutateWord]);
 
     let zatlin = dictionary.getZatlin();
-    let nameLabel = trans("wordEditor.name");
-    let pronunciationLabel = trans("wordEditor.pronunciation");
     let generateNode = (zatlin !== null) && (
       <div styleName="control-button">
         <Button label={trans("wordEditor.generate")} onClick={() => generateName(zatlin!)}/>
@@ -318,7 +316,29 @@ const WordEditorName = create(
     );
     let node = (
       <div styleName="container">
-        <div styleName="inner">
+        <div styleName="head">
+          {trans("wordEditor.basic")}
+        </div>
+        <div styleName="container-inner">
+          <div styleName="container-item">
+            <div styleName="form-wrapper">
+              <div styleName="form">
+                <label>
+                  <Label text={trans("wordEditor.name")} position="left"/>
+                  <div styleName="generate-wrapper">
+                    <Input className={styles!["name"]} value={tempWord.name} onSet={mutateWord((tempWord, name) => tempWord.name = name)}/>
+                    {generateNode}
+                  </div>
+                </label>
+                <label>
+                  <Label text={trans("wordEditor.pronunciation")} position="left"/>
+                  <Input className={styles!["name"]} value={tempWord.pronunciation} onSet={mutateWord((tempWord, pronunciation) => tempWord.pronunciation = pronunciation || undefined)}/>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* <div styleName="inner">
           <div styleName="form">
             <Input className={styles!["title"]} value={tempWord.name} label={nameLabel} onSet={mutateWord((tempWord, name) => tempWord.name = name)}/>
           </div>
@@ -328,7 +348,7 @@ const WordEditorName = create(
           <div styleName="form">
             <Input className={styles!["title"]} value={tempWord.pronunciation} label={pronunciationLabel} onSet={mutateWord((tempWord, pronunciation) => tempWord.pronunciation = pronunciation || undefined)}/>
           </div>
-        </div>
+        </div> */}
       </div>
     );
     return node;
@@ -370,8 +390,13 @@ const WordEditorTags = create(
     })();
     let node = (
       <div styleName="container">
-        {innerNodes}
-        {plusNode}
+        <div styleName="head">
+          {trans("wordEditor.tag")}
+        </div>
+        <div styleName="container-inner">
+          {innerNodes}
+          {plusNode}
+        </div>
       </div>
     );
     return node;
@@ -464,8 +489,13 @@ const WordEditorEquivalents = create(
     })();
     let node = (
       <div styleName="container">
-        {innerNodes}
-        {plusNode}
+        <div styleName="head">
+          {trans("wordEditor.equivalent")}
+        </div>
+        <div styleName="container-inner">
+          {innerNodes}
+          {plusNode}
+        </div>
       </div>
     );
     return node;
@@ -565,8 +595,13 @@ const WordEditorInformations = create(
     })();
     let node = (
       <div styleName="container">
-        {innerNodes}
-        {plusNode}
+        <div styleName="head">
+          {trans("wordEditor.information")}
+        </div>
+        <div styleName="container-inner">
+          {innerNodes}
+          {plusNode}
+        </div>
       </div>
     );
     return node;
@@ -667,8 +702,13 @@ const WordEditorVariations = create(
     })();
     let node = (
       <div styleName="container">
-        {innerNodes}
-        {plusNode}
+        <div styleName="head">
+          {trans("wordEditor.variation")}
+        </div>
+        <div styleName="container-inner">
+          {innerNodes}
+          {plusNode}
+        </div>
       </div>
     );
     return node;
@@ -770,8 +810,13 @@ const WordEditorRelations = create(
     })();
     let node = (
       <div styleName="container">
-        {innerNodes}
-        {plusNode}
+        <div styleName="head">
+          {trans("wordEditor.relation")}
+        </div>
+        <div styleName="container-inner">
+          {innerNodes}
+          {plusNode}
+        </div>
       </div>
     );
     return node;
