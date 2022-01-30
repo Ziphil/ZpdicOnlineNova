@@ -7,6 +7,7 @@ import {
   useCallback
 } from "react";
 import Button from "/client/component/atom/button";
+import Icon from "/client/component/atom/icon";
 import Modal from "/client/component/atom/modal";
 import {
   create
@@ -20,7 +21,7 @@ const Alert = create(
   require("./alert.scss"), "Alert",
   function ({
     text,
-    iconLabel = "\uF071",
+    iconName = "triangle-exclamation",
     confirmLabel = null,
     cancelLabel = null,
     open = false,
@@ -30,7 +31,7 @@ const Alert = create(
     onCancel
   }: {
     text: string,
-    iconLabel?: string,
+    iconName?: string,
     confirmLabel?: string | null,
     cancelLabel?: string | null,
     open?: boolean,
@@ -58,7 +59,7 @@ const Alert = create(
       <Modal open={open} outsideClosable={outsideClosable} onClose={onClose}>
         <div styleName="content">
           <div styleName="text-wrapper">
-            <div styleName="icon">{iconLabel}</div>
+            <div styleName="icon"><Icon name={iconName}/></div>
             <p styleName="text">{text}</p>
           </div>
           <div styleName="button">
