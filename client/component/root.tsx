@@ -72,8 +72,8 @@ const Root = create(
 
     let node = (ready) && (
       <BrowserRouter>
-        <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError}>
-          <DndProvider backend={DndBackend}>
+        <DndProvider backend={DndBackend}>
+          <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError}>
             <Suspense fallback={<EmptyPage/>}>
               <ErrorBoundary fallbackRender={ErrorPage}>
                 <ScrollTop>
@@ -99,8 +99,8 @@ const Root = create(
                 </ScrollTop>
               </ErrorBoundary>
             </Suspense>
-          </DndProvider>
-        </IntlProvider>
+          </IntlProvider>
+        </DndProvider>
       </BrowserRouter>
     );
     return node || null;
