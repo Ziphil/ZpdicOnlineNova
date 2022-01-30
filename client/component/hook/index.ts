@@ -1,6 +1,7 @@
 //
 
 export * from "./debounce";
+export * from "./hotkey";
 export * from "./intl";
 export * from "./misc";
 export * from "./popup";
