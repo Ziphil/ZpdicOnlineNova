@@ -4,8 +4,10 @@ import * as react from "react";
 import {
   Fragment,
   ReactElement,
-  ReactNode
+  ReactNode,
+  useState
 } from "react";
+import HotkeyHelp from "/client/component/compound/hotkey-help";
 import {
   create
 } from "/client/component/create";
@@ -23,6 +25,7 @@ const InnerRoot = create(
     children?: ReactNode
   }): ReactElement {
 
+    let [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
     let {pushPath} = usePath();
 
     useHotkey("jumpDictionaryListPage", "globalNavigation", ["g d"], () => pushPath("/list"));
@@ -30,7 +33,10 @@ const InnerRoot = create(
     useHotkey("jumpDocumentPage", "globalNavigation", ["g h"], () => pushPath("/document"));
     useHotkey("jumpContactPage", "globalNavigation", ["g c"], () => pushPath("/contact"));
     useHotkey("jumpLanguagePage", "globalNavigation", ["g l"], () => pushPath("/language"));
-    useHotkey("unfocus", "unfocus", ["esc"], () => {
+    useHotkey("showHotkeyHelp", "general", ["?"], () => {
+      setHotkeyHelpOpen(true);
+    });
+    useHotkey("unfocus", "general", ["esc"], () => {
       let activeElement = document.activeElement;
       if (activeElement instanceof HTMLElement) {
         activeElement.blur();
@@ -40,6 +46,7 @@ const InnerRoot = create(
     let node = (
       <Fragment>
         {children}
+        <HotkeyHelp open={hotkeyHelpOpen} onClose={() => setHotkeyHelpOpen(false)}/>
       </Fragment>
     );
     return node;
