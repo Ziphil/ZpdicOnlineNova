@@ -470,7 +470,7 @@ hotkeyHelp:
   general: "一般"
   showHotkeyHelp: "このヘルプを表示"
   unfocus: "全ての要素からフォーカスを外す"
-  globalNavigation: "サイト全体のナビゲーション"
+  navigation: "ナビゲーション"
   jumpDashboardPage: "ユーザーページへ移動"
   jumpDictionaryListPage: "辞書一覧ページへ移動"
   jumpNotificationPage: "お知らせページへ移動"

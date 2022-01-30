@@ -470,7 +470,7 @@ hotkeyHelp:
   general: "General"
   showHotkeyHelp: "Show this help"
   unfocus: "Clear the focus from everything"
-  globalNavigation: "Global navigation"
+  navigation: "Navigation"
   jumpDashboardPage: "Go to your user page"
   jumpDictionaryListPage: "Go to the dictionary list page"
   jumpNotificationPage: "Go to the notification page"
