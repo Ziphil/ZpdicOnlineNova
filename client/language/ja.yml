@@ -477,6 +477,12 @@ hotkeyHelp:
   jumpDocumentPage: "ドキュメントページへ移動"
   jumpContactPage: "お問い合わせページへ移動"
   jumpLanguagePage: "言語選択ページへ移動"
+  jumpDictionarySettingPage: "辞書設定ページへ移動"
+  jumpExamplePage: "例文一覧ページへ移動"
+  dictionary: "辞書編集"
+  addWord: "単語を新規作成"
+  addExample: "例文を新規作成"
+  addCommission: "造語依頼"
 invitationPane:
   createdDate: "招待日時"
   userName: "招待者"
