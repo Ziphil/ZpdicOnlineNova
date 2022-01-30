@@ -38,7 +38,7 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
+let WordEditor = lazy(() => import("/client/component/compound/word-editor-beta"));
 let ExampleEditor = lazy(() => import("/client/component/compound/example-editor"));
 let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
 
