@@ -94,12 +94,12 @@ const DictionaryPage = create(
       await Promise.all([ownPromise, editPromise]);
     }, [dictionary?.number, request]);
 
-    let updateWordsImmediately = useCallback(async function (overrides: {parameter?: WordParameter, page?: number}, options?: UpdateWordsOptions): Promise<void> {
+    let updateWordsImmediately = useCallback(async function (): Promise<void> {
       let number = dictionary?.number;
       if (number !== undefined) {
         let query = getQuery();
-        let usedParameter = overrides?.parameter ?? query.parameter;
-        let usedPage = overrides?.page ?? query.page;
+        let usedParameter = query.parameter;
+        let usedPage = query.page;
         let offset = usedPage * 40;
         let size = 40;
         setSearching(true);
@@ -115,8 +115,8 @@ const DictionaryPage = create(
       }
     }, [dictionary?.number, getQuery, request]);
 
-    let updateWords = useDebounce(async function (overrides: {parameter?: WordParameter, page?: number}, options?: UpdateWordsOptions): Promise<void> {
-      await updateWordsImmediately(overrides, options);
+    let updateWords = useDebounce(async function (): Promise<void> {
+      await updateWordsImmediately();
     }, 500, [updateWordsImmediately]);
 
     let handleParameterSet = useCallback(async function (parameter: WordParameter): Promise<void> {
@@ -130,7 +130,7 @@ const DictionaryPage = create(
     }, [setQuery]);
 
     useEffect(() => {
-      updateWords({});
+      updateWords();
     }, [getQuery()]);
 
     useEffect(() => {
@@ -139,7 +139,7 @@ const DictionaryPage = create(
 
     useEffect(() => {
       checkAuthorization();
-      updateWordsImmediately({});
+      updateWordsImmediately();
     }, [dictionary]);
 
     let wordListProps = {dictionary, getQuery, canEdit, hitResult, updateWordsImmediately, handlePageSet};
@@ -176,7 +176,7 @@ const DictionaryPageWordList = create(
     getQuery: () => DictionaryQuery,
     canEdit: boolean,
     hitResult: DictionaryHitResult,
-    updateWordsImmediately: (overrides: {}) => Promise<void>,
+    updateWordsImmediately: () => Promise<void>,
     handlePageSet: (page: number) => Promise<void>
   }): ReactElement {
 
@@ -198,10 +198,10 @@ const DictionaryPageWordList = create(
             showEditLink={canEdit}
             offset={0}
             size={40}
-            onEditConfirm={() => updateWordsImmediately({})}
-            onDiscardConfirm={() => updateWordsImmediately({})}
-            onEditExampleConfirm={() => updateWordsImmediately({})}
-            onDiscardExampleConfirm={() => updateWordsImmediately({})}
+            onEditConfirm={updateWordsImmediately}
+            onDiscardConfirm={updateWordsImmediately}
+            onEditExampleConfirm={updateWordsImmediately}
+            onDiscardExampleConfirm={updateWordsImmediately}
           />
         </div>
         <div styleName="pagination">
