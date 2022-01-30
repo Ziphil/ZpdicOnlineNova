@@ -465,6 +465,18 @@ header:
   contact: "お問い合わせ"
   language: "言語選択"
   dashboard: "ユーザーページ"
+hotkeyHelp:
+  title: "ショートカット一覧"
+  general: "一般"
+  showHotkeyHelp: "このヘルプを表示"
+  unfocus: "全ての要素からフォーカスを外す"
+  globalNavigation: "サイト全体のナビゲーション"
+  jumpDashboardPage: "ユーザーページへ移動"
+  jumpDictionaryListPage: "辞書一覧ページへ移動"
+  jumpNotificationPage: "お知らせページへ移動"
+  jumpDocumentPage: "ドキュメントページへ移動"
+  jumpContactPage: "お問い合わせページへ移動"
+  jumpLanguagePage: "言語選択ページへ移動"
 invitationPane:
   createdDate: "招待日時"
   userName: "招待者"

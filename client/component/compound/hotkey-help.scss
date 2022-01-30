@@ -1,3 +1,59 @@
 @charset "utf-8";
 
 @import "/client/component/mixin.scss";
+
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: $paragraph-margin;
+}
+
+.head {
+  @include bold-font;
+  margin: 0rpx 0rpx $paragraph-margin 0rpx;
+  font-size: 80%;
+  color: $light-color;
+}
+
+.table-wrapper {
+  @include line-height;
+}
+
+.table {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.key-cell {
+  margin-right: $small-margin;
+}
+
+.key {
+  margin: 0rpx 7rpx 0rpx 0rpx;
+  padding: 0em 0.2em;
+  font-family: inherit;
+  font-size: inherit;
+  text-align: left;
+  line-height: 1;
+  border: 1rpx $light-color solid;
+  border-radius: $small-border-radius;
+  box-shadow: 0px 1px 0px $light-color;
+  display: inline-block;
+  position: relative;
+}
+
+.key:not(:last-child)::after {
+  top: 3rpx;
+  right: -10rpx;
+  margin-left: -8rpx;
+  border: 5rpx transparent solid;
+  border-left: 5rpx $light-border-color solid;
+  position: absolute;
+  content: "";
+}
+
+.arrow {
+  margin: 0em $blank-margin;
+  color: $light-color;
+}
