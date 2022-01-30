@@ -24,7 +24,7 @@ export function useHotkey(name: string, group: HotkeyGroup, key: string | Array<
       setHotkeySpecs((hotkeySpecs) => hotkeySpecs.filter((hotkeySpec) => hotkeySpec.key === key));
     };
     return cleanup;
-  }, [name, group, key, callback, setHotkeySpecs]);
+  }, []);
 }
 
 export function useHotkeySpecs(): Array<HotkeySpec> {

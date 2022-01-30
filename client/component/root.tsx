@@ -31,6 +31,7 @@ import {
   useDefaultLocale,
   useDefaultUser
 } from "/client/component/hook";
+import InnerRoot from "/client/component/inner-root";
 import EmptyPage from "/client/component/page/empty-page";
 import ErrorPage from "/client/component/page/error-page";
 import NotFoundPage from "/client/component/page/not-found-page";
@@ -77,25 +78,27 @@ const Root = create(
             <Suspense fallback={<EmptyPage/>}>
               <ErrorBoundary fallbackRender={ErrorPage}>
                 <ScrollTop>
-                  <Switch>
-                    <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
-                    <Authenticator type="guest" exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
-                    <Authenticator type="guest" exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
-                    <Authenticator type="guest" exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
-                    <Authenticator type="none" exact sensitive path="/activate" component={ActivateUserPage}/>
-                    <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
-                    <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
-                    <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
-                    <Authenticator type="none" exact sensitive path="/example/:number(\d+)" component={ExamplePage}/>
-                    <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-                    <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
-                    <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
-                    <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
-                    <Authenticator type="none" exact sensitive path="/contact" component={ContactPage}/>
-                    <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
-                    <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
-                    <Authenticator type="none" component={NotFoundPage}/>
-                  </Switch>
+                  <InnerRoot>
+                    <Switch>
+                      <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
+                      <Authenticator type="guest" exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
+                      <Authenticator type="guest" exact sensitive path="/register" redirect="/dashboard" component={RegisterPage}/>
+                      <Authenticator type="guest" exact sensitive path="/reset" redirect="/dashboard" component={ResetUserPasswordPage}/>
+                      <Authenticator type="none" exact sensitive path="/activate" component={ActivateUserPage}/>
+                      <Authenticator type="private" exact sensitive path="/dashboard/:mode" redirect="/login" component={DashboardPage}/>
+                      <Authenticator type="private" exact sensitive path="/dashboard" redirect="/login" component={DashboardPage}/>
+                      <Authenticator type="none" exact sensitive path="/dictionary/:value([a-zA-Z0-9_-]+)" component={DictionaryPage}/>
+                      <Authenticator type="none" exact sensitive path="/example/:number(\d+)" component={ExamplePage}/>
+                      <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:mode/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                      <Authenticator type="private" exact sensitive path="/dashboard/dictionary/:number(\d+)" redirect="/login" component={DictionarySettingPage}/>
+                      <Authenticator type="none" exact sensitive path="/list" component={DictionaryListPage}/>
+                      <Authenticator type="none" exact sensitive path="/notification" component={NotificationPage}/>
+                      <Authenticator type="none" exact sensitive path="/contact" component={ContactPage}/>
+                      <Authenticator type="none" exact sensitive path="/document/:firstPath?/:secondPath?" component={DocumentPage}/>
+                      <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
+                      <Authenticator type="none" component={NotFoundPage}/>
+                    </Switch>
+                  </InnerRoot>
                 </ScrollTop>
               </ErrorBoundary>
             </Suspense>

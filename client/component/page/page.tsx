@@ -16,10 +16,6 @@ import {
   create
 } from "/client/component/create";
 import {
-  useHotkey,
-  usePath
-} from "/client/component/hook";
-import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
 import {
@@ -44,18 +40,6 @@ const Page = create(
     showSettingLink?: boolean,
     children?: ReactNode
   }): ReactElement {
-
-    let {pushPath} = usePath();
-
-    useHotkey("jumpDictionaryListPage", "globalNavigation", ["g d"], () => pushPath("/list"));
-    useHotkey("jumpNotificationListPage", "globalNavigation", ["g n"], () => pushPath("/notification"));
-    useHotkey("jumpDocumentPage", "globalNavigation", ["g h"], () => pushPath("/document"));
-    useHotkey("jumpContactPage", "globalNavigation", ["g c"], () => pushPath("/contact"));
-    useHotkey("jumpLanguagePage", "globalNavigation", ["g l"], () => pushPath("/language"));
-    useHotkey("unfocus", "unfocus", ["esc"], () => {
-      let activeElement = document.activeElement as HTMLElement | null;
-      activeElement?.blur();
-    });
 
     let spacerStyleName = StyleNameUtil.create(
       "spacer",
