@@ -70,11 +70,25 @@ const DictionaryHeader = create(
     let [exampleEditorOpen, setExampleEditorOpen] = useState(false);
     let [commissionEditorOpen, setCommissionEditorOpen] = useState(false);
 
-    useHotkey("jumpDictionarySettingPage", "navigation", ["g s"], () => pushPath("/dashboard/dictionary/" + dictionary?.number));
-    useHotkey("jumpExamplePage", "navigation", ["g e"], () => pushPath("/example/" + dictionary?.number));
-    useHotkey("addWord", "dictionary", ["w"], () => setWordEditorOpen(true));
-    useHotkey("addExample", "dictionary", ["e"], () => setExampleEditorOpen(true));
-    useHotkey("addCommission", "dictionary", ["r"], () => setCommissionEditorOpen(true));
+    let hotkeyEnabled = dictionary !== null;
+    useHotkey("jumpDictionaryPage", "navigation", ["g d"], () => {
+      pushPath("/dictionary/" + dictionary?.number);
+    }, [dictionary?.number], hotkeyEnabled);
+    useHotkey("jumpDictionarySettingPage", "navigation", ["g s"], () => {
+      pushPath("/dashboard/dictionary/" + dictionary?.number);
+    }, [dictionary?.number], hotkeyEnabled);
+    useHotkey("jumpExamplePage", "navigation", ["g e"], () => {
+      pushPath("/example/" + dictionary?.number);
+    }, [dictionary?.number], hotkeyEnabled);
+    useHotkey("addWord", "editDictionary", ["w"], () => {
+      setWordEditorOpen(true);
+    }, [], hotkeyEnabled);
+    useHotkey("addExample", "editDictionary", ["e"], () => {
+      setExampleEditorOpen(true);
+    }, [], hotkeyEnabled);
+    useHotkey("addCommission", "editDictionary", ["r"], () => {
+      setCommissionEditorOpen(true);
+    }, [], hotkeyEnabled);
 
     useMount(() => {
       if (location.state?.openCommissionEditor) {

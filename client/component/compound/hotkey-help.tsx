@@ -34,7 +34,8 @@ const HotkeyHelp = create(
         <div styleName="root">
           <HotkeyHelpTable group="general"/>
           <HotkeyHelpTable group="navigation"/>
-          <HotkeyHelpTable group="dictionary"/>
+          <HotkeyHelpTable group="editDictionary"/>
+          <HotkeyHelpTable group="searchDictionary"/>
         </div>
       </Overlay>
     );
@@ -58,7 +59,7 @@ const HotkeyHelpTable = create(
     let displayedHotkeySpecs = hotkeySpecs.filter((hotkeySpec) => hotkeySpec.group === group);
     let hotkeyNodes = displayedHotkeySpecs.map((hotkeySpec) => {
       let key = (typeof hotkeySpec.key === "string") ? hotkeySpec.key : hotkeySpec.key[0];
-      let charNodes = key.split(" ").flatMap((char, index) => <kbd styleName="key">{char.charAt(0).toUpperCase() + char.slice(1)}</kbd>);
+      let charNodes = key.split(" ").map((char, index) => <kbd key={index} styleName="key">{char.charAt(0).toUpperCase() + char.slice(1)}</kbd>);
       let hotkeyNode = (
         <Fragment key={hotkeySpec.name}>
           <div styleName="key-cell">

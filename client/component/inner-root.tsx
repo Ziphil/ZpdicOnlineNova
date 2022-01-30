@@ -28,21 +28,30 @@ const InnerRoot = create(
     let [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
     let {pushPath} = usePath();
 
-    useHotkey("jumpDashboardPage", "navigation", ["g u"], () => pushPath("/dashboard"));
-    useHotkey("jumpDictionaryListPage", "navigation", ["g d"], () => pushPath("/list"));
-    useHotkey("jumpNotificationPage", "navigation", ["g n"], () => pushPath("/notification"));
-    useHotkey("jumpDocumentPage", "navigation", ["g h"], () => pushPath("/document"));
-    useHotkey("jumpContactPage", "navigation", ["g c"], () => pushPath("/contact"));
-    useHotkey("jumpLanguagePage", "navigation", ["g l"], () => pushPath("/language"));
+    useHotkey("jumpDashboardPage", "navigation", ["g u"], () => {
+      pushPath("/dashboard");
+    }, []);
+    useHotkey("jumpDictionaryListPage", "navigation", ["g l"], () => {
+      pushPath("/list");
+    }, []);
+    useHotkey("jumpNotificationPage", "navigation", ["g n"], () => {
+      pushPath("/notification");
+    }, []);
+    useHotkey("jumpDocumentPage", "navigation", ["g h"], () => {
+      pushPath("/document");
+    }, []);
+    useHotkey("jumpContactPage", "navigation", ["g c"], () => {
+      pushPath("/contact");
+    }, []);
     useHotkey("showHotkeyHelp", "general", ["?"], () => {
       setHotkeyHelpOpen(true);
-    });
+    }, []);
     useHotkey("unfocus", "general", ["esc"], () => {
       let activeElement = document.activeElement;
       if (activeElement instanceof HTMLElement) {
         activeElement.blur();
       }
-    });
+    }, []);
 
     let node = (
       <Fragment>

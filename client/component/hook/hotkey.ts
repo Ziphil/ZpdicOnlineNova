@@ -5,6 +5,7 @@ import {
   ExtendedKeyboardEvent
 } from "mousetrap";
 import {
+  DependencyList,
   useEffect
 } from "react";
 import {
@@ -14,17 +15,19 @@ import {
 
 let useRawHotkeySpecs = createGlobalState<Array<HotkeySpec>>([]);
 
-export function useHotkey(name: string, group: HotkeyGroup, key: string | Array<string>, callback: HotkeyCallback): void {
+export function useHotkey(name: string, group: HotkeyGroup, key: string | Array<string>, callback: HotkeyCallback, dependencies: DependencyList, enabled: boolean = true): void {
   let [, setHotkeySpecs] = useRawHotkeySpecs();
   useEffect(() => {
-    Mousetrap.bind(key, callback);
-    setHotkeySpecs((hotkeySpecs) => [...hotkeySpecs, {name, group, key}]);
-    let cleanup = function (): void {
-      Mousetrap.unbind(key);
-      setHotkeySpecs((hotkeySpecs) => hotkeySpecs.filter((hotkeySpec) => hotkeySpec.key !== key));
-    };
-    return cleanup;
-  }, []);
+    if (enabled) {
+      Mousetrap.bind(key, callback);
+      setHotkeySpecs((hotkeySpecs) => [...hotkeySpecs, {name, group, key}]);
+      let cleanup = function (): void {
+        Mousetrap.unbind(key);
+        setHotkeySpecs((hotkeySpecs) => hotkeySpecs.filter((hotkeySpec) => hotkeySpec.key !== key));
+      };
+      return cleanup;
+    }
+  }, [enabled, ...dependencies]);
 }
 
 export function useHotkeySpecs(): Array<HotkeySpec> {
