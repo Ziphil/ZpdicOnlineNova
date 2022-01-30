@@ -29,6 +29,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  useHotkey,
   useIntl,
   usePath,
   useRequest
@@ -63,10 +64,17 @@ const DictionaryHeader = create(
     preserveQuery?: boolean
   }): ReactElement {
 
+    let {pushPath} = usePath();
     let location = useLocation<any>();
     let [wordEditorOpen, setWordEditorOpen] = useState(false);
     let [exampleEditorOpen, setExampleEditorOpen] = useState(false);
     let [commissionEditorOpen, setCommissionEditorOpen] = useState(false);
+
+    useHotkey("jumpDictionarySettingPage", "navigation", ["g s"], () => pushPath("/dashboard/dictionary/" + dictionary?.number));
+    useHotkey("jumpExamplePage", "navigation", ["g e"], () => pushPath("/example/" + dictionary?.number));
+    useHotkey("addWord", "dictionary", ["w"], () => setWordEditorOpen(true));
+    useHotkey("addExample", "dictionary", ["e"], () => setExampleEditorOpen(true));
+    useHotkey("addCommission", "dictionary", ["r"], () => setCommissionEditorOpen(true));
 
     useMount(() => {
       if (location.state?.openCommissionEditor) {

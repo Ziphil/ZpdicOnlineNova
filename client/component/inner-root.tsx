@@ -28,12 +28,12 @@ const InnerRoot = create(
     let [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
     let {pushPath} = usePath();
 
-    useHotkey("jumpDashboardPage", "globalNavigation", ["g u"], () => pushPath("/dashboard"));
-    useHotkey("jumpDictionaryListPage", "globalNavigation", ["g d"], () => pushPath("/list"));
-    useHotkey("jumpNotificationPage", "globalNavigation", ["g n"], () => pushPath("/notification"));
-    useHotkey("jumpDocumentPage", "globalNavigation", ["g h"], () => pushPath("/document"));
-    useHotkey("jumpContactPage", "globalNavigation", ["g c"], () => pushPath("/contact"));
-    useHotkey("jumpLanguagePage", "globalNavigation", ["g l"], () => pushPath("/language"));
+    useHotkey("jumpDashboardPage", "navigation", ["g u"], () => pushPath("/dashboard"));
+    useHotkey("jumpDictionaryListPage", "navigation", ["g d"], () => pushPath("/list"));
+    useHotkey("jumpNotificationPage", "navigation", ["g n"], () => pushPath("/notification"));
+    useHotkey("jumpDocumentPage", "navigation", ["g h"], () => pushPath("/document"));
+    useHotkey("jumpContactPage", "navigation", ["g c"], () => pushPath("/contact"));
+    useHotkey("jumpLanguagePage", "navigation", ["g l"], () => pushPath("/language"));
     useHotkey("showHotkeyHelp", "general", ["?"], () => {
       setHotkeyHelpOpen(true);
     });

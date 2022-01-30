@@ -33,7 +33,8 @@ const HotkeyHelp = create(
       <Overlay title={trans("hotkeyHelp.title")} open={open} outsideClosable={true} onClose={onClose}>
         <div styleName="root">
           <HotkeyHelpTable group="general"/>
-          <HotkeyHelpTable group="globalNavigation"/>
+          <HotkeyHelpTable group="navigation"/>
+          <HotkeyHelpTable group="dictionary"/>
         </div>
       </Overlay>
     );
@@ -49,7 +50,7 @@ const HotkeyHelpTable = create(
     group
   }: {
     group: HotkeyGroup
-  }): ReactElement {
+  }): ReactElement | null {
 
     let [, {trans}] = useIntl();
     let hotkeySpecs = useHotkeySpecs();
@@ -70,7 +71,7 @@ const HotkeyHelpTable = create(
       );
       return hotkeyNode;
     });
-    let node = (
+    let node = (displayedHotkeySpecs.length > 0) && (
       <div styleName="table-wrapper">
         <div styleName="head">{trans(`hotkeyHelp.${group}`)}</div>
         <div styleName="table-wrapper">
@@ -80,7 +81,7 @@ const HotkeyHelpTable = create(
         </div>
       </div>
     );
-    return node;
+    return node || null;
 
   }
 );
