@@ -21,7 +21,7 @@ export function useHotkey(name: string, group: HotkeyGroup, key: string | Array<
     setHotkeySpecs((hotkeySpecs) => [...hotkeySpecs, {name, group, key}]);
     let cleanup = function (): void {
       Mousetrap.unbind(key);
-      setHotkeySpecs((hotkeySpecs) => hotkeySpecs.filter((hotkeySpec) => hotkeySpec.key === key));
+      setHotkeySpecs((hotkeySpecs) => hotkeySpecs.filter((hotkeySpec) => hotkeySpec.key !== key));
     };
     return cleanup;
   }, []);
