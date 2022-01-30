@@ -10,6 +10,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  useHotkeySpecs,
   useIntl
 } from "/client/component/hook";
 import {
@@ -28,6 +29,7 @@ const HotkeyHelp = create(
   }): ReactElement {
 
     let [, {trans}] = useIntl();
+    let hotkeySpecs = useHotkeySpecs();
 
     let node = (
       <Overlay title={trans("hotkeyHelp.title")} open={open} outsideClosable={true} onClose={onClose}>

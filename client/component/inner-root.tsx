@@ -33,6 +33,7 @@ const InnerRoot = create(
     useHotkey("jumpDocumentPage", "globalNavigation", ["g h"], () => pushPath("/document"));
     useHotkey("jumpContactPage", "globalNavigation", ["g c"], () => pushPath("/contact"));
     useHotkey("jumpLanguagePage", "globalNavigation", ["g l"], () => pushPath("/language"));
+    useHotkey("jumpDashboardPage", "globalNavigation", ["g u"], () => pushPath("/dashboard"));
     useHotkey("showHotkeyHelp", "general", ["?"], () => {
       setHotkeyHelpOpen(true);
     });
