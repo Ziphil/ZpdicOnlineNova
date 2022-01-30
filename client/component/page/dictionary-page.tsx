@@ -23,6 +23,7 @@ import {
 } from "/client/component/create";
 import {
   useDebounce,
+  useHotkey,
   useQueryState,
   useRequest
 } from "/client/component/hook";
@@ -52,6 +53,17 @@ const DictionaryPage = create(
     let [searching, setSearching] = useState(false);
     let {request} = useRequest();
     let params = useParams<{value: string}>();
+
+    let hotkeyEnabled = dictionary !== null;
+    useHotkey("focusSearch", "searchDictionary", ["s", "/"], () => {
+      console.warn("to be implemented");
+    }, [], hotkeyEnabled);
+    useHotkey("changeNextPage", "searchDictionary", ["l"], () => {
+      console.warn("to be implemented");
+    }, [], hotkeyEnabled);
+    useHotkey("changePreviousPage", "searchDictionary", ["h"], () => {
+      console.warn("to be implemented");
+    }, [], hotkeyEnabled);
 
     let fetchDictionary = useCallback(async function (): Promise<void> {
       let value = params.value;

@@ -484,6 +484,10 @@ hotkeyHelp:
   addWord: "単語を新規作成"
   addExample: "例文を新規作成"
   addCommission: "造語依頼"
+  searchDictionary: "辞書検索"
+  focusSearch: "検索欄にフォーカス"
+  changeNextPage: "次のページへ"
+  changePreviousPage: "前のページへ"
 invitationPane:
   createdDate: "招待日時"
   userName: "招待者"
