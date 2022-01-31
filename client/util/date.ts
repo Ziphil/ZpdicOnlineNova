@@ -21,8 +21,17 @@ export class DateUtil {
     result = result.replace(/ss/g, this.padZero(date.getSeconds(), 2));
     result = result.replace(/s/g, this.padZero(date.getSeconds(), 1));
     result = result.replace(/LLLL/g, date.toLocaleString(locale, {month: "long"}));
-    result = result.replace(/LLL/g, date.toLocaleString(locale, {month: "short"}));
+    result = result.replace(/LLL/g, this.toShortLocaleMonth(date, locale));
     return result;
+  }
+
+  private static toShortLocaleMonth(date: Date, locale?: string): string {
+    if (locale === "eo") {
+      let monthIndex = date.getMonth();
+      return ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aŭg", "Sep", "Okt", "Nov", "Dec"][monthIndex];
+    } else {
+      return date.toLocaleString(locale, {month: "short"});
+    }
   }
 
   private static padZero(number: number | string, length: number): string {

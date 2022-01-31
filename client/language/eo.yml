@@ -35,7 +35,7 @@ popup:
     The description of the dictionary has been changed.
   dictionarySettingsChanged: 
     akrantiainSource: >-
-      The snoj code for Akrantiain has been changed.
+      The snoj data for Akrantiain has been changed.
     zatlinSource: >-
       The source code for Zatlin has been changed.
     pronunciationTitle: >-
@@ -197,98 +197,98 @@ popup:
     Please notify the administrator.
 
 alert:
-  confirm: "Confirm"
-  cancel: "Cancel"
+  confirm: "Certigi"
+  cancel: "Nuligi"
 fileInput:
   button: "Select"
 label:
-  required: "required"
-  optional: "optional"
+  required: "deviga"
+  optional: "nedeviga"
 overlay:
-  back: "Back"
-  close: "Close"
+  back: "Reiri"
+  close: "Fermi"
 changeUserNameForm:
-  name: "User ID"
-  confirm: "Change"
+  name: "Uzanta identigilo"
+  confirm: "Ŝanĝi"
   caution: >-
-    Currently you cannot change your user ID.
+    Nuntempe vi ne povas ŝanĝi vian uzantan identigilon.
 changeUserScreenNameForm:
-  screenName: "Nickname"
-  confirm: "Change"
+  screenName: "Kromnomo"
+  confirm: "Ŝanĝi"
 changeUserEmailForm:
-  email: "Email address"
-  confirm: "Change"
+  email: "Retpoŝta adreso"
+  confirm: "Ŝanĝi"
 changeUserPasswordForm:
-  password: "Password"
-  confirm: "Change"
+  password: "Pasvorto"
+  confirm: "Ŝanĝi"
 createDictionaryForm:
-  defaultName: "New dictionary"
-  name: "Name"
-  confirm: "Create"
+  defaultName: "Nova vortaro"
+  name: "Nomo"
+  confirm: "Krei"
 discardUserForm:
-  confirm: "Delete"
+  confirm: "Forigi"
   caution: >-
-    This operation will delete this user permanently, and also delete the dictionaries you own.
-    Once you delete them, you cannot restore them.
+    Tiu operacio forigos tiun uzanton konstante, kaj ankaŭ forigos la vortarojn kiujn vi posedas.
+    Post kiam vi forigos ilin, vi ne povos restaŭri ilin.
   alert: >-
-    This user will be deleted permanently, and the dictionaries you own will be also deleted.
-    You cannot restore them afterwards.
-    Are you really sure?
+    Tiu uzanto estos forigita konstante, kaj la vortaroj kiujn vi posedas ankaŭ estos forigitaj.
+    Vi ne povas restaŭri ilin poste.
+    Ĉu vi vere certas?
 addEditInvitationForm:
-  userName: "User ID to invite"
-  confirm: "Invite"
+  userName: "Uzanta identigilo por inviti"
+  confirm: "Inviti"
 addTransferInvitationForm:
-  userName: "User ID to invite"
-  confirm: "Invite"
+  userName: "Uzanta identigilo por inviti"
+  confirm: "Inviti"
 changeDictionaryExplanationForm:
   explanation: "Description"
-  confirm: "Change"
+  confirm: "Ŝanĝi"
 changeDictionaryNameForm:
-  name: "Name"
-  confirm: "Change"
+  name: "Nomo"
+  confirm: "Ŝanĝi"
 changeDictionaryParamNameForm:
-  paramName: "Name for URL"
-  confirm: "Change"
+  paramName: "Retadresa nomo"
+  confirm: "Ŝanĝi"
 changeDictionarySecretForm:
-  public: "Show"
-  secret: "Hide"
-  confirm: "Change"
+  public: "Videbla"
+  secret: "Nevidebla"
+  confirm: "Ŝanĝi"
   caution: >-
-    This setting affects only whether or not this dictionary is shown in the public dictionary list.
-    Even if it is set to “Hide”, anyone with the link can view this dictionary.
+    Tiu agordo influas nur ĉu tiu vortaro estas montrata en la publika listo de vortaroj.
+    Eĉ se ĝi estas agordita al “Nevidebla”, ĉiu kun la ligilo povas vidi tiun vortaron.
 changeDictionarySettingsForm:
-  pronunciationTitle: "Title of pronunciation"
-  exampleTitle: "Title of example sentences"
-  enableMarkdownTrue: "Enable"
-  enableMarkdownFalse: "Disable"
-  confirm: "Change"
+  pronunciationTitle: "Titolo por elparolo"
+  exampleTitle: "Titolo por ekzemplaj frazoj"
+  enableMarkdownTrue: "Ebligita"
+  enableMarkdownFalse: "Malebligita"
+  confirm: "Ŝanĝi"
 changeDictionarySourceForm:
-  akrantiain: "Snoj code for Akrantiain"
-  zatlin: "Source code for Zatlin"
-  confirm: "Change"
-  try: "Try"
+  akrantiain: "Fontkodo por Akrantiain"
+  zatlin: "Fontkodo por Zatlin"
+  confirm: "Ŝanĝi"
+  try: "Provi"
 discardDictionaryForm:
-  confirm: "Delete"
+  confirm: "Forigi"
   caution: >-
-    This operation will delete this dictionary permanently.
-    Once you delete it, you cannot restore it.
+    Tiu operacio forigos tiun vortaron konstante.
+    Post kiam vi forigos ĝin, vi ne povas restaŭri ĝin.
   alert: >-
-    This dictionary will be deleted permanently.
-    You cannot restore it afterwards.
-    Are you really sure?
+    Tiu vortaro estos forigita konstante.
+    Vi ne povas restaŭri ĝin poste.
+    Ĉu vi vere certas?
 uploadDictionaryForm:
-  file: "File"
-  confirm: "Confirm"
+  file: "Dosiero"
+  confirm: "Certigi"
 activateUserForm:
-  send: "Send"
+  send: "Sendi"
   caution: >-
-    This user has not yet been activated.
-    For security reasons, unactivated users will not be able to do anything after a certain period of time.
-    To activate, follow the instructions in the mail you received when you created the user.
-    You can also click the button on the right to resend the mail.
+    Tiu uzanto ankoraŭ ne estas aktivigita.
+    Pro sekurecaj kialoj, neaktivigitaj uzantoj povos fari nenion post iom da tempo.
+    Por aktivigi, sekvu la instrukciojn en la poŝto kiun vi ricevis kiam vi kreis la uzanton.
+    Vi ankaŭ povas alklaki la dekstran butonon por resendi la poŝton.
 advancedSearchForm:
   overlayTitle: "Advanced search"
-  search: "Search"
+  search: "Serĉi"
   title: "Title"
   mode: "Range"
   type: "Method"
@@ -302,10 +302,10 @@ advancedSearchForm:
   part: "Part"
   exact: "Exact"
   regular: "Regexp"
-  confirm: "Confirm"
+  confirm: "Certigi"
 akrantiainExecutor:
   title: "Akrantiain {version}"
-  source: "Snoj code"
+  source: "Snoj data"
   input: "Input"
   output: "Output"
   errorMessage: "Error message"
@@ -316,8 +316,8 @@ commissionEditor:
   comment: "Comment"
   confirm: "Request"
 commissionPane:
-  discard: "Delete"
-  add: "Create"
+  discard: "Forigi"
+  add: "Krei"
   alert: >-
     This request will be deleted.
     Are you really sure?
@@ -326,32 +326,32 @@ contactForm:
   email: "Email address"
   subject: "Subject"
   text: "Content"
-  confirm: "Send"
+  confirm: "Sendi"
 contributorList:
   title: "Special thanks to"
 dashboardButtonForm:
-  dashboard: "Go to user page"
-  logout: "Sign out"
+  dashboard: "Iri al uzanta paĝo"
+  logout: "Elsaluti"
 dictionaryHeader:
-  add: "Add"
-  addWord: "Word"
-  addExample: "Sentence"
-  addCommission: "Request"
-  example: "Sentences"
-  setting: "Settings"
-  download: "Download"
+  add: "Aldoni"
+  addWord: "Vorto"
+  addExample: "Frazo"
+  addCommission: "Peti"
+  example: "Frazoj"
+  setting: "Agordoj"
+  download: "Elŝuti"
 dictionaryPane:
-  wordSize: "{wordSize, plural, one {# word} other {# words}}"
+  wordSize: "{wordSize, plural, one {# vorto} other {# vortoj}}"
   wordSizeTokipona: "{wordSize, number, ::.00} TP"
   wordSizeLogTokipona: "{wordSize, number, ::.000} logTP"
-  wordSizeUndefined: "? words"
-  saving: "Saving"
-  error: "Error"
-  userName: "Owner"
-  updatedDate: "Updated at"
-  createdDate: "Created at"
-  setting: "Settings"
-  download: "Download"
+  wordSizeUndefined: "? vortoj"
+  saving: "Konservata"
+  error: "Erara"
+  userName: "Posedanto"
+  updatedDate: "Ĝisdatigita je"
+  createdDate: "Kreita je"
+  setting: "Agordoj"
+  download: "Elŝuti"
 dictionaryStatisticsPane:
   wordCount: "Words"
   wordCountRaw: 
@@ -402,11 +402,11 @@ dictionaryStatisticsPane:
     value: "{value, number, ::.00} "
     unit: "{value, plural, one {char/word} other {chars/word}}"
   exampleCountWhole:
-    title: "Example sentences"
+    title: "Examples"
     value: "{value, number} "
     unit: "{value, plural, one {sentence} other {sentences}}"
   exampleCountAverage:
-    title: "Average example sentences"
+    title: "Average examples"
     value: "{value, number, ::.00} "
     unit: "{value, plural, one {sentence/word} other {sentences/word}}"
   kept: "As is"
@@ -414,40 +414,40 @@ dictionaryStatisticsPane:
   nfc: "NFC"
 exampleEditor:
   title: "Edit example sentence"
-  sentence: "Sentence"
+  sentence: "Example sentence"
   translation: "Translation"
   wordName: "Included word"
   wordNameUndefined: "?"
   wordAbsent: "No included words"
-  discard: "Delete"
-  confirm: "Confirm"
+  discard: "Forigi"
+  confirm: "Certigi"
   selectWord: "Select"
-  alertConfirm: "Delete"
+  alertConfirm: "Forigi"
   alert: >-
     This example sentence will be deleted permanently.
     You cannot restore it afterwards.
     Are you really sure?
 examplePane:
-  edit: "Edit"
+  edit: "Redakti"
   caution: >-
     This example sentence has no words associated with it.
     It will not appear in the dictionary, so please associate some word with it.
 featurePane:
   dictionary:
-    title: "Edit"
+    title: "Redakti"
     text: >-
-      You can create a dictionary in your browser and release it as an online dictionary immediately.
-      You can edit it anywhere as long as you have a browser, without any additional applications.
+      Oni povas krei vortaron en onia retumilo kaj tuj publikigi ĝin kiel reta vortaro.
+      Oni povas redakti ĝin ie kiam ajn oni havas retumilon, sen aldonaj aplikaĵoj.
   search:
-    title: "Search"
+    title: "Serĉi"
     text: >-
-      You can search as you type, both by headword and by translation.
-      Advanced searches by multiple conditions are also possible.
+      Oni povas serĉi dum oni tajpas, kaj laŭ kapvorto kaj laŭ traduko.
+      Oni ankaŭ povas fari altnivelajn serĉojn per pluraj kondiĉoj.
   user:
-    title: "Collaborate"
+    title: "Kunlabori"
     text: >-
-      Multiple users can edit the same dictionary at the same time by giving them permission to edit.
-      Collaborative creation of a constructed language can be easily realised.
+      Multaj uzantoj samtempe povas redakti saman vortaron, donante redaktan permoson al ili.
+      Kunlabora kreado de konstruita lingvo estas facile realigebla.
 giftPane:
   sendGift: "Send gift"
   information: >-
@@ -459,12 +459,12 @@ githubButton:
   github: "View on GitHub"
   dashboard: "Dev dashboard"
 header:
-  dictionaryList: "Dictionaries"
-  notification: "Notifications"
-  document: "Documents"
-  contact: "Contact"
-  language: "Languages"
-  dashboard: "User page"
+  dictionaryList: "Vortaroj"
+  notification: "Sciigoj"
+  document: "Dokumentoj"
+  contact: "Kontakti"
+  language: "Lingvoj"
+  dashboard: "Uzanta paĝo"
 hotkeyHelp:
   title: "List of shortcuts"
   general: "General"
@@ -498,17 +498,17 @@ languageForm:
     The translation may be incorrect.
     If you find something strange in the translation, please notify us from the contact form.
 loginForm:
-  userName: "User ID"
-  email: "Email address"
-  password: "Password"
-  confirm: "Sign in"
-  resetPassword: "Forgot password"
+  userName: "Uzanta identigilo"
+  email: "Retpoŝta adreso"
+  password: "Pasvorto"
+  confirm: "Ensaluti"
+  resetPassword: "Restarigi pasvorton"
 notificationPane:
   fixed: "Fixed"
 overallAggregationPane:
-  dictionaryCount: "Dictionaries"
-  wordCount: "Words"
-  exampleCount: "Sentences"
+  dictionaryCount: "Vortaroj"
+  wordCount: "Vortoj"
+  exampleCount: "Frazoj"
 regexpExecutor:
   title: "Regular expression"
   source: "Regular expression"
@@ -516,14 +516,14 @@ regexpExecutor:
   result: "Result"
   execute: "Execute"
 registerForm:
-  confirm: "Sign up"
+  confirm: "Registriĝi"
 resetUserPasswordForm:
   newPassword: "New password"
-  issue: "Send"
+  issue: "Sendi"
   reset: "Reset"
 resourceList:
   file: "File to upload"
-  confirm: "Confirm"
+  confirm: "Certigi"
   experimantalCaution: >-
     The file upload feature is currently experimental.
     In future updates, this feature may be significantly changed or the uploaded files may be deleted.
@@ -536,7 +536,7 @@ resourceList:
 resourcePane:
   code: "Code to embed"
   copy: "Copy"
-  discard: "Delete"
+  discard: "Forigi"
   alert: >-
     This resource will be deleted.
     Are you really sure?
@@ -558,12 +558,12 @@ searchForm:
   descending: "Desc"
   advancedSearch: "Advanced search"
 sourceTester:
-  try: "Try"
+  try: "Provi"
 suggestionPane:
   maybe: "Do you mean"
   suggestion: "{title} of {nameNode}?"
 userPane:
-  discard: "Delete"
+  discard: "Forigi"
   alert: >-
     This user's edit permission will be revoked.
     Are you really sure?
@@ -591,12 +591,12 @@ wordEditor:
   variationAbsent: "No variations"
   relationAbsent: "No related words"
   add: "Add"
-  discard: "Delete"
-  confirm: "Confirm"
+  discard: "Forigi"
+  confirm: "Certigi"
   generate: "Generate"
   resource: "Images"
   selectRelation: "Select"
-  alertConfirm: "Delete"
+  alertConfirm: "Forigi"
   alert: >-
     This word will be deleted permanently.
     You cannot restore it afterwards.
@@ -606,7 +606,7 @@ wordNameFrequencyPane:
   percent: "{percent, number, ::.000}%"
   others: "Others"
 wordPane:
-  edit: "Edit"
+  edit: "Redakti"
   submit: "Select"
   oneway: "Make one-way"
   mutual: "Make mutual"
@@ -624,11 +624,11 @@ contactPage:
     If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
     Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
 dashboardPage:
-  title: "User page"
-  dictionary: "Dictionaries"
-  notification: "Notifications"
-  account: "Account"
-  logout: "Sign out"
+  title: "Uzanta paĝo"
+  dictionary: "Vortaroj"
+  notification: "Sciigoj"
+  account: "Konto"
+  logout: "Elsaluti"
   dictionaryList:
     label: "Dictionaries"
     description: >-
@@ -666,7 +666,7 @@ dashboardPage:
     description: >-
       Change your password.
   discardUserForm:
-    label: "Delete"
+    label: "Forigi"
     description: >-
       Delete this user.
 dictionaryListPage:
@@ -674,12 +674,12 @@ dictionaryListPage:
   updatedDate: "Sort by update date"
   createdDate: "Sort by creation date"
 dictionarySettingPage:
-  general: "General"
-  setting: "Settings"
-  access: "Permissions"
-  commission: "Requests"
-  resource: "Images"
-  statistics: "Statistics"
+  general: "Ĝenerala"
+  setting: "Agordoj"
+  access: "Permesoj"
+  commission: "Petoj"
+  resource: "Bildoj"
+  statistics: "Statistikoj"
   changeDictionaryNameForm:
     label: "Change name"
     description: >-
@@ -700,10 +700,10 @@ dictionarySettingPage:
       You can use some Markdown syntax.
       This will be displayed in the dictionary page before searching.
   changeDictionaryAkrantiainSourceForm:
-    label: "Change snoj code for Akrantiain"
+    label: "Change snoj data for Akrantiain"
     description: >-
-      Change the snoj code for Akrantiain.
-      If you set this code, Akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
+      Change the snoj data for Akrantiain.
+      If you set this data, Akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
       When a word has its own pronunciation specified, it will be displayed instead.
       See [the documentation](/document) for further information about the syntax of Akrantiain.
   changeDictionaryZatlinSourceForm:
@@ -711,7 +711,7 @@ dictionarySettingPage:
     description: >-
       Change the source code for Zatlin.
       If you set this code, a “Generate” button will appear in the word editor, which enables you to generate a spelling by executing Zatlin.
-      See [the documentation](/document) for further information about the syntax of Zatlin (only available in Japanese).
+      See [the documentation](/document) for further information about the syntax of Zatlin (in Japanese).
   changeDictionaryPronunciationTitleForm:
     label: "Change title of pronunciation"
     description: >-
@@ -730,7 +730,7 @@ dictionarySettingPage:
       Upload a file and overwrite the current data.
       The supported formats are: OTM-JSON format (with extension .json) and PDIC format (with extension .dic).
   discardDictionaryForm:
-    label: "Delete"
+    label: "Forigi"
     description: >-
       Delete this dictionary.
   addEditInvitationForm:
@@ -759,7 +759,7 @@ dictionarySettingPage:
     description: >-
       The frequency of occurrence of each letter used in the headwords.
 errorPage:
-  back: "Back to top page"
+  back: "Reiri al ĉefpaĝo"
   description: >-
     An unexpected error has occurred.
 languagePage:
