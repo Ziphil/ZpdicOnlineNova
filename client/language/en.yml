@@ -654,7 +654,7 @@ dashboardPage:
   changeUserScreenNameForm:
     label: "Change nickname"
     description: >-
-      You can change your nickname.
+      Change your nickname.
       Unlike in your user ID, you can use any characters here.
   changeUserEmailForm:
     label: "Change email address"
