@@ -4,8 +4,10 @@ import * as react from "react";
 import {
   Fragment,
   MouseEvent,
-  ReactElement
+  ReactElement,
+  useState
 } from "react";
+import Button from "/client/component/atom/button";
 import Overlay from "/client/component/atom/overlay";
 import {
   create
@@ -15,6 +17,9 @@ import {
   useHotkeySpecs,
   useIntl
 } from "/client/component/hook";
+import {
+  StyleNameUtil
+} from "/client/util/style-name";
 
 
 const HotkeyHelp = create(
@@ -27,15 +32,24 @@ const HotkeyHelp = create(
     onClose?: (event: MouseEvent<HTMLElement>) => void
   }): ReactElement {
 
+    let [currentGroup, setCurrentGroup] = useState<HotkeyGroup>("general");
     let [, {trans}] = useIntl();
 
     let node = (
       <Overlay title={trans("hotkeyHelp.title")} open={open} outsideClosable={true} onClose={onClose}>
         <div styleName="root">
-          <HotkeyHelpTable group="general"/>
-          <HotkeyHelpTable group="navigation"/>
-          <HotkeyHelpTable group="editDictionary"/>
-          <HotkeyHelpTable group="searchDictionary"/>
+          <div styleName="menu">
+            <Button label={trans("hotkeyHelp.general")} iconName="keyboard" style="simple" onClick={() => setCurrentGroup("general")}/>
+            <Button label={trans("hotkeyHelp.navigation")} iconName="location-arrow" style="simple" onClick={() => setCurrentGroup("navigation")}/>
+            <Button label={trans("hotkeyHelp.editDictionary")} iconName="edit" style="simple" onClick={() => setCurrentGroup("editDictionary")}/>
+            <Button label={trans("hotkeyHelp.searchDictionary")} iconName="search" style="simple" onClick={() => setCurrentGroup("searchDictionary")}/>
+          </div>
+          <div styleName="content">
+            <HotkeyHelpTable group="general" currentGroup={currentGroup}/>
+            <HotkeyHelpTable group="navigation" currentGroup={currentGroup}/>
+            <HotkeyHelpTable group="editDictionary" currentGroup={currentGroup}/>
+            <HotkeyHelpTable group="searchDictionary" currentGroup={currentGroup}/>
+          </div>
         </div>
       </Overlay>
     );
@@ -48,9 +62,11 @@ const HotkeyHelp = create(
 const HotkeyHelpTable = create(
   require("./hotkey-help.scss"),
   function ({
-    group
+    group,
+    currentGroup
   }: {
-    group: HotkeyGroup
+    group: HotkeyGroup,
+    currentGroup: HotkeyGroup
   }): ReactElement | null {
 
     let [, {trans}] = useIntl();
@@ -72,9 +88,12 @@ const HotkeyHelpTable = create(
       );
       return hotkeyNode;
     });
+    let styleName = StyleNameUtil.create(
+      "table-wrapper",
+      {if: group === currentGroup, false: "hidden"}
+    );
     let node = (displayedHotkeySpecs.length > 0) && (
-      <div styleName="table-wrapper">
-        <div styleName="head">{trans(`hotkeyHelp.${group}`)}</div>
+      <div styleName={styleName}>
         <div styleName="table-wrapper">
           <div styleName="table">
             {hotkeyNodes}

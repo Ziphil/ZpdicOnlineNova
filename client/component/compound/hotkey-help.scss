@@ -5,8 +5,30 @@
 
 .root {
   display: flex;
+}
+
+.menu {
+  @include line-height;
+  margin: 0rpx $large-margin 0rpx 0rpx;
+  padding: 0rpx $large-margin 0rpx 0rpx;
+  border-right: 1rpx $invert-border-color solid;
+  display: flex;
+  flex-grow: 0;
+  flex-shrink: 0;
   flex-direction: column;
-  gap: $paragraph-margin;
+  align-items: flex-start;
+}
+
+.content {
+  flex-grow: 1;
+}
+
+.content >* {
+  width: 100%;
+  display: inline-block;
+  &:not(:first-child) {
+    margin-left: -100%;
+  }
 }
 
 .head {
@@ -18,6 +40,9 @@
 
 .table-wrapper {
   @include line-height;
+  &.hidden {
+    visibility: hidden;
+  }
 }
 
 .table {
@@ -37,8 +62,8 @@
   text-align: left;
   line-height: 1;
   border: 1rpx $light-color solid;
+  border-bottom-width: 2rpx;
   border-radius: $small-border-radius;
-  box-shadow: 0px 1px 0px $light-color;
   display: inline-block;
   position: relative;
 }
