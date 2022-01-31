@@ -322,13 +322,13 @@ commissionPane:
     This request will be deleted.
     Are you really sure?
 contactForm:
-  name: "Name"
-  email: "Email address"
-  subject: "Subject"
-  text: "Content"
+  name: "Nomo"
+  email: "Retpoŝta adreso"
+  subject: "Temo"
+  text: "Enhavo"
   confirm: "Sendi"
 contributorList:
-  title: "Special thanks to"
+  title: "Specialan dankon al"
 dashboardButtonForm:
   dashboard: "Iri al uzanta paĝo"
   logout: "Elsaluti"
