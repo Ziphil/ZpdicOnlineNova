@@ -23,7 +23,6 @@ import {
 } from "/client/component/create";
 import {
   useDebounce,
-  useHotkey,
   useQueryState,
   useRequest
 } from "/client/component/hook";
@@ -53,17 +52,6 @@ const DictionaryPage = create(
     let [searching, setSearching] = useState(false);
     let {request} = useRequest();
     let params = useParams<{value: string}>();
-
-    let hotkeyEnabled = dictionary !== null;
-    useHotkey("focusSearch", () => {
-      console.warn("to be implemented");
-    }, [], hotkeyEnabled);
-    useHotkey("changeNextPage", () => {
-      console.warn("to be implemented");
-    }, [], hotkeyEnabled);
-    useHotkey("changePreviousPage", () => {
-      console.warn("to be implemented");
-    }, [], hotkeyEnabled);
 
     let fetchDictionary = useCallback(async function (): Promise<void> {
       let value = params.value;
@@ -162,7 +150,7 @@ const DictionaryPage = create(
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <Loading loading={dictionary === null}>
           <div styleName="search-form">
-            <SearchForm dictionary={dictionary!} parameter={getQuery().parameter} searching={searching} showOrder={true} showAdvancedSearch={true} onParameterSet={handleParameterSet}/>
+            <SearchForm dictionary={dictionary!} parameter={getQuery().parameter} searching={searching} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
           </div>
           {innerNode}
         </Loading>
@@ -217,7 +205,7 @@ const DictionaryPageWordList = create(
           />
         </div>
         <div styleName="pagination">
-          <PaginationButton page={getQuery().page} minPage={0} maxPage={maxPage} onSet={handlePageSet}/>
+          <PaginationButton page={getQuery().page} minPage={0} maxPage={maxPage} enableHotkeys={true} onSet={handlePageSet}/>
         </div>
       </Fragment>
     );

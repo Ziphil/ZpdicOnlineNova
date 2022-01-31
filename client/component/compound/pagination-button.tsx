@@ -14,8 +14,9 @@ import {
   create
 } from "/client/component/create";
 import {
+  useHotkey,
   useMediaQuery
-} from "/client/component/hook/media-query";
+} from "/client/component/hook";
 
 
 const PaginationButton = create(
@@ -24,12 +25,14 @@ const PaginationButton = create(
     page,
     minPage,
     maxPage,
+    enableHotkeys = false,
     onSet,
     styles
   }: {
     page: number,
     minPage: number
-    maxPage: number
+    maxPage: number,
+    enableHotkeys?: boolean,
     onSet?: (page: number) => void,
     styles?: StylesRecord
   }): ReactElement {
@@ -98,6 +101,13 @@ const PaginationButton = create(
       });
       return buttonNodes;
     }, [movePage, styles]);
+
+    useHotkey("movePreviousPage", () => {
+      movePreviousPage();
+    }, [movePreviousPage], enableHotkeys);
+    useHotkey("moveNextPage", () => {
+      moveNextPage();
+    }, [moveNextPage], enableHotkeys);
 
     let leftButtonSpecs = calculateButtonSpecs(-1).reverse();
     let rightButtonSpecs = calculateButtonSpecs(1);

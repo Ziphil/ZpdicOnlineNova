@@ -6,6 +6,7 @@ import {
   FocusEvent,
   ReactElement,
   ReactNode,
+  Ref,
   useCallback,
   useState
 } from "react";
@@ -46,7 +47,8 @@ const Input = create(
     disabled = false,
     onChange,
     onSet,
-    className
+    className,
+    nativeRef
   }: {
     value?: string,
     label?: string,
@@ -62,7 +64,8 @@ const Input = create(
     disabled?: boolean,
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
     onSet?: (value: string) => void,
-    className?: string
+    className?: string,
+    nativeRef?: Ref<HTMLInputElement>
   }): ReactElement {
 
     let [currentType, setCurrentType] = useState((type === "flexible") ? "password" : type);
@@ -118,7 +121,7 @@ const Input = create(
                 showRequired={showRequired}
                 showOptional={showOptional}
               />
-              <InputInput {...{value, prefix, suffix, type, currentType, readOnly, disabled, errorMessage, handleChange, handleFocus, toggleType}}/>
+              <InputInput {...{value, prefix, suffix, type, currentType, readOnly, disabled, errorMessage, handleChange, handleFocus, toggleType, nativeRef}}/>
             </label>
           </Dropdown>
         </Tooltip>
@@ -143,7 +146,8 @@ const InputInput = create(
     errorMessage,
     handleChange,
     handleFocus,
-    toggleType
+    toggleType,
+    nativeRef
   }: {
     value: string,
     prefix?: ReactNode,
@@ -155,7 +159,8 @@ const InputInput = create(
     errorMessage: string | null,
     handleChange: (event: ChangeEvent<HTMLInputElement>) => void,
     handleFocus: (event: FocusEvent<HTMLInputElement>) => void,
-    toggleType: () => void
+    toggleType: () => void,
+    nativeRef?: Ref<HTMLInputElement>
   }): ReactElement {
 
     let styleName = StyleNameUtil.create(
@@ -187,6 +192,7 @@ const InputInput = create(
           disabled={disabled}
           onChange={handleChange}
           onFocus={handleFocus}
+          ref={nativeRef}
         />
         {suffixNode}
       </div>

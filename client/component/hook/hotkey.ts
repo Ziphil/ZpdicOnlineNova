@@ -28,8 +28,8 @@ const HOTKEY_SPECS = [
   {name: "addExample", group: "editDictionary", keys: ["e"]},
   {name: "addCommission", group: "editDictionary", keys: ["r"]},
   {name: "focusSearch", group: "searchWords", keys: ["s"]},
-  {name: "changeNextPage", group: "searchWords", keys: ["h"]},
-  {name: "changePreviousPage", group: "searchWords", keys: ["l"]}
+  {name: "movePreviousPage", group: "searchWords", keys: ["j"]},
+  {name: "moveNextPage", group: "searchWords", keys: ["k"]}
 ];
 
 let useEnabledHotkeyNames = createGlobalState<Array<string>>([]);

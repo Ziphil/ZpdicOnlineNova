@@ -5,6 +5,7 @@ import {
   Fragment,
   ReactElement,
   useCallback,
+  useRef,
   useState
 } from "react";
 import Button from "/client/component/atom/button";
@@ -19,6 +20,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  useHotkey,
   useIntl
 } from "/client/component/hook";
 import {
@@ -41,6 +43,7 @@ const SearchForm = create(
     searching = false,
     showOrder = false,
     showAdvancedSearch = false,
+    enableHotkeys = false,
     onParameterSet,
     styles
   }: {
@@ -49,11 +52,13 @@ const SearchForm = create(
     searching?: boolean,
     showOrder?: boolean,
     showAdvancedSearch?: boolean,
+    enableHotkeys?: boolean,
     onParameterSet?: (parameter: WordParameter) => void,
     styles?: StylesRecord
   }): ReactElement {
 
     let [searchFormOpen, setSearchFormOpen] = useState(false);
+    let inputRef = useRef<HTMLInputElement>(null);
     let [, {trans}] = useIntl();
 
     let handleParameterSet = useCallback(function (nextParameter: {search?: string, mode?: WordMode, type?: WordType, orderMode?: WordOrderMode, orderDirection?: WordOrderDirection, ignoreCase?: boolean}): void {
@@ -75,6 +80,11 @@ const SearchForm = create(
     let handleAdvancedSearchConfirm = useCallback(function (parameter: WordParameter): void {
       onParameterSet?.(parameter);
     }, [onParameterSet]);
+
+    useHotkey("focusSearch", (event) => {
+      inputRef.current?.focus();
+      event.preventDefault();
+    }, [inputRef], enableHotkeys);
 
     let modes = ["both", "name", "equivalent", "content"] as const;
     let types = ["prefix", "part", "exact", "regular"] as const;
@@ -113,7 +123,7 @@ const SearchForm = create(
     let node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-          <Input value={actualParameter.search} prefix={iconNode} onSet={(search) => handleParameterSet({search})}/>
+          <Input value={actualParameter.search} prefix={iconNode} nativeRef={inputRef} onSet={(search) => handleParameterSet({search})}/>
           <div styleName="radio-wrapper">
             <RadioGroup name="mode" value={actualParameter.mode} specs={modeSpecs} onSet={(mode) => handleParameterSet({mode})}/>
           </div>

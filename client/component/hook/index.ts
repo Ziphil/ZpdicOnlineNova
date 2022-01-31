@@ -3,6 +3,7 @@
 export * from "./debounce";
 export * from "./hotkey";
 export * from "./intl";
+export * from "./media-query";
 export * from "./misc";
 export * from "./popup";
 export * from "./query-state";

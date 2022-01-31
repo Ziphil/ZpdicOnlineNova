@@ -486,8 +486,8 @@ hotkeyHelp:
   addCommission: "造語依頼"
   searchWords: "単語検索"
   focusSearch: "検索欄にフォーカス"
-  changeNextPage: "次のページへ"
-  changePreviousPage: "前のページへ"
+  moveNextPage: "次のページへ"
+  movePreviousPage: "前のページへ"
 invitationPane:
   createdDate: "招待日時"
   userName: "招待者"

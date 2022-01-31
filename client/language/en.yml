@@ -486,8 +486,8 @@ hotkeyHelp:
   addCommission: "New request"
   searchWords: "Searching"
   focusSearch: "Focus the search form"
-  changeNextPage: "Next page"
-  changePreviousPage: "Previous page"
+  moveNextPage: "Next page"
+  movePreviousPage: "Previous page"
 invitationPane:
   createdDate: "Invited at"
   userName: "Inviter"
