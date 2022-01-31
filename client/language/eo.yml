@@ -449,15 +449,15 @@ featurePane:
       Multaj uzantoj samtempe povas redakti saman vortaron, donante redaktan permoson al ili.
       Kunlabora kreado de konstruita lingvo estas facile realigebla.
 giftPane:
-  sendGift: "Send gift"
+  sendGift: "Sendi donacon"
   information: >-
-    ZpDIC Online is being developed and maintained by an individual developer.
-    Your support is needed to sustain and improve the service.
-    If you like this application, please send a gift to the developer from the button below.
-    It may speed up the development.
+    ZpDIC Online estas evoluigata kaj prizorgata de individua programisto.
+    Via subteno estas necesa por daŭrigi kaj plibonigi la servon.
+    Se vi ŝatas tiun aplikaĵon, bonvolu sendi donacon al la programisto el la suba butono.
+    Ĝi povas akceli la evoluon.
 githubButton:
-  github: "View on GitHub"
-  dashboard: "Dev dashboard"
+  github: "Vidi sur GitHub"
+  dashboard: "Evolupanelo"
 header:
   dictionaryList: "Vortaroj"
   notification: "Sciigoj"
