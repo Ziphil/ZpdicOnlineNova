@@ -50,6 +50,13 @@
   grid-template-columns: auto 1fr;
 }
 
+.key-cell,
+.description {
+  &.disabled {
+    opacity: 0.5;
+  }
+}
+
 .key-cell {
   margin-right: $small-margin;
 }

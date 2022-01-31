@@ -484,7 +484,7 @@ hotkeyHelp:
   addWord: "New word"
   addExample: "New example sentence"
   addCommission: "New request"
-  searchDictionary: "Searching"
+  searchWords: "Searching"
   focusSearch: "Focus the search form"
   changeNextPage: "Next page"
   changePreviousPage: "Previous page"

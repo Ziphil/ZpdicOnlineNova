@@ -13,17 +13,37 @@ import {
 } from "react-use";
 
 
-let useRawHotkeySpecs = createGlobalState<Array<HotkeySpec>>([]);
+const HOTKEY_SPECS = [
+  {name: "showHotkeyHelp", group: "general", keys: ["?"]},
+  {name: "unfocus", group: "general", keys: ["esc"]},
+  {name: "jumpDashboardPage", group: "navigation", keys: ["g u"]},
+  {name: "jumpDictionaryListPage", group: "navigation", keys: ["g l"]},
+  {name: "jumpNotificationPage", group: "navigation", keys: ["g n"]},
+  {name: "jumpDocumentPage", group: "navigation", keys: ["g h"]},
+  {name: "jumpContactPage", group: "navigation", keys: ["g c"]},
+  {name: "jumpDictionaryPage", group: "navigation", keys: ["g d"]},
+  {name: "jumpDictionarySettingPage", group: "navigation", keys: ["g s"]},
+  {name: "jumpExamplePage", group: "navigation", keys: ["g e"]},
+  {name: "addWord", group: "editDictionary", keys: ["w"]},
+  {name: "addExample", group: "editDictionary", keys: ["e"]},
+  {name: "addCommission", group: "editDictionary", keys: ["r"]},
+  {name: "focusSearch", group: "searchWords", keys: ["s"]},
+  {name: "changeNextPage", group: "searchWords", keys: ["h"]},
+  {name: "changePreviousPage", group: "searchWords", keys: ["l"]}
+];
 
-export function useHotkey(name: string, group: HotkeyGroup, key: string | Array<string>, callback: HotkeyCallback, dependencies: DependencyList, enabled: boolean = true): void {
-  let [, setHotkeySpecs] = useRawHotkeySpecs();
+let useEnabledHotkeyNames = createGlobalState<Array<string>>([]);
+
+export function useHotkey(name: string, callback: HotkeyCallback, dependencies: DependencyList, enabled: boolean = true): void {
+  let [, setEnabledHotkeyNames] = useEnabledHotkeyNames();
+  let keys = HOTKEY_SPECS.find((spec) => spec.name === name)?.keys ?? [];
   useEffect(() => {
     if (enabled) {
-      Mousetrap.bind(key, callback);
-      setHotkeySpecs((hotkeySpecs) => [...hotkeySpecs, {name, group, key}]);
+      Mousetrap.bind(keys, callback);
+      setEnabledHotkeyNames((enabledNames) => [...enabledNames, name]);
       let cleanup = function (): void {
-        Mousetrap.unbind(key);
-        setHotkeySpecs((hotkeySpecs) => hotkeySpecs.filter((hotkeySpec) => hotkeySpec.key !== key));
+        Mousetrap.unbind(keys);
+        setEnabledHotkeyNames((enabledNames) => enabledNames.filter((enabledName) => enabledName !== name));
       };
       return cleanup;
     }
@@ -31,8 +51,12 @@ export function useHotkey(name: string, group: HotkeyGroup, key: string | Array<
 }
 
 export function useHotkeySpecs(): Array<HotkeySpec> {
-  let [hotkeySpecs] = useRawHotkeySpecs();
-  return hotkeySpecs;
+  let [enabledHotkeyNames] = useEnabledHotkeyNames();
+  let specs = HOTKEY_SPECS.map((rawSpec) => {
+    let enabled = enabledHotkeyNames.some((enabledName) => enabledName === rawSpec.name);
+    return {...rawSpec, enabled};
+  });
+  return specs;
 }
 
 Mousetrap.prototype.stopCallback = function (event: ExtendedKeyboardEvent, element: any, combo: string): boolean {
@@ -48,6 +72,6 @@ Mousetrap.prototype.stopCallback = function (event: ExtendedKeyboardEvent, eleme
   }
 };
 
-export type HotkeySpec = {name: string, group: HotkeyGroup, key: string | Array<string>};
+export type HotkeySpec = {name: string, group: HotkeyGroup, keys: Array<string>, enabled: boolean};
 export type HotkeyCallback = (event: ExtendedKeyboardEvent, combo: string) => void;
 export type HotkeyGroup = string;

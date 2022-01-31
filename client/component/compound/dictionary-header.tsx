@@ -71,22 +71,22 @@ const DictionaryHeader = create(
     let [commissionEditorOpen, setCommissionEditorOpen] = useState(false);
 
     let hotkeyEnabled = dictionary !== null;
-    useHotkey("jumpDictionaryPage", "navigation", ["g d"], () => {
+    useHotkey("jumpDictionaryPage", () => {
       pushPath("/dictionary/" + dictionary?.number);
     }, [dictionary?.number], hotkeyEnabled);
-    useHotkey("jumpDictionarySettingPage", "navigation", ["g s"], () => {
+    useHotkey("jumpDictionarySettingPage", () => {
       pushPath("/dashboard/dictionary/" + dictionary?.number);
     }, [dictionary?.number], hotkeyEnabled);
-    useHotkey("jumpExamplePage", "navigation", ["g e"], () => {
+    useHotkey("jumpExamplePage", () => {
       pushPath("/example/" + dictionary?.number);
     }, [dictionary?.number], hotkeyEnabled);
-    useHotkey("addWord", "editDictionary", ["w"], () => {
+    useHotkey("addWord", () => {
       setWordEditorOpen(true);
     }, [], hotkeyEnabled);
-    useHotkey("addExample", "editDictionary", ["e"], () => {
+    useHotkey("addExample", () => {
       setExampleEditorOpen(true);
     }, [], hotkeyEnabled);
-    useHotkey("addCommission", "editDictionary", ["r"], () => {
+    useHotkey("addCommission", () => {
       setCommissionEditorOpen(true);
     }, [], hotkeyEnabled);
 

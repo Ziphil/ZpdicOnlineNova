@@ -55,13 +55,13 @@ const DictionaryPage = create(
     let params = useParams<{value: string}>();
 
     let hotkeyEnabled = dictionary !== null;
-    useHotkey("focusSearch", "searchDictionary", ["s", "/"], () => {
+    useHotkey("focusSearch", () => {
       console.warn("to be implemented");
     }, [], hotkeyEnabled);
-    useHotkey("changeNextPage", "searchDictionary", ["l"], () => {
+    useHotkey("changeNextPage", () => {
       console.warn("to be implemented");
     }, [], hotkeyEnabled);
-    useHotkey("changePreviousPage", "searchDictionary", ["h"], () => {
+    useHotkey("changePreviousPage", () => {
       console.warn("to be implemented");
     }, [], hotkeyEnabled);
 

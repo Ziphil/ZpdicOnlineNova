@@ -28,25 +28,25 @@ const InnerRoot = create(
     let [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
     let {pushPath} = usePath();
 
-    useHotkey("jumpDashboardPage", "navigation", ["g u"], () => {
+    useHotkey("jumpDashboardPage", () => {
       pushPath("/dashboard");
     }, []);
-    useHotkey("jumpDictionaryListPage", "navigation", ["g l"], () => {
+    useHotkey("jumpDictionaryListPage", () => {
       pushPath("/list");
     }, []);
-    useHotkey("jumpNotificationPage", "navigation", ["g n"], () => {
+    useHotkey("jumpNotificationPage", () => {
       pushPath("/notification");
     }, []);
-    useHotkey("jumpDocumentPage", "navigation", ["g h"], () => {
+    useHotkey("jumpDocumentPage", () => {
       pushPath("/document");
     }, []);
-    useHotkey("jumpContactPage", "navigation", ["g c"], () => {
+    useHotkey("jumpContactPage", () => {
       pushPath("/contact");
     }, []);
-    useHotkey("showHotkeyHelp", "general", ["?"], () => {
+    useHotkey("showHotkeyHelp", () => {
       setHotkeyHelpOpen(true);
     }, []);
-    useHotkey("unfocus", "general", ["esc"], () => {
+    useHotkey("unfocus", () => {
       let activeElement = document.activeElement;
       if (activeElement instanceof HTMLElement) {
         activeElement.blur();

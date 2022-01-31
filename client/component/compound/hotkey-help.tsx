@@ -42,13 +42,13 @@ const HotkeyHelp = create(
             <Button label={trans("hotkeyHelp.general")} iconName="keyboard" style="simple" onClick={() => setCurrentGroup("general")}/>
             <Button label={trans("hotkeyHelp.navigation")} iconName="location-arrow" style="simple" onClick={() => setCurrentGroup("navigation")}/>
             <Button label={trans("hotkeyHelp.editDictionary")} iconName="edit" style="simple" onClick={() => setCurrentGroup("editDictionary")}/>
-            <Button label={trans("hotkeyHelp.searchDictionary")} iconName="search" style="simple" onClick={() => setCurrentGroup("searchDictionary")}/>
+            <Button label={trans("hotkeyHelp.searchWords")} iconName="search" style="simple" onClick={() => setCurrentGroup("searchWords")}/>
           </div>
           <div styleName="content">
             <HotkeyHelpTable group="general" currentGroup={currentGroup}/>
             <HotkeyHelpTable group="navigation" currentGroup={currentGroup}/>
             <HotkeyHelpTable group="editDictionary" currentGroup={currentGroup}/>
-            <HotkeyHelpTable group="searchDictionary" currentGroup={currentGroup}/>
+            <HotkeyHelpTable group="searchWords" currentGroup={currentGroup}/>
           </div>
         </div>
       </Overlay>
@@ -74,14 +74,22 @@ const HotkeyHelpTable = create(
 
     let displayedHotkeySpecs = hotkeySpecs.filter((hotkeySpec) => hotkeySpec.group === group);
     let hotkeyNodes = displayedHotkeySpecs.map((hotkeySpec) => {
-      let key = (typeof hotkeySpec.key === "string") ? hotkeySpec.key : hotkeySpec.key[0];
+      let key = hotkeySpec.keys[0] ?? "";
       let charNodes = key.split(" ").map((char, index) => <kbd key={index} styleName="key">{char.charAt(0).toUpperCase() + char.slice(1)}</kbd>);
+      let hotkeyCellStyleName = StyleNameUtil.create(
+        "key-cell",
+        {if: hotkeySpec.enabled, false: "disabled"}
+      );
+      let hotkeyDescriptionStyleName = StyleNameUtil.create(
+        "description",
+        {if: hotkeySpec.enabled, false: "disabled"}
+      );
       let hotkeyNode = (
         <Fragment key={hotkeySpec.name}>
-          <div styleName="key-cell">
+          <div styleName={hotkeyCellStyleName}>
             {charNodes}
           </div>
-          <div styleName="description">
+          <div styleName={hotkeyDescriptionStyleName}>
             {trans(`hotkeyHelp.${hotkeySpec.name}`)}
           </div>
         </Fragment>
