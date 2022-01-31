@@ -244,8 +244,8 @@ const DictionarySettingPageForms = create(
             />
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.changeDictionaryPronunciationTitleForm.label")}
-            description={trans("dictionarySettingPage.changeDictionaryPronunciationTitleForm.description")}
+            label={trans("dictionarySettingPage.changeDictionaryExampleTitleForm.label")}
+            description={trans("dictionarySettingPage.changeDictionaryExampleTitleForm.description")}
           >
             <ChangeDictionarySettingsForm
               number={dictionary.number}
