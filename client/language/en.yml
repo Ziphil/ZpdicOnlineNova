@@ -209,18 +209,18 @@ overlay:
   close: "Close"
 changeUserNameForm:
   name: "User ID"
-  confirm: "Confirm"
+  confirm: "Change"
   caution: >-
     Currently you cannot change your user ID.
 changeUserScreenNameForm:
   screenName: "Nickname"
-  confirm: "Confirm"
+  confirm: "Change"
 changeUserEmailForm:
   email: "Email address"
-  confirm: "Confirm"
+  confirm: "Change"
 changeUserPasswordForm:
   password: "Password"
-  confirm: "Confirm"
+  confirm: "Change"
 createDictionaryForm:
   defaultName: "New dictionary"
   name: "Name"
@@ -236,23 +236,23 @@ discardUserForm:
     Are you really sure?
 addEditInvitationForm:
   userName: "User ID to invite"
-  confirm: "Confirm"
+  confirm: "Invite"
 addTransferInvitationForm:
   userName: "User ID to invite"
-  confirm: "Confirm"
+  confirm: "Invite"
 changeDictionaryExplanationForm:
   explanation: "Description"
-  confirm: "Confirm"
+  confirm: "Change"
 changeDictionaryNameForm:
   name: "Name"
-  confirm: "Confirm"
+  confirm: "Change"
 changeDictionaryParamNameForm:
   paramName: "Name for URL"
-  confirm: "Confirm"
+  confirm: "Change"
 changeDictionarySecretForm:
   public: "Show"
   secret: "Hide"
-  confirm: "Confirm"
+  confirm: "Change"
   caution: >-
     This setting affects only whether or not this dictionary is shown in the public dictionary list.
     Even if it is set to “Hide”, anyone with the link can view this dictionary.
@@ -261,11 +261,11 @@ changeDictionarySettingsForm:
   exampleTitle: "Title of example sentences"
   enableMarkdownTrue: "Enable"
   enableMarkdownFalse: "Disable"
-  confirm: "Confirm"
+  confirm: "Change"
 changeDictionarySourceForm:
   akrantiain: "Snoj data for Akrantiain"
   zatlin: "Source code for Zatlin"
-  confirm: "Confirm"
+  confirm: "Change"
   try: "Try"
 discardDictionaryForm:
   confirm: "Delete"
@@ -519,7 +519,7 @@ registerForm:
   confirm: "Sign up"
 resetUserPasswordForm:
   newPassword: "New password"
-  issue: "Confirm"
+  issue: "Send"
   reset: "Reset"
 resourceList:
   file: "File to upload"
