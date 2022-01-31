@@ -82,13 +82,13 @@ const DictionaryHeader = create(
     }, [dictionary?.number], hotkeyEnabled);
     useHotkey("addWord", () => {
       setWordEditorOpen(true);
-    }, [], hotkeyEnabled);
+    }, [], hotkeyEnabled && showAddLink);
     useHotkey("addExample", () => {
       setExampleEditorOpen(true);
-    }, [], hotkeyEnabled);
+    }, [], hotkeyEnabled && showAddLink);
     useHotkey("addCommission", () => {
       setCommissionEditorOpen(true);
-    }, [], hotkeyEnabled);
+    }, [], hotkeyEnabled && showAddCommissionLink);
 
     useMount(() => {
       if (location.state?.openCommissionEditor) {
