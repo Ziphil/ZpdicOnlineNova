@@ -68,7 +68,7 @@ const Root = create(
     let {locale, messages} = useDefaultLocale("ja");
 
     let handleIntlError = useCallback(function (error: Error): void {
-      console.error(error.name);
+      console.error(error);
     }, []);
 
     let node = (ready) && (
