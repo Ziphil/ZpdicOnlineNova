@@ -635,7 +635,7 @@ dashboardPage:
       This is a list of your dictionaries.
       This also includes those which you do not own but are permitted to edit.
   editInvitationList:
-    label: "Permission invitations"
+    label: "Edit invitations"
     description: >-
       This is a list of edit invitations sent to you.
       Accepting an invitation to a dictionary will allow you to edit it.
@@ -643,11 +643,10 @@ dashboardPage:
     label: "Transferrence invitations"
     description: >-
       This is a list of invitations to transfer ownership of a dictionary to you.
-      Accepting it will make you the new owner of the dictionary. 
+      Accepting an invitation will make you the new owner of the dictionary. 
   createDictionaryForm:
     label: "Create new dictionary"
-    description: >-
-      Create a new empty dictionary.
+    description: <empty>
   changeUserNameForm:
     label: "User ID"
     description: >-
@@ -655,16 +654,14 @@ dashboardPage:
   changeUserScreenNameForm:
     label: "Change nickname"
     description: >-
-      Change your nickname.
+      You can change your nickname.
       Unlike in your user ID, you can use any characters here.
   changeUserEmailForm:
     label: "Change email address"
-    description: >-
-      Change your email address.
+    description: <empty>
   changeUserPasswordForm:
     label: "Change password"
-    description: >-
-      Change your password.
+    description: <empty>
   discardUserForm:
     label: "Delete"
     description: >-

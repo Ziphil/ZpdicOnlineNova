@@ -52,10 +52,12 @@ export function useLocale(): [string, ChangeLocaleCallback] {
 
 export function useIntl(): [IntlShape, TransCallbacks] {
   let intl = useRawIntl();
-  let defaultMessage = "[?]";
   let trans = useCallback(function (id: string, values?: any): any {
-    return intl.formatMessage({id, defaultMessage}, values);
-  }, [intl, defaultMessage]);
+    let defaultMessage = values?.defaultMessage ?? "[?]";
+    let rawMessage = intl.formatMessage({id, defaultMessage}, values);
+    let message = (rawMessage === "<empty>") ? "" : rawMessage;
+    return message;
+  }, [intl]);
   let transDate = useCallback(function (date: Date | number | string | null | undefined): string {
     if (date !== null && date !== undefined) {
       let format = intl.formatMessage({id: "common.dateFormat"});

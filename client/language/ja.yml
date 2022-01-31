@@ -645,8 +645,7 @@ dashboardPage:
       これを承認すると、該当の辞書の管理者になります。
   createDictionaryForm:
     label: "新規作成"
-    description: >-
-      空の辞書を作成します。
+    description: <empty>
   changeUserNameForm:
     label: "ユーザー ID の確認"
     description: >-
@@ -658,12 +657,10 @@ dashboardPage:
       ユーザー ID とは異なり、ここでは英数字以外の文字も使えます。
   changeUserEmailForm:
     label: "メールアドレスの変更"
-    description: >-
-      メールアドレスを変更します。
+    description: <empty>
   changeUserPasswordForm:
     label: "パスワードの変更"
-    description: >-
-      パスワードを変更します。
+    description: <empty>
   discardUserForm:
     label: "削除"
     description: >-

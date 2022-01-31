@@ -630,49 +630,46 @@ dashboardPage:
   account: "Konto"
   logout: "Elsaluti"
   dictionaryList:
-    label: "Dictionaries"
+    label: "Vortaroj"
     description: >-
-      This is a list of your dictionaries.
-      This also includes those which you do not own but are permitted to edit.
+      Jen listo de viaj vortaroj.
+      Tio ankaŭ inkluzivas tiujn kiujn vi ne posedas sed rajtas redakti.
   editInvitationList:
-    label: "Permission invitations"
+    label: "Invitoj por redakti"
     description: >-
-      This is a list of edit invitations sent to you.
-      Accepting an invitation to a dictionary will allow you to edit it.
+      Jen listo de redaktaj invitoj al vi.
+      Akcepti inviton al vortaro permesos al vi redakti ĝin.
   transferInvitationList:
-    label: "Transferrence invitations"
+    label: "Invitoj por transdoni"
     description: >-
-      This is a list of invitations to transfer ownership of a dictionary to you.
-      Accepting it will make you the new owner of the dictionary. 
+      Jen listo de invitoj al vi por transfoni proprieton de vortaro.
+      Akcepti inviton igos vin la nova posedanto de la vortaro.
   createDictionaryForm:
-    label: "Create new dictionary"
-    description: >-
-      Create a new empty dictionary.
+    label: "Krei novan vortaron"
+    description: <empty>
   changeUserNameForm:
-    label: "User ID"
+    label: "Uzanta identigilo"
     description: >-
-      This is your user ID.
+      Jen via uzanta identigilo.
   changeUserScreenNameForm:
-    label: "Change nickname"
+    label: "Ŝanĝi kromnomon"
     description: >-
-      Change your nickname.
-      Unlike in your user ID, you can use any characters here.
+      Vi povas ŝanĝi vian kromnomon.
+      Male al via uzanta identigilo, vi tie povas uzi iujn ajn signojn.
   changeUserEmailForm:
-    label: "Change email address"
-    description: >-
-      Change your email address.
+    label: "Ŝanĝi retpoŝtan adreson"
+    description: <empty>
   changeUserPasswordForm:
-    label: "Change password"
-    description: >-
-      Change your password.
+    label: "Ŝanĝi pasvorton"
+    description: <empty>
   discardUserForm:
     label: "Forigi"
     description: >-
-      Delete this user.
+      Forigi tiun uzanton.
 dictionaryListPage:
-  title: "Dictionaries"
-  updatedDate: "Sort by update date"
-  createdDate: "Sort by creation date"
+  title: "Vortaroj"
+  updatedDate: "Ordigi laŭ dato de ĝisdatigo"
+  createdDate: "Ordigi laŭ dato de kreo"
 dictionarySettingPage:
   general: "Ĝenerala"
   setting: "Agordoj"

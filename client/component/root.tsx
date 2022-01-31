@@ -74,7 +74,7 @@ const Root = create(
     let node = (ready) && (
       <BrowserRouter>
         <DndProvider backend={DndBackend}>
-          <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError}>
+          <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
             <Suspense fallback={<EmptyPage/>}>
               <ErrorBoundary fallbackRender={ErrorPage}>
                 <ScrollTop>
