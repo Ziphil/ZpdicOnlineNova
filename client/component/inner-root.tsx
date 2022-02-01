@@ -7,6 +7,7 @@ import {
   ReactNode,
   useState
 } from "react";
+import Drawer from "/client/component/atom/drawer";
 import HotkeyHelp from "/client/component/compound/hotkey-help";
 import {
   create
@@ -26,6 +27,7 @@ const InnerRoot = create(
   }): ReactElement {
 
     let [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
+    let [editerOpen, setEditorOpen] = useState(false);
     let {pushPath} = usePath();
 
     useHotkey("jumpDashboardPage", () => {
@@ -56,6 +58,7 @@ const InnerRoot = create(
     let node = (
       <Fragment>
         {children}
+        <Drawer open={editerOpen} onOpen={() => setEditorOpen(true)} onClose={() => setEditorOpen(false)} outsideClosable={true} title="Test drawer"/>
         <HotkeyHelp open={hotkeyHelpOpen} onClose={() => setHotkeyHelpOpen(false)}/>
       </Fragment>
     );

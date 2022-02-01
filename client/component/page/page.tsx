@@ -3,11 +3,13 @@
 import * as react from "react";
 import {
   ReactElement,
-  ReactNode
+  ReactNode,
+  useState
 } from "react";
 import {
   Helmet
 } from "react-helmet";
+import Drawer from "/client/component/atom/drawer";
 import DictionaryHeader from "/client/component/compound/dictionary-header";
 import Footer from "/client/component/compound/footer";
 import Header from "/client/component/compound/header";
@@ -40,6 +42,8 @@ const Page = create(
     showSettingLink?: boolean,
     children?: ReactNode
   }): ReactElement {
+
+    let [editerOpen, setEditorOpen] = useState(false);
 
     let spacerStyleName = StyleNameUtil.create(
       "spacer",
