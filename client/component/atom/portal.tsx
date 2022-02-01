@@ -21,7 +21,7 @@ const Portal = create(
     children?: ReactNode
   }): ReactElement {
 
-    let container = document.getElementById("page") ?? document.body;
+    let container = document.body;
     let node = (
       <div className="portal">
         {children}
