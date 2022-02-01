@@ -431,10 +431,10 @@ const WordEditorTag = create(
     );
 
     let suggest = createSuggest("tag");
-    let styleName = StyleNameUtil.create([
+    let styleName = StyleNameUtil.create(
       "container-item",
       {if: dragging, true: "dragging"}
-    ]);
+    );
     let node = (
       <div styleName={styleName} ref={rootRef}>
         <div styleName="handle" ref={handleRef}>
@@ -530,10 +530,10 @@ const WordEditorEquivalent = create(
     );
 
     let suggest = createSuggest("equivalent");
-    let styleName = StyleNameUtil.create([
+    let styleName = StyleNameUtil.create(
       "container-item",
       {if: dragging, true: "dragging"}
-    ]);
+    );
     let node = (
       <div styleName={styleName} ref={rootRef}>
         <div styleName="handle" ref={handleRef}>
@@ -637,10 +637,10 @@ const WordEditorInformation = create(
 
     let language = (dictionary.settings.enableMarkdown) ? "markdown" as const : undefined;
     let suggest = createSuggest("information");
-    let styleName = StyleNameUtil.create([
+    let styleName = StyleNameUtil.create(
       "container-item",
       {if: dragging, true: "dragging"}
-    ]);
+    );
     let node = (
       <div styleName={styleName} ref={rootRef}>
         <div styleName="handle" ref={handleRef}>
@@ -743,10 +743,10 @@ const WordEditorVariation = create(
     );
 
     let suggest = createSuggest("variation");
-    let styleName = StyleNameUtil.create([
+    let styleName = StyleNameUtil.create(
       "container-item",
       {if: dragging, true: "dragging"}
-    ]);
+    );
     let node = (
       <div styleName={styleName} ref={rootRef}>
         <div styleName="handle" ref={handleRef}>
@@ -853,10 +853,10 @@ const WordEditorRelation = create(
     );
 
     let suggest = createSuggest("relation");
-    let styleName = StyleNameUtil.create([
+    let styleName = StyleNameUtil.create(
       "container-item",
       {if: dragging, true: "dragging"}
-    ]);
+    );
     let node = (
       <div styleName={styleName} ref={rootRef}>
         <div styleName="handle" ref={handleRef}>
