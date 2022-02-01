@@ -199,7 +199,7 @@ popup:
     Bonvolu sciigi la administranton.
 
 alert:
-  confirm: "Certigi"
+  confirm: "Konfirmi"
   cancel: "Nuligi"
 fileInput:
   button: "Elekti"
@@ -280,7 +280,7 @@ discardDictionaryForm:
     Ĉu vi vere certas?
 uploadDictionaryForm:
   file: "Dosiero"
-  confirm: "Certigi"
+  confirm: "Konfirmi"
 activateUserForm:
   send: "Sendi"
   caution: >-
@@ -304,7 +304,7 @@ advancedSearchForm:
   part: "Parta"
   exact: "Ekzakta"
   regular: "Regesp"
-  confirm: "Certigi"
+  confirm: "Konfirmi"
 akrantiainExecutor:
   title: "Akrantiain {version}"
   source: "Fontkodo"
@@ -422,7 +422,7 @@ exampleEditor:
   wordNameUndefined: "?"
   wordAbsent: "Neniuj enhavitaj vortoj"
   discard: "Forigi"
-  confirm: "Certigi"
+  confirm: "Konfirmi"
   selectWord: "Elekti"
   alertConfirm: "Forigi"
   alert: >-
@@ -525,7 +525,7 @@ resetUserPasswordForm:
   reset: "Restarigi"
 resourceList:
   file: "Dosiero por alŝuti"
-  confirm: "Certigi"
+  confirm: "Konfirmi"
   experimantalCaution: >-
     La funkcio de alŝutado de dosieroj estas nuntempe eksperimenta.
     En estontaj ĝisdatigoj, tiu funkcio povas esti signife ŝanĝita aŭ la alŝutitaj dosieroj eble estos forigitaj.
@@ -594,7 +594,7 @@ wordEditor:
   relationAbsent: "Neniuj rilataj vortoj"
   add: "Aldoni"
   discard: "Forigi"
-  confirm: "Certigi"
+  confirm: "Konfirmi"
   generate: "Generi"
   resource: "Bildoj"
   selectRelation: "Elekti"
