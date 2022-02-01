@@ -15,7 +15,7 @@
   font-family: $special-font-family;
   font-size: 750%; 
   @include smartphone {
-    font-size: 750% * 4 / 5;
+    font-size: 750% * 0.8;
   }
 }
 
@@ -27,7 +27,7 @@
   letter-spacing: 0.2em;
   position: relative;
   @include smartphone {
-    font-size: 320% * 4 / 5;
+    font-size: 320% * 0.8;
   }
 }
 

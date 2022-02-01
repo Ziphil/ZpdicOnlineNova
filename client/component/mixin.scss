@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+@use "sass:math" as *;
 @import "/client/component/function.scss";
 
 
@@ -100,6 +101,7 @@ $button-hotizontal-padding: 0.8em;
 $tooltip-vertical-padding: 0.25em;
 $tooltip-horizontal-padding: 0.5em;
 
+$medium-font-size: 16rpx;
 $small-font-size: 14rpx;
 $tiny-font-size: 13rpx;
 
@@ -112,8 +114,8 @@ $inset-box-shadow-setting: 0rpx 2rpx 3rpx;
 $small-border-radius: 3rpx;
 $large-border-radius: 5rpx;
 
-$line-height: 24px / $root-size;
-$tooltip-line-height: 22px / $root-size;
+$line-height: div(24px, $root-size);
+$tooltip-line-height: div(22px, $root-size);
 
 $european-font-family: "Alegreya Sans", "Arial";
 $japanese-font-family: "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", "YuGothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック";
@@ -230,10 +232,10 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   counter-increment: list;
   &::before {
     top: 0.5em;
-    width: 0.8em * (100% / 70%);
-    height: 0.8em * (100% / 70%);
-    margin-right: $blank-margin * (100% / 70%);
-    margin-left: - (0.9em + $blank-margin) * (100% / 70%);
+    width: 0.8em * div(100%, 70%);
+    height: 0.8em * div(100%, 70%);
+    margin-right: $blank-margin * div(100%, 70%);
+    margin-left: - (0.9em + $blank-margin) * div(100%, 70%);
     font-size: 70%;
     color: $number-color;
     line-height: 1;
