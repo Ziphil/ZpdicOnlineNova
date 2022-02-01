@@ -200,7 +200,7 @@ alert:
   confirm: "Certigi"
   cancel: "Nuligi"
 fileInput:
-  button: "Select"
+  button: "Elekti"
 label:
   required: "deviga"
   optional: "nedeviga"
@@ -287,40 +287,40 @@ activateUserForm:
     Por aktivigi, sekvu la instrukciojn en la poŝto kiun vi ricevis kiam vi kreis la uzanton.
     Vi ankaŭ povas alklaki la dekstran butonon por resendi la poŝton.
 advancedSearchForm:
-  overlayTitle: "Advanced search"
-  search: "Serĉi"
-  title: "Title"
-  mode: "Range"
-  type: "Method"
-  name: "Headword"
-  equivalent: "Translation"
-  tag: "Tag"
-  information: "Content"
-  content: "Whole"
-  prefix: "Prefix"
-  suffix: "Suffix"
-  part: "Part"
-  exact: "Exact"
-  regular: "Regexp"
+  overlayTitle: "Altnivela serĉo"
+  search: "Ŝlosilvorto"
+  title: "Titlo"
+  mode: "Amplekso"
+  type: "Metodo"
+  name: "Kapvorto"
+  equivalent: "Tradukaĵo"
+  tag: "Etikedo"
+  information: "Enhavo"
+  content: "Tuto"
+  prefix: "Prefiksa"
+  suffix: "Sufiksa"
+  part: "Parta"
+  exact: "Ekzakta"
+  regular: "Regesp"
   confirm: "Certigi"
 akrantiainExecutor:
   title: "Akrantiain {version}"
-  source: "Snoj data"
-  input: "Input"
-  output: "Output"
-  errorMessage: "Error message"
-  execute: "Execute"
+  source: "Fontkodo"
+  input: "Enigo"
+  output: "Eligo"
+  errorMessage: "Erarmesaĝo"
+  execute: "Plenumi"
 commissionEditor:
-  title: "Request word"
-  name: "Word"
-  comment: "Comment"
-  confirm: "Request"
+  title: "Peti vorton"
+  name: "Vorto"
+  comment: "Komento"
+  confirm: "Peti"
 commissionPane:
   discard: "Forigi"
   add: "Krei"
   alert: >-
-    This request will be deleted.
-    Are you really sure?
+    Tiu peto estos forigita.
+    Ĉu vi vere certas?
 contactForm:
   name: "Nomo"
   email: "Retpoŝta adreso"
@@ -353,10 +353,10 @@ dictionaryPane:
   setting: "Agordoj"
   download: "Elŝuti"
 dictionaryStatisticsPane:
-  wordCount: "Words"
+  wordCount: "Vortoj"
   wordCountRaw: 
     value: "{value, number} "
-    unit: "{value, plural, one {word} other {words}} "
+    unit: "{value, plural, one {vorto} other {vortoj}} "
   wordCountTokipona: 
     value: "{value, number, ::.00} "
     unit: "TP"
@@ -374,64 +374,64 @@ dictionaryStatisticsPane:
     value: "{value, number, ::.000} "
     unit: "%EC"
   wordNameLengthAverage:
-    title: "Average headword length"
+    title: "Averaĝa longo de kapvorto"
     value: "{value, number, ::.00} "
-    unit: "{value, plural, one {char/word} other {chars/word}}"
+    unit: "{value, plural, one {signo/vorto} other {signoj/vorto}}"
   equivalentNameCountWhole:
-    title: "Translations"
+    title: "Tradukaĵoj"
     value: "{value, number} "
-    unit: "{value, plural, one {term} other {terms}}"
+    unit: "{value, plural, one {termino} other {terminoj}}"
   equivalentNameCountAverage:
-    title: "Average translations"
+    title: "Averaĝa tradukaĵo"
     value: "{value, number, ::.00} "
-    unit: "{value, plural, one {term/word} other {terms/word}}"
+    unit: "{value, plural, one {termino/vorto} other {terminoj/vorto}}"
   informationCountWhole:
-    title: "Contents"
+    title: "Enhavoj"
     value: "{value, number} "
-    unit: "{value, plural, one {item} other {items}}"
+    unit: "{value, plural, one {ero} other {eroj}}"
   informationCountAverage:
-    title: "Average contents"
+    title: "Averaĝa enhavo"
     value: "{value, number, ::.00} "
-    unit: "{value, plural, one {item/word} other {items/word}}"
+    unit: "{value, plural, one {ero/vorto} other {eroj/vorto}}"
   informationTextLengthWhole:
-    title: "Content length"
+    title: "Longo de enhavo"
     value: "{value, number} "
-    unit: "{value, plural, one {char} other {chars}}"
+    unit: "{value, plural, one {signo} other {signoj}}"
   informationTextLengthAverage:
-    title: "Average content length"
+    title: "Averaĝa longo de enhavo"
     value: "{value, number, ::.00} "
-    unit: "{value, plural, one {char/word} other {chars/word}}"
+    unit: "{value, plural, one {signo/vorto} other {signoj/vorto}}"
   exampleCountWhole:
-    title: "Examples"
+    title: "Ekzemplaj frazoj"
     value: "{value, number} "
-    unit: "{value, plural, one {sentence} other {sentences}}"
+    unit: "{value, plural, one {frazo} other {frazoj}}"
   exampleCountAverage:
-    title: "Average examples"
+    title: "Averaĝa ekzempla frazo"
     value: "{value, number, ::.00} "
-    unit: "{value, plural, one {sentence/word} other {sentences/word}}"
-  kept: "As is"
+    unit: "{value, plural, one {frazo/vorto} other {frazoj/vorto}}"
+  kept: "Kiel estas"
   nfd: "NFD"
   nfc: "NFC"
 exampleEditor:
-  title: "Edit example sentence"
-  sentence: "Example sentence"
-  translation: "Translation"
-  wordName: "Included word"
+  title: "Redakti ekzemplan frazon"
+  sentence: "Frazo"
+  translation: "Tradukaĵo"
+  wordName: "Enhavita vorto"
   wordNameUndefined: "?"
-  wordAbsent: "No included words"
+  wordAbsent: "Neniuj enhavitaj vortoj"
   discard: "Forigi"
   confirm: "Certigi"
-  selectWord: "Select"
+  selectWord: "Elekti"
   alertConfirm: "Forigi"
   alert: >-
-    This example sentence will be deleted permanently.
-    You cannot restore it afterwards.
-    Are you really sure?
+    Tiu ekzempla frazo estos forigita konstante.
+    Vi ne povas restaŭri ĝin poste.
+    Ĉu vi vere certas?
 examplePane:
   edit: "Redakti"
   caution: >-
-    This example sentence has no words associated with it.
-    It will not appear in the dictionary, so please associate some word with it.
+    Tiu ekzempla frazo havas neniujn vortojn asociitajn kun ĝi.
+    Ĝi ne aperos en la vortaro, do bonvolu asocii iun vorton kun ĝi.
 featurePane:
   dictionary:
     title: "Redakti"
@@ -441,7 +441,7 @@ featurePane:
   search:
     title: "Serĉi"
     text: >-
-      Oni povas serĉi dum oni tajpas, kaj laŭ kapvorto kaj laŭ traduko.
+      Oni povas serĉi dum oni tajpas, kaj laŭ kapvorto kaj laŭ tradukaĵo.
       Oni ankaŭ povas fari altnivelajn serĉojn per pluraj kondiĉoj.
   user:
     title: "Kunlabori"
@@ -496,7 +496,7 @@ invitationPane:
 languageForm:
   caution: >-
     La traduko eble estas malĝusta.
-    Se vi trovos ion strangan en la traduko, bonvolu sciigi nin per la kontakta formularo.
+    Se vi trovos ion strangan en la tradukaĵo, bonvolu sciigi nin per la kontakta formularo.
 loginForm:
   userName: "Uzanta identigilo"
   email: "Retpoŝta adreso"
@@ -514,7 +514,7 @@ regexpExecutor:
   source: "Regular expression"
   target: "Target text"
   result: "Result"
-  execute: "Execute"
+  execute: "Plenumi"
 registerForm:
   confirm: "Registriĝi"
 resetUserPasswordForm:
@@ -543,7 +543,7 @@ resourcePane:
 searchForm:
   both: "Ambaŭ"
   name: "Kapvorto"
-  equivalent: "Traduko"
+  equivalent: "Tradukaĵo"
   content: "Tuto"
   prefix: "Prefiksa"
   part: "Parta"
@@ -560,69 +560,69 @@ searchForm:
 sourceTester:
   try: "Provi"
 suggestionPane:
-  maybe: "Do you mean"
-  suggestion: "{title} of {nameNode}?"
+  maybe: "Ĉu vi celas"
+  suggestion: "{title} de {nameNode}?"
 userPane:
   discard: "Forigi"
   alert: >-
-    This user's edit permission will be revoked.
-    Are you really sure?
+    La redakta permeso de tiu uzanto estos revokita.
+    Ĉu vi vere certas?
 wordEditor:
-  title: "Edit word"
-  basic: "Basic information"
-  name: "Word"
-  pronunciation: "Pronunciation"
-  tag: "Tags"
-  equivalent: "Translations"
-  equivalentTitle: "Title"
-  equivalentNames: "Translations"
-  information: "Contents"
-  informationTitle: "Title"
-  informationText: "Content"
-  variation: "Variations"
-  variationTitle: "Title"
-  variationName: "Form"
-  relation: "Related words"
-  relationTitle: "Title"
-  relationName: "Word"
-  tagAbsent: "No tags"
-  equivalentAbsent: "No translations"
-  informationAbsent: "No contents"
-  variationAbsent: "No variations"
-  relationAbsent: "No related words"
-  add: "Add"
+  title: "Redakti vorton"
+  basic: "Bazaj informoj"
+  name: "Literumo"
+  pronunciation: "Prononco"
+  tag: "Etikedoj"
+  equivalent: "Tradukaĵoj"
+  equivalentTitle: "Titlo"
+  equivalentNames: "Tradukaĵoj"
+  information: "Enhavoj"
+  informationTitle: "Titlo"
+  informationText: "Enhavo"
+  variation: "Variaĵaj formoj"
+  variationTitle: "Titlo"
+  variationName: "Formo"
+  relation: "Rilataj vortoj"
+  relationTitle: "Titlo"
+  relationName: "Vorto"
+  tagAbsent: "Neniuj etikedoj"
+  equivalentAbsent: "Neniuj tradukaĵoj"
+  informationAbsent: "Neniuj enhavoj"
+  variationAbsent: "Neniuj variaĵaj formoj"
+  relationAbsent: "Neniuj rilataj vortoj"
+  add: "Aldoni"
   discard: "Forigi"
   confirm: "Certigi"
-  generate: "Generate"
-  resource: "Images"
-  selectRelation: "Select"
+  generate: "Generi"
+  resource: "Bildoj"
+  selectRelation: "Elekti"
   alertConfirm: "Forigi"
   alert: >-
-    This word will be deleted permanently.
-    You cannot restore it afterwards.
-    Are you really sure?
+    Tiu vorto estos forigita konstante.
+    Vi ne povas restaŭri ĝin poste.
+    Ĉu vi vere certas?
 wordNameFrequencyPane:
   value: "{value, number} / {total, number}"
   percent: "{percent, number, ::.000}%"
-  others: "Others"
+  others: "Alioj"
 wordPane:
   edit: "Redakti"
-  submit: "Select"
-  oneway: "Make one-way"
-  mutual: "Make mutual"
+  submit: "Elekti"
+  oneway: "Igi unudirekta"
+  mutual: "Igi reciproka"
 zatlinExecutor:
   title: "Zatlin {version}"
-  source: "Source code"
-  output: "Output"
-  errorMessage: "Error message"
-  execute: "Execute"
+  source: "Fontkodo"
+  output: "Eligo"
+  errorMessage: "Erarmesaĝo"
+  execute: "Plenumi"
 contactPage:
-  title: "Contact"
+  title: "Kontakti"
   privacy: >-
-    Please read and agree to the [privacy policy](/document/other/privacy) before submitting your inquiry.
+    Bonvolu legi kaj konsenti pri la [privateca politiko](/document/other/privacy) antaŭ sendi vian demandon.
   explanation: >-
-    If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
-    Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
+    Se vi volas sendi vian demandon anonime, bonvolu elsaluti kaj poste lasi malplena la kampon “Nomo”.
+    Bonvolu noti, ke ni eble ne povos respondi al via anonima peto se ĝi koncernas ion kiu bezonas la aŭtoritaton de la uzanto, kiel agordado aŭ redaktado de vortaro.
 dashboardPage:
   title: "Uzanta paĝo"
   dictionary: "Vortaroj"

@@ -288,9 +288,9 @@ activateUserForm:
     You can also click the button on the right to resend the mail.
 advancedSearchForm:
   overlayTitle: "Advanced search"
-  search: "Search"
+  search: "Keyword"
   title: "Title"
-  mode: "Range"
+  mode: "Scope"
   type: "Method"
   name: "Headword"
   equivalent: "Translation"
@@ -570,7 +570,7 @@ userPane:
 wordEditor:
   title: "Edit word"
   basic: "Basic information"
-  name: "Word"
+  name: "Spelling"
   pronunciation: "Pronunciation"
   tag: "Tags"
   equivalent: "Translations"
@@ -579,7 +579,7 @@ wordEditor:
   information: "Contents"
   informationTitle: "Title"
   informationText: "Content"
-  variation: "Variations"
+  variation: "Variation forms"
   variationTitle: "Title"
   variationName: "Form"
   relation: "Related words"
@@ -588,7 +588,7 @@ wordEditor:
   tagAbsent: "No tags"
   equivalentAbsent: "No translations"
   informationAbsent: "No contents"
-  variationAbsent: "No variations"
+  variationAbsent: "No variation forms"
   relationAbsent: "No related words"
   add: "Add"
   discard: "Delete"
