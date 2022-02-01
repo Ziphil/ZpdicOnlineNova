@@ -75,6 +75,6 @@ $setting-pane-horizontal-padding: 150u;
 .description {
   @include line-height;
   margin: $medium-margin 0rpx 0rpx 0rpx;
-  font-size: 90%;
+  font-size: $small-font-size;
   text-align: justify;
 }

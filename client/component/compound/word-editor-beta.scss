@@ -12,7 +12,7 @@
 .head {
   @include bold-font;
   margin: 0rpx 0rpx $paragraph-margin 0rpx;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   color: $light-color;
 }
 

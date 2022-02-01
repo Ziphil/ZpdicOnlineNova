@@ -10,7 +10,7 @@
 .tooltip {
   margin: $small-margin 0rpx 0rpx 0rpx;
   padding: $tooltip-vertical-padding $tooltip-horizontal-padding;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   color: map-get($colors, error);
   background-color: background-color(map-get($colors, error));
   border: 1rpx border-color(map-get($colors, error)) solid;

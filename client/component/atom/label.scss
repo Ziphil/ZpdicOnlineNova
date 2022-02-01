@@ -4,7 +4,7 @@
 
 
 .root {
-  font-size: 80%;
+  font-size: $tiny-font-size;
   color: map-get($colors, primary);
 }
 

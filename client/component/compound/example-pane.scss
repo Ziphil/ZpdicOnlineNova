@@ -21,7 +21,7 @@
 .caution {
   @include line-height($tooltip-line-height);
   margin: $small-margin 0rpx 0rpx 0rpx;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   color: map-get($colors, error);
 }
 

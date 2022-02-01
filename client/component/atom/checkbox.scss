@@ -37,7 +37,7 @@
   @include icon-font;
   top: 0.25em;
   left: 0.15em;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   color: map-get($colors, primary);
   background-color: map-get($colors, primary);
   background-image: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25));

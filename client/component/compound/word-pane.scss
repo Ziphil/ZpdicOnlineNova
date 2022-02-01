@@ -59,7 +59,7 @@
 .pronunciation {
   margin: 0em 0.5em * (120% / 80%) 0em 0em;
   color: $head-color;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   display: inline-block;
 }
 
@@ -114,7 +114,7 @@
 .title {
   @include bold-font;
   margin: $paragraph-margin 0rpx;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   color: $light-color;
   display: block;
 }
