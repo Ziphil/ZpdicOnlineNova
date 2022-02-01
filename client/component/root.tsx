@@ -80,10 +80,10 @@ const Root = create(
       <BrowserRouter>
         <DndProvider backend={DndBackend}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-            <Suspense fallback={<EmptyPage/>}>
-              <ErrorBoundary fallbackRender={ErrorPage}>
-                <ScrollTop>
-                  <InnerRoot>
+            <ErrorBoundary fallbackRender={ErrorPage}>
+              <InnerRoot>
+                <Suspense fallback={<EmptyPage/>}>
+                  <ScrollTop>
                     <Switch>
                       <Authenticator type="none" exact sensitive path="/" component={TopPage}/>
                       <Authenticator type="guest" exact sensitive path="/login" redirect="/dashboard" component={LoginPage}/>
@@ -103,10 +103,10 @@ const Root = create(
                       <Authenticator type="none" exact sensitive path="/language" component={LanguagePage}/>
                       <Authenticator type="none" component={NotFoundPage}/>
                     </Switch>
-                  </InnerRoot>
-                </ScrollTop>
-              </ErrorBoundary>
-            </Suspense>
+                  </ScrollTop>
+                </Suspense>
+              </InnerRoot>
+            </ErrorBoundary>
           </IntlProvider>
         </DndProvider>
       </BrowserRouter>
