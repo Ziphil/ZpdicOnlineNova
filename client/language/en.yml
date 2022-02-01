@@ -87,7 +87,8 @@ popup:
     Your message has been sent.
   invalidUserName: >-
     The user ID is invalid.
-    It must be composed of alphanumeric characters, underscores and hyphens, contain at least one non-digit, and have no more than 30 characters.
+    It must be composed of alphanumeric characters, underscores and hyphens.
+    It must also contain at least one non-digit, and have no more than 30 characters.
   invalidUserEmail: >-
     The email address is invalid.
   invalidUserPassword: >-
@@ -120,12 +121,13 @@ popup:
     Please specify another name.
   invalidDictionaryParamName: >-
     The URL name is invalid.
-    It must be composed of alphanumeric characters, underscores and hyphens, contain at least one non-digit, and have no more than 30 characters.
+    It must be composed of alphanumeric characters, underscores and hyphens.
+    It must also contain at least one non-digit, and have no more than 30 characters.
   dictionarySaving: >-
     The upload is currently being processed.
     Please wait for a while until the process is completed.
   failAddRelations: >-
-    Failed to register mutual relations.
+    Failed to register the mutual relations.
   dictionarySizeTooLarge: >-
     The file is too large.
     You cannot upload files larger than 2 MB.
@@ -142,7 +144,7 @@ popup:
   unsupportedResourceType: >-
     This file type is not supported.
   userCanAlreadyEdit: >-
-    This user already has permission.
+    This user already has the permission.
   userCanAlreadyOwn: >-
     This user is already the owner of this dictionary.
   editInvitationAlreadyAdded: >-
@@ -181,10 +183,10 @@ popup:
     Couldn't get a response from the server.
     Please try again after a while.
   recaptchaError: >-
-    The reCAPTCHA returned an error.
+    The reCAPTCHA system returned an error.
     Please try again.
   recaptchaRejected: >-
-    Failed to authenticate by reCAPTCHA.
+    Failed to authenticate by the reCAPTCHA system.
     Please try again.
   awsError: >-
     Something failed.

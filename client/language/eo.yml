@@ -86,115 +86,117 @@ popup:
   contacted: >-
     Via mesaĝo estas sendita.
   invalidUserName: >-
-    The user ID is invalid.
-    It must be composed of alphanumeric characters, underscores and hyphens, contain at least one non-digit, and have no more than 30 characters.
+    La uzanta identigilo estas nevalida.
+    Ĝi devas ampleksi alfanombraj signoj, substrekoj kaj streketoj.
+    Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon, kaj havi ne pli ol 30 signojn.
   invalidUserEmail: >-
-    The email address is invalid.
+    La retpoŝta adreso estas nevalida.
   invalidUserPassword: >-
-    The password is invalid.
-    It must have 6–50 characters.
+    La pasvorto estas nevalida.
+    Ĝi devas havi 6–50 signojn.
   duplicateUserName: >-
-    The user ID you specified already exists.
-    Please specify another user ID.
+    Jam ekzistas la uzanta identigilo kiun vi specifis.
+    Bonvolu specifi alian uzantan identigilon.
   duplicateUserEmail: >-
-    The email address you specified is already registered.
-    Please specify another email address.
+    Jam registritas la retadreso kiun vi specifis.
+    Bonvolu specifi alian retadreson.
   noSuchUser: >-
-    This user does not exist.
+    Tiu uzanto ne ekzistas.
   noSuchUserEmail: >-
-    There is no user with this email address.
+    Ne estas uzanto kun tiu retadreso.
   userAlreadyActivated: >-
-    This user has been already activated.
+    Tiu uzanto jam estas aktivigita.
   invalidActivateToken: >-
-    Failed to activate the user.
+    Malsukcesis aktivigi la uzanton.
   invalidResetToken: >-
-    Failed to reset your password.
+    Malsukcesis restarigi vian pasvorton.
   loginFailed: >-
-    Failed to sign in.
+    Malsukcesis ensaluti.
   noSuchDictionaryNumber: >-
-    There is no dictionary with this number.
+    Ne estas vortaro kun tiu numero.
   noSuchDictionaryParamName: >-
-    There is no dictionary with this name.
+    Ne estas vortaro kun tiu nomo.
   duplicateDictionaryParamName: >-
-    The URL name you specified is already used.
-    Please specify another name.
+    Jam uzatas la retadresa nomo kiun vi specifis.
+    Bonvolu specifi alian nomon.
   invalidDictionaryParamName: >-
-    The URL name is invalid.
-    It must be composed of alphanumeric characters, underscores and hyphens, contain at least one non-digit, and have no more than 30 characters.
+    La retadresa nomo estas nevalida.
+    Ĝi devas ampleksi alfanombraj signoj, substrekoj kaj streketoj.
+    Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon, kaj havi ne pli ol 30 signojn.
   dictionarySaving: >-
-    The upload is currently being processed.
-    Please wait for a while until the process is completed.
+    La alŝutado estas nuntempe prilaborata.
+    Bonvolu atendi iom da tempo ĝis la procezo finiĝos.
   failAddRelations: >-
-    Failed to register mutual relations.
+    Malsukcesis registri la reciprokajn rilatojn.
   dictionarySizeTooLarge: >-
-    The file is too large.
-    You cannot upload files larger than 2 MB.
+    La dosiero estas tro granda.
+    Vi ne povas alŝuti dosierojn pli grandajn ol 2 MB.
   noSuchWordNumber: >-
-    You tried to edit a word which does not exist.
+    Vi provis redakti vorton kiu ne ekzistas.
   noSuchExampleNumber: >-
-    You tried to edit an example sentence which does not exist.
+    Vi provis redakti ekzemplan frazon kiu ne ekzistas.
   resourceCountExceeded: >-
-    No more files can be uploaded.
-    You can upload up to 25 files to one dictionary.
+    Vi ne povas alŝuti pliajn dosierojn.
+    Vi povas alŝuti ĝis 25 dosierojn al unu vortaro.
   resourceSizeTooLarge: >-
-    The file is too large.
-    You cannot upload files larger than 1 MB.
+    La dosiero estas tro granda.
+    Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
   unsupportedResourceType: >-
-    This file type is not supported.
+    Tiu tipo de dosiero ne estas subtenata.
   userCanAlreadyEdit: >-
-    This user already has permission.
+    Tiu uzanto jam havas la permeson.
   userCanAlreadyOwn: >-
-    This user is already the owner of this dictionary.
+    Tiu uzanto jam estas la posedanto de tiu vortaro.
   editInvitationAlreadyAdded: >-
-    You have already invited this user to edit this dictionary.
+    Vi jam invitis tiun uzanton redakti tiun vortaron.
   transferInvitationAlreadyAdded: >-
-    You have already requested this user to be the owner of this dictionary.
+    Vi jam petis tiun uzanton iĝi la posedanto de tiu vortaro.
   noSuchInvitation: >-
-    This invitation does not exist.
+    Tiu invito ne ekzistas.
   noSuchDictionaryAuthorizedUser: >-
-    There is no user with such permission.
+    Ne estas uzanto kun tia permeso.
   emptyCommissionName: >-
-    The word to request is empty.
+    La vorto por peti estas malplena.
   noSuchCommission: >-
-    This request does not exist.
+    Tiu peto ne ekzistas.
   emptyContactText: >-
-    The content is empty.
+    La enhavo estas malplena.
   administratorNotFound: >-
-    An unexpected error occurred.
+    Neatendita eraro okazis.
   invalidArgument: >-
-    The argument is invalid.
+    La argumento estas malvalida.
   unauthenticated: >-
-    You are not signed in.
-    Please sign in again.
+    Vi ne estas ensalutinta.
+    Bonvolu denove ensaluti.
   forbidden: >-
-    You are not authorized to access this content.
+    Vi ne rajtas aliri tiun enhavon.
   serverNotFound: >-
-    The API was not found.
-    The server may have been updated; please refresh the page.
+    La servila interfaco ne estis trovita.
+    La servilo eble estis ĝisdatigita, do bonvolu refreŝigi la paĝon.
   serverError: >-
-    An error occurred in the server.
-    Please try again after a while.
+    Eraro okazis en la servilo.
+    Bonvolu provi denove post iom da tempo.
   serverTimeout: >-
-    Couldn't get a response from the server.
-    Please try again after a while.
+    Ne eblis ricevi respondon de la servilo.
+    Bonvolu provi denove post iom da tempo.
   requestTimeout: >-
-    Couldn't get a response from the server.
-    Please try again after a while.
+    Ne eblis ricevi respondon de la servilo.
+    Bonvolu provi denove post iom da tempo.
   recaptchaError: >-
-    The reCAPTCHA returned an error.
-    Please try again.
+    La sistemo reCAPTCHA vekis eraron.
+    Bonvolu reprovi.
   recaptchaRejected: >-
-    Failed to authenticate by reCAPTCHA.
-    Please try again.
+    Malsukcesis aŭtentikigi per la sistemo reCAPTCHA.
+    Bonvolu reprovi.
   awsError: >-
-    Something failed.
-    Please try again.
+    Io fiaskis.
+    Bonvolu reprovi.
   messageNotFound: >-
-    There is no message configured for this popup.
-    Please notify the administrator.
+    Ne estas mesaĝo agordita por tiu ŝprucfenestro.
+    Bonvolu sciigi la administranton.
   unexpected: >-
-    An unexpected error occurred.
-    Please notify the administrator.
+    Neatendita eraro okazis.
+    Bonvolu sciigi la administranton.
 
 alert:
   confirm: "Certigi"
@@ -510,10 +512,10 @@ overallAggregationPane:
   wordCount: "Vortoj"
   exampleCount: "Frazoj"
 regexpExecutor:
-  title: "Regular expression"
-  source: "Regular expression"
-  target: "Target text"
-  result: "Result"
+  title: "Regula esprimo"
+  source: "Regula esprimo"
+  target: "Cela teksto"
+  result: "Rezulto"
   execute: "Plenumi"
 registerForm:
   confirm: "Registriĝi"
@@ -747,7 +749,7 @@ dictionarySettingPage:
       Jen la statistikaj informoj de tiu vortaro.
       En la eroj pri signolongo, vi povas vidi la valorojn uzantajn la datumojn kiel estas kaj ankaŭ tiujn kalkulitajn post Unikoda normaligo.
   historyPane:
-    label: "Hisorio de nombro da vortoj"
+    label: "Historio de nombro da vortoj"
     description: >-
       Jen la historio de la nombro da vortoj en tiu vortaro dum la lastaj 100 tagoj.
       La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
