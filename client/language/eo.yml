@@ -6,85 +6,85 @@ common:
 
 popup:
   userActivated: >-
-    The user has been activated.
+    La uzanto estas aktivigita.
   userScreenNameChanged: >-
-    Your nickname has been changed.
+    Via kromnomo estas ŝanĝita.
   userEmailChanged: >-
-    Your email address has been changed.
+    Via retpoŝta adreso estas ŝanĝita.
   userPasswordChanged: >-
-    Your password has been changed.
+    Via pasvorto estas ŝanĝita.
   userActivateTokenIssued: >-
-    We have sent an email with a URL for activating this user.
-    Please follow the instructions in the email.
+    Ni sendis retmesaĝon kun retadreso por aktivigi tiun uzanton.
+    Bonvolu sekvi la instrukciojn en la retmesaĝo.
   userResetTokenIssued: >-
-    We have sent an email with a URL for resetting your password.
-    Please follow the instructions in the email.
+    Ni sendis retmesaĝon kun retadreso por restarigi vian pasvorton.
+    Bonvolu sekvi la instrukciojn en la retmesaĝo.
   userPasswordReset: >-
-    Your password has been reset.
-    Please sign in again using your new password.
+    Via pasvorto estis restarigita.
+    Bonvolu denove ensaluti uzante vian novan pasvorton.
   userDiscarded: >-
-    This user has been deleted.
-    Thank you for using ZpDIC Online.
+    Tiu uzanto estis forigita.
+    Dankon pro uzi ZpDIC Online.
   dictionaryNameChanged: >-
-    The display name of the dictionary has been changed.
+    La montra nomo de la vortaro estas ŝanĝita.
   dictionaryParamNameChanged: >-
-    The URL name of the dictionary has been changed.
+    La retadresa nomo de la vortaro estas ŝanĝita.
   dictionarySecretChanged: >-
-    The visibility of the dictionary has been changed.
+    La videblo de la vortaro estas ŝanĝita.
   dictionaryExplanationChanged: >-
-    The description of the dictionary has been changed.
+    La priskribo de la vortaro estas ŝanĝita.
   dictionarySettingsChanged: 
     akrantiainSource: >-
-      The snoj data for Akrantiain has been changed.
+      La fontkodo por Akrantiain estas ŝanĝita.
     zatlinSource: >-
-      The source code for Zatlin has been changed.
+      La fontkodo por Zatlin estas ŝanĝita.
     pronunciationTitle: >-
-      The title of the pronunciation has been changed.
+      La titolo por elparoloj estas ŝanĝita.
     exampleTitle: >-
-      The title of the example sentences has been changed.
+      La titolo por ekzemplaj frazoj estas ŝanĝita.
     enableMarkdown: >-
-      Markdown has been enabled/disabled.
+      Markdown estas ebligita/malebligita.
   dictionaryUploaded: >-
-    Your file was successfully uploaded.
-    Note that it will take some time before the dictionary data is updated.
+    Via dosiero estis sukcese alŝutita.
+    Notu, ke daŭros iom da tempo ĝis la vortaraj datumoj estas ĝisdatigitaj.
   dictionaryDiscarded: >-
-    The dictionary has been deleted.
+    La vortaro estas forigita.
   editInvitationAdded: >-
-    You invited the user to edit this dictionary.
-    The permission will be given to them after they accept the request.
+    Vi invitis la uzanton redakti tiun vortaron.
+    La permeso estos donita al ri post kiam ri akceptos la peton.
   editInvitationAccepted: >-
-    You have accepted the invitation to edit the dictionary.
-    You can now edit the dictionary.
+    Vi akceptis la inviton por redaktado de la vortaron.
+    Vi nun povas redakti la vortaron.
   editInvitationRefused: >-
-    You rejected the invitation to edit this dictionary.
+    Vi malakceptis la inviton por redaktado de la vortaron.
   transferInvitationAdded: >-
-    You have requested to transfer this dictionary.
-    The dictionary will be transferred after the user accepts the request.
+    Vi petis transdoni tiun vortaron.
+    La vortaro estos transdonita post kiam la uzanto akceptos la peton.
   transferInvitationAccepted: >-
-    You accepted the transferrence of the dictionary.
-    You are now the owner of the dictionary.
+    Vi akceptis transdonadon de la vortaro.
+    Vi nun estas la posedanto de la vortaro.
   transferInvitationRefused: >-
-    You rejected the transferrence of the dictionary.
+    Vi malakceptis transdonadon de la vortaro.
   dictionaryAuthorizedUserDiscarded: >-
-    The user's edit permission has been revoked.
+    La redakta permeso de la uzanto estas revokita.
   wordEdited: >-
-    The word has been edited.
+    La vorto estas redaktita.
   wordDiscarded: >-
-    The word has been deleted.
+    La vorto estas forigita.
   exampleEdited: >-
-    The example sentence has been edited.
+    La ekzempla frazo estas redaktita.
   exampleDiscarded: >-
-    The example sentence has been deleted.
+    La ekzempla frazo estas forigita.
   resourceUploaded: >-
-    The resource has been uploaded.
+    La resurso estas alŝutita.
   resourceDiscarded: >-
-    The resource has been deleted.
+    La resurso estas forigita.
   commissionAdded: >-
-    Your request has been completed.
+    Via peto estas sendita.
   commissionDiscarded: >-
-    The request has been deleted.
+    La peto estas forigita.
   contacted: >-
-    Your message has been sent.
+    Via mesaĝo estas sendita.
   invalidUserName: >-
     The user ID is invalid.
     It must be composed of alphanumeric characters, underscores and hyphens, contain at least one non-digit, and have no more than 30 characters.

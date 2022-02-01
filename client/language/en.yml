@@ -39,9 +39,9 @@ popup:
     zatlinSource: >-
       The source code for Zatlin has been changed.
     pronunciationTitle: >-
-      The title of the pronunciation has been changed.
+      The title of pronunciations has been changed.
     exampleTitle: >-
-      The title of the example sentences has been changed.
+      The title of example sentences has been changed.
     enableMarkdown: >-
       Markdown has been enabled/disabled.
   dictionaryUploaded: >-
@@ -56,9 +56,9 @@ popup:
     You have accepted the invitation to edit the dictionary.
     You can now edit the dictionary.
   editInvitationRefused: >-
-    You rejected the invitation to edit this dictionary.
+    You rejected the invitation to edit the dictionary.
   transferInvitationAdded: >-
-    You have requested to transfer this dictionary.
+    You have requested to transfer the dictionary.
     The dictionary will be transferred after the user accepts the request.
   transferInvitationAccepted: >-
     You accepted the transferrence of the dictionary.
