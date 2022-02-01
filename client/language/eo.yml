@@ -257,8 +257,8 @@ changeDictionarySecretForm:
     Tiu agordo influas nur ĉu tiu vortaro estas montrata en la publika listo de vortaroj.
     Eĉ se ĝi estas agordita al “Nevidebla”, ĉiu kun la ligilo povas vidi tiun vortaron.
 changeDictionarySettingsForm:
-  pronunciationTitle: "Titolo por elparolo"
-  exampleTitle: "Titolo por ekzemplaj frazoj"
+  pronunciationTitle: "Titolo por elparoloj"
+  exampleTitle: "Titolo por frazoj"
   enableMarkdownTrue: "Ebligita"
   enableMarkdownFalse: "Malebligita"
   confirm: "Ŝanĝi"
@@ -518,9 +518,9 @@ regexpExecutor:
 registerForm:
   confirm: "Registriĝi"
 resetUserPasswordForm:
-  newPassword: "New password"
+  newPassword: "Nova pasvorto"
   issue: "Sendi"
-  reset: "Reset"
+  reset: "Restarigi"
 resourceList:
   file: "File to upload"
   confirm: "Certigi"
@@ -635,12 +635,12 @@ dashboardPage:
       Jen listo de viaj vortaroj.
       Tio ankaŭ inkluzivas tiujn kiujn vi ne posedas sed rajtas redakti.
   editInvitationList:
-    label: "Invitoj por redakti"
+    label: "Invitoj por redaktado"
     description: >-
       Jen listo de redaktaj invitoj al vi.
       Akcepti inviton al vortaro permesos al vi redakti ĝin.
   transferInvitationList:
-    label: "Invitoj por transdoni"
+    label: "Invitoj por transdonado"
     description: >-
       Jen listo de invitoj al vi por transfoni proprieton de vortaro.
       Akcepti inviton igos vin la nova posedanto de la vortaro.
@@ -697,30 +697,30 @@ dictionarySettingPage:
       Vi povas uzi iun sintakson de Markdown.
       Tio estos montrata en la paĝo de la vortaro antaŭ serĉado.
   changeDictionaryAkrantiainSourceForm:
-    label: "Change snoj data for Akrantiain"
+    label: "Ŝanĝi fontkodon por Akrantiain"
     description: >-
-      Change the snoj data for Akrantiain.
-      If you set this data, Akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
-      When a word has its own pronunciation specified, it will be displayed instead.
-      See [the documentation](/document) for further information about the syntax of Akrantiain.
+      Ŝanĝi la fontkodon por Akrantiain.
+      Se vi agordos tiun kodon, Akrantiain aŭtomate generos prononcon el literumo, kaj ĝi aperos apud la literumo.
+      Kiam vorto havas sian specifitan prononcon, ĝi estos anstataŭe montrata.
+      Vidu [la dokumentaron](/document) por pliaj informoj pri la sintakso de Akrantiain (nun disponebla nur en la japana).
   changeDictionaryZatlinSourceForm:
-    label: "Change source code for Zatlin"
+    label: "Ŝanĝi fontkodon por Zatlin"
     description: >-
-      Change the source code for Zatlin.
-      If you set this code, a “Generate” button will appear in the word editor, which enables you to generate a spelling by executing Zatlin.
-      See [the documentation](/document) for further information about the syntax of Zatlin (in Japanese).
+      Ŝanĝi la fontkodon por Zatlin.
+      Se vi agordos tiun kodon, butono “Generi” aperos en la vortredaktilo, kiu ebligas al vi generi literumon per ekzekuto de Zatlin.
+      Vidu [la dokumentaron](/document) por pliaj informoj pri la sintakso de Zatlin.
   changeDictionaryPronunciationTitleForm:
-    label: "Change title of pronunciation"
+    label: "Ŝanĝi titolon por elparoloj"
     description: >-
-      Change the title of the pronunciation which is used when outputting the dictionary in OTM-JSON format.
+      Ŝanĝi la titolon por elparoloj, kiu estos uzata dum eligado de la vortaro en OTM-JSON formato.
   changeDictionaryExampleTitleForm:
-    label: "Change title of example sentences"
+    label: "Ŝanĝi titolon por frazoj"
     description: >-
-      Change the title of the example sentences which is displayed in the dictionary page.
+      Ŝanĝi la titolon por ekzemplaj frazoj, kiu estos montrata en la paĝo de la vortaro.
   changeDictionaryEnableMarkdownForm:
-    label: "Enable or disable Markdown"
+    label: "Ebligi aŭ malebligi Markdown"
     description: >-
-      If you set this enabled, you can write contents of words in Markdown format.
+      Se vi ebligos tiun, vi povos skribi enhavojn de vortoj en Markdown.
   uploadDictionaryForm:
     label: "Alŝuti"
     description: >-
@@ -731,48 +731,48 @@ dictionarySettingPage:
     description: >-
       Forigi tiun vortaron.
   addEditInvitationForm:
-    label: "Editing permissions"
+    label: "Permesoj por redaktado"
     description: >-
-      These users have permission to edit this dictionary.
-      You can also give permission to another user here.
-      Users with permission can edit and delete words, but cannot change the name of the dictionary or delete it.
+      Jen uzantoj kiu havas permeson por redakti tiun vortaron.
+      Vi tie ankaŭ povas doni permeson al alia uzanto.
+      Uzantoj kun permeso povas redakti kaj forigi vortojn, sed ne povas ŝanĝi la nomon de la vortaro aŭ forigi ĝin.
   addTransferInvitationForm:
-    label: "Transfer"
+    label: "Permesoj por transdonado"
     description: >-
-      Transfer this dictionary to another user.
-      After the dictionary is transferred, you still have editing permission and thus you can edit the words.
+      Vi povas transdoni tiun vortaron al alia uzanto.
+      Post kiam la vortaro estas transdonita, vi ankoraŭ havas redaktan permeson kaj tiel vi povas redakti la vortojn.
   dictionaryStatisticsPane:
-    label: "Statistics"
+    label: "Statistikoj"
     description: >-
-      The statistical information of this dictionary.
-      In the items on character length, you can see the value using the data as is and also those calculated after Unicode normalisation.
+      Jen la statistikaj informoj de tiu vortaro.
+      En la eroj pri signolongo, vi povas vidi la valorojn uzantajn la datumojn kiel estas kaj ankaŭ tiujn kalkulitajn post Unikoda normaligo.
   historyPane:
-    label: "Word count history"
+    label: "Hisorio de nombro da vortoj"
     description: >-
-      The history of the number of words in this dictionary for the last 100 days.
-      The word count is recorded every day at around 14:30 (UTC).
+      Jen la historio de la nombro da vortoj en tiu vortaro dum la lastaj 100 tagoj.
+      La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
   wordNameFrequencyPane:
-    label: "Character frequency"
+    label: "Frekvenco de signoj"
     description: >-
-      The frequency of occurrence of each letter used in the headwords.
+      Jen la frekvenco de apero de ĉiu signo uzata en la kapvortoj.
 errorPage:
   back: "Reiri al ĉefpaĝo"
   description: >-
-    An unexpected error has occurred.
+    Neatendita eraro okazintas.
 languagePage:
-  title: "Choose language"
+  title: "Elekti lingvon"
 loginPage:
-  title: "Sign in"
+  title: "Ensaluti"
 notFoundPage:
   description: >-
-    The page you requested could not be found.
-    Please make sure that you type the correct address.
-    It is also possible that the page you are looking for has been deleted or moved to another location.
+    La paĝo kiun vi petas ne estis trovita.
+    Bonvolu certigi ke vi tajpas la korektan adreson.
+    Ankaŭ eblas, ke la paĝo kiun vi serĉas estis forigita aŭ movita al alia loko.
 notificationPage:
-  title: "Notifications"
+  title: "Sciigoj"
 registerPage:
-  title: "Sign up"
+  title: "Registriĝi"
   privacy: >-
-    In order to use this application, you must read and agree to the [privacy policy](/document/other/privacy).
+    Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la [privateca politiko](/document/other/privacy).
 resetUserPasswordPage:
-  title: "Reset password"
+  title: "Restarigi pasvorton"

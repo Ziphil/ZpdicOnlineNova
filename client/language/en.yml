@@ -257,8 +257,8 @@ changeDictionarySecretForm:
     This setting affects only whether or not this dictionary is shown in the public dictionary list.
     Even if it is set to “Hide”, anyone with the link can view this dictionary.
 changeDictionarySettingsForm:
-  pronunciationTitle: "Title of pronunciation"
-  exampleTitle: "Title of example sentences"
+  pronunciationTitle: "Title of pronunciations"
+  exampleTitle: "Title of sentences"
   enableMarkdownTrue: "Enable"
   enableMarkdownFalse: "Disable"
   confirm: "Change"
@@ -702,21 +702,21 @@ dictionarySettingPage:
       Change the snoj code for Akrantiain.
       If you set this code, Akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
       When a word has its own pronunciation specified, it will be displayed instead.
-      See [the documentation](/document) for further information about the syntax of Akrantiain.
+      See [the documentation](/document) for further information about the syntax of Akrantiain (now only available in Japanese).
   changeDictionaryZatlinSourceForm:
     label: "Change source code for Zatlin"
     description: >-
       Change the source code for Zatlin.
       If you set this code, a “Generate” button will appear in the word editor, which enables you to generate a spelling by executing Zatlin.
-      See [the documentation](/document) for further information about the syntax of Zatlin (only available in Japanese).
+      See [the documentation](/document) for further information about the syntax of Zatlin.
   changeDictionaryPronunciationTitleForm:
-    label: "Change title of pronunciation"
+    label: "Change title of pronunciations"
     description: >-
-      Change the title of the pronunciation which is used when outputting the dictionary in OTM-JSON format.
+      Change the title of pronunciations which is used when outputting the dictionary in OTM-JSON format.
   changeDictionaryExampleTitleForm:
-    label: "Change title of example sentences"
+    label: "Change title of sentences"
     description: >-
-      Change the title of the example sentences which is displayed in the dictionary page.
+      Change the title of example sentences which is displayed in the dictionary page.
   changeDictionaryEnableMarkdownForm:
     label: "Enable or disable Markdown"
     description: >-
@@ -739,13 +739,13 @@ dictionarySettingPage:
   addTransferInvitationForm:
     label: "Transfer"
     description: >-
-      Transfer this dictionary to another user.
+      You can transfer this dictionary to another user.
       After the dictionary is transferred, you still have editing permission and thus you can edit the words.
   dictionaryStatisticsPane:
     label: "Statistics"
     description: >-
       The statistical information of this dictionary.
-      In the items on character length, you can see the value using the data as is and also those calculated after Unicode normalisation.
+      In the items on character length, you can see the values using the data as is and also those calculated after Unicode normalisation.
   historyPane:
     label: "Word count history"
     description: >-
