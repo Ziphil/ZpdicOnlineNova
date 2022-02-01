@@ -1,5 +1,8 @@
 //
 
+import {
+  IntlError
+} from "@formatjs/intl";
 import * as react from "react";
 import {
   ReactElement,
@@ -67,8 +70,10 @@ const Root = create(
     let {ready} = useDefaultUser();
     let {locale, messages} = useDefaultLocale("ja");
 
-    let handleIntlError = useCallback(function (error: Error): void {
-      console.error(error);
+    let handleIntlError = useCallback(function (error: IntlError<any>): void {
+      if (error.code !== "MISSING_DATA" && error.code !== "MISSING_TRANSLATION") {
+        console.error(error);
+      }
     }, []);
 
     let node = (ready) && (
