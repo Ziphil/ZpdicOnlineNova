@@ -50,7 +50,7 @@ const Drawer = create(
     );
     let tabNode = (!open) && (
       <div styleName="tab" onClick={onOpen}>
-        <Icon name="arrow-right"/>
+        <Icon name="edit"/>
       </div>
     );
     let childrenNode = (page !== undefined && Array.isArray(children)) ? children[page] : children;

@@ -71,11 +71,14 @@ $overlay-header-height: 150u;
 
 .tab {
   width: 30rpx;
-  height: 50rpx;
-  top: calc((100% - 50rpx) / 2);
+  height: 60rpx;
+  top: calc((100% - 60rpx) / 2);
   right: -30rpx;
+  color: $light-color;
+  border: 1rpx $light-border-color solid;
+  border-left: none;
   border-radius: 0rpx $large-border-radius $large-border-radius 0rpx;
-  background-color: $background-color;
+  background-color: $strong-background-color;
   display: flex;
   align-items: center;
   justify-content: center;
