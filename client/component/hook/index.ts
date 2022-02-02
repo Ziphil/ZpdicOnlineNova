@@ -10,3 +10,4 @@ export * from "./query-state";
 export * from "./request";
 export * from "./router";
 export * from "./user";
+export * from "./word-editor";

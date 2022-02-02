@@ -75,8 +75,6 @@ const WordEditor = create(
     word,
     defaultName,
     defaultEquivalentName,
-    open,
-    onClose,
     onEditConfirm,
     onDiscardConfirm
   }: {
@@ -84,8 +82,6 @@ const WordEditor = create(
     word: Word | null,
     defaultName?: string,
     defaultEquivalentName?: string,
-    open: boolean,
-    onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
     onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
@@ -166,10 +162,9 @@ const WordEditor = create(
         let editedWord = response.data;
         await addRelations(editedWord);
         addInformationPopup("wordEdited");
-        await onClose?.(event);
         await onEditConfirm?.(word, event);
       }
-    }, [dictionary, tempWord, request, onClose, onEditConfirm, addInformationPopup, addRelations]);
+    }, [dictionary, tempWord, request, onEditConfirm, addInformationPopup, addRelations]);
 
     let discardWord = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
       let number = dictionary.number;
@@ -178,33 +173,26 @@ const WordEditor = create(
         let response = await request("discardWord", {number, wordNumber});
         if (response.status === 200) {
           addInformationPopup("wordDiscarded");
-          await onClose?.(event);
           await onDiscardConfirm?.(event);
         }
       }
-    }, [dictionary, tempWord, request, onClose, onDiscardConfirm, addInformationPopup]);
+    }, [dictionary, tempWord, request, onDiscardConfirm, addInformationPopup]);
 
     let handleBack = useCallback(function (): void {
       setRelationChooserOpen(false);
       setResourceListOpen(false);
     }, []);
 
-    let page = (resourceListOpen) ? 2 : (relationChooserOpen) ? 1 : 0;
-    let showBack = relationChooserOpen || resourceListOpen;
     let editorProps = {dictionary, word, tempWord, mutateWord, createSuggest, openRelationChooser, editWord, setAlertOpen, setResourceListOpen};
     let node = (
       <Fragment>
-        <Overlay
-          size="large"
-          title={trans("wordEditor.title")}
-          open={open}
-          page={page}
-          showBack={showBack}
-          onClose={onClose}
-          onBack={handleBack}
-        >
+        <div>
           <WordEditorEditor {...editorProps}/>
+        </div>
+        <Overlay size="large" open={relationChooserOpen} onClose={() => setRelationChooserOpen(false)}>
           <WordSearcher dictionary={dictionary} style="simple" showButton={true} onSubmit={editRelation}/>
+        </Overlay>
+        <Overlay size="large" open={resourceListOpen} onClose={() => setResourceListOpen(false)}>
           <ResourceList dictionary={dictionary} size={10} showCode={true} showInstruction={true}/>
         </Overlay>
         <Alert

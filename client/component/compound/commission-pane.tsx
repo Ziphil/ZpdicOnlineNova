@@ -5,8 +5,6 @@ import {
   Fragment,
   MouseEvent,
   ReactElement,
-  Suspense,
-  lazy,
   useCallback,
   useState
 } from "react";
@@ -31,9 +29,6 @@ import {
   EditableWord,
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
-
-
-let WordEditor = lazy(() => import("/client/component/compound/word-editor-beta"));
 
 
 const CommissionPane = create(
@@ -100,16 +95,6 @@ const CommissionPane = create(
           onClose={() => setAlertOpen(false)}
           onConfirm={discardCommission}
         />
-        <Suspense fallback="">
-          <WordEditor
-            dictionary={dictionary}
-            word={null}
-            defaultEquivalentName={commission.name}
-            open={editorOpen}
-            onClose={() => setEditorOpen(false)}
-            onEditConfirm={handleEditConfirm}
-          />
-        </Suspense>
       </Fragment>
     );
     return node;

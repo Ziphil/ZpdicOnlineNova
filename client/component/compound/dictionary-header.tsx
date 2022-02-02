@@ -39,7 +39,6 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-let WordEditor = lazy(() => import("/client/component/compound/word-editor-beta"));
 let ExampleEditor = lazy(() => import("/client/component/compound/example-editor"));
 let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
 
@@ -282,11 +281,6 @@ const DictionaryHeaderOverlays = create(
     setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
-    let wordEditorNode = (dictionary !== null && wordEditorOpen) && (
-      <Suspense fallback="">
-        <WordEditor dictionary={dictionary} word={null} open={wordEditorOpen} onClose={() => setWordEditorOpen(false)}/>
-      </Suspense>
-    );
     let exampleEditorNode = (dictionary !== null && exampleEditorOpen) && (
       <Suspense fallback="">
         <ExampleEditor dictionary={dictionary} example={null} open={exampleEditorOpen} onClose={() => setExampleEditorOpen(false)}/>
@@ -299,7 +293,6 @@ const DictionaryHeaderOverlays = create(
     );
     let node = (
       <Fragment>
-        {wordEditorNode}
         {exampleEditorNode}
         {commissionEditorNode}
       </Fragment>

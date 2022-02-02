@@ -9,12 +9,15 @@ import {
 } from "react";
 import Drawer from "/client/component/atom/drawer";
 import HotkeyHelp from "/client/component/compound/hotkey-help";
+import WordEditor from "/client/component/compound/word-editor-beta";
 import {
   create
 } from "/client/component/create";
 import {
   useHotkey,
-  usePath
+  useIntl,
+  usePath,
+  useWordEditorProps
 } from "/client/component/hook";
 
 
@@ -27,7 +30,8 @@ const InnerRoot = create(
   }): ReactElement {
 
     let [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
-    let [editerOpen, setEditorOpen] = useState(false);
+    let [{wordEditorProps, wordEditorOpen}, setWordEditorOpen] = useWordEditorProps();
+    let [, {trans}] = useIntl();
     let {pushPath} = usePath();
 
     useHotkey("jumpDashboardPage", () => {
@@ -55,10 +59,20 @@ const InnerRoot = create(
       }
     }, []);
 
+    let wordEditorNodes = wordEditorProps.map((props, index) => {
+      let wordEditorNode = (
+        <div key={index}>
+          <WordEditor {...props}/>
+        </div>
+      );
+      return wordEditorNode;
+    });
     let node = (
       <Fragment>
         {children}
-        <Drawer open={editerOpen} onOpen={() => setEditorOpen(true)} onClose={() => setEditorOpen(false)} outsideClosable={true} title="Test drawer"/>
+        <Drawer open={wordEditorOpen} onOpen={() => setWordEditorOpen(true)} onClose={() => setWordEditorOpen(false)} outsideClosable={true} title={trans("wordEditor.title")}>
+          {wordEditorNodes}
+        </Drawer>
         <HotkeyHelp open={hotkeyHelpOpen} onClose={() => setHotkeyHelpOpen(false)}/>
       </Fragment>
     );
