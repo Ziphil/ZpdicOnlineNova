@@ -60,11 +60,7 @@ const InnerRoot = create(
     }, []);
 
     let wordEditorNodes = wordEditorProps.map((props, index) => {
-      let wordEditorNode = (
-        <div key={index}>
-          <WordEditor {...props}/>
-        </div>
-      );
+      let wordEditorNode = <WordEditor key={index} {...props}/>;
       return wordEditorNode;
     });
     let node = (

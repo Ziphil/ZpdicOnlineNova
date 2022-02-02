@@ -178,17 +178,10 @@ const WordEditor = create(
       }
     }, [dictionary, tempWord, request, onDiscardConfirm, addInformationPopup]);
 
-    let handleBack = useCallback(function (): void {
-      setRelationChooserOpen(false);
-      setResourceListOpen(false);
-    }, []);
-
     let editorProps = {dictionary, word, tempWord, mutateWord, createSuggest, openRelationChooser, editWord, setAlertOpen, setResourceListOpen};
     let node = (
       <Fragment>
-        <div>
-          <WordEditorEditor {...editorProps}/>
-        </div>
+        <WordEditorEditor {...editorProps}/>
         <Overlay size="large" open={relationChooserOpen} onClose={() => setRelationChooserOpen(false)}>
           <WordSearcher dictionary={dictionary} style="simple" showButton={true} onSubmit={editRelation}/>
         </Overlay>
@@ -245,7 +238,7 @@ const WordEditorEditor = create(
     );
     let innerProps = {dictionary, tempWord, mutateWord, createSuggest};
     let node = (
-      <div>
+      <div styleName="root">
         <div styleName="editor">
           <WordEditorName {...innerProps}/>
           <WordEditorTags {...innerProps}/>

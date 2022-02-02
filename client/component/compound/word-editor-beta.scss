@@ -3,6 +3,17 @@
 @import "/client/component/mixin.scss";
 
 
+.root {
+  padding: $large-margin 0rpx;
+  border-bottom: 1rpx $invert-border-color solid;
+  &:first-child {
+    border-top: 1rpx $light-border-color solid;
+  }
+  &:last-child {
+    border-bottom: 1rpx $light-border-color solid;
+  }
+}
+
 .editor {
   display: flex;
   flex-direction: column;
