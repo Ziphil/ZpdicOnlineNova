@@ -338,17 +338,6 @@ const WordEditorName = create(
             </div>
           </div>
         </div>
-        {/* <div styleName="inner">
-          <div styleName="form">
-            <Input className={styles!["title"]} value={tempWord.name} label={nameLabel} onSet={mutateWord((tempWord, name) => tempWord.name = name)}/>
-          </div>
-          {generateNode}
-        </div>
-        <div styleName="inner large">
-          <div styleName="form">
-            <Input className={styles!["title"]} value={tempWord.pronunciation} label={pronunciationLabel} onSet={mutateWord((tempWord, pronunciation) => tempWord.pronunciation = pronunciation || undefined)}/>
-          </div>
-        </div> */}
       </div>
     );
     return node;
