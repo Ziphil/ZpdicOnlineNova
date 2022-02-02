@@ -49,6 +49,9 @@ const InnerRoot = create(
     useHotkey("jumpContactPage", () => {
       pushPath("/contact");
     }, []);
+    useHotkey("toggleWordEditor", () => {
+      setWordEditorOpen((open) => !open);
+    }, []);
     useHotkey("showHotkeyHelp", () => {
       setHotkeyHelpOpen(true);
     }, []);

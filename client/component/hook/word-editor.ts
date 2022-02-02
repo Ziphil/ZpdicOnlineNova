@@ -6,6 +6,7 @@ import {
 import {
   Dispatch,
   MouseEvent,
+  SetStateAction,
   useCallback
 } from "react";
 import {
@@ -39,7 +40,7 @@ export function useWordEditor(): (props: WordEditorProps) => void {
   return addWordEditor;
 }
 
-export function useWordEditorProps(): [{wordEditorProps: Array<WordEditorProps & {id: string}>, wordEditorOpen: boolean}, Dispatch<boolean>] {
+export function useWordEditorProps(): [{wordEditorProps: Array<WordEditorProps & {id: string}>, wordEditorOpen: boolean}, Dispatch<SetStateAction<boolean>>] {
   let [wordEditorProps] = useRawWordEditorProps();
   let [wordEditorOpen, setWordEditorOpen] = useRawWordEditorOpen();
   return [{wordEditorProps, wordEditorOpen}, setWordEditorOpen];

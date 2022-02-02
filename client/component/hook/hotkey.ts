@@ -24,9 +24,10 @@ const HOTKEY_SPECS = [
   {name: "jumpDictionaryPage", group: "navigation", keys: ["g d"]},
   {name: "jumpDictionarySettingPage", group: "navigation", keys: ["g s"]},
   {name: "jumpExamplePage", group: "navigation", keys: ["g e"]},
-  {name: "addWord", group: "editDictionary", keys: ["w"]},
-  {name: "addExample", group: "editDictionary", keys: ["e"]},
-  {name: "addCommission", group: "editDictionary", keys: ["r"]},
+  {name: "addWord", group: "editDictionary", keys: ["n w"]},
+  {name: "addExample", group: "editDictionary", keys: ["n e"]},
+  {name: "addCommission", group: "editDictionary", keys: ["n r"]},
+  {name: "toggleWordEditor", group: "editDictionary", keys: ["w"]},
   {name: "focusSearch", group: "searchWords", keys: ["s"]},
   {name: "movePreviousPage", group: "searchWords", keys: ["j"]},
   {name: "moveNextPage", group: "searchWords", keys: ["k"]}
