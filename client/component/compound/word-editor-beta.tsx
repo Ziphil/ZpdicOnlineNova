@@ -239,6 +239,7 @@ const WordEditorEditor = create(
     let innerProps = {dictionary, tempWord, mutateWord, createSuggest};
     let node = (
       <div styleName="root">
+        <div styleName="head-name">{tempWord.name}</div>
         <div styleName="editor">
           <WordEditorName {...innerProps}/>
           <WordEditorTags {...innerProps}/>
