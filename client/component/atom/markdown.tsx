@@ -12,6 +12,7 @@ import ReactMarkdown from "react-markdown";
 import {
   uriTransformer
 } from "react-markdown";
+import remarkGfm from "remark-gfm";
 import Link from "/client/component/atom/link";
 import {
   create
@@ -22,14 +23,13 @@ const Markdown = create(
   require("./markdown.scss"), "Markdown",
   function ({
     source,
-    simple = false,
-    allowHeading = false,
+    type = "normal",
     homePath,
     renderers,
     className
   }: {
     source: string,
-    simple?: boolean,
+    type?: "simple" | "normal" | "document",
     allowHeading?: boolean,
     homePath?: string,
     renderers?: Renderers,
@@ -45,27 +45,27 @@ const Markdown = create(
     }, [homePath]);
 
     let [allowedElements, disallowedElements] = useMemo(() => {
-      if (simple) {
-        let allowedElements = ["root", "text", "paragraph", "link"];
+      if (type === "simple") {
+        let allowedElements = ["p", "a"];
         return [allowedElements, undefined];
+      } else if (type === "normal") {
+        let disallowedElements = ["hr", "dl", "dd", "dt", "input", "h1", "h2", "h3", "h4", "h5", "h6"];
+        return [undefined, disallowedElements];
       } else {
-        let disallowedElements = ["thematicBreak", "definition", "heading", "html", "virtualHtml"];
-        if (allowHeading) {
-          disallowedElements = disallowedElements.filter((type) => type !== "heading");
-        }
+        let disallowedElements = ["hr", "dl", "dd", "dt", "input"];
         return [undefined, disallowedElements];
       }
-    }, [simple, allowHeading]);
+    }, [type]);
     let customRenderers = useMemo(() => {
-      if (simple) {
+      if (type === "simple") {
         let simpleRenderer = function (props: any): ReactElement {
           return props.children;
         };
-        return {link: Link, root: simpleRenderer, paragraph: simpleRenderer};
+        return {a: Link, p: simpleRenderer};
       } else {
-        return {link: Link};
+        return {a: Link};
       }
-    }, [simple]);
+    }, [type]);
     let allRenderers = {...customRenderers, ...renderers} as Renderers;
     let innerNode = (
       <ReactMarkdown
@@ -74,11 +74,13 @@ const Markdown = create(
         components={allRenderers}
         allowedElements={allowedElements}
         disallowedElements={disallowedElements}
+        skipHtml={true}
         transformLinkUri={transformUri}
         transformImageUri={transformUri}
+        remarkPlugins={[remarkGfm]}
       />
     );
-    let node = (simple) ? innerNode : <div styleName="root" className={className}>{innerNode}</div>;
+    let node = (type === "simple") ? innerNode : <div styleName="root" className={className}>{innerNode}</div>;
     return node;
 
   }

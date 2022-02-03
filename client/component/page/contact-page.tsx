@@ -28,10 +28,10 @@ const ContactPage = create(
         <div styleName="title">{trans("contactPage.title")}</div>
         <div styleName="explanation">
           <p>
-            <Markdown source={trans("contactPage.privacy")} simple={true}/>
+            <Markdown source={trans("contactPage.privacy")} type="simple"/>
           </p>
           <p>
-            <Markdown source={trans("contactPage.explanation")} simple={true}/>
+            <Markdown source={trans("contactPage.explanation")} type="simple"/>
           </p>
         </div>
         <div styleName="form">
