@@ -65,13 +65,12 @@ const DocumentPage = create(
     let renderSourceTester = useCallback(function (props: {className?: string, children: any}): ReactElement {
       let child = props.children[0];
       if (child.type === "code") {
-        let rawLanguage = child.props.className?.match(/^language-(.+)$/)?.[1];
-        let match = rawLanguage?.match(/^(\w+)(-try)?$/);
+        let match = child.props.className?.match(/^language-(.+)$/)?.[1]?.match(/^(\w+)(-try)?$/);
         let language = match?.[1] ?? "plain";
         let source = String(child.props.children);
         let modeOptions = CodeMirrorUtil.getModeOptions(language);
         if (modeOptions.mode !== undefined) {
-          let innerNode = (match && match[2]) ? <SourceTester source={source} language={language}/> : <Highlight value={source} language={language}/>;
+          let innerNode = (match && match[2]) ? <SourceTester source={source} language={language}/> : <Highlight source={source} language={language}/>;
           let node = (
             <div className="block">
               {innerNode}
