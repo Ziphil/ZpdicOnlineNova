@@ -182,10 +182,10 @@ const WordEditor = create(
     let node = (
       <Fragment>
         <WordEditorRoot {...editorProps}/>
-        <Overlay size="large" open={relationChooserOpen} onClose={() => setRelationChooserOpen(false)}>
+        <Overlay size="large" title={trans("wordSearcher.title")} open={relationChooserOpen} onClose={() => setRelationChooserOpen(false)}>
           <WordSearcher dictionary={dictionary} style="simple" showButton={true} onSubmit={editRelation}/>
         </Overlay>
-        <Overlay size="large" open={resourceListOpen} onClose={() => setResourceListOpen(false)}>
+        <Overlay size="large" title={trans("resourceList.title")} open={resourceListOpen} onClose={() => setResourceListOpen(false)}>
           <ResourceList dictionary={dictionary} size={10} showCode={true} showInstruction={true}/>
         </Overlay>
         <Alert

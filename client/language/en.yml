@@ -527,6 +527,7 @@ resetUserPasswordForm:
   issue: "Send"
   reset: "Reset"
 resourceList:
+  title: "Images"
   file: "File to upload"
   confirm: "Confirm"
   experimantalCaution: >-
@@ -615,6 +616,8 @@ wordPane:
   submit: "Select"
   oneway: "Make one-way"
   mutual: "Make mutual"
+wordSearcher:
+  title: "Search word"
 zatlinExecutor:
   title: "Zatlin {version}"
   source: "Source code"

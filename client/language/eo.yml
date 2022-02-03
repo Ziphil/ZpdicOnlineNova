@@ -527,6 +527,7 @@ resetUserPasswordForm:
   issue: "Sendi"
   reset: "Restarigi"
 resourceList:
+  title: "Bildoj"
   file: "Dosiero por alŝuti"
   confirm: "Konfirmi"
   experimantalCaution: >-
@@ -535,7 +536,7 @@ resourceList:
   markdownCaution: >-
     Por uzi tiun funkcion, vi devas ebligi Markdown en la paĝo de vortara agordo.
   instruction: >-
-    Elektu bildan dosieron kaj alklaku “Certigi” por alŝuti ĝin.
+    Elektu bildan dosieron kaj alklaku “Konfirmi” por alŝuti ĝin.
     La alŝutita dosiero estos aldonita en la suba listo.
     Kopiu la kodon sub la nomo de dosiero kaj algluu ĝin en la kampo de enhavo por montri la bildon.
 resourcePane:
@@ -615,6 +616,8 @@ wordPane:
   submit: "Elekti"
   oneway: "Igi unudirekta"
   mutual: "Igi reciproka"
+wordSearcher:
+  title: "Serĉi vorton"
 zatlinExecutor:
   title: "Zatlin {version}"
   source: "Fontkodo"

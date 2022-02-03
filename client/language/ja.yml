@@ -525,6 +525,7 @@ resetUserPasswordForm:
   issue: "送信"
   reset: "変更"
 resourceList:
+  title: "画像"
   file: "アップロードファイル"
   confirm: "決定"
   experimantalCaution: >-
@@ -612,6 +613,8 @@ wordPane:
   submit: "決定"
   oneway: "一方向で登録"
   mutual: "双方向で登録"
+wordSearcher:
+  title: "単語検索"
 zatlinExecutor:
   title: "Zatlin {version}"
   source: "ソースコード"
