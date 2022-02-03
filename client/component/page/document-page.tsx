@@ -62,7 +62,7 @@ const DocumentPage = create(
       }
     }, [params.firstPath, params.secondPath, locale, request]);
 
-    let renderSourceTester = useCallback(function (props: {className?: string, children: any}): ReactElement {
+    let renderSourceTester = useCallback(function (props: {children: any}): ReactElement {
       let child = props.children[0];
       if (child.type === "code") {
         let match = child.props.className?.match(/^language-(.+)$/)?.[1]?.match(/^(\w+)(-try)?$/);
@@ -92,7 +92,7 @@ const DocumentPage = create(
     }, [fetchSource, location.key]);
 
     if (found) {
-      let renderers = {pre: renderSourceTester};
+      let components = {pre: renderSourceTester};
       let title = source?.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
       let node = (
         <Page>
@@ -100,7 +100,7 @@ const DocumentPage = create(
             <title>{(title) ? `${title} — ZpDIC Online` : "ZpDIC Online"}</title>
           </Helmet>
           <Loading loading={source === null}>
-            <Markdown source={source!} type="document" renderers={renderers}/>
+            <Markdown source={source!} type="document" components={components}/>
           </Loading>
         </Page>
       );

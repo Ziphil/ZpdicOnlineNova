@@ -25,14 +25,14 @@ const Markdown = create(
     source,
     type = "normal",
     homePath,
-    renderers,
+    components,
     className
   }: {
     source: string,
     type?: "simple" | "normal" | "document",
     allowHeading?: boolean,
     homePath?: string,
-    renderers?: Renderers,
+    components?: MarkdownComponents,
     className?: string
   }): ReactElement {
 
@@ -56,22 +56,22 @@ const Markdown = create(
         return [undefined, disallowedElements];
       }
     }, [type]);
-    let customRenderers = useMemo(() => {
+    let customComponents = useMemo(() => {
       if (type === "simple") {
-        let simpleRenderer = function (props: any): ReactElement {
+        let renderChildren = function (props: any): ReactElement {
           return props.children;
         };
-        return {a: Link, p: simpleRenderer};
+        return {a: Link, p: renderChildren};
       } else {
         return {a: Link};
       }
     }, [type]);
-    let allRenderers = {...customRenderers, ...renderers} as Renderers;
+    let allComponents = {...customComponents, ...components} as MarkdownComponents;
     let innerNode = (
       <ReactMarkdown
         className={className}
         children={source}
-        components={allRenderers}
+        components={allComponents}
         allowedElements={allowedElements}
         disallowedElements={disallowedElements}
         skipHtml={true}
@@ -87,6 +87,6 @@ const Markdown = create(
 );
 
 
-export type Renderers = {[type: string]: ElementType};
+export type MarkdownComponents = {[type: string]: ElementType};
 
 export default Markdown;
