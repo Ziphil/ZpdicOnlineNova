@@ -36,7 +36,7 @@ export function verifyUser(authority?: string): RequestHandler {
   let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     let token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
-      if (!error && data && "id" in data) {
+      if (!error && typeof data === "object" && "id" in data) {
         let anyData = data as any;
         let user = await UserModel.findById(anyData.id).exec();
         if (user) {
@@ -64,7 +64,7 @@ export function checkUser(authority?: string): RequestHandler {
   let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     let token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
-      if (!error && data && "id" in data) {
+      if (!error && typeof data === "object" && "id" in data) {
         let anyData = data as any;
         let user = await UserModel.findById(anyData.id).exec();
         if (user) {

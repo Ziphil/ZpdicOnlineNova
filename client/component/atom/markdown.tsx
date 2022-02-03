@@ -10,7 +10,7 @@ import {
 } from "react";
 import ReactMarkdown from "react-markdown";
 import {
-  NodeType
+  uriTransformer
 } from "react-markdown";
 import Link from "/client/component/atom/link";
 import {
@@ -36,24 +36,24 @@ const Markdown = create(
     className?: string
   }): ReactElement {
 
-    let transformUri = useCallback(function (uri: string, children?: ReactNode, title?: string): string {
-      let nextUri = ReactMarkdown.uriTransformer(uri);
+    let transformUri = useCallback(function (uri: string, children: ReactNode, title: string | null): string {
+      let nextUri = uriTransformer(uri);
       if (homePath !== undefined) {
         nextUri = nextUri.replace(/^~/, homePath);
       }
       return nextUri;
     }, [homePath]);
 
-    let [allowedTypes, disallowedTypes] = useMemo(() => {
+    let [allowedElements, disallowedElements] = useMemo(() => {
       if (simple) {
-        let allowedTypes = ["root", "text", "paragraph", "link"] as Array<NodeType>;
-        return [allowedTypes, undefined];
+        let allowedElements = ["root", "text", "paragraph", "link"];
+        return [allowedElements, undefined];
       } else {
-        let disallowedTypes = ["thematicBreak", "definition", "heading", "html", "virtualHtml"] as Array<NodeType>;
+        let disallowedElements = ["thematicBreak", "definition", "heading", "html", "virtualHtml"];
         if (allowHeading) {
-          disallowedTypes = disallowedTypes.filter((type) => type !== "heading");
+          disallowedElements = disallowedElements.filter((type) => type !== "heading");
         }
-        return [undefined, disallowedTypes];
+        return [undefined, disallowedElements];
       }
     }, [simple, allowHeading]);
     let customRenderers = useMemo(() => {
@@ -70,10 +70,10 @@ const Markdown = create(
     let innerNode = (
       <ReactMarkdown
         className={className}
-        source={source}
-        renderers={allRenderers}
-        allowedTypes={allowedTypes}
-        disallowedTypes={disallowedTypes}
+        children={source}
+        components={allRenderers}
+        allowedElements={allowedElements}
+        disallowedElements={disallowedElements}
         transformLinkUri={transformUri}
         transformImageUri={transformUri}
       />

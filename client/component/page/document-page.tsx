@@ -75,13 +75,8 @@ const DocumentPage = create(
         );
         return node;
       } else {
-        let renderCode = ReactMarkdown.renderers.code;
-        if (typeof renderCode === "function") {
-          let node = renderCode(props);
-          return node;
-        } else {
-          throw new Error("cannot happen");
-        }
+        let node = <pre><code>{props.value}</code></pre>;
+        return node;
       }
     }, []);
 
