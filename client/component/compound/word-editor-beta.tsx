@@ -245,7 +245,7 @@ const WordEditorRoot = create(
     let node = (
       <div styleName="root">
         <div styleName="head-name" onClick={() => setMainShown((mainShown) => !mainShown)}>
-          <span styleName="head-icon"><Icon name={(mainShown) ? "circle-chevron-right" : "circle-chevron-down"}/></span>
+          <span styleName="head-icon"><Icon name={(mainShown) ? "circle-chevron-down" : "circle-chevron-right"}/></span>
           {tempWord.name}
         </div>
         <div styleName={mainStyleName}>
