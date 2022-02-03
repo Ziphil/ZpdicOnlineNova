@@ -415,7 +415,7 @@ dictionaryStatisticsPane:
   nfd: "NFD"
   nfc: "NFC"
 exampleEditor:
-  title: "Edit example sentence"
+  title: "Edit example sentences"
   sentence: "Sentence"
   translation: "Translation"
   wordName: "Included word"
@@ -570,7 +570,7 @@ userPane:
     This user's edit permission will be revoked.
     Are you really sure?
 wordEditor:
-  title: "Edit word"
+  title: "Edit words"
   basic: "Basic information"
   name: "Spelling"
   pronunciation: "Pronunciation"

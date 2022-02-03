@@ -415,7 +415,7 @@ dictionaryStatisticsPane:
   nfd: "NFD"
   nfc: "NFC"
 exampleEditor:
-  title: "Redakti ekzemplan frazon"
+  title: "Redakti ekzemplajn frazojn"
   sentence: "Frazo"
   translation: "Tradukaĵo"
   wordName: "Enhavita vorto"
@@ -570,7 +570,7 @@ userPane:
     La redakta permeso de tiu uzanto estos revokita.
     Ĉu vi vere certas?
 wordEditor:
-  title: "Redakti vorton"
+  title: "Redakti vortojn"
   basic: "Bazaj informoj"
   name: "Literumo"
   pronunciation: "Prononco"
