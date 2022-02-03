@@ -15,3 +15,11 @@
 .root >*:nth-child(2) {
   margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }
+
+.caution {
+  @include line-height;
+  margin: $large-margin 0rpx 0rpx 0rpx;
+  font-size: 90%;
+  color: map-get($colors, error);
+  text-align: justify;
+}

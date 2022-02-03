@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  Fragment,
   ReactElement,
   useCallback,
   useState
@@ -48,17 +49,22 @@ const UploadDictionaryForm = create(
     }, [number, file, requestFile, onSubmit, addInformationPopup]);
 
     let validate = function (file: File): string | null {
-      if (file.size <= 2 * 1024 * 1024) {
+      if (file.size <= 5 * 1024 * 1024) {
         return null;
       } else {
         return PopupUtil.getMessage(intl, "dictionarySizeTooLarge");
       }
     };
     let node = (
-      <form styleName="root">
-        <FileInput inputLabel={trans("uploadDictionaryForm.file")} validate={validate} onSet={(file) => setFile(file)}/>
-        <Button label={trans("uploadDictionaryForm.confirm")} reactive={true} onClick={handleClick}/>
-      </form>
+      <Fragment>
+        <form styleName="root">
+          <FileInput inputLabel={trans("uploadDictionaryForm.file")} validate={validate} onSet={(file) => setFile(file)}/>
+          <Button label={trans("uploadDictionaryForm.confirm")} reactive={true} onClick={handleClick}/>
+        </form>
+        <p styleName="caution">
+          {trans("uploadDictionaryForm.caution")}
+        </p>
+      </Fragment>
     );
     return node;
 
