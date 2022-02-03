@@ -281,6 +281,9 @@ discardDictionaryForm:
 uploadDictionaryForm:
   file: "Dosiero"
   confirm: "Konfirmi"
+  caution: >-
+    Vi ne povas alŝuti dosierojn pli grandajn ol 5 MB.
+    Krome, se vi plurfoje alŝutos dosierojn, ni eble suspendos viajn alŝutadojn laŭ la okazo.
 activateUserForm:
   send: "Sendi"
   caution: >-
