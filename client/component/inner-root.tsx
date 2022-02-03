@@ -50,7 +50,7 @@ const InnerRoot = create(
       pushPath("/contact");
     }, []);
     useHotkey("toggleWordEditor", () => {
-      setWordEditorOpen((open) => !open);
+      setWordEditorOpen((wordEditorOpen) => !wordEditorOpen);
     }, []);
     useHotkey("showHotkeyHelp", () => {
       setHotkeyHelpOpen(true);
