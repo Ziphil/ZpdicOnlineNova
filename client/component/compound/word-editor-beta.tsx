@@ -181,7 +181,7 @@ const WordEditor = create(
     let editorProps = {dictionary, word, tempWord, mutateWord, createSuggest, openRelationChooser, editWord, setAlertOpen, setResourceListOpen};
     let node = (
       <Fragment>
-        <WordEditorEditor {...editorProps}/>
+        <WordEditorRoot {...editorProps}/>
         <Overlay size="large" open={relationChooserOpen} onClose={() => setRelationChooserOpen(false)}>
           <WordSearcher dictionary={dictionary} style="simple" showButton={true} onSubmit={editRelation}/>
         </Overlay>
@@ -204,7 +204,7 @@ const WordEditor = create(
 );
 
 
-const WordEditorEditor = create(
+const WordEditorRoot = create(
   require("./word-editor-beta.scss"),
   function ({
     dictionary,
@@ -228,6 +228,7 @@ const WordEditorEditor = create(
     setResourceListOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
+    let [mainShown, setMainShown] = useState(true);
     let [, {trans}] = useIntl();
 
     let discardButtonNode = (word !== null) && (
@@ -236,25 +237,34 @@ const WordEditorEditor = create(
     let confirmButtonNode = (
       <Button label={trans("wordEditor.confirm")} iconName="check" style="information" reactive={true} onClick={editWord}/>
     );
+    let mainStyleName = StyleNameUtil.create(
+      "main",
+      {if: mainShown, false: "hidden"}
+    );
     let innerProps = {dictionary, tempWord, mutateWord, createSuggest};
     let node = (
       <div styleName="root">
-        <div styleName="head-name">{tempWord.name}</div>
-        <div styleName="editor">
-          <WordEditorName {...innerProps}/>
-          <WordEditorTags {...innerProps}/>
-          <WordEditorEquivalents {...innerProps}/>
-          <WordEditorInformations {...innerProps}/>
-          <WordEditorVariations {...innerProps}/>
-          <WordEditorRelations {...innerProps} {...{openRelationChooser}}/>
+        <div styleName="head-name" onClick={() => setMainShown((mainShown) => !mainShown)}>
+          <span styleName="head-icon"><Icon name={(mainShown) ? "circle-chevron-right" : "circle-chevron-down"}/></span>
+          {tempWord.name}
         </div>
-        <div styleName="confirm-button-wrapper">
-          <div styleName="confirm-button">
-            <Button label={trans("wordEditor.resource")} iconName="image" onClick={() => setResourceListOpen(true)}/>
+        <div styleName={mainStyleName}>
+          <div styleName="editor">
+            <WordEditorName {...innerProps}/>
+            <WordEditorTags {...innerProps}/>
+            <WordEditorEquivalents {...innerProps}/>
+            <WordEditorInformations {...innerProps}/>
+            <WordEditorVariations {...innerProps}/>
+            <WordEditorRelations {...innerProps} {...{openRelationChooser}}/>
           </div>
-          <div styleName="confirm-button">
-            {discardButtonNode}
-            {confirmButtonNode}
+          <div styleName="confirm-button-wrapper">
+            <div styleName="confirm-button">
+              <Button label={trans("wordEditor.resource")} iconName="image" onClick={() => setResourceListOpen(true)}/>
+            </div>
+            <div styleName="confirm-button">
+              {discardButtonNode}
+              {confirmButtonNode}
+            </div>
           </div>
         </div>
       </div>

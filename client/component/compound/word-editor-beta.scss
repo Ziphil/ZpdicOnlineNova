@@ -22,10 +22,21 @@
 
 .head-name {
   @include bold-font;
-  margin: 0rpx 0rpx $medium-margin 0rpx;
   font-size: 120%;
   color: $head-color;
-  display: inline-block;
+  cursor: pointer;
+}
+
+.head-icon {
+  margin-right: $small-margin;
+  font-size: 16px;
+}
+
+.main {
+  margin: $medium-margin 0rpx 0rpx 0rpx;
+  &.hidden {
+    display: none;
+  }
 }
 
 .head {
