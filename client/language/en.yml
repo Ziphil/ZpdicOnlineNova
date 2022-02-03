@@ -597,6 +597,7 @@ wordEditor:
   variationAbsent: "No variation forms"
   relationAbsent: "No related words"
   add: "Add"
+  cancel: "Cancel"
   discard: "Delete"
   confirm: "Confirm"
   generate: "Generate"

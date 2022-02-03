@@ -76,7 +76,8 @@ const WordEditor = create(
     defaultName,
     defaultEquivalentName,
     onEditConfirm,
-    onDiscardConfirm
+    onDiscardConfirm,
+    onCancel
   }: {
     dictionary: EnhancedDictionary,
     word: Word | null,
@@ -84,6 +85,7 @@ const WordEditor = create(
     defaultEquivalentName?: string,
     onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+    onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   }): ReactElement {
 
     let [tempWord, setTempWord] = useState(createTempWord(word, defaultName, defaultEquivalentName));
@@ -178,7 +180,7 @@ const WordEditor = create(
       }
     }, [dictionary, tempWord, request, onDiscardConfirm, addInformationPopup]);
 
-    let editorProps = {dictionary, word, tempWord, mutateWord, createSuggest, openRelationChooser, editWord, setAlertOpen, setResourceListOpen};
+    let editorProps = {dictionary, word, tempWord, mutateWord, createSuggest, openRelationChooser, onCancel, editWord, setAlertOpen, setResourceListOpen};
     let node = (
       <Fragment>
         <WordEditorRoot {...editorProps}/>
@@ -213,6 +215,7 @@ const WordEditorRoot = create(
     mutateWord,
     createSuggest,
     openRelationChooser,
+    onCancel,
     editWord,
     setAlertOpen,
     setResourceListOpen
@@ -223,6 +226,7 @@ const WordEditorRoot = create(
     mutateWord: MutateWordCallback,
     createSuggest: (propertyName: string) => Suggest,
     openRelationChooser: (index: number) => void,
+    onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     editWord: (event: MouseEvent<HTMLButtonElement>) => Promise<void>,
     setAlertOpen: Dispatch<SetStateAction<boolean>>,
     setResourceListOpen: Dispatch<SetStateAction<boolean>>
@@ -231,6 +235,9 @@ const WordEditorRoot = create(
     let [mainShown, setMainShown] = useState(true);
     let [, {trans}] = useIntl();
 
+    let cancelButtonNode = (
+      <Button label={trans("wordEditor.cancel")} iconName="times" onClick={onCancel}/>
+    );
     let discardButtonNode = (word !== null) && (
       <Button label={trans("wordEditor.discard")} iconName="trash-alt" style="caution" onClick={() => setAlertOpen(true)}/>
     );
@@ -262,6 +269,7 @@ const WordEditorRoot = create(
               <Button label={trans("wordEditor.resource")} iconName="image" onClick={() => setResourceListOpen(true)}/>
             </div>
             <div styleName="confirm-button">
+              {cancelButtonNode}
               {discardButtonNode}
               {confirmButtonNode}
             </div>

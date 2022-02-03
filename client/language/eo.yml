@@ -597,6 +597,7 @@ wordEditor:
   variationAbsent: "Neniuj variaĵaj formoj"
   relationAbsent: "Neniuj rilataj vortoj"
   add: "Aldoni"
+  cancel: "Nuligi"
   discard: "Forigi"
   confirm: "Konfirmi"
   generate: "Generi"

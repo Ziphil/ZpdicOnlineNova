@@ -40,13 +40,23 @@ export function useWordEditor(): (props: WordEditorProps) => void {
       await props.onDiscardConfirm?.(event);
       setWordEditorProps((previousProps) => {
         let nextProps = previousProps.filter((previousProp) => previousProp.id !== id);
-        if (nextProps.length < 0) {
+        if (nextProps.length <= 0) {
           setWordEditorOpen(false);
         }
         return nextProps;
       });
     };
-    setWordEditorProps((previousProps) => [...previousProps, {id, ...props, onEditConfirm, onDiscardConfirm}]);
+    let onCancel = async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
+      await props.onCancel?.(event);
+      setWordEditorProps((previousProps) => {
+        let nextProps = previousProps.filter((previousProp) => previousProp.id !== id);
+        if (nextProps.length <= 0) {
+          setWordEditorOpen(false);
+        }
+        return nextProps;
+      });
+    };
+    setWordEditorProps((previousProps) => [...previousProps, {id, ...props, onEditConfirm, onDiscardConfirm, onCancel}]);
     setWordEditorOpen(true);
   }, [setWordEditorProps, setWordEditorOpen]);
   return addWordEditor;

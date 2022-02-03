@@ -594,6 +594,7 @@ wordEditor:
   variationAbsent: "変化形は登録されていません"
   relationAbsent: "関連語は登録されていません"
   add: "追加"
+  cancel: "キャンセル"
   discard: "削除"
   confirm: "決定"
   generate: "生成"
