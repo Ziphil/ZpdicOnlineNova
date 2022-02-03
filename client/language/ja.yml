@@ -279,6 +279,9 @@ discardDictionaryForm:
 uploadDictionaryForm:
   file: "ファイル"
   confirm: "決定"
+  caution: >-
+    5 MB より大きなファイルはアップロードすることができません。
+    また、頻繁にファイルアップロードを繰り返すなどした場合は、個別にアップロードの停止などの処置をとらせていただく場合があります。
 activateUserForm:
   send: "送信"
   caution: >-

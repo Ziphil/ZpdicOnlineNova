@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  Fragment,
   ReactElement,
   useCallback,
   useState
@@ -55,10 +56,15 @@ const UploadDictionaryForm = create(
       }
     };
     let node = (
-      <form styleName="root">
-        <FileInput inputLabel={trans("uploadDictionaryForm.file")} validate={validate} onSet={(file) => setFile(file)}/>
-        <Button label={trans("uploadDictionaryForm.confirm")} reactive={true} onClick={handleClick}/>
-      </form>
+      <Fragment>
+        <form styleName="root">
+          <FileInput inputLabel={trans("uploadDictionaryForm.file")} validate={validate} onSet={(file) => setFile(file)}/>
+          <Button label={trans("uploadDictionaryForm.confirm")} reactive={true} onClick={handleClick}/>
+        </form>
+        <p styleName="caution">
+          {trans("uploadDictionaryForm.caution")}
+        </p>
+      </Fragment>
     );
     return node;
 

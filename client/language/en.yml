@@ -279,6 +279,9 @@ discardDictionaryForm:
 uploadDictionaryForm:
   file: "File"
   confirm: "Confirm"
+  caution: >-
+    You cannot upload files larger than 5 MB.
+    In addition, if you repeatedly upload files, we may suspend your uploads as the case may be.
 activateUserForm:
   send: "Send"
   caution: >-
