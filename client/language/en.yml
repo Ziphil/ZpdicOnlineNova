@@ -128,7 +128,7 @@ popup:
     Failed to register mutual relations.
   dictionarySizeTooLarge: >-
     The file is too large.
-    You cannot upload files larger than 2 MB.
+    You cannot upload files larger than 5 MB.
   noSuchWordNumber: >-
     You tried to edit a word which does not exist.
   noSuchExampleNumber: >-

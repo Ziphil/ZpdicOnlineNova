@@ -128,7 +128,7 @@ popup:
     双方向関連語の登録に失敗しました。
   dictionarySizeTooLarge: >-
     ファイルのサイズが大きすぎます。
-    2 MB より大きなファイルはアップロードすることができません。
+    5 MB より大きなファイルはアップロードすることができません。
   noSuchWordNumber: >-
     存在しない単語を編集しようとしました。
   noSuchExampleNumber: >-
