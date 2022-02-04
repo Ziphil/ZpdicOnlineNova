@@ -734,7 +734,7 @@ dictionarySettingPage:
     label: "Alŝuti"
     description: >-
       Alŝuti dosieron kaj anstataŭigi la aktualan datumon.
-      La subtenataj formatoj estas: OTM-JSON (dosiersufikso .json) kaj PDIC (dosiersufikso .dic).
+      La subtenataj formatoj estas: OTM-JSON (kun finaĵo .json) kaj PDIC (kun finaĵo .dic).
   discardDictionaryForm:
     label: "Forigi"
     description: >-
