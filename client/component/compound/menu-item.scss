@@ -23,14 +23,14 @@ $menu-item-horizontal-padding: 15rpx;
     }
   }
   &.vertical {
-    padding: 5rpx 10rpx 5rpx 0rpx;
-    border-right: 5rpx transparent solid;
+    padding: 5rpx 0rpx 5rpx 10rpx;
+    border-left: 5rpx transparent solid;
     &:hover {
-      border-right: 5rpx $light-border-color solid;
+      border-left: 5rpx $light-border-color solid;
     }
     &.highlight {
-      margin-right: -1rpx;
-      border-right: 6rpx $link-color solid;
+      margin-left: -1rpx;
+      border-left: 6rpx $link-color solid;
     }
   }
   &.highlight {

@@ -12,7 +12,7 @@
     gap: $control-horizontal-margin;
   }
   &.vertical {
-    border-right: 1rpx $light-border-color solid;
+    border-left: 1rpx $light-border-color solid;
     display: flex;
     flex-direction: column;
     justify-content: center;
