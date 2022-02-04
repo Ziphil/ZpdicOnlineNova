@@ -1,6 +1,7 @@
 //
 
 export * from "./debounce";
+export * from "./editor";
 export * from "./hotkey";
 export * from "./intl";
 export * from "./media-query";
@@ -10,4 +11,3 @@ export * from "./query-state";
 export * from "./request";
 export * from "./router";
 export * from "./user";
-export * from "./word-editor";

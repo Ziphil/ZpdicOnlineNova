@@ -30,7 +30,7 @@ const InnerRoot = create(
   }): ReactElement {
 
     let [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
-    let [{wordEditorProps, wordEditorOpen}, setWordEditorOpen] = useWordEditorProps();
+    let [wordEditorProps, wordEditorOpen, setWordEditorOpen] = useWordEditorProps();
     let [, {trans}] = useIntl();
     let {pushPath} = usePath();
 
