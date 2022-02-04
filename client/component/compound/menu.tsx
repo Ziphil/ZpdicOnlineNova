@@ -2,8 +2,8 @@
 
 import * as react from "react";
 import {
-  ReactElement,
-  useCallback
+  MouseEvent,
+  ReactElement
 } from "react";
 import {
   IconName
@@ -12,10 +12,6 @@ import MenuItem from "/client/component/compound/menu-item";
 import {
   create
 } from "/client/component/create";
-import {
-  useLogout,
-  usePath
-} from "/client/component/hook";
 
 
 const Menu = create(
@@ -25,24 +21,23 @@ const Menu = create(
     specs
   }: {
     mode: string,
-    specs: ReadonlyArray<{mode: string, label: string, iconName: IconName, badgeValue?: string | number, href: string}>
+    specs: ReadonlyArray<MenuSpec>
   }): ReactElement {
 
-    let {pushPath} = usePath();
-    let logout = useLogout();
-
-    let performLogout = useCallback(async function (): Promise<void> {
-      let response = await logout();
-      if (response.status === 200) {
-        pushPath("/");
-      }
-    }, [pushPath, logout]);
-
-    let itemNodes = specs.map((spec, index) => {
+    let itemNodes = specs.map((spec) => {
       let highlight = spec.mode === mode;
-      let href = (spec.mode !== "logout") ? spec.href : undefined;
-      let onClick = (spec.mode === "logout") ? performLogout : undefined;
-      return <MenuItem label={spec.label} iconName={spec.iconName} badgeValue={spec.badgeValue} href={href} highlight={highlight} onClick={onClick} key={index}/>;
+      let itemNode = (
+        <MenuItem
+          key={spec.label}
+          label={spec.label}
+          iconName={spec.iconName}
+          badgeValue={spec.badgeValue}
+          highlight={highlight}
+          href={spec.href}
+          onClick={spec.onClick}
+        />
+      );
+      return itemNode;
     });
     let node = (
       <nav styleName="root">
@@ -54,5 +49,7 @@ const Menu = create(
   }
 );
 
+
+export type MenuSpec = {mode: string, label: string, iconName: IconName, badgeValue?: string | number, href?: string, onClick?: (event: MouseEvent<HTMLElement>) => void};
 
 export default Menu;

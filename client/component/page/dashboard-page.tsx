@@ -29,6 +29,7 @@ import CreateDictionaryForm from "/client/component/form/create-dictionary-form"
 import DiscardUserForm from "/client/component/form/discard-user-form";
 import {
   useIntl,
+  useLogout,
   usePath,
   useRequest,
   useUser
@@ -52,8 +53,10 @@ const DashboardPage = create(
     let [editInvitations, setEditInvitations] = useState<Array<Invitation> | null>(null);
     let [transferInvitations, setTransferInvitations] = useState<Array<Invitation> | null>(null);
     let [, {trans}] = useIntl();
+    let {pushPath} = usePath();
     let {request} = useRequest();
     let [user] = useUser();
+    let logout = useLogout();
     let params = useParams<{mode: string}>();
 
     let fetchDictionaries = useCallback(async function (): Promise<void> {
@@ -82,6 +85,13 @@ const DashboardPage = create(
       }
     }, [request]);
 
+    let performLogout = useCallback(async function (): Promise<void> {
+      let response = await logout();
+      if (response.status === 200) {
+        pushPath("/");
+      }
+    }, [pushPath, logout]);
+
     useMount(async () => {
       let promise = Promise.all([fetchDictionaries(), fetchEditInvitations(), fetchTransferInvitations()]);
       await promise;
@@ -96,7 +106,7 @@ const DashboardPage = create(
       {mode: "dictionary", label: trans("dashboardPage.dictionary"), iconName: "book", badgeValue: dictionaryCount || undefined, href: "/dashboard"},
       {mode: "notification", label: trans("dashboardPage.notification"), iconName: "bell", badgeValue: notificationCount || undefined, href: "/dashboard/notification"},
       {mode: "account", label: trans("dashboardPage.account"), iconName: "id-card", href: "/dashboard/account"},
-      {mode: "logout", label: trans("dashboardPage.logout"), iconName: "sign-out-alt", href: "/"}
+      {mode: "logout", label: trans("dashboardPage.logout"), iconName: "sign-out-alt", onClick: performLogout}
     ] as const;
     let activateUserForm = (!user?.activated) && (
       <div styleName="activate">
