@@ -489,8 +489,8 @@ hotkeyHelp:
   addWord: "Aldoni novan vorton"
   addExample: "Aldoni novan ekzemplan frazon"
   addCommission: "Peti vorton"
-  toggleWordEditor: "Fermi aŭ malfermi vortan redaktilon"
-  toggleExampleEditor: "Fermi aŭ malfermi frazan redaktilon"
+  toggleWordEditor: "Fermi/malfermi vortan redaktilon"
+  toggleExampleEditor: "Fermi/malfermi frazan redaktilon"
   searchWords: "Serĉado"
   focusSearch: "Enfokusigi la serĉan formularon"
   moveNextPage: "Iri al sekva paĝo"
@@ -503,6 +503,9 @@ hotkeyHelp:
   changeSearchTypeToPart: "Parta kongruo"
   changeSearchTypeToExact: "Ekzakta kongruo"
   changeSearchTypeToRegular: "Uzi regulan esprimon"
+  information: >-
+    Fulmoklavoj kun du aŭ pli da klavoj estas lanĉitaj per enigi la klavojn sinsekve de maldekstre.
+    Se fulmoklavo montriĝas travidebla, ĝi ne estos disponebla sur la nuntempe malfermita paĝo.
 invitationPane:
   createdDate: "Invitita je"
   userName: "Invitanto"

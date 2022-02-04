@@ -501,6 +501,9 @@ hotkeyHelp:
   changeSearchTypeToPart: "部分一致"
   changeSearchTypeToExact: "完全一致"
   changeSearchTypeToRegular: "正規表現検索"
+  information: >-
+    2 つ以上のキーが書かれているものは、そのキーを左から連続で入力することで作動します。
+    半透明になっているものは、現在開いているページでは利用できません。
 invitationPane:
   createdDate: "招待日時"
   userName: "招待者"

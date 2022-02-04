@@ -46,14 +46,19 @@ const HotkeyHelp = create(
     let node = (
       <Overlay title={trans("hotkeyHelp.title")} open={open} outsideClosable={true} onClose={onClose}>
         <div styleName="root">
-          <div styleName="content">
-            <HotkeyHelpTable group="general" currentGroup={currentGroup}/>
-            <HotkeyHelpTable group="navigation" currentGroup={currentGroup}/>
-            <HotkeyHelpTable group="editDictionary" currentGroup={currentGroup}/>
-            <HotkeyHelpTable group="searchWords" currentGroup={currentGroup}/>
-          </div>
-          <div styleName="menu">
-            <Menu mode={currentGroup} specs={menuSpecs} direction="vertical"/>
+          <div styleName="main">
+            <div styleName="content">
+              <div styleName="information">
+                {trans("hotkeyHelp.information")}
+              </div>
+              <HotkeyHelpTable group="general" currentGroup={currentGroup}/>
+              <HotkeyHelpTable group="navigation" currentGroup={currentGroup}/>
+              <HotkeyHelpTable group="editDictionary" currentGroup={currentGroup}/>
+              <HotkeyHelpTable group="searchWords" currentGroup={currentGroup}/>
+            </div>
+            <div styleName="menu">
+              <Menu mode={currentGroup} specs={menuSpecs} direction="vertical"/>
+            </div>
           </div>
         </div>
       </Overlay>

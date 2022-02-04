@@ -489,8 +489,8 @@ hotkeyHelp:
   addWord: "Add new word"
   addExample: "Add new example sentence"
   addCommission: "Request word"
-  toggleWordEditor: "Open or close word editor"
-  toggleExampleEditor: "Open or close sentence editor"
+  toggleWordEditor: "Open/close word editor"
+  toggleExampleEditor: "Open/close sentence editor"
   searchWords: "Searching"
   focusSearch: "Focus the search form"
   moveNextPage: "Go to next page"
@@ -503,6 +503,9 @@ hotkeyHelp:
   changeSearchTypeToPart: "Partial match"
   changeSearchTypeToExact: "Exact match"
   changeSearchTypeToRegular: "Use regular expression"
+  information: >-
+    Shortcuts with two or more keys are triggered by entering the keys consecutively from the left.
+    If a key is shown translucent, it will not be available on the currently open page.
 invitationPane:
   createdDate: "Invited at"
   userName: "Inviter"

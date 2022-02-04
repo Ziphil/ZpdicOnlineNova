@@ -3,7 +3,14 @@
 @import "/client/component/mixin.scss";
 
 
-.root {
+.information {
+  @include line-height;
+  margin: 0rpx 0rpx $large-margin 0rpx;
+  font-size: $small-font-size;
+  text-align: justify;
+}
+
+.main {
   display: flex;
   gap: $large-margin;
 }
@@ -17,10 +24,10 @@
 }
 
 .content {
-  >* {
+  >.table-wrapper {
     width: 100%;
     display: inline-block;
-    &:not(:first-child) {
+    &:not(:nth-child(2)) {
       margin-left: -100%;
     }
   }
@@ -31,10 +38,6 @@
   margin: 0rpx 0rpx $paragraph-margin 0rpx;
   font-size: $tiny-font-size;
   color: $light-color;
-}
-
-.table-list {
-
 }
 
 .table-wrapper {
@@ -52,7 +55,7 @@
 .key-cell,
 .description {
   &.top-margin {
-    padding-top: $small-margin;
+    padding-top: calc(#{$paragraph-margin} - #{line-intrusion($line-height)});
   }
   &.disabled {
     opacity: 0.5;
