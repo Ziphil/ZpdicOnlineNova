@@ -67,7 +67,10 @@ const MenuItem = create(
     let node = (
       <a styleName={styleName} href={href} onClick={handleClick}>
         <Icon className={styles!["icon"]} name={iconName}/>
-        <span styleName="text">{label}</span>
+        <span styleName="text">
+          <span styleName="dummy">{label}</span>
+          {label}
+        </span>
         {badgeNode}
       </a>
     );

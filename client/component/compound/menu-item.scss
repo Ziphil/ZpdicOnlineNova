@@ -9,7 +9,7 @@ $menu-item-horizontal-padding: 15rpx;
 .root {
   color: $light-color;
   text-decoration: none;
-  display: block;
+  display: flex;
   cursor: pointer;
   &.horizontal {
     padding: 0rpx $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
@@ -41,9 +41,22 @@ $menu-item-horizontal-padding: 15rpx;
 
 .text {
   margin: 0rpx 0rpx 0rpx $blank-margin;
+  display: inline-block;
+  text-align: center;
+  .vertical & {
+    text-align: left;
+  }
   @include smartphone {
     display: none;
   }
+}
+
+.dummy {
+  @include bold-font;
+  height: 0rpx;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
 }
 
 .badge {
