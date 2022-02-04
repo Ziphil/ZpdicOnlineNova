@@ -5,18 +5,15 @@
 
 .root {
   display: flex;
+  gap: $large-margin;
 }
 
 .menu {
-  @include line-height;
-  margin: 0rpx $large-margin 0rpx 0rpx;
-  padding: 0rpx $large-margin 0rpx 0rpx;
-  border-right: 1rpx $invert-border-color solid;
-  display: flex;
   flex-grow: 0;
   flex-shrink: 0;
-  flex-direction: column;
-  align-items: flex-start;
+  >* {
+    height: 100%;
+  }
 }
 
 .content {

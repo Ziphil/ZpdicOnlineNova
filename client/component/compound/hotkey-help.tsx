@@ -9,6 +9,7 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import Overlay from "/client/component/atom/overlay";
+import Menu from "/client/component/compound/menu";
 import {
   create
 } from "/client/component/create";
@@ -35,14 +36,17 @@ const HotkeyHelp = create(
     let [currentGroup, setCurrentGroup] = useState<HotkeyGroup>("general");
     let [, {trans}] = useIntl();
 
+    let menuSpecs = [
+      {mode: "general", label: trans("hotkeyHelp.general"), iconName: "keyboard", onClick: () => setCurrentGroup("general")},
+      {mode: "navigation", label: trans("hotkeyHelp.navigation"), iconName: "location-arrow", onClick: () => setCurrentGroup("navigation")},
+      {mode: "editDictionary", label: trans("hotkeyHelp.editDictionary"), iconName: "edit", onClick: () => setCurrentGroup("editDictionary")},
+      {mode: "searchWords", label: trans("hotkeyHelp.searchWords"), iconName: "search", onClick: () => setCurrentGroup("searchWords")}
+    ] as const;
     let node = (
       <Overlay title={trans("hotkeyHelp.title")} open={open} outsideClosable={true} onClose={onClose}>
         <div styleName="root">
           <div styleName="menu">
-            <Button label={trans("hotkeyHelp.general")} iconName="keyboard" style="simple" onClick={() => setCurrentGroup("general")}/>
-            <Button label={trans("hotkeyHelp.navigation")} iconName="location-arrow" style="simple" onClick={() => setCurrentGroup("navigation")}/>
-            <Button label={trans("hotkeyHelp.editDictionary")} iconName="edit" style="simple" onClick={() => setCurrentGroup("editDictionary")}/>
-            <Button label={trans("hotkeyHelp.searchWords")} iconName="search" style="simple" onClick={() => setCurrentGroup("searchWords")}/>
+            <Menu mode={currentGroup} specs={menuSpecs} direction="vertical"/>
           </div>
           <div styleName="content">
             <HotkeyHelpTable group="general" currentGroup={currentGroup}/>

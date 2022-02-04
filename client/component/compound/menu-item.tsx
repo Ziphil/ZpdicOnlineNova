@@ -32,6 +32,7 @@ const MenuItem = create(
     badgeValue,
     highlight,
     href,
+    direction = "horizontal",
     onClick,
     styles
   }: {
@@ -40,6 +41,7 @@ const MenuItem = create(
     badgeValue?: string | number,
     highlight: boolean,
     href?: string,
+    direction?: "horizontal" | "vertical",
     onClick?: (event: MouseEvent<HTMLElement>) => void,
     styles?: StylesRecord
   }): ReactElement {
@@ -56,6 +58,7 @@ const MenuItem = create(
 
     let styleName = StyleNameUtil.create(
       "root",
+      direction,
       {if: highlight, true: "highlight"}
     );
     let badgeNode = (badgeValue) && (

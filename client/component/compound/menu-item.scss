@@ -3,28 +3,40 @@
 @import "/client/component/mixin.scss";
 
 
-$menu-item-vertical-padding: 32u;
-$menu-item-horizontal-padding: 48u;
+$menu-item-vertical-padding: 10rpx;
+$menu-item-horizontal-padding: 15rpx;
 
 .root {
-  padding: 0rpx $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
   color: $light-color;
   text-decoration: none;
-  text-align: right;
-  border-bottom: 5rpx transparent solid;
   display: block;
   cursor: pointer;
-}
-
-.root:hover {
-  border-bottom: 5rpx $light-border-color solid;
-}
-
-.root.highlight {
-  @include bold-font;
-  margin-bottom: -1rpx;
-  color: $link-color;
-  border-bottom: 6rpx $link-color solid;
+  &.horizontal {
+    padding: 0rpx $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
+    border-bottom: 5rpx transparent solid;
+    &:hover {
+      border-bottom: 5rpx $light-border-color solid;
+    }
+    &.highlight {
+      margin-bottom: -1rpx;
+      border-bottom: 6rpx $link-color solid;
+    }
+  }
+  &.vertical {
+    padding: 5rpx 10rpx 5rpx 0rpx;
+    border-right: 5rpx transparent solid;
+    &:hover {
+      border-right: 5rpx $light-border-color solid;
+    }
+    &.highlight {
+      margin-right: -1rpx;
+      border-right: 6rpx $link-color solid;
+    }
+  }
+  &.highlight {
+    @include bold-font;
+    color: $link-color;
+  }
 }
 
 .text {
@@ -32,10 +44,6 @@ $menu-item-horizontal-padding: 48u;
   @include smartphone {
     display: none;
   }
-}
-
-.icon {
-  @include icon-font;
 }
 
 .badge {

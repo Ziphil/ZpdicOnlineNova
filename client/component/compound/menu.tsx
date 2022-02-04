@@ -12,16 +12,21 @@ import MenuItem from "/client/component/compound/menu-item";
 import {
   create
 } from "/client/component/create";
+import {
+  StyleNameUtil
+} from "/client/util/style-name";
 
 
 const Menu = create(
   require("./menu.scss"), "Menu",
   function ({
     mode,
-    specs
+    specs,
+    direction = "horizontal"
   }: {
     mode: string,
-    specs: ReadonlyArray<MenuSpec>
+    specs: ReadonlyArray<MenuSpec>,
+    direction?: "horizontal" | "vertical"
   }): ReactElement {
 
     let itemNodes = specs.map((spec) => {
@@ -34,13 +39,15 @@ const Menu = create(
           badgeValue={spec.badgeValue}
           highlight={highlight}
           href={spec.href}
+          direction={direction}
           onClick={spec.onClick}
         />
       );
       return itemNode;
     });
+    let styleName = StyleNameUtil.create("root", direction);
     let node = (
-      <nav styleName="root">
+      <nav styleName={styleName}>
         {itemNodes}
       </nav>
     );
