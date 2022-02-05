@@ -69,7 +69,15 @@ const InnerRoot = create(
     let node = (
       <Fragment>
         {children}
-        <Drawer open={wordEditorOpen} onOpen={() => setWordEditorOpen(true)} onClose={() => setWordEditorOpen(false)} outsideClosable={true} title={trans("wordEditor.title")}>
+        <Drawer
+          title={trans("wordEditor.title")}
+          iconName="file-word"
+          badgeValue={(wordEditorNodes.length > 0) ? wordEditorNodes.length : undefined}
+          open={wordEditorOpen}
+          onOpen={() => setWordEditorOpen(true)}
+          onClose={() => setWordEditorOpen(false)}
+          outsideClosable={true}
+        >
           {wordEditorNodes}
         </Drawer>
         <HotkeyHelp open={hotkeyHelpOpen} onClose={() => setHotkeyHelpOpen(false)}/>

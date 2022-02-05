@@ -8,6 +8,9 @@ import {
 } from "react";
 import Button from "/client/component/atom/button";
 import Icon from "/client/component/atom/icon";
+import {
+  IconName
+} from "/client/component/atom/icon";
 import Portal from "/client/component/atom/portal";
 import {
   create
@@ -26,6 +29,8 @@ const Drawer = create(
     open = false,
     outsideClosable = false,
     title,
+    iconName = "arrow-right",
+    badgeValue,
     page,
     showBack,
     onOpen,
@@ -36,6 +41,8 @@ const Drawer = create(
     open?: boolean,
     outsideClosable?: boolean,
     title?: string,
+    iconName?: IconName,
+    badgeValue?: string | number,
     page?: number,
     showBack?: boolean,
     onOpen?: (event: MouseEvent<HTMLElement>) => void,
@@ -44,13 +51,20 @@ const Drawer = create(
     children?: ReactNode
   }): ReactElement {
 
+    let [, {transNumber}] = useIntl();
+
     let onBackgroundClick = (outsideClosable) ? onClose : undefined;
     let backgroundNode = (open) && (
       <div styleName="background" onClick={onBackgroundClick}/>
     );
+    let actualBadgeValue = (typeof badgeValue === "number") ? transNumber(badgeValue) : badgeValue;
+    let badgeNode = (badgeValue !== undefined) && <span styleName="number">{actualBadgeValue}</span>;
     let tabNode = (!open) && (
       <div styleName="tab" onClick={onOpen}>
-        <Icon name="edit"/>
+        <div styleName="tab-inner">
+          <Icon name={iconName}/>
+          {badgeNode}
+        </div>
       </div>
     );
     let childrenNode = (page !== undefined && Array.isArray(children)) ? children[page] : children;
