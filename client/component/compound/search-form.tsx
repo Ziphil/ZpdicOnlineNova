@@ -85,6 +85,30 @@ const SearchForm = create(
       inputRef.current?.focus();
       event.preventDefault();
     }, [inputRef], enableHotkeys);
+    useHotkey("changeSearchModeToBoth", () => {
+      handleParameterSet({mode: "both"});
+    }, [handleParameterSet], enableHotkeys);
+    useHotkey("changeSearchModeToName", () => {
+      handleParameterSet({mode: "name"});
+    }, [handleParameterSet], enableHotkeys);
+    useHotkey("changeSearchModeToEquivalent", () => {
+      handleParameterSet({mode: "equivalent"});
+    }, [handleParameterSet], enableHotkeys);
+    useHotkey("changeSearchModeToContent", () => {
+      handleParameterSet({mode: "content"});
+    }, [handleParameterSet], enableHotkeys);
+    useHotkey("changeSearchTypeToPrefix", () => {
+      handleParameterSet({type: "prefix"});
+    }, [handleParameterSet], enableHotkeys);
+    useHotkey("changeSearchTypeToPart", () => {
+      handleParameterSet({type: "part"});
+    }, [handleParameterSet], enableHotkeys);
+    useHotkey("changeSearchTypeToExact", () => {
+      handleParameterSet({type: "exact"});
+    }, [handleParameterSet], enableHotkeys);
+    useHotkey("changeSearchTypeToRegular", () => {
+      handleParameterSet({type: "regular"});
+    }, [handleParameterSet], enableHotkeys);
 
     let modes = ["both", "name", "equivalent", "content"] as const;
     let types = ["prefix", "part", "exact", "regular"] as const;
