@@ -221,7 +221,7 @@ const DictionaryHeaderButtons = create(
       <Button label={trans("dictionaryHeader.addCommission")} iconName="list-check" style="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
     );
     let exampleButtonNode = (showExampleLink) && (
-      <Button label={trans("dictionaryHeader.example")} iconName="file-alt" style="simple" hideLabel={true} onClick={jumpExamplePage}/>
+      <Button label={trans("dictionaryHeader.example")} iconName="custom-example" style="simple" hideLabel={true} onClick={jumpExamplePage}/>
     );
     let settingButtonNode = (showSettingLink) && (
       <Button label={trans("dictionaryHeader.setting")} iconName="cog" style="simple" hideLabel={true} onClick={jumpSettingPage}/>
@@ -256,7 +256,7 @@ const DictionaryHeaderAddDropdownNode = create(
 
     let node = (
       <div>
-        <span styleName="icon"><Icon name={(type === "word") ? "file-word" : "file-alt"}/></span>
+        <span styleName="icon"><Icon name={(type === "word") ? "custom-word" : "custom-example"}/></span>
         {trans(`dictionaryHeader.add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
       </div>
     );

@@ -71,7 +71,7 @@ const InnerRoot = create(
         {children}
         <Drawer
           title={trans("wordEditor.title")}
-          iconName="file-word"
+          iconName="custom-word"
           badgeValue={(wordEditorNodes.length > 0) ? wordEditorNodes.length : undefined}
           open={wordEditorOpen}
           onOpen={() => setWordEditorOpen(true)}
