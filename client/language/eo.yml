@@ -483,7 +483,7 @@ hotkeyHelp:
   jumpContactPage: "Paĝo de kontaktado"
   jumpLanguagePage: "Paĝo de lingvoj"
   jumpDictionaryPage: "Paĝo de vortaro"
-  jumpDictionarySettingPage: "Paĝo de vortara agordoj"
+  jumpDictionarySettingPage: "Paĝo de vortaraj agordoj"
   jumpExamplePage: "Paĝo de ekzemplaj frazoj"
   editDictionary: "Redaktado"
   addWord: "Aldoni novan vorton"
@@ -547,7 +547,7 @@ resourceList:
     La funkcio de alŝutado de dosieroj estas nuntempe eksperimenta.
     En estontaj ĝisdatigoj, tiu funkcio povas esti signife ŝanĝita aŭ la alŝutitaj dosieroj eble estos forigitaj.
   markdownCaution: >-
-    Por uzi tiun funkcion, vi devas ebligi Markdown en la paĝo de vortara agordo.
+    Por uzi tiun funkcion, vi devas ebligi Markdown en la paĝo de vortaraj agordoj.
   instruction: >-
     Elektu bildan dosieron kaj alklaku “Konfirmi” por alŝuti ĝin.
     La alŝutita dosiero estos aldonita en la suba listo.

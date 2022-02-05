@@ -50,7 +50,7 @@ The information stored is as follows:
 
 The abovementioned “request body” does not include the unhashed password which is sent to sign in, and thus passwords will not be stored unencrypted.
 
-This log information will be used to analyze access trends to improve the services, and to determine the cause of errors when they occur.
+This log information will be used to analyze access trends to improve the services and to determine the cause of errors when they occur.
 Log information will be stored on Papertrail for up to 7 days, and thery will be deleted after 7 days.
 
 ### Cookies
@@ -62,10 +62,10 @@ Each cookie is valid for 30 days.
 
 ### reCAPTCHA
 This application uses reCAPTCHA v3 provided by Google in order to enhance security.
-This allows Google to collect information about the user, such as the IP address.
+It allows Google to collect information about the user, such as the IP address.
 This data collection is subject to the Google's [Privacy Policy](https://policies.google.com/privacy) and [Terms of Services](https://policies.google.com/terms).
 
-This reCAPTCHA is used to determine whether the visitor of this application is a human or a robot, and to protect this application and its users from malicious spam.
+This reCAPTCHA is used to determine whether the visitor of this application is a human or a robot and to protect this application and its users from malicious spams.
 This application does not use any information collected by reCAPTCHA and Google.
 
 ## Management of personal information
@@ -76,9 +76,9 @@ This application manages personal information appropriately, and will not disclo
 - When it is necessary to disclose or delete the information in accordance with laws and regulations
 
 ## Disclaimer
-The copyrights and portrait rights of the dictionary data and/or image data published by a user in this application belong to the user concerned.
-The copyrights to documentations and other materials which are not published by the user belong to the developer of this application.
-The developer of this application is not responsible for any damage caused to the users by these contents.
+The copyrights and portrait rights of the dictionary data and/or image data published by the user in this application belong to the user concerned.
+The copyrights to the documentations and other materials which are not published by the users belong to the developer of this application.
+The developer of this application is not responsible for any damages caused to the users by these contents.
 
 While we strive to ensure that the information on this application is as accurate as possible, it may contain errors or be out of date.
 
