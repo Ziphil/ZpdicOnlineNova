@@ -51,10 +51,12 @@ const HotkeyHelp = create(
               <div styleName="information">
                 {trans("hotkeyHelp.information")}
               </div>
-              <HotkeyHelpTable group="general" currentGroup={currentGroup}/>
-              <HotkeyHelpTable group="navigation" currentGroup={currentGroup}/>
-              <HotkeyHelpTable group="editDictionary" currentGroup={currentGroup}/>
-              <HotkeyHelpTable group="searchWords" currentGroup={currentGroup}/>
+              <div styleName="table-list">
+                <HotkeyHelpTable group="general" currentGroup={currentGroup}/>
+                <HotkeyHelpTable group="navigation" currentGroup={currentGroup}/>
+                <HotkeyHelpTable group="editDictionary" currentGroup={currentGroup}/>
+                <HotkeyHelpTable group="searchWords" currentGroup={currentGroup}/>
+              </div>
             </div>
             <div styleName="menu">
               <Menu mode={currentGroup} specs={menuSpecs} direction="vertical"/>
@@ -90,8 +92,9 @@ const HotkeyHelpTable = create(
       prev[spec.subgroup].push(spec);
       return prev;
     }, []);
-    let hotkeyTableNodes = groupedHotkeySpecs.map((specs, subgroup) => {
-      let hotkeyNodes = specs.map((spec, index) => {
+    let nodes = [[], []] as Array<Array<ReactElement>>;
+    groupedHotkeySpecs.forEach((specs, subgroup) => {
+      specs.map((spec, index) => {
         let key = spec.keys[0] ?? "";
         let charNodes = key.split(" ").map((char, index) => <kbd key={index} styleName="key">{char.charAt(0).toUpperCase() + char.slice(1)}</kbd>);
         let hotkeyCellStyleName = StyleNameUtil.create(
@@ -114,12 +117,17 @@ const HotkeyHelpTable = create(
             </div>
           </Fragment>
         );
-        return hotkeyNode;
+        nodes[index % 2].push(hotkeyNode);
       });
       if (specs.length % 2 !== 0) {
-        hotkeyNodes.push(<Fragment key="dummy"><div/><div/></Fragment>);
+        let dummyNode = (
+          <Fragment key="dummy">
+            <div></div>
+            <div>&nbsp;</div>
+          </Fragment>
+        );
+        nodes[1].push(dummyNode);
       }
-      return hotkeyNodes;
     });
     let styleName = StyleNameUtil.create(
       "table-wrapper",
@@ -128,7 +136,10 @@ const HotkeyHelpTable = create(
     let node = (displayedHotkeySpecs.length > 0) && (
       <div styleName={styleName}>
         <div styleName="table">
-          {hotkeyTableNodes}
+          {nodes[0]}
+        </div>
+        <div styleName="table">
+          {nodes[1]}
         </div>
       </div>
     );

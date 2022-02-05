@@ -23,13 +23,10 @@
   }
 }
 
-.content {
-  >.table-wrapper {
-    width: 100%;
-    display: inline-block;
-    &:not(:nth-child(2)) {
-      margin-left: -100%;
-    }
+.table-list {
+  @include line-height;
+  >.table-wrapper:not(:first-child) {
+    margin-left: -100%;
   }
 }
 
@@ -41,7 +38,9 @@
 }
 
 .table-wrapper {
-  @include line-height;
+  width: 100%;
+  display: inline-flex;
+  gap: $large-margin;
   &.hidden {
     visibility: hidden;
   }
@@ -49,7 +48,10 @@
 
 .table {
   display: grid;
-  grid-template-columns: auto 1fr auto 1fr;
+  grid-template-columns: auto 1fr;
+  flex-basis: 0rpx;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .key-cell,
