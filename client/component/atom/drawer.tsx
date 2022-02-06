@@ -2,6 +2,7 @@
 
 import * as react from "react";
 import {
+  Fragment,
   MouseEvent,
   ReactElement,
   ReactNode
@@ -79,18 +80,22 @@ const Drawer = create(
       {if: open, false: "closed"}
     );
     let node = (
-      <Portal>
-        {backgroundNode}
-        <div styleName="spacer">
-          <div styleName={contentWrapperStyleName}>
-            <DrawerHeader {...{title, page, showBack, onClose, onBack}}/>
-            {tabNode}
-            <div styleName="content">
-              {childrenNode}
+      <Fragment>
+        <Portal>
+          {backgroundNode}
+          <div styleName="spacer">
+            <div styleName={contentWrapperStyleName}>
+              <DrawerHeader {...{title, page, showBack, onClose, onBack}}/>
+              <div styleName="content">
+                {childrenNode}
+              </div>
             </div>
           </div>
-        </div>
-      </Portal>
+        </Portal>
+        <Portal position="back">
+          {tabNode}
+        </Portal>
+      </Fragment>
     );
     return node;
 

@@ -72,18 +72,18 @@ $overlay-header-height: 150u;
 .tab {
   width: 25rpx;
   height: 60rpx;
-  right: -25rpx;
+  left: 0rpx;
   color: $light-color;
   border: 1rpx $light-border-color solid;
   border-left: none;
   border-radius: 0rpx $large-border-radius $large-border-radius 0rpx;
   background-color: $strong-background-color;
   cursor: pointer;
+  pointer-events: all;
   position: absolute;
   overflow: hidden;
   &:hover {
     width: 30rpx;
-    right: -30rpx;
   }
   &.center {
     top: calc((100% - 60rpx) / 2);
