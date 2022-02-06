@@ -98,7 +98,7 @@ popup:
     Jam ekzistas la uzanta identigilo kiun vi specifis.
     Bonvolu specifi alian uzantan identigilon.
   duplicateUserEmail: >-
-    Jam registritas la retadreso kiun vi specifis.
+    Jam estas registrita la retadreso kiun vi specifis.
     Bonvolu specifi alian retadreson.
   noSuchUser: >-
     Tiu uzanto ne ekzistas.
@@ -117,7 +117,7 @@ popup:
   noSuchDictionaryParamName: >-
     Ne estas vortaro kun tiu nomo.
   duplicateDictionaryParamName: >-
-    Jam uzatas la retadresa nomo kiun vi specifis.
+    Jam estas uzata la retadresa nomo kiun vi specifis.
     Bonvolu specifi alian nomon.
   invalidDictionaryParamName: >-
     La retadresa nomo estas nevalida.
