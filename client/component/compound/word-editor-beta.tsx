@@ -84,8 +84,8 @@ const WordEditor = create(
     defaultName?: string,
     defaultEquivalentName?: string,
     onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
-    onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
     let [tempWord, setTempWord] = useState(createTempWord(word, defaultName, defaultEquivalentName));

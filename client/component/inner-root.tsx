@@ -8,6 +8,7 @@ import {
   useState
 } from "react";
 import Drawer from "/client/component/atom/drawer";
+import ExampleEditor from "/client/component/compound/example-editor-beta";
 import HotkeyHelp from "/client/component/compound/hotkey-help";
 import WordEditor from "/client/component/compound/word-editor-beta";
 import {
@@ -69,7 +70,7 @@ const InnerRoot = create(
       return wordEditorNode;
     });
     let exampleEditorNodes = exampleEditorProps.map((props) => {
-      let exampleEditorNode = <></>;
+      let exampleEditorNode = <ExampleEditor key={props.id} {...props}/>;
       return exampleEditorNode;
     });
     let node = (

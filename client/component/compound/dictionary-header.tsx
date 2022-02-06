@@ -29,6 +29,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  useExampleEditor,
   useHotkey,
   useIntl,
   usePath,
@@ -40,7 +41,6 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-let ExampleEditor = lazy(() => import("/client/component/compound/example-editor"));
 let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
 
 
@@ -64,9 +64,9 @@ const DictionaryHeader = create(
     preserveQuery?: boolean
   }): ReactElement {
 
-    let [exampleEditorOpen, setExampleEditorOpen] = useState(false);
     let [commissionEditorOpen, setCommissionEditorOpen] = useState(false);
     let addWordEditor = useWordEditor();
+    let addExampleEditor = useExampleEditor();
     let {pushPath} = usePath();
     let location = useLocation<any>();
 
@@ -75,6 +75,12 @@ const DictionaryHeader = create(
         addWordEditor({dictionary, word: null});
       }
     }, [dictionary, addWordEditor]);
+
+    let openExampleEditor = useCallback(function (): void {
+      if (dictionary !== null) {
+        addExampleEditor({dictionary, example: null});
+      }
+    }, [dictionary, addExampleEditor]);
 
     useMount(() => {
       if (location.state?.openCommissionEditor) {
@@ -96,8 +102,8 @@ const DictionaryHeader = create(
       openWordEditor();
     }, [openWordEditor], hotkeyEnabled && showAddLink);
     useHotkey("addExample", () => {
-      setExampleEditorOpen(true);
-    }, [], hotkeyEnabled && showAddLink);
+      openExampleEditor();
+    }, [openExampleEditor], hotkeyEnabled && showAddLink);
     useHotkey("addCommission", () => {
       setCommissionEditorOpen(true);
     }, [], hotkeyEnabled && showAddCommissionLink);
@@ -111,8 +117,8 @@ const DictionaryHeader = create(
       let nameNode = <Link href={href} target="self" style="plane">{dictionary.name}</Link>;
       return nameNode;
     })();
-    let buttonsProps = {dictionary, showAddLink, showAddCommissionLink, showExampleLink, showSettingLink, showDownloadLink, openWordEditor, setExampleEditorOpen, setCommissionEditorOpen};
-    let overlaysProps = {dictionary, exampleEditorOpen, commissionEditorOpen, setExampleEditorOpen, setCommissionEditorOpen};
+    let buttonsProps = {dictionary, showAddLink, showAddCommissionLink, showExampleLink, showSettingLink, showDownloadLink, openWordEditor, openExampleEditor, setCommissionEditorOpen};
+    let overlaysProps = {dictionary, commissionEditorOpen, setCommissionEditorOpen};
     let node = (
       <header styleName="root">
         <Helmet>
@@ -145,7 +151,7 @@ const DictionaryHeaderButtons = create(
     showSettingLink,
     showDownloadLink,
     openWordEditor,
-    setExampleEditorOpen,
+    openExampleEditor,
     setCommissionEditorOpen
   }: {
     dictionary: EnhancedDictionary | null,
@@ -155,7 +161,7 @@ const DictionaryHeaderButtons = create(
     showSettingLink: boolean,
     showDownloadLink: boolean,
     openWordEditor: () => void,
-    setExampleEditorOpen: Dispatch<SetStateAction<boolean>>,
+    openExampleEditor: () => void,
     setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
@@ -163,13 +169,13 @@ const DictionaryHeaderButtons = create(
     let {pushPath} = usePath();
     let {request} = useRequest();
 
-    let addSomething = useCallback(function (type: "word" | "example"): void {
+    let openEditor = useCallback(function (type: "word" | "example"): void {
       if (type === "word") {
         openWordEditor();
       } else {
-        setExampleEditorOpen(true);
+        openExampleEditor();
       }
-    }, [openWordEditor, setExampleEditorOpen]);
+    }, [openWordEditor, openExampleEditor]);
 
     let jumpExamplePage = useCallback(function (): void {
       if (dictionary) {
@@ -213,7 +219,7 @@ const DictionaryHeaderButtons = create(
       {value: "example", node: <DictionaryHeaderAddDropdownNode type="example"/>}
     ] as const;
     let addButtonNode = (showAddLink) && (
-      <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={addSomething}>
+      <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={openEditor}>
         <Button label={trans("dictionaryHeader.add")} iconName="plus" style="simple" hideLabel={true}/>
       </Dropdown>
     );
@@ -270,23 +276,14 @@ const DictionaryHeaderOverlays = create(
   require("./dictionary-header.scss"),
   function ({
     dictionary,
-    exampleEditorOpen,
     commissionEditorOpen,
-    setExampleEditorOpen,
     setCommissionEditorOpen
   }: {
     dictionary: EnhancedDictionary | null,
-    exampleEditorOpen: boolean,
     commissionEditorOpen: boolean,
-    setExampleEditorOpen: Dispatch<SetStateAction<boolean>>,
     setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
-    let exampleEditorNode = (dictionary !== null && exampleEditorOpen) && (
-      <Suspense fallback="">
-        <ExampleEditor dictionary={dictionary} example={null} open={exampleEditorOpen} onClose={() => setExampleEditorOpen(false)}/>
-      </Suspense>
-    );
     let commissionEditorNode = (dictionary !== null && commissionEditorOpen) && (
       <Suspense fallback="">
         <CommissionEditor dictionary={dictionary} open={commissionEditorOpen} onClose={() => setCommissionEditorOpen(false)}/>
@@ -294,7 +291,6 @@ const DictionaryHeaderOverlays = create(
     );
     let node = (
       <Fragment>
-        {exampleEditorNode}
         {commissionEditorNode}
       </Fragment>
     );

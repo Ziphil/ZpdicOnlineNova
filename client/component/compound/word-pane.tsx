@@ -2,14 +2,11 @@
 
 import * as react from "react";
 import {
-  Dispatch,
   Fragment,
   MouseEvent,
   ReactElement,
-  SetStateAction,
   useCallback,
-  useMemo,
-  useState
+  useMemo
 } from "react";
 import {
   AsyncOrSync
@@ -19,11 +16,11 @@ import Dropdown from "/client/component/atom/dropdown";
 import Icon from "/client/component/atom/icon";
 import Link from "/client/component/atom/link";
 import Markdown from "/client/component/atom/markdown";
-import ExampleEditor from "/client/component/compound/example-editor";
 import {
   create
 } from "/client/component/create";
 import {
+  useExampleEditor,
   useIntl,
   useWordEditor
 } from "/client/component/hook";
@@ -67,29 +64,23 @@ const WordPane = create(
     onDiscardExampleConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    let [editingExample, setEditingExample] = useState<Example | null>(null);
     let addWordEditor = useWordEditor();
+    let addExampleEditor = useExampleEditor();
 
-    let openEditor = useCallback(function (): void {
+    let openWordEditor = useCallback(function (): void {
       addWordEditor({dictionary, word, onEditConfirm, onDiscardConfirm});
     }, [dictionary, word, onEditConfirm, onDiscardConfirm, addWordEditor]);
 
+    let openExampleEditor = useCallback(function (example: Example): void {
+      addExampleEditor({dictionary, example, onEditConfirm: onEditExampleConfirm, onDiscardConfirm: onDiscardExampleConfirm});
+    }, [dictionary, onEditExampleConfirm, onDiscardExampleConfirm, addExampleEditor]);
+
     let innerProps = {dictionary, word, showEditLink, showButton};
-    let nameNode = <WordPaneName {...innerProps} {...{onSubmit, openEditor}}/>;
+    let nameNode = <WordPaneName {...innerProps} {...{onSubmit, openWordEditor}}/>;
     let equivalentNode = <WordPaneEquivalents {...innerProps}/>;
     let informationNode = (style === "normal") && <WordPaneInformations {...innerProps}/>;
     let relationNode = (style === "normal") && <WordPaneRelations {...innerProps}/>;
-    let exampleNode = (style === "normal") && <WordPaneExamples {...innerProps} {...{setEditingExample}}/>;
-    let exampleEditorNode = (!showButton && editingExample !== null) && (
-      <ExampleEditor
-        dictionary={dictionary}
-        example={editingExample}
-        open={editingExample !== null}
-        onClose={() => setEditingExample(null)}
-        onEditConfirm={onEditExampleConfirm}
-        onDiscardConfirm={onDiscardExampleConfirm}
-      />
-    );
+    let exampleNode = (style === "normal") && <WordPaneExamples {...innerProps} {...{openExampleEditor}}/>;
     let node = (
       <div styleName="root">
         {nameNode}
@@ -97,7 +88,6 @@ const WordPane = create(
         {informationNode}
         {exampleNode}
         {relationNode}
-        {exampleEditorNode}
       </div>
     );
     return node;
@@ -114,14 +104,14 @@ const WordPaneName = create(
     showEditLink,
     showButton,
     onSubmit,
-    openEditor
+    openWordEditor
   }: {
     dictionary: EnhancedDictionary,
     word: Word | DetailedWord,
     showEditLink: boolean,
     showButton: boolean,
     onSubmit?: (direction: "oneway" | "mutual", event?: MouseEvent<HTMLButtonElement>) => void,
-    openEditor: () => void
+    openWordEditor: () => void
   }): ReactElement {
 
     let [, {trans}] = useIntl();
@@ -154,7 +144,7 @@ const WordPaneName = create(
     ] as const;
     let editButtonNode = (showEditLink && !showButton) && (
       <div styleName="button">
-        <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={openEditor}/>
+        <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={openWordEditor}/>
       </div>
     );
     let submitButtonNode = (showButton) && (
@@ -322,13 +312,13 @@ const WordPaneExamples = create(
     word,
     showEditLink,
     showButton,
-    setEditingExample
+    openExampleEditor
   }: {
     dictionary: EnhancedDictionary,
     word: Word | DetailedWord,
     showEditLink: boolean,
     showButton: boolean,
-    setEditingExample: Dispatch<SetStateAction<Example | null>>
+    openExampleEditor: (example: Example) => void
   }): ReactElement | null {
 
     let [, {trans}] = useIntl();
@@ -337,7 +327,7 @@ const WordPaneExamples = create(
     let innerNodes = examples.map((example, index) => {
       let editButtonNode = (showEditLink && !showButton) && (
         <div styleName="button">
-          <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={() => setEditingExample(example)}/>
+          <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={() => openExampleEditor(example)}/>
         </div>
       );
       let innerNode = (
