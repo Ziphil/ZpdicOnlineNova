@@ -100,6 +100,7 @@ export class WordSchema extends DiscardableSchema {
       resultWord.dictionary = dictionary;
       resultWord.createdDate = new Date();
       resultWord.updatedDate = new Date();
+      await this.filterRelations(dictionary, resultWord);
       await resultWord.save();
     }
     LogUtil.log("word/edit", `number: ${dictionary.number} | current: ${currentWord?.id} | result: ${resultWord.id}`);
