@@ -104,7 +104,7 @@ $overlay-header-height: 150u;
   align-items: center;
   justify-content: center;
   .tab:hover & {
-    padding-left: 5rpx;
+    border-left: 5rpx $light-border-color solid;
   }
 }
 
