@@ -282,19 +282,14 @@ const DictionaryHeaderOverlays = create(
     dictionary: EnhancedDictionary | null,
     commissionEditorOpen: boolean,
     setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
-  }): ReactElement {
+  }): ReactElement | null {
 
-    let commissionEditorNode = (dictionary !== null && commissionEditorOpen) && (
+    let node = (dictionary !== null && commissionEditorOpen) && (
       <Suspense fallback="">
         <CommissionEditor dictionary={dictionary} open={commissionEditorOpen} onClose={() => setCommissionEditorOpen(false)}/>
       </Suspense>
     );
-    let node = (
-      <Fragment>
-        {commissionEditorNode}
-      </Fragment>
-    );
-    return node;
+    return node || null;
 
   }
 );
