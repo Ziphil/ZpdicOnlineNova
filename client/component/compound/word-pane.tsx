@@ -46,6 +46,7 @@ const WordPane = create(
     style = "normal",
     showEditLink,
     showButton = false,
+    showDirectionButton = false,
     onSubmit,
     onEditConfirm,
     onDiscardConfirm,
@@ -57,6 +58,7 @@ const WordPane = create(
     style?: "normal" | "simple",
     showEditLink: boolean,
     showButton?: boolean,
+    showDirectionButton?: boolean,
     onSubmit?: (direction: "oneway" | "mutual", event?: MouseEvent<HTMLButtonElement>) => void,
     onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
@@ -75,7 +77,7 @@ const WordPane = create(
       addExampleEditor({dictionary, example, onEditConfirm: onEditExampleConfirm, onDiscardConfirm: onDiscardExampleConfirm});
     }, [dictionary, onEditExampleConfirm, onDiscardExampleConfirm, addExampleEditor]);
 
-    let innerProps = {dictionary, word, showEditLink, showButton};
+    let innerProps = {dictionary, word, showEditLink, showButton, showDirectionButton};
     let nameNode = <WordPaneName {...innerProps} {...{onSubmit, openWordEditor}}/>;
     let equivalentNode = <WordPaneEquivalents {...innerProps}/>;
     let informationNode = (style === "normal") && <WordPaneInformations {...innerProps}/>;
@@ -103,6 +105,7 @@ const WordPaneName = create(
     word,
     showEditLink,
     showButton,
+    showDirectionButton,
     onSubmit,
     openWordEditor
   }: {
@@ -110,6 +113,7 @@ const WordPaneName = create(
     word: Word | DetailedWord,
     showEditLink: boolean,
     showButton: boolean,
+    showDirectionButton: boolean
     onSubmit?: (direction: "oneway" | "mutual", event?: MouseEvent<HTMLButtonElement>) => void,
     openWordEditor: () => void
   }): ReactElement {
@@ -147,16 +151,23 @@ const WordPaneName = create(
         <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={openWordEditor}/>
       </div>
     );
-    let submitButtonNode = (showButton) && (
-      <div styleName="button">
-        <div styleName="dropdown-button">
-          <Button label={trans("wordPane.submit")} iconName="check" position="left" hideLabel={true} onClick={(event) => onSubmit?.("oneway", event)}/>
-          <Dropdown specs={submitDropdownSpecs} placement="right" fillWidth={false} onSet={(direction) => onSubmit?.(direction)}>
-            <Button iconName="ellipsis-h" position="right"/>
-          </Dropdown>
+    let submitButtonNode = (showButton) && (() => {
+      let directionButtonNode = (showDirectionButton) && (
+        <Dropdown specs={submitDropdownSpecs} placement="right" fillWidth={false} onSet={(direction) => onSubmit?.(direction)}>
+          <Button iconName="ellipsis-h" position="right"/>
+        </Dropdown>
+      );
+      let submitButtonPosition = (showDirectionButton) ? "left" : "alone" as any;
+      let submitButtonNode = (
+        <div styleName="button">
+          <div styleName="dropdown-button">
+            <Button label={trans("wordPane.submit")} iconName="check" position={submitButtonPosition} hideLabel={true} onClick={(event) => onSubmit?.("oneway", event)}/>
+            {directionButtonNode}
+          </div>
         </div>
-      </div>
-    );
+      );
+      return submitButtonNode;
+    })();
     let pronunciationNode = (pronunciationText !== undefined) && (() => {
       let pronunciationNode = <div styleName="pronunciation">{pronunciationText}</div>;
       return pronunciationNode;

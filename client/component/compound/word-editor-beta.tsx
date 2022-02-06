@@ -185,7 +185,7 @@ const WordEditor = create(
       <Fragment>
         <WordEditorRoot {...editorProps}/>
         <Overlay size="large" title={trans("wordSearcher.title")} open={relationChooserOpen} onClose={() => setRelationChooserOpen(false)}>
-          <WordSearcher dictionary={dictionary} style="simple" showButton={true} onSubmit={editRelation}/>
+          <WordSearcher dictionary={dictionary} style="simple" showButton={true} showDirectionButton={true} onSubmit={editRelation}/>
         </Overlay>
         <Overlay size="large" title={trans("resourceList.title")} open={resourceListOpen} onClose={() => setResourceListOpen(false)}>
           <ResourceList dictionary={dictionary} size={10} showCode={true} showInstruction={true}/>

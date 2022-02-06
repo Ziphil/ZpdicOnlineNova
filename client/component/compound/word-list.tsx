@@ -30,6 +30,7 @@ const WordList = create(
     style = "normal",
     showEditLink = false,
     showButton = false,
+    showDirectionButton = false,
     size,
     offset,
     onSubmit,
@@ -43,6 +44,7 @@ const WordList = create(
     style?: "normal" | "simple",
     showEditLink?: boolean,
     showButton?: boolean,
+    showDirectionButton?: boolean,
     size: number,
     offset: number,
     onSubmit?: (word: Word, direction: "oneway" | "mutual", event?: MouseEvent<HTMLButtonElement>) => void,
@@ -62,6 +64,7 @@ const WordList = create(
           style={style}
           showEditLink={showEditLink}
           showButton={showButton}
+          showDirectionButton={showDirectionButton}
           onSubmit={onSubmit && partial(onSubmit, word)}
           onEditConfirm={onEditConfirm && partial(onEditConfirm, word)}
           onDiscardConfirm={onDiscardConfirm && partial(onDiscardConfirm, word)}
