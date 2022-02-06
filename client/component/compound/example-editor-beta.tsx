@@ -203,12 +203,13 @@ const ExampleEditorRoot = create(
       "main",
       {if: mainShown, false: "hidden"}
     );
+    let headName = (example !== null) ? trans("exampleEditor.existingExample", {number: example.number.toString()}) : trans("exampleEditor.newExample");
     let innerProps = {dictionary, tempExample, mutateExample};
     let node = (
       <div styleName="root">
         <div styleName="head-name" onClick={() => setMainShown((mainShown) => !mainShown)}>
           <span styleName="head-icon"><Icon name={(mainShown) ? "circle-chevron-down" : "circle-chevron-right"}/></span>
-          #{tempExample.number}
+          {headName}
         </div>
         <div styleName={mainStyleName}>
           <div styleName="editor">

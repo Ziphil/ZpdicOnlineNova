@@ -419,6 +419,8 @@ dictionaryStatisticsPane:
   nfc: "NFC"
 exampleEditor:
   title: "Edit example sentences"
+  newExample: "New sentence"
+  existingExample: "Sentence #{number}"
   sentence: "Sentence"
   translation: "Translation"
   word: "Included words"

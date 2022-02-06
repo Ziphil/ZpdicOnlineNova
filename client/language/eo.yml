@@ -419,6 +419,8 @@ dictionaryStatisticsPane:
   nfc: "NFC"
 exampleEditor:
   title: "Redakti ekzemplajn frazojn"
+  newExample: "Nova frazo"
+  existingExample: "Frazo #{number}"
   sentence: "Frazo"
   translation: "Tradukaĵo"
   word: "Enhavitaj vortoj"

@@ -417,6 +417,8 @@ dictionaryStatisticsPane:
   nfc: "NFC"
 exampleEditor:
   title: "例文編集"
+  newExample: "新しい例文"
+  existingExample: "例文 #{number}"
   sentence: "例文"
   translation: "翻訳"
   word: "使用単語"
