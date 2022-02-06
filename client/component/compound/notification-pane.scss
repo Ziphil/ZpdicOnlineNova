@@ -43,7 +43,7 @@
   @include bold-font;
   margin: $tiny-margin 0rpx 0rpx 0rpx;
   padding: 0rpx;
-  font-size: 120%;
+  font-size: $large-font-size;
   color: $head-color;
 }
 

@@ -34,7 +34,7 @@ $feature-item-horizontal-margin: 40rpx;
 .head {
   @include bold-font;
   margin: $small-margin 0rpx 0rpx 0rpx;
-  font-size: 120%;
+  font-size: $large-font-size;
   color: $head-color;
   text-align: center;
   @include smartphone {

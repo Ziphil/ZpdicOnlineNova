@@ -78,11 +78,11 @@ const DocumentPage = create(
           );
           return node;
         } else {
-          let node = <pre><code>{props.children}</code></pre>;
+          let node = <pre>{props.children}</pre>;
           return node;
         }
       } else {
-        let node = <pre><code>{props.children}</code></pre>;
+        let node = <pre>{props.children}</pre>;
         return node;
       }
     }, []);

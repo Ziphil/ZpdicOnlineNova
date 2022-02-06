@@ -22,14 +22,14 @@
 
 .head-name {
   @include bold-font;
-  font-size: 120%;
+  font-size: $large-font-size;
   color: $head-color;
   cursor: pointer;
 }
 
 .head-icon {
   margin-right: $small-margin;
-  font-size: 16px;
+  font-size: 16rpx;
 }
 
 .main {
