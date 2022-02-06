@@ -17,10 +17,6 @@ import {
   useState
 } from "react";
 import {
-  useDrag,
-  useDrop
-} from "react-dnd";
-import {
   AsyncOrSync
 } from "ts-essentials";
 import {
@@ -45,6 +41,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  useDragDrop,
   useIntl,
   usePopup,
   useRequest
@@ -910,30 +907,6 @@ function recreateWord(tempWord: TempEditableWord): EditableWord {
   let equivalents = tempWord.equivalents.map((equivalent) => ({...equivalent, names: equivalent.string.split(/\s*(?:,|、|・)\s*/)}));
   let word = {...tempWord, tags, equivalents};
   return word;
-}
-
-function useDragDrop(type: string, index: number, move: (draggingIndex: number, hoverIndex: number) => void): [RefObject<never>, RefObject<never>, boolean] {
-  let rootRef = useRef<never>(null);
-  let handleRef = useRef<never>(null);
-  let [{dragging}, connectDrag, connectPreview] = useDrag({
-    type,
-    item: {index},
-    collect: (monitor) => ({dragging: monitor.isDragging()})
-  });
-  let [, connectDrop] = useDrop<{index: number}, unknown, unknown>({
-    accept: type,
-    hover: (item) => {
-      let draggingIndex = item.index;
-      let hoverIndex = index;
-      if (draggingIndex !== hoverIndex) {
-        move(draggingIndex, hoverIndex);
-        item.index = hoverIndex;
-      }
-    }
-  });
-  connectDrag(handleRef);
-  connectDrop(connectPreview(rootRef));
-  return [rootRef, handleRef, dragging];
 }
 
 type TempEditableWord = Omit<EditableWord, "tags" | "equivalents" | "informations" | "variations" | "relations"> & {
