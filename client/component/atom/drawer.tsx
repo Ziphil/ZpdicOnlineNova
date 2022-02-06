@@ -32,6 +32,7 @@ const Drawer = create(
     iconName = "arrow-right",
     badgeValue,
     page,
+    position = "center",
     showBack,
     onOpen,
     onClose,
@@ -44,6 +45,7 @@ const Drawer = create(
     iconName?: IconName,
     badgeValue?: string | number,
     page?: number,
+    position?: "center" | "top" | "bottom",
     showBack?: boolean,
     onOpen?: (event: MouseEvent<HTMLElement>) => void,
     onClose?: (event: MouseEvent<HTMLElement>) => void,
@@ -57,16 +59,20 @@ const Drawer = create(
     let backgroundNode = (open) && (
       <div styleName="background" onClick={onBackgroundClick}/>
     );
-    let actualBadgeValue = (typeof badgeValue === "number") ? transNumber(badgeValue) : badgeValue;
-    let badgeNode = (badgeValue !== undefined) && <span styleName="number">{actualBadgeValue}</span>;
-    let tabNode = (!open) && (
-      <div styleName="tab" onClick={onOpen}>
-        <div styleName="tab-inner">
-          <Icon name={iconName}/>
-          {badgeNode}
+    let tabNode = (!open) && (() => {
+      let actualBadgeValue = (typeof badgeValue === "number") ? transNumber(badgeValue) : badgeValue;
+      let badgeNode = (badgeValue !== undefined) && <span styleName="number">{actualBadgeValue}</span>;
+      let tabStyleName = StyleNameUtil.create("tab", position);
+      let tabNode = (
+        <div styleName={tabStyleName} onClick={onOpen}>
+          <div styleName="tab-inner">
+            <Icon name={iconName}/>
+            {badgeNode}
+          </div>
         </div>
-      </div>
-    );
+      );
+      return tabNode;
+    })();
     let childrenNode = (page !== undefined && Array.isArray(children)) ? children[page] : children;
     let contentWrapperStyleName = StyleNameUtil.create(
       "content-wrapper",

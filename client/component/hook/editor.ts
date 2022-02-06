@@ -15,8 +15,10 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
+import type ExampleEditor from "/client/component/compound/example-editor";
 import type WordEditor from "/client/component/compound/word-editor-beta";
 import {
+  EditableExample,
   EditableWord
 } from "/client/skeleton/dictionary";
 
@@ -73,6 +75,7 @@ export function createEditor<I, P extends EditorProps<I>>(): [CreateEditorHook<P
 }
 
 export let [useWordEditor, useWordEditorProps] = createEditor<EditableWord, Parameters<typeof WordEditor>[0]>();
+export let [useExampleEditor, useExampleEditorProps] = createEditor<EditableExample, Parameters<typeof ExampleEditor>[0]>();
 
 type EditorProps<I> = {
   onEditConfirm?: (item: I, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,

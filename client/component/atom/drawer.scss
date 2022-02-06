@@ -72,7 +72,6 @@ $overlay-header-height: 150u;
 .tab {
   width: 25rpx;
   height: 60rpx;
-  top: calc((100% - 60rpx) / 2);
   right: -25rpx;
   color: $light-color;
   border: 1rpx $light-border-color solid;
@@ -85,6 +84,15 @@ $overlay-header-height: 150u;
   &:hover {
     width: 30rpx;
     right: -30rpx;
+  }
+  &.center {
+    top: calc((100% - 60rpx) / 2);
+  }
+  &.top {
+    top: calc((100% - 60rpx) / 2 - 40rpx);
+  }
+  &.bottom {
+    top: calc((100% - 60rpx) / 2 + 40rpx);
   }
 }
 

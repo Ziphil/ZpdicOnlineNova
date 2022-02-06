@@ -14,6 +14,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  useExampleEditorProps,
   useHotkey,
   useIntl,
   usePath,
@@ -31,6 +32,7 @@ const InnerRoot = create(
 
     let [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
     let [wordEditorProps, wordEditorOpen, setWordEditorOpen] = useWordEditorProps();
+    let [exampleEditorProps, exampleEditorOpen, setExampleEditorOpen] = useExampleEditorProps();
     let [, {trans}] = useIntl();
     let {pushPath} = usePath();
 
@@ -66,6 +68,10 @@ const InnerRoot = create(
       let wordEditorNode = <WordEditor key={props.id} {...props}/>;
       return wordEditorNode;
     });
+    let exampleEditorNodes = exampleEditorProps.map((props) => {
+      let exampleEditorNode = <></>;
+      return exampleEditorNode;
+    });
     let node = (
       <Fragment>
         {children}
@@ -73,12 +79,25 @@ const InnerRoot = create(
           title={trans("wordEditor.title")}
           iconName="custom-word"
           badgeValue={(wordEditorNodes.length > 0) ? wordEditorNodes.length : undefined}
+          position="top"
           open={wordEditorOpen}
           onOpen={() => setWordEditorOpen(true)}
           onClose={() => setWordEditorOpen(false)}
           outsideClosable={true}
         >
           {wordEditorNodes}
+        </Drawer>
+        <Drawer
+          title={trans("exampleEditor.title")}
+          iconName="custom-example"
+          badgeValue={(exampleEditorNodes.length > 0) ? exampleEditorNodes.length : undefined}
+          position="bottom"
+          open={exampleEditorOpen}
+          onOpen={() => setExampleEditorOpen(true)}
+          onClose={() => setExampleEditorOpen(false)}
+          outsideClosable={true}
+        >
+          {exampleEditorNodes}
         </Drawer>
         <HotkeyHelp open={hotkeyHelpOpen} onClose={() => setHotkeyHelpOpen(false)}/>
       </Fragment>
