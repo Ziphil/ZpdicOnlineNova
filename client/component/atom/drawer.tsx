@@ -33,7 +33,7 @@ const Drawer = create(
     iconName = "arrow-right",
     badgeValue,
     page,
-    position = "center",
+    tabPosition = "center",
     showBack,
     onOpen,
     onClose,
@@ -46,7 +46,7 @@ const Drawer = create(
     iconName?: IconName,
     badgeValue?: string | number,
     page?: number,
-    position?: "center" | "top" | "bottom",
+    tabPosition?: "center" | "top" | "bottom",
     showBack?: boolean,
     onOpen?: (event: MouseEvent<HTMLElement>) => void,
     onClose?: (event: MouseEvent<HTMLElement>) => void,
@@ -63,7 +63,7 @@ const Drawer = create(
     let tabNode = (!open) && (() => {
       let actualBadgeValue = (typeof badgeValue === "number") ? transNumber(badgeValue) : badgeValue;
       let badgeNode = (badgeValue !== undefined) && <span styleName="number">{actualBadgeValue}</span>;
-      let tabStyleName = StyleNameUtil.create("tab", position);
+      let tabStyleName = StyleNameUtil.create("tab", tabPosition);
       let tabNode = (
         <div styleName={tabStyleName} onClick={onOpen}>
           <div styleName="tab-inner">

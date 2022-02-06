@@ -79,7 +79,7 @@ const InnerRoot = create(
           title={trans("wordEditor.title")}
           iconName="custom-word"
           badgeValue={(wordEditorNodes.length > 0) ? wordEditorNodes.length : undefined}
-          position="top"
+          tabPosition="top"
           open={wordEditorOpen}
           onOpen={() => setWordEditorOpen(true)}
           onClose={() => setWordEditorOpen(false)}
@@ -91,7 +91,7 @@ const InnerRoot = create(
           title={trans("exampleEditor.title")}
           iconName="custom-example"
           badgeValue={(exampleEditorNodes.length > 0) ? exampleEditorNodes.length : undefined}
-          position="bottom"
+          tabPosition="bottom"
           open={exampleEditorOpen}
           onOpen={() => setExampleEditorOpen(true)}
           onClose={() => setExampleEditorOpen(false)}
