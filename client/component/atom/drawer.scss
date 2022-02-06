@@ -1,9 +1,11 @@
 @charset "utf-8";
 
+@use "sass:math" as *;
 @import "/client/component/mixin.scss";
 
 
-$overlay-header-height: 150u;
+$drawer-header-height: 50rpx;
+$drawer-tab-height: 60rpx;
 
 .background {
   width: 100%;
@@ -48,7 +50,7 @@ $overlay-header-height: 150u;
 
 .header {
   width: 100%;
-  height: $overlay-header-height;
+  height: $drawer-header-height;
   padding: 0rpx $huge-margin;
   border-bottom: 1rpx $light-border-color solid;
   border-radius: 0rpx $large-border-radius 0rpx 0rpx;
@@ -71,7 +73,7 @@ $overlay-header-height: 150u;
 
 .tab {
   width: 25rpx;
-  height: 60rpx;
+  height: $drawer-tab-height;
   left: 0rpx;
   color: $light-color;
   border: 1rpx $light-border-color solid;
@@ -86,13 +88,13 @@ $overlay-header-height: 150u;
     width: 30rpx;
   }
   &.center {
-    top: calc((100% - 60rpx) / 2);
+    top: calc((100% - #{$drawer-tab-height}) / 2);
   }
   &.top {
-    top: calc((100% - 60rpx) / 2 - 40rpx);
+    top: calc((100% - #{$drawer-tab-height}) / 2 - #{div($drawer-tab-height, 2) + 10rpx});
   }
   &.bottom {
-    top: calc((100% - 60rpx) / 2 + 40rpx);
+    top: calc((100% - #{$drawer-tab-height}) / 2 + #{div($drawer-tab-height, 2) + 10rpx});
   }
 }
 
@@ -123,5 +125,5 @@ $overlay-header-height: 150u;
 }
 
 .content-wrapper .header +.content {
-  height: calc(100% - #{$overlay-header-height});
+  height: calc(100% - #{$drawer-header-height});
 }
