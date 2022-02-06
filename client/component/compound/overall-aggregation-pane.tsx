@@ -8,6 +8,7 @@ import {
 import {
   useMount
 } from "react-use";
+import Icon from "/client/component/atom/icon";
 import {
   create
 } from "/client/component/create";
@@ -29,6 +30,7 @@ const OverallAggregationPane = create(
     let [dictionary, setDictionary] = useState<Aggregation | null>(null);
     let [word, setWord] = useState<Aggregation | null>(null);
     let [example, setExample] = useState<Aggregation | null>(null);
+    let [user, setUser] = useState<Aggregation | null>(null);
     let [, {trans, transNumber}] = useIntl();
     let {request} = useRequest();
 
@@ -39,24 +41,39 @@ const OverallAggregationPane = create(
         setDictionary(body.dictionary);
         setWord(body.word);
         setExample(body.example);
+        setUser(body.user);
       }
     });
 
     let node = (
       <div styleName="root">
-        <div styleName="count-wrapper">
-          <div styleName="title">{trans("overallAggregationPane.dictionaryCount")}</div>
-          <div styleName="count">{transNumber(dictionary?.count)}</div>
-          <div styleName="slash">/</div>
-          <div styleName="whole-count">{transNumber(dictionary?.wholeCount)}</div>
-          <div styleName="title">{trans("overallAggregationPane.wordCount")}</div>
-          <div styleName="count">{transNumber(word?.count)}</div>
-          <div styleName="slash">/</div>
-          <div styleName="whole-count">{transNumber(word?.wholeCount)}</div>
-          <div styleName="title">{trans("overallAggregationPane.exampleCount")}</div>
-          <div styleName="count">{transNumber(example?.count)}</div>
-          <div styleName="slash">/</div>
-          <div styleName="whole-count">{transNumber(example?.wholeCount)}</div>
+        <div styleName="item">
+          <div styleName="icon"><Icon name="user"/></div>
+          <div styleName="count-wrapper">
+            <div styleName="count">{transNumber(user?.count)}</div>
+            <div styleName="unit">{trans("overallAggregationPane.user", {count: user?.count})}</div>
+          </div>
+        </div>
+        <div styleName="item">
+          <div styleName="icon"><Icon name="book"/></div>
+          <div styleName="count-wrapper">
+            <div styleName="count">{transNumber(dictionary?.count)}</div>
+            <div styleName="unit">{trans("overallAggregationPane.dictionary", {count: dictionary?.count})}</div>
+          </div>
+        </div>
+        <div styleName="item">
+          <div styleName="icon"><Icon name="custom-word"/></div>
+          <div styleName="count-wrapper">
+            <div styleName="count">{transNumber(word?.count)}</div>
+            <div styleName="unit">{trans("overallAggregationPane.word", {count: word?.count})}</div>
+          </div>
+        </div>
+        <div styleName="item">
+          <div styleName="icon"><Icon name="custom-example"/></div>
+          <div styleName="count-wrapper">
+            <div styleName="count">{transNumber(example?.count)}</div>
+            <div styleName="unit">{trans("overallAggregationPane.example", {count: example?.count})}</div>
+          </div>
         </div>
       </div>
     );

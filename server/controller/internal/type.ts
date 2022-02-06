@@ -313,7 +313,7 @@ type ServerSpecs = {
   fetchOverallAggregation: {
     request: {},
     response: {
-      success: {dictionary: Aggregation, word: Aggregation, example: Aggregation},
+      success: {dictionary: Aggregation, word: Aggregation, example: Aggregation, user: Aggregation},
       error: never
     }
   },

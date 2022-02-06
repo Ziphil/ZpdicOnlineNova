@@ -528,9 +528,10 @@ loginForm:
 notificationPane:
   fixed: "Riparita"
 overallAggregationPane:
-  dictionaryCount: "Vortaroj"
-  wordCount: "Vortoj"
-  exampleCount: "Frazoj"
+  user: "{count, plural, one {Uzanto} other {Uzantoj}}"
+  dictionary: "{count, plural, one {Vortaro} other {Vortaroj}}"
+  word: "{count, plural, one {Vorto} other {Vortoj}}"
+  example: "{count, plural, one {Frazo} other {Frazoj}}"
 regexpExecutor:
   title: "Regula esprimo"
   source: "Regula esprimo"

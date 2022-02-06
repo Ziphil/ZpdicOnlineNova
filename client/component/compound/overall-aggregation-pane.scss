@@ -3,42 +3,63 @@
 @import "/client/component/mixin.scss";
 
 
+$feature-item-horizontal-margin: 40rpx;
+
 .root {
-  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: $large-margin $feature-item-horizontal-margin;
+  @include smartphone {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.item {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 0rpx;
+  position: relative;
+  z-index: 0;
+}
+
+.icon {
+  font-size: 80rpx;
+  color: $light-color;
+  display: flex;
+  align-items: center;
   justify-content: center;
+  opacity: 0.2;
+  z-index: 1;
+}
+
+.icon path {
+  fill: none;
+  stroke: currentcolor;
+  stroke-width: 16;
 }
 
 .count-wrapper {
-  color: $logo-color;
-  display: grid;
-  grid-template-columns: repeat(2, auto);
-  grid-gap: $tiny-margin 0rpx;
-  align-items: baseline;
-}
-
-.title {
-  margin: 0rpx $huge-margin 0rpx 0rpx;
-  text-align: right;
+  top: 0rpx;
+  bottom: 0rpx;
+  left: 0rpx;
+  right: 0rpx;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  z-index: 2;
 }
 
 .count {
   @include bold-font;
-  font-size: 250%;
-  letter-spacing: 0.05em;
-  text-align: right;
+  font-size: 56rpx;
+  letter-spacing: 0.03em;
 }
 
-.slash {
-  margin: 0em 0.2em;
+.unit {
   font-size: 120%;
-  display: none;
-}
-
-.whole-count {
-  @include bold-font;
-  font-size: 120%;
-  text-align: left;
-  display: none;
 }

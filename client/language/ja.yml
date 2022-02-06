@@ -526,9 +526,10 @@ loginForm:
 notificationPane:
   fixed: "対応済み"
 overallAggregationPane:
-  dictionaryCount: "辞書数"
-  wordCount: "単語数"
-  exampleCount: "例文数"
+  user: "ユーザー"
+  dictionary: "辞書"
+  word: "単語"
+  example: "例文"
 regexpExecutor:
   title: "正規表現"
   source: "正規表現"

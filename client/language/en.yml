@@ -528,9 +528,10 @@ loginForm:
 notificationPane:
   fixed: "Fixed"
 overallAggregationPane:
-  dictionaryCount: "Dictionaries"
-  wordCount: "Words"
-  exampleCount: "Sentences"
+  user: "{count, plural, one {User} other {Users}}"
+  dictionary: "{count, plural, one {Dictionary} other {Dictionaries}}"
+  word: "{count, plural, one {Word} other {Words}}"
+  example: "{count, plural, one {Sentence} other {Sentences}}"
 regexpExecutor:
   title: "Regular expression"
   source: "Regular expression"
