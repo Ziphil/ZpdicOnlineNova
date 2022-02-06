@@ -2,10 +2,13 @@
 
 import * as react from "react";
 import {
+  MouseEvent,
   ReactElement,
-  useCallback,
-  useState
+  useCallback
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import WhitePane from "/client/component/compound/white-pane";
 import {
@@ -16,6 +19,7 @@ import {
   useIntl
 } from "/client/component/hook";
 import {
+  EditableExample,
   EnhancedDictionary,
   Example
 } from "/client/skeleton/dictionary";
@@ -25,18 +29,22 @@ const ExamplePane = create(
   require("./example-pane.scss"), "ExamplePane",
   function ({
     example,
-    dictionary
+    dictionary,
+    onEditConfirm,
+    onDiscardConfirm
   }: {
     example: Example,
-    dictionary: EnhancedDictionary
+    dictionary: EnhancedDictionary,
+    onEditConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   }): ReactElement {
 
     let addExampleEditor = useExampleEditor();
     let [, {trans}] = useIntl();
 
     let openEditor = useCallback(function (): void {
-      addExampleEditor({dictionary, example});
-    }, [dictionary, example, addExampleEditor]);
+      addExampleEditor({dictionary, example, onEditConfirm, onDiscardConfirm});
+    }, [dictionary, example, onEditConfirm, onDiscardConfirm, addExampleEditor]);
 
     let cautionNode = (example.words.length <= 0) && (
       <div styleName="caution">
