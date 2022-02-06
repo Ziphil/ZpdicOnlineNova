@@ -121,7 +121,7 @@ const HotkeyHelpTable = create(
       });
       if (specs.length % 2 !== 0) {
         let dummyNode = (
-          <Fragment key="dummy">
+          <Fragment key={`${specs[0].group}-dummy-${subgroup}`}>
             <div></div>
             <div>&nbsp;</div>
           </Fragment>
