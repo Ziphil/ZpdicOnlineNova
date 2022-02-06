@@ -5,8 +5,6 @@ import {
   Fragment,
   MouseEvent,
   ReactElement,
-  Suspense,
-  lazy,
   useCallback,
   useState
 } from "react";
@@ -22,7 +20,8 @@ import {
 import {
   useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useWordEditor
 } from "/client/component/hook";
 import {
   Commission
@@ -31,9 +30,6 @@ import {
   EditableWord,
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
-
-
-let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
 
 
 const CommissionPane = create(
@@ -51,7 +47,7 @@ const CommissionPane = create(
   }): ReactElement {
 
     let [alertOpen, setAlertOpen] = useState(false);
-    let [editorOpen, setEditorOpen] = useState(false);
+    let addWordEditor = useWordEditor();
     let [, {trans}] = useIntl();
     let {request} = useRequest();
     let [, {addInformationPopup}] = usePopup();
@@ -73,6 +69,15 @@ const CommissionPane = create(
       await onAddConfirm?.(word, event);
     }, [onAddConfirm, discardCommission]);
 
+    let openEditor = useCallback(function (): void {
+      addWordEditor({
+        dictionary,
+        word: null,
+        defaultEquivalentName: commission.name,
+        onEditConfirm: handleEditConfirm
+      });
+    }, [dictionary, commission, handleEditConfirm, addWordEditor]);
+
     let name = commission.name;
     let comment = commission.comment;
     let commentNode = (comment !== undefined && comment !== "") && (
@@ -89,7 +94,7 @@ const CommissionPane = create(
           </div>
           <div styleName="button">
             <Button label={trans("commissionPane.discard")} iconName="trash-alt" style="simple" onClick={() => setAlertOpen(true)}/>
-            <Button label={trans("commissionPane.add")} iconName="plus" style="simple" onClick={() => setEditorOpen(true)}/>
+            <Button label={trans("commissionPane.add")} iconName="plus" style="simple" onClick={openEditor}/>
           </div>
         </WhitePane>
         <Alert
@@ -100,16 +105,6 @@ const CommissionPane = create(
           onClose={() => setAlertOpen(false)}
           onConfirm={discardCommission}
         />
-        <Suspense fallback="">
-          <WordEditor
-            dictionary={dictionary}
-            word={null}
-            defaultEquivalentName={commission.name}
-            open={editorOpen}
-            onClose={() => setEditorOpen(false)}
-            onEditConfirm={handleEditConfirm}
-          />
-        </Suspense>
       </Fragment>
     );
     return node;

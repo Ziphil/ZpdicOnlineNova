@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+@use "sass:math" as *;
 @import "/client/component/function.scss";
 
 
@@ -69,35 +70,42 @@ $footer-color: map-get($colors, primary);
 
 $root-size: 16px;
 
-$huge-margin: 96u;
-$large-margin: 64u;
-$medium-margin: 48u;
-$small-margin: 32u;
-$tiny-margin: 16u;
+$huge-margin: 30rpx;
+$large-margin: 20rpx;
+$medium-margin: 15rpx;
+$small-margin: 10rpx;
+$tiny-margin: 5rpx;
 
-$control-vertical-margin: 48u;
-$control-horizontal-margin: 48u;
-$small-control-horizontal-margin: 32u;
-$small-control-vertical-margin: 24u;
-$paragraph-margin: 32u;
+$control-vertical-margin: 15rpx;
+$control-horizontal-margin: 15rpx;
+$small-control-horizontal-margin: 10rpx;
+$small-control-vertical-margin: 8rpx;
+$paragraph-margin: 10rpx;
 
-$page-width: 2560u;
-$page-top-margin: 180u;
-$page-bottom-margin: 240u;
-$page-horizontal-margin: 96u;
+$page-width: 800rpx;
+$page-top-margin: 60rpx;
+$page-bottom-margin: 80rpx;
+$page-horizontal-margin: 50rpx;
+$page-small-horizontal-margin: 30rpx;
 
-$header-height: 210u;
-$dictionary-header-height: 150u;
-$footer-height: 150u;
+$header-height: 70rpx;
+$dictionary-header-height: 50rpx;
+$footer-height: 50rpx;
 
 $box-vertical-padding: 0.125em;
 $box-horizontal-padding: 0.5em;
 $input-vertical-padding: 0.125em;
 $input-horizontal-padding: 0.5em;
 $textarea-vertical-padding: 0.25em;
-$button-hotizontal-padding: 0.8em;
+$button-hotizontal-padding: 0.75em;
 $tooltip-vertical-padding: 0.25em;
 $tooltip-horizontal-padding: 0.5em;
+
+$huge-font-size: 22rpx;
+$large-font-size: 19rpx;
+$medium-font-size: 16rpx;
+$small-font-size: 14rpx;
+$tiny-font-size: 13rpx;
 
 $icon-width: 1.25em;
 $blank-margin: 0.3em;
@@ -108,8 +116,8 @@ $inset-box-shadow-setting: 0rpx 2rpx 3rpx;
 $small-border-radius: 3rpx;
 $large-border-radius: 5rpx;
 
-$line-height: 24px / $root-size;
-$tooltip-line-height: 22px / $root-size;
+$line-height: div(24px, $root-size);
+$tooltip-line-height: div(22px, $root-size);
 
 $european-font-family: "Alegreya Sans", "Arial";
 $japanese-font-family: "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック体", "YuGothic", "ヒラギノ角ゴ ProN W3", "Hiragino Kaku Gothic ProN", "ＭＳ Ｐゴシック";
@@ -121,13 +129,13 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 
 
 @mixin smartphone {
-  @media screen and (max-width: #{$page-width + $page-horizontal-margin * 2}) {
+  @media screen and (max-width: 900px) {
     @content;
   }
 }
 
-@mixin intermediate {
-  @media screen and (max-width: #{$page-width + 300u}) {
+@mixin small-screen {
+  @media screen and (max-width: 580px) {
     @content;
   }
 }
@@ -165,13 +173,24 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 }
 
 @mixin page($additional-top-margin) {
-  width: calc(100% - #{$page-horizontal-margin} * 2);
   margin-top: $page-top-margin + $additional-top-margin;
   margin-bottom: $page-bottom-margin;
   margin-right: $page-horizontal-margin;
   margin-left: $page-horizontal-margin;
   padding: 0rpx;
   box-sizing: border-box;
+  @include smartphone {
+    margin-right: $page-small-horizontal-margin;
+    margin-left: $page-small-horizontal-margin;
+  }
+}
+
+@mixin header-container {
+  margin: 0rpx $page-horizontal-margin;
+  height: 100%;
+  @include smartphone {
+    margin: 0rpx $page-small-horizontal-margin;
+  }
 }
 
 @mixin monospace-font {
@@ -215,10 +234,10 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   counter-increment: list;
   &::before {
     top: 0.5em;
-    width: 0.8em * (100% / 70%);
-    height: 0.8em * (100% / 70%);
-    margin-right: $blank-margin * (100% / 70%);
-    margin-left: - (0.9em + $blank-margin) * (100% / 70%);
+    width: 0.8em * div(100%, 70%);
+    height: 0.8em * div(100%, 70%);
+    margin-right: $blank-margin * div(100%, 70%);
+    margin-left: - (0.9em + $blank-margin) * div(100%, 70%);
     font-size: 70%;
     color: $number-color;
     line-height: 1;
@@ -332,18 +351,5 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     &:hover {
       background-color: hover-color(background-color($color), true, false);
     }
-  }
-}
-
-@mixin header-container {
-  margin: 0rpx 150u;
-  height: 100%;
-  @include intermediate {
-    width: $page-width;
-    margin: 0rpx auto;
-  }
-  @include smartphone {
-    width: calc(100% - #{$page-horizontal-margin * 2});
-    margin: 0rpx auto;
   }
 }

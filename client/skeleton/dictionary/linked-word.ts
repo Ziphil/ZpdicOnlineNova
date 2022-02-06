@@ -8,8 +8,7 @@ export class LinkedWord {
 
   public static createEmpty(): LinkedWord {
     let number = -1;
-    let name = "";
-    let skeleton = {number, name};
+    let skeleton = {number};
     return skeleton;
   }
 

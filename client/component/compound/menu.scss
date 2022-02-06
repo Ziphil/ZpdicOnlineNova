@@ -4,14 +4,18 @@
 
 
 .root {
-  padding: 0rpx 0rpx;
-  border-bottom: 1rpx $light-border-color solid;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-.root >* {
-  @include reset-first-margin;
-  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
+  &.horizontal {
+    border-bottom: 1rpx $light-border-color solid;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: $control-horizontal-margin;
+  }
+  &.vertical {
+    border-left: 1rpx $light-border-color solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: $small-margin;
+  }
 }

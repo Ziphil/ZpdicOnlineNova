@@ -86,6 +86,7 @@ export class WordSchema extends DiscardableSchema {
       resultWord.dictionary = dictionary;
       resultWord.createdDate = currentWord.createdDate;
       resultWord.updatedDate = new Date();
+      await this.filterRelations(dictionary, resultWord);
       await currentWord.flagDiscarded();
       await resultWord.save();
       if (currentWord.name !== resultWord.name) {
@@ -99,6 +100,7 @@ export class WordSchema extends DiscardableSchema {
       resultWord.dictionary = dictionary;
       resultWord.createdDate = new Date();
       resultWord.updatedDate = new Date();
+      await this.filterRelations(dictionary, resultWord);
       await resultWord.save();
     }
     LogUtil.log("word/edit", `number: ${dictionary.number} | current: ${currentWord?.id} | result: ${resultWord.id}`);
@@ -136,6 +138,14 @@ export class WordSchema extends DiscardableSchema {
     } else {
       throw new CustomError("noSuchWordNumber");
     }
+  }
+
+  // word に渡された単語データ内の関連語データのうち、現在存在していないものを削除します。
+  // この処理は、word 内の関連語データを上書きします。
+  private static async filterRelations(dictionary: Dictionary, word: Word): Promise<void> {
+    let relationNumbers = word.relations.map((relation) => relation.number);
+    let relationWords = await WordModel.findExist().where("dictionary", dictionary).where("number", relationNumbers);
+    word.relations = word.relations.filter((relation) => relationWords.some((relationWord) => relationWord.number === relation.number));
   }
 
   // 単語データの編集によって単語の綴りが変化した場合に、それによって起こり得る関連語データの不整合を修正します。

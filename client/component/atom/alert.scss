@@ -21,9 +21,7 @@
 }
 
 .icon {
-  @include icon-font;
-  width: $icon-width;
-  font-size: 250%;
+  font-size: 48rpx;
   color: map-get($colors, error);
   text-align: center;
   display: inline-block;

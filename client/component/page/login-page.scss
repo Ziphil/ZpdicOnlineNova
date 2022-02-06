@@ -6,7 +6,7 @@
 .title {
   @include bold-font;
   margin: 0rpx 0rpx $huge-margin 0rpx;
-  font-size: 150%;
+  font-size: $huge-font-size;
   color: $light-color;
   text-align: center;
 }
@@ -15,7 +15,7 @@
   width: 100%;
   max-width: 1200u;
   margin: 0rpx auto $large-margin auto;
-  font-size: 90%;
+  font-size: $small-font-size;
 }
 
 .explanation p {

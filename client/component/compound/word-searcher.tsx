@@ -44,12 +44,14 @@ const WordSearcher = create(
     dictionary,
     style = "normal",
     showButton = false,
+    showDirectionButton = false,
     onSubmit,
     onEditConfirm
   }: {
     dictionary: EnhancedDictionary | null,
     style?: "normal" | "simple",
     showButton?: boolean,
+    showDirectionButton?: boolean,
     onSubmit?: (word: Word, direction: "oneway" | "mutual") => void,
     onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
@@ -100,7 +102,7 @@ const WordSearcher = create(
       await updateWordsImmediately();
     });
 
-    let innerProps = {dictionary, style, showButton, page, hitResult, onSubmit, onEditConfirm, handlePageSet};
+    let innerProps = {dictionary, style, showButton, showDirectionButton, page, hitResult, onSubmit, onEditConfirm, handlePageSet};
     let innerNode = (dictionary !== null) && <WordSearcherWordList {...innerProps}/>;
     let node = (
       <div>
@@ -124,6 +126,7 @@ const WordSearcherWordList = create(
     dictionary,
     style,
     showButton,
+    showDirectionButton,
     page,
     hitResult,
     onSubmit,
@@ -133,6 +136,7 @@ const WordSearcherWordList = create(
     dictionary: EnhancedDictionary | null,
     style: "normal" | "simple",
     showButton: boolean,
+    showDirectionButton: boolean,
     page: number,
     hitResult: DictionaryHitResult,
     onSubmit?: (word: Word, direction: "oneway" | "mutual") => void,
@@ -150,6 +154,7 @@ const WordSearcherWordList = create(
             words={hitWords}
             style={style}
             showButton={showButton}
+            showDirectionButton={showDirectionButton}
             offset={0}
             size={40}
             onSubmit={onSubmit}

@@ -30,10 +30,10 @@ const SettingPane = create(
     children?: ReactNode
   }): ReactElement {
 
-    let styleName = StyleNameUtil.create([
+    let styleName = StyleNameUtil.create(
       "root",
       {if: forceWide, true: "force-wide"}
-    ]);
+    );
     let badgeNode = (badgeValue) && (
       <Badge value={badgeValue}/>
     );

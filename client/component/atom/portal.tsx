@@ -11,19 +11,23 @@ import {
 import {
   create
 } from "/client/component/create";
+import { StyleNameUtil } from "/client/util/style-name";
 
 
 const Portal = create(
   null, "Portal",
   function ({
+    position = "front",
     children
   }: {
+    position?: "front" | "back",
     children?: ReactNode
   }): ReactElement {
 
-    let container = document.getElementById("page") ?? document.body;
+    let container = document.body;
+    let className = StyleNameUtil.create("portal", position);
     let node = (
-      <div className="portal">
+      <div className={className}>
         {children}
       </div>
     );

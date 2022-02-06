@@ -1,0 +1,129 @@
+@charset "utf-8";
+
+@use "sass:math" as *;
+@import "/client/component/mixin.scss";
+
+
+$drawer-header-height: 50rpx;
+$drawer-tab-height: 60rpx;
+
+.background {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(darken(map-get($colors, primary), 40%), 0.6);
+  position: absolute;
+  pointer-events: auto;
+  z-index: 200;
+}
+
+.spacer {
+  height: 100%;
+  margin-right: $page-horizontal-margin;
+  padding: 0rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  pointer-events: none;
+  z-index: 220;
+  @include smartphone {
+    margin-right: $page-small-horizontal-margin;
+  }
+}
+
+.content-wrapper {
+  width: 100%;
+  height: 100%;
+  left: 0rpx;
+  max-width: $page-width;
+  background-color: $background-color;
+  border-radius: 0rpx $large-border-radius $large-border-radius 0rpx;
+  box-sizing: border-box;
+  position: relative;
+  pointer-events: auto;
+  transition: left 0.2s ease;
+  &.closed {
+    left: max(-100%, #{-$page-width});
+  }
+}
+
+.header {
+  width: 100%;
+  height: $drawer-header-height;
+  padding: 0rpx $huge-margin;
+  border-bottom: 1rpx $light-border-color solid;
+  border-radius: 0rpx $large-border-radius 0rpx 0rpx;
+  background-color: $strong-background-color;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.title {
+  @include bold-font;
+}
+
+.right >* {
+  @include reset-first-margin;
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
+}
+
+.tab {
+  width: 25rpx;
+  height: $drawer-tab-height;
+  left: 0rpx;
+  color: $light-color;
+  border: 1rpx $light-border-color solid;
+  border-left: none;
+  border-radius: 0rpx $large-border-radius $large-border-radius 0rpx;
+  background-color: $strong-background-color;
+  cursor: pointer;
+  pointer-events: all;
+  position: absolute;
+  overflow: hidden;
+  &:hover {
+    width: 30rpx;
+  }
+  &.center {
+    top: calc((100% - #{$drawer-tab-height}) / 2);
+  }
+  &.top {
+    top: calc((100% - #{$drawer-tab-height}) / 2 - #{div($drawer-tab-height, 2) + 10rpx});
+  }
+  &.bottom {
+    top: calc((100% - #{$drawer-tab-height}) / 2 + #{div($drawer-tab-height, 2) + 10rpx});
+  }
+}
+
+.tab-inner {
+  height: 100%;
+  gap: $tiny-margin;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .tab:hover & {
+    border-left: 5rpx $light-border-color solid;
+  }
+}
+
+.number {
+  font-size: $tiny-font-size;
+}
+
+.content {
+  padding: $huge-margin $huge-margin;
+  box-sizing: border-box;
+}
+
+.content-wrapper .content {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.content-wrapper .header +.content {
+  height: calc(100% - #{$drawer-header-height});
+}

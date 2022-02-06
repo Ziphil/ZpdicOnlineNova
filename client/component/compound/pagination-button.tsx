@@ -13,6 +13,10 @@ import {
   StylesRecord,
   create
 } from "/client/component/create";
+import {
+  useHotkey,
+  useMediaQuery
+} from "/client/component/hook";
 
 
 const PaginationButton = create(
@@ -21,15 +25,19 @@ const PaginationButton = create(
     page,
     minPage,
     maxPage,
+    enableHotkeys = false,
     onSet,
     styles
   }: {
     page: number,
     minPage: number
-    maxPage: number
+    maxPage: number,
+    enableHotkeys?: boolean,
     onSet?: (page: number) => void,
     styles?: StylesRecord
   }): ReactElement {
+
+    let {smartphone} = useMediaQuery();
 
     let movePage = useCallback(function (page: number): void {
       onSet?.(page);
@@ -56,7 +64,8 @@ const PaginationButton = create(
       let currentPage = page;
       let buttonSpecs = [];
       let difference = 2;
-      for (let i = 0 ; i < 4 ; i ++) {
+      let size = (smartphone) ? 1 : 4;
+      for (let i = 0 ; i < size ; i ++) {
         let nextPage = currentPage + (difference - 1) * direction;
         if ((direction === -1 && nextPage > targetPage) || (direction === 1 && nextPage < targetPage)) {
           buttonSpecs.push({page: nextPage});
@@ -66,7 +75,7 @@ const PaginationButton = create(
         difference *= 2;
       }
       return buttonSpecs;
-    }, [page, minPage, maxPage]);
+    }, [page, minPage, maxPage, smartphone]);
 
     let createButtonNode = useCallback(function (specs: Array<{page: number}>, direction: 1 | -1): Array<ReactNode> {
       let buttonNodes = specs.map((spec, index) => {
@@ -92,6 +101,13 @@ const PaginationButton = create(
       });
       return buttonNodes;
     }, [movePage, styles]);
+
+    useHotkey("movePreviousPage", () => {
+      movePreviousPage();
+    }, [movePreviousPage], enableHotkeys);
+    useHotkey("moveNextPage", () => {
+      moveNextPage();
+    }, [moveNextPage], enableHotkeys);
 
     let leftButtonSpecs = calculateButtonSpecs(-1).reverse();
     let rightButtonSpecs = calculateButtonSpecs(1);
@@ -133,11 +149,8 @@ const PaginationButton = create(
           {minPageButtonNode}
           {leftButtonNodes}
         </div>
-        <div styleName="button center desktop">
+        <div styleName="button center">
           <Button label={(page + 1).toString()} position={centerButtonPosition} disabled={true}/>
-        </div>
-        <div styleName="button center smartphone">
-          <Button label={(page + 1).toString()} position="alone" disabled={true}/>
         </div>
         <div styleName="button right">
           {rightButtonNodes}

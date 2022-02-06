@@ -102,12 +102,17 @@ let config = {
     alias: {
       "/client": path.resolve(__dirname, "client"),
       "/server": path.resolve(__dirname, "server")
+    },
+    fallback: {
+      stream: require.resolve("stream-browserify")
     }
   },
   devServer: {
     port: 3000,
     historyApiFallback: true,
-    contentBase: path.join(__dirname, "dist", "client"),
+    static: {
+      directory: path.join(__dirname, "dist", "client")
+    },
     proxy: {
       "/internal": "http://localhost:8050",
       "/external": "http://localhost:8050",

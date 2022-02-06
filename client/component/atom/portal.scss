@@ -9,5 +9,11 @@
   left: 0rpx;
   right: 0rpx;
   position: fixed;
-  z-index: 200;
+  pointer-events: none;
+  &:global(.front) {
+    z-index: 200;
+  }
+  &:global(.back) {
+    z-index: 180;
+  }
 }

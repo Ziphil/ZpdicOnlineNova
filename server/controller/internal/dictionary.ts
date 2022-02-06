@@ -398,16 +398,25 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["fetchOverallAggregation"])
   public async [Symbol()](request: Request<"fetchOverallAggregation">, response: Response<"fetchOverallAggregation">): Promise<void> {
-    let models = [DictionaryModel, WordModel, ExampleModel] as Array<any>;
+    let models = [DictionaryModel, WordModel, ExampleModel, UserModel] as Array<any>;
     let promises = models.map((model) => {
-      let promise = Promise.all([model.findExist().countDocuments(), model.estimatedDocumentCount(), model.collection.stats()]).then(([count, wholeCount, stats]) => {
-        let size = stats.size;
-        return {count, wholeCount, size};
-      });
-      return promise;
+      if (model === UserModel) {
+        let promise = Promise.all([model.estimatedDocumentCount(), model.collection.stats()]).then(([count, stats]) => {
+          let wholeCount = count;
+          let size = stats.size;
+          return {count, wholeCount, size};
+        });
+        return promise;
+      } else {
+        let promise = Promise.all([model.findExist().countDocuments(), model.estimatedDocumentCount(), model.collection.stats()]).then(([count, wholeCount, stats]) => {
+          let size = stats.size;
+          return {count, wholeCount, size};
+        });
+        return promise;
+      }
     });
-    let [dictionary, word, example] = await Promise.all(promises);
-    let body = {dictionary, word, example};
+    let [dictionary, word, example, user] = await Promise.all(promises);
+    let body = {dictionary, word, example, user};
     Controller.respond(response, body);
   }
 

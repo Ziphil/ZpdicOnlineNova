@@ -35,13 +35,13 @@ popup:
     The description of the dictionary has been changed.
   dictionarySettingsChanged: 
     akrantiainSource: >-
-      The snoj data for Akrantiain has been changed.
+      The snoj code for Akrantiain has been changed.
     zatlinSource: >-
       The source code for Zatlin has been changed.
     pronunciationTitle: >-
-      The title of the pronunciation has been changed.
+      The title of pronunciations has been changed.
     exampleTitle: >-
-      The title of the example sentences has been changed.
+      The title of example sentences has been changed.
     enableMarkdown: >-
       Markdown has been enabled/disabled.
   dictionaryUploaded: >-
@@ -56,9 +56,9 @@ popup:
     You have accepted the invitation to edit the dictionary.
     You can now edit the dictionary.
   editInvitationRefused: >-
-    You rejected the invitation to edit this dictionary.
+    You rejected the invitation to edit the dictionary.
   transferInvitationAdded: >-
-    You have requested to transfer this dictionary.
+    You have requested to transfer the dictionary.
     The dictionary will be transferred after the user accepts the request.
   transferInvitationAccepted: >-
     You accepted the transferrence of the dictionary.
@@ -87,7 +87,8 @@ popup:
     Your message has been sent.
   invalidUserName: >-
     The user ID is invalid.
-    It must be composed of alphanumeric characters, underscores and hyphens, contain at least one non-digit, and have no more than 30 characters.
+    It must be composed of alphanumeric characters, underscores and hyphens.
+    It must also contain at least one non-digit, and have no more than 30 characters.
   invalidUserEmail: >-
     The email address is invalid.
   invalidUserPassword: >-
@@ -120,12 +121,13 @@ popup:
     Please specify another name.
   invalidDictionaryParamName: >-
     The URL name is invalid.
-    It must be composed of alphanumeric characters, underscores and hyphens, contain at least one non-digit, and have no more than 30 characters.
+    It must be composed of alphanumeric characters, underscores and hyphens.
+    It must also contain at least one non-digit, and have no more than 30 characters.
   dictionarySaving: >-
     The upload is currently being processed.
     Please wait for a while until the process is completed.
   failAddRelations: >-
-    Failed to register mutual relations.
+    Failed to register the mutual relations.
   dictionarySizeTooLarge: >-
     The file is too large.
     You cannot upload files larger than 5 MB.
@@ -142,7 +144,7 @@ popup:
   unsupportedResourceType: >-
     This file type is not supported.
   userCanAlreadyEdit: >-
-    This user already has permission.
+    This user already has the permission.
   userCanAlreadyOwn: >-
     This user is already the owner of this dictionary.
   editInvitationAlreadyAdded: >-
@@ -181,10 +183,10 @@ popup:
     Couldn't get a response from the server.
     Please try again after a while.
   recaptchaError: >-
-    The reCAPTCHA returned an error.
+    The reCAPTCHA system returned an error.
     Please try again.
   recaptchaRejected: >-
-    Failed to authenticate by reCAPTCHA.
+    Failed to authenticate by the reCAPTCHA system.
     Please try again.
   awsError: >-
     Something failed.
@@ -209,18 +211,18 @@ overlay:
   close: "Close"
 changeUserNameForm:
   name: "User ID"
-  confirm: "Confirm"
+  confirm: "Change"
   caution: >-
     Currently you cannot change your user ID.
 changeUserScreenNameForm:
   screenName: "Nickname"
-  confirm: "Confirm"
+  confirm: "Change"
 changeUserEmailForm:
   email: "Email address"
-  confirm: "Confirm"
+  confirm: "Change"
 changeUserPasswordForm:
   password: "Password"
-  confirm: "Confirm"
+  confirm: "Change"
 createDictionaryForm:
   defaultName: "New dictionary"
   name: "Name"
@@ -236,42 +238,42 @@ discardUserForm:
     Are you really sure?
 addEditInvitationForm:
   userName: "User ID to invite"
-  confirm: "Confirm"
+  confirm: "Invite"
 addTransferInvitationForm:
   userName: "User ID to invite"
-  confirm: "Confirm"
+  confirm: "Invite"
 changeDictionaryExplanationForm:
   explanation: "Description"
-  confirm: "Confirm"
+  confirm: "Change"
 changeDictionaryNameForm:
   name: "Name"
-  confirm: "Confirm"
+  confirm: "Change"
 changeDictionaryParamNameForm:
   paramName: "Name for URL"
-  confirm: "Confirm"
+  confirm: "Change"
 changeDictionarySecretForm:
   public: "Show"
   secret: "Hide"
-  confirm: "Confirm"
+  confirm: "Change"
   caution: >-
     This setting affects only whether or not this dictionary is shown in the public dictionary list.
     Even if it is set to “Hide”, anyone with the link can view this dictionary.
 changeDictionarySettingsForm:
-  pronunciationTitle: "Title of pronunciation"
-  exampleTitle: "Title of example sentences"
+  pronunciationTitle: "Title of pronunciations"
+  exampleTitle: "Title of sentences"
   enableMarkdownTrue: "Enable"
   enableMarkdownFalse: "Disable"
-  confirm: "Confirm"
+  confirm: "Change"
 changeDictionarySourceForm:
-  akrantiain: "Snoj data for Akrantiain"
+  akrantiain: "Snoj code for Akrantiain"
   zatlin: "Source code for Zatlin"
-  confirm: "Confirm"
+  confirm: "Change"
   try: "Try"
 discardDictionaryForm:
   confirm: "Delete"
   caution: >-
     This operation will delete this dictionary permanently.
-    Once you delete this dictionary, you cannot restore it.
+    Once you delete it, you cannot restore it.
   alert: >-
     This dictionary will be deleted permanently.
     You cannot restore it afterwards.
@@ -291,9 +293,9 @@ activateUserForm:
     You can also click the button on the right to resend the mail.
 advancedSearchForm:
   overlayTitle: "Advanced search"
-  search: "Search"
+  search: "Keyword"
   title: "Title"
-  mode: "Range"
+  mode: "Scope"
   type: "Method"
   name: "Headword"
   equivalent: "Translation"
@@ -302,13 +304,13 @@ advancedSearchForm:
   content: "Whole"
   prefix: "Prefix"
   suffix: "Suffix"
-  part: "Part"
+  part: "Partial"
   exact: "Exact"
   regular: "Regexp"
   confirm: "Confirm"
 akrantiainExecutor:
   title: "Akrantiain {version}"
-  source: "Snoj data"
+  source: "Snoj code"
   input: "Input"
   output: "Output"
   errorMessage: "Error message"
@@ -338,15 +340,15 @@ dashboardButtonForm:
 dictionaryHeader:
   add: "Add"
   addWord: "Word"
-  addExample: "Example"
+  addExample: "Sentence"
   addCommission: "Request"
-  example: "Examples"
+  example: "Sentences"
   setting: "Settings"
   download: "Download"
 dictionaryPane:
   wordSize: "{wordSize, plural, one {# word} other {# words}}"
   wordSizeTokipona: "{wordSize, number, ::.00} TP"
-  wordSizeLogTokipona: "{wordSize, number, ::.00} logTP"
+  wordSizeLogTokipona: "{wordSize, number, ::.000} logTP"
   wordSizeUndefined: "? words"
   saving: "Saving"
   error: "Error"
@@ -405,23 +407,27 @@ dictionaryStatisticsPane:
     value: "{value, number, ::.00} "
     unit: "{value, plural, one {char/word} other {chars/word}}"
   exampleCountWhole:
-    title: "Examples"
+    title: "Example sentences"
     value: "{value, number} "
     unit: "{value, plural, one {sentence} other {sentences}}"
   exampleCountAverage:
-    title: "Average examples"
+    title: "Average example sentences"
     value: "{value, number, ::.00} "
     unit: "{value, plural, one {sentence/word} other {sentences/word}}"
   kept: "As is"
   nfd: "NFD"
   nfc: "NFC"
 exampleEditor:
-  title: "Edit example sentence"
-  sentence: "Example sentence"
+  title: "Edit example sentences"
+  newExample: "New sentence"
+  existingExample: "Sentence #{number}"
+  sentence: "Sentence"
   translation: "Translation"
-  wordName: "Included word"
+  word: "Included words"
   wordNameUndefined: "?"
   wordAbsent: "No included words"
+  add: "Add"
+  cancel: "Cancel"
   discard: "Delete"
   confirm: "Confirm"
   selectWord: "Select"
@@ -444,7 +450,7 @@ featurePane:
   search:
     title: "Search"
     text: >-
-      You can search as you type, either by headword or by translation.
+      You can search as you type, both by headword and by translation.
       Advanced searches by multiple conditions are also possible.
   user:
     title: "Collaborate"
@@ -468,6 +474,42 @@ header:
   contact: "Contact"
   language: "Languages"
   dashboard: "User page"
+hotkeyHelp:
+  title: "List of shortcuts"
+  general: "General"
+  showHotkeyHelp: "Show this help"
+  unfocus: "Clear the focus from everything"
+  navigation: "Navigation"
+  jumpDashboardPage: "User page"
+  jumpDictionaryListPage: "Dictionary list page"
+  jumpNotificationPage: "Notification page"
+  jumpDocumentPage: "Document page"
+  jumpContactPage: "Contact page"
+  jumpLanguagePage: "Language page"
+  jumpDictionaryPage: "Dictionary page"
+  jumpDictionarySettingPage: "Dictionary setting page"
+  jumpExamplePage: "Example sentence page"
+  editDictionary: "Editing"
+  addWord: "Add new word"
+  addExample: "Add new example sentence"
+  addCommission: "Request word"
+  toggleWordEditor: "Open/close word editor"
+  toggleExampleEditor: "Open/close sentence editor"
+  searchWords: "Searching"
+  focusSearch: "Focus the search form"
+  moveNextPage: "Go to next page"
+  movePreviousPage: "Go to previous page"
+  changeSearchModeToBoth: "Search both"
+  changeSearchModeToName: "Search headwords"
+  changeSearchModeToEquivalent: "Search translations"
+  changeSearchModeToContent: "Search whole contents"
+  changeSearchTypeToPrefix: "Prefix match"
+  changeSearchTypeToPart: "Partial match"
+  changeSearchTypeToExact: "Exact match"
+  changeSearchTypeToRegular: "Use regular expression"
+  information: >-
+    Shortcuts with two or more keys are triggered by entering the keys consecutively from the left.
+    If a key is shown translucent, it will not be available on the currently open page.
 invitationPane:
   createdDate: "Invited at"
   userName: "Inviter"
@@ -486,9 +528,10 @@ loginForm:
 notificationPane:
   fixed: "Fixed"
 overallAggregationPane:
-  dictionaryCount: "Dictionaries"
-  wordCount: "Words"
-  exampleCount: "Sentences"
+  user: "{count, plural, one {User} other {Users}}"
+  dictionary: "{count, plural, one {Dictionary} other {Dictionaries}}"
+  word: "{count, plural, one {Word} other {Words}}"
+  example: "{count, plural, one {Sentence} other {Sentences}}"
 regexpExecutor:
   title: "Regular expression"
   source: "Regular expression"
@@ -499,9 +542,10 @@ registerForm:
   confirm: "Sign up"
 resetUserPasswordForm:
   newPassword: "New password"
-  issue: "Confirm"
+  issue: "Send"
   reset: "Reset"
 resourceList:
+  title: "Images"
   file: "File to upload"
   confirm: "Confirm"
   experimantalCaution: >-
@@ -526,14 +570,14 @@ searchForm:
   equivalent: "Translation"
   content: "Whole"
   prefix: "Prefix"
-  part: "Part"
+  part: "Partial"
   exact: "Exact"
   regular: "Regexp"
   ignoreCase: "Ignore case"
-  unicode: "By Unicode"
-  custom: "By custom order"
-  updatedDate: "By update date"
-  createdDate: "By creation date"
+  unicode: "Unicode"
+  custom: "Custom order"
+  updatedDate: "Update date"
+  createdDate: "Creation date"
   ascending: "Asc"
   descending: "Desc"
   advancedSearch: "Advanced search"
@@ -548,23 +592,30 @@ userPane:
     This user's edit permission will be revoked.
     Are you really sure?
 wordEditor:
-  title: "Edit word"
-  name: "Word"
+  title: "Edit words"
+  basic: "Basic information"
+  name: "Spelling"
   pronunciation: "Pronunciation"
-  tag: "Tag"
+  tag: "Tags"
+  equivalent: "Translations"
   equivalentTitle: "Title"
-  equivalentNames: "Translations (separated by commas)"
+  equivalentNames: "Translations"
+  information: "Contents"
   informationTitle: "Title"
   informationText: "Content"
+  variation: "Variation forms"
   variationTitle: "Title"
-  variationName: "Variation"
+  variationName: "Form"
+  relation: "Related words"
   relationTitle: "Title"
-  relationName: "Related word"
+  relationName: "Word"
   tagAbsent: "No tags"
   equivalentAbsent: "No translations"
   informationAbsent: "No contents"
-  variationAbsent: "No variations"
-  relationAbsent: "No relations"
+  variationAbsent: "No variation forms"
+  relationAbsent: "No related words"
+  add: "Add"
+  cancel: "Cancel"
   discard: "Delete"
   confirm: "Confirm"
   generate: "Generate"
@@ -584,6 +635,8 @@ wordPane:
   submit: "Select"
   oneway: "Make one-way"
   mutual: "Make mutual"
+wordSearcher:
+  title: "Search word"
 zatlinExecutor:
   title: "Zatlin {version}"
   source: "Source code"
@@ -609,7 +662,7 @@ dashboardPage:
       This is a list of your dictionaries.
       This also includes those which you do not own but are permitted to edit.
   editInvitationList:
-    label: "Permission invitations"
+    label: "Edit invitations"
     description: >-
       This is a list of edit invitations sent to you.
       Accepting an invitation to a dictionary will allow you to edit it.
@@ -617,11 +670,10 @@ dashboardPage:
     label: "Transferrence invitations"
     description: >-
       This is a list of invitations to transfer ownership of a dictionary to you.
-      Accepting it will make you the new owner of the dictionary. 
+      Accepting an invitation will make you the new owner of the dictionary. 
   createDictionaryForm:
     label: "Create new dictionary"
-    description: >-
-      Create a new empty dictionary.
+    description: <empty>
   changeUserNameForm:
     label: "User ID"
     description: >-
@@ -633,12 +685,10 @@ dashboardPage:
       Unlike in your user ID, you can use any characters here.
   changeUserEmailForm:
     label: "Change email address"
-    description: >-
-      Change your email address.
+    description: <empty>
   changeUserPasswordForm:
     label: "Change password"
-    description: >-
-      Change your password.
+    description: <empty>
   discardUserForm:
     label: "Delete"
     description: >-
@@ -674,26 +724,26 @@ dictionarySettingPage:
       You can use some Markdown syntax.
       This will be displayed in the dictionary page before searching.
   changeDictionaryAkrantiainSourceForm:
-    label: "Change snoj data for Akrantiain"
+    label: "Change snoj code for Akrantiain"
     description: >-
-      Change the snoj data for Akrantiain.
-      If you set this data, Akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
+      Change the snoj code for Akrantiain.
+      If you set this code, Akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
       When a word has its own pronunciation specified, it will be displayed instead.
-      See [the documentation](/document) for further information about the syntax of Akrantiain.
+      See [the documentation](/document) for further information about the syntax of Akrantiain (now only available in Japanese).
   changeDictionaryZatlinSourceForm:
     label: "Change source code for Zatlin"
     description: >-
       Change the source code for Zatlin.
       If you set this code, a “Generate” button will appear in the word editor, which enables you to generate a spelling by executing Zatlin.
-      See [the documentation](/document) for further information about the syntax of Zatlin (in Japanese).
+      See [the documentation](/document) for further information about the syntax of Zatlin.
   changeDictionaryPronunciationTitleForm:
-    label: "Change title of pronunciation"
+    label: "Change title of pronunciations"
     description: >-
-      Change the title of the pronunciation which is used when outputting the dictionary in OTM-JSON format.
+      Change the title of pronunciations which is used when outputting the dictionary in OTM-JSON format.
   changeDictionaryExampleTitleForm:
-    label: "Change title of example sentences"
+    label: "Change title of sentences"
     description: >-
-      Change the title of the example sentences which is displayed in the dictionary page.
+      Change the title of example sentences which is displayed in the dictionary page.
   changeDictionaryEnableMarkdownForm:
     label: "Enable or disable Markdown"
     description: >-
@@ -716,13 +766,13 @@ dictionarySettingPage:
   addTransferInvitationForm:
     label: "Transfer"
     description: >-
-      Transfer this dictionary to another user.
+      You can transfer this dictionary to another user.
       After the dictionary is transferred, you still have editing permission and thus you can edit the words.
   dictionaryStatisticsPane:
     label: "Statistics"
     description: >-
       The statistical information of this dictionary.
-      In the items on character length, you can see the value using the data as is and also those calculated after Unicode normalisation.
+      In the items on character length, you can see the values using the data as is and also those calculated after Unicode normalisation.
   historyPane:
     label: "Word count history"
     description: >-

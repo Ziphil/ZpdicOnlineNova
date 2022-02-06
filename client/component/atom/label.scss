@@ -3,12 +3,17 @@
 @import "/client/component/mixin.scss";
 
 
-$label-bottom-margin: 3rpx;
-
 .root {
-  margin: 0rpx 0rpx $label-bottom-margin 0rpx;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   color: map-get($colors, primary);
+}
+
+.root.top {
+  margin: 0rpx 0rpx 3rpx 0rpx;
+}
+
+.root.left {
+  margin: 0rpx 5rpx 0rpx 0rpx;
 }
 
 .root.error {

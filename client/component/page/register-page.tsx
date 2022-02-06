@@ -28,7 +28,7 @@ const RegisterPage = create(
         <div styleName="title">{trans("registerPage.title")}</div>
         <div styleName="explanation">
           <p>
-            <Markdown source={trans("registerPage.privacy")} simple={true}/>
+            <Markdown source={trans("registerPage.privacy")} type="simple"/>
           </p>
         </div>
         <div styleName="form">

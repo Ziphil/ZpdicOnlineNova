@@ -3,39 +3,60 @@
 @import "/client/component/mixin.scss";
 
 
-$menu-item-vertical-padding: 32u;
-$menu-item-horizontal-padding: 48u;
+$menu-item-vertical-padding: 10rpx;
+$menu-item-horizontal-padding: 15rpx;
 
 .root {
-  padding: 0rpx $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
   color: $light-color;
   text-decoration: none;
-  text-align: right;
-  border-bottom: 5rpx transparent solid;
-  display: block;
+  display: flex;
   cursor: pointer;
-}
-
-.root:hover {
-  border-bottom: 5rpx $light-border-color solid;
-}
-
-.root.highlight {
-  @include bold-font;
-  margin-bottom: -1rpx;
-  color: $link-color;
-  border-bottom: 6rpx $link-color solid;
+  &.horizontal {
+    padding: 0rpx $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
+    border-bottom: 5rpx transparent solid;
+    &:hover {
+      border-bottom: 5rpx $light-border-color solid;
+    }
+    &.highlight {
+      margin-bottom: -1rpx;
+      border-bottom: 6rpx $link-color solid;
+    }
+  }
+  &.vertical {
+    padding: 5rpx 0rpx 5rpx 10rpx;
+    border-left: 5rpx transparent solid;
+    &:hover {
+      border-left: 5rpx $light-border-color solid;
+    }
+    &.highlight {
+      margin-left: -1rpx;
+      border-left: 6rpx $link-color solid;
+    }
+  }
+  &.highlight {
+    @include bold-font;
+    color: $link-color;
+  }
 }
 
 .text {
   margin: 0rpx 0rpx 0rpx $blank-margin;
+  display: inline-block;
+  text-align: center;
+  .vertical & {
+    text-align: left;
+  }
   @include smartphone {
     display: none;
   }
 }
 
-.icon {
-  @include icon-font;
+.dummy {
+  @include bold-font;
+  height: 0rpx;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
 }
 
 .badge {

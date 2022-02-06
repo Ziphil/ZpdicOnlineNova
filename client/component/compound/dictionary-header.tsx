@@ -29,17 +29,18 @@ import {
   create
 } from "/client/component/create";
 import {
+  useExampleEditor,
+  useHotkey,
   useIntl,
   usePath,
-  useRequest
+  useRequest,
+  useWordEditor
 } from "/client/component/hook";
 import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
 
 
-let WordEditor = lazy(() => import("/client/component/compound/word-editor"));
-let ExampleEditor = lazy(() => import("/client/component/compound/example-editor"));
 let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
 
 
@@ -63,16 +64,49 @@ const DictionaryHeader = create(
     preserveQuery?: boolean
   }): ReactElement {
 
-    let location = useLocation<any>();
-    let [wordEditorOpen, setWordEditorOpen] = useState(false);
-    let [exampleEditorOpen, setExampleEditorOpen] = useState(false);
     let [commissionEditorOpen, setCommissionEditorOpen] = useState(false);
+    let addWordEditor = useWordEditor();
+    let addExampleEditor = useExampleEditor();
+    let {pushPath} = usePath();
+    let location = useLocation<any>();
+
+    let openWordEditor = useCallback(function (): void {
+      if (dictionary !== null) {
+        addWordEditor({dictionary, word: null});
+      }
+    }, [dictionary, addWordEditor]);
+
+    let openExampleEditor = useCallback(function (): void {
+      if (dictionary !== null) {
+        addExampleEditor({dictionary, example: null});
+      }
+    }, [dictionary, addExampleEditor]);
 
     useMount(() => {
       if (location.state?.openCommissionEditor) {
         setCommissionEditorOpen(true);
       }
     });
+
+    let hotkeyEnabled = dictionary !== null;
+    useHotkey("jumpDictionaryPage", () => {
+      pushPath("/dictionary/" + dictionary?.number);
+    }, [dictionary?.number], hotkeyEnabled);
+    useHotkey("jumpDictionarySettingPage", () => {
+      pushPath("/dashboard/dictionary/" + dictionary?.number);
+    }, [dictionary?.number], hotkeyEnabled);
+    useHotkey("jumpExamplePage", () => {
+      pushPath("/example/" + dictionary?.number);
+    }, [dictionary?.number], hotkeyEnabled);
+    useHotkey("addWord", () => {
+      openWordEditor();
+    }, [openWordEditor], hotkeyEnabled && showAddLink);
+    useHotkey("addExample", () => {
+      openExampleEditor();
+    }, [openExampleEditor], hotkeyEnabled && showAddLink);
+    useHotkey("addCommission", () => {
+      setCommissionEditorOpen(true);
+    }, [], hotkeyEnabled && showAddCommissionLink);
 
     let nameNode = (dictionary) && (() => {
       let href = "/dictionary/" + dictionary.number;
@@ -83,8 +117,8 @@ const DictionaryHeader = create(
       let nameNode = <Link href={href} target="self" style="plane">{dictionary.name}</Link>;
       return nameNode;
     })();
-    let buttonsProps = {dictionary, showAddLink, showAddCommissionLink, showExampleLink, showSettingLink, showDownloadLink, setWordEditorOpen, setExampleEditorOpen, setCommissionEditorOpen};
-    let overlaysProps = {dictionary, wordEditorOpen, exampleEditorOpen, commissionEditorOpen, setWordEditorOpen, setExampleEditorOpen, setCommissionEditorOpen};
+    let buttonsProps = {dictionary, showAddLink, showAddCommissionLink, showExampleLink, showSettingLink, showDownloadLink, openWordEditor, openExampleEditor, setCommissionEditorOpen};
+    let overlaysProps = {dictionary, commissionEditorOpen, setCommissionEditorOpen};
     let node = (
       <header styleName="root">
         <Helmet>
@@ -116,8 +150,8 @@ const DictionaryHeaderButtons = create(
     showExampleLink,
     showSettingLink,
     showDownloadLink,
-    setWordEditorOpen,
-    setExampleEditorOpen,
+    openWordEditor,
+    openExampleEditor,
     setCommissionEditorOpen
   }: {
     dictionary: EnhancedDictionary | null,
@@ -126,8 +160,8 @@ const DictionaryHeaderButtons = create(
     showExampleLink: boolean,
     showSettingLink: boolean,
     showDownloadLink: boolean,
-    setWordEditorOpen: Dispatch<SetStateAction<boolean>>,
-    setExampleEditorOpen: Dispatch<SetStateAction<boolean>>,
+    openWordEditor: () => void,
+    openExampleEditor: () => void,
     setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
@@ -135,13 +169,13 @@ const DictionaryHeaderButtons = create(
     let {pushPath} = usePath();
     let {request} = useRequest();
 
-    let addSomething = useCallback(function (type: "word" | "example"): void {
+    let openEditor = useCallback(function (type: "word" | "example"): void {
       if (type === "word") {
-        setWordEditorOpen(true);
+        openWordEditor();
       } else {
-        setExampleEditorOpen(true);
+        openExampleEditor();
       }
-    }, [setWordEditorOpen, setExampleEditorOpen]);
+    }, [openWordEditor, openExampleEditor]);
 
     let jumpExamplePage = useCallback(function (): void {
       if (dictionary) {
@@ -185,7 +219,7 @@ const DictionaryHeaderButtons = create(
       {value: "example", node: <DictionaryHeaderAddDropdownNode type="example"/>}
     ] as const;
     let addButtonNode = (showAddLink) && (
-      <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={addSomething}>
+      <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={openEditor}>
         <Button label={trans("dictionaryHeader.add")} iconName="plus" style="simple" hideLabel={true}/>
       </Dropdown>
     );
@@ -193,7 +227,7 @@ const DictionaryHeaderButtons = create(
       <Button label={trans("dictionaryHeader.addCommission")} iconName="list-check" style="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
     );
     let exampleButtonNode = (showExampleLink) && (
-      <Button label={trans("dictionaryHeader.example")} iconName="file-alt" style="simple" hideLabel={true} onClick={jumpExamplePage}/>
+      <Button label={trans("dictionaryHeader.example")} iconName="custom-example" style="simple" hideLabel={true} onClick={jumpExamplePage}/>
     );
     let settingButtonNode = (showSettingLink) && (
       <Button label={trans("dictionaryHeader.setting")} iconName="cog" style="simple" hideLabel={true} onClick={jumpSettingPage}/>
@@ -228,9 +262,7 @@ const DictionaryHeaderAddDropdownNode = create(
 
     let node = (
       <div>
-        <span styleName="icon">
-          <Icon name={(type === "word") ? "file-word" : "file-alt"}/>
-        </span>
+        <span styleName="icon"><Icon name={(type === "word") ? "custom-word" : "custom-example"}/></span>
         {trans(`dictionaryHeader.add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
       </div>
     );
@@ -244,45 +276,20 @@ const DictionaryHeaderOverlays = create(
   require("./dictionary-header.scss"),
   function ({
     dictionary,
-    wordEditorOpen,
-    exampleEditorOpen,
     commissionEditorOpen,
-    setWordEditorOpen,
-    setExampleEditorOpen,
     setCommissionEditorOpen
   }: {
     dictionary: EnhancedDictionary | null,
-    wordEditorOpen: boolean,
-    exampleEditorOpen: boolean,
     commissionEditorOpen: boolean,
-    setWordEditorOpen: Dispatch<SetStateAction<boolean>>,
-    setExampleEditorOpen: Dispatch<SetStateAction<boolean>>,
     setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
-  }): ReactElement {
+  }): ReactElement | null {
 
-    let wordEditorNode = (dictionary !== null && wordEditorOpen) && (
-      <Suspense fallback="">
-        <WordEditor dictionary={dictionary} word={null} open={wordEditorOpen} onClose={() => setWordEditorOpen(false)}/>
-      </Suspense>
-    );
-    let exampleEditorNode = (dictionary !== null && exampleEditorOpen) && (
-      <Suspense fallback="">
-        <ExampleEditor dictionary={dictionary} example={null} open={exampleEditorOpen} onClose={() => setExampleEditorOpen(false)}/>
-      </Suspense>
-    );
-    let commissionEditorNode = (dictionary !== null && commissionEditorOpen) && (
+    let node = (dictionary !== null && commissionEditorOpen) && (
       <Suspense fallback="">
         <CommissionEditor dictionary={dictionary} open={commissionEditorOpen} onClose={() => setCommissionEditorOpen(false)}/>
       </Suspense>
     );
-    let node = (
-      <Fragment>
-        {wordEditorNode}
-        {exampleEditorNode}
-        {commissionEditorNode}
-      </Fragment>
-    );
-    return node;
+    return node || null;
 
   }
 );

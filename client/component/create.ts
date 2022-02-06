@@ -12,7 +12,7 @@ export function create<C extends FunctionComponent<any>>(css: any, name: string,
 export function create<C extends FunctionComponent<any>>(...args: [any, C] | [any, string, C]): C {
   let [css, component, name] = (args.length === 2) ? [args[0], args[1]] : [args[0], args[2], args[1]];
   if (css !== null && css !== undefined) {
-    component = cssModules(css, {allowMultiple: true, handleNotFoundStyleName: "ignore"})(component);
+    component = cssModules(css.default, {allowMultiple: true, handleNotFoundStyleName: "ignore"})(component);
   }
   component.displayName = name ?? "<unknown>";
   return component;

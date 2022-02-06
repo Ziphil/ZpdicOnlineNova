@@ -19,7 +19,7 @@
 .url {
   width: 100%;
   margin: $small-margin 0rpx 0rpx 0rpx;
-  font-size: 90%;
+  font-size: $small-font-size;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

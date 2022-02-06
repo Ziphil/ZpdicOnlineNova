@@ -10,8 +10,9 @@ import {
 } from "react";
 import ReactMarkdown from "react-markdown";
 import {
-  NodeType
+  uriTransformer
 } from "react-markdown";
+import remarkGfm from "remark-gfm";
 import Link from "/client/component/atom/link";
 import {
   create
@@ -22,69 +23,70 @@ const Markdown = create(
   require("./markdown.scss"), "Markdown",
   function ({
     source,
-    simple = false,
-    allowHeading = false,
+    type = "normal",
     homePath,
-    renderers,
+    components,
     className
   }: {
     source: string,
-    simple?: boolean,
+    type?: "simple" | "normal" | "document",
     allowHeading?: boolean,
     homePath?: string,
-    renderers?: Renderers,
+    components?: MarkdownComponents,
     className?: string
   }): ReactElement {
 
-    let transformUri = useCallback(function (uri: string, children?: ReactNode, title?: string): string {
-      let nextUri = ReactMarkdown.uriTransformer(uri);
+    let transformUri = useCallback(function (uri: string, children: ReactNode, title: string | null): string {
+      let nextUri = uriTransformer(uri);
       if (homePath !== undefined) {
         nextUri = nextUri.replace(/^~/, homePath);
       }
       return nextUri;
     }, [homePath]);
 
-    let [allowedTypes, disallowedTypes] = useMemo(() => {
-      if (simple) {
-        let allowedTypes = ["root", "text", "paragraph", "link"] as Array<NodeType>;
-        return [allowedTypes, undefined];
+    let [allowedElements, disallowedElements] = useMemo(() => {
+      if (type === "simple") {
+        let allowedElements = ["p", "a"];
+        return [allowedElements, undefined];
+      } else if (type === "normal") {
+        let disallowedElements = ["hr", "dl", "dd", "dt", "input", "h1", "h2", "h3", "h4", "h5", "h6"];
+        return [undefined, disallowedElements];
       } else {
-        let disallowedTypes = ["thematicBreak", "definition", "heading", "html", "virtualHtml"] as Array<NodeType>;
-        if (allowHeading) {
-          disallowedTypes = disallowedTypes.filter((type) => type !== "heading");
-        }
-        return [undefined, disallowedTypes];
+        let disallowedElements = ["hr", "dl", "dd", "dt", "input"];
+        return [undefined, disallowedElements];
       }
-    }, [simple, allowHeading]);
-    let customRenderers = useMemo(() => {
-      if (simple) {
-        let simpleRenderer = function (props: any): ReactElement {
+    }, [type]);
+    let customComponents = useMemo(() => {
+      if (type === "simple") {
+        let renderChildren = function (props: any): ReactElement {
           return props.children;
         };
-        return {link: Link, root: simpleRenderer, paragraph: simpleRenderer};
+        return {a: Link, p: renderChildren};
       } else {
-        return {link: Link};
+        return {a: Link};
       }
-    }, [simple]);
-    let allRenderers = {...customRenderers, ...renderers} as Renderers;
+    }, [type]);
+    let allComponents = {...customComponents, ...components} as MarkdownComponents;
     let innerNode = (
       <ReactMarkdown
         className={className}
-        source={source}
-        renderers={allRenderers}
-        allowedTypes={allowedTypes}
-        disallowedTypes={disallowedTypes}
+        children={source}
+        components={allComponents}
+        allowedElements={allowedElements}
+        disallowedElements={disallowedElements}
+        skipHtml={true}
         transformLinkUri={transformUri}
         transformImageUri={transformUri}
+        remarkPlugins={[remarkGfm]}
       />
     );
-    let node = (simple) ? innerNode : <div styleName="root" className={className}>{innerNode}</div>;
+    let node = (type === "simple") ? innerNode : <div styleName="root" className={className}>{innerNode}</div>;
     return node;
 
   }
 );
 
 
-export type Renderers = {[type: string]: ElementType};
+export type MarkdownComponents = {[type: string]: ElementType};
 
 export default Markdown;

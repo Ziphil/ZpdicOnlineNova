@@ -35,7 +35,7 @@
 
 .date {
   margin: 0rpx;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   color: $head-color;
 }
 
@@ -43,13 +43,13 @@
   @include bold-font;
   margin: $tiny-margin 0rpx 0rpx 0rpx;
   padding: 0rpx;
-  font-size: 120%;
+  font-size: $large-font-size;
   color: $head-color;
 }
 
 .fixed {
   margin: 0em $blank-margin 0em 0em;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   font-weight: normal;
 }
 

@@ -5,7 +5,7 @@
 
 .title {
   @include bold-font;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   color: $light-color;
 }
 
@@ -28,15 +28,15 @@
 }
 
 .value {
-  font-size: 120%;
+  font-size: $large-font-size;
 }
 
 .unit {
-  font-size: 80%;
+  font-size: $tiny-font-size;
 }
 
 .note {
   margin: 0rpx 0rpx 0rpx 24u;
-  font-size: 90%;
+  font-size: $small-font-size;
   color: $light-color;
 }

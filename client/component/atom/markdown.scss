@@ -8,7 +8,7 @@
   @include reset-first-margin;
   @include bold-font;
   margin: $large-margin 0rpx $medium-margin 0rpx;
-  font-size: 150%;
+  font-size: $huge-font-size;
   color: $head-color;
 }
 
@@ -16,7 +16,7 @@
   @include reset-first-margin;
   @include bold-font;
   margin: $large-margin 0rpx $medium-margin 0rpx;
-  font-size: 120%;
+  font-size: $large-font-size;
   color: $head-color;
 }
 
@@ -123,7 +123,7 @@
 
 .root pre >code {
   padding: 0em;
-  font-size: 100%;
+  font-size: inherit;
 }
 
 .root :global(.block) {

@@ -2,8 +2,8 @@
 
 import * as react from "react";
 import {
-  ReactElement,
-  useCallback
+  MouseEvent,
+  ReactElement
 } from "react";
 import {
   IconName
@@ -13,39 +13,41 @@ import {
   create
 } from "/client/component/create";
 import {
-  useLogout,
-  usePath
-} from "/client/component/hook";
+  StyleNameUtil
+} from "/client/util/style-name";
 
 
 const Menu = create(
   require("./menu.scss"), "Menu",
   function ({
     mode,
-    specs
+    specs,
+    direction = "horizontal"
   }: {
     mode: string,
-    specs: ReadonlyArray<{mode: string, label: string, iconName: IconName, badgeValue?: string | number, href: string}>
+    specs: ReadonlyArray<MenuSpec>,
+    direction?: "horizontal" | "vertical"
   }): ReactElement {
 
-    let {pushPath} = usePath();
-    let logout = useLogout();
-
-    let performLogout = useCallback(async function (): Promise<void> {
-      let response = await logout();
-      if (response.status === 200) {
-        pushPath("/");
-      }
-    }, [pushPath, logout]);
-
-    let itemNodes = specs.map((spec, index) => {
+    let itemNodes = specs.map((spec) => {
       let highlight = spec.mode === mode;
-      let href = (spec.mode !== "logout") ? spec.href : undefined;
-      let onClick = (spec.mode === "logout") ? performLogout : undefined;
-      return <MenuItem label={spec.label} iconName={spec.iconName} badgeValue={spec.badgeValue} href={href} highlight={highlight} onClick={onClick} key={index}/>;
+      let itemNode = (
+        <MenuItem
+          key={spec.label}
+          label={spec.label}
+          iconName={spec.iconName}
+          badgeValue={spec.badgeValue}
+          highlight={highlight}
+          href={spec.href}
+          direction={direction}
+          onClick={spec.onClick}
+        />
+      );
+      return itemNode;
     });
+    let styleName = StyleNameUtil.create("root", direction);
     let node = (
-      <nav styleName="root">
+      <nav styleName={styleName}>
         {itemNodes}
       </nav>
     );
@@ -54,5 +56,7 @@ const Menu = create(
   }
 );
 
+
+export type MenuSpec = {mode: string, label: string, iconName: IconName, badgeValue?: string | number, href?: string, onClick?: (event: MouseEvent<HTMLElement>) => void};
 
 export default Menu;

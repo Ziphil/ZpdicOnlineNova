@@ -21,7 +21,8 @@ import {
   Dictionary,
   DictionarySchema,
   LinkedWordCreator,
-  Word
+  Word,
+  WordModel
 } from "/server/model/dictionary";
 import {
   LinkedWordSchema
@@ -81,6 +82,7 @@ export class ExampleSchema extends DiscardableSchema {
       resultExample.dictionary = dictionary;
       resultExample.createdDate = currentExample.createdDate;
       resultExample.updatedDate = new Date();
+      await this.filterWords(dictionary, resultExample);
       await currentExample.flagDiscarded();
       await resultExample.save();
     } else {
@@ -91,6 +93,7 @@ export class ExampleSchema extends DiscardableSchema {
       resultExample.dictionary = dictionary;
       resultExample.createdDate = new Date();
       resultExample.updatedDate = new Date();
+      await this.filterWords(dictionary, resultExample);
       await resultExample.save();
     }
     LogUtil.log("example/edit", `number: ${dictionary.number} | current: ${currentExample?.id} | result: ${resultExample.id}`);
@@ -106,6 +109,12 @@ export class ExampleSchema extends DiscardableSchema {
     }
     LogUtil.log("word/discard", `number: ${dictionary.number} | current: ${example.id}`);
     return example;
+  }
+
+  private static async filterWords(dictionary: Dictionary, example: Example): Promise<void> {
+    let linkedNumbers = example.words.map((word) => word.number);
+    let linkedWords = await WordModel.findExist().where("dictionary", dictionary).where("number", linkedNumbers);
+    example.words = example.words.filter((word) => linkedWords.some((linkedWord) => linkedWord.number === word.number));
   }
 
   private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {

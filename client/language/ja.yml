@@ -346,7 +346,7 @@ dictionaryHeader:
 dictionaryPane:
   wordSize: "{wordSize, number} 語"
   wordSizeTokipona: "{wordSize, number, ::.00} TP"
-  wordSizeLogTokipona: "{wordSize, number, ::.00} logTP"
+  wordSizeLogTokipona: "{wordSize, number, ::.000} logTP"
   wordSizeUndefined: "? 語"
   saving: "保存中"
   error: "エラー"
@@ -417,11 +417,15 @@ dictionaryStatisticsPane:
   nfc: "NFC"
 exampleEditor:
   title: "例文編集"
+  newExample: "新しい例文"
+  existingExample: "例文 #{number}"
   sentence: "例文"
   translation: "翻訳"
-  wordName: "使用単語"
+  word: "使用単語"
   wordNameUndefined: "?"
   wordAbsent: "使用単語は登録されていません"
+  add: "追加"
+  cancel: "キャンセル"
   discard: "削除"
   confirm: "決定"
   selectWord: "変更"
@@ -468,6 +472,42 @@ header:
   contact: "お問い合わせ"
   language: "言語選択"
   dashboard: "ユーザーページ"
+hotkeyHelp:
+  title: "ショートカット一覧"
+  general: "一般"
+  showHotkeyHelp: "このヘルプを表示"
+  unfocus: "全ての要素からフォーカスを外す"
+  navigation: "ページ移動"
+  jumpDashboardPage: "ユーザーページへ"
+  jumpDictionaryListPage: "辞書一覧ページへ"
+  jumpNotificationPage: "お知らせページへ"
+  jumpDocumentPage: "ドキュメントページへ"
+  jumpContactPage: "お問い合わせページへ"
+  jumpLanguagePage: "言語選択ページへ"
+  jumpDictionaryPage: "辞書ページへ"
+  jumpDictionarySettingPage: "辞書設定ページへ"
+  jumpExamplePage: "例文一覧ページへ"
+  editDictionary: "辞書編集"
+  addWord: "単語を新規作成"
+  addExample: "例文を新規作成"
+  addCommission: "造語依頼"
+  toggleWordEditor: "単語編集画面を開閉"
+  toggleExampleEditor: "例文編集画面を開閉"
+  searchWords: "単語検索"
+  focusSearch: "検索欄にフォーカス"
+  moveNextPage: "次のページへ"
+  movePreviousPage: "前のページへ"
+  changeSearchModeToBoth: "単語と訳語から"
+  changeSearchModeToName: "単語から"
+  changeSearchModeToEquivalent: "訳語から"
+  changeSearchModeToContent: "全文から"
+  changeSearchTypeToPrefix: "前方一致"
+  changeSearchTypeToPart: "部分一致"
+  changeSearchTypeToExact: "完全一致"
+  changeSearchTypeToRegular: "正規表現検索"
+  information: >-
+    2 つ以上のキーが書かれているものは、そのキーを左から連続で入力することで作動します。
+    半透明になっているものは、現在開いているページでは利用できません。
 invitationPane:
   createdDate: "招待日時"
   userName: "招待者"
@@ -486,9 +526,10 @@ loginForm:
 notificationPane:
   fixed: "対応済み"
 overallAggregationPane:
-  dictionaryCount: "辞書数"
-  wordCount: "単語数"
-  exampleCount: "例文数"
+  user: "ユーザー"
+  dictionary: "辞書"
+  word: "単語"
+  example: "例文"
 regexpExecutor:
   title: "正規表現"
   source: "正規表現"
@@ -502,6 +543,7 @@ resetUserPasswordForm:
   issue: "送信"
   reset: "変更"
 resourceList:
+  title: "画像"
   file: "アップロードファイル"
   confirm: "決定"
   experimantalCaution: >-
@@ -529,10 +571,10 @@ searchForm:
   exact: "完全"
   regular: "正規"
   ignoreCase: "大小文字を区別しない"
-  unicode: "Unicode 順"
-  custom: "独自順序順"
-  updatedDate: "更新日時順"
-  createdDate: "作成日時順"
+  unicode: "Unicode"
+  custom: "独自順序"
+  updatedDate: "更新日時"
+  createdDate: "作成日時"
   ascending: "昇順"
   descending: "降順"
   advancedSearch: "高度な検索"
@@ -548,15 +590,20 @@ userPane:
     本当によろしいですか?
 wordEditor:
   title: "単語編集"
+  basic: "基本情報"
   name: "単語"
   pronunciation: "発音"
   tag: "タグ"
+  equivalent: "訳語"
   equivalentTitle: "分類"
-  equivalentNames: "訳語 (コンマ区切り)"
+  equivalentNames: "訳語"
+  information: "内容"
   informationTitle: "分類"
   informationText: "内容"
+  variation: "変化形"
   variationTitle: "分類"
   variationName: "変化形"
+  relation: "関連語"
   relationTitle: "分類"
   relationName: "関連語"
   tagAbsent: "タグは登録されていません"
@@ -564,6 +611,8 @@ wordEditor:
   informationAbsent: "内容は登録されていません"
   variationAbsent: "変化形は登録されていません"
   relationAbsent: "関連語は登録されていません"
+  add: "追加"
+  cancel: "キャンセル"
   discard: "削除"
   confirm: "決定"
   generate: "生成"
@@ -583,6 +632,8 @@ wordPane:
   submit: "決定"
   oneway: "一方向で登録"
   mutual: "双方向で登録"
+wordSearcher:
+  title: "単語検索"
 zatlinExecutor:
   title: "Zatlin {version}"
   source: "ソースコード"
@@ -619,8 +670,7 @@ dashboardPage:
       これを承認すると、該当の辞書の管理者になります。
   createDictionaryForm:
     label: "新規作成"
-    description: >-
-      空の辞書を作成します。
+    description: <empty>
   changeUserNameForm:
     label: "ユーザー ID の確認"
     description: >-
@@ -632,12 +682,10 @@ dashboardPage:
       ユーザー ID とは異なり、ここでは英数字以外の文字も使えます。
   changeUserEmailForm:
     label: "メールアドレスの変更"
-    description: >-
-      メールアドレスを変更します。
+    description: <empty>
   changeUserPasswordForm:
     label: "パスワードの変更"
-    description: >-
-      パスワードを変更します。
+    description: <empty>
   discardUserForm:
     label: "削除"
     description: >-

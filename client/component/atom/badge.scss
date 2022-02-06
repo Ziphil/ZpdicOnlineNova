@@ -4,11 +4,9 @@
 
 
 .root {
-  bottom: 0.15em;
-  margin-top: -0.2em !important;
-  margin-bottom: -0.2em !important;
+  bottom: 0.1em;
   padding: 0.15em 0.5em;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   font-weight: normal;
   color: $background-color;
   border-radius: 1em;

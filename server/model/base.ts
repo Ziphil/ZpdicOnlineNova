@@ -16,7 +16,7 @@ export class DiscardableSchema {
   @prop()
   public removedDate?: Date;
 
-  public static findExist<T, H>(this: Model<T, H>, callback?: (error: any, result: Array<T>) => void): QueryWithHelpers<Array<HydratedDocument<T>>, HydratedDocument<T>, H, T> {
+  public static findExist<T, H>(this: Model<T, H>, callback?: (error: any, result: Array<T>) => void): QueryWithHelpers<Array<T>, T, H, T> {
     return this.find({}, callback).where({removedDate: undefined});
   }
 

@@ -23,11 +23,11 @@ import {
 const Highlight = create(
   require("./highlight.scss"), "Highlight",
   function ({
-    value = "",
+    source = "",
     language,
     className
   }: {
-    value?: string,
+    source?: string,
     language: string,
     className?: string
   }): ReactElement {
@@ -39,7 +39,7 @@ const Highlight = create(
         let modeOptions = CodeMirrorUtil.getModeOptions(language);
         let html = "";
         html += `<div class=\"cm-s-${escapeHtml(modeOptions.theme)}\">`;
-        CodeMirror.runMode(value, modeOptions.mode, (text, style) => {
+        CodeMirror.runMode(source, modeOptions.mode, (text, style) => {
           if (text === "\n") {
             html += "<br>";
           } else if (style) {
@@ -51,7 +51,7 @@ const Highlight = create(
         html += "</div>";
         rootRef.current.innerHTML = html;
       }
-    }, [language, value]);
+    }, [language, source]);
 
     useEffect(() => {
       drawHighlight();

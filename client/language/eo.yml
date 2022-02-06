@@ -1,0 +1,805 @@
+common:
+  dateFormat: "dd/LLL/yyyy HH:mm"
+  shortDateFormat: "dd/LLL"
+  dateUndefined: "?"
+  numberUndefined: "?"
+
+popup:
+  userActivated: >-
+    La uzanto estas aktivigita.
+  userScreenNameChanged: >-
+    Via kromnomo estas ŝanĝita.
+  userEmailChanged: >-
+    Via retpoŝta adreso estas ŝanĝita.
+  userPasswordChanged: >-
+    Via pasvorto estas ŝanĝita.
+  userActivateTokenIssued: >-
+    Ni sendis retmesaĝon kun retadreso por aktivigi tiun uzanton.
+    Bonvolu sekvi la instrukciojn en la retmesaĝo.
+  userResetTokenIssued: >-
+    Ni sendis retmesaĝon kun retadreso por restarigi vian pasvorton.
+    Bonvolu sekvi la instrukciojn en la retmesaĝo.
+  userPasswordReset: >-
+    Via pasvorto estis restarigita.
+    Bonvolu denove ensaluti uzante vian novan pasvorton.
+  userDiscarded: >-
+    Tiu uzanto estis forigita.
+    Dankon pro uzi ZpDIC Online.
+  dictionaryNameChanged: >-
+    La montra nomo de la vortaro estas ŝanĝita.
+  dictionaryParamNameChanged: >-
+    La retadresa nomo de la vortaro estas ŝanĝita.
+  dictionarySecretChanged: >-
+    La videblo de la vortaro estas ŝanĝita.
+  dictionaryExplanationChanged: >-
+    La priskribo de la vortaro estas ŝanĝita.
+  dictionarySettingsChanged: 
+    akrantiainSource: >-
+      La fontkodo por Akrantiain estas ŝanĝita.
+    zatlinSource: >-
+      La fontkodo por Zatlin estas ŝanĝita.
+    pronunciationTitle: >-
+      La titolo por elparoloj estas ŝanĝita.
+    exampleTitle: >-
+      La titolo por ekzemplaj frazoj estas ŝanĝita.
+    enableMarkdown: >-
+      Markdown estas ebligita/malebligita.
+  dictionaryUploaded: >-
+    Via dosiero estis sukcese alŝutita.
+    Notu, ke daŭros iom da tempo ĝis la vortaraj datumoj estas ĝisdatigitaj.
+  dictionaryDiscarded: >-
+    La vortaro estas forigita.
+  editInvitationAdded: >-
+    Vi invitis la uzanton redakti tiun vortaron.
+    La permeso estos donita al ri post kiam ri akceptos la peton.
+  editInvitationAccepted: >-
+    Vi akceptis la inviton por redaktado de la vortaron.
+    Vi nun povas redakti la vortaron.
+  editInvitationRefused: >-
+    Vi malakceptis la inviton por redaktado de la vortaron.
+  transferInvitationAdded: >-
+    Vi petis transdoni tiun vortaron.
+    La vortaro estos transdonita post kiam la uzanto akceptos la peton.
+  transferInvitationAccepted: >-
+    Vi akceptis transdonadon de la vortaro.
+    Vi nun estas la posedanto de la vortaro.
+  transferInvitationRefused: >-
+    Vi malakceptis transdonadon de la vortaro.
+  dictionaryAuthorizedUserDiscarded: >-
+    La redakta permeso de la uzanto estas revokita.
+  wordEdited: >-
+    La vorto estas redaktita.
+  wordDiscarded: >-
+    La vorto estas forigita.
+  exampleEdited: >-
+    La ekzempla frazo estas redaktita.
+  exampleDiscarded: >-
+    La ekzempla frazo estas forigita.
+  resourceUploaded: >-
+    La resurso estas alŝutita.
+  resourceDiscarded: >-
+    La resurso estas forigita.
+  commissionAdded: >-
+    Via peto estas sendita.
+  commissionDiscarded: >-
+    La peto estas forigita.
+  contacted: >-
+    Via mesaĝo estas sendita.
+  invalidUserName: >-
+    La uzanta identigilo estas nevalida.
+    Ĝi devas ampleksi alfanombraj signoj, substrekoj kaj streketoj.
+    Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon, kaj havi ne pli ol 30 signojn.
+  invalidUserEmail: >-
+    La retpoŝta adreso estas nevalida.
+  invalidUserPassword: >-
+    La pasvorto estas nevalida.
+    Ĝi devas havi 6–50 signojn.
+  duplicateUserName: >-
+    Jam ekzistas la uzanta identigilo kiun vi specifis.
+    Bonvolu specifi alian uzantan identigilon.
+  duplicateUserEmail: >-
+    Jam estas registrita la retadreso kiun vi specifis.
+    Bonvolu specifi alian retadreson.
+  noSuchUser: >-
+    Tiu uzanto ne ekzistas.
+  noSuchUserEmail: >-
+    Ne estas uzanto kun tiu retadreso.
+  userAlreadyActivated: >-
+    Tiu uzanto jam estas aktivigita.
+  invalidActivateToken: >-
+    Malsukcesis aktivigi la uzanton.
+  invalidResetToken: >-
+    Malsukcesis restarigi vian pasvorton.
+  loginFailed: >-
+    Malsukcesis ensaluti.
+  noSuchDictionaryNumber: >-
+    Ne estas vortaro kun tiu numero.
+  noSuchDictionaryParamName: >-
+    Ne estas vortaro kun tiu nomo.
+  duplicateDictionaryParamName: >-
+    Jam estas uzata la retadresa nomo kiun vi specifis.
+    Bonvolu specifi alian nomon.
+  invalidDictionaryParamName: >-
+    La retadresa nomo estas nevalida.
+    Ĝi devas ampleksi alfanombraj signoj, substrekoj kaj streketoj.
+    Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon, kaj havi ne pli ol 30 signojn.
+  dictionarySaving: >-
+    La alŝutado estas nuntempe prilaborata.
+    Bonvolu atendi iom da tempo ĝis la procezo finiĝos.
+  failAddRelations: >-
+    Malsukcesis registri la reciprokajn rilatojn.
+  dictionarySizeTooLarge: >-
+    La dosiero estas tro granda.
+    Vi ne povas alŝuti dosierojn pli grandajn ol 2 MB.
+  noSuchWordNumber: >-
+    Vi provis redakti vorton kiu ne ekzistas.
+  noSuchExampleNumber: >-
+    Vi provis redakti ekzemplan frazon kiu ne ekzistas.
+  resourceCountExceeded: >-
+    Vi ne povas alŝuti pliajn dosierojn.
+    Vi povas alŝuti ĝis 25 dosierojn al unu vortaro.
+  resourceSizeTooLarge: >-
+    La dosiero estas tro granda.
+    Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
+  unsupportedResourceType: >-
+    Tiu tipo de dosiero ne estas subtenata.
+  userCanAlreadyEdit: >-
+    Tiu uzanto jam havas la permeson.
+  userCanAlreadyOwn: >-
+    Tiu uzanto jam estas la posedanto de tiu vortaro.
+  editInvitationAlreadyAdded: >-
+    Vi jam invitis tiun uzanton redakti tiun vortaron.
+  transferInvitationAlreadyAdded: >-
+    Vi jam petis tiun uzanton iĝi la posedanto de tiu vortaro.
+  noSuchInvitation: >-
+    Tiu invito ne ekzistas.
+  noSuchDictionaryAuthorizedUser: >-
+    Ne estas uzanto kun tia permeso.
+  emptyCommissionName: >-
+    La vorto por peti estas malplena.
+  noSuchCommission: >-
+    Tiu peto ne ekzistas.
+  emptyContactText: >-
+    La enhavo estas malplena.
+  administratorNotFound: >-
+    Neatendita eraro okazis.
+  invalidArgument: >-
+    La argumento estas malvalida.
+  unauthenticated: >-
+    Vi ne estas ensalutinta.
+    Bonvolu denove ensaluti.
+  forbidden: >-
+    Vi ne rajtas aliri tiun enhavon.
+  serverNotFound: >-
+    La servila interfaco ne estis trovita.
+    La servilo eble estis ĝisdatigita, do bonvolu refreŝigi la paĝon.
+  serverError: >-
+    Eraro okazis en la servilo.
+    Bonvolu provi denove post iom da tempo.
+  serverTimeout: >-
+    Ne eblis ricevi respondon de la servilo.
+    Bonvolu provi denove post iom da tempo.
+  requestTimeout: >-
+    Ne eblis ricevi respondon de la servilo.
+    Bonvolu provi denove post iom da tempo.
+  recaptchaError: >-
+    La sistemo reCAPTCHA vekis eraron.
+    Bonvolu reprovi.
+  recaptchaRejected: >-
+    Malsukcesis aŭtentikigi per la sistemo reCAPTCHA.
+    Bonvolu reprovi.
+  awsError: >-
+    Io fiaskis.
+    Bonvolu reprovi.
+  messageNotFound: >-
+    Ne estas mesaĝo agordita por tiu ŝprucfenestro.
+    Bonvolu sciigi la administranton.
+  unexpected: >-
+    Neatendita eraro okazis.
+    Bonvolu sciigi la administranton.
+
+alert:
+  confirm: "Konfirmi"
+  cancel: "Nuligi"
+fileInput:
+  button: "Elekti"
+label:
+  required: "deviga"
+  optional: "nedeviga"
+overlay:
+  back: "Reiri"
+  close: "Fermi"
+changeUserNameForm:
+  name: "Uzanta identigilo"
+  confirm: "Ŝanĝi"
+  caution: >-
+    Nuntempe vi ne povas ŝanĝi vian uzantan identigilon.
+changeUserScreenNameForm:
+  screenName: "Kromnomo"
+  confirm: "Ŝanĝi"
+changeUserEmailForm:
+  email: "Retpoŝta adreso"
+  confirm: "Ŝanĝi"
+changeUserPasswordForm:
+  password: "Pasvorto"
+  confirm: "Ŝanĝi"
+createDictionaryForm:
+  defaultName: "Nova vortaro"
+  name: "Nomo"
+  confirm: "Krei"
+discardUserForm:
+  confirm: "Forigi"
+  caution: >-
+    Tiu operacio forigos tiun uzanton konstante, kaj ankaŭ forigos la vortarojn kiujn vi posedas.
+    Post kiam vi forigos ilin, vi ne povos restaŭri ilin.
+  alert: >-
+    Tiu uzanto estos forigita konstante, kaj la vortaroj kiujn vi posedas ankaŭ estos forigitaj.
+    Vi ne povas restaŭri ilin poste.
+    Ĉu vi vere certas?
+addEditInvitationForm:
+  userName: "Uzanta identigilo por inviti"
+  confirm: "Inviti"
+addTransferInvitationForm:
+  userName: "Uzanta identigilo por inviti"
+  confirm: "Inviti"
+changeDictionaryExplanationForm:
+  explanation: "Description"
+  confirm: "Ŝanĝi"
+changeDictionaryNameForm:
+  name: "Nomo"
+  confirm: "Ŝanĝi"
+changeDictionaryParamNameForm:
+  paramName: "Retadresa nomo"
+  confirm: "Ŝanĝi"
+changeDictionarySecretForm:
+  public: "Videbla"
+  secret: "Nevidebla"
+  confirm: "Ŝanĝi"
+  caution: >-
+    Tiu agordo influas nur ĉu tiu vortaro estas montrata en la publika listo de vortaroj.
+    Eĉ se ĝi estas agordita al “Nevidebla”, ĉiu kun la ligilo povas vidi tiun vortaron.
+changeDictionarySettingsForm:
+  pronunciationTitle: "Titolo por elparoloj"
+  exampleTitle: "Titolo por frazoj"
+  enableMarkdownTrue: "Ebligita"
+  enableMarkdownFalse: "Malebligita"
+  confirm: "Ŝanĝi"
+changeDictionarySourceForm:
+  akrantiain: "Fontkodo por Akrantiain"
+  zatlin: "Fontkodo por Zatlin"
+  confirm: "Ŝanĝi"
+  try: "Provi"
+discardDictionaryForm:
+  confirm: "Forigi"
+  caution: >-
+    Tiu operacio forigos tiun vortaron konstante.
+    Post kiam vi forigos ĝin, vi ne povas restaŭri ĝin.
+  alert: >-
+    Tiu vortaro estos forigita konstante.
+    Vi ne povas restaŭri ĝin poste.
+    Ĉu vi vere certas?
+uploadDictionaryForm:
+  file: "Dosiero"
+  confirm: "Konfirmi"
+  caution: >-
+    Vi ne povas alŝuti dosierojn pli grandajn ol 5 MB.
+    Krome, se vi plurfoje alŝutos dosierojn, ni eble suspendos viajn alŝutadojn laŭ la okazo.
+activateUserForm:
+  send: "Sendi"
+  caution: >-
+    Tiu uzanto ankoraŭ ne estas aktivigita.
+    Pro sekurecaj kialoj, neaktivigitaj uzantoj povos fari nenion post iom da tempo.
+    Por aktivigi, sekvu la instrukciojn en la poŝto kiun vi ricevis kiam vi kreis la uzanton.
+    Vi ankaŭ povas alklaki la dekstran butonon por resendi la poŝton.
+advancedSearchForm:
+  overlayTitle: "Altnivela serĉo"
+  search: "Ŝlosilvorto"
+  title: "Titlo"
+  mode: "Amplekso"
+  type: "Metodo"
+  name: "Kapvorto"
+  equivalent: "Tradukaĵo"
+  tag: "Etikedo"
+  information: "Enhavo"
+  content: "Tuto"
+  prefix: "Prefiksa"
+  suffix: "Sufiksa"
+  part: "Parta"
+  exact: "Ekzakta"
+  regular: "Regesp"
+  confirm: "Konfirmi"
+akrantiainExecutor:
+  title: "Akrantiain {version}"
+  source: "Fontkodo"
+  input: "Enigo"
+  output: "Eligo"
+  errorMessage: "Erarmesaĝo"
+  execute: "Plenumi"
+commissionEditor:
+  title: "Peti vorton"
+  name: "Vorto"
+  comment: "Komento"
+  confirm: "Peti"
+commissionPane:
+  discard: "Forigi"
+  add: "Krei"
+  alert: >-
+    Tiu peto estos forigita.
+    Ĉu vi vere certas?
+contactForm:
+  name: "Nomo"
+  email: "Retpoŝta adreso"
+  subject: "Temo"
+  text: "Enhavo"
+  confirm: "Sendi"
+contributorList:
+  title: "Specialan dankon al"
+dashboardButtonForm:
+  dashboard: "Iri al uzanta paĝo"
+  logout: "Elsaluti"
+dictionaryHeader:
+  add: "Aldoni"
+  addWord: "Vorto"
+  addExample: "Frazo"
+  addCommission: "Peti"
+  example: "Frazoj"
+  setting: "Agordoj"
+  download: "Elŝuti"
+dictionaryPane:
+  wordSize: "{wordSize, plural, one {# vorto} other {# vortoj}}"
+  wordSizeTokipona: "{wordSize, number, ::.00} TP"
+  wordSizeLogTokipona: "{wordSize, number, ::.000} logTP"
+  wordSizeUndefined: "? vortoj"
+  saving: "Konservata"
+  error: "Erara"
+  userName: "Posedanto"
+  updatedDate: "Ĝisdatigita je"
+  createdDate: "Kreita je"
+  setting: "Agordoj"
+  download: "Elŝuti"
+dictionaryStatisticsPane:
+  wordCount: "Vortoj"
+  wordCountRaw: 
+    value: "{value, number} "
+    unit: "{value, plural, one {vorto} other {vortoj}} "
+  wordCountTokipona: 
+    value: "{value, number, ::.00} "
+    unit: "TP"
+  wordCountCtwi: 
+    valuePositive: "{value, number, ::.00} "
+    valueNegative: "−{value, number, ::sign-never .00} "
+    valueInfinity: "−∞ "
+    unit: "CTP"
+  wordCountLogTokipona: 
+    valuePositive: "{value, number, ::.000} "
+    valueNegative: "−{value, number, ::sign-never .000} "
+    valueInfinity: "−∞ "
+    unit: "logTP"
+  wordCountCoverage: 
+    value: "{value, number, ::.000} "
+    unit: "%EC"
+  wordNameLengthAverage:
+    title: "Averaĝa longo de kapvorto"
+    value: "{value, number, ::.00} "
+    unit: "{value, plural, one {signo/vorto} other {signoj/vorto}}"
+  equivalentNameCountWhole:
+    title: "Tradukaĵoj"
+    value: "{value, number} "
+    unit: "{value, plural, one {termino} other {terminoj}}"
+  equivalentNameCountAverage:
+    title: "Averaĝa tradukaĵo"
+    value: "{value, number, ::.00} "
+    unit: "{value, plural, one {termino/vorto} other {terminoj/vorto}}"
+  informationCountWhole:
+    title: "Enhavoj"
+    value: "{value, number} "
+    unit: "{value, plural, one {ero} other {eroj}}"
+  informationCountAverage:
+    title: "Averaĝa enhavo"
+    value: "{value, number, ::.00} "
+    unit: "{value, plural, one {ero/vorto} other {eroj/vorto}}"
+  informationTextLengthWhole:
+    title: "Longo de enhavo"
+    value: "{value, number} "
+    unit: "{value, plural, one {signo} other {signoj}}"
+  informationTextLengthAverage:
+    title: "Averaĝa longo de enhavo"
+    value: "{value, number, ::.00} "
+    unit: "{value, plural, one {signo/vorto} other {signoj/vorto}}"
+  exampleCountWhole:
+    title: "Ekzemplaj frazoj"
+    value: "{value, number} "
+    unit: "{value, plural, one {frazo} other {frazoj}}"
+  exampleCountAverage:
+    title: "Averaĝa ekzempla frazo"
+    value: "{value, number, ::.00} "
+    unit: "{value, plural, one {frazo/vorto} other {frazoj/vorto}}"
+  kept: "Kiel estas"
+  nfd: "NFD"
+  nfc: "NFC"
+exampleEditor:
+  title: "Redakti ekzemplajn frazojn"
+  newExample: "Nova frazo"
+  existingExample: "Frazo #{number}"
+  sentence: "Frazo"
+  translation: "Tradukaĵo"
+  word: "Enhavitaj vortoj"
+  wordNameUndefined: "?"
+  wordAbsent: "Neniuj enhavitaj vortoj"
+  add: "Aldoni"
+  cancel: "Nuligi"
+  discard: "Forigi"
+  confirm: "Konfirmi"
+  selectWord: "Elekti"
+  alertConfirm: "Forigi"
+  alert: >-
+    Tiu ekzempla frazo estos forigita konstante.
+    Vi ne povas restaŭri ĝin poste.
+    Ĉu vi vere certas?
+examplePane:
+  edit: "Redakti"
+  caution: >-
+    Tiu ekzempla frazo havas neniujn vortojn asociitajn kun ĝi.
+    Ĝi ne aperos en la vortaro, do bonvolu asocii iun vorton kun ĝi.
+featurePane:
+  dictionary:
+    title: "Redakti"
+    text: >-
+      Oni povas krei vortaron en onia retumilo kaj tuj publikigi ĝin kiel reta vortaro.
+      Oni povas redakti ĝin kiam ajn oni havas retumilon, sen aldonaj aplikaĵoj.
+  search:
+    title: "Serĉi"
+    text: >-
+      Oni povas serĉi dum oni tajpas, kaj laŭ kapvorto kaj laŭ tradukaĵo.
+      Oni ankaŭ povas fari altnivelajn serĉojn per pluraj kondiĉoj.
+  user:
+    title: "Kunlabori"
+    text: >-
+      Multaj uzantoj samtempe povas redakti saman vortaron, donante redaktan permoson al ili.
+      Kunlabora kreado de konstruita lingvo estas facile realigebla.
+giftPane:
+  sendGift: "Sendi donacon"
+  information: >-
+    ZpDIC Online estas evoluigata kaj prizorgata de individua programisto.
+    Via subteno estas necesa por daŭrigi kaj plibonigi la servon.
+    Se vi ŝatas tiun aplikaĵon, bonvolu sendi donacon al la programisto el la suba butono.
+    Ĝi povas akceli la evoluon.
+githubButton:
+  github: "Vidi sur GitHub"
+  dashboard: "Evolupanelo"
+header:
+  dictionaryList: "Vortaroj"
+  notification: "Sciigoj"
+  document: "Dokumentoj"
+  contact: "Kontakti"
+  language: "Lingvoj"
+  dashboard: "Uzanta paĝo"
+hotkeyHelp:
+  title: "Listo de fulmoklavoj"
+  general: "Ĝenerala"
+  showHotkeyHelp: "Montri tiun helpon"
+  unfocus: "Malfokusigi ĉion"
+  navigation: "Navigado"
+  jumpDashboardPage: "Uzanta paĝo"
+  jumpDictionaryListPage: "Paĝo de listo de vortaroj"
+  jumpNotificationPage: "Paĝo de sciigoj"
+  jumpDocumentPage: "Paĝo de dokumentoj"
+  jumpContactPage: "Paĝo de kontaktado"
+  jumpLanguagePage: "Paĝo de lingvoj"
+  jumpDictionaryPage: "Paĝo de vortaro"
+  jumpDictionarySettingPage: "Paĝo de vortaraj agordoj"
+  jumpExamplePage: "Paĝo de ekzemplaj frazoj"
+  editDictionary: "Redaktado"
+  addWord: "Aldoni novan vorton"
+  addExample: "Aldoni novan ekzemplan frazon"
+  addCommission: "Peti vorton"
+  toggleWordEditor: "Fermi/malfermi vortan redaktilon"
+  toggleExampleEditor: "Fermi/malfermi frazan redaktilon"
+  searchWords: "Serĉado"
+  focusSearch: "Enfokusigi la serĉan formularon"
+  moveNextPage: "Iri al sekva paĝo"
+  movePreviousPage: "Iri al antaŭa paĝo"
+  changeSearchModeToBoth: "Serĉi ambaŭ"
+  changeSearchModeToName: "Serĉi kapvortojn"
+  changeSearchModeToEquivalent: "Serĉi tradukaĵojn"
+  changeSearchModeToContent: "Serĉi tutajn enhavojn"
+  changeSearchTypeToPrefix: "Prefiksa kongruo"
+  changeSearchTypeToPart: "Parta kongruo"
+  changeSearchTypeToExact: "Ekzakta kongruo"
+  changeSearchTypeToRegular: "Uzi regulan esprimon"
+  information: >-
+    Fulmoklavoj kun du aŭ pli da klavoj estas lanĉitaj per enigi la klavojn sinsekve de maldekstre.
+    Se fulmoklavo montriĝas travidebla, ĝi ne estos disponebla sur la nuntempe malfermita paĝo.
+invitationPane:
+  createdDate: "Invitita je"
+  userName: "Invitanto"
+  reject: "Malakcepti"
+  accept: "Akcepti"
+languageForm:
+  caution: >-
+    La traduko eble estas malĝusta.
+    Se vi trovos ion strangan en la tradukaĵo, bonvolu sciigi nin per la kontakta formularo.
+loginForm:
+  userName: "Uzanta identigilo"
+  email: "Retpoŝta adreso"
+  password: "Pasvorto"
+  confirm: "Ensaluti"
+  resetPassword: "Restarigi pasvorton"
+notificationPane:
+  fixed: "Riparita"
+overallAggregationPane:
+  user: "{count, plural, one {Uzanto} other {Uzantoj}}"
+  dictionary: "{count, plural, one {Vortaro} other {Vortaroj}}"
+  word: "{count, plural, one {Vorto} other {Vortoj}}"
+  example: "{count, plural, one {Frazo} other {Frazoj}}"
+regexpExecutor:
+  title: "Regula esprimo"
+  source: "Regula esprimo"
+  target: "Cela teksto"
+  result: "Rezulto"
+  execute: "Plenumi"
+registerForm:
+  confirm: "Registriĝi"
+resetUserPasswordForm:
+  newPassword: "Nova pasvorto"
+  issue: "Sendi"
+  reset: "Restarigi"
+resourceList:
+  title: "Bildoj"
+  file: "Dosiero por alŝuti"
+  confirm: "Konfirmi"
+  experimantalCaution: >-
+    La funkcio de alŝutado de dosieroj estas nuntempe eksperimenta.
+    En estontaj ĝisdatigoj, tiu funkcio povas esti signife ŝanĝita aŭ la alŝutitaj dosieroj eble estos forigitaj.
+  markdownCaution: >-
+    Por uzi tiun funkcion, vi devas ebligi Markdown en la paĝo de vortaraj agordoj.
+  instruction: >-
+    Elektu bildan dosieron kaj alklaku “Konfirmi” por alŝuti ĝin.
+    La alŝutita dosiero estos aldonita en la suba listo.
+    Kopiu la kodon sub la nomo de dosiero kaj algluu ĝin en la kampo de enhavo por montri la bildon.
+resourcePane:
+  code: "Kodo por enkorpigi"
+  copy: "Kopii"
+  discard: "Forigi"
+  alert: >-
+    Tiu resurso estos forigita.
+    Ĉu vi vere certas?
+searchForm:
+  both: "Ambaŭ"
+  name: "Kapvorto"
+  equivalent: "Tradukaĵo"
+  content: "Tuto"
+  prefix: "Prefiksa"
+  part: "Parta"
+  exact: "Ekzakta"
+  regular: "Regesp"
+  ignoreCase: "Ignori usklecon"
+  unicode: "Unikodo"
+  custom: "Propra ordo"
+  updatedDate: "Dato de ĝisdatigo"
+  createdDate: "Dato de kreo"
+  ascending: "Kreska"
+  descending: "Malkreska"
+  advancedSearch: "Altnivela serĉo"
+sourceTester:
+  try: "Provi"
+suggestionPane:
+  maybe: "Ĉu vi celas"
+  suggestion: "{title} de {nameNode}?"
+userPane:
+  discard: "Forigi"
+  alert: >-
+    La redakta permeso de tiu uzanto estos revokita.
+    Ĉu vi vere certas?
+wordEditor:
+  title: "Redakti vortojn"
+  basic: "Bazaj informoj"
+  name: "Literumo"
+  pronunciation: "Prononco"
+  tag: "Etikedoj"
+  equivalent: "Tradukaĵoj"
+  equivalentTitle: "Titlo"
+  equivalentNames: "Tradukaĵoj"
+  information: "Enhavoj"
+  informationTitle: "Titlo"
+  informationText: "Enhavo"
+  variation: "Variaĵaj formoj"
+  variationTitle: "Titlo"
+  variationName: "Formo"
+  relation: "Rilataj vortoj"
+  relationTitle: "Titlo"
+  relationName: "Vorto"
+  tagAbsent: "Neniuj etikedoj"
+  equivalentAbsent: "Neniuj tradukaĵoj"
+  informationAbsent: "Neniuj enhavoj"
+  variationAbsent: "Neniuj variaĵaj formoj"
+  relationAbsent: "Neniuj rilataj vortoj"
+  add: "Aldoni"
+  cancel: "Nuligi"
+  discard: "Forigi"
+  confirm: "Konfirmi"
+  generate: "Generi"
+  resource: "Bildoj"
+  selectRelation: "Elekti"
+  alertConfirm: "Forigi"
+  alert: >-
+    Tiu vorto estos forigita konstante.
+    Vi ne povas restaŭri ĝin poste.
+    Ĉu vi vere certas?
+wordNameFrequencyPane:
+  value: "{value, number} / {total, number}"
+  percent: "{percent, number, ::.000}%"
+  others: "Alioj"
+wordPane:
+  edit: "Redakti"
+  submit: "Elekti"
+  oneway: "Igi unudirekta"
+  mutual: "Igi reciproka"
+wordSearcher:
+  title: "Serĉi vorton"
+zatlinExecutor:
+  title: "Zatlin {version}"
+  source: "Fontkodo"
+  output: "Eligo"
+  errorMessage: "Erarmesaĝo"
+  execute: "Plenumi"
+contactPage:
+  title: "Kontakti"
+  privacy: >-
+    Bonvolu legi kaj konsenti pri la [privateca politiko](/document/other/privacy) antaŭ sendi vian demandon.
+  explanation: >-
+    Se vi volas sendi vian demandon anonime, bonvolu elsaluti kaj poste lasi malplena la kampon “Nomo”.
+    Bonvolu noti, ke ni eble ne povos respondi al via anonima peto se ĝi koncernas ion kiu bezonas la aŭtoritaton de la uzanto, kiel agordado aŭ redaktado de vortaro.
+dashboardPage:
+  title: "Uzanta paĝo"
+  dictionary: "Vortaroj"
+  notification: "Sciigoj"
+  account: "Konto"
+  logout: "Elsaluti"
+  dictionaryList:
+    label: "Vortaroj"
+    description: >-
+      Jen listo de viaj vortaroj.
+      Tio ankaŭ inkluzivas tiujn kiujn vi ne posedas sed rajtas redakti.
+  editInvitationList:
+    label: "Invitoj por redaktado"
+    description: >-
+      Jen listo de redaktaj invitoj al vi.
+      Akcepti inviton al vortaro permesos al vi redakti ĝin.
+  transferInvitationList:
+    label: "Invitoj por transdonado"
+    description: >-
+      Jen listo de invitoj al vi por transfoni proprieton de vortaro.
+      Akcepti inviton igos vin la nova posedanto de la vortaro.
+  createDictionaryForm:
+    label: "Krei novan vortaron"
+    description: <empty>
+  changeUserNameForm:
+    label: "Uzanta identigilo"
+    description: >-
+      Jen via uzanta identigilo.
+  changeUserScreenNameForm:
+    label: "Ŝanĝi kromnomon"
+    description: >-
+      Ŝanĝi vian kromnomon.
+      Male al via uzanta identigilo, vi tie povas uzi iujn ajn signojn.
+  changeUserEmailForm:
+    label: "Ŝanĝi retpoŝtan adreson"
+    description: <empty>
+  changeUserPasswordForm:
+    label: "Ŝanĝi pasvorton"
+    description: <empty>
+  discardUserForm:
+    label: "Forigi"
+    description: >-
+      Forigi tiun uzanton.
+dictionaryListPage:
+  title: "Vortaroj"
+  updatedDate: "Ordigi laŭ dato de ĝisdatigo"
+  createdDate: "Ordigi laŭ dato de kreo"
+dictionarySettingPage:
+  general: "Ĝenerala"
+  setting: "Agordoj"
+  access: "Permesoj"
+  commission: "Petoj"
+  resource: "Bildoj"
+  statistics: "Statistikoj"
+  changeDictionaryNameForm:
+    label: "Ŝanĝi nomon"
+    description: >-
+      Ŝanĝi la montran nomon de tiu vortaro.
+  changeDictionaryParamNameForm:
+    label: "Ŝanĝi retadresan nomon"
+    description: >-
+      Ŝanĝi la retadresan nomon de tiu vortaro.
+      Agordi ĝi anstataŭigos la identigan numeron en la retadreso de la vortaro per la nomo tie agordita.
+  changeDictionarySecretForm:
+    label: "Ŝanĝi videblon"
+    description: >-
+      Ŝanĝi ĉu tiu vortaro estas montrata en la paĝo de la listo de vortaroj.
+  changeDictionaryExplanationForm:
+    label: "Ŝanĝi priskribon"
+    description: >-
+      Ŝanĝi la priskribon de tiu vortaro.
+      Vi povas uzi iun sintakson de Markdown.
+      Tio estos montrata en la paĝo de la vortaro antaŭ serĉado.
+  changeDictionaryAkrantiainSourceForm:
+    label: "Ŝanĝi fontkodon por Akrantiain"
+    description: >-
+      Ŝanĝi la fontkodon por Akrantiain.
+      Se vi agordos tiun kodon, Akrantiain aŭtomate generos prononcon el literumo, kaj ĝi aperos apud la literumo.
+      Kiam vorto havas sian specifitan prononcon, ĝi estos anstataŭe montrata.
+      Vidu [la dokumentaron](/document) por pliaj informoj pri la sintakso de Akrantiain (nun disponebla nur en la japana).
+  changeDictionaryZatlinSourceForm:
+    label: "Ŝanĝi fontkodon por Zatlin"
+    description: >-
+      Ŝanĝi la fontkodon por Zatlin.
+      Se vi agordos tiun kodon, butono “Generi” aperos en la vortredaktilo, kiu ebligas al vi generi literumon per ekzekuto de Zatlin.
+      Vidu [la dokumentaron](/document) por pliaj informoj pri la sintakso de Zatlin.
+  changeDictionaryPronunciationTitleForm:
+    label: "Ŝanĝi titolon por elparoloj"
+    description: >-
+      Ŝanĝi la titolon por elparoloj, kiu estos uzata dum eligado de la vortaro en OTM-JSON formato.
+  changeDictionaryExampleTitleForm:
+    label: "Ŝanĝi titolon por frazoj"
+    description: >-
+      Ŝanĝi la titolon por ekzemplaj frazoj, kiu estos montrata en la paĝo de la vortaro.
+  changeDictionaryEnableMarkdownForm:
+    label: "Ebligi aŭ malebligi Markdown"
+    description: >-
+      Se vi ebligos tiun, vi povos skribi enhavojn de vortoj en Markdown.
+  uploadDictionaryForm:
+    label: "Alŝuti"
+    description: >-
+      Alŝuti dosieron kaj anstataŭigi la aktualan datumon.
+      La subtenataj formatoj estas: OTM-JSON (kun finaĵo .json) kaj PDIC (kun finaĵo .dic).
+  discardDictionaryForm:
+    label: "Forigi"
+    description: >-
+      Forigi tiun vortaron.
+  addEditInvitationForm:
+    label: "Permesoj por redaktado"
+    description: >-
+      Jen uzantoj kiu havas permeson por redakti tiun vortaron.
+      Vi tie ankaŭ povas doni permeson al alia uzanto.
+      Uzantoj kun permeso povas redakti kaj forigi vortojn, sed ne povas ŝanĝi la nomon de la vortaro aŭ forigi ĝin.
+  addTransferInvitationForm:
+    label: "Permesoj por transdonado"
+    description: >-
+      Vi povas transdoni tiun vortaron al alia uzanto.
+      Post kiam la vortaro estas transdonita, vi ankoraŭ havas redaktan permeson kaj tiel vi povas redakti la vortojn.
+  dictionaryStatisticsPane:
+    label: "Statistikoj"
+    description: >-
+      Jen la statistikaj informoj de tiu vortaro.
+      En la eroj pri signolongo, vi povas vidi la valorojn uzantajn la datumojn kiel estas kaj ankaŭ tiujn kalkulitajn post Unikoda normaligo.
+  historyPane:
+    label: "Historio de nombro da vortoj"
+    description: >-
+      Jen la historio de la nombro da vortoj en tiu vortaro dum la lastaj 100 tagoj.
+      La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
+  wordNameFrequencyPane:
+    label: "Frekvenco de signoj"
+    description: >-
+      Jen la frekvenco de apero de ĉiu signo uzata en la kapvortoj.
+errorPage:
+  back: "Reiri al ĉefpaĝo"
+  description: >-
+    Neatendita eraro okazintas.
+languagePage:
+  title: "Elekti lingvon"
+loginPage:
+  title: "Ensaluti"
+notFoundPage:
+  description: >-
+    La paĝo kiun vi petas ne estis trovita.
+    Bonvolu certigi ke vi tajpas la korektan adreson.
+    Ankaŭ eblas, ke la paĝo kiun vi serĉas estis forigita aŭ movita al alia loko.
+notificationPage:
+  title: "Sciigoj"
+registerPage:
+  title: "Registriĝi"
+  privacy: >-
+    Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la [privateca politiko](/document/other/privacy).
+resetUserPasswordPage:
+  title: "Restarigi pasvorton"

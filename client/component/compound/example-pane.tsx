@@ -2,41 +2,49 @@
 
 import * as react from "react";
 import {
-  Fragment,
+  MouseEvent,
   ReactElement,
-  Suspense,
-  lazy,
-  useState
+  useCallback
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import WhitePane from "/client/component/compound/white-pane";
 import {
   create
 } from "/client/component/create";
 import {
+  useExampleEditor,
   useIntl
 } from "/client/component/hook";
 import {
+  EditableExample,
   EnhancedDictionary,
   Example
 } from "/client/skeleton/dictionary";
-
-
-let ExampleEditor = lazy(() => import("/client/component/compound/example-editor"));
 
 
 const ExamplePane = create(
   require("./example-pane.scss"), "ExamplePane",
   function ({
     example,
-    dictionary
+    dictionary,
+    onEditConfirm,
+    onDiscardConfirm
   }: {
     example: Example,
-    dictionary: EnhancedDictionary
+    dictionary: EnhancedDictionary,
+    onEditConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   }): ReactElement {
 
-    let [editorOpen, setEditorOpen] = useState(false);
+    let addExampleEditor = useExampleEditor();
     let [, {trans}] = useIntl();
+
+    let openEditor = useCallback(function (): void {
+      addExampleEditor({dictionary, example, onEditConfirm, onDiscardConfirm});
+    }, [dictionary, example, onEditConfirm, onDiscardConfirm, addExampleEditor]);
 
     let cautionNode = (example.words.length <= 0) && (
       <div styleName="caution">
@@ -44,29 +52,19 @@ const ExamplePane = create(
       </div>
     );
     let node = (
-      <Fragment>
-        <WhitePane clickable={false}>
-          <div styleName="example-wrapper">
-            <div styleName="example">
-              <span styleName="sentence">{example.sentence}</span>
-              <span styleName="example-separator"/>
-              <span styleName="translation">{example.translation}</span>
-            </div>
-            {cautionNode}
+      <WhitePane clickable={false}>
+        <div styleName="example-wrapper">
+          <div styleName="example">
+            <span styleName="sentence">{example.sentence}</span>
+            <span styleName="example-separator"/>
+            <span styleName="translation">{example.translation}</span>
           </div>
-          <div styleName="button">
-            <Button label={trans("examplePane.edit")} iconName="edit" style="simple" onClick={() => setEditorOpen(true)}/>
-          </div>
-        </WhitePane>
-        <Suspense fallback="">
-          <ExampleEditor
-            dictionary={dictionary}
-            example={example}
-            open={editorOpen}
-            onClose={() => setEditorOpen(false)}
-          />
-        </Suspense>
-      </Fragment>
+          {cautionNode}
+        </div>
+        <div styleName="button">
+          <Button label={trans("examplePane.edit")} iconName="edit" style="simple" onClick={openEditor}/>
+        </div>
+      </WhitePane>
     );
     return node;
 

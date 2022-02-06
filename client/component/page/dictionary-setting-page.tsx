@@ -210,7 +210,7 @@ const DictionarySettingPageForms = create(
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.label")}
-            description={<Markdown source={trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.description")} simple={true}/>}
+            description={<Markdown source={trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.description")} type="simple"/>}
             forceWide={true}
           >
             <ChangeDictionarySourceForm
@@ -222,7 +222,7 @@ const DictionarySettingPageForms = create(
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.label")}
-            description={<Markdown source={trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.description")} simple={true}/>}
+            description={<Markdown source={trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.description")} type="simple"/>}
             forceWide={true}
           >
             <ChangeDictionarySourceForm
@@ -244,8 +244,8 @@ const DictionarySettingPageForms = create(
             />
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.changeDictionaryPronunciationTitleForm.label")}
-            description={trans("dictionarySettingPage.changeDictionaryPronunciationTitleForm.description")}
+            label={trans("dictionarySettingPage.changeDictionaryExampleTitleForm.label")}
+            description={trans("dictionarySettingPage.changeDictionaryExampleTitleForm.description")}
           >
             <ChangeDictionarySettingsForm
               number={dictionary.number}

@@ -15,7 +15,7 @@
 .root :global(.c3-axis) text,
 .root :global(.c3-chart-arc) text,
 .root :global(.c3-legend-item) {
-  font-size: 80%;
+  font-size: $tiny-font-size;
 }
 
 .root :global(.c3-axis) text {
@@ -49,7 +49,7 @@
 
 .root :global(.c3-zptooltip) {
   padding: $tooltip-vertical-padding $tooltip-horizontal-padding;
-  font-size: 80%;
+  font-size: $tiny-font-size;
   line-height: $tooltip-line-height;
   border: 1rpx transparent solid;
   border-radius: $small-border-radius;

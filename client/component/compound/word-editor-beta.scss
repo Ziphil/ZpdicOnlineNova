@@ -1,0 +1,151 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  padding: $large-margin 0rpx;
+  border-bottom: 1rpx $invert-border-color solid;
+  &:first-child {
+    border-top: 1rpx $light-border-color solid;
+  }
+  &:last-child {
+    border-bottom: 1rpx $light-border-color solid;
+  }
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: $paragraph-margin;
+}
+
+.head-name {
+  @include bold-font;
+  font-size: $large-font-size;
+  color: $head-color;
+  cursor: pointer;
+}
+
+.head-icon {
+  margin-right: $small-margin;
+  font-size: 16rpx;
+}
+
+.main {
+  margin: $medium-margin 0rpx 0rpx 0rpx;
+  &.hidden {
+    display: none;
+  }
+}
+
+.head {
+  @include bold-font;
+  margin: 0rpx 0rpx $paragraph-margin 0rpx;
+  font-size: $tiny-font-size;
+  color: $light-color;
+}
+
+.container-inner {
+  display: flex;
+  flex-direction: column;
+  gap: $small-control-vertical-margin;
+}
+
+.container-item {
+  display: flex;
+  flex-direction: row;
+  &.dragging {
+    opacity: 0.3;
+  }
+}
+
+.handle {
+  width: 10rpx;
+  margin: 0rpx $small-margin 0rpx 0rpx;
+  border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+  background-color: $strong-background-color;
+  display: flex;
+  align-items: center;
+  cursor: move;
+}
+
+.handle-icon {
+  color: $light-color;
+}
+
+.form-wrapper {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: row;
+  align-items: flex-end;
+}
+
+.form {
+  display: grid;
+  flex-grow: 1;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: $small-control-vertical-margin 0rpx;
+  &.information {
+    grid-template-rows: auto 150rpx;
+  }
+  &.sentence {
+    grid-template-rows: 80rpx 80rpx;
+  }
+  >label {
+    display: contents;
+  }
+}
+
+.generate-wrapper {
+  display: flex;
+  & >:nth-child(1) {
+    flex-grow: 1;
+  }
+}
+
+.title {
+  max-width: 200rpx;
+}
+
+.text {
+  height: 100%;
+}
+
+.plus {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.absent {
+  color: $light-color;
+  opacity: 0.5;
+}
+
+.control-button {
+  margin: 0rpx 0rpx 0rpx $small-control-horizontal-margin;
+}
+
+.relation-input,
+.word-input {
+  align-items: flex-end;
+}
+
+.relation-input >*:nth-child(1),
+.word-input >*:nth-child(1) {
+  flex-grow: 1;
+}
+
+.confirm-button-wrapper {
+  margin: $large-margin 0rpx 0rpx 0rpx;
+  display: flex;
+  justify-content: space-between;
+}
+
+.confirm-button {
+  display: flex;
+  gap: $control-horizontal-margin;
+}

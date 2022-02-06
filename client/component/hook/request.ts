@@ -87,8 +87,7 @@ export function useRequest(): RequestCallbacks {
       } catch (error) {
         if (error.code === "ECONNABORTED") {
           let data = undefined as any;
-          let headers = config.headers;
-          return {status: 408, statusText: "Request Timeout", data, headers, config};
+          return {status: 408, statusText: "Request Timeout", headers: {}, data, config};
         } else {
           throw error;
         }

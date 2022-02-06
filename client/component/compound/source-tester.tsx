@@ -37,7 +37,7 @@ const SourceTester = create(
     let node = (
       <Fragment>
         <form styleName="root">
-          <Highlight value={source} language={language}/>
+          <Highlight source={source} language={language}/>
           <Button label={trans("sourceTester.try")} style="link" onClick={() => setExecutorOpen(true)}/>
         </form>
         <SourceTesterExecutor {...{source, language, executorOpen, setExecutorOpen}}/>

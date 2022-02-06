@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+@use "sass:math" as *;
 @import "/client/component/mixin.scss";
 
 
@@ -28,7 +29,7 @@ $top-content-vertical-margin: 50rpx;
   flex-grow: 1;
   @include smartphone {
     width: 100%;
-    max-width: $page-width / 2;
+    max-width: div($page-width, 2);
     margin: $huge-margin 0rpx 0rpx 0rpx;
   }
 }

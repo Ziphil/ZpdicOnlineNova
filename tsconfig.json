@@ -21,6 +21,7 @@
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "removeComments": true,
+    "resolveJsonModule": true,
     "useUnknownInCatchVariables": false
   },
   "include": [
