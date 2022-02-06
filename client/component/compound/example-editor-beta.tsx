@@ -19,8 +19,11 @@ import {
 import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
+import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
+import Label from "/client/component/atom/label";
 import Overlay from "/client/component/atom/overlay";
+import TextArea from "/client/component/atom/text-area";
 import WordSearcher from "/client/component/compound/word-searcher";
 import {
   StylesRecord,
@@ -40,8 +43,7 @@ import {
   Word
 } from "/client/skeleton/dictionary";
 import {
-  deleteAt,
-  swap
+  deleteAt
 } from "/client/util/misc";
 import {
   StyleNameUtil
@@ -185,6 +187,7 @@ const ExampleEditorRoot = create(
     setAlertOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
+    let [mainShown, setMainShown] = useState(true);
     let [, {trans}] = useIntl();
 
     let cancelButtonNode = (
@@ -196,20 +199,29 @@ const ExampleEditorRoot = create(
     let confirmButtonNode = (
       <Button label={trans("exampleEditor.confirm")} iconName="check" style="information" reactive={true} onClick={editExample}/>
     );
+    let mainStyleName = StyleNameUtil.create(
+      "main",
+      {if: mainShown, false: "hidden"}
+    );
     let innerProps = {dictionary, tempExample, mutateExample};
     let node = (
-      <div>
-        <div styleName="editor">
-          <ExampleEditorSentence {...innerProps}/>
-          <ExampleEditorTranslation {...innerProps}/>
-          <ExampleEditorWords {...innerProps} {...{openWordChooser}}/>
+      <div styleName="root">
+        <div styleName="head-name" onClick={() => setMainShown((mainShown) => !mainShown)}>
+          <span styleName="head-icon"><Icon name={(mainShown) ? "circle-chevron-down" : "circle-chevron-right"}/></span>
+          #{tempExample.number}
         </div>
-        <div styleName="confirm-button-wrapper">
-          <div/>
-          <div styleName="confirm-button">
-            {cancelButtonNode}
-            {discardButtonNode}
-            {confirmButtonNode}
+        <div styleName={mainStyleName}>
+          <div styleName="editor">
+            <ExampleEditorSentence {...innerProps}/>
+            <ExampleEditorWords {...innerProps} {...{openWordChooser}}/>
+          </div>
+          <div styleName="confirm-button-wrapper">
+            <div/>
+            <div styleName="confirm-button">
+              {cancelButtonNode}
+              {discardButtonNode}
+              {confirmButtonNode}
+            </div>
           </div>
         </div>
       </div>
@@ -225,43 +237,38 @@ const ExampleEditorSentence = create(
   function ({
     dictionary,
     tempExample,
-    mutateExample
+    mutateExample,
+    styles
   }: {
     dictionary: EnhancedDictionary,
     tempExample: EditableExample,
-    mutateExample: MutateExampleCallback
+    mutateExample: MutateExampleCallback,
+    styles?: StylesRecord
   }): ReactElement {
 
     let [, {trans}] = useIntl();
 
     let node = (
       <div styleName="container">
-        <Input value={tempExample.sentence} label={trans("exampleEditor.sentence")} onSet={mutateExample((tempExample, sentence) => tempExample.sentence = sentence)}/>
-      </div>
-    );
-    return node;
-
-  }
-);
-
-
-const ExampleEditorTranslation = create(
-  require("./example-editor-beta.scss"),
-  function ({
-    dictionary,
-    tempExample,
-    mutateExample
-  }: {
-    dictionary: EnhancedDictionary,
-    tempExample: EditableExample,
-    mutateExample: MutateExampleCallback
-  }): ReactElement {
-
-    let [, {trans}] = useIntl();
-
-    let node = (
-      <div styleName="container">
-        <Input value={tempExample.translation} label={trans("exampleEditor.translation")} onSet={mutateExample((tempExample, translation) => tempExample.translation = translation)}/>
+        <div styleName="head">
+          {trans("wordEditor.basic")}
+        </div>
+        <div styleName="container-inner">
+          <div styleName="container-item">
+            <div styleName="form-wrapper">
+              <div styleName="form sentence">
+                <label>
+                  <Label text={trans("exampleEditor.sentence")} position="left"/>
+                  <TextArea className={styles!["text"]} value={tempExample.sentence} onSet={mutateExample((tempExample, sentence) => tempExample.sentence = sentence)}/>
+                </label>
+                <label>
+                  <Label text={trans("exampleEditor.translation")} position="left"/>
+                  <TextArea className={styles!["text"]} value={tempExample.translation} onSet={mutateExample((tempExample, translation) => tempExample.translation = translation)}/>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
     return node;
@@ -276,46 +283,24 @@ const ExampleEditorWords = create(
     dictionary,
     tempExample,
     mutateExample,
-    openWordChooser,
-    styles
+    openWordChooser
   }: {
     dictionary: EnhancedDictionary,
     tempExample: EditableExample,
     mutateExample: MutateExampleCallback,
-    openWordChooser: (index: number) => void,
-    styles?: StylesRecord
+    openWordChooser: (index: number) => void
   }): ReactElement {
 
     let [, {trans}] = useIntl();
 
-    let innerNodes = tempExample.words.map((word, index) => {
-      let nameLabel = (index === 0) ? trans("exampleEditor.wordName") : undefined;
-      let innerNode = (
-        <div styleName="inner" key={index}>
-          <div styleName="form">
-            <ControlGroup className={StyleNameUtil.create(styles!["name"], styles!["word-input"])}>
-              <Input value={word.name ?? trans("exampleEditor.wordNameUndefined")} label={nameLabel} readOnly={true}/>
-              <Button label={trans("exampleEditor.selectWord")} onClick={() => openWordChooser(index)}/>
-            </ControlGroup>
-          </div>
-          <div styleName="control-button">
-            <ControlGroup>
-              <Button iconName="arrow-up" disabled={index === 0} onClick={mutateExample((tempExample) => swap(tempExample.words, index, -1))}/>
-              <Button iconName="arrow-down" disabled={index === tempExample.words.length - 1} onClick={mutateExample((tempExample) => swap(tempExample.words, index, 1))}/>
-              <Button iconName="minus" onClick={mutateExample((tempExample) => deleteAt(tempExample.words, index))}/>
-            </ControlGroup>
-          </div>
-        </div>
-      );
-      return innerNode;
-    });
+    let innerNodes = tempExample.words.map((word, index) => <ExampleEditorWord key={index} {...{dictionary, word, index, mutateExample, openWordChooser}}/>);
     let plusNode = (() => {
       let absentMessage = (tempExample.words.length <= 0) ? trans("exampleEditor.wordAbsent") : "";
       let plusNode = (
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button iconName="plus" onClick={() => openWordChooser(tempExample.words.length)}/>
+            <Button label={trans("exampleEditor.add")} iconName="plus" onClick={() => openWordChooser(tempExample.words.length)}/>
           </div>
         </div>
       );
@@ -323,8 +308,62 @@ const ExampleEditorWords = create(
     })();
     let node = (
       <div styleName="container">
-        {innerNodes}
-        {plusNode}
+        <div styleName="head">
+          {trans("exampleEditor.word")}
+        </div>
+        <div styleName="container-inner">
+          {innerNodes}
+          {plusNode}
+        </div>
+      </div>
+    );
+    return node;
+
+  }
+);
+
+
+const ExampleEditorWord = create(
+  require("./example-editor-beta.scss"),
+  function ({
+    dictionary,
+    word,
+    index,
+    mutateExample,
+    openWordChooser,
+    styles
+  }: {
+    dictionary: EnhancedDictionary,
+    word: LinkedWord,
+    index: number,
+    mutateExample: MutateExampleCallback,
+    openWordChooser: (index: number) => void,
+    styles?: StylesRecord
+  }): ReactElement {
+
+    let [, {trans}] = useIntl();
+
+    let styleName = StyleNameUtil.create(
+      "container-item",
+      {if: false, true: "dragging"}
+    );
+    let node = (
+      <div styleName={styleName}>
+        <div styleName="handle">
+          <div styleName="handle-icon"></div>
+        </div>
+        <div styleName="form-wrapper">
+          <div styleName="form">
+            <div/>
+            <ControlGroup className={StyleNameUtil.create(styles!["name"], styles!["word-input"])}>
+              <Input value={word.name ?? trans("exampleEditor.wordNameUndefined")} readOnly={true}/>
+              <Button label={trans("exampleEditor.selectWord")} onClick={() => openWordChooser(index)}/>
+            </ControlGroup>
+          </div>
+          <div styleName="control-button">
+            <Button iconName="minus" onClick={mutateExample((tempExample) => deleteAt(tempExample.words, index))}/>
+          </div>
+        </div>
       </div>
     );
     return node;

@@ -90,6 +90,9 @@
   &.information {
     grid-template-rows: auto 150rpx;
   }
+  &.sentence {
+    grid-template-rows: 80rpx 80rpx;
+  }
   >label {
     display: contents;
   }
