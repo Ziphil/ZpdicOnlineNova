@@ -925,18 +925,18 @@ function useDragDrop(type: string, index: number, move: (draggingIndex: number, 
   return [rootRef, handleRef, dragging];
 }
 
-export type TempEditableWord = Omit<EditableWord, "tags" | "equivalents" | "informations" | "variations" | "relations"> & {
+type TempEditableWord = Omit<EditableWord, "tags" | "equivalents" | "informations" | "variations" | "relations"> & {
   tags: Array<TempTag>,
   equivalents: Array<TempEquivalent>,
   informations: Array<TempInformation>,
   variations: Array<TempVariation>,
   relations: Array<TempRelation>
 };
-export type TempTag = {id: string, string: string};
-export type TempEquivalent = Equivalent & {id: string, string: string};
-export type TempInformation = Information & {id: string};
-export type TempVariation = Variation & {id: string};
-export type TempRelation = Relation & {id: string, mutual?: boolean};
+type TempTag = {id: string, string: string};
+type TempEquivalent = Equivalent & {id: string, string: string};
+type TempInformation = Information & {id: string};
+type TempVariation = Variation & {id: string};
+type TempRelation = Relation & {id: string, mutual?: boolean};
 
 export type MutateWordCallback = <T extends Array<unknown>>(setter: (tempWord: TempEditableWord, ...args: T) => void) => (...args: T) => void;
 

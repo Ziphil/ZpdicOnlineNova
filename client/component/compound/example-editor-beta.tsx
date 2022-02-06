@@ -1,6 +1,9 @@
 //
 
 import cloneDeep from "lodash-es/cloneDeep";
+import {
+  nanoid
+} from "nanoid";
 import * as react from "react";
 import {
   Dispatch,
@@ -30,6 +33,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  useDragDrop,
   useIntl,
   usePopup,
   useRequest,
@@ -43,7 +47,8 @@ import {
   Word
 } from "/client/skeleton/dictionary";
 import {
-  deleteAt
+  deleteAt,
+  moveAt
 } from "/client/util/misc";
 import {
   StyleNameUtil
@@ -66,7 +71,7 @@ const ExampleEditor = create(
     onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    let [tempExample, setTempExample] = useStateWithCallback(cloneDeep(example) ?? EditableExample.createEmpty());
+    let [tempExample, setTempExample] = useStateWithCallback(createTempExample(example));
     let [wordChooserOpen, setWordChooserOpen] = useState(false);
     let [alertOpen, setAlertOpen] = useState(false);
     let editingWordIndexRef = useRef<number>();
@@ -90,15 +95,17 @@ const ExampleEditor = create(
     }, []);
 
     let editWord = useCallback(function (word: Word): void {
-      let wordIndex = editingWordIndexRef.current!;
-      if (tempExample.words[wordIndex] === undefined) {
-        tempExample.words[wordIndex] = LinkedWord.createEmpty();
-      }
-      tempExample.words[wordIndex].number = word.number;
-      tempExample.words[wordIndex].name = word.name;
-      setTempExample(tempExample);
+      setTempExample((tempExample) => {
+        let wordIndex = editingWordIndexRef.current!;
+        if (tempExample.words[wordIndex] === undefined) {
+          tempExample.words[wordIndex] = {...LinkedWord.createEmpty(), id: nanoid()};
+        }
+        tempExample.words[wordIndex].number = word.number;
+        tempExample.words[wordIndex].name = word.name;
+        return {...tempExample};
+      });
       setWordChooserOpen(false);
-    }, [tempExample, setTempExample]);
+    }, [setTempExample]);
 
     let editExample = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
       let number = dictionary.number;
@@ -136,7 +143,7 @@ const ExampleEditor = create(
     }, [dictionary.number, tempExample, request, mutateExample]);
 
     useEffect(() => {
-      let tempExample = cloneDeep(example) ?? EditableExample.createEmpty();
+      let tempExample = createTempExample(example);
       setTempExample(tempExample, () => {
         fetchWordNames();
       });
@@ -179,7 +186,7 @@ const ExampleEditorRoot = create(
   }: {
     dictionary: EnhancedDictionary,
     example: Example | null,
-    tempExample: EditableExample,
+    tempExample: TempEditableExample,
     mutateExample: MutateExampleCallback,
     openWordChooser: (index: number) => void,
     onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
@@ -242,7 +249,7 @@ const ExampleEditorSentence = create(
     styles
   }: {
     dictionary: EnhancedDictionary,
-    tempExample: EditableExample,
+    tempExample: TempEditableExample,
     mutateExample: MutateExampleCallback,
     styles?: StylesRecord
   }): ReactElement {
@@ -287,14 +294,14 @@ const ExampleEditorWords = create(
     openWordChooser
   }: {
     dictionary: EnhancedDictionary,
-    tempExample: EditableExample,
+    tempExample: TempEditableExample,
     mutateExample: MutateExampleCallback,
     openWordChooser: (index: number) => void
   }): ReactElement {
 
     let [, {trans}] = useIntl();
 
-    let innerNodes = tempExample.words.map((word, index) => <ExampleEditorWord key={index} {...{dictionary, word, index, mutateExample, openWordChooser}}/>);
+    let innerNodes = tempExample.words.map((word, index) => <ExampleEditorWord key={word.id} {...{dictionary, word, index, mutateExample, openWordChooser}}/>);
     let plusNode = (() => {
       let absentMessage = (tempExample.words.length <= 0) ? trans("exampleEditor.wordAbsent") : "";
       let plusNode = (
@@ -343,15 +350,20 @@ const ExampleEditorWord = create(
   }): ReactElement {
 
     let [, {trans}] = useIntl();
+    let [rootRef, handleRef, dragging] = useDragDrop(
+      `example-word-${dictionary.id}`,
+      index,
+      mutateExample((tempExample, draggingIndex, hoverIndex) => moveAt(tempExample.words, draggingIndex, hoverIndex))
+    );
 
     let styleName = StyleNameUtil.create(
       "container-item",
-      {if: false, true: "dragging"}
+      {if: dragging, true: "dragging"}
     );
     let node = (
-      <div styleName={styleName}>
-        <div styleName="handle">
-          <div styleName="handle-icon"></div>
+      <div styleName={styleName} ref={rootRef}>
+        <div styleName="handle" ref={handleRef}>
+          <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
         </div>
         <div styleName="form-wrapper">
           <div styleName="form">
@@ -372,6 +384,15 @@ const ExampleEditorWord = create(
   }
 );
 
+
+function createTempExample(example: EditableExample | null): TempEditableExample {
+  let tempExample = cloneDeep(example) ?? EditableExample.createEmpty();
+  let words = tempExample.words.map((word) => ({...word, id: nanoid()}));
+  return {...tempExample, words};
+}
+
+type TempEditableExample = Omit<EditableExample, "words"> & {words: Array<TempLinkedWord>};
+type TempLinkedWord = LinkedWord & {id: string};
 
 export type MutateExampleCallback = <T extends Array<unknown>>(setter: (tempExample: EditableExample, ...args: T) => void) => (...args: T) => void;
 
