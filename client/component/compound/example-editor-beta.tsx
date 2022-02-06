@@ -98,7 +98,7 @@ const ExampleEditor = create(
       setTempExample((tempExample) => {
         let wordIndex = editingWordIndexRef.current!;
         if (tempExample.words[wordIndex] === undefined) {
-          tempExample.words[wordIndex] = {...LinkedWord.createEmpty(), id: nanoid()};
+          tempExample.words[wordIndex] = {...LinkedWord.createEmpty(), tempId: nanoid()};
         }
         tempExample.words[wordIndex].number = word.number;
         tempExample.words[wordIndex].name = word.name;
@@ -301,7 +301,7 @@ const ExampleEditorWords = create(
 
     let [, {trans}] = useIntl();
 
-    let innerNodes = tempExample.words.map((word, index) => <ExampleEditorWord key={word.id} {...{dictionary, word, index, mutateExample, openWordChooser}}/>);
+    let innerNodes = tempExample.words.map((word, index) => <ExampleEditorWord key={word.tempId} {...{dictionary, tempExample, word, index, mutateExample, openWordChooser}}/>);
     let plusNode = (() => {
       let absentMessage = (tempExample.words.length <= 0) ? trans("exampleEditor.wordAbsent") : "";
       let plusNode = (
@@ -335,6 +335,7 @@ const ExampleEditorWord = create(
   require("./example-editor-beta.scss"),
   function ({
     dictionary,
+    tempExample,
     word,
     index,
     mutateExample,
@@ -342,6 +343,7 @@ const ExampleEditorWord = create(
     styles
   }: {
     dictionary: EnhancedDictionary,
+    tempExample: TempEditableExample,
     word: LinkedWord,
     index: number,
     mutateExample: MutateExampleCallback,
@@ -351,7 +353,7 @@ const ExampleEditorWord = create(
 
     let [, {trans}] = useIntl();
     let [rootRef, handleRef, dragging] = useDragDrop(
-      `example-word-${dictionary.id}`,
+      `example-word-${dictionary.id}-${tempExample.tempId}`,
       index,
       mutateExample((tempExample, draggingIndex, hoverIndex) => moveAt(tempExample.words, draggingIndex, hoverIndex))
     );
@@ -387,12 +389,13 @@ const ExampleEditorWord = create(
 
 function createTempExample(example: EditableExample | null): TempEditableExample {
   let tempExample = cloneDeep(example) ?? EditableExample.createEmpty();
-  let words = tempExample.words.map((word) => ({...word, id: nanoid()}));
-  return {...tempExample, words};
+  let tempId = nanoid();
+  let words = tempExample.words.map((word) => ({...word, tempId: nanoid()}));
+  return {...tempExample, tempId, words};
 }
 
-type TempEditableExample = Omit<EditableExample, "words"> & {words: Array<TempLinkedWord>};
-type TempLinkedWord = LinkedWord & {id: string};
+type TempEditableExample = Omit<EditableExample, "words"> & {tempId: string, words: Array<TempLinkedWord>};
+type TempLinkedWord = LinkedWord & {tempId: string};
 
 export type MutateExampleCallback = <T extends Array<unknown>>(setter: (tempExample: EditableExample, ...args: T) => void) => (...args: T) => void;
 

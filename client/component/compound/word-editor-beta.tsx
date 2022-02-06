@@ -116,9 +116,9 @@ const WordEditor = create(
       setTempWord((tempWord) => {
         let relationIndex = editingRelationIndexRef.current!;
         if (tempWord.relations[relationIndex] === undefined) {
-          tempWord.relations[relationIndex] = {...Relation.createEmpty(), id: nanoid()};
+          tempWord.relations[relationIndex] = {...Relation.createEmpty(), tempId: nanoid()};
         }
-        tempWord.relations[relationIndex].id = relationWord.id;
+        tempWord.relations[relationIndex].tempId = relationWord.id;
         tempWord.relations[relationIndex].number = relationWord.number;
         tempWord.relations[relationIndex].name = relationWord.name;
         tempWord.relations[relationIndex].mutual = direction === "mutual";
@@ -364,14 +364,14 @@ const WordEditorTags = create(
 
     let [, {trans}] = useIntl();
 
-    let innerNodes = tempWord.tags.map((tag, index) => <WordEditorTag key={tag.id} {...{dictionary, tag, index, mutateWord, createSuggest, styles}}/>);
+    let innerNodes = tempWord.tags.map((tag, index) => <WordEditorTag key={tag.tempId} {...{dictionary, tempWord, tag, index, mutateWord, createSuggest, styles}}/>);
     let plusNode = (() => {
       let absentMessage = (tempWord.tags.length <= 0) ? trans("wordEditor.tagAbsent") : "";
       let plusNode = (
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.tags.push({id: nanoid(), string: ""}))}/>
+            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.tags.push({tempId: nanoid(), string: ""}))}/>
           </div>
         </div>
       );
@@ -398,6 +398,7 @@ const WordEditorTag = create(
   require("./word-editor-beta.scss"),
   function ({
     dictionary,
+    tempWord,
     tag,
     index,
     mutateWord,
@@ -405,6 +406,7 @@ const WordEditorTag = create(
     styles
   }: {
     dictionary: EnhancedDictionary,
+    tempWord: TempEditableWord,
     tag: TempTag,
     index: number,
     mutateWord: MutateWordCallback,
@@ -414,7 +416,7 @@ const WordEditorTag = create(
 
     let [, {trans}] = useIntl();
     let [rootRef, handleRef, dragging] = useDragDrop(
-      `tag-${dictionary.id}`,
+      `tag-${dictionary.id}-${tempWord.tempId}`,
       index,
       mutateWord((tempWord, draggingIndex, hoverIndex) => moveAt(tempWord.tags, draggingIndex, hoverIndex))
     );
@@ -463,14 +465,14 @@ const WordEditorEquivalents = create(
 
     let [, {trans}] = useIntl();
 
-    let innerNodes = tempWord.equivalents.map((equivalent, index) => <WordEditorEquivalent key={equivalent.id} {...{dictionary, equivalent, index, mutateWord, createSuggest, styles}}/>);
+    let innerNodes = tempWord.equivalents.map((equivalent, index) => <WordEditorEquivalent key={equivalent.tempId} {...{dictionary, tempWord, equivalent, index, mutateWord, createSuggest, styles}}/>);
     let plusNode = (() => {
       let absentMessage = (tempWord.equivalents.length <= 0) ? trans("wordEditor.equivalentAbsent") : "";
       let plusNode = (
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.equivalents.push({...Equivalent.createEmpty(), id: nanoid(), string: ""}))}/>
+            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.equivalents.push({...Equivalent.createEmpty(), tempId: nanoid(), string: ""}))}/>
           </div>
         </div>
       );
@@ -497,6 +499,7 @@ const WordEditorEquivalent = create(
   require("./word-editor-beta.scss"),
   function ({
     dictionary,
+    tempWord,
     equivalent,
     index,
     mutateWord,
@@ -504,6 +507,7 @@ const WordEditorEquivalent = create(
     styles
   }: {
     dictionary: EnhancedDictionary,
+    tempWord: TempEditableWord,
     equivalent: TempEquivalent,
     index: number,
     mutateWord: MutateWordCallback,
@@ -513,7 +517,7 @@ const WordEditorEquivalent = create(
 
     let [, {trans}] = useIntl();
     let [rootRef, handleRef, dragging] = useDragDrop(
-      `equivalent-${dictionary.id}`,
+      `equivalent-${dictionary.id}-${tempWord.tempId}`,
       index,
       mutateWord((tempWord, draggingIndex, hoverIndex) => moveAt(tempWord.equivalents, draggingIndex, hoverIndex))
     );
@@ -569,14 +573,14 @@ const WordEditorInformations = create(
 
     let [, {trans}] = useIntl();
 
-    let innerNodes = tempWord.informations.map((information, index) => <WordEditorInformation key={information.id} {...{dictionary, information, index, mutateWord, createSuggest, styles}}/>);
+    let innerNodes = tempWord.informations.map((information, index) => <WordEditorInformation key={information.tempId} {...{dictionary, tempWord, information, index, mutateWord, createSuggest, styles}}/>);
     let plusNode = (() => {
       let absentMessage = (tempWord.informations.length <= 0) ? trans("wordEditor.informationAbsent") : "";
       let plusNode = (
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.informations.push({...Information.createEmpty(), id: nanoid()}))}/>
+            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.informations.push({...Information.createEmpty(), tempId: nanoid()}))}/>
           </div>
         </div>
       );
@@ -603,6 +607,7 @@ const WordEditorInformation = create(
   require("./word-editor-beta.scss"),
   function ({
     dictionary,
+    tempWord,
     information,
     index,
     mutateWord,
@@ -610,6 +615,7 @@ const WordEditorInformation = create(
     styles
   }: {
     dictionary: EnhancedDictionary,
+    tempWord: TempEditableWord,
     information: TempInformation,
     index: number,
     mutateWord: MutateWordCallback,
@@ -619,7 +625,7 @@ const WordEditorInformation = create(
 
     let [, {trans}] = useIntl();
     let [rootRef, handleRef, dragging] = useDragDrop(
-      `information-${dictionary.id}`,
+      `information-${dictionary.id}-${tempWord.tempId}`,
       index,
       mutateWord((tempWord, draggingIndex, hoverIndex) => moveAt(tempWord.informations, draggingIndex, hoverIndex))
     );
@@ -676,14 +682,14 @@ const WordEditorVariations = create(
 
     let [, {trans}] = useIntl();
 
-    let innerNodes = tempWord.variations.map((variation, index) => <WordEditorVariation key={variation.id} {...{dictionary, variation, index, mutateWord, createSuggest, styles}}/>);
+    let innerNodes = tempWord.variations.map((variation, index) => <WordEditorVariation key={variation.tempId} {...{dictionary, tempWord, variation, index, mutateWord, createSuggest, styles}}/>);
     let plusNode = (() => {
       let absentMessage = (tempWord.variations.length <= 0) ? trans("wordEditor.variationAbsent") : "";
       let plusNode = (
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.variations.push({...Variation.createEmpty(), id: nanoid()}))}/>
+            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.variations.push({...Variation.createEmpty(), tempId: nanoid()}))}/>
           </div>
         </div>
       );
@@ -710,6 +716,7 @@ const WordEditorVariation = create(
   require("./word-editor-beta.scss"),
   function ({
     dictionary,
+    tempWord,
     variation,
     index,
     mutateWord,
@@ -717,6 +724,7 @@ const WordEditorVariation = create(
     styles
   }: {
     dictionary: EnhancedDictionary,
+    tempWord: TempEditableWord,
     variation: TempVariation,
     index: number,
     mutateWord: MutateWordCallback,
@@ -726,7 +734,7 @@ const WordEditorVariation = create(
 
     let [, {trans}] = useIntl();
     let [rootRef, handleRef, dragging] = useDragDrop(
-      `variation-${dictionary.id}`,
+      `variation-${dictionary.id}-${tempWord.tempId}`,
       index,
       mutateWord((tempWord, draggingIndex, hoverIndex) => moveAt(tempWord.variations, draggingIndex, hoverIndex))
     );
@@ -784,7 +792,7 @@ const WordEditorRelations = create(
 
     let [, {trans}] = useIntl();
 
-    let innerNodes = tempWord.relations.map((relation, index) => <WordEditorRelation key={relation.id} {...{dictionary, relation, index, mutateWord, createSuggest, openRelationChooser, styles}}/>);
+    let innerNodes = tempWord.relations.map((relation, index) => <WordEditorRelation key={relation.tempId} {...{dictionary, tempWord, relation, index, mutateWord, createSuggest, openRelationChooser, styles}}/>);
     let plusNode = (() => {
       let absentMessage = (tempWord.relations.length <= 0) ? trans("wordEditor.relationAbsent") : "";
       let plusNode = (
@@ -818,6 +826,7 @@ const WordEditorRelation = create(
   require("./word-editor-beta.scss"),
   function ({
     dictionary,
+    tempWord,
     relation,
     index,
     mutateWord,
@@ -826,6 +835,7 @@ const WordEditorRelation = create(
     styles
   }: {
     dictionary: EnhancedDictionary,
+    tempWord: TempEditableWord,
     relation: TempRelation,
     index: number,
     mutateWord: MutateWordCallback,
@@ -836,7 +846,7 @@ const WordEditorRelation = create(
 
     let [, {trans}] = useIntl();
     let [rootRef, handleRef, dragging] = useDragDrop(
-      `relation-${dictionary.id}`,
+      `relation-${dictionary.id}-${tempWord.tempId}`,
       index,
       mutateWord((tempWord, draggingIndex, hoverIndex) => moveAt(tempWord.relations, draggingIndex, hoverIndex))
     );
@@ -886,12 +896,13 @@ function createTempWord(word: EditableWord | null, defaultName?: string, default
     let equivalent = {title: "", names: [defaultEquivalentName]};
     tempWord.equivalents.push(equivalent);
   }
-  let tags = tempWord.tags.map((tag) => ({id: nanoid(), string: tag}));
-  let equivalents = tempWord.equivalents.map((equivalent) => ({...equivalent, id: nanoid(), string: equivalent.names.join(", ")}));
-  let informations = tempWord.informations.map((information) => ({...information, id: nanoid()}));
-  let variations = tempWord.variations.map((variation) => ({...variation, id: nanoid()}));
-  let relations = tempWord.relations.map((relation) => ({...relation, id: nanoid()}));
-  return {...tempWord, tags, equivalents, informations, variations, relations};
+  let tempId = nanoid();
+  let tags = tempWord.tags.map((tag) => ({tempId: nanoid(), string: tag}));
+  let equivalents = tempWord.equivalents.map((equivalent) => ({...equivalent, tempId: nanoid(), string: equivalent.names.join(", ")}));
+  let informations = tempWord.informations.map((information) => ({...information, tempId: nanoid()}));
+  let variations = tempWord.variations.map((variation) => ({...variation, tempId: nanoid()}));
+  let relations = tempWord.relations.map((relation) => ({...relation, tempId: nanoid()}));
+  return {...tempWord, tempId, tags, equivalents, informations, variations, relations};
 }
 
 function recreateWord(tempWord: TempEditableWord): EditableWord {
@@ -926,17 +937,18 @@ function useDragDrop(type: string, index: number, move: (draggingIndex: number, 
 }
 
 type TempEditableWord = Omit<EditableWord, "tags" | "equivalents" | "informations" | "variations" | "relations"> & {
+  tempId: string,
   tags: Array<TempTag>,
   equivalents: Array<TempEquivalent>,
   informations: Array<TempInformation>,
   variations: Array<TempVariation>,
   relations: Array<TempRelation>
 };
-type TempTag = {id: string, string: string};
-type TempEquivalent = Equivalent & {id: string, string: string};
-type TempInformation = Information & {id: string};
-type TempVariation = Variation & {id: string};
-type TempRelation = Relation & {id: string, mutual?: boolean};
+type TempTag = {tempId: string, string: string};
+type TempEquivalent = Equivalent & {tempId: string, string: string};
+type TempInformation = Information & {tempId: string};
+type TempVariation = Variation & {tempId: string};
+type TempRelation = Relation & {tempId: string, mutual?: boolean};
 
 export type MutateWordCallback = <T extends Array<unknown>>(setter: (tempWord: TempEditableWord, ...args: T) => void) => (...args: T) => void;
 
