@@ -62,37 +62,12 @@ const DocumentPage = create(
       }
     }, [params.firstPath, params.secondPath, locale, request]);
 
-    let renderSourceTester = useCallback(function (props: {children: any}): ReactElement {
-      let child = props.children[0];
-      if (child.type === "code") {
-        let match = child.props.className?.match(/^language-(.+)$/)?.[1]?.match(/^(\w+)(-try)?$/);
-        let language = match?.[1] ?? "plain";
-        let source = String(child.props.children);
-        let modeOptions = CodeMirrorUtil.getModeOptions(language);
-        if (modeOptions.mode !== undefined) {
-          let innerNode = (match && match[2]) ? <SourceTester source={source} language={language}/> : <Highlight source={source} language={language}/>;
-          let node = (
-            <div className="block">
-              {innerNode}
-            </div>
-          );
-          return node;
-        } else {
-          let node = <pre>{props.children}</pre>;
-          return node;
-        }
-      } else {
-        let node = <pre>{props.children}</pre>;
-        return node;
-      }
-    }, []);
-
     useEffect(() => {
       fetchSource();
     }, [fetchSource, location.key]);
 
     if (found) {
-      let components = {pre: renderSourceTester};
+      let components = {pre: DocumentPageSourceTester};
       let title = source?.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
       let node = (
         <Page>
@@ -109,6 +84,41 @@ const DocumentPage = create(
       let node = (
         <NotFoundPage/>
       );
+      return node;
+    }
+
+  }
+);
+
+
+const DocumentPageSourceTester = create(
+  require("./document-page.scss"),
+  function ({
+    children
+  }: {
+    children?: any
+  }): ReactElement {
+
+    let child = children[0];
+    if (child.type === "code") {
+      let match = child.props.className?.match(/^language-(.+)$/)?.[1]?.match(/^(\w+)(-try)?$/);
+      let language = match?.[1] ?? "plain";
+      let source = String(child.props.children);
+      let modeOptions = CodeMirrorUtil.getModeOptions(language);
+      if (modeOptions.mode !== undefined) {
+        let innerNode = (match && match[2]) ? <SourceTester source={source} language={language}/> : <Highlight source={source} language={language}/>;
+        let node = (
+          <div className="block">
+            {innerNode}
+          </div>
+        );
+        return node;
+      } else {
+        let node = <pre>{children}</pre>;
+        return node;
+      }
+    } else {
+      let node = <pre>{children}</pre>;
       return node;
     }
 
