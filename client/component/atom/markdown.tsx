@@ -98,6 +98,4 @@ const MarkdownSimple = create(
 );
 
 
-export type MarkdownComponents = {[type: string]: ElementType};
-
 export default Markdown;
