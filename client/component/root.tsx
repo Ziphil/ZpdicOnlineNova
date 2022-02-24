@@ -87,7 +87,7 @@ const Root = create(
     let node = (ready) && (
       <DndProvider backend={DndBackend}>
         <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-          <Router location={location} routes={routes}>
+          <Router location={location} routes={routes} caseSensitive={true}>
             <ErrorBoundary fallbackRender={ErrorPage}>
               <InnerRoot>
                 <ScrollTop>
