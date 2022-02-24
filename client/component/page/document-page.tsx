@@ -61,7 +61,7 @@ const DocumentPage = create(
 
     useEffect(() => {
       fetchSource();
-    }, [fetchSource, location]);
+    }, [fetchSource, location.key]);
 
     if (found) {
       let components = {pre: DocumentPageSourceTester};

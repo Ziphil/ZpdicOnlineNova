@@ -43,7 +43,13 @@ export function useParams(): Record<string, string> {
 export function useLocation(): Location {
   let reactLocation = useReactLocation();
   let rawLocation = reactLocation.current;
-  let location = {path: rawLocation.pathname, search: rawLocation.search, searchString: rawLocation.searchStr, hash: rawLocation.hash};
+  let location = {
+    path: rawLocation.pathname,
+    search: rawLocation.search,
+    searchString: rawLocation.searchStr,
+    hash: rawLocation.hash,
+    key: rawLocation.key
+  };
   return location;
 }
 
@@ -62,5 +68,6 @@ type Location = {
   path: string,
   search: Record<string, unknown>,
   searchString: string,
-  hash: string
+  hash: string,
+  key: string | undefined
 };

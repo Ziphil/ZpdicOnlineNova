@@ -27,7 +27,7 @@ const ScrollTop = create(
 
     useEffect(() => {
       window.scrollTo(0, 0);
-    }, [location]);
+    }, [location.key]);
 
     let node = (
       <Fragment>

@@ -7,7 +7,7 @@ Akrantiain とは、人工言語の単語の綴りから発音記号を自動生
 
 ZpDIC Online には Akrantiain 0.7.0 を拡張したものが組み込まれており、辞書の設定画面から Akrantiain ソースコード (snoj データ) を設定することで、辞書ページにおいて発音記号が自動生成され、見出し語の横に表示されるようにできます。
 
-Akrantiain ソースコードの書き方については、[こちら](introduction)をご覧ください。
+Akrantiain ソースコードの書き方については、[こちら](./introduction)をご覧ください。
 
 ## 試してみる
 以下は Akrantiain ソースコードの例です。

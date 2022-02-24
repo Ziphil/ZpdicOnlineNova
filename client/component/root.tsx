@@ -62,6 +62,8 @@ let routes = [
   createRoute("/notification", () => import("/client/component/page/notification-page"), {type: "none"}),
   createRoute("/contact", () => import("/client/component/page/contact-page"), {type: "none"}),
   createRoute("/document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none"}),
+  createRoute("/document/:firstPath", () => import("/client/component/page/document-page"), {type: "none"}),
+  createRoute("/document", () => import("/client/component/page/document-page"), {type: "none"}),
   createRoute("/language", () => import("/client/component/page/language-page"), {type: "none"}),
   createRoute("*", () => import("/client/component/page/not-found-page"), {type: "none"})
 ] as Array<Route>;

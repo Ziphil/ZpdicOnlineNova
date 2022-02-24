@@ -3,7 +3,7 @@
 
 ## Overview
 This document briefly describes a practical usage of Zatlin while creating a source code to generate spellings of a hypothetical constructed language.
-For the complete specification of Zatlin's syntax, please see [here](syntax).
+For the complete specification of Zatlin's syntax, please see [here](./syntax).
 
 ## Simple example
 ### First pattern
