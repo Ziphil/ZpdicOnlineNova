@@ -10,9 +10,6 @@ import {
 import {
   Helmet
 } from "react-helmet";
-import {
-  useLocation
-} from "react-router-dom";
 import Highlight from "/client/component/atom/highlight";
 import Markdown from "/client/component/atom/markdown";
 import Loading from "/client/component/compound/loading";
@@ -22,6 +19,7 @@ import {
 } from "/client/component/create";
 import {
   useLocale,
+  useLocation,
   useParams,
   useRequest
 } from "/client/component/hook";
@@ -63,7 +61,7 @@ const DocumentPage = create(
 
     useEffect(() => {
       fetchSource();
-    }, [fetchSource, location.key]);
+    }, [fetchSource, location]);
 
     if (found) {
       let components = {pre: DocumentPageSourceTester};

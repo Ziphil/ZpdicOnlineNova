@@ -216,7 +216,7 @@ const DashboardPageForms = create(
             label={trans("dashboardPage.discardUserForm.label")}
             description={trans("dashboardPage.discardUserForm.description")}
           >
-            <DiscardUserForm onSubmit={() => pushPath("/", undefined, true)}/>
+            <DiscardUserForm onSubmit={() => pushPath("/", {preservePopup: true})}/>
           </SettingPane>
         </Fragment>
       );

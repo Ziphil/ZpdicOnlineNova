@@ -7,9 +7,6 @@ import {
   useState
 } from "react";
 import {
-  useLocation
-} from "react-router-dom";
-import {
   useMount
 } from "react-use";
 import Button from "/client/component/atom/button";
@@ -19,6 +16,7 @@ import {
 } from "/client/component/create";
 import {
   useIntl,
+  useLocation,
   useLogin,
   usePath,
   usePopup,
@@ -50,7 +48,7 @@ const RegisterForm = create(
     let login = useLogin();
     let [intl, {trans}] = useIntl();
     let {replacePath} = usePath();
-    let location = useLocation<any>();
+    let location = useLocation();
     let [, {addErrorPopup}] = usePopup();
 
     let performRegister = useCallback(async function (): Promise<void> {
@@ -67,9 +65,9 @@ const RegisterForm = create(
     }, [name, email, password, request, login, replacePath, addErrorPopup]);
 
     useMount(() => {
-      let name = location.state?.name;
-      let password = location.state?.password;
-      if (name !== undefined && password !== undefined) {
+      let name = location.search.name;
+      let password = location.search.password;
+      if (typeof name === "string" && typeof password === "string") {
         setName(name);
         setPassword(password);
       }

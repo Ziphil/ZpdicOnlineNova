@@ -3,8 +3,7 @@
 import {
   useMatch,
   useNavigate,
-  useLocation as useReactLocation,
-  useRouter
+  useLocation as useReactLocation
 } from "@tanstack/react-location";
 import {
   useCallback
@@ -17,17 +16,21 @@ import {
 export function usePath(): PathCallbacks {
   let navigate = useNavigate();
   let [, {clearAllPopups}] = usePopup();
-  let pushPath = useCallback(function (path: string, state?: object, preservesPopup?: boolean): void {
-    if (!preservesPopup) {
+  let pushPath = useCallback(function (path: string, options?: PathCallbackOptions): void {
+    if (!options?.preservePopup) {
       clearAllPopups();
     }
-    navigate({to: path, search: {}, hash: "", replace: false});
+    let search = options?.search ?? (options?.preserveSearch ? undefined : {});
+    let hash = options?.hash ?? "";
+    navigate({to: path, search, hash, replace: false});
   }, [navigate, clearAllPopups]);
-  let replacePath = useCallback(function (path: string, state?: object, preservesPopup?: boolean): void {
-    if (!preservesPopup) {
+  let replacePath = useCallback(function (path: string, options?: PathCallbackOptions): void {
+    if (!options?.preservePopup) {
       clearAllPopups();
     }
-    navigate({to: path, search: {}, hash: "", replace: true});
+    let search = options?.search ?? (options?.preserveSearch ? undefined : {});
+    let hash = options?.hash ?? "";
+    navigate({to: path, search, hash, replace: true});
   }, [navigate, clearAllPopups]);
   return {pushPath, replacePath};
 }
@@ -44,10 +47,16 @@ export function useLocation(): Location {
   return location;
 }
 
-type PathCallback = (path: string, state?: object, preservesPopup?: boolean) => void;
+type PathCallback = (path: string, options?: PathCallbackOptions) => void;
 type PathCallbacks = {
   pushPath: PathCallback,
   replacePath: PathCallback
+};
+type PathCallbackOptions = {
+  search?: Record<string, unknown>,
+  hash?: string,
+  preservePopup?: boolean,
+  preserveSearch?: boolean
 };
 type Location = {
   path: string,

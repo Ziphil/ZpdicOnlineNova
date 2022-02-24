@@ -188,7 +188,7 @@ const DictionarySettingPageForms = create(
             label={trans("dictionarySettingPage.discardDictionaryForm.label")}
             description={trans("dictionarySettingPage.discardDictionaryForm.description")}
           >
-            <DiscardDictionaryForm number={dictionary.number} onSubmit={() => pushPath("/dashboard", undefined, true)}/>
+            <DiscardDictionaryForm number={dictionary.number} onSubmit={() => pushPath("/dashboard", {preservePopup: true})}/>
           </SettingPane>
         </Fragment>
       );
