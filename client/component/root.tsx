@@ -49,20 +49,20 @@ require("../../node_modules/c3/c3.css");
 
 let location = new ReactLocation();
 let routes = [
-  createRoute("", () => import("/client/component/page/top-page"), {type: "none"}),
-  createRoute("login", () => import("/client/component/page/login-page"), {type: "guest", redirect: "/dashboard"}),
-  createRoute("register", () => import("/client/component/page/register-page"), {type: "guest", redirect: "/dashboard"}),
-  createRoute("reset", () => import("/client/component/page/reset-user-password-page"), {type: "guest", redirect: "/dashboard"}),
-  createRoute("activate", () => import("/client/component/page/activate-user-page"), {type: "none"}),
-  createRoute("dashboard/dictionary/:number", () => import("/client/component/page/dictionary-setting-page"), {type: "private", redirect: "/login"}),
-  createRoute("dashboard", () => import("/client/component/page/dashboard-page"), {type: "private", redirect: "/login"}),
-  createRoute("dictionary/:value", () => import("/client/component/page/dictionary-page"), {type: "none"}),
-  createRoute("example/:number", () => import("/client/component/page/example-page"), {type: "none"}),
-  createRoute("list", () => import("/client/component/page/dictionary-list-page"), {type: "none"}),
-  createRoute("notification", () => import("/client/component/page/notification-page"), {type: "none"}),
-  createRoute("contact", () => import("/client/component/page/contact-page"), {type: "none"}),
-  createRoute("document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none"}),
-  createRoute("language", () => import("/client/component/page/language-page"), {type: "none"}),
+  createRoute("/", () => import("/client/component/page/top-page"), {type: "none"}),
+  createRoute("/login", () => import("/client/component/page/login-page"), {type: "guest", redirect: "/dashboard"}),
+  createRoute("/register", () => import("/client/component/page/register-page"), {type: "guest", redirect: "/dashboard"}),
+  createRoute("/reset", () => import("/client/component/page/reset-user-password-page"), {type: "guest", redirect: "/dashboard"}),
+  createRoute("/activate", () => import("/client/component/page/activate-user-page"), {type: "none"}),
+  createRoute("/dashboard/dictionary/:number", () => import("/client/component/page/dictionary-setting-page"), {type: "private", redirect: "/login"}),
+  createRoute("/dashboard", () => import("/client/component/page/dashboard-page"), {type: "private", redirect: "/login"}),
+  createRoute("/dictionary/:value", () => import("/client/component/page/dictionary-page"), {type: "none"}),
+  createRoute("/example/:number", () => import("/client/component/page/example-page"), {type: "none"}),
+  createRoute("/list", () => import("/client/component/page/dictionary-list-page"), {type: "none"}),
+  createRoute("/notification", () => import("/client/component/page/notification-page"), {type: "none"}),
+  createRoute("/contact", () => import("/client/component/page/contact-page"), {type: "none"}),
+  createRoute("/document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none"}),
+  createRoute("/language", () => import("/client/component/page/language-page"), {type: "none"}),
   createRoute("*", () => import("/client/component/page/not-found-page"), {type: "none"})
 ] as Array<Route>;
 

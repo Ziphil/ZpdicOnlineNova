@@ -11,21 +11,26 @@ import {
 import Authenticator from "./authenticator";
 
 
-export function createRoute(path: string, importModule: () => Promise<{default: FunctionComponent<unknown>}>, options: {type: "private" | "guest" | "none", redirect?: string}, childRoutes?: Array<Route>): Route {
+export function createRoute(path: string, importModule: () => Promise<FunctionComponentModule>, options: RouteOptions, childRoutes?: Array<Route>): Route {
   let innerRoute = {
     path: "/",
     caseSensitive: true,
-    element: () => importModule().then((module) => <Authenticator type={options.type} redirect={options.redirect} node={createElement(module.default)}/>)
+    element: async () => {
+      let module = await importModule();
+      return <Authenticator type={options.type} redirect={options.redirect} node={createElement(module.default)}/>;
+    }
   } as Route;
-  if (path === "") {
+  if (path === "/") {
     return innerRoute;
   } else if (path === "*") {
     return {...innerRoute, path: "*"};
   } else {
-    let route = {
-      path,
-      children: [innerRoute, ...(childRoutes ?? [])]
-    };
-    return route;
+    return {path, children: [innerRoute, ...(childRoutes ?? [])]};
   }
 }
+
+type FunctionComponentModule = {default: FunctionComponent<unknown>};
+type RouteOptions = {
+  type: "private" | "guest" | "none",
+  redirect?: string
+};
