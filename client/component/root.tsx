@@ -90,11 +90,9 @@ const Root = create(
           <Router location={location} routes={routes}>
             <ErrorBoundary fallbackRender={ErrorPage}>
               <InnerRoot>
-                <Suspense fallback={<EmptyPage/>}>
-                  <ScrollTop>
-                    <Outlet/>
-                  </ScrollTop>
-                </Suspense>
+                <ScrollTop>
+                  <Outlet/>
+                </ScrollTop>
               </InnerRoot>
             </ErrorBoundary>
           </Router>
