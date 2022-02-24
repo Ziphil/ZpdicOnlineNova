@@ -15,12 +15,6 @@ import {
 import {
   Helmet
 } from "react-helmet";
-import {
-  useLocation
-} from "react-router-dom";
-import {
-  useMount
-} from "react-use";
 import Button from "/client/component/atom/button";
 import Dropdown from "/client/component/atom/dropdown";
 import Icon from "/client/component/atom/icon";
@@ -32,6 +26,7 @@ import {
   useExampleEditor,
   useHotkey,
   useIntl,
+  useLocation,
   usePath,
   useRequest,
   useWordEditor
@@ -68,7 +63,7 @@ const DictionaryHeader = create(
     let addWordEditor = useWordEditor();
     let addExampleEditor = useExampleEditor();
     let {pushPath} = usePath();
-    let location = useLocation<any>();
+    let location = useLocation();
 
     let openWordEditor = useCallback(function (): void {
       if (dictionary !== null) {
@@ -81,12 +76,6 @@ const DictionaryHeader = create(
         addExampleEditor({dictionary, example: null});
       }
     }, [dictionary, addExampleEditor]);
-
-    useMount(() => {
-      if (location.state?.openCommissionEditor) {
-        setCommissionEditorOpen(true);
-      }
-    });
 
     let hotkeyEnabled = dictionary !== null;
     useHotkey("jumpDictionaryPage", () => {
@@ -111,8 +100,7 @@ const DictionaryHeader = create(
     let nameNode = (dictionary) && (() => {
       let href = "/dictionary/" + dictionary.number;
       if (preserveQuery) {
-        let queryString = location!.search;
-        href += queryString;
+        href += location.searchString;
       }
       let nameNode = <Link href={href} target="self" style="plane">{dictionary.name}</Link>;
       return nameNode;

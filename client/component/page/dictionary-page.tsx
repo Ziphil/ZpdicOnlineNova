@@ -9,9 +9,6 @@ import {
   useEffect,
   useState
 } from "react";
-import {
-  useParams
-} from "react-router-dom";
 import Markdown from "/client/component/atom/markdown";
 import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
@@ -23,6 +20,7 @@ import {
 } from "/client/component/create";
 import {
   useDebounce,
+  useParams,
   useQueryState,
   useRequest
 } from "/client/component/hook";
@@ -51,7 +49,7 @@ const DictionaryPage = create(
     let [canEdit, setCanEdit] = useState(false);
     let [searching, setSearching] = useState(false);
     let {request} = useRequest();
-    let params = useParams<{value: string}>();
+    let params = useParams();
 
     let fetchDictionary = useCallback(async function (): Promise<void> {
       let value = params.value;
@@ -121,12 +119,14 @@ const DictionaryPage = create(
 
     let handleParameterSet = useCallback(async function (parameter: WordParameter): Promise<void> {
       let page = 0;
-      setQuery((query) => ({...query, parameter, page}));
+      let showExplanation = false;
+      setQuery((query) => ({...query, parameter, page, showExplanation}));
     }, [setQuery]);
 
     let handlePageSet = useCallback(async function (page: number): Promise<void> {
+      let showExplanation = false;
+      setQuery((query) => ({...query, page, showExplanation}));
       window.scrollTo(0, 0);
-      setQuery((query) => ({...query, page}));
     }, [setQuery]);
 
     useEffect(() => {
@@ -215,16 +215,15 @@ const DictionaryPageWordList = create(
 );
 
 
-function serializeQuery(query: DictionaryQuery): string {
-  let queryString = query.parameter.serialize() + `&page=${query.page}`;
-  return queryString;
+function serializeQuery(query: DictionaryQuery): Record<string, unknown> {
+  let search = {...query.parameter.serialize(), page: query.page};
+  return search;
 }
 
-function deserializeQuery(queryString: string): DictionaryQuery {
-  let rawQuery = queryParser.parse(queryString);
-  let parameter = WordParameter.deserialize(queryString);
-  let page = (typeof rawQuery.page === "string") ? +rawQuery.page : 0;
-  let showExplanation = Object.keys(rawQuery).length <= 0;
+function deserializeQuery(search: Record<string, unknown>): DictionaryQuery {
+  let parameter = WordParameter.deserialize(search);
+  let page = (typeof search.page === "string") ? +search.page : 0;
+  let showExplanation = Object.keys(search).length <= 0;
   return {parameter, page, showExplanation};
 }
 

@@ -29,11 +29,11 @@ const Menu = create(
     direction?: "horizontal" | "vertical"
   }): ReactElement {
 
-    let itemNodes = specs.map((spec) => {
+    let itemNodes = specs.map((spec, index) => {
       let highlight = spec.mode === mode;
       let itemNode = (
         <MenuItem
-          key={spec.label}
+          key={index}
           label={spec.label}
           iconName={spec.iconName}
           badgeValue={spec.badgeValue}

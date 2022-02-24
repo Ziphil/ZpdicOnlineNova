@@ -13,16 +13,15 @@ import {
 
 export abstract class WordParameter {
 
-  public static deserialize(queryString: string): WordParameter {
-    let query = queryParser.parse(queryString);
-    if ("advanced" in query) {
-      return AdvancedWordParameter.deserializeEach(query);
+  public static deserialize(search: Record<string, unknown>): WordParameter {
+    if ("advanced" in search) {
+      return AdvancedWordParameter.deserializeEach(search);
     } else {
-      return NormalWordParameter.deserializeEach(query);
+      return NormalWordParameter.deserializeEach(search);
     }
   }
 
-  public abstract serialize(): string;
+  public abstract serialize(): Record<string, unknown>;
 
   public static getNormal(parameter: WordParameter): NormalWordParameter {
     if (parameter instanceof NormalWordParameter) {

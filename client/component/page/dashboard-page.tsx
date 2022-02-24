@@ -8,9 +8,6 @@ import {
   useState
 } from "react";
 import {
-  useParams
-} from "react-router-dom";
-import {
   useMount
 } from "react-use";
 import ActivateUserForm from "/client/component/compound/activate-user-form";
@@ -29,7 +26,9 @@ import CreateDictionaryForm from "/client/component/form/create-dictionary-form"
 import DiscardUserForm from "/client/component/form/discard-user-form";
 import {
   useIntl,
+  useLocation,
   useLogout,
+  useParams,
   usePath,
   useRequest,
   useUser
@@ -57,7 +56,8 @@ const DashboardPage = create(
     let {request} = useRequest();
     let [user] = useUser();
     let logout = useLogout();
-    let params = useParams<{mode: string}>();
+    let params = useParams();
+    let location = useLocation();
 
     let fetchDictionaries = useCallback(async function (): Promise<void> {
       let response = await request("fetchDictionaries", {});
@@ -97,15 +97,15 @@ const DashboardPage = create(
       await promise;
     });
 
-    let mode = params.mode || "dictionary";
+    let mode = location.hash || "dictionary";
     let dictionaryCount = dictionaries?.length ?? 0;
     let editNotificationCount = editInvitations?.length ?? 0;
     let transferNotificationCount = transferInvitations?.length ?? 0;
     let notificationCount = editNotificationCount + transferNotificationCount;
     let menuSpecs = [
-      {mode: "dictionary", label: trans("dashboardPage.dictionary"), iconName: "book", badgeValue: dictionaryCount || undefined, href: "/dashboard"},
-      {mode: "notification", label: trans("dashboardPage.notification"), iconName: "bell", badgeValue: notificationCount || undefined, href: "/dashboard/notification"},
-      {mode: "account", label: trans("dashboardPage.account"), iconName: "id-card", href: "/dashboard/account"},
+      {mode: "dictionary", label: trans("dashboardPage.dictionary"), iconName: "book", badgeValue: dictionaryCount || undefined, href: "#dictionary"},
+      {mode: "notification", label: trans("dashboardPage.notification"), iconName: "bell", badgeValue: notificationCount || undefined, href: "#notification"},
+      {mode: "account", label: trans("dashboardPage.account"), iconName: "id-card", href: "#account"},
       {mode: "logout", label: trans("dashboardPage.logout"), iconName: "sign-out-alt", onClick: performLogout}
     ] as const;
     let activateUserForm = (!user?.activated) && (

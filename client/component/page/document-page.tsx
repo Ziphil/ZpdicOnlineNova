@@ -10,10 +10,8 @@ import {
 import {
   Helmet
 } from "react-helmet";
-import ReactMarkdown from "react-markdown";
 import {
-  useLocation,
-  useParams
+  useLocation
 } from "react-router-dom";
 import Highlight from "/client/component/atom/highlight";
 import Markdown from "/client/component/atom/markdown";
@@ -24,6 +22,7 @@ import {
 } from "/client/component/create";
 import {
   useLocale,
+  useParams,
   useRequest
 } from "/client/component/hook";
 import NotFoundPage from "/client/component/page/not-found-page";
@@ -41,7 +40,7 @@ const DocumentPage = create(
 
     let [source, setSource] = useState<string | null>(null);
     let [found, setFound] = useState(true);
-    let params = useParams<{firstPath: string, secondPath: string}>();
+    let params = useParams();
     let location = useLocation();
     let [locale] = useLocale();
     let {request} = useRequest();

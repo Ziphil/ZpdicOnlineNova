@@ -26,9 +26,9 @@ export class AdvancedWordParameter extends WordParameter {
     return skeleton;
   }
 
-  public static deserializeEach(query: Record<string, unknown>): AdvancedWordParameter {
-    if (typeof query["advanced"] === "string") {
-      let data = rison.decode(query["advanced"]) as any;
+  public static deserializeEach(searchObject: Record<string, unknown>): AdvancedWordParameter {
+    if (typeof searchObject.advanced === "string") {
+      let data = rison.decode<any>(searchObject.advanced);
       let parameter = new AdvancedWordParameter(data.elements);
       return parameter;
     } else {
@@ -37,9 +37,9 @@ export class AdvancedWordParameter extends WordParameter {
     }
   }
 
-  public serialize(): string {
-    let queryString = "advanced=" + encodeURI(rison.encode(this));
-    return queryString;
+  public serialize(): Record<string, unknown> {
+    let searchObject = {advanced: encodeURI(rison.encode(this))};
+    return searchObject;
   }
 
 }

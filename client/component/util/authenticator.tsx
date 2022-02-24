@@ -1,14 +1,13 @@
 //
 
+import {
+  Navigate
+} from "@tanstack/react-location";
 import * as react from "react";
 import {
-  ReactElement
+  ReactElement,
+  ReactNode
 } from "react";
-import {
-  Redirect,
-  Route,
-  RouteProps
-} from "react-router-dom";
 import {
   create
 } from "/client/component/create";
@@ -22,23 +21,23 @@ const Authenticator = create(
   function ({
     type,
     redirect,
-    ...props
+    node
   }: {
     type: "private" | "guest" | "none",
-    redirect?: string
-  } & RouteProps): ReactElement {
+    redirect?: string,
+    node: ReactNode
+  }): ReactElement {
 
     let [user] = useUser();
 
     if (type === "private" && redirect !== undefined) {
-      let node = (user !== null) ? <Route {...props}/> : <Redirect to={redirect}/>;
-      return node;
+      let actualNode = (user !== null) ? <>{node}</> : <Navigate to={redirect} replace={true}/>;
+      return actualNode;
     } else if (type === "guest" && redirect !== undefined) {
-      let node = (user === null) ? <Route {...props}/> : <Redirect to={redirect}/>;
-      return node;
+      let actualNode = (user === null) ? <>{node}</> : <Navigate to={redirect} replace={true}/>;
+      return actualNode;
     } else {
-      let node = <Route {...props}/>;
-      return node;
+      return <>{node}</>;
     }
 
   }

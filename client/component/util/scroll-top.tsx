@@ -8,11 +8,11 @@ import {
   useEffect
 } from "react";
 import {
-  useLocation
-} from "react-router-dom";
-import {
   create
 } from "/client/component/create";
+import {
+  useLocation
+} from "/client/component/hook";
 
 
 const ScrollTop = create(

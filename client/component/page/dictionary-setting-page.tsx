@@ -8,9 +8,6 @@ import {
   useState
 } from "react";
 import {
-  useParams
-} from "react-router-dom";
-import {
   useMount
 } from "react-use";
 import Markdown from "/client/component/atom/markdown";
@@ -36,6 +33,8 @@ import DiscardDictionaryForm from "/client/component/form/discard-dictionary-for
 import UploadDictionaryForm from "/client/component/form/upload-dictionary-form";
 import {
   useIntl,
+  useLocation,
+  useParams,
   usePath,
   useRequest
 } from "/client/component/hook";
@@ -62,7 +61,8 @@ const DictionarySettingPage = create(
     let [authorized, setAuthorized] = useState(false);
     let [, {trans}] = useIntl();
     let {request} = useRequest();
-    let params = useParams<{number: string, mode: string}>();
+    let params = useParams();
+    let location = useLocation();
 
     let fetchDictionary = useCallback(async function (): Promise<void> {
       let number = +params.number;
@@ -101,16 +101,15 @@ const DictionarySettingPage = create(
       await promise;
     });
 
-    let number = params.number;
-    let mode = params.mode || "general";
+    let mode = location.hash || "general";
     let actualCommissionCount = (commissionCount > 0) ? commissionCount : undefined;
     let menuSpecs = [
-      {mode: "general", label: trans("dictionarySettingPage.general"), iconName: "info-circle", href: "/dashboard/dictionary/" + number},
-      {mode: "setting", label: trans("dictionarySettingPage.setting"), iconName: "cog", href: "/dashboard/dictionary/setting/" + number},
-      {mode: "access", label: trans("dictionarySettingPage.access"), iconName: "users", href: "/dashboard/dictionary/access/" + number},
-      {mode: "request", label: trans("dictionarySettingPage.commission"), iconName: "list-check", badgeValue: actualCommissionCount, href: "/dashboard/dictionary/request/" + number},
-      {mode: "resource", label: trans("dictionarySettingPage.resource"), iconName: "image", href: "/dashboard/dictionary/resource/" + number},
-      {mode: "statistics", label: trans("dictionarySettingPage.statistics"), iconName: "chart-line", href: "/dashboard/dictionary/statistics/" + number}
+      {mode: "general", label: trans("dictionarySettingPage.general"), iconName: "info-circle", href: "#general"},
+      {mode: "setting", label: trans("dictionarySettingPage.setting"), iconName: "cog", href: "#setting"},
+      {mode: "access", label: trans("dictionarySettingPage.access"), iconName: "users", href: "#access"},
+      {mode: "request", label: trans("dictionarySettingPage.commission"), iconName: "list-check", badgeValue: actualCommissionCount, href: "#request"},
+      {mode: "resource", label: trans("dictionarySettingPage.resource"), iconName: "image", href: "#resource"},
+      {mode: "statistics", label: trans("dictionarySettingPage.statistics"), iconName: "chart-line", href: "#statistics"}
     ] as const;
     let contentNodes = (dictionary && authorized) && <DictionarySettingPageForms {...{dictionary, mode, fetchDictionary, fetchCommissionCount}}/>;
     let node = (
@@ -142,7 +141,7 @@ const DictionarySettingPageForms = create(
     let [, {trans}] = useIntl();
     let {request} = useRequest();
     let {pushPath} = usePath();
-    let params = useParams<{number: string}>();
+    let params = useParams();
 
     let provideCommissions = useCallback(async function (offset?: number, size?: number): Promise<WithSize<Commission>> {
       let number = +params.number;
