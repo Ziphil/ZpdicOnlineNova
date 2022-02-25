@@ -35,17 +35,18 @@ export function usePath(): PathCallbacks {
   return {pushPath, replacePath};
 }
 
-export function useParams(): Record<string, string> {
+export function useParams<P extends Params = Params>(): P {
   let match = useMatch();
-  return match.params;
+  let params = match.params as P;
+  return params;
 }
 
-export function useLocation(): Location {
+export function useLocation<S extends Search = Search>(): Location<S> {
   let reactLocation = useReactLocation();
   let rawLocation = reactLocation.current;
   let location = {
     path: rawLocation.pathname,
-    search: rawLocation.search,
+    search: rawLocation.search as S,
     searchString: rawLocation.searchStr,
     hash: rawLocation.hash,
     key: rawLocation.key
@@ -65,9 +66,11 @@ type PathCallbacks = {
   replacePath: PathCallback
 };
 
-type Location = {
+type Params = Record<string, string>;
+type Search = Record<string, unknown>;
+type Location<S extends Search> = {
   path: string,
-  search: Record<string, unknown>,
+  search: S,
   searchString: string,
   hash: string,
   key: string | undefined
