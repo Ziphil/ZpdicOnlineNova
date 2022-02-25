@@ -41,6 +41,12 @@ export function useParams<P extends Params = Params>(): P {
   return params;
 }
 
+export function useLoaderData<D extends LoaderData = LoaderData>(): D {
+  let match = useMatch();
+  let loaderData = match.data as D;
+  return loaderData;
+}
+
 export function useLocation<S extends Search = Search>(): Location<S> {
   let reactLocation = useReactLocation();
   let rawLocation = reactLocation.current;
@@ -68,6 +74,7 @@ type PathCallbacks = {
 
 type Params = Record<string, string>;
 type Search = Record<string, unknown>;
+type LoaderData = Record<string, any>;
 type Location<S extends Search> = {
   path: string,
   search: S,

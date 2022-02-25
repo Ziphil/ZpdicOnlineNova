@@ -9,12 +9,12 @@ import {
   Route,
   Router
 } from "@tanstack/react-location";
+import axios from "axios";
 import * as queryParser from "query-string";
 import * as react from "react";
 import {
   ReactElement,
   StrictMode,
-  Suspense,
   useCallback
 } from "react";
 import {
@@ -42,10 +42,28 @@ import {
   createRoute
 } from "/client/component/util/route";
 import ScrollTop from "/client/component/util/scroll-top";
+import {
+  SERVER_PATHS,
+  SERVER_PATH_PREFIX
+} from "/server/controller/internal/type";
 
 
 require("../../node_modules/codemirror/lib/codemirror.css");
 require("../../node_modules/c3/c3.css");
+
+export async function loadDocumentSource({params}: {params: Record<string, string>}): Promise<{source: string | null}> {
+  let firstPath = (params.firstPath) ? params.firstPath : "";
+  let secondPath = (params.secondPath) ? "/" + params.secondPath : "";
+  let path = firstPath + secondPath;
+  let url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchDocument"];
+  let response = await axios.post(url, {locale: "ja", path}, {validateStatus: () => true});
+  if (response.status === 200 && typeof response.data === "string") {
+    let source = response.data;
+    return {source};
+  } else {
+    return {source: null};
+  }
+}
 
 let location = new ReactLocation({
   parseSearch: (searchString) => queryParser.parse(searchString),
@@ -63,9 +81,9 @@ let routes = [
   ...createRoute("/list", () => import("/client/component/page/dictionary-list-page"), {type: "none"}),
   ...createRoute("/notification", () => import("/client/component/page/notification-page"), {type: "none"}),
   ...createRoute("/contact", () => import("/client/component/page/contact-page"), {type: "none"}),
-  ...createRoute("/document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none"}),
-  ...createRoute("/document/:firstPath", () => import("/client/component/page/document-page"), {type: "none"}),
-  ...createRoute("/document", () => import("/client/component/page/document-page"), {type: "none"}),
+  ...createRoute("/document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentSource}),
+  ...createRoute("/document/:firstPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentSource}),
+  ...createRoute("/document", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentSource}),
   ...createRoute("/language", () => import("/client/component/page/language-page"), {type: "none"}),
   ...createRoute("/", () => import("/client/component/page/top-page"), {type: "none"})
 ] as Array<Route>;

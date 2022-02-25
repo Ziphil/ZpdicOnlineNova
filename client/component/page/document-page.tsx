@@ -2,26 +2,19 @@
 
 import * as react from "react";
 import {
-  ReactElement,
-  useCallback,
-  useEffect,
-  useState
+  ReactElement
 } from "react";
 import {
   Helmet
 } from "react-helmet";
 import Highlight from "/client/component/atom/highlight";
 import Markdown from "/client/component/atom/markdown";
-import Loading from "/client/component/compound/loading";
 import SourceTester from "/client/component/compound/source-tester";
 import {
   create
 } from "/client/component/create";
 import {
-  useLocale,
-  useLocation,
-  useParams,
-  useRequest
+  useLoaderData
 } from "/client/component/hook";
 import NotFoundPage from "/client/component/page/not-found-page";
 import Page from "/client/component/page/page";
@@ -36,34 +29,9 @@ const DocumentPage = create(
   }: {
   }): ReactElement {
 
-    let [source, setSource] = useState<string | null>(null);
-    let [found, setFound] = useState(true);
-    let params = useParams();
-    let location = useLocation();
-    let [locale] = useLocale();
-    let {request} = useRequest();
+    let {source} = useLoaderData();
 
-    let fetchSource = useCallback(async function (): Promise<void> {
-      setSource(null);
-      setFound(true);
-      let firstPath = (params.firstPath) ? params.firstPath : "";
-      let secondPath = (params.secondPath) ? "/" + params.secondPath : "";
-      let path = firstPath + secondPath;
-      let response = await request("fetchDocument", {locale, path}, {ignoreError: true});
-      if (response.status === 200 && typeof response.data === "string") {
-        let source = response.data;
-        setSource(source);
-      } else {
-        setSource("");
-        setFound(false);
-      }
-    }, [params.firstPath, params.secondPath, locale, request]);
-
-    useEffect(() => {
-      fetchSource();
-    }, [fetchSource, location.key]);
-
-    if (found) {
+    if (source !== null) {
       let components = {pre: DocumentPageSourceTester};
       let title = source?.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
       let node = (
@@ -71,9 +39,7 @@ const DocumentPage = create(
           <Helmet>
             <title>{(title) ? `${title} — ZpDIC Online` : "ZpDIC Online"}</title>
           </Helmet>
-          <Loading loading={source === null}>
-            <Markdown source={source!} type="document" components={components}/>
-          </Loading>
+          <Markdown source={source!} type="document" components={components}/>
         </Page>
       );
       return node;

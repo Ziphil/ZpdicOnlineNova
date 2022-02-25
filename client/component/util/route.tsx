@@ -1,7 +1,10 @@
 //
 
 import {
-  Route
+  DefaultGenerics,
+  LoaderFnOptions,
+  Route,
+  RouteMatch
 } from "@tanstack/react-location";
 import * as react from "react";
 import {
@@ -16,7 +19,8 @@ export function createRoute(path: string, importModule: () => Promise<FunctionCo
     path: "/",
     element: () => importModule().then((module) => {
       return <Authenticator type={options.type} redirect={options.redirect} node={createElement(module.default)}/>;
-    })
+    }),
+    loader: options.loader
   }, {
     path: "*",
     element: () => import("/client/component/page/not-found-page").then((module) => {
@@ -33,5 +37,6 @@ export function createRoute(path: string, importModule: () => Promise<FunctionCo
 type FunctionComponentModule = {default: FunctionComponent<unknown>};
 type RouteOptions = {
   type: "private" | "guest" | "none",
-  redirect?: string
+  redirect?: string,
+  loader?: (routeMatch: RouteMatch<DefaultGenerics>, options: LoaderFnOptions<DefaultGenerics>) => Promise<{}>
 };
