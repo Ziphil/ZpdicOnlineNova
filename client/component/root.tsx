@@ -9,6 +9,7 @@ import {
   Route,
   Router
 } from "@tanstack/react-location";
+import * as queryParser from "query-string";
 import * as react from "react";
 import {
   ReactElement,
@@ -46,7 +47,10 @@ import ScrollTop from "/client/component/util/scroll-top";
 require("../../node_modules/codemirror/lib/codemirror.css");
 require("../../node_modules/c3/c3.css");
 
-let location = new ReactLocation();
+let location = new ReactLocation({
+  parseSearch: (searchString) => queryParser.parse(searchString),
+  stringifySearch: (search) => queryParser.stringify(search)
+});
 let routes = [
   ...createRoute("/login", () => import("/client/component/page/login-page"), {type: "guest", redirect: "/dashboard"}),
   ...createRoute("/register", () => import("/client/component/page/register-page"), {type: "guest", redirect: "/dashboard"}),
