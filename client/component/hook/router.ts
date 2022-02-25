@@ -54,16 +54,17 @@ export function useLocation(): Location {
 }
 
 type PathCallback = (path: string, options?: PathCallbackOptions) => void;
-type PathCallbacks = {
-  pushPath: PathCallback,
-  replacePath: PathCallback
-};
 type PathCallbackOptions = {
   search?: Record<string, unknown>,
   hash?: string,
   preservePopup?: boolean,
   preserveSearch?: boolean
 };
+type PathCallbacks = {
+  pushPath: PathCallback,
+  replacePath: PathCallback
+};
+
 type Location = {
   path: string,
   search: Record<string, unknown>,
