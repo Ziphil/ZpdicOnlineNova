@@ -44,11 +44,11 @@ const LoginForm = create(
     }, [name, password, login, replacePath, addErrorPopup]);
 
     let jumpRegister = useCallback(async function (): Promise<void> {
-      pushPath("/register", {name, password});
+      pushPath("/register", {search: {name, password}});
     }, [name, password, pushPath]);
 
     let jumpResetPassword = useCallback(async function (): Promise<void> {
-      pushPath("/reset", {name});
+      pushPath("/reset", {search: {name}});
     }, [name, pushPath]);
 
     let registerNode = (showRegister) && (

@@ -1,6 +1,10 @@
 //
 
 import {
+  useNavigate,
+  useSearch
+} from "@tanstack/react-location";
+import {
   Dispatch,
   SetStateAction,
   useCallback,
@@ -8,39 +12,35 @@ import {
   useRef
 } from "react";
 import {
-  useHistory,
-  useLocation
-} from "react-router-dom";
-import {
   useGetSet
 } from "react-use";
 
 
-export function useQueryState<S>(serializeQuery: (state: S) => string, deserializeQuery: (queryString: string) => S): [() => S, Dispatch<SetStateAction<S>>] {
-  let history = useHistory();
-  let location = useLocation();
+export function useQueryState<S>(serializeQuery: (state: S) => Search, deserializeQuery: (search: Search) => S): [() => S, Dispatch<SetStateAction<S>>] {
+  let search = useSearch();
+  let navigate = useNavigate();
   let [getState, setState] = useGetSet<S>(() => {
-    let queryString = location.search;
-    let state = deserializeQuery(queryString);
+    let state = deserializeQuery(search);
     return state;
   });
-  let lastQueryStringRef = useRef<string>();
+  let updatedRef = useRef(false);
   let setStateQuery = useCallback(function (state: SetStateAction<S>): void {
     setState((previousState) => {
       let nextState = (state instanceof Function) ? state(previousState) : state;
-      let queryString = serializeQuery(nextState);
-      lastQueryStringRef.current = queryString;
-      history.replace({search: queryString});
+      let search = serializeQuery(nextState);
+      updatedRef.current = true;
+      navigate({search, replace: true});
       return nextState;
     });
-  }, [history, setState, serializeQuery]);
+  }, [navigate, setState, serializeQuery]);
   useEffect(() => {
-    let queryString = location.search;
-    if (lastQueryStringRef.current !== queryString) {
-      let state = deserializeQuery(queryString);
-      lastQueryStringRef.current = queryString;
+    if (!updatedRef.current) {
+      let state = deserializeQuery(search);
       setState(state);
     }
-  }, [location.search, setState, deserializeQuery]);
+    updatedRef.current = false;
+  }, [search, setState, deserializeQuery]);
   return [getState, setStateQuery];
 }
+
+export type Search = Record<string, unknown>;

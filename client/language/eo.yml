@@ -659,17 +659,17 @@ dashboardPage:
   dictionaryList:
     label: "Vortaroj"
     description: >-
-      Jen listo de viaj vortaroj.
+      Jen la listo de viaj vortaroj.
       Tio ankaŭ inkluzivas tiujn kiujn vi ne posedas sed rajtas redakti.
   editInvitationList:
     label: "Invitoj por redaktado"
     description: >-
-      Jen listo de redaktaj invitoj al vi.
+      Jen la listo de redaktaj invitoj al vi.
       Akcepti inviton al vortaro permesos al vi redakti ĝin.
   transferInvitationList:
     label: "Invitoj por transdonado"
     description: >-
-      Jen listo de invitoj al vi por transfoni proprieton de vortaro.
+      Jen la listo de invitoj al vi por transfoni proprieton de vortaro.
       Akcepti inviton igos vin la nova posedanto de la vortaro.
   createDictionaryForm:
     label: "Krei novan vortaron"

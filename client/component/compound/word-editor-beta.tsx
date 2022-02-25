@@ -10,7 +10,6 @@ import {
   Fragment,
   MouseEvent,
   ReactElement,
-  RefObject,
   SetStateAction,
   useCallback,
   useRef,

@@ -1,10 +1,15 @@
 //
 
+import {
+  useRouter
+} from "@tanstack/react-location";
+import nprogress from "nprogress";
 import * as react from "react";
 import {
   Fragment,
   ReactElement,
   ReactNode,
+  useEffect,
   useState
 } from "react";
 import Drawer from "/client/component/atom/drawer";
@@ -36,6 +41,7 @@ const InnerRoot = create(
     let [exampleEditorProps, exampleEditorOpen, setExampleEditorOpen] = useExampleEditorProps();
     let [, {trans}] = useIntl();
     let {pushPath} = usePath();
+    let router = useRouter();
 
     useHotkey("jumpDashboardPage", () => {
       pushPath("/dashboard");
@@ -64,6 +70,14 @@ const InnerRoot = create(
         activeElement.blur();
       }
     }, []);
+
+    useEffect(() => {
+      if (router.pending) {
+        nprogress.start();
+      } else {
+        nprogress.done();
+      }
+    }, [router.pending]);
 
     let wordEditorNodes = wordEditorProps.map((props) => {
       let wordEditorNode = <WordEditor key={props.id} {...props}/>;

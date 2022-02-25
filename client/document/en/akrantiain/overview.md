@@ -8,7 +8,7 @@ By writing spelling rules according to a specific format and letting Akrantiain 
 ZpDIC Online includes an extension of Akrantiain 0.7.0 in itself.
 If you configure an Akrantiain source code (or a snoj data) in the dictionary setting page, the phonetic representations are automatically generated and displayed next to the headwords in the dictionary page.
 
-For more information about the format of Akrantiain code, please see [here](introduction).
+For more information about the format of Akrantiain code, please see [here](./introduction).
 
 ## Try
 The following is an example of a Akrantiain source code.

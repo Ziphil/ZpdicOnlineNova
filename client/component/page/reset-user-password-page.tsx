@@ -32,7 +32,7 @@ const ResetUserPasswordPage = create(
       let query = queryParser.parse(location.search ?? "");
       let tokenKey = (typeof query.key === "string") ? query.key : null;
       return tokenKey;
-    }, [location]);
+    }, [location.search]);
     let node = (
       <Page title={trans("resetUserPasswordPage.title")}>
         <div styleName="title">{trans("resetUserPasswordPage.title")}</div>

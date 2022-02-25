@@ -43,28 +43,27 @@ export class NormalWordParameter extends WordParameter {
     return skeleton;
   }
 
-  public static deserializeEach(query: Record<string, unknown>): NormalWordParameter {
-    let search = (typeof query.search === "string") ? query.search : undefined;
-    let mode = (typeof query.mode === "string") ? WordModeUtil.cast(query.mode) : undefined;
-    let type = (typeof query.type === "string") ? WordTypeUtil.cast(query.type) : undefined;
-    let orderMode = (typeof query.orderMode === "string") ? WordOrderModeUtil.cast(query.orderMode) : undefined;
-    let orderDirection = (typeof query.orderDirection === "string") ? WordOrderDirectionUtil.cast(query.orderDirection) : undefined;
+  public static deserializeEach(searchObject: Record<string, unknown>): NormalWordParameter {
+    let search = (typeof searchObject.search === "string") ? searchObject.search : undefined;
+    let mode = (typeof searchObject.mode === "string") ? WordModeUtil.cast(searchObject.mode) : undefined;
+    let type = (typeof searchObject.type === "string") ? WordTypeUtil.cast(searchObject.type) : undefined;
+    let orderMode = (typeof searchObject.orderMode === "string") ? WordOrderModeUtil.cast(searchObject.orderMode) : undefined;
+    let orderDirection = (typeof searchObject.orderDirection === "string") ? WordOrderDirectionUtil.cast(searchObject.orderDirection) : undefined;
     let order = (orderMode !== undefined && orderDirection !== undefined) ? {mode: orderMode, direction: orderDirection} : undefined;
-    let ignoreOptions = (query.ignoreCase === "true") ? {case: true} : undefined;
+    let ignoreOptions = (searchObject.ignoreCase === "true") ? {case: true} : undefined;
     let parameter = NormalWordParameter.createEmpty({search, mode, type, order, ignoreOptions});
     return parameter;
   }
 
-  public serialize(): string {
+  public serialize(): Record<string, unknown> {
     let search = this.search;
     let mode = this.mode;
     let type = this.type;
     let orderMode = this.order.mode;
     let orderDirection = this.order.direction;
     let ignoreCase = this.ignoreOptions.case;
-    let query = {search, mode, type, orderMode, orderDirection, ignoreCase};
-    let queryString = queryParser.stringify(query);
-    return queryString;
+    let searchObject = {search, mode, type, orderMode, orderDirection, ignoreCase};
+    return searchObject;
   }
 
 }

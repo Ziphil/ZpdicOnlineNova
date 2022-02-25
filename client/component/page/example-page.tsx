@@ -7,9 +7,6 @@ import {
   useState
 } from "react";
 import {
-  useParams
-} from "react-router-dom";
-import {
   useMount
 } from "react-use";
 import ExampleList from "/client/component/compound/example-list";
@@ -19,6 +16,7 @@ import {
 } from "/client/component/create";
 import {
   useIntl,
+  useParams,
   useRequest
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
@@ -42,7 +40,7 @@ const ExamplePage = create(
     let [canOwn, setCanOwn] = useState(false);
     let [canEdit, setCanEdit] = useState(false);
     let {request} = useRequest();
-    let params = useParams<{number: string}>();
+    let params = useParams();
 
     let fetchDictionary = useCallback(async function (): Promise<void> {
       let number = +params.number;

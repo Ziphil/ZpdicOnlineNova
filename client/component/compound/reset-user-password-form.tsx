@@ -7,9 +7,6 @@ import {
   useState
 } from "react";
 import {
-  useLocation
-} from "react-router-dom";
-import {
   useMount
 } from "react-use";
 import Button from "/client/component/atom/button";
@@ -19,6 +16,7 @@ import {
 } from "/client/component/create";
 import {
   useIntl,
+  useLocation,
   usePath,
   usePopup,
   useRequest
@@ -48,14 +46,14 @@ const ResetUserPasswordForm = create(
     let {request} = useRequest();
     let [intl, {trans}] = useIntl();
     let {pushPath} = usePath();
-    let location = useLocation<any>();
+    let location = useLocation();
     let [, {addInformationPopup}] = usePopup();
 
     let issueResetToken = useCallback(async function (): Promise<void> {
       let response = await request("issueUserResetToken", {name, email}, {useRecaptcha: true});
       if (response.status === 200) {
         addInformationPopup("userResetTokenIssued");
-        pushPath("/", undefined, true);
+        pushPath("/", {preservePopup: true});
       }
     }, [name, email, request, pushPath, addInformationPopup]);
 
@@ -63,13 +61,13 @@ const ResetUserPasswordForm = create(
       let response = await request("resetUserPassword", {key: tokenKey!, password});
       if (response.status === 200) {
         addInformationPopup("userPasswordReset");
-        pushPath("/", undefined, true);
+        pushPath("/", {preservePopup: true});
       }
     }, [tokenKey, password, request, pushPath, addInformationPopup]);
 
     useMount(() => {
-      let name = location.state.name;
-      if (name !== undefined) {
+      let name = location.search.name;
+      if (typeof name === "string") {
         setName(name);
       }
     });

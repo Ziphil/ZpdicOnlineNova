@@ -8,11 +8,11 @@ import {
   useEffect
 } from "react";
 import {
-  useLocation
-} from "react-router-dom";
-import {
   create
 } from "/client/component/create";
+import {
+  useLocation
+} from "/client/component/hook";
 
 
 const ScrollTop = create(
@@ -27,7 +27,7 @@ const ScrollTop = create(
 
     useEffect(() => {
       window.scrollTo(0, 0);
-    }, [location]);
+    }, [location.key]);
 
     let node = (
       <Fragment>

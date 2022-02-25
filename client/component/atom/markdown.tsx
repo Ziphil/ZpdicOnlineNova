@@ -3,12 +3,16 @@
 import * as react from "react";
 import {
   ElementType,
+  Fragment,
   ReactElement,
   ReactNode,
   useCallback,
   useMemo
 } from "react";
 import ReactMarkdown from "react-markdown";
+import {
+  Options as ReactMarkdownOptions
+} from "react-markdown";
 import {
   uriTransformer
 } from "react-markdown";
@@ -32,7 +36,7 @@ const Markdown = create(
     type?: "simple" | "normal" | "document",
     allowHeading?: boolean,
     homePath?: string,
-    components?: MarkdownComponents,
+    components?: ReactMarkdownOptions["components"],
     className?: string
   }): ReactElement {
 
@@ -46,27 +50,15 @@ const Markdown = create(
 
     let [allowedElements, disallowedElements] = useMemo(() => {
       if (type === "simple") {
-        let allowedElements = ["p", "a"];
-        return [allowedElements, undefined];
+        return [["p", "a"], undefined];
       } else if (type === "normal") {
-        let disallowedElements = ["hr", "dl", "dd", "dt", "input", "h1", "h2", "h3", "h4", "h5", "h6"];
-        return [undefined, disallowedElements];
+        return [undefined, ["hr", "dl", "dd", "dt", "input", "h1", "h2", "h3", "h4", "h5", "h6"]];
       } else {
-        let disallowedElements = ["hr", "dl", "dd", "dt", "input"];
-        return [undefined, disallowedElements];
+        return [undefined, ["hr", "dl", "dd", "dt", "input"]];
       }
     }, [type]);
-    let customComponents = useMemo(() => {
-      if (type === "simple") {
-        let renderChildren = function (props: any): ReactElement {
-          return props.children;
-        };
-        return {a: Link, p: renderChildren};
-      } else {
-        return {a: Link};
-      }
-    }, [type]);
-    let allComponents = {...customComponents, ...components} as MarkdownComponents;
+    let customComponents = (type === "simple") ? {a: Link, p: MarkdownSimple} : {a: Link};
+    let allComponents = {...customComponents, ...components} as any;
     let innerNode = (
       <ReactMarkdown
         className={className}
@@ -87,6 +79,23 @@ const Markdown = create(
 );
 
 
-export type MarkdownComponents = {[type: string]: ElementType};
+const MarkdownSimple = create(
+  null,
+  function ({
+    children
+  }: {
+    children?: ReactNode
+  }): ReactElement {
+
+    let node = (
+      <Fragment>
+        {children}
+      </Fragment>
+    );
+    return node;
+
+  }
+);
+
 
 export default Markdown;
