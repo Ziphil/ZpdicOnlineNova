@@ -9,6 +9,7 @@ import {
 import {
   fas as iconFas
 } from "@fortawesome/free-solid-svg-icons";
+import nprogress from "nprogress";
 import * as react from "react";
 import {
   render
@@ -24,6 +25,7 @@ export class Main {
   public main(): void {
     this.appendIconElement();
     this.appendRecaptchaElement();
+    this.setupNprogress();
     this.render();
   }
 
@@ -40,6 +42,10 @@ export class Main {
     let element = document.createElement("script");
     element.src = "https://www.google.com/recaptcha/api.js?render=" + RECAPTCHA_KEY;
     document.head.appendChild(element);
+  }
+
+  private setupNprogress(): void {
+    nprogress.configure({trickleSpeed: 100, showSpinner: false});
   }
 
   private render(): void {

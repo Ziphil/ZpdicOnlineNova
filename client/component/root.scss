@@ -33,3 +33,21 @@ body {
 :global(.grecaptcha-badge) {
   visibility: hidden;
 }
+
+:global(#nprogress) {
+  pointer-events: none;
+}
+
+:global(#nprogress .bar) {
+  width: 100%;
+  height: 2rpx;
+  top: 0rpx;
+  left: 0rpx;
+  background-color: darken(map-get($colors, information), 0%);
+  position: fixed;
+  z-index: 10001;
+}
+
+:global(#nprogress .peg) {
+  display: none;
+}
