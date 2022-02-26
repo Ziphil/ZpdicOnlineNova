@@ -33,6 +33,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  globalLocale,
   useDefaultLocale,
   useDefaultUser
 } from "/client/component/hook";
@@ -54,9 +55,10 @@ require("../../node_modules/c3/c3.css");
 export async function loadDocumentSource({params}: {params: Record<string, string>}): Promise<{source: string | null}> {
   let firstPath = (params.firstPath) ? params.firstPath : "";
   let secondPath = (params.secondPath) ? "/" + params.secondPath : "";
+  let locale = globalLocale;
   let path = firstPath + secondPath;
   let url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchDocument"];
-  let response = await axios.post(url, {locale: "ja", path}, {validateStatus: () => true});
+  let response = await axios.post(url, {locale, path}, {validateStatus: () => true});
   if (response.status === 200 && typeof response.data === "string") {
     let source = response.data;
     return {source};
