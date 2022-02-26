@@ -42,6 +42,7 @@ import {
   useDefaultUser
 } from "/client/component/hook";
 import InnerRoot from "/client/component/inner-root";
+import EmptyPage from "/client/component/page/empty-page";
 import ErrorPage from "/client/component/page/error-page";
 import {
   createRoute
@@ -115,15 +116,17 @@ const Root = create(
       <DndProvider backend={DndBackend}>
         <QueryClientProvider client={queryClient}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-            <Router location={location} routes={routes} caseSensitive={true}>
-              <ErrorBoundary fallbackRender={ErrorPage}>
-                <InnerRoot>
-                  <ScrollTop>
-                    <Outlet/>
-                  </ScrollTop>
-                </InnerRoot>
-              </ErrorBoundary>
-            </Router>
+            <ErrorBoundary fallbackRender={EmptyPage}>
+              <Router location={location} routes={routes} caseSensitive={true}>
+                <ErrorBoundary fallbackRender={ErrorPage}>
+                  <InnerRoot>
+                    <ScrollTop>
+                      <Outlet/>
+                    </ScrollTop>
+                  </InnerRoot>
+                </ErrorBoundary>
+              </Router>
+            </ErrorBoundary>
           </IntlProvider>
         </QueryClientProvider>
       </DndProvider>
