@@ -45,6 +45,9 @@ const Markdown = create(
       if (homePath !== undefined) {
         nextUri = nextUri.replace(/^~/, homePath);
       }
+      if (nextUri === "javascript:void(0)") {
+        nextUri = "";
+      }
       return nextUri;
     }, [homePath]);
 

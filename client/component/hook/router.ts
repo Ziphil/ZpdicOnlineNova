@@ -20,17 +20,29 @@ export function usePath(): PathCallbacks {
     if (!options?.preservePopup) {
       clearAllPopups();
     }
-    let search = options?.search ?? (options?.preserveSearch ? undefined : {});
-    let hash = options?.hash ?? "";
-    navigate({to: path, search, hash, replace: false});
+    if (path.startsWith("#")) {
+      let search = options?.search ?? (options?.preserveSearch ? undefined : {});
+      let hash = path.slice(1);
+      navigate({search, hash, replace: false});
+    } else {
+      let search = options?.search ?? (options?.preserveSearch ? undefined : {});
+      let hash = options?.hash ?? "";
+      navigate({to: path, search, hash, replace: false});
+    }
   }, [navigate, clearAllPopups]);
   let replacePath = useCallback(function (path: string, options?: PathCallbackOptions): void {
     if (!options?.preservePopup) {
       clearAllPopups();
     }
-    let search = options?.search ?? (options?.preserveSearch ? undefined : {});
-    let hash = options?.hash ?? "";
-    navigate({to: path, search, hash, replace: true});
+    if (path.startsWith("#")) {
+      let search = options?.search ?? (options?.preserveSearch ? undefined : {});
+      let hash = path.slice(1);
+      navigate({search, hash, replace: true});
+    } else {
+      let search = options?.search ?? (options?.preserveSearch ? undefined : {});
+      let hash = options?.hash ?? "";
+      navigate({to: path, search, hash, replace: true});
+    }
   }, [navigate, clearAllPopups]);
   return {pushPath, replacePath};
 }

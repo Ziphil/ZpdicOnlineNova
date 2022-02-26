@@ -25,6 +25,7 @@ import {
 
 let useRawLocale = createGlobalState("ja");
 let useRawMessages = createGlobalState<Messages>({});
+export let globalLocale = "ja";
 
 export function useDefaultLocale(defaultLocale: string): {locale: string, messages: Messages} {
   let [locale] = useRawLocale();
@@ -43,6 +44,7 @@ export function useLocale(): [string, ChangeLocaleCallback] {
   let changeLocale = useCallback(async function (locale: string): Promise<void> {
     let language = LANGUAGES.find((language) => language.locale === locale) ?? LANGUAGES[0];
     let messages = await language.fetchMessages().then((module) => module.default);
+    globalLocale = locale;
     setLocale(locale);
     setMessages(messages);
     localStorage.setItem("locale", locale);

@@ -1,13 +1,12 @@
 //
 
-import axios from "axios";
-import {
-  AxiosRequestConfig,
-  AxiosResponse
-} from "axios";
 import {
   useCallback
 } from "react";
+import {
+  QueryStatus,
+  useQuery as useRawQuery
+} from "react-query";
 import {
   usePopup
 } from "/client/component/hook/popup";
@@ -15,98 +14,58 @@ import {
   useRawUser
 } from "/client/component/hook/user";
 import {
-  RECAPTCHA_KEY
-} from "/client/variable";
+  AxiosResponseSpec,
+  RequestConfig,
+  WithFile,
+  determineErrorPopupType,
+  request as rawRequest,
+  requestFile as rawRequestFile
+} from "/client/util/request";
 import {
   ProcessName,
   RequestData,
-  ResponseData,
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
+  ResponseData
 } from "/server/controller/internal/type";
 
 
-let client = axios.create({timeout: 10000, validateStatus: () => true});
-
-function useCatchError(): <T>(response: AxiosResponse<T>) => AxiosResponse<T> {
+export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): [ResponseData<N> | null, unknown, QueryStatus] {
   let [, {addErrorPopup}] = usePopup();
-  let [, setUser] = useRawUser();
-  let catchError = useCallback(function <T>(response: AxiosResponse<T>): AxiosResponse<T> {
-    let status = response.status;
-    let body = response.data as any;
-    if (status === 400) {
-      if (typeof body === "object" && "error" in body && "type" in body && typeof body.type === "string") {
-        addErrorPopup(body.type);
-      } else {
-        addErrorPopup("messageNotFound");
-      }
-    } else if (status === 401) {
-      addErrorPopup("unauthenticated");
-      setUser(null);
-    } else if (status === 403) {
-      if (typeof body === "object" && "error" in body && "type" in body && typeof body.type === "string") {
-        addErrorPopup(body.type);
-      } else {
-        addErrorPopup("forbidden");
-      }
-    } else if (status === 404) {
-      addErrorPopup("serverNotFound");
-    } else if (status === 408) {
-      addErrorPopup("requestTimeout");
-    } else if (status === 500 || status === 503) {
-      addErrorPopup("serverError");
-    } else if (status === 504) {
-      addErrorPopup("serverTimeout");
-    } else {
-      addErrorPopup("unexpected");
+  let result = useRawQuery([name, data], async () => {
+    let response = await rawRequest(name, data, config);
+    if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
+      let type = determineErrorPopupType(response);
+      addErrorPopup(type);
     }
-    return response;
-  }, [addErrorPopup, setUser]);
-  return catchError;
+    return response.data;
+  });
+  return [result.data ?? null, result.error, result.status];
 }
 
 export function useRequest(): RequestCallbacks {
-  let catchError = useCatchError();
+  let [, {addErrorPopup}] = usePopup();
+  let [, setUser] = useRawUser();
   let request = useCallback(async function <N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
-    let url = SERVER_PATH_PREFIX + SERVER_PATHS[name];
-    let method = "post" as const;
-    if (config.useRecaptcha) {
-      let action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : name;
-      let recaptchaToken = await grecaptcha.execute(RECAPTCHA_KEY, {action});
-      if (data !== undefined) {
-        if (data instanceof FormData) {
-          data.append("recaptchaToken", recaptchaToken);
-        } else {
-          data = {...data, recaptchaToken};
-        }
-      }
-    }
-    let response = await (async () => {
-      try {
-        return await client.request({url, method, ...config, data});
-      } catch (error) {
-        if (error.code === "ECONNABORTED") {
-          let data = undefined as any;
-          return {status: 408, statusText: "Request Timeout", headers: {}, data, config};
-        } else {
-          throw error;
-        }
-      }
-    })();
+    let response = await rawRequest(name, data, config);
     if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
-      catchError(response);
+      let type = determineErrorPopupType(response);
+      addErrorPopup(type);
+      if (type === "unauthenticated") {
+        setUser(null);
+      }
     }
     return response;
-  }, [catchError]);
+  }, [setUser, addErrorPopup]);
   let requestFile = useCallback(async function <N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
-    let formData = new FormData() as any;
-    for (let [key, value] of Object.entries(data)) {
-      formData.append(key, value);
+    let response = await rawRequestFile(name, data, config);
+    if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
+      let type = determineErrorPopupType(response);
+      addErrorPopup(type);
+      if (type === "unauthenticated") {
+        setUser(null);
+      }
     }
-    let nextConfig = {...config, timeout: 0};
-    let response = await request(name, formData, nextConfig);
     return response;
-  }, [request]);
+  }, [setUser, addErrorPopup]);
   return {request, requestFile};
 }
 
@@ -138,23 +97,6 @@ export function useLogout(): (config?: RequestConfig) => Promise<AxiosResponseSp
 }
 
 type RequestCallbacks = {
-  request: RequestCallback,
-  requestFile: RequestFileCallback
+  request: typeof rawRequest,
+  requestFile: typeof rawRequestFile
 };
-type RequestCallback = {
-  <N extends ProcessName>(name: N, data: Omit<RequestData<N>, "recaptchaToken">, config: RequestConfigWithRecaptcha): Promise<AxiosResponseSpec<N>>,
-  <N extends ProcessName>(name: N, data: RequestData<N>, config?: RequestConfig): Promise<AxiosResponseSpec<N>>
-};
-type RequestFileCallback = {
-  <N extends ProcessName>(name: N, data: WithFile<Omit<RequestData<N>, "recaptchaToken">>, config: RequestConfigWithRecaptcha): Promise<AxiosResponseSpec<N>>;
-  <N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config?: RequestConfig): Promise<AxiosResponseSpec<N>>;
-};
-
-type AdditionalRequestConfig = {
-  ignoreError?: boolean,
-  useRecaptcha?: boolean | string
-};
-type RequestConfig = AxiosRequestConfig & AdditionalRequestConfig;
-type RequestConfigWithRecaptcha = RequestConfig & {useRecaptcha: true | string};
-type WithFile<T> = T & {file: Blob} & {[key: string]: string | Blob};
-type AxiosResponseSpec<N extends ProcessName> = AxiosResponse<ResponseData<N>>;

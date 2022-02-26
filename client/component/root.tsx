@@ -30,13 +30,19 @@ import {
   IntlProvider
 } from "react-intl";
 import {
+  QueryClient,
+  QueryClientProvider
+} from "react-query";
+import {
   create
 } from "/client/component/create";
 import {
+  globalLocale,
   useDefaultLocale,
   useDefaultUser
 } from "/client/component/hook";
 import InnerRoot from "/client/component/inner-root";
+import EmptyPage from "/client/component/page/empty-page";
 import ErrorPage from "/client/component/page/error-page";
 import {
   createRoute
@@ -54,9 +60,10 @@ require("../../node_modules/c3/c3.css");
 export async function loadDocumentSource({params}: {params: Record<string, string>}): Promise<{source: string | null}> {
   let firstPath = (params.firstPath) ? params.firstPath : "";
   let secondPath = (params.secondPath) ? "/" + params.secondPath : "";
+  let locale = globalLocale;
   let path = firstPath + secondPath;
   let url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchDocument"];
-  let response = await axios.post(url, {locale: "ja", path}, {validateStatus: () => true});
+  let response = await axios.post(url, {locale, path}, {validateStatus: () => true});
   if (response.status === 200 && typeof response.data === "string") {
     let source = response.data;
     return {source};
@@ -69,6 +76,7 @@ let location = new ReactLocation({
   parseSearch: (searchString) => queryParser.parse(searchString),
   stringifySearch: (search) => queryParser.stringify(search)
 });
+let queryClient = new QueryClient();
 let routes = [
   ...createRoute("/login", () => import("/client/component/page/login-page"), {type: "guest", redirect: "/dashboard"}),
   ...createRoute("/register", () => import("/client/component/page/register-page"), {type: "guest", redirect: "/dashboard"}),
@@ -106,17 +114,21 @@ const Root = create(
 
     let node = (ready) && (
       <DndProvider backend={DndBackend}>
-        <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-          <Router location={location} routes={routes} caseSensitive={true}>
-            <ErrorBoundary fallbackRender={ErrorPage}>
-              <InnerRoot>
-                <ScrollTop>
-                  <Outlet/>
-                </ScrollTop>
-              </InnerRoot>
+        <QueryClientProvider client={queryClient}>
+          <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
+            <ErrorBoundary fallbackRender={EmptyPage}>
+              <Router location={location} routes={routes} caseSensitive={true}>
+                <ErrorBoundary fallbackRender={ErrorPage}>
+                  <InnerRoot>
+                    <ScrollTop>
+                      <Outlet/>
+                    </ScrollTop>
+                  </InnerRoot>
+                </ErrorBoundary>
+              </Router>
             </ErrorBoundary>
-          </Router>
-        </IntlProvider>
+          </IntlProvider>
+        </QueryClientProvider>
       </DndProvider>
     );
     return node || null;

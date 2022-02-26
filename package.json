@@ -1,6 +1,6 @@
 {
   "name": "zpdic",
-  "version": "2.35.1",
+  "version": "2.35.2",
   "author": "Ziphil",
   "description": "",
   "main": "dist/index.js",
@@ -93,6 +93,7 @@
     "react-intl": "^5.24.4",
     "react-markdown": "^8.0.0",
     "react-onclickoutside": "^6.12.1",
+    "react-query": "^3.34.16",
     "react-responsive": "^9.0.0-beta.6",
     "react-use": "^17.3.2",
     "remark-gfm": "^3.0.1",
