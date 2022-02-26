@@ -30,6 +30,10 @@ import {
   IntlProvider
 } from "react-intl";
 import {
+  QueryClient,
+  QueryClientProvider
+} from "react-query";
+import {
   create
 } from "/client/component/create";
 import {
@@ -71,6 +75,7 @@ let location = new ReactLocation({
   parseSearch: (searchString) => queryParser.parse(searchString),
   stringifySearch: (search) => queryParser.stringify(search)
 });
+let queryClient = new QueryClient();
 let routes = [
   ...createRoute("/login", () => import("/client/component/page/login-page"), {type: "guest", redirect: "/dashboard"}),
   ...createRoute("/register", () => import("/client/component/page/register-page"), {type: "guest", redirect: "/dashboard"}),
@@ -108,17 +113,19 @@ const Root = create(
 
     let node = (ready) && (
       <DndProvider backend={DndBackend}>
-        <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-          <Router location={location} routes={routes} caseSensitive={true}>
-            <ErrorBoundary fallbackRender={ErrorPage}>
-              <InnerRoot>
-                <ScrollTop>
-                  <Outlet/>
-                </ScrollTop>
-              </InnerRoot>
-            </ErrorBoundary>
-          </Router>
-        </IntlProvider>
+        <QueryClientProvider client={queryClient}>
+          <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
+            <Router location={location} routes={routes} caseSensitive={true}>
+              <ErrorBoundary fallbackRender={ErrorPage}>
+                <InnerRoot>
+                  <ScrollTop>
+                    <Outlet/>
+                  </ScrollTop>
+                </InnerRoot>
+              </ErrorBoundary>
+            </Router>
+          </IntlProvider>
+        </QueryClientProvider>
       </DndProvider>
     );
     return node || null;

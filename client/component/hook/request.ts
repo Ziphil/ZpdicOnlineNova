@@ -4,6 +4,10 @@ import {
   useCallback
 } from "react";
 import {
+  QueryStatus,
+  useQuery as useRawQuery
+} from "react-query";
+import {
   usePopup
 } from "/client/component/hook/popup";
 import {
@@ -19,9 +23,23 @@ import {
 } from "/client/util/request";
 import {
   ProcessName,
-  RequestData
+  RequestData,
+  ResponseData
 } from "/server/controller/internal/type";
 
+
+export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): [ResponseData<N> | null, unknown, QueryStatus] {
+  let [, {addErrorPopup}] = usePopup();
+  let result = useRawQuery([name, data], async () => {
+    let response = await rawRequest(name, data, config);
+    if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
+      let type = determineErrorPopupType(response);
+      addErrorPopup(type);
+    }
+    return response.data;
+  });
+  return [result.data ?? null, result.error, result.status];
+}
 
 export function useRequest(): RequestCallbacks {
   let [, {addErrorPopup}] = usePopup();
