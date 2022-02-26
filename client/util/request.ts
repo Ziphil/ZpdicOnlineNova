@@ -19,6 +19,8 @@ import {
 
 let client = axios.create({timeout: 10000, validateStatus: () => true});
 
+export async function request<N extends ProcessName>(name: N, data: Omit<RequestData<N>, "recaptchaToken">, config: RequestConfigWithRecaptcha): Promise<AxiosResponseSpec<N>>;
+export async function request<N extends ProcessName>(name: N, data: RequestData<N>, config?: RequestConfig): Promise<AxiosResponseSpec<N>>;
 export async function request<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
   let url = SERVER_PATH_PREFIX + SERVER_PATHS[name];
   let method = "post" as const;
@@ -45,6 +47,18 @@ export async function request<N extends ProcessName>(name: N, data: RequestData<
       }
     }
   })();
+  return response;
+}
+
+export async function requestFile<N extends ProcessName>(name: N, data: WithFile<Omit<RequestData<N>, "recaptchaToken">>, config: RequestConfigWithRecaptcha): Promise<AxiosResponseSpec<N>>;
+export async function requestFile<N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config?: RequestConfig): Promise<AxiosResponseSpec<N>>;
+export async function requestFile<N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
+  let formData = new FormData() as any;
+  for (let [key, value] of Object.entries(data)) {
+    formData.append(key, value);
+  }
+  let nextConfig = {...config, timeout: 0};
+  let response = await request(name, formData, nextConfig);
   return response;
 }
 
@@ -83,4 +97,6 @@ type AdditionalRequestConfig = {
   useRecaptcha?: boolean | string
 };
 export type RequestConfig = AxiosRequestConfig & AdditionalRequestConfig;
+export type RequestConfigWithRecaptcha = RequestConfig & {useRecaptcha: true | string};
+export type WithFile<T> = T & {file: Blob} & {[key: string]: string | Blob};
 export type AxiosResponseSpec<N extends ProcessName> = AxiosResponse<ResponseData<N>>;
