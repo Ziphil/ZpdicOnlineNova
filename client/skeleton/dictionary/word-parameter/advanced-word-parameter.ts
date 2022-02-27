@@ -26,9 +26,9 @@ export class AdvancedWordParameter extends WordParameter {
     return skeleton;
   }
 
-  public static deserializeEach(searchObject: Record<string, unknown>): AdvancedWordParameter {
-    if (typeof searchObject.advanced === "string") {
-      let data = rison.decode<any>(searchObject.advanced);
+  public static deserializeEach(search: Record<string, unknown>): AdvancedWordParameter {
+    if (typeof search.advanced === "string") {
+      let data = rison.decode<any>(search.advanced);
       let parameter = new AdvancedWordParameter(data.elements);
       return parameter;
     } else {
@@ -38,8 +38,8 @@ export class AdvancedWordParameter extends WordParameter {
   }
 
   public serialize(): Record<string, unknown> {
-    let searchObject = {advanced: encodeURI(rison.encode(this))};
-    return searchObject;
+    let search = {advanced: encodeURI(rison.encode(this))};
+    return search;
   }
 
 }
@@ -47,17 +47,17 @@ export class AdvancedWordParameter extends WordParameter {
 
 export class AdvancedWordParameterElement {
 
-  public search!: string;
+  public text!: string;
   public title!: string;
   public mode!: AdvancedWordMode;
   public type!: WordType;
 
   public static createEmpty(): AdvancedWordParameterElement {
-    let search = "";
+    let text = "";
     let title = "";
     let mode = "name" as const;
     let type = "exact" as const;
-    let skeleton = {search, title, mode, type};
+    let skeleton = {text, title, mode, type};
     return skeleton;
   }
 

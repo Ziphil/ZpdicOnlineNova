@@ -291,7 +291,7 @@ activateUserForm:
     右のボタンをクリックして、メールを再送信することもできます。
 advancedSearchForm:
   overlayTitle: "高度な検索"
-  search: "検索内容"
+  text: "検索内容"
   title: "分類"
   mode: "検索範囲"
   type: "検索方式"

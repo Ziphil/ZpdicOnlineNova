@@ -61,10 +61,10 @@ const SearchForm = create(
     let inputRef = useRef<HTMLInputElement>(null);
     let [, {trans}] = useIntl();
 
-    let handleParameterSet = useCallback(function (nextParameter: {search?: string, mode?: WordMode, type?: WordType, orderMode?: WordOrderMode, orderDirection?: WordOrderDirection, ignoreCase?: boolean}): void {
+    let handleParameterSet = useCallback(function (nextParameter: {text?: string, mode?: WordMode, type?: WordType, orderMode?: WordOrderMode, orderDirection?: WordOrderDirection, ignoreCase?: boolean}): void {
       if (onParameterSet) {
         let oldParameter = WordParameter.getNormal(parameter);
-        let search = nextParameter.search ?? oldParameter.search;
+        let text = nextParameter.text ?? oldParameter.text;
         let mode = nextParameter.mode ?? oldParameter.mode;
         let type = nextParameter.type ?? oldParameter.type;
         let orderMode = nextParameter.orderMode ?? oldParameter.order.mode;
@@ -72,7 +72,7 @@ const SearchForm = create(
         let order = {mode: orderMode, direction: orderDirection};
         let ignoreCase = nextParameter.ignoreCase ?? oldParameter.ignoreOptions.case;
         let ignoreOptions = {case: ignoreCase};
-        let actualParameter = NormalWordParameter.createEmpty({search, mode, type, order, ignoreOptions});
+        let actualParameter = NormalWordParameter.createEmpty({text, mode, type, order, ignoreOptions});
         onParameterSet(actualParameter);
       }
     }, [parameter, onParameterSet]);
@@ -147,7 +147,7 @@ const SearchForm = create(
     let node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-          <Input value={actualParameter.search} prefix={iconNode} nativeRef={inputRef} onSet={(search) => handleParameterSet({search})}/>
+          <Input value={actualParameter.text} prefix={iconNode} nativeRef={inputRef} onSet={(text) => handleParameterSet({text})}/>
           <div styleName="radio-wrapper">
             <RadioGroup name="mode" value={actualParameter.mode} specs={modeSpecs} onSet={(mode) => handleParameterSet({mode})}/>
           </div>

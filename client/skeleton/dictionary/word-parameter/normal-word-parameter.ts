@@ -1,6 +1,5 @@
 //
 
-import * as queryParser from "query-string";
 import {
   WordMode,
   WordModeUtil,
@@ -18,15 +17,15 @@ import {
 
 export class NormalWordParameter extends WordParameter {
 
-  public search: string;
+  public text: string;
   public mode: WordMode;
   public type: WordType;
   public order: WordOrder;
   public ignoreOptions: WordIgnoreOptions;
 
-  private constructor(search: string, mode: WordMode, type: WordType, order: WordOrder, ignoreOptions: WordIgnoreOptions) {
+  private constructor(text: string, mode: WordMode, type: WordType, order: WordOrder, ignoreOptions: WordIgnoreOptions) {
     super();
-    this.search = search;
+    this.text = text;
     this.mode = mode;
     this.type = type;
     this.order = order;
@@ -34,36 +33,36 @@ export class NormalWordParameter extends WordParameter {
   }
 
   public static createEmpty(overrides: Partial<NormalWordParameter> = {}): NormalWordParameter {
-    let search = overrides.search ?? "";
+    let text = overrides.text ?? "";
     let mode = overrides.mode ?? "both";
     let type = overrides.type ?? "prefix";
     let order = overrides.order ?? {mode: "unicode", direction: "ascending"};
     let ignoreOptions = overrides.ignoreOptions ?? {case: false};
-    let skeleton = new NormalWordParameter(search, mode, type, order, ignoreOptions);
+    let skeleton = new NormalWordParameter(text, mode, type, order, ignoreOptions);
     return skeleton;
   }
 
-  public static deserializeEach(searchObject: Record<string, unknown>): NormalWordParameter {
-    let search = (typeof searchObject.search === "string") ? searchObject.search : undefined;
-    let mode = (typeof searchObject.mode === "string") ? WordModeUtil.cast(searchObject.mode) : undefined;
-    let type = (typeof searchObject.type === "string") ? WordTypeUtil.cast(searchObject.type) : undefined;
-    let orderMode = (typeof searchObject.orderMode === "string") ? WordOrderModeUtil.cast(searchObject.orderMode) : undefined;
-    let orderDirection = (typeof searchObject.orderDirection === "string") ? WordOrderDirectionUtil.cast(searchObject.orderDirection) : undefined;
+  public static deserializeEach(search: Record<string, unknown>): NormalWordParameter {
+    let text = (typeof search.text === "string") ? search.text : (typeof search.search === "string") ? search.search : undefined;
+    let mode = (typeof search.mode === "string") ? WordModeUtil.cast(search.mode) : undefined;
+    let type = (typeof search.type === "string") ? WordTypeUtil.cast(search.type) : undefined;
+    let orderMode = (typeof search.orderMode === "string") ? WordOrderModeUtil.cast(search.orderMode) : undefined;
+    let orderDirection = (typeof search.orderDirection === "string") ? WordOrderDirectionUtil.cast(search.orderDirection) : undefined;
     let order = (orderMode !== undefined && orderDirection !== undefined) ? {mode: orderMode, direction: orderDirection} : undefined;
-    let ignoreOptions = (searchObject.ignoreCase === "true") ? {case: true} : undefined;
-    let parameter = NormalWordParameter.createEmpty({search, mode, type, order, ignoreOptions});
+    let ignoreOptions = (search.ignoreCase === "true") ? {case: true} : undefined;
+    let parameter = NormalWordParameter.createEmpty({text, mode, type, order, ignoreOptions});
     return parameter;
   }
 
   public serialize(): Record<string, unknown> {
-    let search = this.search;
+    let text = this.text;
     let mode = this.mode;
     let type = this.type;
     let orderMode = this.order.mode;
     let orderDirection = this.order.direction;
     let ignoreCase = this.ignoreOptions.case;
-    let searchObject = {search, mode, type, orderMode, orderDirection, ignoreCase};
-    return searchObject;
+    let search = {text, mode, type, orderMode, orderDirection, ignoreCase};
+    return search;
   }
 
 }

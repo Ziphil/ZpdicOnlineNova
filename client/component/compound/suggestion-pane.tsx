@@ -29,7 +29,7 @@ const SuggestionPane = create(
 
     let [, {trans}] = useIntl();
 
-    let href = "/dictionary/" + dictionary.number + "?search=" + encodeURIComponent(suggestion.word.name) + "&mode=name&type=exact&page=0";
+    let href = "/dictionary/" + dictionary.number + "?text=" + encodeURIComponent(suggestion.word.name) + "&mode=name&type=exact&page=0";
     let nameNode = <Link href={href} target="self">{suggestion.word.name}</Link>;
     let title = suggestion.title;
     let node = (

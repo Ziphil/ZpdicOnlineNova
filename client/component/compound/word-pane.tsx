@@ -284,7 +284,7 @@ const WordPaneRelations = create(
     let innerNodes = Array.from(groupedRelations).map(([title, relations], index) => {
       let titleNode = (title !== "") && <span styleName="box">{title}</span>;
       let relationNodes = relations.map((relation, relationIndex) => {
-        let href = "/dictionary/" + dictionary.number + "?search=" + encodeURIComponent(relation.name) + "&mode=name&type=exact&page=0";
+        let href = "/dictionary/" + dictionary.number + "?text=" + encodeURIComponent(relation.name) + "&mode=name&type=exact&page=0";
         let relationNode = (
           <Fragment key={relationIndex}>
             {(relationIndex === 0) ? "" : ", "}

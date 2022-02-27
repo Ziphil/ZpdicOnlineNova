@@ -99,7 +99,7 @@ const AdvancedSearchForm = create(
       let modeLabel = (index === 0) ? trans("advancedSearchForm.mode") : undefined;
       let typeLabel = (index === 0) ? trans("advancedSearchForm.type") : undefined;
       let titleLabel = (index === 0) ? trans("advancedSearchForm.title") : undefined;
-      let searchLabel = (index === 0) ? trans("advancedSearchForm.search") : undefined;
+      let textLabel = (index === 0) ? trans("advancedSearchForm.text") : undefined;
       let titleDisabled = element.mode !== "equivalent" && element.mode !== "information";
       let deleteDisabled = elements.length <= 1;
       let suggest = (titleDisabled) ? undefined : createSuggest(element.mode);
@@ -111,7 +111,7 @@ const AdvancedSearchForm = create(
           </div>
           <div styleName="form right">
             <Input className={styles!["title"]} value={element.title} label={titleLabel} suggest={suggest} disabled={titleDisabled} onSet={mutateParameter((parameter, title) => elements[index].title = title)}/>
-            <Input className={styles!["search"]} value={element.search} label={searchLabel} onSet={mutateParameter((parameter, search) => elements[index].search = search)}/>
+            <Input className={styles!["text"]} value={element.text} label={textLabel} onSet={mutateParameter((parameter, text) => elements[index].text = text)}/>
           </div>
           <div styleName="control-button">
             <Button iconName="minus" disabled={deleteDisabled} onClick={mutateParameter((parameter) => deleteAt(elements, index))}/>

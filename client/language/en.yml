@@ -293,7 +293,7 @@ activateUserForm:
     You can also click the button on the right to resend the mail.
 advancedSearchForm:
   overlayTitle: "Advanced search"
-  search: "Keyword"
+  text: "Keyword"
   title: "Title"
   mode: "Scope"
   type: "Method"

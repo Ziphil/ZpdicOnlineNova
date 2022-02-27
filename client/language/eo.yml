@@ -293,7 +293,7 @@ activateUserForm:
     Vi ankaŭ povas alklaki la dekstran butonon por resendi la poŝton.
 advancedSearchForm:
   overlayTitle: "Altnivela serĉo"
-  search: "Ŝlosilvorto"
+  text: "Ŝlosilvorto"
   title: "Titlo"
   mode: "Amplekso"
   type: "Metodo"

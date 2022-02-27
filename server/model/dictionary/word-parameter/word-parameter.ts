@@ -52,27 +52,27 @@ export abstract class WordParameter {
     }
   }
 
-  protected static createNeedle(search: string, type: WordType, ignoreOptions: WordIgnoreOptions): string | RegExp {
-    let escapedSearch = escapeRegexp(search);
+  protected static createNeedle(text: string, type: WordType, ignoreOptions: WordIgnoreOptions): string | RegExp {
+    let escapedText = escapeRegexp(text);
     if (type === "exact") {
       if (ignoreOptions.case) {
-        return new RegExp("^" + escapedSearch + "$", "i");
+        return new RegExp("^" + escapedText + "$", "i");
       } else {
-        return search;
+        return text;
       }
     } else if (type === "prefix") {
       let flags = (ignoreOptions.case) ? "i" : undefined;
-      return new RegExp("^" + escapedSearch, flags);
+      return new RegExp("^" + escapedText, flags);
     } else if (type === "suffix") {
       let flags = (ignoreOptions.case) ? "i" : undefined;
-      return new RegExp(escapedSearch + "$", flags);
+      return new RegExp(escapedText + "$", flags);
     } else if (type === "part") {
       let flags = (ignoreOptions.case) ? "i" : undefined;
-      return new RegExp(escapedSearch, flags);
+      return new RegExp(escapedText, flags);
     } else {
       try {
         let flags = (ignoreOptions.case) ? "i" : undefined;
-        return new RegExp(search, flags);
+        return new RegExp(text, flags);
       } catch (error) {
         return "";
       }
@@ -103,12 +103,12 @@ export class WordParameterCreator {
   public static recreate(skeleton: Jsonify<WordParameterSkeleton>): WordParameter {
     if ("elements" in skeleton) {
       let castSkeleton = skeleton as AdvancedWordParameterSkeleton;
-      let elements = castSkeleton.elements.map((element) => new AdvancedWordParameterElement(element.search, element.title, element.mode, element.type));
+      let elements = castSkeleton.elements.map((element) => new AdvancedWordParameterElement(element.text, element.title, element.mode, element.type));
       let raw = new AdvancedWordParameter(elements);
       return raw;
     } else {
       let castSkeleton = skeleton as NormalWordParameterSkeleton;
-      let raw = new NormalWordParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type, castSkeleton.order, castSkeleton.ignoreOptions);
+      let raw = new NormalWordParameter(castSkeleton.text, castSkeleton.mode, castSkeleton.type, castSkeleton.order, castSkeleton.ignoreOptions);
       return raw;
     }
   }
