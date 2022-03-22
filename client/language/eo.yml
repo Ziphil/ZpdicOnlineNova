@@ -574,6 +574,7 @@ searchForm:
   exact: "Ekzakta"
   regular: "Regesp"
   ignoreCase: "Ignori usklecon"
+  enableSuggestions: "Sugesti variaĵojn"
   unicode: "Unikodo"
   custom: "Propra ordo"
   updatedDate: "Dato de ĝisdatigo"

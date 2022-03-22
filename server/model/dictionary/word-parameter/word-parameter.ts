@@ -108,7 +108,7 @@ export class WordParameterCreator {
       return raw;
     } else {
       let castSkeleton = skeleton as NormalWordParameterSkeleton;
-      let raw = new NormalWordParameter(castSkeleton.text, castSkeleton.mode, castSkeleton.type, castSkeleton.order, castSkeleton.ignoreOptions);
+      let raw = new NormalWordParameter(castSkeleton.text, castSkeleton.mode, castSkeleton.type, castSkeleton.order, castSkeleton.ignoreOptions, castSkeleton.enableSuggestions);
       return raw;
     }
   }

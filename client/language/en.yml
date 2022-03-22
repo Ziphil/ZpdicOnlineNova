@@ -574,6 +574,7 @@ searchForm:
   exact: "Exact"
   regular: "Regexp"
   ignoreCase: "Ignore case"
+  enableSuggestions: "Suggest variations"
   unicode: "Unicode"
   custom: "Custom order"
   updatedDate: "Update date"

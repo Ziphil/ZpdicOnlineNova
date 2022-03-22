@@ -61,7 +61,7 @@ const SearchForm = create(
     let inputRef = useRef<HTMLInputElement>(null);
     let [, {trans}] = useIntl();
 
-    let handleParameterSet = useCallback(function (nextParameter: {text?: string, mode?: WordMode, type?: WordType, orderMode?: WordOrderMode, orderDirection?: WordOrderDirection, ignoreCase?: boolean}): void {
+    let handleParameterSet = useCallback(function (nextParameter: PartialWordParameter): void {
       if (onParameterSet) {
         let oldParameter = WordParameter.getNormal(parameter);
         let text = nextParameter.text ?? oldParameter.text;
@@ -72,7 +72,8 @@ const SearchForm = create(
         let order = {mode: orderMode, direction: orderDirection};
         let ignoreCase = nextParameter.ignoreCase ?? oldParameter.ignoreOptions.case;
         let ignoreOptions = {case: ignoreCase};
-        let actualParameter = NormalWordParameter.createEmpty({text, mode, type, order, ignoreOptions});
+        let enableSuggestions = nextParameter.enableSuggestions;
+        let actualParameter = NormalWordParameter.createEmpty({text, mode, type, order, ignoreOptions, enableSuggestions});
         onParameterSet(actualParameter);
       }
     }, [parameter, onParameterSet]);
@@ -122,6 +123,7 @@ const SearchForm = create(
       <Fragment>
         <div styleName="selection-wrapper">
           <Checkbox name="ignoreCase" value="true" label={trans("searchForm.ignoreCase")} checked={actualParameter.ignoreOptions.case} onSet={(ignoreCase) => handleParameterSet({ignoreCase})}/>
+          <Checkbox name="enableSuggestions" value="true" label={trans("searchForm.enableSuggestions")} checked={actualParameter.enableSuggestions} onSet={(enableSuggestions) => handleParameterSet({enableSuggestions})}/>
         </div>
         <div styleName="selection-wrapper">
           <Selection className={styles!["order-mode"]} value={actualParameter.order.mode} specs={orderModeSpecs} onSet={(orderMode) => handleParameterSet({orderMode})}/>
@@ -189,5 +191,15 @@ const SearchFormOrderModeDropdownNode = create(
   }
 );
 
+
+type PartialWordParameter = {
+  text?: string,
+  mode?: WordMode,
+  type?: WordType,
+  orderMode?: WordOrderMode,
+  orderDirection?: WordOrderDirection,
+  ignoreCase?: boolean,
+  enableSuggestions?: boolean
+};
 
 export default SearchForm;
