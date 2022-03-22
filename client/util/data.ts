@@ -3,23 +3,19 @@
 
 export class DataUtil {
 
-  private static toSnake(string: string): string {
-    return string.replace(/([A-Z])/g, (char) => "_" + char.toLowerCase());
+  private static toSnakeCase(string: string): string {
+    return string.replace(/([A-Z])/g, (char) => "-" + char.toLowerCase());
   }
 
-  public static create(object: Record<string, DataSpec>): Record<`data-${string}`, string> {
+  public static create(object: Record<string, string | boolean | null | undefined>): Record<`data-${string}`, string> {
     let dataEntries = [];
     for (let [name, spec] of Object.entries(object)) {
-      let snakeName = DataUtil.toSnake(name);
+      let snakeName = DataUtil.toSnakeCase(name);
       if (spec !== null && spec !== undefined) {
         if (typeof spec === "string") {
           dataEntries.push([`data-${snakeName}`, spec]);
-        } else {
-          if (spec.if && spec.true !== null && spec.true !== undefined) {
-            dataEntries.push([`data-${snakeName}`, spec.true]);
-          } else if (!spec.if && spec.false !== null && spec.false !== undefined) {
-            dataEntries.push([`data-${snakeName}`, spec.false]);
-          }
+        } else if (typeof spec === "boolean" && spec) {
+          dataEntries.push([`data-${snakeName}`, "true"]);
         }
       }
     }
@@ -28,7 +24,3 @@ export class DataUtil {
   }
 
 }
-
-
-type DataSpec = {if: boolean, true?: MaybeString, false?: MaybeString} | MaybeString;
-type MaybeString = string | null | undefined;
