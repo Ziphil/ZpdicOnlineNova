@@ -16,8 +16,8 @@ import {
 } from "ts-essentials";
 import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
-import SearchForm from "/client/component/compound/search-form";
 import WordList from "/client/component/compound/word-list";
+import WordSearchForm from "/client/component/compound/word-search-form";
 import {
   create
 } from "/client/component/create";
@@ -108,7 +108,7 @@ const WordSearcher = create(
       <div>
         <Loading loading={dictionary === null}>
           <div styleName="search-form">
-            <SearchForm dictionary={dictionary!} parameter={parameter} onParameterSet={handleParameterSet}/>
+            <WordSearchForm dictionary={dictionary!} parameter={parameter} onParameterSet={handleParameterSet}/>
           </div>
           {innerNode}
         </Loading>

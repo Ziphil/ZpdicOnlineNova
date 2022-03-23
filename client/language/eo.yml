@@ -291,7 +291,7 @@ activateUserForm:
     Pro sekurecaj kialoj, neaktivigitaj uzantoj povos fari nenion post iom da tempo.
     Por aktivigi, sekvu la instrukciojn en la poŝto kiun vi ricevis kiam vi kreis la uzanton.
     Vi ankaŭ povas alklaki la dekstran butonon por resendi la poŝton.
-advancedSearchForm:
+advancedWordSearchForm:
   overlayTitle: "Altnivela serĉo"
   text: "Ŝlosilvorto"
   title: "Titlo"
@@ -564,7 +564,7 @@ resourcePane:
   alert: >-
     Tiu resurso estos forigita.
     Ĉu vi vere certas?
-searchForm:
+wordSearchForm:
   both: "Ambaŭ"
   name: "Kapvorto"
   equivalent: "Tradukaĵo"

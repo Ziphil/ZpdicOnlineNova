@@ -289,7 +289,7 @@ activateUserForm:
     セキュリティー確保のため、この状態で一定期間が経過すると全ての操作ができなくなります。
     ユーザー作成時に送られたメールの指示に従って、ユーザーをアクティベートしてください。
     右のボタンをクリックして、メールを再送信することもできます。
-advancedSearchForm:
+advancedWordSearchForm:
   overlayTitle: "高度な検索"
   text: "検索内容"
   title: "分類"
@@ -561,7 +561,7 @@ resourcePane:
   alert: >-
     このリソースを削除します。
     よろしいですか?
-searchForm:
+wordSearchForm:
   both: "単語＋訳語"
   name: "単語"
   equivalent: "訳語"

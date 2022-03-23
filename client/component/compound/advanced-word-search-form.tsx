@@ -36,8 +36,8 @@ import {
 } from "/client/util/misc";
 
 
-const AdvancedSearchForm = create(
-  require("./advanced-search-form.scss"), "AdvancedSearchForm",
+const AdvancedWordSearchForm = create(
+  require("./advanced-word-search-form.scss"), "AdvancedWordSearchForm",
   function ({
     dictionary,
     defaultParameter,
@@ -93,13 +93,13 @@ const AdvancedSearchForm = create(
     }, [dictionary.number, request]);
 
     let elements = parameter.elements;
-    let modeSpecs = ADVANCED_WORD_MODES.map((mode) => ({value: mode, node: trans(`advancedSearchForm.${mode}`)}));
-    let typeSpecs = WORD_TYPES.map((type) => ({value: type, node: trans(`advancedSearchForm.${type}`)}));
+    let modeSpecs = ADVANCED_WORD_MODES.map((mode) => ({value: mode, node: trans(`advancedWordSearchForm.${mode}`)}));
+    let typeSpecs = WORD_TYPES.map((type) => ({value: type, node: trans(`advancedWordSearchForm.${type}`)}));
     let searchNodes = elements.map((element, index) => {
-      let modeLabel = (index === 0) ? trans("advancedSearchForm.mode") : undefined;
-      let typeLabel = (index === 0) ? trans("advancedSearchForm.type") : undefined;
-      let titleLabel = (index === 0) ? trans("advancedSearchForm.title") : undefined;
-      let textLabel = (index === 0) ? trans("advancedSearchForm.text") : undefined;
+      let modeLabel = (index === 0) ? trans("advancedWordSearchForm.mode") : undefined;
+      let typeLabel = (index === 0) ? trans("advancedWordSearchForm.type") : undefined;
+      let titleLabel = (index === 0) ? trans("advancedWordSearchForm.title") : undefined;
+      let textLabel = (index === 0) ? trans("advancedWordSearchForm.text") : undefined;
       let titleDisabled = element.mode !== "equivalent" && element.mode !== "information";
       let deleteDisabled = elements.length <= 1;
       let suggest = (titleDisabled) ? undefined : createSuggest(element.mode);
@@ -121,13 +121,13 @@ const AdvancedSearchForm = create(
       return searchNode;
     });
     let node = (
-      <Overlay size="large" title={trans("advancedSearchForm.overlayTitle")} open={open} onClose={handleClose}>
+      <Overlay size="large" title={trans("advancedWordSearchForm.overlayTitle")} open={open} onClose={handleClose}>
         {searchNodes}
         <div styleName="plus">
           <Button iconName="plus" onClick={mutateParameter((parameter) => elements.push(AdvancedWordParameterElement.createEmpty()))}/>
         </div>
         <div styleName="confirm-button">
-          <Button label={trans("advancedSearchForm.confirm")} iconName="check" variant="information" onClick={confirmParameter}/>
+          <Button label={trans("advancedWordSearchForm.confirm")} iconName="check" variant="information" onClick={confirmParameter}/>
         </div>
       </Overlay>
     );
@@ -137,4 +137,4 @@ const AdvancedSearchForm = create(
 );
 
 
-export default AdvancedSearchForm;
+export default AdvancedWordSearchForm;

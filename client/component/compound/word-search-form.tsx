@@ -14,7 +14,7 @@ import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
 import RadioGroup from "/client/component/atom/radio-group";
 import Selection from "/client/component/atom/selection";
-import AdvancedSearchForm from "/client/component/compound/advanced-search-form";
+import AdvancedWordSearchForm from "/client/component/compound/advanced-word-search-form";
 import {
   StylesRecord,
   create
@@ -35,8 +35,8 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-const SearchForm = create(
-  require("./search-form.scss"), "SearchForm",
+const WordSearchForm = create(
+  require("./word-search-form.scss"), "WordSearchForm",
   function ({
     dictionary,
     parameter = NormalWordParameter.createEmpty(),
@@ -114,16 +114,16 @@ const SearchForm = create(
     let modes = ["both", "name", "equivalent", "content"] as const;
     let types = ["prefix", "part", "exact", "regular"] as const;
     let orderMode = ["unicode", "updatedDate", "createdDate"] as const;
-    let modeSpecs = modes.map((mode) => ({value: mode, label: trans(`searchForm.${mode}`)}));
-    let typeSpecs = types.map((type) => ({value: type, label: trans(`searchForm.${type}`)}));
-    let orderModeSpecs = orderMode.map((orderMode) => ({value: orderMode, node: trans(`searchForm.${orderMode}`)}));
+    let modeSpecs = modes.map((mode) => ({value: mode, label: trans(`wordSearchForm.${mode}`)}));
+    let typeSpecs = types.map((type) => ({value: type, label: trans(`wordSearchForm.${type}`)}));
+    let orderModeSpecs = orderMode.map((orderMode) => ({value: orderMode, node: trans(`wordSearchForm.${orderMode}`)}));
     let orderDirectionSpecs = WORD_ORDER_DIRECTIONS.map((orderDirection) => ({value: orderDirection, node: <SearchFormOrderModeDropdownNode orderDirection={orderDirection}/>}));
     let actualParameter = WordParameter.getNormal(parameter);
     let orderNode = (showOrder) && (
       <Fragment>
         <div styleName="selection-wrapper">
-          <Checkbox name="ignoreCase" value="true" label={trans("searchForm.ignoreCase")} checked={actualParameter.ignoreOptions.case} onSet={(ignoreCase) => handleParameterSet({ignoreCase})}/>
-          <Checkbox name="enableSuggestions" value="true" label={trans("searchForm.enableSuggestions")} checked={actualParameter.enableSuggestions} onSet={(enableSuggestions) => handleParameterSet({enableSuggestions})}/>
+          <Checkbox name="ignoreCase" value="true" label={trans("wordSearchForm.ignoreCase")} checked={actualParameter.ignoreOptions.case} onSet={(ignoreCase) => handleParameterSet({ignoreCase})}/>
+          <Checkbox name="enableSuggestions" value="true" label={trans("wordSearchForm.enableSuggestions")} checked={actualParameter.enableSuggestions} onSet={(enableSuggestions) => handleParameterSet({enableSuggestions})}/>
         </div>
         <div styleName="selection-wrapper">
           <Selection className={styles!["order-mode"]} value={actualParameter.order.mode} specs={orderModeSpecs} onSet={(orderMode) => handleParameterSet({orderMode})}/>
@@ -133,11 +133,11 @@ const SearchForm = create(
     );
     let advancedSearchButton = (showAdvancedSearch) && (
       <div styleName="radio-wrapper">
-        <Button label={trans("searchForm.advancedSearch")} iconName="search-plus" variant="simple" onClick={() => setSearchFormOpen(true)}/>
+        <Button label={trans("wordSearchForm.advancedSearch")} iconName="search-plus" variant="simple" onClick={() => setSearchFormOpen(true)}/>
       </div>
     );
     let advancedSearchNode = (showAdvancedSearch) && (
-      <AdvancedSearchForm
+      <AdvancedWordSearchForm
         dictionary={dictionary}
         defaultParameter={parameter}
         open={searchFormOpen}
@@ -169,7 +169,7 @@ const SearchForm = create(
 
 
 const SearchFormOrderModeDropdownNode = create(
-  require("./search-form.scss"),
+  require("./word-search-form.scss"),
   function ({
     orderDirection
   }: {
@@ -183,7 +183,7 @@ const SearchFormOrderModeDropdownNode = create(
         <span styleName="order-direction-icon">
           <Icon name={(orderDirection === "ascending") ? "arrow-down-a-z" : "arrow-down-z-a"}/>
         </span>
-        {trans(`searchForm.${orderDirection}`)}
+        {trans(`wordSearchForm.${orderDirection}`)}
       </div>
     );
     return node;
@@ -202,4 +202,4 @@ type PartialWordParameter = {
   enableSuggestions?: boolean
 };
 
-export default SearchForm;
+export default WordSearchForm;

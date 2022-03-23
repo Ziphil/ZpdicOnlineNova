@@ -12,9 +12,9 @@ import {
 import Markdown from "/client/component/atom/markdown";
 import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
-import SearchForm from "/client/component/compound/search-form";
 import SuggestionList from "/client/component/compound/suggestion-list";
 import WordList from "/client/component/compound/word-list";
+import WordSearchForm from "/client/component/compound/word-search-form";
 import {
   create
 } from "/client/component/create";
@@ -150,7 +150,7 @@ const DictionaryPage = create(
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <Loading loading={dictionary === null}>
           <div styleName="search-form">
-            <SearchForm dictionary={dictionary!} parameter={getQuery().parameter} searching={searching} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
+            <WordSearchForm dictionary={dictionary!} parameter={getQuery().parameter} searching={searching} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
           </div>
           {innerNode}
         </Loading>

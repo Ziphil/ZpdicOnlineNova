@@ -291,7 +291,7 @@ activateUserForm:
     For security reasons, unactivated users will not be able to do anything after a certain period of time.
     To activate, follow the instructions in the mail you received when you created the user.
     You can also click the button on the right to resend the mail.
-advancedSearchForm:
+advancedWordSearchForm:
   overlayTitle: "Advanced search"
   text: "Keyword"
   title: "Title"
@@ -564,7 +564,7 @@ resourcePane:
   alert: >-
     This resource will be deleted.
     Are you really sure?
-searchForm:
+wordSearchForm:
   both: "Both"
   name: "Headword"
   equivalent: "Translation"
