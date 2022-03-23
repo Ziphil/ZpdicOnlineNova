@@ -58,13 +58,13 @@ const Alert = create(
     let node = (
       <Modal open={open} outsideClosable={outsideClosable} onClose={onClose}>
         <div styleName="content">
-          <div styleName="text-wrapper">
+          <div styleName="text-container">
             <div styleName="icon"><Icon name={iconName}/></div>
             <p styleName="text">{text}</p>
           </div>
-          <div styleName="button">
+          <div styleName="button-group">
             <Button label={actualCancelLabel} onClick={handleCancel}/>
-            <Button label={actualConfirmLabel} style="caution" onClick={handleConfirm}/>
+            <Button label={actualConfirmLabel} variant="caution" onClick={handleConfirm}/>
           </div>
         </div>
       </Modal>

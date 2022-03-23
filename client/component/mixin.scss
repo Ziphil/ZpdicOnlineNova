@@ -283,13 +283,16 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color), $focus-box-shadow-setting focus-box-shadow-color($color);
   }
   &:disabled,
-  &.disabled {
+  &.disabled,
+  &[data-disabled] {
     opacity: 0.5;
   }
   &:disabled:hover,
   &:disabled:hover *,
+  &[data-disabled]:hover *,
   &.disabled:hover,
-  &.disabled:hover * {
+  &.disabled:hover *,
+  &[data-disabled]:hover * {
     cursor: not-allowed;
   }
 }

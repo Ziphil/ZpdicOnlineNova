@@ -55,7 +55,7 @@ const Highlight = create(
 
     useEffect(() => {
       drawHighlight();
-    }, [rootRef]);
+    }, [rootRef.current]);
 
     let node = (
       <div styleName="root" className={className} ref={rootRef}/>

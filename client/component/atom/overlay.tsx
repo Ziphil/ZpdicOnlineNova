@@ -81,10 +81,10 @@ const OverlayHeader = create(
 
     if (title !== undefined) {
       let backButtonNode = (page !== undefined && ((showBack === undefined && page > 0) || showBack)) && (
-        <Button label={trans("overlay.back")} iconName="backward" style="simple" hideLabel={true} onClick={onBack}/>
+        <Button label={trans("overlay.back")} iconName="backward" variant="simple" hideLabel={true} onClick={onBack}/>
       );
       let closeButtonNode = (
-        <Button label={trans("overlay.close")} iconName="times" style="simple" hideLabel={true} onClick={onClose}/>
+        <Button label={trans("overlay.close")} iconName="times" variant="simple" hideLabel={true} onClick={onClose}/>
       );
       let node = (
         <div styleName="header">

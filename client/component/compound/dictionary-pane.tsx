@@ -103,10 +103,10 @@ const DictionaryPane = create(
       <div styleName="information-item">{trans("dictionaryPane.createdDate")} — {transDate(dictionary.createdDate)}</div>
     );
     let settingNode = (showSettingLink) && (
-      <Button label={trans("dictionaryPane.setting")} iconName="cog" style="simple" onClick={jumpSettingPage}/>
+      <Button label={trans("dictionaryPane.setting")} iconName="cog" variant="simple" onClick={jumpSettingPage}/>
     );
     let downloadNode = (showDownloadLink) && (
-      <Button label={trans("dictionaryPane.download")} iconName="download" style="simple" onClick={downloadDictionary}/>
+      <Button label={trans("dictionaryPane.download")} iconName="download" variant="simple" onClick={downloadDictionary}/>
     );
     let linkNode = (showSettingLink || showDownloadLink) && (
       <div styleName="setting">

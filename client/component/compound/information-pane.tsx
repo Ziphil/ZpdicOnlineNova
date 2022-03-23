@@ -39,7 +39,7 @@ const InformationPane = create(
         <div styleName="button-box"/>
         <div styleName="overlay"/>
         <div styleName="button">
-          <Button iconName="times" style="simple" onClick={onClose}/>
+          <Button iconName="times" variant="simple" onClick={onClose}/>
         </div>
       </div>
     );

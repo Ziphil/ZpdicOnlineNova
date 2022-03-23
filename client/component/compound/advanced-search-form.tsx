@@ -127,7 +127,7 @@ const AdvancedSearchForm = create(
           <Button iconName="plus" onClick={mutateParameter((parameter) => elements.push(AdvancedWordParameterElement.createEmpty()))}/>
         </div>
         <div styleName="confirm-button">
-          <Button label={trans("advancedSearchForm.confirm")} iconName="check" style="information" onClick={confirmParameter}/>
+          <Button label={trans("advancedSearchForm.confirm")} iconName="check" variant="information" onClick={confirmParameter}/>
         </div>
       </Overlay>
     );

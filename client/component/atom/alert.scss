@@ -5,7 +5,7 @@
 
 .content {
   width: 100%;
-  max-width: 1500u;
+  max-width: 500rpx;
   margin: 0rpx auto;
   padding: $large-margin $large-margin;
   background-color: $background-color;
@@ -14,7 +14,7 @@
   position: relative;
 }
 
-.text-wrapper {
+.text-container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -33,12 +33,11 @@
   text-align: justify;
 }
 
-.button {
+.button-group {
   margin: $large-margin 0rpx 0rpx 0rpx;
   text-align: right;
-}
-
-.button >* {
-  @include reset-first-margin;
-  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
+  >* {
+    @include reset-first-margin;
+    margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
+  }
 }

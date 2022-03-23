@@ -45,7 +45,7 @@ const DiscardDictionaryForm = create(
     let node = (
       <Fragment>
         <form styleName="root">
-          <Button label={trans("discardDictionaryForm.confirm")} reactive={true} style="caution" onClick={() => setAlertOpen(true)}/>
+          <Button label={trans("discardDictionaryForm.confirm")} reactive={true} variant="caution" onClick={() => setAlertOpen(true)}/>
         </form>
         <p styleName="caution">
           {trans("discardDictionaryForm.caution")}

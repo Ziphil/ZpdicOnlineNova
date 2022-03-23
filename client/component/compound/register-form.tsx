@@ -83,7 +83,7 @@ const RegisterForm = create(
         <Input label={trans("loginForm.password")} type="flexible" value={password} validate={validatePassword} onSet={(password) => setPassword(password)}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={trans("registerForm.confirm")} iconName="user-plus" style="information" reactive={true} onClick={performRegister}/>
+            <Button label={trans("registerForm.confirm")} iconName="user-plus" variant="information" reactive={true} onClick={performRegister}/>
           </div>
         </div>
       </form>

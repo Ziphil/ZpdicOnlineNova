@@ -3,19 +3,21 @@
 @import "/client/component/mixin.scss";
 
 
+.root {
+  cursor: pointer;
+}
+
 .checkbox {
   display: none;
 }
 
-.checkbox +.label {
-  padding: 0em 0em 0em 1em + $blank-margin;
+.label {
+  padding: 0em 0em 0em $blank-margin;
   position: relative;
-  cursor: pointer;
 }
 
-.checkbox +.label::before {
-  top: 0em;
-  left: 0em;
+.box {
+  bottom: 0.1em;
   width: 1em;
   height: 1em;
   border: 1rpx $light-border-color solid;
@@ -23,21 +25,21 @@
   background-color: white;
   box-shadow: $inset-box-shadow-setting input-box-shadow-color(map-get($colors, primary)) inset;
   box-sizing: border-box;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   vertical-align: middle;
-  position: absolute;
-  content: "";
+  .checkbox:hover +& {
+    border: 1rpx $light-color solid;
+  }
+  .checkbox:focus +& {
+    box-shadow: $focus-box-shadow-setting focus-box-shadow-color(map-get($colors, primary));
+  }
 }
 
-.checkbox:hover +.label::before {
-  border: 1rpx $light-color solid;
-}
-
-.checkbox:checked +.label::after {
-  @include icon-font;
-  top: 0.25em;
-  left: 0.15em;
-  font-size: $tiny-font-size;
+.icon {
+  font-size: 90%;
   color: map-get($colors, primary);
   background-color: map-get($colors, primary);
   background-image: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25));
@@ -45,16 +47,11 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   box-sizing: border-box;
-  display: block;
-  position: absolute;
-  content: "\F00C";
-}
-
-.checkbox:hover +.label::after {
-  color: map-get($colors, primary);
-  background-color: hover-color(map-get($colors, primary));
-}
-
-.checkbox:focus +.label::before {
-  box-shadow: $focus-box-shadow-setting focus-box-shadow-color(map-get($colors, primary));
+  display: none;
+  .checkbox:checked +* >& {
+    display: block;
+  }
+  .checkbox:hover +* >& {
+    color: hover-color(map-get($colors, primary));
+  }
 }

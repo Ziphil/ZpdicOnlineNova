@@ -6,34 +6,36 @@
 
 .button {
   @include button(map-get($colors, primary));
+  &[data-position="left"],
+  [data-control-group] >&:first-child,
+  [data-control-group] >:first-child & {
+    margin: 0rpx -1rpx 0rpx 0rpx;
+    border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+  }
+  &[data-position="right"],
+  [data-control-group] >&:last-child,
+  [data-control-group] >:last-child & {
+    border-radius: 0rpx $small-border-radius $small-border-radius 0rpx;
+  }
+  &[data-position="middle"],
+  [data-control-group] >&:not(:first-child):not(:last-child),
+  [data-control-group] >:not(:first-child):not(:last-child) & {
+    margin: 0rpx -1rpx 0rpx 0rpx;
+    border-radius: 0rpx;
+  }
+  &[data-only-icon] {
+    width: 2.2em;
+    padding-left: 0em;
+    padding-right: 0em;
+  }
 }
 
-.button.caution {
+.button[data-intent="caution"] {
   @include button(map-get($colors, error));
 }
 
-.button.information {
+.button[data-intent="information"] {
   @include button(map-get($colors, information));
-}
-
-.button.left {
-  margin: 0rpx -1rpx 0rpx 0rpx;
-  border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
-}
-
-.button.right {
-  border-radius: 0rpx $small-border-radius $small-border-radius 0rpx;
-}
-
-.button.middle {
-  margin: 0rpx -1rpx 0rpx 0rpx;
-  border-radius: 0rpx;
-}
-
-.button.only-icon {
-  width: 2.2em;
-  padding-left: 0em;
-  padding-right: 0em;
 }
 
 .simple {
@@ -46,28 +48,33 @@
   background: none;
   cursor: pointer;
   outline: none;
-}
-
-.simple:hover {
-  color: $link-hover-color;
-}
-
-.simple.link {
-  text-decoration: underline;
+  &:hover {
+    color: $link-hover-color;
+  }
+  &[data-link] {
+    text-decoration: underline;
+  }
 }
 
 .icon {
-  @include icon-font;
   text-decoration: none;
+  .button[data-loading] >& {
+    visibility: hidden;
+  }
 }
 
-.icon +.label {
-  margin: 0em 0em 0em $blank-margin;
-}
-
-.hide-label >.label {
-  @include smartphone {
-    display: none;
+.label {
+  .icon +& {
+    margin: 0em 0em 0em $blank-margin;
+  }
+  .button[data-hide-label] >&,
+  .simple[data-hide-label] >& {
+    @include smartphone {
+      display: none;
+    }
+  }
+  .button[data-loading] >& {
+    visibility: hidden;
   }
 }
 
@@ -81,13 +88,7 @@
   justify-content: center;
   position: absolute;
   visibility: hidden;
-}
-
-.loading >.spinner-wrapper {
-  visibility: visible;
-}
-
-.loading >.label,
-.loading >.icon {
-  visibility: hidden;
+  .button[data-loading] >& {
+    visibility: visible;
+  }
 }

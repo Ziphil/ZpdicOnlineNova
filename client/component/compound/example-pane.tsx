@@ -62,7 +62,7 @@ const ExamplePane = create(
           {cautionNode}
         </div>
         <div styleName="button">
-          <Button label={trans("examplePane.edit")} iconName="edit" style="simple" onClick={openEditor}/>
+          <Button label={trans("examplePane.edit")} iconName="edit" variant="simple" onClick={openEditor}/>
         </div>
       </WhitePane>
     );

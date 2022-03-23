@@ -81,7 +81,7 @@ const ResourcePane = create(
             </div>
           </div>
           <div styleName="button">
-            <Button label={trans("resourcePane.discard")} iconName="trash-alt" style="simple" onClick={() => setAlertOpen(true)}/>
+            <Button label={trans("resourcePane.discard")} iconName="trash-alt" variant="simple" onClick={() => setAlertOpen(true)}/>
           </div>
         </WhitePane>
         <Alert

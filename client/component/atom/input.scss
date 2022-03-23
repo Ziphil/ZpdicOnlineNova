@@ -12,7 +12,7 @@
   display: inline-flex;
 }
 
-.input.error {
+.input[data-error] {
   @include input(map-get($colors, error));
 }
 
@@ -43,16 +43,13 @@
   text-align: center;
   display: inline-block;
   cursor: pointer;
-}
-
-.eye:hover {
-  color: $link-hover-color;
-}
-
-.eye::before {
-  content: "\F070";
-}
-
-.eye.password::before {
-  content: "\F06E";
+  &:hover {
+    color: $link-hover-color;
+  }
+  &::before {
+    content: "\F070";
+  }
+  &[data-current-type="password"]::before {
+    content: "\F06E";
+  }
 }

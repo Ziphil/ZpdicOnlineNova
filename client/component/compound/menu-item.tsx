@@ -62,7 +62,7 @@ const MenuItem = create(
       {if: highlight, true: "highlight"}
     );
     let badgeNode = (badgeValue) && (
-      <Badge className={styles!["badge"]} value={badgeValue} style={(highlight) ? "highlight" : "normal"}/>
+      <Badge className={styles!["badge"]} value={badgeValue} variant={(highlight) ? "highlight" : "normal"}/>
     );
     let node = (
       <a styleName={styleName} href={href} onClick={handleClick}>

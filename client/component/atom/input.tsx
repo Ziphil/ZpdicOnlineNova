@@ -26,8 +26,8 @@ import {
   useDebounce
 } from "/client/component/hook";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const Input = create(
@@ -163,27 +163,16 @@ const InputInput = create(
     nativeRef?: Ref<HTMLInputElement>
   }): ReactElement {
 
-    let styleName = StyleNameUtil.create(
-      "input",
-      {if: errorMessage !== null, true: "error"},
-      {if: disabled, true: "disabled"}
-    );
-    let eyeStyleName = StyleNameUtil.create("eye", currentType);
-    let eyeNode = (type === "flexible") && (
-      <span styleName={eyeStyleName} onClick={toggleType}/>
-    );
-    let prefixNode = (prefix !== undefined) && (
-      <div styleName="prefix">{prefix}</div>
-    );
-    let suffixNode = (suffix !== undefined || type === "flexible") && (
-      <div styleName="suffix">
-        {suffix}
-        {eyeNode}
-      </div>
-    );
+    let data = DataUtil.create({
+      error: errorMessage !== null,
+      disabled
+    });
+    let eyeData = DataUtil.create({currentType});
     let node = (
-      <div styleName={styleName}>
-        {prefixNode}
+      <div styleName="input" {...data}>
+        {(prefix !== undefined) && (
+          <div styleName="prefix">{prefix}</div>
+        )}
         <input
           styleName="input-inner"
           type={currentType}
@@ -194,7 +183,14 @@ const InputInput = create(
           onFocus={handleFocus}
           ref={nativeRef}
         />
-        {suffixNode}
+        {(suffix !== undefined || type === "flexible") && (
+          <div styleName="suffix">
+            {suffix}
+            {(type === "flexible") && (
+              <span styleName="eye" onClick={toggleType} {...eyeData}/>
+            )}
+          </div>
+        )}
       </div>
     );
     return node;

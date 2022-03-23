@@ -28,11 +28,13 @@
 }
 
 .root :global(.c3-line) {
-  stroke-width: 6u;
+  stroke-width: 2rpx;
 }
 
-.root :global(.c3-circle)[class~="_expanded_"] {
-  stroke: none;
+.root :global(.c3-circle) {
+  &[class~="_expanded_"] {
+    stroke: none;
+  }
 }
 
 .root :global(.c3-area) {

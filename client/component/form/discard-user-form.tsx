@@ -46,7 +46,7 @@ const DiscardUserForm = create(
     let node = (
       <Fragment>
         <form styleName="root">
-          <Button label={trans("discardUserForm.confirm")} reactive={true} style="caution" onClick={() => setAlertOpen(true)}/>
+          <Button label={trans("discardUserForm.confirm")} reactive={true} variant="caution" onClick={() => setAlertOpen(true)}/>
         </form>
         <p styleName="caution">
           {trans("discardUserForm.caution")}

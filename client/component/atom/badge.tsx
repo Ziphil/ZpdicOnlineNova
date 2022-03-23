@@ -11,31 +11,30 @@ import {
   useIntl
 } from "/client/component/hook";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const Badge = create(
   require("./badge.scss"), "Badge",
   function ({
     value,
-    style = "normal",
+    variant = "normal",
     className
   }: {
     value: string | number,
-    style?: "normal" | "highlight",
+    variant?: "normal" | "highlight",
     className?: string
   }): ReactElement {
 
     let [, {transNumber}] = useIntl();
 
-    let styleName = StyleNameUtil.create(
-      "root",
-      {if: style === "highlight", true: "highlight"}
-    );
     let actualValue = (typeof value === "number") ? transNumber(value) : value;
+    let data = DataUtil.create({
+      highlight: variant === "highlight"
+    });
     let node = (
-      <span styleName={styleName} className={className}>
+      <span styleName="root" className={className} {...data}>
         {actualValue}
       </span>
     );

@@ -133,7 +133,7 @@ const SearchForm = create(
     );
     let advancedSearchButton = (showAdvancedSearch) && (
       <div styleName="radio-wrapper">
-        <Button label={trans("searchForm.advancedSearch")} iconName="search-plus" style="simple" onClick={() => setSearchFormOpen(true)}/>
+        <Button label={trans("searchForm.advancedSearch")} iconName="search-plus" variant="simple" onClick={() => setSearchFormOpen(true)}/>
       </div>
     );
     let advancedSearchNode = (showAdvancedSearch) && (

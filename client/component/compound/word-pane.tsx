@@ -148,7 +148,7 @@ const WordPaneName = create(
     ] as const;
     let editButtonNode = (showEditLink && !showButton) && (
       <div styleName="button">
-        <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={openWordEditor}/>
+        <Button label={trans("wordPane.edit")} iconName="edit" variant="simple" hideLabel={true} onClick={openWordEditor}/>
       </div>
     );
     let submitButtonNode = (showButton) && (() => {
@@ -338,7 +338,7 @@ const WordPaneExamples = create(
     let innerNodes = examples.map((example, index) => {
       let editButtonNode = (showEditLink && !showButton) && (
         <div styleName="button">
-          <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={() => openExampleEditor(example)}/>
+          <Button label={trans("wordPane.edit")} iconName="edit" variant="simple" hideLabel={true} onClick={() => openExampleEditor(example)}/>
         </div>
       );
       let innerNode = (
