@@ -1,6 +1,5 @@
 //
 
-import * as queryParser from "query-string";
 import {
   AdvancedWordParameter,
   NormalWordParameter
