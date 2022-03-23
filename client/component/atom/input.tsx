@@ -117,7 +117,7 @@ const Input = create(
             <label styleName="label-wrapper">
               <Label
                 text={label}
-                style={(errorMessage === null) ? "normal" : "error"}
+                variant={(errorMessage === null) ? "normal" : "error"}
                 showRequired={showRequired}
                 showOptional={showOptional}
               />

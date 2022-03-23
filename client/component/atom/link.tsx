@@ -13,9 +13,6 @@ import {
 import {
   usePath
 } from "/client/component/hook";
-import {
-  StyleNameUtil
-} from "/client/util/style-name";
 
 
 let Link = create(
@@ -62,10 +59,7 @@ let Link = create(
       }
     }, [href, target, onClick, pushPath]);
 
-    let styleName = StyleNameUtil.create(
-      "root",
-      {if: style === "plane", true: "plane"}
-    );
+    let styleName = (style === "plane") ? "plane" : "link";
     let node = (
       <a styleName={styleName} className={className} href={href} onClick={handleClick}>
         {children}

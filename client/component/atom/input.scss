@@ -10,6 +10,20 @@
 .input {
   @include input(map-get($colors, primary));
   display: inline-flex;
+  [data-control-group] >&:first-child,
+  [data-control-group] >:first-child & {
+    margin: 0rpx -1rpx 0rpx 0rpx;
+    border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+  }
+  [data-control-group] >&:last-child,
+  [data-control-group] >:last-child & {
+    border-radius: 0rpx $small-border-radius $small-border-radius 0rpx;
+  }
+  [data-control-group] >&:not(:first-child):not(:last-child),
+  [data-control-group] >:not(:first-child):not(:last-child) & {
+    margin: 0rpx -1rpx 0rpx 0rpx;
+    border-radius: 0rpx;
+  }
 }
 
 .input[data-error] {

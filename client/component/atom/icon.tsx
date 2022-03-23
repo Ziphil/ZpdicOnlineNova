@@ -14,6 +14,9 @@ import ICON_DATA from "/client/component/atom/icon-data.json";
 import {
   create
 } from "/client/component/create";
+import {
+  DataUtil
+} from "/client/util/data";
 
 
 const Icon = create(
@@ -49,7 +52,7 @@ const Icon = create(
       let fullName = (name === "github") ? ["fa-brands", "fa-github"] : name as any;
       if (slashed) {
         let node = (
-          <span styleName="root stack" className={className}>
+          <span styleName="root-stack" className={className}>
             <FontAwesomeIcon icon="slash" transform="down-2 left-2" mask={fullName} fixedWidth={true}/>
             <FontAwesomeIcon icon="slash"/>
           </span>

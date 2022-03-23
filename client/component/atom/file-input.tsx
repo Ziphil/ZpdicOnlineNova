@@ -18,8 +18,8 @@ import {
   useIntl
 } from "/client/component/hook";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const FileInput = create(
@@ -73,21 +73,20 @@ const FileInput = create(
       setFileName(fileName);
     }, [file]);
 
-    let inputStyleName = StyleNameUtil.create(
-      "input",
-      {if: errorMessage !== null, true: "error"}
-    );
+    let inputData = DataUtil.create({
+      error: errorMessage !== null
+    });
     let node = (
       <div styleName="root" className={className}>
         <Tooltip message={errorMessage}>
-          <div>
-            <label styleName="input-wrapper">
-              <Label text={inputLabel} style={(errorMessage === null) ? "normal" : "error"}/>
-              <input styleName={inputStyleName} type="text" value={fileName} readOnly={true} ref={inputRef}/>
+          <div styleName="root-inner">
+            <label styleName="input-container">
+              <Label text={inputLabel} variant={(errorMessage === null) ? "normal" : "error"}/>
+              <input styleName="input" type="text" value={fileName} readOnly={true} ref={inputRef} {...inputData}/>
             </label>
             <label styleName="button">
               {buttonLabel ?? trans("fileInput.button")}
-              <input styleName="file" type="file" onChange={handleChange}/>
+              <input styleName="original" type="file" onChange={handleChange}/>
             </label>
           </div>
         </Tooltip>
