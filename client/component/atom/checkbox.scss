@@ -7,7 +7,7 @@
   cursor: pointer;
 }
 
-.checkbox {
+.original {
   display: none;
 }
 
@@ -30,10 +30,7 @@
   justify-content: center;
   position: relative;
   vertical-align: middle;
-  .checkbox:hover +& {
-    border: 1rpx $light-color solid;
-  }
-  .checkbox:focus +& {
+  .original:focus +& {
     box-shadow: $focus-box-shadow-setting focus-box-shadow-color(map-get($colors, primary));
   }
 }
@@ -41,17 +38,12 @@
 .icon {
   font-size: 90%;
   color: map-get($colors, primary);
-  background-color: map-get($colors, primary);
-  background-image: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25));
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   box-sizing: border-box;
   display: none;
-  .checkbox:checked +* >& {
+  .original:checked +* >& {
     display: block;
   }
-  .checkbox:hover +* >& {
+  .original:hover +* >& {
     color: hover-color(map-get($colors, primary));
   }
 }

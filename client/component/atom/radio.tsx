@@ -35,7 +35,10 @@ const Radio = create(
 
     let node = (
       <label styleName="root" className={className}>
-        <input styleName="radio" type="radio" name={name} value={value} checked={checked} onChange={handleChange}/>
+        <input styleName="original" type="radio" name={name} value={value} checked={checked} onChange={handleChange}/>
+        <div styleName="box">
+          <div styleName="icon"/>
+        </div>
         <span styleName="label">{label}</span>
       </label>
     );

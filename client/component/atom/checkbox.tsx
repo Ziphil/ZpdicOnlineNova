@@ -44,7 +44,7 @@ const Checkbox = create(
 
     let node = (
       <label styleName="root" className={className}>
-        <input styleName="checkbox" type="checkbox" name={name} value={value} checked={checked} onChange={handleChange}/>
+        <input styleName="original" type="checkbox" name={name} value={value} checked={checked} onChange={handleChange}/>
         <div styleName="box">
           <FontAwesomeIcon className={styles!["icon"]} icon="check"/>
         </div>
