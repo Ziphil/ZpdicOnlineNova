@@ -11,7 +11,9 @@ import {
 import {
   create
 } from "/client/component/create";
-import { StyleNameUtil } from "/client/util/style-name";
+import {
+  StyleNameUtil
+} from "/client/util/style-name";
 
 
 const Portal = create(
