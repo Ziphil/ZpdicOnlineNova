@@ -16,56 +16,55 @@
   display: block;
   position: absolute;
   z-index: 50;
-}
-
-.suggestion.left {
-  left: 0rpx;
-}
-
-.suggestion.right {
-  right: 0rpx;
-}
-
-.suggestion.arrow {
-  margin: $small-margin 0rpx 0rpx 0rpx;
-}
-
-.suggestion.fill-width {
-  width: 100%;
-}
-
-.suggestion.restrict-height {
-  max-height: 450u;
-  overflow-y: auto;
+  &[data-placement="left"] {
+    left: 0rpx;
+  }
+  &[data-placement="right"] {
+    right: 0rpx;
+  }
+  &[data-show-arrow] {
+    margin: $small-margin 0rpx 0rpx 0rpx;
+  }
+  &[data-fill-width] {
+    width: 100%;
+  }
+  &[data-restrict-height] {
+    max-height: 150rpx;
+    overflow-y: auto;
+  }
 }
 
 .suggestion-item {
   padding: $input-vertical-padding + line-intrusion($line-height) $input-horizontal-padding;
   text-align: left;
   outline: none;
+  &:hover {
+    background-color: background-color(map-get($colors, information));
+    cursor: pointer;
+  }
 }
 
-.suggestion-item:hover {
-  background-color: background-color(map-get($colors, information));
-  cursor: pointer;
-}
-
-.suggestion.arrow::before {
-  top: -48u;
-  left: 48u;
-  margin-left: -24u;
-  border: 24u transparent solid;
-  border-bottom: 24u $light-border-color solid;
-  position: absolute;
-  content: "";
-}
-
-.suggestion.arrow::after {
-  top: -45u;
-  left: 48u;
-  margin-left: -24u;
-  border: 24u transparent solid;
-  border-bottom: 24u white solid;
-  position: absolute;
-  content: "";
+.arrow {
+  display: none;
+  .suggestion[data-show-arrow] >& {
+    display: block;
+  }
+  &::before {
+    top: -16rpx;
+    left: 16rpx;
+    margin-left: -8rpx;
+    border: 8rpx transparent solid;
+    border-bottom: 8rpx $light-border-color solid;
+    position: absolute;
+    content: "";
+  }
+  &::after {
+    top: -15rpx;
+    left: 16rpx;
+    margin-left: -8rpx;
+    border: 8rpx transparent solid;
+    border-bottom: 8rpx white solid;
+    position: absolute;
+    content: "";
+  }
 }
