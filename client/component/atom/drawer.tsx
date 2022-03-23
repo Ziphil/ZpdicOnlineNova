@@ -64,7 +64,7 @@ const Drawer = create(
           )}
           <div styleName="spacer">
             <div styleName="content-container" {...contentContainerData}>
-              <DrawerHeader {...{title, page, showBack, onClose, onBack}}/>
+              {(title !== undefined) && <DrawerHeader {...{title, page, showBack, onClose, onBack}}/>}
               <div styleName="content">
                 {(page !== undefined && Array.isArray(children)) ? children[page] : children}
               </div>
@@ -93,16 +93,16 @@ const DrawerHeader = create(
     onClose,
     onBack
   }: {
-    title?: string,
+    title: string,
     page?: number,
     showBack?: boolean,
     onClose?: (event: MouseEvent<HTMLElement>) => void,
     onBack?: (event: MouseEvent<HTMLButtonElement>) => void
-  }): ReactElement | null {
+  }): ReactElement {
 
     let [, {trans}] = useIntl();
 
-    let node = (title !== undefined) && (
+    let node = (
       <div styleName="header">
         <div styleName="left">
           <div styleName="title">{title}</div>
@@ -117,7 +117,7 @@ const DrawerHeader = create(
         </div>
       </div>
     );
-    return node || null;
+    return node;
 
   }
 );

@@ -87,7 +87,7 @@ $drawer-tab-height: 60rpx;
   &:hover {
     width: 30rpx;
   }
-  &.center {
+  &[data-tab-position="center"] {
     top: calc((100% - #{$drawer-tab-height}) / 2);
   }
   &[data-tab-position="top"] {
@@ -115,15 +115,11 @@ $drawer-tab-height: 60rpx;
 }
 
 .content {
+  height: 100%;
   padding: $huge-margin $huge-margin;
   box-sizing: border-box;
-}
-
-.content-wrapper .content {
-  height: 100%;
   overflow-y: scroll;
-}
-
-.content-wrapper .header +.content {
-  height: calc(100% - #{$drawer-header-height});
+  .header +& {
+    height: calc(100% - #{$drawer-header-height});
+  }
 }
