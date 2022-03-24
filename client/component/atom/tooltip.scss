@@ -19,30 +19,27 @@
   position: absolute;
   pointer-events: none;
   z-index: 50;
-}
-
-:focus-within +.tooltip {
-  display: block;
-}
-
-.tooltip::before {
-  top: -48u;
-  left: 48u;
-  margin-left: -24u;
-  border: 24u transparent solid;
-  border-bottom: 24u border-color(map-get($colors, error)) solid;
-  position: absolute;
-  content: "";
-}
-
-.tooltip::after {
-  top: -45u;
-  left: 48u;
-  margin-left: -24u;
-  border: 24u transparent solid;
-  border-bottom: 24u background-color(map-get($colors, error)) solid;
-  position: absolute;
-  content: "";
+  :focus-within +& {
+    display: block;
+  }
+  &::before {
+    top: -16rpx;
+    left: 16rpx;
+    margin-left: -8rpx;
+    border: 8rpx transparent solid;
+    border-bottom: 8rpx border-color(map-get($colors, error)) solid;
+    position: absolute;
+    content: "";
+  }
+  &::after {
+    top: -15rpx;
+    left: 16rpx;
+    margin-left: -8rpx;
+    border: 8rpx transparent solid;
+    border-bottom: 8rpx background-color(map-get($colors, error)) solid;
+    position: absolute;
+    content: "";
+  }
 }
 
 .tooltip-text {

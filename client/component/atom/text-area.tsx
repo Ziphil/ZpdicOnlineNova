@@ -18,8 +18,8 @@ import {
   CodeMirrorUtil
 } from "/client/util/code-mirror";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const TextArea = create(
@@ -65,11 +65,10 @@ const TextArea = create(
     }, [onChange, onSet]);
 
     let innerProps = {value, font, language, nowrap, readOnly, fitHeight, styles, handleChange, handleBeforeChange};
-    let innerNode = (language !== undefined) ? <TextAreaCodeMirror {...innerProps}/> : <TextAreaTextArea {...innerProps}/>;
     let node = (
       <label styleName="root" className={className}>
         <Label text={label} showRequired={showRequired} showOptional={showOptional}/>
-        {innerNode}
+        {(language !== undefined) ? <TextAreaCodeMirror {...innerProps}/> : <TextAreaTextArea {...innerProps}/>}
       </label>
     );
     return node;
@@ -98,16 +97,17 @@ const TextAreaCodeMirror = create(
     handleBeforeChange: (editor: any, data: any, value: string) => void
   }): ReactElement {
 
-    let className = StyleNameUtil.create(
-      styles!["textarea-code"],
-      {if: fitHeight, true: styles!["fit"], false: styles!["no-fit"]}
-    );
+    let data = DataUtil.create({
+      fitHeight: (fitHeight) ? "fit" : "no-fit"
+    });
     let modeOptions = CodeMirrorUtil.getModeOptions(language!);
     let heightOptions = (fitHeight) ? {viewportMargin: 1 / 0} : {};
     let otherOptions = {readOnly, lineWrapping: !nowrap};
     let options = {...modeOptions, ...heightOptions, ...otherOptions};
     let node = (
-      <CodeMirror className={className} value={value} options={options} onBeforeChange={handleBeforeChange}/>
+      <div styleName="code-wrapper" {...data}>
+        <CodeMirror className={styles!["code"]} value={value} options={options} onBeforeChange={handleBeforeChange}/>
+      </div>
     );
     return node;
 
@@ -131,13 +131,12 @@ const TextAreaTextArea = create(
     handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
   }): ReactElement {
 
-    let styleName = StyleNameUtil.create(
-      "textarea",
-      {if: font === "monospace", true: "monospace"},
-      {if: nowrap, true: "nowrap"}
-    );
+    let data = DataUtil.create({
+      font,
+      nowrap
+    });
     let node = (
-      <textarea styleName={styleName} value={value} readOnly={readOnly} onChange={handleChange}/>
+      <textarea styleName="textarea" value={value} readOnly={readOnly} onChange={handleChange} {...data}/>
     );
     return node;
 

@@ -15,19 +15,18 @@
   display: block;
   resize: none;
   flex-grow: 1;
+  &[data-font="monospace"] {
+    @include monospace-font;
+  }
+  &[data-nowrap] {
+    white-space: pre;
+    overflow: auto;
+  }
 }
 
-.textarea.monospace {
-  @include monospace-font;
-}
-
-.textarea.nowrap {
-  white-space: pre;
-  overflow: auto;
-}
-
-.textarea-code {
+.code {
   @include input(map-get($colors, primary));
+  height: 100%;
   padding: 0rpx;
   display: block;
   resize: none;
@@ -35,30 +34,28 @@
   position: relative;
 }
 
-.textarea-code >div {
+.code >div {
   @include monospace-font;
   padding: 0em;
   background: transparent;
   box-sizing: border-box;
+  .code-wrapper[data-fit-height="no-fit"] & {
+    height: 100%;
+    top: 0rpx;
+    bottom: 0rpx;
+    left: 0rpx;
+    right: 0rpx;
+    position: absolute;
+  }
+  .code-wrapper[data-fit-height="fit"] & {
+    height: auto;
+  }
 }
 
-.textarea-code.no-fit >div {
-  height: 100%;
-  top: 0rpx;
-  bottom: 0rpx;
-  left: 0rpx;
-  right: 0rpx;
-  position: absolute;
-}
-
-.textarea-code.fit >div {
-  height: auto;
-}
-
-.textarea-code >div *[class~="CodeMirror-lines"] {
+.code >div *[class~="CodeMirror-lines"] {
   padding: $textarea-vertical-padding 0em !important;
 } 
 
-.textarea-code >div *[class~="CodeMirror-line"] {
+.code >div *[class~="CodeMirror-line"] {
   padding: 0em $input-horizontal-padding !important;
 }
