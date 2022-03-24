@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.label-wrapper {
+.label-container {
   display: block;
 }
 
@@ -50,7 +50,6 @@
 }
 
 .eye {
-  @include icon-font;
   width: 1.3em;
   margin: 0em 0em 0em $input-horizontal-padding;
   color: $link-color;
@@ -59,11 +58,5 @@
   cursor: pointer;
   &:hover {
     color: $link-hover-color;
-  }
-  &::before {
-    content: "\F070";
-  }
-  &[data-current-type="password"]::before {
-    content: "\F06E";
   }
 }

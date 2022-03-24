@@ -17,6 +17,7 @@ import Dropdown from "/client/component/atom/dropdown";
 import {
   DropdownSpec
 } from "/client/component/atom/dropdown";
+import Icon from "/client/component/atom/icon";
 import Label from "/client/component/atom/label";
 import Tooltip from "/client/component/atom/tooltip";
 import {
@@ -114,7 +115,7 @@ const Input = create(
       <div styleName="root" className={className}>
         <Tooltip message={errorMessage}>
           <Dropdown specs={dropdownSpecs} onSet={updateValue}>
-            <label styleName="label-wrapper">
+            <label styleName="label-container">
               <Label
                 text={label}
                 variant={(errorMessage === null) ? "normal" : "error"}
@@ -187,7 +188,9 @@ const InputInput = create(
           <div styleName="suffix">
             {suffix}
             {(type === "flexible") && (
-              <span styleName="eye" onClick={toggleType} {...eyeData}/>
+              <span styleName="eye" onClick={toggleType} {...eyeData}>
+                <Icon name={(currentType === "password") ? "eye" : "eye-slash"}/>
+              </span>
             )}
           </div>
         )}
