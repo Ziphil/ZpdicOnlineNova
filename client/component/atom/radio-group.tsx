@@ -36,13 +36,11 @@ const RadioGroup = create(
       onSet?.(value);
     }, [onChange, onSet]);
 
-    let radioNodes = Array.from(specs).map((spec, index) => {
-      let checked = spec.value === value;
-      return <Radio name={name} value={spec.value} label={spec.label} checked={checked} onChange={handleChange} key={index}/>;
-    });
     let node = (
       <div styleName="root" className={className}>
-        {radioNodes}
+        {Array.from(specs).map((spec, index) => (
+          <Radio name={name} value={spec.value} label={spec.label} checked={spec.value === value} onChange={handleChange} key={index}/>
+        ))}
       </div>
     );
     return node;

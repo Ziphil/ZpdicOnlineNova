@@ -12,8 +12,8 @@ import {
   create
 } from "/client/component/create";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const Portal = create(
@@ -27,9 +27,9 @@ const Portal = create(
   }): ReactElement {
 
     let container = document.body;
-    let className = StyleNameUtil.create("portal", position);
+    let data = DataUtil.create({position});
     let node = (
-      <div className={className}>
+      <div className="portal" {...data}>
         {children}
       </div>
     );
