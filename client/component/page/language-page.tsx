@@ -25,7 +25,7 @@ const LanguagePage = create(
     let node = (
       <Page title={trans("languagePage.title")}>
         <div styleName="title">{trans("languagePage.title")}</div>
-        <div styleName="form">
+        <div styleName="form-container">
           <LanguageForm/>
         </div>
       </Page>

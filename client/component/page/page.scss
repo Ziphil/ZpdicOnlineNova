@@ -12,10 +12,9 @@
 .spacer {
   @include page($header-height);
   flex: 1;
-}
-
-.spacer.dictionary {
-  @include page($header-height + $dictionary-header-height);
+  &[data-show-dictionary] {
+    @include page($header-height + $dictionary-header-height);
+  }
 }
 
 .content {

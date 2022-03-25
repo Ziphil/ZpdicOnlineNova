@@ -36,7 +36,7 @@ const ResetUserPasswordPage = create(
     let node = (
       <Page title={trans("resetUserPasswordPage.title")}>
         <div styleName="title">{trans("resetUserPasswordPage.title")}</div>
-        <div styleName="form">
+        <div styleName="form-container">
           <ResetUserPasswordForm tokenKey={tokenKey}/>
         </div>
       </Page>

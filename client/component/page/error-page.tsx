@@ -38,14 +38,14 @@ const ErrorPage = create(
     let node = (
       <Page>
         <div styleName="root">
-          <div styleName="icon"><Icon name="bomb"/></div>
+          <div styleName="icon-container"><Icon name="bomb"/></div>
           <div styleName="description">
             {trans("errorPage.description")}
           </div>
           <pre styleName="message">
             {error.stack}
           </pre>
-          <div styleName="button">
+          <div styleName="button-container">
             <Button label={trans("errorPage.back")} iconName="arrow-circle-left" onClick={handleClick}/>
           </div>
         </div>

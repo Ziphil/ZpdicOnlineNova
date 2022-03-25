@@ -31,7 +31,7 @@ const RegisterPage = create(
             <Markdown source={trans("registerPage.privacy")} type="simple"/>
           </p>
         </div>
-        <div styleName="form">
+        <div styleName="form-container">
           <RegisterForm/>
         </div>
       </Page>

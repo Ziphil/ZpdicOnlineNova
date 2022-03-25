@@ -25,7 +25,7 @@ const NotFoundPage = create(
     let node = (
       <Page>
         <div styleName="root">
-          <div styleName="icon"><Icon name="ghost"/></div>
+          <div styleName="icon-container"><Icon name="ghost"/></div>
           <div styleName="description">
             {trans("notFoundPage.description")}
           </div>

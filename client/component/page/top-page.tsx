@@ -22,8 +22,8 @@ import {
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const TopPage = create(
@@ -40,26 +40,24 @@ const TopPage = create(
       {name: "nymwa", url: {github: "nymwa"}, avatarUrl: {github: "nymwa"}},
       {name: "川音リオ", url: {twitter: "KawaneRio"}, avatarUrl: "https://pbs.twimg.com/profile_images/1085673171083091969/t3IjudoH_400x400.jpg"}
     ];
-    let loginFormStyleName = StyleNameUtil.create(
-      "login-form",
-      {if: user === null, false: "hidden"}
-    );
-    let dashboardButtonFormStyleName = StyleNameUtil.create(
-      "dashboard-button-form",
-      {if: user === null, true: "hidden"}
-    );
+    let loginFormData = DataUtil.create({
+      hidden: user !== null
+    });
+    let dashboardFormData = DataUtil.create({
+      hidden: user !== null
+    });
     let node = (
       <Page title="">
         <div styleName="top">
           <div styleName="logo">
             <Logo/>
           </div>
-          <div styleName="login-form-wrapper">
+          <div styleName="login-form-container">
             <FormPane>
-              <div styleName={loginFormStyleName}>
+              <div styleName="login-form" {...loginFormData}>
                 <LoginForm showRegister={true}/>
               </div>
-              <div styleName={dashboardButtonFormStyleName}>
+              <div styleName="dashboard-button-form" {...dashboardFormData}>
                 <DashboardButtonForm/>
               </div>
             </FormPane>
@@ -74,8 +72,8 @@ const TopPage = create(
         <div styleName="border notification">
           <NotificationList size={1} showPagination={false}/>
         </div>
-        <div styleName="border github">
-          <div styleName="github-inner">
+        <div styleName="border last">
+          <div styleName="github">
             <GithubButton/>
             <ContributorList rawContributors={rawContributors}/>
           </div>

@@ -34,7 +34,7 @@ const ContactPage = create(
             <Markdown source={trans("contactPage.explanation")} type="simple"/>
           </p>
         </div>
-        <div styleName="form">
+        <div styleName="form-container">
           <ContactForm/>
         </div>
       </Page>
