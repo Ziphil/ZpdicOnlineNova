@@ -28,7 +28,6 @@ import {
   useIntl,
   useLocation,
   useLogout,
-  useParams,
   usePath,
   useRequest,
   useUser
@@ -56,7 +55,6 @@ const DashboardPage = create(
     let {request} = useRequest();
     let [user] = useUser();
     let logout = useLogout();
-    let params = useParams();
     let location = useLocation();
 
     let fetchDictionaries = useCallback(async function (): Promise<void> {
@@ -108,17 +106,15 @@ const DashboardPage = create(
       {mode: "account", label: trans("dashboardPage.account"), iconName: "id-card", href: "#account"},
       {mode: "logout", label: trans("dashboardPage.logout"), iconName: "sign-out-alt", onClick: performLogout}
     ] as const;
-    let activateUserForm = (!user?.activated) && (
-      <div styleName="activate">
-        <ActivateUserForm/>
-      </div>
-    );
-    let contentNode = (user) && <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode, fetchEditInvitations, fetchTransferInvitations}}/>;
     let node = (
       <Page title={trans("dashboardPage.title")}>
-        {activateUserForm}
+        {(!user?.activated) && (
+          <div styleName="activate">
+            <ActivateUserForm/>
+          </div>
+        )}
         <Menu mode={mode} specs={menuSpecs}/>
-        {contentNode}
+        {(user) && <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode, fetchEditInvitations, fetchTransferInvitations}}/>}
       </Page>
     );
     return node;

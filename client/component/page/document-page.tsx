@@ -69,10 +69,9 @@ const DocumentPageSourceTester = create(
       let source = String(child.props.children);
       let modeOptions = CodeMirrorUtil.getModeOptions(language);
       if (modeOptions.mode !== undefined) {
-        let innerNode = (match && match[2]) ? <SourceTester source={source} language={language}/> : <Highlight source={source} language={language}/>;
         let node = (
           <div className="block">
-            {innerNode}
+            {(match && match[2]) ? <SourceTester source={source} language={language}/> : <Highlight source={source} language={language}/>}
           </div>
         );
         return node;

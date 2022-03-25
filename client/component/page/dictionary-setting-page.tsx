@@ -111,11 +111,10 @@ const DictionarySettingPage = create(
       {mode: "resource", label: trans("dictionarySettingPage.resource"), iconName: "image", href: "#resource"},
       {mode: "statistics", label: trans("dictionarySettingPage.statistics"), iconName: "chart-line", href: "#statistics"}
     ] as const;
-    let contentNodes = (dictionary && authorized) && <DictionarySettingPageForms {...{dictionary, mode, fetchDictionary, fetchCommissionCount}}/>;
     let node = (
       <Page dictionary={dictionary} showDictionary={true}>
         <Menu mode={mode} specs={menuSpecs}/>
-        {contentNodes}
+        {(dictionary && authorized) && <DictionarySettingPageForms {...{dictionary, mode, fetchDictionary, fetchCommissionCount}}/>}
       </Page>
     );
     return node;

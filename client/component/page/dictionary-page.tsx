@@ -1,6 +1,5 @@
 //
 
-import * as queryParser from "query-string";
 import * as react from "react";
 import {
   Fragment,
@@ -143,16 +142,15 @@ const DictionaryPage = create(
     }, [dictionary]);
 
     let wordListProps = {dictionary, getQuery, canEdit, hitResult, updateWordsImmediately, handlePageSet};
-    let innerNode = (dictionary !== null) && (
-      (getQuery().showExplanation) ? <Markdown source={dictionary.explanation ?? ""}/> : <DictionaryPageWordList {...wordListProps}/>
-    );
     let node = (
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <Loading loading={dictionary === null}>
-          <div styleName="search-form">
+          <div styleName="search-form-container">
             <WordSearchForm dictionary={dictionary!} parameter={getQuery().parameter} searching={searching} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
           </div>
-          {innerNode}
+          {(dictionary !== null) && (
+            (getQuery().showExplanation) ? <Markdown source={dictionary.explanation ?? ""}/> : <DictionaryPageWordList {...wordListProps}/>
+          )}
         </Loading>
       </Page>
     );
@@ -185,13 +183,13 @@ const DictionaryPageWordList = create(
     let maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
     let node = (
       <Fragment>
-        <div styleName="suggestion-list">
+        <div styleName="suggestion-list-container">
           <SuggestionList
             dictionary={dictionary!}
             suggestions={hitSuggestions}
           />
         </div>
-        <div styleName="word-list">
+        <div styleName="word-list-container">
           <WordList
             dictionary={dictionary!}
             words={hitWords}
