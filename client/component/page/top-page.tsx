@@ -44,7 +44,7 @@ const TopPage = create(
       hidden: user !== null
     });
     let dashboardFormData = DataUtil.create({
-      hidden: user !== null
+      hidden: user === null
     });
     let node = (
       <Page title="">
