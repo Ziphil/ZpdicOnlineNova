@@ -24,9 +24,6 @@ import {
   EnhancedDictionary,
   Example
 } from "/client/skeleton/dictionary";
-import {
-  StyleNameUtil
-} from "/client/util/style-name";
 
 
 const ExamplePage = create(
