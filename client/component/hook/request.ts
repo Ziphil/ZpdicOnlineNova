@@ -41,6 +41,19 @@ export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, c
   return [result.data ?? null, result.error, result.status];
 }
 
+export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): [ResponseData<N>, unknown, QueryStatus] {
+  let [, {addErrorPopup}] = usePopup();
+  let result = useRawQuery([name, data], async () => {
+    let response = await rawRequest(name, data, config);
+    if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
+      let type = determineErrorPopupType(response);
+      addErrorPopup(type);
+    }
+    return response.data;
+  }, {suspense: true});
+  return [result.data!, result.error, result.status];
+}
+
 export function useRequest(): RequestCallbacks {
   let [, {addErrorPopup}] = usePopup();
   let [, setUser] = useRawUser();
