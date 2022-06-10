@@ -16,6 +16,9 @@ import {
 import {
   uriTransformer
 } from "react-markdown";
+import {
+  ElementContent
+} from "react-markdown/lib/ast-to-react";
 import remarkGfm from "remark-gfm";
 import Link from "/client/component/atom/link";
 import {
@@ -40,7 +43,18 @@ const Markdown = create(
     className?: string
   }): ReactElement {
 
-    let transformUri = useCallback(function (uri: string, children: ReactNode, title: string | null): string {
+    let transformLinkUri = useCallback(function (uri: string, children: Array<ElementContent>, title: string | null): string {
+      let nextUri = uriTransformer(uri);
+      if (homePath !== undefined) {
+        nextUri = nextUri.replace(/^~/, homePath);
+      }
+      if (nextUri === "javascript:void(0)") {
+        nextUri = "";
+      }
+      return nextUri;
+    }, [homePath]);
+
+    let transformImageUri = useCallback(function (uri: string, alt: string, title: string | null): string {
       let nextUri = uriTransformer(uri);
       if (homePath !== undefined) {
         nextUri = nextUri.replace(/^~/, homePath);
@@ -70,8 +84,8 @@ const Markdown = create(
         allowedElements={allowedElements}
         disallowedElements={disallowedElements}
         skipHtml={true}
-        transformLinkUri={transformUri}
-        transformImageUri={transformUri}
+        transformLinkUri={transformLinkUri}
+        transformImageUri={transformImageUri}
         remarkPlugins={[remarkGfm]}
       />
     );

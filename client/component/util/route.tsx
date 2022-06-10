@@ -34,7 +34,7 @@ export function createRoute(path: string, importModule: () => Promise<FunctionCo
   }
 }
 
-type FunctionComponentModule = {default: FunctionComponent<unknown>};
+type FunctionComponentModule = {default: FunctionComponent<any>};
 type RouteOptions = {
   type: "private" | "guest" | "none",
   redirect?: string,
