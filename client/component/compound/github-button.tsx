@@ -6,6 +6,7 @@ import {
   ReactElement,
   useState
 } from "react";
+import { useQuery } from "react-query";
 import {
   useMount
 } from "react-use";
@@ -24,19 +25,17 @@ const GithubButton = create(
   }: {
   }): ReactElement {
 
-    let [starCount, setStarCount] = useState<number | null>(null);
-    let [, {trans, transNumber}] = useIntl();
-
-    useMount(async () => {
+    let {data: starCount} = useQuery("github", async () => {
       let url = "https://api.github.com/repos/Ziphil/ZpdicOnlineNova";
       let response = await axios.get(url, {validateStatus: () => true});
       if (response.status === 200 && "stargazers_count" in response.data) {
         let starCount = +response.data["stargazers_count"];
-        setStarCount(starCount);
+        return starCount;
       } else {
-        setStarCount(null);
+        throw new Error("cannot fetch");
       }
-    });
+    }, {suspense: true});
+    let [, {trans, transNumber}] = useIntl();
 
     let githubUrl = "https://github.com/Ziphil/ZpdicOnlineNova";
     let dashboardUrl = "https://ziphil.notion.site/ZpDIC-Online-987030f6505e4cf1ba8fe08121584d93";
@@ -47,7 +46,7 @@ const GithubButton = create(
             <div styleName="icon"><Icon name="github"/></div>
             <div styleName="star-wrapper">
               <span styleName="star"><Icon name="star"/></span>
-              <span styleName="count">{transNumber(starCount)}</span>
+              <span styleName="count">{transNumber(starCount!)}</span>
             </div>
           </div>
           <div styleName="text">{trans("githubButton.github")}</div>
