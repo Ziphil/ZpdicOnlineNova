@@ -34,7 +34,7 @@ const Selection = create(
     className?: string
   }): ReactElement {
 
-    let node = (
+    const node = (
       <div styleName="root" className={className}>
         <Dropdown specs={specs} onSet={onSet}>
           <label styleName="label-container">
@@ -62,7 +62,7 @@ const SelectionSelection = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let node = (
+    const node = (
       <button styleName="selection">
         <div styleName="text">
           {Array.from(specs).find((spec) => spec.value === value)!.node}

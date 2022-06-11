@@ -20,9 +20,9 @@ const LanguagePage = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <Page title={trans("languagePage.title")}>
         <div styleName="title">{trans("languagePage.title")}</div>
         <div styleName="form-container">

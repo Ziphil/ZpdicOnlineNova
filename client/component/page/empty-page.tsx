@@ -17,7 +17,7 @@ const EmptyPage = create(
   }: {
   }): ReactElement {
 
-    let node = (
+    const node = (
       <Page>
         <Loading loading={true}/>
       </Page>

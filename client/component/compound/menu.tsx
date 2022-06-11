@@ -29,9 +29,9 @@ const Menu = create(
     direction?: "horizontal" | "vertical"
   }): ReactElement {
 
-    let itemNodes = specs.map((spec, index) => {
-      let highlight = spec.mode === mode;
-      let itemNode = (
+    const itemNodes = specs.map((spec, index) => {
+      const highlight = spec.mode === mode;
+      const itemNode = (
         <MenuItem
           key={index}
           label={spec.label}
@@ -45,8 +45,8 @@ const Menu = create(
       );
       return itemNode;
     });
-    let styleName = StyleNameUtil.create("root", direction);
-    let node = (
+    const styleName = StyleNameUtil.create("root", direction);
+    const node = (
       <nav styleName={styleName}>
         {itemNodes}
       </nav>

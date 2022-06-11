@@ -12,7 +12,6 @@ import {
   AsyncOrSync
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
-import Input from "/client/component/atom/input";
 import Label from "/client/component/atom/label";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
@@ -43,25 +42,25 @@ const RegexpExecutor = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let [source, setSource] = useState(defaultSource ?? "");
-    let [target, setTarget] = useState("");
-    let [result, setResult] = useState<RegexpExecResult | null>(null);
-    let [errorMessage, setErrorMessage] = useState("");
-    let [, {trans}] = useIntl();
+    const [source, setSource] = useState(defaultSource ?? "");
+    const [target, setTarget] = useState("");
+    const [result, setResult] = useState<RegexpExecResult | null>(null);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [, {trans}] = useIntl();
 
-    let executeRegexp = useCallback(function (): void {
+    const executeRegexp = useCallback(function (): void {
       try {
-        let result = RegexpUtil.exec(source, target);
+        const result = RegexpUtil.exec(source, target);
         setResult(result);
         setErrorMessage("");
       } catch (error) {
-        let errorMessage = error.message.trim() ?? "Unknown error";
+        const errorMessage = error.message.trim() ?? "Unknown error";
         setResult(null);
         setErrorMessage(errorMessage);
       }
     }, [source, target]);
 
-    let handleClose = useCallback(function (event: MouseEvent<HTMLElement>): void {
+    const handleClose = useCallback(function (event: MouseEvent<HTMLElement>): void {
       onClose?.(event, source);
     }, [onClose, source]);
 
@@ -69,7 +68,7 @@ const RegexpExecutor = create(
       setSource(defaultSource ?? "");
     }, [defaultSource]);
 
-    let node = (
+    const node = (
       <Overlay size="large" title={trans("regexpExecutor.title")} open={open} onClose={handleClose}>
         <div styleName="root">
           <TextArea
@@ -113,20 +112,20 @@ const RegexpExecutorResult = create(
     errorMessage: string
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let innerNodes = [];
+    const innerNodes = [];
     if (result !== null) {
-      let target = result.target;
-      let length = result.matches.length;
+      const target = result.target;
+      const length = result.matches.length;
       let currentIndex = 0;
       innerNodes.push((length > 0) ? "matched" : "not matched");
       if (result.matches.length > 0) {
         innerNodes.push((length === 1) ? ` (${length} match):\n` : ` (${length} matches):\n`);
         innerNodes.push("  ");
         for (let index = 0 ; index < result.matches.length ; index ++) {
-          let range = result.matches[index].range;
-          let rangeNode = (
+          const range = result.matches[index].range;
+          const rangeNode = (
             <span styleName="hit" key={index}>
               {target.substring(range.start, range.end).replaceAll("\n", "\n  ")}
             </span>
@@ -140,7 +139,7 @@ const RegexpExecutorResult = create(
     } else {
       innerNodes.push(errorMessage);
     }
-    let node = (
+    const node = (
       <div styleName="error-message">
         <Label text={trans("regexpExecutor.result")}/>
         <div styleName="result-input">

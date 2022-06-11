@@ -39,8 +39,8 @@ const ExampleList = create(
     onDiscardConfirm?: (example: Example, event: MouseEvent<HTMLButtonElement>) => void,
   }): ReactElement {
 
-    let renderExample = useCallback(function (example: Example): ReactNode {
-      let node = (
+    const renderExample = useCallback(function (example: Example): ReactNode {
+      const node = (
         <ExamplePane
           example={example}
           dictionary={dictionary}
@@ -51,7 +51,7 @@ const ExampleList = create(
       return node;
     }, [dictionary, onEditConfirm, onDiscardConfirm]);
 
-    let node = (
+    const node = (
       <PaneList items={examples} size={size} column={2} renderer={renderExample}/>
     );
     return node;

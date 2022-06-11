@@ -42,16 +42,16 @@ const UserPane = create(
     onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    let [alertOpen, setAlertOpen] = useState(false);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let discardAuthorizedUser = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
+    const discardAuthorizedUser = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
       if (dictionary !== undefined) {
-        let number = dictionary.number;
-        let id = user.id;
-        let response = await request("discardDictionaryAuthorizedUser", {number, id});
+        const number = dictionary.number;
+        const id = user.id;
+        const response = await request("discardDictionaryAuthorizedUser", {number, id});
         if (response.status === 200) {
           addInformationPopup("dictionaryAuthorizedUserDiscarded");
           await onSubmit?.(event);
@@ -59,7 +59,7 @@ const UserPane = create(
       }
     }, [dictionary, user, request, onSubmit, addInformationPopup]);
 
-    let node = (
+    const node = (
       <Fragment>
         <WhitePane clickable={false}>
           <div>

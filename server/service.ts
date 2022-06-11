@@ -32,7 +32,7 @@ export class Service {
   }
 
   private async execute(): Promise<void> {
-    let name = process.argv[2];
+    const name = process.argv[2];
     if (name === "history") {
       await HistoryController.addHistories();
     }
@@ -41,5 +41,5 @@ export class Service {
 }
 
 
-let service = new Service();
+const service = new Service();
 service.main();

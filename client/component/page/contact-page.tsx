@@ -21,9 +21,9 @@ const ContactPage = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <Page title={trans("contactPage.title")}>
         <div styleName="title">{trans("contactPage.title")}</div>
         <div styleName="explanation">

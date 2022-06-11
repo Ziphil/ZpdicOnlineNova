@@ -68,33 +68,33 @@ export class Main {
 
   // リクエストボディをパースするミドルウェアの設定をします。
   private setupBodyParsers(): void {
-    let urlencodedParser = express.urlencoded({extended: false});
-    let jsonParser = express.json();
+    const urlencodedParser = express.urlencoded({extended: false});
+    const jsonParser = express.json();
     this.application.use(urlencodedParser);
     this.application.use(jsonParser);
   }
 
   private setupCookie(): void {
-    let middleware = cookieParser(COOKIE_SECRET);
+    const middleware = cookieParser(COOKIE_SECRET);
     this.application.use(middleware);
   }
 
   // ファイルをアップロードする処理を行う Multer の設定をします。
   // アップロードされたファイルは upload フォルダ内に保存するようにしています。
   private setupMulter(): void {
-    let middleware = multer({dest: "./dist/upload/"}).single("file");
+    const middleware = multer({dest: "./dist/upload/"}).single("file");
     this.application.use("/internal*", middleware);
   }
 
   // アクセスログを出力する morgan の設定をします。
   private setupMorgan(): void {
-    let middleware = morgan<Request>((tokens, request, response) => {
-      let method = tokens.method(request, response);
-      let status = tokens.status(request, response);
-      let url = tokens.url(request, response);
-      let time = tokens["total-time"](request, response, 0);
-      let body = ("password" in request.body) ? {...request.body, password: "***"} : request.body;
-      let bodyString = JSON.stringify(body);
+    const middleware = morgan<Request>((tokens, request, response) => {
+      const method = tokens.method(request, response);
+      const status = tokens.status(request, response);
+      const url = tokens.url(request, response);
+      const time = tokens["total-time"](request, response, 0);
+      const body = ("password" in request.body) ? {...request.body, password: "***"} : request.body;
+      const bodyString = JSON.stringify(body);
       return `![request] ${method} ${status} ${url} | time: ${time}ms | body: ${bodyString}`;
     });
     this.application.use(middleware);
@@ -113,8 +113,8 @@ export class Main {
   }
 
   private setupAws(): void {
-    let credentials = {accessKeyId: AWS_KEY, secretAccessKey: AWS_SECRET};
-    let region = AWS_REGION;
+    const credentials = {accessKeyId: AWS_KEY, secretAccessKey: AWS_SECRET};
+    const region = AWS_REGION;
     aws.config.update({credentials, region});
   }
 
@@ -148,12 +148,12 @@ export class Main {
   // フロントエンドから呼び出すためのエンドポイント用 URL で処理が存在しないものにアクセスされた場合は、404 エラーを返します。
   // そうでない場合は、フロントエンドのトップページを返します。
   private setupFallbackHandlers(): void {
-    let internalHandler = function (request: Request, response: Response, next: NextFunction): void {
-      let fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
+    const internalHandler = function (request: Request, response: Response, next: NextFunction): void {
+      const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
       response.status(404).end();
     };
-    let otherHandler = function (request: Request, response: Response, next: NextFunction): void {
-      let method = request.method;
+    const otherHandler = function (request: Request, response: Response, next: NextFunction): void {
+      const method = request.method;
       if ((method === "GET" || method === "HEAD") && request.accepts("html")) {
         response.sendFile(process.cwd() + "/dist/client/index.html", (error) => {
           if (error) {
@@ -169,7 +169,7 @@ export class Main {
   }
 
   private setupErrorHandler(): void {
-    let handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
+    const handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
       LogUtil.error("index", "uncaught error occurred", error);
       response.status(500).end();
     };
@@ -185,5 +185,5 @@ export class Main {
 }
 
 
-let main = new Main();
+const main = new Main();
 main.main();

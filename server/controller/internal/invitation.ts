@@ -36,17 +36,17 @@ export class InvitationController extends Controller {
   @post(SERVER_PATHS["addInvitation"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"addInvitation">, response: Response<"addInvitation">): Promise<void> {
-    let dictionary = request.dictionary;
-    let type = request.body.type;
-    let userName = request.body.userName;
-    let user = await UserModel.fetchOneByName(userName);
+    const dictionary = request.dictionary;
+    const type = request.body.type;
+    const userName = request.body.userName;
+    const user = await UserModel.fetchOneByName(userName);
     if (dictionary && user) {
       try {
-        let invitation = await InvitationModel.add(type, dictionary, user);
-        let body = await InvitationCreator.create(invitation);
+        const invitation = await InvitationModel.add(type, dictionary, user);
+        const body = await InvitationCreator.create(invitation);
         Controller.respond(response, body);
       } catch (error) {
-        let body = (() => {
+        const body = (() => {
           if (error.name === "CustomError") {
             if (error.type === "userCanAlreadyEdit") {
               return CustomError.ofType("userCanAlreadyEdit");
@@ -62,7 +62,7 @@ export class InvitationController extends Controller {
         Controller.respondError(response, body, error);
       }
     } else {
-      let body = (() => {
+      const body = (() => {
         if (dictionary === undefined) {
           return CustomError.ofType("noSuchDictionaryNumber");
         } else {
@@ -76,14 +76,14 @@ export class InvitationController extends Controller {
   @post(SERVER_PATHS["respondInvitation"])
   @before(verifyUser())
   public async [Symbol()](request: Request<"respondInvitation">, response: Response<"respondInvitation">): Promise<void> {
-    let user = request.user!;
-    let id = request.body.id;
-    let accept = request.body.accept;
-    let invitation = await InvitationModel.findById(id);
+    const user = request.user!;
+    const id = request.body.id;
+    const accept = request.body.accept;
+    const invitation = await InvitationModel.findById(id);
     if (invitation) {
       try {
         invitation.respond(user, accept);
-        let body = await InvitationCreator.create(invitation);
+        const body = await InvitationCreator.create(invitation);
         Controller.respond(response, body);
       } catch (error) {
         if (error.name === "CustomError" && error.type === "forbidden") {
@@ -93,7 +93,7 @@ export class InvitationController extends Controller {
         }
       }
     } else {
-      let body = CustomError.ofType("noSuchInvitation");
+      const body = CustomError.ofType("noSuchInvitation");
       Controller.respondError(response, body);
     }
   }
@@ -101,10 +101,10 @@ export class InvitationController extends Controller {
   @post(SERVER_PATHS["fetchInvitations"])
   @before(verifyUser())
   public async [Symbol()](request: Request<"fetchInvitations">, response: Response<"fetchInvitations">): Promise<void> {
-    let user = request.user!;
-    let type = request.body.type;
-    let invitations = await InvitationModel.fetchByUser(type, user);
-    let body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
+    const user = request.user!;
+    const type = request.body.type;
+    const invitations = await InvitationModel.fetchByUser(type, user);
+    const body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
     Controller.respond(response, body);
   }
 

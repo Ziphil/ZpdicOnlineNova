@@ -37,24 +37,24 @@ const ChangeDictionaryParamNameForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [paramName, setParamName] = useState(currentParamName ?? "");
-    let [intl, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [paramName, setParamName] = useState(currentParamName ?? "");
+    const [intl, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let response = await request("changeDictionaryParamName", {number, paramName});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const response = await request("changeDictionaryParamName", {number, paramName});
       if (response.status === 200) {
         addInformationPopup("dictionaryParamNameChanged");
         onSubmit?.();
       }
     }, [number, paramName, request, onSubmit, addInformationPopup]);
 
-    let nextUrl = "http://zpdic.ziphil.com/dictionary/" + (paramName || number);
-    let validate = function (value: string): string | null {
+    const nextUrl = "http://zpdic.ziphil.com/dictionary/" + (paramName || number);
+    const validate = function (value: string): string | null {
       return (value === "" || value.match(IDENTIFIER_REGEXP)) ? null : PopupUtil.getMessage(intl, "invalidDictionaryParamName");
     };
-    let node = (
+    const node = (
       <Fragment>
         <form styleName="root">
           <Input label={trans("changeDictionaryParamNameForm.paramName")} value={paramName} validate={validate} onSet={(paramName) => setParamName(paramName)}/>

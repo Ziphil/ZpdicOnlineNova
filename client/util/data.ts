@@ -8,9 +8,9 @@ export class DataUtil {
   }
 
   public static create(object: Record<string, string | boolean | null | undefined>): Record<`data-${string}`, string> {
-    let dataEntries = [];
-    for (let [name, spec] of Object.entries(object)) {
-      let snakeName = DataUtil.toSnakeCase(name);
+    const dataEntries = [];
+    for (const [name, spec] of Object.entries(object)) {
+      const snakeName = DataUtil.toSnakeCase(name);
       if (spec !== null && spec !== undefined) {
         if (typeof spec === "string") {
           dataEntries.push([`data-${snakeName}`, spec]);
@@ -19,7 +19,7 @@ export class DataUtil {
         }
       }
     }
-    let data = Object.fromEntries(dataEntries);
+    const data = Object.fromEntries(dataEntries);
     return data;
   }
 

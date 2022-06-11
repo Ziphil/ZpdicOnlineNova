@@ -47,66 +47,66 @@ const DashboardPage = create(
   }: {
   }): ReactElement {
 
-    let [dictionaries, setDictionaries] = useState<Array<UserDictionary> | null>(null);
-    let [editInvitations, setEditInvitations] = useState<Array<Invitation> | null>(null);
-    let [transferInvitations, setTransferInvitations] = useState<Array<Invitation> | null>(null);
-    let [, {trans}] = useIntl();
-    let {pushPath} = usePath();
-    let {request} = useRequest();
-    let [user] = useUser();
-    let logout = useLogout();
-    let location = useLocation();
+    const [dictionaries, setDictionaries] = useState<Array<UserDictionary> | null>(null);
+    const [editInvitations, setEditInvitations] = useState<Array<Invitation> | null>(null);
+    const [transferInvitations, setTransferInvitations] = useState<Array<Invitation> | null>(null);
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
+    const {request} = useRequest();
+    const [user] = useUser();
+    const logout = useLogout();
+    const location = useLocation();
 
-    let fetchDictionaries = useCallback(async function (): Promise<void> {
-      let response = await request("fetchDictionaries", {});
+    const fetchDictionaries = useCallback(async function (): Promise<void> {
+      const response = await request("fetchDictionaries", {});
       if (response.status === 200) {
-        let dictionaries = response.data;
+        const dictionaries = response.data;
         setDictionaries(dictionaries);
       }
     }, [request]);
 
-    let fetchEditInvitations = useCallback(async function (): Promise<void> {
-      let type = "edit" as const;
-      let response = await request("fetchInvitations", {type});
+    const fetchEditInvitations = useCallback(async function (): Promise<void> {
+      const type = "edit" as const;
+      const response = await request("fetchInvitations", {type});
       if (response.status === 200) {
-        let editInvitations = response.data;
+        const editInvitations = response.data;
         setEditInvitations(editInvitations);
       }
     }, [request]);
 
-    let fetchTransferInvitations = useCallback(async function (): Promise<void> {
-      let type = "transfer" as const;
-      let response = await request("fetchInvitations", {type});
+    const fetchTransferInvitations = useCallback(async function (): Promise<void> {
+      const type = "transfer" as const;
+      const response = await request("fetchInvitations", {type});
       if (response.status === 200) {
-        let transferInvitations = response.data;
+        const transferInvitations = response.data;
         setTransferInvitations(transferInvitations);
       }
     }, [request]);
 
-    let performLogout = useCallback(async function (): Promise<void> {
-      let response = await logout();
+    const performLogout = useCallback(async function (): Promise<void> {
+      const response = await logout();
       if (response.status === 200) {
         pushPath("/");
       }
     }, [pushPath, logout]);
 
     useMount(async () => {
-      let promise = Promise.all([fetchDictionaries(), fetchEditInvitations(), fetchTransferInvitations()]);
+      const promise = Promise.all([fetchDictionaries(), fetchEditInvitations(), fetchTransferInvitations()]);
       await promise;
     });
 
-    let mode = location.hash || "dictionary";
-    let dictionaryCount = dictionaries?.length ?? 0;
-    let editNotificationCount = editInvitations?.length ?? 0;
-    let transferNotificationCount = transferInvitations?.length ?? 0;
-    let notificationCount = editNotificationCount + transferNotificationCount;
-    let menuSpecs = [
+    const mode = location.hash || "dictionary";
+    const dictionaryCount = dictionaries?.length ?? 0;
+    const editNotificationCount = editInvitations?.length ?? 0;
+    const transferNotificationCount = transferInvitations?.length ?? 0;
+    const notificationCount = editNotificationCount + transferNotificationCount;
+    const menuSpecs = [
       {mode: "dictionary", label: trans("dashboardPage.dictionary"), iconName: "book", badgeValue: dictionaryCount || undefined, href: "#dictionary"},
       {mode: "notification", label: trans("dashboardPage.notification"), iconName: "bell", badgeValue: notificationCount || undefined, href: "#notification"},
       {mode: "account", label: trans("dashboardPage.account"), iconName: "id-card", href: "#account"},
       {mode: "logout", label: trans("dashboardPage.logout"), iconName: "sign-out-alt", onClick: performLogout}
     ] as const;
-    let node = (
+    const node = (
       <Page title={trans("dashboardPage.title")}>
         {(!user?.activated) && (
           <div styleName="activate">
@@ -141,12 +141,12 @@ const DashboardPageForms = create(
     fetchTransferInvitations: () => Promise<void>
   }): ReactElement | null {
 
-    let [user, {fetchUser}] = useUser();
-    let [, {trans}] = useIntl();
-    let {pushPath} = usePath();
+    const [user, {fetchUser}] = useUser();
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
 
     if (mode === "dictionary") {
-      let node = (
+      const node = (
         <Fragment>
           <SettingPane
             label={trans("dashboardPage.dictionaryList.label")}
@@ -164,7 +164,7 @@ const DashboardPageForms = create(
       );
       return node;
     } else if (mode === "notification") {
-      let node = (
+      const node = (
         <Fragment>
           <SettingPane
             label={trans("dashboardPage.editInvitationList.label")}
@@ -182,7 +182,7 @@ const DashboardPageForms = create(
       );
       return node;
     } else if (mode === "account") {
-      let node = (
+      const node = (
         <Fragment>
           <SettingPane
             label={trans("dashboardPage.changeUserNameForm.label")}

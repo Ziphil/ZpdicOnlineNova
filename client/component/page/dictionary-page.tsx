@@ -41,48 +41,48 @@ const DictionaryPage = create(
   }: {
   }): ReactElement {
 
-    let [dictionary, setDictionary] = useState<EnhancedDictionary | null>(null);
-    let [getQuery, setQuery] = useQueryState(serializeQuery, deserializeQuery);
-    let [hitResult, setHitResult] = useState<DictionaryHitResult>({words: [[], 0], suggestions: []});
-    let [canOwn, setCanOwn] = useState(false);
-    let [canEdit, setCanEdit] = useState(false);
-    let [searching, setSearching] = useState(false);
-    let {request} = useRequest();
-    let params = useParams();
+    const [dictionary, setDictionary] = useState<EnhancedDictionary | null>(null);
+    const [getQuery, setQuery] = useQueryState(serializeQuery, deserializeQuery);
+    const [hitResult, setHitResult] = useState<DictionaryHitResult>({words: [[], 0], suggestions: []});
+    const [canOwn, setCanOwn] = useState(false);
+    const [canEdit, setCanEdit] = useState(false);
+    const [searching, setSearching] = useState(false);
+    const {request} = useRequest();
+    const params = useParams();
 
-    let fetchDictionary = useCallback(async function (): Promise<void> {
-      let value = params.value;
-      let [number, paramName] = (() => {
+    const fetchDictionary = useCallback(async function (): Promise<void> {
+      const value = params.value;
+      const [number, paramName] = (() => {
         if (value.match(/^\d+$/)) {
           return [+value, undefined] as const;
         } else {
           return [undefined, value] as const;
         }
       })();
-      let response = await request("fetchDictionary", {number, paramName});
+      const response = await request("fetchDictionary", {number, paramName});
       if (response.status === 200 && !("error" in response.data)) {
-        let dictionary = EnhancedDictionary.enhance(response.data);
+        const dictionary = EnhancedDictionary.enhance(response.data);
         setDictionary(dictionary);
       } else {
         setDictionary(null);
       }
     }, [params.value, request]);
 
-    let checkAuthorization = useCallback(async function (): Promise<void> {
-      let number = dictionary?.number;
-      let ownPromise = (async () => {
+    const checkAuthorization = useCallback(async function (): Promise<void> {
+      const number = dictionary?.number;
+      const ownPromise = (async () => {
         if (number !== undefined) {
-          let authority = "own" as const;
-          let response = await request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
+          const authority = "own" as const;
+          const response = await request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
           if (response.status === 200) {
             setCanOwn(true);
           }
         }
       })();
-      let editPromise = (async () => {
+      const editPromise = (async () => {
         if (number !== undefined) {
-          let authority = "edit" as const;
-          let response = await request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
+          const authority = "edit" as const;
+          const response = await request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
           if (response.status === 200) {
             setCanEdit(true);
           }
@@ -91,18 +91,18 @@ const DictionaryPage = create(
       await Promise.all([ownPromise, editPromise]);
     }, [dictionary?.number, request]);
 
-    let updateWordsImmediately = useCallback(async function (): Promise<void> {
-      let number = dictionary?.number;
+    const updateWordsImmediately = useCallback(async function (): Promise<void> {
+      const number = dictionary?.number;
       if (number !== undefined) {
-        let query = getQuery();
-        let usedParameter = query.parameter;
-        let usedPage = query.page;
-        let offset = usedPage * 40;
-        let size = 40;
+        const query = getQuery();
+        const usedParameter = query.parameter;
+        const usedPage = query.page;
+        const offset = usedPage * 40;
+        const size = 40;
         setSearching(true);
-        let response = await request("searchDictionary", {number, parameter: usedParameter, offset, size});
+        const response = await request("searchDictionary", {number, parameter: usedParameter, offset, size});
         if (response.status === 200 && !("error" in response.data)) {
-          let hitResult = response.data;
+          const hitResult = response.data;
           setHitResult(hitResult);
           setSearching(false);
         } else {
@@ -112,18 +112,18 @@ const DictionaryPage = create(
       }
     }, [dictionary?.number, getQuery, request]);
 
-    let updateWords = useDebounce(async function (): Promise<void> {
+    const updateWords = useDebounce(async function (): Promise<void> {
       await updateWordsImmediately();
     }, 500, [updateWordsImmediately]);
 
-    let handleParameterSet = useCallback(async function (parameter: WordParameter): Promise<void> {
-      let page = 0;
-      let showExplanation = false;
+    const handleParameterSet = useCallback(async function (parameter: WordParameter): Promise<void> {
+      const page = 0;
+      const showExplanation = false;
       setQuery((query) => ({...query, parameter, page, showExplanation}));
     }, [setQuery]);
 
-    let handlePageSet = useCallback(async function (page: number): Promise<void> {
-      let showExplanation = false;
+    const handlePageSet = useCallback(async function (page: number): Promise<void> {
+      const showExplanation = false;
       setQuery((query) => ({...query, page, showExplanation}));
       window.scrollTo(0, 0);
     }, [setQuery]);
@@ -141,8 +141,8 @@ const DictionaryPage = create(
       updateWordsImmediately();
     }, [dictionary]);
 
-    let wordListProps = {dictionary, getQuery, canEdit, hitResult, updateWordsImmediately, handlePageSet};
-    let node = (
+    const wordListProps = {dictionary, getQuery, canEdit, hitResult, updateWordsImmediately, handlePageSet};
+    const node = (
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <Loading loading={dictionary === null}>
           <div styleName="search-form-container">
@@ -178,10 +178,10 @@ const DictionaryPageWordList = create(
     handlePageSet: (page: number) => Promise<void>
   }): ReactElement {
 
-    let [hitWords, hitSize] = hitResult.words;
-    let hitSuggestions = hitResult.suggestions;
-    let maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
-    let node = (
+    const [hitWords, hitSize] = hitResult.words;
+    const hitSuggestions = hitResult.suggestions;
+    const maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
+    const node = (
       <Fragment>
         <div styleName="suggestion-list-container">
           <SuggestionList
@@ -214,14 +214,14 @@ const DictionaryPageWordList = create(
 
 
 function serializeQuery(query: DictionaryQuery): Record<string, unknown> {
-  let search = {...query.parameter.serialize(), page: query.page};
+  const search = {...query.parameter.serialize(), page: query.page};
   return search;
 }
 
 function deserializeQuery(search: Record<string, unknown>): DictionaryQuery {
-  let parameter = WordParameter.deserialize(search);
-  let page = (typeof search.page === "string") ? +search.page : 0;
-  let showExplanation = Object.keys(search).length <= 0;
+  const parameter = WordParameter.deserialize(search);
+  const page = (typeof search.page === "string") ? +search.page : 0;
+  const showExplanation = Object.keys(search).length <= 0;
   return {parameter, page, showExplanation};
 }
 

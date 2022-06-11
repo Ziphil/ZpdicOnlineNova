@@ -2,7 +2,6 @@
 
 import * as react from "react";
 import {
-  ElementType,
   Fragment,
   ReactElement,
   ReactNode,
@@ -43,7 +42,7 @@ const Markdown = create(
     className?: string
   }): ReactElement {
 
-    let transformLinkUri = useCallback(function (uri: string, children: Array<ElementContent>, title: string | null): string {
+    const transformLinkUri = useCallback(function (uri: string, children: Array<ElementContent>, title: string | null): string {
       let nextUri = uriTransformer(uri);
       if (homePath !== undefined) {
         nextUri = nextUri.replace(/^~/, homePath);
@@ -54,7 +53,7 @@ const Markdown = create(
       return nextUri;
     }, [homePath]);
 
-    let transformImageUri = useCallback(function (uri: string, alt: string, title: string | null): string {
+    const transformImageUri = useCallback(function (uri: string, alt: string, title: string | null): string {
       let nextUri = uriTransformer(uri);
       if (homePath !== undefined) {
         nextUri = nextUri.replace(/^~/, homePath);
@@ -65,7 +64,7 @@ const Markdown = create(
       return nextUri;
     }, [homePath]);
 
-    let [allowedElements, disallowedElements] = useMemo(() => {
+    const [allowedElements, disallowedElements] = useMemo(() => {
       if (type === "simple") {
         return [["p", "a"], undefined];
       } else if (type === "normal") {
@@ -74,12 +73,11 @@ const Markdown = create(
         return [undefined, ["hr", "dl", "dd", "dt", "input"]];
       }
     }, [type]);
-    let customComponents = (type === "simple") ? {a: Link, p: MarkdownSimple} : {a: Link};
-    let allComponents = {...customComponents, ...components} as any;
-    let innerNode = (
+    const customComponents = (type === "simple") ? {a: Link, p: MarkdownSimple} : {a: Link};
+    const allComponents = {...customComponents, ...components} as any;
+    const innerNode = (
       <ReactMarkdown
         className={className}
-        children={source}
         components={allComponents}
         allowedElements={allowedElements}
         disallowedElements={disallowedElements}
@@ -87,9 +85,11 @@ const Markdown = create(
         transformLinkUri={transformLinkUri}
         transformImageUri={transformImageUri}
         remarkPlugins={[remarkGfm]}
-      />
+      >
+        {source}
+      </ReactMarkdown>
     );
-    let node = (type === "simple") ? innerNode : <div styleName="root" className={className}>{innerNode}</div>;
+    const node = (type === "simple") ? innerNode : <div styleName="root" className={className}>{innerNode}</div>;
     return node;
 
   }
@@ -104,7 +104,7 @@ const MarkdownSimple = create(
     children?: ReactNode
   }): ReactElement {
 
-    let node = (
+    const node = (
       <Fragment>
         {children}
       </Fragment>

@@ -35,36 +35,36 @@ const ChangeDictionarySourceForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [source, setSource] = useState(currentSource ?? "");
-    let [executorOpen, setExecutorOpen] = useState(false);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [source, setSource] = useState(currentSource ?? "");
+    const [executorOpen, setExecutorOpen] = useState(false);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let propertyName = language + "Source";
-      let settings = {[propertyName]: source};
-      let response = await request("changeDictionarySettings", {number, settings});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const propertyName = language + "Source";
+      const settings = {[propertyName]: source};
+      const response = await request("changeDictionarySettings", {number, settings});
       if (response.status === 200) {
         addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
         onSubmit?.();
       }
     }, [number, language, source, request, onSubmit, addInformationPopup]);
 
-    let executorNode = (() => {
+    const executorNode = (() => {
       if (language === "akrantiain") {
-        let executorNode = (
+        const executorNode = (
           <AkrantiainExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
         );
         return executorNode;
       } else if (language === "zatlin") {
-        let executorNode = (
+        const executorNode = (
           <ZatlinExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
         );
         return executorNode;
       }
     })();
-    let node = (
+    const node = (
       <Fragment>
         <form styleName="root">
           <TextArea

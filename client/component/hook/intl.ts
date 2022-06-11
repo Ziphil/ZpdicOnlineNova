@@ -23,27 +23,27 @@ import {
 } from "/client/util/date";
 
 
-let useRawLocale = createGlobalState("ja");
-let useRawMessages = createGlobalState<Messages>({});
+const useRawLocale = createGlobalState("ja");
+const useRawMessages = createGlobalState<Messages>({});
 export let globalLocale = "ja";
 
 export function useDefaultLocale(defaultLocale: string): {locale: string, messages: Messages} {
-  let [locale] = useRawLocale();
-  let [messages] = useRawMessages();
-  let [, changeLocale] = useLocale();
+  const [locale] = useRawLocale();
+  const [messages] = useRawMessages();
+  const [, changeLocale] = useLocale();
   useMount(() => {
-    let firstLocale = localStorage.getItem("locale") ?? defaultLocale;
+    const firstLocale = localStorage.getItem("locale") ?? defaultLocale;
     changeLocale(firstLocale);
   });
   return {locale, messages};
 }
 
 export function useLocale(): [string, ChangeLocaleCallback] {
-  let [locale, setLocale] = useRawLocale();
-  let [, setMessages] = useRawMessages();
-  let changeLocale = useCallback(async function (locale: string): Promise<void> {
-    let language = LANGUAGES.find((language) => language.locale === locale) ?? LANGUAGES[0];
-    let messages = await language.fetchMessages().then((module) => module.default);
+  const [locale, setLocale] = useRawLocale();
+  const [, setMessages] = useRawMessages();
+  const changeLocale = useCallback(async function (locale: string): Promise<void> {
+    const language = LANGUAGES.find((language) => language.locale === locale) ?? LANGUAGES[0];
+    const messages = await language.fetchMessages().then((module) => module.default);
     globalLocale = locale;
     setLocale(locale);
     setMessages(messages);
@@ -53,33 +53,33 @@ export function useLocale(): [string, ChangeLocaleCallback] {
 }
 
 export function useIntl(): [IntlShape, TransCallbacks] {
-  let intl = useRawIntl();
-  let trans = useCallback(function (id: string, values?: any): any {
-    let defaultMessage = values?.defaultMessage ?? "[?]";
-    let rawMessage = intl.formatMessage({id, defaultMessage}, values);
-    let message = (rawMessage === "<empty>") ? "" : rawMessage;
+  const intl = useRawIntl();
+  const trans = useCallback(function (id: string, values?: any): any {
+    const defaultMessage = values?.defaultMessage ?? "[?]";
+    const rawMessage = intl.formatMessage({id, defaultMessage}, values);
+    const message = (rawMessage === "<empty>") ? "" : rawMessage;
     return message;
   }, [intl]);
-  let transDate = useCallback(function (date: Date | number | string | null | undefined): string {
+  const transDate = useCallback(function (date: Date | number | string | null | undefined): string {
     if (date !== null && date !== undefined) {
-      let format = intl.formatMessage({id: "common.dateFormat"});
-      let locale = intl.locale;
+      const format = intl.formatMessage({id: "common.dateFormat"});
+      const locale = intl.locale;
       return DateUtil.format(date, format, locale);
     } else {
       return intl.formatMessage({id: "common.dateUndefined"});
     }
   }, [intl]);
-  let transShortDate = useCallback(function (date: Date | number | string | null | undefined): string {
+  const transShortDate = useCallback(function (date: Date | number | string | null | undefined): string {
     if (date !== null && date !== undefined) {
-      let format = intl.formatMessage({id: "common.shortDateFormat"});
-      let locale = intl.locale;
+      const format = intl.formatMessage({id: "common.shortDateFormat"});
+      const locale = intl.locale;
       return DateUtil.format(date, format, locale);
     } else {
       return intl.formatMessage({id: "common.dateUndefined"});
     }
   }, [intl]);
-  let transNumber = useCallback(function (number: number | null | undefined, digit?: number): string {
-    let options = {minimumFractionDigits: digit, maximumFractionDigits: digit};
+  const transNumber = useCallback(function (number: number | null | undefined, digit?: number): string {
+    const options = {minimumFractionDigits: digit, maximumFractionDigits: digit};
     if (number !== null && number !== undefined) {
       return intl.formatNumber(number, options);
     } else {

@@ -13,7 +13,6 @@ import {
 } from "/client/component/create";
 import {
   useIntl,
-  usePopup,
   useRequest
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
@@ -31,25 +30,25 @@ const DictionaryListPage = create(
   }: {
   }): ReactElement {
 
-    let [order, setOrder] = useState("updatedDate");
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
+    const [order, setOrder] = useState("updatedDate");
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
 
-    let provideDictionaries = useCallback(async function (offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
-      let response = await request("fetchAllDictionaries", {order, offset, size});
+    const provideDictionaries = useCallback(async function (offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
+      const response = await request("fetchAllDictionaries", {order, offset, size});
       if (response.status === 200) {
-        let hitResult = response.data;
+        const hitResult = response.data;
         return hitResult;
       } else {
         return [[], 0];
       }
     }, [order, request]);
 
-    let specs = [
+    const specs = [
       {value: "updatedDate", label: trans("dictionaryListPage.updatedDate")},
       {value: "createdDate", label: trans("dictionaryListPage.createdDate")}
     ];
-    let node = (
+    const node = (
       <Page title={trans("dictionaryListPage.title")}>
         <div styleName="search-form-container">
           <RadioGroup name="order" value={order} specs={specs} onSet={(order) => setOrder(order)}/>

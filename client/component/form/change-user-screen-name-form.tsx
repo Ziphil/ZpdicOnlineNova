@@ -28,20 +28,20 @@ const ChangeUserScreenNameForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [screenName, setScreenName] = useState(currentScreenName ?? "");
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [screenName, setScreenName] = useState(currentScreenName ?? "");
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let response = await request("changeUserScreenName", {screenName});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const response = await request("changeUserScreenName", {screenName});
       if (response.status === 200) {
         addInformationPopup("userScreenNameChanged");
         onSubmit?.();
       }
     }, [screenName, request, onSubmit, addInformationPopup]);
 
-    let node = (
+    const node = (
       <form styleName="root">
         <Input label={trans("changeUserScreenNameForm.screenName")} value={screenName} onSet={(screenName) => setScreenName(screenName)}/>
         <Button label={trans("changeUserScreenNameForm.confirm")} reactive={true} onClick={handleClick}/>

@@ -30,20 +30,20 @@ const ChangeDictionaryExplanationForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [explanation, setExplanation] = useState(currentExplanation ?? "");
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [explanation, setExplanation] = useState(currentExplanation ?? "");
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let response = await request("changeDictionaryExplanation", {number, explanation});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const response = await request("changeDictionaryExplanation", {number, explanation});
       if (response.status === 200) {
         addInformationPopup("dictionaryExplanationChanged");
         onSubmit?.();
       }
     }, [number, explanation, request, onSubmit, addInformationPopup]);
 
-    let node = (
+    const node = (
       <form styleName="root">
         <TextArea
           label={trans("changeDictionaryExplanationForm.explanation")}

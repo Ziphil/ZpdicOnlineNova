@@ -34,16 +34,16 @@ const InvitationPane = create(
     onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    let [, {trans, transDate}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [, {trans, transDate}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let respondInvitation = useCallback(async function (event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
-      let id = invitation.id;
-      let invitationType = invitation.type;
-      let response = await request("respondInvitation", {id, accept});
+    const respondInvitation = useCallback(async function (event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
+      const id = invitation.id;
+      const invitationType = invitation.type;
+      const response = await request("respondInvitation", {id, accept});
       if (response.status === 200) {
-        let type = (() => {
+        const type = (() => {
           if (invitationType === "edit") {
             return (accept) ? "editInvitationAccepted" : "editInvitationRefused";
           } else if (invitationType === "transfer") {
@@ -57,9 +57,9 @@ const InvitationPane = create(
       }
     }, [invitation, request, onSubmit, addInformationPopup]);
 
-    let name = invitation.dictionary.name;
-    let createdDate = invitation.createdDate;
-    let node = (
+    const name = invitation.dictionary.name;
+    const createdDate = invitation.createdDate;
+    const node = (
       <WhitePane clickable={false}>
         <div>
           <div styleName="head">

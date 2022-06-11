@@ -32,11 +32,11 @@ const InvitationList = create(
     onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    let rendererInvitation = useCallback(function (invitation: Invitation): ReactNode {
+    const rendererInvitation = useCallback(function (invitation: Invitation): ReactNode {
       return <InvitationPane invitation={invitation} key={invitation.id} onSubmit={onSubmit}/>;
     }, [onSubmit]);
 
-    let node = (
+    const node = (
       <PaneList items={invitations} size={size} renderer={rendererInvitation}/>
     );
     return node;

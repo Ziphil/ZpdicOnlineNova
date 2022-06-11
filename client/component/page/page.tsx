@@ -41,8 +41,8 @@ const Page = create(
     children?: ReactNode
   }): ReactElement {
 
-    let spacerData = DataUtil.create({showDictionary});
-    let node = (
+    const spacerData = DataUtil.create({showDictionary});
+    const node = (
       <div styleName="root" id="page">
         <Helmet>
           <title>{(title) ? `${title} — ZpDIC Online` : "ZpDIC Online"}</title>

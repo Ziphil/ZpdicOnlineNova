@@ -23,7 +23,7 @@ import {
 } from "/client/util/data";
 
 
-let Dropdown = create(
+const Dropdown = create(
   require("./dropdown.scss"), "Dropdown",
   function <V>({
     specs,
@@ -55,10 +55,10 @@ let Dropdown = create(
     children?: ReactNode
   }): ReactElement {
 
-    let [currentOpen, setCurrentOpen] = useState(false);
-    let suggestionRef = useRef<HTMLDivElement>(null);
+    const [currentOpen, setCurrentOpen] = useState(false);
+    const suggestionRef = useRef<HTMLDivElement>(null);
 
-    let handleMouseDown = useCallback(function (value: V, event: MouseEvent<HTMLDivElement>): void {
+    const handleMouseDown = useCallback(function (value: V, event: MouseEvent<HTMLDivElement>): void {
       onClick?.(event);
       onSet?.(value);
       if (autoMode === "click") {
@@ -67,28 +67,28 @@ let Dropdown = create(
       }
     }, [autoMode, onClick, onClose, onSet, setCurrentOpen]);
 
-    let handleClick = useCallback(function (event: MouseEvent<HTMLDivElement>): void {
+    const handleClick = useCallback(function (event: MouseEvent<HTMLDivElement>): void {
       if (autoMode === "click") {
         setCurrentOpen(true);
         onOpen?.(event);
       }
     }, [autoMode, onOpen, setCurrentOpen]);
 
-    let handleClickOutside = useCallback(function (): void {
+    const handleClickOutside = useCallback(function (): void {
       if (autoMode === "click") {
         setCurrentOpen(false);
         onClose?.();
       }
     }, [autoMode, onClose, setCurrentOpen]);
 
-    let handleFocus = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
+    const handleFocus = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
       if (autoMode === "focus") {
         setCurrentOpen(true);
         onOpen?.(event);
       }
     }, [autoMode, onOpen, setCurrentOpen]);
 
-    let handleBlur = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
+    const handleBlur = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
       if (autoMode === "focus") {
         setCurrentOpen(false);
         onClose?.(event);
@@ -99,14 +99,14 @@ let Dropdown = create(
       handleClickOutside();
     });
 
-    let actualOpen = (autoMode !== null) ? currentOpen : open;
-    let data = DataUtil.create({
+    const actualOpen = (autoMode !== null) ? currentOpen : open;
+    const data = DataUtil.create({
       placement,
       showArrow,
       fillWidth,
       restrictHeight
     });
-    let node = (
+    const node = (
       <div styleName="root" className={className}>
         <div onClick={handleClick} onFocus={handleFocus} onBlur={handleBlur}>
           {children}

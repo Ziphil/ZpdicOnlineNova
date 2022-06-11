@@ -29,13 +29,13 @@ export abstract class Deserializer extends EventEmitter {
 
   public on<E extends keyof DeserializerEvent>(event: E, listener: (...args: DeserializerEvent[E]) => void): this;
   public on(event: string | symbol, listener: (...args: any) => void): this {
-    let result = super.on(event, listener);
+    const result = super.on(event, listener);
     return result;
   }
 
   public once<E extends keyof DeserializerEvent>(event: E, listener: (...args: DeserializerEvent[E]) => void): this;
   public once(event: string | symbol, listener: (...args: any) => void): this {
-    let result = super.once(event, listener);
+    const result = super.once(event, listener);
     return result;
   }
 
@@ -58,7 +58,7 @@ export abstract class Deserializer extends EventEmitter {
       }
     }
     if (event !== "end" || (event === "end" && this.error === null)) {
-      let result = super.emit(event, ...args);
+      const result = super.emit(event, ...args);
       return result;
     } else {
       return this.listeners(event).length > 0;
@@ -71,7 +71,7 @@ export abstract class Deserializer extends EventEmitter {
   // 拡張子が対応していないものだった場合は null を返します。
   public static create(path: string, originalPath: string, dictionary: Dictionary, cacheSize?: number): Deserializer | null {
     try {
-      let extension = originalPath.split(/\.(?=[^.]+$)/)[1];
+      const extension = originalPath.split(/\.(?=[^.]+$)/)[1];
       if (extension === "json") {
         return new SlimeDeserializer(path, dictionary, cacheSize);
       } else if (extension === "dic") {

@@ -30,7 +30,7 @@ export class Main {
   }
 
   private appendIconElement(): void {
-    let element = document.createElement("link");
+    const element = document.createElement("link");
     element.href = "https://kit-free.fontawesome.com/releases/latest/css/free.min.css";
     element.rel = "stylesheet";
     element.media = "all";
@@ -39,7 +39,7 @@ export class Main {
   }
 
   private appendRecaptchaElement(): void {
-    let element = document.createElement("script");
+    const element = document.createElement("script");
     element.src = "https://www.google.com/recaptcha/api.js?render=" + RECAPTCHA_KEY;
     document.head.appendChild(element);
   }
@@ -49,9 +49,9 @@ export class Main {
   }
 
   private render(): void {
-    let container = document.getElementById("root");
+    const container = document.getElementById("root");
     if (container) {
-      let root = createRoot(container);
+      const root = createRoot(container);
       root.render(<Root/>);
     }
   }
@@ -59,5 +59,5 @@ export class Main {
 }
 
 
-let main = new Main();
+const main = new Main();
 main.main();

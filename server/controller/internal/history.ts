@@ -33,14 +33,14 @@ export class HistoryController extends Controller {
   @post(SERVER_PATHS["fetchHistories"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchHistories">, response: Response<"fetchHistories">): Promise<void> {
-    let dictionary = request.dictionary;
-    let from = new Date(request.body.from);
+    const dictionary = request.dictionary;
+    const from = new Date(request.body.from);
     if (dictionary) {
-      let histories = await HistoryModel.fetch(dictionary, from);
-      let body = histories.map(HistoryCreator.create);
+      const histories = await HistoryModel.fetch(dictionary, from);
+      const body = histories.map(HistoryCreator.create);
       Controller.respond(response, body);
     } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
+      const body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);
     }
   }

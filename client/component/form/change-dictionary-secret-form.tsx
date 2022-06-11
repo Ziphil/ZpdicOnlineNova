@@ -31,25 +31,25 @@ const ChangeDictionarySecretForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [secret, setSecret] = useState(currentSecret);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [secret, setSecret] = useState(currentSecret);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let response = await request("changeDictionarySecret", {number, secret});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const response = await request("changeDictionarySecret", {number, secret});
       if (response.status === 200) {
         addInformationPopup("dictionarySecretChanged");
         onSubmit?.();
       }
     }, [number, secret, request, onSubmit, addInformationPopup]);
 
-    let specs = [
+    const specs = [
       {value: "public", label: trans("changeDictionarySecretForm.public")},
       {value: "secret", label: trans("changeDictionarySecretForm.secret")}
     ];
-    let secretValue = (secret) ? "secret" : "public";
-    let node = (
+    const secretValue = (secret) ? "secret" : "public";
+    const node = (
       <Fragment>
         <form styleName="root">
           <RadioGroup name="secret" specs={specs} value={secretValue} onSet={(value) => setSecret(value === "secret")}/>

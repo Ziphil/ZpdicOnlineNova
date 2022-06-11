@@ -39,20 +39,20 @@ export class NormalWordParameter extends WordParameter {
   }
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>, Word> {
-    let keys = WordParameter.createKeys(this.mode);
-    let needle = WordParameter.createNeedle(this.text, this.type, this.ignoreOptions);
-    let sortKey = WordParameter.createSortKey(this.order);
-    let disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
-    let query = WordModel.findExist().where("dictionary", dictionary).or(disjunctFilters).sort(sortKey);
+    const keys = WordParameter.createKeys(this.mode);
+    const needle = WordParameter.createNeedle(this.text, this.type, this.ignoreOptions);
+    const sortKey = WordParameter.createSortKey(this.order);
+    const disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
+    const query = WordModel.findExist().where("dictionary", dictionary).or(disjunctFilters).sort(sortKey);
     return query;
   }
 
   public createSuggestionQuery(dictionary: Dictionary): Aggregate<Array<RawSuggestion>> | null {
     if (this.enableSuggestions) {
-      let mode = this.mode;
-      let type = this.type;
+      const mode = this.mode;
+      const type = this.type;
       if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {
-        let needle = WordParameter.createNeedle(this.text, "exact", {case: false});
+        const needle = WordParameter.createNeedle(this.text, "exact", {case: false});
         let aggregate = WordModel.aggregate();
         aggregate = aggregate.match(WordModel.findExist().where("dictionary", dictionary["_id"]).where("variations.name", needle).getFilter());
         aggregate = aggregate.addFields({oldVariations: "$variations"});

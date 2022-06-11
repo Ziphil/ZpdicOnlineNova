@@ -4,8 +4,8 @@
 export class StyleNameUtil {
 
   private static createArray(...specs: Array<StyleNameSpec>): Array<string> {
-    let styleNames = [];
-    for (let spec of specs) {
+    const styleNames = [];
+    for (const spec of specs) {
       if (spec !== null && spec !== undefined) {
         if (typeof spec === "string") {
           styleNames.push(spec);
@@ -24,7 +24,7 @@ export class StyleNameUtil {
   }
 
   public static create(...specs: Array<StyleNameSpec>): string {
-    let styleName = this.createArray(...specs).join(" ");
+    const styleName = this.createArray(...specs).join(" ");
     return styleName;
   }
 

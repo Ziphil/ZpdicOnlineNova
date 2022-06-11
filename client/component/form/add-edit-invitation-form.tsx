@@ -45,31 +45,31 @@ const AddEditInvitationForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [userName, setUserName] = useState("");
-    let [authorizedUsers, setAuthorizedUsers] = useState<Array<User> | null>(null);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [userName, setUserName] = useState("");
+    const [authorizedUsers, setAuthorizedUsers] = useState<Array<User> | null>(null);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let fetchAuthorizedUsers = useCallback(async function (): Promise<void> {
-      let number = dictionary.number;
-      let authority = "editOnly" as const;
-      let response = await request("fetchDictionaryAuthorizedUsers", {number, authority});
+    const fetchAuthorizedUsers = useCallback(async function (): Promise<void> {
+      const number = dictionary.number;
+      const authority = "editOnly" as const;
+      const response = await request("fetchDictionaryAuthorizedUsers", {number, authority});
       if (response.status === 200 && !("error" in response.data)) {
-        let authorizedUsers = response.data;
+        const authorizedUsers = response.data;
         setAuthorizedUsers(authorizedUsers);
       } else {
         setAuthorizedUsers(null);
       }
     }, [dictionary.number, request]);
 
-    let suggestUsers = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
-      let response = await request("suggestUsers", {pattern}, {ignoreError: true});
+    const suggestUsers = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
+      const response = await request("suggestUsers", {pattern}, {ignoreError: true});
       if (response.status === 200 && !("error" in response.data)) {
-        let users = response.data;
-        let suggestions = users.map((user) => {
-          let replacement = user.name;
-          let node = <UserSuggestionPane user={user}/>;
+        const users = response.data;
+        const suggestions = users.map((user) => {
+          const replacement = user.name;
+          const node = <UserSuggestionPane user={user}/>;
           return {replacement, node};
         });
         return suggestions;
@@ -78,9 +78,9 @@ const AddEditInvitationForm = create(
       }
     }, [request]);
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let type = "edit" as const;
-      let response = await request("addInvitation", {number, type, userName});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const type = "edit" as const;
+      const response = await request("addInvitation", {number, type, userName});
       if (response.status === 200) {
         addInformationPopup("editInvitationAdded");
         onSubmit?.();
@@ -91,7 +91,7 @@ const AddEditInvitationForm = create(
       await fetchAuthorizedUsers();
     });
 
-    let node = (
+    const node = (
       <Fragment>
         <form styleName="root">
           <Input

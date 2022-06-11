@@ -54,9 +54,9 @@ const WordList = create(
     onDiscardExampleConfirm?: (word: Word, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    let displayedWords = words.slice(offset, offset + size);
-    let wordPanes = displayedWords.map((word) => {
-      let wordPane = (
+    const displayedWords = words.slice(offset, offset + size);
+    const wordPanes = displayedWords.map((word) => {
+      const wordPane = (
         <WordPane
           dictionary={dictionary}
           word={word}
@@ -74,7 +74,7 @@ const WordList = create(
       );
       return wordPane;
     });
-    let node = (
+    const node = (
       <div styleName="root">
         {wordPanes}
       </div>

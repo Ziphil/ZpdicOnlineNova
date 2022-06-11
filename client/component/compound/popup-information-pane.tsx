@@ -23,18 +23,18 @@ const PopupInformationPane = create(
   }: {
   }): ReactElement {
 
-    let [intl] = useIntl();
-    let [popupSpecs, {clearPopup}] = usePopup();
+    const [intl] = useIntl();
+    const [popupSpecs, {clearPopup}] = usePopup();
 
-    let specNodes = popupSpecs.map((spec) => {
-      let specNode = (
+    const specNodes = popupSpecs.map((spec) => {
+      const specNode = (
         <div styleName="pane-wrapper" key={spec.id}>
           <InformationPane texts={[PopupUtil.getMessage(intl, spec.type)]} style={spec.style} onClose={() => clearPopup(spec.id)}/>
         </div>
       );
       return specNode;
     });
-    let node = (
+    const node = (
       <div styleName="root">
         {specNodes}
       </div>

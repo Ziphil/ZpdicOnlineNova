@@ -56,54 +56,54 @@ const DictionarySettingPage = create(
   }: {
   }): ReactElement {
 
-    let [dictionary, setDictionary] = useState<EnhancedDictionary | null>(null);
-    let [commissionCount, setCommissionCount] = useState(0);
-    let [authorized, setAuthorized] = useState(false);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let params = useParams();
-    let location = useLocation();
+    const [dictionary, setDictionary] = useState<EnhancedDictionary | null>(null);
+    const [commissionCount, setCommissionCount] = useState(0);
+    const [authorized, setAuthorized] = useState(false);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const params = useParams();
+    const location = useLocation();
 
-    let fetchDictionary = useCallback(async function (): Promise<void> {
-      let number = +params.number;
-      let response = await request("fetchDictionary", {number});
+    const fetchDictionary = useCallback(async function (): Promise<void> {
+      const number = +params.number;
+      const response = await request("fetchDictionary", {number});
       if (response.status === 200 && !("error" in response.data)) {
-        let dictionary = EnhancedDictionary.enhance(response.data);
+        const dictionary = EnhancedDictionary.enhance(response.data);
         setDictionary(dictionary);
       } else {
         setDictionary(null);
       }
     }, [params.number, request]);
 
-    let fetchCommissionCount = useCallback(async function (): Promise<void> {
-      let number = +params.number;
-      let size = 1;
-      let response = await request("fetchCommissions", {number, size});
+    const fetchCommissionCount = useCallback(async function (): Promise<void> {
+      const number = +params.number;
+      const size = 1;
+      const response = await request("fetchCommissions", {number, size});
       if (response.status === 200 && !("error" in response.data)) {
-        let commissionCount = response.data[1];
+        const commissionCount = response.data[1];
         setCommissionCount(commissionCount);
       } else {
         setCommissionCount(0);
       }
     }, [params.number, request]);
 
-    let checkAuthorization = useCallback(async function (): Promise<void> {
-      let number = +params.number;
-      let authority = "own" as const;
-      let response = await request("checkDictionaryAuthorization", {number, authority});
+    const checkAuthorization = useCallback(async function (): Promise<void> {
+      const number = +params.number;
+      const authority = "own" as const;
+      const response = await request("checkDictionaryAuthorization", {number, authority});
       if (response.status === 200) {
         setAuthorized(true);
       }
     }, [params.number, request]);
 
     useMount(async () => {
-      let promise = Promise.all([fetchDictionary(), fetchCommissionCount(), checkAuthorization()]);
+      const promise = Promise.all([fetchDictionary(), fetchCommissionCount(), checkAuthorization()]);
       await promise;
     });
 
-    let mode = location.hash || "general";
-    let actualCommissionCount = (commissionCount > 0) ? commissionCount : undefined;
-    let menuSpecs = [
+    const mode = location.hash || "general";
+    const actualCommissionCount = (commissionCount > 0) ? commissionCount : undefined;
+    const menuSpecs = [
       {mode: "general", label: trans("dictionarySettingPage.general"), iconName: "info-circle", href: "#general"},
       {mode: "setting", label: trans("dictionarySettingPage.setting"), iconName: "cog", href: "#setting"},
       {mode: "access", label: trans("dictionarySettingPage.access"), iconName: "users", href: "#access"},
@@ -111,7 +111,7 @@ const DictionarySettingPage = create(
       {mode: "resource", label: trans("dictionarySettingPage.resource"), iconName: "image", href: "#resource"},
       {mode: "statistics", label: trans("dictionarySettingPage.statistics"), iconName: "chart-line", href: "#statistics"}
     ] as const;
-    let node = (
+    const node = (
       <Page dictionary={dictionary} showDictionary={true}>
         <Menu mode={mode} specs={menuSpecs}/>
         {(dictionary && authorized) && <DictionarySettingPageForms {...{dictionary, mode, fetchDictionary, fetchCommissionCount}}/>}
@@ -137,16 +137,16 @@ const DictionarySettingPageForms = create(
     fetchCommissionCount: () => Promise<void>
   }): ReactElement | null {
 
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let {pushPath} = usePath();
-    let params = useParams();
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const {pushPath} = usePath();
+    const params = useParams();
 
-    let provideCommissions = useCallback(async function (offset?: number, size?: number): Promise<WithSize<Commission>> {
-      let number = +params.number;
-      let response = await request("fetchCommissions", {number, offset, size});
+    const provideCommissions = useCallback(async function (offset?: number, size?: number): Promise<WithSize<Commission>> {
+      const number = +params.number;
+      const response = await request("fetchCommissions", {number, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
-        let hitResult = response.data;
+        const hitResult = response.data;
         return hitResult;
       } else {
         return [[], 0];
@@ -154,28 +154,25 @@ const DictionarySettingPageForms = create(
     }, [params.number, request]);
 
     if (mode === "general") {
-      let node = (
+      const node = (
         <Fragment>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryNameForm.label")}
             description={trans("dictionarySettingPage.changeDictionaryNameForm.description")}
           >
-            <ChangeDictionaryNameForm number={dictionary.number} currentName={dictionary.name} onSubmit={fetchDictionary}
-            />
+            <ChangeDictionaryNameForm number={dictionary.number} currentName={dictionary.name} onSubmit={fetchDictionary}/>
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryParamNameForm.label")}
             description={trans("dictionarySettingPage.changeDictionaryParamNameForm.description")}
           >
-            <ChangeDictionaryParamNameForm number={dictionary.number} currentParamName={dictionary.paramName} onSubmit={fetchDictionary}
-            />
+            <ChangeDictionaryParamNameForm number={dictionary.number} currentParamName={dictionary.paramName} onSubmit={fetchDictionary}/>
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionarySecretForm.label")}
             description={trans("dictionarySettingPage.changeDictionarySecretForm.description")}
           >
-            <ChangeDictionarySecretForm number={dictionary.number} currentSecret={dictionary.secret} onSubmit={fetchDictionary}
-            />
+            <ChangeDictionarySecretForm number={dictionary.number} currentSecret={dictionary.secret} onSubmit={fetchDictionary}/>
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.uploadDictionaryForm.label")}
@@ -193,7 +190,7 @@ const DictionarySettingPageForms = create(
       );
       return node;
     } else if (mode === "setting") {
-      let node = (
+      const node = (
         <Fragment>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryExplanationForm.label")}
@@ -267,7 +264,7 @@ const DictionarySettingPageForms = create(
       );
       return node;
     } else if (mode === "access") {
-      let node = (
+      const node = (
         <Fragment>
           <SettingPane
             label={trans("dictionarySettingPage.addEditInvitationForm.label")}
@@ -285,7 +282,7 @@ const DictionarySettingPageForms = create(
       );
       return node;
     } else if (mode === "request") {
-      let node = (
+      const node = (
         <Fragment>
           <SettingPane>
             <CommissionList commissions={provideCommissions} dictionary={dictionary} size={30} onDiscardConfirm={fetchCommissionCount}/>
@@ -294,7 +291,7 @@ const DictionarySettingPageForms = create(
       );
       return node;
     } else if (mode === "resource") {
-      let node = (
+      const node = (
         <Fragment>
           <SettingPane>
             <ResourceList dictionary={dictionary} size={20}/>
@@ -303,7 +300,7 @@ const DictionarySettingPageForms = create(
       );
       return node;
     } else if (mode === "statistics") {
-      let node = (
+      const node = (
         <Fragment>
           <SettingPane
             label={trans("dictionarySettingPage.dictionaryStatisticsPane.label")}

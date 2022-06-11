@@ -37,29 +37,29 @@ const WordNameFrequencyPane = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let [data, setData] = useState<ChartData | null>(null);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
+    const [data, setData] = useState<ChartData | null>(null);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
 
     useMount(async () => {
-      let number = dictionary.number;
-      let response = await request("fetchWordNameFrequencies", {number});
+      const number = dictionary.number;
+      const response = await request("fetchWordNameFrequencies", {number});
       if (response.status === 200 && !("error" in response.data)) {
-        let frequencies = response.data;
-        let rawColumns = frequencies.char.map(([char, frequency]) => [char, frequency.all] as const);
+        const frequencies = response.data;
+        const rawColumns = frequencies.char.map(([char, frequency]) => [char, frequency.all] as const);
         rawColumns.sort((firstColumn, secondColumn) => secondColumn[1] - firstColumn[1]);
-        let formerColumns = rawColumns.slice(0, 20);
-        let otherColumns = (rawColumns.length > 20) ? [[trans("wordNameFrequencyPane.others"), rawColumns.slice(20, -1).reduce((sum, column) => sum + column[1], 0)]] : [];
-        let columns = [...formerColumns, ...otherColumns];
-        let colors = Object.fromEntries([[trans("wordNameFrequencyPane.others"), "hsl(30, 40%, 50%)"]]);
-        let data = {columns, colors, type: "pie", order: null} as ChartData;
+        const formerColumns = rawColumns.slice(0, 20);
+        const otherColumns = (rawColumns.length > 20) ? [[trans("wordNameFrequencyPane.others"), rawColumns.slice(20, -1).reduce((sum, column) => sum + column[1], 0)]] : [];
+        const columns = [...formerColumns, ...otherColumns];
+        const colors = Object.fromEntries([[trans("wordNameFrequencyPane.others"), "hsl(30, 40%, 50%)"]]);
+        const data = {columns, colors, type: "pie", order: null} as ChartData;
         setData(data);
       } else {
         setData(null);
       }
     });
 
-    let config = {
+    const config = {
       padding: {top: 0, bottom: 0, left: 0, right: 0},
       legend: {show: true},
       customTooltip: {
@@ -69,7 +69,7 @@ const WordNameFrequencyPane = create(
         }
       }
     } as ChartConfig;
-    let node = (
+    const node = (
       <div styleName="root">
         <Loading loading={data === null}>
           <Chart className={styles!["chart"]} data={data!} config={config}/>

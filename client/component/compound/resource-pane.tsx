@@ -45,32 +45,32 @@ const ResourcePane = create(
     onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    let [alertOpen, setAlertOpen] = useState(false);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let discardResource = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
-      let number = dictionary.number;
-      let name = resource;
-      let response = await request("discardResource", {number, name});
+    const discardResource = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
+      const number = dictionary.number;
+      const name = resource;
+      const response = await request("discardResource", {number, name});
       if (response.status === 200) {
         addInformationPopup("resourceDiscarded");
         await onDiscardConfirm?.(event);
       }
     }, [dictionary.number, resource, request, onDiscardConfirm, addInformationPopup]);
 
-    let url = AwsUtil.getFileUrl(`resource/${dictionary.number}/${resource}`);
-    let shortUrl = "~" + resource;
-    let code = `![](<${shortUrl}>)`;
-    let codeNode = (showCode) && (
+    const url = AwsUtil.getFileUrl(`resource/${dictionary.number}/${resource}`);
+    const shortUrl = "~" + resource;
+    const code = `![](<${shortUrl}>)`;
+    const codeNode = (showCode) && (
       <div styleName="code-outer">
         <div styleName="code-wrapper">
           <TextArea value={code} language="plain" font="monospace" fitHeight={true} readOnly={true}/>
         </div>
       </div>
     );
-    let node = (
+    const node = (
       <Fragment>
         <WhitePane clickable={false}>
           <div>

@@ -54,9 +54,9 @@ const Drawer = create(
     children?: ReactNode
   }): ReactElement {
 
-    let onBackgroundClick = (outsideClosable) ? onClose : undefined;
-    let contentContainerData = DataUtil.create({closed: !open});
-    let node = (
+    const onBackgroundClick = (outsideClosable) ? onClose : undefined;
+    const contentContainerData = DataUtil.create({closed: !open});
+    const node = (
       <Fragment>
         <Portal>
           {(open) && (
@@ -100,9 +100,9 @@ const DrawerHeader = create(
     onBack?: (event: MouseEvent<HTMLButtonElement>) => void
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <div styleName="header">
         <div styleName="left">
           <div styleName="title">{title}</div>
@@ -137,11 +137,11 @@ const DrawerTab = create(
     onOpen?: (event: MouseEvent<HTMLElement>) => void
   }): ReactElement {
 
-    let [, {transNumber}] = useIntl();
+    const [, {transNumber}] = useIntl();
 
-    let actualBadgeValue = (typeof badgeValue === "number") ? transNumber(badgeValue) : badgeValue;
-    let tabData = DataUtil.create({tabPosition});
-    let node = (
+    const actualBadgeValue = (typeof badgeValue === "number") ? transNumber(badgeValue) : badgeValue;
+    const tabData = DataUtil.create({tabPosition});
+    const node = (
       <div styleName="tab" onClick={onOpen} {...tabData}>
         <div styleName="tab-inner">
           <Icon name={iconName}/>

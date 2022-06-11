@@ -18,16 +18,16 @@ import {
 } from "/server/controller/internal/type";
 
 
-export let useRawUser = createGlobalState<DetailedUser | null>(null);
+export const useRawUser = createGlobalState<DetailedUser | null>(null);
 
 export function useDefaultUser(): {user: DetailedUser | null, ready: boolean} {
-  let [user, setUser] = useRawUser();
-  let [ready, setReady] = useState(false);
+  const [user, setUser] = useRawUser();
+  const [ready, setReady] = useState(false);
   useMount(async () => {
-    let url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
-    let response = await axios.post(url, {}, {validateStatus: () => true});
+    const url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
+    const response = await axios.post(url, {}, {validateStatus: () => true});
     if (response.status === 200) {
-      let user = response.data;
+      const user = response.data;
       setUser(user);
       setReady(true);
     } else {
@@ -39,12 +39,12 @@ export function useDefaultUser(): {user: DetailedUser | null, ready: boolean} {
 }
 
 export function useUser(): [DetailedUser | null, UserCallbacks] {
-  let [user, setUser] = useRawUser();
-  let fetchUser = useCallback(async function (): Promise<void> {
-    let url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
-    let response = await axios.post(url, {}, {validateStatus: () => true});
+  const [user, setUser] = useRawUser();
+  const fetchUser = useCallback(async function (): Promise<void> {
+    const url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
+    const response = await axios.post(url, {}, {validateStatus: () => true});
     if (response.status === 200) {
-      let user = response.data;
+      const user = response.data;
       setUser(user);
     } else {
       setUser(null);

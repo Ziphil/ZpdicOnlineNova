@@ -26,8 +26,8 @@ export class AdvancedWordParameter extends WordParameter {
   }
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>, Word> {
-    let filters = this.elements.map((element) => element.createQuery(dictionary).getFilter());
-    let query = WordModel.findExist().and(filters);
+    const filters = this.elements.map((element) => element.createQuery(dictionary).getFilter());
+    const query = WordModel.findExist().and(filters);
     return query;
   }
 
@@ -54,17 +54,17 @@ export class AdvancedWordParameterElement extends WordParameter {
   }
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>, Word> {
-    let keys = WordParameter.createKeys(this.mode);
-    let needle = WordParameter.createNeedle(this.text, this.type, {case: false});
-    let eachFilters = keys.map((key) => {
+    const keys = WordParameter.createKeys(this.mode);
+    const needle = WordParameter.createNeedle(this.text, this.type, {case: false});
+    const eachFilters = keys.map((key) => {
       let eachQuery = WordModel.find().where(key, needle);
       if (this.title && (this.mode === "equivalent" || this.mode === "information")) {
         eachQuery = eachQuery.where(`${this.mode}s.title`, this.title);
       }
-      let eachFilter = eachQuery.getFilter();
+      const eachFilter = eachQuery.getFilter();
       return eachFilter;
     });
-    let query = WordModel.findExist().where("dictionary", dictionary).or(eachFilters);
+    const query = WordModel.findExist().where("dictionary", dictionary).or(eachFilters);
     return query;
   }
 

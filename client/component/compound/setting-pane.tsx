@@ -30,19 +30,19 @@ const SettingPane = create(
     children?: ReactNode
   }): ReactElement {
 
-    let styleName = StyleNameUtil.create(
+    const styleName = StyleNameUtil.create(
       "root",
       {if: forceWide, true: "force-wide"}
     );
-    let badgeNode = (badgeValue) && (
+    const badgeNode = (badgeValue) && (
       <Badge value={badgeValue}/>
     );
-    let descriptionNode = (description) && (
+    const descriptionNode = (description) && (
       <p styleName="description">
         {description}
       </p>
     );
-    let descriptionWrapperNode = (label || description) && (
+    const descriptionWrapperNode = (label || description) && (
       <div styleName="description-wrapper">
         <div styleName="label">
           {label}
@@ -51,7 +51,7 @@ const SettingPane = create(
         {descriptionNode}
       </div>
     );
-    let node = (
+    const node = (
       <div styleName={styleName}>
         {descriptionWrapperNode}
         <div styleName="content">

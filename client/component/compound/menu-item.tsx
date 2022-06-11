@@ -16,7 +16,6 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   usePath
 } from "/client/component/hook";
 import {
@@ -46,9 +45,9 @@ const MenuItem = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let {pushPath} = usePath();
+    const {pushPath} = usePath();
 
-    let handleClick = useCallback(function (event: MouseEvent<HTMLElement>): void {
+    const handleClick = useCallback(function (event: MouseEvent<HTMLElement>): void {
       event.preventDefault();
       onClick?.(event);
       if (href) {
@@ -56,15 +55,15 @@ const MenuItem = create(
       }
     }, [href, onClick, pushPath]);
 
-    let styleName = StyleNameUtil.create(
+    const styleName = StyleNameUtil.create(
       "root",
       direction,
       {if: highlight, true: "highlight"}
     );
-    let badgeNode = (badgeValue) && (
+    const badgeNode = (badgeValue) && (
       <Badge className={styles!["badge"]} value={badgeValue} variant={(highlight) ? "highlight" : "normal"}/>
     );
-    let node = (
+    const node = (
       <a styleName={styleName} href={href} onClick={handleClick}>
         <Icon className={styles!["icon"]} name={iconName}/>
         <span styleName="text">

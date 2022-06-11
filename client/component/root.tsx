@@ -14,8 +14,6 @@ import * as queryParser from "query-string";
 import * as react from "react";
 import {
   ReactElement,
-  StrictMode,
-  Suspense,
   useCallback
 } from "react";
 import {
@@ -44,8 +42,6 @@ import {
 } from "/client/component/hook";
 import InnerRoot from "/client/component/inner-root";
 import EmptyPage from "/client/component/page/empty-page";
-import ErrorPage from "/client/component/page/error-page";
-import LoadingPage from "/client/component/page/loading-page";
 import {
   createRoute
 } from "/client/component/util/route";
@@ -60,26 +56,26 @@ require("../../node_modules/codemirror/lib/codemirror.css");
 require("../../node_modules/c3/c3.css");
 
 export async function loadDocumentSource({params}: {params: Record<string, string>}): Promise<{source: string | null}> {
-  let firstPath = (params.firstPath) ? params.firstPath : "";
-  let secondPath = (params.secondPath) ? "/" + params.secondPath : "";
-  let locale = globalLocale;
-  let path = firstPath + secondPath;
-  let url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchDocument"];
-  let response = await axios.post(url, {locale, path}, {validateStatus: () => true});
+  const firstPath = (params.firstPath) ? params.firstPath : "";
+  const secondPath = (params.secondPath) ? "/" + params.secondPath : "";
+  const locale = globalLocale;
+  const path = firstPath + secondPath;
+  const url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchDocument"];
+  const response = await axios.post(url, {locale, path}, {validateStatus: () => true});
   if (response.status === 200 && typeof response.data === "string") {
-    let source = response.data;
+    const source = response.data;
     return {source};
   } else {
     return {source: null};
   }
 }
 
-let location = new ReactLocation({
+const location = new ReactLocation({
   parseSearch: (searchString) => queryParser.parse(searchString),
   stringifySearch: (search) => queryParser.stringify(search)
 });
-let queryClient = new QueryClient();
-let routes = [
+const queryClient = new QueryClient();
+const routes = [
   ...createRoute("/login", () => import("/client/component/page/login-page"), {type: "guest", redirect: "/dashboard"}),
   ...createRoute("/register", () => import("/client/component/page/register-page"), {type: "guest", redirect: "/dashboard"}),
   ...createRoute("/reset", () => import("/client/component/page/reset-user-password-page"), {type: "guest", redirect: "/dashboard"}),
@@ -105,16 +101,16 @@ const Root = create(
   }: {
   }): ReactElement | null {
 
-    let {ready} = useDefaultUser();
-    let {locale, messages} = useDefaultLocale("ja");
+    const {ready} = useDefaultUser();
+    const {locale, messages} = useDefaultLocale("ja");
 
-    let handleIntlError = useCallback(function (error: IntlError<any>): void {
+    const handleIntlError = useCallback(function (error: IntlError<any>): void {
       if (error.code !== "MISSING_DATA" && error.code !== "MISSING_TRANSLATION") {
         console.error(error);
       }
     }, []);
 
-    let node = (ready) && (
+    const node = (ready) && (
       <DndProvider backend={DndBackend}>
         <QueryClientProvider client={queryClient}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>

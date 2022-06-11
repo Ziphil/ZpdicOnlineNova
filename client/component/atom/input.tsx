@@ -69,13 +69,13 @@ const Input = create(
     nativeRef?: Ref<HTMLInputElement>
   }): ReactElement {
 
-    let [currentType, setCurrentType] = useState((type === "flexible") ? "password" : type);
-    let [errorMessage, setErrorMessage] = useState<string | null>(null);
-    let [dropdownSpecs, setDropdownSpecs] = useState<Array<DropdownSpec<string>>>([]);
+    const [currentType, setCurrentType] = useState((type === "flexible") ? "password" : type);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [dropdownSpecs, setDropdownSpecs] = useState<Array<DropdownSpec<string>>>([]);
 
-    let updateValue = useCallback(function (value: string): void {
+    const updateValue = useCallback(function (value: string): void {
       if (validate !== undefined) {
-        let errorMessage = validate(value);
+        const errorMessage = validate(value);
         setErrorMessage(errorMessage);
       } else {
         setErrorMessage(null);
@@ -83,27 +83,27 @@ const Input = create(
       onSet?.(value);
     }, [validate, onSet]);
 
-    let updateSuggestions = useDebounce(async function (value: string): Promise<void> {
+    const updateSuggestions = useDebounce(async function (value: string): Promise<void> {
       if (suggest !== undefined) {
-        let suggestionSpecs = await suggest(value);
-        let dropdownSpecs = suggestionSpecs.map((suggestionSpec) => ({value: suggestionSpec.replacement, node: suggestionSpec.node}));
+        const suggestionSpecs = await suggest(value);
+        const dropdownSpecs = suggestionSpecs.map((suggestionSpec) => ({value: suggestionSpec.replacement, node: suggestionSpec.node}));
         setDropdownSpecs(dropdownSpecs);
       }
     }, 500, [suggest]);
 
-    let handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
-      let value = event.target.value;
+    const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+      const value = event.target.value;
       updateValue(value);
       updateSuggestions(value);
       onChange?.(event);
     }, [onChange, updateValue, updateSuggestions]);
 
-    let handleFocus = useCallback(function (event: FocusEvent<HTMLInputElement>): void {
-      let value = event.target.value;
+    const handleFocus = useCallback(function (event: FocusEvent<HTMLInputElement>): void {
+      const value = event.target.value;
       updateSuggestions(value);
     }, [updateSuggestions]);
 
-    let toggleType = useCallback(function (): void {
+    const toggleType = useCallback(function (): void {
       if (currentType === "text") {
         setCurrentType("password");
       } else {
@@ -111,7 +111,7 @@ const Input = create(
       }
     }, [currentType]);
 
-    let node = (
+    const node = (
       <div styleName="root" className={className}>
         <Tooltip message={errorMessage}>
           <Dropdown specs={dropdownSpecs} onSet={updateValue}>
@@ -164,12 +164,12 @@ const InputInput = create(
     nativeRef?: Ref<HTMLInputElement>
   }): ReactElement {
 
-    let data = DataUtil.create({
+    const data = DataUtil.create({
       error: errorMessage !== null,
       disabled
     });
-    let eyeData = DataUtil.create({currentType});
-    let node = (
+    const eyeData = DataUtil.create({currentType});
+    const node = (
       <div styleName="input" {...data}>
         {(prefix !== undefined) && (
           <div styleName="prefix">{prefix}</div>

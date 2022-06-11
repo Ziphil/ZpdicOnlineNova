@@ -2,7 +2,6 @@
 
 import * as react from "react";
 import {
-  Fragment,
   MouseEvent,
   ReactElement,
   ReactNode,
@@ -47,10 +46,10 @@ const CommissionList = create(
     onAddConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    let {smartphone} = useMediaQuery();
+    const {smartphone} = useMediaQuery();
 
-    let renderCommission = useCallback(function (commission: Commission): ReactNode {
-      let node = (
+    const renderCommission = useCallback(function (commission: Commission): ReactNode {
+      const node = (
         <CommissionPane
           commission={commission}
           dictionary={dictionary}
@@ -62,8 +61,8 @@ const CommissionList = create(
       return node;
     }, [dictionary, onDiscardConfirm, onAddConfirm]);
 
-    let column = (smartphone) ? 2 : 3;
-    let node = (
+    const column = (smartphone) ? 2 : 3;
+    const node = (
       <div styleName="root">
         <PaneList items={commissions} size={size} column={column} renderer={renderCommission}/>
       </div>

@@ -23,9 +23,9 @@ export class InformationSchema {
 export class InformationCreator {
 
   public static create(raw: Information): InformationSkeleton {
-    let title = raw.title;
-    let text = raw.text;
-    let skeleton = {title, text};
+    const title = raw.title;
+    const text = raw.text;
+    const skeleton = {title, text};
     return skeleton;
   }
 
@@ -33,4 +33,4 @@ export class InformationCreator {
 
 
 export type Information = InformationSchema;
-export let InformationModel = getModelForClass(InformationSchema);
+export const InformationModel = getModelForClass(InformationSchema);

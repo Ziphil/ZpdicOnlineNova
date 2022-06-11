@@ -20,9 +20,9 @@ const NotFoundPage = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <Page>
         <div styleName="root">
           <div styleName="icon-container"><Icon name="ghost"/></div>

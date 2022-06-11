@@ -61,7 +61,7 @@ export class EnhancedDictionary extends DetailedDictionary {
     if (this.akrantiain === undefined) {
       if (this.settings.akrantiainSource !== undefined && this.settings.akrantiainSource !== "") {
         try {
-          let akrantiain = Akrantiain.load(this.settings.akrantiainSource);
+          const akrantiain = Akrantiain.load(this.settings.akrantiainSource);
           this.akrantiain = akrantiain;
         } catch (error) {
           this.akrantiain = null;
@@ -78,7 +78,7 @@ export class EnhancedDictionary extends DetailedDictionary {
     if (this.zatlin === undefined) {
       if (this.settings.zatlinSource !== undefined && this.settings.zatlinSource !== "") {
         try {
-          let zatlin = Zatlin.load(this.settings.zatlinSource);
+          const zatlin = Zatlin.load(this.settings.zatlinSource);
           this.zatlin = zatlin;
         } catch (error) {
           this.zatlin = null;

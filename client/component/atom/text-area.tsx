@@ -54,18 +54,18 @@ const TextArea = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let handleBeforeChange = useCallback(function (editor: any, data: any, value: string): void {
+    const handleBeforeChange = useCallback(function (editor: any, data: any, value: string): void {
       onSet?.(value);
     }, [onSet]);
 
-    let handleChange = useCallback(function (event: ChangeEvent<HTMLTextAreaElement>): void {
-      let value = event.target.value;
+    const handleChange = useCallback(function (event: ChangeEvent<HTMLTextAreaElement>): void {
+      const value = event.target.value;
       onChange?.(event);
       onSet?.(value);
     }, [onChange, onSet]);
 
-    let innerProps = {value, font, language, nowrap, readOnly, fitHeight, styles, handleChange, handleBeforeChange};
-    let node = (
+    const innerProps = {value, font, language, nowrap, readOnly, fitHeight, styles, handleChange, handleBeforeChange};
+    const node = (
       <label styleName="root" className={className}>
         <Label text={label} showRequired={showRequired} showOptional={showOptional}/>
         {(language !== undefined) ? <TextAreaCodeMirror {...innerProps}/> : <TextAreaTextArea {...innerProps}/>}
@@ -97,14 +97,14 @@ const TextAreaCodeMirror = create(
     handleBeforeChange: (editor: any, data: any, value: string) => void
   }): ReactElement {
 
-    let data = DataUtil.create({
+    const data = DataUtil.create({
       fitHeight: (fitHeight) ? "fit" : "no-fit"
     });
-    let modeOptions = CodeMirrorUtil.getModeOptions(language!);
-    let heightOptions = (fitHeight) ? {viewportMargin: 1 / 0} : {};
-    let otherOptions = {readOnly, lineWrapping: !nowrap};
-    let options = {...modeOptions, ...heightOptions, ...otherOptions};
-    let node = (
+    const modeOptions = CodeMirrorUtil.getModeOptions(language!);
+    const heightOptions = (fitHeight) ? {viewportMargin: 1 / 0} : {};
+    const otherOptions = {readOnly, lineWrapping: !nowrap};
+    const options = {...modeOptions, ...heightOptions, ...otherOptions};
+    const node = (
       <div styleName="code-wrapper" {...data}>
         <CodeMirror className={styles!["code"]} value={value} options={options} onBeforeChange={handleBeforeChange}/>
       </div>
@@ -131,11 +131,11 @@ const TextAreaTextArea = create(
     handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
   }): ReactElement {
 
-    let data = DataUtil.create({
+    const data = DataUtil.create({
       font,
       nowrap
     });
-    let node = (
+    const node = (
       <textarea styleName="textarea" value={value} readOnly={readOnly} onChange={handleChange} {...data}/>
     );
     return node;

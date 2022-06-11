@@ -8,7 +8,7 @@ import {
   generate as generateChart
 } from "c3";
 import merge from "lodash-es/merge";
-import * as react from "react";;
+import * as react from "react";
 import {
   ReactElement,
   useCallback,
@@ -35,36 +35,36 @@ const Chart = create(
     className?: string
   }): ReactElement {
 
-    let rootRef = useRef<HTMLDivElement>(null);
-    let chartRef = useRef<ChartAPI>();
+    const rootRef = useRef<HTMLDivElement>(null);
+    const chartRef = useRef<ChartAPI>();
 
-    let getRenderTooltip = useCallback(function (): any {
+    const getRenderTooltip = useCallback(function (): any {
       if (data.type === "pie") {
-        let formatValue = config?.customTooltip?.format?.value;
-        let formatPercent = config?.customTooltip?.format?.percent;
-        let total = data.columns?.reduce((sum, column) => sum + +(column[1] ?? 0), 0) ?? 0;
-        let renderTooltip = function (dataPoint: Array<any>, defaultFormatTitle: unknown, defaultFormatValue: unknown, getColor: (dataPoint: any) => any): string {
-          let valueString = (formatValue !== undefined) ? formatValue(dataPoint[0].value, total) : `${dataPoint[0].value} / ${total}`;
-          let percentString = (formatPercent !== undefined) ? formatPercent(dataPoint[0].ratio * 100) : dataPoint[0].ratio * 100;
-          let string = valueString + "<br>" + percentString;
-          let color = getColor(dataPoint[0]);
+        const formatValue = config?.customTooltip?.format?.value;
+        const formatPercent = config?.customTooltip?.format?.percent;
+        const total = data.columns?.reduce((sum, column) => sum + +(column[1] ?? 0), 0) ?? 0;
+        const renderTooltip = function (dataPoint: Array<any>, defaultFormatTitle: unknown, defaultFormatValue: unknown, getColor: (dataPoint: any) => any): string {
+          const valueString = (formatValue !== undefined) ? formatValue(dataPoint[0].value, total) : `${dataPoint[0].value} / ${total}`;
+          const percentString = (formatPercent !== undefined) ? formatPercent(dataPoint[0].ratio * 100) : dataPoint[0].ratio * 100;
+          const string = valueString + "<br>" + percentString;
+          const color = getColor(dataPoint[0]);
           return `<div class="c3-zptooltip" style="border-color:${color}">${string}</div>`;
         };
         return renderTooltip;
       } else {
-        let formatValue = config?.customTooltip?.format?.value;
-        let renderTooltip = function (dataPoint: Array<any>, defaultFormatTitle: unknown, defaultFormatValue: (...args: any) => any, getColor: (dataPoint: any) => any): string {
-          let string = (formatValue !== undefined) ? formatValue(dataPoint[0].value, undefined) : defaultFormatValue(dataPoint[0].value);
-          let color = getColor(dataPoint[0]);
+        const formatValue = config?.customTooltip?.format?.value;
+        const renderTooltip = function (dataPoint: Array<any>, defaultFormatTitle: unknown, defaultFormatValue: (...args: any) => any, getColor: (dataPoint: any) => any): string {
+          const string = (formatValue !== undefined) ? formatValue(dataPoint[0].value, undefined) : defaultFormatValue(dataPoint[0].value);
+          const color = getColor(dataPoint[0]);
           return `<div class="c3-zptooltip" style="border-color:${color}">${string}</div>`;
         };
         return renderTooltip;
       }
     }, [data, config]);
 
-    let drawChart = useCallback(function (): void {
-      let renderTooltip = getRenderTooltip();
-      let defaultConfig = {
+    const drawChart = useCallback(function (): void {
+      const renderTooltip = getRenderTooltip();
+      const defaultConfig = {
         transition: {duration: null},
         grid: {y: {show: true}},
         axis: {x: {tick: {outer: false}}, y: {tick: {outer: false}}},
@@ -74,7 +74,7 @@ const Chart = create(
         tooltip: {contents: renderTooltip},
         color: {pattern: ["hsl(200, 60%, 45%)", "hsl(140, 45%, 50%)", "hsl(260, 30%, 50%)", "hsl(60, 45%, 50%)", "hsl(330, 30%, 50%)"]}
       } as ChartConfig;
-      let finalConfig = merge(defaultConfig, config);
+      const finalConfig = merge(defaultConfig, config);
       chartRef.current = generateChart({bindto: rootRef.current, data, ...finalConfig});
     }, [data, config, getRenderTooltip]);
 
@@ -86,7 +86,7 @@ const Chart = create(
       chartRef.current?.destroy();
     });
 
-    let node = (
+    const node = (
       <div styleName="root" className={className} ref={rootRef}/>
     );
     return node;

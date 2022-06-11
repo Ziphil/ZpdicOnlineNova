@@ -27,13 +27,13 @@ const Badge = create(
     className?: string
   }): ReactElement {
 
-    let [, {transNumber}] = useIntl();
+    const [, {transNumber}] = useIntl();
 
-    let actualValue = (typeof value === "number") ? transNumber(value) : value;
-    let data = DataUtil.create({
+    const actualValue = (typeof value === "number") ? transNumber(value) : value;
+    const data = DataUtil.create({
       highlight: variant === "highlight"
     });
-    let node = (
+    const node = (
       <span styleName="root" className={className} {...data}>
         {actualValue}
       </span>

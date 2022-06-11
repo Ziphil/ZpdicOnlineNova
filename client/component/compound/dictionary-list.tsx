@@ -38,10 +38,10 @@ const DictionaryList = create(
     size: number
   }): ReactElement {
 
-    let renderDictionary = useCallback(function (dictionary: DetailedDictionary | UserDictionary): ReactNode {
-      let actualShowLinks = showLinks && "authorities" in dictionary;
-      let canOwn = "authorities" in dictionary && dictionary.authorities.indexOf("own") >= 0;
-      let dictionaryNode = (
+    const renderDictionary = useCallback(function (dictionary: DetailedDictionary | UserDictionary): ReactNode {
+      const actualShowLinks = showLinks && "authorities" in dictionary;
+      const canOwn = "authorities" in dictionary && dictionary.authorities.indexOf("own") >= 0;
+      const dictionaryNode = (
         <DictionaryPane
           dictionary={dictionary}
           key={dictionary.id}
@@ -55,7 +55,7 @@ const DictionaryList = create(
       return dictionaryNode;
     }, [showUser, showUpdatedDate, showCreatedDate, showLinks]);
 
-    let node = (
+    const node = (
       <PaneList items={dictionaries} size={size} renderer={renderDictionary}/>
     );
     return node;

@@ -7,8 +7,8 @@ export class LinkedWord {
   public name?: string;
 
   public static createEmpty(): LinkedWord {
-    let number = -1;
-    let skeleton = {number};
+    const number = -1;
+    const skeleton = {number};
     return skeleton;
   }
 

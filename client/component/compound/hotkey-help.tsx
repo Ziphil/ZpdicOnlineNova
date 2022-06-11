@@ -7,7 +7,6 @@ import {
   ReactElement,
   useState
 } from "react";
-import Button from "/client/component/atom/button";
 import Overlay from "/client/component/atom/overlay";
 import Menu from "/client/component/compound/menu";
 import {
@@ -34,16 +33,16 @@ const HotkeyHelp = create(
     onClose?: (event: MouseEvent<HTMLElement>) => void
   }): ReactElement {
 
-    let [currentGroup, setCurrentGroup] = useState<HotkeyGroup>("general");
-    let [, {trans}] = useIntl();
+    const [currentGroup, setCurrentGroup] = useState<HotkeyGroup>("general");
+    const [, {trans}] = useIntl();
 
-    let menuSpecs = [
+    const menuSpecs = [
       {mode: "general", label: trans("hotkeyHelp.general"), iconName: "keyboard", onClick: () => setCurrentGroup("general")},
       {mode: "navigation", label: trans("hotkeyHelp.navigation"), iconName: "location-arrow", onClick: () => setCurrentGroup("navigation")},
       {mode: "editDictionary", label: trans("hotkeyHelp.editDictionary"), iconName: "edit", onClick: () => setCurrentGroup("editDictionary")},
       {mode: "searchWords", label: trans("hotkeyHelp.searchWords"), iconName: "search", onClick: () => setCurrentGroup("searchWords")}
     ] as const;
-    let node = (
+    const node = (
       <Overlay title={trans("hotkeyHelp.title")} open={open} outsideClosable={true} onClose={onClose}>
         <div styleName="root">
           <div styleName="main">
@@ -81,33 +80,33 @@ const HotkeyHelpTable = create(
     currentGroup: HotkeyGroup
   }): ReactElement | null {
 
-    let [, {trans}] = useIntl();
-    let hotkeySpecs = useHotkeySpecs();
+    const [, {trans}] = useIntl();
+    const hotkeySpecs = useHotkeySpecs();
 
-    let displayedHotkeySpecs = hotkeySpecs.filter((spec) => spec.group === group);
-    let groupedHotkeySpecs = displayedHotkeySpecs.reduce<Array<Array<HotkeySpec>>>((prev, spec) => {
+    const displayedHotkeySpecs = hotkeySpecs.filter((spec) => spec.group === group);
+    const groupedHotkeySpecs = displayedHotkeySpecs.reduce<Array<Array<HotkeySpec>>>((prev, spec) => {
       if (prev[spec.subgroup] === undefined) {
         prev[spec.subgroup] = [];
       }
       prev[spec.subgroup].push(spec);
       return prev;
     }, []);
-    let nodes = [[], []] as Array<Array<ReactElement>>;
+    const nodes = [[], []] as Array<Array<ReactElement>>;
     groupedHotkeySpecs.forEach((specs, subgroup) => {
       specs.map((spec, index) => {
-        let key = spec.keys[0] ?? "";
-        let charNodes = key.split(" ").map((char, index) => <kbd key={index} styleName="key">{char.charAt(0).toUpperCase() + char.slice(1)}</kbd>);
-        let hotkeyCellStyleName = StyleNameUtil.create(
+        const key = spec.keys[0] ?? "";
+        const charNodes = key.split(" ").map((char, index) => <kbd key={index} styleName="key">{char.charAt(0).toUpperCase() + char.slice(1)}</kbd>);
+        const hotkeyCellStyleName = StyleNameUtil.create(
           "key-cell",
           {if: spec.enabled, false: "disabled"},
           {if: subgroup > 0 && index <= 1, true: "top-margin"}
         );
-        let hotkeyDescriptionStyleName = StyleNameUtil.create(
+        const hotkeyDescriptionStyleName = StyleNameUtil.create(
           "description",
           {if: spec.enabled, false: "disabled"},
           {if: subgroup > 0 && index <= 1, true: "top-margin"}
         );
-        let hotkeyNode = (
+        const hotkeyNode = (
           <Fragment key={spec.name}>
             <div styleName={hotkeyCellStyleName}>
               {charNodes}
@@ -120,7 +119,7 @@ const HotkeyHelpTable = create(
         nodes[index % 2].push(hotkeyNode);
       });
       if (specs.length % 2 !== 0) {
-        let dummyNode = (
+        const dummyNode = (
           <Fragment key={`${specs[0].group}-dummy-${subgroup}`}>
             <div></div>
             <div>&nbsp;</div>
@@ -129,11 +128,11 @@ const HotkeyHelpTable = create(
         nodes[1].push(dummyNode);
       }
     });
-    let styleName = StyleNameUtil.create(
+    const styleName = StyleNameUtil.create(
       "table-wrapper",
       {if: group === currentGroup, false: "hidden"}
     );
-    let node = (displayedHotkeySpecs.length > 0) && (
+    const node = (displayedHotkeySpecs.length > 0) && (
       <div styleName={styleName}>
         <div styleName="table">
           {nodes[0]}

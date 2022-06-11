@@ -42,12 +42,12 @@ const InnerRoot = create(
     children?: ReactNode
   }): ReactElement {
 
-    let [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
-    let [wordEditorProps, wordEditorOpen, setWordEditorOpen] = useWordEditorProps();
-    let [exampleEditorProps, exampleEditorOpen, setExampleEditorOpen] = useExampleEditorProps();
-    let [, {trans}] = useIntl();
-    let {pushPath} = usePath();
-    let router = useRouter();
+    const [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
+    const [wordEditorProps, wordEditorOpen, setWordEditorOpen] = useWordEditorProps();
+    const [exampleEditorProps, exampleEditorOpen, setExampleEditorOpen] = useExampleEditorProps();
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
+    const router = useRouter();
 
     useHotkey("jumpDashboardPage", () => {
       pushPath("/dashboard");
@@ -71,7 +71,7 @@ const InnerRoot = create(
       setHotkeyHelpOpen(true);
     }, []);
     useHotkey("unfocus", () => {
-      let activeElement = document.activeElement;
+      const activeElement = document.activeElement;
       if (activeElement instanceof HTMLElement) {
         activeElement.blur();
       }
@@ -85,15 +85,15 @@ const InnerRoot = create(
       }
     }, [router.pending]);
 
-    let wordEditorNodes = wordEditorProps.map((props) => {
-      let wordEditorNode = <WordEditor key={props.id} {...props}/>;
+    const wordEditorNodes = wordEditorProps.map((props) => {
+      const wordEditorNode = <WordEditor key={props.id} {...props}/>;
       return wordEditorNode;
     });
-    let exampleEditorNodes = exampleEditorProps.map((props) => {
-      let exampleEditorNode = <ExampleEditor key={props.id} {...props}/>;
+    const exampleEditorNodes = exampleEditorProps.map((props) => {
+      const exampleEditorNode = <ExampleEditor key={props.id} {...props}/>;
       return exampleEditorNode;
     });
-    let node = (
+    const node = (
       <Fragment>
         <ErrorBoundary fallbackRender={ErrorPage}>
           <Suspense fallback={<LoadingPage/>}>

@@ -28,13 +28,13 @@ const NotificationPane = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let [, {trans, transDate}] = useIntl();
+    const [, {trans, transDate}] = useIntl();
 
-    let fixedNode = (notification.type === "bugFixed") && (
+    const fixedNode = (notification.type === "bugFixed") && (
       <span styleName="fixed">({trans("notificationPane.fixed")})</span>
     );
-    let [iconName, iconSlashed] = (() => {
-      let type = notification.type;
+    const [iconName, iconSlashed] = (() => {
+      const type = notification.type;
       if (type === "update") {
         return ["medal", false] as const;
       } else if (type === "bug") {
@@ -45,7 +45,7 @@ const NotificationPane = create(
         return ["info-circle", false] as const;
       }
     })();
-    let node = (
+    const node = (
       <div styleName="root">
         <div styleName="head-wrapper">
           <div styleName="icon">

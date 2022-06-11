@@ -17,18 +17,18 @@ export abstract class PullStream {
   public abstract pull(buffer: Buffer, offset: number, length?: number): number;
 
   public skip(length: number): number {
-    let buffer = Buffer.alloc(length);
-    let readLength = this.pull(buffer, 0);
+    const buffer = Buffer.alloc(length);
+    const readLength = this.pull(buffer, 0);
     return readLength;
   }
 
   // 1 バイト分を読み込んで返します。
   // すでにデータの終端に到達していて読み込むデータが存在しない場合は、-1 を返します。
   public read(): number {
-    let buffer = Buffer.alloc(1);
-    let readLength = this.pull(buffer, 0);
+    const buffer = Buffer.alloc(1);
+    const readLength = this.pull(buffer, 0);
     if (readLength === 1) {
-      let byte = buffer[0];
+      const byte = buffer[0];
       return byte;
     } else {
       return -1;
@@ -36,8 +36,8 @@ export abstract class PullStream {
   }
 
   public readBuffer(length: number): Buffer {
-    let buffer = Buffer.alloc(length);
-    let readLength = this.pull(buffer, 0, length);
+    const buffer = Buffer.alloc(length);
+    const readLength = this.pull(buffer, 0, length);
     if (readLength === length) {
       return buffer;
     } else {
@@ -48,10 +48,10 @@ export abstract class PullStream {
   // 指定されたバイト数分だけデータを読み込み、リトルエンディアンで符号なし整数に変換して返します。
   // バイト数が足りなかった場合はエラーが発生します。
   public readUIntLE(length: number): number {
-    let buffer = Buffer.alloc(length);
-    let readLength = this.pull(buffer, 0);
+    const buffer = Buffer.alloc(length);
+    const readLength = this.pull(buffer, 0);
     if (readLength === length) {
-      let number = buffer.readUIntLE(0, length);
+      const number = buffer.readUIntLE(0, length);
       return number;
     } else {
       throw new Error("out of range");
@@ -61,10 +61,10 @@ export abstract class PullStream {
   // 指定されたバイト数分だけデータを読み込み、ビッグエンディアンで符号なし整数に変換して返します。
   // バイト数が足りなかった場合はエラーが発生します。
   public readUIntBE(length: number): number {
-    let buffer = Buffer.alloc(length);
-    let readLength = this.pull(buffer, 0, length);
+    const buffer = Buffer.alloc(length);
+    const readLength = this.pull(buffer, 0, length);
     if (readLength === length) {
-      let number = buffer.readUIntBE(0, length);
+      const number = buffer.readUIntBE(0, length);
       return number;
     } else {
       throw new Error("out of range");
@@ -104,8 +104,8 @@ export class FilePullStream extends PullStream {
   }
 
   public pull(buffer: Buffer, offset: number, length?: number): number {
-    let actualLength = length ?? buffer.length;
-    let readLength = readSync(this.descriptor, buffer, offset, actualLength, null);
+    const actualLength = length ?? buffer.length;
+    const readLength = readSync(this.descriptor, buffer, offset, actualLength, null);
     return readLength;
   }
 
@@ -127,22 +127,22 @@ export class BufferPullStream extends PullStream {
   }
 
   public pull(buffer: Buffer, offset: number, length?: number): number {
-    let actualLength = length ?? buffer.length;
-    let readLength = Math.min(actualLength, this.buffer.length - this.pointer);
+    const actualLength = length ?? buffer.length;
+    const readLength = Math.min(actualLength, this.buffer.length - this.pointer);
     buffer.set(this.buffer.subarray(this.pointer, this.pointer + readLength), offset);
     this.pointer += readLength;
     return readLength;
   }
 
   public skip(length: number): number {
-    let readLength = Math.min(length, this.buffer.length - this.pointer);
+    const readLength = Math.min(length, this.buffer.length - this.pointer);
     this.pointer += readLength;
     return readLength;
   }
 
   public read(): number {
     try {
-      let byte = this.buffer.readUIntLE(this.pointer, 1);
+      const byte = this.buffer.readUIntLE(this.pointer, 1);
       this.pointer ++;
       return byte;
     } catch (error) {

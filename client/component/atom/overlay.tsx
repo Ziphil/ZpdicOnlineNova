@@ -43,8 +43,8 @@ const Overlay = create(
     children?: ReactNode
   }): ReactElement {
 
-    let contentContainerData = DataUtil.create({size});
-    let node = (
+    const contentContainerData = DataUtil.create({size});
+    const node = (
       <Modal open={open} outsideClosable={outsideClosable} onClose={onClose}>
         <div styleName="content-container" {...contentContainerData}>
           {(title !== undefined) && <OverlayHeader {...{title, page, showBack, onClose, onBack}}/>}
@@ -76,9 +76,9 @@ const OverlayHeader = create(
     onBack?: (event: MouseEvent<HTMLButtonElement>) => void
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <div styleName="header">
         <div styleName="left">
           <div styleName="title">{title}</div>

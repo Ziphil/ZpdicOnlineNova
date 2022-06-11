@@ -1,9 +1,5 @@
 //
 
-import {
-  Error as MongooseError
-} from "mongoose";
-
 
 export class CustomError<E extends string> extends Error {
 

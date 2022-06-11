@@ -27,15 +27,15 @@ const ErrorPage = create(
     resetErrorBoundary: (...args: Array<unknown>) => void
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
-    let {pushPath} = usePath();
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
 
-    let handleClick = useCallback(function (): void {
+    const handleClick = useCallback(function (): void {
       resetErrorBoundary();
       pushPath("/");
     }, [resetErrorBoundary, pushPath]);
 
-    let node = (
+    const node = (
       <Page>
         <div styleName="root">
           <div styleName="icon-container"><Icon name="bomb"/></div>

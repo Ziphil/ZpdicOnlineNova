@@ -20,9 +20,9 @@ const LoginPage = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <Page title={trans("loginPage.title")}>
         <div styleName="title">{trans("loginPage.title")}</div>
         <div styleName="form-container">

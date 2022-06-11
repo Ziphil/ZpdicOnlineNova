@@ -31,29 +31,29 @@ const DictionaryStatisticsPane = create(
     dictionary: DetailedDictionary
   }): ReactElement {
 
-    let [statistics, setStatistics] = useState<DictionaryStatistics | null>(null);
-    let [stringType, setStringType] = useState<"kept" | "nfd" | "nfc">("kept");
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
+    const [statistics, setStatistics] = useState<DictionaryStatistics | null>(null);
+    const [stringType, setStringType] = useState<"kept" | "nfd" | "nfc">("kept");
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
 
     useMount(async () => {
-      let number = dictionary.number;
-      let response = await request("fetchDictionaryStatistics", {number});
+      const number = dictionary.number;
+      const response = await request("fetchDictionaryStatistics", {number});
       if (response.status === 200 && !("error" in response.data)) {
-        let statistics = response.data;
+        const statistics = response.data;
         setStatistics(statistics);
       } else {
         setStatistics(null);
       }
     });
 
-    let wordCountCtwiType = (statistics?.wordCount.ctwi! === null) ? "Infinity" : (statistics?.wordCount.ctwi! < 0) ? "Negative" : "Positive";
-    let specs = [
+    const wordCountCtwiType = (statistics?.wordCount.ctwi! === null) ? "Infinity" : (statistics?.wordCount.ctwi! < 0) ? "Negative" : "Positive";
+    const specs = [
       {value: "kept", label: trans("dictionaryStatisticsPane.kept")},
       {value: "nfd", label: trans("dictionaryStatisticsPane.nfd")},
       {value: "nfc", label: trans("dictionaryStatisticsPane.nfc")}
     ] as const;
-    let node = (
+    const node = (
       <div styleName="root">
         <Loading loading={statistics === null}>
           <div styleName="radio">

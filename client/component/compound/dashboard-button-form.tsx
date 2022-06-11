@@ -22,22 +22,22 @@ const DashboardButtonForm = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
-    let {pushPath} = usePath();
-    let logout = useLogout();
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
+    const logout = useLogout();
 
-    let performLogout = useCallback(async function (): Promise<void> {
-      let response = await logout();
+    const performLogout = useCallback(async function (): Promise<void> {
+      const response = await logout();
       if (response.status === 200) {
         pushPath("/");
       }
     }, [pushPath, logout]);
 
-    let jumpDashboard = useCallback(async function (): Promise<void> {
+    const jumpDashboard = useCallback(async function (): Promise<void> {
       pushPath("/dashboard");
     }, [pushPath]);
 
-    let node = (
+    const node = (
       <form styleName="root">
         <div styleName="row">
           <Button label={trans("dashboardButtonForm.dashboard")} iconName="house-user" variant="information" onClick={jumpDashboard}/>

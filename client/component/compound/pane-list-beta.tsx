@@ -46,8 +46,8 @@ const PaneList = create(
     showPagination?: boolean
   }): ReactElement {
 
-    let panesProps = {items, renderer, column, variant, border};
-    let node = (
+    const panesProps = {items, renderer, column, variant, border};
+    const node = (
       <div styleName="root">
         {(method === "div") ? (
           <PaneListDivPanes {...panesProps}/>
@@ -77,8 +77,8 @@ const PaneListDivPanes = create(
     variant: "spaced" | "compact"
   }): ReactElement {
 
-    let data = DataUtil.create({variant});
-    let node = (
+    const data = DataUtil.create({variant});
+    const node = (
       <div styleName="div-pane" style={{gridTemplateColumns: `repeat(${column}, 1fr)`}} {...data}>
         {items.map(renderer)}
       </div>
@@ -105,8 +105,8 @@ const PaneListTablePanes = create(
     border: boolean
   }): ReactElement {
 
-    let data = DataUtil.create({variant});
-    let node = (
+    const data = DataUtil.create({variant});
+    const node = (
       <table styleName="table-pane" {...data}>
         <tbody>
           {slices(items, column, true).map((rowItems, index) => (
@@ -149,10 +149,10 @@ const PaneListPaginationButton = create(
     onPageSet?: (page: number) => void,
   }): ReactElement {
 
-    let data = DataUtil.create({empty: items.length <= 0});
-    let minPage = 0;
-    let maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
-    let node = (
+    const data = DataUtil.create({empty: items.length <= 0});
+    const minPage = 0;
+    const maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
+    const node = (
       <div styleName="pagination" {...data}>
         <PaginationButton page={page} minPage={minPage} maxPage={maxPage} onSet={onPageSet}/>
       </div>

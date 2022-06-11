@@ -39,19 +39,19 @@ const ExamplePane = create(
     onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
   }): ReactElement {
 
-    let addExampleEditor = useExampleEditor();
-    let [, {trans}] = useIntl();
+    const addExampleEditor = useExampleEditor();
+    const [, {trans}] = useIntl();
 
-    let openEditor = useCallback(function (): void {
+    const openEditor = useCallback(function (): void {
       addExampleEditor({dictionary, example, onEditConfirm, onDiscardConfirm});
     }, [dictionary, example, onEditConfirm, onDiscardConfirm, addExampleEditor]);
 
-    let cautionNode = (example.words.length <= 0) && (
+    const cautionNode = (example.words.length <= 0) && (
       <div styleName="caution">
         {trans("examplePane.caution")}
       </div>
     );
-    let node = (
+    const node = (
       <WhitePane clickable={false}>
         <div styleName="example-wrapper">
           <div styleName="example">

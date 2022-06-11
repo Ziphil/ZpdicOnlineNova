@@ -27,12 +27,12 @@ const SuggestionPane = create(
     suggestion: Suggestion
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let href = "/dictionary/" + dictionary.number + "?text=" + encodeURIComponent(suggestion.word.name) + "&mode=name&type=exact&page=0";
-    let nameNode = <Link href={href} target="self">{suggestion.word.name}</Link>;
-    let title = suggestion.title;
-    let node = (
+    const href = "/dictionary/" + dictionary.number + "?text=" + encodeURIComponent(suggestion.word.name) + "&mode=name&type=exact&page=0";
+    const nameNode = <Link href={href} target="self">{suggestion.word.name}</Link>;
+    const title = suggestion.title;
+    const node = (
       <li styleName="root">
         <span styleName="maybe">{trans("suggestionPane.maybe")}</span>
         {trans("suggestionPane.suggestion", {nameNode, title})}

@@ -79,7 +79,7 @@ export class WordSchema extends DiscardableSchema {
   // そうでない場合は、渡された単語データを新しいデータとして追加します。
   // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
   public static async edit(dictionary: Dictionary, word: EditableWordSkeleton): Promise<Word> {
-    let currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", word.number);
+    const currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", word.number);
     let resultWord;
     if (currentWord) {
       resultWord = new WordModel(word);
@@ -108,7 +108,7 @@ export class WordSchema extends DiscardableSchema {
   }
 
   public static async discard(dictionary: Dictionary, number: number): Promise<Word> {
-    let word = await WordModel.findOneExist().where("dictionary", dictionary).where("number", number);
+    const word = await WordModel.findOneExist().where("dictionary", dictionary).where("number", number);
     if (word) {
       await word.flagDiscarded();
       await this.correctRelationsByDiscard(dictionary, word);
@@ -120,11 +120,11 @@ export class WordSchema extends DiscardableSchema {
   }
 
   public static async addRelation(dictionary: Dictionary, number: number, relation: Relation): Promise<Word | null> {
-    let currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", number);
+    const currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", number);
     if (currentWord) {
-      let existRelation = currentWord.relations.some((existingRelation) => existingRelation.number === relation.number);
+      const existRelation = currentWord.relations.some((existingRelation) => existingRelation.number === relation.number);
       if (!existRelation) {
-        let resultWord = currentWord.copy();
+        const resultWord = currentWord.copy();
         resultWord.relations.push(relation);
         resultWord.createdDate = currentWord.createdDate;
         resultWord.updatedDate = new Date();
@@ -143,23 +143,23 @@ export class WordSchema extends DiscardableSchema {
   // word に渡された単語データ内の関連語データのうち、現在存在していないものを削除します。
   // この処理は、word 内の関連語データを上書きします。
   private static async filterRelations(dictionary: Dictionary, word: Word): Promise<void> {
-    let relationNumbers = word.relations.map((relation) => relation.number);
-    let relationWords = await WordModel.findExist().where("dictionary", dictionary).where("number", relationNumbers);
+    const relationNumbers = word.relations.map((relation) => relation.number);
+    const relationWords = await WordModel.findExist().where("dictionary", dictionary).where("number", relationNumbers);
     word.relations = word.relations.filter((relation) => relationWords.some((relationWord) => relationWord.number === relation.number));
   }
 
   // 単語データの編集によって単語の綴りが変化した場合に、それによって起こり得る関連語データの不整合を修正します。
   // この処理では、既存の単語データを上書きするので、編集履歴は残りません。
   private static async correctRelationsByEdit(dictionary: Dictionary, word: Word): Promise<void> {
-    let affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("relations.number", word.number);
-    for (let affectedWord of affectedWords) {
-      for (let relation of affectedWord.relations) {
+    const affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("relations.number", word.number);
+    for (const affectedWord of affectedWords) {
+      for (const relation of affectedWord.relations) {
         if (relation.number === word.number) {
           relation.name = word.name;
         }
       }
     }
-    let promises = affectedWords.map((affectedWord) => affectedWord.save());
+    const promises = affectedWords.map((affectedWord) => affectedWord.save());
     LogUtil.log("word/correct-relations-edit", `number: ${dictionary.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
     await Promise.all(promises);
   }
@@ -168,38 +168,38 @@ export class WordSchema extends DiscardableSchema {
   // この処理では、修正が必要な既存の単語データを論理削除した上で、関連語データの不整合を修正した新しい単語データを作成します。
   // そのため、この処理の内容は、修正を行った単語データに編集履歴として残ります。
   private static async correctRelationsByDiscard(dictionary: Dictionary, word: Word): Promise<void> {
-    let affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("relations.number", word.number);
-    let changedWords = [];
-    for (let affectedWord of affectedWords) {
-      let changedWord = affectedWord.copy();
+    const affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("relations.number", word.number);
+    const changedWords = [];
+    for (const affectedWord of affectedWords) {
+      const changedWord = affectedWord.copy();
       changedWord.relations = affectedWord.relations.filter((relation) => relation.number !== word.number);
       changedWord.updatedDate = new Date();
       changedWords.push(changedWord);
     }
-    let affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagDiscarded());
-    let changedPromises = changedWords.map((changedWord) => changedWord.save());
+    const affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagDiscarded());
+    const changedPromises = changedWords.map((changedWord) => changedWord.save());
     LogUtil.log("word/correct-relations-discard", `number: ${dictionary.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
     await Promise.all([...affectedPromises, ...changedPromises]);
   }
 
   // この単語データをコピーした新しい単語データを返します。
   public copy(this: Word): Word {
-    let dictionary = this.dictionary;
-    let number = this.number;
-    let name = this.name;
-    let pronunciation = this.pronunciation;
-    let equivalents = this.equivalents;
-    let tags = this.tags;
-    let informations = this.informations;
-    let variations = this.variations;
-    let relations = this.relations;
-    let createdDate = this.createdDate;
-    let word = new WordModel({dictionary, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate});
+    const dictionary = this.dictionary;
+    const number = this.number;
+    const name = this.name;
+    const pronunciation = this.pronunciation;
+    const equivalents = this.equivalents;
+    const tags = this.tags;
+    const informations = this.informations;
+    const variations = this.variations;
+    const relations = this.relations;
+    const createdDate = this.createdDate;
+    const word = new WordModel({dictionary, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate});
     return word;
   }
 
   private static async fetchNextNumber(dictionary: Dictionary): Promise<number> {
-    let words = await WordModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1);
+    const words = await WordModel.find().where("dictionary", dictionary).select("number").sort("-number").limit(1);
     if (words.length > 0) {
       return words[0].number + 1;
     } else {
@@ -213,25 +213,25 @@ export class WordSchema extends DiscardableSchema {
 export class WordCreator {
 
   public static create(raw: Word): WordSkeleton {
-    let id = raw.id;
-    let number = raw.number;
-    let name = raw.name;
-    let pronunciation = raw.pronunciation;
-    let equivalents = raw.equivalents.map(EquivalentCreator.create);
-    let tags = raw.tags;
-    let informations = raw.informations.map(InformationCreator.create);
-    let variations = raw.variations.map(VariationCreator.create);
-    let relations = raw.relations.map(RelationCreator.create);
-    let createdDate = raw.createdDate?.toISOString() ?? undefined;
-    let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = {id, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate, updatedDate};
+    const id = raw.id;
+    const number = raw.number;
+    const name = raw.name;
+    const pronunciation = raw.pronunciation;
+    const equivalents = raw.equivalents.map(EquivalentCreator.create);
+    const tags = raw.tags;
+    const informations = raw.informations.map(InformationCreator.create);
+    const variations = raw.variations.map(VariationCreator.create);
+    const relations = raw.relations.map(RelationCreator.create);
+    const createdDate = raw.createdDate?.toISOString() ?? undefined;
+    const updatedDate = raw.updatedDate?.toISOString() ?? undefined;
+    const skeleton = {id, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate, updatedDate};
     return skeleton;
   }
 
   public static async createDetailed(raw: Word): Promise<DetailedWordSkeleton> {
-    let base = WordCreator.create(raw);
-    let examples = await ExampleModel.fetchByWord(raw).then((rawExamples) => rawExamples.map(ExampleCreator.create));
-    let skeleton = {...base, examples};
+    const base = WordCreator.create(raw);
+    const examples = await ExampleModel.fetchByWord(raw).then((rawExamples) => rawExamples.map(ExampleCreator.create));
+    const skeleton = {...base, examples};
     return skeleton;
   }
 
@@ -239,4 +239,4 @@ export class WordCreator {
 
 
 export type Word = DocumentType<WordSchema>;
-export let WordModel = getModelForClass(WordSchema);
+export const WordModel = getModelForClass(WordSchema);

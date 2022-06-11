@@ -32,21 +32,21 @@ const TopPage = create(
   }: {
   }): ReactElement {
 
-    let [user] = useUser();
+    const [user] = useUser();
 
-    let rawContributors = [
+    const rawContributors = [
       {name: "lynn", url: {github: "lynn"}, avatarUrl: {github: "lynn"}},
       {name: "bluebear94", url: {github: "bluebear94"}, avatarUrl: {github: "bluebear94"}},
       {name: "nymwa", url: {github: "nymwa"}, avatarUrl: {github: "nymwa"}},
       {name: "川音リオ", url: {twitter: "KawaneRio"}, avatarUrl: "https://pbs.twimg.com/profile_images/1085673171083091969/t3IjudoH_400x400.jpg"}
     ];
-    let loginFormData = DataUtil.create({
+    const loginFormData = DataUtil.create({
       hidden: user !== null
     });
-    let dashboardFormData = DataUtil.create({
+    const dashboardFormData = DataUtil.create({
       hidden: user === null
     });
-    let node = (
+    const node = (
       <Page title="">
         <div styleName="top">
           <div styleName="logo">

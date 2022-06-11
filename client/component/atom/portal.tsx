@@ -26,9 +26,9 @@ const Portal = create(
     children?: ReactNode
   }): ReactElement {
 
-    let container = document.body;
-    let data = DataUtil.create({position});
-    let node = (
+    const container = document.body;
+    const data = DataUtil.create({position});
+    const node = (
       <div className="portal" {...data}>
         {children}
       </div>

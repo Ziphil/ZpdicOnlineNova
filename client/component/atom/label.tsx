@@ -33,13 +33,13 @@ const Label = create(
     className?: string
   }): ReactElement | null {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let styleName = DataUtil.create({
+    const styleName = DataUtil.create({
       position,
       error: variant === "error"
     });
-    let node = (text !== undefined) && (
+    const node = (text !== undefined) && (
       <div styleName="root" className={className} {...styleName}>
         {text}
         {(showRequired) && (

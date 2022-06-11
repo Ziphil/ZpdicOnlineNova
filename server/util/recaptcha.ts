@@ -15,7 +15,7 @@ export class RecaptchaUtil {
     const data = new URLSearchParams();
     data.append("secret", RECAPTCHA_SECRET);
     data.append("response", token);
-    let response = await axios.post("https://www.google.com/recaptcha/api/siteverify", data);
+    const response = await axios.post("https://www.google.com/recaptcha/api/siteverify", data);
     if (response.status === 200 && response.data.success) {
       return response.data;
     } else {

@@ -28,13 +28,13 @@ const Authenticator = create(
     node: ReactNode
   }): ReactElement {
 
-    let [user] = useUser();
+    const [user] = useUser();
 
     if (type === "private" && redirect !== undefined) {
-      let actualNode = (user !== null) ? <>{node}</> : <Navigate to={redirect} replace={true}/>;
+      const actualNode = (user !== null) ? <>{node}</> : <Navigate to={redirect} replace={true}/>;
       return actualNode;
     } else if (type === "guest" && redirect !== undefined) {
-      let actualNode = (user === null) ? <>{node}</> : <Navigate to={redirect} replace={true}/>;
+      const actualNode = (user === null) ? <>{node}</> : <Navigate to={redirect} replace={true}/>;
       return actualNode;
     } else {
       return <>{node}</>;

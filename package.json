@@ -29,7 +29,37 @@
     ],
     "ignorePatterns": "webpack-*.ts",
     "rules": {
-      "arrow-body-style": "off"
+      "arrow-body-style": "off",
+      "prefer-const": [
+        "warn", {
+          "destructuring": "all"
+        }
+      ],
+      "import/order": [
+        "warn",
+        {
+          "groups": [["builtin", "external"], "internal", "parent", "sibling", "index", "object"],
+          "pathGroups": [
+            {
+              "pattern": "/client/**",
+              "group": "internal"
+            },
+            {
+              "pattern": "/server/**",
+              "group": "internal"
+            },
+            {
+              "pattern": "/source/**",
+              "group": "internal"
+            }
+          ],
+          "alphabetize": {
+            "order": "asc",
+            "caseInsensitive": false
+          },
+          "newlines-between": "never"
+        }
+      ]
     }
   },
   "nodemonConfig": {

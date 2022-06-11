@@ -22,7 +22,7 @@ const Tooltip = create(
     children?: ReactNode
   }): ReactElement {
 
-    let node = (
+    const node = (
       <div styleName="root" className={className}>
         {children}
         {(message !== null) && (

@@ -33,18 +33,18 @@ import {
 // 認証に失敗した場合、ステータスコード 401 を返して終了します。
 // なお、引数に権限を表す文字列が指定された場合、追加でユーザーが指定の権限を保持しているかチェックし、権限がなかった場合、ステータスコード 403 を返して終了します。
 export function verifyUser(authority?: string): RequestHandler {
-  let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
-    let token = (request.signedCookies.authorization || request.headers.authorization) + "";
+  const handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
+    const token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
       if (!error && typeof data === "object" && "id" in data) {
-        let anyData = data as any;
-        let user = await UserModel.findById(anyData.id).exec();
+        const anyData = data as any;
+        const user = await UserModel.findById(anyData.id).exec();
         if (user) {
           if (!authority || user.authority === authority) {
             request.user = user;
             next();
           } else {
-            let body = CustomError.ofType("notEnoughUserAuthority");
+            const body = CustomError.ofType("notEnoughUserAuthority");
             response.status(403).send(body).end();
           }
         } else {
@@ -61,12 +61,12 @@ export function verifyUser(authority?: string): RequestHandler {
 // リクエストのヘッダーに書き込まれたトークンを利用してユーザーのチェックを行います。
 // 基本的に verifyUser 関数とほぼ同じ動作をしますが、認証に失敗した場合にエラーステータスを返すのではなく次の動作に移行します。
 export function checkUser(authority?: string): RequestHandler {
-  let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
-    let token = (request.signedCookies.authorization || request.headers.authorization) + "";
+  const handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
+    const token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
       if (!error && typeof data === "object" && "id" in data) {
-        let anyData = data as any;
-        let user = await UserModel.findById(anyData.id).exec();
+        const anyData = data as any;
+        const user = await UserModel.findById(anyData.id).exec();
         if (user) {
           if (!authority || user.authority === authority) {
             request.user = user;
@@ -92,17 +92,17 @@ export function checkUser(authority?: string): RequestHandler {
 // 編集権限がない場合、ステータスコード 403 を返して終了します。
 // そもそも該当する辞書が存在しない場合、request オブジェクトの dictionary プロパティの値は undefined のまま、次の処理を行います。
 export function verifyDictionary(authority: DictionaryAuthority): RequestHandler {
-  let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
-    let user = request.user!;
-    let number = parseInt(request.query.number || request.body.number, 10);
-    let dictionary = await DictionaryModel.fetchOneByNumber(number);
+  const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
+    const user = request.user!;
+    const number = parseInt(request.query.number || request.body.number, 10);
+    const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
-      let hasAuthority = await dictionary.hasAuthority(user, authority);
+      const hasAuthority = await dictionary.hasAuthority(user, authority);
       if (hasAuthority) {
         request.dictionary = dictionary;
         next();
       } else {
-        let body = CustomError.ofType("notEnoughDictionaryAuthority");
+        const body = CustomError.ofType("notEnoughDictionaryAuthority");
         response.status(403).send(body).end();
       }
     } else {
@@ -113,23 +113,23 @@ export function verifyDictionary(authority: DictionaryAuthority): RequestHandler
 }
 
 export function verifyRecaptcha(): RequestHandler {
-  let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
-    let recaptchaToken = request.query.recaptchaToken || request.body.recaptchaToken;
+  const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
+    const recaptchaToken = request.query.recaptchaToken || request.body.recaptchaToken;
     try {
-      let result = await RecaptchaUtil.verify(recaptchaToken);
-      let score = result.score;
-      let action = result.action;
+      const result = await RecaptchaUtil.verify(recaptchaToken);
+      const score = result.score;
+      const action = result.action;
       LogUtil.log("middle/verify-recaptcha", `action: ${action} | score: ${score}`);
       if (result.score >= 0.5) {
         request.recaptchaScore = result.score;
         next();
       } else {
-        let body = CustomError.ofType("recaptchaRejected");
+        const body = CustomError.ofType("recaptchaRejected");
         response.status(403).send(body).end();
       }
     } catch (error) {
       if (error.name === "CustomError" && error.type === "recaptchaError") {
-        let body = CustomError.ofType("recaptchaError");
+        const body = CustomError.ofType("recaptchaError");
         response.status(403).send(body).end();
       } else {
         next(error);
@@ -144,16 +144,16 @@ export function verifyRecaptcha(): RequestHandler {
 // ログインに成功した場合 (該当するユーザーが存在した場合)、request オブジェクトの token プロパティにトークンを書き込み、次の処理を行います。
 // ログインに失敗した場合、ステータスコード 401 を返して終了します。
 export function login(expiresIn: number): RequestHandler {
-  let handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
-    let name = request.body.name;
-    let password = request.body.password;
-    let user = await UserModel.authenticate(name, password);
+  const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
+    const name = request.body.name;
+    const password = request.body.password;
+    const user = await UserModel.authenticate(name, password);
     if (user) {
       jwt.sign({id: user.id}, JWT_SECRET, {expiresIn}, (error, token) => {
         if (!error) {
           request.token = token;
           request.user = user;
-          let options = {maxAge: expiresIn * 1000, httpOnly: true, signed: true, sameSite: true};
+          const options = {maxAge: expiresIn * 1000, httpOnly: true, signed: true, sameSite: true};
           response.cookie("authorization", token, options);
           next();
         } else {
@@ -168,7 +168,7 @@ export function login(expiresIn: number): RequestHandler {
 }
 
 export function logout(): RequestHandler {
-  let handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
+  const handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     response.clearCookie("authorization");
     next();
   };

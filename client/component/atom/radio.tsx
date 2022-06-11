@@ -29,11 +29,11 @@ const Radio = create(
     className?: string
   }): ReactElement {
 
-    let handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+    const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
       onChange?.(event);
     }, [onChange]);
 
-    let node = (
+    const node = (
       <label styleName="root" className={className}>
         <input styleName="original" type="radio" name={name} value={value} checked={checked} onChange={handleChange}/>
         <div styleName="box">

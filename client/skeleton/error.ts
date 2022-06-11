@@ -8,8 +8,8 @@ export class CustomError<E extends string = string> {
   public code?: number;
 
   public static ofType<E extends string>(type: E, code?: number): CustomError<E> {
-    let error = "CustomError" as const;
-    let skeleton = {error, type, code};
+    const error = "CustomError" as const;
+    const skeleton = {error, type, code};
     return skeleton;
   }
 

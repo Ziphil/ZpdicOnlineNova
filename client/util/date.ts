@@ -27,7 +27,7 @@ export class DateUtil {
 
   private static toShortLocaleMonth(date: Date, locale?: string): string {
     if (locale === "eo") {
-      let monthIndex = date.getMonth();
+      const monthIndex = date.getMonth();
       return ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aŭg", "Sep", "Okt", "Nov", "Dec"][monthIndex];
     } else {
       return date.toLocaleString(locale, {month: "short"});
@@ -35,8 +35,8 @@ export class DateUtil {
   }
 
   private static padZero(number: number | string, length: number): string {
-    let preceding = new Array(length).join("0");
-    let result = (preceding + number).slice(-length);
+    const preceding = new Array(length).join("0");
+    const result = (preceding + number).slice(-length);
     return result;
   }
 

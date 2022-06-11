@@ -27,15 +27,15 @@ const ActivateUserPage = create(
   }: {
   }): ReactElement {
 
-    let location = useLocation();
-    let {pushPath} = usePath();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const location = useLocation();
+    const {pushPath} = usePath();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
     useMount(async () => {
-      let search = queryParser.parse(location.searchString);
-      let key = (typeof search.key === "string") ? search.key : "";
-      let response = await request("activateUser", {key});
+      const search = queryParser.parse(location.searchString);
+      const key = (typeof search.key === "string") ? search.key : "";
+      const response = await request("activateUser", {key});
       if (response.status === 200) {
         addInformationPopup("userActivated");
         pushPath("/dashboard", {preservePopup: true});
@@ -44,7 +44,7 @@ const ActivateUserPage = create(
       }
     });
 
-    let node = (
+    const node = (
       <Page>
         <Loading loading={true}/>
       </Page>

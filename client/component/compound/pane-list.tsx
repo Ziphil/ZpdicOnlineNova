@@ -47,23 +47,23 @@ const PaneList = create(
     showPagination?: boolean
   }): ReactElement {
 
-    let [page, setPage] = useState(0);
-    let [hitResult, setHitResult] = useState<WithSize<T>>([[], 0]);
-    let [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(0);
+    const [hitResult, setHitResult] = useState<WithSize<T>>([[], 0]);
+    const [loading, setLoading] = useState(false);
 
-    let handlePageSet = useCallback(async function (page: number): Promise<void> {
-      let offset = size * page;
+    const handlePageSet = useCallback(async function (page: number): Promise<void> {
+      const offset = size * page;
       if (typeof items === "function") {
         setLoading(true);
-        let hitResult = await items(offset, size);
+        const hitResult = await items(offset, size);
         setPage(page);
         setHitResult(hitResult);
         setLoading(false);
       } else {
         if (items !== null) {
-          let hitItems = items.slice(offset, offset + size);
-          let hitSize = items.length;
-          let hitResult = [hitItems, hitSize] as WithSize<T>;
+          const hitItems = items.slice(offset, offset + size);
+          const hitSize = items.length;
+          const hitResult = [hitItems, hitSize] as WithSize<T>;
           setPage(page);
           setHitResult(hitResult);
           setLoading(false);
@@ -77,10 +77,10 @@ const PaneList = create(
       handlePageSet(page);
     }, [items]);
 
-    let panesProps = {renderer, column, style, border, hitResult};
-    let panes = (method === "div") ? <PaneListDivPanes {...panesProps}/> : <PaneListTablePanes {...panesProps}/>;
-    let pagenationButtonNode = (showPagination) && <PaneListPaginationButton {...{size, page, hitResult, handlePageSet}}/>;
-    let node = (
+    const panesProps = {renderer, column, style, border, hitResult};
+    const panes = (method === "div") ? <PaneListDivPanes {...panesProps}/> : <PaneListTablePanes {...panesProps}/>;
+    const pagenationButtonNode = (showPagination) && <PaneListPaginationButton {...{size, page, hitResult, handlePageSet}}/>;
+    const node = (
       <div styleName="root">
         <Loading loading={loading}>
           {panes}
@@ -108,13 +108,13 @@ const PaneListDivPanes = create(
     hitResult: WithSize<T>
   }): ReactElement {
 
-    let [hitItems, hitSize] = hitResult;
-    let styleName = StyleNameUtil.create(
+    const [hitItems, hitSize] = hitResult;
+    const styleName = StyleNameUtil.create(
       "div-pane",
       {if: style === "spaced", true: "spaced"}
     );
-    let panes = hitItems.map(renderer);
-    let node = (
+    const panes = hitItems.map(renderer);
+    const node = (
       <div styleName={styleName} style={{gridTemplateColumns: `repeat(${column}, 1fr)`}}>
         {panes}
       </div>
@@ -141,21 +141,21 @@ const PaneListTablePanes = create(
     hitResult: WithSize<T>
   }): ReactElement {
 
-    let [hitItems, hitSize] = hitResult;
-    let styleName = StyleNameUtil.create(
+    const [hitItems, hitSize] = hitResult;
+    const styleName = StyleNameUtil.create(
       "table-pane",
       {if: style === "spaced", true: "spaced"}
     );
-    let rowPanes = slices(hitItems, column, true).map((rowItems, index) => {
-      let cellPanes = rowItems.map((item, index) => {
-        let innerPane = (item !== undefined) ? renderer(item) : undefined;
-        let spacerNode = (index !== 0) && (
+    const rowPanes = slices(hitItems, column, true).map((rowItems, index) => {
+      const cellPanes = rowItems.map((item, index) => {
+        const innerPane = (item !== undefined) ? renderer(item) : undefined;
+        const spacerNode = (index !== 0) && (
           <td styleName="spacer"/>
         );
-        let borderSpacerNode = (border && index !== 0) && (
+        const borderSpacerNode = (border && index !== 0) && (
           <td styleName="spacer border"/>
         );
-        let cellPane = (
+        const cellPane = (
           <Fragment key={index}>
             {spacerNode}
             {borderSpacerNode}
@@ -164,10 +164,10 @@ const PaneListTablePanes = create(
         );
         return cellPane;
       });
-      let rowPane = <tr key={index}>{cellPanes}</tr>;
+      const rowPane = <tr key={index}>{cellPanes}</tr>;
       return rowPane;
     });
-    let node = (
+    const node = (
       <table styleName={styleName}>
         <tbody>
           {rowPanes}
@@ -194,13 +194,13 @@ const PaneListPaginationButton = create(
     handlePageSet: (page: number) => Promise<void>
   }): ReactElement {
 
-    let [hitItems, hitSize] = hitResult;
-    let maxPage = Math.max(Math.ceil(hitSize / size) - 1, 0);
-    let styleName = StyleNameUtil.create(
+    const [hitItems, hitSize] = hitResult;
+    const maxPage = Math.max(Math.ceil(hitSize / size) - 1, 0);
+    const styleName = StyleNameUtil.create(
       "pagination",
       {if: hitItems.length <= 0, true: "empty"}
     );
-    let node = (
+    const node = (
       <div styleName={styleName}>
         <PaginationButton page={page} minPage={0} maxPage={maxPage} onSet={(page) => handlePageSet(page)}/>
       </div>

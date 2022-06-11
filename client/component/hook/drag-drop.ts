@@ -11,18 +11,18 @@ import {
 
 
 export function useDragDrop(type: string, index: number, move: (draggingIndex: number, hoverIndex: number) => void): [RefObject<never>, RefObject<never>, boolean] {
-  let rootRef = useRef<never>(null);
-  let handleRef = useRef<never>(null);
-  let [{dragging}, connectDrag, connectPreview] = useDrag({
+  const rootRef = useRef<never>(null);
+  const handleRef = useRef<never>(null);
+  const [{dragging}, connectDrag, connectPreview] = useDrag({
     type,
     item: {index},
     collect: (monitor) => ({dragging: monitor.isDragging()})
   });
-  let [, connectDrop] = useDrop<{index: number}, unknown, unknown>({
+  const [, connectDrop] = useDrop<{index: number}, unknown, unknown>({
     accept: type,
     hover: (item) => {
-      let draggingIndex = item.index;
-      let hoverIndex = index;
+      const draggingIndex = item.index;
+      const hoverIndex = index;
       if (draggingIndex !== hoverIndex) {
         move(draggingIndex, hoverIndex);
         item.index = hoverIndex;

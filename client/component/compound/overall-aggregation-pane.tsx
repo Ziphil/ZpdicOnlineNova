@@ -20,10 +20,10 @@ const OverallAggregationPane = create(
   }: {
   }): ReactElement {
 
-    let [aggregations] = useSuspenseQuery("fetchOverallAggregation", {});
-    let [, {trans, transNumber}] = useIntl();
+    const [aggregations] = useSuspenseQuery("fetchOverallAggregation", {});
+    const [, {trans, transNumber}] = useIntl();
 
-    let node = (
+    const node = (
       <div styleName="root">
         <div styleName="item">
           <div styleName="icon"><Icon name="user"/></div>

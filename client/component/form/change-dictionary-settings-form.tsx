@@ -36,14 +36,14 @@ const ChangeDictionarySettingsForm = create(
     onSubmit?: () => void
   }): ReactElement | null {
 
-    let [value, setValue] = useState<any>(currentSettings[propertyName]);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [value, setValue] = useState<any>(currentSettings[propertyName]);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let settings = {[propertyName]: value};
-      let response = await request("changeDictionarySettings", {number, settings});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const settings = {[propertyName]: value};
+      const response = await request("changeDictionarySettings", {number, settings});
       if (response.status === 200) {
         addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
         onSubmit?.();
@@ -53,7 +53,7 @@ const ChangeDictionarySettingsForm = create(
     if (propertyName === "punctuations") {
       return null;
     } else if (propertyName === "pronunciationTitle") {
-      let node = (
+      const node = (
         <form styleName="root input">
           <Input label={trans("changeDictionarySettingsForm.pronunciationTitle")} value={value} onSet={(value) => setValue(value)}/>
           <Button label={trans("changeDictionarySettingsForm.confirm")} reactive={true} onClick={handleClick}/>
@@ -61,7 +61,7 @@ const ChangeDictionarySettingsForm = create(
       );
       return node;
     } else if (propertyName === "exampleTitle") {
-      let node = (
+      const node = (
         <form styleName="root input">
           <Input label={trans("changeDictionarySettingsForm.exampleTitle")} value={value} onSet={(value) => setValue(value)}/>
           <Button label={trans("changeDictionarySettingsForm.confirm")} reactive={true} onClick={handleClick}/>
@@ -69,12 +69,12 @@ const ChangeDictionarySettingsForm = create(
       );
       return node;
     } else if (propertyName === "enableMarkdown") {
-      let specs = [
+      const specs = [
         {value: "true", label: trans("changeDictionarySettingsForm.enableMarkdownTrue")},
         {value: "false", label: trans("changeDictionarySettingsForm.enableMarkdownFalse")}
       ];
-      let secretValue = (value) ? "true" : "false";
-      let node = (
+      const secretValue = (value) ? "true" : "false";
+      const node = (
         <form styleName="root radio">
           <RadioGroup name="enableMarkdown" specs={specs} value={secretValue} onSet={(valueString) => setValue(valueString === "true")}/>
           <Button label={trans("changeDictionarySettingsForm.confirm")} reactive={true} onClick={handleClick}/>

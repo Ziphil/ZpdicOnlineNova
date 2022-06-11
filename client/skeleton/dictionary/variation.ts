@@ -7,9 +7,9 @@ export class Variation {
   public name!: string;
 
   public static createEmpty(): Variation {
-    let title = "";
-    let name = "";
-    let skeleton = {title, name};
+    const title = "";
+    const name = "";
+    const skeleton = {title, name};
     return skeleton;
   }
 

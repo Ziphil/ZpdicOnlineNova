@@ -37,21 +37,21 @@ const ChangeUserEmailForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [email, setEmail] = useState(currentEmail);
-    let [intl, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [email, setEmail] = useState(currentEmail);
+    const [intl, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let response = await request("changeUserEmail", {email});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const response = await request("changeUserEmail", {email});
       if (response.status === 200) {
         addInformationPopup("userEmailChanged");
         onSubmit?.();
       }
     }, [email, request, onSubmit, addInformationPopup]);
 
-    let validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(intl, "invalidUserEmail"));
-    let node = (
+    const validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(intl, "invalidUserEmail"));
+    const node = (
       <form styleName="root">
         <Input label={trans("changeUserEmailForm.email")} value={email} validate={validate} useTooltip={true} onSet={(email) => setEmail(email)}/>
         <Button label={trans("changeUserEmailForm.confirm")} reactive={true} onClick={handleClick}/>

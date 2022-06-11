@@ -8,10 +8,10 @@ export class Relation {
   public name!: string;
 
   public static createEmpty(): Relation {
-    let title = "";
-    let number = -1;
-    let name = "";
-    let skeleton = {title, number, name};
+    const title = "";
+    const number = -1;
+    const name = "";
+    const skeleton = {title, number, name};
     return skeleton;
   }
 

@@ -31,10 +31,10 @@ const SourceTester = create(
     language: string
   }): ReactElement {
 
-    let [executorOpen, setExecutorOpen] = useState(false);
-    let [, {trans}] = useIntl();
+    const [executorOpen, setExecutorOpen] = useState(false);
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <Fragment>
         <form styleName="root">
           <Highlight source={source} language={language}/>
@@ -64,17 +64,17 @@ const SourceTesterExecutor = create(
   }): ReactElement | null {
 
     if (language === "akrantiain") {
-      let node = (
+      const node = (
         <AkrantiainExecutor defaultSource={source} open={executorOpen} onClose={() => setExecutorOpen(false)}/>
       );
       return node;
     } else if (language === "zatlin") {
-      let node = (
+      const node = (
         <ZatlinExecutor defaultSource={source} open={executorOpen} onClose={() => setExecutorOpen(false)}/>
       );
       return node;
     } else if (language === "regexp") {
-      let node = (
+      const node = (
         <RegexpExecutor defaultSource={source} open={executorOpen} onClose={() => setExecutorOpen(false)}/>
       );
       return node;

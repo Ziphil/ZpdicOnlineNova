@@ -1,9 +1,6 @@
 //
 
 import {
-  CustomError
-} from "/client/skeleton/error";
-import {
   before,
   controller,
   post
@@ -35,23 +32,23 @@ export class NotificationController extends Controller {
   @post(SERVER_PATHS["addNotification"])
   @before(verifyUser("admin"))
   public async [Symbol()](request: Request<"addNotification">, response: Response<"addNotification">): Promise<void> {
-    let type = request.body.type;
-    let title = request.body.title;
-    let text = request.body.text;
-    let notification = await NotificationModel.add(type, title, text);
-    let body = NotificationCreator.create(notification);
+    const type = request.body.type;
+    const title = request.body.title;
+    const text = request.body.text;
+    const notification = await NotificationModel.add(type, title, text);
+    const body = NotificationCreator.create(notification);
     Controller.respond(response, body);
   }
 
   @post(SERVER_PATHS["fetchNotifications"])
   public async [Symbol()](request: Request<"fetchNotifications">, response: Response<"fetchNotifications">): Promise<void> {
-    let offset = request.body.offset;
-    let size = request.body.size;
-    let range = new QueryRange(offset, size);
-    let hitResult = await NotificationModel.fetch(range);
-    let hitNotifications = hitResult[0].map(NotificationCreator.create);
-    let hitSize = hitResult[1];
-    let body = [hitNotifications, hitSize] as any;
+    const offset = request.body.offset;
+    const size = request.body.size;
+    const range = new QueryRange(offset, size);
+    const hitResult = await NotificationModel.fetch(range);
+    const hitNotifications = hitResult[0].map(NotificationCreator.create);
+    const hitSize = hitResult[1];
+    const body = [hitNotifications, hitSize] as any;
     Controller.respond(response, body);
   }
 

@@ -3,8 +3,7 @@
 import * as react from "react";
 import {
   ReactElement,
-  useCallback,
-  useState
+  useCallback
 } from "react";
 import Button from "/client/component/atom/button";
 import {
@@ -23,18 +22,18 @@ const ActivateUserForm = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let issueActivateToken = useCallback(async function (): Promise<void> {
-      let response = await request("issueUserActivateToken", {}, {useRecaptcha: true});
+    const issueActivateToken = useCallback(async function (): Promise<void> {
+      const response = await request("issueUserActivateToken", {}, {useRecaptcha: true});
       if (response.status === 200) {
         addInformationPopup("userActivateTokenIssued");
       }
     }, [request, addInformationPopup]);
 
-    let node = (
+    const node = (
       <form styleName="root">
         <div styleName="caution">
           {trans("activateUserForm.caution")}

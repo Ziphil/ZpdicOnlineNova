@@ -17,7 +17,7 @@ const LoadingPage = create(
   }: {
   }): ReactElement {
 
-    let node = (
+    const node = (
       <Page>
         <div styleName="root">
           <Loading loading={true}/>

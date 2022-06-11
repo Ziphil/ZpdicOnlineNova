@@ -18,9 +18,6 @@ import {
   DictionarySchema
 } from "/server/model/dictionary";
 import {
-  CustomError
-} from "/server/model/error";
-import {
   QueryRange
 } from "/server/util/query";
 
@@ -41,19 +38,19 @@ export class CommissionSchema {
   public createdDate!: Date;
 
   public static async fetchByDictionary(dictionary: Dictionary, range?: QueryRange): Promise<WithSize<Commission>> {
-    let query = CommissionModel.find().where("dictionary", dictionary).sort("-createdDate");
-    let result = await QueryRange.restrictWithSize(query, range);
+    const query = CommissionModel.find().where("dictionary", dictionary).sort("-createdDate");
+    const result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 
   public static async fetchOneByDictionaryAndId(dictionary: Dictionary, id: string): Promise<Commission | null> {
-    let commission = await CommissionModel.findById(id).where("dictionary", dictionary);
+    const commission = await CommissionModel.findById(id).where("dictionary", dictionary);
     return commission;
   }
 
   public static async add(dictionary: Dictionary, name: string, comment?: string): Promise<Commission> {
-    let createdDate = new Date();
-    let commission = new CommissionModel({dictionary, name, comment, createdDate});
+    const createdDate = new Date();
+    const commission = new CommissionModel({dictionary, name, comment, createdDate});
     await commission.save();
     return commission;
   }
@@ -68,11 +65,11 @@ export class CommissionSchema {
 export class CommissionCreator {
 
   public static create(raw: Commission): CommissionSkeleton {
-    let id = raw.id;
-    let name = raw.name;
-    let comment = raw.comment;
-    let createdDate = raw.createdDate.toISOString();
-    let skeleton = {id, name, comment, createdDate};
+    const id = raw.id;
+    const name = raw.name;
+    const comment = raw.comment;
+    const createdDate = raw.createdDate.toISOString();
+    const skeleton = {id, name, comment, createdDate};
     return skeleton;
 
   }
@@ -81,4 +78,4 @@ export class CommissionCreator {
 
 
 export type Commission = DocumentType<CommissionSchema>;
-export let CommissionModel = getModelForClass(CommissionSchema);
+export const CommissionModel = getModelForClass(CommissionSchema);

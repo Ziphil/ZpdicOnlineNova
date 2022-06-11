@@ -13,10 +13,10 @@ export class EditableExample {
   public translation!: string;
 
   public static createEmpty(): EditableExample {
-    let words = new Array<LinkedWord>();
-    let sentence = "";
-    let translation = "";
-    let skeleton = {words, sentence, translation};
+    const words = new Array<LinkedWord>();
+    const sentence = "";
+    const translation = "";
+    const skeleton = {words, sentence, translation};
     return skeleton;
   }
 

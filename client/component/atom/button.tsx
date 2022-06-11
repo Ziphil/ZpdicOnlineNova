@@ -55,17 +55,17 @@ const Button = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let [loading, setLoading] = useState(false);
-    let [promise, setPromise] = useState<CancelablePromise<void> | null>(null);
+    const [loading, setLoading] = useState(false);
+    const [promise, setPromise] = useState<CancelablePromise<void> | null>(null);
 
-    let handleClick = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
+    const handleClick = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       event.preventDefault();
       if (reactive) {
         setLoading(true);
         if (onClick) {
-          let result = onClick(event);
+          const result = onClick(event);
           if (typeof result === "object" && typeof result.then === "function") {
-            let nextPromise = new CancelablePromise(result);
+            const nextPromise = new CancelablePromise(result);
             setPromise(nextPromise);
             nextPromise.then(() => {
               setLoading(false);
@@ -88,8 +88,8 @@ const Button = create(
       promise?.cancel();
     });
 
-    let styleName = (variant === "simple" || variant === "link") ? "simple" : "button";
-    let data = DataUtil.create({
+    const styleName = (variant === "simple" || variant === "link") ? "simple" : "button";
+    const data = DataUtil.create({
       position: (position !== "alone") ? position : undefined,
       intent: (variant === "caution") ? "caution" : (variant === "information") ? "information" : undefined,
       onlyIcon: label === undefined,
@@ -97,7 +97,7 @@ const Button = create(
       hideLabel,
       loading
     });
-    let node = (
+    const node = (
       <button styleName={styleName} className={className} disabled={disabled || loading} onClick={handleClick} {...data}>
         {(iconName !== undefined) && <Icon className={styles!["icon"]} name={iconName}/>}
         {(label !== undefined) && <span styleName="label">{label}</span>}

@@ -28,14 +28,14 @@ const DiscardUserForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [alertOpen, setAlertOpen] = useState(false);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let logout = useLogout();
-    let [, {addInformationPopup}] = usePopup();
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const logout = useLogout();
+    const [, {addInformationPopup}] = usePopup();
 
-    let discardUser = useCallback(async function (): Promise<void> {
-      let response = await request("discardUser", {});
+    const discardUser = useCallback(async function (): Promise<void> {
+      const response = await request("discardUser", {});
       if (response.status === 200) {
         addInformationPopup("userDiscarded");
         await logout();
@@ -43,7 +43,7 @@ const DiscardUserForm = create(
       }
     }, [request, logout, onSubmit, addInformationPopup]);
 
-    let node = (
+    const node = (
       <Fragment>
         <form styleName="root">
           <Button label={trans("discardUserForm.confirm")} reactive={true} variant="caution" onClick={() => setAlertOpen(true)}/>

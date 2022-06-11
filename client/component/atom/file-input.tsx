@@ -40,18 +40,18 @@ const FileInput = create(
     className?: string
   }): ReactElement {
 
-    let [fileName, setFileName] = useState("");
-    let [errorMessage, setErrorMessage] = useState<string | null>(null);
-    let inputRef = useRef<HTMLInputElement>(null);
-    let [, {trans}] = useIntl();
+    const [fileName, setFileName] = useState("");
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [, {trans}] = useIntl();
 
-    let handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
-      let files = event.target.files;
+    const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+      const files = event.target.files;
       if (files && files.length > 0) {
-        let file = files[0];
-        let fileName = file.name;
+        const file = files[0];
+        const fileName = file.name;
         if (validate !== undefined) {
-          let errorMessage = validate(file);
+          const errorMessage = validate(file);
           setErrorMessage(errorMessage);
         } else {
           setErrorMessage(null);
@@ -63,9 +63,9 @@ const FileInput = create(
     }, [validate, onSet]);
 
     useEffect(() => {
-      let fileName = file?.name ?? "";
+      const fileName = file?.name ?? "";
       if (file !== null && validate !== undefined) {
-        let errorMessage = validate(file);
+        const errorMessage = validate(file);
         setErrorMessage(errorMessage);
       } else {
         setErrorMessage(null);
@@ -73,10 +73,10 @@ const FileInput = create(
       setFileName(fileName);
     }, [file]);
 
-    let inputData = DataUtil.create({
+    const inputData = DataUtil.create({
       error: errorMessage !== null
     });
-    let node = (
+    const node = (
       <div styleName="root" className={className}>
         <Tooltip message={errorMessage}>
           <div styleName="root-inner">

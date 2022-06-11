@@ -40,25 +40,25 @@ const ResetUserPasswordForm = create(
     tokenKey: string | null
   }): ReactElement {
 
-    let [name, setName] = useState("");
-    let [email, setEmail] = useState("");
-    let [password, setPassword] = useState("");
-    let {request} = useRequest();
-    let [intl, {trans}] = useIntl();
-    let {pushPath} = usePath();
-    let location = useLocation();
-    let [, {addInformationPopup}] = usePopup();
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const {request} = useRequest();
+    const [intl, {trans}] = useIntl();
+    const {pushPath} = usePath();
+    const location = useLocation();
+    const [, {addInformationPopup}] = usePopup();
 
-    let issueResetToken = useCallback(async function (): Promise<void> {
-      let response = await request("issueUserResetToken", {name, email}, {useRecaptcha: true});
+    const issueResetToken = useCallback(async function (): Promise<void> {
+      const response = await request("issueUserResetToken", {name, email}, {useRecaptcha: true});
       if (response.status === 200) {
         addInformationPopup("userResetTokenIssued");
         pushPath("/", {preservePopup: true});
       }
     }, [name, email, request, pushPath, addInformationPopup]);
 
-    let resetPassword = useCallback(async function (): Promise<void> {
-      let response = await request("resetUserPassword", {key: tokenKey!, password});
+    const resetPassword = useCallback(async function (): Promise<void> {
+      const response = await request("resetUserPassword", {key: tokenKey!, password});
       if (response.status === 200) {
         addInformationPopup("userPasswordReset");
         pushPath("/", {preservePopup: true});
@@ -66,15 +66,15 @@ const ResetUserPasswordForm = create(
     }, [tokenKey, password, request, pushPath, addInformationPopup]);
 
     useMount(() => {
-      let name = location.search.name;
+      const name = location.search.name;
       if (typeof name === "string") {
         setName(name);
       }
     });
 
     if (tokenKey !== null) {
-      let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
-      let node = (
+      const validate = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
+      const node = (
         <form styleName="root">
           <Input label={trans("resetUserPasswordForm.newPassword")} value={password} validate={validate} onSet={(password) => setPassword(password)}/>
           <div styleName="button-group">
@@ -86,7 +86,7 @@ const ResetUserPasswordForm = create(
       );
       return node;
     } else {
-      let node = (
+      const node = (
         <form styleName="root">
           <Input label={trans("loginForm.userName")} value={name} onSet={(name) => setName(name)}/>
           <Input label={trans("loginForm.email")} value={email} onSet={(email) => setEmail(email)}/>

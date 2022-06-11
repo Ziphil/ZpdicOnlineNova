@@ -31,11 +31,11 @@ import {
 
 
 export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [ResponseData<N> | null, unknown, QueryStatus] {
-  let [, {addErrorPopup}] = usePopup();
-  let result = useRawQuery<ResponseData<N>>([name, data], async () => {
-    let response = await rawRequest(name, data, config);
+  const [, {addErrorPopup}] = usePopup();
+  const result = useRawQuery<ResponseData<N>>([name, data], async () => {
+    const response = await rawRequest(name, data, config);
     if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
-      let type = determineErrorPopupType(response);
+      const type = determineErrorPopupType(response);
       addErrorPopup(type);
     }
     return response.data;
@@ -44,11 +44,11 @@ export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, c
 }
 
 export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [SuccessResponseData<N>, unknown, QueryStatus] {
-  let [, {addErrorPopup}] = usePopup();
-  let result = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
-    let response = await rawRequest(name, data, config);
+  const [, {addErrorPopup}] = usePopup();
+  const result = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
+    const response = await rawRequest(name, data, config);
     if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
-      let type = determineErrorPopupType(response);
+      const type = determineErrorPopupType(response);
       addErrorPopup(type);
     }
     if (response.status === 200 && !("error" in (response.data as any))) {
@@ -62,12 +62,12 @@ export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestDa
 }
 
 export function useRequest(): RequestCallbacks {
-  let [, {addErrorPopup}] = usePopup();
-  let [, setUser] = useRawUser();
-  let request = useCallback(async function <N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
-    let response = await rawRequest(name, data, config);
+  const [, {addErrorPopup}] = usePopup();
+  const [, setUser] = useRawUser();
+  const request = useCallback(async function <N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
+    const response = await rawRequest(name, data, config);
     if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
-      let type = determineErrorPopupType(response);
+      const type = determineErrorPopupType(response);
       addErrorPopup(type);
       if (type === "unauthenticated") {
         setUser(null);
@@ -75,10 +75,10 @@ export function useRequest(): RequestCallbacks {
     }
     return response;
   }, [setUser, addErrorPopup]);
-  let requestFile = useCallback(async function <N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
-    let response = await rawRequestFile(name, data, config);
+  const requestFile = useCallback(async function <N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
+    const response = await rawRequestFile(name, data, config);
     if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
-      let type = determineErrorPopupType(response);
+      const type = determineErrorPopupType(response);
       addErrorPopup(type);
       if (type === "unauthenticated") {
         setUser(null);
@@ -90,12 +90,12 @@ export function useRequest(): RequestCallbacks {
 }
 
 export function useLogin(): (data: RequestData<"login">, config?: RequestConfig) => Promise<AxiosResponseSpec<"login">> {
-  let {request} = useRequest();
-  let [, setUser] = useRawUser();
-  let login = useCallback(async function (data: RequestData<"login">, config?: RequestConfig): Promise<AxiosResponseSpec<"login">> {
-    let response = await request("login", data, config);
+  const {request} = useRequest();
+  const [, setUser] = useRawUser();
+  const login = useCallback(async function (data: RequestData<"login">, config?: RequestConfig): Promise<AxiosResponseSpec<"login">> {
+    const response = await request("login", data, config);
     if (response.status === 200) {
-      let body = response.data;
+      const body = response.data;
       setUser(body.user);
     }
     return response;
@@ -104,10 +104,10 @@ export function useLogin(): (data: RequestData<"login">, config?: RequestConfig)
 }
 
 export function useLogout(): (config?: RequestConfig) => Promise<AxiosResponseSpec<"logout">> {
-  let {request} = useRequest();
-  let [, setUser] = useRawUser();
-  let logout = useCallback(async function (config?: RequestConfig): Promise<AxiosResponseSpec<"logout">> {
-    let response = await request("logout", {}, config);
+  const {request} = useRequest();
+  const [, setUser] = useRawUser();
+  const logout = useCallback(async function (config?: RequestConfig): Promise<AxiosResponseSpec<"logout">> {
+    const response = await request("logout", {}, config);
     if (response.status === 200) {
       setUser(null);
     }

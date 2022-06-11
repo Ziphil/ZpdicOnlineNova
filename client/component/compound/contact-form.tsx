@@ -29,17 +29,17 @@ const ContactForm = create(
   }: {
   }): ReactElement {
 
-    let [name, setName] = useState("");
-    let [email, setEmail] = useState("");
-    let [subject, setSubject] = useState("");
-    let [text, setText] = useState("");
-    let [, {trans}] = useIntl();
-    let [user] = useUser();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [subject, setSubject] = useState("");
+    const [text, setText] = useState("");
+    const [, {trans}] = useIntl();
+    const [user] = useUser();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let performSend = useCallback(async function (): Promise<void> {
-      let response = await request("contact", {name, email, subject, text}, {useRecaptcha: true});
+    const performSend = useCallback(async function (): Promise<void> {
+      const response = await request("contact", {name, email, subject, text}, {useRecaptcha: true});
       if (response.status === 200) {
         addInformationPopup("contacted");
         setSubject("");
@@ -49,15 +49,15 @@ const ContactForm = create(
 
     useMount(() => {
       if (user !== null) {
-        let name = user.screenName;
-        let email = user.email;
+        const name = user.screenName;
+        const email = user.email;
         setName(name);
         setEmail(email);
       }
     });
 
-    let disabled = user !== null;
-    let node = (
+    const disabled = user !== null;
+    const node = (
       <form styleName="root">
         <Input label={trans("contactForm.name")} value={name} disabled={disabled} showOptional={true} onSet={(name) => setName(name)}/>
         <Input label={trans("contactForm.email")} value={email} disabled={disabled} showOptional={true} onSet={(email) => setEmail(email)}/>

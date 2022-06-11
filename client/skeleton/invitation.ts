@@ -21,4 +21,4 @@ export class Invitation {
 
 export const INVITATION_TYPES = ["edit", "transfer"] as const;
 export type InvitationType = LiteralType<typeof INVITATION_TYPES>;
-export let InvitationTypeUtil = LiteralUtilType.create(INVITATION_TYPES);
+export const InvitationTypeUtil = LiteralUtilType.create(INVITATION_TYPES);

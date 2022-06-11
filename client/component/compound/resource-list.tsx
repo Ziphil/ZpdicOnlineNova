@@ -44,31 +44,31 @@ const ResouceList = create(
     showInstruction?: boolean
   }): ReactElement {
 
-    let [file, setFile] = useState<File | null>(null);
-    let [dummy, setDummy] = useState({});
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup, addErrorPopup}] = usePopup();
+    const [file, setFile] = useState<File | null>(null);
+    const [dummy, setDummy] = useState({});
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup, addErrorPopup}] = usePopup();
 
-    let provideResources = useCallback(async function (offset?: number, size?: number): Promise<WithSize<string>> {
-      let number = dictionary.number;
-      let response = await request("fetchResources", {number, offset, size});
+    const provideResources = useCallback(async function (offset?: number, size?: number): Promise<WithSize<string>> {
+      const number = dictionary.number;
+      const response = await request("fetchResources", {number, offset, size});
       if (response.status === 200 && !("error" in response.data)) {
-        let resources = response.data;
+        const resources = response.data;
         return resources;
       } else {
         return [[], 0];
       }
     }, [dictionary.number, dummy, request]);
 
-    let uploadFile = useCallback(async function (): Promise<void> {
-      let number = dictionary.number;
+    const uploadFile = useCallback(async function (): Promise<void> {
+      const number = dictionary.number;
       if (file) {
-        let name = file.name;
-        let type = file.type;
-        let response = await request("fetchUploadResourcePost", {number, name, type}, {useRecaptcha: true});
+        const name = file.name;
+        const type = file.type;
+        const response = await request("fetchUploadResourcePost", {number, name, type}, {useRecaptcha: true});
         if (response.status === 200 && !("error" in response.data)) {
-          let post = response.data;
+          const post = response.data;
           try {
             await AwsUtil.uploadFile(post, file);
             addInformationPopup("resourceUploaded");
@@ -76,8 +76,8 @@ const ResouceList = create(
             setDummy({});
           } catch (error) {
             if (error.name === "AwsError") {
-              let code = error.data["Code"]["_text"];
-              let message = error.data["Message"]["_text"];
+              const code = error.data["Code"]["_text"];
+              const message = error.data["Message"]["_text"];
               if (code === "EntityTooLarge") {
                 addErrorPopup("resourceSizeTooLarge");
               } else if (code === "AccessDenied" && message.includes("Policy Condition failed") && message.includes("$Content-Type")) {
@@ -93,20 +93,20 @@ const ResouceList = create(
       }
     }, [dictionary.number, file, request, addInformationPopup, addErrorPopup]);
 
-    let renderResource = useCallback(function (resource: string): ReactNode {
-      let node = (
+    const renderResource = useCallback(function (resource: string): ReactNode {
+      const node = (
         <ResourcePane dictionary={dictionary} resource={resource} showCode={showCode} onDiscardConfirm={() => setDummy({})}/>
       );
       return node;
     }, [dictionary, showCode]);
 
-    let instructionText = (dictionary.settings.enableMarkdown) ? trans("resourceList.instruction") : trans("resourceList.markdownCaution");
-    let instructionNode = (showInstruction) && (
+    const instructionText = (dictionary.settings.enableMarkdown) ? trans("resourceList.instruction") : trans("resourceList.markdownCaution");
+    const instructionNode = (showInstruction) && (
       <div styleName="instruction">
         {instructionText}
       </div>
     );
-    let node = (
+    const node = (
       <div styleName="root">
         <div styleName="caution">
           {trans("resourceList.experimantalCaution")}

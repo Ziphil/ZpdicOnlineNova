@@ -25,17 +25,17 @@ export class DiscardableSchema {
   }
 
   public static updateManyDiscarded<T extends DocumentType<DiscardableSchema>, H>(this: Model<T, H>): QueryWithHelpers<any, HydratedDocument<T>, H, T> {
-    let removedDate = new Date();
+    const removedDate = new Date();
     return this.updateMany({}, {removedDate});
   }
 
   public static updateOneDiscarded<T extends DocumentType<DiscardableSchema>, H>(this: Model<T, H>): QueryWithHelpers<any, HydratedDocument<T>, H, T> {
-    let removedDate = new Date();
+    const removedDate = new Date();
     return this.updateOne({}, {removedDate});
   }
 
   public flagDiscarded<T extends DocumentType<DiscardableSchema>>(this: T): Promise<this> {
-    let removedDate = new Date();
+    const removedDate = new Date();
     return this.update({removedDate}).exec();
   }
 
