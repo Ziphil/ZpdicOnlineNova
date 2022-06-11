@@ -31,33 +31,9 @@
     "rules": {
       "arrow-body-style": "off",
       "prefer-const": [
-        "warn", {
-          "destructuring": "all"
-        }
-      ],
-      "import/order": [
         "warn",
         {
-          "groups": [["builtin", "external"], "internal", "parent", "sibling", "index", "object"],
-          "pathGroups": [
-            {
-              "pattern": "/client/**",
-              "group": "internal"
-            },
-            {
-              "pattern": "/server/**",
-              "group": "internal"
-            },
-            {
-              "pattern": "/source/**",
-              "group": "internal"
-            }
-          ],
-          "alphabetize": {
-            "order": "asc",
-            "caseInsensitive": false
-          },
-          "newlines-between": "never"
+          "destructuring": "all"
         }
       ]
     }
@@ -184,7 +160,7 @@
     "cross-env": "^7.0.3",
     "css-loader": "^6.6.0",
     "eslint": "^8.17.0",
-    "eslint-config-ziphil": "^1.4.1",
+    "eslint-config-ziphil": "^1.4.2",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsdoc": "^39.3.2",
     "eslint-plugin-react": "^7.30.0",
