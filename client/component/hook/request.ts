@@ -44,7 +44,7 @@ export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, c
   return [resultData ?? null, result.error, resultRest];
 }
 
-export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [SuccessResponseData<N>, unknown, UseQueryRestResult<N>] {
+export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [SuccessResponseData<N>, UseQueryRestResult<N>] {
   const [, {addErrorPopup}] = usePopup();
   const result = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
     const response = await rawRequest(name, data, config);
@@ -59,8 +59,8 @@ export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestDa
       throw new Error("todo: please replace with a more specific error");
     }
   }, {suspense: true, ...config});
-  const {data: resultData, error: resultError, ...resultRest} = result;
-  return [resultData!, resultError, resultRest];
+  const {data: resultData, ...resultRest} = result;
+  return [resultData!, resultRest];
 }
 
 export function useRequest(): RequestCallbacks {

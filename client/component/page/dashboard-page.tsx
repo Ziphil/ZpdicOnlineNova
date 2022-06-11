@@ -44,8 +44,8 @@ const DashboardPage = create(
   }): ReactElement {
 
     const [dictionaries] = useSuspenseQuery("fetchDictionaries", {});
-    const [editInvitations, , {refetch: refetchEditInvitations}] = useSuspenseQuery("fetchInvitations", {type: "edit"});
-    const [transferInvitations, , {refetch: refetchTransferInvitations}] = useSuspenseQuery("fetchInvitations", {type: "transfer"});
+    const [editInvitations, {refetch: refetchEditInvitations}] = useSuspenseQuery("fetchInvitations", {type: "edit"});
+    const [transferInvitations, {refetch: refetchTransferInvitations}] = useSuspenseQuery("fetchInvitations", {type: "transfer"});
     const [, {trans}] = useIntl();
     const {pushPath} = usePath();
     const [user] = useUser();
