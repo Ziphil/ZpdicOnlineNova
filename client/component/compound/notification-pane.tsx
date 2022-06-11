@@ -30,9 +30,6 @@ const NotificationPane = create(
 
     const [, {trans, transDate}] = useIntl();
 
-    const fixedNode = (notification.type === "bugFixed") && (
-      <span styleName="fixed">({trans("notificationPane.fixed")})</span>
-    );
     const [iconName, iconSlashed] = (() => {
       const type = notification.type;
       if (type === "update") {
@@ -54,7 +51,9 @@ const NotificationPane = create(
           <div styleName="head-right">
             <div styleName="date">{transDate(notification.date)}</div>
             <h1 styleName="head">
-              {fixedNode}
+              {(notification.type === "bugFixed") && (
+                <span styleName="fixed">({trans("notificationPane.fixed")})</span>
+              )}
               {notification.title}
             </h1>
           </div>
