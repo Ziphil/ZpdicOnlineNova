@@ -12,8 +12,8 @@ import {
 import nprogress from "nprogress";
 import * as react from "react";
 import {
-  render
-} from "react-dom";
+  createRoot
+} from "react-dom/client";
 import Root from "/client/component/root";
 import {
   RECAPTCHA_KEY
@@ -49,7 +49,11 @@ export class Main {
   }
 
   private render(): void {
-    render(<Root/>, document.getElementById("root"));
+    let container = document.getElementById("root");
+    if (container) {
+      let root = createRoot(container);
+      root.render(<Root/>);
+    }
   }
 
 }
