@@ -44,7 +44,7 @@ const GithubButton = create(
             <div styleName="icon"><Icon name="github"/></div>
             <div styleName="star-wrapper">
               <span styleName="star"><Icon name="star"/></span>
-              <span styleName="count">{transNumber(starCount!)}</span>
+              <span styleName="count">{transNumber(starCount)}</span>
             </div>
           </div>
           <div styleName="text">{trans("githubButton.github")}</div>

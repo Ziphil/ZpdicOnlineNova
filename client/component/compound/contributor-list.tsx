@@ -92,6 +92,8 @@ function resolveUrl(rawUrl?: string | {github: string} | {twitter: string}): str
       return "https://github.com/" + rawUrl.github;
     } else if ("twitter" in rawUrl) {
       return "https://twitter.com/" + rawUrl.twitter;
+    } else {
+      return undefined;
     }
   } else {
     return undefined;

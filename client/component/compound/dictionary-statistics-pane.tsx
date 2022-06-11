@@ -47,7 +47,8 @@ const DictionaryStatisticsPane = create(
       }
     });
 
-    const wordCountCtwiType = (statistics?.wordCount.ctwi! === null) ? "Infinity" : (statistics?.wordCount.ctwi! < 0) ? "Negative" : "Positive";
+    const ctwi = statistics?.wordCount.ctwi;
+    const wordCountCtwiType = (ctwi === null || ctwi === undefined) ? "Infinity" : (ctwi < 0) ? "Negative" : "Positive";
     const specs = [
       {value: "kept", label: trans("dictionaryStatisticsPane.kept")},
       {value: "nfd", label: trans("dictionaryStatisticsPane.nfd")},

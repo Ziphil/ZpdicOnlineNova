@@ -93,7 +93,7 @@ const HotkeyHelpTable = create(
     }, []);
     const nodes = [[], []] as Array<Array<ReactElement>>;
     groupedHotkeySpecs.forEach((specs, subgroup) => {
-      specs.map((spec, index) => {
+      specs.forEach((spec, index) => {
         const key = spec.keys[0] ?? "";
         const charNodes = key.split(" ").map((char, index) => <kbd key={index} styleName="key">{char.charAt(0).toUpperCase() + char.slice(1)}</kbd>);
         const hotkeyCellStyleName = StyleNameUtil.create(
