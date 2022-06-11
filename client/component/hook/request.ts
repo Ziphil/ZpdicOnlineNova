@@ -4,8 +4,8 @@ import {
   useCallback
 } from "react";
 import {
-  QueryStatus,
   UseQueryOptions,
+  UseQueryResult,
   useQuery as useRawQuery
 } from "react-query";
 import {
@@ -30,7 +30,7 @@ import {
 } from "/server/controller/internal/type";
 
 
-export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [ResponseData<N> | null, unknown, QueryStatus] {
+export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [ResponseData<N> | null, unknown, UseQueryRestResult<N>] {
   const [, {addErrorPopup}] = usePopup();
   const result = useRawQuery<ResponseData<N>>([name, data], async () => {
     const response = await rawRequest(name, data, config);
@@ -40,10 +40,11 @@ export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, c
     }
     return response.data;
   });
-  return [result.data ?? null, result.error, result.status];
+  const {data: resultData, error: resultError, ...resultRest} = result;
+  return [resultData ?? null, result.error, resultRest];
 }
 
-export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [SuccessResponseData<N>, unknown, QueryStatus] {
+export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [SuccessResponseData<N>, unknown, UseQueryRestResult<N>] {
   const [, {addErrorPopup}] = usePopup();
   const result = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
     const response = await rawRequest(name, data, config);
@@ -58,7 +59,8 @@ export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestDa
       throw new Error("todo: please replace with a more specific error");
     }
   }, {suspense: true, ...config});
-  return [result.data!, result.error, result.status];
+  const {data: resultData, error: resultError, ...resultRest} = result;
+  return [resultData!, resultError, resultRest];
 }
 
 export function useRequest(): RequestCallbacks {
@@ -117,6 +119,7 @@ export function useLogout(): (config?: RequestConfig) => Promise<AxiosResponseSp
 }
 
 type QueryConfig<N extends ProcessName> = RequestConfig & UseQueryOptions<ResponseData<N>>;
+type UseQueryRestResult<N extends ProcessName> = Omit<UseQueryResult<ResponseData<N>>, "data" | "error">;
 type RequestCallbacks = {
   request: typeof rawRequest,
   requestFile: typeof rawRequestFile

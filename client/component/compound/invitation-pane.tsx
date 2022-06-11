@@ -31,7 +31,7 @@ const InvitationPane = create(
     onSubmit
   }: {
     invitation: Invitation
-    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
   }): ReactElement {
 
     const [, {trans, transDate}] = useIntl();

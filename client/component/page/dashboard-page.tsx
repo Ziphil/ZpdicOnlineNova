@@ -4,12 +4,8 @@ import * as react from "react";
 import {
   Fragment,
   ReactElement,
-  useCallback,
-  useState
+  useCallback
 } from "react";
-import {
-  useMount
-} from "react-use";
 import ActivateUserForm from "/client/component/compound/activate-user-form";
 import DictionaryList from "/client/component/compound/dictionary-list";
 import InvitationList from "/client/component/compound/invitation-list";
@@ -29,7 +25,7 @@ import {
   useLocation,
   useLogout,
   usePath,
-  useRequest,
+  useSuspenseQuery,
   useUser
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
@@ -47,41 +43,14 @@ const DashboardPage = create(
   }: {
   }): ReactElement {
 
-    const [dictionaries, setDictionaries] = useState<Array<UserDictionary> | null>(null);
-    const [editInvitations, setEditInvitations] = useState<Array<Invitation> | null>(null);
-    const [transferInvitations, setTransferInvitations] = useState<Array<Invitation> | null>(null);
+    const [dictionaries] = useSuspenseQuery("fetchDictionaries", {});
+    const [editInvitations, , {refetch: refetchEditInvitations}] = useSuspenseQuery("fetchInvitations", {type: "edit"});
+    const [transferInvitations, , {refetch: refetchTransferInvitations}] = useSuspenseQuery("fetchInvitations", {type: "transfer"});
     const [, {trans}] = useIntl();
     const {pushPath} = usePath();
-    const {request} = useRequest();
     const [user] = useUser();
     const logout = useLogout();
     const location = useLocation();
-
-    const fetchDictionaries = useCallback(async function (): Promise<void> {
-      const response = await request("fetchDictionaries", {});
-      if (response.status === 200) {
-        const dictionaries = response.data;
-        setDictionaries(dictionaries);
-      }
-    }, [request]);
-
-    const fetchEditInvitations = useCallback(async function (): Promise<void> {
-      const type = "edit" as const;
-      const response = await request("fetchInvitations", {type});
-      if (response.status === 200) {
-        const editInvitations = response.data;
-        setEditInvitations(editInvitations);
-      }
-    }, [request]);
-
-    const fetchTransferInvitations = useCallback(async function (): Promise<void> {
-      const type = "transfer" as const;
-      const response = await request("fetchInvitations", {type});
-      if (response.status === 200) {
-        const transferInvitations = response.data;
-        setTransferInvitations(transferInvitations);
-      }
-    }, [request]);
 
     const performLogout = useCallback(async function (): Promise<void> {
       const response = await logout();
@@ -90,19 +59,14 @@ const DashboardPage = create(
       }
     }, [pushPath, logout]);
 
-    useMount(async () => {
-      const promise = Promise.all([fetchDictionaries(), fetchEditInvitations(), fetchTransferInvitations()]);
-      await promise;
-    });
-
     const mode = location.hash || "dictionary";
-    const dictionaryCount = dictionaries?.length ?? 0;
-    const editNotificationCount = editInvitations?.length ?? 0;
-    const transferNotificationCount = transferInvitations?.length ?? 0;
+    const dictionaryCount = dictionaries.length;
+    const editNotificationCount = editInvitations.length;
+    const transferNotificationCount = transferInvitations.length;
     const notificationCount = editNotificationCount + transferNotificationCount;
     const menuSpecs = [
-      {mode: "dictionary", label: trans("dashboardPage.dictionary"), iconName: "book", badgeValue: dictionaryCount || undefined, href: "#dictionary"},
-      {mode: "notification", label: trans("dashboardPage.notification"), iconName: "bell", badgeValue: notificationCount || undefined, href: "#notification"},
+      {mode: "dictionary", label: trans("dashboardPage.dictionary"), iconName: "book", badgeValue: dictionaryCount, href: "#dictionary"},
+      {mode: "notification", label: trans("dashboardPage.notification"), iconName: "bell", badgeValue: notificationCount, href: "#notification"},
       {mode: "account", label: trans("dashboardPage.account"), iconName: "id-card", href: "#account"},
       {mode: "logout", label: trans("dashboardPage.logout"), iconName: "sign-out-alt", onClick: performLogout}
     ] as const;
@@ -114,7 +78,7 @@ const DashboardPage = create(
           </div>
         )}
         <Menu mode={mode} specs={menuSpecs}/>
-        {(user) && <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode, fetchEditInvitations, fetchTransferInvitations}}/>}
+        {(user) && <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode, refetchEditInvitations, refetchTransferInvitations}}/>}
       </Page>
     );
     return node;
@@ -130,15 +94,15 @@ const DashboardPageForms = create(
     editInvitations,
     transferInvitations,
     mode,
-    fetchEditInvitations,
-    fetchTransferInvitations
+    refetchEditInvitations,
+    refetchTransferInvitations
   }: {
-    dictionaries: Array<UserDictionary> | null,
-    editInvitations: Array<Invitation> | null,
-    transferInvitations: Array<Invitation> | null
+    dictionaries: Array<UserDictionary>,
+    editInvitations: Array<Invitation>,
+    transferInvitations: Array<Invitation>,
     mode: string,
-    fetchEditInvitations: () => Promise<void>,
-    fetchTransferInvitations: () => Promise<void>
+    refetchEditInvitations: () => Promise<unknown>,
+    refetchTransferInvitations: () => Promise<unknown>
   }): ReactElement | null {
 
     const [user, {fetchUser}] = useUser();
@@ -170,13 +134,13 @@ const DashboardPageForms = create(
             label={trans("dashboardPage.editInvitationList.label")}
             description={trans("dashboardPage.editInvitationList.description")}
           >
-            <InvitationList invitations={editInvitations} size={8} onSubmit={fetchEditInvitations}/>
+            <InvitationList invitations={editInvitations} size={8} onSubmit={refetchEditInvitations}/>
           </SettingPane>
           <SettingPane
             label={trans("dashboardPage.transferInvitationList.label")}
             description={trans("dashboardPage.transferInvitationList.description")}
           >
-            <InvitationList invitations={transferInvitations} size={8} onSubmit={fetchTransferInvitations}/>
+            <InvitationList invitations={transferInvitations} size={8} onSubmit={refetchTransferInvitations}/>
           </SettingPane>
         </Fragment>
       );

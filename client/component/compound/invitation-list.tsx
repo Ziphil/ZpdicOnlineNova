@@ -29,7 +29,7 @@ const InvitationList = create(
   }: {
     invitations: Array<Invitation> | null,
     size: number,
-    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
   }): ReactElement {
 
     const rendererInvitation = useCallback(function (invitation: Invitation): ReactNode {
