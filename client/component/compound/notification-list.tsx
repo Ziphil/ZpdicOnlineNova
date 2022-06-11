@@ -4,22 +4,22 @@ import * as react from "react";
 import {
   ReactElement,
   ReactNode,
-  useCallback
+  useState
 } from "react";
 import NotificationPane from "/client/component/compound/notification-pane";
-import PaneList from "/client/component/compound/pane-list";
+import PaneList from "/client/component/compound/pane-list-beta";
 import {
   create
 } from "/client/component/create";
 import {
-  useRequest
+  useSuspenseQuery
 } from "/client/component/hook";
 import {
   Notification
 } from "/client/skeleton/notification";
 import {
-  WithSize
-} from "/server/controller/internal/type";
+  calcOffset
+} from "/client/util/misc";
 
 
 const NotificationList = create(
@@ -32,23 +32,14 @@ const NotificationList = create(
     showPagination: boolean
   }): ReactElement {
 
-    let {request} = useRequest();
-
-    let provideNotifications = useCallback(async function (offset?: number, size?: number): Promise<WithSize<Notification>> {
-      let response = await request("fetchNotifications", {offset, size});
-      if (response.status === 200) {
-        let hitResult = response.data;
-        return hitResult;
-      } else {
-        return [[], 0];
-      }
-    }, [request]);
+    let [page, setPage] = useState(0);
+    let [[hitNotifications, hitSize]] = useSuspenseQuery("fetchNotifications", calcOffset(page, size), {keepPreviousData: true});
 
     let renderer = function (notification: Notification): ReactNode {
       return <NotificationPane notification={notification} key={notification.id}/>;
     };
     let node = (
-      <PaneList items={provideNotifications} size={size} showPagination={showPagination} style="compact" renderer={renderer}/>
+      <PaneList items={hitNotifications} variant="compact" size={size} hitSize={hitSize} page={page} onPageSet={setPage} showPagination={showPagination} renderer={renderer}/>
     );
     return node;
 

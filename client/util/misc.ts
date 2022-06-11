@@ -72,6 +72,11 @@ export function hasTypedOwnProperty<T extends object>(object: T, key: string | s
   return object.hasOwnProperty(key);
 }
 
+export function calcOffset(page: number, size: number): {offset: number, size: number} {
+  let offset = size * page;
+  return {offset, size};
+}
+
 export function createValidate(pattern: RegExp | ((value: string) => boolean), message?: string): (value: string) => string | null {
   if (pattern instanceof RegExp) {
     let validate = function (value: string): string | null {
