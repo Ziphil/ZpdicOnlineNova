@@ -29,7 +29,6 @@
     ],
     "ignorePatterns": "webpack-*.ts",
     "rules": {
-      "arrow-body-style": "off",
       "prefer-const": [
         "warn",
         {
