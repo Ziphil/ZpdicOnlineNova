@@ -29,7 +29,6 @@ import {
   IntlProvider
 } from "react-intl";
 import {
-  QueryClient,
   QueryClientProvider
 } from "react-query";
 import {
@@ -37,11 +36,15 @@ import {
 } from "/client/component/create";
 import {
   globalLocale,
+  queryClient,
   useDefaultLocale,
   useDefaultMe
 } from "/client/component/hook";
 import InnerRoot from "/client/component/inner-root";
 import EmptyPage from "/client/component/page/empty-page";
+import {
+  loadDashboardPage
+} from "/client/component/page/loader";
 import {
   createRoute
 } from "/client/component/util/route";
@@ -74,14 +77,13 @@ const location = new ReactLocation({
   parseSearch: (searchString) => queryParser.parse(searchString),
   stringifySearch: (search) => queryParser.stringify(search)
 });
-const queryClient = new QueryClient();
 const routes = [
   ...createRoute("/login", () => import("/client/component/page/login-page"), {type: "guest", redirect: "/dashboard"}),
   ...createRoute("/register", () => import("/client/component/page/register-page"), {type: "guest", redirect: "/dashboard"}),
   ...createRoute("/reset", () => import("/client/component/page/reset-user-password-page"), {type: "guest", redirect: "/dashboard"}),
   ...createRoute("/activate", () => import("/client/component/page/activate-user-page"), {type: "none"}),
   ...createRoute("/dashboard/dictionary/:number", () => import("/client/component/page/dictionary-setting-page"), {type: "private", redirect: "/login"}),
-  ...createRoute("/dashboard", () => import("/client/component/page/dashboard-page"), {type: "private", redirect: "/login"}),
+  ...createRoute("/dashboard", () => import("/client/component/page/dashboard-page"), {type: "private", redirect: "/login", loader: loadDashboardPage}),
   ...createRoute("/dictionary/:value", () => import("/client/component/page/dictionary-page"), {type: "none"}),
   ...createRoute("/example/:number", () => import("/client/component/page/example-page"), {type: "none"}),
   ...createRoute("/list", () => import("/client/component/page/dictionary-list-page"), {type: "none"}),

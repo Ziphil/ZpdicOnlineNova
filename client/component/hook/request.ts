@@ -4,6 +4,7 @@ import {
   useCallback
 } from "react";
 import {
+  QueryClient,
   UseQueryOptions,
   UseQueryResult,
   useQuery as useRawQuery
@@ -29,6 +30,19 @@ import {
   SuccessResponseData
 } from "/server/controller/internal/type";
 
+
+export const queryClient = new QueryClient();
+
+export async function prefetchQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<void> {
+  await queryClient.prefetchQuery([name, data], async () => {
+    const response = await rawRequest(name, data, config);
+    if (response.status !== 200) {
+      throw new QueryError(response);
+    } else {
+      return response.data;
+    }
+  });
+}
 
 export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [ResponseData<N> | null, unknown, UseQueryRestResult<N>] {
   const [, {addErrorPopup}] = usePopup();
