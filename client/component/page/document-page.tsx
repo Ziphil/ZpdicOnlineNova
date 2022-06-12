@@ -30,9 +30,10 @@ const DocumentPage = create(
   }: {
   }): ReactElement {
 
-    const {firstPath, secondPath} = useParams();
+    const params = useParams();
     const [locale] = useLocale();
-    const path = ((firstPath) ? firstPath : "") + ((secondPath) ? "/" + secondPath : "");
+    const path = ((params.firstPath) ? params.firstPath : "") + ((params.secondPath) ? "/" + params.secondPath : "");
+
     const [source] = useSuspenseQuery("fetchDocument", {path, locale});
 
     const components = {pre: DocumentPageSourceTester};

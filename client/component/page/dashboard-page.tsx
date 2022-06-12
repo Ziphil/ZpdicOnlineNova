@@ -43,14 +43,15 @@ const DashboardPage = create(
   }: {
   }): ReactElement {
 
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
+    const logout = useLogout();
+    const location = useLocation();
+
     const [dictionaries] = useSuspenseQuery("fetchDictionaries", {});
     const [editInvitations, {refetch: refetchEditInvitations}] = useSuspenseQuery("fetchInvitations", {type: "edit"});
     const [transferInvitations, {refetch: refetchTransferInvitations}] = useSuspenseQuery("fetchInvitations", {type: "transfer"});
-    const [, {trans}] = useIntl();
-    const {pushPath} = usePath();
     const [me] = useSuspenseMe();
-    const logout = useLogout();
-    const location = useLocation();
 
     const performLogout = useCallback(async function (): Promise<void> {
       const response = await logout();

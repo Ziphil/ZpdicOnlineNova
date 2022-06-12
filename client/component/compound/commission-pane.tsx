@@ -42,8 +42,8 @@ const CommissionPane = create(
   }: {
     commission: Commission,
     dictionary: EnhancedDictionary,
-    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-    onAddConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
+    onAddConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
   }): ReactElement {
 
     const [alertOpen, setAlertOpen] = useState(false);
@@ -80,17 +80,16 @@ const CommissionPane = create(
 
     const name = commission.name;
     const comment = commission.comment;
-    const commentNode = (comment !== undefined && comment !== "") && (
-      <div styleName="comment">
-        {comment}
-      </div>
-    );
     const node = (
       <Fragment>
         <WhitePane clickable={false}>
           <div>
             <div styleName="name">{name}</div>
-            {commentNode}
+            {(comment !== undefined && comment !== "") && (
+              <div styleName="comment">
+                {comment}
+              </div>
+            )}
           </div>
           <div styleName="button">
             <Button label={trans("commissionPane.discard")} iconName="trash-alt" variant="simple" onClick={() => setAlertOpen(true)}/>

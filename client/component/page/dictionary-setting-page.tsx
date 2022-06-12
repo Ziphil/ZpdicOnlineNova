@@ -5,11 +5,8 @@ import {
   Fragment,
   ReactElement,
   useCallback,
-  useState
+  useMemo
 } from "react";
-import {
-  useMount
-} from "react-use";
 import Markdown from "/client/component/atom/markdown";
 import CommissionList from "/client/component/compound/commission-list";
 import DictionaryStatisticsPane from "/client/component/compound/dictionary-statistics-pane";
@@ -36,7 +33,8 @@ import {
   useLocation,
   useParams,
   usePath,
-  useRequest
+  useRequest,
+  useSuspenseQuery
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
@@ -56,65 +54,29 @@ const DictionarySettingPage = create(
   }: {
   }): ReactElement {
 
-    const [dictionary, setDictionary] = useState<EnhancedDictionary | null>(null);
-    const [commissionCount, setCommissionCount] = useState(0);
-    const [authorized, setAuthorized] = useState(false);
-    const [, {trans}] = useIntl();
-    const {request} = useRequest();
     const params = useParams();
+    const number = +params.number;
     const location = useLocation();
+    const [, {trans}] = useIntl();
 
-    const fetchDictionary = useCallback(async function (): Promise<void> {
-      const number = +params.number;
-      const response = await request("fetchDictionary", {number});
-      if (response.status === 200 && !("error" in response.data)) {
-        const dictionary = EnhancedDictionary.enhance(response.data);
-        setDictionary(dictionary);
-      } else {
-        setDictionary(null);
-      }
-    }, [params.number, request]);
-
-    const fetchCommissionCount = useCallback(async function (): Promise<void> {
-      const number = +params.number;
-      const size = 1;
-      const response = await request("fetchCommissions", {number, size});
-      if (response.status === 200 && !("error" in response.data)) {
-        const commissionCount = response.data[1];
-        setCommissionCount(commissionCount);
-      } else {
-        setCommissionCount(0);
-      }
-    }, [params.number, request]);
-
-    const checkAuthorization = useCallback(async function (): Promise<void> {
-      const number = +params.number;
-      const authority = "own" as const;
-      const response = await request("checkDictionaryAuthorization", {number, authority});
-      if (response.status === 200) {
-        setAuthorized(true);
-      }
-    }, [params.number, request]);
-
-    useMount(async () => {
-      const promise = Promise.all([fetchDictionary(), fetchCommissionCount(), checkAuthorization()]);
-      await promise;
-    });
+    const [rawDictionary, {refetch: refetchDictionary}] = useSuspenseQuery("fetchDictionary", {number});
+    const [[, commisionSize], {refetch: refetchCommissions}] = useSuspenseQuery("fetchCommissions", {number, offset: 0, size: 30});
+    const [] = useSuspenseQuery("checkDictionaryAuthorization", {number, authority: "own"});
+    const dictionary = useMemo(() => EnhancedDictionary.enhance(rawDictionary), [rawDictionary]);
 
     const mode = location.hash || "general";
-    const actualCommissionCount = (commissionCount > 0) ? commissionCount : undefined;
     const menuSpecs = [
       {mode: "general", label: trans("dictionarySettingPage.general"), iconName: "info-circle", href: "#general"},
       {mode: "setting", label: trans("dictionarySettingPage.setting"), iconName: "cog", href: "#setting"},
       {mode: "access", label: trans("dictionarySettingPage.access"), iconName: "users", href: "#access"},
-      {mode: "request", label: trans("dictionarySettingPage.commission"), iconName: "list-check", badgeValue: actualCommissionCount, href: "#request"},
+      {mode: "request", label: trans("dictionarySettingPage.commission"), iconName: "list-check", badgeValue: commisionSize, href: "#request"},
       {mode: "resource", label: trans("dictionarySettingPage.resource"), iconName: "image", href: "#resource"},
       {mode: "statistics", label: trans("dictionarySettingPage.statistics"), iconName: "chart-line", href: "#statistics"}
     ] as const;
     const node = (
       <Page dictionary={dictionary} showDictionary={true}>
         <Menu mode={mode} specs={menuSpecs}/>
-        {(dictionary && authorized) && <DictionarySettingPageForms {...{dictionary, mode, fetchDictionary, fetchCommissionCount}}/>}
+        <DictionarySettingPageForms {...{dictionary, mode, refetchDictionary, refetchCommissions}}/>
       </Page>
     );
     return node;
@@ -128,13 +90,13 @@ const DictionarySettingPageForms = create(
   function ({
     dictionary,
     mode,
-    fetchDictionary,
-    fetchCommissionCount
+    refetchDictionary,
+    refetchCommissions
   }: {
     dictionary: EnhancedDictionary,
     mode: string,
-    fetchDictionary: () => Promise<void>,
-    fetchCommissionCount: () => Promise<void>
+    refetchDictionary: () => Promise<unknown>,
+    refetchCommissions: () => Promise<unknown>
   }): ReactElement | null {
 
     const [, {trans}] = useIntl();
@@ -160,19 +122,19 @@ const DictionarySettingPageForms = create(
             label={trans("dictionarySettingPage.changeDictionaryNameForm.label")}
             description={trans("dictionarySettingPage.changeDictionaryNameForm.description")}
           >
-            <ChangeDictionaryNameForm number={dictionary.number} currentName={dictionary.name} onSubmit={fetchDictionary}/>
+            <ChangeDictionaryNameForm number={dictionary.number} currentName={dictionary.name} onSubmit={refetchDictionary}/>
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryParamNameForm.label")}
             description={trans("dictionarySettingPage.changeDictionaryParamNameForm.description")}
           >
-            <ChangeDictionaryParamNameForm number={dictionary.number} currentParamName={dictionary.paramName} onSubmit={fetchDictionary}/>
+            <ChangeDictionaryParamNameForm number={dictionary.number} currentParamName={dictionary.paramName} onSubmit={refetchDictionary}/>
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionarySecretForm.label")}
             description={trans("dictionarySettingPage.changeDictionarySecretForm.description")}
           >
-            <ChangeDictionarySecretForm number={dictionary.number} currentSecret={dictionary.secret} onSubmit={fetchDictionary}/>
+            <ChangeDictionarySecretForm number={dictionary.number} currentSecret={dictionary.secret} onSubmit={refetchDictionary}/>
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.uploadDictionaryForm.label")}
@@ -200,7 +162,7 @@ const DictionarySettingPageForms = create(
             <ChangeDictionaryExplanationForm
               number={dictionary.number}
               currentExplanation={dictionary.explanation}
-              onSubmit={fetchDictionary}
+              onSubmit={refetchDictionary}
             />
           </SettingPane>
           <SettingPane
@@ -212,7 +174,7 @@ const DictionarySettingPageForms = create(
               number={dictionary.number}
               currentSource={dictionary.settings.akrantiainSource}
               language="akrantiain"
-              onSubmit={fetchDictionary}
+              onSubmit={refetchDictionary}
             />
           </SettingPane>
           <SettingPane
@@ -224,7 +186,7 @@ const DictionarySettingPageForms = create(
               number={dictionary.number}
               currentSource={dictionary.settings.zatlinSource}
               language="zatlin"
-              onSubmit={fetchDictionary}
+              onSubmit={refetchDictionary}
             />
           </SettingPane>
           <SettingPane
@@ -235,7 +197,7 @@ const DictionarySettingPageForms = create(
               number={dictionary.number}
               currentSettings={dictionary.settings}
               propertyName="pronunciationTitle"
-              onSubmit={fetchDictionary}
+              onSubmit={refetchDictionary}
             />
           </SettingPane>
           <SettingPane
@@ -246,7 +208,7 @@ const DictionarySettingPageForms = create(
               number={dictionary.number}
               currentSettings={dictionary.settings}
               propertyName="exampleTitle"
-              onSubmit={fetchDictionary}
+              onSubmit={refetchDictionary}
             />
           </SettingPane>
           <SettingPane
@@ -257,7 +219,7 @@ const DictionarySettingPageForms = create(
               number={dictionary.number}
               currentSettings={dictionary.settings}
               propertyName="enableMarkdown"
-              onSubmit={fetchDictionary}
+              onSubmit={refetchDictionary}
             />
           </SettingPane>
         </Fragment>
@@ -285,7 +247,7 @@ const DictionarySettingPageForms = create(
       const node = (
         <Fragment>
           <SettingPane>
-            <CommissionList commissions={provideCommissions} dictionary={dictionary} size={30} onDiscardConfirm={fetchCommissionCount}/>
+            <CommissionList dictionary={dictionary} size={30} onAddConfirm={refetchCommissions} onDiscardConfirm={refetchCommissions}/>
           </SettingPane>
         </Fragment>
       );
