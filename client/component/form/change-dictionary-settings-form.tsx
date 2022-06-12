@@ -6,6 +6,9 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import RadioGroup from "/client/component/atom/radio-group";
@@ -13,6 +16,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -33,7 +37,7 @@ const ChangeDictionarySettingsForm = create(
     number: number,
     currentSettings: DictionarySettings,
     propertyName: N,
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement | null {
 
     const [value, setValue] = useState<any>(currentSettings[propertyName]);
@@ -46,7 +50,8 @@ const ChangeDictionarySettingsForm = create(
       const response = await request("changeDictionarySettings", {number, settings});
       if (response.status === 200) {
         addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
-        onSubmit?.();
+        await onSubmit?.();
+        await invalidateQueries("fetchDictionary", (data) => data.number === number);
       }
     }, [number, propertyName, value, request, onSubmit, addInformationPopup]);
 

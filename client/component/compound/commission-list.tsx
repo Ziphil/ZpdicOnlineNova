@@ -53,7 +53,7 @@ const CommissionList = create(
 
     const [page, setPage] = useState(0);
     const number = dictionary.number;
-    const [[hitCommissions, hitSize], {refetch: refetchCommissions}] = useSuspenseQuery("fetchCommissions", {number, ...calcOffset(page, size)}, {keepPreviousData: true});
+    const [[hitCommissions, hitSize]] = useSuspenseQuery("fetchCommissions", {number, ...calcOffset(page, size)}, {keepPreviousData: true});
 
     const column = (smartphone) ? 2 : 3;
     const node = (

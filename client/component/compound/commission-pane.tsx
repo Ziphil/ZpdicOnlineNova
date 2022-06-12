@@ -62,7 +62,7 @@ const CommissionPane = create(
           addInformationPopup("commissionDiscarded");
         }
         await onDiscardConfirm?.(event);
-        invalidateQueries("fetchCommissions", (data) => data.number === number);
+        await invalidateQueries("fetchCommissions", (data) => data.number === number);
       }
     }, [dictionary.number, commission, request, onDiscardConfirm, addInformationPopup]);
 

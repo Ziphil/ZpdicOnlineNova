@@ -7,12 +7,16 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import RadioGroup from "/client/component/atom/radio-group";
 import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -28,7 +32,7 @@ const ChangeDictionarySecretForm = create(
   }: {
     number: number,
     currentSecret: boolean,
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
     const [secret, setSecret] = useState(currentSecret);
@@ -40,7 +44,8 @@ const ChangeDictionarySecretForm = create(
       const response = await request("changeDictionarySecret", {number, secret});
       if (response.status === 200) {
         addInformationPopup("dictionarySecretChanged");
-        onSubmit?.();
+        await onSubmit?.();
+        await invalidateQueries("fetchDictionary", (data) => data.number === number);
       }
     }, [number, secret, request, onSubmit, addInformationPopup]);
 

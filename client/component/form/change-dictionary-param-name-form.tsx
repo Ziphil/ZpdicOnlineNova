@@ -7,12 +7,16 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -34,7 +38,7 @@ const ChangeDictionaryParamNameForm = create(
   }: {
     number: number,
     currentParamName: string | undefined,
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
     const [paramName, setParamName] = useState(currentParamName ?? "");
@@ -46,7 +50,8 @@ const ChangeDictionaryParamNameForm = create(
       const response = await request("changeDictionaryParamName", {number, paramName});
       if (response.status === 200) {
         addInformationPopup("dictionaryParamNameChanged");
-        onSubmit?.();
+        await onSubmit?.();
+        await invalidateQueries("fetchDictionary", (data) => data.number === number);
       }
     }, [number, paramName, request, onSubmit, addInformationPopup]);
 

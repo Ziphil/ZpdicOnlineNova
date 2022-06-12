@@ -68,7 +68,7 @@ const DictionarySettingPage = create(
     const node = (
       <Page dictionary={dictionary} showDictionary={true}>
         <Menu mode={mode} specs={menuSpecs}/>
-        <DictionarySettingPageForms {...{dictionary, mode, refetchDictionary}}/>
+        <DictionarySettingPageForms {...{dictionary, mode}}/>
       </Page>
     );
     return node;
@@ -81,12 +81,10 @@ const DictionarySettingPageForms = create(
   require("./dictionary-setting-page.scss"),
   function ({
     dictionary,
-    mode,
-    refetchDictionary
+    mode
   }: {
     dictionary: EnhancedDictionary,
-    mode: string,
-    refetchDictionary: () => Promise<unknown>
+    mode: string
   }): ReactElement | null {
 
     const [, {trans}] = useIntl();
@@ -99,19 +97,19 @@ const DictionarySettingPageForms = create(
             label={trans("dictionarySettingPage.changeDictionaryNameForm.label")}
             description={trans("dictionarySettingPage.changeDictionaryNameForm.description")}
           >
-            <ChangeDictionaryNameForm number={dictionary.number} currentName={dictionary.name} onSubmit={refetchDictionary}/>
+            <ChangeDictionaryNameForm number={dictionary.number} currentName={dictionary.name}/>
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryParamNameForm.label")}
             description={trans("dictionarySettingPage.changeDictionaryParamNameForm.description")}
           >
-            <ChangeDictionaryParamNameForm number={dictionary.number} currentParamName={dictionary.paramName} onSubmit={refetchDictionary}/>
+            <ChangeDictionaryParamNameForm number={dictionary.number} currentParamName={dictionary.paramName}/>
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionarySecretForm.label")}
             description={trans("dictionarySettingPage.changeDictionarySecretForm.description")}
           >
-            <ChangeDictionarySecretForm number={dictionary.number} currentSecret={dictionary.secret} onSubmit={refetchDictionary}/>
+            <ChangeDictionarySecretForm number={dictionary.number} currentSecret={dictionary.secret}/>
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.uploadDictionaryForm.label")}
@@ -139,7 +137,6 @@ const DictionarySettingPageForms = create(
             <ChangeDictionaryExplanationForm
               number={dictionary.number}
               currentExplanation={dictionary.explanation}
-              onSubmit={refetchDictionary}
             />
           </SettingPane>
           <SettingPane
@@ -151,7 +148,6 @@ const DictionarySettingPageForms = create(
               number={dictionary.number}
               currentSource={dictionary.settings.akrantiainSource}
               language="akrantiain"
-              onSubmit={refetchDictionary}
             />
           </SettingPane>
           <SettingPane
@@ -163,7 +159,6 @@ const DictionarySettingPageForms = create(
               number={dictionary.number}
               currentSource={dictionary.settings.zatlinSource}
               language="zatlin"
-              onSubmit={refetchDictionary}
             />
           </SettingPane>
           <SettingPane
@@ -174,7 +169,6 @@ const DictionarySettingPageForms = create(
               number={dictionary.number}
               currentSettings={dictionary.settings}
               propertyName="pronunciationTitle"
-              onSubmit={refetchDictionary}
             />
           </SettingPane>
           <SettingPane
@@ -185,7 +179,6 @@ const DictionarySettingPageForms = create(
               number={dictionary.number}
               currentSettings={dictionary.settings}
               propertyName="exampleTitle"
-              onSubmit={refetchDictionary}
             />
           </SettingPane>
           <SettingPane
@@ -196,7 +189,6 @@ const DictionarySettingPageForms = create(
               number={dictionary.number}
               currentSettings={dictionary.settings}
               propertyName="enableMarkdown"
-              onSubmit={refetchDictionary}
             />
           </SettingPane>
         </Fragment>

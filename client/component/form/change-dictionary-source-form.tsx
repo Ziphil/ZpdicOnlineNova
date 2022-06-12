@@ -7,6 +7,9 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import TextArea from "/client/component/atom/text-area";
 import AkrantiainExecutor from "/client/component/compound/akrantiain-executor";
@@ -15,6 +18,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -32,7 +36,7 @@ const ChangeDictionarySourceForm = create(
     number: number,
     currentSource: string | undefined,
     language: "akrantiain" | "zatlin",
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
     const [source, setSource] = useState(currentSource ?? "");
@@ -47,23 +51,11 @@ const ChangeDictionarySourceForm = create(
       const response = await request("changeDictionarySettings", {number, settings});
       if (response.status === 200) {
         addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
-        onSubmit?.();
+        await onSubmit?.();
+        await invalidateQueries("fetchDictionary", (data) => data.number === number);
       }
     }, [number, language, source, request, onSubmit, addInformationPopup]);
 
-    const executorNode = (() => {
-      if (language === "akrantiain") {
-        const executorNode = (
-          <AkrantiainExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
-        );
-        return executorNode;
-      } else if (language === "zatlin") {
-        const executorNode = (
-          <ZatlinExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
-        );
-        return executorNode;
-      }
-    })();
     const node = (
       <Fragment>
         <form styleName="root">
@@ -80,7 +72,11 @@ const ChangeDictionarySourceForm = create(
             <Button label={trans("changeDictionarySourceForm.confirm")} reactive={true} onClick={handleClick}/>
           </div>
         </form>
-        {executorNode}
+        {(language === "akrantiain") ? (
+          <AkrantiainExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
+        ) : (language === "zatlin") ? (
+          <ZatlinExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
+        ) : null}
       </Fragment>
     );
     return node;

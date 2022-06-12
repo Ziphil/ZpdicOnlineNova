@@ -19,6 +19,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -53,15 +54,16 @@ const CommissionEditor = create(
       const response = await request("addCommission", {number, name, comment}, {useRecaptcha: true});
       if (response.status === 200) {
         addInformationPopup("commissionAdded");
-        onClose?.(event);
+        await onClose?.(event);
+        await invalidateQueries("fetchCommissions", (data) => data.number === number);
       }
     }, [dictionary.number, name, comment, request, onClose, addInformationPopup]);
 
     const node = (
       <Overlay size="large" title={trans("commissionEditor.title")} open={open} onClose={onClose}>
         <div styleName="root">
-          <Input label={trans("commissionEditor.name")} value={name} onSet={(name) => setName(name)}/>
-          <TextArea className={styles!["comment"]} label={trans("commissionEditor.comment")} value={comment} showOptional={true} onSet={(comment) => setComment(comment)}/>
+          <Input label={trans("commissionEditor.name")} value={name} onSet={setName}/>
+          <TextArea className={styles!["comment"]} label={trans("commissionEditor.comment")} value={comment} showOptional={true} onSet={setComment}/>
           <Button className={styles!["button"]} label={trans("commissionEditor.confirm")} iconName="list-check" variant="information" reactive={true} onClick={addCommission}/>
         </div>
       </Overlay>
