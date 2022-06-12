@@ -37,7 +37,7 @@ export async function prefetchQuery<N extends ProcessName>(name: N, data: Reques
   await queryClient.prefetchQuery([name, data], async () => {
     const response = await rawRequest(name, data, config);
     if (response.status !== 200) {
-      throw new QueryError(response);
+      throw new QueryError(name, data, response);
     } else {
       return response.data;
     }
@@ -67,7 +67,7 @@ export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestDa
     }
     if (response.status !== 200) {
       console.error(response);
-      throw new QueryError(response);
+      throw new QueryError(name, data, response);
     } else {
       return response.data;
     }
@@ -142,19 +142,25 @@ type RequestCallbacks = {
 };
 
 
-export class QueryError extends Error {
+export class QueryError<N extends ProcessName> extends Error {
 
+  public queryName: string;
   public status: number;
-  public data: any;
+  public type: string;
+  public requestData: RequestData<N>;
+  public responseData: ResponseData<N>;
 
-  public constructor(response: AxiosResponseSpec<ProcessName>) {
-    super("query error");
+  public constructor(name: N, data: RequestData<N>, response: AxiosResponseSpec<N>) {
+    super(`${response.status} error; ${name}, data: ${JSON.stringify(data)}`);
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, QueryError);
     }
     this.name = "QueryError";
+    this.queryName = name;
     this.status = response.status;
-    this.data = response.data;
+    this.type = response.data?.type;
+    this.requestData = data;
+    this.responseData = response.data;
   }
 
 }

@@ -14,9 +14,10 @@ import {
   create
 } from "/client/component/create";
 import {
-  useLoaderData
+  useLocale,
+  useParams,
+  useSuspenseQuery
 } from "/client/component/hook";
-import NotFoundPage from "/client/component/page/not-found-page";
 import Page from "/client/component/page/page";
 import {
   CodeMirrorUtil
@@ -29,26 +30,22 @@ const DocumentPage = create(
   }: {
   }): ReactElement {
 
-    const {source} = useLoaderData();
+    const {firstPath, secondPath} = useParams();
+    const [locale] = useLocale();
+    const path = ((firstPath) ? firstPath : "") + ((secondPath) ? "/" + secondPath : "");
+    const [source] = useSuspenseQuery("fetchDocument", {path, locale});
 
-    if (source !== null) {
-      const components = {pre: DocumentPageSourceTester};
-      const title = source?.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
-      const node = (
-        <Page>
-          <Helmet>
-            <title>{(title) ? `${title} — ZpDIC Online` : "ZpDIC Online"}</title>
-          </Helmet>
-          <Markdown source={source!} type="document" components={components}/>
-        </Page>
-      );
-      return node;
-    } else {
-      const node = (
-        <NotFoundPage/>
-      );
-      return node;
-    }
+    const components = {pre: DocumentPageSourceTester};
+    const title = source?.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
+    const node = (
+      <Page>
+        <Helmet>
+          <title>{(title) ? `${title} — ZpDIC Online` : "ZpDIC Online"}</title>
+        </Helmet>
+        <Markdown source={source} type="document" components={components}/>
+      </Page>
+    );
+    return node;
 
   }
 );

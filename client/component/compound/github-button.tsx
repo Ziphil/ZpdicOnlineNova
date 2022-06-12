@@ -32,7 +32,7 @@ const GithubButton = create(
       } else {
         throw new Error("cannot fetch");
       }
-    }, {suspense: true});
+    });
     const [, {trans, transNumber}] = useIntl();
 
     const githubUrl = "https://github.com/Ziphil/ZpdicOnlineNova";

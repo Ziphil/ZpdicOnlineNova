@@ -9,7 +9,6 @@ import {
   Route,
   Router
 } from "@tanstack/react-location";
-import axios from "axios";
 import * as queryParser from "query-string";
 import * as react from "react";
 import {
@@ -35,7 +34,6 @@ import {
   create
 } from "/client/component/create";
 import {
-  globalLocale,
   queryClient,
   useDefaultLocale,
   useDefaultMe
@@ -43,35 +41,18 @@ import {
 import InnerRoot from "/client/component/inner-root";
 import EmptyPage from "/client/component/page/empty-page";
 import {
-  loadDashboardPage
+  loadDashboardPage,
+  loadDocumentPage,
+  loadTopPage
 } from "/client/component/page/loader";
 import {
   createRoute
 } from "/client/component/util/route";
 import ScrollTop from "/client/component/util/scroll-top";
-import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
 
 
 require("../../node_modules/codemirror/lib/codemirror.css");
 require("../../node_modules/c3/c3.css");
-
-export async function loadDocumentSource({params}: {params: Record<string, string>}): Promise<{source: string | null}> {
-  const firstPath = (params.firstPath) ? params.firstPath : "";
-  const secondPath = (params.secondPath) ? "/" + params.secondPath : "";
-  const locale = globalLocale;
-  const path = firstPath + secondPath;
-  const url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchDocument"];
-  const response = await axios.post(url, {locale, path}, {validateStatus: () => true});
-  if (response.status === 200 && typeof response.data === "string") {
-    const source = response.data;
-    return {source};
-  } else {
-    return {source: null};
-  }
-}
 
 const location = new ReactLocation({
   parseSearch: (searchString) => queryParser.parse(searchString),
@@ -89,11 +70,11 @@ const routes = [
   ...createRoute("/list", () => import("/client/component/page/dictionary-list-page"), {type: "none"}),
   ...createRoute("/notification", () => import("/client/component/page/notification-page"), {type: "none"}),
   ...createRoute("/contact", () => import("/client/component/page/contact-page"), {type: "none"}),
-  ...createRoute("/document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentSource}),
-  ...createRoute("/document/:firstPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentSource}),
-  ...createRoute("/document", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentSource}),
+  ...createRoute("/document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
+  ...createRoute("/document/:firstPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
+  ...createRoute("/document", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
   ...createRoute("/language", () => import("/client/component/page/language-page"), {type: "none"}),
-  ...createRoute("/", () => import("/client/component/page/top-page"), {type: "none"})
+  ...createRoute("/", () => import("/client/component/page/top-page"), {type: "none", loader: loadTopPage})
 ] as Array<Route>;
 
 
