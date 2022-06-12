@@ -23,7 +23,7 @@ const ErrorPage = create(
     error,
     resetErrorBoundary
   }: {
-    error: Error;
+    error: Error,
     resetErrorBoundary: (...args: Array<unknown>) => void
   }): ReactElement {
 

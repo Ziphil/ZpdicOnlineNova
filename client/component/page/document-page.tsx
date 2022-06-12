@@ -32,8 +32,8 @@ const DocumentPage = create(
 
     const params = useParams();
     const [locale] = useLocale();
-    const path = ((params.firstPath) ? params.firstPath : "") + ((params.secondPath) ? "/" + params.secondPath : "");
 
+    const path = ((params.firstPath) ? params.firstPath : "") + ((params.secondPath) ? "/" + params.secondPath : "");
     const [source] = useSuspenseQuery("fetchDocument", {path, locale});
 
     const components = {pre: DocumentPageSourceTester};

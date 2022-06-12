@@ -26,10 +26,11 @@ const DictionaryListPage = create(
   }: {
   }): ReactElement {
 
+    const [, {trans}] = useIntl();
+
     const [order, setOrder] = useState("updatedDate");
     const [page, setPage] = useState(0);
     const [[hitDictionaries, hitSize]] = useSuspenseQuery("fetchAllDictionaries", {order, ...calcOffset(page, 20)}, {keepPreviousData: true});
-    const [, {trans}] = useIntl();
 
     const specs = [
       {value: "updatedDate", label: trans("dictionaryListPage.updatedDate")},
