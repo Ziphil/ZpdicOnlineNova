@@ -17,9 +17,7 @@ import Authenticator from "./authenticator";
 export function createRoute(path: string, importModule: () => Promise<FunctionComponentModule>, options: RouteOptions, childRoutes?: Array<Route>): Array<Route> {
   const innerRoutes = [{
     path: "/",
-    element: () => importModule().then((module) => {
-      return <Authenticator type={options.type} redirect={options.redirect} node={createElement(module.default)}/>;
-    }),
+    element: () => importModule().then((module) => <Authenticator type={options.type} redirect={options.redirect} node={createElement(module.default)}/>),
     loader: options.loader
   }, {
     path: "*",

@@ -36,7 +36,7 @@ const DocumentPage = create(
     const [source] = useSuspenseQuery("fetchDocument", {path, locale});
 
     const components = {pre: DocumentPageSourceTester};
-    const title = source?.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
+    const title = source.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
     const node = (
       <Page>
         <Helmet>

@@ -13,6 +13,7 @@ import * as queryParser from "query-string";
 import * as react from "react";
 import {
   ReactElement,
+  Suspense,
   useCallback
 } from "react";
 import {
@@ -39,12 +40,13 @@ import {
   useDefaultMe
 } from "/client/component/hook";
 import InnerRoot from "/client/component/inner-root";
-import EmptyPage from "/client/component/page/empty-page";
+import ErrorPage from "/client/component/page/error-page";
 import {
   loadDashboardPage,
   loadDocumentPage,
   loadTopPage
 } from "/client/component/page/loader";
+import LoadingPage from "/client/component/page/loading-page";
 import {
   createRoute
 } from "/client/component/util/route";
@@ -97,15 +99,17 @@ const Root = create(
       <DndProvider backend={DndBackend}>
         <QueryClientProvider client={queryClient}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-            <ErrorBoundary fallbackRender={EmptyPage}>
-              <Router location={location} routes={routes} caseSensitive={true}>
-                <InnerRoot>
-                  <ScrollTop>
-                    <Outlet/>
-                  </ScrollTop>
-                </InnerRoot>
-              </Router>
-            </ErrorBoundary>
+            <Router location={location} routes={routes} caseSensitive={true}>
+              <ErrorBoundary fallbackRender={(props) => <ErrorPage {...props}/>}>
+                <Suspense fallback={<LoadingPage/>}>
+                  <InnerRoot>
+                    <ScrollTop>
+                      <Outlet/>
+                    </ScrollTop>
+                  </InnerRoot>
+                </Suspense>
+              </ErrorBoundary>
+            </Router>
           </IntlProvider>
         </QueryClientProvider>
       </DndProvider>

@@ -9,13 +9,9 @@ import {
   Fragment,
   ReactElement,
   ReactNode,
-  Suspense,
   useEffect,
   useState
 } from "react";
-import {
-  ErrorBoundary
-} from "react-error-boundary";
 import Drawer from "/client/component/atom/drawer";
 import ExampleEditor from "/client/component/compound/example-editor-beta";
 import HotkeyHelp from "/client/component/compound/hotkey-help";
@@ -30,8 +26,6 @@ import {
   usePath,
   useWordEditorProps
 } from "/client/component/hook";
-import ErrorPage from "/client/component/page/error-page";
-import LoadingPage from "/client/component/page/loading-page";
 
 
 const InnerRoot = create(
@@ -95,11 +89,7 @@ const InnerRoot = create(
     });
     const node = (
       <Fragment>
-        <ErrorBoundary fallbackRender={ErrorPage}>
-          <Suspense fallback={<LoadingPage/>}>
-            {children}
-          </Suspense>
-        </ErrorBoundary>
+        {children}
         <Drawer
           title={trans("wordEditor.title")}
           iconName="custom-word"
