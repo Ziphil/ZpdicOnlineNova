@@ -36,7 +36,7 @@ const DictionaryList = create(
     size: number,
     hitSize?: number,
     page?: number,
-    onPageSet?: (page: number) => void,
+    onPageSet?: (page: number) => void
   }): ReactElement {
 
     const node = (
@@ -68,7 +68,7 @@ const DictionaryListPane = create(
     showUser?: boolean,
     showUpdatedDate?: boolean,
     showCreatedDate?: boolean,
-    showLinks?: boolean,
+    showLinks?: boolean
   }): ReactElement {
 
     const actualShowLinks = showLinks && "authorities" in dictionary;
