@@ -78,9 +78,9 @@ export const [useWordEditor, useWordEditorProps] = createEditor<EditableWord, Pa
 export const [useExampleEditor, useExampleEditorProps] = createEditor<EditableExample, Parameters<typeof ExampleEditor>[0]>();
 
 type EditorProps<I> = {
-  onEditConfirm?: (item: I, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-  onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+  onEditConfirm?: (item: I, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
+  onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
+  onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
 };
 type CreateEditorHook<P> = () => (props: P) => void;
 type CreateEditorPropsHook<P> = () => [Array<P & {id: string}>, boolean, Dispatch<SetStateAction<boolean>>];

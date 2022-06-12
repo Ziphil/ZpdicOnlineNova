@@ -33,6 +33,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useDragDrop,
   useIntl,
   usePopup,
@@ -66,8 +67,8 @@ const ExampleEditor = create(
   }: {
     dictionary: EnhancedDictionary,
     example: Example | null,
-    onEditConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    onEditConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
+    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
     onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
@@ -113,6 +114,7 @@ const ExampleEditor = create(
       if (response.status === 200) {
         addInformationPopup("exampleEdited");
         await onEditConfirm?.(tempExample, event);
+        await invalidateQueries("fetchExamples", (data) => data.number === number);
       }
     }, [dictionary, tempExample, request, onEditConfirm, addInformationPopup]);
 
@@ -124,6 +126,7 @@ const ExampleEditor = create(
         if (response.status === 200) {
           addInformationPopup("exampleDiscarded");
           await onDiscardConfirm?.(event);
+          await invalidateQueries("fetchExamples", (data) => data.number === number);
         }
       }
     }, [dictionary, tempExample, request, onDiscardConfirm, addInformationPopup]);
