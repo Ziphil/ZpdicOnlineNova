@@ -295,7 +295,7 @@ type ServerSpecs = {
       success: DictionaryStatistics,
       error: CustomError<"noSuchDictionaryNumber">
     }
-  }
+  },
   fetchDictionaries: {
     request: {},
     response: {
