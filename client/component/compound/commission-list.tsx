@@ -4,7 +4,6 @@ import * as react from "react";
 import {
   MouseEvent,
   ReactElement,
-  useCallback,
   useState
 } from "react";
 import {
@@ -56,10 +55,6 @@ const CommissionList = create(
     const number = dictionary.number;
     const [[hitCommissions, hitSize], {refetch: refetchCommissions}] = useSuspenseQuery("fetchCommissions", {number, ...calcOffset(page, size)}, {keepPreviousData: true});
 
-    const handleDiscardConfirm = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
-      await Promise.all([refetchCommissions(), onDiscardConfirm?.(event)]);
-    }, [refetchCommissions, onDiscardConfirm]);
-
     const column = (smartphone) ? 2 : 3;
     const node = (
       <div styleName="root">
@@ -75,7 +70,7 @@ const CommissionList = create(
               key={commission.id}
               dictionary={dictionary}
               commission={commission}
-              onDiscardConfirm={handleDiscardConfirm}
+              onDiscardConfirm={onDiscardConfirm}
               onAddConfirm={onAddConfirm}
             />
           )}

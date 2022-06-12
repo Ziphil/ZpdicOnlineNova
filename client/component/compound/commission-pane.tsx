@@ -18,6 +18,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest,
@@ -61,6 +62,7 @@ const CommissionPane = create(
           addInformationPopup("commissionDiscarded");
         }
         await onDiscardConfirm?.(event);
+        invalidateQueries("fetchCommissions", (data) => data.number === number);
       }
     }, [dictionary.number, commission, request, onDiscardConfirm, addInformationPopup]);
 

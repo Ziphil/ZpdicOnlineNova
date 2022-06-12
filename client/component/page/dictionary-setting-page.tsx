@@ -4,7 +4,6 @@ import * as react from "react";
 import {
   Fragment,
   ReactElement,
-  useCallback,
   useMemo
 } from "react";
 import Markdown from "/client/component/atom/markdown";
@@ -33,19 +32,12 @@ import {
   useLocation,
   useParams,
   usePath,
-  useRequest,
   useSuspenseQuery
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
-  Commission
-} from "/client/skeleton/commission";
-import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
-import {
-  WithSize
-} from "/server/controller/internal/type";
 
 
 const DictionarySettingPage = create(
@@ -60,7 +52,7 @@ const DictionarySettingPage = create(
     const [, {trans}] = useIntl();
 
     const [rawDictionary, {refetch: refetchDictionary}] = useSuspenseQuery("fetchDictionary", {number});
-    const [[, commisionSize], {refetch: refetchCommissions}] = useSuspenseQuery("fetchCommissions", {number, offset: 0, size: 30});
+    const [[, commisionSize]] = useSuspenseQuery("fetchCommissions", {number, offset: 0, size: 30});
     const [] = useSuspenseQuery("checkDictionaryAuthorization", {number, authority: "own"});
     const dictionary = useMemo(() => EnhancedDictionary.enhance(rawDictionary), [rawDictionary]);
 
@@ -76,7 +68,7 @@ const DictionarySettingPage = create(
     const node = (
       <Page dictionary={dictionary} showDictionary={true}>
         <Menu mode={mode} specs={menuSpecs}/>
-        <DictionarySettingPageForms {...{dictionary, mode, refetchDictionary, refetchCommissions}}/>
+        <DictionarySettingPageForms {...{dictionary, mode, refetchDictionary}}/>
       </Page>
     );
     return node;
@@ -90,30 +82,15 @@ const DictionarySettingPageForms = create(
   function ({
     dictionary,
     mode,
-    refetchDictionary,
-    refetchCommissions
+    refetchDictionary
   }: {
     dictionary: EnhancedDictionary,
     mode: string,
     refetchDictionary: () => Promise<unknown>,
-    refetchCommissions: () => Promise<unknown>
   }): ReactElement | null {
 
     const [, {trans}] = useIntl();
-    const {request} = useRequest();
     const {pushPath} = usePath();
-    const params = useParams();
-
-    const provideCommissions = useCallback(async function (offset?: number, size?: number): Promise<WithSize<Commission>> {
-      const number = +params.number;
-      const response = await request("fetchCommissions", {number, offset, size});
-      if (response.status === 200 && !("error" in response.data)) {
-        const hitResult = response.data;
-        return hitResult;
-      } else {
-        return [[], 0];
-      }
-    }, [params.number, request]);
 
     if (mode === "general") {
       const node = (
@@ -247,7 +224,7 @@ const DictionarySettingPageForms = create(
       const node = (
         <Fragment>
           <SettingPane>
-            <CommissionList dictionary={dictionary} size={30} onAddConfirm={refetchCommissions} onDiscardConfirm={refetchCommissions}/>
+            <CommissionList dictionary={dictionary} size={30}/>
           </SettingPane>
         </Fragment>
       );

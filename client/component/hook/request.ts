@@ -44,6 +44,16 @@ export async function prefetchQuery<N extends ProcessName>(name: N, data: Reques
   });
 }
 
+export async function invalidateQueries<N extends ProcessName>(name: N, predicate?: (data: RequestData<N>) => boolean): Promise<void> {
+  await queryClient.invalidateQueries({predicate: (query) => {
+    if (predicate !== undefined) {
+      return query.queryKey[0] === name && predicate(query.queryKey[1] as any);
+    } else {
+      return query.queryKey[0] === name;
+    }
+  }});
+}
+
 export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [ResponseData<N> | null, unknown, UseQueryRestResult<N>] {
   const [, {addErrorPopup}] = usePopup();
   const {data: queryData, error: queryError, ...rest} = useRawQuery<ResponseData<N>>([name, data], async () => {
