@@ -2,14 +2,15 @@
 
 import * as react from "react";
 import {
-  Fragment,
   ReactElement,
+  Suspense,
   useMemo
 } from "react";
 import Markdown from "/client/component/atom/markdown";
 import CommissionList from "/client/component/compound/commission-list";
 import DictionaryStatisticsPane from "/client/component/compound/dictionary-statistics-pane";
 import HistoryPane from "/client/component/compound/history-pane";
+import Loading from "/client/component/compound/loading";
 import Menu from "/client/component/compound/menu";
 import ResourceList from "/client/component/compound/resource-list";
 import SettingPane from "/client/component/compound/setting-pane";
@@ -51,7 +52,7 @@ const DictionarySettingPage = create(
     const location = useLocation();
     const [, {trans}] = useIntl();
 
-    const [rawDictionary, {refetch: refetchDictionary}] = useSuspenseQuery("fetchDictionary", {number});
+    const [rawDictionary] = useSuspenseQuery("fetchDictionary", {number});
     const [[, commisionSize]] = useSuspenseQuery("fetchCommissions", {number, offset: 0, size: 30});
     const [] = useSuspenseQuery("checkDictionaryAuthorization", {number, authority: "own"});
     const dictionary = useMemo(() => EnhancedDictionary.enhance(rawDictionary), [rawDictionary]);
@@ -92,7 +93,7 @@ const DictionarySettingPageForms = create(
 
     if (mode === "general") {
       const node = (
-        <Fragment>
+        <Suspense fallback={<DictionarySettingPageLoading/>}>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryNameForm.label")}
             description={trans("dictionarySettingPage.changeDictionaryNameForm.description")}
@@ -123,12 +124,12 @@ const DictionarySettingPageForms = create(
           >
             <DiscardDictionaryForm number={dictionary.number} onSubmit={() => pushPath("/dashboard", {preservePopup: true})}/>
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else if (mode === "setting") {
       const node = (
-        <Fragment>
+        <Suspense fallback={<DictionarySettingPageLoading/>}>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryExplanationForm.label")}
             description={trans("dictionarySettingPage.changeDictionaryExplanationForm.description")}
@@ -191,12 +192,12 @@ const DictionarySettingPageForms = create(
               propertyName="enableMarkdown"
             />
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else if (mode === "access") {
       const node = (
-        <Fragment>
+        <Suspense fallback={<DictionarySettingPageLoading/>}>
           <SettingPane
             label={trans("dictionarySettingPage.addEditInvitationForm.label")}
             description={trans("dictionarySettingPage.addEditInvitationForm.description")}
@@ -209,30 +210,30 @@ const DictionarySettingPageForms = create(
           >
             <AddTransferInvitationForm number={dictionary.number} dictionary={dictionary}/>
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else if (mode === "request") {
       const node = (
-        <Fragment>
+        <Suspense fallback={<DictionarySettingPageLoading/>}>
           <SettingPane>
             <CommissionList dictionary={dictionary} size={30}/>
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else if (mode === "resource") {
       const node = (
-        <Fragment>
+        <Suspense fallback={<DictionarySettingPageLoading/>}>
           <SettingPane>
             <ResourceList dictionary={dictionary} size={20}/>
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else if (mode === "statistics") {
       const node = (
-        <Fragment>
+        <Suspense fallback={<DictionarySettingPageLoading/>}>
           <SettingPane
             label={trans("dictionarySettingPage.dictionaryStatisticsPane.label")}
             description={trans("dictionarySettingPage.dictionaryStatisticsPane.description")}
@@ -252,12 +253,29 @@ const DictionarySettingPageForms = create(
           >
             <WordNameFrequencyPane dictionary={dictionary}/>
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else {
       return null;
     }
+
+  }
+);
+
+
+const DictionarySettingPageLoading = create(
+  require("./dictionary-setting-page.scss"),
+  function ({
+  }: {
+  }): ReactElement {
+
+    const node = (
+      <SettingPane>
+        <Loading loading={true}/>
+      </SettingPane>
+    );
+    return node;
 
   }
 );

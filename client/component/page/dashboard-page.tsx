@@ -2,13 +2,14 @@
 
 import * as react from "react";
 import {
-  Fragment,
   ReactElement,
+  Suspense,
   useCallback
 } from "react";
 import ActivateUserForm from "/client/component/compound/activate-user-form";
 import DictionaryList from "/client/component/compound/dictionary-list";
 import InvitationList from "/client/component/compound/invitation-list";
+import Loading from "/client/component/compound/loading";
 import Menu from "/client/component/compound/menu";
 import SettingPane from "/client/component/compound/setting-pane";
 import {
@@ -112,7 +113,7 @@ const DashboardPageForms = create(
 
     if (mode === "dictionary") {
       const node = (
-        <Fragment>
+        <Suspense fallback={<DashboardPageLoading/>}>
           <SettingPane
             label={trans("dashboardPage.dictionaryList.label")}
             description={trans("dashboardPage.dictionaryList.description")}
@@ -125,12 +126,12 @@ const DashboardPageForms = create(
           >
             <CreateDictionaryForm/>
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else if (mode === "notification") {
       const node = (
-        <Fragment>
+        <Suspense fallback={<DashboardPageLoading/>}>
           <SettingPane
             label={trans("dashboardPage.editInvitationList.label")}
             description={trans("dashboardPage.editInvitationList.description")}
@@ -143,12 +144,12 @@ const DashboardPageForms = create(
           >
             <InvitationList invitations={transferInvitations} size={8} onSubmit={refetchTransferInvitations}/>
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else if (mode === "account") {
       const node = (
-        <Fragment>
+        <Suspense fallback={<DashboardPageLoading/>}>
           <SettingPane
             label={trans("dashboardPage.changeUserNameForm.label")}
             description={trans("dashboardPage.changeUserNameForm.description")}
@@ -179,12 +180,29 @@ const DashboardPageForms = create(
           >
             <DiscardUserForm onSubmit={() => pushPath("/", {preservePopup: true})}/>
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else {
       return null;
     }
+
+  }
+);
+
+
+const DashboardPageLoading = create(
+  require("./dictionary-setting-page.scss"),
+  function ({
+  }: {
+  }): ReactElement {
+
+    const node = (
+      <SettingPane>
+        <Loading loading={true}/>
+      </SettingPane>
+    );
+    return node;
 
   }
 );
