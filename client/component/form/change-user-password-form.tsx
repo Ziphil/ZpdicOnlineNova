@@ -6,6 +6,9 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
@@ -32,7 +35,7 @@ const ChangeUserPasswordForm = create(
   function ({
     onSubmit
   }: {
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
     const [password, setPassword] = useState("");
@@ -44,7 +47,7 @@ const ChangeUserPasswordForm = create(
       const response = await request("changeUserPassword", {password});
       if (response.status === 200) {
         addInformationPopup("userPasswordChanged");
-        onSubmit?.();
+        await onSubmit?.();
       }
     }, [password, request, onSubmit, addInformationPopup]);
 

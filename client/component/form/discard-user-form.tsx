@@ -7,6 +7,9 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import {
@@ -25,7 +28,7 @@ const DiscardUserForm = create(
   function ({
     onSubmit
   }: {
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
     const [alertOpen, setAlertOpen] = useState(false);
@@ -39,7 +42,7 @@ const DiscardUserForm = create(
       if (response.status === 200) {
         addInformationPopup("userDiscarded");
         await logout();
-        onSubmit?.();
+        await onSubmit?.();
       }
     }, [request, logout, onSubmit, addInformationPopup]);
 

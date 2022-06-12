@@ -50,8 +50,8 @@ const DashboardPage = create(
     const location = useLocation();
 
     const [dictionaries] = useSuspenseQuery("fetchDictionaries", {});
-    const [editInvitations, {refetch: refetchEditInvitations}] = useSuspenseQuery("fetchInvitations", {type: "edit"});
-    const [transferInvitations, {refetch: refetchTransferInvitations}] = useSuspenseQuery("fetchInvitations", {type: "transfer"});
+    const [editInvitations] = useSuspenseQuery("fetchInvitations", {type: "edit"});
+    const [transferInvitations] = useSuspenseQuery("fetchInvitations", {type: "transfer"});
     const [me] = useSuspenseMe();
 
     const performLogout = useCallback(async function (): Promise<void> {
@@ -80,7 +80,7 @@ const DashboardPage = create(
           </div>
         )}
         <Menu mode={mode} specs={menuSpecs}/>
-        <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode, refetchEditInvitations, refetchTransferInvitations}}/>
+        <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode}}/>
       </Page>
     );
     return node;
@@ -95,16 +95,12 @@ const DashboardPageForms = create(
     dictionaries,
     editInvitations,
     transferInvitations,
-    mode,
-    refetchEditInvitations,
-    refetchTransferInvitations
+    mode
   }: {
     dictionaries: Array<UserDictionary>,
     editInvitations: Array<Invitation>,
     transferInvitations: Array<Invitation>,
-    mode: string,
-    refetchEditInvitations: () => Promise<unknown>,
-    refetchTransferInvitations: () => Promise<unknown>
+    mode: string
   }): ReactElement | null {
 
     const [user, {refetchMe}] = useSuspenseMe();
@@ -136,13 +132,13 @@ const DashboardPageForms = create(
             label={trans("dashboardPage.editInvitationList.label")}
             description={trans("dashboardPage.editInvitationList.description")}
           >
-            <InvitationList invitations={editInvitations} size={8} onSubmit={refetchEditInvitations}/>
+            <InvitationList invitations={editInvitations} size={8}/>
           </SettingPane>
           <SettingPane
             label={trans("dashboardPage.transferInvitationList.label")}
             description={trans("dashboardPage.transferInvitationList.description")}
           >
-            <InvitationList invitations={transferInvitations} size={8} onSubmit={refetchTransferInvitations}/>
+            <InvitationList invitations={transferInvitations} size={8}/>
           </SettingPane>
         </Suspense>
       );

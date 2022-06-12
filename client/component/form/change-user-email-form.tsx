@@ -6,6 +6,9 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
@@ -34,7 +37,7 @@ const ChangeUserEmailForm = create(
     onSubmit
   }: {
     currentEmail: string,
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
     const [email, setEmail] = useState(currentEmail);
@@ -46,7 +49,7 @@ const ChangeUserEmailForm = create(
       const response = await request("changeUserEmail", {email});
       if (response.status === 200) {
         addInformationPopup("userEmailChanged");
-        onSubmit?.();
+        await onSubmit?.();
       }
     }, [email, request, onSubmit, addInformationPopup]);
 

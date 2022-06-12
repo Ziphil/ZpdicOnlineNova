@@ -15,6 +15,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -30,7 +31,7 @@ const InvitationPane = create(
     invitation,
     onSubmit
   }: {
-    invitation: Invitation
+    invitation: Invitation,
     onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
   }): ReactElement {
 
@@ -54,6 +55,7 @@ const InvitationPane = create(
         })();
         addInformationPopup(type);
         await onSubmit?.(event);
+        await invalidateQueries("fetchInvitations", (data) => data.type === invitationType);
       }
     }, [invitation, request, onSubmit, addInformationPopup]);
 

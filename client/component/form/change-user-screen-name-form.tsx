@@ -6,6 +6,9 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
@@ -25,7 +28,7 @@ const ChangeUserScreenNameForm = create(
     onSubmit
   }: {
     currentScreenName: string | undefined,
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
     const [screenName, setScreenName] = useState(currentScreenName ?? "");
@@ -37,7 +40,7 @@ const ChangeUserScreenNameForm = create(
       const response = await request("changeUserScreenName", {screenName});
       if (response.status === 200) {
         addInformationPopup("userScreenNameChanged");
-        onSubmit?.();
+        await onSubmit?.();
       }
     }, [screenName, request, onSubmit, addInformationPopup]);
 
