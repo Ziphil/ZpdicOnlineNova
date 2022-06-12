@@ -3,7 +3,6 @@
 import * as react from "react";
 import {
   ReactElement,
-  useCallback,
   useState
 } from "react";
 import RadioGroup from "/client/component/atom/radio-group";
@@ -13,15 +12,12 @@ import {
 } from "/client/component/create";
 import {
   useIntl,
-  useRequest
+  useSuspenseQuery
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
-  DetailedDictionary
-} from "/client/skeleton/dictionary";
-import {
-  WithSize
-} from "/server/controller/internal/type";
+  calcOffset
+} from "/client/util/misc";
 
 
 const DictionaryListPage = create(
@@ -31,18 +27,9 @@ const DictionaryListPage = create(
   }): ReactElement {
 
     const [order, setOrder] = useState("updatedDate");
+    const [page, setPage] = useState(0);
+    const [[hitDictionaries, hitSize]] = useSuspenseQuery("fetchAllDictionaries", {order, ...calcOffset(page, 20)}, {keepPreviousData: true});
     const [, {trans}] = useIntl();
-    const {request} = useRequest();
-
-    const provideDictionaries = useCallback(async function (offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
-      const response = await request("fetchAllDictionaries", {order, offset, size});
-      if (response.status === 200) {
-        const hitResult = response.data;
-        return hitResult;
-      } else {
-        return [[], 0];
-      }
-    }, [order, request]);
 
     const specs = [
       {value: "updatedDate", label: trans("dictionaryListPage.updatedDate")},
@@ -54,7 +41,7 @@ const DictionaryListPage = create(
           <RadioGroup name="order" value={order} specs={specs} onSet={(order) => setOrder(order)}/>
         </div>
         <div styleName="list">
-          <DictionaryList dictionaries={provideDictionaries} showCreatedDate={true} size={20}/>
+          <DictionaryList dictionaries={hitDictionaries} size={20} hitSize={hitSize} page={page} onPageSet={setPage} showCreatedDate={true}/>
         </div>
       </Page>
     );

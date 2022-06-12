@@ -4,7 +4,8 @@ import * as react from "react";
 import {
   Fragment,
   ReactElement,
-  ReactNode
+  ReactNode,
+  useState
 } from "react";
 import PaginationButton from "/client/component/compound/pagination-button";
 import {
@@ -40,13 +41,19 @@ const PaneList = create(
     variant?: "spaced" | "compact",
     border?: boolean,
     size: number,
-    hitSize: number,
-    page: number,
+    hitSize?: number,
+    page?: number,
     onPageSet?: (page: number) => void,
     showPagination?: boolean
   }): ReactElement {
 
-    const panesProps = {items, renderer, column, variant, border};
+    const [innerPage, onInnerPageSet] = useState(0);
+
+    const actualItems = (hitSize !== undefined && page !== undefined) ? items : items.slice(size * innerPage, size * innerPage + size);
+    const actualHitSize = (hitSize !== undefined && page !== undefined) ? hitSize : items.length;
+    const actualPage = (hitSize !== undefined && page !== undefined) ? page : innerPage;
+    const actualOnPageSet = (hitSize !== undefined && page !== undefined) ? onPageSet : onInnerPageSet;
+    const panesProps = {items: actualItems, renderer, column, variant, border};
     const node = (
       <div styleName="root">
         {(method === "div") ? (
@@ -54,7 +61,7 @@ const PaneList = create(
         ) : (
           <PaneListTablePanes {...panesProps}/>
         )}
-        {(showPagination) && <PaneListPaginationButton {...{items, size, hitSize, page, onPageSet}}/>}
+        {(showPagination) && <PaneListPaginationButton {...{items: actualItems, size, hitSize: actualHitSize, page: actualPage, onPageSet: actualOnPageSet}}/>}
       </div>
     );
     return node;
@@ -151,7 +158,7 @@ const PaneListPaginationButton = create(
 
     const data = DataUtil.create({empty: items.length <= 0});
     const minPage = 0;
-    const maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
+    const maxPage = Math.max(Math.ceil(hitSize / size) - 1, 0);
     const node = (
       <div styleName="pagination" {...data}>
         <PaginationButton page={page} minPage={minPage} maxPage={maxPage} onSet={onPageSet}/>
