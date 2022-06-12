@@ -86,7 +86,7 @@ const DictionarySettingPageForms = create(
   }: {
     dictionary: EnhancedDictionary,
     mode: string,
-    refetchDictionary: () => Promise<unknown>,
+    refetchDictionary: () => Promise<unknown>
   }): ReactElement | null {
 
     const [, {trans}] = useIntl();
