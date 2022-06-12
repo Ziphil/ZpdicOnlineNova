@@ -19,7 +19,7 @@ import {
   useIntl,
   usePopup,
   useRequest,
-  useUser
+  useMe
 } from "/client/component/hook";
 
 
@@ -34,7 +34,7 @@ const ContactForm = create(
     const [subject, setSubject] = useState("");
     const [text, setText] = useState("");
     const [, {trans}] = useIntl();
-    const [user] = useUser();
+    const [me] = useMe();
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -48,15 +48,15 @@ const ContactForm = create(
     }, [name, email, subject, text, request, addInformationPopup]);
 
     useMount(() => {
-      if (user !== null) {
-        const name = user.screenName;
-        const email = user.email;
+      if (me !== null) {
+        const name = me.screenName;
+        const email = me.email;
         setName(name);
         setEmail(email);
       }
     });
 
-    const disabled = user !== null;
+    const disabled = me !== null;
     const node = (
       <form styleName="root">
         <Input label={trans("contactForm.name")} value={name} disabled={disabled} showOptional={true} onSet={(name) => setName(name)}/>

@@ -60,9 +60,6 @@ const MenuItem = create(
       direction,
       {if: highlight, true: "highlight"}
     );
-    const badgeNode = (badgeValue) && (
-      <Badge className={styles!["badge"]} value={badgeValue} variant={(highlight) ? "highlight" : "normal"}/>
-    );
     const node = (
       <a styleName={styleName} href={href} onClick={handleClick}>
         <Icon className={styles!["icon"]} name={iconName}/>
@@ -70,7 +67,9 @@ const MenuItem = create(
           <span styleName="dummy">{label}</span>
           {label}
         </span>
-        {badgeNode}
+        {(badgeValue !== undefined && badgeValue > 0) && (
+          <Badge className={styles!["badge"]} value={badgeValue} variant={(highlight) ? "highlight" : "normal"}/>
+        )}
       </a>
     );
     return node;

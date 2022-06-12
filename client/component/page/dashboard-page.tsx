@@ -25,8 +25,8 @@ import {
   useLocation,
   useLogout,
   usePath,
-  useSuspenseQuery,
-  useUser
+  useSuspenseMe,
+  useSuspenseQuery
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
@@ -48,7 +48,7 @@ const DashboardPage = create(
     const [transferInvitations, {refetch: refetchTransferInvitations}] = useSuspenseQuery("fetchInvitations", {type: "transfer"});
     const [, {trans}] = useIntl();
     const {pushPath} = usePath();
-    const [user] = useUser();
+    const [me] = useSuspenseMe();
     const logout = useLogout();
     const location = useLocation();
 
@@ -72,13 +72,13 @@ const DashboardPage = create(
     ] as const;
     const node = (
       <Page title={trans("dashboardPage.title")}>
-        {(!user?.activated) && (
+        {(!me.activated) && (
           <div styleName="activate">
             <ActivateUserForm/>
           </div>
         )}
         <Menu mode={mode} specs={menuSpecs}/>
-        {(user) && <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode, refetchEditInvitations, refetchTransferInvitations}}/>}
+        <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode, refetchEditInvitations, refetchTransferInvitations}}/>
       </Page>
     );
     return node;
@@ -105,7 +105,7 @@ const DashboardPageForms = create(
     refetchTransferInvitations: () => Promise<unknown>
   }): ReactElement | null {
 
-    const [user, {fetchUser}] = useUser();
+    const [user, {refetchMe}] = useSuspenseMe();
     const [, {trans}] = useIntl();
     const {pushPath} = usePath();
 
@@ -152,19 +152,19 @@ const DashboardPageForms = create(
             label={trans("dashboardPage.changeUserNameForm.label")}
             description={trans("dashboardPage.changeUserNameForm.description")}
           >
-            <ChangeUserNameForm currentName={user!.name} onSubmit={fetchUser}/>
+            <ChangeUserNameForm currentName={user.name} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
             label={trans("dashboardPage.changeUserScreenNameForm.label")}
             description={trans("dashboardPage.changeUserScreenNameForm.description")}
           >
-            <ChangeUserScreenNameForm currentScreenName={user!.screenName} onSubmit={fetchUser}/>
+            <ChangeUserScreenNameForm currentScreenName={user.screenName} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
             label={trans("dashboardPage.changeUserEmailForm.label")}
             description={trans("dashboardPage.changeUserEmailForm.description")}
           >
-            <ChangeUserEmailForm currentEmail={user!.email} onSubmit={fetchUser}/>
+            <ChangeUserEmailForm currentEmail={user.email} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
             label={trans("dashboardPage.changeUserPasswordForm.label")}

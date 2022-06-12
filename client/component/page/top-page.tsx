@@ -18,7 +18,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useUser
+  useMe
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
@@ -32,7 +32,7 @@ const TopPage = create(
   }: {
   }): ReactElement {
 
-    const [user] = useUser();
+    const [me] = useMe();
 
     const rawContributors = [
       {name: "lynn", url: {github: "lynn"}, avatarUrl: {github: "lynn"}},
@@ -41,10 +41,10 @@ const TopPage = create(
       {name: "川音リオ", url: {twitter: "KawaneRio"}, avatarUrl: "https://pbs.twimg.com/profile_images/1085673171083091969/t3IjudoH_400x400.jpg"}
     ];
     const loginFormData = DataUtil.create({
-      hidden: user !== null
+      hidden: me !== null
     });
     const dashboardFormData = DataUtil.create({
-      hidden: user === null
+      hidden: me === null
     });
     const node = (
       <Page title="">

@@ -18,10 +18,10 @@ import {
 } from "/server/controller/internal/type";
 
 
-export const useRawUser = createGlobalState<DetailedUser | null>(null);
+export const useRawMe = createGlobalState<DetailedUser | null>(null);
 
-export function useDefaultUser(): {user: DetailedUser | null, ready: boolean} {
-  const [user, setUser] = useRawUser();
+export function useDefaultMe(): {user: DetailedUser | null, ready: boolean} {
+  const [user, setUser] = useRawMe();
   const [ready, setReady] = useState(false);
   useMount(async () => {
     const url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
@@ -38,21 +38,31 @@ export function useDefaultUser(): {user: DetailedUser | null, ready: boolean} {
   return {user, ready};
 }
 
-export function useUser(): [DetailedUser | null, UserCallbacks] {
-  const [user, setUser] = useRawUser();
-  const fetchUser = useCallback(async function (): Promise<void> {
+export function useMe(): [DetailedUser | null, UserCallbacks] {
+  const [me, setMe] = useRawMe();
+  const refetchMe = useCallback(async function (): Promise<void> {
     const url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
     const response = await axios.post(url, {}, {validateStatus: () => true});
     if (response.status === 200) {
-      const user = response.data;
-      setUser(user);
+      const me = response.data;
+      setMe(me);
     } else {
-      setUser(null);
+      setMe(null);
     }
-  }, [setUser]);
-  return [user, {fetchUser}];
+  }, [setMe]);
+  return [me, {refetchMe}];
+}
+
+export function useSuspenseMe(): [DetailedUser, UserCallbacks] {
+  const [me, setMe] = useMe();
+  if (me === null) {
+    throw new Promise(() => {
+      console.log("me suspended");
+    });
+  }
+  return [me, setMe];
 }
 
 type UserCallbacks = {
-  fetchUser: () => Promise<void>
+  refetchMe: () => Promise<void>
 };

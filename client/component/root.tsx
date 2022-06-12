@@ -38,7 +38,7 @@ import {
 import {
   globalLocale,
   useDefaultLocale,
-  useDefaultUser
+  useDefaultMe
 } from "/client/component/hook";
 import InnerRoot from "/client/component/inner-root";
 import EmptyPage from "/client/component/page/empty-page";
@@ -101,7 +101,7 @@ const Root = create(
   }: {
   }): ReactElement | null {
 
-    const {ready} = useDefaultUser();
+    const {ready} = useDefaultMe();
     const {locale, messages} = useDefaultLocale("ja");
 
     const handleIntlError = useCallback(function (error: IntlError<any>): void {
