@@ -31,9 +31,19 @@ export async function loadDashboardPage(): Promise<{}> {
   return {};
 }
 
-export async function loadDocumentPage(routeMatch: RouteMatch<DefaultGenerics>): Promise<{}> {
-  const {firstPath, secondPath} = routeMatch.params;
-  const path = ((firstPath) ? firstPath : "") + ((secondPath) ? "/" + secondPath : "");
+export async function loadDictionarySettingPage({params}: RouteMatch<DefaultGenerics>): Promise<{}> {
+  const number = +params.number;
+  const promises = [
+    prefetchQuery("fetchDictionary", {number}),
+    prefetchQuery("fetchCommissions", {number, offset: 0, size: 30}),
+    prefetchQuery("checkDictionaryAuthorization", {number, authority: "own"})
+  ];
+  await Promise.all(promises);
+  return {};
+}
+
+export async function loadDocumentPage({params}: RouteMatch<DefaultGenerics>): Promise<{}> {
+  const path = ((params.firstPath) ? params.firstPath : "") + ((params.secondPath) ? "/" + params.secondPath : "");
   const promises = LANGUAGES.map(({locale}) => prefetchQuery("fetchDocument", {path, locale}));
   await Promise.all(promises);
   return {};

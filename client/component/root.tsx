@@ -43,6 +43,7 @@ import InnerRoot from "/client/component/inner-root";
 import ErrorPage from "/client/component/page/error-page";
 import {
   loadDashboardPage,
+  loadDictionarySettingPage,
   loadDocumentPage,
   loadTopPage
 } from "/client/component/page/loader";
@@ -65,7 +66,7 @@ const routes = [
   ...createRoute("/register", () => import("/client/component/page/register-page"), {type: "guest", redirect: "/dashboard"}),
   ...createRoute("/reset", () => import("/client/component/page/reset-user-password-page"), {type: "guest", redirect: "/dashboard"}),
   ...createRoute("/activate", () => import("/client/component/page/activate-user-page"), {type: "none"}),
-  ...createRoute("/dashboard/dictionary/:number", () => import("/client/component/page/dictionary-setting-page"), {type: "private", redirect: "/login"}),
+  ...createRoute("/dashboard/dictionary/:number", () => import("/client/component/page/dictionary-setting-page"), {type: "private", redirect: "/login", loader: loadDictionarySettingPage}),
   ...createRoute("/dashboard", () => import("/client/component/page/dashboard-page"), {type: "private", redirect: "/login", loader: loadDashboardPage}),
   ...createRoute("/dictionary/:value", () => import("/client/component/page/dictionary-page"), {type: "none"}),
   ...createRoute("/example/:number", () => import("/client/component/page/example-page"), {type: "none"}),

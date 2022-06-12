@@ -48,10 +48,10 @@ const DictionarySettingPage = create(
   }): ReactElement {
 
     const params = useParams();
-    const number = +params.number;
     const location = useLocation();
     const [, {trans}] = useIntl();
 
+    const number = +params.number;
     const [rawDictionary] = useSuspenseQuery("fetchDictionary", {number});
     const [[, commisionSize]] = useSuspenseQuery("fetchCommissions", {number, offset: 0, size: 30});
     const [] = useSuspenseQuery("checkDictionaryAuthorization", {number, authority: "own"});
