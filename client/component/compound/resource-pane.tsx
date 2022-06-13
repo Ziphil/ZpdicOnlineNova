@@ -19,6 +19,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -57,6 +58,7 @@ const ResourcePane = create(
       if (response.status === 200) {
         addInformationPopup("resourceDiscarded");
         await onDiscardConfirm?.(event);
+        await invalidateQueries("fetchResources", (data) => data.number === number);
       }
     }, [dictionary.number, resource, request, onDiscardConfirm, addInformationPopup]);
 
