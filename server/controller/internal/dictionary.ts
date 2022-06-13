@@ -73,7 +73,7 @@ export class DictionaryController extends Controller {
       if (request.file!.size <= 5 * 1024 * 1024) {
         const promise = new Promise(async (resolve, reject) => {
           try {
-            await dictionary!.upload(path, originalPath);
+            await dictionary.upload(path, originalPath);
             await fs.unlink(path);
             resolve(null);
           } catch (error) {
@@ -427,6 +427,26 @@ export class DictionaryController extends Controller {
         Controller.respond(response, null);
       } else {
         Controller.respondForbidden(response);
+      }
+    } else {
+      const body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
+  @post(SERVER_PATHS["checkDictionaryAuthorizationBoolean"])
+  @before(verifyUser())
+  public async [Symbol()](request: Request<"checkDictionaryAuthorizationBoolean">, response: Response<"checkDictionaryAuthorizationBoolean">): Promise<void> {
+    const user = request.user!;
+    const number = request.body.number;
+    const authority = request.body.authority;
+    const dictionary = await DictionaryModel.fetchOneByNumber(number);
+    if (dictionary) {
+      const hasAuthority = await dictionary.hasAuthority(user, authority);
+      if (hasAuthority) {
+        Controller.respond(response, true);
+      } else {
+        Controller.respond(response, false);
       }
     } else {
       const body = CustomError.ofType("noSuchDictionaryNumber");

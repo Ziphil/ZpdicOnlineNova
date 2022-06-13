@@ -27,12 +27,18 @@ const ExampleList = create(
     examples,
     dictionary,
     size,
+    hitSize,
+    page,
+    onPageSet,
     onEditConfirm,
     onDiscardConfirm
   }: {
     examples: Array<Example>,
     dictionary: EnhancedDictionary,
     size: number,
+    hitSize?: number,
+    page?: number,
+    onPageSet?: (page: number) => void,
     onEditConfirm?: (oldExample: Example, newExample: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
     onDiscardConfirm?: (example: Example, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
   }): ReactElement {
@@ -40,8 +46,11 @@ const ExampleList = create(
     const node = (
       <PaneList
         items={examples}
-        size={size}
         column={2}
+        size={size}
+        hitSize={hitSize}
+        page={page}
+        onPageSet={onPageSet}
         renderer={(example) => (
           <ExamplePane
             key={example.id}

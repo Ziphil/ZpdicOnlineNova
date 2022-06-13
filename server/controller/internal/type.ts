@@ -74,6 +74,7 @@ export const SERVER_PATHS = {
   suggestDictionaryTitles: "/dictionary/suggest/title",
   fetchDictionaryAuthorizedUsers: "/dictionary/user",
   checkDictionaryAuthorization: "/dictionary/check",
+  checkDictionaryAuthorizationBoolean: "/dictionary/check/boolean",
   fetchDictionary: "/dictionary/fetch",
   fetchWordNameFrequencies: "/dictionary/fetch/frequency",
   fetchDictionaryStatistics: "/dictionary/fetch/statistics",
@@ -272,6 +273,13 @@ type ServerSpecs = {
     request: {number: number, authority: DictionaryAuthority},
     response: {
       success: null,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
+  checkDictionaryAuthorizationBoolean: {
+    request: {number: number, authority: DictionaryAuthority},
+    response: {
+      success: boolean,
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
