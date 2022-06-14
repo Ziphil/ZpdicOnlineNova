@@ -9,7 +9,6 @@ import {
   useState
 } from "react";
 import Markdown from "/client/component/atom/markdown";
-import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
 import SuggestionList from "/client/component/compound/suggestion-list";
 import WordList from "/client/component/compound/word-list";
@@ -21,7 +20,8 @@ import {
   useDebounce,
   useParams,
   useQueryState,
-  useRequest
+  useRequest,
+  useSuspenseQuery
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
@@ -41,55 +41,17 @@ const DictionaryPage = create(
   }: {
   }): ReactElement {
 
-    const [dictionary, setDictionary] = useState<EnhancedDictionary | null>(null);
-    const [getQuery, setQuery] = useQueryState(serializeQuery, deserializeQuery);
-    const [hitResult, setHitResult] = useState<DictionaryHitResult>({words: [[], 0], suggestions: []});
-    const [canOwn, setCanOwn] = useState(false);
-    const [canEdit, setCanEdit] = useState(false);
-    const [searching, setSearching] = useState(false);
     const {request} = useRequest();
     const params = useParams();
 
-    const fetchDictionary = useCallback(async function (): Promise<void> {
-      const value = params.value;
-      const [number, paramName] = (() => {
-        if (value.match(/^\d+$/)) {
-          return [+value, undefined] as const;
-        } else {
-          return [undefined, value] as const;
-        }
-      })();
-      const response = await request("fetchDictionary", {number, paramName});
-      if (response.status === 200 && !("error" in response.data)) {
-        const dictionary = EnhancedDictionary.enhance(response.data);
-        setDictionary(dictionary);
-      } else {
-        setDictionary(null);
-      }
-    }, [params.value, request]);
-
-    const checkAuthorization = useCallback(async function (): Promise<void> {
-      const number = dictionary?.number;
-      const ownPromise = (async () => {
-        if (number !== undefined) {
-          const authority = "own" as const;
-          const response = await request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
-          if (response.status === 200) {
-            setCanOwn(true);
-          }
-        }
-      })();
-      const editPromise = (async () => {
-        if (number !== undefined) {
-          const authority = "edit" as const;
-          const response = await request("checkDictionaryAuthorization", {number, authority}, {ignoreError: true});
-          if (response.status === 200) {
-            setCanEdit(true);
-          }
-        }
-      })();
-      await Promise.all([ownPromise, editPromise]);
-    }, [dictionary?.number, request]);
+    const value = params.value;
+    const [number, paramName] = value.match(/^\d+$/) ? [+value, undefined] : [undefined, value];
+    const [dictionary] = useSuspenseQuery("fetchDictionary", {number, paramName}, {}, EnhancedDictionary.enhance);
+    const [canOwn] = useSuspenseQuery("checkDictionaryAuthorizationBoolean", {number: dictionary.number, authority: "own"});
+    const [canEdit] = useSuspenseQuery("checkDictionaryAuthorizationBoolean", {number: dictionary.number, authority: "edit"});
+    const [getQuery, setQuery] = useQueryState(serializeQuery, deserializeQuery);
+    const [hitResult, setHitResult] = useState<DictionaryHitResult>({words: [[], 0], suggestions: []});
+    const [searching, setSearching] = useState(false);
 
     const updateWordsImmediately = useCallback(async function (): Promise<void> {
       const number = dictionary?.number;
@@ -110,7 +72,7 @@ const DictionaryPage = create(
           setSearching(false);
         }
       }
-    }, [dictionary?.number, getQuery, request]);
+    }, [dictionary.number, getQuery, request]);
 
     const updateWords = useDebounce(async function (): Promise<void> {
       await updateWordsImmediately();
@@ -133,25 +95,16 @@ const DictionaryPage = create(
     }, [getQuery()]);
 
     useEffect(() => {
-      fetchDictionary();
-    }, [params.value]);
-
-    useEffect(() => {
-      checkAuthorization();
       updateWordsImmediately();
     }, [dictionary]);
 
     const wordListProps = {dictionary, getQuery, canEdit, hitResult, updateWordsImmediately, handlePageSet};
     const node = (
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
-        <Loading loading={dictionary === null}>
-          <div styleName="search-form-container">
-            <WordSearchForm dictionary={dictionary!} parameter={getQuery().parameter} searching={searching} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
-          </div>
-          {(dictionary !== null) && (
-            (getQuery().showExplanation) ? <Markdown source={dictionary.explanation ?? ""}/> : <DictionaryPageWordList {...wordListProps}/>
-          )}
-        </Loading>
+        <div styleName="search-form-container">
+          <WordSearchForm dictionary={dictionary} parameter={getQuery().parameter} searching={searching} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
+        </div>
+        {(getQuery().showExplanation) ? <Markdown source={dictionary.explanation ?? ""}/> : <DictionaryPageWordList {...wordListProps}/>}
       </Page>
     );
     return node;

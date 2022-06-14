@@ -1,7 +1,8 @@
 //
 
 import {
-  useCallback
+  useCallback,
+  useMemo
 } from "react";
 import {
   QueryClient,
@@ -67,7 +68,7 @@ export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, c
   return [queryData ?? null, queryError, rest];
 }
 
-export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [SuccessResponseData<N>, UseQueryRestResult<N>] {
+export function useSuspenseQuery<N extends ProcessName, T = SuccessResponseData<N>>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}, transform?: (data: SuccessResponseData<N>) => T): [T, UseQueryRestResult<N>] {
   const [, {addErrorPopup}] = usePopup();
   const {data: queryData, ...rest} = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
     const response = await rawRequest(name, data, config);
@@ -84,9 +85,15 @@ export function useSuspenseQuery<N extends ProcessName>(name: N, data: RequestDa
   }, {suspense: true, ...config});
   if (queryData === undefined) {
     throw new Error("bug");
-  } else {
-    return [queryData, rest];
   }
+  const transformedData = useMemo(() => {
+    if (transform !== undefined) {
+      return transform(queryData);
+    } else {
+      return queryData;
+    }
+  }, [queryData, transform]);
+  return [transformedData, rest];
 }
 
 export function useRequest(): RequestCallbacks {
