@@ -55,7 +55,7 @@ export async function invalidateQueries<N extends ProcessName>(name: N, predicat
   }});
 }
 
-export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [ResponseData<N> | null, unknown, UseQueryRestResult<N>] {
+export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [SuccessResponseData<N> | undefined, unknown, UseQueryRestResult<N>] {
   const [, {addErrorPopup}] = usePopup();
   const {data: queryData, error: queryError, ...rest} = useRawQuery<ResponseData<N>>([name, data], async () => {
     const response = await rawRequest(name, data, config);
@@ -63,9 +63,14 @@ export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, c
       const type = determineErrorPopupType(response);
       addErrorPopup(type);
     }
-    return response.data;
+    if (response.status !== 200) {
+      console.error(response);
+      throw new QueryError(name, data, response);
+    } else {
+      return response.data;
+    }
   });
-  return [queryData ?? null, queryError, rest];
+  return [queryData, queryError, rest];
 }
 
 export function useSuspenseQuery<N extends ProcessName, T = SuccessResponseData<N>>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}, transform?: (data: SuccessResponseData<N>) => T): [T, UseQueryRestResult<N>] {

@@ -4,9 +4,7 @@ import * as react from "react";
 import {
   Fragment,
   ReactElement,
-  useCallback,
-  useEffect,
-  useState
+  useCallback
 } from "react";
 import Markdown from "/client/component/atom/markdown";
 import PaginationButton from "/client/component/compound/pagination-button";
@@ -17,12 +15,12 @@ import {
   create
 } from "/client/component/create";
 import {
-  useDebounce,
   useParams,
-  useQueryState,
-  useRequest,
   useSuspenseQuery
 } from "/client/component/hook";
+import {
+  useQueryState
+} from "/client/component/hook/query-state-beta";
 import Page from "/client/component/page/page";
 import {
   DetailedWord,
@@ -30,6 +28,9 @@ import {
   Suggestion,
   WordParameter
 } from "/client/skeleton/dictionary";
+import {
+  calcOffset
+} from "/client/util/misc";
 import {
   WithSize
 } from "/server/controller/internal/type";
@@ -41,7 +42,6 @@ const DictionaryPage = create(
   }: {
   }): ReactElement {
 
-    const {request} = useRequest();
     const params = useParams();
 
     const value = params.value;
@@ -49,62 +49,26 @@ const DictionaryPage = create(
     const [dictionary] = useSuspenseQuery("fetchDictionary", {number, paramName}, {}, EnhancedDictionary.enhance);
     const [canOwn] = useSuspenseQuery("checkDictionaryAuthorizationBoolean", {number: dictionary.number, authority: "own"});
     const [canEdit] = useSuspenseQuery("checkDictionaryAuthorizationBoolean", {number: dictionary.number, authority: "edit"});
-    const [getQuery, setQuery] = useQueryState(serializeQuery, deserializeQuery);
-    const [hitResult, setHitResult] = useState<DictionaryHitResult>({words: [[], 0], suggestions: []});
-    const [searching, setSearching] = useState(false);
-
-    const updateWordsImmediately = useCallback(async function (): Promise<void> {
-      const number = dictionary?.number;
-      if (number !== undefined) {
-        const query = getQuery();
-        const usedParameter = query.parameter;
-        const usedPage = query.page;
-        const offset = usedPage * 40;
-        const size = 40;
-        setSearching(true);
-        const response = await request("searchDictionary", {number, parameter: usedParameter, offset, size});
-        if (response.status === 200 && !("error" in response.data)) {
-          const hitResult = response.data;
-          setHitResult(hitResult);
-          setSearching(false);
-        } else {
-          setHitResult({words: [[], 0], suggestions: []});
-          setSearching(false);
-        }
-      }
-    }, [dictionary.number, getQuery, request]);
-
-    const updateWords = useDebounce(async function (): Promise<void> {
-      await updateWordsImmediately();
-    }, 500, [updateWordsImmediately]);
+    const [query, debouncedQuery, setQuery] = useQueryState(serializeQuery, deserializeQuery);
+    const [hitResult, hitResultRest] = useSuspenseQuery("searchDictionary", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffset(query.page, 40)}, {keepPreviousData: true});
+    const searching = hitResultRest.isFetching || hitResultRest.isRefetching;
 
     const handleParameterSet = useCallback(async function (parameter: WordParameter): Promise<void> {
-      const page = 0;
-      const showExplanation = false;
-      setQuery((query) => ({...query, parameter, page, showExplanation}));
-    }, [setQuery]);
+      setQuery({...query, parameter, page: 0, showExplanation: false});
+    }, [query, setQuery]);
 
     const handlePageSet = useCallback(async function (page: number): Promise<void> {
-      const showExplanation = false;
-      setQuery((query) => ({...query, page, showExplanation}));
+      setQuery({...query, page, showExplanation: false});
       window.scrollTo(0, 0);
-    }, [setQuery]);
+    }, [query, setQuery]);
 
-    useEffect(() => {
-      updateWords();
-    }, [getQuery()]);
-
-    useEffect(() => {
-      updateWordsImmediately();
-    }, [dictionary]);
-
-    const wordListProps = {dictionary, getQuery, canEdit, hitResult, updateWordsImmediately, handlePageSet};
+    const wordListProps = {dictionary, query, canEdit, hitResult, handlePageSet};
     const node = (
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <div styleName="search-form-container">
-          <WordSearchForm dictionary={dictionary} parameter={getQuery().parameter} searching={searching} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
+          <WordSearchForm dictionary={dictionary} parameter={query.parameter} searching={searching} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
         </div>
-        {(getQuery().showExplanation) ? <Markdown source={dictionary.explanation ?? ""}/> : <DictionaryPageWordList {...wordListProps}/>}
+        {(debouncedQuery.showExplanation) ? <Markdown source={dictionary.explanation ?? ""}/> : <DictionaryPageWordList {...wordListProps}/>}
       </Page>
     );
     return node;
@@ -114,20 +78,18 @@ const DictionaryPage = create(
 
 
 const DictionaryPageWordList = create(
-  require("./dictionary-page.scss"),
+  require("./dictionary-page.scss"), "DictionaryPageWordList",
   function ({
     dictionary,
-    getQuery,
+    query,
     canEdit,
     hitResult,
-    updateWordsImmediately,
     handlePageSet
   }: {
-    dictionary: EnhancedDictionary | null,
-    getQuery: () => DictionaryQuery,
+    dictionary: EnhancedDictionary,
+    query: DictionaryQuery,
     canEdit: boolean,
     hitResult: DictionaryHitResult,
-    updateWordsImmediately: () => Promise<void>,
     handlePageSet: (page: number) => Promise<void>
   }): ReactElement {
 
@@ -137,26 +99,13 @@ const DictionaryPageWordList = create(
     const node = (
       <Fragment>
         <div styleName="suggestion-list-container">
-          <SuggestionList
-            dictionary={dictionary!}
-            suggestions={hitSuggestions}
-          />
+          <SuggestionList dictionary={dictionary} suggestions={hitSuggestions}/>
         </div>
         <div styleName="word-list-container">
-          <WordList
-            dictionary={dictionary!}
-            words={hitWords}
-            showEditLink={canEdit}
-            offset={0}
-            size={40}
-            onEditConfirm={updateWordsImmediately}
-            onDiscardConfirm={updateWordsImmediately}
-            onEditExampleConfirm={updateWordsImmediately}
-            onDiscardExampleConfirm={updateWordsImmediately}
-          />
+          <WordList dictionary={dictionary} words={hitWords} showEditLink={canEdit} offset={0} size={40}/>
         </div>
-        <div styleName="pagination">
-          <PaginationButton page={getQuery().page} minPage={0} maxPage={maxPage} enableHotkeys={true} onSet={handlePageSet}/>
+        <div styleName="pagination-container">
+          <PaginationButton page={query.page} minPage={0} maxPage={maxPage} enableHotkeys={true} onSet={handlePageSet}/>
         </div>
       </Fragment>
     );

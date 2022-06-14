@@ -54,7 +54,7 @@ export class EnhancedDictionary extends DetailedDictionary {
   private zatlin?: Zatlin | null;
 
   public static enhance(object: DetailedDictionary): EnhancedDictionary {
-    return Object.assign(Object.create(this.prototype), object);
+    return Object.assign(Object.create(EnhancedDictionary.prototype), object);
   }
 
   public getAkrantiain(): Akrantiain | null {
