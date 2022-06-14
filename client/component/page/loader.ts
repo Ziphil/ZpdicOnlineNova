@@ -30,6 +30,16 @@ export async function loadDictionaryListPage({}: RouteMatch<DefaultGenerics>): P
   return {};
 }
 
+export async function loadDictionaryPage({params}: RouteMatch<DefaultGenerics>): Promise<{}> {
+  const value = params.value;
+  const [number, paramName] = value.match(/^\d+$/) ? [+value, undefined] : [undefined, value];
+  const promises = [
+    prefetchQuery("fetchDictionary", {number, paramName})
+  ];
+  await Promise.all(promises);
+  return {};
+}
+
 export async function loadDictionarySettingPage({params}: RouteMatch<DefaultGenerics>): Promise<{}> {
   const number = +params.number;
   const promises = [
