@@ -73,8 +73,8 @@ export const SERVER_PATHS = {
   downloadDictionary: "/dictionary/download",
   suggestDictionaryTitles: "/dictionary/suggest/title",
   fetchDictionaryAuthorizedUsers: "/dictionary/user",
-  checkDictionaryAuthorization: "/dictionary/check",
-  checkDictionaryAuthorizationBoolean: "/dictionary/check/boolean",
+  fetchDictionaryAuthorization: "/dictionary/authorization",
+  checkDictionaryAuthorization: "/dictionary/authorization/check",
   fetchDictionary: "/dictionary/fetch",
   fetchWordNameFrequencies: "/dictionary/fetch/frequency",
   fetchDictionaryStatistics: "/dictionary/fetch/statistics",
@@ -269,17 +269,17 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
+  fetchDictionaryAuthorization: {
+    request: {number: number, authority: DictionaryAuthority},
+    response: {
+      success: boolean,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
   checkDictionaryAuthorization: {
     request: {number: number, authority: DictionaryAuthority},
     response: {
       success: null,
-      error: CustomError<"noSuchDictionaryNumber">
-    }
-  },
-  checkDictionaryAuthorizationBoolean: {
-    request: {number: number, authority: DictionaryAuthority},
-    response: {
-      success: boolean,
       error: CustomError<"noSuchDictionaryNumber">
     }
   },

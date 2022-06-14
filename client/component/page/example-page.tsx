@@ -35,8 +35,8 @@ const ExamplePage = create(
     const [page, setPage] = useState(0);
     const [rawDictionary] = useSuspenseQuery("fetchDictionary", {number});
     const [[hitExamples, hitSize]] = useSuspenseQuery("fetchExamples", {number, ...calcOffset(page, 40)}, {keepPreviousData: true});
-    const [canOwn] = useSuspenseQuery("checkDictionaryAuthorizationBoolean", {number, authority: "own"});
-    const [canEdit] = useSuspenseQuery("checkDictionaryAuthorizationBoolean", {number, authority: "edit"});
+    const [canOwn] = useSuspenseQuery("fetchDictionaryAuthorization", {number, authority: "own"});
+    const [canEdit] = useSuspenseQuery("fetchDictionaryAuthorization", {number, authority: "edit"});
     const dictionary = useMemo(() => EnhancedDictionary.enhance(rawDictionary), [rawDictionary]);
 
     const node = (

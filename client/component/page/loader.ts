@@ -53,8 +53,8 @@ export async function loadExamplePage({params}: RouteMatch<DefaultGenerics>): Pr
   const promises = [
     prefetchQuery("fetchDictionary", {number}),
     prefetchQuery("fetchExamples", {number, offset: 0, size: 40}),
-    prefetchQuery("checkDictionaryAuthorizationBoolean", {number, authority: "own"}),
-    prefetchQuery("checkDictionaryAuthorizationBoolean", {number, authority: "edit"})
+    prefetchQuery("fetchDictionaryAuthorization", {number, authority: "own"}),
+    prefetchQuery("fetchDictionaryAuthorization", {number, authority: "edit"})
   ];
   await Promise.all(promises);
   return {};
