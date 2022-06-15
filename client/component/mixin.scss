@@ -295,6 +295,9 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   &[data-disabled]:hover * {
     cursor: not-allowed;
   }
+  & input {
+    outline: none;
+  }
 }
 
 @mixin button($color) {
