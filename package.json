@@ -1,6 +1,6 @@
 {
   "name": "zpdic",
-  "version": "2.35.4",
+  "version": "2.35.5",
   "author": "Ziphil",
   "description": "",
   "main": "dist/index.js",
@@ -21,6 +21,10 @@
     "lint:fix": "eslint --fix client/**/*.ts client/**/*.tsx server/**/*.ts",
     "command:tsnode": "ts-node -r tsconfig-paths/register",
     "command:tsc": "tsc"
+  },
+  "engines": {
+    "node": "16.13.2",
+    "npm": "8.1.2"
   },
   "eslintConfig": {
     "extends": [
