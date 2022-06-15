@@ -13,7 +13,6 @@ import * as queryParser from "query-string";
 import * as react from "react";
 import {
   ReactElement,
-  Suspense,
   useCallback
 } from "react";
 import {
@@ -22,9 +21,6 @@ import {
 import {
   HTML5Backend as DndBackend
 } from "react-dnd-html5-backend";
-import {
-  ErrorBoundary
-} from "react-error-boundary";
 import {
   IntlProvider
 } from "react-intl";
@@ -40,7 +36,6 @@ import {
   useDefaultMe
 } from "/client/component/hook";
 import InnerRoot from "/client/component/inner-root";
-import ErrorPage from "/client/component/page/error-page";
 import {
   loadDashboardPage,
   loadDictionaryListPage,
@@ -50,11 +45,9 @@ import {
   loadNotificationPage,
   loadTopPage
 } from "/client/component/page/loader";
-import LoadingPage from "/client/component/page/loading-page";
 import {
   createRoute
 } from "/client/component/util/route";
-import ScrollTop from "/client/component/util/scroll-top";
 
 
 require("../../node_modules/codemirror/lib/codemirror.css");
@@ -104,15 +97,9 @@ const Root = create(
         <QueryClientProvider client={queryClient}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
             <Router location={location} routes={routes} caseSensitive={true}>
-              <ErrorBoundary fallbackRender={(props) => <ErrorPage {...props}/>}>
-                <Suspense fallback={<LoadingPage/>}>
-                  <InnerRoot>
-                    <ScrollTop>
-                      <Outlet/>
-                    </ScrollTop>
-                  </InnerRoot>
-                </Suspense>
-              </ErrorBoundary>
+              <InnerRoot>
+                <Outlet/>
+              </InnerRoot>
             </Router>
           </IntlProvider>
         </QueryClientProvider>

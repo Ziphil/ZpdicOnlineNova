@@ -9,9 +9,14 @@ import {
   Fragment,
   ReactElement,
   ReactNode,
+  Suspense,
   useEffect,
+  useRef,
   useState
 } from "react";
+import {
+  ErrorBoundary
+} from "react-error-boundary";
 import Drawer from "/client/component/atom/drawer";
 import ExampleEditor from "/client/component/compound/example-editor-beta";
 import HotkeyHelp from "/client/component/compound/hotkey-help";
@@ -23,9 +28,13 @@ import {
   useExampleEditorProps,
   useHotkey,
   useIntl,
+  useLocation,
   usePath,
   useWordEditorProps
 } from "/client/component/hook";
+import ErrorPage from "/client/component/page/error-page";
+import LoadingPage from "/client/component/page/loading-page";
+import ScrollTop from "/client/component/util/scroll-top";
 
 
 const InnerRoot = create(
@@ -39,9 +48,11 @@ const InnerRoot = create(
     const [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
     const [wordEditorProps, wordEditorOpen, setWordEditorOpen] = useWordEditorProps();
     const [exampleEditorProps, exampleEditorOpen, setExampleEditorOpen] = useExampleEditorProps();
+    const resetErrorBoundaryRef = useRef<(() => void) | null>(null);
     const [, {trans}] = useIntl();
     const {pushPath} = usePath();
     const router = useRouter();
+    const location = useLocation();
 
     useHotkey("jumpDashboardPage", () => {
       pushPath("/dashboard");
@@ -76,43 +87,46 @@ const InnerRoot = create(
         nprogress.start();
       } else {
         nprogress.done();
+        resetErrorBoundaryRef.current?.();
       }
     }, [router.pending]);
 
-    const wordEditorNodes = wordEditorProps.map((props) => {
-      const wordEditorNode = <WordEditor key={props.id} {...props}/>;
-      return wordEditorNode;
-    });
-    const exampleEditorNodes = exampleEditorProps.map((props) => {
-      const exampleEditorNode = <ExampleEditor key={props.id} {...props}/>;
-      return exampleEditorNode;
-    });
     const node = (
       <Fragment>
-        {children}
+        <ErrorBoundary fallbackRender={(props) => (resetErrorBoundaryRef.current = props.resetErrorBoundary, <ErrorPage {...props}/>)}>
+          <Suspense fallback={<LoadingPage/>}>
+            <ScrollTop>
+              {children}
+            </ScrollTop>
+          </Suspense>
+        </ErrorBoundary>
         <Drawer
           title={trans("wordEditor.title")}
           iconName="custom-word"
-          badgeValue={(wordEditorNodes.length > 0) ? wordEditorNodes.length : undefined}
+          badgeValue={(wordEditorProps.length > 0) ? wordEditorProps.length : undefined}
           tabPosition="top"
           open={wordEditorOpen}
           onOpen={() => setWordEditorOpen(true)}
           onClose={() => setWordEditorOpen(false)}
           outsideClosable={true}
         >
-          {wordEditorNodes}
+          {wordEditorProps.map((props) => (
+            <WordEditor key={props.id} {...props}/>
+          ))}
         </Drawer>
         <Drawer
           title={trans("exampleEditor.title")}
           iconName="custom-example"
-          badgeValue={(exampleEditorNodes.length > 0) ? exampleEditorNodes.length : undefined}
+          badgeValue={(exampleEditorProps.length > 0) ? exampleEditorProps.length : undefined}
           tabPosition="bottom"
           open={exampleEditorOpen}
           onOpen={() => setExampleEditorOpen(true)}
           onClose={() => setExampleEditorOpen(false)}
           outsideClosable={true}
         >
-          {exampleEditorNodes}
+          {exampleEditorProps.map((props) => (
+            <ExampleEditor key={props.id} {...props}/>
+          ))}
         </Drawer>
         <HotkeyHelp open={hotkeyHelpOpen} onClose={() => setHotkeyHelpOpen(false)}/>
       </Fragment>

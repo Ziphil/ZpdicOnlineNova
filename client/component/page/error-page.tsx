@@ -31,9 +31,8 @@ const ErrorPage = create(
     const {pushPath} = usePath();
 
     const handleClick = useCallback(function (): void {
-      resetErrorBoundary();
       pushPath("/");
-    }, [resetErrorBoundary, pushPath]);
+    }, [pushPath]);
 
     const node = (
       <Page>
