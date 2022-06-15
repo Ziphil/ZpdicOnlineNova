@@ -40,6 +40,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useDragDrop,
   useIntl,
   usePopup,
@@ -160,6 +161,7 @@ const WordEditor = create(
         await addRelations(editedWord);
         addInformationPopup("wordEdited");
         await onEditConfirm?.(word, event);
+        await invalidateQueries("searchDictionary", (data) => data.number === number);
       }
     }, [dictionary, tempWord, request, onEditConfirm, addInformationPopup, addRelations]);
 
@@ -171,6 +173,7 @@ const WordEditor = create(
         if (response.status === 200) {
           addInformationPopup("wordDiscarded");
           await onDiscardConfirm?.(event);
+          await invalidateQueries("searchDictionary", (data) => data.number === number);
         }
       }
     }, [dictionary, tempWord, request, onDiscardConfirm, addInformationPopup]);
@@ -288,7 +291,7 @@ const WordEditorName = create(
   }: {
     dictionary: EnhancedDictionary,
     tempWord: TempEditableWord,
-    mutateWord: MutateWordCallback
+    mutateWord: MutateWordCallback,
     styles?: StylesRecord
   }): ReactElement {
 
@@ -296,7 +299,7 @@ const WordEditorName = create(
 
     const generateName = useCallback(function (zatlin: Zatlin): void {
       try {
-        const name = zatlin!.generate();
+        const name = zatlin.generate();
         mutateWord((tempWord) => tempWord.name = name)();
       } catch (error) {
         console.log(error);
@@ -306,7 +309,7 @@ const WordEditorName = create(
     const zatlin = dictionary.getZatlin();
     const generateNode = (zatlin !== null) && (
       <div styleName="control-button">
-        <Button label={trans("wordEditor.generate")} onClick={() => generateName(zatlin!)}/>
+        <Button label={trans("wordEditor.generate")} onClick={() => generateName(zatlin)}/>
       </div>
     );
     const node = (
@@ -353,7 +356,7 @@ const WordEditorTags = create(
     dictionary: EnhancedDictionary,
     tempWord: TempEditableWord,
     mutateWord: MutateWordCallback,
-    createSuggest: (propertyName: string) => Suggest
+    createSuggest: (propertyName: string) => Suggest,
     styles?: StylesRecord
   }): ReactElement {
 
@@ -405,7 +408,7 @@ const WordEditorTag = create(
     tag: TempTag,
     index: number,
     mutateWord: MutateWordCallback,
-    createSuggest: (propertyName: string) => Suggest
+    createSuggest: (propertyName: string) => Suggest,
     styles?: StylesRecord
   }): ReactElement {
 
@@ -454,7 +457,7 @@ const WordEditorEquivalents = create(
     dictionary: EnhancedDictionary,
     tempWord: TempEditableWord,
     mutateWord: MutateWordCallback,
-    createSuggest: (propertyName: string) => Suggest
+    createSuggest: (propertyName: string) => Suggest,
     styles?: StylesRecord
   }): ReactElement {
 
@@ -506,7 +509,7 @@ const WordEditorEquivalent = create(
     equivalent: TempEquivalent,
     index: number,
     mutateWord: MutateWordCallback,
-    createSuggest: (propertyName: string) => Suggest
+    createSuggest: (propertyName: string) => Suggest,
     styles?: StylesRecord
   }): ReactElement {
 
@@ -562,7 +565,7 @@ const WordEditorInformations = create(
     dictionary: EnhancedDictionary,
     tempWord: TempEditableWord,
     mutateWord: MutateWordCallback,
-    createSuggest: (propertyName: string) => Suggest
+    createSuggest: (propertyName: string) => Suggest,
     styles?: StylesRecord
   }): ReactElement {
 
@@ -614,7 +617,7 @@ const WordEditorInformation = create(
     information: TempInformation,
     index: number,
     mutateWord: MutateWordCallback,
-    createSuggest: (propertyName: string) => Suggest
+    createSuggest: (propertyName: string) => Suggest,
     styles?: StylesRecord
   }): ReactElement {
 
@@ -671,7 +674,7 @@ const WordEditorVariations = create(
     dictionary: EnhancedDictionary,
     tempWord: TempEditableWord,
     mutateWord: MutateWordCallback,
-    createSuggest: (propertyName: string) => Suggest
+    createSuggest: (propertyName: string) => Suggest,
     styles?: StylesRecord
   }): ReactElement {
 
@@ -723,7 +726,7 @@ const WordEditorVariation = create(
     variation: TempVariation,
     index: number,
     mutateWord: MutateWordCallback,
-    createSuggest: (propertyName: string) => Suggest
+    createSuggest: (propertyName: string) => Suggest,
     styles?: StylesRecord
   }): ReactElement {
 
