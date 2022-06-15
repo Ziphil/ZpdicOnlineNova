@@ -24,18 +24,18 @@ const GoogleAnalytics = create(
   function ({
     id
   }: {
-    id?: string
+    id: string
   }): ReactElement | null {
 
     const router = useRouter();
 
     useEffect(() => {
-      if (id !== undefined && !router.pending) {
+      if (!!id && !router.pending) {
         GtagUtil.event("page_view", [["page_path", location.pathname]]);
       }
     }, [id, router.pending]);
 
-    const node = (id !== undefined) && (
+    const node = (!!id) && (
       <Helmet>
         <script async={true} src={`https://www.googletagmanager.com/gtag/js?id=${id}`}/>
         <script>
