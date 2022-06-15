@@ -56,13 +56,8 @@ export async function invalidateQueries<N extends ProcessName>(name: N, predicat
 }
 
 export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}): [SuccessResponseData<N> | undefined, unknown, UseQueryRestResult<N>] {
-  const [, {addErrorPopup}] = usePopup();
   const {data: queryData, error: queryError, ...rest} = useRawQuery<ResponseData<N>>([name, data], async () => {
     const response = await rawRequest(name, data, config);
-    if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
-      const type = determineErrorPopupType(response);
-      addErrorPopup(type);
-    }
     if (response.status !== 200) {
       console.error(response);
       throw new QueryError(name, data, response);
@@ -74,13 +69,8 @@ export function useQuery<N extends ProcessName>(name: N, data: RequestData<N>, c
 }
 
 export function useSuspenseQuery<N extends ProcessName, T = SuccessResponseData<N>>(name: N, data: RequestData<N>, config: QueryConfig<N> = {}, transform?: (data: SuccessResponseData<N>) => T): [T, UseQueryRestResult<N>] {
-  const [, {addErrorPopup}] = usePopup();
   const {data: queryData, ...rest} = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
     const response = await rawRequest(name, data, config);
-    if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
-      const type = determineErrorPopupType(response);
-      addErrorPopup(type);
-    }
     if (response.status !== 200) {
       console.error(response);
       throw new QueryError(name, data, response);
