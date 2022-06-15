@@ -65,8 +65,15 @@ Tiu aplikaĵo uzas reCAPTCHA v3 provizatan de Guglo por plibonigi sekurecon.
 Ĝi permesas al Guglo kolekti informojn pri la uzanto, kiel la IP-adreso.
 Tiu kolektado de datumoj estas submetita al la [privateca politiko](https://policies.google.com/privacy) kaj la [kondiĉoj de servoj](https://policies.google.com/terms) de Guglo.
 
-Tiu reCAPTCHA estos uzata por determini ĉu la vizitanto de tiu aplikaĵo estas homo aŭ roboto kaj por protekti tiun aplikaĵon kaj ĝiajn uzantojn kontraŭ malicaj spamoj.
+Ĝi estos uzata por determini ĉu la vizitanto de tiu aplikaĵo estas homo aŭ roboto kaj por protekti tiun aplikaĵon kaj ĝiajn uzantojn kontraŭ malicaj spamoj.
 Tiu aplikaĵo ne uzas ajnajn informojn kolektitajn de reCAPTCHA kaj Guglo.
+
+### Google Analytics
+Tiu aplikaĵo uzas Google Analytics, kaj ankaŭ uzas kuketojn por kolekti datumojn.
+Tiu kolektado de datumoj estas submetita al la [privateca politiko](https://policies.google.com/privacy) kaj la [kondiĉoj de servoj](https://marketingplatform.google.com/about/analytics/terms/en/) de Guglo.
+
+La kolektitaj datumoj estos uzataj por kompreni kiel tiu aplikaĵo estas uzata kaj por plibonigi la servojn.
+Tiuj datumoj estas kolektitaj anonime kaj ne identigas la uzanton.
 
 ## Administrado de personaj informoj
 Tiu aplikaĵo taŭge administras personajn informojn, kaj ne malkaŝos aŭ forigos ilin krom en la sekvaj kazoj:
@@ -91,4 +98,6 @@ Se vi havas demandojn pri la privateca politiko de tiu aplikaĵo, bonvolu uzi la
 - Retpoŝta adreso — ziphil.shaleiras❖gmail.com (❖ → @)
 
 ## Dato de leĝigado
-Tiu privateca politiko estis leĝigita la 30an de januaro 2021, kaj parte reviziita la 28an de januaro 2022.
+- Leĝigita la 30an de januaro 2021
+- Parte reviziita la 28an de januaro 2022
+- Parte reviziita la 15an de junio 2022

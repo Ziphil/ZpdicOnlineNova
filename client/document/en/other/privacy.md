@@ -65,8 +65,15 @@ This application uses reCAPTCHA v3 provided by Google in order to enhance securi
 It allows Google to collect information about the user, such as the IP address.
 This data collection is subject to the Google's [Privacy Policy](https://policies.google.com/privacy) and [Terms of Services](https://policies.google.com/terms).
 
-This reCAPTCHA is used to determine whether the visitor of this application is a human or a robot and to protect this application and its users from malicious spams.
+It is used to determine whether the visitor of this application is a human or a robot and to protect this application and its users from malicious spams.
 This application does not use any information collected by reCAPTCHA and Google.
+
+### Google Analytics
+This application uses Google Analytics, and also uses cookies to collect data.
+This data collection is subject to the Google's [Privacy Policy](https://policies.google.com/privacy) and [Terms of Services](https://marketingplatform.google.com/about/analytics/terms/en/).
+
+The collected data will be used to understand how this application is used and to improve the services.
+This data is collected anonymously and does not identify the user.
 
 ## Management of personal information
 This application manages personal information appropriately, and will not disclose or delete it except in the following cases:
@@ -91,4 +98,6 @@ If you have any questions regarding the privacy policy of this application, plea
 - Email address — ziphil.shaleiras❖gmail.com (❖ → @)
 
 ## Enactment date
-This privacy policy was enacted on 30 January 2021, and partially revised on 28 January 2022.
+- Enacted on 30 January 2021
+- Partially revised on 28 January 2022
+- Partially revised on 15 June 2022
