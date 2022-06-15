@@ -113,7 +113,7 @@ const WordPaneName = create(
     word: Word | DetailedWord,
     showEditLink: boolean,
     showButton: boolean,
-    showDirectionButton: boolean
+    showDirectionButton: boolean,
     onSubmit?: (direction: "oneway" | "mutual", event?: MouseEvent<HTMLButtonElement>) => void,
     openWordEditor: () => void
   }): ReactElement {
