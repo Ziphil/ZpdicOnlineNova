@@ -18,6 +18,7 @@ import {
   ErrorBoundary
 } from "react-error-boundary";
 import Drawer from "/client/component/atom/drawer";
+import GoogleAnalytics from "/client/component/atom/google-analytics";
 import ExampleEditor from "/client/component/compound/example-editor-beta";
 import HotkeyHelp from "/client/component/compound/hotkey-help";
 import WordEditor from "/client/component/compound/word-editor-beta";
@@ -34,6 +35,9 @@ import {
 import ErrorPage from "/client/component/page/error-page";
 import LoadingPage from "/client/component/page/loading-page";
 import ScrollTop from "/client/component/util/scroll-top";
+import {
+  ANALYTICS_ID
+} from "/client/variable";
 
 
 const InnerRoot = create(
@@ -91,6 +95,7 @@ const InnerRoot = create(
 
     const node = (
       <Fragment>
+        <GoogleAnalytics id={ANALYTICS_ID}/>
         <ErrorBoundary fallbackRender={(props) => (resetErrorBoundaryRef.current = props.resetErrorBoundary, <ErrorPage {...props}/>)}>
           <Suspense fallback={<LoadingPage/>}>
             <ScrollTop>
