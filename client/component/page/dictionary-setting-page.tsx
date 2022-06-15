@@ -3,8 +3,7 @@
 import * as react from "react";
 import {
   ReactElement,
-  Suspense,
-  useMemo
+  Suspense
 } from "react";
 import Markdown from "/client/component/atom/markdown";
 import CommissionList from "/client/component/compound/commission-list";
@@ -52,10 +51,9 @@ const DictionarySettingPage = create(
     const [, {trans}] = useIntl();
 
     const number = +params.number;
-    const [rawDictionary] = useSuspenseQuery("fetchDictionary", {number});
+    const [dictionary] = useSuspenseQuery("fetchDictionary", {number}, {}, EnhancedDictionary.enhance);
     const [[, commisionSize]] = useSuspenseQuery("fetchCommissions", {number, offset: 0, size: 30});
     const [] = useSuspenseQuery("checkDictionaryAuthorization", {number, authority: "own"});
-    const dictionary = useMemo(() => EnhancedDictionary.enhance(rawDictionary), [rawDictionary]);
 
     const mode = location.hash || "general";
     const menuSpecs = [

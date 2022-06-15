@@ -3,7 +3,6 @@
 import * as react from "react";
 import {
   ReactElement,
-  useMemo,
   useState
 } from "react";
 import ExampleList from "/client/component/compound/example-list";
@@ -33,11 +32,10 @@ const ExamplePage = create(
 
     const number = +params.number;
     const [page, setPage] = useState(0);
-    const [rawDictionary] = useSuspenseQuery("fetchDictionary", {number});
+    const [dictionary] = useSuspenseQuery("fetchDictionary", {number}, {}, EnhancedDictionary.enhance);
     const [[hitExamples, hitSize]] = useSuspenseQuery("fetchExamples", {number, ...calcOffset(page, 40)}, {keepPreviousData: true});
     const [canOwn] = useSuspenseQuery("fetchDictionaryAuthorization", {number, authority: "own"});
     const [canEdit] = useSuspenseQuery("fetchDictionaryAuthorization", {number, authority: "edit"});
-    const dictionary = useMemo(() => EnhancedDictionary.enhance(rawDictionary), [rawDictionary]);
 
     const node = (
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
