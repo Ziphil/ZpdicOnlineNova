@@ -25,9 +25,9 @@ export class Suggestion {
 export class SuggestionCreator {
 
   public static create(raw: Suggestion): SuggestionSkeleton {
-    let title = raw.title;
-    let word = WordCreator.create(raw.word);
-    let skeleton = {title, word};
+    const title = raw.title;
+    const word = WordCreator.create(raw.word);
+    const skeleton = {title, word};
     return skeleton;
   }
 

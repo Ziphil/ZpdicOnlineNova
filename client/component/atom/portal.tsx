@@ -11,7 +11,9 @@ import {
 import {
   create
 } from "/client/component/create";
-import { StyleNameUtil } from "/client/util/style-name";
+import {
+  DataUtil
+} from "/client/util/data";
 
 
 const Portal = create(
@@ -24,10 +26,10 @@ const Portal = create(
     children?: ReactNode
   }): ReactElement {
 
-    let container = document.body;
-    let className = StyleNameUtil.create("portal", position);
-    let node = (
-      <div className={className}>
+    const container = document.body;
+    const data = DataUtil.create({position});
+    const node = (
+      <div className="portal" {...data}>
         {children}
       </div>
     );

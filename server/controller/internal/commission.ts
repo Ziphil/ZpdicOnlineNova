@@ -40,21 +40,21 @@ export class CommissionController extends Controller {
   @post(SERVER_PATHS["addCommission"])
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"addCommission">, response: Response<"addCommission">): Promise<void> {
-    let number = request.body.number;
-    let name = request.body.name;
-    let comment = request.body.comment;
+    const number = request.body.number;
+    const name = request.body.name;
+    const comment = request.body.comment;
     if (name !== "") {
-      let dictionary = await DictionaryModel.fetchOneByNumber(number);
+      const dictionary = await DictionaryModel.fetchOneByNumber(number);
       if (dictionary) {
-        let commission = await CommissionModel.add(dictionary, name, comment);
-        let body = CommissionCreator.create(commission);
+        const commission = await CommissionModel.add(dictionary, name, comment);
+        const body = CommissionCreator.create(commission);
         Controller.respond(response, body);
       } else {
-        let body = CustomError.ofType("noSuchDictionaryNumber");
+        const body = CustomError.ofType("noSuchDictionaryNumber");
         Controller.respondError(response, body);
       }
     } else {
-      let body = CustomError.ofType("emptyCommissionName");
+      const body = CustomError.ofType("emptyCommissionName");
       Controller.respondError(response, body);
     }
   }
@@ -62,20 +62,20 @@ export class CommissionController extends Controller {
   @post(SERVER_PATHS["discardCommission"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"discardCommission">, response: Response<"discardCommission">): Promise<void> {
-    let dictionary = request.dictionary!;
-    let id = request.body.id;
+    const dictionary = request.dictionary!;
+    const id = request.body.id;
     if (dictionary) {
-      let commission = await CommissionModel.fetchOneByDictionaryAndId(dictionary, id);
+      const commission = await CommissionModel.fetchOneByDictionaryAndId(dictionary, id);
       if (commission) {
         await commission.discard();
-        let body = CommissionCreator.create(commission);
+        const body = CommissionCreator.create(commission);
         Controller.respond(response, body);
       } else {
-        let body = CustomError.ofType("noSuchCommission");
+        const body = CustomError.ofType("noSuchCommission");
         Controller.respondError(response, body);
       }
     } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
+      const body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);
     }
   }
@@ -83,18 +83,18 @@ export class CommissionController extends Controller {
   @post(SERVER_PATHS["fetchCommissions"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchCommissions">, response: Response<"fetchCommissions">): Promise<void> {
-    let dictionary = request.dictionary;
-    let offset = request.body.offset;
-    let size = request.body.size;
+    const dictionary = request.dictionary;
+    const offset = request.body.offset;
+    const size = request.body.size;
     if (dictionary) {
-      let range = new QueryRange(offset, size);
-      let hitResult = await CommissionModel.fetchByDictionary(dictionary, range);
-      let hitCommissions = hitResult[0].map(CommissionCreator.create);
-      let hitSize = hitResult[1];
-      let body = [hitCommissions, hitSize] as any;
+      const range = new QueryRange(offset, size);
+      const hitResult = await CommissionModel.fetchByDictionary(dictionary, range);
+      const hitCommissions = hitResult[0].map(CommissionCreator.create);
+      const hitSize = hitResult[1];
+      const body = [hitCommissions, hitSize] as any;
       Controller.respond(response, body);
     } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
+      const body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);
     }
   }

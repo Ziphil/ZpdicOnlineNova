@@ -3,28 +3,27 @@
 import * as react from "react";
 import {
   ReactElement,
-  useState
+  useMemo
 } from "react";
-import {
-  useMount
-} from "react-use";
 import Chart from "/client/component/atom/chart";
 import {
   ChartConfig,
   ChartData
 } from "/client/component/atom/chart";
-import Loading from "/client/component/compound/loading";
 import {
   StylesRecord,
   create
 } from "/client/component/create";
 import {
   useIntl,
-  useRequest
+  useSuspenseQuery
 } from "/client/component/hook";
 import {
   DetailedDictionary
 } from "/client/skeleton/dictionary";
+import {
+  History
+} from "/client/skeleton/history";
 
 
 const HistoryPane = create(
@@ -37,48 +36,24 @@ const HistoryPane = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let [data, setData] = useState<ChartData | null>(null);
-    let [maxAxis, setMaxAxis] = useState(10);
-    let [minAxis, setMinAxis] = useState(0);
-    let [, {transNumber, transShortDate}] = useIntl();
-    let {request} = useRequest();
+    const [, {transNumber, transShortDate}] = useIntl();
 
-    useMount(async () => {
-      let number = dictionary.number;
-      let from = new Date(Date.now() - 100 * 24 * 60 * 60 * 1000).toString();
-      let response = await request("fetchHistories", {number, from});
-      if (response.status === 200 && !("error" in response.data)) {
-        let histories = response.data;
-        let dates = [...histories.map((history) => new Date(history.date)), new Date()];
-        let wordSizes = [...histories.map((history) => history.wordSize), dictionary.wordSize];
-        let maxWordSize = Math.max(...wordSizes);
-        let minWordSize = Math.min(...wordSizes);
-        let maxAxis = maxWordSize + Math.max((maxWordSize - minWordSize) * 0.05, 10);
-        let minAxis = Math.max(minWordSize - Math.max((maxWordSize - minWordSize) * 0.05, 10), 0);
-        let data = {x: "date", columns: [["date", ...dates], ["wordSize", ...wordSizes]], types: {wordSize: "area"}} as ChartData;
-        setData(data);
-        setMaxAxis(maxAxis);
-        setMinAxis(minAxis);
-      } else {
-        setData(null);
-        setMaxAxis(10);
-        setMinAxis(0);
-      }
-    });
+    const number = dictionary.number;
+    const from = useMemo(() => new Date(Date.now() - 100 * 24 * 60 * 60 * 1000).toString(), []);
+    const [histories] = useSuspenseQuery("fetchHistories", {number, from});
 
-    let padding = 24 * 60 * 60 * 1000;
-    let config = {
+    const {data, maxAxis, minAxis} = calcChartSpec(histories, dictionary.wordSize);
+    const padding = 24 * 60 * 60 * 1000;
+    const config = {
       padding: {left: 45},
       axis: {
         x: {tick: {format: transShortDate}, padding: {left: padding, right: padding}, type: "timeseries"},
         y: {tick: {format: transNumber}, max: maxAxis, min: minAxis, padding: {top: 0, bottom: 0}}
       }
     } as ChartConfig;
-    let node = (
+    const node = (
       <div styleName="root">
-        <Loading loading={data === null}>
-          <Chart className={styles!["chart"]} data={data!} config={config}/>
-        </Loading>
+        <Chart className={styles!["chart"]} data={data} config={config}/>
       </div>
     );
     return node;
@@ -86,5 +61,16 @@ const HistoryPane = create(
   }
 );
 
+
+function calcChartSpec(histories: Array<History>, wordSize: number): {data: ChartData, maxAxis: number, minAxis: number} {
+  const dates = [...histories.map((history) => new Date(history.date)), new Date()];
+  const wordSizes = [...histories.map((history) => history.wordSize), wordSize];
+  const maxWordSize = Math.max(...wordSizes);
+  const minWordSize = Math.min(...wordSizes);
+  const maxAxis = maxWordSize + Math.max((maxWordSize - minWordSize) * 0.05, 10);
+  const minAxis = Math.max(minWordSize - Math.max((maxWordSize - minWordSize) * 0.05, 10), 0);
+  const data = {x: "date", columns: [["date", ...dates], ["wordSize", ...wordSizes]], types: {wordSize: "area"}} as ChartData;
+  return {data, maxAxis, minAxis};
+}
 
 export default HistoryPane;

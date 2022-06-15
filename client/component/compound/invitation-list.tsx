@@ -3,15 +3,13 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactElement,
-  ReactNode,
-  useCallback
+  ReactElement
 } from "react";
 import {
   AsyncOrSync
 } from "ts-essentials";
 import InvitationPane from "/client/component/compound/invitation-pane";
-import PaneList from "/client/component/compound/pane-list";
+import PaneList from "/client/component/compound/pane-list-beta";
 import {
   create
 } from "/client/component/create";
@@ -25,19 +23,28 @@ const InvitationList = create(
   function ({
     invitations,
     size,
+    hitSize,
+    page,
+    onPageSet,
     onSubmit
   }: {
-    invitations: Array<Invitation> | null,
+    invitations: Array<Invitation>,
     size: number,
-    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+    hitSize?: number,
+    page?: number,
+    onPageSet?: (page: number) => void,
+    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
   }): ReactElement {
 
-    let rendererInvitation = useCallback(function (invitation: Invitation): ReactNode {
-      return <InvitationPane invitation={invitation} key={invitation.id} onSubmit={onSubmit}/>;
-    }, [onSubmit]);
-
-    let node = (
-      <PaneList items={invitations} size={size} renderer={rendererInvitation}/>
+    const node = (
+      <PaneList
+        items={invitations}
+        size={size}
+        hitSize={hitSize}
+        page={page}
+        onPageSet={onPageSet}
+        renderer={(invitation) => <InvitationPane key={invitation.id} invitation={invitation} onSubmit={onSubmit}/>}
+      />
     );
     return node;
 

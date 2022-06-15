@@ -23,9 +23,9 @@ export class VariationSchema {
 export class VariationCreator {
 
   public static create(raw: Variation): VariationSkeleton {
-    let title = raw.title;
-    let name = raw.name;
-    let skeleton = {title, name};
+    const title = raw.title;
+    const name = raw.name;
+    const skeleton = {title, name};
     return skeleton;
   }
 
@@ -33,4 +33,4 @@ export class VariationCreator {
 
 
 export type Variation = VariationSchema;
-export let VariationModel = getModelForClass(VariationSchema);
+export const VariationModel = getModelForClass(VariationSchema);

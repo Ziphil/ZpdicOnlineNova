@@ -21,42 +21,48 @@ import {
 
 export class NormalWordParameter extends WordParameter {
 
-  public search: string;
+  public text: string;
   public mode: WordMode;
   public type: WordType;
   public order: WordOrder;
   public ignoreOptions: WordIgnoreOptions;
+  public enableSuggestions: boolean;
 
-  public constructor(search: string, mode: WordMode, type: WordType, order: WordOrder, ignoreOptions: WordIgnoreOptions) {
+  public constructor(text: string, mode: WordMode, type: WordType, order: WordOrder, ignoreOptions: WordIgnoreOptions, enableSuggestions: boolean) {
     super();
-    this.search = search;
+    this.text = text;
     this.mode = mode;
     this.type = type;
     this.order = order;
     this.ignoreOptions = ignoreOptions;
+    this.enableSuggestions = enableSuggestions;
   }
 
   public createQuery(dictionary: Dictionary): Query<Array<Word>, Word> {
-    let keys = WordParameter.createKeys(this.mode);
-    let needle = WordParameter.createNeedle(this.search, this.type, this.ignoreOptions);
-    let sortKey = WordParameter.createSortKey(this.order);
-    let disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
-    let query = WordModel.findExist().where("dictionary", dictionary).or(disjunctFilters).sort(sortKey);
+    const keys = WordParameter.createKeys(this.mode);
+    const needle = WordParameter.createNeedle(this.text, this.type, this.ignoreOptions);
+    const sortKey = WordParameter.createSortKey(this.order);
+    const disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
+    const query = WordModel.findExist().where("dictionary", dictionary).or(disjunctFilters).sort(sortKey);
     return query;
   }
 
   public createSuggestionQuery(dictionary: Dictionary): Aggregate<Array<RawSuggestion>> | null {
-    let mode = this.mode;
-    let type = this.type;
-    if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {
-      let needle = WordParameter.createNeedle(this.search, "exact", {case: false});
-      let aggregate = WordModel.aggregate();
-      aggregate = aggregate.match(WordModel.findExist().where("dictionary", dictionary["_id"]).where("variations.name", needle).getFilter());
-      aggregate = aggregate.addFields({oldVariations: "$variations"});
-      aggregate = aggregate.unwind("$oldVariations");
-      aggregate = aggregate.match(WordModel.where("oldVariations.name", needle).getFilter());
-      aggregate = aggregate.project({title: "$oldVariations.title", word: "$$CURRENT"});
-      return aggregate;
+    if (this.enableSuggestions) {
+      const mode = this.mode;
+      const type = this.type;
+      if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {
+        const needle = WordParameter.createNeedle(this.text, "exact", {case: false});
+        let aggregate = WordModel.aggregate();
+        aggregate = aggregate.match(WordModel.findExist().where("dictionary", dictionary["_id"]).where("variations.name", needle).getFilter());
+        aggregate = aggregate.addFields({oldVariations: "$variations"});
+        aggregate = aggregate.unwind("$oldVariations");
+        aggregate = aggregate.match(WordModel.where("oldVariations.name", needle).getFilter());
+        aggregate = aggregate.project({title: "$oldVariations.title", word: "$$CURRENT"});
+        return aggregate;
+      } else {
+        return null;
+      }
     } else {
       return null;
     }

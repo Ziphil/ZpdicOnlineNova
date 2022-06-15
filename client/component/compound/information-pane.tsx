@@ -26,12 +26,12 @@ const InformationPane = create(
     onClose?: (event: MouseEvent<HTMLButtonElement>) => void
   }): ReactElement {
 
-    let styleName = StyleNameUtil.create("root", style);
-    let itemNodes = texts.map((text, index) => {
-      let itemNode = <li key={index}>{text}</li>;
+    const styleName = StyleNameUtil.create("root", style);
+    const itemNodes = texts.map((text, index) => {
+      const itemNode = <li key={index}>{text}</li>;
       return itemNode;
     });
-    let node = (
+    const node = (
       <div styleName={styleName}>
         <ul styleName="list">
           {itemNodes}
@@ -39,7 +39,7 @@ const InformationPane = create(
         <div styleName="button-box"/>
         <div styleName="overlay"/>
         <div styleName="button">
-          <Button iconName="times" style="simple" onClick={onClose}/>
+          <Button iconName="times" variant="simple" onClick={onClose}/>
         </div>
       </div>
     );

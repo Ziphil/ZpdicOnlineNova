@@ -35,9 +35,9 @@ const HeaderMenuItem = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let {pushPath} = usePath();
+    const {pushPath} = usePath();
 
-    let handleClick = useCallback(function (event: MouseEvent<HTMLElement>): void {
+    const handleClick = useCallback(function (event: MouseEvent<HTMLElement>): void {
       event.preventDefault();
       onClick?.(event);
       if (href) {
@@ -45,10 +45,10 @@ const HeaderMenuItem = create(
       }
     }, [href, onClick, pushPath]);
 
-    let iconNode = (iconName !== undefined) && (
+    const iconNode = (iconName !== undefined) && (
       <Icon className={styles!["icon"]} name={iconName}/>
     );
-    let node = (
+    const node = (
       <a styleName="root" href={href} onClick={handleClick}>
         {iconNode}
         <span styleName="text">{label}</span>

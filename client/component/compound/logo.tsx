@@ -18,7 +18,7 @@ const Logo = create(
   }: {
   }): ReactElement {
 
-    let node = (
+    const node = (
       <div styleName="root">
         <div styleName="title">ZpDIC</div>
         <div styleName="subtitle">Online</div>

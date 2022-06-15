@@ -6,6 +6,9 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
@@ -25,23 +28,23 @@ const ChangeUserScreenNameForm = create(
     onSubmit
   }: {
     currentScreenName: string | undefined,
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
-    let [screenName, setScreenName] = useState(currentScreenName ?? "");
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [screenName, setScreenName] = useState(currentScreenName ?? "");
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let response = await request("changeUserScreenName", {screenName});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const response = await request("changeUserScreenName", {screenName});
       if (response.status === 200) {
         addInformationPopup("userScreenNameChanged");
-        onSubmit?.();
+        await onSubmit?.();
       }
     }, [screenName, request, onSubmit, addInformationPopup]);
 
-    let node = (
+    const node = (
       <form styleName="root">
         <Input label={trans("changeUserScreenNameForm.screenName")} value={screenName} onSet={(screenName) => setScreenName(screenName)}/>
         <Button label={trans("changeUserScreenNameForm.confirm")} reactive={true} onClick={handleClick}/>

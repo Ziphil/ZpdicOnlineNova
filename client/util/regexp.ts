@@ -4,17 +4,17 @@
 export class RegexpUtil {
 
   public static exec(pattern: string | RegExp, target: string): RegexpExecResult {
-    let regexp = new RegExp(pattern, "g");
+    const regexp = new RegExp(pattern, "g");
     let captures;
-    let matches = [];
+    const matches = [];
     while ((captures = regexp.exec(target)) !== null) {
-      let start = captures.index;
-      let end = regexp.lastIndex;
-      let range = {start, end};
-      let match = {range, captures};
+      const start = captures.index;
+      const end = regexp.lastIndex;
+      const range = {start, end};
+      const match = {range, captures};
       matches.push(match);
     }
-    let result = {target, matches};
+    const result = {target, matches};
     return result;
   }
 

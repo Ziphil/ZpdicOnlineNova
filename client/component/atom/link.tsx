@@ -13,12 +13,9 @@ import {
 import {
   usePath
 } from "/client/component/hook";
-import {
-  StyleNameUtil
-} from "/client/util/style-name";
 
 
-let Link = create(
+const Link = create(
   require("./link.scss"), "Link",
   function ({
     href,
@@ -36,13 +33,13 @@ let Link = create(
     children?: ReactNode
   }): ReactElement {
 
-    let {pushPath} = usePath();
+    const {pushPath} = usePath();
 
-    let handleClick = useCallback(function (event: MouseEvent<HTMLAnchorElement>): void {
+    const handleClick = useCallback(function (event: MouseEvent<HTMLAnchorElement>): void {
       event.preventDefault();
       onClick?.(event);
       if (href) {
-        let actualTarget = (() => {
+        const actualTarget = (() => {
           if (target === "auto") {
             if (href.includes(location.host) || (!href.startsWith("http") && !href.startsWith("//"))) {
               return "self";
@@ -54,7 +51,7 @@ let Link = create(
           }
         })();
         if (actualTarget === "self") {
-          let shortHref = href.replace(/^(\w+?):\/\//, "").replace(location.host, "");
+          const shortHref = href.replace(/^(\w+?):\/\//, "").replace(location.host, "");
           pushPath(shortHref);
         } else {
           window.open(href);
@@ -62,11 +59,8 @@ let Link = create(
       }
     }, [href, target, onClick, pushPath]);
 
-    let styleName = StyleNameUtil.create(
-      "root",
-      {if: style === "plane", true: "plane"}
-    );
-    let node = (
+    const styleName = (style === "plane") ? "plane" : "link";
+    const node = (
       <a styleName={styleName} className={className} href={href} onClick={handleClick}>
         {children}
       </a>

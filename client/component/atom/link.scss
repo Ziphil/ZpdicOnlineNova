@@ -3,21 +3,19 @@
 @import "/client/component/mixin.scss";
 
 
-.root {
+.link {
   color: $link-color;
   text-decoration: underline;
   cursor: pointer;
+  &:hover {
+    color: $link-hover-color;
+  }
 }
 
-.root:hover {
-  color: $link-hover-color;
-}
-
-.root.plane {
+.plane {
   color: inherit;
   text-decoration: inherit;
-}
-
-.root.plane:hover {
-  color: inherit !important;
+  &:hover {
+    color: inherit;
+  }
 }

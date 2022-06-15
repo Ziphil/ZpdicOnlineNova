@@ -41,30 +41,30 @@ const Alert = create(
     onCancel?: (event: MouseEvent<HTMLButtonElement>) => void
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let handleConfirm = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
+    const handleConfirm = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       onClose?.(event);
       onConfirm?.(event);
     }, [onClose, onConfirm]);
 
-    let handleCancel = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
+    const handleCancel = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       onClose?.(event);
       onCancel?.(event);
     }, [onClose, onCancel]);
 
-    let actualCancelLabel = cancelLabel ?? trans("alert.cancel");
-    let actualConfirmLabel = confirmLabel ?? trans("alert.confirm");
-    let node = (
+    const actualCancelLabel = cancelLabel ?? trans("alert.cancel");
+    const actualConfirmLabel = confirmLabel ?? trans("alert.confirm");
+    const node = (
       <Modal open={open} outsideClosable={outsideClosable} onClose={onClose}>
         <div styleName="content">
-          <div styleName="text-wrapper">
+          <div styleName="text-container">
             <div styleName="icon"><Icon name={iconName}/></div>
             <p styleName="text">{text}</p>
           </div>
-          <div styleName="button">
+          <div styleName="button-group">
             <Button label={actualCancelLabel} onClick={handleCancel}/>
-            <Button label={actualConfirmLabel} style="caution" onClick={handleConfirm}/>
+            <Button label={actualConfirmLabel} variant="caution" onClick={handleConfirm}/>
           </div>
         </div>
       </Modal>

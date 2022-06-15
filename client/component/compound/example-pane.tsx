@@ -35,23 +35,18 @@ const ExamplePane = create(
   }: {
     example: Example,
     dictionary: EnhancedDictionary,
-    onEditConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
+    onEditConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
+    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
   }): ReactElement {
 
-    let addExampleEditor = useExampleEditor();
-    let [, {trans}] = useIntl();
+    const addExampleEditor = useExampleEditor();
+    const [, {trans}] = useIntl();
 
-    let openEditor = useCallback(function (): void {
+    const openEditor = useCallback(function (): void {
       addExampleEditor({dictionary, example, onEditConfirm, onDiscardConfirm});
     }, [dictionary, example, onEditConfirm, onDiscardConfirm, addExampleEditor]);
 
-    let cautionNode = (example.words.length <= 0) && (
-      <div styleName="caution">
-        {trans("examplePane.caution")}
-      </div>
-    );
-    let node = (
+    const node = (
       <WhitePane clickable={false}>
         <div styleName="example-wrapper">
           <div styleName="example">
@@ -59,10 +54,14 @@ const ExamplePane = create(
             <span styleName="example-separator"/>
             <span styleName="translation">{example.translation}</span>
           </div>
-          {cautionNode}
+          {(example.words.length <= 0) && (
+            <div styleName="caution">
+              {trans("examplePane.caution")}
+            </div>
+          )}
         </div>
         <div styleName="button">
-          <Button label={trans("examplePane.edit")} iconName="edit" style="simple" onClick={openEditor}/>
+          <Button label={trans("examplePane.edit")} iconName="edit" variant="simple" onClick={openEditor}/>
         </div>
       </WhitePane>
     );

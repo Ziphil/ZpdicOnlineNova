@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.icon {
+.icon-container {
   margin: 0rpx 0rpx $huge-margin 0rpx;
   font-size: 64rpx;
   color: $light-color;
@@ -26,7 +26,7 @@
   overflow: hidden;
 }
 
-.button {
+.button-container {
   margin: $large-margin 0rpx 0rpx 0rpx;
   text-align: center;
 }

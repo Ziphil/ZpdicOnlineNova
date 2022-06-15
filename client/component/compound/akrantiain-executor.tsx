@@ -42,26 +42,26 @@ const AkrantiainExecutor = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let [source, setSource] = useState(defaultSource ?? "");
-    let [input, setInput] = useState("");
-    let [output, setOutput] = useState("");
-    let [errorMessage, setErrorMessage] = useState("");
-    let [, {trans}] = useIntl();
+    const [source, setSource] = useState(defaultSource ?? "");
+    const [input, setInput] = useState("");
+    const [output, setOutput] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [, {trans}] = useIntl();
 
-    let executeAkrantiain = useCallback(function (): void {
+    const executeAkrantiain = useCallback(function (): void {
       try {
-        let akrantiain = Akrantiain.load(source);
-        let output = akrantiain.convert(input);
+        const akrantiain = Akrantiain.load(source);
+        const output = akrantiain.convert(input);
         setOutput(output);
         setErrorMessage("");
       } catch (error) {
-        let errorMessage = error.message.trim() ?? "Unknown error";
+        const errorMessage = error.message.trim() ?? "Unknown error";
         setOutput("");
         setErrorMessage(errorMessage);
       }
     }, [source, input]);
 
-    let handleClose = useCallback(function (event: MouseEvent<HTMLElement>): void {
+    const handleClose = useCallback(function (event: MouseEvent<HTMLElement>): void {
       onClose?.(event, source);
     }, [onClose, source]);
 
@@ -69,8 +69,8 @@ const AkrantiainExecutor = create(
       setSource(defaultSource ?? "");
     }, [defaultSource]);
 
-    let version = AKRANTIAIN_VERSION;
-    let node = (
+    const version = AKRANTIAIN_VERSION;
+    const node = (
       <Overlay size="large" title={trans("akrantiainExecutor.title", {version})} open={open} onClose={handleClose}>
         <div styleName="root">
           <TextArea

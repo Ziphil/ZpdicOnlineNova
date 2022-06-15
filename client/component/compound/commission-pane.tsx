@@ -18,6 +18,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest,
@@ -42,34 +43,35 @@ const CommissionPane = create(
   }: {
     commission: Commission,
     dictionary: EnhancedDictionary,
-    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-    onAddConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+    onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
+    onAddConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
   }): ReactElement {
 
-    let [alertOpen, setAlertOpen] = useState(false);
-    let addWordEditor = useWordEditor();
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [alertOpen, setAlertOpen] = useState(false);
+    const addWordEditor = useWordEditor();
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let discardCommission = useCallback(async function (event: MouseEvent<HTMLButtonElement>, showPopup?: boolean): Promise<void> {
-      let number = dictionary.number;
-      let id = commission.id;
-      let response = await request("discardCommission", {number, id});
+    const discardCommission = useCallback(async function (event: MouseEvent<HTMLButtonElement>, showPopup?: boolean): Promise<void> {
+      const number = dictionary.number;
+      const id = commission.id;
+      const response = await request("discardCommission", {number, id});
       if (response.status === 200) {
         if (showPopup === undefined || showPopup) {
           addInformationPopup("commissionDiscarded");
         }
         await onDiscardConfirm?.(event);
+        await invalidateQueries("fetchCommissions", (data) => data.number === number);
       }
     }, [dictionary.number, commission, request, onDiscardConfirm, addInformationPopup]);
 
-    let handleEditConfirm = useCallback(async function (word: EditableWord, event: MouseEvent<HTMLButtonElement>): Promise<void> {
+    const handleEditConfirm = useCallback(async function (word: EditableWord, event: MouseEvent<HTMLButtonElement>): Promise<void> {
       await discardCommission(event, false);
       await onAddConfirm?.(word, event);
     }, [onAddConfirm, discardCommission]);
 
-    let openEditor = useCallback(function (): void {
+    const openEditor = useCallback(function (): void {
       addWordEditor({
         dictionary,
         word: null,
@@ -78,23 +80,22 @@ const CommissionPane = create(
       });
     }, [dictionary, commission, handleEditConfirm, addWordEditor]);
 
-    let name = commission.name;
-    let comment = commission.comment;
-    let commentNode = (comment !== undefined && comment !== "") && (
-      <div styleName="comment">
-        {comment}
-      </div>
-    );
-    let node = (
+    const name = commission.name;
+    const comment = commission.comment;
+    const node = (
       <Fragment>
         <WhitePane clickable={false}>
           <div>
             <div styleName="name">{name}</div>
-            {commentNode}
+            {(comment !== undefined && comment !== "") && (
+              <div styleName="comment">
+                {comment}
+              </div>
+            )}
           </div>
           <div styleName="button">
-            <Button label={trans("commissionPane.discard")} iconName="trash-alt" style="simple" onClick={() => setAlertOpen(true)}/>
-            <Button label={trans("commissionPane.add")} iconName="plus" style="simple" onClick={openEditor}/>
+            <Button label={trans("commissionPane.discard")} iconName="trash-alt" variant="simple" onClick={() => setAlertOpen(true)}/>
+            <Button label={trans("commissionPane.add")} iconName="plus" variant="simple" onClick={openEditor}/>
           </div>
         </WhitePane>
         <Alert

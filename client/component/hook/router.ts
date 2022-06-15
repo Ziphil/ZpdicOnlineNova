@@ -14,33 +14,33 @@ import {
 
 
 export function usePath(): PathCallbacks {
-  let navigate = useNavigate();
-  let [, {clearAllPopups}] = usePopup();
-  let pushPath = useCallback(function (path: string, options?: PathCallbackOptions): void {
+  const navigate = useNavigate();
+  const [, {clearAllPopups}] = usePopup();
+  const pushPath = useCallback(function (path: string, options?: PathCallbackOptions): void {
     if (!options?.preservePopup) {
       clearAllPopups();
     }
     if (path.startsWith("#")) {
-      let search = options?.search ?? (options?.preserveSearch ? undefined : {});
-      let hash = path.slice(1);
+      const search = options?.search ?? (options?.preserveSearch ? undefined : {});
+      const hash = path.slice(1);
       navigate({search, hash, replace: false});
     } else {
-      let search = options?.search ?? (options?.preserveSearch ? undefined : {});
-      let hash = options?.hash ?? "";
+      const search = options?.search ?? (options?.preserveSearch ? undefined : {});
+      const hash = options?.hash ?? "";
       navigate({to: path, search, hash, replace: false});
     }
   }, [navigate, clearAllPopups]);
-  let replacePath = useCallback(function (path: string, options?: PathCallbackOptions): void {
+  const replacePath = useCallback(function (path: string, options?: PathCallbackOptions): void {
     if (!options?.preservePopup) {
       clearAllPopups();
     }
     if (path.startsWith("#")) {
-      let search = options?.search ?? (options?.preserveSearch ? undefined : {});
-      let hash = path.slice(1);
+      const search = options?.search ?? (options?.preserveSearch ? undefined : {});
+      const hash = path.slice(1);
       navigate({search, hash, replace: true});
     } else {
-      let search = options?.search ?? (options?.preserveSearch ? undefined : {});
-      let hash = options?.hash ?? "";
+      const search = options?.search ?? (options?.preserveSearch ? undefined : {});
+      const hash = options?.hash ?? "";
       navigate({to: path, search, hash, replace: true});
     }
   }, [navigate, clearAllPopups]);
@@ -48,21 +48,21 @@ export function usePath(): PathCallbacks {
 }
 
 export function useParams<P extends Params = Params>(): P {
-  let match = useMatch();
-  let params = match.params as P;
+  const match = useMatch();
+  const params = match.params as P;
   return params;
 }
 
 export function useLoaderData<D extends LoaderData = LoaderData>(): D {
-  let match = useMatch();
-  let loaderData = match.data as D;
+  const match = useMatch();
+  const loaderData = match.data as D;
   return loaderData;
 }
 
 export function useLocation<S extends Search = Search>(): Location<S> {
-  let reactLocation = useReactLocation();
-  let rawLocation = reactLocation.current;
-  let location = {
+  const reactLocation = useReactLocation();
+  const rawLocation = reactLocation.current;
+  const location = {
     path: rawLocation.pathname,
     search: rawLocation.search as S,
     searchString: rawLocation.searchStr,

@@ -6,18 +6,15 @@
 .root {
   font-size: $tiny-font-size;
   color: map-get($colors, primary);
-}
-
-.root.top {
-  margin: 0rpx 0rpx 3rpx 0rpx;
-}
-
-.root.left {
-  margin: 0rpx 5rpx 0rpx 0rpx;
-}
-
-.root.error {
-  color: map-get($colors, error);
+  &[data-position="top"] {
+    margin: 0rpx 0rpx 3rpx 0rpx;
+  }
+  &[data-position="left"] {
+    margin: 0rpx 5rpx 0rpx 0rpx;
+  }
+  &[data-error] {
+    color: map-get($colors, error);
+  }
 }
 
 .required,

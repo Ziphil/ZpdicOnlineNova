@@ -14,9 +14,10 @@ import {
   create
 } from "/client/component/create";
 import {
-  useLoaderData
+  useLocale,
+  useParams,
+  useSuspenseQuery
 } from "/client/component/hook";
-import NotFoundPage from "/client/component/page/not-found-page";
 import Page from "/client/component/page/page";
 import {
   CodeMirrorUtil
@@ -29,26 +30,23 @@ const DocumentPage = create(
   }: {
   }): ReactElement {
 
-    let {source} = useLoaderData();
+    const params = useParams();
+    const [locale] = useLocale();
 
-    if (source !== null) {
-      let components = {pre: DocumentPageSourceTester};
-      let title = source?.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
-      let node = (
-        <Page>
-          <Helmet>
-            <title>{(title) ? `${title} — ZpDIC Online` : "ZpDIC Online"}</title>
-          </Helmet>
-          <Markdown source={source!} type="document" components={components}/>
-        </Page>
-      );
-      return node;
-    } else {
-      let node = (
-        <NotFoundPage/>
-      );
-      return node;
-    }
+    const path = ((params.firstPath) ? params.firstPath : "") + ((params.secondPath) ? "/" + params.secondPath : "");
+    const [source] = useSuspenseQuery("fetchDocument", {path, locale});
+
+    const components = {pre: DocumentPageSourceTester};
+    const title = source.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
+    const node = (
+      <Page>
+        <Helmet>
+          <title>{(title) ? `${title} — ZpDIC Online` : "ZpDIC Online"}</title>
+        </Helmet>
+        <Markdown source={source} type="document" components={components}/>
+      </Page>
+    );
+    return node;
 
   }
 );
@@ -62,26 +60,25 @@ const DocumentPageSourceTester = create(
     children?: any
   }): ReactElement {
 
-    let child = children[0];
+    const child = children[0];
     if (child.type === "code") {
-      let match = child.props.className?.match(/^language-(.+)$/)?.[1]?.match(/^(\w+)(-try)?$/);
-      let language = match?.[1] ?? "plain";
-      let source = String(child.props.children);
-      let modeOptions = CodeMirrorUtil.getModeOptions(language);
+      const match = child.props.className?.match(/^language-(.+)$/)?.[1]?.match(/^(\w+)(-try)?$/);
+      const language = match?.[1] ?? "plain";
+      const source = String(child.props.children);
+      const modeOptions = CodeMirrorUtil.getModeOptions(language);
       if (modeOptions.mode !== undefined) {
-        let innerNode = (match && match[2]) ? <SourceTester source={source} language={language}/> : <Highlight source={source} language={language}/>;
-        let node = (
+        const node = (
           <div className="block">
-            {innerNode}
+            {(match && match[2]) ? <SourceTester source={source} language={language}/> : <Highlight source={source} language={language}/>}
           </div>
         );
         return node;
       } else {
-        let node = <pre>{children}</pre>;
+        const node = <pre>{children}</pre>;
         return node;
       }
     } else {
-      let node = <pre>{children}</pre>;
+      const node = <pre>{children}</pre>;
       return node;
     }
 

@@ -23,7 +23,7 @@ const Loading = create(
   }): ReactElement {
 
     if (loading) {
-      let node = (
+      const node = (
         <div styleName="root">
           <span styleName="spinner">
             <Icon name="spinner" pulse={true}/>
@@ -32,7 +32,7 @@ const Loading = create(
       );
       return node;
     } else {
-      let node = (
+      const node = (
         <Fragment>
           {children}
         </Fragment>

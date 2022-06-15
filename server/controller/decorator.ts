@@ -27,13 +27,13 @@ type RequestHandlerSpec = {
 };
 
 export function controller(path: string): ClassDecorator {
-  let decorator = function (clazz: Function): void {
-    let originalSetup = clazz.prototype.setup;
+  const decorator = function (clazz: Function): void {
+    const originalSetup = clazz.prototype.setup;
     clazz.prototype.setup = function (this: Controller): void {
-      let anyThis = this as any;
-      let metadata = Reflect.getMetadata(KEY, clazz.prototype) as Metadata;
-      for (let spec of metadata) {
-        let handler = function (request: Request, response: Response, next: NextFunction): void {
+      const anyThis = this as any;
+      const metadata = Reflect.getMetadata(KEY, clazz.prototype) as Metadata;
+      for (const spec of metadata) {
+        const handler = function (request: Request, response: Response, next: NextFunction): void {
           Promise.resolve(anyThis[spec.name](request, response, next)).catch((error) => {
             next(error);
           });
@@ -48,28 +48,28 @@ export function controller(path: string): ClassDecorator {
 }
 
 export function get(path: string): MethodDecorator {
-  let decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
+  const decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
     setPath(target, name, "get", path);
   };
   return decorator;
 }
 
 export function post(path: string): MethodDecorator {
-  let decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
+  const decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
     setPath(target, name, "post", path);
   };
   return decorator;
 }
 
 export function before<P extends Params = ParamsDictionary>(...middlewares: Array<RequestHandler<P>>): MethodDecorator {
-  let decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
+  const decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
     pushMiddlewares(target, name, "before", ...middlewares);
   };
   return decorator;
 }
 
 export function after<P extends Params = ParamsDictionary>(...middlewares: Array<RequestHandler<P>>): MethodDecorator {
-  let decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
+  const decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
     pushMiddlewares(target, name, "after", ...middlewares);
   };
   return decorator;
@@ -90,13 +90,13 @@ function findHandlerSpec(target: object, name: string | symbol): RequestHandlerS
 }
 
 function setPath(target: object, name: string | symbol, method: MethodType, path: string): void {
-  let spec = findHandlerSpec(target, name);
+  const spec = findHandlerSpec(target, name);
   spec.method = method;
   spec.path = path;
 }
 
 function pushMiddlewares<P extends Params = ParamsDictionary>(target: object, name: string | symbol, timing: string, ...middlewares: Array<RequestHandler<P>>): void {
-  let spec = findHandlerSpec(target, name);
+  const spec = findHandlerSpec(target, name);
   if (timing === "before") {
     spec.befores.push(...middlewares);
   } else if (timing === "after") {

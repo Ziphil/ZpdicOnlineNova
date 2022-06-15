@@ -21,13 +21,13 @@ export class EditableWord {
   public relations!: Array<Relation>;
 
   public static createEmpty(): EditableWord {
-    let name = "";
-    let equivalents = new Array<Equivalent>();
-    let tags = new Array<string>();
-    let informations = new Array<Information>();
-    let variations = new Array<Variation>();
-    let relations = new Array<Relation>();
-    let skeleton = {name, equivalents, tags, informations, variations, relations};
+    const name = "";
+    const equivalents = new Array<Equivalent>();
+    const tags = new Array<string>();
+    const informations = new Array<Information>();
+    const variations = new Array<Variation>();
+    const relations = new Array<Relation>();
+    const skeleton = {name, equivalents, tags, informations, variations, relations};
     return skeleton;
   }
 

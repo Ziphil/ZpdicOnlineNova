@@ -23,9 +23,9 @@ export class EquivalentSchema {
 export class EquivalentCreator {
 
   public static create(raw: Equivalent): EquivalentSkeleton {
-    let title = raw.title;
-    let names = raw.names;
-    let skeleton = {title, names};
+    const title = raw.title;
+    const names = raw.names;
+    const skeleton = {title, names};
     return skeleton;
   }
 
@@ -33,4 +33,4 @@ export class EquivalentCreator {
 
 
 export type Equivalent = EquivalentSchema;
-export let EquivalentModel = getModelForClass(EquivalentSchema);
+export const EquivalentModel = getModelForClass(EquivalentSchema);

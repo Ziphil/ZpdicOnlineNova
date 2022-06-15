@@ -12,7 +12,7 @@ import {
 } from "/client/component/create";
 import {
   useIntl,
-  useUser
+  useMe
 } from "/client/component/hook";
 
 
@@ -22,16 +22,16 @@ const Header = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
-    let [user] = useUser();
+    const [, {trans}] = useIntl();
+    const [me] = useMe();
 
-    let userNameNode = (user !== null) && (
+    const userNameNode = (me !== null) && (
       <Fragment>
         <div styleName="separator"/>
         <HeaderMenuItem label={trans("header.dashboard")} iconName="house-user" href="/dashboard"/>
       </Fragment>
     );
-    let node = (
+    const node = (
       <header styleName="root">
         <div styleName="container">
           <div styleName="left">

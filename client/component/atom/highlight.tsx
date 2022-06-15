@@ -32,11 +32,11 @@ const Highlight = create(
     className?: string
   }): ReactElement {
 
-    let rootRef = useRef<HTMLDivElement>(null);
+    const rootRef = useRef<HTMLDivElement>(null);
 
-    let drawHighlight = useCallback(function (): void {
+    const drawHighlight = useCallback(function (): void {
       if (rootRef.current !== null) {
-        let modeOptions = CodeMirrorUtil.getModeOptions(language);
+        const modeOptions = CodeMirrorUtil.getModeOptions(language);
         let html = "";
         html += `<div class=\"cm-s-${escapeHtml(modeOptions.theme)}\">`;
         CodeMirror.runMode(source, modeOptions.mode, (text, style) => {
@@ -55,9 +55,9 @@ const Highlight = create(
 
     useEffect(() => {
       drawHighlight();
-    }, [rootRef]);
+    }, [rootRef.current]);
 
-    let node = (
+    const node = (
       <div styleName="root" className={className} ref={rootRef}/>
     );
     return node;

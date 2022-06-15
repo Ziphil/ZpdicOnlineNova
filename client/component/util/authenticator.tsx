@@ -12,7 +12,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useUser
+  useMe
 } from "/client/component/hook";
 
 
@@ -28,13 +28,13 @@ const Authenticator = create(
     node: ReactNode
   }): ReactElement {
 
-    let [user] = useUser();
+    const [me] = useMe();
 
     if (type === "private" && redirect !== undefined) {
-      let actualNode = (user !== null) ? <>{node}</> : <Navigate to={redirect} replace={true}/>;
+      const actualNode = (me !== null) ? <>{node}</> : <Navigate to={redirect} replace={true}/>;
       return actualNode;
     } else if (type === "guest" && redirect !== undefined) {
-      let actualNode = (user === null) ? <>{node}</> : <Navigate to={redirect} replace={true}/>;
+      const actualNode = (me === null) ? <>{node}</> : <Navigate to={redirect} replace={true}/>;
       return actualNode;
     } else {
       return <>{node}</>;

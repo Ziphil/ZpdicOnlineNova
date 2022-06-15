@@ -4,15 +4,13 @@ import partial from "lodash-es/partial";
 import * as react from "react";
 import {
   MouseEvent,
-  ReactElement,
-  ReactNode,
-  useCallback
+  ReactElement
 } from "react";
 import {
   AsyncOrSync
 } from "ts-essentials";
 import ExamplePane from "/client/component/compound/example-pane";
-import PaneList from "/client/component/compound/pane-list";
+import PaneList from "/client/component/compound/pane-list-beta";
 import {
   create
 } from "/client/component/create";
@@ -29,30 +27,40 @@ const ExampleList = create(
     examples,
     dictionary,
     size,
+    hitSize,
+    page,
+    onPageSet,
     onEditConfirm,
     onDiscardConfirm
   }: {
-    examples: Array<Example> | null,
+    examples: Array<Example>,
     dictionary: EnhancedDictionary,
     size: number,
-    onEditConfirm?: (oldExample: Example, newExample: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-    onDiscardConfirm?: (example: Example, event: MouseEvent<HTMLButtonElement>) => void,
+    hitSize?: number,
+    page?: number,
+    onPageSet?: (page: number) => void,
+    onEditConfirm?: (oldExample: Example, newExample: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
+    onDiscardConfirm?: (example: Example, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
   }): ReactElement {
 
-    let renderExample = useCallback(function (example: Example): ReactNode {
-      let node = (
-        <ExamplePane
-          example={example}
-          dictionary={dictionary}
-          onEditConfirm={onEditConfirm && partial(onEditConfirm, example)}
-          onDiscardConfirm={onDiscardConfirm && partial(onDiscardConfirm, example)}
-        />
-      );
-      return node;
-    }, [dictionary, onEditConfirm, onDiscardConfirm]);
-
-    let node = (
-      <PaneList items={examples} size={size} column={2} renderer={renderExample}/>
+    const node = (
+      <PaneList
+        items={examples}
+        column={2}
+        size={size}
+        hitSize={hitSize}
+        page={page}
+        onPageSet={onPageSet}
+        renderer={(example) => (
+          <ExamplePane
+            key={example.id}
+            example={example}
+            dictionary={dictionary}
+            onEditConfirm={onEditConfirm && partial(onEditConfirm, example)}
+            onDiscardConfirm={onDiscardConfirm && partial(onDiscardConfirm, example)}
+          />
+        )}
+      />
     );
     return node;
 

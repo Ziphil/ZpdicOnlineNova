@@ -13,8 +13,7 @@
   background-color: $head-color;
   display: inline-block;
   position: relative;
-}
-
-.root.highlight {
-  background-color: $link-color;
+  &[data-highlight] {
+    background-color: $link-color;
+  }
 }

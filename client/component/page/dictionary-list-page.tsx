@@ -3,7 +3,6 @@
 import * as react from "react";
 import {
   ReactElement,
-  useCallback,
   useState
 } from "react";
 import RadioGroup from "/client/component/atom/radio-group";
@@ -13,16 +12,12 @@ import {
 } from "/client/component/create";
 import {
   useIntl,
-  usePopup,
-  useRequest
+  useSuspenseQuery
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
-  DetailedDictionary
-} from "/client/skeleton/dictionary";
-import {
-  WithSize
-} from "/server/controller/internal/type";
+  calcOffset
+} from "/client/util/misc";
 
 
 const DictionaryListPage = create(
@@ -31,31 +26,23 @@ const DictionaryListPage = create(
   }: {
   }): ReactElement {
 
-    let [order, setOrder] = useState("updatedDate");
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
+    const [, {trans}] = useIntl();
 
-    let provideDictionaries = useCallback(async function (offset?: number, size?: number): Promise<WithSize<DetailedDictionary>> {
-      let response = await request("fetchAllDictionaries", {order, offset, size});
-      if (response.status === 200) {
-        let hitResult = response.data;
-        return hitResult;
-      } else {
-        return [[], 0];
-      }
-    }, [order, request]);
+    const [order, setOrder] = useState("updatedDate");
+    const [page, setPage] = useState(0);
+    const [[hitDictionaries, hitSize]] = useSuspenseQuery("fetchAllDictionaries", {order, ...calcOffset(page, 20)}, {keepPreviousData: true});
 
-    let specs = [
+    const specs = [
       {value: "updatedDate", label: trans("dictionaryListPage.updatedDate")},
       {value: "createdDate", label: trans("dictionaryListPage.createdDate")}
     ];
-    let node = (
+    const node = (
       <Page title={trans("dictionaryListPage.title")}>
-        <div styleName="search-form">
+        <div styleName="search-form-container">
           <RadioGroup name="order" value={order} specs={specs} onSet={(order) => setOrder(order)}/>
         </div>
         <div styleName="list">
-          <DictionaryList dictionaries={provideDictionaries} showCreatedDate={true} size={20}/>
+          <DictionaryList dictionaries={hitDictionaries} size={20} hitSize={hitSize} page={page} onPageSet={setPage} showCreatedDate={true}/>
         </div>
       </Page>
     );

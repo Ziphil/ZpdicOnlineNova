@@ -10,10 +10,10 @@
   right: 0rpx;
   position: fixed;
   pointer-events: none;
-  &:global(.front) {
+  &[data-position="front"] {
     z-index: 200;
   }
-  &:global(.back) {
+  &[data-position="back"] {
     z-index: 180;
   }
 }

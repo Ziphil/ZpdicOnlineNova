@@ -6,12 +6,16 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -27,23 +31,24 @@ const ChangeDictionaryNameForm = create(
   }: {
     number: number,
     currentName: string,
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
-    let [name, setName] = useState(currentName);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [name, setName] = useState(currentName);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let response = await request("changeDictionaryName", {number, name});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const response = await request("changeDictionaryName", {number, name});
       if (response.status === 200) {
         addInformationPopup("dictionaryNameChanged");
-        onSubmit?.();
+        await onSubmit?.();
+        await invalidateQueries("fetchDictionary", (data) => data.number === number);
       }
     }, [number, name, request, onSubmit, addInformationPopup]);
 
-    let node = (
+    const node = (
       <form styleName="root">
         <Input label={trans("changeDictionaryNameForm.name")} value={name} onSet={(name) => setName(name)}/>
         <Button label={trans("changeDictionaryNameForm.confirm")} reactive={true} onClick={handleClick}/>

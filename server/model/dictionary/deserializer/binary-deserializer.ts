@@ -49,13 +49,13 @@ export class BinaryDeserializer extends Deserializer {
   }
 
   private parseHeader(): void {
-    let buffer = this.stream.readBuffer(256);
-    let version = buffer.readUIntLE(0x8C, 2);
-    let type = buffer.readUIntLE(0xA5, 1);
-    let wordSize = buffer.readUIntLE(0xA0, 2);
-    let indexBlockLength = buffer.readUIntLE(0x94, 2);
-    let extendedHeaderLength = buffer.readUIntLE(0xB8, 4);
-    let skippedLength = extendedHeaderLength + indexBlockLength * 1024 + 768;
+    const buffer = this.stream.readBuffer(256);
+    const version = buffer.readUIntLE(0x8C, 2);
+    const type = buffer.readUIntLE(0xA5, 1);
+    const wordSize = buffer.readUIntLE(0xA0, 2);
+    const indexBlockLength = buffer.readUIntLE(0x94, 2);
+    const extendedHeaderLength = buffer.readUIntLE(0xB8, 4);
+    const skippedLength = extendedHeaderLength + indexBlockLength * 1024 + 768;
     if ((version >> 8) !== 6) {
       throw new Error("unsupported version");
     }
@@ -67,10 +67,10 @@ export class BinaryDeserializer extends Deserializer {
 
   private parseDataBlocks(): void {
     while (true) {
-      let rawLength = this.stream.readMaybeUIntLE(2, -1);
+      const rawLength = this.stream.readMaybeUIntLE(2, -1);
       if (rawLength >= 0) {
-        let length = (rawLength & 0x7FFF) * 1024;
-        let fieldLength = ((rawLength & 0x8000) !== 0) ? 4 : 2;
+        const length = (rawLength & 0x7FFF) * 1024;
+        const fieldLength = ((rawLength & 0x8000) !== 0) ? 4 : 2;
         if (length > 0) {
           this.parseWords(length, fieldLength);
         } else {
@@ -84,19 +84,19 @@ export class BinaryDeserializer extends Deserializer {
   }
 
   private parseWords(length: number, fieldLength: number): void {
-    let buffer = this.stream.readBuffer(length - 2);
-    let raw = new BocuPullStream(new BufferPullStream(buffer));
+    const buffer = this.stream.readBuffer(length - 2);
+    const raw = new BocuPullStream(new BufferPullStream(buffer));
     let previousNameBytes = new Array<number>();
     while (true) {
-      let length = raw.readMaybeUIntLE(fieldLength, -1);
+      const length = raw.readMaybeUIntLE(fieldLength, -1);
       if (length > 0) {
-        let omittedNameLength = raw.readUIntLE(1);
-        let flag = raw.readUIntLE(1);
-        let buffer = Buffer.alloc(length + omittedNameLength);
-        let rawWord = new BocuPullStream(new BufferPullStream(buffer));
+        const omittedNameLength = raw.readUIntLE(1);
+        const flag = raw.readUIntLE(1);
+        const buffer = Buffer.alloc(length + omittedNameLength);
+        const rawWord = new BocuPullStream(new BufferPullStream(buffer));
         buffer.set(previousNameBytes.slice(0, omittedNameLength));
         raw.pull(buffer, omittedNameLength, length);
-        let [word, nameBytes] = this.createWord(rawWord, fieldLength, flag);
+        const [word, nameBytes] = this.createWord(rawWord, fieldLength, flag);
         previousNameBytes = nameBytes;
         this.emit("word", word);
       } else {
@@ -106,47 +106,47 @@ export class BinaryDeserializer extends Deserializer {
   }
 
   private createWord(raw: BocuPullStream, fieldLength: number, flag: number): [Word, Array<number>] {
-    let [rawName, nameBytes] = raw.readBocuString(true);
-    let nameTabIndex = rawName.indexOf("\t");
-    let name = (nameTabIndex >= 0) ? rawName.substring(nameTabIndex + 1) : rawName;
+    const [rawName, nameBytes] = raw.readBocuString(true);
+    const nameTabIndex = rawName.indexOf("\t");
+    const name = (nameTabIndex >= 0) ? rawName.substring(nameTabIndex + 1) : rawName;
     this.count ++;
-    let dictionary = this.dictionary;
-    let number = this.count;
-    let equivalents = new Array<Equivalent>();
-    let tags = new Array<string>();
-    let informations = new Array<Information>();
-    let variations = new Array<Variation>();
-    let relations = new Array<Relation>();
+    const dictionary = this.dictionary;
+    const number = this.count;
+    const equivalents = new Array<Equivalent>();
+    const tags = new Array<string>();
+    const informations = new Array<Information>();
+    const variations = new Array<Variation>();
+    const relations = new Array<Relation>();
     informations.push(this.createInformation(raw));
     if ((flag & 0x10) !== 0) {
-      let informations = this.createAdditionalInformations(raw, fieldLength);
+      const informations = this.createAdditionalInformations(raw, fieldLength);
       informations.push(...informations);
     }
-    let updatedDate = new Date();
-    let word = new WordModel({dictionary, number, name, equivalents, tags, informations, variations, relations, updatedDate});
+    const updatedDate = new Date();
+    const word = new WordModel({dictionary, number, name, equivalents, tags, informations, variations, relations, updatedDate});
     return [word, nameBytes];
   }
 
   private createInformation(raw: BocuPullStream): Information {
-    let title = "訳語";
-    let text = raw.readBocuString();
-    let information = new InformationModel({title, text});
+    const title = "訳語";
+    const text = raw.readBocuString();
+    const information = new InformationModel({title, text});
     return information;
   }
 
   private createAdditionalInformations(raw: BocuPullStream, fieldLength: number): Array<Information> {
-    let informations = new Array<Information>();
+    const informations = new Array<Information>();
     while (true) {
-      let flag = raw.readMaybeUIntLE(1, -1);
-      let type = flag & 0xF;
+      const flag = raw.readMaybeUIntLE(1, -1);
+      const type = flag & 0xF;
       if ((flag & 0x80) === 0) {
         if ((flag & 0x10) === 0) {
-          let title = (type === 0x2) ? "発音" : "用例";
-          let text = raw.readBocuString();
-          let information = new InformationModel({title, text});
+          const title = (type === 0x2) ? "発音" : "用例";
+          const text = raw.readBocuString();
+          const information = new InformationModel({title, text});
           informations.push(information);
         } else {
-          let length = raw.readMaybeUIntLE(fieldLength, -1);
+          const length = raw.readMaybeUIntLE(fieldLength, -1);
           raw.skip(length);
         }
       } else {

@@ -8,8 +8,8 @@ import {
 export class PopupUtil {
 
   public static getMessage(intl: IntlShape, type: string, values?: Record<string, string>): string {
-    let defaultMessage = intl.formatMessage({id: "popup.messageNotFound"});
-    let message = intl.formatMessage({id: "popup." + type, defaultMessage}, values);
+    const defaultMessage = intl.formatMessage({id: "popup.messageNotFound"});
+    const message = intl.formatMessage({id: "popup." + type, defaultMessage}, values);
     return message;
   }
 

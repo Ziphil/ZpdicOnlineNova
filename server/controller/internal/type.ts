@@ -73,7 +73,8 @@ export const SERVER_PATHS = {
   downloadDictionary: "/dictionary/download",
   suggestDictionaryTitles: "/dictionary/suggest/title",
   fetchDictionaryAuthorizedUsers: "/dictionary/user",
-  checkDictionaryAuthorization: "/dictionary/check",
+  fetchDictionaryAuthorization: "/dictionary/authorization",
+  checkDictionaryAuthorization: "/dictionary/authorization/check",
   fetchDictionary: "/dictionary/fetch",
   fetchWordNameFrequencies: "/dictionary/fetch/frequency",
   fetchDictionaryStatistics: "/dictionary/fetch/statistics",
@@ -268,6 +269,13 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
+  fetchDictionaryAuthorization: {
+    request: {number: number, authority: DictionaryAuthority},
+    response: {
+      success: boolean,
+      error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
   checkDictionaryAuthorization: {
     request: {number: number, authority: DictionaryAuthority},
     response: {
@@ -295,7 +303,7 @@ type ServerSpecs = {
       success: DictionaryStatistics,
       error: CustomError<"noSuchDictionaryNumber">
     }
-  }
+  },
   fetchDictionaries: {
     request: {},
     response: {
@@ -494,5 +502,7 @@ export type Status = "success" | "error";
 export type ProcessName = keyof ServerSpecs;
 
 export type RequestData<N extends ProcessName> = Jsonify<ServerSpecs[N]["request"]>;
-export type ResponseData<N extends ProcessName> = Jsonify<ServerSpecs[N]["response"]["success"]> | Jsonify<ServerSpecs[N]["response"]["error"]>;
+export type SuccessResponseData<N extends ProcessName> = Jsonify<ServerSpecs[N]["response"]["success"]>;
+export type ErrorResponseData<N extends ProcessName> = Jsonify<ServerSpecs[N]["response"]["error"]>;
+export type ResponseData<N extends ProcessName> = SuccessResponseData<N> | ErrorResponseData<N>;
 export type ResponseEachData<N extends ProcessName, S extends Status> = Jsonify<ServerSpecs[N]["response"][S]>;

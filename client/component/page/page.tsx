@@ -19,8 +19,8 @@ import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const Page = create(
@@ -41,22 +41,18 @@ const Page = create(
     children?: ReactNode
   }): ReactElement {
 
-    let spacerStyleName = StyleNameUtil.create(
-      "spacer",
-      {if: showDictionary, true: "dictionary"}
-    );
-    let dictionaryHeaderNode = (showDictionary) && (
-      <DictionaryHeader dictionary={dictionary} showAddLink={showAddLink} showSettingLink={showSettingLink}/>
-    );
-    let node = (
+    const spacerData = DataUtil.create({showDictionary});
+    const node = (
       <div styleName="root" id="page">
         <Helmet>
           <title>{(title) ? `${title} — ZpDIC Online` : "ZpDIC Online"}</title>
         </Helmet>
         <PopupInformationPane/>
         <Header/>
-        {dictionaryHeaderNode}
-        <div styleName={spacerStyleName}>
+        {(showDictionary) && (
+          <DictionaryHeader dictionary={dictionary} showAddLink={showAddLink} showSettingLink={showSettingLink}/>
+        )}
+        <div styleName="spacer" {...spacerData}>
           <div styleName="content">
             {children}
           </div>

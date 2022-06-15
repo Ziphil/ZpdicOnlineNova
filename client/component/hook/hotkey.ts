@@ -42,16 +42,16 @@ const HOTKEY_SPECS = [
   {name: "changeSearchTypeToRegular", group: "searchWords", subgroup: 3, keys: ["m"]}
 ];
 
-let useEnabledHotkeyNames = createGlobalState<Array<string>>([]);
+const useEnabledHotkeyNames = createGlobalState<Array<string>>([]);
 
 export function useHotkey(name: string, callback: HotkeyCallback, dependencies: DependencyList, enabled: boolean = true): void {
-  let [, setEnabledHotkeyNames] = useEnabledHotkeyNames();
-  let keys = HOTKEY_SPECS.find((spec) => spec.name === name)?.keys ?? [];
+  const [, setEnabledHotkeyNames] = useEnabledHotkeyNames();
+  const keys = HOTKEY_SPECS.find((spec) => spec.name === name)?.keys ?? [];
   useEffect(() => {
     if (enabled) {
       Mousetrap.bind(keys, callback);
       setEnabledHotkeyNames((enabledNames) => [...enabledNames, name]);
-      let cleanup = function (): void {
+      const cleanup = function (): void {
         Mousetrap.unbind(keys);
         setEnabledHotkeyNames((enabledNames) => enabledNames.filter((enabledName) => enabledName !== name));
       };
@@ -61,16 +61,16 @@ export function useHotkey(name: string, callback: HotkeyCallback, dependencies: 
 }
 
 export function useHotkeySpecs(): Array<HotkeySpec> {
-  let [enabledHotkeyNames] = useEnabledHotkeyNames();
-  let specs = HOTKEY_SPECS.map((rawSpec) => {
-    let enabled = enabledHotkeyNames.some((enabledName) => enabledName === rawSpec.name);
+  const [enabledHotkeyNames] = useEnabledHotkeyNames();
+  const specs = HOTKEY_SPECS.map((rawSpec) => {
+    const enabled = enabledHotkeyNames.some((enabledName) => enabledName === rawSpec.name);
     return {...rawSpec, enabled};
   });
   return specs;
 }
 
 Mousetrap.prototype.stopCallback = function (event: ExtendedKeyboardEvent, element: any, combo: string): boolean {
-  let tagName = element.tagName.toLowerCase();
+  const tagName = element.tagName.toLowerCase();
   if (tagName === "input" || tagName === "select" || tagName === "textarea" || (element.contentEditable && element.contentEditable === "true")) {
     if (combo === "esc") {
       return false;

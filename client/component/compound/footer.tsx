@@ -19,9 +19,9 @@ const Footer = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let date = new Date();
-    let yearString = date.getFullYear().toString();
-    let node = (
+    const date = new Date();
+    const yearString = date.getFullYear().toString();
+    const node = (
       <footer styleName="root">
         <div styleName="container">
           <div styleName="left">
@@ -33,7 +33,7 @@ const Footer = create(
           <div styleName="right">
             <div styleName="copyright">
               This site is protected by reCAPTCHA.<br/>
-              The Google <a href="https://policies.google.com/privacy" target="_blank">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank">Terms of Service</a> apply.
+              The Google <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer">Terms of Service</a> apply.
             </div>
           </div>
         </div>

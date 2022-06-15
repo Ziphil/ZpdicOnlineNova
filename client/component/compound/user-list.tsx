@@ -37,11 +37,11 @@ const UserList = create(
     onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    let renderUser = useCallback(function (user: User): ReactNode {
+    const renderUser = useCallback(function (user: User): ReactNode {
       return <UserPane user={user} dictionary={dictionary} key={user.id} onSubmit={onSubmit}/>;
     }, [dictionary, onSubmit]);
 
-    let node = (
+    const node = (
       <PaneList items={users} size={size} column={2} renderer={renderUser}/>
     );
     return node;

@@ -19,9 +19,9 @@ const FeaturePane = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <div styleName="root">
         <div styleName="item">
           <div styleName="head-wrapper">

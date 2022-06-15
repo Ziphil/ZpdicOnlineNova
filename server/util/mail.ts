@@ -15,24 +15,24 @@ import {
 export class MailUtil {
 
   public static getSubject(type: string, values?: Record<string, string>): string {
-    let intl = INTLS[0];
-    let title = intl.formatMessage({id: `mail.${type}.subject`}, values);
+    const intl = INTLS[0];
+    const title = intl.formatMessage({id: `mail.${type}.subject`}, values);
     return title;
   }
 
   public static getText(type: string, values?: Record<string, string>): string {
-    let intl = INTLS[0];
-    let text = intl.formatMessage({id: `mail.${type}.text`}, values);
-    let footer = intl.formatMessage({id: "mail.footer"});
-    let wholeText = text + "\n" + footer;
+    const intl = INTLS[0];
+    const text = intl.formatMessage({id: `mail.${type}.text`}, values);
+    const footer = intl.formatMessage({id: "mail.footer"});
+    const wholeText = text + "\n" + footer;
     return wholeText;
   }
 
   public static async send(to: EmailData, subject: string, text: string): Promise<ClientResponse> {
-    let from = {name: "ZpDIC Online", email: "zpdic@ziphil.com"};
-    let trackingSettings = {clickTracking: {enable: false, enableText: false}};
-    let message = {to, from, subject, text, trackingSettings};
-    let response = await sendgrid.send(message);
+    const from = {name: "ZpDIC Online", email: "zpdic@ziphil.com"};
+    const trackingSettings = {clickTracking: {enable: false, enableText: false}};
+    const message = {to, from, subject, text, trackingSettings};
+    const response = await sendgrid.send(message);
     return response[0];
   }
 

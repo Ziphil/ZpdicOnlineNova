@@ -41,21 +41,21 @@ const RegisterForm = create(
   }: {
   }): ReactElement {
 
-    let [name, setName] = useState("");
-    let [email, setEmail] = useState("");
-    let [password, setPassword] = useState("");
-    let {request} = useRequest();
-    let login = useLogin();
-    let [intl, {trans}] = useIntl();
-    let {replacePath} = usePath();
-    let location = useLocation();
-    let [, {addErrorPopup}] = usePopup();
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const {request} = useRequest();
+    const login = useLogin();
+    const [intl, {trans}] = useIntl();
+    const {replacePath} = usePath();
+    const location = useLocation();
+    const [, {addErrorPopup}] = usePopup();
 
-    let performRegister = useCallback(async function (): Promise<void> {
-      let response = await request("registerUser", {name, email, password}, {useRecaptcha: true});
-      let body = response.data;
+    const performRegister = useCallback(async function (): Promise<void> {
+      const response = await request("registerUser", {name, email, password}, {useRecaptcha: true});
+      const body = response.data;
       if (response.status === 200) {
-        let loginResponse = await login({name, password});
+        const loginResponse = await login({name, password});
         if (loginResponse.status === 200) {
           replacePath("/dashboard");
         } else {
@@ -65,25 +65,25 @@ const RegisterForm = create(
     }, [name, email, password, request, login, replacePath, addErrorPopup]);
 
     useMount(() => {
-      let name = location.search.name;
-      let password = location.search.password;
+      const name = location.search.name;
+      const password = location.search.password;
       if (typeof name === "string" && typeof password === "string") {
         setName(name);
         setPassword(password);
       }
     });
 
-    let validateName = createValidate(IDENTIFIER_REGEXP, PopupUtil.getMessage(intl, "invalidUserName"));
-    let validateEmail = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(intl, "invalidUserEmail"));
-    let validatePassword = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
-    let node = (
+    const validateName = createValidate(IDENTIFIER_REGEXP, PopupUtil.getMessage(intl, "invalidUserName"));
+    const validateEmail = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(intl, "invalidUserEmail"));
+    const validatePassword = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
+    const node = (
       <form styleName="root">
         <Input label={trans("loginForm.userName")} value={name} validate={validateName} onSet={(name) => setName(name)}/>
         <Input label={trans("loginForm.email")} value={email} validate={validateEmail} onSet={(email) => setEmail(email)}/>
         <Input label={trans("loginForm.password")} type="flexible" value={password} validate={validatePassword} onSet={(password) => setPassword(password)}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={trans("registerForm.confirm")} iconName="user-plus" style="information" reactive={true} onClick={performRegister}/>
+            <Button label={trans("registerForm.confirm")} iconName="user-plus" variant="information" reactive={true} onClick={performRegister}/>
           </div>
         </div>
       </form>

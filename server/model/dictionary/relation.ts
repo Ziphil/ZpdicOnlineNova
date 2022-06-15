@@ -26,10 +26,10 @@ export class RelationSchema {
 export class RelationCreator {
 
   public static create(raw: Relation): RelationSkeleton {
-    let title = raw.title;
-    let number = raw.number;
-    let name = raw.name;
-    let skeleton = {title, number, name};
+    const title = raw.title;
+    const number = raw.number;
+    const name = raw.name;
+    const skeleton = {title, number, name};
     return skeleton;
   }
 
@@ -37,4 +37,4 @@ export class RelationCreator {
 
 
 export type Relation = RelationSchema;
-export let RelationModel = getModelForClass(RelationSchema);
+export const RelationModel = getModelForClass(RelationSchema);

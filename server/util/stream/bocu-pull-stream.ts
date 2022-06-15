@@ -62,7 +62,7 @@ export class BocuPullStream extends PullStream {
   public readBocuString(includeBytes: true): [string, Array<number>];
   public readBocuString(includeBytes?: boolean): string | [string, Array<number>] {
     let string = "";
-    let bytes = new Array<number>();
+    const bytes = new Array<number>();
     let previous = ASCII_PREVIOUS;
     let current = 0;
     while ((current = this.read()) > 0) {

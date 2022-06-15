@@ -20,14 +20,14 @@ const GiftPane = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let jumpAmazon = useCallback(function (): void {
-      let url = "https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L?ref_=wl_share";
+    const jumpAmazon = useCallback(function (): void {
+      const url = "https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L?ref_=wl_share";
       window.open(url);
     }, []);
 
-    let node = (
+    const node = (
       <div styleName="root">
         <div styleName="information">
           {trans("giftPane.information")}

@@ -11,9 +11,6 @@ import {
 } from "@typegoose/typegoose";
 import Fuse from "fuse.js";
 import {
-  QueryCursor
-} from "mongoose";
-import {
   DetailedDictionary as DetailedDictionarySkeleton,
   Dictionary as DictionarySkeleton,
   DictionaryStatistics,
@@ -83,7 +80,7 @@ import {
 
 export const DICTIONARY_STATUSES = ["ready", "saving", "error"] as const;
 export type DictionaryStatus = LiteralType<typeof DICTIONARY_STATUSES>;
-export let DictionaryStatusUtil = LiteralUtilType.create(DICTIONARY_STATUSES);
+export const DictionaryStatusUtil = LiteralUtilType.create(DICTIONARY_STATUSES);
 
 
 @modelOptions({schemaOptions: {collection: "dictionaries", minimize: false}})
@@ -126,49 +123,49 @@ export class DictionarySchema extends DiscardableSchema {
   public updatedDate?: Date;
 
   public static async addEmpty(name: string, user: User): Promise<Dictionary> {
-    let editUsers = new Array<User>();
-    let number = await DictionaryModel.fetchNextNumber();
-    let status = "ready";
-    let secret = false;
-    let settings = DictionarySettingsModel.createDefault();
-    let externalData = {};
-    let createdDate = new Date();
-    let updatedDate = new Date();
-    let dictionary = new DictionaryModel({user, editUsers, number, name, status, secret, settings, externalData, createdDate, updatedDate});
+    const editUsers = new Array<User>();
+    const number = await DictionaryModel.fetchNextNumber();
+    const status = "ready";
+    const secret = false;
+    const settings = DictionarySettingsModel.createDefault();
+    const externalData = {};
+    const createdDate = new Date();
+    const updatedDate = new Date();
+    const dictionary = new DictionaryModel({user, editUsers, number, name, status, secret, settings, externalData, createdDate, updatedDate});
     await dictionary.save();
     return dictionary;
   }
 
   public static async fetch(order: string, range?: QueryRange): Promise<WithSize<Dictionary>> {
-    let sortArg = (order === "createdDate") ? "-createdDate -updatedDate -number" : "-updatedDate -number";
-    let query = DictionaryModel.findExist().ne("secret", true).sort(sortArg);
-    let result = await QueryRange.restrictWithSize(query, range);
+    const sortArg = (order === "createdDate") ? "-createdDate -updatedDate -number" : "-updatedDate -number";
+    const query = DictionaryModel.findExist().ne("secret", true).sort(sortArg);
+    const result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 
   public static async fetchOneByNumber(number: number): Promise<Dictionary | null> {
-    let dictionary = await DictionaryModel.findOneExist().where("number", number);
+    const dictionary = await DictionaryModel.findOneExist().where("number", number);
     return dictionary;
   }
 
   public static async fetchOneByValue(value: number | string): Promise<Dictionary | null> {
-    let key = (typeof value === "number") ? "number" : "paramName";
-    let dictionary = await DictionaryModel.findOneExist().where(key, value);
+    const key = (typeof value === "number") ? "number" : "paramName";
+    const dictionary = await DictionaryModel.findOneExist().where(key, value);
     return dictionary;
   }
 
   public static async fetchByUser(user: User, authority: DictionaryAuthority): Promise<Array<Dictionary>> {
-    let ownQuery = DictionaryModel.findExist().where("user", user);
-    let editQuery = DictionaryModel.findExist().where("editUsers", user);
-    let rawQuery = (() => {
+    const ownQuery = DictionaryModel.findExist().where("user", user);
+    const editQuery = DictionaryModel.findExist().where("editUsers", user);
+    const rawQuery = (() => {
       if (authority === "own") {
         return ownQuery;
       } else {
         return DictionaryModel.findExist().or([ownQuery.getFilter(), editQuery.getFilter()]);
       }
     })();
-    let query = rawQuery.sort("-updatedDate -number");
-    let dictionaries = await query.exec();
+    const query = rawQuery.sort("-updatedDate -number");
+    const dictionaries = await query.exec();
     return dictionaries;
   }
 
@@ -176,11 +173,11 @@ export class DictionarySchema extends DiscardableSchema {
   // 辞書の内部データも、ファイルから読み込んだものに更新されます。
   public async upload(this: Dictionary, path: string, originalPath: string): Promise<Dictionary> {
     await this.startUpload();
-    let settings = this.settings as any;
+    const settings = this.settings as any;
     let externalData = {};
-    let anyThis = this as any;
-    let promise = new Promise<Dictionary>((resolve, reject) => {
-      let stream = Deserializer.create(path, originalPath, this);
+    const anyThis = this as any;
+    const promise = new Promise<Dictionary>((resolve, reject) => {
+      const stream = Deserializer.create(path, originalPath, this);
       if (stream !== null) {
         let count = 0;
         stream.on("words", (words) => {
@@ -234,8 +231,8 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async download(this: Dictionary, path: string): Promise<void> {
-    let promise = new Promise<void>((resolve, reject) => {
-      let stream = Serializer.create(path, this);
+    const promise = new Promise<void>((resolve, reject) => {
+      const stream = Serializer.create(path, this);
       if (stream !== null) {
         stream.on("end", () => {
           resolve();
@@ -259,25 +256,25 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async fetchOneWordByNumber(this: Dictionary, number: number): Promise<Word | null> {
-    let query = WordModel.findOneExist().where("dictionary", this).where("number", number);
-    let word = await query.exec();
+    const query = WordModel.findOneExist().where("dictionary", this).where("number", number);
+    const word = await query.exec();
     return word;
   }
 
   public async fetchWordNames<N extends number>(this: Dictionary, numbers: Array<N>): Promise<Record<N, string | null>> {
-    let promises = numbers.map((number) => {
-      let query = WordModel.findOneExist().where("dictionary", this).where("number", number);
-      let promise = query.exec().then((word) => [number, word?.name ?? null] as const);
+    const promises = numbers.map((number) => {
+      const query = WordModel.findOneExist().where("dictionary", this).where("number", number);
+      const promise = query.exec().then((word) => [number, word?.name ?? null] as const);
       return promise;
     });
-    let entries = await Promise.all(promises);
-    let names = Object.fromEntries(entries) as any;
+    const entries = await Promise.all(promises);
+    const names = Object.fromEntries(entries) as any;
     return names;
   }
 
   public async changeParamName(this: Dictionary, paramName: string): Promise<Dictionary> {
     if (paramName !== "") {
-      let formerDictionary = await DictionaryModel.findOneExist().where("paramName", paramName);
+      const formerDictionary = await DictionaryModel.findOneExist().where("paramName", paramName);
       if (formerDictionary && formerDictionary.id !== this.id) {
         throw new CustomError("duplicateDictionaryParamName");
       }
@@ -308,8 +305,8 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async changeSettings(this: Dictionary, settings: Partial<DictionarySettings>): Promise<Dictionary> {
-    let anySettings = this.settings as any;
-    for (let [key, value] of Object.entries(settings)) {
+    const anySettings = this.settings as any;
+    for (const [key, value] of Object.entries(settings)) {
       if (value !== undefined) {
         anySettings[key] = value;
       }
@@ -320,7 +317,7 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async editWord(this: Dictionary, word: EditableWordSkeleton): Promise<Word> {
     if (this.status !== "saving") {
-      let resultWord = await WordModel.edit(this, word);
+      const resultWord = await WordModel.edit(this, word);
       this.status = "ready";
       this.updatedDate = new Date();
       await this.save();
@@ -332,7 +329,7 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async discardWord(this: Dictionary, number: number): Promise<Word> {
     if (this.status !== "saving") {
-      let word = await WordModel.discard(this, number);
+      const word = await WordModel.discard(this, number);
       return word;
     } else {
       throw new CustomError("dictionarySaving");
@@ -341,7 +338,7 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async addRelation(this: Dictionary, number: number, relation: Relation): Promise<Word | null> {
     if (this.status !== "saving") {
-      let word = await WordModel.addRelation(this, number, relation);
+      const word = await WordModel.addRelation(this, number, relation);
       return word;
     } else {
       throw new CustomError("dictionarySaving");
@@ -350,7 +347,7 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async editExample(this: Dictionary, example: EditableExampleSkeleton): Promise<Example> {
     if (this.status !== "saving") {
-      let resultExample = await ExampleModel.edit(this, example);
+      const resultExample = await ExampleModel.edit(this, example);
       this.status = "ready";
       this.updatedDate = new Date();
       await this.save();
@@ -362,7 +359,7 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async discardExample(this: Dictionary, number: number): Promise<Example> {
     if (this.status !== "saving") {
-      let example = await ExampleModel.discard(this, number);
+      const example = await ExampleModel.discard(this, number);
       return example;
     } else {
       throw new CustomError("dictionarySaving");
@@ -371,16 +368,16 @@ export class DictionarySchema extends DiscardableSchema {
 
   // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
   public async search(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
-    let query = parameter.createQuery(this);
-    let suggestionQuery = parameter.createSuggestionQuery(this);
-    let wordPromise = QueryRange.restrictWithSize(query, range);
-    let suggestionPromise = suggestionQuery?.then((suggestions) => suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word))) ?? Promise.resolve([]);
-    let [words, suggestions] = await Promise.all([wordPromise, suggestionPromise]);
+    const query = parameter.createQuery(this);
+    const suggestionQuery = parameter.createSuggestionQuery(this);
+    const wordPromise = QueryRange.restrictWithSize(query, range);
+    const suggestionPromise = suggestionQuery?.then((suggestions) => suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word))) ?? Promise.resolve([]);
+    const [words, suggestions] = await Promise.all([wordPromise, suggestionPromise]);
     return {words, suggestions};
   }
 
   public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {
-    let key = (() => {
+    const key = (() => {
       if (propertyName === "equivalent") {
         return "equivalents.title";
       } else if (propertyName === "tag") {
@@ -395,10 +392,10 @@ export class DictionarySchema extends DiscardableSchema {
         return "";
       }
     })();
-    let titles = await WordModel.findExist().where("dictionary", this).distinct(key);
-    let hitTitles = (() => {
+    const titles = await WordModel.findExist().where("dictionary", this).distinct(key);
+    const hitTitles = (() => {
       if (pattern !== "") {
-        let fuse = new Fuse(titles, {threshold: 1, distance: 40});
+        const fuse = new Fuse(titles, {threshold: 1, distance: 40});
         return fuse.search(pattern).map((result) => result.item);
       } else {
         return titles.filter((title) => title !== "");
@@ -408,18 +405,18 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async countWords(): Promise<number> {
-    let count = await WordModel.findExist().where("dictionary", this).countDocuments();
+    const count = await WordModel.findExist().where("dictionary", this).countDocuments();
     return count;
   }
 
   public async calcWordNameFrequencies(): Promise<WordNameFrequencies> {
-    let query = WordModel.findExist().where("dictionary", this).select("name").lean().cursor();
-    let wholeFrequency = {all: 0, word: 0};
-    let charFrequencies = new Map<string, WordNameFrequency>();
-    for await (let word of query) {
-      let countedChars = new Set<string>();
-      for (let char of word.name) {
-        let frequency = charFrequencies.get(char) ?? {all: 0, word: 0};
+    const query = WordModel.findExist().where("dictionary", this).select("name").lean().cursor();
+    const wholeFrequency = {all: 0, word: 0};
+    const charFrequencies = new Map<string, WordNameFrequency>();
+    for await (const word of query) {
+      const countedChars = new Set<string>();
+      for (const char of word.name) {
+        const frequency = charFrequencies.get(char) ?? {all: 0, word: 0};
         if (!countedChars.has(char)) {
           frequency.word ++;
           countedChars.add(char);
@@ -430,58 +427,58 @@ export class DictionarySchema extends DiscardableSchema {
       }
       wholeFrequency.word ++;
     }
-    let frequencies = {whole: wholeFrequency, char: Array.from(charFrequencies.entries())};
+    const frequencies = {whole: wholeFrequency, char: Array.from(charFrequencies.entries())};
     return frequencies;
   }
 
   public async calcStatistics(): Promise<DictionaryStatistics> {
-    let wordQuery = WordModel.findExist().where("dictionary", this).select(["name", "equivalents", "informations"]).lean().cursor();
-    let exampleQuery = ExampleModel.findExist().where("dictionary", this).select(["sentence"]).lean().cursor();
+    const wordQuery = WordModel.findExist().where("dictionary", this).select(["name", "equivalents", "informations"]).lean().cursor();
+    const exampleQuery = ExampleModel.findExist().where("dictionary", this).select(["sentence"]).lean().cursor();
     let rawWordCount = 0;
-    let wholeWordNameLengths = {kept: 0, nfd: 0, nfc: 0};
+    const wholeWordNameLengths = {kept: 0, nfd: 0, nfc: 0};
     let wholeEquivalentNameCount = 0;
     let wholeInformationCount = 0;
-    let wholeInformationTextLengths = {kept: 0, nfd: 0, nfc: 0};
+    const wholeInformationTextLengths = {kept: 0, nfd: 0, nfc: 0};
     let wholeExampleCount = 0;
-    for await (let word of wordQuery) {
+    for await (const word of wordQuery) {
       rawWordCount ++;
       wholeWordNameLengths.kept += [...word.name].length;
       wholeWordNameLengths.nfd += [...word.name.normalize("NFD")].length;
       wholeWordNameLengths.nfc += [...word.name.normalize("NFC")].length;
-      for (let equivalent of word.equivalents) {
+      for (const equivalent of word.equivalents) {
         wholeEquivalentNameCount += equivalent.names.length;
       }
-      for (let information of word.informations) {
+      for (const information of word.informations) {
         wholeInformationCount ++;
         wholeInformationTextLengths.kept += [...information.text].length;
         wholeInformationTextLengths.nfd += [...information.text.normalize("NFD")].length;
         wholeInformationTextLengths.nfc += [...information.text.normalize("NFC")].length;
       }
     }
-    for await (let example of exampleQuery) {
+    for await (const example of exampleQuery) {
       wholeExampleCount ++;
     }
-    let calcWithRatio = function <V extends number | StringLengths>(value: V): WholeAverage<V> {
+    const calcWithRatio = function <V extends number | StringLengths>(value: V): WholeAverage<V> {
       if (typeof value === "number") {
         return {whole: value, average: value / rawWordCount} as any;
       } else {
         return {whole: value, average: {kept: value.kept / rawWordCount, nfd: value.nfd / rawWordCount, nfc: value.nfc / rawWordCount}} as any;
       }
     };
-    let calcWordCount = function (rawWordCount: number): DictionaryStatistics["wordCount"] {
-      let raw = rawWordCount;
-      let tokipona = rawWordCount / 120;
-      let logTokipona = (rawWordCount <= 0) ? null : Math.log10(rawWordCount / 120);
-      let ctwi = (rawWordCount <= 0) ? null : (Math.log(rawWordCount) / Math.log(120)) * 120;
-      let coverage = Math.log10(rawWordCount) * 20 + 20;
+    const calcWordCount = function (rawWordCount: number): DictionaryStatistics["wordCount"] {
+      const raw = rawWordCount;
+      const tokipona = rawWordCount / 120;
+      const logTokipona = (rawWordCount <= 0) ? null : Math.log10(rawWordCount / 120);
+      const ctwi = (rawWordCount <= 0) ? null : (Math.log(rawWordCount) / Math.log(120)) * 120;
+      const coverage = Math.log10(rawWordCount) * 20 + 20;
       return {raw, tokipona, logTokipona, ctwi, coverage};
     };
-    let wordCount = calcWordCount(rawWordCount);
-    let wordNameLengths = calcWithRatio(wholeWordNameLengths);
-    let equivalentNameCount = calcWithRatio(wholeEquivalentNameCount);
-    let informationCount = calcWithRatio(wholeInformationCount);
-    let informationTextLengths = calcWithRatio(wholeInformationTextLengths);
-    let exampleCount = calcWithRatio(wholeExampleCount);
+    const wordCount = calcWordCount(rawWordCount);
+    const wordNameLengths = calcWithRatio(wholeWordNameLengths);
+    const equivalentNameCount = calcWithRatio(wholeEquivalentNameCount);
+    const informationCount = calcWithRatio(wholeInformationCount);
+    const informationTextLengths = calcWithRatio(wholeInformationTextLengths);
+    const exampleCount = calcWithRatio(wholeExampleCount);
     return {wordCount, wordNameLengths, equivalentNameCount, informationCount, informationTextLengths, exampleCount};
   }
 
@@ -505,12 +502,12 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async fetchAuthorities(this: Dictionary, user: User): Promise<Array<DictionaryAuthority>> {
-    let promises = DICTIONARY_AUTHORITIES.map((authority) => {
-      let promise = this.hasAuthority(user, authority).then((predicate) => (predicate) ? authority : null);
+    const promises = DICTIONARY_AUTHORITIES.map((authority) => {
+      const promise = this.hasAuthority(user, authority).then((predicate) => (predicate) ? authority : null);
       return promise;
     });
-    let authorities = await Promise.all(promises);
-    let filteredAuthorities = authorities.filter(DictionaryAuthorityUtil.is, DictionaryAuthorityUtil);
+    const authorities = await Promise.all(promises);
+    const filteredAuthorities = authorities.filter(DictionaryAuthorityUtil.is, DictionaryAuthorityUtil);
     return filteredAuthorities;
   }
 
@@ -534,7 +531,7 @@ export class DictionarySchema extends DiscardableSchema {
   public async discardAuthorizedUser(this: Dictionary, user: User): Promise<true> {
     await this.populate("editUsers");
     if (isDocumentArray(this.editUsers)) {
-      let exist = this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+      const exist = this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
       if (exist) {
         this.editUsers = this.editUsers.filter((editUser) => editUser.id !== user.id);
         await this.save();
@@ -548,7 +545,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   private static async fetchNextNumber(): Promise<number> {
-    let dictionaries = await DictionaryModel.find().select("number").sort("-number").limit(1);
+    const dictionaries = await DictionaryModel.find().select("number").sort("-number").limit(1);
     if (dictionaries.length > 0) {
       return dictionaries[0].number + 1;
     } else {
@@ -562,35 +559,35 @@ export class DictionarySchema extends DiscardableSchema {
 export class DictionaryCreator {
 
   public static create(raw: Dictionary): DictionarySkeleton {
-    let id = raw.id;
-    let number = raw.number;
-    let paramName = raw.paramName;
-    let name = raw.name;
-    let status = raw.status;
-    let secret = raw.secret;
-    let explanation = raw.explanation;
-    let settings = DictionarySettingsCreator.create(raw.settings);
-    let createdDate = raw.createdDate?.toISOString() ?? undefined;
-    let updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    let skeleton = {id, number, paramName, name, status, secret, explanation, settings, createdDate, updatedDate};
+    const id = raw.id;
+    const number = raw.number;
+    const paramName = raw.paramName;
+    const name = raw.name;
+    const status = raw.status;
+    const secret = raw.secret;
+    const explanation = raw.explanation;
+    const settings = DictionarySettingsCreator.create(raw.settings);
+    const createdDate = raw.createdDate?.toISOString() ?? undefined;
+    const updatedDate = raw.updatedDate?.toISOString() ?? undefined;
+    const skeleton = {id, number, paramName, name, status, secret, explanation, settings, createdDate, updatedDate};
     return skeleton;
   }
 
   public static async createDetailed(raw: Dictionary): Promise<DetailedDictionarySkeleton> {
-    let base = DictionaryCreator.create(raw);
-    let wordSizePromise = new Promise<number>(async (resolve, reject) => {
+    const base = DictionaryCreator.create(raw);
+    const wordSizePromise = new Promise<number>(async (resolve, reject) => {
       try {
-        let wordSize = await raw.countWords();
+        const wordSize = await raw.countWords();
         resolve(wordSize);
       } catch (error) {
         reject(error);
       }
     });
-    let userPromise = new Promise<UserSkeleton>(async (resolve, reject) => {
+    const userPromise = new Promise<UserSkeleton>(async (resolve, reject) => {
       try {
         await raw.populate("user");
         if (isDocument(raw.user)) {
-          let user = UserCreator.create(raw.user);
+          const user = UserCreator.create(raw.user);
           resolve(user);
         } else {
           reject();
@@ -599,16 +596,16 @@ export class DictionaryCreator {
         reject(error);
       }
     });
-    let [wordSize, user] = await Promise.all([wordSizePromise, userPromise]);
-    let skeleton = {...base, wordSize, user};
+    const [wordSize, user] = await Promise.all([wordSizePromise, userPromise]);
+    const skeleton = {...base, wordSize, user};
     return skeleton;
   }
 
   public static async createUser(raw: Dictionary, rawUser: User): Promise<UserDictionarySkeleton> {
-    let basePromise = DictionaryCreator.createDetailed(raw);
-    let authoritiesPromise = raw.fetchAuthorities(rawUser);
-    let [base, authorities] = await Promise.all([basePromise, authoritiesPromise]);
-    let skeleton = {...base, authorities};
+    const basePromise = DictionaryCreator.createDetailed(raw);
+    const authoritiesPromise = raw.fetchAuthorities(rawUser);
+    const [base, authorities] = await Promise.all([basePromise, authoritiesPromise]);
+    const skeleton = {...base, authorities};
     return skeleton;
   }
 
@@ -616,4 +613,4 @@ export class DictionaryCreator {
 
 
 export type Dictionary = DocumentType<DictionarySchema>;
-export let DictionaryModel = getModelForClass(DictionarySchema);
+export const DictionaryModel = getModelForClass(DictionarySchema);

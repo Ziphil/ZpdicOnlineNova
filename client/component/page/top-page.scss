@@ -25,7 +25,7 @@ $top-content-vertical-margin: 50rpx;
   }
 }
 
-.login-form-wrapper {
+.login-form-container {
   flex-grow: 1;
   @include smartphone {
     width: 100%;
@@ -34,7 +34,7 @@ $top-content-vertical-margin: 50rpx;
   }
 }
 
-.login-form-wrapper >* >* {
+.login-form-container >* >* {
   position: relative;
 }
 
@@ -52,11 +52,13 @@ $top-content-vertical-margin: 50rpx;
   }
 }
 
-.login-form.hidden,
-.dashboard-button-form.hidden {
-  visibility: hidden;
-  @include smartphone {
-    display: none;
+.login-form,
+.dashboard-button-form {
+  &[data-hidden] {
+    visibility: hidden;
+    @include smartphone {
+      display: none;
+    }
   }
 }
 
@@ -76,13 +78,13 @@ $top-content-vertical-margin: 50rpx;
   border: none !important;
 }
 
-.github-inner {
+.github {
   display: flex;
   align-items: flex-start;
   justify-content: center;
 }
 
-.github-inner >*:nth-child(1) {
+.github >*:nth-child(1) {
   margin: 0rpx $github-horizontal-margin 0rpx 0rpx;
 }
 

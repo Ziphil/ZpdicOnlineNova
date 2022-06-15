@@ -4,17 +4,9 @@ import * as react from "react";
 import {
   ReactElement
 } from "react";
-import Loading from "/client/component/compound/loading";
 import {
   create
 } from "/client/component/create";
-import {
-  useIntl
-} from "/client/component/hook";
-import Page from "/client/component/page/page";
-import {
-  StyleNameUtil
-} from "/client/util/style-name";
 
 
 const EmptyPage = create(
@@ -23,10 +15,8 @@ const EmptyPage = create(
   }: {
   }): ReactElement {
 
-    let node = (
-      <Page>
-        <Loading loading={true}/>
-      </Page>
+    const node = (
+      <div>application crashed</div>
     );
     return node;
 

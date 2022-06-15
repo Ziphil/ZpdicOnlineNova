@@ -30,20 +30,20 @@ const WhitePane = create(
     children?: ReactNode
   }): ReactElement {
 
-    let {pushPath} = usePath();
+    const {pushPath} = usePath();
 
-    let handleClickAnchor = useCallback(function (event: MouseEvent<HTMLAnchorElement>): void {
+    const handleClickAnchor = useCallback(function (event: MouseEvent<HTMLAnchorElement>): void {
       event.preventDefault();
-      let path = event.currentTarget.attributes.getNamedItem("href")!.value;
+      const path = event.currentTarget.attributes.getNamedItem("href")!.value;
       pushPath(path);
       onClick?.(event);
     }, [onClick, pushPath]);
 
-    let innerNode = (() => {
+    const innerNode = (() => {
       if (Array.isArray(children)) {
-        let actualChildren = children.filter((child) => child !== null && child !== undefined && child !== false);
+        const actualChildren = children.filter((child) => child !== null && child !== undefined && child !== false);
         if (actualChildren.length >= 2) {
-          let innerNode = (
+          const innerNode = (
             <Fragment>
               {actualChildren[0]}
               <hr styleName="separator"/>
@@ -58,16 +58,16 @@ const WhitePane = create(
         return children;
       }
     })();
-    let node = (() => {
+    const node = (() => {
       if (clickable) {
-        let node = (
+        const node = (
           <a styleName="root hoverable" href={href} onClick={handleClickAnchor}>
             {innerNode}
           </a>
         );
         return node;
       } else {
-        let node = (
+        const node = (
           <div styleName="root">
             {innerNode}
           </div>

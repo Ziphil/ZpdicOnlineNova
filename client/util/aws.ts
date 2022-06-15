@@ -12,16 +12,16 @@ import {
 export class AwsUtil {
 
   public static async uploadFile(post: PresignedPost, file: Blob): Promise<void> {
-    let formData = new FormData();
-    for (let [key, value] of Object.entries(post.fields)) {
+    const formData = new FormData();
+    for (const [key, value] of Object.entries(post.fields)) {
       formData.append(key, value);
     }
     formData.append("Content-Type", file.type);
     formData.append("file", file);
-    let response = await axios.post(post.url, formData, {validateStatus: () => true});
+    const response = await axios.post(post.url, formData, {validateStatus: () => true});
     if (response.status === 400 || response.status === 403) {
-      let result = parseXml(response.data, {compact: true}) as any;
-      let errorData = result["Error"];
+      const result = parseXml(response.data, {compact: true}) as any;
+      const errorData = result["Error"];
       if (typeof errorData === "object") {
         throw new AwsError(errorData);
       } else {
@@ -31,8 +31,8 @@ export class AwsUtil {
   }
 
   public static uploadFileByUrl(url: string, file: Blob): Promise<void> {
-    let promise = new Promise<void>((resolve, reject) => {
-      let client = new XMLHttpRequest();
+    const promise = new Promise<void>((resolve, reject) => {
+      const client = new XMLHttpRequest();
       client.open("PUT", url);
       client.onreadystatechange = function (event: Event): void {
         if (client.readyState === 4) {
@@ -49,7 +49,7 @@ export class AwsUtil {
   }
 
   public static getFileUrl(path: string): string {
-    let url = `https://${AWS_STORAGE_BUCKET}.s3.amazonaws.com/${path}`;
+    const url = `https://${AWS_STORAGE_BUCKET}.s3.amazonaws.com/${path}`;
     return url;
   }
 

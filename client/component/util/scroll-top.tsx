@@ -23,13 +23,13 @@ const ScrollTop = create(
     children?: ReactNode
   }): ReactElement {
 
-    let location = useLocation();
+    const location = useLocation();
 
     useEffect(() => {
       window.scrollTo(0, 0);
     }, [location.key]);
 
-    let node = (
+    const node = (
       <Fragment>
         {children}
       </Fragment>

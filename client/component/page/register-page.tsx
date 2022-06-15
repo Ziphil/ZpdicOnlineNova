@@ -21,9 +21,9 @@ const RegisterPage = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <Page title={trans("registerPage.title")}>
         <div styleName="title">{trans("registerPage.title")}</div>
         <div styleName="explanation">
@@ -31,7 +31,7 @@ const RegisterPage = create(
             <Markdown source={trans("registerPage.privacy")} type="simple"/>
           </p>
         </div>
-        <div styleName="form">
+        <div styleName="form-container">
           <RegisterForm/>
         </div>
       </Page>

@@ -11,46 +11,43 @@ import {
   useIntl
 } from "/client/component/hook";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const Label = create(
   require("./label.scss"), "Label",
   function ({
     text,
-    style = "normal",
+    variant = "normal",
     position = "top",
     showRequired = false,
     showOptional = false,
     className
   }: {
     text?: string,
-    style?: "normal" | "error",
+    variant?: "normal" | "error",
     position?: "top" | "left",
     showRequired?: boolean,
     showOptional?: boolean,
     className?: string
   }): ReactElement | null {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let styleName = StyleNameUtil.create(
-      "root",
+    const styleName = DataUtil.create({
       position,
-      {if: style === "error", true: "error"}
-    );
-    let requiredNode = (showRequired) && (
-      <span styleName="required">({trans("label.required")})</span>
-    );
-    let optionalNode = (showOptional) && (
-      <span styleName="optional">({trans("label.optional")})</span>
-    );
-    let node = (text !== undefined) && (
-      <div styleName={styleName} className={className}>
+      error: variant === "error"
+    });
+    const node = (text !== undefined) && (
+      <div styleName="root" className={className} {...styleName}>
         {text}
-        {requiredNode}
-        {optionalNode}
+        {(showRequired) && (
+          <span styleName="required">({trans("label.required")})</span>
+        )}
+        {(showOptional) && (
+          <span styleName="optional">({trans("label.optional")})</span>
+        )}
       </div>
     );
     return node || null;

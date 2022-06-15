@@ -21,25 +21,25 @@ export class AdvancedWordParameter extends WordParameter {
   }
 
   public static createEmpty(): AdvancedWordParameter {
-    let elements = [AdvancedWordParameterElement.createEmpty()];
-    let skeleton = new AdvancedWordParameter(elements);
+    const elements = [AdvancedWordParameterElement.createEmpty()];
+    const skeleton = new AdvancedWordParameter(elements);
     return skeleton;
   }
 
-  public static deserializeEach(searchObject: Record<string, unknown>): AdvancedWordParameter {
-    if (typeof searchObject.advanced === "string") {
-      let data = rison.decode<any>(searchObject.advanced);
-      let parameter = new AdvancedWordParameter(data.elements);
+  public static deserializeEach(search: Record<string, unknown>): AdvancedWordParameter {
+    if (typeof search.advanced === "string") {
+      const data = rison.decode<any>(search.advanced);
+      const parameter = new AdvancedWordParameter(data.elements);
       return parameter;
     } else {
-      let parameter = new AdvancedWordParameter([]);
+      const parameter = new AdvancedWordParameter([]);
       return parameter;
     }
   }
 
   public serialize(): Record<string, unknown> {
-    let searchObject = {advanced: encodeURI(rison.encode(this))};
-    return searchObject;
+    const search = {advanced: encodeURI(rison.encode(this))};
+    return search;
   }
 
 }
@@ -47,17 +47,17 @@ export class AdvancedWordParameter extends WordParameter {
 
 export class AdvancedWordParameterElement {
 
-  public search!: string;
+  public text!: string;
   public title!: string;
   public mode!: AdvancedWordMode;
   public type!: WordType;
 
   public static createEmpty(): AdvancedWordParameterElement {
-    let search = "";
-    let title = "";
-    let mode = "name" as const;
-    let type = "exact" as const;
-    let skeleton = {search, title, mode, type};
+    const text = "";
+    const title = "";
+    const mode = "name" as const;
+    const type = "exact" as const;
+    const skeleton = {text, title, mode, type};
     return skeleton;
   }
 

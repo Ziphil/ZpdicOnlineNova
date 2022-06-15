@@ -36,20 +36,20 @@ export class HistorySchema {
   public wordSize!: number;
 
   public static async fetch(dictionary: Dictionary, from: Date): Promise<Array<History>> {
-    let anyFrom = from as any;
-    let histories = await HistoryModel.find().where("dictionary", dictionary).gte("date", anyFrom);
+    const anyFrom = from as any;
+    const histories = await HistoryModel.find().where("dictionary", dictionary).gte("date", anyFrom);
     return histories;
   }
 
   public static async addAll(): Promise<number> {
-    let size = await DictionaryModel.find().countDocuments();
-    let pageSize = Math.floor((size - 1) / 100) + 1;
+    const size = await DictionaryModel.find().countDocuments();
+    const pageSize = Math.floor((size - 1) / 100) + 1;
     for (let page = 0 ; page < pageSize ; page ++) {
-      let range = new QueryRange(page * 100, 100);
-      let query = DictionaryModel.find();
-      let dictionaries = await QueryRange.restrict(query, range);
-      let promises = dictionaries.map((dictionary) => HistoryModel.build(dictionary));
-      let histories = await Promise.all(promises);
+      const range = new QueryRange(page * 100, 100);
+      const query = DictionaryModel.find();
+      const dictionaries = await QueryRange.restrict(query, range);
+      const promises = dictionaries.map((dictionary) => HistoryModel.build(dictionary));
+      const histories = await Promise.all(promises);
       await HistoryModel.insertMany(histories);
       LogUtil.log("history/add-all", `saved: ${page * 100 + dictionaries.length}`);
     }
@@ -57,9 +57,9 @@ export class HistorySchema {
   }
 
   public static async build(dictionary: Dictionary): Promise<History> {
-    let date = new Date();
-    let wordSize = await dictionary.countWords();
-    let history = new HistoryModel({dictionary, date, wordSize});
+    const date = new Date();
+    const wordSize = await dictionary.countWords();
+    const history = new HistoryModel({dictionary, date, wordSize});
     return history;
   }
 
@@ -69,10 +69,10 @@ export class HistorySchema {
 export class HistoryCreator {
 
   public static create(raw: History): HistorySkeleton {
-    let id = raw.id;
-    let date = raw.date.toISOString();
-    let wordSize = raw.wordSize;
-    let skeleton = {id, date, wordSize};
+    const id = raw.id;
+    const date = raw.date.toISOString();
+    const wordSize = raw.wordSize;
+    const skeleton = {id, date, wordSize};
     return skeleton;
   }
 
@@ -80,4 +80,4 @@ export class HistoryCreator {
 
 
 export type History = DocumentType<HistorySchema>;
-export let HistoryModel = getModelForClass(HistorySchema);
+export const HistoryModel = getModelForClass(HistorySchema);

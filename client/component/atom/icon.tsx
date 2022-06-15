@@ -1,9 +1,6 @@
 //
 
 import {
-  IconName as FontAwesomeIconName
-} from "@fortawesome/fontawesome-common-types";
-import {
   FontAwesomeIcon
 } from "@fortawesome/react-fontawesome";
 import * as react from "react";
@@ -34,10 +31,10 @@ const Icon = create(
     className?: string
   }): ReactElement {
 
-    let data = ICON_DATA as IconData;
-    let specs = data[name];
+    const data = ICON_DATA as IconData;
+    const specs = data[name];
     if (specs !== undefined) {
-      let node = (
+      const node = (
         <span styleName="root" className={className}>
           <svg viewBox={specs.viewBox} className="svg-inline--fa" xmlns="http://www.w3.org/2000/svg">
             <path fill="currentcolor" d={specs.commands}/>
@@ -46,17 +43,17 @@ const Icon = create(
       );
       return node;
     } else {
-      let fullName = (name === "github") ? ["fa-brands", "fa-github"] : name as any;
+      const fullName = (name === "github") ? ["fa-brands", "fa-github"] : name as any;
       if (slashed) {
-        let node = (
-          <span styleName="root stack" className={className}>
+        const node = (
+          <span styleName="root-stack" className={className}>
             <FontAwesomeIcon icon="slash" transform="down-2 left-2" mask={fullName} fixedWidth={true}/>
             <FontAwesomeIcon icon="slash"/>
           </span>
         );
         return node;
       } else {
-        let node = (
+        const node = (
           <span styleName="root" className={className}>
             <FontAwesomeIcon icon={fullName} flip={flip} spin={spin} pulse={pulse}/>
           </span>

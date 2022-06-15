@@ -23,7 +23,7 @@ export abstract class Serializer extends EventEmitter {
 
   public on<E extends keyof SerializerEvent>(event: E, listener: (...args: SerializerEvent[E]) => void): this;
   public on(event: string | symbol, listener: (...args: any) => void): this {
-    let result = super.on(event, listener);
+    const result = super.on(event, listener);
     return result;
   }
 
@@ -33,7 +33,7 @@ export abstract class Serializer extends EventEmitter {
       this.error = args[0];
     }
     if (event !== "end" || (event === "end" && this.error === null)) {
-      let result = super.emit(event, ...args);
+      const result = super.emit(event, ...args);
       return result;
     } else {
       return this.listeners(event).length > 0;
@@ -46,7 +46,7 @@ export abstract class Serializer extends EventEmitter {
   // 拡張子が対応していないものだった場合は null を返します。
   public static create(path: string, dictionary: Dictionary): Serializer | null {
     try {
-      let extension = path.split(/\.(?=[^.]+$)/)[1];
+      const extension = path.split(/\.(?=[^.]+$)/)[1];
       if (extension === "json") {
         return new SlimeSerializer(path, dictionary);
       } else {

@@ -7,9 +7,9 @@ export class Equivalent {
   public names!: Array<string>;
 
   public static createEmpty(): Equivalent {
-    let title = "";
-    let names = new Array<string>();
-    let skeleton = {title, names};
+    const title = "";
+    const names = new Array<string>();
+    const skeleton = {title, names};
     return skeleton;
   }
 

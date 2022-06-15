@@ -33,15 +33,15 @@ export class NotificationSchema {
   public text!: string;
 
   public static async add(type: string, title: string, text: string): Promise<Notification> {
-    let date = new Date();
-    let notification = new NotificationModel({type, date, title, text});
+    const date = new Date();
+    const notification = new NotificationModel({type, date, title, text});
     await notification.save();
     return notification;
   }
 
   public static async fetch(range?: QueryRange): Promise<WithSize<Notification>> {
-    let query = NotificationModel.find().sort("-date");
-    let result = await QueryRange.restrictWithSize(query, range);
+    const query = NotificationModel.find().sort("-date");
+    const result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 
@@ -51,12 +51,12 @@ export class NotificationSchema {
 export class NotificationCreator {
 
   public static create(raw: Notification): NotificationSkeleton {
-    let id = raw.id;
-    let type = raw.type;
-    let date = raw.date.toISOString();
-    let title = raw.title;
-    let text = raw.text;
-    let skeleton = {id, type, date, title, text};
+    const id = raw.id;
+    const type = raw.type;
+    const date = raw.date.toISOString();
+    const title = raw.title;
+    const text = raw.text;
+    const skeleton = {id, type, date, title, text};
     return skeleton;
   }
 
@@ -64,4 +64,4 @@ export class NotificationCreator {
 
 
 export type Notification = DocumentType<NotificationSchema>;
-export let NotificationModel = getModelForClass(NotificationSchema);
+export const NotificationModel = getModelForClass(NotificationSchema);

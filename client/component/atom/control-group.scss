@@ -6,18 +6,15 @@
 .root {
   display: flex;
   flex-direction: row;
-}
-
-.root >:first-child {
-  margin: 0rpx -1rpx 0rpx 0rpx;
-  border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
-}
-
-.root >:last-child {
-  border-radius: 0rpx $small-border-radius $small-border-radius 0rpx;
-}
-
-.root >:not(:first-child):not(:last-child) {
-  margin: 0rpx -1rpx 0rpx 0rpx;
-  border-radius: 0rpx;
+  >:first-child {
+    margin: 0rpx -1rpx 0rpx 0rpx;
+    border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+  }
+  >:last-child {
+    border-radius: 0rpx $small-border-radius $small-border-radius 0rpx;
+  }
+  >:not(:first-child):not(:last-child) {
+    margin: 0rpx -1rpx 0rpx 0rpx;
+    border-radius: 0rpx;
+  }
 }

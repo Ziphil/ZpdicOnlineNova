@@ -17,6 +17,7 @@ import Dropdown from "/client/component/atom/dropdown";
 import {
   DropdownSpec
 } from "/client/component/atom/dropdown";
+import Icon from "/client/component/atom/icon";
 import Label from "/client/component/atom/label";
 import Tooltip from "/client/component/atom/tooltip";
 import {
@@ -26,8 +27,8 @@ import {
   useDebounce
 } from "/client/component/hook";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const Input = create(
@@ -68,13 +69,13 @@ const Input = create(
     nativeRef?: Ref<HTMLInputElement>
   }): ReactElement {
 
-    let [currentType, setCurrentType] = useState((type === "flexible") ? "password" : type);
-    let [errorMessage, setErrorMessage] = useState<string | null>(null);
-    let [dropdownSpecs, setDropdownSpecs] = useState<Array<DropdownSpec<string>>>([]);
+    const [currentType, setCurrentType] = useState((type === "flexible") ? "password" : type);
+    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [dropdownSpecs, setDropdownSpecs] = useState<Array<DropdownSpec<string>>>([]);
 
-    let updateValue = useCallback(function (value: string): void {
+    const updateValue = useCallback(function (value: string): void {
       if (validate !== undefined) {
-        let errorMessage = validate(value);
+        const errorMessage = validate(value);
         setErrorMessage(errorMessage);
       } else {
         setErrorMessage(null);
@@ -82,27 +83,27 @@ const Input = create(
       onSet?.(value);
     }, [validate, onSet]);
 
-    let updateSuggestions = useDebounce(async function (value: string): Promise<void> {
+    const updateSuggestions = useDebounce(async function (value: string): Promise<void> {
       if (suggest !== undefined) {
-        let suggestionSpecs = await suggest(value);
-        let dropdownSpecs = suggestionSpecs.map((suggestionSpec) => ({value: suggestionSpec.replacement, node: suggestionSpec.node}));
+        const suggestionSpecs = await suggest(value);
+        const dropdownSpecs = suggestionSpecs.map((suggestionSpec) => ({value: suggestionSpec.replacement, node: suggestionSpec.node}));
         setDropdownSpecs(dropdownSpecs);
       }
     }, 500, [suggest]);
 
-    let handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
-      let value = event.target.value;
+    const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+      const value = event.target.value;
       updateValue(value);
       updateSuggestions(value);
       onChange?.(event);
     }, [onChange, updateValue, updateSuggestions]);
 
-    let handleFocus = useCallback(function (event: FocusEvent<HTMLInputElement>): void {
-      let value = event.target.value;
+    const handleFocus = useCallback(function (event: FocusEvent<HTMLInputElement>): void {
+      const value = event.target.value;
       updateSuggestions(value);
     }, [updateSuggestions]);
 
-    let toggleType = useCallback(function (): void {
+    const toggleType = useCallback(function (): void {
       if (currentType === "text") {
         setCurrentType("password");
       } else {
@@ -110,14 +111,14 @@ const Input = create(
       }
     }, [currentType]);
 
-    let node = (
+    const node = (
       <div styleName="root" className={className}>
         <Tooltip message={errorMessage}>
           <Dropdown specs={dropdownSpecs} onSet={updateValue}>
-            <label styleName="label-wrapper">
+            <label styleName="label-container">
               <Label
                 text={label}
-                style={(errorMessage === null) ? "normal" : "error"}
+                variant={(errorMessage === null) ? "normal" : "error"}
                 showRequired={showRequired}
                 showOptional={showOptional}
               />
@@ -163,27 +164,16 @@ const InputInput = create(
     nativeRef?: Ref<HTMLInputElement>
   }): ReactElement {
 
-    let styleName = StyleNameUtil.create(
-      "input",
-      {if: errorMessage !== null, true: "error"},
-      {if: disabled, true: "disabled"}
-    );
-    let eyeStyleName = StyleNameUtil.create("eye", currentType);
-    let eyeNode = (type === "flexible") && (
-      <span styleName={eyeStyleName} onClick={toggleType}/>
-    );
-    let prefixNode = (prefix !== undefined) && (
-      <div styleName="prefix">{prefix}</div>
-    );
-    let suffixNode = (suffix !== undefined || type === "flexible") && (
-      <div styleName="suffix">
-        {suffix}
-        {eyeNode}
-      </div>
-    );
-    let node = (
-      <div styleName={styleName}>
-        {prefixNode}
+    const data = DataUtil.create({
+      error: errorMessage !== null,
+      disabled
+    });
+    const eyeData = DataUtil.create({currentType});
+    const node = (
+      <div styleName="input" {...data}>
+        {(prefix !== undefined) && (
+          <div styleName="prefix">{prefix}</div>
+        )}
         <input
           styleName="input-inner"
           type={currentType}
@@ -194,7 +184,16 @@ const InputInput = create(
           onFocus={handleFocus}
           ref={nativeRef}
         />
-        {suffixNode}
+        {(suffix !== undefined || type === "flexible") && (
+          <div styleName="suffix">
+            {suffix}
+            {(type === "flexible") && (
+              <span styleName="eye" onClick={toggleType} {...eyeData}>
+                <Icon name={(currentType === "password") ? "eye" : "eye-slash"}/>
+              </span>
+            )}
+          </div>
+        )}
       </div>
     );
     return node;

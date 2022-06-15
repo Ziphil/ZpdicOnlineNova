@@ -17,17 +17,17 @@ import {
 
 
 export function useQueryState<S>(serializeQuery: (state: S) => Search, deserializeQuery: (search: Search) => S): [() => S, Dispatch<SetStateAction<S>>] {
-  let search = useSearch();
-  let navigate = useNavigate();
-  let [getState, setState] = useGetSet<S>(() => {
-    let state = deserializeQuery(search);
+  const search = useSearch();
+  const navigate = useNavigate();
+  const [getState, setState] = useGetSet<S>(() => {
+    const state = deserializeQuery(search);
     return state;
   });
-  let updatedRef = useRef(false);
-  let setStateQuery = useCallback(function (state: SetStateAction<S>): void {
+  const updatedRef = useRef(false);
+  const setStateQuery = useCallback(function (state: SetStateAction<S>): void {
     setState((previousState) => {
-      let nextState = (state instanceof Function) ? state(previousState) : state;
-      let search = serializeQuery(nextState);
+      const nextState = (state instanceof Function) ? state(previousState) : state;
+      const search = serializeQuery(nextState);
       updatedRef.current = true;
       navigate({search, replace: true});
       return nextState;
@@ -35,7 +35,7 @@ export function useQueryState<S>(serializeQuery: (state: S) => Search, deseriali
   }, [navigate, setState, serializeQuery]);
   useEffect(() => {
     if (!updatedRef.current) {
-      let state = deserializeQuery(search);
+      const state = deserializeQuery(search);
       setState(state);
     }
     updatedRef.current = false;

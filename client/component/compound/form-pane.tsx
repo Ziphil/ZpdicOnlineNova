@@ -32,15 +32,15 @@ const FormPane = create(
     children?: ReactNode
   }): ReactElement {
 
-    let [intl] = useIntl();
+    const [intl] = useIntl();
 
-    let texts = [PopupUtil.getMessage(intl, errorType ?? "")];
-    let errorNode = (errorType !== null) && (
+    const texts = [PopupUtil.getMessage(intl, errorType ?? "")];
+    const errorNode = (errorType !== null) && (
       <div styleName="error">
         <InformationPane texts={texts} style={errorStyle} onClose={onErrorClose}/>
       </div>
     );
-    let node = (
+    const node = (
       <div>
         {errorNode}
         <div styleName="root">

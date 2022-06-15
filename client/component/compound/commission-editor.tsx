@@ -19,6 +19,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -42,27 +43,28 @@ const CommissionEditor = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let [name, setName] = useState("");
-    let [comment, setComment] = useState("");
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [name, setName] = useState("");
+    const [comment, setComment] = useState("");
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let addCommission = useCallback(async function (event: MouseEvent<HTMLElement>): Promise<void> {
-      let number = dictionary.number;
-      let response = await request("addCommission", {number, name, comment}, {useRecaptcha: true});
+    const addCommission = useCallback(async function (event: MouseEvent<HTMLElement>): Promise<void> {
+      const number = dictionary.number;
+      const response = await request("addCommission", {number, name, comment}, {useRecaptcha: true});
       if (response.status === 200) {
         addInformationPopup("commissionAdded");
-        onClose?.(event);
+        await onClose?.(event);
+        await invalidateQueries("fetchCommissions", (data) => data.number === number);
       }
     }, [dictionary.number, name, comment, request, onClose, addInformationPopup]);
 
-    let node = (
+    const node = (
       <Overlay size="large" title={trans("commissionEditor.title")} open={open} onClose={onClose}>
         <div styleName="root">
-          <Input label={trans("commissionEditor.name")} value={name} onSet={(name) => setName(name)}/>
-          <TextArea className={styles!["comment"]} label={trans("commissionEditor.comment")} value={comment} showOptional={true} onSet={(comment) => setComment(comment)}/>
-          <Button className={styles!["button"]} label={trans("commissionEditor.confirm")} iconName="list-check" style="information" reactive={true} onClick={addCommission}/>
+          <Input label={trans("commissionEditor.name")} value={name} onSet={setName}/>
+          <TextArea className={styles!["comment"]} label={trans("commissionEditor.comment")} value={comment} showOptional={true} onSet={setComment}/>
+          <Button className={styles!["button"]} label={trans("commissionEditor.confirm")} iconName="list-check" variant="information" reactive={true} onClick={addCommission}/>
         </div>
       </Overlay>
     );

@@ -1,6 +1,5 @@
 //
 
-import * as queryParser from "query-string";
 import {
   WordMode,
   WordModeUtil,
@@ -18,52 +17,57 @@ import {
 
 export class NormalWordParameter extends WordParameter {
 
-  public search: string;
+  public text: string;
   public mode: WordMode;
   public type: WordType;
   public order: WordOrder;
   public ignoreOptions: WordIgnoreOptions;
+  public enableSuggestions: boolean;
 
-  private constructor(search: string, mode: WordMode, type: WordType, order: WordOrder, ignoreOptions: WordIgnoreOptions) {
+  private constructor(text: string, mode: WordMode, type: WordType, order: WordOrder, ignoreOptions: WordIgnoreOptions, enableSuggestions: boolean) {
     super();
-    this.search = search;
+    this.text = text;
     this.mode = mode;
     this.type = type;
     this.order = order;
     this.ignoreOptions = ignoreOptions;
+    this.enableSuggestions = enableSuggestions;
   }
 
   public static createEmpty(overrides: Partial<NormalWordParameter> = {}): NormalWordParameter {
-    let search = overrides.search ?? "";
-    let mode = overrides.mode ?? "both";
-    let type = overrides.type ?? "prefix";
-    let order = overrides.order ?? {mode: "unicode", direction: "ascending"};
-    let ignoreOptions = overrides.ignoreOptions ?? {case: false};
-    let skeleton = new NormalWordParameter(search, mode, type, order, ignoreOptions);
+    const text = overrides.text ?? "";
+    const mode = overrides.mode ?? "both";
+    const type = overrides.type ?? "prefix";
+    const order = overrides.order ?? {mode: "unicode", direction: "ascending"};
+    const ignoreOptions = overrides.ignoreOptions ?? {case: false};
+    const enableSuggestions = overrides.enableSuggestions ?? false;
+    const skeleton = new NormalWordParameter(text, mode, type, order, ignoreOptions, enableSuggestions);
     return skeleton;
   }
 
-  public static deserializeEach(searchObject: Record<string, unknown>): NormalWordParameter {
-    let search = (typeof searchObject.search === "string") ? searchObject.search : undefined;
-    let mode = (typeof searchObject.mode === "string") ? WordModeUtil.cast(searchObject.mode) : undefined;
-    let type = (typeof searchObject.type === "string") ? WordTypeUtil.cast(searchObject.type) : undefined;
-    let orderMode = (typeof searchObject.orderMode === "string") ? WordOrderModeUtil.cast(searchObject.orderMode) : undefined;
-    let orderDirection = (typeof searchObject.orderDirection === "string") ? WordOrderDirectionUtil.cast(searchObject.orderDirection) : undefined;
-    let order = (orderMode !== undefined && orderDirection !== undefined) ? {mode: orderMode, direction: orderDirection} : undefined;
-    let ignoreOptions = (searchObject.ignoreCase === "true") ? {case: true} : undefined;
-    let parameter = NormalWordParameter.createEmpty({search, mode, type, order, ignoreOptions});
+  public static deserializeEach(search: Record<string, unknown>): NormalWordParameter {
+    const text = (typeof search.text === "string") ? search.text : (typeof search.search === "string") ? search.search : undefined;
+    const mode = (typeof search.mode === "string") ? WordModeUtil.cast(search.mode) : undefined;
+    const type = (typeof search.type === "string") ? WordTypeUtil.cast(search.type) : undefined;
+    const orderMode = (typeof search.orderMode === "string") ? WordOrderModeUtil.cast(search.orderMode) : undefined;
+    const orderDirection = (typeof search.orderDirection === "string") ? WordOrderDirectionUtil.cast(search.orderDirection) : undefined;
+    const order = (orderMode !== undefined && orderDirection !== undefined) ? {mode: orderMode, direction: orderDirection} : undefined;
+    const ignoreOptions = (search.ignoreCase === "true") ? {case: true} : undefined;
+    const enableSuggestions = search.enableSuggestions === "true";
+    const parameter = NormalWordParameter.createEmpty({text, mode, type, order, ignoreOptions, enableSuggestions});
     return parameter;
   }
 
   public serialize(): Record<string, unknown> {
-    let search = this.search;
-    let mode = this.mode;
-    let type = this.type;
-    let orderMode = this.order.mode;
-    let orderDirection = this.order.direction;
-    let ignoreCase = this.ignoreOptions.case;
-    let searchObject = {search, mode, type, orderMode, orderDirection, ignoreCase};
-    return searchObject;
+    const text = this.text;
+    const mode = this.mode;
+    const type = this.type;
+    const orderMode = this.order.mode;
+    const orderDirection = this.order.direction;
+    const ignoreCase = this.ignoreOptions.case;
+    const enableSuggestions = this.enableSuggestions;
+    const search = {text, mode, type, orderMode, orderDirection, ignoreCase, enableSuggestions};
+    return search;
   }
 
 }

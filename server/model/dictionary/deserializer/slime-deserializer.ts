@@ -27,7 +27,7 @@ export class SlimeDeserializer extends Deserializer {
   }
 
   private readSettings(): void {
-    let stream = oboe(createReadStream(this.path));
+    const stream = oboe(createReadStream(this.path));
     stream.on("node:!.*", (data, jsonPath) => {
       this.emitSettings(data, jsonPath[0]);
       return oboe.drop;
@@ -41,10 +41,10 @@ export class SlimeDeserializer extends Deserializer {
   }
 
   private readMain(): void {
-    let stream = oboe(createReadStream(this.path));
+    const stream = oboe(createReadStream(this.path));
     stream.on("node:!.words.*", (data, jsonPath) => {
       try {
-        let word = this.createWord(data);
+        const word = this.createWord(data);
         this.emit("word", word);
       } catch (error) {
         this.emit("error", error);
@@ -97,52 +97,52 @@ export class SlimeDeserializer extends Deserializer {
   }
 
   private createWord(raw: any): Word {
-    let dictionary = this.dictionary;
-    let number = parseInt(raw["entry"]["id"], 10);
-    let name = raw["entry"]["form"];
-    let equivalents = [];
-    for (let rawEquivalent of raw["translations"] ?? []) {
-      let title = rawEquivalent["title"] ?? "";
-      let names = rawEquivalent["forms"] ?? [];
-      let equivalent = new EquivalentModel({title, names});
+    const dictionary = this.dictionary;
+    const number = parseInt(raw["entry"]["id"], 10);
+    const name = raw["entry"]["form"];
+    const equivalents = [];
+    for (const rawEquivalent of raw["translations"] ?? []) {
+      const title = rawEquivalent["title"] ?? "";
+      const names = rawEquivalent["forms"] ?? [];
+      const equivalent = new EquivalentModel({title, names});
       equivalents.push(equivalent);
     }
-    let tags = raw["tags"] ?? [];
+    const tags = raw["tags"] ?? [];
     let pronunciation;
-    let informations = [];
-    for (let rawInformation of raw["contents"] ?? []) {
+    const informations = [];
+    for (const rawInformation of raw["contents"] ?? []) {
       if (rawInformation["title"] === this.pronunciationTitle) {
         pronunciation = rawInformation["text"] ?? undefined;
       } else {
-        let title = rawInformation["title"] ?? "";
-        let text = (() => {
+        const title = rawInformation["title"] ?? "";
+        const text = (() => {
           if (this.enableMarkdown) {
             return rawInformation["markdown"] ?? rawInformation["text"] ?? "";
           } else {
             return rawInformation["text"] ?? "";
           }
         })();
-        let information = new InformationModel({title, text});
+        const information = new InformationModel({title, text});
         informations.push(information);
       }
     }
-    let variations = [];
-    for (let rawVariation of raw["variations"] ?? []) {
-      let title = rawVariation["title"] ?? "";
-      let name = rawVariation["form"] ?? "";
-      let variation = new VariationModel({title, name});
+    const variations = [];
+    for (const rawVariation of raw["variations"] ?? []) {
+      const title = rawVariation["title"] ?? "";
+      const name = rawVariation["form"] ?? "";
+      const variation = new VariationModel({title, name});
       variations.push(variation);
     }
-    let relations = [];
-    for (let rawRelation of raw["relations"] ?? []) {
-      let title = rawRelation["title"] ?? "";
-      let number = parseInt(rawRelation["entry"]["id"], 10);
-      let name = rawRelation["entry"]["form"];
-      let relation = new RelationModel({title, number, name});
+    const relations = [];
+    for (const rawRelation of raw["relations"] ?? []) {
+      const title = rawRelation["title"] ?? "";
+      const number = parseInt(rawRelation["entry"]["id"], 10);
+      const name = rawRelation["entry"]["form"];
+      const relation = new RelationModel({title, number, name});
       relations.push(relation);
     }
-    let updatedDate = new Date();
-    let word = new WordModel({dictionary, number, name, pronunciation, equivalents, tags, informations, variations, relations, updatedDate});
+    const updatedDate = new Date();
+    const word = new WordModel({dictionary, number, name, pronunciation, equivalents, tags, informations, variations, relations, updatedDate});
     return word;
   }
 

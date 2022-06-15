@@ -15,6 +15,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -30,20 +31,20 @@ const InvitationPane = create(
     invitation,
     onSubmit
   }: {
-    invitation: Invitation
-    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
+    invitation: Invitation,
+    onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
   }): ReactElement {
 
-    let [, {trans, transDate}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [, {trans, transDate}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let respondInvitation = useCallback(async function (event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
-      let id = invitation.id;
-      let invitationType = invitation.type;
-      let response = await request("respondInvitation", {id, accept});
+    const respondInvitation = useCallback(async function (event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
+      const id = invitation.id;
+      const invitationType = invitation.type;
+      const response = await request("respondInvitation", {id, accept});
       if (response.status === 200) {
-        let type = (() => {
+        const type = (() => {
           if (invitationType === "edit") {
             return (accept) ? "editInvitationAccepted" : "editInvitationRefused";
           } else if (invitationType === "transfer") {
@@ -54,12 +55,13 @@ const InvitationPane = create(
         })();
         addInformationPopup(type);
         await onSubmit?.(event);
+        await invalidateQueries("fetchInvitations", (data) => data.type === invitationType);
       }
     }, [invitation, request, onSubmit, addInformationPopup]);
 
-    let name = invitation.dictionary.name;
-    let createdDate = invitation.createdDate;
-    let node = (
+    const name = invitation.dictionary.name;
+    const createdDate = invitation.createdDate;
+    const node = (
       <WhitePane clickable={false}>
         <div>
           <div styleName="head">
@@ -73,8 +75,8 @@ const InvitationPane = create(
           </div>
         </div>
         <div styleName="setting">
-          <Button label={trans("invitationPane.reject")} iconName="ban" style="caution" reactive={true} onClick={(event) => respondInvitation(event, false)}/>
-          <Button label={trans("invitationPane.accept")} iconName="thumbs-up" style="information" reactive={true} onClick={(event) => respondInvitation(event, true)}/>
+          <Button label={trans("invitationPane.reject")} iconName="ban" variant="caution" reactive={true} onClick={(event) => respondInvitation(event, false)}/>
+          <Button label={trans("invitationPane.accept")} iconName="thumbs-up" variant="information" reactive={true} onClick={(event) => respondInvitation(event, true)}/>
         </div>
       </WhitePane>
     );

@@ -34,12 +34,12 @@ export class OtherController extends Controller {
 
   @post(SERVER_PATHS["fetchDocument"])
   public async [Symbol()](request: Request<"fetchDocument">, response: Response<"fetchDocument">): Promise<void> {
-    let locale = request.body.locale;
-    let path = request.body.path;
-    let localPath = `/dist/document/${locale}/${path || "index"}.md`;
+    const locale = request.body.locale;
+    const path = request.body.path;
+    const localPath = `/dist/document/${locale}/${path || "index"}.md`;
     response.sendFile(process.cwd() + localPath, (error) => {
       if (error) {
-        let body = CustomError.ofType("noSuchDocument");
+        const body = CustomError.ofType("noSuchDocument");
         Controller.respondError(response, body);
       }
     });
@@ -48,26 +48,26 @@ export class OtherController extends Controller {
   @post(SERVER_PATHS["contact"])
   @before(checkUser(), verifyRecaptcha())
   public async [Symbol()](request: Request<"contact">, response: Response<"contact">): Promise<void> {
-    let user = request.user;
-    let name = request.body.name;
-    let email = request.body.email;
-    let subject = request.body.subject;
-    let text = request.body.text;
-    let signedIn = (user !== undefined).toString();
-    let userName = user?.name ?? "";
+    const user = request.user;
+    const name = request.body.name;
+    const email = request.body.email;
+    const subject = request.body.subject;
+    const text = request.body.text;
+    const signedIn = (user !== undefined).toString();
+    const userName = user?.name ?? "";
     if (text !== "") {
-      let administrator = await UserModel.fetchOneAdministrator();
+      const administrator = await UserModel.fetchOneAdministrator();
       if (administrator !== null) {
-        let nextSubject = MailUtil.getSubject("contact", {subject});
-        let nextText = MailUtil.getText("contact", {userName, email, subject, text, signedIn, name});
+        const nextSubject = MailUtil.getSubject("contact", {subject});
+        const nextText = MailUtil.getText("contact", {userName, email, subject, text, signedIn, name});
         MailUtil.send(administrator.email, nextSubject, nextText);
         Controller.respond(response, null);
       } else {
-        let body = CustomError.ofType("administratorNotFound");
+        const body = CustomError.ofType("administratorNotFound");
         Controller.respondError(response, body);
       }
     } else {
-      let body = CustomError.ofType("emptyContactText");
+      const body = CustomError.ofType("emptyContactText");
       Controller.respondError(response, body);
     }
   }

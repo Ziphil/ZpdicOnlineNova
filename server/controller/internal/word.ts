@@ -32,15 +32,15 @@ export class WordController extends Controller {
   @post(SERVER_PATHS["editWord"])
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"editWord">, response: Response<"editWord">): Promise<void> {
-    let dictionary = request.dictionary;
-    let word = request.body.word;
+    const dictionary = request.dictionary;
+    const word = request.body.word;
     if (dictionary) {
       try {
-        let resultWord = await dictionary.editWord(word);
-        let body = WordCreator.create(resultWord);
+        const resultWord = await dictionary.editWord(word);
+        const body = WordCreator.create(resultWord);
         Controller.respond(response, body);
       } catch (error) {
-        let body = (() => {
+        const body = (() => {
           if (error.name === "CustomError" && error.type === "dictionarySaving") {
             return CustomError.ofType("dictionarySaving");
           }
@@ -48,7 +48,7 @@ export class WordController extends Controller {
         Controller.respondError(response, body, error);
       }
     } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
+      const body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);
     }
   }
@@ -56,16 +56,16 @@ export class WordController extends Controller {
   @post(SERVER_PATHS["discardWord"])
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"discardWord">, response: Response<"discardWord">): Promise<void> {
-    let dictionary = request.dictionary;
-    let wordNumber = request.body.wordNumber;
+    const dictionary = request.dictionary;
+    const wordNumber = request.body.wordNumber;
     if (dictionary) {
       try {
-        let resultWord = await dictionary.discardWord(wordNumber);
-        let body = WordCreator.create(resultWord);
+        const resultWord = await dictionary.discardWord(wordNumber);
+        const body = WordCreator.create(resultWord);
         Controller.respond(response, body);
       } catch (error) {
-        let body = (() => {
-          if (error.name === "CustomError"){
+        const body = (() => {
+          if (error.name === "CustomError") {
             if (error.type === "noSuchWordNumber") {
               return CustomError.ofType("noSuchWordNumber");
             } else if (error.type === "dictionarySaving") {
@@ -76,7 +76,7 @@ export class WordController extends Controller {
         Controller.respondError(response, body, error);
       }
     } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
+      const body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);
     }
   }
@@ -84,29 +84,29 @@ export class WordController extends Controller {
   @post(SERVER_PATHS["addRelations"])
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"addRelations">, response: Response<"addRelations">): Promise<void> {
-    let dictionary = request.dictionary;
-    let specs = request.body.specs;
+    const dictionary = request.dictionary;
+    const specs = request.body.specs;
     if (dictionary) {
       try {
-        let promises = specs.map(async ({wordNumber, relation}) => {
+        const promises = specs.map(async ({wordNumber, relation}) => {
           await dictionary!.addRelation(wordNumber, relation);
         });
-        let results = await Promise.allSettled(promises);
-        let rejectedResult = results.find((result) => result.status === "rejected") as PromiseRejectedResult | undefined;
+        const results = await Promise.allSettled(promises);
+        const rejectedResult = results.find((result) => result.status === "rejected") as PromiseRejectedResult | undefined;
         if (rejectedResult !== undefined) {
           throw rejectedResult.reason;
         }
         Controller.respond(response, null);
       } catch (error) {
-        let body = (() => {
-          if (error.name === "CustomError"){
+        const body = (() => {
+          if (error.name === "CustomError") {
             return CustomError.ofType("failAddRelations");
           }
         })();
         Controller.respondError(response, body, error);
       }
     } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
+      const body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);
     }
   }
@@ -114,14 +114,14 @@ export class WordController extends Controller {
   @post(SERVER_PATHS["fetchWordNames"])
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
-    let dictionary = request.dictionary;
-    let wordNumbers = request.body.wordNumbers;
+    const dictionary = request.dictionary;
+    const wordNumbers = request.body.wordNumbers;
     if (dictionary) {
-      let names = await dictionary.fetchWordNames(wordNumbers);
-      let body = {names};
+      const names = await dictionary.fetchWordNames(wordNumbers);
+      const body = {names};
       Controller.respond(response, body);
     } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
+      const body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);
     }
   }

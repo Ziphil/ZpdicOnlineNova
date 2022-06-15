@@ -26,23 +26,23 @@ const CreateDictionaryForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [name, setName] = useState<string | null>(null);
-    let [intl, {trans}] = useIntl();
-    let {request} = useRequest();
-    let {pushPath} = usePath();
+    const [name, setName] = useState<string | null>(null);
+    const [intl, {trans}] = useIntl();
+    const {request} = useRequest();
+    const {pushPath} = usePath();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let actualName = name ?? trans("createDictionaryForm.defaultName");
-      let response = await request("createDictionary", {name: actualName});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const actualName = name ?? trans("createDictionaryForm.defaultName");
+      const response = await request("createDictionary", {name: actualName});
       if (response.status === 200) {
-        let dictionary = response.data;
+        const dictionary = response.data;
         onSubmit?.();
         pushPath("/dashboard/dictionary/" + dictionary.number);
       }
     }, [name, request, trans, onSubmit, pushPath]);
 
-    let actualName = name ?? trans("createDictionaryForm.defaultName");
-    let node = (
+    const actualName = name ?? trans("createDictionaryForm.defaultName");
+    const node = (
       <form styleName="root">
         <Input label={trans("createDictionaryForm.name")} value={actualName} onSet={(name) => setName(name)}/>
         <Button label={trans("createDictionaryForm.confirm")} reactive={true} onClick={handleClick}/>

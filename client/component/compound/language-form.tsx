@@ -23,11 +23,11 @@ const LanguageForm = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
-    let [locale, changeLocale] = useLocale();
+    const [, {trans}] = useIntl();
+    const [locale, changeLocale] = useLocale();
 
-    let specs = LANGUAGES.map((language) => ({value: language.locale, label: language.name}));
-    let node = (
+    const specs = LANGUAGES.map((language) => ({value: language.locale, label: language.name}));
+    const node = (
       <form styleName="root">
         <RadioGroup name="language" value={locale} specs={specs} onSet={(locale) => changeLocale(locale)}/>
         <p styleName="caution">

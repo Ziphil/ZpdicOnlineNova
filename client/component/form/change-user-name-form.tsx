@@ -3,9 +3,7 @@
 import * as react from "react";
 import {
   Fragment,
-  ReactElement,
-  useCallback,
-  useState
+  ReactElement
 } from "react";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
@@ -13,9 +11,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
-  usePopup,
-  useRequest
+  useIntl
 } from "/client/component/hook";
 
 
@@ -29,9 +25,9 @@ const ChangeUserNameForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <Fragment>
         <form styleName="root">
           <Input label={trans("changeUserNameForm.name")} value={currentName} disabled={true}/>

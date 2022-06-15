@@ -19,7 +19,7 @@ import {
   useIntl,
   usePopup,
   useRequest,
-  useUser
+  useMe
 } from "/client/component/hook";
 
 
@@ -29,17 +29,17 @@ const ContactForm = create(
   }: {
   }): ReactElement {
 
-    let [name, setName] = useState("");
-    let [email, setEmail] = useState("");
-    let [subject, setSubject] = useState("");
-    let [text, setText] = useState("");
-    let [, {trans}] = useIntl();
-    let [user] = useUser();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [subject, setSubject] = useState("");
+    const [text, setText] = useState("");
+    const [, {trans}] = useIntl();
+    const [me] = useMe();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let performSend = useCallback(async function (): Promise<void> {
-      let response = await request("contact", {name, email, subject, text}, {useRecaptcha: true});
+    const performSend = useCallback(async function (): Promise<void> {
+      const response = await request("contact", {name, email, subject, text}, {useRecaptcha: true});
       if (response.status === 200) {
         addInformationPopup("contacted");
         setSubject("");
@@ -48,16 +48,16 @@ const ContactForm = create(
     }, [name, email, subject, text, request, addInformationPopup]);
 
     useMount(() => {
-      if (user !== null) {
-        let name = user.screenName;
-        let email = user.email;
+      if (me !== null) {
+        const name = me.screenName;
+        const email = me.email;
         setName(name);
         setEmail(email);
       }
     });
 
-    let disabled = user !== null;
-    let node = (
+    const disabled = me !== null;
+    const node = (
       <form styleName="root">
         <Input label={trans("contactForm.name")} value={name} disabled={disabled} showOptional={true} onSet={(name) => setName(name)}/>
         <Input label={trans("contactForm.email")} value={email} disabled={disabled} showOptional={true} onSet={(email) => setEmail(email)}/>
@@ -65,7 +65,7 @@ const ContactForm = create(
         <TextArea label={trans("contactForm.text")} value={text} onSet={(text) => setText(text)}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={trans("contactForm.confirm")} iconName="envelope" style="information" reactive={true} onClick={performSend}/>
+            <Button label={trans("contactForm.confirm")} iconName="envelope" variant="information" reactive={true} onClick={performSend}/>
           </div>
         </div>
       </form>

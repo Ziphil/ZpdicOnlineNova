@@ -7,12 +7,16 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import RadioGroup from "/client/component/atom/radio-group";
 import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -28,28 +32,29 @@ const ChangeDictionarySecretForm = create(
   }: {
     number: number,
     currentSecret: boolean,
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
-    let [secret, setSecret] = useState(currentSecret);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [secret, setSecret] = useState(currentSecret);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let response = await request("changeDictionarySecret", {number, secret});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const response = await request("changeDictionarySecret", {number, secret});
       if (response.status === 200) {
         addInformationPopup("dictionarySecretChanged");
-        onSubmit?.();
+        await onSubmit?.();
+        await invalidateQueries("fetchDictionary", (data) => data.number === number);
       }
     }, [number, secret, request, onSubmit, addInformationPopup]);
 
-    let specs = [
+    const specs = [
       {value: "public", label: trans("changeDictionarySecretForm.public")},
       {value: "secret", label: trans("changeDictionarySecretForm.secret")}
     ];
-    let secretValue = (secret) ? "secret" : "public";
-    let node = (
+    const secretValue = (secret) ? "secret" : "public";
+    const node = (
       <Fragment>
         <form styleName="root">
           <RadioGroup name="secret" specs={specs} value={secretValue} onSet={(value) => setSecret(value === "secret")}/>

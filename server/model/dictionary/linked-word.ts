@@ -20,8 +20,8 @@ export class LinkedWordSchema {
 export class LinkedWordCreator {
 
   public static create(raw: LinkedWord): LinkedWordSkeleton {
-    let number = raw.number;
-    let skeleton = {number};
+    const number = raw.number;
+    const skeleton = {number};
     return skeleton;
   }
 
@@ -29,4 +29,4 @@ export class LinkedWordCreator {
 
 
 export type LinkedWord = LinkedWordSchema;
-export let LinkedWordModel = getModelForClass(LinkedWordSchema);
+export const LinkedWordModel = getModelForClass(LinkedWordSchema);

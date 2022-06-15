@@ -2,17 +2,14 @@
 
 import * as react from "react";
 import {
-  Fragment,
   ReactElement,
-  useCallback,
-  useState
+  Suspense,
+  useCallback
 } from "react";
-import {
-  useMount
-} from "react-use";
 import ActivateUserForm from "/client/component/compound/activate-user-form";
 import DictionaryList from "/client/component/compound/dictionary-list";
 import InvitationList from "/client/component/compound/invitation-list";
+import Loading from "/client/component/compound/loading";
 import Menu from "/client/component/compound/menu";
 import SettingPane from "/client/component/compound/setting-pane";
 import {
@@ -28,10 +25,9 @@ import {
   useIntl,
   useLocation,
   useLogout,
-  useParams,
   usePath,
-  useRequest,
-  useUser
+  useSuspenseMe,
+  useSuspenseQuery
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
@@ -48,77 +44,43 @@ const DashboardPage = create(
   }: {
   }): ReactElement {
 
-    let [dictionaries, setDictionaries] = useState<Array<UserDictionary> | null>(null);
-    let [editInvitations, setEditInvitations] = useState<Array<Invitation> | null>(null);
-    let [transferInvitations, setTransferInvitations] = useState<Array<Invitation> | null>(null);
-    let [, {trans}] = useIntl();
-    let {pushPath} = usePath();
-    let {request} = useRequest();
-    let [user] = useUser();
-    let logout = useLogout();
-    let params = useParams();
-    let location = useLocation();
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
+    const logout = useLogout();
+    const location = useLocation();
 
-    let fetchDictionaries = useCallback(async function (): Promise<void> {
-      let response = await request("fetchDictionaries", {});
-      if (response.status === 200) {
-        let dictionaries = response.data;
-        setDictionaries(dictionaries);
-      }
-    }, [request]);
+    const [dictionaries] = useSuspenseQuery("fetchDictionaries", {});
+    const [editInvitations] = useSuspenseQuery("fetchInvitations", {type: "edit"});
+    const [transferInvitations] = useSuspenseQuery("fetchInvitations", {type: "transfer"});
+    const [me] = useSuspenseMe();
 
-    let fetchEditInvitations = useCallback(async function (): Promise<void> {
-      let type = "edit" as const;
-      let response = await request("fetchInvitations", {type});
-      if (response.status === 200) {
-        let editInvitations = response.data;
-        setEditInvitations(editInvitations);
-      }
-    }, [request]);
-
-    let fetchTransferInvitations = useCallback(async function (): Promise<void> {
-      let type = "transfer" as const;
-      let response = await request("fetchInvitations", {type});
-      if (response.status === 200) {
-        let transferInvitations = response.data;
-        setTransferInvitations(transferInvitations);
-      }
-    }, [request]);
-
-    let performLogout = useCallback(async function (): Promise<void> {
-      let response = await logout();
+    const performLogout = useCallback(async function (): Promise<void> {
+      const response = await logout();
       if (response.status === 200) {
         pushPath("/");
       }
     }, [pushPath, logout]);
 
-    useMount(async () => {
-      let promise = Promise.all([fetchDictionaries(), fetchEditInvitations(), fetchTransferInvitations()]);
-      await promise;
-    });
-
-    let mode = location.hash || "dictionary";
-    let dictionaryCount = dictionaries?.length ?? 0;
-    let editNotificationCount = editInvitations?.length ?? 0;
-    let transferNotificationCount = transferInvitations?.length ?? 0;
-    let notificationCount = editNotificationCount + transferNotificationCount;
-    let menuSpecs = [
-      {mode: "dictionary", label: trans("dashboardPage.dictionary"), iconName: "book", badgeValue: dictionaryCount || undefined, href: "#dictionary"},
-      {mode: "notification", label: trans("dashboardPage.notification"), iconName: "bell", badgeValue: notificationCount || undefined, href: "#notification"},
+    const mode = location.hash || "dictionary";
+    const dictionaryCount = dictionaries.length;
+    const editNotificationCount = editInvitations.length;
+    const transferNotificationCount = transferInvitations.length;
+    const notificationCount = editNotificationCount + transferNotificationCount;
+    const menuSpecs = [
+      {mode: "dictionary", label: trans("dashboardPage.dictionary"), iconName: "book", badgeValue: dictionaryCount, href: "#dictionary"},
+      {mode: "notification", label: trans("dashboardPage.notification"), iconName: "bell", badgeValue: notificationCount, href: "#notification"},
       {mode: "account", label: trans("dashboardPage.account"), iconName: "id-card", href: "#account"},
       {mode: "logout", label: trans("dashboardPage.logout"), iconName: "sign-out-alt", onClick: performLogout}
     ] as const;
-    let activateUserForm = (!user?.activated) && (
-      <div styleName="activate">
-        <ActivateUserForm/>
-      </div>
-    );
-    let contentNode = (user) && <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode, fetchEditInvitations, fetchTransferInvitations}}/>;
-    let node = (
+    const node = (
       <Page title={trans("dashboardPage.title")}>
-        {activateUserForm}
+        {(!me.activated) && (
+          <div styleName="activate">
+            <ActivateUserForm/>
+          </div>
+        )}
         <Menu mode={mode} specs={menuSpecs}/>
-        {contentNode}
+        <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode}}/>
       </Page>
     );
     return node;
@@ -133,25 +95,21 @@ const DashboardPageForms = create(
     dictionaries,
     editInvitations,
     transferInvitations,
-    mode,
-    fetchEditInvitations,
-    fetchTransferInvitations
+    mode
   }: {
-    dictionaries: Array<UserDictionary> | null,
-    editInvitations: Array<Invitation> | null,
-    transferInvitations: Array<Invitation> | null
-    mode: string,
-    fetchEditInvitations: () => Promise<void>,
-    fetchTransferInvitations: () => Promise<void>
+    dictionaries: Array<UserDictionary>,
+    editInvitations: Array<Invitation>,
+    transferInvitations: Array<Invitation>,
+    mode: string
   }): ReactElement | null {
 
-    let [user, {fetchUser}] = useUser();
-    let [, {trans}] = useIntl();
-    let {pushPath} = usePath();
+    const [user, {refetchMe}] = useSuspenseMe();
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
 
     if (mode === "dictionary") {
-      let node = (
-        <Fragment>
+      const node = (
+        <Suspense fallback={<DashboardPageLoading/>}>
           <SettingPane
             label={trans("dashboardPage.dictionaryList.label")}
             description={trans("dashboardPage.dictionaryList.description")}
@@ -164,47 +122,47 @@ const DashboardPageForms = create(
           >
             <CreateDictionaryForm/>
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else if (mode === "notification") {
-      let node = (
-        <Fragment>
+      const node = (
+        <Suspense fallback={<DashboardPageLoading/>}>
           <SettingPane
             label={trans("dashboardPage.editInvitationList.label")}
             description={trans("dashboardPage.editInvitationList.description")}
           >
-            <InvitationList invitations={editInvitations} size={8} onSubmit={fetchEditInvitations}/>
+            <InvitationList invitations={editInvitations} size={8}/>
           </SettingPane>
           <SettingPane
             label={trans("dashboardPage.transferInvitationList.label")}
             description={trans("dashboardPage.transferInvitationList.description")}
           >
-            <InvitationList invitations={transferInvitations} size={8} onSubmit={fetchTransferInvitations}/>
+            <InvitationList invitations={transferInvitations} size={8}/>
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else if (mode === "account") {
-      let node = (
-        <Fragment>
+      const node = (
+        <Suspense fallback={<DashboardPageLoading/>}>
           <SettingPane
             label={trans("dashboardPage.changeUserNameForm.label")}
             description={trans("dashboardPage.changeUserNameForm.description")}
           >
-            <ChangeUserNameForm currentName={user!.name} onSubmit={fetchUser}/>
+            <ChangeUserNameForm currentName={user.name} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
             label={trans("dashboardPage.changeUserScreenNameForm.label")}
             description={trans("dashboardPage.changeUserScreenNameForm.description")}
           >
-            <ChangeUserScreenNameForm currentScreenName={user!.screenName} onSubmit={fetchUser}/>
+            <ChangeUserScreenNameForm currentScreenName={user.screenName} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
             label={trans("dashboardPage.changeUserEmailForm.label")}
             description={trans("dashboardPage.changeUserEmailForm.description")}
           >
-            <ChangeUserEmailForm currentEmail={user!.email} onSubmit={fetchUser}/>
+            <ChangeUserEmailForm currentEmail={user.email} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
             label={trans("dashboardPage.changeUserPasswordForm.label")}
@@ -218,12 +176,29 @@ const DashboardPageForms = create(
           >
             <DiscardUserForm onSubmit={() => pushPath("/", {preservePopup: true})}/>
           </SettingPane>
-        </Fragment>
+        </Suspense>
       );
       return node;
     } else {
       return null;
     }
+
+  }
+);
+
+
+const DashboardPageLoading = create(
+  require("./dictionary-setting-page.scss"),
+  function ({
+  }: {
+  }): ReactElement {
+
+    const node = (
+      <SettingPane>
+        <Loading loading={true}/>
+      </SettingPane>
+    );
+    return node;
 
   }
 );

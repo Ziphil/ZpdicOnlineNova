@@ -15,8 +15,8 @@ import {
   useIntl
 } from "/client/component/hook";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const Overlay = create(
@@ -43,14 +43,13 @@ const Overlay = create(
     children?: ReactNode
   }): ReactElement {
 
-    let contentStyleName = StyleNameUtil.create("content-wrapper", size);
-    let childrenNode = (page !== undefined && Array.isArray(children)) ? children[page] : children;
-    let node = (
+    const contentContainerData = DataUtil.create({size});
+    const node = (
       <Modal open={open} outsideClosable={outsideClosable} onClose={onClose}>
-        <div styleName={contentStyleName}>
-          <OverlayHeader {...{title, page, showBack, onClose, onBack}}/>
+        <div styleName="content-container" {...contentContainerData}>
+          {(title !== undefined) && <OverlayHeader {...{title, page, showBack, onClose, onBack}}/>}
           <div styleName="content">
-            {childrenNode}
+            {(page !== undefined && Array.isArray(children)) ? children[page] : children}
           </div>
         </div>
       </Modal>
@@ -75,32 +74,26 @@ const OverlayHeader = create(
     showBack?: boolean,
     onClose?: (event: MouseEvent<HTMLElement>) => void,
     onBack?: (event: MouseEvent<HTMLButtonElement>) => void
-  }): ReactElement | null {
+  }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    if (title !== undefined) {
-      let backButtonNode = (page !== undefined && ((showBack === undefined && page > 0) || showBack)) && (
-        <Button label={trans("overlay.back")} iconName="backward" style="simple" hideLabel={true} onClick={onBack}/>
-      );
-      let closeButtonNode = (
-        <Button label={trans("overlay.close")} iconName="times" style="simple" hideLabel={true} onClick={onClose}/>
-      );
-      let node = (
-        <div styleName="header">
-          <div styleName="left">
-            <div styleName="title">{title}</div>
-          </div>
-          <div styleName="right">
-            {backButtonNode}
-            {closeButtonNode}
-          </div>
+    const node = (
+      <div styleName="header">
+        <div styleName="left">
+          <div styleName="title">{title}</div>
         </div>
-      );
-      return node;
-    } else {
-      return null;
-    }
+        <div styleName="right">
+          {(page !== undefined && ((showBack === undefined && page > 0) || showBack)) && (
+            <Button label={trans("overlay.back")} iconName="backward" variant="simple" hideLabel={true} onClick={onBack}/>
+          )}
+          {(
+            <Button label={trans("overlay.close")} iconName="times" variant="simple" hideLabel={true} onClick={onClose}/>
+          )}
+        </div>
+      </div>
+    );
+    return node;
 
   }
 );

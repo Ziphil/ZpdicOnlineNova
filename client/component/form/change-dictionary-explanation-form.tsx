@@ -6,12 +6,16 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import TextArea from "/client/component/atom/text-area";
 import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -27,23 +31,24 @@ const ChangeDictionaryExplanationForm = create(
   }: {
     number: number,
     currentExplanation: string | undefined,
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
-    let [explanation, setExplanation] = useState(currentExplanation ?? "");
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [explanation, setExplanation] = useState(currentExplanation ?? "");
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let response = await request("changeDictionaryExplanation", {number, explanation});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const response = await request("changeDictionaryExplanation", {number, explanation});
       if (response.status === 200) {
         addInformationPopup("dictionaryExplanationChanged");
-        onSubmit?.();
+        await onSubmit?.();
+        await invalidateQueries("fetchDictionary", (data) => data.number === number);
       }
     }, [number, explanation, request, onSubmit, addInformationPopup]);
 
-    let node = (
+    const node = (
       <form styleName="root">
         <TextArea
           label={trans("changeDictionaryExplanationForm.explanation")}

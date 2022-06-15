@@ -3,16 +3,30 @@
 @import "/client/component/mixin.scss";
 
 
-.label-wrapper {
+.label-container {
   display: block;
 }
 
 .input {
   @include input(map-get($colors, primary));
   display: inline-flex;
+  [data-control-group] >&:first-child,
+  [data-control-group] >:first-child & {
+    margin: 0rpx -1rpx 0rpx 0rpx;
+    border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+  }
+  [data-control-group] >&:last-child,
+  [data-control-group] >:last-child & {
+    border-radius: 0rpx $small-border-radius $small-border-radius 0rpx;
+  }
+  [data-control-group] >&:not(:first-child):not(:last-child),
+  [data-control-group] >:not(:first-child):not(:last-child) & {
+    margin: 0rpx -1rpx 0rpx 0rpx;
+    border-radius: 0rpx;
+  }
 }
 
-.input.error {
+.input[data-error] {
   @include input(map-get($colors, error));
 }
 
@@ -36,23 +50,13 @@
 }
 
 .eye {
-  @include icon-font;
   width: 1.3em;
   margin: 0em 0em 0em $input-horizontal-padding;
   color: $link-color;
   text-align: center;
   display: inline-block;
   cursor: pointer;
-}
-
-.eye:hover {
-  color: $link-hover-color;
-}
-
-.eye::before {
-  content: "\F070";
-}
-
-.eye.password::before {
-  content: "\F06E";
+  &:hover {
+    color: $link-hover-color;
+  }
 }

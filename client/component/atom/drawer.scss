@@ -32,7 +32,7 @@ $drawer-tab-height: 60rpx;
   }
 }
 
-.content-wrapper {
+.content-container {
   width: 100%;
   height: 100%;
   left: 0rpx;
@@ -43,7 +43,7 @@ $drawer-tab-height: 60rpx;
   position: relative;
   pointer-events: auto;
   transition: left 0.2s ease;
-  &.closed {
+  &[data-closed] {
     left: max(-100%, #{-$page-width});
   }
 }
@@ -87,13 +87,13 @@ $drawer-tab-height: 60rpx;
   &:hover {
     width: 30rpx;
   }
-  &.center {
+  &[data-tab-position="center"] {
     top: calc((100% - #{$drawer-tab-height}) / 2);
   }
-  &.top {
+  &[data-tab-position="top"] {
     top: calc((100% - #{$drawer-tab-height}) / 2 - #{div($drawer-tab-height, 2) + 10rpx});
   }
-  &.bottom {
+  &[data-tab-position="bottom"] {
     top: calc((100% - #{$drawer-tab-height}) / 2 + #{div($drawer-tab-height, 2) + 10rpx});
   }
 }
@@ -115,15 +115,11 @@ $drawer-tab-height: 60rpx;
 }
 
 .content {
+  height: 100%;
   padding: $huge-margin $huge-margin;
   box-sizing: border-box;
-}
-
-.content-wrapper .content {
-  height: 100%;
   overflow-y: scroll;
-}
-
-.content-wrapper .header +.content {
-  height: calc(100% - #{$drawer-header-height});
+  .header +& {
+    height: calc(100% - #{$drawer-header-height});
+  }
 }

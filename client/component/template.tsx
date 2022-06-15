@@ -2,9 +2,7 @@
 
 import * as react from "react";
 import {
-  ReactElement,
-  useCallback,
-  useState
+  ReactElement
 } from "react";
 import {
   create
@@ -14,9 +12,6 @@ import {
   usePopup,
   useRequest
 } from "/client/component/hook";
-import {
-  StyleNameUtil
-} from "/client/util/style-name";
 
 
 const Component = create(
@@ -25,9 +20,9 @@ const Component = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
     return <></>;
 

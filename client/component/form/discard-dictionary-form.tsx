@@ -29,23 +29,23 @@ const DiscardDictionaryForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [alertOpen, setAlertOpen] = useState(false);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [alertOpen, setAlertOpen] = useState(false);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let discardDictionary = useCallback(async function (): Promise<void> {
-      let response = await request("discardDictionary", {number});
+    const discardDictionary = useCallback(async function (): Promise<void> {
+      const response = await request("discardDictionary", {number});
       if (response.status === 200) {
         addInformationPopup("dictionaryDiscarded");
         onSubmit?.();
       }
     }, [number, request, onSubmit, addInformationPopup]);
 
-    let node = (
+    const node = (
       <Fragment>
         <form styleName="root">
-          <Button label={trans("discardDictionaryForm.confirm")} reactive={true} style="caution" onClick={() => setAlertOpen(true)}/>
+          <Button label={trans("discardDictionaryForm.confirm")} reactive={true} variant="caution" onClick={() => setAlertOpen(true)}/>
         </form>
         <p styleName="caution">
           {trans("discardDictionaryForm.caution")}

@@ -38,10 +38,10 @@ export class UserController extends Controller {
   @post(SERVER_PATHS["login"])
   @before(login(30 * 24 * 60 * 60))
   public async [Symbol()](request: Request<"login">, response: Response<"login">): Promise<void> {
-    let token = request.token!;
-    let user = request.user!;
-    let userBody = UserCreator.createDetailed(user);
-    let body = {token, user: userBody};
+    const token = request.token!;
+    const user = request.user!;
+    const userBody = UserCreator.createDetailed(user);
+    const body = {token, user: userBody};
     Controller.respond(response, body);
   }
 
@@ -54,19 +54,19 @@ export class UserController extends Controller {
   @post(SERVER_PATHS["registerUser"])
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"registerUser">, response: Response<"registerUser">): Promise<void> {
-    let name = request.body.name;
-    let email = request.body.email;
-    let password = request.body.password;
+    const name = request.body.name;
+    const email = request.body.email;
+    const password = request.body.password;
     try {
-      let {user, key} = await UserModel.register(name, email, password);
-      let url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
-      let body = UserCreator.create(user);
-      let subject = MailUtil.getSubject("registerUser");
-      let text = MailUtil.getText("registerUser", {name, url});
+      const {user, key} = await UserModel.register(name, email, password);
+      const url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
+      const body = UserCreator.create(user);
+      const subject = MailUtil.getSubject("registerUser");
+      const text = MailUtil.getText("registerUser", {name, url});
       MailUtil.send(user.email, subject, text);
       Controller.respond(response, body);
     } catch (error) {
-      let body = (() => {
+      const body = (() => {
         if (error.name === "CustomError") {
           if (error.type === "duplicateUserName") {
             return CustomError.ofType("duplicateUserName");
@@ -90,11 +90,11 @@ export class UserController extends Controller {
   @post(SERVER_PATHS["changeUserScreenName"])
   @before(verifyUser())
   public async [Symbol()](request: Request<"changeUserScreenName">, response: Response<"changeUserScreenName">): Promise<void> {
-    let user = request.user!;
-    let screenName = request.body.screenName;
+    const user = request.user!;
+    const screenName = request.body.screenName;
     try {
       await user.changeScreenName(screenName);
-      let body = UserCreator.create(user);
+      const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
       Controller.respondError(response, undefined, error);
@@ -104,14 +104,14 @@ export class UserController extends Controller {
   @post(SERVER_PATHS["changeUserEmail"])
   @before(verifyUser())
   public async [Symbol()](request: Request<"changeUserEmail">, response: Response<"changeUserEmail">): Promise<void> {
-    let user = request.user!;
-    let email = request.body.email;
+    const user = request.user!;
+    const email = request.body.email;
     try {
       await user.changeEmail(email);
-      let body = UserCreator.create(user);
+      const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      let body = (() => {
+      const body = (() => {
         if (error.name === "CustomError" && error.type === "duplicateUserEmail") {
           return CustomError.ofType("duplicateUserEmail");
         } else if (error.name === "ValidationError" && error.errors.email) {
@@ -125,14 +125,14 @@ export class UserController extends Controller {
   @post(SERVER_PATHS["changeUserPassword"])
   @before(verifyUser())
   public async [Symbol()](request: Request<"changeUserPassword">, response: Response<"changeUserPassword">): Promise<void> {
-    let user = request.user!;
-    let password = request.body.password;
+    const user = request.user!;
+    const password = request.body.password;
     try {
       await user.changePassword(password);
-      let body = UserCreator.create(user);
+      const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      let body = (() => {
+      const body = (() => {
         if (error.name === "CustomError" && error.type === "invalidUserPassword") {
           return CustomError.ofType("invalidUserPassword");
         }
@@ -144,16 +144,16 @@ export class UserController extends Controller {
   @post(SERVER_PATHS["issueUserActivateToken"])
   @before(verifyRecaptcha(), verifyUser())
   public async [Symbol()](request: Request<"issueUserActivateToken">, response: Response<"issueUserActivateToken">): Promise<void> {
-    let user = request.user!;
+    const user = request.user!;
     try {
-      let key = await user.issueActivateToken();
-      let url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
-      let subject = MailUtil.getSubject("issueUserActivateToken");
-      let text = MailUtil.getText("issueUserActivateToken", {url});
+      const key = await user.issueActivateToken();
+      const url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
+      const subject = MailUtil.getSubject("issueUserActivateToken");
+      const text = MailUtil.getText("issueUserActivateToken", {url});
       MailUtil.send(user.email, subject, text);
       Controller.respond(response, null);
     } catch (error) {
-      let body = (() => {
+      const body = (() => {
         if (error.name === "CustomError") {
           if (error.type === "noSuchUser") {
             return CustomError.ofType("noSuchUser");
@@ -169,17 +169,17 @@ export class UserController extends Controller {
   @post(SERVER_PATHS["issueUserResetToken"])
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"issueUserResetToken">, response: Response<"issueUserResetToken">): Promise<void> {
-    let name = request.body.name;
-    let email = request.body.email;
+    const name = request.body.name;
+    const email = request.body.email;
     try {
-      let {user, key} = await UserModel.issueResetToken(name, email);
-      let url = `${request.protocol}://${request.get("host")}/reset?key=${key}`;
-      let subject = MailUtil.getSubject("issueUserResetToken");
-      let text = MailUtil.getText("issueUserResetToken", {url});
+      const {user, key} = await UserModel.issueResetToken(name, email);
+      const url = `${request.protocol}://${request.get("host")}/reset?key=${key}`;
+      const subject = MailUtil.getSubject("issueUserResetToken");
+      const text = MailUtil.getText("issueUserResetToken", {url});
       MailUtil.send(user.email, subject, text);
       Controller.respond(response, null);
     } catch (error) {
-      let body = (() => {
+      const body = (() => {
         if (error.name === "CustomError") {
           if (error.type === "noSuchUser") {
             return CustomError.ofType("noSuchUser");
@@ -192,13 +192,13 @@ export class UserController extends Controller {
 
   @post(SERVER_PATHS["activateUser"])
   public async [Symbol()](request: Request<"activateUser">, response: Response<"activateUser">): Promise<void> {
-    let key = request.body.key;
+    const key = request.body.key;
     try {
-      let user = await UserModel.activate(key, 60);
-      let body = UserCreator.create(user);
+      const user = await UserModel.activate(key, 60);
+      const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      let body = (() => {
+      const body = (() => {
         if (error.name === "CustomError") {
           if (error.type === "invalidActivateToken") {
             return CustomError.ofType("invalidActivateToken");
@@ -211,14 +211,14 @@ export class UserController extends Controller {
 
   @post(SERVER_PATHS["resetUserPassword"])
   public async [Symbol()](request: Request<"resetUserPassword">, response: Response<"resetUserPassword">): Promise<void> {
-    let key = request.body.key;
-    let password = request.body.password;
+    const key = request.body.key;
+    const password = request.body.password;
     try {
-      let user = await UserModel.resetPassword(key, password, 60);
-      let body = UserCreator.create(user);
+      const user = await UserModel.resetPassword(key, password, 60);
+      const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      let body = (() => {
+      const body = (() => {
         if (error.name === "CustomError") {
           if (error.type === "invalidResetToken") {
             return CustomError.ofType("invalidResetToken");
@@ -234,7 +234,7 @@ export class UserController extends Controller {
   @post(SERVER_PATHS["discardUser"])
   @before(verifyUser())
   public async [Symbol()](request: Request<"discardUser">, response: Response<"discardUser">): Promise<void> {
-    let user = request.user!;
+    const user = request.user!;
     try {
       await user.discard();
       Controller.respond(response, null);
@@ -246,16 +246,16 @@ export class UserController extends Controller {
   @post(SERVER_PATHS["fetchUser"])
   @before(verifyUser())
   public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
-    let user = request.user!;
-    let body = UserCreator.createDetailed(user);
+    const user = request.user!;
+    const body = UserCreator.createDetailed(user);
     Controller.respond(response, body);
   }
 
   @post(SERVER_PATHS["suggestUsers"])
   public async [Symbol()](request: Request<"suggestUsers">, response: Response<"suggestUsers">): Promise<void> {
-    let pattern = request.body.pattern;
-    let users = await UserModel.suggest(pattern);
-    let body = users.map(UserCreator.create);
+    const pattern = request.body.pattern;
+    const users = await UserModel.suggest(pattern);
+    const body = users.map(UserCreator.create);
     Controller.respond(response, body);
   }
 

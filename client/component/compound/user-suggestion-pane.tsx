@@ -20,7 +20,7 @@ const UserSuggestionPane = create(
     user: User
   }): ReactElement {
 
-    let node = (
+    const node = (
       <div styleName="root">
         <div styleName="right">
           <div styleName="image"/>

@@ -20,8 +20,8 @@ import {
   useIntl
 } from "/client/component/hook";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const Drawer = create(
@@ -54,46 +54,27 @@ const Drawer = create(
     children?: ReactNode
   }): ReactElement {
 
-    let [, {transNumber}] = useIntl();
-
-    let onBackgroundClick = (outsideClosable) ? onClose : undefined;
-    let backgroundNode = (open) && (
-      <div styleName="background" onClick={onBackgroundClick}/>
-    );
-    let tabNode = (!open) && (() => {
-      let actualBadgeValue = (typeof badgeValue === "number") ? transNumber(badgeValue) : badgeValue;
-      let badgeNode = (badgeValue !== undefined) && <span styleName="number">{actualBadgeValue}</span>;
-      let tabStyleName = StyleNameUtil.create("tab", tabPosition);
-      let tabNode = (
-        <div styleName={tabStyleName} onClick={onOpen}>
-          <div styleName="tab-inner">
-            <Icon name={iconName}/>
-            {badgeNode}
-          </div>
-        </div>
-      );
-      return tabNode;
-    })();
-    let childrenNode = (page !== undefined && Array.isArray(children)) ? children[page] : children;
-    let contentWrapperStyleName = StyleNameUtil.create(
-      "content-wrapper",
-      {if: open, false: "closed"}
-    );
-    let node = (
+    const onBackgroundClick = (outsideClosable) ? onClose : undefined;
+    const contentContainerData = DataUtil.create({closed: !open});
+    const node = (
       <Fragment>
         <Portal>
-          {backgroundNode}
+          {(open) && (
+            <div styleName="background" onClick={onBackgroundClick}/>
+          )}
           <div styleName="spacer">
-            <div styleName={contentWrapperStyleName}>
-              <DrawerHeader {...{title, page, showBack, onClose, onBack}}/>
+            <div styleName="content-container" {...contentContainerData}>
+              {(title !== undefined) && <DrawerHeader {...{title, page, showBack, onClose, onBack}}/>}
               <div styleName="content">
-                {childrenNode}
+                {(page !== undefined && Array.isArray(children)) ? children[page] : children}
               </div>
             </div>
           </div>
         </Portal>
         <Portal position="back">
-          {tabNode}
+          {(!open) && (
+            <DrawerTab {...{iconName, badgeValue, tabPosition, onOpen}}/>
+          )}
         </Portal>
       </Fragment>
     );
@@ -112,37 +93,63 @@ const DrawerHeader = create(
     onClose,
     onBack
   }: {
-    title?: string,
+    title: string,
     page?: number,
     showBack?: boolean,
     onClose?: (event: MouseEvent<HTMLElement>) => void,
     onBack?: (event: MouseEvent<HTMLButtonElement>) => void
-  }): ReactElement | null {
+  }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    if (title !== undefined) {
-      let backButtonNode = (page !== undefined && ((showBack === undefined && page > 0) || showBack)) && (
-        <Button label={trans("overlay.back")} iconName="backward" style="simple" hideLabel={true} onClick={onBack}/>
-      );
-      let closeButtonNode = (
-        <Button label={trans("overlay.close")} iconName="times" style="simple" hideLabel={true} onClick={onClose}/>
-      );
-      let node = (
-        <div styleName="header">
-          <div styleName="left">
-            <div styleName="title">{title}</div>
-          </div>
-          <div styleName="right">
-            {backButtonNode}
-            {closeButtonNode}
-          </div>
+    const node = (
+      <div styleName="header">
+        <div styleName="left">
+          <div styleName="title">{title}</div>
         </div>
-      );
-      return node;
-    } else {
-      return null;
-    }
+        <div styleName="right">
+          {(page !== undefined && ((showBack === undefined && page > 0) || showBack)) && (
+            <Button label={trans("overlay.back")} iconName="backward" variant="simple" hideLabel={true} onClick={onBack}/>
+          )}
+          {(
+            <Button label={trans("overlay.close")} iconName="times" variant="simple" hideLabel={true} onClick={onClose}/>
+          )}
+        </div>
+      </div>
+    );
+    return node;
+
+  }
+);
+
+
+const DrawerTab = create(
+  require("./drawer.scss"),
+  function ({
+    iconName,
+    badgeValue,
+    tabPosition,
+    onOpen
+  }: {
+    iconName: IconName,
+    badgeValue?: string | number,
+    tabPosition: "center" | "top" | "bottom",
+    onOpen?: (event: MouseEvent<HTMLElement>) => void
+  }): ReactElement {
+
+    const [, {transNumber}] = useIntl();
+
+    const actualBadgeValue = (typeof badgeValue === "number") ? transNumber(badgeValue) : badgeValue;
+    const tabData = DataUtil.create({tabPosition});
+    const node = (
+      <div styleName="tab" onClick={onOpen} {...tabData}>
+        <div styleName="tab-inner">
+          <Icon name={iconName}/>
+          {(badgeValue !== undefined) && <span styleName="number">{actualBadgeValue}</span>}
+        </div>
+      </div>
+    );
+    return node;
 
   }
 );

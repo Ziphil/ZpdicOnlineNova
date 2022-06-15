@@ -37,13 +37,13 @@ const PaginationButton = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let {smartphone} = useMediaQuery();
+    const {smartphone} = useMediaQuery();
 
-    let movePage = useCallback(function (page: number): void {
+    const movePage = useCallback(function (page: number): void {
       onSet?.(page);
     }, [onSet]);
 
-    let movePreviousPage = useCallback(function (): void {
+    const movePreviousPage = useCallback(function (): void {
       let movedPage = page - 1;
       if (movedPage < minPage) {
         movedPage = minPage;
@@ -51,7 +51,7 @@ const PaginationButton = create(
       movePage(movedPage);
     }, [page, minPage, movePage]);
 
-    let moveNextPage = useCallback(function (): void {
+    const moveNextPage = useCallback(function (): void {
       let movedPage = page + 1;
       if (movedPage > maxPage) {
         movedPage = maxPage;
@@ -59,14 +59,14 @@ const PaginationButton = create(
       movePage(movedPage);
     }, [page, maxPage, movePage]);
 
-    let calculateButtonSpecs = useCallback(function (direction: 1 | -1): Array<{page: number}> {
-      let targetPage = (direction === -1) ? minPage : maxPage;
-      let currentPage = page;
-      let buttonSpecs = [];
+    const calculateButtonSpecs = useCallback(function (direction: 1 | -1): Array<{page: number}> {
+      const targetPage = (direction === -1) ? minPage : maxPage;
+      const currentPage = page;
+      const buttonSpecs = [];
       let difference = 2;
-      let size = (smartphone) ? 1 : 4;
+      const size = (smartphone) ? 1 : 4;
       for (let i = 0 ; i < size ; i ++) {
-        let nextPage = currentPage + (difference - 1) * direction;
+        const nextPage = currentPage + (difference - 1) * direction;
         if ((direction === -1 && nextPage > targetPage) || (direction === 1 && nextPage < targetPage)) {
           buttonSpecs.push({page: nextPage});
         } else {
@@ -77,9 +77,9 @@ const PaginationButton = create(
       return buttonSpecs;
     }, [page, minPage, maxPage, smartphone]);
 
-    let createButtonNode = useCallback(function (specs: Array<{page: number}>, direction: 1 | -1): Array<ReactNode> {
-      let buttonNodes = specs.map((spec, index) => {
-        let position = (() => {
+    const createButtonNode = useCallback(function (specs: Array<{page: number}>, direction: 1 | -1): Array<ReactNode> {
+      const buttonNodes = specs.map((spec, index) => {
+        const position = (() => {
           if (direction === 1) {
             if (index === specs.length - 1) {
               return "right" as const;
@@ -94,7 +94,7 @@ const PaginationButton = create(
             }
           }
         })();
-        let buttonNode = (
+        const buttonNode = (
           <Button className={styles!["desktop"]} key={spec.page} label={(spec.page + 1).toString()} position={position} onClick={() => movePage(spec.page)}/>
         );
         return buttonNode;
@@ -109,11 +109,11 @@ const PaginationButton = create(
       moveNextPage();
     }, [moveNextPage], enableHotkeys);
 
-    let leftButtonSpecs = calculateButtonSpecs(-1).reverse();
-    let rightButtonSpecs = calculateButtonSpecs(1);
-    let leftButtonNodes = createButtonNode(leftButtonSpecs, -1);
-    let rightButtonNodes = createButtonNode(rightButtonSpecs, 1);
-    let centerButtonPosition = (() => {
+    const leftButtonSpecs = calculateButtonSpecs(-1).reverse();
+    const rightButtonSpecs = calculateButtonSpecs(1);
+    const leftButtonNodes = createButtonNode(leftButtonSpecs, -1);
+    const rightButtonNodes = createButtonNode(rightButtonSpecs, 1);
+    const centerButtonPosition = (() => {
       if (leftButtonSpecs.length === 0 && rightButtonSpecs.length === 0) {
         return "alone" as const;
       } else if (leftButtonSpecs.length > 0 && rightButtonSpecs.length === 0) {
@@ -124,7 +124,7 @@ const PaginationButton = create(
         return "middle" as const;
       }
     })();
-    let minPageButtonNode = (page > minPage) && (
+    const minPageButtonNode = (page > minPage) && (
       <Fragment>
         <Button label={(minPage + 1).toString()} onClick={() => movePage(minPage)}/>
         <div styleName="icon">
@@ -132,7 +132,7 @@ const PaginationButton = create(
         </div>
       </Fragment>
     );
-    let maxPageButtonNode = (page < maxPage) && (
+    const maxPageButtonNode = (page < maxPage) && (
       <Fragment>
         <div styleName="icon">
           <Icon name="ellipsis-h"/>
@@ -140,7 +140,7 @@ const PaginationButton = create(
         <Button label={(maxPage + 1).toString()} onClick={() => movePage(maxPage)}/>
       </Fragment>
     );
-    let node = (
+    const node = (
       <div styleName="root">
         <div styleName="button leftmost">
           <Button iconName="arrow-left" disabled={page <= minPage} onClick={movePreviousPage}/>

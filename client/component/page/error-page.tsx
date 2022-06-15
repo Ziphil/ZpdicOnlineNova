@@ -23,29 +23,28 @@ const ErrorPage = create(
     error,
     resetErrorBoundary
   }: {
-    error: Error;
+    error: Error,
     resetErrorBoundary: (...args: Array<unknown>) => void
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
-    let {pushPath} = usePath();
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
 
-    let handleClick = useCallback(function (): void {
-      resetErrorBoundary();
+    const handleClick = useCallback(function (): void {
       pushPath("/");
-    }, [resetErrorBoundary, pushPath]);
+    }, [pushPath]);
 
-    let node = (
+    const node = (
       <Page>
         <div styleName="root">
-          <div styleName="icon"><Icon name="bomb"/></div>
+          <div styleName="icon-container"><Icon name="bomb"/></div>
           <div styleName="description">
             {trans("errorPage.description")}
           </div>
           <pre styleName="message">
             {error.stack}
           </pre>
-          <div styleName="button">
+          <div styleName="button-container">
             <Button label={trans("errorPage.back")} iconName="arrow-circle-left" onClick={handleClick}/>
           </div>
         </div>

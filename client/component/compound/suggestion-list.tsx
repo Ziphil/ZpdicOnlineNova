@@ -24,8 +24,8 @@ const SuggestionList = create(
     suggestions: Array<Suggestion>
   }): ReactElement | null {
 
-    let suggestionPanes = suggestions.map((suggestion, index) => {
-      let suggestionPane = (
+    const suggestionPanes = suggestions.map((suggestion, index) => {
+      const suggestionPane = (
         <SuggestionPane
           dictionary={dictionary}
           suggestion={suggestion}
@@ -34,7 +34,7 @@ const SuggestionList = create(
       );
       return suggestionPane;
     });
-    let node = (suggestionPanes.length > 0) && (
+    const node = (suggestionPanes.length > 0) && (
       <ul styleName="root">
         {suggestionPanes}
       </ul>

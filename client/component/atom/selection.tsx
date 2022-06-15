@@ -34,10 +34,10 @@ const Selection = create(
     className?: string
   }): ReactElement {
 
-    let node = (
+    const node = (
       <div styleName="root" className={className}>
         <Dropdown specs={specs} onSet={onSet}>
-          <label styleName="label-wrapper">
+          <label styleName="label-container">
             <Label text={label} showRequired={showRequired} showOptional={showOptional}/>
             <SelectionSelection {...{value, specs}}/>
           </label>
@@ -62,10 +62,11 @@ const SelectionSelection = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let innerNode = Array.from(specs).find((spec) => spec.value === value)!.node;
-    let node = (
+    const node = (
       <button styleName="selection">
-        <div styleName="text">{innerNode}</div>
+        <div styleName="text">
+          {Array.from(specs).find((spec) => spec.value === value)!.node}
+        </div>
         <Icon className={styles!["arrow"]} name="angle-down"/>
       </button>
     );

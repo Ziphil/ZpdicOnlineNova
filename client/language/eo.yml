@@ -291,9 +291,9 @@ activateUserForm:
     Pro sekurecaj kialoj, neaktivigitaj uzantoj povos fari nenion post iom da tempo.
     Por aktivigi, sekvu la instrukciojn en la poŝto kiun vi ricevis kiam vi kreis la uzanton.
     Vi ankaŭ povas alklaki la dekstran butonon por resendi la poŝton.
-advancedSearchForm:
+advancedWordSearchForm:
   overlayTitle: "Altnivela serĉo"
-  search: "Ŝlosilvorto"
+  text: "Ŝlosilvorto"
   title: "Titlo"
   mode: "Amplekso"
   type: "Metodo"
@@ -564,7 +564,7 @@ resourcePane:
   alert: >-
     Tiu resurso estos forigita.
     Ĉu vi vere certas?
-searchForm:
+wordSearchForm:
   both: "Ambaŭ"
   name: "Kapvorto"
   equivalent: "Tradukaĵo"
@@ -574,6 +574,7 @@ searchForm:
   exact: "Ekzakta"
   regular: "Regesp"
   ignoreCase: "Ignori usklecon"
+  enableSuggestions: "Sugesti variaĵojn"
   unicode: "Unikodo"
   custom: "Propra ordo"
   updatedDate: "Dato de ĝisdatigo"

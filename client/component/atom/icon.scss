@@ -7,11 +7,12 @@
   line-height: 0;
 }
 
-.root.stack {
+.root-stack {
+  line-height: 0;
   position: relative;
 }
 
-.root.stack :not(:first-child) {
+.root-stack :not(:first-child) {
   top: 0em;
   left: 0em;
   position: absolute;

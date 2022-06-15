@@ -6,6 +6,9 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
@@ -32,24 +35,24 @@ const ChangeUserPasswordForm = create(
   function ({
     onSubmit
   }: {
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
-    let [password, setPassword] = useState("");
-    let [intl, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [password, setPassword] = useState("");
+    const [intl, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let response = await request("changeUserPassword", {password});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const response = await request("changeUserPassword", {password});
       if (response.status === 200) {
         addInformationPopup("userPasswordChanged");
-        onSubmit?.();
+        await onSubmit?.();
       }
     }, [password, request, onSubmit, addInformationPopup]);
 
-    let validate = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
-    let node = (
+    const validate = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
+    const node = (
       <form styleName="root">
         <Input label={trans("changeUserPasswordForm.password")} type="flexible" value={password} validate={validate} useTooltip={true} onSet={(password) => setPassword(password)}/>
         <Button label={trans("changeUserPasswordForm.confirm")} reactive={true} onClick={handleClick}/>

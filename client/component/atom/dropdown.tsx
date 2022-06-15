@@ -2,6 +2,9 @@
 
 import * as react from "react";
 import {
+  useRef
+} from "react";
+import {
   FocusEvent,
   MouseEvent,
   ReactElement,
@@ -10,14 +13,17 @@ import {
   useState
 } from "react";
 import {
+  useClickAway
+} from "react-use";
+import {
   create
 } from "/client/component/create";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
-let Dropdown = create(
+const Dropdown = create(
   require("./dropdown.scss"), "Dropdown",
   function <V>({
     specs,
@@ -43,15 +49,16 @@ let Dropdown = create(
     restrictHeight?: boolean,
     onClick?: (event: MouseEvent<HTMLDivElement>) => void,
     onOpen?: (event: FocusEvent<HTMLDivElement> | MouseEvent<HTMLDivElement>) => void,
-    onClose?: (event: FocusEvent<HTMLDivElement> | MouseEvent<unknown>) => void,
+    onClose?: (event?: FocusEvent<HTMLDivElement> | MouseEvent<HTMLDivElement>) => void,
     onSet?: (value: V) => void,
     className?: string,
     children?: ReactNode
   }): ReactElement {
 
-    let [currentOpen, setCurrentOpen] = useState(false);
+    const [currentOpen, setCurrentOpen] = useState(false);
+    const suggestionRef = useRef<HTMLDivElement>(null);
 
-    let handleMouseDown = useCallback(function (value: V, event: MouseEvent<HTMLDivElement>): void {
+    const handleMouseDown = useCallback(function (value: V, event: MouseEvent<HTMLDivElement>): void {
       onClick?.(event);
       onSet?.(value);
       if (autoMode === "click") {
@@ -60,61 +67,60 @@ let Dropdown = create(
       }
     }, [autoMode, onClick, onClose, onSet, setCurrentOpen]);
 
-    let handleClick = useCallback(function (event: MouseEvent<HTMLDivElement>): void {
+    const handleClick = useCallback(function (event: MouseEvent<HTMLDivElement>): void {
       if (autoMode === "click") {
         setCurrentOpen(true);
         onOpen?.(event);
       }
     }, [autoMode, onOpen, setCurrentOpen]);
 
-    let handleClickOutside = useCallback(function (event: MouseEvent<unknown>): void {
+    const handleClickOutside = useCallback(function (): void {
       if (autoMode === "click") {
         setCurrentOpen(false);
-        onClose?.(event);
+        onClose?.();
       }
     }, [autoMode, onClose, setCurrentOpen]);
 
-    let handleFocus = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
+    const handleFocus = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
       if (autoMode === "focus") {
         setCurrentOpen(true);
         onOpen?.(event);
       }
     }, [autoMode, onOpen, setCurrentOpen]);
 
-    let handleBlur = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
+    const handleBlur = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
       if (autoMode === "focus") {
         setCurrentOpen(false);
         onClose?.(event);
       }
     }, [autoMode, onClose, setCurrentOpen]);
 
-    let actualOpen = (autoMode !== null) ? currentOpen : open;
-    let styleName = StyleNameUtil.create(
-      "suggestion",
-      placement,
-      {if: showArrow, true: "arrow"},
-      {if: fillWidth, true: "fill-width"},
-      {if: restrictHeight, true: "restrict-height"}
-    );
-    let itemNodes = Array.from(specs).map((spec, index) => {
-      let itemNode = (
-        <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={(event) => handleMouseDown(spec.value, event)}>
-          {spec.node}
-        </div>
-      );
-      return itemNode;
+    useClickAway(suggestionRef, () => {
+      handleClickOutside();
     });
-    let suggestionNode = (actualOpen && specs.length > 0) && (
-      <div styleName={styleName}>
-        {itemNodes}
-      </div>
-    );
-    let node = (
+
+    const actualOpen = (autoMode !== null) ? currentOpen : open;
+    const data = DataUtil.create({
+      placement,
+      showArrow,
+      fillWidth,
+      restrictHeight
+    });
+    const node = (
       <div styleName="root" className={className}>
         <div onClick={handleClick} onFocus={handleFocus} onBlur={handleBlur}>
           {children}
         </div>
-        {suggestionNode}
+        {(actualOpen && specs.length > 0) && (
+          <div styleName="suggestion" ref={suggestionRef} {...data}>
+            <div styleName="arrow"/>
+            {Array.from(specs).map((spec, index) => (
+              <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={(event) => handleMouseDown(spec.value, event)}>
+                {spec.node}
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     );
     return node;

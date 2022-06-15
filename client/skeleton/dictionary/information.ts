@@ -7,9 +7,9 @@ export class Information {
   public text!: string;
 
   public static createEmpty(): Information {
-    let title = "";
-    let text = "";
-    let skeleton = {title, text};
+    const title = "";
+    const text = "";
+    const skeleton = {title, text};
     return skeleton;
   }
 

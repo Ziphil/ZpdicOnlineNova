@@ -11,14 +11,14 @@ import {
 
 
 export function useNullableState<S>(initialState?: (S | null) | (() => S | null)): [S | null, Dispatch<SetStateAction<S | null>>] {
-  let [state, setState] = useState(initialState ?? null);
+  const [state, setState] = useState(initialState ?? null);
   return [state, setState];
 }
 
 export function useStateWithCallback<S>(initialState: S | (() => S)): [S, DispatchWithCallback<SetStateAction<S>, S>] {
-  let [state, setState] = useState(initialState);
-  let callbackRef = useRef<(state: S) => void>();
-  let setStateWithCallback = useCallback(function (state: SetStateAction<S>, callback?: (state: S) => void) {
+  const [state, setState] = useState(initialState);
+  const callbackRef = useRef<(state: S) => void>();
+  const setStateWithCallback = useCallback(function (state: SetStateAction<S>, callback?: (state: S) => void) {
     callbackRef.current = callback;
     setState(state);
   }, []);

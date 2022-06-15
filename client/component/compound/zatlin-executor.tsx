@@ -42,25 +42,25 @@ const ZatlinExecutor = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    let [source, setSource] = useState(defaultSource ?? "");
-    let [output, setOutput] = useState("");
-    let [errorMessage, setErrorMessage] = useState("");
-    let [, {trans}] = useIntl();
+    const [source, setSource] = useState(defaultSource ?? "");
+    const [output, setOutput] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
+    const [, {trans}] = useIntl();
 
-    let executeZatlin = useCallback(function (): void {
+    const executeZatlin = useCallback(function (): void {
       try {
-        let zatlin = Zatlin.load(source);
-        let output = zatlin.generate();
+        const zatlin = Zatlin.load(source);
+        const output = zatlin.generate();
         setOutput(output);
         setErrorMessage("");
       } catch (error) {
-        let errorMessage = error.message.trim() ?? "Unknown error";
+        const errorMessage = error.message.trim() ?? "Unknown error";
         setOutput("");
         setErrorMessage(errorMessage);
       }
     }, [source]);
 
-    let handleClose = useCallback(function (event: MouseEvent<HTMLElement>): void {
+    const handleClose = useCallback(function (event: MouseEvent<HTMLElement>): void {
       onClose?.(event, source);
     }, [onClose, source]);
 
@@ -68,8 +68,8 @@ const ZatlinExecutor = create(
       setSource(defaultSource ?? "");
     }, [defaultSource]);
 
-    let version = ZATLIN_VERSION;
-    let node = (
+    const version = ZATLIN_VERSION;
+    const node = (
       <Overlay size="large" title={trans("zatlinExecutor.title", {version})} open={open} onClose={handleClose}>
         <div styleName="root">
           <TextArea

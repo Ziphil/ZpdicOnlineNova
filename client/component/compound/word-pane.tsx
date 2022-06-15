@@ -66,24 +66,24 @@ const WordPane = create(
     onDiscardExampleConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    let addWordEditor = useWordEditor();
-    let addExampleEditor = useExampleEditor();
+    const addWordEditor = useWordEditor();
+    const addExampleEditor = useExampleEditor();
 
-    let openWordEditor = useCallback(function (): void {
+    const openWordEditor = useCallback(function (): void {
       addWordEditor({dictionary, word, onEditConfirm, onDiscardConfirm});
     }, [dictionary, word, onEditConfirm, onDiscardConfirm, addWordEditor]);
 
-    let openExampleEditor = useCallback(function (example: Example): void {
+    const openExampleEditor = useCallback(function (example: Example): void {
       addExampleEditor({dictionary, example, onEditConfirm: onEditExampleConfirm, onDiscardConfirm: onDiscardExampleConfirm});
     }, [dictionary, onEditExampleConfirm, onDiscardExampleConfirm, addExampleEditor]);
 
-    let innerProps = {dictionary, word, showEditLink, showButton, showDirectionButton};
-    let nameNode = <WordPaneName {...innerProps} {...{onSubmit, openWordEditor}}/>;
-    let equivalentNode = <WordPaneEquivalents {...innerProps}/>;
-    let informationNode = (style === "normal") && <WordPaneInformations {...innerProps}/>;
-    let relationNode = (style === "normal") && <WordPaneRelations {...innerProps}/>;
-    let exampleNode = (style === "normal") && <WordPaneExamples {...innerProps} {...{openExampleEditor}}/>;
-    let node = (
+    const innerProps = {dictionary, word, showEditLink, showButton, showDirectionButton};
+    const nameNode = <WordPaneName {...innerProps} {...{onSubmit, openWordEditor}}/>;
+    const equivalentNode = <WordPaneEquivalents {...innerProps}/>;
+    const informationNode = (style === "normal") && <WordPaneInformations {...innerProps}/>;
+    const relationNode = (style === "normal") && <WordPaneRelations {...innerProps}/>;
+    const exampleNode = (style === "normal") && <WordPaneExamples {...innerProps} {...{openExampleEditor}}/>;
+    const node = (
       <div styleName="root">
         {nameNode}
         {equivalentNode}
@@ -118,9 +118,9 @@ const WordPaneName = create(
     openWordEditor: () => void
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let pronunciationText = useMemo(() => {
+    const pronunciationText = useMemo(() => {
       if (word.pronunciation !== undefined) {
         if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
           return word.pronunciation;
@@ -128,10 +128,10 @@ const WordPaneName = create(
           return "/" + word.pronunciation + "/";
         }
       } else {
-        let akrantiain = dictionary.getAkrantiain();
+        const akrantiain = dictionary.getAkrantiain();
         if (akrantiain !== null) {
           try {
-            let pronunciation = akrantiain.convert(word.name);
+            const pronunciation = akrantiain.convert(word.name);
             return "/" + pronunciation + "/";
           } catch (error) {
             console.error(error);
@@ -142,23 +142,23 @@ const WordPaneName = create(
         }
       }
     }, [dictionary, word]);
-    let submitDropdownSpecs = [
+    const submitDropdownSpecs = [
       {value: "oneway", node: <WordPaneSubmitDropdownNode direction="oneway"/>},
       {value: "mutual", node: <WordPaneSubmitDropdownNode direction="mutual"/>}
     ] as const;
-    let editButtonNode = (showEditLink && !showButton) && (
+    const editButtonNode = (showEditLink && !showButton) && (
       <div styleName="button">
-        <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={openWordEditor}/>
+        <Button label={trans("wordPane.edit")} iconName="edit" variant="simple" hideLabel={true} onClick={openWordEditor}/>
       </div>
     );
-    let submitButtonNode = (showButton) && (() => {
-      let directionButtonNode = (showDirectionButton) && (
+    const submitButtonNode = (showButton) && (() => {
+      const directionButtonNode = (showDirectionButton) && (
         <Dropdown specs={submitDropdownSpecs} placement="right" fillWidth={false} onSet={(direction) => onSubmit?.(direction)}>
           <Button iconName="ellipsis-h" position="right"/>
         </Dropdown>
       );
-      let submitButtonPosition = (showDirectionButton) ? "left" : "alone" as any;
-      let submitButtonNode = (
+      const submitButtonPosition = (showDirectionButton) ? "left" : "alone" as any;
+      const submitButtonNode = (
         <div styleName="button">
           <div styleName="dropdown-button">
             <Button label={trans("wordPane.submit")} iconName="check" position={submitButtonPosition} hideLabel={true} onClick={(event) => onSubmit?.("oneway", event)}/>
@@ -168,19 +168,19 @@ const WordPaneName = create(
       );
       return submitButtonNode;
     })();
-    let pronunciationNode = (pronunciationText !== undefined) && (() => {
-      let pronunciationNode = <div styleName="pronunciation">{pronunciationText}</div>;
+    const pronunciationNode = (pronunciationText !== undefined) && (() => {
+      const pronunciationNode = <div styleName="pronunciation">{pronunciationText}</div>;
       return pronunciationNode;
     })();
-    let tagNode = (word.tags.length > 0) && (() => {
-      let tagBoxNodes = word.tags.map((tag, index) => {
-        let tagBoxNode = (tag !== "") && <span styleName="box" key={index}>{tag}</span>;
+    const tagNode = (word.tags.length > 0) && (() => {
+      const tagBoxNodes = word.tags.map((tag, index) => {
+        const tagBoxNode = (tag !== "") && <span styleName="box" key={index}>{tag}</span>;
         return tagBoxNode;
       });
-      let tagNode = <div styleName="tag">{tagBoxNodes}</div>;
+      const tagNode = <div styleName="tag">{tagBoxNodes}</div>;
       return tagNode;
     })();
-    let node = (
+    const node = (
       <div styleName="name-wrapper">
         <div styleName="left">
           <div styleName="name">{word.name}</div>
@@ -207,9 +207,9 @@ const WordPaneEquivalents = create(
     word: Word | DetailedWord
   }): ReactElement | null {
 
-    let innerNodes = word.equivalents.map((equivalent, index) => {
-      let titleNode = (equivalent.title !== "") && <span styleName="box">{equivalent.title}</span>;
-      let innerNode = (
+    const innerNodes = word.equivalents.map((equivalent, index) => {
+      const titleNode = (equivalent.title !== "") && <span styleName="box">{equivalent.title}</span>;
+      const innerNode = (
         <span styleName="equivalent" key={index}>
           {titleNode}
           {equivalent.names.join(", ")}
@@ -218,7 +218,7 @@ const WordPaneEquivalents = create(
       );
       return innerNode;
     });
-    let node = (innerNodes.length > 0) && (
+    const node = (innerNodes.length > 0) && (
       <div styleName="container">
         <p styleName="text">
           {innerNodes}
@@ -241,10 +241,10 @@ const WordPaneInformations = create(
     word: Word | DetailedWord
   }): ReactElement {
 
-    let innerNodes = word.informations.map((information, index) => {
-      let homePath = AwsUtil.getFileUrl(`resource/${dictionary.number}/`);
-      let textNode = (dictionary.settings.enableMarkdown) ? <Markdown source={information.text} homePath={homePath}/> : <p styleName="text">{information.text}</p>;
-      let informationNode = (
+    const innerNodes = word.informations.map((information, index) => {
+      const homePath = AwsUtil.getFileUrl(`resource/${dictionary.number}/`);
+      const textNode = (dictionary.settings.enableMarkdown) ? <Markdown source={information.text} homePath={homePath}/> : <p styleName="text">{information.text}</p>;
+      const informationNode = (
         <div styleName="container" key={index}>
           <div styleName="title">{information.title}</div>
           {textNode}
@@ -252,7 +252,7 @@ const WordPaneInformations = create(
       );
       return informationNode;
     });
-    let node = (
+    const node = (
       <Fragment>
         {innerNodes}
       </Fragment>
@@ -273,19 +273,19 @@ const WordPaneRelations = create(
     word: Word | DetailedWord
   }): ReactElement | null {
 
-    let groupedRelations = new Map<string, Array<Relation>>();
-    for (let relation of word.relations) {
-      let title = relation.title;
+    const groupedRelations = new Map<string, Array<Relation>>();
+    for (const relation of word.relations) {
+      const title = relation.title;
       if (groupedRelations.get(title) === undefined) {
         groupedRelations.set(title, []);
       }
       groupedRelations.get(title)!.push(relation);
     }
-    let innerNodes = Array.from(groupedRelations).map(([title, relations], index) => {
-      let titleNode = (title !== "") && <span styleName="box">{title}</span>;
-      let relationNodes = relations.map((relation, relationIndex) => {
-        let href = "/dictionary/" + dictionary.number + "?search=" + encodeURIComponent(relation.name) + "&mode=name&type=exact&page=0";
-        let relationNode = (
+    const innerNodes = Array.from(groupedRelations).map(([title, relations], index) => {
+      const titleNode = (title !== "") && <span styleName="box">{title}</span>;
+      const relationNodes = relations.map((relation, relationIndex) => {
+        const href = "/dictionary/" + dictionary.number + "?text=" + encodeURIComponent(relation.name) + "&mode=name&type=exact&page=0";
+        const relationNode = (
           <Fragment key={relationIndex}>
             {(relationIndex === 0) ? "" : ", "}
             <Link href={href} target="self">{relation.name}</Link>
@@ -293,7 +293,7 @@ const WordPaneRelations = create(
         );
         return relationNode;
       });
-      let innerNode = (
+      const innerNode = (
         <span styleName="relations" key={index}>
           <span styleName="confer"/>
           {titleNode}
@@ -303,7 +303,7 @@ const WordPaneRelations = create(
       );
       return innerNode;
     });
-    let node = (innerNodes.length > 0) && (
+    const node = (innerNodes.length > 0) && (
       <div styleName="container">
         <p styleName="text">
           {innerNodes}
@@ -332,16 +332,16 @@ const WordPaneExamples = create(
     openExampleEditor: (example: Example) => void
   }): ReactElement | null {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let examples = ("examples" in word) ? word.examples : [];
-    let innerNodes = examples.map((example, index) => {
-      let editButtonNode = (showEditLink && !showButton) && (
+    const examples = ("examples" in word) ? word.examples : [];
+    const innerNodes = examples.map((example, index) => {
+      const editButtonNode = (showEditLink && !showButton) && (
         <div styleName="button">
-          <Button label={trans("wordPane.edit")} iconName="edit" style="simple" hideLabel={true} onClick={() => openExampleEditor(example)}/>
+          <Button label={trans("wordPane.edit")} iconName="edit" variant="simple" hideLabel={true} onClick={() => openExampleEditor(example)}/>
         </div>
       );
-      let innerNode = (
+      const innerNode = (
         <li key={index}>
           <div styleName="example-content-wrapper">
             <div styleName="example-content">
@@ -355,7 +355,7 @@ const WordPaneExamples = create(
       );
       return innerNode;
     });
-    let node = (innerNodes.length > 0) && (
+    const node = (innerNodes.length > 0) && (
       <div styleName="container">
         <div styleName="title">{dictionary.settings.exampleTitle}</div>
         <ul styleName="example">
@@ -377,9 +377,9 @@ const WordPaneSubmitDropdownNode = create(
     direction: "oneway" | "mutual"
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <div>
         <span styleName="dropdown-icon">
           <Icon name={(direction === "oneway") ? "arrow-right-long" : "arrow-right-arrow-left"}/>

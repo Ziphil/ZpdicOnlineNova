@@ -21,12 +21,12 @@ export class SlimeSerializer extends Serializer {
   }
 
   public start(): void {
-    let stream = WordModel.findExist().where("dictionary", this.dictionary).lean().cursor();
-    let writer = createWriteStream(this.path);
+    const stream = WordModel.findExist().where("dictionary", this.dictionary).lean().cursor();
+    const writer = createWriteStream(this.path);
     let first = true;
     writer.write("{\"words\":[");
     stream.on("data", (word) => {
-      let string = this.createString(word);
+      const string = this.createString(word);
       if (first) {
         first = false;
       } else {
@@ -36,7 +36,7 @@ export class SlimeSerializer extends Serializer {
     });
     stream.on("end", () => {
       writer.write("]");
-      let externalString = this.createExternalString();
+      const externalString = this.createExternalString();
       if (externalString) {
         writer.write(",");
         writer.write(externalString);
@@ -53,21 +53,21 @@ export class SlimeSerializer extends Serializer {
   }
 
   private createString(word: Word): string {
-    let raw = {} as any;
+    const raw = {} as any;
     raw["entry"] = {};
     raw["entry"]["id"] = word.number;
     raw["entry"]["form"] = word.name;
     raw["translations"] = [];
-    for (let equivalent of word.equivalents) {
-      let rawEquivalent = {} as any;
+    for (const equivalent of word.equivalents) {
+      const rawEquivalent = {} as any;
       rawEquivalent["title"] = equivalent.title;
       rawEquivalent["forms"] = equivalent.names;
       raw["translations"].push(rawEquivalent);
     }
     raw["tags"] = word.tags;
     raw["contents"] = [];
-    for (let information of word.informations) {
-      let rawInformation = {} as any;
+    for (const information of word.informations) {
+      const rawInformation = {} as any;
       rawInformation["title"] = information.title;
       if (this.dictionary.settings.enableMarkdown) {
         rawInformation["text"] = removeMarkdown(information.text);
@@ -78,29 +78,29 @@ export class SlimeSerializer extends Serializer {
       raw["contents"].push(rawInformation);
     }
     if (word.pronunciation !== undefined) {
-      let title = this.dictionary.settings.pronunciationTitle;
-      let rawInformation = {} as any;
+      const title = this.dictionary.settings.pronunciationTitle;
+      const rawInformation = {} as any;
       rawInformation["title"] = title;
       rawInformation["text"] = word.pronunciation;
       raw["contents"].push(rawInformation);
     }
     raw["variations"] = [];
-    for (let variation of word.variations) {
-      let rawVariation = {} as any;
+    for (const variation of word.variations) {
+      const rawVariation = {} as any;
       rawVariation["title"] = variation.title;
       rawVariation["form"] = variation.name;
       raw["variations"].push(rawVariation);
     }
     raw["relations"] = [];
-    for (let relation of word.relations) {
-      let rawRelation = {} as any;
+    for (const relation of word.relations) {
+      const rawRelation = {} as any;
       rawRelation["title"] = relation.title;
       rawRelation["entry"] = {};
       rawRelation["entry"]["id"] = relation.number;
       rawRelation["entry"]["form"] = relation.name;
       raw["relations"].push(rawRelation);
     }
-    let string = JSON.stringify(raw);
+    const string = JSON.stringify(raw);
     return string;
   }
 
@@ -121,7 +121,7 @@ export class SlimeSerializer extends Serializer {
     externalData["zpdic"]["punctuations"] = this.dictionary.settings.punctuations;
     externalData["zpdic"]["pronunciationTitle"] = this.dictionary.settings.pronunciationTitle;
     externalData["zpdicOnline"]["enableMarkdown"] = this.dictionary.settings.enableMarkdown;
-    let string = JSON.stringify(externalData).slice(1, -1);
+    const string = JSON.stringify(externalData).slice(1, -1);
     return string;
   }
 

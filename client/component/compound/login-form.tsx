@@ -27,15 +27,15 @@ const LoginForm = create(
     showRegister: boolean
   }): ReactElement {
 
-    let [name, setName] = useState("");
-    let [password, setPassword] = useState("");
-    let login = useLogin();
-    let [, {trans}] = useIntl();
-    let {pushPath, replacePath} = usePath();
-    let [, {addErrorPopup}] = usePopup();
+    const [name, setName] = useState("");
+    const [password, setPassword] = useState("");
+    const login = useLogin();
+    const [, {trans}] = useIntl();
+    const {pushPath, replacePath} = usePath();
+    const [, {addErrorPopup}] = usePopup();
 
-    let performLogin = useCallback(async function (): Promise<void> {
-      let response = await login({name, password}, {ignoreError: true});
+    const performLogin = useCallback(async function (): Promise<void> {
+      const response = await login({name, password}, {ignoreError: true});
       if (response.status === 200) {
         replacePath("/dashboard");
       } else {
@@ -43,28 +43,28 @@ const LoginForm = create(
       }
     }, [name, password, login, replacePath, addErrorPopup]);
 
-    let jumpRegister = useCallback(async function (): Promise<void> {
+    const jumpRegister = useCallback(async function (): Promise<void> {
       pushPath("/register", {search: {name, password}});
     }, [name, password, pushPath]);
 
-    let jumpResetPassword = useCallback(async function (): Promise<void> {
+    const jumpResetPassword = useCallback(async function (): Promise<void> {
       pushPath("/reset", {search: {name}});
     }, [name, pushPath]);
 
-    let registerNode = (showRegister) && (
-      <Button label={trans("registerForm.confirm")} iconName="user-plus" style="simple" onClick={jumpRegister}/>
+    const registerNode = (showRegister) && (
+      <Button label={trans("registerForm.confirm")} iconName="user-plus" variant="simple" onClick={jumpRegister}/>
     );
-    let node = (
+    const node = (
       <form styleName="root">
         <Input label={trans("loginForm.userName")} value={name} onSet={(name) => setName(name)}/>
         <Input label={trans("loginForm.password")} type="flexible" value={password} onSet={(password) => setPassword(password)}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={trans("loginForm.confirm")} iconName="sign-in-alt" style="information" reactive={true} onClick={performLogin}/>
+            <Button label={trans("loginForm.confirm")} iconName="sign-in-alt" variant="information" reactive={true} onClick={performLogin}/>
             {registerNode}
           </div>
           <div styleName="row">
-            <Button label={trans("loginForm.resetPassword")} iconName="question" style="simple" onClick={jumpResetPassword}/>
+            <Button label={trans("loginForm.resetPassword")} iconName="question" variant="simple" onClick={jumpResetPassword}/>
           </div>
         </div>
       </form>

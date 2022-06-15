@@ -30,11 +30,11 @@ export class DictionarySettingsSchema {
   public enableMarkdown!: boolean;
 
   public static createDefault(): DictionarySettings {
-    let punctuations = [",", "、"];
-    let pronunciationTitle = "Pronunciation";
-    let exampleTitle = "Examples";
-    let enableMarkdown = false;
-    let settings = new DictionarySettingsModel({punctuations, pronunciationTitle, exampleTitle, enableMarkdown});
+    const punctuations = [",", "、"];
+    const pronunciationTitle = "Pronunciation";
+    const exampleTitle = "Examples";
+    const enableMarkdown = false;
+    const settings = new DictionarySettingsModel({punctuations, pronunciationTitle, exampleTitle, enableMarkdown});
     return settings;
   }
 
@@ -44,13 +44,13 @@ export class DictionarySettingsSchema {
 export class DictionarySettingsCreator {
 
   public static create(raw: DictionarySettings): DictionarySettingsSkeleton {
-    let akrantiainSource = raw.akrantiainSource;
-    let zatlinSource = raw.zatlinSource;
-    let punctuations = raw.punctuations;
-    let pronunciationTitle = raw.pronunciationTitle;
-    let exampleTitle = raw.exampleTitle;
-    let enableMarkdown = raw.enableMarkdown;
-    let skeleton = {akrantiainSource, zatlinSource, punctuations, pronunciationTitle, exampleTitle, enableMarkdown};
+    const akrantiainSource = raw.akrantiainSource;
+    const zatlinSource = raw.zatlinSource;
+    const punctuations = raw.punctuations;
+    const pronunciationTitle = raw.pronunciationTitle;
+    const exampleTitle = raw.exampleTitle;
+    const enableMarkdown = raw.enableMarkdown;
+    const skeleton = {akrantiainSource, zatlinSource, punctuations, pronunciationTitle, exampleTitle, enableMarkdown};
     return skeleton;
   }
 
@@ -58,4 +58,4 @@ export class DictionarySettingsCreator {
 
 
 export type DictionarySettings = DictionarySettingsSchema;
-export let DictionarySettingsModel = getModelForClass(DictionarySettingsSchema);
+export const DictionarySettingsModel = getModelForClass(DictionarySettingsSchema);

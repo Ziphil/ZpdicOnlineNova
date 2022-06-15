@@ -40,29 +40,29 @@ const DictionaryPane = create(
     showDownloadLink?: boolean
   }): ReactElement {
 
-    let {request} = useRequest();
-    let [, {trans, transDate}] = useIntl();
-    let {pushPath} = usePath();
+    const {request} = useRequest();
+    const [, {trans, transDate}] = useIntl();
+    const {pushPath} = usePath();
 
-    let jumpSettingPage = useCallback(function (event: MouseEvent<HTMLElement>): void {
+    const jumpSettingPage = useCallback(function (event: MouseEvent<HTMLElement>): void {
       event.preventDefault();
       event.stopPropagation();
-      let path = "/dashboard/dictionary/" + dictionary.number;
+      const path = "/dashboard/dictionary/" + dictionary.number;
       pushPath(path);
     }, [dictionary.number, pushPath]);
 
-    let downloadDictionary = useCallback(async function (event: MouseEvent<HTMLElement>): Promise<void> {
+    const downloadDictionary = useCallback(async function (event: MouseEvent<HTMLElement>): Promise<void> {
       event.preventDefault();
       event.stopPropagation();
       if (dictionary) {
-        let number = dictionary.number;
-        let response = await request("downloadDictionary", {number}, {responseType: "blob"});
+        const number = dictionary.number;
+        const response = await request("downloadDictionary", {number}, {responseType: "blob"});
         if (response.status === 200 && !("error" in response.data)) {
-          let data = response.data;
-          let disposition = response.headers["content-disposition"];
-          let match = disposition.match(/filename="(.+)"/);
-          let encodedMatch = disposition.match(/filename\*=UTF-8''(.+)$/);
-          let fileName = (() => {
+          const data = response.data;
+          const disposition = response.headers["content-disposition"];
+          const match = disposition.match(/filename="(.+)"/);
+          const encodedMatch = disposition.match(/filename\*=UTF-8''(.+)$/);
+          const fileName = (() => {
             if (encodedMatch !== null) {
               return decodeURIComponent(encodedMatch[1]).replace(/\+/g, " ");
             } else if (match !== null) {
@@ -76,16 +76,16 @@ const DictionaryPane = create(
       }
     }, [dictionary, request]);
 
-    let name = dictionary.name;
-    let status = dictionary.status;
-    let href = "/dictionary/" + (dictionary.paramName ?? dictionary.number);
-    let statusString = (() => {
+    const name = dictionary.name;
+    const status = dictionary.status;
+    const href = "/dictionary/" + (dictionary.paramName ?? dictionary.number);
+    const statusString = (() => {
       if (status === "saving") {
         return trans("dictionaryPane.saving");
       } else if (status === "error") {
         return trans("dictionaryPane.error");
       } else {
-        let wordSize = dictionary.wordSize;
+        const wordSize = dictionary.wordSize;
         if (wordSize !== undefined) {
           return trans("dictionaryPane.wordSize", {wordSize});
         } else {
@@ -93,28 +93,28 @@ const DictionaryPane = create(
         }
       }
     })();
-    let userNode = (showUser) && (
+    const userNode = (showUser) && (
       <div styleName="information-item">{trans("dictionaryPane.userName")} — {dictionary.user.screenName}</div>
     );
-    let updatedDateNode = (showUpdatedDate) && (
+    const updatedDateNode = (showUpdatedDate) && (
       <div styleName="information-item">{trans("dictionaryPane.updatedDate")} — {transDate(dictionary.updatedDate)}</div>
     );
-    let createdDateNode = (showCreatedDate) && (
+    const createdDateNode = (showCreatedDate) && (
       <div styleName="information-item">{trans("dictionaryPane.createdDate")} — {transDate(dictionary.createdDate)}</div>
     );
-    let settingNode = (showSettingLink) && (
-      <Button label={trans("dictionaryPane.setting")} iconName="cog" style="simple" onClick={jumpSettingPage}/>
+    const settingNode = (showSettingLink) && (
+      <Button label={trans("dictionaryPane.setting")} iconName="cog" variant="simple" onClick={jumpSettingPage}/>
     );
-    let downloadNode = (showDownloadLink) && (
-      <Button label={trans("dictionaryPane.download")} iconName="download" style="simple" onClick={downloadDictionary}/>
+    const downloadNode = (showDownloadLink) && (
+      <Button label={trans("dictionaryPane.download")} iconName="download" variant="simple" onClick={downloadDictionary}/>
     );
-    let linkNode = (showSettingLink || showDownloadLink) && (
+    const linkNode = (showSettingLink || showDownloadLink) && (
       <div styleName="setting">
         {settingNode}
         {downloadNode}
       </div>
     );
-    let node = (
+    const node = (
       <WhitePane href={href} clickable={true}>
         <div>
           <div styleName="head">

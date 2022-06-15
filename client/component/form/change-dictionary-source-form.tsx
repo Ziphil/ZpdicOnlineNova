@@ -7,6 +7,9 @@ import {
   useCallback,
   useState
 } from "react";
+import {
+  AsyncOrSync
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import TextArea from "/client/component/atom/text-area";
 import AkrantiainExecutor from "/client/component/compound/akrantiain-executor";
@@ -15,6 +18,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -32,39 +36,27 @@ const ChangeDictionarySourceForm = create(
     number: number,
     currentSource: string | undefined,
     language: "akrantiain" | "zatlin",
-    onSubmit?: () => void
+    onSubmit?: () => AsyncOrSync<unknown>
   }): ReactElement {
 
-    let [source, setSource] = useState(currentSource ?? "");
-    let [executorOpen, setExecutorOpen] = useState(false);
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [source, setSource] = useState(currentSource ?? "");
+    const [executorOpen, setExecutorOpen] = useState(false);
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let propertyName = language + "Source";
-      let settings = {[propertyName]: source};
-      let response = await request("changeDictionarySettings", {number, settings});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const propertyName = language + "Source";
+      const settings = {[propertyName]: source};
+      const response = await request("changeDictionarySettings", {number, settings});
       if (response.status === 200) {
         addInformationPopup(`dictionarySettingsChanged.${propertyName}`);
-        onSubmit?.();
+        await onSubmit?.();
+        await invalidateQueries("fetchDictionary", (data) => data.number === number);
       }
     }, [number, language, source, request, onSubmit, addInformationPopup]);
 
-    let executorNode = (() => {
-      if (language === "akrantiain") {
-        let executorNode = (
-          <AkrantiainExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
-        );
-        return executorNode;
-      } else if (language === "zatlin") {
-        let executorNode = (
-          <ZatlinExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
-        );
-        return executorNode;
-      }
-    })();
-    let node = (
+    const node = (
       <Fragment>
         <form styleName="root">
           <TextArea
@@ -76,11 +68,15 @@ const ChangeDictionarySourceForm = create(
             onSet={(source) => setSource(source)}
           />
           <div styleName="button">
-            <Button label={trans("changeDictionarySourceForm.try")} style="link" onClick={() => setExecutorOpen(true)}/>
+            <Button label={trans("changeDictionarySourceForm.try")} variant="link" onClick={() => setExecutorOpen(true)}/>
             <Button label={trans("changeDictionarySourceForm.confirm")} reactive={true} onClick={handleClick}/>
           </div>
         </form>
-        {executorNode}
+        {(language === "akrantiain") ? (
+          <AkrantiainExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
+        ) : (language === "zatlin") ? (
+          <ZatlinExecutor defaultSource={source} open={executorOpen} onClose={(event, source) => (setSource(source), setExecutorOpen(false))}/>
+        ) : null}
       </Fragment>
     );
     return node;

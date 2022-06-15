@@ -30,19 +30,17 @@ const RadioGroup = create(
     className?: string
   }): ReactElement {
 
-    let handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
-      let value = event.target.value as V;
+    const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+      const value = event.target.value as V;
       onChange?.(event);
       onSet?.(value);
     }, [onChange, onSet]);
 
-    let radioNodes = Array.from(specs).map((spec, index) => {
-      let checked = spec.value === value;
-      return <Radio name={name} value={spec.value} label={spec.label} checked={checked} onChange={handleChange} key={index}/>;
-    });
-    let node = (
+    const node = (
       <div styleName="root" className={className}>
-        {radioNodes}
+        {Array.from(specs).map((spec, index) => (
+          <Radio name={name} value={spec.value} label={spec.label} checked={spec.value === value} onChange={handleChange} key={index}/>
+        ))}
       </div>
     );
     return node;

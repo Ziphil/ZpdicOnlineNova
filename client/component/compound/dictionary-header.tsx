@@ -4,7 +4,6 @@ import downloadFile from "js-file-download";
 import * as react from "react";
 import {
   Dispatch,
-  Fragment,
   ReactElement,
   SetStateAction,
   Suspense,
@@ -36,7 +35,7 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-let CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
+const CommissionEditor = lazy(() => import("/client/component/compound/commission-editor"));
 
 
 const DictionaryHeader = create(
@@ -59,25 +58,25 @@ const DictionaryHeader = create(
     preserveQuery?: boolean
   }): ReactElement {
 
-    let [commissionEditorOpen, setCommissionEditorOpen] = useState(false);
-    let addWordEditor = useWordEditor();
-    let addExampleEditor = useExampleEditor();
-    let {pushPath} = usePath();
-    let location = useLocation();
+    const [commissionEditorOpen, setCommissionEditorOpen] = useState(false);
+    const addWordEditor = useWordEditor();
+    const addExampleEditor = useExampleEditor();
+    const {pushPath} = usePath();
+    const location = useLocation();
 
-    let openWordEditor = useCallback(function (): void {
+    const openWordEditor = useCallback(function (): void {
       if (dictionary !== null) {
         addWordEditor({dictionary, word: null});
       }
     }, [dictionary, addWordEditor]);
 
-    let openExampleEditor = useCallback(function (): void {
+    const openExampleEditor = useCallback(function (): void {
       if (dictionary !== null) {
         addExampleEditor({dictionary, example: null});
       }
     }, [dictionary, addExampleEditor]);
 
-    let hotkeyEnabled = dictionary !== null;
+    const hotkeyEnabled = dictionary !== null;
     useHotkey("jumpDictionaryPage", () => {
       pushPath("/dictionary/" + dictionary?.number);
     }, [dictionary?.number], hotkeyEnabled);
@@ -97,17 +96,17 @@ const DictionaryHeader = create(
       setCommissionEditorOpen(true);
     }, [], hotkeyEnabled && showAddCommissionLink);
 
-    let nameNode = (dictionary) && (() => {
+    const nameNode = (dictionary) && (() => {
       let href = "/dictionary/" + dictionary.number;
       if (preserveQuery) {
         href += location.searchString;
       }
-      let nameNode = <Link href={href} target="self" style="plane">{dictionary.name}</Link>;
+      const nameNode = <Link href={href} target="self" style="plane">{dictionary.name}</Link>;
       return nameNode;
     })();
-    let buttonsProps = {dictionary, showAddLink, showAddCommissionLink, showExampleLink, showSettingLink, showDownloadLink, openWordEditor, openExampleEditor, setCommissionEditorOpen};
-    let overlaysProps = {dictionary, commissionEditorOpen, setCommissionEditorOpen};
-    let node = (
+    const buttonsProps = {dictionary, showAddLink, showAddCommissionLink, showExampleLink, showSettingLink, showDownloadLink, openWordEditor, openExampleEditor, setCommissionEditorOpen};
+    const overlaysProps = {dictionary, commissionEditorOpen, setCommissionEditorOpen};
+    const node = (
       <header styleName="root">
         <Helmet>
           <title>{(dictionary) ? `${dictionary.name} — ZpDIC Online` : "ZpDIC Online"}</title>
@@ -153,11 +152,11 @@ const DictionaryHeaderButtons = create(
     setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
-    let {pushPath} = usePath();
-    let {request} = useRequest();
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
+    const {request} = useRequest();
 
-    let openEditor = useCallback(function (type: "word" | "example"): void {
+    const openEditor = useCallback(function (type: "word" | "example"): void {
       if (type === "word") {
         openWordEditor();
       } else {
@@ -165,30 +164,30 @@ const DictionaryHeaderButtons = create(
       }
     }, [openWordEditor, openExampleEditor]);
 
-    let jumpExamplePage = useCallback(function (): void {
+    const jumpExamplePage = useCallback(function (): void {
       if (dictionary) {
-        let path = "/example/" + dictionary.number;
+        const path = "/example/" + dictionary.number;
         pushPath(path);
       }
     }, [dictionary, pushPath]);
 
-    let jumpSettingPage = useCallback(function (): void {
+    const jumpSettingPage = useCallback(function (): void {
       if (dictionary) {
-        let path = "/dashboard/dictionary/" + dictionary.number;
+        const path = "/dashboard/dictionary/" + dictionary.number;
         pushPath(path);
       }
     }, [dictionary, pushPath]);
 
-    let downloadDictionary = useCallback(async function (): Promise<void> {
+    const downloadDictionary = useCallback(async function (): Promise<void> {
       if (dictionary) {
-        let number = dictionary.number;
-        let response = await request("downloadDictionary", {number}, {responseType: "blob"});
+        const number = dictionary.number;
+        const response = await request("downloadDictionary", {number}, {responseType: "blob"});
         if (response.status === 200 && !("error" in response.data)) {
-          let data = response.data;
-          let disposition = response.headers["content-disposition"];
-          let match = disposition.match(/filename="(.+)"/);
-          let encodedMatch = disposition.match(/filename\*=UTF-8''(.+)$/);
-          let fileName = (() => {
+          const data = response.data;
+          const disposition = response.headers["content-disposition"];
+          const match = disposition.match(/filename="(.+)"/);
+          const encodedMatch = disposition.match(/filename\*=UTF-8''(.+)$/);
+          const fileName = (() => {
             if (encodedMatch !== null) {
               return decodeURIComponent(encodedMatch[1]).replace(/\+/g, " ");
             } else if (match !== null) {
@@ -202,28 +201,28 @@ const DictionaryHeaderButtons = create(
       }
     }, [dictionary, request]);
 
-    let addDropdownSpecs = [
+    const addDropdownSpecs = [
       {value: "word", node: <DictionaryHeaderAddDropdownNode type="word"/>},
       {value: "example", node: <DictionaryHeaderAddDropdownNode type="example"/>}
     ] as const;
-    let addButtonNode = (showAddLink) && (
+    const addButtonNode = (showAddLink) && (
       <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={openEditor}>
-        <Button label={trans("dictionaryHeader.add")} iconName="plus" style="simple" hideLabel={true}/>
+        <Button label={trans("dictionaryHeader.add")} iconName="plus" variant="simple" hideLabel={true}/>
       </Dropdown>
     );
-    let addCommissionButtonNode = (showAddCommissionLink) && (
-      <Button label={trans("dictionaryHeader.addCommission")} iconName="list-check" style="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
+    const addCommissionButtonNode = (showAddCommissionLink) && (
+      <Button label={trans("dictionaryHeader.addCommission")} iconName="list-check" variant="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
     );
-    let exampleButtonNode = (showExampleLink) && (
-      <Button label={trans("dictionaryHeader.example")} iconName="custom-example" style="simple" hideLabel={true} onClick={jumpExamplePage}/>
+    const exampleButtonNode = (showExampleLink) && (
+      <Button label={trans("dictionaryHeader.example")} iconName="custom-example" variant="simple" hideLabel={true} onClick={jumpExamplePage}/>
     );
-    let settingButtonNode = (showSettingLink) && (
-      <Button label={trans("dictionaryHeader.setting")} iconName="cog" style="simple" hideLabel={true} onClick={jumpSettingPage}/>
+    const settingButtonNode = (showSettingLink) && (
+      <Button label={trans("dictionaryHeader.setting")} iconName="cog" variant="simple" hideLabel={true} onClick={jumpSettingPage}/>
     );
-    let downloadButtonNode = (showDownloadLink) && (
-      <Button label={trans("dictionaryHeader.download")} iconName="download" style="simple" hideLabel={true} onClick={downloadDictionary}/>
+    const downloadButtonNode = (showDownloadLink) && (
+      <Button label={trans("dictionaryHeader.download")} iconName="download" variant="simple" hideLabel={true} onClick={downloadDictionary}/>
     );
-    let node = (
+    const node = (
       <div styleName="button">
         {settingButtonNode}
         {addButtonNode}
@@ -246,9 +245,9 @@ const DictionaryHeaderAddDropdownNode = create(
     type: "word" | "example"
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <div>
         <span styleName="icon"><Icon name={(type === "word") ? "custom-word" : "custom-example"}/></span>
         {trans(`dictionaryHeader.add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
@@ -272,7 +271,7 @@ const DictionaryHeaderOverlays = create(
     setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement | null {
 
-    let node = (dictionary !== null && commissionEditorOpen) && (
+    const node = (dictionary !== null && commissionEditorOpen) && (
       <Suspense fallback="">
         <CommissionEditor dictionary={dictionary} open={commissionEditorOpen} onClose={() => setCommissionEditorOpen(false)}/>
       </Suspense>

@@ -38,18 +38,18 @@ const AddTransferInvitationForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    let [userName, setUserName] = useState("");
-    let [, {trans}] = useIntl();
-    let {request} = useRequest();
-    let [, {addInformationPopup}] = usePopup();
+    const [userName, setUserName] = useState("");
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+    const [, {addInformationPopup}] = usePopup();
 
-    let suggestUsers = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
-      let response = await request("suggestUsers", {pattern}, {ignoreError: true});
+    const suggestUsers = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
+      const response = await request("suggestUsers", {pattern}, {ignoreError: true});
       if (response.status === 200 && !("error" in response.data)) {
-        let users = response.data;
-        let suggestions = users.map((user) => {
-          let replacement = user.name;
-          let node = <UserSuggestionPane user={user}/>;
+        const users = response.data;
+        const suggestions = users.map((user) => {
+          const replacement = user.name;
+          const node = <UserSuggestionPane user={user}/>;
           return {replacement, node};
         });
         return suggestions;
@@ -58,16 +58,16 @@ const AddTransferInvitationForm = create(
       }
     }, [request]);
 
-    let handleClick = useCallback(async function (): Promise<void> {
-      let type = "transfer" as const;
-      let response = await request("addInvitation", {number, type, userName});
+    const handleClick = useCallback(async function (): Promise<void> {
+      const type = "transfer" as const;
+      const response = await request("addInvitation", {number, type, userName});
       if (response.status === 200) {
         addInformationPopup("transferInvitationAdded");
         onSubmit?.();
       }
     }, [number, userName, request, onSubmit, addInformationPopup]);
 
-    let node = (
+    const node = (
       <Fragment>
         <form styleName="root">
           <Input

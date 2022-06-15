@@ -1,5 +1,8 @@
 //
 
+import {
+  FontAwesomeIcon
+} from "@fortawesome/react-fontawesome";
 import * as react from "react";
 import {
   ChangeEvent,
@@ -7,6 +10,7 @@ import {
   useCallback
 } from "react";
 import {
+  StylesRecord,
   create
 } from "/client/component/create";
 
@@ -20,7 +24,8 @@ const Checkbox = create(
     checked,
     onSet,
     onChange,
-    className
+    className,
+    styles
   }: {
     name: string,
     value: string,
@@ -28,17 +33,21 @@ const Checkbox = create(
     checked: boolean,
     onSet?: (checked: boolean) => void,
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
-    className?: string
+    className?: string,
+    styles?: StylesRecord
   }): ReactElement {
 
-    let handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+    const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
       onSet?.(event.target.checked);
       onChange?.(event);
     }, [onSet, onChange]);
 
-    let node = (
+    const node = (
       <label styleName="root" className={className}>
-        <input styleName="checkbox" type="checkbox" name={name} value={value} checked={checked} onChange={handleChange}/>
+        <input styleName="original" type="checkbox" name={name} value={value} checked={checked} onChange={handleChange}/>
+        <div styleName="box">
+          <FontAwesomeIcon className={styles!["icon"]} icon="check"/>
+        </div>
         <span styleName="label">{label}</span>
       </label>
     );

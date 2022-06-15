@@ -52,27 +52,27 @@ export abstract class WordParameter {
     }
   }
 
-  protected static createNeedle(search: string, type: WordType, ignoreOptions: WordIgnoreOptions): string | RegExp {
-    let escapedSearch = escapeRegexp(search);
+  protected static createNeedle(text: string, type: WordType, ignoreOptions: WordIgnoreOptions): string | RegExp {
+    const escapedText = escapeRegexp(text);
     if (type === "exact") {
       if (ignoreOptions.case) {
-        return new RegExp("^" + escapedSearch + "$", "i");
+        return new RegExp("^" + escapedText + "$", "i");
       } else {
-        return search;
+        return text;
       }
     } else if (type === "prefix") {
-      let flags = (ignoreOptions.case) ? "i" : undefined;
-      return new RegExp("^" + escapedSearch, flags);
+      const flags = (ignoreOptions.case) ? "i" : undefined;
+      return new RegExp("^" + escapedText, flags);
     } else if (type === "suffix") {
-      let flags = (ignoreOptions.case) ? "i" : undefined;
-      return new RegExp(escapedSearch + "$", flags);
+      const flags = (ignoreOptions.case) ? "i" : undefined;
+      return new RegExp(escapedText + "$", flags);
     } else if (type === "part") {
-      let flags = (ignoreOptions.case) ? "i" : undefined;
-      return new RegExp(escapedSearch, flags);
+      const flags = (ignoreOptions.case) ? "i" : undefined;
+      return new RegExp(escapedText, flags);
     } else {
       try {
-        let flags = (ignoreOptions.case) ? "i" : undefined;
-        return new RegExp(search, flags);
+        const flags = (ignoreOptions.case) ? "i" : undefined;
+        return new RegExp(text, flags);
       } catch (error) {
         return "";
       }
@@ -80,8 +80,8 @@ export abstract class WordParameter {
   }
 
   protected static createSortKey(order: WordOrder): string {
-    let mode = order.mode;
-    let directionChar = (order.direction === "ascending") ? "" : "-";
+    const mode = order.mode;
+    const directionChar = (order.direction === "ascending") ? "" : "-";
     if (mode === "unicode") {
       return directionChar + "name _id";
     } else if (mode === "custom") {
@@ -102,13 +102,13 @@ export class WordParameterCreator {
 
   public static recreate(skeleton: Jsonify<WordParameterSkeleton>): WordParameter {
     if ("elements" in skeleton) {
-      let castSkeleton = skeleton as AdvancedWordParameterSkeleton;
-      let elements = castSkeleton.elements.map((element) => new AdvancedWordParameterElement(element.search, element.title, element.mode, element.type));
-      let raw = new AdvancedWordParameter(elements);
+      const castSkeleton = skeleton as AdvancedWordParameterSkeleton;
+      const elements = castSkeleton.elements.map((element) => new AdvancedWordParameterElement(element.text, element.title, element.mode, element.type));
+      const raw = new AdvancedWordParameter(elements);
       return raw;
     } else {
-      let castSkeleton = skeleton as NormalWordParameterSkeleton;
-      let raw = new NormalWordParameter(castSkeleton.search, castSkeleton.mode, castSkeleton.type, castSkeleton.order, castSkeleton.ignoreOptions);
+      const castSkeleton = skeleton as NormalWordParameterSkeleton;
+      const raw = new NormalWordParameter(castSkeleton.text, castSkeleton.mode, castSkeleton.type, castSkeleton.order, castSkeleton.ignoreOptions, castSkeleton.enableSuggestions);
       return raw;
     }
   }
@@ -118,19 +118,19 @@ export class WordParameterCreator {
 
 export const WORD_MODES = ["name", "equivalent", "both", "tag", "information", "content"] as const;
 export type WordMode = LiteralType<typeof WORD_MODES>;
-export let WordModeUtil = LiteralUtilType.create(WORD_MODES);
+export const WordModeUtil = LiteralUtilType.create(WORD_MODES);
 
 export const WORD_TYPES = ["exact", "prefix", "suffix", "part", "regular"] as const;
 export type WordType = LiteralType<typeof WORD_TYPES>;
-export let WordTypeUtil = LiteralUtilType.create(WORD_TYPES);
+export const WordTypeUtil = LiteralUtilType.create(WORD_TYPES);
 
 export const WORD_ORDER_MODES = ["unicode", "custom", "updatedDate", "createdDate"] as const;
 export type WordOrderMode = LiteralType<typeof WORD_ORDER_MODES>;
-export let WordOrderModeUtil = LiteralUtilType.create(WORD_ORDER_MODES);
+export const WordOrderModeUtil = LiteralUtilType.create(WORD_ORDER_MODES);
 
 export const WORD_ORDER_DIRECTIONS = ["ascending", "descending"] as const;
 export type WordOrderDirection = LiteralType<typeof WORD_ORDER_DIRECTIONS>;
-export let WordOrderDirectionUtil = LiteralUtilType.create(WORD_ORDER_DIRECTIONS);
+export const WordOrderDirectionUtil = LiteralUtilType.create(WORD_ORDER_DIRECTIONS);
 
 export type WordOrder = {mode: WordOrderMode, direction: WordOrderDirection};
 export type WordIgnoreOptions = {case: boolean};

@@ -17,22 +17,21 @@ const Tooltip = create(
     className,
     children
   }: {
-    message: string | null
+    message: string | null,
     className?: string,
     children?: ReactNode
   }): ReactElement {
 
-    let tooltipNode = (message !== null) && (
-      <div styleName="tooltip">
-        <p styleName="tooltip-text">
-          {message}
-        </p>
-      </div>
-    );
-    let node = (
+    const node = (
       <div styleName="root" className={className}>
         {children}
-        {tooltipNode}
+        {(message !== null) && (
+          <div styleName="tooltip">
+            <p styleName="tooltip-text">
+              {message}
+            </p>
+          </div>
+        )}
       </div>
     );
     return node;

@@ -36,28 +36,28 @@ export class ResourceController extends Controller {
   @post(SERVER_PATHS["fetchUploadResourcePost"])
   @before(verifyRecaptcha(), verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchUploadResourcePost">, response: Response<"fetchUploadResourcePost">): Promise<void> {
-    let dictionary = request.dictionary!;
-    let name = request.body.name;
+    const dictionary = request.dictionary!;
+    const name = request.body.name;
     if (dictionary) {
       try {
-        let directoryPath = `resource/${dictionary.number}`;
-        let path = `resource/${dictionary.number}/${name}`;
-        let names = await AwsUtil.getFileNames(directoryPath);
+        const directoryPath = `resource/${dictionary.number}`;
+        const path = `resource/${dictionary.number}/${name}`;
+        const names = await AwsUtil.getFileNames(directoryPath);
         if (names.length < 25) {
-          let configs = {contentType: "image/", sizeLimit: 1024 * 1024};
-          let post = await AwsUtil.getUploadFilePost(path, configs);
-          let body = post;
+          const configs = {contentType: "image/", sizeLimit: 1024 * 1024};
+          const post = await AwsUtil.getUploadFilePost(path, configs);
+          const body = post;
           Controller.respond(response, body);
         } else {
-          let body = CustomError.ofType("resourceCountExceeded");
+          const body = CustomError.ofType("resourceCountExceeded");
           Controller.respondError(response, body);
         }
       } catch (error) {
-        let body = CustomError.ofType("awsError");
+        const body = CustomError.ofType("awsError");
         Controller.respondError(response, body);
       }
     } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
+      const body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);
     }
   }
@@ -65,19 +65,19 @@ export class ResourceController extends Controller {
   @post(SERVER_PATHS["discardResource"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"discardResource">, response: Response<"discardResource">): Promise<void> {
-    let dictionary = request.dictionary!;
-    let name = request.body.name;
+    const dictionary = request.dictionary!;
+    const name = request.body.name;
     if (dictionary) {
       try {
-        let path = `resource/${dictionary.number}/${name}`;
+        const path = `resource/${dictionary.number}/${name}`;
         await AwsUtil.deleteFile(path);
         Controller.respond(response, null);
       } catch (error) {
-        let body = CustomError.ofType("awsError");
+        const body = CustomError.ofType("awsError");
         Controller.respondError(response, body);
       }
     } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
+      const body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);
     }
   }
@@ -85,23 +85,23 @@ export class ResourceController extends Controller {
   @post(SERVER_PATHS["fetchResources"])
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchResources">, response: Response<"fetchResources">): Promise<void> {
-    let dictionary = request.dictionary!;
-    let offset = request.body.offset;
-    let size = request.body.size;
+    const dictionary = request.dictionary!;
+    const offset = request.body.offset;
+    const size = request.body.size;
     if (dictionary) {
       try {
-        let path = `resource/${dictionary.number}`;
-        let names = await AwsUtil.getFileNames(path);
-        let range = new QueryRange(offset, size);
-        let result = QueryRange.restrictArrayWithSize(names, range);
-        let body = result;
+        const path = `resource/${dictionary.number}`;
+        const names = await AwsUtil.getFileNames(path);
+        const range = new QueryRange(offset, size);
+        const result = QueryRange.restrictArrayWithSize(names, range);
+        const body = result;
         Controller.respond(response, body);
       } catch (error) {
-        let body = CustomError.ofType("awsError");
+        const body = CustomError.ofType("awsError");
         Controller.respondError(response, body);
       }
     } else {
-      let body = CustomError.ofType("noSuchDictionaryNumber");
+      const body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);
     }
   }

@@ -26,8 +26,8 @@ const Modal = create(
     children?: ReactNode
   }): ReactElement | null {
 
-    let onBackgroundClick = (outsideClosable) ? onClose : undefined;
-    let node = (open) && (
+    const onBackgroundClick = (outsideClosable) ? onClose : undefined;
+    const node = (open) && (
       <Portal>
         <div styleName="background" onClick={onBackgroundClick}/>
         <div styleName="spacer">

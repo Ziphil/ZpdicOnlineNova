@@ -9,10 +9,16 @@ import {
   Fragment,
   ReactElement,
   ReactNode,
+  Suspense,
   useEffect,
+  useRef,
   useState
 } from "react";
+import {
+  ErrorBoundary
+} from "react-error-boundary";
 import Drawer from "/client/component/atom/drawer";
+import GoogleAnalytics from "/client/component/atom/google-analytics";
 import ExampleEditor from "/client/component/compound/example-editor-beta";
 import HotkeyHelp from "/client/component/compound/hotkey-help";
 import WordEditor from "/client/component/compound/word-editor-beta";
@@ -26,6 +32,12 @@ import {
   usePath,
   useWordEditorProps
 } from "/client/component/hook";
+import ErrorPage from "/client/component/page/error-page";
+import LoadingPage from "/client/component/page/loading-page";
+import ScrollTop from "/client/component/util/scroll-top";
+import {
+  ANALYTICS_ID
+} from "/client/variable";
 
 
 const InnerRoot = create(
@@ -36,12 +48,13 @@ const InnerRoot = create(
     children?: ReactNode
   }): ReactElement {
 
-    let [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
-    let [wordEditorProps, wordEditorOpen, setWordEditorOpen] = useWordEditorProps();
-    let [exampleEditorProps, exampleEditorOpen, setExampleEditorOpen] = useExampleEditorProps();
-    let [, {trans}] = useIntl();
-    let {pushPath} = usePath();
-    let router = useRouter();
+    const [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
+    const [wordEditorProps, wordEditorOpen, setWordEditorOpen] = useWordEditorProps();
+    const [exampleEditorProps, exampleEditorOpen, setExampleEditorOpen] = useExampleEditorProps();
+    const resetErrorBoundaryRef = useRef<(() => void) | null>(null);
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
+    const router = useRouter();
 
     useHotkey("jumpDashboardPage", () => {
       pushPath("/dashboard");
@@ -65,7 +78,7 @@ const InnerRoot = create(
       setHotkeyHelpOpen(true);
     }, []);
     useHotkey("unfocus", () => {
-      let activeElement = document.activeElement;
+      const activeElement = document.activeElement;
       if (activeElement instanceof HTMLElement) {
         activeElement.blur();
       }
@@ -76,43 +89,47 @@ const InnerRoot = create(
         nprogress.start();
       } else {
         nprogress.done();
+        resetErrorBoundaryRef.current?.();
       }
     }, [router.pending]);
 
-    let wordEditorNodes = wordEditorProps.map((props) => {
-      let wordEditorNode = <WordEditor key={props.id} {...props}/>;
-      return wordEditorNode;
-    });
-    let exampleEditorNodes = exampleEditorProps.map((props) => {
-      let exampleEditorNode = <ExampleEditor key={props.id} {...props}/>;
-      return exampleEditorNode;
-    });
-    let node = (
+    const node = (
       <Fragment>
-        {children}
+        <GoogleAnalytics id={ANALYTICS_ID}/>
+        <ErrorBoundary fallbackRender={(props) => (resetErrorBoundaryRef.current = props.resetErrorBoundary, <ErrorPage {...props}/>)}>
+          <Suspense fallback={<LoadingPage/>}>
+            <ScrollTop>
+              {children}
+            </ScrollTop>
+          </Suspense>
+        </ErrorBoundary>
         <Drawer
           title={trans("wordEditor.title")}
           iconName="custom-word"
-          badgeValue={(wordEditorNodes.length > 0) ? wordEditorNodes.length : undefined}
+          badgeValue={(wordEditorProps.length > 0) ? wordEditorProps.length : undefined}
           tabPosition="top"
           open={wordEditorOpen}
           onOpen={() => setWordEditorOpen(true)}
           onClose={() => setWordEditorOpen(false)}
           outsideClosable={true}
         >
-          {wordEditorNodes}
+          {wordEditorProps.map((props) => (
+            <WordEditor key={props.id} {...props}/>
+          ))}
         </Drawer>
         <Drawer
           title={trans("exampleEditor.title")}
           iconName="custom-example"
-          badgeValue={(exampleEditorNodes.length > 0) ? exampleEditorNodes.length : undefined}
+          badgeValue={(exampleEditorProps.length > 0) ? exampleEditorProps.length : undefined}
           tabPosition="bottom"
           open={exampleEditorOpen}
           onOpen={() => setExampleEditorOpen(true)}
           onClose={() => setExampleEditorOpen(false)}
           outsideClosable={true}
         >
-          {exampleEditorNodes}
+          {exampleEditorProps.map((props) => (
+            <ExampleEditor key={props.id} {...props}/>
+          ))}
         </Drawer>
         <HotkeyHelp open={hotkeyHelpOpen} onClose={() => setHotkeyHelpOpen(false)}/>
       </Fragment>

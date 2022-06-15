@@ -32,7 +32,7 @@ import {
 
 export const INVITATION_TYPES = ["edit", "transfer"] as const;
 export type InvitationType = LiteralType<typeof INVITATION_TYPES>;
-export let InvitationTypeUtil = LiteralUtilType.create(INVITATION_TYPES);
+export const InvitationTypeUtil = LiteralUtilType.create(INVITATION_TYPES);
 
 
 @modelOptions({schemaOptions: {collection: "invitations"}})
@@ -52,27 +52,27 @@ export class InvitationSchema {
 
   public static async add(type: InvitationType, dictionary: Dictionary, user: User): Promise<Invitation> {
     await this.assure(type, dictionary, user);
-    let createdDate = new Date();
-    let invitation = new InvitationModel({type, dictionary, user, createdDate});
+    const createdDate = new Date();
+    const invitation = new InvitationModel({type, dictionary, user, createdDate});
     await invitation.save();
     return invitation;
   }
 
   private static async assure(type: InvitationType, dictionary: Dictionary, user: User): Promise<void> {
     if (type === "edit") {
-      let canEdit = await dictionary.hasAuthority(user, "edit");
+      const canEdit = await dictionary.hasAuthority(user, "edit");
       if (canEdit) {
         throw new CustomError("userCanAlreadyEdit");
       }
     } else if (type === "transfer") {
-      let canOwn = await dictionary.hasAuthority(user, "own");
+      const canOwn = await dictionary.hasAuthority(user, "own");
       if (canOwn) {
         throw new CustomError("userCanAlreadyOwn");
       }
     } else {
       throw new Error("cannot happen");
     }
-    let formerInvitation = await InvitationModel.findOne().where("type", type).where("dictionary", dictionary).where("user", user);
+    const formerInvitation = await InvitationModel.findOne().where("type", type).where("dictionary", dictionary).where("user", user);
     if (formerInvitation !== null) {
       if (type === "edit") {
         throw new CustomError("editInvitationAlreadyAdded");
@@ -85,7 +85,7 @@ export class InvitationSchema {
   }
 
   public static async fetchByUser(type: InvitationType, user: User): Promise<Array<Invitation>> {
-    let invitations = await InvitationModel.find().where("type", type).where("user", user).sort("-createdDate");
+    const invitations = await InvitationModel.find().where("type", type).where("user", user).sort("-createdDate");
     return invitations;
   }
 
@@ -93,7 +93,7 @@ export class InvitationSchema {
     await this.populate("user");
     if (isDocument(this.user) && this.user.id === user.id) {
       if (accept) {
-        let type = this.type;
+        const type = this.type;
         if (type === "edit") {
           await this.respondEdit(user);
         } else if (type === "transfer") {
@@ -119,8 +119,8 @@ export class InvitationSchema {
     if (isDocument(this.dictionary)) {
       await this.dictionary.populate(["user", "editUsers"]);
       if (isDocument(this.dictionary.user) && isDocumentArray(this.dictionary.editUsers)) {
-        let previousUser = this.dictionary.user;
-        let nextEditUsers = this.dictionary.editUsers.filter((editUser) => editUser.id !== user.id && editUser.id !== previousUser.id);
+        const previousUser = this.dictionary.user;
+        const nextEditUsers = this.dictionary.editUsers.filter((editUser) => editUser.id !== user.id && editUser.id !== previousUser.id);
         this.dictionary.user = user;
         this.dictionary.editUsers = [...nextEditUsers, previousUser];
         await this.dictionary.save();
@@ -136,11 +136,11 @@ export class InvitationCreator {
   public static async create(raw: Invitation): Promise<InvitationSkeleton> {
     await raw.populate("dictionary");
     if (isDocument(raw.dictionary)) {
-      let id = raw.id;
-      let type = raw.type;
-      let dictionary = await DictionaryCreator.createDetailed(raw.dictionary);
-      let createdDate = raw.createdDate.toISOString();
-      let skeleton = {id, type, dictionary, createdDate};
+      const id = raw.id;
+      const type = raw.type;
+      const dictionary = await DictionaryCreator.createDetailed(raw.dictionary);
+      const createdDate = raw.createdDate.toISOString();
+      const skeleton = {id, type, dictionary, createdDate};
       return skeleton;
     } else {
       throw new Error("cannot happen");
@@ -151,4 +151,4 @@ export class InvitationCreator {
 
 
 export type Invitation = DocumentType<InvitationSchema>;
-export let InvitationModel = getModelForClass(InvitationSchema);
+export const InvitationModel = getModelForClass(InvitationSchema);

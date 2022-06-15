@@ -20,9 +20,9 @@ const NotificationPage = create(
   }: {
   }): ReactElement {
 
-    let [, {trans}] = useIntl();
+    const [, {trans}] = useIntl();
 
-    let node = (
+    const node = (
       <Page title={trans("notificationPage.title")}>
         <div styleName="list">
           <NotificationList size={10} showPagination={true}/>
