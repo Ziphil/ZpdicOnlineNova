@@ -30,6 +30,10 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+:focus-visible {
+  outline: $focus-size focus-box-shadow-color(map-get($colors, primary)) solid;
+}
+
 :global(.grecaptcha-badge) {
   visibility: hidden;
 }

@@ -108,9 +108,9 @@ $small-font-size: 14rpx;
 $tiny-font-size: 13rpx;
 
 $icon-width: 1.25em;
+$focus-size: 2rpx;
 $blank-margin: 0.3em;
 
-$focus-box-shadow-setting: 0rpx 0rpx 0rpx 2rpx;
 $inset-box-shadow-setting: 0rpx 2rpx 3rpx;
 
 $small-border-radius: 3rpx;
@@ -280,7 +280,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     background-color: tint($color, 90%);
   }
   &:focus-within:not(:disabled):not(.disabled) {
-    box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color), $focus-box-shadow-setting focus-box-shadow-color($color);
+    outline: $focus-size focus-box-shadow-color($color) solid;
   }
   &:disabled,
   &.disabled,
@@ -315,15 +315,12 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     background-color: hover-color($color);
   }
   &:focus:not(:disabled) {
-    box-shadow: $focus-box-shadow-setting focus-box-shadow-color($color);
+    outline: $focus-size focus-box-shadow-color($color) solid;
   }
   &:active:not(:disabled) {
     background-color: shade($color, 25%);
     background-image: none;
     box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1);
-  }
-  &:active:focus:not(:disabled) {
-    box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1), $focus-box-shadow-setting focus-box-shadow-color($color);
   }
   &:disabled {
     opacity: 0.5;

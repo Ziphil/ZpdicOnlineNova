@@ -31,7 +31,7 @@
   position: relative;
   vertical-align: middle;
   .original:focus +& {
-    box-shadow: $focus-box-shadow-setting focus-box-shadow-color(map-get($colors, primary));
+    outline: $focus-size focus-box-shadow-color(map-get($colors, primary)) solid;
   }
 }
 
