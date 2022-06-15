@@ -28,7 +28,6 @@ import {
   useExampleEditorProps,
   useHotkey,
   useIntl,
-  useLocation,
   usePath,
   useWordEditorProps
 } from "/client/component/hook";
@@ -52,7 +51,6 @@ const InnerRoot = create(
     const [, {trans}] = useIntl();
     const {pushPath} = usePath();
     const router = useRouter();
-    const location = useLocation();
 
     useHotkey("jumpDashboardPage", () => {
       pushPath("/dashboard");
