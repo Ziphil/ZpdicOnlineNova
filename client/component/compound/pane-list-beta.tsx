@@ -153,7 +153,7 @@ const PaneListPaginationButton = create(
     size: number,
     hitSize: number,
     page: number,
-    onPageSet?: (page: number) => void,
+    onPageSet?: (page: number) => void
   }): ReactElement {
 
     const data = DataUtil.create({empty: items.length <= 0});
