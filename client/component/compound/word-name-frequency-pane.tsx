@@ -9,7 +9,6 @@ import {
   ChartConfig,
   ChartData
 } from "/client/component/atom/chart";
-import Loading from "/client/component/compound/loading";
 import {
   StylesRecord,
   create
@@ -52,9 +51,7 @@ const WordNameFrequencyPane = create(
     } as ChartConfig;
     const node = (
       <div styleName="root">
-        <Loading loading={data === null}>
-          <Chart className={styles!["chart"]} data={data} config={config}/>
-        </Loading>
+        <Chart className={styles!["chart"]} data={data} config={config}/>
       </div>
     );
     return node;
