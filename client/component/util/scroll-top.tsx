@@ -1,5 +1,8 @@
 //
 
+import {
+  useRouter
+} from "@tanstack/react-location";
 import * as react from "react";
 import {
   Fragment,
@@ -10,9 +13,6 @@ import {
 import {
   create
 } from "/client/component/create";
-import {
-  useLocation
-} from "/client/component/hook";
 
 
 const ScrollTop = create(
@@ -23,11 +23,13 @@ const ScrollTop = create(
     children?: ReactNode
   }): ReactElement {
 
-    const location = useLocation();
+    const router = useRouter();
 
     useEffect(() => {
-      window.scrollTo(0, 0);
-    }, [location.key]);
+      if (!router.pending) {
+        window.scrollTo(0, 0);
+      }
+    }, [router.pending]);
 
     const node = (
       <Fragment>
