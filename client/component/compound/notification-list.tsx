@@ -40,8 +40,9 @@ const NotificationList = create(
         page={page}
         onPageSet={setPage}
         showPagination={showPagination}
-        renderer={(notification) => <NotificationPane key={notification.id} notification={notification}/>}
-      />
+      >
+        {(notification) => <NotificationPane key={notification.id} notification={notification}/>}
+      </PaneList>
     );
     return node;
 

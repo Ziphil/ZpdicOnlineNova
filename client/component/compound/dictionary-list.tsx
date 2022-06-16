@@ -46,7 +46,8 @@ const DictionaryList = create(
         hitSize={hitSize}
         page={page}
         onPageSet={onPageSet}
-        renderer={(dictionary) => (
+      >
+        {(dictionary) => (
           <DictionaryListPane
             key={dictionary.id}
             dictionary={dictionary}
@@ -56,7 +57,7 @@ const DictionaryList = create(
             showLinks={showLinks}
           />
         )}
-      />
+      </PaneList>
     );
     return node;
 

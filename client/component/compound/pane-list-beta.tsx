@@ -23,7 +23,6 @@ const PaneList = create(
   require("./pane-list-beta.scss"), "PaneList",
   function <T>({
     items,
-    renderer,
     column = 1,
     method = "div",
     variant = "spaced",
@@ -32,10 +31,10 @@ const PaneList = create(
     hitSize,
     page,
     onPageSet,
-    showPagination = true
+    showPagination = true,
+    children
   }: {
     items: Array<T>,
-    renderer: (item: T) => ReactNode,
     column?: number,
     method?: "div" | "table",
     variant?: "spaced" | "compact",
@@ -44,7 +43,8 @@ const PaneList = create(
     hitSize?: number,
     page?: number,
     onPageSet?: (page: number) => void,
-    showPagination?: boolean
+    showPagination?: boolean,
+    children: (item: T) => ReactNode
   }): ReactElement {
 
     const [innerPage, onInnerPageSet] = useState(0);
@@ -53,7 +53,7 @@ const PaneList = create(
     const actualHitSize = (hitSize !== undefined && page !== undefined) ? hitSize : items.length;
     const actualPage = (hitSize !== undefined && page !== undefined) ? page : innerPage;
     const actualOnPageSet = (hitSize !== undefined && page !== undefined) ? onPageSet : onInnerPageSet;
-    const panesProps = {items: actualItems, renderer, column, variant, border};
+    const panesProps = {items: actualItems, column, variant, border, children};
     const node = (
       <div styleName="root">
         {(method === "div") ? (
@@ -74,20 +74,20 @@ const PaneListDivPanes = create(
   require("./pane-list-beta.scss"),
   function <T>({
     items,
-    renderer,
     column,
-    variant
+    variant,
+    children
   }: {
     items: Array<T>,
-    renderer: (item: T) => ReactNode,
     column: number,
-    variant: "spaced" | "compact"
+    variant: "spaced" | "compact",
+    children: (item: T) => ReactNode
   }): ReactElement {
 
     const data = DataUtil.create({variant});
     const node = (
       <div styleName="div-pane" style={{gridTemplateColumns: `repeat(${column}, 1fr)`}} {...data}>
-        {items.map(renderer)}
+        {items.map(children)}
       </div>
     );
     return node;
@@ -100,16 +100,16 @@ const PaneListTablePanes = create(
   require("./pane-list-beta.scss"),
   function <T>({
     items,
-    renderer,
     column,
     variant,
-    border
+    border,
+    children
   }: {
     items: Array<T>,
-    renderer: (item: T) => ReactNode,
     column: number,
     variant: "spaced" | "compact",
-    border: boolean
+    border: boolean,
+    children: (item: T) => ReactNode
   }): ReactElement {
 
     const data = DataUtil.create({variant});
@@ -126,7 +126,7 @@ const PaneListTablePanes = create(
                   {(border && index !== 0) && (
                     <td styleName="spacer border"/>
                   )}
-                  <td>{(item !== undefined) ? renderer(item) : undefined}</td>
+                  <td>{(item !== undefined) ? children(item) : undefined}</td>
                 </Fragment>
               ))}
             </tr>

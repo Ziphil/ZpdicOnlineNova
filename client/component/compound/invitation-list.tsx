@@ -43,8 +43,9 @@ const InvitationList = create(
         hitSize={hitSize}
         page={page}
         onPageSet={onPageSet}
-        renderer={(invitation) => <InvitationPane key={invitation.id} invitation={invitation} onSubmit={onSubmit}/>}
-      />
+      >
+        {(invitation) => <InvitationPane key={invitation.id} invitation={invitation} onSubmit={onSubmit}/>}
+      </PaneList>
     );
     return node;
 

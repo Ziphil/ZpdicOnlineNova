@@ -55,17 +55,17 @@ const CommissionList = create(
     const number = dictionary.number;
     const [[hitCommissions, hitSize]] = useSuspenseQuery("fetchCommissions", {number, ...calcOffset(page, size)}, {keepPreviousData: true});
 
-    const column = (smartphone) ? 2 : 3;
     const node = (
       <div styleName="root">
         <PaneList
           items={hitCommissions}
-          column={column}
+          column={(smartphone) ? 2 : 3}
           size={size}
           hitSize={hitSize}
           page={page}
           onPageSet={setPage}
-          renderer={(commission) => (
+        >
+          {(commission) => (
             <CommissionPane
               key={commission.id}
               dictionary={dictionary}
@@ -74,7 +74,7 @@ const CommissionList = create(
               onAddConfirm={onAddConfirm}
             />
           )}
-        />
+        </PaneList>
       </div>
     );
     return node;
