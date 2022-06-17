@@ -51,11 +51,11 @@ const DictionaryPage = create(
     const [canEdit] = useSuspenseQuery("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
     const [query, debouncedQuery, setQuery] = useQueryState(serializeQuery, deserializeQuery, 500);
 
-    const handleParameterSet = useCallback(async function (parameter: WordParameter): Promise<void> {
+    const handleParameterSet = useCallback(function (parameter: WordParameter): void {
       setQuery({...query, parameter, page: 0, showExplanation: false});
     }, [query, setQuery]);
 
-    const handlePageSet = useCallback(async function (page: number): Promise<void> {
+    const handlePageSet = useCallback(function (page: number): void {
       setQuery({...query, page, showExplanation: false});
       window.scrollTo(0, 0);
     }, [query, setQuery]);
@@ -91,7 +91,7 @@ const DictionaryPageWordList = create(
     query: DictionaryQuery,
     debouncedQuery: DictionaryQuery,
     canEdit: boolean,
-    handlePageSet: (page: number) => Promise<void>
+    handlePageSet: (page: number) => unknown
   }): ReactElement {
 
     const [hitResult] = useSuspenseQuery("searchDictionary", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffset(query.page, 40)}, {keepPreviousData: true});
