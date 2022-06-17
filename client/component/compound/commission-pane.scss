@@ -14,12 +14,12 @@
   text-align: justify;
 }
 
-.button {
+.button-container {
   margin: $small-margin 0rpx 0rpx 0rpx;
   text-align: right;
 }
 
-.button >* {
+.button-container >* {
   @include reset-first-margin;
   margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
 }

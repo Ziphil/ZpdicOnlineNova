@@ -38,7 +38,7 @@ const ActivateUserForm = create(
         <div styleName="caution">
           {trans("activateUserForm.caution")}
         </div>
-        <div styleName="button">
+        <div styleName="button-container">
           <Button label={trans("activateUserForm.send")} reactive={false} onClick={issueActivateToken}/>
         </div>
       </form>

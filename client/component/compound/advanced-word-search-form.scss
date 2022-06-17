@@ -3,8 +3,8 @@
 @import "/client/component/mixin.scss";
 
 
-.inner,
-.plus {
+.element,
+.plus-container {
   @include reset-first-margin;
   margin: $small-control-vertical-margin 0rpx 0rpx 0rpx;
   display: flex;
@@ -16,7 +16,7 @@
   }
 }
 
-.plus {
+.plus-container {
   justify-content: flex-end;
   display: flex;
   align-items: flex-end;
@@ -47,8 +47,8 @@
 }
 
 .selection {
-  width: 330u;
-  flex-basis: 330u;
+  width: 110rpx;
+  flex-basis: 110rpx;
 }
 
 .title {
@@ -62,7 +62,7 @@
   }
 }
 
-.control-button {
+.control-button-container {
   margin: 0rpx 0rpx 0rpx $small-control-horizontal-margin;
   @include smartphone {
     margin: $small-control-vertical-margin 0rpx 0rpx 0rpx;
@@ -70,7 +70,7 @@
   }
 }
 
-.confirm-button {
+.confirm-button-container {
   margin: $large-margin 0rpx 0rpx 0rpx;
   text-align: right;
 }

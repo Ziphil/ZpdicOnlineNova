@@ -17,9 +17,9 @@ import {
 } from "/client/component/create";
 import {
   useIntl,
+  useMe,
   usePopup,
-  useRequest,
-  useMe
+  useRequest
 } from "/client/component/hook";
 
 
@@ -29,14 +29,15 @@ const ContactForm = create(
   }: {
   }): ReactElement {
 
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [subject, setSubject] = useState("");
-    const [text, setText] = useState("");
     const [, {trans}] = useIntl();
     const [me] = useMe();
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
+
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [subject, setSubject] = useState("");
+    const [text, setText] = useState("");
 
     const performSend = useCallback(async function (): Promise<void> {
       const response = await request("contact", {name, email, subject, text}, {useRecaptcha: true});
@@ -59,10 +60,10 @@ const ContactForm = create(
     const disabled = me !== null;
     const node = (
       <form styleName="root">
-        <Input label={trans("contactForm.name")} value={name} disabled={disabled} showOptional={true} onSet={(name) => setName(name)}/>
-        <Input label={trans("contactForm.email")} value={email} disabled={disabled} showOptional={true} onSet={(email) => setEmail(email)}/>
-        <Input label={trans("contactForm.subject")} value={subject} showOptional={true} onSet={(subject) => setSubject(subject)}/>
-        <TextArea label={trans("contactForm.text")} value={text} onSet={(text) => setText(text)}/>
+        <Input label={trans("contactForm.name")} value={name} disabled={disabled} showOptional={true} onSet={setName}/>
+        <Input label={trans("contactForm.email")} value={email} disabled={disabled} showOptional={true} onSet={setEmail}/>
+        <Input label={trans("contactForm.subject")} value={subject} showOptional={true} onSet={setSubject}/>
+        <TextArea label={trans("contactForm.text")} value={text} onSet={setText}/>
         <div styleName="button-group">
           <div styleName="row">
             <Button label={trans("contactForm.confirm")} iconName="envelope" variant="information" reactive={true} onClick={performSend}/>

@@ -42,11 +42,12 @@ const AkrantiainExecutor = create(
     styles?: StylesRecord
   }): ReactElement {
 
+    const [, {trans}] = useIntl();
+
     const [source, setSource] = useState(defaultSource ?? "");
     const [input, setInput] = useState("");
     const [output, setOutput] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [, {trans}] = useIntl();
 
     const executeAkrantiain = useCallback(function (): void {
       try {
@@ -81,7 +82,7 @@ const AkrantiainExecutor = create(
             language="akrantiain"
             nowrap={true}
             fitHeight={true}
-            onSet={(source) => setSource(source)}
+            onSet={setSource}
           />
           <Input label={trans("akrantiainExecutor.input")} value={input} onSet={(input) => setInput(input)}/>
           <Button className={styles!["button"]} label={trans("akrantiainExecutor.execute")} onClick={executeAkrantiain}/>

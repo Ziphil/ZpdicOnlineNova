@@ -43,20 +43,18 @@ const AdvancedWordSearchForm = create(
     defaultParameter,
     open,
     onClose,
-    onConfirm,
-    styles
+    onConfirm
   }: {
     dictionary: Dictionary,
     defaultParameter: WordParameter,
-    open: boolean
+    open: boolean,
     onClose?: (event: MouseEvent<HTMLElement>) => void,
-    onConfirm?: (parameter: WordParameter, event: MouseEvent<HTMLButtonElement>) => void,
-    styles?: StylesRecord
+    onConfirm?: (parameter: WordParameter, event: MouseEvent<HTMLButtonElement>) => void
   }): ReactElement {
 
-    const [parameter, setParameter] = useState((defaultParameter instanceof AdvancedWordParameter) ? defaultParameter : AdvancedWordParameter.createEmpty());
     const [, {trans}] = useIntl();
-    const {request} = useRequest();
+
+    const [parameter, setParameter] = useState((defaultParameter instanceof AdvancedWordParameter) ? defaultParameter : AdvancedWordParameter.createEmpty());
 
     const mutateParameter = useCallback(function <T extends Array<unknown>>(setter: (parameter: AdvancedWordParameter, ...args: T) => void): (...args: T) => void {
       const wrapper = function (...args: T): void {
@@ -77,6 +75,47 @@ const AdvancedWordSearchForm = create(
       onConfirm?.(parameter, event);
     }, [parameter, onClose, onConfirm]);
 
+    const elements = parameter.elements;
+    const node = (
+      <Overlay size="large" title={trans("advancedWordSearchForm.overlayTitle")} open={open} onClose={handleClose}>
+        {elements.map((element, index) => (
+          <AdvancedWordSearchFormElement key={index} {...{index, element, elements, dictionary, mutateParameter}}/>
+        ))}
+        <div styleName="plus-container">
+          <Button iconName="plus" onClick={mutateParameter((parameter) => elements.push(AdvancedWordParameterElement.createEmpty()))}/>
+        </div>
+        <div styleName="confirm-button-container">
+          <Button label={trans("advancedWordSearchForm.confirm")} iconName="check" variant="information" onClick={confirmParameter}/>
+        </div>
+      </Overlay>
+    );
+    return node;
+
+  }
+);
+
+
+const AdvancedWordSearchFormElement = create(
+  require("./advanced-word-search-form.scss"),
+  function ({
+    index,
+    element,
+    elements,
+    dictionary,
+    mutateParameter,
+    styles
+  }: {
+    index: number,
+    element: AdvancedWordParameterElement,
+    elements: Array<AdvancedWordParameterElement>,
+    dictionary: Dictionary,
+    mutateParameter: <T extends Array<unknown>>(setter: (parameter: AdvancedWordParameter, ...args: T) => void) => (...args: T) => void,
+    styles?: StylesRecord
+  }): ReactElement {
+
+    const [, {trans}] = useIntl();
+    const {request} = useRequest();
+
     const createSuggest = useCallback(function (propertyName: string): Suggest {
       const number = dictionary.number;
       const suggest = async function (pattern: string): Promise<Array<SuggestionSpec>> {
@@ -92,46 +131,31 @@ const AdvancedWordSearchForm = create(
       return suggest;
     }, [dictionary.number, request]);
 
-    const elements = parameter.elements;
     const modeSpecs = ADVANCED_WORD_MODES.map((mode) => ({value: mode, node: trans(`advancedWordSearchForm.${mode}`)}));
     const typeSpecs = WORD_TYPES.map((type) => ({value: type, node: trans(`advancedWordSearchForm.${type}`)}));
-    const searchNodes = elements.map((element, index) => {
-      const modeLabel = (index === 0) ? trans("advancedWordSearchForm.mode") : undefined;
-      const typeLabel = (index === 0) ? trans("advancedWordSearchForm.type") : undefined;
-      const titleLabel = (index === 0) ? trans("advancedWordSearchForm.title") : undefined;
-      const textLabel = (index === 0) ? trans("advancedWordSearchForm.text") : undefined;
-      const titleDisabled = element.mode !== "equivalent" && element.mode !== "information";
-      const deleteDisabled = elements.length <= 1;
-      const suggest = (titleDisabled) ? undefined : createSuggest(element.mode);
-      const searchNode = (
-        <div styleName="inner" key={index}>
-          <div styleName="form left">
-            <Selection className={styles!["selection"]} value={element.mode} label={modeLabel} specs={modeSpecs} onSet={mutateParameter((parameter, mode) => elements[index].mode = mode)}/>
-            <Selection className={styles!["selection"]} value={element.type} label={typeLabel} specs={typeSpecs} onSet={mutateParameter((parameter, type) => elements[index].type = type)}/>
-          </div>
-          <div styleName="form right">
-            <Input className={styles!["title"]} value={element.title} label={titleLabel} suggest={suggest} disabled={titleDisabled} onSet={mutateParameter((parameter, title) => elements[index].title = title)}/>
-            <Input className={styles!["text"]} value={element.text} label={textLabel} onSet={mutateParameter((parameter, text) => elements[index].text = text)}/>
-          </div>
-          <div styleName="control-button">
-            <Button iconName="minus" disabled={deleteDisabled} onClick={mutateParameter((parameter) => deleteAt(elements, index))}/>
-          </div>
+    const modeLabel = (index === 0) ? trans("advancedWordSearchForm.mode") : undefined;
+    const typeLabel = (index === 0) ? trans("advancedWordSearchForm.type") : undefined;
+    const titleLabel = (index === 0) ? trans("advancedWordSearchForm.title") : undefined;
+    const textLabel = (index === 0) ? trans("advancedWordSearchForm.text") : undefined;
+    const titleDisabled = element.mode !== "equivalent" && element.mode !== "information";
+    const deleteDisabled = elements.length <= 1;
+    const suggest = (titleDisabled) ? undefined : createSuggest(element.mode);
+    const searchNode = (
+      <div styleName="element">
+        <div styleName="form left">
+          <Selection className={styles!["selection"]} value={element.mode} label={modeLabel} specs={modeSpecs} onSet={mutateParameter((parameter, mode) => elements[index].mode = mode)}/>
+          <Selection className={styles!["selection"]} value={element.type} label={typeLabel} specs={typeSpecs} onSet={mutateParameter((parameter, type) => elements[index].type = type)}/>
         </div>
-      );
-      return searchNode;
-    });
-    const node = (
-      <Overlay size="large" title={trans("advancedWordSearchForm.overlayTitle")} open={open} onClose={handleClose}>
-        {searchNodes}
-        <div styleName="plus">
-          <Button iconName="plus" onClick={mutateParameter((parameter) => elements.push(AdvancedWordParameterElement.createEmpty()))}/>
+        <div styleName="form right">
+          <Input className={styles!["title"]} value={element.title} label={titleLabel} suggest={suggest} disabled={titleDisabled} onSet={mutateParameter((parameter, title) => elements[index].title = title)}/>
+          <Input className={styles!["text"]} value={element.text} label={textLabel} onSet={mutateParameter((parameter, text) => elements[index].text = text)}/>
         </div>
-        <div styleName="confirm-button">
-          <Button label={trans("advancedWordSearchForm.confirm")} iconName="check" variant="information" onClick={confirmParameter}/>
+        <div styleName="control-button-container">
+          <Button iconName="minus" disabled={deleteDisabled} onClick={mutateParameter((parameter) => deleteAt(elements, index))}/>
         </div>
-      </Overlay>
+      </div>
     );
-    return node;
+    return searchNode;
 
   }
 );

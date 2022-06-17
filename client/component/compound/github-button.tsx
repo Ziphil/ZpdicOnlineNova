@@ -23,6 +23,8 @@ const GithubButton = create(
   }: {
   }): ReactElement {
 
+    const [, {trans, transNumber}] = useIntl();
+
     const {data: starCount} = useQuery("github", async () => {
       const url = "https://api.github.com/repos/Ziphil/ZpdicOnlineNova";
       const response = await axios.get(url, {validateStatus: () => true});
@@ -33,7 +35,6 @@ const GithubButton = create(
         throw new Error("cannot fetch");
       }
     });
-    const [, {trans, transNumber}] = useIntl();
 
     const githubUrl = "https://github.com/Ziphil/ZpdicOnlineNova";
     const dashboardUrl = "https://ziphil.notion.site/ZpDIC-Online-987030f6505e4cf1ba8fe08121584d93";

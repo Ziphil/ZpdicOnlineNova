@@ -43,11 +43,12 @@ const CommissionEditor = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [name, setName] = useState("");
-    const [comment, setComment] = useState("");
     const [, {trans}] = useIntl();
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
+
+    const [name, setName] = useState("");
+    const [comment, setComment] = useState("");
 
     const addCommission = useCallback(async function (event: MouseEvent<HTMLElement>): Promise<void> {
       const number = dictionary.number;
