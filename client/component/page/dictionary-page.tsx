@@ -49,9 +49,7 @@ const DictionaryPage = create(
     const [dictionary] = useSuspenseQuery("fetchDictionary", {number, paramName}, {}, EnhancedDictionary.enhance);
     const [canOwn] = useSuspenseQuery("fetchDictionaryAuthorization", {number: dictionary.number, authority: "own"});
     const [canEdit] = useSuspenseQuery("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
-    const [query, debouncedQuery, setQuery] = useQueryState(serializeQuery, deserializeQuery);
-    const [hitResult, hitResultRest] = useSuspenseQuery("searchDictionary", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffset(query.page, 40)}, {keepPreviousData: true});
-    const searching = hitResultRest.isFetching || hitResultRest.isRefetching;
+    const [query, debouncedQuery, setQuery] = useQueryState(serializeQuery, deserializeQuery, 500);
 
     const handleParameterSet = useCallback(async function (parameter: WordParameter): Promise<void> {
       setQuery({...query, parameter, page: 0, showExplanation: false});
@@ -62,13 +60,16 @@ const DictionaryPage = create(
       window.scrollTo(0, 0);
     }, [query, setQuery]);
 
-    const wordListProps = {dictionary, query, canEdit, hitResult, handlePageSet};
     const node = (
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <div styleName="search-form-container">
-          <WordSearchForm dictionary={dictionary} parameter={query.parameter} searching={searching} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
+          <WordSearchForm dictionary={dictionary} parameter={query.parameter} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
         </div>
-        {(debouncedQuery.showExplanation) ? <Markdown source={dictionary.explanation ?? ""}/> : <DictionaryPageWordList {...wordListProps}/>}
+        {(debouncedQuery.showExplanation) ? (
+          <Markdown source={dictionary.explanation ?? ""}/>
+        ) : (
+          <DictionaryPageWordList {...{dictionary, query, debouncedQuery, canEdit, handlePageSet}}/>
+        )}
       </Page>
     );
     return node;
@@ -82,16 +83,18 @@ const DictionaryPageWordList = create(
   function ({
     dictionary,
     query,
+    debouncedQuery,
     canEdit,
-    hitResult,
     handlePageSet
   }: {
     dictionary: EnhancedDictionary,
     query: DictionaryQuery,
+    debouncedQuery: DictionaryQuery,
     canEdit: boolean,
-    hitResult: DictionaryHitResult,
     handlePageSet: (page: number) => Promise<void>
   }): ReactElement {
+
+    const [hitResult] = useSuspenseQuery("searchDictionary", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffset(query.page, 40)}, {keepPreviousData: true});
 
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
