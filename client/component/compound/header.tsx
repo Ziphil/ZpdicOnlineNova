@@ -25,12 +25,6 @@ const Header = create(
     const [, {trans}] = useIntl();
     const [me] = useMe();
 
-    const userNameNode = (me !== null) && (
-      <Fragment>
-        <div styleName="separator"/>
-        <HeaderMenuItem label={trans("header.dashboard")} iconName="house-user" href="/dashboard"/>
-      </Fragment>
-    );
     const node = (
       <header styleName="root">
         <div styleName="container">
@@ -46,7 +40,12 @@ const Header = create(
               <HeaderMenuItem label={trans("header.document")} iconName="book-open" href="/document"/>
               <HeaderMenuItem label={trans("header.contact")} iconName="envelope" href="/contact"/>
               <HeaderMenuItem label={trans("header.language")} iconName="language" href="/language"/>
-              {userNameNode}
+              {(me !== null) && (
+                <Fragment>
+                  <div styleName="separator"/>
+                  <HeaderMenuItem label={trans("header.dashboard")} iconName="house-user" href="/dashboard"/>
+                </Fragment>
+              )}
             </div>
           </div>
         </div>
