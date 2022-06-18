@@ -30,11 +30,11 @@
   @include bold-font;
 }
 
-.button {
+.button-container {
   white-space: nowrap;
 }
 
-.button >* {
+.button-container >* {
   @include reset-first-margin;
   margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
   display: inline-block;
