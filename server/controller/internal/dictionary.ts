@@ -415,16 +415,19 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATHS["fetchDictionaryAuthorization"])
-  @before(verifyUser())
   public async [Symbol()](request: Request<"fetchDictionaryAuthorization">, response: Response<"fetchDictionaryAuthorization">): Promise<void> {
-    const user = request.user!;
+    const user = request.user;
     const number = request.body.number;
     const authority = request.body.authority;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
-      const hasAuthority = await dictionary.hasAuthority(user, authority);
-      if (hasAuthority) {
-        Controller.respond(response, true);
+      if (user) {
+        const hasAuthority = await dictionary.hasAuthority(user, authority);
+        if (hasAuthority) {
+          Controller.respond(response, true);
+        } else {
+          Controller.respond(response, false);
+        }
       } else {
         Controller.respond(response, false);
       }
