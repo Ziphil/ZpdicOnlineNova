@@ -7,8 +7,8 @@
   width: 100%;
   padding-block: $large-margin;
   padding-inline: $page-horizontal-margin;
-  border-block-end: 1rpx var(--border-color) solid;
-  background-color: var(--white-background-color);
+  border-block-end: 1rpx solid color(border);
+  background-color: color(white-background);
   display: flex;
   justify-content: center;
   position: sticky;
@@ -42,8 +42,9 @@
 
 .title {
   font-family: $special-font-family;
-  font-size: 24rpx;
-  color: var(--primary-color);
+  font-size: $large-font-size;
+  color: color(head-text);
+  letter-spacing: 0.1em;
   line-height: 1;
 }
 
@@ -53,6 +54,6 @@
 }
 
 .separator {
-  border-right: 1rpx rgba($background-color, 0.5) solid;
+  border-right: 1rpx solid color(light-border);
   display: inline;
 }

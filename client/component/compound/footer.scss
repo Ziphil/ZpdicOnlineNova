@@ -15,8 +15,8 @@
 .content {
   padding-block: $small-margin;
   font-size: $tiny-font-size;
-  color: var(--primary-color);
-  border-block-start: 1rpx var(--border-color) solid;
+  color: color(footer-text);
+  border-block-start: 1rpx solid color(border);
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -24,7 +24,7 @@
 
 .content a,
 .content .link {
-  color: var(--primary-color);
+  color: color(footer-text);
   text-decoration: underline;
 }
 

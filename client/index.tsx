@@ -25,6 +25,7 @@ export class Main {
   public main(): void {
     this.appendIconElement();
     this.appendRecaptchaElement();
+    this.setupTheme();
     this.setupNprogress();
     this.render();
   }
@@ -42,6 +43,10 @@ export class Main {
     const element = document.createElement("script");
     element.src = "https://www.google.com/recaptcha/api.js?render=" + RECAPTCHA_KEY;
     document.head.appendChild(element);
+  }
+
+  private setupTheme(): void {
+    document.documentElement.setAttribute("data-theme", "light");
   }
 
   private setupNprogress(): void {

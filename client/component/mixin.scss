@@ -2,6 +2,7 @@
 
 @use "sass:math" as *;
 @import "/client/component/function.scss";
+@import "/client/component/color.scss";
 
 
 @function background-color($color) {
@@ -97,7 +98,7 @@ $button-hotizontal-padding: 0.75em;
 $tooltip-vertical-padding: 0.25em;
 $tooltip-horizontal-padding: 0.5em;
 
-$huge-font-size: 24px;
+$huge-font-size: 24rpx;
 $large-font-size: 20rpx;
 $medium-font-size: 16rpx;
 $small-font-size: 14rpx;
@@ -257,24 +258,18 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   @return rgba($color, 0.1);
 }
 
-@mixin input($color, $dye: false) {
+@mixin input($scheme: primary) {
   width: 100%;
-  padding: $input-vertical-padding $input-horizontal-padding;
-  font-family: inherit;
-  font-size: inherit;
-  color: inherit;
+  padding-block: $input-vertical-padding;
+  padding-inline: $input-horizontal-padding;
   line-height: $line-height;
-  border: 1rpx border-color($color) solid;
+  border: 1rpx solid schemed-color(input-border, $scheme);
   border-radius: $small-border-radius;
-  background-color: white;
-  box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color);
-  box-sizing: border-box;
+  background-color: color(input-background);
+  box-shadow: inset $inset-box-shadow-setting schemed-color(input-box-shadow, $scheme);
   outline: none;
-  @if $dye {
-    background-color: tint($color, 90%);
-  }
   &:focus-within:not(:disabled):not(.disabled) {
-    outline: $focus-size focus-box-shadow-color($color) solid;
+    outline: $focus-size solid schemed-color(focus-outline, $scheme);
   }
   &:disabled,
   &.disabled,
@@ -294,28 +289,27 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   }
 }
 
-@mixin button($color) {
-  padding: $input-vertical-padding $button-hotizontal-padding;
-  font-family: inherit;
-  font-size: inherit;
-  color: white;
+@mixin button($scheme: primary) {
+  padding-block: $input-vertical-padding;
+  padding-inline: $button-hotizontal-padding;
+  color: color(button-text);
   line-height: $line-height;
-  border: 1rpx border-color($color, false) solid;
+  border: 1rpx solid schemed-color(button-border, $scheme);
   border-radius: $small-border-radius;
-  background-color: $color;
+  background-color: schemed-color(button-background, $scheme);
   background-image: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25));
   white-space: nowrap;
   position: relative;
   cursor: pointer;
   outline: none;
   &:hover:not(:disabled) {
-    background-color: hover-color($color);
+    background-color: schemed-color(hover-button-background, $scheme);
   }
   &:focus:not(:disabled) {
-    outline: $focus-size focus-box-shadow-color($color) solid;
+    outline: $focus-size solid schemed-color(focus-outline, $scheme);
   }
   &:active:not(:disabled) {
-    background-color: shade($color, 25%);
+    background-color: schemed-color(active-button-background, $scheme);
     background-image: none;
     box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1);
   }

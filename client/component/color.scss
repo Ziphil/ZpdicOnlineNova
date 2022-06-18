@@ -1,17 +1,21 @@
 @charset "utf-8";
 
-@import "/client/component/mixin.scss";
 
+@function color($name) {
+  @return var(#{"--" + $name + "-color"});
+}
 
-$primary-base-color: hsl(30, 40%, 50%);
-$secondary-base-color: hsl(310, 40%, 50%);
-$red-base-color: hsl(0, 45%, 50%);
-$blue-base-color: hsl(200, 60%, 45%);
+@function schemed-color($name, $scheme) {
+  @return var(#{"--" + $scheme + "-" + $name + "-color"});
+}
 
-body {
-  --background-color: #{tint($primary-base-color, 90%)};
-  --white-background-color: #{tint($primary-base-color, 98%)};
-  --text-color: #{shade($primary-base-color, 60%)};
-  --border-color: #{tint($primary-base-color, 50%)};
-  --primary-color: #{$primary-base-color};
+@mixin color-variables($colors, $schemed-colors) {
+  @each $name, $color in $colors {
+    #{"--" + $name + "-color"}: #{$color};
+  }
+  @each $name, $colors in $schemed-colors {
+    @each $scheme, $color in $colors {
+      #{"--" + $scheme + "-" + $name + "-color"}: #{$color};
+    }
+  }
 }

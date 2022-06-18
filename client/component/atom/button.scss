@@ -5,7 +5,7 @@
 
 
 .button {
-  @include button(map-get($colors, primary));
+  @include button(primary);
   &[data-position="left"],
   [data-control-group] >&:first-child,
   [data-control-group] >:first-child & {
@@ -31,11 +31,11 @@
 }
 
 .button[data-intent="caution"] {
-  @include button(map-get($colors, error));
+  @include button(red);
 }
 
 .button[data-intent="information"] {
-  @include button(map-get($colors, information));
+  @include button(blue);
 }
 
 .simple {

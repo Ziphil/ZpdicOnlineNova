@@ -7,10 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-
-.right {
-  margin: 0rpx 0rpx 0rpx $huge-margin;
+  gap: $huge-margin;
 }
 
 .name {
@@ -30,5 +27,5 @@
 
 .icon {
   margin-inline-end: $blank-margin;
-  color: var(--primary-color);
+  color: color(icon);
 }

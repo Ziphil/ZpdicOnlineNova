@@ -1,0 +1,66 @@
+@charset "utf-8";
+
+@use "/client/component/function.scss" as *;
+@use "/client/component/color.scss" as *;
+
+
+$primary-base-color: hsl(30, 40%, 50%);
+$secondary-base-color: hsl(310, 40%, 50%);
+$red-base-color: hsl(0, 45%, 50%);
+$blue-base-color: hsl(200, 60%, 45%);
+
+$colors: (
+  background: tint($primary-base-color, 90%),
+  white-background: tint($primary-base-color, 98%),
+  input-background: hsl(30, 100%, 100%),
+  text: shade($primary-base-color, 60%),
+  head-text: $primary-base-color,
+  footer-text: $primary-base-color,
+  button-text: hsl(30, 100%, 100%),
+  icon: $primary-base-color,
+  border: tint($primary-base-color, 40%),
+  light-border: tint($primary-base-color, 60%),
+  focus-outline: rgba($primary-base-color, 0.2)
+);
+
+$schemed-colors: (
+  input-border: (
+    primary: tint($primary-base-color, 40%),
+    red: tint($red-base-color, 40%),
+    blue: tint($blue-base-color, 40%),
+  ),
+  input-box-shadow: (
+    primary: rgba($primary-base-color, 0.1),
+    red: rgba($red-base-color, 0.1),
+    blue: rgba($blue-base-color, 0.1),
+  ),
+  button-border: (
+    primary: rgba(black, 0.3),
+    red: rgba(black, 0.3),
+    blue: rgba(black, 0.3),
+  ),
+  button-background: (
+    primary: $primary-base-color,
+    red: $red-base-color,
+    blue: $blue-base-color
+  ),
+  hover-button-background: (
+    primary: tint($primary-base-color, 10%),
+    red: tint($red-base-color, 10%),
+    blue: tint($blue-base-color, 10%)
+  ),
+  active-button-background: (
+    primary: shade($primary-base-color, 20%),
+    red: shade($red-base-color, 20%),
+    blue: shade($blue-base-color, 20%)
+  ),
+  focus-outline: (
+    primary: rgba($primary-base-color, 0.2),
+    red: rgba($red-base-color, 0.2),
+    blue: rgba($blue-base-color, 0.2)
+  )
+);
+
+html[data-theme="light"] {
+  @include color-variables($colors, $schemed-colors);
+}

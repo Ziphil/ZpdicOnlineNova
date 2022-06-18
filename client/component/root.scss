@@ -1,9 +1,9 @@
 @charset "utf-8";
 
+@use "/client/component/color/light.scss";
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Simonetta:400&display=swap");
-@import "/client/component/color.scss";
 @import "/client/component/mixin.scss";
 @import "/client/component/highlight.scss";
 @import "/client/component/atom/portal.scss";
@@ -27,9 +27,9 @@ body {
   padding: 0rpx;
   font-family: $european-font-family, $japanese-font-family, sans-serif;
   font-feature-settings: "palt" 1, "pkna" 1, "lnum" 1;
-  color: var(--text-color);
+  color: color(text);
   line-height: 1;
-  background-color: var(--background-color);
+  background-color: color(background);
   overflow-x: auto;
   overflow-y: scroll;
   text-decoration-skip-ink: none;
@@ -38,7 +38,7 @@ body {
 }
 
 :focus-visible {
-  outline: $focus-size focus-box-shadow-color(map-get($colors, primary)) solid;
+  outline: $focus-size solid color(focus-outline);
 }
 
 :global(.grecaptcha-badge) {

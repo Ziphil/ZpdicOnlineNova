@@ -8,7 +8,7 @@
 }
 
 .selection {
-  @include input(map-get($colors, primary));
+  @include input(primary);
   align-items: center;
   display: flex;
   cursor: pointer;
