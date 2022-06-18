@@ -5,6 +5,7 @@ import {
   MouseEvent,
   ReactElement,
   useCallback,
+  useRef,
   useState
 } from "react";
 import {
@@ -58,7 +59,7 @@ const Button = create(
   }): ReactElement {
 
     const [loading, setLoading] = useState(false);
-    const [promise, setPromise] = useState<CancelablePromise<void> | null>(null);
+    const promiseRef = useRef<CancelablePromise<void> | null>(null);
 
     const handleClick = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       event.preventDefault();
@@ -67,12 +68,9 @@ const Button = create(
         if (onClick) {
           const result = onClick(event);
           if (typeof result === "object" && typeof result.then === "function") {
-            const nextPromise = new CancelablePromise(result);
-            setPromise(nextPromise);
-            nextPromise.then(() => {
-              setLoading(false);
-            }, (error) => {
-            });
+            const promise = new CancelablePromise(result);
+            promiseRef.current = promise;
+            promise.then(() => setLoading(false)).catch(() => null);
           } else {
             setLoading(false);
           }
@@ -80,14 +78,12 @@ const Button = create(
           setLoading(false);
         }
       } else {
-        if (onClick) {
-          onClick(event);
-        }
+        onClick?.(event);
       }
     }, [reactive, onClick]);
 
     useUnmount(() => {
-      promise?.cancel();
+      promiseRef.current?.cancel();
     });
 
     const styleName = (variant === "simple" || variant === "link") ? "simple" : "button";
