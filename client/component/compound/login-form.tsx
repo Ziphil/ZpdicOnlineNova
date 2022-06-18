@@ -60,7 +60,7 @@ const LoginForm = create(
         <Input label={trans("loginForm.password")} type="flexible" value={password} onSet={(password) => setPassword(password)}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={trans("loginForm.confirm")} iconName="sign-in-alt" variant="information" reactive={true} onClick={performLogin}/>
+            <Button label={trans("loginForm.confirm")} iconName="sign-in-alt" scheme="blue" reactive={true} onClick={performLogin}/>
             {registerNode}
           </div>
           <div styleName="row">

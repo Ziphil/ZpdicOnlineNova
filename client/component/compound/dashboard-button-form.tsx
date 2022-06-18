@@ -40,7 +40,7 @@ const DashboardButtonForm = create(
     const node = (
       <form styleName="root">
         <div styleName="row">
-          <Button label={trans("dashboardButtonForm.dashboard")} iconName="house-user" variant="information" onClick={jumpDashboard}/>
+          <Button label={trans("dashboardButtonForm.dashboard")} iconName="house-user" scheme="blue" onClick={jumpDashboard}/>
         </div>
         <div styleName="row">
           <Button label={trans("dashboardButtonForm.logout")} iconName="sign-out-alt" variant="simple" onClick={performLogout}/>

@@ -79,7 +79,7 @@ const ResetUserPasswordForm = create(
           <Input label={trans("resetUserPasswordForm.newPassword")} value={password} validate={validate} onSet={(password) => setPassword(password)}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label={trans("resetUserPasswordForm.reset")} iconName="check" variant="information" reactive={true} onClick={resetPassword}/>
+              <Button label={trans("resetUserPasswordForm.reset")} iconName="check" scheme="blue" reactive={true} onClick={resetPassword}/>
             </div>
           </div>
         </form>
@@ -92,7 +92,7 @@ const ResetUserPasswordForm = create(
           <Input label={trans("loginForm.email")} value={email} onSet={(email) => setEmail(email)}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label={trans("resetUserPasswordForm.issue")} iconName="envelope" variant="information" reactive={true} onClick={issueResetToken}/>
+              <Button label={trans("resetUserPasswordForm.issue")} iconName="envelope" scheme="blue" reactive={true} onClick={issueResetToken}/>
             </div>
           </div>
         </form>

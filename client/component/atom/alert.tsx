@@ -64,7 +64,7 @@ const Alert = create(
           </div>
           <div styleName="button-group">
             <Button label={actualCancelLabel} onClick={handleCancel}/>
-            <Button label={actualConfirmLabel} variant="caution" onClick={handleConfirm}/>
+            <Button label={actualConfirmLabel} scheme="red" onClick={handleConfirm}/>
           </div>
         </div>
       </Modal>

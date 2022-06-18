@@ -204,10 +204,10 @@ const ExampleEditorRoot = create(
       <Button label={trans("wordEditor.cancel")} iconName="times" onClick={onCancel}/>
     );
     const discardButtonNode = (example !== null) && (
-      <Button label={trans("exampleEditor.discard")} iconName="trash-alt" variant="caution" reactive={true} onClick={() => setAlertOpen(true)}/>
+      <Button label={trans("exampleEditor.discard")} iconName="trash-alt" scheme="red" reactive={true} onClick={() => setAlertOpen(true)}/>
     );
     const confirmButtonNode = (
-      <Button label={trans("exampleEditor.confirm")} iconName="check" variant="information" reactive={true} onClick={editExample}/>
+      <Button label={trans("exampleEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editExample}/>
     );
     const mainStyleName = StyleNameUtil.create(
       "main",

@@ -66,7 +66,7 @@ const ContactForm = create(
         <TextArea label={trans("contactForm.text")} value={text} onSet={setText}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={trans("contactForm.confirm")} iconName="envelope" variant="information" reactive={true} onClick={performSend}/>
+            <Button label={trans("contactForm.confirm")} iconName="envelope" scheme="blue" reactive={true} onClick={performSend}/>
           </div>
         </div>
       </form>

@@ -263,12 +263,12 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 @mixin button($scheme: primary) {
   padding-block: $input-vertical-padding;
   padding-inline: $button-hotizontal-padding;
-  color: color(button-text);
+  color: schemed-color(button-text, $scheme);
   line-height: $line-height;
   border: 1rpx solid schemed-color(button-border, $scheme);
   border-radius: $small-border-radius;
   background-color: schemed-color(button-background, $scheme);
-  background-image: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25));
+  background-image: schemed-color(button-gradient, $scheme);
   white-space: nowrap;
   position: relative;
   cursor: pointer;
@@ -282,7 +282,39 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   &:active:not(:disabled) {
     background-color: schemed-color(active-button-background, $scheme);
     background-image: none;
-    box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1);
+    box-shadow: inset $inset-box-shadow-setting schemed-color(active-button-shadow, $scheme);
+  }
+  &:disabled {
+    opacity: 0.5;
+  }
+  &:disabled:hover {
+    cursor: not-allowed;
+  }
+}
+
+@mixin light-button($scheme: primary) {
+  padding-block: $input-vertical-padding;
+  padding-inline: $button-hotizontal-padding;
+  color: schemed-color(light-button-text, $scheme);
+  line-height: $line-height;
+  border: 1rpx solid schemed-color(input-border, $scheme);
+  border-radius: $small-border-radius;
+  background-color: schemed-color(light-button-background, $scheme);
+  background-image: schemed-color(light-button-gradient, $scheme);
+  white-space: nowrap;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  &:hover:not(:disabled) {
+    background-color: schemed-color(hover-light-button-background, $scheme);
+  }
+  &:focus:not(:disabled) {
+    outline: $focus-size solid schemed-color(focus-outline, $scheme);
+  }
+  &:active:not(:disabled) {
+    background-color: schemed-color(active-light-button-background, $scheme);
+    background-image: none;
+    box-shadow: inset $inset-box-shadow-setting schemed-color(active-light-button-shadow, $scheme);
   }
   &:disabled {
     opacity: 0.5;

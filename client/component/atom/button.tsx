@@ -36,6 +36,7 @@ const Button = create(
     iconName,
     position = "alone",
     variant = "normal",
+    scheme = "primary",
     hideLabel = false,
     reactive = false,
     disabled = false,
@@ -46,7 +47,8 @@ const Button = create(
     label?: string,
     iconName?: IconName,
     position?: "alone" | "left" | "right" | "middle",
-    variant?: "normal" | "caution" | "information" | "simple" | "link",
+    variant?: "normal" | "light" | "link" | "simple",
+    scheme?: "primary" | "red" | "blue",
     hideLabel?: boolean,
     reactive?: boolean,
     disabled?: boolean,
@@ -91,7 +93,8 @@ const Button = create(
     const styleName = (variant === "simple" || variant === "link") ? "simple" : "button";
     const data = DataUtil.create({
       position: (position !== "alone") ? position : undefined,
-      intent: (variant === "caution") ? "caution" : (variant === "information") ? "information" : undefined,
+      variant,
+      scheme,
       onlyIcon: label === undefined,
       link: variant === "link",
       hideLabel,

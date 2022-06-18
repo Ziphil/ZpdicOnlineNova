@@ -12,11 +12,12 @@ $blue-base-color: hsl(200, 60%, 45%);
 $colors: (
   background: tint($primary-base-color, 90%),
   white-background: tint($primary-base-color, 98%),
-  input-background: hsl(30, 100%, 100%),
+  input-background: white,
   text: shade($primary-base-color, 60%),
   head-text: $primary-base-color,
   footer-text: $primary-base-color,
-  button-text: hsl(30, 100%, 100%),
+  link: $secondary-base-color,
+  hover-link: tint($secondary-base-color, 30%),
   icon: $primary-base-color,
   nprogress: $secondary-base-color,
   border: tint($primary-base-color, 30%),
@@ -35,10 +36,15 @@ $schemed-colors: (
     red: rgba($red-base-color, 0.1),
     blue: rgba($blue-base-color, 0.1),
   ),
+  button-text: (
+    primary: white,
+    red: white,
+    blue: white
+  ),
   button-border: (
     primary: rgba(black, 0.3),
     red: rgba(black, 0.3),
-    blue: rgba(black, 0.3),
+    blue: rgba(black, 0.3)
   ),
   button-background: (
     primary: $primary-base-color,
@@ -55,8 +61,49 @@ $schemed-colors: (
     red: shade($red-base-color, 20%),
     blue: shade($blue-base-color, 20%)
   ),
+  button-gradient: (
+    primary: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25)),
+    red: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25)),
+    blue: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25)),
+  ),
+  active-button-shadow: (
+    primary: rgba(black, 0.1),
+    red: rgba(black, 0.1),
+    blue: rgba(black, 0.1)
+  ),
+  light-button-text: (
+    primary: $primary-base-color,
+    red: $red-base-color,
+    blue: $blue-base-color
+  ),
+  light-button-background: (
+    primary: tint($primary-base-color, 90%),
+    red: tint($red-base-color, 90%),
+    blue: tint($blue-base-color, 90%)
+  ),
+  hover-light-button-background: (
+    primary: tint($primary-base-color, 82%),
+    red: tint($red-base-color, 82%),
+    blue: tint($blue-base-color, 82%)
+  ),
+  active-light-button-background: (
+    primary: tint($primary-base-color, 65%),
+    red: tint($red-base-color, 65%),
+    blue: tint($blue-base-color, 65%)
+  ),
+  light-button-gradient: (
+    primary: linear-gradient(to bottom, rgba(black, 0), rgba($primary-base-color, 0.2)),
+    red: linear-gradient(to bottom, rgba(black, 0), rgba($red-base-color, 0.2)),
+    blue: linear-gradient(to bottom, rgba(black, 0), rgba($blue-base-color, 0.2))
+  ),
+  active-light-button-shadow: (
+    primary: rgba($primary-base-color, 0.1),
+    red: rgba($red-base-color, 0.1),
+    blue: rgba($blue-base-color, 0.1)
+  ),
   focus-outline: (
     primary: rgba($primary-base-color, 0.2),
+    secondary: rgba($secondary-base-color, 0.2),
     red: rgba($red-base-color, 0.2),
     blue: rgba($blue-base-color, 0.2)
   )
