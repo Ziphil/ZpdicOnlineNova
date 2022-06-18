@@ -70,27 +70,23 @@ $footer-color: map-get($colors, primary);
 
 $root-size: 16px;
 
-$huge-margin: 30rpx;
-$large-margin: 20rpx;
-$medium-margin: 15rpx;
-$small-margin: 10rpx;
-$tiny-margin: 5rpx;
+$huge-margin: 24rpx;
+$large-margin: 18rpx;
+$medium-margin: 12rpx;
+$small-margin: 8rpx;
+$tiny-margin: 4rpx;
 
-$control-vertical-margin: 15rpx;
-$control-horizontal-margin: 15rpx;
-$small-control-horizontal-margin: 10rpx;
+$control-vertical-margin: 12rpx;
+$control-horizontal-margin: 12rpx;
+$small-control-horizontal-margin: 12rpx;
 $small-control-vertical-margin: 8rpx;
-$paragraph-margin: 10rpx;
+$paragraph-margin: 12rpx;
 
-$page-width: 800rpx;
-$page-top-margin: 60rpx;
-$page-bottom-margin: 80rpx;
-$page-horizontal-margin: 50rpx;
-$page-small-horizontal-margin: 30rpx;
-
-$header-height: 70rpx;
-$dictionary-header-height: 50rpx;
-$footer-height: 50rpx;
+$page-width: 1000rpx;
+$page-top-margin: 48rpx;
+$page-bottom-margin: 48rpx;
+$page-horizontal-margin: 40rpx;
+$page-small-horizontal-margin: 28rpx;
 
 $box-vertical-padding: 0.125em;
 $box-horizontal-padding: 0.5em;
@@ -101,11 +97,11 @@ $button-hotizontal-padding: 0.75em;
 $tooltip-vertical-padding: 0.25em;
 $tooltip-horizontal-padding: 0.5em;
 
-$huge-font-size: 22rpx;
-$large-font-size: 19rpx;
+$huge-font-size: 24px;
+$large-font-size: 20rpx;
 $medium-font-size: 16rpx;
 $small-font-size: 14rpx;
-$tiny-font-size: 13rpx;
+$tiny-font-size: 12rpx;
 
 $icon-width: 1.25em;
 $focus-size: 2rpx;
@@ -173,15 +169,13 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 }
 
 @mixin page($additional-top-margin) {
-  margin-top: $page-top-margin + $additional-top-margin;
+  margin-top: $page-top-margin;
   margin-bottom: $page-bottom-margin;
-  margin-right: $page-horizontal-margin;
-  margin-left: $page-horizontal-margin;
+  margin-inline: $page-horizontal-margin;
   padding: 0rpx;
   box-sizing: border-box;
   @include smartphone {
-    margin-right: $page-small-horizontal-margin;
-    margin-left: $page-small-horizontal-margin;
+    margin-inline: $page-small-horizontal-margin;
   }
 }
 

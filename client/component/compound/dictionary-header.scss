@@ -4,20 +4,7 @@
 
 
 .root {
-  width: 100%;
-  height: $dictionary-header-height;
-  top: $header-height;
-  left: 0rpx;
-  border-bottom: 1rpx $light-border-color solid;
-  background-color: $strong-background-color;
-  position: absolute;
-  z-index: 80;
-}
-
-.container {
-  @include header-container;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
 }
@@ -28,19 +15,20 @@
 
 .name {
   @include bold-font;
+  font-size: $huge-font-size;
 }
 
 .button-container {
   white-space: nowrap;
+  display: flex;
+  gap: $control-horizontal-margin;
 }
 
 .button-container >* {
-  @include reset-first-margin;
-  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
   display: inline-block;
 }
 
 .icon {
-  margin: 0rpx $blank-margin 0rpx 0rpx;
-  color: $light-color;
+  margin-inline-end: $blank-margin;
+  color: var(--primary-color);
 }

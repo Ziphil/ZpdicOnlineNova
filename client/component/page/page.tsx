@@ -8,7 +8,6 @@ import {
 import {
   Helmet
 } from "react-helmet";
-import DictionaryHeader from "/client/component/compound/dictionary-header";
 import Footer from "/client/component/compound/footer";
 import Header from "/client/component/compound/header";
 import PopupInformationPane from "/client/component/compound/popup-information-pane";
@@ -27,14 +26,14 @@ const Page = create(
   require("./page.scss"), "Page",
   function ({
     title,
-    dictionary = null,
+    dictionary,
     showDictionary = false,
     showAddLink = false,
     showSettingLink = false,
     children
   }: {
     title?: string,
-    dictionary?: EnhancedDictionary | null,
+    dictionary?: EnhancedDictionary,
     showDictionary?: boolean,
     showAddLink?: boolean,
     showSettingLink?: boolean,
@@ -48,10 +47,7 @@ const Page = create(
           <title>{(title) ? `${title} — ZpDIC Online` : "ZpDIC Online"}</title>
         </Helmet>
         <PopupInformationPane/>
-        <Header/>
-        {(showDictionary) && (
-          <DictionaryHeader dictionary={dictionary} showAddLink={showAddLink} showSettingLink={showSettingLink}/>
-        )}
+        <Header dictionary={dictionary} showAddLink={showAddLink} showSettingLink={showSettingLink}/>
         <div styleName="spacer" {...spacerData}>
           <div styleName="content">
             {children}

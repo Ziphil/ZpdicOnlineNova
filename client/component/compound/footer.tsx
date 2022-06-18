@@ -23,7 +23,7 @@ const Footer = create(
     const yearString = date.getFullYear().toString();
     const node = (
       <footer styleName="root">
-        <div styleName="container">
+        <div styleName="content">
           <div styleName="left">
             <div styleName="copyright">
               © 2020–{yearString} Ziphil<br/>

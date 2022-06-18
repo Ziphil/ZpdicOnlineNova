@@ -5,25 +5,26 @@
 
 .root {
   width: 100%;
-  height: $footer-height;
+  padding-inline: $page-horizontal-margin;
   z-index: 100;
+  @include smartphone {
+    padding-inline: $page-small-horizontal-margin;
+  }
 }
 
-.container {
-  @include header-container;
-  font-size: 12rpx;
-  color: $footer-color;
-  line-height: 1;
-  border-top: 1rpx border-color($footer-color) solid;
+.content {
+  padding-block: $small-margin;
+  font-size: $tiny-font-size;
+  color: var(--primary-color);
+  border-block-start: 1rpx var(--border-color) solid;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-sizing: border-box;
 }
 
-.container a,
-.container .link {
-  color: $footer-color;
+.content a,
+.content .link {
+  color: var(--primary-color);
   text-decoration: underline;
 }
 

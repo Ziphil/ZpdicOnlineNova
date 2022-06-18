@@ -11,9 +11,6 @@ import {
   useCallback,
   useState
 } from "react";
-import {
-  Helmet
-} from "react-helmet";
 import Button from "/client/component/atom/button";
 import Dropdown from "/client/component/atom/dropdown";
 import Icon from "/client/component/atom/icon";
@@ -100,18 +97,13 @@ const DictionaryHeader = create(
 
     const node = (
       <header styleName="root">
-        <Helmet>
-          <title>{(dictionary) ? `${dictionary.name} — ZpDIC Online` : "ZpDIC Online"}</title>
-        </Helmet>
-        <div styleName="container">
-          <div styleName="left">
-            <div styleName="name">
-              {(dictionary) && <Link href={"/dictionary/" + dictionary.number + ((preserveQuery) ? location.searchString : "")} target="self" style="plane">{dictionary.name}</Link>}
-            </div>
+        <div styleName="left">
+          <div styleName="name">
+            {(dictionary) && <Link href={"/dictionary/" + dictionary.number + ((preserveQuery) ? location.searchString : "")} target="self" style="plane">{dictionary.name}</Link>}
           </div>
-          <div styleName="right">
-            <DictionaryHeaderButtons {...{dictionary, showAddLink, showAddCommissionLink, showExampleLink, showSettingLink, showDownloadLink, openWordEditor, openExampleEditor, setCommissionEditorOpen}}/>
-          </div>
+        </div>
+        <div styleName="right">
+          <DictionaryHeaderButtons {...{dictionary, showAddLink, showAddCommissionLink, showExampleLink, showSettingLink, showDownloadLink, openWordEditor, openExampleEditor, setCommissionEditorOpen}}/>
         </div>
         <DictionaryHeaderOverlays {...{dictionary, commissionEditorOpen, setCommissionEditorOpen}}/>
       </header>
