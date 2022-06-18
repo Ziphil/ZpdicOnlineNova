@@ -87,7 +87,7 @@
   right: -10rpx;
   margin-left: -8rpx;
   border: 5rpx transparent solid;
-  border-left: 5rpx $light-border-color solid;
+  border-left: 5rpx color(border) solid;
   position: absolute;
   content: "";
 }

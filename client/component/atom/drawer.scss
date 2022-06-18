@@ -52,7 +52,7 @@ $drawer-tab-height: 60rpx;
   width: 100%;
   height: $drawer-header-height;
   padding: 0rpx $huge-margin;
-  border-bottom: 1rpx $light-border-color solid;
+  border-bottom: 1rpx color(border) solid;
   border-radius: 0rpx $large-border-radius 0rpx 0rpx;
   background-color: $strong-background-color;
   display: flex;
@@ -76,7 +76,7 @@ $drawer-tab-height: 60rpx;
   height: $drawer-tab-height;
   left: 0rpx;
   color: $light-color;
-  border: 1rpx $light-border-color solid;
+  border: 1rpx color(border) solid;
   border-left: none;
   border-radius: 0rpx $large-border-radius $large-border-radius 0rpx;
   background-color: $strong-background-color;
@@ -106,7 +106,7 @@ $drawer-tab-height: 60rpx;
   align-items: center;
   justify-content: center;
   .tab:hover & {
-    border-left: 5rpx $light-border-color solid;
+    border-left: 5rpx color(border) solid;
   }
 }
 

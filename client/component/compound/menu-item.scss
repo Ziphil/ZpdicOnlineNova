@@ -15,7 +15,7 @@ $menu-item-horizontal-padding: 15rpx;
     padding: 0rpx $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
     border-bottom: 5rpx transparent solid;
     &:hover {
-      border-bottom: 5rpx $light-border-color solid;
+      border-bottom: 5rpx color(border) solid;
     }
     &.highlight {
       margin-bottom: -1rpx;
@@ -26,7 +26,7 @@ $menu-item-horizontal-padding: 15rpx;
     padding: 5rpx 0rpx 5rpx 10rpx;
     border-left: 5rpx transparent solid;
     &:hover {
-      border-left: 5rpx $light-border-color solid;
+      border-left: 5rpx color(border) solid;
     }
     &.highlight {
       margin-left: -1rpx;

@@ -56,9 +56,6 @@ $header-background-color: darken(map-get($colors, primary), 10%);
 $text-color: hsl(30, 40%, 22%);
 
 $light-color: map-get($colors, primary);
-$light-border-color: border-color(map-get($colors, primary));
-$dark-border-color: border-color(map-get($colors, primary), false);
-$invert-border-color: rgba($light-border-color, 0.3);
 
 $link-color: map-get($colors, secondary);
 $link-hover-color: hover-color($link-color, false);
@@ -67,7 +64,6 @@ $pale-link-hover-color: hover-color($pale-link-color, false, false);
 
 $logo-color: darken(map-get($colors, primary), 20%);
 $head-color: map-get($colors, primary);
-$footer-color: map-get($colors, primary);
 
 $root-size: 16px;
 
@@ -98,18 +94,16 @@ $button-hotizontal-padding: 0.75em;
 $tooltip-vertical-padding: 0.25em;
 $tooltip-horizontal-padding: 0.5em;
 
-$huge-font-size: 24rpx;
-$large-font-size: 20rpx;
+$huge-font-size: 22rpx;
+$large-font-size: 19rpx;
 $medium-font-size: 16rpx;
 $small-font-size: 14rpx;
 $tiny-font-size: 12rpx;
 
-$icon-width: 1.25em;
 $focus-size: 2rpx;
 $blank-margin: 0.3em;
 
 $inset-box-shadow-setting: 0rpx 2rpx 3rpx;
-
 $small-border-radius: 3rpx;
 $large-border-radius: 5rpx;
 
@@ -147,14 +141,14 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   &::before {
     width: 0rpx;
     height: 0rpx;
-    margin-top: - line-intrusion($line-height);
+    margin-block-start: - line-intrusion($line-height);
     display: block;
     content: "";
   }
   &::after {
     width: 0rpx;
     height: 0rpx;
-    margin-bottom: - line-intrusion($line-height);
+    margin-block-end: - line-intrusion($line-height);
     display: block;
     content: "";
   }
@@ -166,25 +160,6 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     &:first-child {
       #{$property-name}: 0rpx;
     }
-  }
-}
-
-@mixin page($additional-top-margin) {
-  margin-top: $page-top-margin;
-  margin-bottom: $page-bottom-margin;
-  margin-inline: $page-horizontal-margin;
-  padding: 0rpx;
-  box-sizing: border-box;
-  @include smartphone {
-    margin-inline: $page-small-horizontal-margin;
-  }
-}
-
-@mixin header-container {
-  margin: 0rpx $page-horizontal-margin;
-  height: 100%;
-  @include smartphone {
-    margin: 0rpx $page-small-horizontal-margin;
   }
 }
 
@@ -252,10 +227,6 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   >li {
     @include ordered-list-item($number-color);
   }
-}
-
-@function input-box-shadow-color($color) {
-  @return rgba($color, 0.1);
 }
 
 @mixin input($scheme: primary) {

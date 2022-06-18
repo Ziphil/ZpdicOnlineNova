@@ -10,7 +10,7 @@
 }
 
 .github {
-  color: $light-border-color;
+  color: color(border);
   text-decoration: none;
   display: inline-flex;
   flex-direction: column;
@@ -25,7 +25,7 @@
 
 .icon {
   font-size: 40rpx;
-  color: $light-border-color;
+  color: color(border);
   line-height: 0;
 }
 
@@ -35,7 +35,7 @@
   padding: 0rpx 32u;
   font-size: 24rpx;
   line-height: 36rpx;
-  border: 1rpx $light-border-color solid;
+  border: 1rpx color(border) solid;
   border-radius: $large-border-radius;
   display: inline-block;
   position: relative;
@@ -46,7 +46,7 @@
   left: -8rpx;
   margin-left: -8rpx;
   border: 8rpx transparent solid;
-  border-right: 8rpx $light-border-color solid;
+  border-right: 8rpx color(border) solid;
   position: absolute;
   content: "";
 }

@@ -18,16 +18,17 @@ $colors: (
   footer-text: $primary-base-color,
   button-text: hsl(30, 100%, 100%),
   icon: $primary-base-color,
-  border: tint($primary-base-color, 40%),
-  light-border: tint($primary-base-color, 60%),
+  nprogress: $secondary-base-color,
+  border: tint($primary-base-color, 30%),
+  light-border: tint($primary-base-color, 65%),
   focus-outline: rgba($primary-base-color, 0.2)
 );
 
 $schemed-colors: (
   input-border: (
-    primary: tint($primary-base-color, 40%),
-    red: tint($red-base-color, 40%),
-    blue: tint($blue-base-color, 40%),
+    primary: tint($primary-base-color, 30%),
+    red: tint($red-base-color, 30%),
+    blue: tint($blue-base-color, 30%),
   ),
   input-box-shadow: (
     primary: rgba($primary-base-color, 0.1),

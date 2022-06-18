@@ -20,10 +20,10 @@
   bottom: 0.1em;
   width: 1em;
   height: 1em;
-  border: 1rpx $light-border-color solid;
+  border: 1rpx color(border) solid;
   border-radius: 50%;
   background-color: white;
-  box-shadow: $inset-box-shadow-setting input-box-shadow-color(map-get($colors, primary)) inset;
+  box-shadow: inset $inset-box-shadow-setting schemed-color(input-box-shadow, primary);
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;

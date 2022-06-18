@@ -54,7 +54,7 @@ body {
   height: 2rpx;
   top: 0rpx;
   left: 0rpx;
-  background-color: darken(map-get($colors, information), 0%);
+  background-color: color(nprogress);
   position: fixed;
   z-index: 10001;
 }

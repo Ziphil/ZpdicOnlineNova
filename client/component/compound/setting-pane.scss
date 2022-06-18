@@ -8,7 +8,7 @@ $setting-pane-horizontal-padding: 150u;
 
 .root {
   padding: $setting-pane-vertical-padding 0rpx $setting-pane-vertical-padding 0rpx;
-  border-bottom: 1rpx $invert-border-color solid; 
+  border-bottom: 1rpx color(light-border) solid; 
   display: flex;
   flex-direction: row;
   @include smartphone {
@@ -21,7 +21,7 @@ $setting-pane-horizontal-padding: 150u;
 }
 
 .root:last-child {
-  border-bottom: 1rpx $light-border-color solid;
+  border-bottom: 1rpx color(border) solid;
 }
 
 .description-wrapper {

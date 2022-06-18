@@ -5,12 +5,12 @@
 
 .root {
   padding: $large-margin 0rpx;
-  border-bottom: 1rpx $invert-border-color solid;
+  border-bottom: 1rpx color(light-border) solid;
   &:first-child {
-    border-top: 1rpx $light-border-color solid;
+    border-top: 1rpx color(border) solid;
   }
   &:last-child {
-    border-bottom: 1rpx $light-border-color solid;
+    border-bottom: 1rpx color(border) solid;
   }
 }
 

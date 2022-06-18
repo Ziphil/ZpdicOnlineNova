@@ -23,7 +23,7 @@ $overlay-header-height: 50rpx;
   width: 100%;
   height: $overlay-header-height;
   padding: 0rpx $huge-margin;
-  border-bottom: 1rpx $light-border-color solid;
+  border-bottom: 1rpx color(border) solid;
   border-radius: $large-border-radius $large-border-radius 0rpx 0rpx;
   background-color: $strong-background-color;
   display: flex;

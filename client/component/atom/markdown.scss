@@ -71,8 +71,8 @@
   padding: $box-vertical-padding $box-horizontal-padding;
   line-height: $line-height;
   text-align: left;
-  border-bottom: 1rpx $light-border-color solid;
-  border-right: 1rpx $light-border-color solid;
+  border-bottom: 1rpx color(border) solid;
+  border-right: 1rpx color(border) solid;
 }
 
 .root tr >th {
@@ -81,11 +81,11 @@
 }
 
 .root thead tr:first-child >* {
-  border-top: 1rpx $light-border-color solid;
+  border-top: 1rpx color(border) solid;
 }
 
 .root tr >*:first-child {
-  border-left: 1rpx $light-border-color solid;
+  border-left: 1rpx color(border) solid;
 }
 
 .root thead tr:first-child >*:first-child {
