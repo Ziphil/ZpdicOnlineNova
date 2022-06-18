@@ -26,7 +26,7 @@ const Loading = create(
       const node = (
         <div styleName="root">
           <span styleName="spinner">
-            <Icon name="spinner" pulse={true}/>
+            <Icon name="circle-notch" spin={true}/>
           </span>
         </div>
       );

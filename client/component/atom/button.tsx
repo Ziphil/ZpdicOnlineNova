@@ -106,7 +106,7 @@ const Button = create(
         {(label !== undefined) && <span styleName="label">{label}</span>}
         {(reactive) && (
           <span styleName="spinner-wrapper">
-            <Icon name="spinner" pulse={true}/>
+            <Icon name="circle-notch" spin={true}/>
           </span>
         )}
       </button>
