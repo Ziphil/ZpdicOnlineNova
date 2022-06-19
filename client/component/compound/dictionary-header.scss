@@ -16,6 +16,10 @@
   gap: $control-horizontal-margin;
 }
 
+.dropdown-node {
+  white-space: nowrap;
+}
+
 .icon {
   margin-inline-end: $blank-margin;
   color: color(icon);

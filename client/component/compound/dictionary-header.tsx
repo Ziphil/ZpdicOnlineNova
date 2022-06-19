@@ -175,7 +175,7 @@ const DictionaryHeaderAddDropdownNode = create(
     const [, {trans}] = useIntl();
 
     const node = (
-      <div>
+      <div styleName="dropdown-node">
         <Icon className={styles!["icon"]} name={(type === "word") ? "custom-word" : "custom-example"}/>
         {trans(`dictionaryHeader.add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
       </div>
