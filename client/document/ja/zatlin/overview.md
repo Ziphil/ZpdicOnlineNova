@@ -8,7 +8,7 @@ Zatlin を使うことで、単語の綴りを完全に Zatlin に任せて文�
 
 ZpDIC Online には Zatlin 1.2 が組み込まれており、辞書の設定画面から Zatlin ソースコードを設定することで、単語編集画面で Zatlin を実行して綴りを生成することができます。
 
-Zatlin ソースコードの書き方については、[こちら](./introduction)をご覧ください。
+Zatlin ソースコードの書き方については、[こちら](/document/zatlin/introduction)をご覧ください。
 
 ## 試してみる
 以下は Zatlin ソースコードの例です。
