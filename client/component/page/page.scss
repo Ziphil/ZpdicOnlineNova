@@ -14,6 +14,9 @@
   padding-block-end: $page-bottom-margin;
   padding-inline: $page-horizontal-margin;
   flex: 1;
+  @include smartphone {
+    padding-inline: $page-small-horizontal-margin;
+  }
 }
 
 .content {
