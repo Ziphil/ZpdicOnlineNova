@@ -784,6 +784,7 @@ errorPage:
   back: "トップページに戻る"
   description: >-
     原因不明のエラーが発生しました。
+    お手数ですが、以下のエラーメッセージとともに管理者にご連絡ください。
 languagePage:
   title: "言語選択"
 loginPage:
