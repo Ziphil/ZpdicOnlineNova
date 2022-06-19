@@ -24,6 +24,12 @@
   }
 }
 
+.code-wrapper {
+  &[data-fit-height="no-fit"] {
+    height: 100%;
+  }
+}
+
 .code {
   @include input(primary);
   height: 100%;

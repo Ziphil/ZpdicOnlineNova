@@ -21,7 +21,6 @@ const LoadingPage = create(
       <Page>
         <div styleName="root">
           <Loading loading={true}/>
-          Global loading
         </div>
       </Page>
     );
