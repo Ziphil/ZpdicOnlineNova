@@ -39,7 +39,7 @@
   text-align: left;
   outline: none;
   &:hover {
-    background-color: background-color(map-get($colors, information));
+    background-color: schemed-color(background, primary);
     cursor: pointer;
   }
 }

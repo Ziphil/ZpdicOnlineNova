@@ -4,7 +4,7 @@
 
 
 .root {
-  @include color-pane(map-get($colors, error));
+  @include color-pane(red);
   padding: $medium-margin $medium-margin;
   display: flex;
   align-items: flex-end;

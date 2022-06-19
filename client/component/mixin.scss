@@ -5,50 +5,6 @@
 @import "/client/component/color.scss";
 
 
-@function background-color($color) {
-  @return tint($color, 83%);
-}
-
-@function border-color($color, $light: true) {
-  @if $light {
-    @return $color;
-  } @else {
-    @return rgba(black, 0.3);
-  }
-}
-
-@function hover-color($color, $box: true, $light: true) {
-  @if $box {
-    @if $light {
-      @return tint($color, 10%);
-    } @else {
-      @return darken($color, 5%);
-    }
-  } @else {
-    @if $light {
-      @return tint($color, 30%);
-    } @else {
-      @return darken($color, 15%);
-    }
-  }
-}
-
-@function gradient-color($color) {
-  @return darken($color, 10%);
-}
-
-@function focus-box-shadow-color($color) {
-  @return rgba($color, 0.3)
-}
-
-
-$colors: (
-  primary: hsl(30, 40%, 50%),
-  secondary: hsl(310, 40%, 50%),
-  error: hsl(0, 45%, 50%),
-  information: hsl(200, 60%, 45%)
-);
-
 $root-size: 16px;
 
 $huge-margin: 24rpx;

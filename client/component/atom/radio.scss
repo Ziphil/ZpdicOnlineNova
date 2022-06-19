@@ -31,7 +31,7 @@
   position: relative;
   vertical-align: middle;
   .original:focus +& {
-    outline: $focus-size focus-box-shadow-color(map-get($colors, primary)) solid;
+    outline: $focus-size solid color(focus);
   }
 }
 
@@ -39,8 +39,7 @@
   width: calc(1em - 8rpx);
   height: calc(1em - 8rpx);
   border-radius: 50%;
-  background-color: map-get($colors, primary);
-  background-image: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25));
+  background-color: schemed-color(button-background, primary);
   box-sizing: border-box;
   display: block;
   display: none;
@@ -48,6 +47,6 @@
     display: block;
   }
   .original:hover +* >& {
-    background-color: hover-color(map-get($colors, primary));
+    background-color: schemed-color(hover-button-background, primary);
   }
 }

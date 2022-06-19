@@ -2,7 +2,7 @@
 
 
 *[class~="CodeMirror-selected"] {
-  background: background-color(map-get($colors, information)) !important;
+  background: schemed-color(background, primary) !important;
 }
 
 *[class|="cm"] {

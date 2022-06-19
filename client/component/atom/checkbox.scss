@@ -31,19 +31,19 @@
   position: relative;
   vertical-align: middle;
   .original:focus +& {
-    outline: $focus-size focus-box-shadow-color(map-get($colors, primary)) solid;
+    outline: $focus-size solid color(focus);
   }
 }
 
 .icon {
   font-size: 90%;
-  color: map-get($colors, primary);
+  color: schemed-color(button-background, primary);
   box-sizing: border-box;
   display: none;
   .original:checked +* >& {
     display: block;
   }
   .original:hover +* >& {
-    color: hover-color(map-get($colors, primary));
+    color: schemed-color(hover-button-background, primary);
   }
 }
