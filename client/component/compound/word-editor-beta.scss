@@ -23,7 +23,7 @@
 .head-name {
   @include bold-font;
   font-size: $large-font-size;
-  color: $head-color;
+  color: color(head-text);
   cursor: pointer;
 }
 
@@ -64,7 +64,7 @@
   width: 10rpx;
   margin: 0rpx $small-margin 0rpx 0rpx;
   border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
-  background-color: $strong-background-color;
+  background-color: color(strong-background);
   display: flex;
   align-items: center;
   cursor: move;

@@ -11,6 +11,7 @@ $blue-base-color: hsl(200, 60%, 45%);
 
 $colors: (
   background: tint($primary-base-color, 90%),
+  strong-background: tint($primary-base-color, 75%),
   white-background: tint($primary-base-color, 98%),
   input-background: white,
   text: shade($primary-base-color, 60%),

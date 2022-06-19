@@ -56,7 +56,7 @@
   left: -7rpx;
   margin-left: -8rpx;
   border: 8rpx transparent solid;
-  border-right: 8rpx $background-color solid;
+  border-right: 8rpx color(background) solid;
   position: absolute;
   content: "";
 }

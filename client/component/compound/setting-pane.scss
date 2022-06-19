@@ -65,7 +65,7 @@ $setting-pane-horizontal-padding: 150u;
 
 .label {
   @include bold-font;
-  color: $head-color;
+  color: color(head-text);
 }
 
 .label >*:nth-child(1) {

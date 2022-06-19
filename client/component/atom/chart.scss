@@ -42,7 +42,7 @@
 }
 
 .root :global(.c3-chart-arc) path {
-  stroke: $background-color;
+  stroke: color(background);
 }
 
 .root :global(.c3-target.c3-defocused) {

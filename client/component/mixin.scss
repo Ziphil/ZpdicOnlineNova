@@ -49,21 +49,14 @@ $colors: (
   information: hsl(200, 60%, 45%)
 );
 
-$background-color: background-color(map-get($colors, primary));
-$strong-background-color: darken($background-color, 10%);
-$header-background-color: darken(map-get($colors, primary), 10%);
-
-$text-color: hsl(30, 40%, 22%);
-
 $light-color: map-get($colors, primary);
 
 $link-color: map-get($colors, secondary);
 $link-hover-color: hover-color($link-color, false);
-$pale-link-color: $background-color;
+$pale-link-color: background-color(map-get($colors, primary));
 $pale-link-hover-color: hover-color($pale-link-color, false, false);
 
 $logo-color: darken(map-get($colors, primary), 20%);
-$head-color: map-get($colors, primary);
 
 $root-size: 16px;
 
