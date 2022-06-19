@@ -21,6 +21,7 @@ import {
   Response
 } from "/server/controller/internal/controller";
 import {
+  checkUser,
   verifyDictionary,
   verifyRecaptcha,
   verifyUser
@@ -415,6 +416,7 @@ export class DictionaryController extends Controller {
   }
 
   @post(SERVER_PATHS["fetchDictionaryAuthorization"])
+  @before(checkUser())
   public async [Symbol()](request: Request<"fetchDictionaryAuthorization">, response: Response<"fetchDictionaryAuthorization">): Promise<void> {
     const user = request.user;
     const number = request.body.number;
