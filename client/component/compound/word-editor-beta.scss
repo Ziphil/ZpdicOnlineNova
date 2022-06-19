@@ -23,7 +23,7 @@
 .head-name {
   @include bold-font;
   font-size: $large-font-size;
-  color: color(head-text);
+  color: color(accent);
   cursor: pointer;
 }
 

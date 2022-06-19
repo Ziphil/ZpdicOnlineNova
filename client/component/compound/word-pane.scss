@@ -29,7 +29,7 @@
   @include bold-font;
   margin: 0em 0.5em 0em 0em;
   font-size: $large-font-size;
-  color: color(head-text);
+  color: color(accent);
   display: inline-block;
 }
 
@@ -59,7 +59,7 @@
 
 .pronunciation {
   margin: 0em (0.5em * div(120%, 80%)) 0em 0em;
-  color: color(head-text);
+  color: color(accent);
   font-size: $tiny-font-size;
   display: inline-block;
 }

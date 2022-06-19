@@ -4,16 +4,21 @@
 
 
 .link {
-  color: $link-color;
+  color: color(link);
+  border-radius: $small-border-radius;
   text-decoration: underline;
   cursor: pointer;
   &:hover {
-    color: $link-hover-color;
+    color: color(hover-link);
+  }
+  &:focus-visible {
+    outline: $focus-size solid schemed-color(focus-outline, secondary);
   }
 }
 
 .plane {
   color: inherit;
+  border-radius: $small-border-radius;
   text-decoration: inherit;
   cursor: pointer;
   &:hover {

@@ -24,7 +24,7 @@
 
 .head-wrapper .icon {
   font-size: 32rpx;
-  color: color(head-text);
+  color: color(accent);
   text-align: center;
   display: inline-block;
 }
@@ -36,7 +36,7 @@
 .date {
   margin: 0rpx;
   font-size: $tiny-font-size;
-  color: color(head-text);
+  color: color(accent);
 }
 
 .head {
@@ -44,7 +44,7 @@
   margin: $tiny-margin 0rpx 0rpx 0rpx;
   padding: 0rpx;
   font-size: $large-font-size;
-  color: color(head-text);
+  color: color(accent);
 }
 
 .fixed {

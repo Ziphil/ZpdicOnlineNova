@@ -15,22 +15,28 @@ $colors: (
   white-background: tint($primary-base-color, 98%),
   input-background: white,
   text: shade($primary-base-color, 60%),
-  head-text: $primary-base-color,
   footer-text: $primary-base-color,
+  accent: $primary-base-color,
   link: $secondary-base-color,
   hover-link: tint($secondary-base-color, 30%),
   icon: $primary-base-color,
   nprogress: $secondary-base-color,
-  border: tint($primary-base-color, 30%),
-  light-border: tint($primary-base-color, 65%),
-  focus-outline: rgba($primary-base-color, 0.2)
+  border: tint($primary-base-color, 35%),
+  light-border: tint($primary-base-color, 70%),
+  focus-outline: rgba($primary-base-color, 0.3)
 );
 
 $schemed-colors: (
-  input-border: (
-    primary: tint($primary-base-color, 30%),
-    red: tint($red-base-color, 30%),
-    blue: tint($blue-base-color, 30%),
+  accent: (
+    primary: $primary-base-color,
+    secondary: $secondary-base-color,
+    red: $red-base-color,
+    blue: $blue-base-color
+  ),
+  border: (
+    primary: tint($primary-base-color, 35%),
+    red: tint($red-base-color, 35%),
+    blue: tint($blue-base-color, 35%),
   ),
   input-box-shadow: (
     primary: rgba($primary-base-color, 0.1),
@@ -103,10 +109,10 @@ $schemed-colors: (
     blue: rgba($blue-base-color, 0.1)
   ),
   focus-outline: (
-    primary: rgba($primary-base-color, 0.2),
-    secondary: rgba($secondary-base-color, 0.2),
-    red: rgba($red-base-color, 0.2),
-    blue: rgba($blue-base-color, 0.2)
+    primary: rgba($primary-base-color, 0.3),
+    secondary: rgba($secondary-base-color, 0.3),
+    red: rgba($red-base-color, 0.3),
+    blue: rgba($blue-base-color, 0.3)
   )
 );
 

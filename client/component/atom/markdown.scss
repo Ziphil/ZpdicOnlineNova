@@ -9,7 +9,7 @@
   @include bold-font;
   margin: $large-margin 0rpx $medium-margin 0rpx;
   font-size: $huge-font-size;
-  color: color(head-text);
+  color: color(accent);
 }
 
 .root h3 {
@@ -17,7 +17,7 @@
   @include bold-font;
   margin: $large-margin 0rpx $medium-margin 0rpx;
   font-size: $large-font-size;
-  color: color(head-text);
+  color: color(accent);
 }
 
 .root h2 +h3 {
