@@ -5,7 +5,7 @@
 
 .root {
   width: 100%;
-  padding-block: $large-margin;
+  padding-block: $medium-margin;
   padding-inline: $page-horizontal-margin;
   border-block-end: 1rpx solid color(border);
   background-color: color(white-background);
@@ -23,32 +23,30 @@
   max-width: $page-width;
 }
 
-.dictionary-container {
-  margin-block-start: 10rpx;
-}
-
-.common {
+.top {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.left {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: $huge-margin;
-}
-
 .title {
   font-family: $special-font-family;
-  font-size: $large-font-size;
+  font-size: 32rpx;
   color: color(head-text);
   letter-spacing: 0.1em;
   line-height: 1;
+  &[data-small] {
+    font-size: $medium-font-size;
+  }
 }
 
-.menu {
+.dictionary-name {
+  @include bold-font;
+  margin-block-start: $tiny-margin;
+  font-size: $huge-font-size;
+}
+
+.right {
   display: flex;
   gap: $control-horizontal-margin;
 }
@@ -56,4 +54,14 @@
 .separator {
   border-right: 1rpx solid color(light-border);
   display: inline;
+}
+
+.home-container {
+  font-size: 32rpx;
+}
+
+.addition {
+  margin-block-start: $medium-margin;
+  padding-block-start: $medium-margin;
+  border-block-start: 1rpx solid color(light-border);
 }

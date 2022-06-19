@@ -2,88 +2,81 @@
 
 import * as react from "react";
 import {
-  Fragment,
   ReactElement
 } from "react";
+import Button from "/client/component/atom/button";
 import Link from "/client/component/atom/link";
-import HeaderMenuItem from "/client/component/compound/header-menu-item";
+import DictionaryHeader from "/client/component/compound/dictionary-header";
 import {
   create
 } from "/client/component/create";
 import {
   useIntl,
-  useMe
+  useLocation,
+  useMe,
+  usePath
 } from "/client/component/hook";
-import {EnhancedDictionary} from "/client/skeleton/dictionary";
-import DictionaryHeader from "./dictionary-header";
+import {
+  EnhancedDictionary
+} from "/client/skeleton/dictionary";
+import {
+  DataUtil
+} from "/client/util/data";
 
 
 const Header = create(
   require("./header.scss"), "Header",
   function ({
     dictionary,
-    showDictionary,
     showAddLink,
-    showSettingLink
+    showSettingLink,
+    preserveQuery = false
   }: {
     dictionary?: EnhancedDictionary,
-    showDictionary?: boolean,
     showAddLink?: boolean,
-    showSettingLink?: boolean
+    showSettingLink?: boolean,
+    preserveQuery?: boolean
   }): ReactElement {
 
+    const [, {trans}] = useIntl();
+    const {pushPath} = usePath();
+    const location = useLocation();
+    const [me] = useMe();
+
+    const titleData = DataUtil.create({small: dictionary !== undefined});
     const node = (
       <header styleName="root">
         <div styleName="content">
-          <div styleName="common-container">
-            <CommonHeader/>
+          <div styleName="top">
+            <div styleName="left">
+              <div styleName="title" {...titleData}>
+                <Link href="/" target="self" style="plane">ZpDIC</Link>
+              </div>
+              {(dictionary !== undefined) && (
+                <div styleName="dictionary-name">
+                  <Link href={"/dictionary/" + dictionary.number + ((preserveQuery) ? location.searchString : "")} target="self" style="plane">{dictionary.name}</Link>
+                </div>
+              )}
+            </div>
+            <div styleName="right">
+              <Button label={trans("header.dictionaryList")} iconName="book" variant="simple" hideLabel={true} onClick={() => pushPath("/list")}/>
+              {(me !== null) && (
+                <>
+                  <div styleName="separator"/>
+                  <div styleName="home-container">
+                    <Button iconName="house-user" variant="simple" onClick={() => pushPath("/dashboard")}/>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
           {(dictionary !== undefined) && (
-            <div styleName="dictionary-container">
+            <div styleName="addition">
               <DictionaryHeader dictionary={dictionary} showAddLink={showAddLink} showSettingLink={showSettingLink}/>
             </div>
           )}
         </div>
       </header>
-    );
-    return node;
-
-  }
-);
-
-
-const CommonHeader = create(
-  require("./header.scss"), "CommonHeader",
-  function ({
-  }: {
-  }): ReactElement {
-
-    const [, {trans}] = useIntl();
-    const [me] = useMe();
-
-    const node = (
-      <div styleName="common">
-        <div styleName="left">
-          <div styleName="title">
-            <Link href="/" target="self" style="plane">ZpDIC</Link>
-          </div>
-        </div>
-        <div styleName="right">
-          <div styleName="menu">
-            <HeaderMenuItem label={trans("header.dictionaryList")} iconName="book" href="/list"/>
-            <HeaderMenuItem label={trans("header.notification")} iconName="info-circle" href="/notification"/>
-            <HeaderMenuItem label={trans("header.document")} iconName="book-open" href="/document"/>
-            <HeaderMenuItem label={trans("header.contact")} iconName="envelope" href="/contact"/>
-            <HeaderMenuItem label={trans("header.language")} iconName="language" href="/language"/>
-            {(me !== null) && (
-              <Fragment>
-                <div styleName="separator"/>
-                <HeaderMenuItem label={trans("header.dashboard")} iconName="house-user" href="/dashboard"/>
-              </Fragment>
-            )}
-          </div>
-        </div>
-      </div>
     );
     return node;
 

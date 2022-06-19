@@ -10,19 +10,10 @@
   gap: $huge-margin;
 }
 
-.name {
-  @include bold-font;
-  font-size: $huge-font-size;
-}
-
-.button-container {
-  white-space: nowrap;
+.left,
+.right {
   display: flex;
   gap: $control-horizontal-margin;
-}
-
-.button-container >* {
-  display: inline-block;
 }
 
 .icon {
