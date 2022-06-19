@@ -24,7 +24,7 @@
 }
 
 .button {
-  @include button(primary);
+  @include light-button(primary);
   margin: 0rpx 0rpx 0rpx -1rpx;
   border-radius: 0rpx $small-border-radius $small-border-radius 0rpx;
 }

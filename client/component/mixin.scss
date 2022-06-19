@@ -275,6 +275,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   padding-inline: $button-hotizontal-padding;
   color: schemed-color(light-button-text, $scheme);
   line-height: $line-height;
+  text-align: center;
   border: 1rpx solid schemed-color(border, $scheme);
   border-radius: $small-border-radius;
   background-color: schemed-color(light-button-background, $scheme);

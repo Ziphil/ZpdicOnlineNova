@@ -63,7 +63,7 @@ const Alert = create(
             <p styleName="text">{text}</p>
           </div>
           <div styleName="button-group">
-            <Button label={actualCancelLabel} onClick={handleCancel}/>
+            <Button label={actualCancelLabel} variant="light" onClick={handleCancel}/>
             <Button label={actualConfirmLabel} scheme="red" onClick={handleConfirm}/>
           </div>
         </div>

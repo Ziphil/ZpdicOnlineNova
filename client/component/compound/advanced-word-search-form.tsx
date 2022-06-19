@@ -82,7 +82,7 @@ const AdvancedWordSearchForm = create(
           <AdvancedWordSearchFormElement key={index} {...{index, element, elements, dictionary, mutateParameter}}/>
         ))}
         <div styleName="plus-container">
-          <Button iconName="plus" onClick={mutateParameter((parameter) => elements.push(AdvancedWordParameterElement.createEmpty()))}/>
+          <Button iconName="plus" variant="light" onClick={mutateParameter((parameter) => elements.push(AdvancedWordParameterElement.createEmpty()))}/>
         </div>
         <div styleName="confirm-button-container">
           <Button label={trans("advancedWordSearchForm.confirm")} iconName="check" scheme="blue" onClick={confirmParameter}/>
@@ -151,7 +151,7 @@ const AdvancedWordSearchFormElement = create(
           <Input className={styles!["text"]} value={element.text} label={textLabel} onSet={mutateParameter((parameter, text) => elements[index].text = text)}/>
         </div>
         <div styleName="control-button-container">
-          <Button iconName="minus" disabled={deleteDisabled} onClick={mutateParameter((parameter) => deleteAt(elements, index))}/>
+          <Button iconName="minus" variant="light" disabled={deleteDisabled} onClick={mutateParameter((parameter) => deleteAt(elements, index))}/>
         </div>
       </div>
     );

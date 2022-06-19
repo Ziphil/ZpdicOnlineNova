@@ -238,7 +238,7 @@ const WordEditorRoot = create(
     const [, {trans}] = useIntl();
 
     const cancelButtonNode = (
-      <Button label={trans("wordEditor.cancel")} iconName="times" onClick={onCancel}/>
+      <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
     );
     const discardButtonNode = (word !== null) && (
       <Button label={trans("wordEditor.discard")} iconName="trash-alt" scheme="red" onClick={() => setAlertOpen(true)}/>
@@ -313,7 +313,7 @@ const WordEditorName = create(
     const zatlin = dictionary.getZatlin();
     const generateNode = (zatlin !== null) && (
       <div styleName="control-button">
-        <Button label={trans("wordEditor.generate")} onClick={() => generateName(zatlin)}/>
+        <Button label={trans("wordEditor.generate")} variant="light" onClick={() => generateName(zatlin)}/>
       </div>
     );
     const node = (
@@ -373,7 +373,7 @@ const WordEditorTags = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.tags.push({tempId: nanoid(), string: ""}))}/>
+            <Button iconName="plus" variant="light" onClick={mutateWord((tempWord) => tempWord.tags.push({tempId: nanoid(), string: ""}))}/>
           </div>
         </div>
       );
@@ -438,7 +438,7 @@ const WordEditorTag = create(
             <Input className={styles!["title"]} value={tag.string} suggest={suggest} onSet={mutateWord((tempWord, tag) => tempWord.tags[index].string = tag)}/>
           </div>
           <div styleName="control-button">
-            <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.tags, index))}/>
+            <Button iconName="minus" variant="light" onClick={mutateWord((tempWord) => deleteAt(tempWord.tags, index))}/>
           </div>
         </div>
       </div>
@@ -474,7 +474,7 @@ const WordEditorEquivalents = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.equivalents.push({...Equivalent.createEmpty(), tempId: nanoid(), string: ""}))}/>
+            <Button iconName="plus" variant="light" onClick={mutateWord((tempWord) => tempWord.equivalents.push({...Equivalent.createEmpty(), tempId: nanoid(), string: ""}))}/>
           </div>
         </div>
       );
@@ -546,7 +546,7 @@ const WordEditorEquivalent = create(
             </label>
           </div>
           <div styleName="control-button">
-            <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.equivalents, index))}/>
+            <Button iconName="minus" variant="light" onClick={mutateWord((tempWord) => deleteAt(tempWord.equivalents, index))}/>
           </div>
         </div>
       </div>
@@ -582,7 +582,7 @@ const WordEditorInformations = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.informations.push({...Information.createEmpty(), tempId: nanoid()}))}/>
+            <Button iconName="plus" variant="light" onClick={mutateWord((tempWord) => tempWord.informations.push({...Information.createEmpty(), tempId: nanoid()}))}/>
           </div>
         </div>
       );
@@ -655,7 +655,7 @@ const WordEditorInformation = create(
             </label>
           </div>
           <div styleName="control-button">
-            <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.informations, index))}/>
+            <Button iconName="minus" variant="light" onClick={mutateWord((tempWord) => deleteAt(tempWord.informations, index))}/>
           </div>
         </div>
       </div>
@@ -691,7 +691,7 @@ const WordEditorVariations = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button label={trans("wordEditor.add")} iconName="plus" onClick={mutateWord((tempWord) => tempWord.variations.push({...Variation.createEmpty(), tempId: nanoid()}))}/>
+            <Button iconName="plus" variant="light" onClick={mutateWord((tempWord) => tempWord.variations.push({...Variation.createEmpty(), tempId: nanoid()}))}/>
           </div>
         </div>
       );
@@ -763,7 +763,7 @@ const WordEditorVariation = create(
             </label>
           </div>
           <div styleName="control-button">
-            <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.variations, index))}/>
+            <Button iconName="minus" variant="light" onClick={mutateWord((tempWord) => deleteAt(tempWord.variations, index))}/>
           </div>
         </div>
       </div>
@@ -801,7 +801,7 @@ const WordEditorRelations = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button label={trans("wordEditor.add")} iconName="plus" onClick={() => openRelationChooser(tempWord.relations.length)}/>
+            <Button iconName="plus" variant="light" onClick={() => openRelationChooser(tempWord.relations.length)}/>
           </div>
         </div>
       );
@@ -873,12 +873,12 @@ const WordEditorRelation = create(
               <Label text={trans("wordEditor.relationName")} position="left"/>
               <ControlGroup className={StyleNameUtil.create(styles!["name"], styles!["relation-input"])}>
                 <Input value={relation.name} readOnly={true}/>
-                <Button label={trans("wordEditor.selectRelation")} onClick={() => openRelationChooser(index)}/>
+                <Button label={trans("wordEditor.selectRelation")} variant="light" onClick={() => openRelationChooser(index)}/>
               </ControlGroup>
             </label>
           </div>
           <div styleName="control-button">
-            <Button iconName="minus" onClick={mutateWord((tempWord) => deleteAt(tempWord.relations, index))}/>
+            <Button iconName="minus" variant="light" onClick={mutateWord((tempWord) => deleteAt(tempWord.relations, index))}/>
           </div>
         </div>
       </div>

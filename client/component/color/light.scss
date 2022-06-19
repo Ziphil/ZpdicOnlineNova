@@ -5,9 +5,9 @@
 
 
 $primary-base-color: hsl(30, 40%, 50%);
-$secondary-base-color: hsl(310, 40%, 50%);
-$red-base-color: hsl(0, 45%, 50%);
-$blue-base-color: hsl(200, 60%, 45%);
+$secondary-base-color: hsl(310, 35%, 50%);
+$red-base-color: hsl(0, 35%, 50%);
+$blue-base-color: hsl(200, 40%, 50%);
 
 $colors: (
   background: tint($primary-base-color, 90%),
