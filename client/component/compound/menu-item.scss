@@ -7,7 +7,7 @@ $menu-item-vertical-padding: 10rpx;
 $menu-item-horizontal-padding: 15rpx;
 
 .root {
-  color: $light-color;
+  color: color(accent);
   text-decoration: none;
   display: flex;
   cursor: pointer;

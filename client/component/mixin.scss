@@ -49,15 +49,6 @@ $colors: (
   information: hsl(200, 60%, 45%)
 );
 
-$light-color: map-get($colors, primary);
-
-$link-color: map-get($colors, secondary);
-$link-hover-color: hover-color($link-color, false);
-$pale-link-color: background-color(map-get($colors, primary));
-$pale-link-hover-color: hover-color($pale-link-color, false, false);
-
-$logo-color: darken(map-get($colors, primary), 20%);
-
 $root-size: 16px;
 
 $huge-margin: 24rpx;
@@ -235,7 +226,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   box-shadow: inset $inset-box-shadow-setting schemed-color(input-box-shadow, $scheme);
   outline: none;
   &:focus-within:not(:disabled):not(.disabled) {
-    outline: $focus-size solid schemed-color(focus-outline, $scheme);
+    outline: $focus-size solid schemed-color(focus, $scheme);
   }
   &:disabled,
   &.disabled,
@@ -266,7 +257,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     background-color: schemed-color(hover-button-background, $scheme);
   }
   &:focus:not(:disabled) {
-    outline: $focus-size solid schemed-color(focus-outline, $scheme);
+    outline: $focus-size solid schemed-color(focus, $scheme);
   }
   &:active:not(:disabled) {
     background-color: schemed-color(active-button-background, $scheme);
@@ -296,7 +287,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     background-color: schemed-color(hover-light-button-background, $scheme);
   }
   &:focus:not(:disabled) {
-    outline: $focus-size solid schemed-color(focus-outline, $scheme);
+    outline: $focus-size solid schemed-color(focus, $scheme);
   }
   &:active:not(:disabled) {
     background-color: schemed-color(active-light-button-background, $scheme);

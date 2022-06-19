@@ -22,7 +22,7 @@
 
 .icon {
   font-size: 48rpx;
-  color: map-get($colors, error);
+  color: schemed-color(accent, red);
   text-align: center;
   display: inline-block;
 }

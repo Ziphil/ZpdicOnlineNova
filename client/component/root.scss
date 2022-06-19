@@ -38,7 +38,7 @@ body {
 }
 
 :focus-visible {
-  outline: $focus-size solid color(focus-outline);
+  outline: $focus-size solid color(focus);
 }
 
 :global(.grecaptcha-badge) {

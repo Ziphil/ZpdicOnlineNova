@@ -14,6 +14,6 @@
   display: inline-block;
   position: relative;
   &[data-highlight] {
-    background-color: $link-color;
+    background-color: schemed-color(accent, secondary);
   }
 }

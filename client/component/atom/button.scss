@@ -47,14 +47,14 @@
 }
 
 .simple {
-  color: color(link);
+  color: schemed-color(accent, secondary);
   border-radius: $small-border-radius;
   cursor: pointer;
   &:hover {
-    color: color(hover-link);
+    color: schemed-color(hover-accent, secondary);
   }
   &:focus-visible {
-    outline: $focus-size solid schemed-color(focus-outline, secondary);
+    outline: $focus-size solid schemed-color(focus, secondary);
   }
   &[data-variant="link"] {
     text-decoration: underline;

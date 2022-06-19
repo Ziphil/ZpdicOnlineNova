@@ -54,7 +54,7 @@
 
 .dropdown-icon {
   margin: 0rpx $blank-margin 0rpx 0rpx;
-  color: $light-color;
+  color: color(accent);
 }
 
 .pronunciation {
@@ -80,7 +80,7 @@
 }
 
 .example {
-  @include unordered-list("\F0DA", $light-color, 0.4em);
+  @include unordered-list("\F0DA", color(accent), 0.4em);
   @include line-height;
   margin: 0rpx 0rpx 0rpx 6u;
   padding: 0rpx;
@@ -98,7 +98,7 @@
 
 .example-separator::before {
   margin: 0em $blank-margin;
-  color: $light-color;
+  color: color(accent);
   content: "—";
 }
 
@@ -116,14 +116,14 @@
   @include bold-font;
   margin: $paragraph-margin 0rpx;
   font-size: $tiny-font-size;
-  color: $light-color;
+  color: color(accent);
   display: block;
 }
 
 .confer {
   @include icon-font;
   margin: 0em $blank-margin 0em 0em;
-  color: $light-color;
+  color: color(accent);
 }
 
 .confer::before {

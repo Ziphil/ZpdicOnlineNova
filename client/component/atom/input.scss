@@ -52,11 +52,11 @@
 .eye {
   width: 1.3em;
   margin: 0em 0em 0em $input-horizontal-padding;
-  color: $link-color;
+  color: schemed-color(accent, secondary);
   text-align: center;
   display: inline-block;
   cursor: pointer;
   &:hover {
-    color: $link-hover-color;
+    color: schemed-color(hover-accent, secondary);
   }
 }

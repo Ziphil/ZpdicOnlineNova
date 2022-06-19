@@ -13,7 +13,7 @@
     margin: 0rpx 5rpx 0rpx 0rpx;
   }
   &[data-error] {
-    color: map-get($colors, error);
+    color: schemed-color(accent, red);
   }
 }
 

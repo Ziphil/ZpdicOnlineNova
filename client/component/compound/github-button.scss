@@ -72,7 +72,7 @@
 
 .text {
   margin: $small-margin 0rpx 0rpx 0rpx;
-  color: $link-color;
+  color: schemed-color(accent, secondary);
   text-decoration: underline;
   cursor: pointer;
 }
@@ -83,5 +83,5 @@
 
 .github:hover .text,
 .dashboard:hover .text {
-  color: $link-hover-color;
+  color: schemed-color(hover-accent, secondary);
 }

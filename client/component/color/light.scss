@@ -12,18 +12,17 @@ $blue-base-color: hsl(200, 60%, 45%);
 $colors: (
   background: tint($primary-base-color, 90%),
   strong-background: tint($primary-base-color, 75%),
-  white-background: tint($primary-base-color, 98%),
+  white-background: tint($primary-base-color, 95%),
   input-background: white,
   text: shade($primary-base-color, 60%),
   footer-text: $primary-base-color,
   accent: $primary-base-color,
-  link: $secondary-base-color,
-  hover-link: tint($secondary-base-color, 30%),
   icon: $primary-base-color,
-  nprogress: $secondary-base-color,
-  border: tint($primary-base-color, 35%),
-  light-border: tint($primary-base-color, 70%),
-  focus-outline: rgba($primary-base-color, 0.3)
+  nprogress: $primary-base-color,
+  logo: shade($primary-base-color, 40%),
+  border: tint($primary-base-color, 40%),
+  light-border: tint($primary-base-color, 75%),
+  focus: rgba($primary-base-color, 0.3)
 );
 
 $schemed-colors: (
@@ -40,9 +39,9 @@ $schemed-colors: (
     blue: tint($blue-base-color, 30%)
   ),
   border: (
-    primary: tint($primary-base-color, 35%),
-    red: tint($red-base-color, 35%),
-    blue: tint($blue-base-color, 35%),
+    primary: tint($primary-base-color, 40%),
+    red: tint($red-base-color, 40%),
+    blue: tint($blue-base-color, 40%),
   ),
   input-box-shadow: (
     primary: rgba($primary-base-color, 0.1),
@@ -114,13 +113,14 @@ $schemed-colors: (
     red: rgba($red-base-color, 0.1),
     blue: rgba($blue-base-color, 0.1)
   ),
-  focus-outline: (
+  focus: (
     primary: rgba($primary-base-color, 0.3),
     secondary: rgba($secondary-base-color, 0.3),
     red: rgba($red-base-color, 0.3),
     blue: rgba($blue-base-color, 0.3)
   )
 );
+
 
 html[data-theme="light"] {
   @include color-variables($colors, $schemed-colors);

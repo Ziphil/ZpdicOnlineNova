@@ -32,7 +32,7 @@
 }
 
 .root ul {
-  @include unordered-list("\F0DA", $light-color, 0.4em);
+  @include unordered-list("\F0DA", color(accent), 0.4em);
   @include reset-first-margin;
   @include line-height;
   margin: $paragraph-margin 0rpx 0rpx 6u;
@@ -40,7 +40,7 @@
 }
 
 .root ol {
-  @include ordered-list($light-color);
+  @include ordered-list(color(accent));
   @include reset-first-margin;
   @include line-height;
   margin: $paragraph-margin 0rpx 0rpx 0rpx;
@@ -160,11 +160,11 @@
 }
 
 .root a {
-  color: $link-color;
+  color: schemed-color(accent, secondary);
   text-decoration: underline;
   cursor: pointer;
 }
 
 .root a:hover {
-  color: $link-hover-color;
+  color: schemed-color(hover-accent, secondary);
 }

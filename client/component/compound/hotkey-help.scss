@@ -34,7 +34,7 @@
   @include bold-font;
   margin: 0rpx 0rpx $paragraph-margin 0rpx;
   font-size: $tiny-font-size;
-  color: $light-color;
+  color: color(accent);
 }
 
 .table-wrapper {
@@ -75,7 +75,7 @@
   font-size: inherit;
   text-align: left;
   line-height: 1;
-  border: 1rpx $light-color solid;
+  border: 1rpx color(accent) solid;
   border-bottom-width: 2rpx;
   border-radius: $small-border-radius;
   display: inline-block;
@@ -94,5 +94,5 @@
 
 .arrow {
   margin: 0em $blank-margin;
-  color: $light-color;
+  color: color(accent);
 }
