@@ -10,10 +10,7 @@
   font-weight: normal;
   color: color(background);
   border-radius: 1em;
-  background-color: color(accent);
+  background-color: var(--badge-background-color);
   display: inline-block;
   position: relative;
-  &[data-highlight] {
-    background-color: schemed-color(accent, secondary);
-  }
 }

@@ -35,6 +35,7 @@ $menu-item-horizontal-padding: 15rpx;
   }
   &.highlight {
     @include bold-font;
+    --badge-background-color: #{schemed-color(accent, secondary)};
     color: schemed-color(accent, secondary);
   }
 }

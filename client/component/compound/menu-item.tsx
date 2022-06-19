@@ -68,7 +68,7 @@ const MenuItem = create(
           {label}
         </span>
         {(badgeValue !== undefined && badgeValue > 0) && (
-          <Badge className={styles!["badge"]} value={badgeValue} variant={(highlight) ? "highlight" : "normal"}/>
+          <Badge className={styles!["badge"]} value={badgeValue}/>
         )}
       </a>
     );
