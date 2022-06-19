@@ -787,6 +787,7 @@ errorPage:
   back: "Back to top page"
   description: >-
     An unexpected error has occurred.
+    Please contact the administrator with the following error message.
 languagePage:
   title: "Choose language"
 loginPage:
