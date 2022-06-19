@@ -10,12 +10,13 @@
 }
 
 .github {
-  color: color(border);
+  color: color(accent);
   text-decoration: none;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; 
+  cursor: pointer;
 }
 
 .icon-wrapper {
@@ -25,17 +26,17 @@
 
 .icon {
   font-size: 40rpx;
-  color: color(border);
+  color: color(accent);
   line-height: 0;
 }
 
 .star-wrapper {
   height: 36rpx;
-  margin: 0rpx 0rpx 0rpx 48u;
-  padding: 0rpx 32u;
+  margin: 0rpx 0rpx 0rpx 16rpx;
+  padding: 0rpx 10rpx;
   font-size: 24rpx;
-  line-height: 36rpx;
-  border: 1rpx color(border) solid;
+  line-height: 34rpx;
+  border: 1rpx solid color(border);
   border-radius: $large-border-radius;
   display: inline-block;
   position: relative;
@@ -73,6 +74,7 @@
   margin: $small-margin 0rpx 0rpx 0rpx;
   color: $link-color;
   text-decoration: underline;
+  cursor: pointer;
 }
 
 .dashboard {
