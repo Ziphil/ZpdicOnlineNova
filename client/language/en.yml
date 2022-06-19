@@ -457,6 +457,11 @@ featurePane:
     text: >-
       Multiple users can edit the same dictionary at the same time by giving them permission to edit.
       Collaborative creation of a constructed language can be easily realised.
+footer:
+  notification: "Notifications"
+  document: "Documents"
+  contact: "Contact"
+  language: "Languages"
 giftPane:
   sendGift: "Send gift"
   information: >-
@@ -469,10 +474,6 @@ githubButton:
   dashboard: "Dev dashboard"
 header:
   dictionaryList: "Dictionaries"
-  notification: "Notifications"
-  document: "Documents"
-  contact: "Contact"
-  language: "Languages"
   dashboard: "User page"
 hotkeyHelp:
   title: "List of shortcuts"

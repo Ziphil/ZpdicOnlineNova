@@ -13,13 +13,14 @@
 }
 
 .content {
-  padding-block: $small-margin;
-  font-size: $tiny-font-size;
+  padding-block: $medium-margin;
+  font-size: $small-font-size;
   color: color(footer-text);
   border-block-start: 1rpx solid color(border);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: $huge-margin;
 }
 
 .content a,
@@ -27,19 +28,21 @@
   color: color(footer-text);
   text-decoration: underline;
   cursor: pointer;
-}
-
-.left {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  &:hover {
+    color: schemed-color(hover-accent, primary);
+  }
 }
 
 .copyright {
   @include line-height($tooltip-line-height);
 }
 
+.recaptcha {
+  margin-block-start: $tiny-margin;
+  font-size: $tiny-font-size;
+}
+
 .right {
-  margin: 0rpx 0rpx 0rpx $huge-margin;
-  text-align: right;
+  display: flex;
+  gap: $control-horizontal-margin;
 }
