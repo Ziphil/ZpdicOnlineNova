@@ -31,7 +31,8 @@ $schemed-colors: (
     primary: $primary-base-color,
     secondary: $secondary-base-color,
     red: $red-base-color,
-    blue: $blue-base-color
+    blue: $blue-base-color,
+    white: inherit
   ),
   hover-accent: (
     primary: tint($primary-base-color, 30%),
@@ -43,16 +44,19 @@ $schemed-colors: (
     primary: tint($primary-base-color, 40%),
     red: tint($red-base-color, 40%),
     blue: tint($blue-base-color, 40%),
+    white: white
   ),
   background: (
     primary: tint($primary-base-color, 85%),
     red: tint($red-base-color, 85%),
     blue: tint($blue-base-color, 85%),
+    white: tint($primary-base-color, 95%),
   ),
   hover-background: (
     primary: tint($primary-base-color, 80%),
     red: tint($red-base-color, 80%),
     blue: tint($blue-base-color, 80%),
+    white: tint($primary-base-color, 98%),
   ),
   input-box-shadow: (
     primary: rgba($primary-base-color, 0.1),

@@ -142,7 +142,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   margin-left: 0.9em + $blank-margin;
   text-align: justify;
   position: relative;
-  counter-increment: list;
+  counter-increment: ordered-list;
   &::before {
     top: 0.5em;
     width: 0.8em * div(100%, 70%);
@@ -155,7 +155,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     text-align: center;
     border: 1rpx $number-color solid;
     border-radius: 50%;
-    content: counter(list);
+    content: counter(ordered-list);
     display: inline-block;
     position: absolute;
   }
@@ -256,18 +256,6 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   }
   &:disabled:hover {
     cursor: not-allowed;
-  }
-}
-
-@mixin white-pane($hover: false) {
-  color: inherit;
-  border: 1rpx rgba(white, 0.8) solid;
-  border-radius: $large-border-radius;
-  background-color: rgba(white, 0.5);
-  @if $hover {
-    &:hover {
-      background-color: rgba(white, 0.7);
-    }
   }
 }
 
