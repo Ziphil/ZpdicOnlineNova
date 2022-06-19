@@ -27,7 +27,7 @@ const Icon = create(
     flip?: "horizontal" | "vertical" | "both" | undefined,
     spin?: boolean,
     pulse?: boolean,
-    slashed?: boolean
+    slashed?: boolean,
     className?: string
   }): ReactElement {
 

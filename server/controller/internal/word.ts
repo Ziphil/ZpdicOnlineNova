@@ -89,7 +89,7 @@ export class WordController extends Controller {
     if (dictionary) {
       try {
         const promises = specs.map(async ({wordNumber, relation}) => {
-          await dictionary!.addRelation(wordNumber, relation);
+          await dictionary.addRelation(wordNumber, relation);
         });
         const results = await Promise.allSettled(promises);
         const rejectedResult = results.find((result) => result.status === "rejected") as PromiseRejectedResult | undefined;

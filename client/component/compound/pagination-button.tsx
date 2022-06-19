@@ -30,7 +30,7 @@ const PaginationButton = create(
     styles
   }: {
     page: number,
-    minPage: number
+    minPage: number,
     maxPage: number,
     enableHotkeys?: boolean,
     onSet?: (page: number) => void,
