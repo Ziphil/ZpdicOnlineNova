@@ -12,6 +12,7 @@
 .github {
   color: color(accent);
   text-decoration: none;
+  border-radius: $small-border-radius;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -74,7 +75,11 @@
   margin: $small-margin 0rpx 0rpx 0rpx;
   color: schemed-color(accent, secondary);
   text-decoration: underline;
+  border-radius: $small-border-radius;
   cursor: pointer;
+  &:focus-visible {
+    outline: $focus-size solid schemed-color(focus, secondary);
+  }
 }
 
 .dashboard {

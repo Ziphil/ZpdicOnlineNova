@@ -7,13 +7,13 @@
   border-radius: $small-border-radius;
   display: flex;
   flex-direction: row;
-  overflow: hidden;
 }
 
 .button {
   width: 2em;
   color: color(accent);
   text-align: center;
+  border-radius: $small-border-radius;
   cursor: pointer;
   .leftmost &,
   .rightmost & {
