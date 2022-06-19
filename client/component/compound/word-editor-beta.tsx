@@ -11,6 +11,7 @@ import {
   MouseEvent,
   ReactElement,
   SetStateAction,
+  Suspense,
   useCallback,
   useRef,
   useState
@@ -33,6 +34,7 @@ import {
 import Label from "/client/component/atom/label";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
+import Loading from "/client/component/compound/loading";
 import ResourceList from "/client/component/compound/resource-list";
 import WordSearcher from "/client/component/compound/word-searcher";
 import {
@@ -186,7 +188,9 @@ const WordEditor = create(
           <WordSearcher dictionary={dictionary} style="simple" showButton={true} showDirectionButton={true} onSubmit={editRelation}/>
         </Overlay>
         <Overlay size="large" title={trans("resourceList.title")} open={resourceListOpen} onClose={() => setResourceListOpen(false)}>
-          <ResourceList dictionary={dictionary} size={10} showCode={true} showInstruction={true}/>
+          <Suspense fallback={<Loading loading={true}/>}>
+            <ResourceList dictionary={dictionary} size={10} showCode={true} showInstruction={true}/>
+          </Suspense>
         </Overlay>
         <Alert
           text={trans("wordEditor.alert")}
