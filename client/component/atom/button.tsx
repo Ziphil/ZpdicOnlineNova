@@ -5,6 +5,7 @@ import {
   MouseEvent,
   ReactElement,
   useCallback,
+  useRef,
   useState
 } from "react";
 import {
@@ -36,6 +37,7 @@ const Button = create(
     iconName,
     position = "alone",
     variant = "normal",
+    scheme = "primary",
     hideLabel = false,
     reactive = false,
     disabled = false,
@@ -46,7 +48,8 @@ const Button = create(
     label?: string,
     iconName?: IconName,
     position?: "alone" | "left" | "right" | "middle",
-    variant?: "normal" | "caution" | "information" | "simple" | "link",
+    variant?: "normal" | "light" | "link" | "simple",
+    scheme?: "primary" | "red" | "blue",
     hideLabel?: boolean,
     reactive?: boolean,
     disabled?: boolean,
@@ -56,7 +59,7 @@ const Button = create(
   }): ReactElement {
 
     const [loading, setLoading] = useState(false);
-    const [promise, setPromise] = useState<CancelablePromise<void> | null>(null);
+    const promiseRef = useRef<CancelablePromise<void> | null>(null);
 
     const handleClick = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       event.preventDefault();
@@ -65,12 +68,9 @@ const Button = create(
         if (onClick) {
           const result = onClick(event);
           if (typeof result === "object" && typeof result.then === "function") {
-            const nextPromise = new CancelablePromise(result);
-            setPromise(nextPromise);
-            nextPromise.then(() => {
-              setLoading(false);
-            }, (error) => {
-            });
+            const promise = new CancelablePromise(result);
+            promiseRef.current = promise;
+            promise.then(() => setLoading(false)).catch(() => null);
           } else {
             setLoading(false);
           }
@@ -78,20 +78,19 @@ const Button = create(
           setLoading(false);
         }
       } else {
-        if (onClick) {
-          onClick(event);
-        }
+        onClick?.(event);
       }
     }, [reactive, onClick]);
 
     useUnmount(() => {
-      promise?.cancel();
+      promiseRef.current?.cancel();
     });
 
     const styleName = (variant === "simple" || variant === "link") ? "simple" : "button";
     const data = DataUtil.create({
       position: (position !== "alone") ? position : undefined,
-      intent: (variant === "caution") ? "caution" : (variant === "information") ? "information" : undefined,
+      variant,
+      scheme,
       onlyIcon: label === undefined,
       link: variant === "link",
       hideLabel,
@@ -103,7 +102,7 @@ const Button = create(
         {(label !== undefined) && <span styleName="label">{label}</span>}
         {(reactive) && (
           <span styleName="spinner-wrapper">
-            <Icon name="spinner" pulse={true}/>
+            <Icon name="circle-notch" spin={true}/>
           </span>
         )}
       </button>

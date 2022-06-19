@@ -5,15 +5,15 @@
 
 .root {
   padding: $large-margin 0rpx;
-  border-bottom: 1rpx $invert-border-color solid;
+  border-bottom: 1rpx color(light-border) solid;
 }
 
 .root:first-child {
-  border-top: 1rpx $light-border-color solid;
+  border-top: 1rpx color(border) solid;
 }
 
 .root:last-child {
-  border-bottom: 1rpx $light-border-color solid;
+  border-bottom: 1rpx color(border) solid;
 }
 
 .head-wrapper {
@@ -24,7 +24,7 @@
 
 .head-wrapper .icon {
   font-size: 32rpx;
-  color: $head-color;
+  color: color(accent);
   text-align: center;
   display: inline-block;
 }
@@ -36,7 +36,7 @@
 .date {
   margin: 0rpx;
   font-size: $tiny-font-size;
-  color: $head-color;
+  color: color(accent);
 }
 
 .head {
@@ -44,7 +44,7 @@
   margin: $tiny-margin 0rpx 0rpx 0rpx;
   padding: 0rpx;
   font-size: $large-font-size;
-  color: $head-color;
+  color: color(accent);
 }
 
 .fixed {

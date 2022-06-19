@@ -5,7 +5,24 @@
 
 
 .button {
-  @include button(map-get($colors, primary));
+  &[data-variant="normal"][data-scheme="primary"] {
+    @include button(primary);
+  }
+  &[data-variant="normal"][data-scheme="red"] {
+    @include button(red);
+  }
+  &[data-variant="normal"][data-scheme="blue"] {
+    @include button(blue);
+  }
+  &[data-variant="light"][data-scheme="primary"] {
+    @include light-button(primary);
+  }
+  &[data-variant="light"][data-scheme="red"] {
+    @include light-button(red);
+  }
+  &[data-variant="light"][data-scheme="blue"] {
+    @include light-button(blue);
+  }
   &[data-position="left"],
   [data-control-group] >&:first-child,
   [data-control-group] >:first-child & {
@@ -23,35 +40,23 @@
     margin: 0rpx -1rpx 0rpx 0rpx;
     border-radius: 0rpx;
   }
-  &[data-only-icon] {
+  &[data-only-icon][data-only-icon] {
     width: 2.2em;
-    padding-left: 0em;
-    padding-right: 0em;
+    padding-inline: 0em;
   }
-}
-
-.button[data-intent="caution"] {
-  @include button(map-get($colors, error));
-}
-
-.button[data-intent="information"] {
-  @include button(map-get($colors, information));
 }
 
 .simple {
-  padding: 0em;
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-  color: $link-color;
-  border: none;
-  background: none;
+  color: schemed-color(accent, secondary);
+  border-radius: $small-border-radius;
   cursor: pointer;
-  outline: none;
   &:hover {
-    color: $link-hover-color;
+    color: schemed-color(hover-accent, secondary);
   }
-  &[data-link] {
+  &:focus-visible {
+    outline: $focus-size solid schemed-color(focus, secondary);
+  }
+  &[data-variant="link"] {
     text-decoration: underline;
   }
 }
@@ -65,7 +70,7 @@
 
 .label {
   .icon +& {
-    margin: 0em 0em 0em $blank-margin;
+    margin-inline-start: $blank-margin;
   }
   .button[data-hide-label] >&,
   .simple[data-hide-label] >& {

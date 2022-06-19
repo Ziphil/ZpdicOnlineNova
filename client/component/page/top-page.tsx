@@ -45,37 +45,39 @@ const TopPage = create(
     const dashboardFormData = DataUtil.create({hidden: me === null});
     const node = (
       <Page title="">
-        <div styleName="top">
-          <div styleName="logo">
-            <Logo/>
+        <div styleName="root">
+          <div styleName="top">
+            <div styleName="logo">
+              <Logo/>
+            </div>
+            <div styleName="login-form-container">
+              <FormPane>
+                <div styleName="login-form" {...loginFormData}>
+                  <LoginForm showRegister={true}/>
+                </div>
+                <div styleName="dashboard-button-form" {...dashboardFormData}>
+                  <DashboardButtonForm/>
+                </div>
+              </FormPane>
+            </div>
           </div>
-          <div styleName="login-form-container">
-            <FormPane>
-              <div styleName="login-form" {...loginFormData}>
-                <LoginForm showRegister={true}/>
-              </div>
-              <div styleName="dashboard-button-form" {...dashboardFormData}>
-                <DashboardButtonForm/>
-              </div>
-            </FormPane>
+          <div styleName="aggregation">
+            <OverallAggregationPane/>
           </div>
-        </div>
-        <div styleName="aggregation">
-          <OverallAggregationPane/>
-        </div>
-        <div styleName="border feature">
-          <FeaturePane/>
-        </div>
-        <div styleName="border notification">
-          <NotificationList size={1} showPagination={false}/>
-        </div>
-        <div styleName="border last">
-          <div styleName="github">
-            <GithubButton/>
-            <ContributorList rawContributors={rawContributors}/>
+          <div styleName="border feature">
+            <FeaturePane/>
           </div>
-          <div styleName="gift">
-            <GiftPane/>
+          <div styleName="border notification">
+            <NotificationList size={1} showPagination={false}/>
+          </div>
+          <div styleName="border last">
+            <div styleName="github">
+              <GithubButton/>
+              <ContributorList rawContributors={rawContributors}/>
+            </div>
+            <div styleName="gift">
+              <GiftPane/>
+            </div>
           </div>
         </div>
       </Page>

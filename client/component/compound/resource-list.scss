@@ -29,5 +29,5 @@
 }
 
 .caution {
-  color: map-get($colors, error);
+  color: schemed-color(accent, red);
 }

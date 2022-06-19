@@ -75,8 +75,8 @@ const InvitationPane = create(
           </div>
         </div>
         <div styleName="setting">
-          <Button label={trans("invitationPane.reject")} iconName="ban" variant="caution" reactive={true} onClick={(event) => respondInvitation(event, false)}/>
-          <Button label={trans("invitationPane.accept")} iconName="thumbs-up" variant="information" reactive={true} onClick={(event) => respondInvitation(event, true)}/>
+          <Button label={trans("invitationPane.reject")} iconName="ban" scheme="red" reactive={true} onClick={(event) => respondInvitation(event, false)}/>
+          <Button label={trans("invitationPane.accept")} iconName="thumbs-up" scheme="blue" reactive={true} onClick={(event) => respondInvitation(event, true)}/>
         </div>
       </WhitePane>
     );

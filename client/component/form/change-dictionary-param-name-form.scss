@@ -28,6 +28,6 @@
 .url::before {
   @include icon-font;
   margin: 0em $blank-margin 0em 0em;
-  color: $light-color;
+  color: color(accent);
   content: "\F0A4";
 }

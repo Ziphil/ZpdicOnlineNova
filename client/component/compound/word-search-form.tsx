@@ -145,7 +145,7 @@ const WordSearchForm = create(
         onClose={() => setSearchFormOpen(false)}
       />
     );
-    const iconNode = (searching) ? <Icon className={styles!["icon"]} name="spinner" pulse={true}/> : <Icon className={styles!["icon"]} name="search"/>;
+    const iconNode = (searching) ? <Icon className={styles!["icon"]} name="circle-notch" spin={true}/> : <Icon className={styles!["icon"]} name="search"/>;
     const node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>

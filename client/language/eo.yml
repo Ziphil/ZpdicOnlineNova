@@ -457,6 +457,11 @@ featurePane:
     text: >-
       Multaj uzantoj samtempe povas redakti saman vortaron, donante redaktan permoson al ili.
       Kunlabora kreado de konstruita lingvo estas facile realigebla.
+footer:
+  notification: "Sciigoj"
+  document: "Dokumentoj"
+  contact: "Kontakti"
+  language: "Lingvoj"
 giftPane:
   sendGift: "Sendi donacon"
   information: >-
@@ -469,10 +474,6 @@ githubButton:
   dashboard: "Evolupanelo"
 header:
   dictionaryList: "Vortaroj"
-  notification: "Sciigoj"
-  document: "Dokumentoj"
-  contact: "Kontakti"
-  language: "Lingvoj"
   dashboard: "Uzanta paĝo"
 hotkeyHelp:
   title: "Listo de fulmoklavoj"

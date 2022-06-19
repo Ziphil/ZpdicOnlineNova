@@ -5,39 +5,44 @@
 
 .root {
   width: 100%;
-  height: $footer-height;
+  padding-inline: $page-horizontal-margin;
   z-index: 100;
+  @include smartphone {
+    padding-inline: $page-small-horizontal-margin;
+  }
 }
 
-.container {
-  @include header-container;
-  font-size: 12rpx;
-  color: $footer-color;
-  line-height: 1;
-  border-top: 1rpx border-color($footer-color) solid;
+.content {
+  padding-block: $medium-margin;
+  font-size: $small-font-size;
+  color: color(footer-text);
+  border-block-start: 1rpx solid color(border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-sizing: border-box;
+  gap: $huge-margin;
 }
 
-.container a,
-.container .link {
-  color: $footer-color;
+.content a,
+.content .link {
+  color: color(footer-text);
   text-decoration: underline;
-}
-
-.left {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  cursor: pointer;
+  &:hover {
+    color: schemed-color(hover-accent, primary);
+  }
 }
 
 .copyright {
   @include line-height($tooltip-line-height);
 }
 
+.recaptcha {
+  margin-block-start: $tiny-margin;
+  font-size: $tiny-font-size;
+}
+
 .right {
-  margin: 0rpx 0rpx 0rpx $huge-margin;
-  text-align: right;
+  display: flex;
+  gap: $control-horizontal-margin;
 }

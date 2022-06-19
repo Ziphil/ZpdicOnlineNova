@@ -24,9 +24,9 @@
 }
 
 .source >:nth-child(2) *[class~="CodeMirror-scroll"] {
-  min-height: 900u;
+  min-height: 300rpx;
 }
 
 .error-message >:nth-child(2) *[class~="CodeMirror-scroll"] {
-  min-height: 450u;
+  min-height: 150rpx;
 }

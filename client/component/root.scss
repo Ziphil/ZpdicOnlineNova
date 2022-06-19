@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+@use "/client/component/theme/light.scss";
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Simonetta:400&display=swap");
@@ -7,6 +8,12 @@
 @import "/client/component/highlight.scss";
 @import "/client/component/atom/portal.scss";
 
+
+*:where(:not(iframe, canvas, img, svg, video):not(svg *)) {
+  all: unset;
+  display: revert;
+  box-sizing: border-box;
+}
 
 html {
   font-size: $root-size;
@@ -20,9 +27,9 @@ body {
   padding: 0rpx;
   font-family: $european-font-family, $japanese-font-family, sans-serif;
   font-feature-settings: "palt" 1, "pkna" 1, "lnum" 1;
-  color: $text-color;
+  color: color(text);
   line-height: 1;
-  background-color: $background-color;
+  background-color: color(background);
   overflow-x: auto;
   overflow-y: scroll;
   text-decoration-skip-ink: none;
@@ -31,7 +38,7 @@ body {
 }
 
 :focus-visible {
-  outline: $focus-size focus-box-shadow-color(map-get($colors, primary)) solid;
+  outline: $focus-size solid color(focus);
 }
 
 :global(.grecaptcha-badge) {
@@ -47,7 +54,7 @@ body {
   height: 2rpx;
   top: 0rpx;
   left: 0rpx;
-  background-color: darken(map-get($colors, information), 0%);
+  background-color: color(nprogress);
   position: fixed;
   z-index: 10001;
 }

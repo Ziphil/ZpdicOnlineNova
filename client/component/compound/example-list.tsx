@@ -51,7 +51,8 @@ const ExampleList = create(
         hitSize={hitSize}
         page={page}
         onPageSet={onPageSet}
-        renderer={(example) => (
+      >
+        {(example) => (
           <ExamplePane
             key={example.id}
             example={example}
@@ -60,7 +61,7 @@ const ExampleList = create(
             onDiscardConfirm={onDiscardConfirm && partial(onDiscardConfirm, example)}
           />
         )}
-      />
+      </PaneList>
     );
     return node;
 

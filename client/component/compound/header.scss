@@ -1,74 +1,68 @@
 @charset "utf-8";
 
+@use "sass:math" as *;
 @import "/client/component/mixin.scss";
 
 
 .root {
   width: 100%;
-  height: $header-height;
-  top: 0rpx;
-  left: 0rpx;
-  border-bottom: 1rpx $dark-border-color solid;
-  background-color: $header-background-color;
-  position: absolute;
+  padding-block: $large-margin;
+  padding-inline: $page-horizontal-margin;
+  border-block-end: 1rpx solid color(border);
+  background-color: color(white-background);
+  display: flex;
+  justify-content: center;
+  position: sticky;
   z-index: 100;
+  @include smartphone {
+    padding-inline: $page-small-horizontal-margin;
+  }
 }
 
-.container {
-  @include header-container;
+.content {
+  width: 100%;
+  max-width: $page-width;
+}
+
+.top {
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.left {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 .title {
   font-family: $special-font-family;
-  font-size: 40rpx;
-  color: $background-color;
+  font-size: 32rpx;
+  color: color(accent);
+  letter-spacing: 0.1em;
   line-height: 1;
+  &[data-small] {
+    font-size: $medium-font-size;
+  }
 }
 
-.menu >* {
-  @include reset-first-margin;
-  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
-}
-
-.language {
-  color: $background-color;
-  line-height: 1;
-}
-
-.language .icon {
-  @include icon-font;
-  margin: 0rpx $blank-margin 0rpx 0rpx;
-}
-
-.language .link {
-  text-decoration: none;
-  display: inline-block;
-  color: $pale-link-color;
-  cursor: pointer;
-}
-
-.language .link:hover {
-  color: $pale-link-hover-color;
+.dictionary-name {
+  @include bold-font;
+  margin-block-start: div($tiny-margin + $small-margin, 2);
+  font-size: $huge-font-size;
 }
 
 .right {
-  margin: 0rpx 0rpx 0rpx $huge-margin;
-}
-
-.name {
-  color: $background-color;
+  display: flex;
+  gap: $control-horizontal-margin;
 }
 
 .separator {
-  border-right: 1rpx rgba($background-color, 0.5) solid;
+  border-right: 1rpx solid color(light-border);
   display: inline;
+}
+
+.home-container {
+  font-size: 32rpx;
+}
+
+.addition {
+  margin-block-start: $large-margin;
+  padding-block-start: $large-margin;
+  border-block-start: 1rpx solid color(light-border);
 }

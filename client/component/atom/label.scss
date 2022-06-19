@@ -5,19 +5,19 @@
 
 .root {
   font-size: $tiny-font-size;
-  color: map-get($colors, primary);
+  color: color(accent);
+  &[data-error] {
+    color: schemed-color(accent, red);
+  }
   &[data-position="top"] {
     margin: 0rpx 0rpx 3rpx 0rpx;
   }
   &[data-position="left"] {
     margin: 0rpx 5rpx 0rpx 0rpx;
   }
-  &[data-error] {
-    color: map-get($colors, error);
-  }
 }
 
 .required,
 .optional {
-  margin: 0em 0em 0em $blank-margin;
+  margin-inline-start: $blank-margin;
 }

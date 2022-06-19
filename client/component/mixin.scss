@@ -2,95 +2,28 @@
 
 @use "sass:math" as *;
 @import "/client/component/function.scss";
+@import "/client/component/color.scss";
 
-
-@function background-color($color) {
-  @return tint($color, 83%);
-}
-
-@function border-color($color, $light: true) {
-  @if $light {
-    @return $color;
-  } @else {
-    @return rgba(black, 0.3);
-  }
-}
-
-@function hover-color($color, $box: true, $light: true) {
-  @if $box {
-    @if $light {
-      @return tint($color, 10%);
-    } @else {
-      @return darken($color, 5%);
-    }
-  } @else {
-    @if $light {
-      @return tint($color, 30%);
-    } @else {
-      @return darken($color, 15%);
-    }
-  }
-}
-
-@function gradient-color($color) {
-  @return darken($color, 10%);
-}
-
-@function focus-box-shadow-color($color) {
-  @return rgba($color, 0.3)
-}
-
-
-$colors: (
-  primary: hsl(30, 40%, 50%),
-  secondary: hsl(310, 40%, 50%),
-  error: hsl(0, 45%, 50%),
-  information: hsl(200, 60%, 45%)
-);
-
-$background-color: background-color(map-get($colors, primary));
-$strong-background-color: darken($background-color, 10%);
-$header-background-color: darken(map-get($colors, primary), 10%);
-
-$text-color: hsl(30, 40%, 22%);
-
-$light-color: map-get($colors, primary);
-$light-border-color: border-color(map-get($colors, primary));
-$dark-border-color: border-color(map-get($colors, primary), false);
-$invert-border-color: rgba($light-border-color, 0.3);
-
-$link-color: map-get($colors, secondary);
-$link-hover-color: hover-color($link-color, false);
-$pale-link-color: $background-color;
-$pale-link-hover-color: hover-color($pale-link-color, false, false);
-
-$logo-color: darken(map-get($colors, primary), 20%);
-$head-color: map-get($colors, primary);
-$footer-color: map-get($colors, primary);
 
 $root-size: 16px;
 
-$huge-margin: 30rpx;
-$large-margin: 20rpx;
-$medium-margin: 15rpx;
-$small-margin: 10rpx;
-$tiny-margin: 5rpx;
+$huge-margin: 24rpx;
+$large-margin: 16rpx;
+$medium-margin: 12rpx;
+$small-margin: 8rpx;
+$tiny-margin: 4rpx;
 
-$control-vertical-margin: 15rpx;
-$control-horizontal-margin: 15rpx;
-$small-control-horizontal-margin: 10rpx;
+$control-vertical-margin: 12rpx;
+$control-horizontal-margin: 12rpx;
+$small-control-horizontal-margin: 12rpx;
 $small-control-vertical-margin: 8rpx;
-$paragraph-margin: 10rpx;
+$paragraph-margin: 12rpx;
 
-$page-width: 800rpx;
-$page-top-margin: 60rpx;
-$page-bottom-margin: 80rpx;
-$page-horizontal-margin: 50rpx;
-$page-small-horizontal-margin: 30rpx;
-
-$header-height: 70rpx;
-$dictionary-header-height: 50rpx;
-$footer-height: 50rpx;
+$page-width: 1000rpx;
+$page-top-margin: 48rpx;
+$page-bottom-margin: 48rpx;
+$page-horizontal-margin: 40rpx;
+$page-small-horizontal-margin: 28rpx;
 
 $box-vertical-padding: 0.125em;
 $box-horizontal-padding: 0.5em;
@@ -105,14 +38,13 @@ $huge-font-size: 22rpx;
 $large-font-size: 19rpx;
 $medium-font-size: 16rpx;
 $small-font-size: 14rpx;
-$tiny-font-size: 13rpx;
+$tiny-font-size: 12rpx;
 
-$icon-width: 1.25em;
 $focus-size: 2rpx;
 $blank-margin: 0.3em;
+$disabled-opacity: 0.4;
 
 $inset-box-shadow-setting: 0rpx 2rpx 3rpx;
-
 $small-border-radius: 3rpx;
 $large-border-radius: 5rpx;
 
@@ -150,14 +82,14 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   &::before {
     width: 0rpx;
     height: 0rpx;
-    margin-top: - line-intrusion($line-height);
+    margin-block-start: - line-intrusion($line-height);
     display: block;
     content: "";
   }
   &::after {
     width: 0rpx;
     height: 0rpx;
-    margin-bottom: - line-intrusion($line-height);
+    margin-block-end: - line-intrusion($line-height);
     display: block;
     content: "";
   }
@@ -169,27 +101,6 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     &:first-child {
       #{$property-name}: 0rpx;
     }
-  }
-}
-
-@mixin page($additional-top-margin) {
-  margin-top: $page-top-margin + $additional-top-margin;
-  margin-bottom: $page-bottom-margin;
-  margin-right: $page-horizontal-margin;
-  margin-left: $page-horizontal-margin;
-  padding: 0rpx;
-  box-sizing: border-box;
-  @include smartphone {
-    margin-right: $page-small-horizontal-margin;
-    margin-left: $page-small-horizontal-margin;
-  }
-}
-
-@mixin header-container {
-  margin: 0rpx $page-horizontal-margin;
-  height: 100%;
-  @include smartphone {
-    margin: 0rpx $page-small-horizontal-margin;
   }
 }
 
@@ -231,7 +142,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   margin-left: 0.9em + $blank-margin;
   text-align: justify;
   position: relative;
-  counter-increment: list;
+  counter-increment: ordered-list;
   &::before {
     top: 0.5em;
     width: 0.8em * div(100%, 70%);
@@ -244,7 +155,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     text-align: center;
     border: 1rpx $number-color solid;
     border-radius: 50%;
-    content: counter(list);
+    content: counter(ordered-list);
     display: inline-block;
     position: absolute;
   }
@@ -259,40 +170,24 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   }
 }
 
-@function input-box-shadow-color($color) {
-  @return rgba($color, 0.1);
-}
-
-@mixin input($color, $dye: false) {
+@mixin input($scheme: primary) {
   width: 100%;
-  padding: $input-vertical-padding $input-horizontal-padding;
-  font-family: inherit;
-  font-size: inherit;
-  color: inherit;
+  padding-block: $input-vertical-padding;
+  padding-inline: $input-horizontal-padding;
   line-height: $line-height;
-  border: 1rpx border-color($color) solid;
+  text-align: left;
+  border: 1rpx solid schemed-color(border, $scheme);
   border-radius: $small-border-radius;
-  background-color: white;
-  box-shadow: inset $inset-box-shadow-setting input-box-shadow-color($color);
-  box-sizing: border-box;
+  background-color: color(input-background);
+  box-shadow: inset $inset-box-shadow-setting schemed-color(input-box-shadow, $scheme);
   outline: none;
-  @if $dye {
-    background-color: tint($color, 90%);
-  }
   &:focus-within:not(:disabled):not(.disabled) {
-    outline: $focus-size focus-box-shadow-color($color) solid;
+    outline: $focus-size solid schemed-color(focus, $scheme);
   }
   &:disabled,
   &.disabled,
   &[data-disabled] {
-    opacity: 0.5;
-  }
-  &:disabled:hover,
-  &:disabled:hover *,
-  &[data-disabled]:hover *,
-  &.disabled:hover,
-  &.disabled:hover *,
-  &[data-disabled]:hover * {
+    opacity: $disabled-opacity;
     cursor: not-allowed;
   }
   & input {
@@ -300,59 +195,78 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   }
 }
 
-@mixin button($color) {
-  padding: $input-vertical-padding $button-hotizontal-padding;
-  font-family: inherit;
-  font-size: inherit;
-  color: white;
+@mixin button($scheme: primary) {
+  padding-block: $input-vertical-padding;
+  padding-inline: $button-hotizontal-padding;
+  color: schemed-color(button-text, $scheme);
   line-height: $line-height;
-  border: 1rpx border-color($color, false) solid;
+  text-align: center;
+  border: 1rpx solid schemed-color(button-border, $scheme);
   border-radius: $small-border-radius;
-  background-color: $color;
-  background-image: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25));
+  background-color: schemed-color(button-background, $scheme);
+  background-image: schemed-color(button-gradient, $scheme);
   white-space: nowrap;
   position: relative;
   cursor: pointer;
   outline: none;
   &:hover:not(:disabled) {
-    background-color: hover-color($color);
+    background-color: schemed-color(hover-button-background, $scheme);
   }
   &:focus:not(:disabled) {
-    outline: $focus-size focus-box-shadow-color($color) solid;
+    outline: $focus-size solid schemed-color(focus, $scheme);
   }
   &:active:not(:disabled) {
-    background-color: shade($color, 25%);
+    background-color: schemed-color(active-button-background, $scheme);
     background-image: none;
-    box-shadow: inset $inset-box-shadow-setting rgba(black, 0.1);
+    box-shadow: inset $inset-box-shadow-setting schemed-color(active-button-shadow, $scheme);
   }
   &:disabled {
-    opacity: 0.5;
+    opacity: $disabled-opacity;
+    cursor: not-allowed;
+  }
+}
+
+@mixin light-button($scheme: primary) {
+  padding-block: $input-vertical-padding;
+  padding-inline: $button-hotizontal-padding;
+  color: schemed-color(light-button-text, $scheme);
+  line-height: $line-height;
+  text-align: center;
+  border: 1rpx solid schemed-color(border, $scheme);
+  border-radius: $small-border-radius;
+  background-color: schemed-color(light-button-background, $scheme);
+  background-image: schemed-color(light-button-gradient, $scheme);
+  white-space: nowrap;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  &:hover:not(:disabled) {
+    background-color: schemed-color(hover-light-button-background, $scheme);
+  }
+  &:focus:not(:disabled) {
+    outline: $focus-size solid schemed-color(focus, $scheme);
+  }
+  &:active:not(:disabled) {
+    background-color: schemed-color(active-light-button-background, $scheme);
+    background-image: none;
+    box-shadow: inset $inset-box-shadow-setting schemed-color(active-light-button-shadow, $scheme);
+  }
+  &:disabled {
+    opacity: $disabled-opacity;
   }
   &:disabled:hover {
     cursor: not-allowed;
   }
 }
 
-@mixin white-pane($hover: false) {
-  color: inherit;
-  border: 1rpx rgba(white, 0.8) solid;
+@mixin color-pane($scheme, $hover: false) {
+  color: schemed-color(accent, $scheme);
+  border: 1rpx solid schemed-color(border, $scheme);
   border-radius: $large-border-radius;
-  background-color: rgba(white, 0.5);
+  background-color: schemed-color(background, $scheme);
   @if $hover {
     &:hover {
-      background-color: rgba(white, 0.7);
-    }
-  }
-}
-
-@mixin color-pane($color, $hover: false) {
-  color: $color;
-  border: 1rpx border-color($color) solid;
-  border-radius: $large-border-radius;
-  background-color: background-color($color);
-  @if $hover {
-    &:hover {
-      background-color: hover-color(background-color($color), true, false);
+      background-color: schemed-color(hover-background, $scheme);
     }
   }
 }

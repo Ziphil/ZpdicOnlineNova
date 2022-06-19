@@ -455,6 +455,11 @@ featurePane:
     text: >-
       別のユーザーに編集権限を付与して、複数人で同じ辞書を同時に編集することができます。
       人工言語の共同制作も簡単に実現できます。
+footer:
+  notification: "お知らせ"
+  document: "ドキュメント"
+  contact: "お問い合わせ"
+  language: "言語選択"
 giftPane:
   sendGift: "ギフトを送る"
   information: >-
@@ -467,10 +472,6 @@ githubButton:
   dashboard: "開発ダッシュボード"
 header:
   dictionaryList: "辞書一覧"
-  notification: "お知らせ"
-  document: "ドキュメント"
-  contact: "お問い合わせ"
-  language: "言語選択"
   dashboard: "ユーザーページ"
 hotkeyHelp:
   title: "ショートカット一覧"

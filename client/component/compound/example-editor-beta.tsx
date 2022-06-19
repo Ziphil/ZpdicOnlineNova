@@ -201,13 +201,13 @@ const ExampleEditorRoot = create(
     const [, {trans}] = useIntl();
 
     const cancelButtonNode = (
-      <Button label={trans("wordEditor.cancel")} iconName="times" onClick={onCancel}/>
+      <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
     );
     const discardButtonNode = (example !== null) && (
-      <Button label={trans("exampleEditor.discard")} iconName="trash-alt" variant="caution" reactive={true} onClick={() => setAlertOpen(true)}/>
+      <Button label={trans("exampleEditor.discard")} iconName="trash-alt" scheme="red" reactive={true} onClick={() => setAlertOpen(true)}/>
     );
     const confirmButtonNode = (
-      <Button label={trans("exampleEditor.confirm")} iconName="check" variant="information" reactive={true} onClick={editExample}/>
+      <Button label={trans("exampleEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editExample}/>
     );
     const mainStyleName = StyleNameUtil.create(
       "main",
@@ -311,7 +311,7 @@ const ExampleEditorWords = create(
         <div styleName="plus">
           <div styleName="absent">{absentMessage}</div>
           <div styleName="plus-button">
-            <Button label={trans("exampleEditor.add")} iconName="plus" onClick={() => openWordChooser(tempExample.words.length)}/>
+            <Button iconName="plus" variant="light" onClick={() => openWordChooser(tempExample.words.length)}/>
           </div>
         </div>
       );
@@ -375,11 +375,11 @@ const ExampleEditorWord = create(
             <div/>
             <ControlGroup className={StyleNameUtil.create(styles!["name"], styles!["word-input"])}>
               <Input value={word.name ?? trans("exampleEditor.wordNameUndefined")} readOnly={true}/>
-              <Button label={trans("exampleEditor.selectWord")} onClick={() => openWordChooser(index)}/>
+              <Button label={trans("exampleEditor.selectWord")} variant="light" onClick={() => openWordChooser(index)}/>
             </ControlGroup>
           </div>
           <div styleName="control-button">
-            <Button iconName="minus" onClick={mutateExample((tempExample) => deleteAt(tempExample.words, index))}/>
+            <Button iconName="minus" variant="light" onClick={mutateExample((tempExample) => deleteAt(tempExample.words, index))}/>
           </div>
         </div>
       </div>

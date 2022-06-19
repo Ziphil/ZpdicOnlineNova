@@ -12,6 +12,7 @@ import {
 } from "/client/component/create";
 import {
   useIntl,
+  useMediaQuery,
   useSuspenseQuery
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
@@ -27,11 +28,13 @@ const DictionaryListPage = create(
   }): ReactElement {
 
     const [, {trans}] = useIntl();
+    const {smartphone} = useMediaQuery();
 
     const [order, setOrder] = useState("updatedDate");
     const [page, setPage] = useState(0);
     const [[hitDictionaries, hitSize]] = useSuspenseQuery("fetchAllDictionaries", {order, ...calcOffset(page, 20)}, {keepPreviousData: true});
 
+    const column = (smartphone) ? 1 : 2;
     const specs = [
       {value: "updatedDate", label: trans("dictionaryListPage.updatedDate")},
       {value: "createdDate", label: trans("dictionaryListPage.createdDate")}
@@ -42,7 +45,7 @@ const DictionaryListPage = create(
           <RadioGroup name="order" value={order} specs={specs} onSet={(order) => setOrder(order)}/>
         </div>
         <div styleName="list">
-          <DictionaryList dictionaries={hitDictionaries} size={20} hitSize={hitSize} page={page} onPageSet={setPage} showCreatedDate={true}/>
+          <DictionaryList dictionaries={hitDictionaries} column={column} size={20} hitSize={hitSize} page={page} onPageSet={setPage} showCreatedDate={true}/>
         </div>
       </Page>
     );

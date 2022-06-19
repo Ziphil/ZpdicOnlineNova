@@ -93,27 +93,6 @@ const DictionaryPane = create(
         }
       }
     })();
-    const userNode = (showUser) && (
-      <div styleName="information-item">{trans("dictionaryPane.userName")} — {dictionary.user.screenName}</div>
-    );
-    const updatedDateNode = (showUpdatedDate) && (
-      <div styleName="information-item">{trans("dictionaryPane.updatedDate")} — {transDate(dictionary.updatedDate)}</div>
-    );
-    const createdDateNode = (showCreatedDate) && (
-      <div styleName="information-item">{trans("dictionaryPane.createdDate")} — {transDate(dictionary.createdDate)}</div>
-    );
-    const settingNode = (showSettingLink) && (
-      <Button label={trans("dictionaryPane.setting")} iconName="cog" variant="simple" onClick={jumpSettingPage}/>
-    );
-    const downloadNode = (showDownloadLink) && (
-      <Button label={trans("dictionaryPane.download")} iconName="download" variant="simple" onClick={downloadDictionary}/>
-    );
-    const linkNode = (showSettingLink || showDownloadLink) && (
-      <div styleName="setting">
-        {settingNode}
-        {downloadNode}
-      </div>
-    );
     const node = (
       <WhitePane href={href} clickable={true}>
         <div>
@@ -126,12 +105,27 @@ const DictionaryPane = create(
             </div>
           </div>
           <div styleName="information">
-            {updatedDateNode}
-            {createdDateNode}
-            {userNode}
+            {(showUpdatedDate) && (
+              <div styleName="information-item">{trans("dictionaryPane.updatedDate")} — {transDate(dictionary.updatedDate)}</div>
+            )}
+            {(showCreatedDate) && (
+              <div styleName="information-item">{trans("dictionaryPane.createdDate")} — {transDate(dictionary.createdDate)}</div>
+            )}
+            {(showUser) && (
+              <div styleName="information-item">{trans("dictionaryPane.userName")} — {dictionary.user.screenName}</div>
+            )}
           </div>
         </div>
-        {linkNode}
+        {(showSettingLink || showDownloadLink) && (
+          <div styleName="setting">
+            {(showSettingLink) && (
+              <Button label={trans("dictionaryPane.setting")} iconName="cog" variant="simple" onClick={jumpSettingPage}/>
+            )}
+            {(showDownloadLink) && (
+              <Button label={trans("dictionaryPane.download")} iconName="download" variant="simple" onClick={downloadDictionary}/>
+            )}
+          </div>
+        )}
       </WhitePane>
     );
     return node;

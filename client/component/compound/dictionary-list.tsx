@@ -23,6 +23,7 @@ const DictionaryList = create(
     showUpdatedDate,
     showCreatedDate,
     showLinks = false,
+    column,
     size,
     hitSize,
     page,
@@ -33,6 +34,7 @@ const DictionaryList = create(
     showUpdatedDate?: boolean,
     showCreatedDate?: boolean,
     showLinks?: boolean,
+    column?: number,
     size: number,
     hitSize?: number,
     page?: number,
@@ -42,11 +44,13 @@ const DictionaryList = create(
     const node = (
       <PaneList
         items={dictionaries}
+        column={column}
         size={size}
         hitSize={hitSize}
         page={page}
         onPageSet={onPageSet}
-        renderer={(dictionary) => (
+      >
+        {(dictionary) => (
           <DictionaryListPane
             key={dictionary.id}
             dictionary={dictionary}
@@ -56,7 +60,7 @@ const DictionaryList = create(
             showLinks={showLinks}
           />
         )}
-      />
+      </PaneList>
     );
     return node;
 

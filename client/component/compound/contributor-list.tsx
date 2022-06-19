@@ -3,12 +3,11 @@
 import axios from "axios";
 import * as react from "react";
 import {
-  ReactElement,
-  useState
+  ReactElement
 } from "react";
 import {
-  useMount
-} from "react-use";
+  useQuery
+} from "react-query";
 import Link from "/client/component/atom/link";
 import {
   create
@@ -26,10 +25,9 @@ const ContributorList = create(
     rawContributors: Array<RawContributor>
   }): ReactElement {
 
-    const [contributors, setContributors] = useState<Array<Contributor>>([]);
     const [, {trans}] = useIntl();
 
-    useMount(async () => {
+    const {data: contributors} = useQuery(["contributors", rawContributors], async () => {
       const promises = rawContributors.map(async (rawContributor) => {
         const name = rawContributor.name;
         const url = resolveUrl(rawContributor.url);
@@ -37,25 +35,19 @@ const ContributorList = create(
         return {name, url, avatarUrl};
       });
       const contributors = await Promise.all(promises);
-      setContributors(contributors);
+      return contributors;
     });
 
-    const contributorNodes = contributors.map((contributor) => {
-      const avatarNode = (contributor.avatarUrl !== undefined) && <img styleName="avatar" src={contributor.avatarUrl}/>;
-      const nameNode = (contributor.url !== undefined) ? <Link href={contributor.url}>{contributor.name}</Link> : contributor.name;
-      const contributorNode = (
-        <li styleName="item" key={contributor.name}>
-          {avatarNode}
-          {nameNode}
-        </li>
-      );
-      return contributorNode;
-    });
     const node = (
       <div styleName="root">
         <div styleName="head">{trans("contributorList.title")}</div>
         <ul styleName="list">
-          {contributorNodes}
+          {contributors?.map((contributor) => (
+            <li styleName="item" key={contributor.name}>
+              {(contributor.avatarUrl !== undefined) && <img styleName="avatar" src={contributor.avatarUrl}/>}
+              {(contributor.url !== undefined) ? <Link href={contributor.url}>{contributor.name}</Link> : contributor.name}
+            </li>
+          ))}
         </ul>
       </div>
     );

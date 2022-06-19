@@ -8,7 +8,7 @@ $setting-pane-horizontal-padding: 150u;
 
 .root {
   padding: $setting-pane-vertical-padding 0rpx $setting-pane-vertical-padding 0rpx;
-  border-bottom: 1rpx $invert-border-color solid; 
+  border-bottom: 1rpx color(light-border) solid; 
   display: flex;
   flex-direction: row;
   @include smartphone {
@@ -21,7 +21,7 @@ $setting-pane-horizontal-padding: 150u;
 }
 
 .root:last-child {
-  border-bottom: 1rpx $light-border-color solid;
+  border-bottom: 1rpx color(border) solid;
 }
 
 .description-wrapper {
@@ -65,7 +65,7 @@ $setting-pane-horizontal-padding: 150u;
 
 .label {
   @include bold-font;
-  color: $head-color;
+  color: color(accent);
 }
 
 .label >*:nth-child(1) {
@@ -74,7 +74,7 @@ $setting-pane-horizontal-padding: 150u;
 
 .description {
   @include line-height;
-  margin: $medium-margin 0rpx 0rpx 0rpx;
+  margin: $large-margin 0rpx 0rpx 0rpx;
   font-size: $small-font-size;
   text-align: justify;
 }

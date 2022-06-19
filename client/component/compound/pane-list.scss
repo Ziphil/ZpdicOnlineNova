@@ -24,7 +24,7 @@
 }
 
 .table-pane .spacer.border {
-  border-left: 1rpx $invert-border-color solid;
+  border-left: 1rpx color(light-border) solid;
 }
 
 .table-pane tr >td {

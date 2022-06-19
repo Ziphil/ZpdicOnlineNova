@@ -22,27 +22,25 @@ const FormPane = create(
   require("./form-pane.scss"), "FormPane",
   function ({
     errorType = null,
-    errorStyle = "error",
+    errorScheme = "red",
     onErrorClose,
     children
   }: {
     errorType?: string | null,
-    errorStyle?: "error" | "information",
+    errorScheme?: "red" | "blue",
     onErrorClose?: (event: MouseEvent<HTMLButtonElement>) => void,
     children?: ReactNode
   }): ReactElement {
 
     const [intl] = useIntl();
 
-    const texts = [PopupUtil.getMessage(intl, errorType ?? "")];
-    const errorNode = (errorType !== null) && (
-      <div styleName="error">
-        <InformationPane texts={texts} style={errorStyle} onClose={onErrorClose}/>
-      </div>
-    );
     const node = (
       <div>
-        {errorNode}
+        {(errorType !== null) && (
+          <div styleName="error">
+            <InformationPane texts={[PopupUtil.getMessage(intl, errorType ?? "")]} scheme={errorScheme} onClose={onErrorClose}/>
+          </div>
+        )}
         <div styleName="root">
           {children}
         </div>

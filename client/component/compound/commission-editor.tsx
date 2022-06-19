@@ -43,11 +43,12 @@ const CommissionEditor = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [name, setName] = useState("");
-    const [comment, setComment] = useState("");
     const [, {trans}] = useIntl();
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
+
+    const [name, setName] = useState("");
+    const [comment, setComment] = useState("");
 
     const addCommission = useCallback(async function (event: MouseEvent<HTMLElement>): Promise<void> {
       const number = dictionary.number;
@@ -64,7 +65,7 @@ const CommissionEditor = create(
         <div styleName="root">
           <Input label={trans("commissionEditor.name")} value={name} onSet={setName}/>
           <TextArea className={styles!["comment"]} label={trans("commissionEditor.comment")} value={comment} showOptional={true} onSet={setComment}/>
-          <Button className={styles!["button"]} label={trans("commissionEditor.confirm")} iconName="list-check" variant="information" reactive={true} onClick={addCommission}/>
+          <Button className={styles!["button"]} label={trans("commissionEditor.confirm")} iconName="list-check" scheme="blue" reactive={true} onClick={addCommission}/>
         </div>
       </Overlay>
     );

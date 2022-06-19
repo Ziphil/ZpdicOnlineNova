@@ -9,7 +9,7 @@
 
 .root :global(.c3-axis) path,
 .root :global(.c3-axis) line {
-  stroke: $light-border-color;
+  stroke: color(border);
 }
 
 .root :global(.c3-axis) text,
@@ -19,12 +19,12 @@
 }
 
 .root :global(.c3-axis) text {
-  fill: $light-border-color;
+  fill: color(accent);
 }
 
 .root :global(.c3-grid) path,
 .root :global(.c3-grid) line {
-  stroke: $invert-border-color;
+  stroke: color(light-border);
 }
 
 .root :global(.c3-line) {
@@ -42,7 +42,7 @@
 }
 
 .root :global(.c3-chart-arc) path {
-  stroke: $background-color;
+  stroke: color(background);
 }
 
 .root :global(.c3-target.c3-defocused) {

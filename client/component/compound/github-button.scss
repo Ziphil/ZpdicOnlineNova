@@ -10,12 +10,14 @@
 }
 
 .github {
-  color: $light-border-color;
+  color: color(accent);
   text-decoration: none;
+  border-radius: $small-border-radius;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   justify-content: center; 
+  cursor: pointer;
 }
 
 .icon-wrapper {
@@ -25,17 +27,17 @@
 
 .icon {
   font-size: 40rpx;
-  color: $light-border-color;
+  color: color(accent);
   line-height: 0;
 }
 
 .star-wrapper {
   height: 36rpx;
-  margin: 0rpx 0rpx 0rpx 48u;
-  padding: 0rpx 32u;
+  margin: 0rpx 0rpx 0rpx 16rpx;
+  padding: 0rpx 10rpx;
   font-size: 24rpx;
-  line-height: 36rpx;
-  border: 1rpx $light-border-color solid;
+  line-height: 34rpx;
+  border: 1rpx solid color(border);
   border-radius: $large-border-radius;
   display: inline-block;
   position: relative;
@@ -46,7 +48,7 @@
   left: -8rpx;
   margin-left: -8rpx;
   border: 8rpx transparent solid;
-  border-right: 8rpx $light-border-color solid;
+  border-right: 8rpx color(border) solid;
   position: absolute;
   content: "";
 }
@@ -56,7 +58,7 @@
   left: -7rpx;
   margin-left: -8rpx;
   border: 8rpx transparent solid;
-  border-right: 8rpx $background-color solid;
+  border-right: 8rpx color(background) solid;
   position: absolute;
   content: "";
 }
@@ -71,8 +73,13 @@
 
 .text {
   margin: $small-margin 0rpx 0rpx 0rpx;
-  color: $link-color;
+  color: schemed-color(accent, secondary);
   text-decoration: underline;
+  border-radius: $small-border-radius;
+  cursor: pointer;
+  &:focus-visible {
+    outline: $focus-size solid schemed-color(focus, secondary);
+  }
 }
 
 .dashboard {
@@ -81,5 +88,5 @@
 
 .github:hover .text,
 .dashboard:hover .text {
-  color: $link-hover-color;
+  color: schemed-color(hover-accent, secondary);
 }

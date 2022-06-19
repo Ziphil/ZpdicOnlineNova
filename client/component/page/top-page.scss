@@ -9,6 +9,8 @@ $github-horizontal-margin: 75rpx;
 $top-content-vertical-margin: 50rpx;
 
 .top {
+  max-width: $page-width * 0.85;
+  margin-inline: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -63,7 +65,7 @@ $top-content-vertical-margin: 50rpx;
 }
 
 .border {
-  border-top: 1rpx $invert-border-color solid;
+  border-top: 1rpx color(light-border) solid;
   margin: $huge-margin auto 0rpx auto;
   padding: $huge-margin 0rpx 0rpx 0rpx;
 }

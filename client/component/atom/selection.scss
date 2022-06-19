@@ -8,7 +8,7 @@
 }
 
 .selection {
-  @include input(map-get($colors, primary));
+  @include input(primary);
   align-items: center;
   display: flex;
   cursor: pointer;
@@ -22,5 +22,5 @@
 
 .arrow {
   margin: 0em 0em 0em $input-horizontal-padding;
-  color: $light-color;
+  color: color(accent);
 }

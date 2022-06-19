@@ -10,31 +10,27 @@ import {
   create
 } from "/client/component/create";
 import {
-  StyleNameUtil
-} from "/client/util/style-name";
+  DataUtil
+} from "/client/util/data";
 
 
 const InformationPane = create(
   require("./information-pane.scss"), "InformationPane",
   function ({
     texts,
-    style,
+    scheme,
     onClose
   }: {
     texts: Array<string>,
-    style: "error" | "information",
+    scheme: "red" | "blue",
     onClose?: (event: MouseEvent<HTMLButtonElement>) => void
   }): ReactElement {
 
-    const styleName = StyleNameUtil.create("root", style);
-    const itemNodes = texts.map((text, index) => {
-      const itemNode = <li key={index}>{text}</li>;
-      return itemNode;
-    });
+    const data = DataUtil.create({scheme});
     const node = (
-      <div styleName={styleName}>
+      <div styleName="root" {...data}>
         <ul styleName="list">
-          {itemNodes}
+          {texts.map((text, index) => <li key={index}>{text}</li>)}
         </ul>
         <div styleName="button-box"/>
         <div styleName="overlay"/>

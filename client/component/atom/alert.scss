@@ -8,7 +8,7 @@
   max-width: 500rpx;
   margin: 0rpx auto;
   padding: $large-margin $large-margin;
-  background-color: $background-color;
+  background-color: color(background);
   border-radius: $large-border-radius;
   box-sizing: border-box;
   position: relative;
@@ -22,7 +22,7 @@
 
 .icon {
   font-size: 48rpx;
-  color: map-get($colors, error);
+  color: schemed-color(accent, red);
   text-align: center;
   display: inline-block;
 }

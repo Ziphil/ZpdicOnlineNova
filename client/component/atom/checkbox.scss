@@ -20,10 +20,10 @@
   bottom: 0.1em;
   width: 1em;
   height: 1em;
-  border: 1rpx $light-border-color solid;
+  border: 1rpx color(border) solid;
   border-radius: $small-border-radius;
   background-color: white;
-  box-shadow: $inset-box-shadow-setting input-box-shadow-color(map-get($colors, primary)) inset;
+  box-shadow: inset $inset-box-shadow-setting schemed-color(input-box-shadow, primary);
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -31,19 +31,19 @@
   position: relative;
   vertical-align: middle;
   .original:focus +& {
-    outline: $focus-size focus-box-shadow-color(map-get($colors, primary)) solid;
+    outline: $focus-size solid color(focus);
   }
 }
 
 .icon {
   font-size: 90%;
-  color: map-get($colors, primary);
+  color: schemed-color(button-background, primary);
   box-sizing: border-box;
   display: none;
   .original:checked +* >& {
     display: block;
   }
   .original:hover +* >& {
-    color: hover-color(map-get($colors, primary));
+    color: schemed-color(hover-button-background, primary);
   }
 }

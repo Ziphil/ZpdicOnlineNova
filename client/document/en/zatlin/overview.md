@@ -9,7 +9,7 @@ With Zatlin, you can leave the creation of spellings completely to Zatlin and co
 ZpDIC Online includes Zatlin 1.2 in itself.
 By configuring a Zatlin source code in the dictionary setting page, you can run Zatlin in the word editing window to generate spellings.
 
-For more information about the format of Zatlin code, please see [here](./introduction).
+For more information about the format of Zatlin code, please see [here](/document/zatlin/introduction).
 
 ## Try
 The following is an example of a Zatlin source code.

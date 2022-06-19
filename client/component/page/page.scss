@@ -10,11 +10,10 @@
 }
 
 .spacer {
-  @include page($header-height);
+  padding-block-start: $page-top-margin;
+  padding-block-end: $page-bottom-margin;
+  padding-inline: $page-horizontal-margin;
   flex: 1;
-  &[data-show-dictionary] {
-    @include page($header-height + $dictionary-header-height);
-  }
 }
 
 .content {

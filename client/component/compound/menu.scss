@@ -5,14 +5,14 @@
 
 .root {
   &.horizontal {
-    border-bottom: 1rpx $light-border-color solid;
+    border-bottom: 1rpx color(border) solid;
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: $control-horizontal-margin;
   }
   &.vertical {
-    border-left: 1rpx $light-border-color solid;
+    border-left: 1rpx color(border) solid;
     display: flex;
     flex-direction: column;
     justify-content: center;

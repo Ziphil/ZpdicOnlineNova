@@ -8,7 +8,7 @@
 }
 
 .input {
-  @include input(map-get($colors, primary));
+  @include input(primary);
   display: inline-flex;
   [data-control-group] >&:first-child,
   [data-control-group] >:first-child & {
@@ -27,7 +27,7 @@
 }
 
 .input[data-error] {
-  @include input(map-get($colors, error));
+  @include input(red);
 }
 
 .input-inner {
@@ -52,11 +52,11 @@
 .eye {
   width: 1.3em;
   margin: 0em 0em 0em $input-horizontal-padding;
-  color: $link-color;
+  color: schemed-color(accent, secondary);
   text-align: center;
   display: inline-block;
   cursor: pointer;
   &:hover {
-    color: $link-hover-color;
+    color: schemed-color(hover-accent, secondary);
   }
 }

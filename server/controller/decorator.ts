@@ -20,10 +20,10 @@ type Metadata = Array<RequestHandlerSpec>;
 type MethodType = "get" | "post";
 type RequestHandlerSpec = {
   name: string | symbol,
-  path: string;
-  method: MethodType;
-  befores: Array<RequestHandler<any>>;
-  afters: Array<RequestHandler<any>>;
+  path: string,
+  method: MethodType,
+  befores: Array<RequestHandler<any>>,
+  afters: Array<RequestHandler<any>>
 };
 
 export function controller(path: string): ClassDecorator {

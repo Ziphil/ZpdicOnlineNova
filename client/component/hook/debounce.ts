@@ -6,7 +6,11 @@ import type {
 import debounce from "lodash-es/debounce";
 import {
   DependencyList,
-  useMemo
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useMemo,
+  useState
 } from "react";
 import {
   useUnmount
@@ -19,4 +23,15 @@ export function useDebounce<C extends (...args: Array<never>) => unknown>(callba
     debouncedCallback.cancel();
   });
   return debouncedCallback;
+}
+
+export function useDebouncedState<S>(initialState: S | (() => S), wait: number): [S, S, Dispatch<SetStateAction<S>>] {
+  const [state, setState] = useState(initialState);
+  const [debouncedState, setDebouncedStateImmediately] = useState(initialState);
+  const setDebouncedState = useDebounce(setDebouncedStateImmediately, wait, [setDebouncedStateImmediately]);
+  const setBothState = useCallback(function (state: SetStateAction<S>): void {
+    setState(state);
+    setDebouncedState(state);
+  }, [setDebouncedState]);
+  return [state, debouncedState, setBothState];
 }

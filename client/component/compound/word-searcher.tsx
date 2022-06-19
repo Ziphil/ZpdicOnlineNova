@@ -5,16 +5,11 @@ import {
   Fragment,
   MouseEvent,
   ReactElement,
-  useCallback,
-  useState
+  useCallback
 } from "react";
-import {
-  useMount
-} from "react-use";
 import {
   AsyncOrSync
 } from "ts-essentials";
-import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
 import WordList from "/client/component/compound/word-list";
 import WordSearchForm from "/client/component/compound/word-search-form";
@@ -22,8 +17,8 @@ import {
   create
 } from "/client/component/create";
 import {
-  useDebounce,
-  useRequest
+  useDebouncedState,
+  useQuery
 } from "/client/component/hook";
 import {
   EditableWord,
@@ -33,6 +28,9 @@ import {
   Word,
   WordParameter
 } from "/client/skeleton/dictionary";
+import {
+  calcOffset
+} from "/client/util/misc";
 import {
   WithSize
 } from "/server/controller/internal/type";
@@ -48,7 +46,7 @@ const WordSearcher = create(
     onSubmit,
     onEditConfirm
   }: {
-    dictionary: EnhancedDictionary | null,
+    dictionary: EnhancedDictionary,
     style?: "normal" | "simple",
     showButton?: boolean,
     showDirectionButton?: boolean,
@@ -56,62 +54,22 @@ const WordSearcher = create(
     onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    const [parameter, setParameter] = useState<WordParameter>(NormalWordParameter.createEmpty());
-    const [page, setPage] = useState(0);
-    const [hitResult, setHitResult] = useState<DictionaryHitResult>({words: [[], 0], suggestions: []});
-    const [loading, setLoading] = useState(false);
-    const {request} = useRequest();
+    const [query, debouncedQuery, setQuery] = useDebouncedState<DictionaryQuery>({parameter: NormalWordParameter.createEmpty(), page: 0}, 500);
 
-    const updateWordsImmediately = useCallback(async function (overrides?: {parameter?: WordParameter, page?: number}): Promise<void> {
-      const number = dictionary?.number;
-      if (number !== undefined) {
-        const usedParameter = overrides?.parameter ?? parameter;
-        const usedPage = overrides?.page ?? page;
-        const offset = usedPage * 40;
-        const size = 40;
-        setLoading(true);
-        const response = await request("searchDictionary", {number, parameter: usedParameter, offset, size});
-        if (response.status === 200 && !("error" in response.data)) {
-          const hitResult = response.data;
-          setHitResult(hitResult);
-          setLoading(false);
-        } else {
-          setHitResult({words: [[], 0], suggestions: []});
-          setLoading(false);
-        }
-      }
-    }, [dictionary?.number, parameter, page, request]);
+    const handleParameterSet = useCallback(function (parameter: WordParameter): void {
+      setQuery({parameter, page: 0});
+    }, [setQuery]);
 
-    const updateWords = useDebounce(async function (overrides?: {parameter?: WordParameter, page?: number}): Promise<void> {
-      await updateWordsImmediately(overrides);
-    }, 500, [updateWordsImmediately]);
+    const handlePageSet = useCallback(function (page: number): void {
+      setQuery((query) => ({...query, page}));
+    }, [setQuery]);
 
-    const handleParameterSet = useCallback(async function (parameter: WordParameter): Promise<void> {
-      const page = 0;
-      setParameter(parameter);
-      setPage(page);
-      await updateWords({parameter, page});
-    }, [updateWords]);
-
-    const handlePageSet = useCallback(async function (page: number): Promise<void> {
-      setPage(page);
-      await updateWordsImmediately({page});
-    }, [updateWordsImmediately]);
-
-    useMount(async () => {
-      await updateWordsImmediately();
-    });
-
-    const innerProps = {dictionary, style, showButton, showDirectionButton, page, hitResult, onSubmit, onEditConfirm, handlePageSet};
-    const innerNode = (dictionary !== null) && <WordSearcherWordList {...innerProps}/>;
     const node = (
       <div>
-        <Loading loading={dictionary === null}>
-          <div styleName="search-form">
-            <WordSearchForm dictionary={dictionary!} parameter={parameter} onParameterSet={handleParameterSet}/>
-          </div>
-          {innerNode}
-        </Loading>
+        <div styleName="search-form">
+          <WordSearchForm dictionary={dictionary} parameter={query.parameter} onParameterSet={handleParameterSet}/>
+        </div>
+        <WordSearcherWordList {...{dictionary, style, showButton, showDirectionButton, query, debouncedQuery, onSubmit, onEditConfirm, handlePageSet}}/>
       </div>
     );
     return node;
@@ -127,30 +85,32 @@ const WordSearcherWordList = create(
     style,
     showButton,
     showDirectionButton,
-    page,
-    hitResult,
+    query,
+    debouncedQuery,
     onSubmit,
     onEditConfirm,
     handlePageSet
   }: {
-    dictionary: EnhancedDictionary | null,
+    dictionary: EnhancedDictionary,
     style: "normal" | "simple",
     showButton: boolean,
     showDirectionButton: boolean,
-    page: number,
-    hitResult: DictionaryHitResult,
+    query: DictionaryQuery,
+    debouncedQuery: DictionaryQuery,
     onSubmit?: (word: Word, direction: "oneway" | "mutual") => void,
     onEditConfirm?: (oldWord: Word, newWord: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
-    handlePageSet: (page: number) => Promise<void>
+    handlePageSet: (page: number) => unknown
   }): ReactElement {
 
-    const [hitWords, hitSize] = hitResult.words;
+    const [hitResult] = useQuery("searchDictionary", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffset(query.page, 40)}, {keepPreviousData: true});
+
+    const [hitWords, hitSize] = hitResult?.words ?? [[], 0];
     const maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);
     const node = (
       <Fragment>
         <div styleName="word-list">
           <WordList
-            dictionary={dictionary!}
+            dictionary={dictionary}
             words={hitWords}
             style={style}
             showButton={showButton}
@@ -163,7 +123,7 @@ const WordSearcherWordList = create(
         </div>
         <div styleName="pagination">
           <PaginationButton
-            page={page}
+            page={query.page}
             minPage={0}
             maxPage={maxPage}
             onSet={handlePageSet}
@@ -178,5 +138,6 @@ const WordSearcherWordList = create(
 
 
 export type DictionaryHitResult = {words: WithSize<Word>, suggestions: Array<Suggestion>};
+export type DictionaryQuery = {parameter: WordParameter, page: number};
 
 export default WordSearcher;

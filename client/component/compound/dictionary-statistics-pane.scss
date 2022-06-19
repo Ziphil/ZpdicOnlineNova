@@ -6,7 +6,7 @@
 .title {
   @include bold-font;
   font-size: $tiny-font-size;
-  color: $light-color;
+  color: color(accent);
 }
 
 .row-wrapper {
@@ -38,5 +38,5 @@
 .note {
   margin: 0rpx 0rpx 0rpx 24u;
   font-size: $small-font-size;
-  color: $light-color;
+  color: color(accent);
 }

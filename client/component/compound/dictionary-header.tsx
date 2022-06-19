@@ -11,21 +11,17 @@ import {
   useCallback,
   useState
 } from "react";
-import {
-  Helmet
-} from "react-helmet";
 import Button from "/client/component/atom/button";
 import Dropdown from "/client/component/atom/dropdown";
 import Icon from "/client/component/atom/icon";
-import Link from "/client/component/atom/link";
 import {
+  StylesRecord,
   create
 } from "/client/component/create";
 import {
   useExampleEditor,
   useHotkey,
   useIntl,
-  useLocation,
   usePath,
   useRequest,
   useWordEditor
@@ -46,123 +42,33 @@ const DictionaryHeader = create(
     showAddCommissionLink = true,
     showExampleLink = true,
     showSettingLink = false,
-    showDownloadLink = true,
-    preserveQuery = false
+    showDownloadLink = true
   }: {
-    dictionary: EnhancedDictionary | null,
+    dictionary: EnhancedDictionary,
     showAddLink?: boolean,
     showAddCommissionLink?: boolean,
     showExampleLink?: boolean,
     showSettingLink?: boolean,
-    showDownloadLink?: boolean,
-    preserveQuery?: boolean
+    showDownloadLink?: boolean
   }): ReactElement {
 
-    const [commissionEditorOpen, setCommissionEditorOpen] = useState(false);
     const addWordEditor = useWordEditor();
     const addExampleEditor = useExampleEditor();
-    const {pushPath} = usePath();
-    const location = useLocation();
-
-    const openWordEditor = useCallback(function (): void {
-      if (dictionary !== null) {
-        addWordEditor({dictionary, word: null});
-      }
-    }, [dictionary, addWordEditor]);
-
-    const openExampleEditor = useCallback(function (): void {
-      if (dictionary !== null) {
-        addExampleEditor({dictionary, example: null});
-      }
-    }, [dictionary, addExampleEditor]);
-
-    const hotkeyEnabled = dictionary !== null;
-    useHotkey("jumpDictionaryPage", () => {
-      pushPath("/dictionary/" + dictionary?.number);
-    }, [dictionary?.number], hotkeyEnabled);
-    useHotkey("jumpDictionarySettingPage", () => {
-      pushPath("/dashboard/dictionary/" + dictionary?.number);
-    }, [dictionary?.number], hotkeyEnabled);
-    useHotkey("jumpExamplePage", () => {
-      pushPath("/example/" + dictionary?.number);
-    }, [dictionary?.number], hotkeyEnabled);
-    useHotkey("addWord", () => {
-      openWordEditor();
-    }, [openWordEditor], hotkeyEnabled && showAddLink);
-    useHotkey("addExample", () => {
-      openExampleEditor();
-    }, [openExampleEditor], hotkeyEnabled && showAddLink);
-    useHotkey("addCommission", () => {
-      setCommissionEditorOpen(true);
-    }, [], hotkeyEnabled && showAddCommissionLink);
-
-    const nameNode = (dictionary) && (() => {
-      let href = "/dictionary/" + dictionary.number;
-      if (preserveQuery) {
-        href += location.searchString;
-      }
-      const nameNode = <Link href={href} target="self" style="plane">{dictionary.name}</Link>;
-      return nameNode;
-    })();
-    const buttonsProps = {dictionary, showAddLink, showAddCommissionLink, showExampleLink, showSettingLink, showDownloadLink, openWordEditor, openExampleEditor, setCommissionEditorOpen};
-    const overlaysProps = {dictionary, commissionEditorOpen, setCommissionEditorOpen};
-    const node = (
-      <header styleName="root">
-        <Helmet>
-          <title>{(dictionary) ? `${dictionary.name} — ZpDIC Online` : "ZpDIC Online"}</title>
-        </Helmet>
-        <div styleName="container">
-          <div styleName="left">
-            <div styleName="name">{nameNode}</div>
-          </div>
-          <div styleName="right">
-            <DictionaryHeaderButtons {...buttonsProps}/>
-          </div>
-        </div>
-        <DictionaryHeaderOverlays {...overlaysProps}/>
-      </header>
-    );
-    return node;
-
-  }
-);
-
-
-const DictionaryHeaderButtons = create(
-  require("./dictionary-header.scss"),
-  function ({
-    dictionary,
-    showAddLink,
-    showAddCommissionLink,
-    showExampleLink,
-    showSettingLink,
-    showDownloadLink,
-    openWordEditor,
-    openExampleEditor,
-    setCommissionEditorOpen
-  }: {
-    dictionary: EnhancedDictionary | null,
-    showAddLink: boolean,
-    showAddCommissionLink: boolean,
-    showExampleLink: boolean,
-    showSettingLink: boolean,
-    showDownloadLink: boolean,
-    openWordEditor: () => void,
-    openExampleEditor: () => void,
-    setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
-  }): ReactElement {
-
     const [, {trans}] = useIntl();
     const {pushPath} = usePath();
     const {request} = useRequest();
 
+    const [commissionEditorOpen, setCommissionEditorOpen] = useState(false);
+
     const openEditor = useCallback(function (type: "word" | "example"): void {
-      if (type === "word") {
-        openWordEditor();
-      } else {
-        openExampleEditor();
+      if (dictionary !== null) {
+        if (type === "word") {
+          addWordEditor({dictionary, word: null});
+        } else {
+          addExampleEditor({dictionary, example: null});
+        }
       }
-    }, [openWordEditor, openExampleEditor]);
+    }, [dictionary, addWordEditor, addExampleEditor]);
 
     const jumpExamplePage = useCallback(function (): void {
       if (dictionary) {
@@ -201,34 +107,53 @@ const DictionaryHeaderButtons = create(
       }
     }, [dictionary, request]);
 
+    useHotkey("jumpDictionaryPage", () => {
+      pushPath("/dictionary/" + dictionary.number);
+    }, [dictionary?.number]);
+    useHotkey("jumpDictionarySettingPage", () => {
+      pushPath("/dashboard/dictionary/" + dictionary?.number);
+    }, [dictionary?.number]);
+    useHotkey("jumpExamplePage", () => {
+      pushPath("/example/" + dictionary.number);
+    }, [dictionary?.number]);
+    useHotkey("addWord", () => {
+      openEditor("word");
+    }, [openEditor], showAddLink);
+    useHotkey("addExample", () => {
+      openEditor("example");
+    }, [openEditor], showAddLink);
+    useHotkey("addCommission", () => {
+      setCommissionEditorOpen(true);
+    }, [], showAddCommissionLink);
+
     const addDropdownSpecs = [
       {value: "word", node: <DictionaryHeaderAddDropdownNode type="word"/>},
       {value: "example", node: <DictionaryHeaderAddDropdownNode type="example"/>}
     ] as const;
-    const addButtonNode = (showAddLink) && (
-      <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={openEditor}>
-        <Button label={trans("dictionaryHeader.add")} iconName="plus" variant="simple" hideLabel={true}/>
-      </Dropdown>
-    );
-    const addCommissionButtonNode = (showAddCommissionLink) && (
-      <Button label={trans("dictionaryHeader.addCommission")} iconName="list-check" variant="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
-    );
-    const exampleButtonNode = (showExampleLink) && (
-      <Button label={trans("dictionaryHeader.example")} iconName="custom-example" variant="simple" hideLabel={true} onClick={jumpExamplePage}/>
-    );
-    const settingButtonNode = (showSettingLink) && (
-      <Button label={trans("dictionaryHeader.setting")} iconName="cog" variant="simple" hideLabel={true} onClick={jumpSettingPage}/>
-    );
-    const downloadButtonNode = (showDownloadLink) && (
-      <Button label={trans("dictionaryHeader.download")} iconName="download" variant="simple" hideLabel={true} onClick={downloadDictionary}/>
-    );
     const node = (
-      <div styleName="button">
-        {settingButtonNode}
-        {addButtonNode}
-        {addCommissionButtonNode}
-        {exampleButtonNode}
-        {downloadButtonNode}
+      <div styleName="root">
+        <div styleName="left">
+          {(showExampleLink) && (
+            <Button label={trans("dictionaryHeader.example")} iconName="custom-example" variant="simple" hideLabel={true} onClick={jumpExamplePage}/>
+          )}
+          {(showAddCommissionLink) && (
+            <Button label={trans("dictionaryHeader.addCommission")} iconName="list-check" variant="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
+          )}
+          {(showDownloadLink) && (
+            <Button label={trans("dictionaryHeader.download")} iconName="download" variant="simple" hideLabel={true} onClick={downloadDictionary}/>
+          )}
+        </div>
+        <div styleName="right">
+          {(showAddLink) && (
+            <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={openEditor}>
+              <Button label={trans("dictionaryHeader.add")} iconName="plus" variant="simple" hideLabel={true}/>
+            </Dropdown>
+          )}
+          {(showSettingLink) && (
+            <Button label={trans("dictionaryHeader.setting")} iconName="cog" variant="simple" hideLabel={true} onClick={jumpSettingPage}/>
+          )}
+        </div>
+        <DictionaryHeaderOverlays {...{dictionary, commissionEditorOpen, setCommissionEditorOpen}}/>
       </div>
     );
     return node;
@@ -240,16 +165,18 @@ const DictionaryHeaderButtons = create(
 const DictionaryHeaderAddDropdownNode = create(
   require("./dictionary-header.scss"),
   function ({
-    type
+    type,
+    styles
   }: {
-    type: "word" | "example"
+    type: "word" | "example",
+    styles?: StylesRecord
   }): ReactElement {
 
     const [, {trans}] = useIntl();
 
     const node = (
-      <div>
-        <span styleName="icon"><Icon name={(type === "word") ? "custom-word" : "custom-example"}/></span>
+      <div styleName="dropdown-node">
+        <Icon className={styles!["icon"]} name={(type === "word") ? "custom-word" : "custom-example"}/>
         {trans(`dictionaryHeader.add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
       </div>
     );
@@ -266,12 +193,12 @@ const DictionaryHeaderOverlays = create(
     commissionEditorOpen,
     setCommissionEditorOpen
   }: {
-    dictionary: EnhancedDictionary | null,
+    dictionary: EnhancedDictionary,
     commissionEditorOpen: boolean,
     setCommissionEditorOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement | null {
 
-    const node = (dictionary !== null && commissionEditorOpen) && (
+    const node = (commissionEditorOpen) && (
       <Suspense fallback="">
         <CommissionEditor dictionary={dictionary} open={commissionEditorOpen} onClose={() => setCommissionEditorOpen(false)}/>
       </Suspense>

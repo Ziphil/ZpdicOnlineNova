@@ -100,10 +100,9 @@ const ResouceList = create(
             items={resources}
             size={size}
             column={2}
-            renderer={(resource) => (
-              <ResourcePane key={resource} dictionary={dictionary} resource={resource} showCode={showCode}/>
-            )}
-          />
+          >
+            {(resource) => <ResourcePane key={resource} dictionary={dictionary} resource={resource} showCode={showCode}/>}
+          </PaneList>
         </div>
       </div>
     );

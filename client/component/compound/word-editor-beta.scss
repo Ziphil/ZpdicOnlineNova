@@ -5,12 +5,12 @@
 
 .root {
   padding: $large-margin 0rpx;
-  border-bottom: 1rpx $invert-border-color solid;
+  border-bottom: 1rpx color(light-border) solid;
   &:first-child {
-    border-top: 1rpx $light-border-color solid;
+    border-top: 1rpx color(border) solid;
   }
   &:last-child {
-    border-bottom: 1rpx $light-border-color solid;
+    border-bottom: 1rpx color(border) solid;
   }
 }
 
@@ -23,7 +23,7 @@
 .head-name {
   @include bold-font;
   font-size: $large-font-size;
-  color: $head-color;
+  color: color(accent);
   cursor: pointer;
 }
 
@@ -43,7 +43,7 @@
   @include bold-font;
   margin: 0rpx 0rpx $paragraph-margin 0rpx;
   font-size: $tiny-font-size;
-  color: $light-color;
+  color: color(accent);
 }
 
 .container-inner {
@@ -64,14 +64,14 @@
   width: 10rpx;
   margin: 0rpx $small-margin 0rpx 0rpx;
   border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
-  background-color: $strong-background-color;
+  background-color: color(strong-background);
   display: flex;
   align-items: center;
   cursor: move;
 }
 
 .handle-icon {
-  color: $light-color;
+  color: color(accent);
 }
 
 .form-wrapper {
@@ -121,8 +121,8 @@
 }
 
 .absent {
-  color: $light-color;
-  opacity: 0.5;
+  color: color(accent);
+  opacity: $disabled-opacity;
 }
 
 .control-button {

@@ -11,9 +11,9 @@
   margin: $small-margin 0rpx 0rpx 0rpx;
   padding: $tooltip-vertical-padding $tooltip-horizontal-padding;
   font-size: $tiny-font-size;
-  color: map-get($colors, error);
-  background-color: background-color(map-get($colors, error));
-  border: 1rpx border-color(map-get($colors, error)) solid;
+  color: schemed-color(accent, red);
+  background-color: schemed-color(background, red);
+  border: 1rpx solid schemed-color(border, red);
   border-radius: $small-border-radius;
   display: none;
   position: absolute;
@@ -27,7 +27,7 @@
     left: 16rpx;
     margin-left: -8rpx;
     border: 8rpx transparent solid;
-    border-bottom: 8rpx border-color(map-get($colors, error)) solid;
+    border-bottom: 8rpx solid schemed-color(border, red);
     position: absolute;
     content: "";
   }
@@ -36,7 +36,7 @@
     left: 16rpx;
     margin-left: -8rpx;
     border: 8rpx transparent solid;
-    border-bottom: 8rpx background-color(map-get($colors, error)) solid;
+    border-bottom: 8rpx solid schemed-color(background, red);
     position: absolute;
     content: "";
   }

@@ -9,7 +9,7 @@
 
 .head {
   @include bold-font;
-  color: $head-color;
+  color: color(accent);
   font-size: $tiny-font-size;
 }
 

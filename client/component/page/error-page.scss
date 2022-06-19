@@ -6,7 +6,7 @@
 .icon-container {
   margin: 0rpx 0rpx $huge-margin 0rpx;
   font-size: 64rpx;
-  color: $light-color;
+  color: color(accent);
   text-align: center;
 }
 
@@ -21,7 +21,7 @@
   margin: $paragraph-margin 0rpx 0rpx 0rpx;
   padding: $box-vertical-padding $box-horizontal-padding;
   line-height: $line-height;
-  background-color: $strong-background-color;
+  background-color: color(strong-background);
   border-radius: $small-border-radius;
   overflow: hidden;
 }

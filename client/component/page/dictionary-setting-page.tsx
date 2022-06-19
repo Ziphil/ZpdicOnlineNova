@@ -52,7 +52,7 @@ const DictionarySettingPage = create(
 
     const number = +params.number;
     const [dictionary] = useSuspenseQuery("fetchDictionary", {number}, {}, EnhancedDictionary.enhance);
-    const [[, commisionSize]] = useSuspenseQuery("fetchCommissions", {number, offset: 0, size: 30});
+    const [[, commissionSize]] = useSuspenseQuery("fetchCommissions", {number, offset: 0, size: 30});
     const [] = useSuspenseQuery("checkDictionaryAuthorization", {number, authority: "own"});
 
     const mode = location.hash || "general";
@@ -60,12 +60,12 @@ const DictionarySettingPage = create(
       {mode: "general", label: trans("dictionarySettingPage.general"), iconName: "info-circle", href: "#general"},
       {mode: "setting", label: trans("dictionarySettingPage.setting"), iconName: "cog", href: "#setting"},
       {mode: "access", label: trans("dictionarySettingPage.access"), iconName: "users", href: "#access"},
-      {mode: "request", label: trans("dictionarySettingPage.commission"), iconName: "list-check", badgeValue: commisionSize, href: "#request"},
+      {mode: "request", label: trans("dictionarySettingPage.commission"), iconName: "list-check", badgeValue: commissionSize, href: "#request"},
       {mode: "resource", label: trans("dictionarySettingPage.resource"), iconName: "image", href: "#resource"},
       {mode: "statistics", label: trans("dictionarySettingPage.statistics"), iconName: "chart-line", href: "#statistics"}
     ] as const;
     const node = (
-      <Page dictionary={dictionary} showDictionary={true}>
+      <Page dictionary={dictionary} showDictionary={true} showAddLink={true} showSettingLink={true}>
         <Menu mode={mode} specs={menuSpecs}/>
         <DictionarySettingPageForms {...{dictionary, mode}}/>
       </Page>

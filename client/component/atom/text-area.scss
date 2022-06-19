@@ -10,7 +10,7 @@
 }
 
 .textarea {
-  @include input(map-get($colors, primary));
+  @include input(primary);
   padding: $textarea-vertical-padding $input-horizontal-padding;
   display: block;
   resize: none;
@@ -25,7 +25,7 @@
 }
 
 .code {
-  @include input(map-get($colors, primary));
+  @include input(primary);
   height: 100%;
   padding: 0rpx;
   display: block;

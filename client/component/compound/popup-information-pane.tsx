@@ -26,17 +26,13 @@ const PopupInformationPane = create(
     const [intl] = useIntl();
     const [popupSpecs, {clearPopup}] = usePopup();
 
-    const specNodes = popupSpecs.map((spec) => {
-      const specNode = (
-        <div styleName="pane-wrapper" key={spec.id}>
-          <InformationPane texts={[PopupUtil.getMessage(intl, spec.type)]} style={spec.style} onClose={() => clearPopup(spec.id)}/>
-        </div>
-      );
-      return specNode;
-    });
     const node = (
       <div styleName="root">
-        {specNodes}
+        {popupSpecs.map((spec) => (
+          <div styleName="pane-wrapper" key={spec.id}>
+            <InformationPane texts={[PopupUtil.getMessage(intl, spec.type)]} scheme={spec.scheme} onClose={() => clearPopup(spec.id)}/>
+          </div>
+        ))}
       </div>
     );
     return node;

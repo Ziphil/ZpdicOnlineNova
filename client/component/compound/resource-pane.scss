@@ -4,7 +4,7 @@
 
 
 .resource {
-  @include unordered-list-item("\F0DA", $light-color, 0.4em);
+  @include unordered-list-item("\F0DA", color(accent), 0.4em);
 }
 
 .code-outer {
@@ -21,7 +21,7 @@
   margin: 0rpx;
   padding: $box-vertical-padding $box-horizontal-padding;
   line-height: $line-height;
-  background-color: $strong-background-color;
+  background-color: color(strong-background);
   border-radius: $small-border-radius;
   overflow: hidden;
   flex-grow: 1;

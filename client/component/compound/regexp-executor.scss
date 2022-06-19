@@ -13,7 +13,7 @@
 }
 
 .result-input {
-  @include input(map-get($colors, primary));
+  @include input(primary);
   @include monospace-font;
   padding: $textarea-vertical-padding $input-horizontal-padding;
   display: block;

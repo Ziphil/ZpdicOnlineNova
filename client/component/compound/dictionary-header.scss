@@ -4,43 +4,23 @@
 
 
 .root {
-  width: 100%;
-  height: $dictionary-header-height;
-  top: $header-height;
-  left: 0rpx;
-  border-bottom: 1rpx $light-border-color solid;
-  background-color: $strong-background-color;
-  position: absolute;
-  z-index: 80;
-}
-
-.container {
-  @include header-container;
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  gap: $huge-margin;
 }
 
+.left,
 .right {
-  margin: 0rpx 0rpx 0rpx $huge-margin;
+  display: flex;
+  gap: $control-horizontal-margin;
 }
 
-.name {
-  @include bold-font;
-}
-
-.button {
+.dropdown-node {
   white-space: nowrap;
 }
 
-.button >* {
-  @include reset-first-margin;
-  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
-  display: inline-block;
-}
-
 .icon {
-  margin: 0rpx $blank-margin 0rpx 0rpx;
-  color: $light-color;
+  margin-inline-end: $blank-margin;
+  color: color(accent);
 }

@@ -7,35 +7,36 @@ $menu-item-vertical-padding: 10rpx;
 $menu-item-horizontal-padding: 15rpx;
 
 .root {
-  color: $light-color;
+  color: color(accent);
   text-decoration: none;
   display: flex;
   cursor: pointer;
   &.horizontal {
     padding: 0rpx $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
-    border-bottom: 5rpx transparent solid;
+    margin-bottom: -1rpx;
+    border-bottom: 6rpx transparent solid;
     &:hover {
-      border-bottom: 5rpx $light-border-color solid;
+      border-bottom: 6rpx solid schemed-color(accent, primary);
     }
     &.highlight {
-      margin-bottom: -1rpx;
-      border-bottom: 6rpx $link-color solid;
+      border-bottom: 6rpx solid schemed-color(accent, secondary);
     }
   }
   &.vertical {
     padding: 5rpx 0rpx 5rpx 10rpx;
-    border-left: 5rpx transparent solid;
+    margin-left: -1rpx;
+    border-left: 6rpx transparent solid;
     &:hover {
-      border-left: 5rpx $light-border-color solid;
+      border-left: 6rpx solid schemed-color(accent, primary);
     }
     &.highlight {
-      margin-left: -1rpx;
-      border-left: 6rpx $link-color solid;
+      border-left: 6rpx solid schemed-color(accent, secondary);
     }
   }
   &.highlight {
     @include bold-font;
-    color: $link-color;
+    --badge-background-color: #{schemed-color(accent, secondary)};
+    color: schemed-color(accent, secondary);
   }
 }
 

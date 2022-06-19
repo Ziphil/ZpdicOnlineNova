@@ -9,6 +9,9 @@ import {
   StylesRecord,
   create
 } from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 
 
 const Footer = create(
@@ -19,22 +22,27 @@ const Footer = create(
     styles?: StylesRecord
   }): ReactElement {
 
+    const [, {trans}] = useIntl();
+
     const date = new Date();
     const yearString = date.getFullYear().toString();
     const node = (
       <footer styleName="root">
-        <div styleName="container">
+        <div styleName="content">
           <div styleName="left">
             <div styleName="copyright">
               © 2020–{yearString} Ziphil<br/>
-              <Link className={styles!["link"]} href="/document/other/privacy" style="plane">Privacy Policy</Link> · <Link className={styles!["link"]} href="/contact" style="plane">Contact</Link>
             </div>
-          </div>
-          <div styleName="right">
-            <div styleName="copyright">
+            <div styleName="copyright recaptcha">
               This site is protected by reCAPTCHA.<br/>
               The Google <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer">Terms of Service</a> apply.
             </div>
+          </div>
+          <div styleName="right">
+            <Link className={styles!["link"]} href="/notification" style="plane">{trans("footer.notification")}</Link>
+            <Link className={styles!["link"]} href="/document" style="plane">{trans("footer.document")}</Link>
+            <Link className={styles!["link"]} href="/language" style="plane">{trans("footer.language")}</Link>
+            <Link className={styles!["link"]} href="/contact" style="plane">{trans("footer.contact")}</Link>
           </div>
         </div>
       </footer>
