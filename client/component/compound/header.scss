@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+@use "sass:math" as *;
 @import "/client/component/mixin.scss";
 
 
@@ -42,7 +43,7 @@
 
 .dictionary-name {
   @include bold-font;
-  margin-block-start: $tiny-margin;
+  margin-block-start: div($tiny-margin + $small-margin, 2);
   font-size: $huge-font-size;
 }
 
