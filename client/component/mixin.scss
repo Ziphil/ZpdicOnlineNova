@@ -95,6 +95,7 @@ $tiny-font-size: 12rpx;
 
 $focus-size: 2rpx;
 $blank-margin: 0.3em;
+$disabled-opacity: 0.4;
 
 $inset-box-shadow-setting: 0rpx 2rpx 3rpx;
 $small-border-radius: 3rpx;
@@ -239,14 +240,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   &:disabled,
   &.disabled,
   &[data-disabled] {
-    opacity: 0.5;
-  }
-  &:disabled:hover,
-  &:disabled:hover *,
-  &[data-disabled]:hover *,
-  &.disabled:hover,
-  &.disabled:hover *,
-  &[data-disabled]:hover * {
+    opacity: $disabled-opacity;
     cursor: not-allowed;
   }
   & input {
@@ -280,9 +274,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     box-shadow: inset $inset-box-shadow-setting schemed-color(active-button-shadow, $scheme);
   }
   &:disabled {
-    opacity: 0.5;
-  }
-  &:disabled:hover {
+    opacity: $disabled-opacity;
     cursor: not-allowed;
   }
 }
@@ -312,7 +304,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     box-shadow: inset $inset-box-shadow-setting schemed-color(active-light-button-shadow, $scheme);
   }
   &:disabled {
-    opacity: 0.5;
+    opacity: $disabled-opacity;
   }
   &:disabled:hover {
     cursor: not-allowed;

@@ -60,7 +60,7 @@
     padding-top: calc(#{$paragraph-margin} - #{line-intrusion($line-height)});
   }
   &.disabled {
-    opacity: 0.5;
+    opacity: $disabled-opacity;
   }
 }
 

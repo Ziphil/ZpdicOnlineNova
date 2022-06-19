@@ -33,6 +33,12 @@ $schemed-colors: (
     red: $red-base-color,
     blue: $blue-base-color
   ),
+  hover-accent: (
+    primary: tint($primary-base-color, 30%),
+    secondary: tint($secondary-base-color, 30%),
+    red: tint($red-base-color, 30%),
+    blue: tint($blue-base-color, 30%)
+  ),
   border: (
     primary: tint($primary-base-color, 35%),
     red: tint($red-base-color, 35%),
