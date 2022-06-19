@@ -4,46 +4,45 @@
 
 
 .root {
-  padding: $small-margin $medium-margin;
+  padding-block: $small-margin;
+  padding-inline: $medium-margin;
   position: relative;
+  &[data-scheme="red"] {
+    @include color-pane(red);
+  }
+  &[data-scheme="blue"] {
+    @include color-pane(blue);
+  }
 }
 
-.root.error {
-  @include color-pane(map-get($colors, error));
+.list {
+  .root[data-scheme="red"] & {
+    @include unordered-list("\F06A", inherit, 1em);
+    @include line-height;
+  }
+  .root[data-scheme="blue"] & {
+    @include unordered-list("\F05A", inherit, 1em);
+    @include line-height;
+  }
 }
 
-.root.information {
-  @include color-pane(map-get($colors, information));
+.button-box {
+  .root[data-scheme="red"] & {
+    @include color-pane(red);
+  }
+  .root[data-scheme="blue"] & {
+    @include color-pane(blue);
+  }
 }
 
-.root.error .list {
-  @include unordered-list("\F06A", inherit, 1em);
-  @include line-height;
-}
-
-.root.information .list {
-  @include unordered-list("\F05A", inherit, 1em);
-  @include line-height;
-}
-
-.root.error .button-box {
-  @include color-pane(map-get($colors, error));
-}
-
-.root.information .button-box {
-  @include color-pane(map-get($colors, information));
-}
-
-.root.error .button-box,
-.root.information .button-box,
+.button-box,
 .button {
-  right: -32u;
-  top: -32u;
-  width: 76u;
-  height: 76u;
+  right: -10rpx;
+  top: -10rpx;
+  width: 24rpx;
+  height: 24rpx;
   text-align: center;
-  border-radius: 50%;
-  box-sizing: border-box;
+  border-radius: 50% !important;
   position: absolute;
 }
 
@@ -53,34 +52,31 @@
   align-items: center;
 }
 
-.root.error .button >button >span {
-  color: map-get($colors, error);
-}
-
-.root.information .button >button >span {
-  color: map-get($colors, information);
-}
-
-.root.error .button:hover >button >span {
-  color: hover-color(map-get($colors, error), false);
-}
-
-.root.information .button:hover >button >span {
-  color: hover-color(map-get($colors, information), false);
+.button >button >span {
+  .root[data-scheme="red"] & {
+    color: schemed-color(accent, red);
+    &:hover {
+      color: schemed-color(hover-accent, red);
+    }
+  }
+  .root[data-scheme="blue"] & {
+    color: schemed-color(accent, blue);
+    &:hover {
+      color: schemed-color(hover-accent, blue);
+    }
+  }
 }
 
 .overlay {
   top: 0rpx;
   right: 0rpx;
-  width: 76u - 32u + 3u;
-  height: 76u - 32u + 3u;
+  width: 24rpx - 10rpx + 1rpx;
+  height: 24rpx - 10rpx + 1rpx;
   position: absolute;
-}
-
-.root.error .overlay {
-  background-color: background-color(map-get($colors, error));
-}
-
-.root.information .overlay {
-  background-color: background-color(map-get($colors, information));
+  .root[data-scheme="red"] & {
+    background-color: schemed-color(background, red);
+  }
+  .root[data-scheme="blue"] & {
+    background-color: schemed-color(background, blue);
+  }
 }

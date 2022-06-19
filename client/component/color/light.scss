@@ -43,6 +43,16 @@ $schemed-colors: (
     red: tint($red-base-color, 40%),
     blue: tint($blue-base-color, 40%),
   ),
+  background: (
+    primary: tint($primary-base-color, 85%),
+    red: tint($red-base-color, 85%),
+    blue: tint($blue-base-color, 85%),
+  ),
+  hover-background: (
+    primary: tint($primary-base-color, 80%),
+    red: tint($red-base-color, 80%),
+    blue: tint($blue-base-color, 80%),
+  ),
   input-box-shadow: (
     primary: rgba($primary-base-color, 0.1),
     red: rgba($red-base-color, 0.1),

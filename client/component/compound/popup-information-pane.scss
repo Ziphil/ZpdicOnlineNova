@@ -4,10 +4,10 @@
 
 
 .root {
-  bottom: $large-margin;
-  left: 0rpx;
   width: calc(100% - #{$page-horizontal-margin} * 2);
   margin: 0rpx $page-horizontal-margin;
+  top: $large-margin;
+  left: 0rpx;
   position: fixed;
   pointer-events: none;
   z-index: 300;

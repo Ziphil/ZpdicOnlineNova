@@ -315,14 +315,14 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   }
 }
 
-@mixin color-pane($color, $hover: false) {
-  color: $color;
-  border: 1rpx border-color($color) solid;
+@mixin color-pane($scheme, $hover: false) {
+  color: schemed-color(accent, $scheme);
+  border: 1rpx solid schemed-color(border, $scheme);
   border-radius: $large-border-radius;
-  background-color: background-color($color);
+  background-color: schemed-color(background, $scheme);
   @if $hover {
     &:hover {
-      background-color: hover-color(background-color($color), true, false);
+      background-color: schemed-color(hover-background, $scheme);
     }
   }
 }
