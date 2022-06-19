@@ -9,6 +9,8 @@ $github-horizontal-margin: 75rpx;
 $top-content-vertical-margin: 50rpx;
 
 .top {
+  max-width: $page-width * 0.85;
+  margin-inline: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
