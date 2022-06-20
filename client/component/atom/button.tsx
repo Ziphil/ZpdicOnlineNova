@@ -30,7 +30,7 @@ import {
 } from "/client/util/data";
 
 
-const Button = create(
+export const Button = create(
   require("./button.scss"), "Button",
   function ({
     label,

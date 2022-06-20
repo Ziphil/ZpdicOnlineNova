@@ -1,9 +1,8 @@
 //
 
 import {
-  ComponentMeta
-} from "@storybook/react";
-import Button from "/client/component/atom/button";
+  Button
+} from "/client/component/atom/button";
 import {
   createTemplate
 } from "/client/util/story";
@@ -12,7 +11,7 @@ import {
 export default {
   title: "Atom/Button",
   component: Button
-} as ComponentMeta<typeof Button>;
+};
 
 const template = createTemplate(Button);
 
