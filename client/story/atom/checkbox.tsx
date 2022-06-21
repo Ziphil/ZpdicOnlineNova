@@ -1,5 +1,9 @@
 //
 
+import * as react from "react";
+import {
+  useState
+} from "react";
 import {
   Checkbox
 } from "/client/component/atom/checkbox";
@@ -11,31 +15,29 @@ import {
 
 export default {
   title: "Atom/Checkbox",
-  component: Checkbox
+  component: Checkbox,
+  argTypes: {
+    checked: {control: {disable: true}}
+  }
 };
 
-const template = createTemplate(Checkbox);
+const template = createTemplate<typeof Checkbox>((props) => {
+  const [checked, setChecked] = useState(props.checked);
+  const node = (
+    <Checkbox {...props} checked={checked} onSet={(checked) => (props.onSet?.(checked), setChecked(checked))}/>
+  );
+  return node;
+});
 
 export const Alone = createStory(template);
 Alone.args = {
+  checked: true,
   name: "alone"
-};
-
-export const AloneChecked = createStory(template);
-AloneChecked.args = {
-  name: "alone-checked",
-  checked: true
 };
 
 export const Labeled = createStory(template);
 Labeled.args = {
+  checked: true,
   name: "labeled",
   label: "Checkbox"
-};
-
-export const LabeledChecked = createStory(template);
-LabeledChecked.args = {
-  name: "labeled-checked",
-  label: "Checkbox",
-  checked: true
 };

@@ -12,7 +12,7 @@ import {
 } from "/client/component/create";
 
 
-const Loading = create(
+export const Loading = create(
   require("./loading.scss"), "Loading",
   function ({
     loading,

@@ -1,5 +1,9 @@
 //
 
+import * as react from "react";
+import {
+  useState
+} from "react";
 import {
   Input
 } from "/client/component/atom/input";
@@ -11,14 +15,24 @@ import {
 
 export default {
   title: "Atom/Input",
-  component: Input
+  component: Input,
+  argTypes: {
+    value: {control: {disable: true}}
+  }
 };
 
-const template = createTemplate(Input);
+const template = createTemplate<typeof Input>((props) => {
+  const [value, setValue] = useState(props.value);
+  const node = (
+    <Input {...props} value={value} onSet={(value) => (props.onSet?.(value), setValue(value))}/>
+  );
+  return node;
+});
 
 export const Normal = createStory(template);
 Normal.args = {
-  value: "Input"
+  value: "Input",
+  label: "Label"
 };
 
 export const Labeled = createStory(template);

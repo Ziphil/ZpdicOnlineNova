@@ -1,5 +1,6 @@
 //
 
+import * as react from "react";
 import {
   Radio
 } from "/client/component/atom/radio";
@@ -14,28 +15,17 @@ export default {
   component: Radio
 };
 
-const template = createTemplate(Radio);
+const template = createTemplate<typeof Radio>((props) => <Radio {...props}/>);
 
 export const Alone = createStory(template);
 Alone.args = {
+  checked: true,
   name: "alone"
-};
-
-export const AloneChecked = createStory(template);
-AloneChecked.args = {
-  name: "alone-checked",
-  checked: true
 };
 
 export const Labeled = createStory(template);
 Labeled.args = {
+  checked: true,
   name: "labeled",
   label: "Radio"
-};
-
-export const LabeledChecked = createStory(template);
-LabeledChecked.args = {
-  name: "labeled-checked",
-  label: "Radio",
-  checked: true
 };

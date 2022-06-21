@@ -61,7 +61,7 @@ const StoryRoot = create(
     children
   }: {
     children?: ReactNode
-  }): ReactElement | null {
+  }): ReactElement {
 
     const {ready} = useDefaultMe();
     const {locale, messages} = useDefaultLocale("ja");
@@ -72,7 +72,7 @@ const StoryRoot = create(
       }
     }, []);
 
-    const node = (ready) && (
+    const node = (
       <DndProvider backend={DndBackend}>
         <QueryClientProvider client={queryClient}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
@@ -81,7 +81,7 @@ const StoryRoot = create(
         </QueryClientProvider>
       </DndProvider>
     );
-    return node || null;
+    return node;
 
   }
 );
