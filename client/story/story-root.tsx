@@ -4,6 +4,15 @@ import {
   IntlError
 } from "@formatjs/intl";
 import {
+  library as fontawesomeLibrary
+} from "@fortawesome/fontawesome-svg-core";
+import {
+  faGithub as iconFaGithub
+} from "@fortawesome/free-brands-svg-icons";
+import {
+  fas as iconFas
+} from "@fortawesome/free-solid-svg-icons";
+import {
   ReactLocation
 } from "@tanstack/react-location";
 import * as queryParser from "query-string";
@@ -38,14 +47,16 @@ import {
 require("../../node_modules/codemirror/lib/codemirror.css");
 require("../../node_modules/c3/c3.css");
 
+fontawesomeLibrary.add(iconFas, iconFaGithub);
+
 const location = new ReactLocation({
   parseSearch: (searchString) => queryParser.parse(searchString),
   stringifySearch: (search) => queryParser.stringify(search)
 });
 
 
-const SimpleRoot = create(
-  require("./root.scss"), "SimpleRoot",
+const StoryRoot = create(
+  require("/client/component/root.scss"), "StoryRoot",
   function ({
     children
   }: {
@@ -76,4 +87,4 @@ const SimpleRoot = create(
 );
 
 
-export default SimpleRoot;
+export default StoryRoot;

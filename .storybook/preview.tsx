@@ -1,15 +1,6 @@
 //
 
 import {
-  library as fontawesomeLibrary
-} from "@fortawesome/fontawesome-svg-core";
-import {
-  faGithub as iconFaGithub
-} from "@fortawesome/free-brands-svg-icons";
-import {
-  fas as iconFas
-} from "@fortawesome/free-solid-svg-icons";
-import {
   BaseDecorators,
   Parameters
 } from "@storybook/addons";
@@ -17,10 +8,8 @@ import * as react from "react";
 import {
   createElement
 } from "react";
-import SimpleRoot from "../client/component/simple-root";
+import StoryRoot from "../client/story/story-root";
 
-
-fontawesomeLibrary.add(iconFas, iconFaGithub);
 
 export const parameters = {
   actions: {
@@ -30,10 +19,10 @@ export const parameters = {
 
 export const decorators = [
   (story) => (
-    <SimpleRoot>
+    <StoryRoot>
       <div id="story-wrapper">
         {createElement(story)}
       </div>
-    </SimpleRoot>
+    </StoryRoot>
   )
 ] as BaseDecorators<any>
