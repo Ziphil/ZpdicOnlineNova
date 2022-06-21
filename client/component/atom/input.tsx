@@ -31,7 +31,7 @@ import {
 } from "/client/util/data";
 
 
-const Input = create(
+export const Input = create(
   require("./input.scss"), "Input",
   function ({
     value = "",
