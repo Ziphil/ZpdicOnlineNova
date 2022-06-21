@@ -18,6 +18,7 @@ export const Radio = create(
     value,
     label,
     checked,
+    onSet,
     onChange,
     className
   }: {
@@ -25,13 +26,15 @@ export const Radio = create(
     value: string,
     label: string,
     checked: boolean,
+    onSet?: (checked: boolean) => void,
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
     className?: string
   }): ReactElement {
 
     const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+      onSet?.(event.target.checked);
       onChange?.(event);
-    }, [onChange]);
+    }, [onSet, onChange]);
 
     const node = (
       <label styleName="root" className={className}>
