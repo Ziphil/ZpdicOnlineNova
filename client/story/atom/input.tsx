@@ -4,6 +4,7 @@ import {
   Input
 } from "/client/component/atom/input";
 import {
+  createStory,
   createTemplate
 } from "/client/util/story";
 
@@ -15,25 +16,25 @@ export default {
 
 const template = createTemplate(Input);
 
-export const Normal = template.bind({});
+export const Normal = createStory(template);
 Normal.args = {
   value: "Input"
 };
 
-export const WithLabel = template.bind({});
-WithLabel.args = {
+export const Labeled = createStory(template);
+Labeled.args = {
   value: "Input",
   label: "Label"
 };
 
-export const WithAffixes = template.bind({});
+export const WithAffixes = createStory(template);
 WithAffixes.args = {
   value: "Input",
   prefix: "#",
   suffix: "suffix"
 };
 
-export const Flexible = template.bind({});
+export const Flexible = createStory(template);
 Flexible.args = {
   value: "Password",
   type: "flexible"

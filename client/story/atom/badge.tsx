@@ -4,6 +4,7 @@ import {
   Badge
 } from "/client/component/atom/badge";
 import {
+  createStory,
   createTemplate
 } from "/client/util/story";
 
@@ -15,12 +16,12 @@ export default {
 
 const template = createTemplate(Badge);
 
-export const Number = template.bind({});
+export const Number = createStory(template);
 Number.args = {
   value: 5102
 };
 
-export const String = template.bind({});
+export const String = createStory(template);
 String.args = {
   value: "Badge"
 };

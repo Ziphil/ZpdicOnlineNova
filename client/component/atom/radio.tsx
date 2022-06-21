@@ -11,7 +11,7 @@ import {
 } from "/client/component/create";
 
 
-const Radio = create(
+export const Radio = create(
   require("./radio.scss"), "Radio",
   function ({
     name,

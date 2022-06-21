@@ -15,7 +15,7 @@ import {
 } from "/client/component/create";
 
 
-const Checkbox = create(
+export const Checkbox = create(
   require("./checkbox.scss"), "Checkbox",
   function ({
     name,
