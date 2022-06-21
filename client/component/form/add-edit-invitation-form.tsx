@@ -7,9 +7,6 @@ import {
   useCallback,
   useState
 } from "react";
-import {
-  useMount
-} from "react-use";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
@@ -23,14 +20,12 @@ import {
 import {
   useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useSuspenseQuery
 } from "/client/component/hook";
 import {
   Dictionary
 } from "/client/skeleton/dictionary";
-import {
-  User
-} from "/client/skeleton/user";
 
 
 const AddEditInvitationForm = create(
@@ -45,23 +40,12 @@ const AddEditInvitationForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    const [userName, setUserName] = useState("");
-    const [authorizedUsers, setAuthorizedUsers] = useState<Array<User> | null>(null);
     const [, {trans}] = useIntl();
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
-    const fetchAuthorizedUsers = useCallback(async function (): Promise<void> {
-      const number = dictionary.number;
-      const authority = "editOnly" as const;
-      const response = await request("fetchDictionaryAuthorizedUsers", {number, authority});
-      if (response.status === 200 && !("error" in response.data)) {
-        const authorizedUsers = response.data;
-        setAuthorizedUsers(authorizedUsers);
-      } else {
-        setAuthorizedUsers(null);
-      }
-    }, [dictionary.number, request]);
+    const [authorizedUsers] = useSuspenseQuery("fetchDictionaryAuthorizedUsers", {number, authority: "editOnly"});
+    const [userName, setUserName] = useState("");
 
     const suggestUsers = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const response = await request("suggestUsers", {pattern}, {ignoreError: true});
@@ -87,10 +71,6 @@ const AddEditInvitationForm = create(
       }
     }, [number, userName, request, onSubmit, addInformationPopup]);
 
-    useMount(async () => {
-      await fetchAuthorizedUsers();
-    });
-
     const node = (
       <Fragment>
         <form styleName="root">
@@ -99,12 +79,12 @@ const AddEditInvitationForm = create(
             value={userName}
             prefix="@"
             suggest={suggestUsers}
-            onSet={(userName) => setUserName(userName)}
+            onSet={setUserName}
           />
           <Button label={trans("addEditInvitationForm.confirm")} reactive={true} onClick={handleClick}/>
         </form>
         <div styleName="user">
-          <UserList users={authorizedUsers} dictionary={dictionary} size={8} onSubmit={fetchAuthorizedUsers}/>
+          <UserList users={authorizedUsers} dictionary={dictionary} size={8}/>
         </div>
       </Fragment>
     );
