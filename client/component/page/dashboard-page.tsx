@@ -195,7 +195,7 @@ const DashboardPageLoading = create(
 
     const node = (
       <SettingPane>
-        <Loading loading={true}/>
+        <Loading/>
       </SettingPane>
     );
     return node;

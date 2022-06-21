@@ -20,7 +20,7 @@ const LoadingPage = create(
     const node = (
       <Page>
         <div styleName="root">
-          <Loading loading={true}/>
+          <Loading/>
         </div>
       </Page>
     );

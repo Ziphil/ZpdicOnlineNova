@@ -188,7 +188,7 @@ const WordEditor = create(
           <WordSearcher dictionary={dictionary} style="simple" showButton={true} showDirectionButton={true} onSubmit={editRelation}/>
         </Overlay>
         <Overlay size="large" title={trans("resourceList.title")} open={resourceListOpen} onClose={() => setResourceListOpen(false)}>
-          <Suspense fallback={<Loading loading={true}/>}>
+          <Suspense fallback={<Loading/>}>
             <ResourceList dictionary={dictionary} size={10} showCode={true} showInstruction={true}/>
           </Suspense>
         </Overlay>

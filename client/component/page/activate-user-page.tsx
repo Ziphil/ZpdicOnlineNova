@@ -46,7 +46,7 @@ const ActivateUserPage = create(
 
     const node = (
       <Page>
-        <Loading loading={true}/>
+        <Loading/>
       </Page>
     );
     return node;

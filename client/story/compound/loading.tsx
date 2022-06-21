@@ -18,6 +18,3 @@ export default {
 const template = createTemplate<typeof Loading>((props) => <Loading {...props}/>);
 
 export const Basic = createStory(template);
-Basic.args = {
-  loading: true
-};
