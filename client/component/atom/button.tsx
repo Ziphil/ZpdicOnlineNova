@@ -33,6 +33,7 @@ import {
 export const Button = create(
   require("./button.scss"), "Button",
   function ({
+    name,
     label,
     iconName,
     position = "alone",
@@ -45,6 +46,7 @@ export const Button = create(
     className,
     styles
   }: {
+    name?: string,
     label?: string,
     iconName?: IconName,
     position?: "alone" | "left" | "right" | "middle",
@@ -97,7 +99,7 @@ export const Button = create(
       loading
     });
     const node = (
-      <button styleName={styleName} className={className} disabled={disabled || loading} onClick={handleClick} {...data}>
+      <button styleName={styleName} className={className} name={name} disabled={disabled || loading} onClick={handleClick} {...data}>
         {(iconName !== undefined) && <Icon className={styles!["icon"]} name={iconName}/>}
         {(label !== undefined) && <span styleName="label">{label}</span>}
         {(reactive) && (
