@@ -24,7 +24,9 @@ export default {
 const template = createTemplate<typeof TextArea>((props) => {
   const [value, setValue] = useState(props.value);
   const node = (
-    <TextArea {...props} value={value} onSet={(value) => (props.onSet?.(value), setValue(value))}/>
+    <div style={{height: "200px", display: "flex"}}>
+      <TextArea {...props} value={value} onSet={(value) => (props.onSet?.(value), setValue(value))}/>
+    </div>
   );
   return node;
 });
@@ -48,7 +50,7 @@ Monospace.args = {
 
 export const Highlight = createStory(template);
 Highlight.args = {
-  value: "TextArea\ntextarea textarea",
+  value: "cons = \"s\" 3 | \"t\" 3 | \"k\" 2 | \"p\" 1;\nvowel = \"a\" 3 | \"e\" 2;\n% cons vowel cons (cons | \"\") - cons &1",
   font: "monospace",
   language: "zatlin"
 };
