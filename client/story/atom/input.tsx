@@ -31,8 +31,7 @@ const template = createTemplate<typeof Input>((props) => {
 
 export const Normal = createStory(template, {
   args: {
-    value: "Input",
-    label: "Label"
+    value: "Input"
   }
 });
 
