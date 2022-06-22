@@ -54,3 +54,19 @@ Highlight.args = {
   font: "monospace",
   language: "zatlin"
 };
+
+export const Nowrap = createStory(template);
+Nowrap.args = {
+  value: "variable = \"a\" 5" + " | \"s\" 3 | \"z\" 3 | \"t\" 3 | \"d\" 3 | \"k\" 2 | \"g\" 2 | \"f\" 2 | \"v\" 2 | \"p\" 2 | \"b\" 2 | \"c\" 2 | \"q\" 2".repeat(3),
+  font: "monospace",
+  language: "zatlin",
+  nowrap: true
+};
+
+export const FitHeight = createStory(template);
+FitHeight.args = {
+  value: "cons = \"s\" 3 | \"t\" 3 | \"k\" 2 | \"p\" 1;\nvowel = \"a\" 3 | \"e\" 2;\n% cons vowel cons (cons | \"\") - cons &1",
+  font: "monospace",
+  language: "zatlin",
+  fitHeight: true
+};
