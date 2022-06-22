@@ -26,6 +26,7 @@
 .content a,
 .content .link {
   color: color(footer-text);
+  border-radius: $small-border-radius;
   text-decoration: underline;
   cursor: pointer;
   &:hover {
