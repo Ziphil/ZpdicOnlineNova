@@ -1,12 +1,9 @@
 //
 
-import {
-  StoryContext
-} from "@storybook/react";
+
 import {
   userEvent
 } from "@storybook/testing-library";
-import * as react from "react";
 import {
   Button
 } from "/client/component/atom/button";
@@ -21,39 +18,44 @@ export default {
   component: Button
 };
 
-const template = createTemplate<typeof Button>((props) => <Button {...props}/>);
+const template = createTemplate<typeof Button>();
 
-export const Normal = createStory(template);
-Normal.args = {
-  label: "Button",
-  variant: "normal"
-};
+export const Normal = createStory(template, {
+  args: {
+    label: "Button",
+    variant: "normal"
+  }
+});
 
-export const Light = createStory(template);
-Light.args = {
-  label: "Button",
-  variant: "light"
-};
+export const Light = createStory(template, {
+  args: {
+    label: "Button",
+    variant: "light"
+  }
+});
 
-export const Link = createStory(template);
-Link.args = {
-  label: "Button",
-  variant: "link"
-};
+export const Link = createStory(template, {
+  args: {
+    label: "Button",
+    variant: "link"
+  }
+});
 
-export const Simple = createStory(template);
-Simple.args = {
-  label: "Button",
-  variant: "simple"
-};
+export const Simple = createStory(template, {
+  args: {
+    label: "Button",
+    variant: "simple"
+  }
+});
 
-export const Loading = createStory(template);
-Loading.args = {
-  label: "Button",
-  className: "zp-story-button",
-  reactive: true,
-  onClick: () => new Promise(() => null)
-};
-Loading.play = async function ({canvasElement}: StoryContext<any, any>): Promise<void> {
-  userEvent.click(canvasElement.getElementsByClassName("zp-story-button").item(0)!);
-};
+export const Loading = createStory(template, {
+  args: {
+    label: "Button",
+    className: "zp-story-button",
+    reactive: true,
+    onClick: () => new Promise(() => null)
+  },
+  play: async ({canvasElement}) => {
+    userEvent.click(canvasElement.getElementsByClassName("zp-story-button").item(0)!);
+  }
+});

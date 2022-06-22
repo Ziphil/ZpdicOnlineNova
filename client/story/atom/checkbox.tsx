@@ -29,15 +29,17 @@ const template = createTemplate<typeof Checkbox>((props) => {
   return node;
 });
 
-export const Alone = createStory(template);
-Alone.args = {
-  checked: true,
-  name: "alone"
-};
+export const Alone = createStory(template, {
+  args: {
+    checked: true,
+    name: "alone"
+  }
+});
 
-export const Labeled = createStory(template);
-Labeled.args = {
-  checked: true,
-  name: "labeled",
-  label: "Checkbox"
-};
+export const Labeled = createStory(template, {
+  args: {
+    checked: true,
+    name: "labeled",
+    label: "Checkbox"
+  }
+});

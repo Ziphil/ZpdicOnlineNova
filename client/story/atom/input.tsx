@@ -29,27 +29,31 @@ const template = createTemplate<typeof Input>((props) => {
   return node;
 });
 
-export const Normal = createStory(template);
-Normal.args = {
-  value: "Input",
-  label: "Label"
-};
+export const Normal = createStory(template, {
+  args: {
+    value: "Input",
+    label: "Label"
+  }
+});
 
-export const Labeled = createStory(template);
-Labeled.args = {
-  value: "Input",
-  label: "Label"
-};
+export const Labeled = createStory(template, {
+  args: {
+    value: "Input",
+    label: "Label"
+  }
+});
 
-export const WithAffixes = createStory(template);
-WithAffixes.args = {
-  value: "Input",
-  prefix: "#",
-  suffix: "suffix"
-};
+export const WithAffixes = createStory(template, {
+  args: {
+    value: "Input",
+    prefix: "#",
+    suffix: "suffix"
+  }
+});
 
-export const Flexible = createStory(template);
-Flexible.args = {
-  value: "Password",
-  type: "flexible"
-};
+export const Flexible = createStory(template, {
+  args: {
+    value: "Password",
+    type: "flexible"
+  }
+});

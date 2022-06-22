@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   Loading
 } from "/client/component/compound/loading";
@@ -15,6 +14,6 @@ export default {
   component: Loading
 };
 
-const template = createTemplate<typeof Loading>((props) => <Loading {...props}/>);
+const template = createTemplate<typeof Loading>();
 
 export const Basic = createStory(template);

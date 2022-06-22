@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   Badge
 } from "/client/component/atom/badge";
@@ -15,14 +14,16 @@ export default {
   component: Badge
 };
 
-const template = createTemplate<typeof Badge>((props) => <Badge {...props}/>);
+const template = createTemplate<typeof Badge>();
 
-export const Number = createStory(template);
-Number.args = {
-  value: 5102
-};
+export const Number = createStory(template, {
+  args: {
+    value: 5102
+  }
+});
 
-export const String = createStory(template);
-String.args = {
-  value: "Badge"
-};
+export const String = createStory(template, {
+  args: {
+    value: "Badge"
+  }
+});

@@ -1,23 +1,18 @@
 //
 
 import {
-  ComponentStory,
-  Story
+  ComponentStoryObj
 } from "@storybook/react";
 import {
-  ComponentProps,
   FunctionComponent
 } from "react";
 
 
-export function createTemplate<C extends FunctionComponent<any>>(story: Story<ComponentProps<C>>): ComponentStory<C> {
-  return story;
+export function createTemplate<C extends FunctionComponent<any>>(render?: ComponentStoryObj<C>["render"]): ComponentStoryObj<C> {
+  return {render};
 }
 
-export function createStory<C extends FunctionComponent<any>>(template: ComponentStory<C>, name?: string): ComponentStory<C> {
-  const story = template.bind({});
-  if (name !== undefined) {
-    story.storyName = name;
-  }
-  return story;
+export function createStory<C extends FunctionComponent<any>>(template: ComponentStoryObj<C>, story?: ComponentStoryObj<C>): ComponentStoryObj<C> {
+  const nextStory = {...template, ...story};
+  return nextStory;
 }
