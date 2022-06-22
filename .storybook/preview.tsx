@@ -14,6 +14,9 @@ import StoryRoot from "../client/story/story-root";
 export const parameters = {
   actions: {
     argTypesRegex: "^on[A-Z].*"
+  },
+  grid: {
+    cellSize: 16
   }
 } as Parameters;
 
