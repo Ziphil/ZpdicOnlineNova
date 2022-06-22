@@ -180,6 +180,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   border-radius: $small-border-radius;
   background-color: color(input-background);
   box-shadow: inset $inset-box-shadow-setting schemed-color(input-box-shadow, $scheme);
+  cursor: text;
   outline: none;
   &:focus-within:not(:disabled):not(.disabled) {
     outline: $focus-size solid schemed-color(focus, $scheme);
