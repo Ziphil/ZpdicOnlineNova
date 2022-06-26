@@ -1,6 +1,5 @@
 //
 
-import merge from "lodash-es/merge";
 import * as react from "react";
 import {
   Fragment,
@@ -64,7 +63,16 @@ const WordSearchForm = create(
     const handleParameterSet = useCallback(function (nextParameter: DeepPartial<NormalWordParameter>): void {
       if (onParameterSet) {
         const oldParameter = WordParameter.getNormal(parameter);
-        const {text, mode, type, order, options} = merge(oldParameter, nextParameter);
+        const text = nextParameter.text ?? oldParameter.text;
+        const mode = nextParameter.mode ?? oldParameter.mode;
+        const type = nextParameter.type ?? oldParameter.type;
+        const order = nextParameter.order ?? oldParameter.order;
+        const options = {
+          ignore: {
+            case: nextParameter.options?.ignore?.case ?? oldParameter.options.ignore.case
+          },
+          enableSuggestions: nextParameter.options?.enableSuggestions ?? oldParameter.options.enableSuggestions
+        };
         const actualParameter = NormalWordParameter.createEmpty({text, mode, type, order, options});
         onParameterSet(actualParameter);
       }
