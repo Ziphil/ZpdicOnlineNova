@@ -19,6 +19,9 @@ import {
 import {
   QueryLike
 } from "/server/util/query";
+import {
+  Random
+} from "/server/util/random";
 
 
 export class NormalWordParameter extends WordParameter {
@@ -44,7 +47,17 @@ export class NormalWordParameter extends WordParameter {
     const sortKey = WordParameter.createSortKey(this.order);
     const disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
     const query = WordModel.findExist().where("dictionary", dictionary).or(disjunctFilters).sort(sortKey);
-    return query;
+    if (this.options.shuffleSeed !== null) {
+      const random = new Random(this.options.shuffleSeed);
+      const promise = (async () => {
+        const words = await query;
+        random.shuffle(words);
+        return words;
+      })();
+      return promise;
+    } else {
+      return query;
+    }
   }
 
   public createSuggestionQuery(dictionary: Dictionary): Aggregate<Array<RawSuggestion>> | null {
