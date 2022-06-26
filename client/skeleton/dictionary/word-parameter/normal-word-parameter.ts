@@ -44,7 +44,7 @@ export class NormalWordParameter extends WordParameter {
       order: {mode: "unicode", direction: "ascending"},
       options: {
         ignore: {case: false},
-        randomSeed: null,
+        shuffleSeed: null,
         enableSuggestions: false
       }
     }, overrides);
@@ -61,9 +61,9 @@ export class NormalWordParameter extends WordParameter {
     const order = {mode: orderMode, direction: orderDirection};
     const ignoreCase = (search.ignoreCase === "true") ? true : undefined;
     const ignore = (ignoreCase !== undefined) ? {case: ignoreCase} : undefined;
-    const randomSeed = (typeof search.randomSeed === "string") ? search.randomSeed : undefined;
+    const shuffleSeed = (typeof search.shuffleSeed === "string") ? search.shuffleSeed : undefined;
     const enableSuggestions = (search.enableSuggestions === "true") ? true : undefined;
-    const options = {ignore, randomSeed, enableSuggestions};
+    const options = {ignore, shuffleSeed, enableSuggestions};
     const parameter = NormalWordParameter.createEmpty({text, mode, type, order, options});
     return parameter;
   }
@@ -75,9 +75,9 @@ export class NormalWordParameter extends WordParameter {
     const orderMode = this.order.mode;
     const orderDirection = this.order.direction;
     const ignoreCase = this.options.ignore.case;
-    const randomSeed = this.options.randomSeed ?? undefined;
+    const shuffleSeed = this.options.shuffleSeed ?? undefined;
     const enableSuggestions = this.options.enableSuggestions;
-    const search = {text, mode, type, orderMode, orderDirection, ignoreCase, randomSeed, enableSuggestions};
+    const search = {text, mode, type, orderMode, orderDirection, ignoreCase, shuffleSeed, enableSuggestions};
     return search;
   }
 
@@ -86,6 +86,6 @@ export class NormalWordParameter extends WordParameter {
 
 export type NormalWordParameterOptions = {
   ignore: WordIgnoreOptions,
-  randomSeed: string | null,
+  shuffleSeed: string | null,
   enableSuggestions: boolean
 };

@@ -69,7 +69,7 @@ const WordSearchForm = create(
         const order = nextParameter.order ?? oldParameter.order;
         const options = {
           ignore: {case: nextParameter.options?.ignore?.case ?? oldParameter.options.ignore.case},
-          randomSeed: nextParameter.options?.randomSeed ?? oldParameter.options.randomSeed,
+          shuffleSeed: nextParameter.options?.shuffleSeed ?? oldParameter.options.shuffleSeed,
           enableSuggestions: nextParameter.options?.enableSuggestions ?? oldParameter.options.enableSuggestions
         };
         const actualParameter = NormalWordParameter.createEmpty({text, mode, type, order, options});
@@ -169,7 +169,7 @@ const WordSearchForm = create(
                   label={trans("wordSearchForm.shuffleResult")}
                   iconName="shuffle"
                   variant="simple"
-                  onClick={() => handleParameterSet({options: {randomSeed: Date.now().toString()}})}
+                  onClick={() => handleParameterSet({options: {shuffleSeed: Date.now().toString()}})}
                 />
               )}
               {(showAdvancedSearch) && <Button label={trans("wordSearchForm.advancedSearch")} iconName="search-plus" variant="simple" onClick={() => setSearchFormOpen(true)}/>}
