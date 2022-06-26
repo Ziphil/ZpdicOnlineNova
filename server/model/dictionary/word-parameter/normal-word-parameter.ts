@@ -73,5 +73,6 @@ export class NormalWordParameter extends WordParameter {
 
 export type NormalWordParameterOptions = {
   ignore: WordIgnoreOptions,
+  randomSeed: string | null,
   enableSuggestions: boolean
 };

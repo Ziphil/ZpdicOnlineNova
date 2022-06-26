@@ -68,9 +68,8 @@ const WordSearchForm = create(
         const type = nextParameter.type ?? oldParameter.type;
         const order = nextParameter.order ?? oldParameter.order;
         const options = {
-          ignore: {
-            case: nextParameter.options?.ignore?.case ?? oldParameter.options.ignore.case
-          },
+          ignore: {case: nextParameter.options?.ignore?.case ?? oldParameter.options.ignore.case},
+          randomSeed: nextParameter.options?.randomSeed ?? oldParameter.options.randomSeed,
           enableSuggestions: nextParameter.options?.enableSuggestions ?? oldParameter.options.enableSuggestions
         };
         const actualParameter = NormalWordParameter.createEmpty({text, mode, type, order, options});
