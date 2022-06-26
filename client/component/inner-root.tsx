@@ -10,12 +10,14 @@ import {
   ReactElement,
   ReactNode,
   Suspense,
+  useCallback,
   useEffect,
   useRef,
   useState
 } from "react";
 import {
-  ErrorBoundary
+  ErrorBoundary,
+  FallbackProps
 } from "react-error-boundary";
 import Drawer from "/client/component/atom/drawer";
 import GoogleAnalytics from "/client/component/atom/google-analytics";
@@ -26,6 +28,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  QueryError,
   useExampleEditorProps,
   useHotkey,
   useIntl,
@@ -38,6 +41,7 @@ import ScrollTop from "/client/component/util/scroll-top";
 import {
   ANALYTICS_ID
 } from "/client/variable";
+import NotFoundPage from "./page/not-found-page";
 
 
 const InnerRoot = create(
@@ -48,13 +52,28 @@ const InnerRoot = create(
     children?: ReactNode
   }): ReactElement {
 
-    const [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
-    const [wordEditorProps, wordEditorOpen, setWordEditorOpen] = useWordEditorProps();
-    const [exampleEditorProps, exampleEditorOpen, setExampleEditorOpen] = useExampleEditorProps();
-    const resetErrorBoundaryRef = useRef<(() => void) | null>(null);
     const [, {trans}] = useIntl();
     const {pushPath} = usePath();
     const router = useRouter();
+    const [wordEditorProps, wordEditorOpen, setWordEditorOpen] = useWordEditorProps();
+    const [exampleEditorProps, exampleEditorOpen, setExampleEditorOpen] = useExampleEditorProps();
+
+    const [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
+    const resetErrorBoundaryRef = useRef<(() => void) | null>(null);
+
+    const renderFallback = useCallback(function (props: FallbackProps): ReactElement {
+      resetErrorBoundaryRef.current = props.resetErrorBoundary;
+      const error = props.error;
+      if (QueryError.isQueryError(error)) {
+        const {type, status} = error;
+        if (status === 403) {
+          return <NotFoundPage/>;
+        } else if (type === "noSuchDictionaryNumber" || type === "noSuchDictionaryParamName") {
+          return <NotFoundPage/>;
+        }
+      }
+      return <ErrorPage {...props}/>;
+    }, []);
 
     useHotkey("jumpDashboardPage", () => {
       pushPath("/dashboard");
@@ -96,7 +115,7 @@ const InnerRoot = create(
     const node = (
       <Fragment>
         <GoogleAnalytics id={ANALYTICS_ID}/>
-        <ErrorBoundary fallbackRender={(props) => (resetErrorBoundaryRef.current = props.resetErrorBoundary, <ErrorPage {...props}/>)}>
+        <ErrorBoundary fallbackRender={renderFallback}>
           <Suspense fallback={<LoadingPage/>}>
             <ScrollTop>
               {children}
