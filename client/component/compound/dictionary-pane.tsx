@@ -5,21 +5,31 @@ import * as react from "react";
 import {
   MouseEvent,
   ReactElement,
-  useCallback
+  useCallback,
+  useMemo
 } from "react";
 import Button from "/client/component/atom/button";
+import Chart from "/client/component/atom/chart";
+import {
+  ChartData
+} from "/client/component/atom/chart";
 import WhitePane from "/client/component/compound/white-pane";
 import {
+  StylesRecord,
   create
 } from "/client/component/create";
 import {
   useIntl,
   usePath,
+  useQuery,
   useRequest
 } from "/client/component/hook";
 import {
   DetailedDictionary
 } from "/client/skeleton/dictionary";
+import {
+  History
+} from "/client/skeleton/history";
 
 
 const DictionaryPane = create(
@@ -29,20 +39,28 @@ const DictionaryPane = create(
     showUser = true,
     showUpdatedDate = true,
     showCreatedDate = false,
+    showChart = true,
     showSettingLink = false,
-    showDownloadLink = false
+    showDownloadLink = false,
+    styles
   }: {
     dictionary: DetailedDictionary,
     showUser?: boolean,
     showUpdatedDate?: boolean,
     showCreatedDate?: boolean,
+    showChart?: boolean,
     showSettingLink?: boolean,
-    showDownloadLink?: boolean
+    showDownloadLink?: boolean,
+    styles?: StylesRecord
   }): ReactElement {
 
     const {request} = useRequest();
     const [, {trans, transDate}] = useIntl();
     const {pushPath} = usePath();
+
+    const number = dictionary.number;
+    const from = useMemo(() => new Date(Date.now() - 16 * 24 * 60 * 60 * 1000).toString(), []);
+    const [histories] = useQuery("fetchHistories", {number, from}, {enabled: showChart, staleTime: 1 / 0, refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
 
     const jumpSettingPage = useCallback(function (event: MouseEvent<HTMLElement>): void {
       event.preventDefault();
@@ -78,6 +96,19 @@ const DictionaryPane = create(
 
     const name = dictionary.name;
     const href = "/dictionary/" + (dictionary.paramName ?? dictionary.number);
+    const chartSpec = useMemo(() => calcChartSpec(histories), [histories]);
+    const config = useMemo(() => (chartSpec !== undefined) && {
+      padding: {top: 0, bottom: 0, left: 0, right: 0},
+      axis: {
+        x: {max: chartSpec.maxXAxis, min: chartSpec.minXAxis, padding: {left: 0, right: 0}, type: "timeseries", show: false} as const,
+        y: {max: chartSpec.maxYAxis, min: chartSpec.minYAxis, padding: {top: 1, bottom: 1}, show: false}
+      },
+      grid: {
+        x: {show: false},
+        y: {show: false}
+      },
+      interaction: {enabled: false}
+    }, [chartSpec]);
     const node = (
       <WhitePane href={href} clickable={true}>
         <div styleName="main">
@@ -95,6 +126,11 @@ const DictionaryPane = create(
               )}
             </div>
           </div>
+          {useMemo(() => (showChart && chartSpec && config) && (
+            <div styleName="right">
+              <Chart className={styles!["chart"]} data={chartSpec.data} config={config}/>
+            </div>
+          ), [chartSpec, config, showChart, styles])}
         </div>
         {(showSettingLink || showDownloadLink) && (
           <div styleName="button-group">
@@ -113,5 +149,24 @@ const DictionaryPane = create(
   }
 );
 
+
+function calcChartSpec(histories?: Array<History>): {data: ChartData, maxXAxis: Date, minXAxis: Date, maxYAxis: number, minYAxis: number} | undefined {
+  if (histories) {
+    const dates = [];
+    const differences = [];
+    for (let i = 0 ; i < histories.length - 1 ; i ++) {
+      const difference = histories[i].wordSize - histories[i + 1].wordSize;
+      const trimmedDifference = Math.max(Math.min(difference, 20), 0);
+      dates.push(new Date(histories[i].date));
+      differences.push(trimmedDifference);
+    }
+    const data = {x: "date", columns: [["date", ...dates], ["wordSize", ...differences]], types: {wordSize: "line"}} as ChartData;
+    const maxXAxis = dates[0];
+    const minXAxis = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
+    return {data, maxXAxis, minXAxis, maxYAxis: 20, minYAxis: 0};
+  } else {
+    return undefined;
+  }
+}
 
 export default DictionaryPane;

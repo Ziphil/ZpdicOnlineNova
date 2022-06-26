@@ -11,6 +11,15 @@
   gap: $large-margin;
 }
 
+.chart {
+  width: 100rpx;
+  height: 50rpx;
+}
+
+.chart :global(.c3-line) {
+  stroke: color(accent) !important;
+}
+
 .name {
   @include bold-font;
 }
