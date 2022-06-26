@@ -118,69 +118,73 @@ const WordSearchForm = create(
     const orderModeSpecs = orderMode.map((orderMode) => ({value: orderMode, node: trans(`wordSearchForm.${orderMode}`)}));
     const orderDirectionSpecs = WORD_ORDER_DIRECTIONS.map((orderDirection) => ({value: orderDirection, node: <SearchFormOrderModeDropdownNode orderDirection={orderDirection}/>}));
     const actualParameter = WordParameter.getNormal(parameter);
-    const orderNode = (showOrder) && (
-      <Fragment>
-        <div styleName="selection-wrapper">
-          <Checkbox
-            name="ignoreCase"
-            value="true"
-            label={trans("wordSearchForm.ignoreCase")}
-            checked={actualParameter.options.ignore.case}
-            onSet={(ignoreCase) => handleParameterSet({options: {ignore: {case: ignoreCase}}})}
-          />
-          <Checkbox
-            name="enableSuggestions"
-            value="true"
-            label={trans("wordSearchForm.enableSuggestions")}
-            checked={actualParameter.options.enableSuggestions}
-            onSet={(enableSuggestions) => handleParameterSet({options: {enableSuggestions}})}
-          />
-        </div>
-        <div styleName="selection-wrapper">
-          <Selection
-            className={styles!["order-mode"]}
-            value={actualParameter.order.mode}
-            specs={orderModeSpecs}
-            onSet={(orderMode) => handleParameterSet({order: {mode: orderMode}})}
-          />
-          <Selection
-            className={styles!["order-direction"]}
-            value={actualParameter.order.direction}
-            specs={orderDirectionSpecs}
-            onSet={(orderDirection) => handleParameterSet({order: {direction: orderDirection}})}
-          />
-        </div>
-      </Fragment>
-    );
-    const advancedSearchButton = (showAdvancedSearch) && (
-      <div styleName="radio-wrapper">
-        <Button label={trans("wordSearchForm.advancedSearch")} iconName="search-plus" variant="simple" onClick={() => setSearchFormOpen(true)}/>
-      </div>
-    );
-    const advancedSearchNode = (showAdvancedSearch) && (
-      <AdvancedWordSearchForm
-        dictionary={dictionary}
-        defaultParameter={parameter}
-        open={searchFormOpen}
-        onConfirm={handleAdvancedSearchConfirm}
-        onClose={() => setSearchFormOpen(false)}
-      />
-    );
-    const iconNode = (searching) ? <Icon className={styles!["icon"]} name="circle-notch" spin={true}/> : <Icon className={styles!["icon"]} name="search"/>;
     const node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-          <Input value={actualParameter.text} prefix={iconNode} nativeRef={inputRef} onSet={(text) => handleParameterSet({text})}/>
+          <Input value={actualParameter.text} prefix={<Icon className={styles!["icon"]} name="search"/>} nativeRef={inputRef} onSet={(text) => handleParameterSet({text})}/>
           <div styleName="radio-wrapper">
             <RadioGroup name="mode" value={actualParameter.mode} specs={modeSpecs} onSet={(mode) => handleParameterSet({mode})}/>
           </div>
           <div styleName="radio-wrapper">
             <RadioGroup name="type" value={actualParameter.type} specs={typeSpecs} onSet={(type) => handleParameterSet({type})}/>
           </div>
-          {orderNode}
-          {advancedSearchButton}
+          {(showOrder) && (
+            <div styleName="selection-wrapper">
+              <Checkbox
+                name="ignoreCase"
+                value="true"
+                label={trans("wordSearchForm.ignoreCase")}
+                checked={actualParameter.options.ignore.case}
+                onSet={(ignoreCase) => handleParameterSet({options: {ignore: {case: ignoreCase}}})}
+              />
+              <Checkbox
+                name="enableSuggestions"
+                value="true"
+                label={trans("wordSearchForm.enableSuggestions")}
+                checked={actualParameter.options.enableSuggestions}
+                onSet={(enableSuggestions) => handleParameterSet({options: {enableSuggestions}})}
+              />
+            </div>
+          )}
+          {(showOrder) && (
+            <div styleName="selection-wrapper">
+              <Selection
+                className={styles!["order-mode"]}
+                value={actualParameter.order.mode}
+                specs={orderModeSpecs}
+                onSet={(orderMode) => handleParameterSet({order: {mode: orderMode}})}
+              />
+              <Selection
+                className={styles!["order-direction"]}
+                value={actualParameter.order.direction}
+                specs={orderDirectionSpecs}
+                onSet={(orderDirection) => handleParameterSet({order: {direction: orderDirection}})}
+              />
+            </div>
+          )}
+          {(showOrder || showAdvancedSearch) && (
+            <div styleName="selection-wrapper">
+              {(showOrder) && (
+                <Button
+                  label={trans("wordSearchForm.shuffleResult")}
+                  iconName="shuffle"
+                  variant="simple"
+                  onClick={() => handleParameterSet({options: {randomSeed: Date.now().toString()}})}
+                />
+              )}
+              {(showAdvancedSearch) && <Button label={trans("wordSearchForm.advancedSearch")} iconName="search-plus" variant="simple" onClick={() => setSearchFormOpen(true)}/>}
+            </div>
+          )}
         </form>
-        {advancedSearchNode}
+        {(showAdvancedSearch) && (
+          <AdvancedWordSearchForm
+            dictionary={dictionary}
+            defaultParameter={parameter}
+            open={searchFormOpen}
+            onConfirm={handleAdvancedSearchConfirm}
+            onClose={() => setSearchFormOpen(false)}
+          />
+        )}
       </Fragment>
     );
     return node;
