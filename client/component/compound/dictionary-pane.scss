@@ -3,43 +3,28 @@
 @import "/client/component/mixin.scss";
 
 
-.head {
+.main {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  gap: $large-margin;
 }
 
 .name {
   @include bold-font;
 }
 
-.status {
-  margin: 0rpx 0rpx 0rpx $large-margin;
-  white-space: nowrap;
-}
-
 .information {
-  margin: $small-margin 0rpx 0rpx 0rpx;
+  margin-block-start: $small-margin;
   font-size: $tiny-font-size;
+  display: flex;
+  flex-direction: column;
+  gap: $tiny-margin;
 }
 
-.information-item {
-  margin: $tiny-margin 0rpx 0rpx 0rpx;
-}
-
-.information-item:first-child {
-  margin: 0rpx;
-}
-
-.setting {
-  text-align: right;
-}
-
-.setting >* {
-  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
-}
-
-.setting >*:first-child {
-  margin: 0rpx;
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: $control-horizontal-margin;
 }

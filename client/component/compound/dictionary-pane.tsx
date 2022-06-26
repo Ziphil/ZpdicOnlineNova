@@ -80,26 +80,24 @@ const DictionaryPane = create(
     const href = "/dictionary/" + (dictionary.paramName ?? dictionary.number);
     const node = (
       <WhitePane href={href} clickable={true}>
-        <div>
-          <div styleName="head">
-            <div styleName="left">
-              <div styleName="name">{name}</div>
+        <div styleName="main">
+          <div styleName="left">
+            <div styleName="name">{name}</div>
+            <div styleName="information">
+              {(showUpdatedDate) && (
+                <div styleName="information-item">{trans("dictionaryPane.updatedDate")} — {transDate(dictionary.updatedDate)}</div>
+              )}
+              {(showCreatedDate) && (
+                <div styleName="information-item">{trans("dictionaryPane.createdDate")} — {transDate(dictionary.createdDate)}</div>
+              )}
+              {(showUser) && (
+                <div styleName="information-item">{trans("dictionaryPane.userName")} — {dictionary.user.screenName}</div>
+              )}
             </div>
-          </div>
-          <div styleName="information">
-            {(showUpdatedDate) && (
-              <div styleName="information-item">{trans("dictionaryPane.updatedDate")} — {transDate(dictionary.updatedDate)}</div>
-            )}
-            {(showCreatedDate) && (
-              <div styleName="information-item">{trans("dictionaryPane.createdDate")} — {transDate(dictionary.createdDate)}</div>
-            )}
-            {(showUser) && (
-              <div styleName="information-item">{trans("dictionaryPane.userName")} — {dictionary.user.screenName}</div>
-            )}
           </div>
         </div>
         {(showSettingLink || showDownloadLink) && (
-          <div styleName="setting">
+          <div styleName="button-group">
             {(showSettingLink) && (
               <Button label={trans("dictionaryPane.setting")} iconName="cog" variant="simple" onClick={jumpSettingPage}/>
             )}
