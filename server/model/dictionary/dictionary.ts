@@ -575,14 +575,6 @@ export class DictionaryCreator {
 
   public static async createDetailed(raw: Dictionary): Promise<DetailedDictionarySkeleton> {
     const base = DictionaryCreator.create(raw);
-    const wordSizePromise = new Promise<number>(async (resolve, reject) => {
-      try {
-        const wordSize = await raw.countWords();
-        resolve(wordSize);
-      } catch (error) {
-        reject(error);
-      }
-    });
     const userPromise = new Promise<UserSkeleton>(async (resolve, reject) => {
       try {
         await raw.populate("user");
@@ -596,8 +588,8 @@ export class DictionaryCreator {
         reject(error);
       }
     });
-    const [wordSize, user] = await Promise.all([wordSizePromise, userPromise]);
-    const skeleton = {...base, wordSize, user};
+    const [user] = await Promise.all([userPromise]);
+    const skeleton = {...base, user};
     return skeleton;
   }
 

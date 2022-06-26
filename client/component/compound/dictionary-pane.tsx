@@ -77,31 +77,13 @@ const DictionaryPane = create(
     }, [dictionary, request]);
 
     const name = dictionary.name;
-    const status = dictionary.status;
     const href = "/dictionary/" + (dictionary.paramName ?? dictionary.number);
-    const statusString = (() => {
-      if (status === "saving") {
-        return trans("dictionaryPane.saving");
-      } else if (status === "error") {
-        return trans("dictionaryPane.error");
-      } else {
-        const wordSize = dictionary.wordSize;
-        if (wordSize !== undefined) {
-          return trans("dictionaryPane.wordSize", {wordSize});
-        } else {
-          return trans("dictionaryPane.wordSizeUndefined");
-        }
-      }
-    })();
     const node = (
       <WhitePane href={href} clickable={true}>
         <div>
           <div styleName="head">
             <div styleName="left">
               <div styleName="name">{name}</div>
-            </div>
-            <div styleName="right">
-              <div styleName="status">{statusString}</div>
             </div>
           </div>
           <div styleName="information">

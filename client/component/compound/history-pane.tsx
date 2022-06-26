@@ -40,9 +40,10 @@ const HistoryPane = create(
 
     const number = dictionary.number;
     const from = useMemo(() => new Date(Date.now() - 100 * 24 * 60 * 60 * 1000).toString(), []);
+    const [wordSize] = useSuspenseQuery("fetchWordSize", {number});
     const [histories] = useSuspenseQuery("fetchHistories", {number, from});
 
-    const {data, maxAxis, minAxis} = calcChartSpec(histories, dictionary.wordSize);
+    const {data, maxAxis, minAxis} = calcChartSpec(histories, wordSize);
     const padding = 24 * 60 * 60 * 1000;
     const config = {
       padding: {left: 45},
