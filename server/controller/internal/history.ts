@@ -4,7 +4,6 @@ import {
   CustomError
 } from "/client/skeleton/error";
 import {
-  before,
   controller,
   post
 } from "/server/controller/decorator";
@@ -14,13 +13,12 @@ import {
   Response
 } from "/server/controller/internal/controller";
 import {
-  verifyDictionary,
-  verifyUser
-} from "/server/controller/internal/middle";
-import {
   SERVER_PATHS,
   SERVER_PATH_PREFIX
 } from "/server/controller/internal/type";
+import {
+  DictionaryModel
+} from "/server/model/dictionary";
 import {
   HistoryCreator,
   HistoryModel
@@ -31,10 +29,10 @@ import {
 export class HistoryController extends Controller {
 
   @post(SERVER_PATHS["fetchHistories"])
-  @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchHistories">, response: Response<"fetchHistories">): Promise<void> {
-    const dictionary = request.dictionary;
+    const number = request.body.number;
     const from = new Date(request.body.from);
+    const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const histories = await HistoryModel.fetch(dictionary, from);
       const body = histories.map(HistoryCreator.create);
