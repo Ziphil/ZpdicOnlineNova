@@ -1,5 +1,6 @@
 //
 
+import merge from "lodash-es/merge";
 import * as react from "react";
 import {
   Fragment,
@@ -8,6 +9,9 @@ import {
   useRef,
   useState
 } from "react";
+import {
+  DeepPartial
+} from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Checkbox from "/client/component/atom/checkbox";
 import Icon from "/client/component/atom/icon";
@@ -27,11 +31,7 @@ import {
   Dictionary,
   NormalWordParameter,
   WORD_ORDER_DIRECTIONS,
-  WordMode,
-  WordOrderDirection,
-  WordOrderMode,
-  WordParameter,
-  WordType
+  WordParameter
 } from "/client/skeleton/dictionary";
 
 
@@ -61,19 +61,11 @@ const WordSearchForm = create(
     const inputRef = useRef<HTMLInputElement>(null);
     const [, {trans}] = useIntl();
 
-    const handleParameterSet = useCallback(function (nextParameter: PartialWordParameter): void {
+    const handleParameterSet = useCallback(function (nextParameter: DeepPartial<NormalWordParameter>): void {
       if (onParameterSet) {
         const oldParameter = WordParameter.getNormal(parameter);
-        const text = nextParameter.text ?? oldParameter.text;
-        const mode = nextParameter.mode ?? oldParameter.mode;
-        const type = nextParameter.type ?? oldParameter.type;
-        const orderMode = nextParameter.orderMode ?? oldParameter.order.mode;
-        const orderDirection = nextParameter.orderDirection ?? oldParameter.order.direction;
-        const order = {mode: orderMode, direction: orderDirection};
-        const ignoreCase = nextParameter.ignoreCase ?? oldParameter.ignoreOptions.case;
-        const ignoreOptions = {case: ignoreCase};
-        const enableSuggestions = nextParameter.enableSuggestions;
-        const actualParameter = NormalWordParameter.createEmpty({text, mode, type, order, ignoreOptions, enableSuggestions});
+        const {text, mode, type, order, options} = merge(oldParameter, nextParameter);
+        const actualParameter = NormalWordParameter.createEmpty({text, mode, type, order, options});
         onParameterSet(actualParameter);
       }
     }, [parameter, onParameterSet]);
@@ -122,12 +114,34 @@ const WordSearchForm = create(
     const orderNode = (showOrder) && (
       <Fragment>
         <div styleName="selection-wrapper">
-          <Checkbox name="ignoreCase" value="true" label={trans("wordSearchForm.ignoreCase")} checked={actualParameter.ignoreOptions.case} onSet={(ignoreCase) => handleParameterSet({ignoreCase})}/>
-          <Checkbox name="enableSuggestions" value="true" label={trans("wordSearchForm.enableSuggestions")} checked={actualParameter.enableSuggestions} onSet={(enableSuggestions) => handleParameterSet({enableSuggestions})}/>
+          <Checkbox
+            name="ignoreCase"
+            value="true"
+            label={trans("wordSearchForm.ignoreCase")}
+            checked={actualParameter.options.ignore.case}
+            onSet={(ignoreCase) => handleParameterSet({options: {ignore: {case: ignoreCase}}})}
+          />
+          <Checkbox
+            name="enableSuggestions"
+            value="true"
+            label={trans("wordSearchForm.enableSuggestions")}
+            checked={actualParameter.options.enableSuggestions}
+            onSet={(enableSuggestions) => handleParameterSet({options: {enableSuggestions}})}
+          />
         </div>
         <div styleName="selection-wrapper">
-          <Selection className={styles!["order-mode"]} value={actualParameter.order.mode} specs={orderModeSpecs} onSet={(orderMode) => handleParameterSet({orderMode})}/>
-          <Selection className={styles!["order-direction"]} value={actualParameter.order.direction} specs={orderDirectionSpecs} onSet={(orderDirection) => handleParameterSet({orderDirection})}/>
+          <Selection
+            className={styles!["order-mode"]}
+            value={actualParameter.order.mode}
+            specs={orderModeSpecs}
+            onSet={(orderMode) => handleParameterSet({order: {mode: orderMode}})}
+          />
+          <Selection
+            className={styles!["order-direction"]}
+            value={actualParameter.order.direction}
+            specs={orderDirectionSpecs}
+            onSet={(orderDirection) => handleParameterSet({order: {direction: orderDirection}})}
+          />
         </div>
       </Fragment>
     );
@@ -191,15 +205,5 @@ const SearchFormOrderModeDropdownNode = create(
   }
 );
 
-
-type PartialWordParameter = {
-  text?: string,
-  mode?: WordMode,
-  type?: WordType,
-  orderMode?: WordOrderMode,
-  orderDirection?: WordOrderDirection,
-  ignoreCase?: boolean,
-  enableSuggestions?: boolean
-};
 
 export default WordSearchForm;

@@ -1,5 +1,9 @@
 //
 
+import merge from "lodash-es/merge";
+import {
+  DeepPartial
+} from "ts-essentials";
 import {
   WordMode,
   WordModeUtil,
@@ -21,27 +25,29 @@ export class NormalWordParameter extends WordParameter {
   public mode: WordMode;
   public type: WordType;
   public order: WordOrder;
-  public ignoreOptions: WordIgnoreOptions;
-  public enableSuggestions: boolean;
+  public options: NormalWordParameterOptions;
 
-  private constructor(text: string, mode: WordMode, type: WordType, order: WordOrder, ignoreOptions: WordIgnoreOptions, enableSuggestions: boolean) {
+  private constructor(text: string, mode: WordMode, type: WordType, order: WordOrder, options: NormalWordParameterOptions) {
     super();
     this.text = text;
     this.mode = mode;
     this.type = type;
     this.order = order;
-    this.ignoreOptions = ignoreOptions;
-    this.enableSuggestions = enableSuggestions;
+    this.options = options;
   }
 
-  public static createEmpty(overrides: Partial<NormalWordParameter> = {}): NormalWordParameter {
-    const text = overrides.text ?? "";
-    const mode = overrides.mode ?? "both";
-    const type = overrides.type ?? "prefix";
-    const order = overrides.order ?? {mode: "unicode", direction: "ascending"};
-    const ignoreOptions = overrides.ignoreOptions ?? {case: false};
-    const enableSuggestions = overrides.enableSuggestions ?? false;
-    const skeleton = new NormalWordParameter(text, mode, type, order, ignoreOptions, enableSuggestions);
+  public static createEmpty(overrides: DeepPartial<NormalWordParameter> = {}): NormalWordParameter {
+    const {text, mode, type, order, options} = merge({
+      text: "",
+      mode: "both",
+      type: "prefix",
+      order: {mode: "unicode", direction: "ascending"},
+      options: {
+        ignore: {case: false},
+        enableSuggestions: false
+      }
+    }, overrides);
+    const skeleton = new NormalWordParameter(text, mode, type, order, options);
     return skeleton;
   }
 
@@ -51,10 +57,12 @@ export class NormalWordParameter extends WordParameter {
     const type = (typeof search.type === "string") ? WordTypeUtil.cast(search.type) : undefined;
     const orderMode = (typeof search.orderMode === "string") ? WordOrderModeUtil.cast(search.orderMode) : undefined;
     const orderDirection = (typeof search.orderDirection === "string") ? WordOrderDirectionUtil.cast(search.orderDirection) : undefined;
-    const order = (orderMode !== undefined && orderDirection !== undefined) ? {mode: orderMode, direction: orderDirection} : undefined;
-    const ignoreOptions = (search.ignoreCase === "true") ? {case: true} : undefined;
-    const enableSuggestions = search.enableSuggestions === "true";
-    const parameter = NormalWordParameter.createEmpty({text, mode, type, order, ignoreOptions, enableSuggestions});
+    const order = {mode: orderMode, direction: orderDirection};
+    const optionsIgnoreCase = (search.ignoreCase === "true") ? true : undefined;
+    const optionsIgnore = (optionsIgnoreCase !== undefined) ? {case: optionsIgnoreCase} : undefined;
+    const optionsEnableSuggestions = (search.enableSuggestions === "true") ? true : undefined;
+    const options = {ignore: optionsIgnore, enableSuggestions: optionsEnableSuggestions};
+    const parameter = NormalWordParameter.createEmpty({text, mode, type, order, options});
     return parameter;
   }
 
@@ -64,10 +72,16 @@ export class NormalWordParameter extends WordParameter {
     const type = this.type;
     const orderMode = this.order.mode;
     const orderDirection = this.order.direction;
-    const ignoreCase = this.ignoreOptions.case;
-    const enableSuggestions = this.enableSuggestions;
+    const ignoreCase = this.options.ignore.case;
+    const enableSuggestions = this.options.enableSuggestions;
     const search = {text, mode, type, orderMode, orderDirection, ignoreCase, enableSuggestions};
     return search;
   }
 
 }
+
+
+export type NormalWordParameterOptions = {
+  ignore: WordIgnoreOptions,
+  enableSuggestions: boolean
+};
