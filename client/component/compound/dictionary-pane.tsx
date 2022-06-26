@@ -126,11 +126,11 @@ const DictionaryPane = create(
               )}
             </div>
           </div>
-          {useMemo(() => (showChart && chartSpec && config) && (
-            <div styleName="right">
+          <div styleName="right">
+            {useMemo(() => (showChart && chartSpec && config) && (
               <Chart className={styles!["chart"]} data={chartSpec.data} config={config}/>
-            </div>
-          ), [chartSpec, config, showChart, styles])}
+            ), [chartSpec, config, showChart, styles])}
+          </div>
         </div>
         {(showSettingLink || showDownloadLink) && (
           <div styleName="button-group">
@@ -160,7 +160,7 @@ function calcChartSpec(histories?: Array<History>): {data: ChartData, maxXAxis: 
       dates.push(new Date(histories[i].date));
       differences.push(trimmedDifference);
     }
-    const data = {x: "date", columns: [["date", ...dates], ["wordSize", ...differences]], types: {wordSize: "line"}} as ChartData;
+    const data = {x: "date", columns: [["date", ...dates], ["wordSize", ...differences]], types: {wordSize: "area"}} as ChartData;
     const maxXAxis = dates[0];
     const minXAxis = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
     return {data, maxXAxis, minXAxis, maxYAxis: 20, minYAxis: 0};
