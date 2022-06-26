@@ -69,7 +69,7 @@ const WordSearchForm = create(
         const order = nextParameter.order ?? oldParameter.order;
         const options = {
           ignore: {case: nextParameter.options?.ignore?.case ?? oldParameter.options.ignore.case},
-          shuffleSeed: nextParameter.options?.shuffleSeed ?? oldParameter.options.shuffleSeed,
+          shuffleSeed: nextParameter.options?.shuffleSeed ?? null,
           enableSuggestions: nextParameter.options?.enableSuggestions ?? oldParameter.options.enableSuggestions
         };
         const actualParameter = NormalWordParameter.createEmpty({text, mode, type, order, options});
