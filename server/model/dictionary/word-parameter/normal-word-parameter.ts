@@ -1,8 +1,7 @@
 //
 
 import {
-  Aggregate,
-  Query
+  Aggregate
 } from "mongoose";
 import {
   Dictionary,
@@ -17,6 +16,12 @@ import {
   WordIgnoreOptions,
   WordParameter
 } from "/server/model/dictionary/word-parameter/word-parameter";
+import {
+  QueryLike
+} from "/server/util/query";
+import {
+  Random
+} from "/server/util/random";
 
 
 export class NormalWordParameter extends WordParameter {
@@ -25,30 +30,38 @@ export class NormalWordParameter extends WordParameter {
   public mode: WordMode;
   public type: WordType;
   public order: WordOrder;
-  public ignoreOptions: WordIgnoreOptions;
-  public enableSuggestions: boolean;
+  public options: NormalWordParameterOptions;
 
-  public constructor(text: string, mode: WordMode, type: WordType, order: WordOrder, ignoreOptions: WordIgnoreOptions, enableSuggestions: boolean) {
+  public constructor(text: string, mode: WordMode, type: WordType, order: WordOrder, options: NormalWordParameterOptions) {
     super();
     this.text = text;
     this.mode = mode;
     this.type = type;
     this.order = order;
-    this.ignoreOptions = ignoreOptions;
-    this.enableSuggestions = enableSuggestions;
+    this.options = options;
   }
 
-  public createQuery(dictionary: Dictionary): Query<Array<Word>, Word> {
+  public createQuery(dictionary: Dictionary): QueryLike<Array<Word>, Word> {
     const keys = WordParameter.createKeys(this.mode);
-    const needle = WordParameter.createNeedle(this.text, this.type, this.ignoreOptions);
+    const needle = WordParameter.createNeedle(this.text, this.type, this.options.ignore);
     const sortKey = WordParameter.createSortKey(this.order);
     const disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
     const query = WordModel.findExist().where("dictionary", dictionary).or(disjunctFilters).sort(sortKey);
-    return query;
+    if (this.options.shuffleSeed !== null) {
+      const random = new Random(this.options.shuffleSeed);
+      const promise = (async () => {
+        const words = await query;
+        random.shuffle(words);
+        return words;
+      })();
+      return promise;
+    } else {
+      return query;
+    }
   }
 
   public createSuggestionQuery(dictionary: Dictionary): Aggregate<Array<RawSuggestion>> | null {
-    if (this.enableSuggestions) {
+    if (this.options.enableSuggestions) {
       const mode = this.mode;
       const type = this.type;
       if ((mode === "name" || mode === "both") && (type === "exact" || type === "prefix")) {
@@ -69,3 +82,10 @@ export class NormalWordParameter extends WordParameter {
   }
 
 }
+
+
+export type NormalWordParameterOptions = {
+  ignore: WordIgnoreOptions,
+  shuffleSeed: string | null,
+  enableSuggestions: boolean
+};

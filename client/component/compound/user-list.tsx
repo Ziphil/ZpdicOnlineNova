@@ -3,14 +3,12 @@
 import * as react from "react";
 import {
   MouseEvent,
-  ReactElement,
-  ReactNode,
-  useCallback
+  ReactElement
 } from "react";
 import {
   AsyncOrSync
 } from "ts-essentials";
-import PaneList from "/client/component/compound/pane-list";
+import PaneList from "/client/component/compound/pane-list-beta";
 import UserPane from "/client/component/compound/user-pane";
 import {
   create
@@ -31,18 +29,20 @@ const UserList = create(
     size,
     onSubmit
   }: {
-    users: Array<User> | null,
+    users: Array<User>,
     dictionary?: Dictionary,
     size: number,
     onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
   }): ReactElement {
 
-    const renderUser = useCallback(function (user: User): ReactNode {
-      return <UserPane user={user} dictionary={dictionary} key={user.id} onSubmit={onSubmit}/>;
-    }, [dictionary, onSubmit]);
-
     const node = (
-      <PaneList items={users} size={size} column={2} renderer={renderUser}/>
+      <PaneList
+        items={users}
+        size={size}
+        column={2}
+      >
+        {(user) => <UserPane user={user} dictionary={dictionary} key={user.id} onSubmit={onSubmit}/>}
+      </PaneList>
     );
     return node;
 

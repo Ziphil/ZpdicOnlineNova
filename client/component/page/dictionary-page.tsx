@@ -4,9 +4,11 @@ import * as react from "react";
 import {
   Fragment,
   ReactElement,
+  Suspense,
   useCallback
 } from "react";
 import Markdown from "/client/component/atom/markdown";
+import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
 import SuggestionList from "/client/component/compound/suggestion-list";
 import WordList from "/client/component/compound/word-list";
@@ -68,7 +70,9 @@ const DictionaryPage = create(
         {(debouncedQuery.showExplanation) ? (
           <Markdown source={dictionary.explanation ?? ""}/>
         ) : (
-          <DictionaryPageWordList {...{dictionary, query, debouncedQuery, canEdit, handlePageSet}}/>
+          <Suspense fallback={<Loading/>}>
+            <DictionaryPageWordList {...{dictionary, query, debouncedQuery, canEdit, handlePageSet}}/>
+          </Suspense>
         )}
       </Page>
     );

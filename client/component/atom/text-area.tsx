@@ -22,7 +22,7 @@ import {
 } from "/client/util/data";
 
 
-const TextArea = create(
+export const TextArea = create(
   require("./text-area.scss"), "TextArea",
   function ({
     value = "",

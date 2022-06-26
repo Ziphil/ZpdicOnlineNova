@@ -575,6 +575,7 @@ wordSearchForm:
   exact: "Ekzakta"
   regular: "Regesp"
   ignoreCase: "Ignori usklecon"
+  shuffleResult: "Miksi rezulton"
   enableSuggestions: "Sugesti variaĵojn"
   unicode: "Unikodo"
   custom: "Propra ordo"

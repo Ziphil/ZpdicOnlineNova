@@ -575,6 +575,7 @@ wordSearchForm:
   exact: "Exact"
   regular: "Regexp"
   ignoreCase: "Ignore case"
+  shuffleResult: "Shuffle result"
   enableSuggestions: "Suggest variations"
   unicode: "Unicode"
   custom: "Custom order"

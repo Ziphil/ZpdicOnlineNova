@@ -12,7 +12,7 @@ import {
 } from "/client/component/hook";
 
 
-const Badge = create(
+export const Badge = create(
   require("./badge.scss"), "Badge",
   function ({
     value,

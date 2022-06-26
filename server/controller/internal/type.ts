@@ -76,6 +76,7 @@ export const SERVER_PATHS = {
   fetchDictionaryAuthorization: "/dictionary/authorization",
   checkDictionaryAuthorization: "/dictionary/authorization/check",
   fetchDictionary: "/dictionary/fetch",
+  fetchWordSize: "/dictionary/fetch/word-size",
   fetchWordNameFrequencies: "/dictionary/fetch/frequency",
   fetchDictionaryStatistics: "/dictionary/fetch/statistics",
   fetchDictionaries: "/dictionary/list",
@@ -288,6 +289,13 @@ type ServerSpecs = {
     response: {
       success: DetailedDictionary,
       error: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
+    }
+  },
+  fetchWordSize: {
+    request: {number: number},
+    response: {
+      success: number,
+      error: CustomError<"noSuchDictionaryNumber">
     }
   },
   fetchWordNameFrequencies: {

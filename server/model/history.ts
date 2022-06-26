@@ -37,7 +37,7 @@ export class HistorySchema {
 
   public static async fetch(dictionary: Dictionary, from: Date): Promise<Array<History>> {
     const anyFrom = from as any;
-    const histories = await HistoryModel.find().where("dictionary", dictionary).gte("date", anyFrom);
+    const histories = await HistoryModel.find().where("dictionary", dictionary).gte("date", anyFrom).sort("-date");
     return histories;
   }
 

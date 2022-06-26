@@ -136,6 +136,7 @@ $schemed-colors: (
 );
 
 
+html,
 html[data-theme="light"] {
   @include color-variables($colors, $schemed-colors);
   --badge-background-color: #{color(accent)};

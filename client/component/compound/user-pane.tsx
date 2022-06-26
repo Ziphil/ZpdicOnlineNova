@@ -18,6 +18,7 @@ import {
   create
 } from "/client/component/create";
 import {
+  invalidateQueries,
   useIntl,
   usePopup,
   useRequest
@@ -55,6 +56,7 @@ const UserPane = create(
         if (response.status === 200) {
           addInformationPopup("dictionaryAuthorizedUserDiscarded");
           await onSubmit?.(event);
+          await invalidateQueries("fetchDictionaryAuthorizedUsers", (data) => data.number === number);
         }
       }
     }, [dictionary, user, request, onSubmit, addInformationPopup]);

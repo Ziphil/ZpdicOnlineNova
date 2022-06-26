@@ -17,6 +17,7 @@
 
 html {
   font-size: $root-size;
+  --fa-animation-duration: 1s;
   @include small-screen {
     font-size: $root-size * 0.7;
   }

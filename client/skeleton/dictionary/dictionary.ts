@@ -35,7 +35,6 @@ export class Dictionary {
 
 export class DetailedDictionary extends Dictionary {
 
-  public wordSize!: number;
   public user!: User;
 
 }

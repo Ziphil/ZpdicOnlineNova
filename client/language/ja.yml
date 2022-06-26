@@ -572,6 +572,7 @@ wordSearchForm:
   exact: "完全"
   regular: "正規"
   ignoreCase: "大小文字を区別しない"
+  shuffleResult: "結果シャッフル"
   enableSuggestions: "変化形サジェスト"
   unicode: "Unicode"
   custom: "独自順序"
