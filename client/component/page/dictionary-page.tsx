@@ -18,11 +18,9 @@ import {
 } from "/client/component/create";
 import {
   useParams,
+  useQueryState,
   useSuspenseQuery
 } from "/client/component/hook";
-import {
-  useQueryState
-} from "/client/component/hook/query-state-beta";
 import Page from "/client/component/page/page";
 import {
   DetailedWord,
