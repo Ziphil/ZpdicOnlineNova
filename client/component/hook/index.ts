@@ -8,7 +8,7 @@ export * from "./intl";
 export * from "./media-query";
 export * from "./misc";
 export * from "./popup";
-export * from "./query-state";
+export * from "./query-state-beta";
 export * from "./request";
 export * from "./router";
 export * from "./user";
