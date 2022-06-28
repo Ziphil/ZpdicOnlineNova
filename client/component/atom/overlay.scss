@@ -44,7 +44,6 @@ $overlay-header-height: 50rpx;
 
 .content {
   padding: $huge-margin $huge-margin;
-  box-sizing: border-box;
   .content-container[data-size="large"] >& {
     height: 100%;
     overflow-y: scroll;

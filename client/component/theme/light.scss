@@ -12,7 +12,7 @@ $blue-base-color: hsl(200, 40%, 50%);
 $colors: (
   background: tint($primary-base-color, 90%),
   strong-background: tint($primary-base-color, 75%),
-  modal-background: rgba(darken($primary-base-color, 50%), 0.6),
+  modal-background: rgba(darken($primary-base-color, 50%), 0.5),
   white-background: tint($primary-base-color, 95%),
   input-background: white,
   text: shade($primary-base-color, 60%),
@@ -20,7 +20,7 @@ $colors: (
   accent: $primary-base-color,
   nprogress: $primary-base-color,
   logo: shade($primary-base-color, 40%),
-  border: tint($primary-base-color, 40%),
+  border: tint($primary-base-color, 50%),
   light-border: tint($primary-base-color, 75%),
   focus: rgba($primary-base-color, 0.3)
 );
@@ -40,9 +40,9 @@ $schemed-colors: (
     blue: tint($blue-base-color, 30%)
   ),
   border: (
-    primary: tint($primary-base-color, 40%),
-    red: tint($red-base-color, 40%),
-    blue: tint($blue-base-color, 40%),
+    primary: tint($primary-base-color, 50%),
+    red: tint($red-base-color, 50%),
+    blue: tint($blue-base-color, 50%),
     white: white
   ),
   background: (
@@ -57,7 +57,7 @@ $schemed-colors: (
     blue: tint($blue-base-color, 80%),
     white: tint($primary-base-color, 98%),
   ),
-  input-box-shadow: (
+  input-shadow: (
     primary: rgba($primary-base-color, 0.1),
     red: rgba($red-base-color, 0.1),
     blue: rgba($blue-base-color, 0.1),
@@ -68,9 +68,9 @@ $schemed-colors: (
     blue: white
   ),
   button-border: (
-    primary: rgba(black, 0.3),
-    red: rgba(black, 0.3),
-    blue: rgba(black, 0.3)
+    primary: rgba(black, 0.2),
+    red: rgba(black, 0.2),
+    blue: rgba(black, 0.2)
   ),
   button-background: (
     primary: $primary-base-color,

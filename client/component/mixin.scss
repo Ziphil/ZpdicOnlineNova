@@ -21,7 +21,7 @@ $paragraph-margin: 12rpx;
 
 $page-width: 1000rpx;
 $page-top-margin: 48rpx;
-$page-bottom-margin: 48rpx;
+$page-bottom-margin: 56rpx;
 $page-horizontal-margin: 40rpx;
 $page-small-horizontal-margin: 28rpx;
 
@@ -179,7 +179,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   border: 1rpx solid schemed-color(border, $scheme);
   border-radius: $small-border-radius;
   background-color: color(input-background);
-  box-shadow: inset $inset-box-shadow-setting schemed-color(input-box-shadow, $scheme);
+  box-shadow: inset $inset-box-shadow-setting schemed-color(input-shadow, $scheme);
   cursor: text;
   outline: none;
   &:focus-within:not(:disabled):not(.disabled) {
