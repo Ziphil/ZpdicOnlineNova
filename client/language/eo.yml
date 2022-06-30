@@ -360,60 +360,42 @@ dictionaryPane:
 dictionaryStatisticsPane:
   wordCount: "Vortoj"
   wordCountRaw: 
-    value: "{value, number} "
-    unit: "{value, plural, one {vorto} other {vortoj}} "
+    value: "{value, number} <unit>{value, plural, one {vorto} other {vortoj}}</unit>"
   wordCountTokipona: 
-    value: "{value, number, ::.00} "
-    unit: "TP"
+    value: "{value, number, ::.00} <unit>TP</unit>"
   wordCountCtwi: 
-    valuePositive: "{value, number, ::.00} "
-    valueNegative: "−{value, number, ::sign-never .00} "
-    valueInfinity: "−∞ "
-    unit: "CTP"
+    value: "{valueString} <unit>CTP</unit>"
   wordCountLogTokipona: 
-    valuePositive: "{value, number, ::.000} "
-    valueNegative: "−{value, number, ::sign-never .000} "
-    valueInfinity: "−∞ "
-    unit: "logTP"
+    value: "{valueString} <unit>logTP</unit>"
   wordCountCoverage: 
-    value: "{value, number, ::.000} "
-    unit: "%EC"
+    value: "{value, number, ::.000} <unit>%EC</unit>"
   wordNameLengthAverage:
     title: "Averaĝa longo de kapvorto"
-    value: "{value, number, ::.00} "
-    unit: "{value, plural, one {signo/vorto} other {signoj/vorto}}"
+    value: "{value, number, ::.00} <unit>{value, plural, one {signo/vorto} other {signoj/vorto}}</unit>"
   equivalentNameCountWhole:
     title: "Tradukaĵoj"
-    value: "{value, number} "
-    unit: "{value, plural, one {termino} other {terminoj}}"
+    value: "{value, number} <unit>{value, plural, one {termino} other {terminoj}}</unit>"
   equivalentNameCountAverage:
     title: "Averaĝa tradukaĵo"
-    value: "{value, number, ::.00} "
-    unit: "{value, plural, one {termino/vorto} other {terminoj/vorto}}"
+    value: "{value, number, ::.00} <unit>{value, plural, one {termino/vorto} other {terminoj/vorto}}</unit>"
   informationCountWhole:
     title: "Enhavoj"
-    value: "{value, number} "
-    unit: "{value, plural, one {ero} other {eroj}}"
+    value: "{value, number} <unit>{value, plural, one {ero} other {eroj}}</unit>"
   informationCountAverage:
     title: "Averaĝa enhavo"
-    value: "{value, number, ::.00} "
-    unit: "{value, plural, one {ero/vorto} other {eroj/vorto}}"
+    value: "{value, number, ::.00} <unit>{value, plural, one {ero/vorto} other {eroj/vorto}}</unit>"
   informationTextLengthWhole:
     title: "Longo de enhavo"
-    value: "{value, number} "
-    unit: "{value, plural, one {signo} other {signoj}}"
+    value: "{value, number} <unit>{value, plural, one {signo} other {signoj}}</unit>"
   informationTextLengthAverage:
     title: "Averaĝa longo de enhavo"
-    value: "{value, number, ::.00} "
-    unit: "{value, plural, one {signo/vorto} other {signoj/vorto}}"
+    value: "{value, number, ::.00} <unit>{value, plural, one {signo/vorto} other {signoj/vorto}}</unit>"
   exampleCountWhole:
     title: "Ekzemplaj frazoj"
-    value: "{value, number} "
-    unit: "{value, plural, one {frazo} other {frazoj}}"
+    value: "{value, number} <unit>{value, plural, one {frazo} other {frazoj}}</unit>"
   exampleCountAverage:
     title: "Averaĝa ekzempla frazo"
-    value: "{value, number, ::.00} "
-    unit: "{value, plural, one {frazo/vorto} other {frazoj/vorto}}"
+    value: "{value, number, ::.00} <unit>{value, plural, one {frazo/vorto} other {frazoj/vorto}}</unit>"
   kept: "Kiel estas"
   nfd: "NFD"
   nfc: "NFC"

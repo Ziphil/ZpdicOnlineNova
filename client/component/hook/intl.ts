@@ -2,7 +2,8 @@
 
 import {
   ReactNode,
-  useCallback
+  useCallback,
+  useMemo
 } from "react";
 import {
   IntlShape,
@@ -87,7 +88,7 @@ export function useIntl(): [IntlShape, TransCallbacks] {
     }
   }, [intl]);
   const transNode = trans;
-  return [intl, {trans, transNode, transDate, transShortDate, transNumber}];
+  return useMemo(() => [intl, {trans, transNode, transDate, transShortDate, transNumber}], [intl, trans, transNode, transDate, transShortDate, transNumber]);
 }
 
 type Messages = Record<string, string>;
