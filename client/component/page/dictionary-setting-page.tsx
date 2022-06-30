@@ -5,7 +5,7 @@ import {
   ReactElement,
   Suspense
 } from "react";
-import Markdown from "/client/component/atom/markdown";
+import Link from "/client/component/atom/link";
 import CommissionList from "/client/component/compound/commission-list";
 import DictionaryStatisticsPane from "/client/component/compound/dictionary-statistics-pane";
 import HistoryPane from "/client/component/compound/history-pane";
@@ -86,7 +86,7 @@ const DictionarySettingPageForms = create(
     mode: string
   }): ReactElement | null {
 
-    const [, {trans}] = useIntl();
+    const [, {trans, transNode}] = useIntl();
     const {pushPath} = usePath();
 
     if (mode === "general") {
@@ -140,7 +140,9 @@ const DictionarySettingPageForms = create(
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.label")}
-            description={<Markdown source={trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.description")} type="simple"/>}
+            description={transNode("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.description", {
+              link: (parts) => <Link href="/document">{parts}</Link>
+            })}
             forceWide={true}
           >
             <ChangeDictionarySourceForm
@@ -151,7 +153,9 @@ const DictionarySettingPageForms = create(
           </SettingPane>
           <SettingPane
             label={trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.label")}
-            description={<Markdown source={trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.description")} type="simple"/>}
+            description={transNode("dictionarySettingPage.changeDictionaryZatlinSourceForm.description", {
+              link: (parts) => <Link href="/document">{parts}</Link>
+            })}
             forceWide={true}
           >
             <ChangeDictionarySourceForm

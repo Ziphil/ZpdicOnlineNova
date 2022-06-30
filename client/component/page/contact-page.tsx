@@ -4,7 +4,7 @@ import * as react from "react";
 import {
   ReactElement
 } from "react";
-import Markdown from "/client/component/atom/markdown";
+import Link from "/client/component/atom/link";
 import ContactForm from "/client/component/compound/contact-form";
 import {
   create
@@ -21,17 +21,19 @@ const ContactPage = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const [, {trans, transNode}] = useIntl();
 
     const node = (
       <Page title={trans("contactPage.title")}>
         <div styleName="title">{trans("contactPage.title")}</div>
         <div styleName="explanation">
           <p>
-            <Markdown source={trans("contactPage.privacy")} type="simple"/>
+            {transNode("contactPage.privacy", {
+              link: (parts) => <Link href="/document/other/privacy">{parts}</Link>
+            })}
           </p>
           <p>
-            <Markdown source={trans("contactPage.explanation")} type="simple"/>
+            {trans("contactPage.explanation")}
           </p>
         </div>
         <div styleName="form-container">

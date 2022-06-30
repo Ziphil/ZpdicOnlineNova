@@ -649,7 +649,7 @@ zatlinExecutor:
 contactPage:
   title: "Kontakti"
   privacy: >-
-    Bonvolu legi kaj konsenti pri la [privateca politiko](/document/other/privacy) antaŭ sendi vian demandon.
+    Bonvolu legi kaj konsenti pri la <link>privateca politiko</link> antaŭ sendi vian demandon.
   explanation: >-
     Se vi volas sendi vian demandon anonime, bonvolu elsaluti kaj poste lasi malplena la kampon “Nomo”.
     Bonvolu noti, ke ni eble ne povos respondi al via anonima peto se ĝi koncernas ion kiu bezonas la aŭtoritaton de la uzanto, kiel agordado aŭ redaktado de vortaro.
@@ -732,13 +732,13 @@ dictionarySettingPage:
       Ŝanĝi la fontkodon por Akrantiain.
       Se vi agordos tiun kodon, Akrantiain aŭtomate generos prononcon el literumo, kaj ĝi aperos apud la literumo.
       Kiam vorto havas sian specifitan prononcon, ĝi estos anstataŭe montrata.
-      Vidu [la dokumentaron](/document) por pliaj informoj pri la sintakso de Akrantiain (nun disponebla nur en la japana).
+      Vidu <link>la dokumentaron</link> por pliaj informoj pri la sintakso de Akrantiain (nun disponebla nur en la japana).
   changeDictionaryZatlinSourceForm:
     label: "Ŝanĝi fontkodon por Zatlin"
     description: >-
       Ŝanĝi la fontkodon por Zatlin.
       Se vi agordos tiun kodon, butono “Generi” aperos en la vortredaktilo, kiu ebligas al vi generi literumon per ekzekuto de Zatlin.
-      Vidu [la dokumentaron](/document) por pliaj informoj pri la sintakso de Zatlin.
+      Vidu <link>la dokumentaron</link> por pliaj informoj pri la sintakso de Zatlin.
   changeDictionaryPronunciationTitleForm:
     label: "Ŝanĝi titolon por elparoloj"
     description: >-
@@ -804,6 +804,6 @@ notificationPage:
 registerPage:
   title: "Registriĝi"
   privacy: >-
-    Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la [privateca politiko](/document/other/privacy).
+    Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la <link>privateca politiko</link>.
 resetUserPasswordPage:
   title: "Restarigi pasvorton"

@@ -4,7 +4,7 @@ import * as react from "react";
 import {
   ReactElement
 } from "react";
-import Markdown from "/client/component/atom/markdown";
+import Link from "/client/component/atom/link";
 import RegisterForm from "/client/component/compound/register-form";
 import {
   create
@@ -21,14 +21,16 @@ const RegisterPage = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const [, {trans, transNode}] = useIntl();
 
     const node = (
       <Page title={trans("registerPage.title")}>
         <div styleName="title">{trans("registerPage.title")}</div>
         <div styleName="explanation">
           <p>
-            <Markdown source={trans("registerPage.privacy")} type="simple"/>
+            {transNode("registerPage.privacy", {
+              link: (parts) => <Link href="/document/other/privacy">{parts}</Link>
+            })}
           </p>
         </div>
         <div styleName="form-container">
