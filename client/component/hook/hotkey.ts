@@ -56,6 +56,8 @@ export function useHotkey(name: string, callback: HotkeyCallback, dependencies: 
         setEnabledHotkeyNames((enabledNames) => enabledNames.filter((enabledName) => enabledName !== name));
       };
       return cleanup;
+    } else {
+      return undefined;
     }
   }, [enabled, ...dependencies]);
 }
