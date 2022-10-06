@@ -2,7 +2,7 @@
 
 import {
   Radio
-} from "/client/component/atom/radio";
+} from "/client/component/atom/radio-beta";
 import {
   createStory,
   createTemplate
@@ -18,15 +18,11 @@ const template = createTemplate<typeof Radio>();
 
 export const Alone = createStory(template, {
   args: {
-    checked: true,
-    name: "alone"
   }
 });
 
 export const Labeled = createStory(template, {
   args: {
-    checked: true,
-    name: "labeled",
     label: "Radio"
   }
 });
