@@ -3,6 +3,8 @@ common:
   shortDateFormat: "dd/LLL"
   dateUndefined: "?"
   numberUndefined: "?"
+  negative: "−{value}"
+  negativeInfinity: "−∞"
 
 popup:
   userActivated: >-
