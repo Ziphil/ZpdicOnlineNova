@@ -62,7 +62,7 @@ export const RadioGroup = create(
 
 
 export const RadioGroupContainer = create(
-  require("./radio-group.scss"), "",
+  require("./radio-group.scss"),
   function ({
     withContainer,
     className,
