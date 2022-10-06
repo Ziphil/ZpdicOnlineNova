@@ -39,10 +39,18 @@ const Footer = create(
             </div>
           </div>
           <div styleName="right">
-            <Link className={styles!["link"]} href="/notification" style="plane">{trans("footer.notification")}</Link>
-            <Link className={styles!["link"]} href="/document" style="plane">{trans("footer.document")}</Link>
-            <Link className={styles!["link"]} href="/language" style="plane">{trans("footer.language")}</Link>
-            <Link className={styles!["link"]} href="/contact" style="plane">{trans("footer.contact")}</Link>
+            <div>
+              <Link className={styles!["link"]} href="/notification" style="plane">{trans("footer.notification")}</Link>
+            </div>
+            <div>
+              <Link className={styles!["link"]} href="/document" style="plane">{trans("footer.document")}</Link>
+            </div>
+            <div>
+              <Link className={styles!["link"]} href="/language" style="plane">{trans("footer.language")}</Link>
+            </div>
+            <div>
+              <Link className={styles!["link"]} href="/contact" style="plane">{trans("footer.contact")}</Link>
+            </div>
           </div>
         </div>
       </footer>
