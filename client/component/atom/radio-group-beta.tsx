@@ -41,7 +41,7 @@ export const RadioGroup = create(
     name: string,
     withContainer?: boolean,
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
-    onSet?: (value: string) => void,
+    onSet?: (value: V) => void,
     className?: string,
     children?: ReactNode
   }): ReactElement {

@@ -5,7 +5,8 @@ import {
   ReactElement,
   useState
 } from "react";
-import RadioGroup from "/client/component/atom/radio-group";
+import Radio from "/client/component/atom/radio-beta";
+import RadioGroup from "/client/component/atom/radio-group-beta";
 import DictionaryList from "/client/component/compound/dictionary-list";
 import {
   create
@@ -35,14 +36,13 @@ const DictionaryListPage = create(
     const [[hitDictionaries, hitSize]] = useSuspenseQuery("fetchAllDictionaries", {order, ...calcOffset(page, 20)}, {keepPreviousData: true});
 
     const column = (smartphone) ? 1 : 2;
-    const specs = [
-      {value: "updatedDate", label: trans("dictionaryListPage.updatedDate")},
-      {value: "createdDate", label: trans("dictionaryListPage.createdDate")}
-    ];
     const node = (
       <Page title={trans("dictionaryListPage.title")}>
         <div styleName="search-form-container">
-          <RadioGroup name="order" value={order} specs={specs} onSet={(order) => setOrder(order)}/>
+          <RadioGroup name="order" value={order} onSet={(order) => setOrder(order)}>
+            <Radio value="updatedDate" label={trans("dictionaryListPage.updatedDate")}/>
+            <Radio value="createdDate" label={trans("dictionaryListPage.createdDate")}/>
+          </RadioGroup>
         </div>
         <div styleName="list">
           <DictionaryList dictionaries={hitDictionaries} column={column} size={20} hitSize={hitSize} page={page} onPageSet={setPage} showCreatedDate={true}/>

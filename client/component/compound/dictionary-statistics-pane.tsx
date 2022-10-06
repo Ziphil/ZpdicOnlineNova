@@ -6,7 +6,8 @@ import {
   useCallback,
   useState
 } from "react";
-import RadioGroup from "/client/component/atom/radio-group";
+import Radio from "/client/component/atom/radio-beta";
+import RadioGroup from "/client/component/atom/radio-group-beta";
 import {
   create
 } from "/client/component/create";
@@ -44,15 +45,14 @@ const DictionaryStatisticsPane = create(
       }
     }, [intl]);
 
-    const specs = [
-      {value: "kept", label: trans("dictionaryStatisticsPane.kept")},
-      {value: "nfd", label: trans("dictionaryStatisticsPane.nfd")},
-      {value: "nfc", label: trans("dictionaryStatisticsPane.nfc")}
-    ] as const;
     const node = (
       <div styleName="root">
         <div styleName="radio">
-          <RadioGroup name="stringType" value={stringType} specs={specs} onSet={setStringType}/>
+          <RadioGroup name="stringType" value={stringType} onSet={setStringType}>
+            <Radio value="kept" label={trans("dictionaryStatisticsPane.kept")}/>
+            <Radio value="nfd" label={trans("dictionaryStatisticsPane.nfd")}/>
+            <Radio value="nfc" label={trans("dictionaryStatisticsPane.nfc")}/>
+          </RadioGroup>
         </div>
         <div styleName="row-wrapper">
           <div styleName="row">

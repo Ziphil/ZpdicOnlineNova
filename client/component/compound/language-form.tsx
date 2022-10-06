@@ -4,7 +4,8 @@ import * as react from "react";
 import {
   ReactElement
 } from "react";
-import RadioGroup from "/client/component/atom/radio-group";
+import Radio from "/client/component/atom/radio-beta";
+import RadioGroup from "/client/component/atom/radio-group-beta";
 import {
   create
 } from "/client/component/create";
@@ -26,10 +27,11 @@ const LanguageForm = create(
     const [, {trans}] = useIntl();
     const [locale, changeLocale] = useLocale();
 
-    const specs = LANGUAGES.map((language) => ({value: language.locale, label: language.name}));
     const node = (
       <form styleName="root">
-        <RadioGroup name="language" value={locale} specs={specs} onSet={(locale) => changeLocale(locale)}/>
+        <RadioGroup name="language" value={locale} onSet={(locale) => changeLocale(locale)}>
+          {LANGUAGES.map((language) => <Radio key={language.locale} value={language.locale} label={language.name}/>)}
+        </RadioGroup>
         <p styleName="caution">
           {trans("languageForm.caution")}
         </p>

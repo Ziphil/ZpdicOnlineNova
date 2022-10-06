@@ -11,7 +11,8 @@ import {
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
-import RadioGroup from "/client/component/atom/radio-group";
+import Radio from "/client/component/atom/radio-beta";
+import RadioGroup from "/client/component/atom/radio-group-beta";
 import {
   create
 } from "/client/component/create";
@@ -74,14 +75,12 @@ const ChangeDictionarySettingsForm = create(
       );
       return node;
     } else if (propertyName === "enableMarkdown") {
-      const specs = [
-        {value: "true", label: trans("changeDictionarySettingsForm.enableMarkdownTrue")},
-        {value: "false", label: trans("changeDictionarySettingsForm.enableMarkdownFalse")}
-      ];
-      const secretValue = (value) ? "true" : "false";
       const node = (
         <form styleName="root radio">
-          <RadioGroup name="enableMarkdown" specs={specs} value={secretValue} onSet={(valueString) => setValue(valueString === "true")}/>
+          <RadioGroup name="enableMarkdown" value={value} onSet={(value) => setValue(value)}>
+            <Radio value={true} label={trans("changeDictionarySettingsForm.enableMarkdownTrue")}/>
+            <Radio value={false} label={trans("changeDictionarySettingsForm.enableMarkdownFalse")}/>
+          </RadioGroup>
           <Button label={trans("changeDictionarySettingsForm.confirm")} reactive={true} onClick={handleClick}/>
         </form>
       );
