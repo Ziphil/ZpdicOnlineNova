@@ -28,7 +28,7 @@ export const radioContext = createContext<RadioContextValue>({
 
 export const RadioGroup = create(
   require("./radio-group.scss"), "RadioGroup",
-  function <V>({
+  function <V extends {}>({
     value,
     name,
     withContainer = true,
