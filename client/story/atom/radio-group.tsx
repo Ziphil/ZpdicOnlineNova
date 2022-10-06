@@ -31,8 +31,9 @@ const template = createTemplate<typeof RadioGroup>((props) => {
   return node;
 });
 
-export const Alone = createStory(template, {
+export const Basic = createStory(template, {
   args: {
-    name: "alone"
+    name: "basic",
+    withContainer: true
   }
 });

@@ -3,6 +3,7 @@
 import * as react from "react";
 import {
   ChangeEvent,
+  Fragment,
   ReactElement,
   ReactNode,
   createContext,
@@ -30,14 +31,18 @@ export const RadioGroup = create(
   function <V>({
     value,
     name,
+    withContainer = true,
     onChange,
     onSet,
+    className,
     children
   }: {
     value: V | null,
     name: string,
+    withContainer?: boolean,
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
     onSet?: (value: string) => void,
+    className?: string,
     children?: ReactNode
   }): ReactElement {
 
@@ -45,8 +50,37 @@ export const RadioGroup = create(
     const contextValue = useMemo(() => ({value, name, onChange, onSet}), [value, name, onChange, onSet]);
     const node = (
       <ContextProvider value={contextValue}>
-        {children}
+        <RadioGroupContainer {...{withContainer, className}}>
+          {children}
+        </RadioGroupContainer>
       </ContextProvider>
+    );
+    return node;
+
+  }
+);
+
+
+export const RadioGroupContainer = create(
+  require("./radio-group.scss"), "",
+  function ({
+    withContainer,
+    className,
+    children
+  }: {
+    withContainer?: boolean,
+    className?: string,
+    children?: ReactNode
+  }): ReactElement {
+
+    const node = (withContainer) ? (
+      <div styleName="root" className={className}>
+        {children}
+      </div>
+    ) : (
+      <Fragment>
+        {children}
+      </Fragment>
     );
     return node;
 
