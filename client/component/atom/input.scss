@@ -46,7 +46,8 @@
 
 .prefix,
 .suffix {
-  display: inline-block;
+  display: inline-flex;
+  flex-direction: column;
 }
 
 .eye {
@@ -54,9 +55,13 @@
   margin: 0em 0em 0em $input-horizontal-padding;
   color: schemed-color(accent, secondary);
   text-align: center;
+  border-radius: $small-border-radius;
   display: inline-block;
   cursor: pointer;
   &:hover {
     color: schemed-color(hover-accent, secondary);
+  }
+  &:focus-visible {
+    outline: $focus-size solid schemed-color(focus, secondary);
   }
 }
