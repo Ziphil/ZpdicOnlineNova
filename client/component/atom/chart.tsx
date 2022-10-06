@@ -80,7 +80,7 @@ const Chart = create(
 
     useEffect(() => {
       drawChart();
-    }, [data, config]);
+    }, [drawChart]);
 
     useUnmount(() => {
       chartRef.current?.destroy();
