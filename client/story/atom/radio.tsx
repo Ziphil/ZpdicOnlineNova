@@ -2,7 +2,7 @@
 
 import {
   Radio
-} from "/client/component/atom/radio-beta";
+} from "/client/component/atom/radio";
 import {
   createStory,
   createTemplate

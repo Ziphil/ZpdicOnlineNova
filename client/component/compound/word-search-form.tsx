@@ -15,8 +15,8 @@ import Button from "/client/component/atom/button";
 import Checkbox from "/client/component/atom/checkbox";
 import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
-import Radio from "/client/component/atom/radio-beta";
-import RadioGroup from "/client/component/atom/radio-group-beta";
+import Radio from "/client/component/atom/radio";
+import RadioGroup from "/client/component/atom/radio-group";
 import Selection from "/client/component/atom/selection";
 import AdvancedWordSearchForm from "/client/component/compound/advanced-word-search-form";
 import {

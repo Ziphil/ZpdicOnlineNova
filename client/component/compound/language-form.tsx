@@ -4,8 +4,8 @@ import * as react from "react";
 import {
   ReactElement
 } from "react";
-import Radio from "/client/component/atom/radio-beta";
-import RadioGroup from "/client/component/atom/radio-group-beta";
+import Radio from "/client/component/atom/radio";
+import RadioGroup from "/client/component/atom/radio-group";
 import {
   create
 } from "/client/component/create";

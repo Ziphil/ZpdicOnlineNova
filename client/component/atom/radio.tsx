@@ -10,7 +10,7 @@ import {
 } from "react";
 import {
   radioContext
-} from "/client/component/atom/radio-group-beta";
+} from "/client/component/atom/radio-group";
 import {
   create
 } from "/client/component/create";
