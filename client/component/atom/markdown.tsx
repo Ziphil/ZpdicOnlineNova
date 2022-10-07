@@ -75,21 +75,22 @@ const Markdown = create(
     }, [type]);
     const customComponents = (type === "simple") ? {a: Link, p: MarkdownSimple} : {a: Link};
     const allComponents = {...customComponents, ...components} as any;
-    const innerNode = (
-      <ReactMarkdown
-        className={className}
-        components={allComponents}
-        allowedElements={allowedElements}
-        disallowedElements={disallowedElements}
-        skipHtml={true}
-        transformLinkUri={transformLinkUri}
-        transformImageUri={transformImageUri}
-        remarkPlugins={[remarkGfm]}
-      >
-        {source}
-      </ReactMarkdown>
+    const node = (
+      <MarkdownContainer {...{type, className}}>
+        <ReactMarkdown
+          className={className}
+          components={allComponents}
+          allowedElements={allowedElements}
+          disallowedElements={disallowedElements}
+          skipHtml={true}
+          transformLinkUri={transformLinkUri}
+          transformImageUri={transformImageUri}
+          remarkPlugins={[remarkGfm]}
+        >
+          {source}
+        </ReactMarkdown>
+      </MarkdownContainer>
     );
-    const node = (type === "simple") ? innerNode : <div styleName="root" className={className}>{innerNode}</div>;
     return node;
 
   }
@@ -108,6 +109,33 @@ const MarkdownSimple = create(
       <Fragment>
         {children}
       </Fragment>
+    );
+    return node;
+
+  }
+);
+
+
+const MarkdownContainer = create(
+  require("./markdown.scss"),
+  function ({
+    type,
+    className,
+    children
+  }: {
+    type: "simple" | "normal" | "document",
+    className?: string,
+    children?: ReactNode
+  }): ReactElement {
+
+    const node = (type === "simple") ? (
+      <Fragment>
+        {children}
+      </Fragment>
+    ) : (
+      <div styleName="root" className={className}>
+        {children}
+      </div>
     );
     return node;
 

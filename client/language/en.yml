@@ -3,6 +3,8 @@ common:
   shortDateFormat: "dd/LLL"
   dateUndefined: "?"
   numberUndefined: "?"
+  negative: "−{value}"
+  negativeInfinity: "−∞"
 
 popup:
   userActivated: >-
@@ -360,60 +362,42 @@ dictionaryPane:
 dictionaryStatisticsPane:
   wordCount: "Words"
   wordCountRaw: 
-    value: "{value, number} "
-    unit: "{value, plural, one {word} other {words}} "
+    value: "{value, number} <unit>{value, plural, one {word} other {words}}</unit>"
   wordCountTokipona: 
-    value: "{value, number, ::.00} "
-    unit: "TP"
+    value: "{value, number, ::.00} <unit>TP</unit>"
   wordCountCtwi: 
-    valuePositive: "{value, number, ::.00} "
-    valueNegative: "−{value, number, ::sign-never .00} "
-    valueInfinity: "−∞ "
-    unit: "CTP"
+    value: "{valueString} <unit>CTP</unit>"
   wordCountLogTokipona: 
-    valuePositive: "{value, number, ::.000} "
-    valueNegative: "−{value, number, ::sign-never .000} "
-    valueInfinity: "−∞ "
-    unit: "logTP"
+    value: "{valueString} <unit>logTP</unit>"
   wordCountCoverage: 
-    value: "{value, number, ::.000} "
-    unit: "%EC"
+    value: "{value, number, ::.00} <unit>%EC</unit>"
   wordNameLengthAverage:
     title: "Average headword length"
-    value: "{value, number, ::.00} "
-    unit: "{value, plural, one {char/word} other {chars/word}}"
+    value: "{value, number, ::.00} <unit>{value, plural, one {char/word} other {chars/word}}</unit>"
   equivalentNameCountWhole:
     title: "Translations"
-    value: "{value, number} "
-    unit: "{value, plural, one {term} other {terms}}"
+    value: "{value, number} <unit>{value, plural, one {term} other {terms}}</unit>"
   equivalentNameCountAverage:
     title: "Average translations"
-    value: "{value, number, ::.00} "
-    unit: "{value, plural, one {term/word} other {terms/word}}"
+    value: "{value, number, ::.00} <unit>{value, plural, one {term/word} other {terms/word}}</unit>"
   informationCountWhole:
     title: "Contents"
-    value: "{value, number} "
-    unit: "{value, plural, one {item} other {items}}"
+    value: "{value, number} <unit>{value, plural, one {item} other {items}}</unit>"
   informationCountAverage:
     title: "Average contents"
-    value: "{value, number, ::.00} "
-    unit: "{value, plural, one {item/word} other {items/word}}"
+    value: "{value, number, ::.00} <unit>{value, plural, one {item/word} other {items/word}}</unit>"
   informationTextLengthWhole:
     title: "Content length"
-    value: "{value, number} "
-    unit: "{value, plural, one {char} other {chars}}"
+    value: "{value, number} <unit>{value, plural, one {char} other {chars}}</unit>"
   informationTextLengthAverage:
     title: "Average content length"
-    value: "{value, number, ::.00} "
-    unit: "{value, plural, one {char/word} other {chars/word}}"
+    value: "{value, number, ::.00} <unit>{value, plural, one {char/word} other {chars/word}}</unit>"
   exampleCountWhole:
     title: "Example sentences"
-    value: "{value, number} "
-    unit: "{value, plural, one {sentence} other {sentences}}"
+    value: "{value, number} <unit>{value, plural, one {sentence} other {sentences}}</unit>"
   exampleCountAverage:
     title: "Average example sentences"
-    value: "{value, number, ::.00} "
-    unit: "{value, plural, one {sentence/word} other {sentences/word}}"
+    value: "{value, number, ::.00} <unit>{value, plural, one {sentence/word} other {sentences/word}}</unit>"
   kept: "As is"
   nfd: "NFD"
   nfc: "NFC"
@@ -649,7 +633,7 @@ zatlinExecutor:
 contactPage:
   title: "Contact"
   privacy: >-
-    Please read and agree to the [privacy policy](/document/other/privacy) before submitting your inquiry.
+    Please read and agree to the <link>privacy policy</link> before submitting your inquiry.
   explanation: >-
     If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
     Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
@@ -732,13 +716,13 @@ dictionarySettingPage:
       Change the snoj code for Akrantiain.
       If you set this code, Akrantiain automatically generates a pronunciation from a spelling, and it will appear next to the spelling.
       When a word has its own pronunciation specified, it will be displayed instead.
-      See [the documentation](/document) for further information about the syntax of Akrantiain (now only available in Japanese).
+      See <link>the documentation</link> for further information about the syntax of Akrantiain (now only available in Japanese).
   changeDictionaryZatlinSourceForm:
     label: "Change source code for Zatlin"
     description: >-
       Change the source code for Zatlin.
       If you set this code, a “Generate” button will appear in the word editor, which enables you to generate a spelling by executing Zatlin.
-      See [the documentation](/document) for further information about the syntax of Zatlin.
+      See <link>the documentation</link> for further information about the syntax of Zatlin.
   changeDictionaryPronunciationTitleForm:
     label: "Change title of pronunciations"
     description: >-
@@ -804,6 +788,6 @@ notificationPage:
 registerPage:
   title: "Sign up"
   privacy: >-
-    In order to use this application, you must read and agree to the [privacy policy](/document/other/privacy).
+    In order to use this application, you must read and agree to the <link>privacy policy</link>.
 resetUserPasswordPage:
   title: "Reset password"

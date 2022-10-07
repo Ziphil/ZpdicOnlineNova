@@ -6,6 +6,8 @@
 .root {
   width: 100%;
   padding-inline: $page-horizontal-margin;
+  display: flex;
+  justify-content: center;
   z-index: 100;
   @include smartphone {
     padding-inline: $page-small-horizontal-margin;
@@ -13,7 +15,9 @@
 }
 
 .content {
-  padding-block: $medium-margin;
+  width: 100%;
+  max-width: $page-width;
+  padding-block: $large-margin;
   font-size: $small-font-size;
   color: color(footer-text);
   border-block-start: 1rpx solid color(border);
@@ -44,6 +48,9 @@
 }
 
 .right {
-  display: flex;
-  gap: $control-horizontal-margin;
+  text-align: right;
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  column-gap: $control-horizontal-margin;
+  row-gap: $small-margin;
 }

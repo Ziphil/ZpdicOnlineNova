@@ -29,7 +29,7 @@ export const Checkbox = create(
   }: {
     name: string,
     value: string,
-    label: string,
+    label?: string,
     checked: boolean,
     onSet?: (checked: boolean) => void,
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
@@ -48,7 +48,7 @@ export const Checkbox = create(
         <div styleName="box">
           <FontAwesomeIcon className={styles!["icon"]} icon="check"/>
         </div>
-        <span styleName="label">{label}</span>
+        {(label !== undefined) && <span styleName="label">{label}</span>}
       </label>
     );
     return node;

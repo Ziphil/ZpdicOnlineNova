@@ -2,7 +2,8 @@
 
 import {
   ReactNode,
-  useCallback
+  useCallback,
+  useMemo
 } from "react";
 import {
   IntlShape,
@@ -86,7 +87,8 @@ export function useIntl(): [IntlShape, TransCallbacks] {
       return intl.formatMessage({id: "common.numberUndefined"});
     }
   }, [intl]);
-  return [intl, {trans, transDate, transShortDate, transNumber}];
+  const transNode = trans;
+  return useMemo(() => [intl, {trans, transNode, transDate, transShortDate, transNumber}], [intl, trans, transNode, transDate, transShortDate, transNumber]);
 }
 
 type Messages = Record<string, string>;
@@ -98,6 +100,7 @@ type TransCallback = {
 };
 type TransCallbacks = {
   trans: TransCallback,
+  transNode: (id: string, values?: Record<string, ReactNode | ((parts: Array<ReactNode>) => ReactNode)>) => ReactNode,
   transDate: (date: Date | number | string | null | undefined) => string,
   transShortDate: (date: Date | number | string | null | undefined) => string,
   transNumber: (number: number | null | undefined, digit?: number) => string

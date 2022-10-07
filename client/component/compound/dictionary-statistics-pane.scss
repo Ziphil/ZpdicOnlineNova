@@ -23,11 +23,8 @@
   flex: 1;
 }
 
-.value-wrapper {
-  margin: $tiny-margin 0rpx 0rpx 0rpx;
-}
-
 .value {
+  margin-block-start: $tiny-margin;
   font-size: $large-font-size;
 }
 

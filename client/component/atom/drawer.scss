@@ -39,7 +39,6 @@ $drawer-tab-height: 60rpx;
   max-width: $page-width;
   background-color: color(background);
   border-radius: 0rpx $large-border-radius $large-border-radius 0rpx;
-  box-sizing: border-box;
   position: relative;
   pointer-events: auto;
   transition: left 0.2s ease;

@@ -9,7 +9,7 @@
 
 ### Zatlin
 
-- [About Akrantiain](/document/zatlin/overview)
+- [About Zatlin](/document/zatlin/overview)
 - [Zatlin introduction](/document/zatlin/introduction)
 - [Complete specification](/document/zatlin/syntax)
 - ~~Errors~~

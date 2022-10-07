@@ -3,6 +3,8 @@ common:
   shortDateFormat: "MM/dd"
   dateUndefined: "?"
   numberUndefined: "?"
+  negative: "−{value}"
+  negativeInfinity: "−∞"
 
 popup: 
   userActivated: >-
@@ -358,60 +360,42 @@ dictionaryPane:
 dictionaryStatisticsPane:
   wordCount: "単語数"
   wordCountRaw: 
-    value: "{value, number} "
-    unit: "語"
+    value: "{value, number} <unit>語</unit>"
   wordCountTokipona: 
-    value: "{value, number, ::.00} "
-    unit: "TP"
+    value: "{value, number, ::.00} <unit>TP</unit>"
   wordCountCtwi: 
-    valuePositive: "{value, number, ::.00} "
-    valueNegative: "−{value, number, ::sign-never .00} "
-    valueInfinity: "−∞ "
-    unit: "CTP"
+    value: "{valueString} <unit>CTP</unit>"
   wordCountLogTokipona: 
-    valuePositive: "{value, number, ::.000} "
-    valueNegative: "−{value, number, ::sign-never .000} "
-    valueInfinity: "−∞ "
-    unit: "logTP"
+    value: "{valueString} <unit>logTP</unit>"
   wordCountCoverage: 
-    value: "{value, number, ::.000} "
-    unit: "%EC"
+    value: "{value, number, ::.000} <unit>%EC</unit>"
   wordNameLengthAverage:
     title: "平均単語長"
-    value: "{value, number, ::.00} "
-    unit: "文字/語"
+    value: "{value, number, ::.00} <unit>文字/語</unit>"
   equivalentNameCountWhole:
     title: "訳語数"
-    value: "{value, number} "
-    unit: "個"
+    value: "{value, number} <unit>個</unit>"
   equivalentNameCountAverage:
     title: "平均訳語数"
-    value: "{value, number, ::.00} "
-    unit: "個/語"
+    value: "{value, number, ::.00} <unit>個/語</unit>"
   informationCountWhole:
     title: "内容数"
-    value: "{value, number} "
-    unit: "項目"
+    value: "{value, number} <unit>項目</unit>"
   informationCountAverage:
     title: "平均内容数"
-    value: "{value, number, ::.00} "
-    unit: "項目/語"
+    value: "{value, number, ::.00} <unit>項目/語</unit>"
   informationTextLengthWhole:
     title: "内容長"
-    value: "{value, number} "
-    unit: "文字"
+    value: "{value, number} <unit>文字</unit>"
   informationTextLengthAverage:
     title: "平均内容長"
-    value: "{value, number, ::.00} "
-    unit: "文字/語"
+    value: "{value, number, ::.00} <unit>文字/語</unit>"
   exampleCountWhole:
     title: "例文数"
-    value: "{value, number} "
-    unit: "文"
+    value: "{value, number} <unit>文</unit>"
   exampleCountAverage:
     title: "平均例文数"
-    value: "{value, number, ::.00} "
-    unit: "文/語"
+    value: "{value, number, ::.00} <unit>文/語</unit>"
   kept: "そのまま"
   nfd: "NFD"
   nfc: "NFC"
@@ -646,7 +630,7 @@ zatlinExecutor:
 contactPage:
   title: "お問い合わせ"
   privacy: >-
-    お問い合わせの際は、[プライバシーポリシー](/document/other/privacy)をお読みいただき、同意の上で送信してください。
+    お問い合わせの際は、<link>プライバシーポリシー</link>をお読みいただき、同意の上で送信してください。
   explanation: >-
     匿名でのお問い合わせをご希望の場合は、ログアウトした状態で名前欄を空欄にした上で送信してください。
     なお、辞書の設定や編集などに関わるような、ユーザーの権限が必要になる内容に関するお問い合わせの場合、匿名では対応できない場合がありますのでご了承ください。
@@ -729,13 +713,13 @@ dictionarySettingPage:
       Akrantiain 用の snoj データを設定できます。
       これを設定しておくと、Akrantiain を実行することで単語の発音が綴りから自動生成され、単語の横に表示されるようになります。
       単語に個別の発音が指定されているときは、そちらが優先されます。
-      Akrantiain の構文については[ドキュメント](/document)をご覧ください。
+      Akrantiain の構文については<link>ドキュメント</link>をご覧ください。
   changeDictionaryZatlinSourceForm:
     label: "Zatlin 用ソースコードの変更"
     description: >-
       Zatlin 用のソースコードを設定できます。
       これを設定しておくと、単語編集画面において単語欄に「生成」ボタンが表示され、Zatlin を実行して綴りを自動生成できるようになります。
-      Zatlin の構文については[ドキュメント](/document)をご覧ください。
+      Zatlin の構文については<link>ドキュメント</link>をご覧ください。
   changeDictionaryPronunciationTitleForm:
     label: "発音データの分類名の変更"
     description: >-
@@ -801,6 +785,6 @@ notificationPage:
 registerPage:
   title: "新規登録"
   privacy: >-
-    当アプリケーションを利用していただくには、[プライバシーポリシー](/document/other/privacy)をお読みいただき、同意していただく必要があります。
+    当アプリケーションを利用していただくには、<link>プライバシーポリシー</link>をお読みいただき、同意していただく必要があります。
 resetUserPasswordPage:
   title: "パスワードリセット"

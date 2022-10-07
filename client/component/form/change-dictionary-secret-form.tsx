@@ -11,6 +11,7 @@ import {
   AsyncOrSync
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
+import Radio from "/client/component/atom/radio";
 import RadioGroup from "/client/component/atom/radio-group";
 import {
   create
@@ -49,15 +50,13 @@ const ChangeDictionarySecretForm = create(
       }
     }, [number, secret, request, onSubmit, addInformationPopup]);
 
-    const specs = [
-      {value: "public", label: trans("changeDictionarySecretForm.public")},
-      {value: "secret", label: trans("changeDictionarySecretForm.secret")}
-    ];
-    const secretValue = (secret) ? "secret" : "public";
     const node = (
       <Fragment>
         <form styleName="root">
-          <RadioGroup name="secret" specs={specs} value={secretValue} onSet={(value) => setSecret(value === "secret")}/>
+          <RadioGroup name="secret" value={secret} onSet={(secret) => setSecret(secret)}>
+            <Radio value={false} label={trans("changeDictionarySecretForm.public")}/>
+            <Radio value={true} label={trans("changeDictionarySecretForm.secret")}/>
+          </RadioGroup>
           <Button label={trans("changeDictionarySecretForm.confirm")} reactive={true} onClick={handleClick}/>
         </form>
         <p styleName="caution">

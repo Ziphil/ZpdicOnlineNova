@@ -63,18 +63,16 @@ const InvitationPane = create(
     const createdDate = invitation.createdDate;
     const node = (
       <WhitePane clickable={false}>
-        <div>
-          <div styleName="head">
-            <div styleName="left">
-              <div styleName="name">{name}</div>
+        <div styleName="main">
+          <div styleName="left">
+            <div styleName="name">{name}</div>
+            <div styleName="information">
+              <div styleName="information-item">{trans("invitationPane.createdDate")} — {transDate(createdDate)}</div>
+              <div styleName="information-item">{trans("invitationPane.userName")} — {invitation.dictionary.user.screenName}</div>
             </div>
           </div>
-          <div styleName="information">
-            <div styleName="information-item">{trans("invitationPane.createdDate")} — {transDate(createdDate)}</div>
-            <div styleName="information-item">{trans("invitationPane.userName")} — {invitation.dictionary.user.screenName}</div>
-          </div>
         </div>
-        <div styleName="setting">
+        <div styleName="button-group">
           <Button label={trans("invitationPane.reject")} iconName="ban" scheme="red" reactive={true} onClick={(event) => respondInvitation(event, false)}/>
           <Button label={trans("invitationPane.accept")} iconName="thumbs-up" scheme="blue" reactive={true} onClick={(event) => respondInvitation(event, true)}/>
         </div>

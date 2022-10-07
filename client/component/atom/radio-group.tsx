@@ -3,45 +3,84 @@
 import * as react from "react";
 import {
   ChangeEvent,
+  Fragment,
   ReactElement,
-  useCallback
+  ReactNode,
+  createContext,
+  useMemo
 } from "react";
-import Radio from "/client/component/atom/radio";
 import {
   create
 } from "/client/component/create";
 
 
-const RadioGroup = create(
+type RadioContextValue = {
+  value: any | null,
+  name: string,
+  onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
+  onSet?: (value: any) => void
+};
+export const radioContext = createContext<RadioContextValue>({
+  value: null,
+  name: ""
+});
+
+
+export const RadioGroup = create(
   require("./radio-group.scss"), "RadioGroup",
-  function <V extends string>({
+  function <V extends {}>({
     value,
     name,
-    specs,
+    withContainer = true,
     onChange,
     onSet,
-    className
+    className,
+    children
   }: {
     value: V | null,
     name: string,
-    specs: ArrayLike<{value: V, label: string}>,
+    withContainer?: boolean,
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
     onSet?: (value: V) => void,
-    className?: string
+    className?: string,
+    children?: ReactNode
   }): ReactElement {
 
-    const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
-      const value = event.target.value as V;
-      onChange?.(event);
-      onSet?.(value);
-    }, [onChange, onSet]);
-
+    const ContextProvider = radioContext["Provider"];
+    const contextValue = useMemo(() => ({value, name, onChange, onSet}), [value, name, onChange, onSet]);
     const node = (
+      <ContextProvider value={contextValue}>
+        <RadioGroupContainer {...{withContainer, className}}>
+          {children}
+        </RadioGroupContainer>
+      </ContextProvider>
+    );
+    return node;
+
+  }
+);
+
+
+export const RadioGroupContainer = create(
+  require("./radio-group.scss"),
+  function ({
+    withContainer,
+    className,
+    children
+  }: {
+    withContainer?: boolean,
+    className?: string,
+    children?: ReactNode
+  }): ReactElement {
+
+    const node = (withContainer) ? (
       <div styleName="root" className={className}>
-        {Array.from(specs).map((spec, index) => (
-          <Radio name={name} value={spec.value} label={spec.label} checked={spec.value === value} onChange={handleChange} key={index}/>
-        ))}
+        {children}
       </div>
+    ) : (
+      <Fragment>
+        {children}
+      </Fragment>
     );
     return node;
 

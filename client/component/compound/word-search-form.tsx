@@ -15,6 +15,7 @@ import Button from "/client/component/atom/button";
 import Checkbox from "/client/component/atom/checkbox";
 import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
+import Radio from "/client/component/atom/radio";
 import RadioGroup from "/client/component/atom/radio-group";
 import Selection from "/client/component/atom/selection";
 import AdvancedWordSearchForm from "/client/component/compound/advanced-word-search-form";
@@ -66,7 +67,10 @@ const WordSearchForm = create(
         const text = nextParameter.text ?? oldParameter.text;
         const mode = nextParameter.mode ?? oldParameter.mode;
         const type = nextParameter.type ?? oldParameter.type;
-        const order = nextParameter.order ?? oldParameter.order;
+        const order = {
+          mode: nextParameter.order?.mode ?? oldParameter.order.mode,
+          direction: nextParameter.order?.direction ?? oldParameter.order.direction
+        };
         const options = {
           ignore: {case: nextParameter.options?.ignore?.case ?? oldParameter.options.ignore.case},
           shuffleSeed: nextParameter.options?.shuffleSeed ?? null,
@@ -113,8 +117,6 @@ const WordSearchForm = create(
     const modes = ["both", "name", "equivalent", "content"] as const;
     const types = ["prefix", "part", "exact", "regular"] as const;
     const orderMode = ["unicode", "updatedDate", "createdDate"] as const;
-    const modeSpecs = modes.map((mode) => ({value: mode, label: trans(`wordSearchForm.${mode}`)}));
-    const typeSpecs = types.map((type) => ({value: type, label: trans(`wordSearchForm.${type}`)}));
     const orderModeSpecs = orderMode.map((orderMode) => ({value: orderMode, node: trans(`wordSearchForm.${orderMode}`)}));
     const orderDirectionSpecs = WORD_ORDER_DIRECTIONS.map((orderDirection) => ({value: orderDirection, node: <SearchFormOrderModeDropdownNode orderDirection={orderDirection}/>}));
     const actualParameter = WordParameter.getNormal(parameter);
@@ -123,10 +125,14 @@ const WordSearchForm = create(
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
           <Input value={actualParameter.text} prefix={<Icon className={styles!["icon"]} name="search"/>} nativeRef={inputRef} onSet={(text) => handleParameterSet({text})}/>
           <div styleName="radio-wrapper">
-            <RadioGroup name="mode" value={actualParameter.mode} specs={modeSpecs} onSet={(mode) => handleParameterSet({mode})}/>
+            <RadioGroup name="mode" value={actualParameter.mode} onSet={(mode) => handleParameterSet({mode})}>
+              {modes.map((mode) => <Radio key={mode} value={mode} label={trans(`wordSearchForm.${mode}`)}/>)}
+            </RadioGroup>
           </div>
           <div styleName="radio-wrapper">
-            <RadioGroup name="type" value={actualParameter.type} specs={typeSpecs} onSet={(type) => handleParameterSet({type})}/>
+            <RadioGroup name="type" value={actualParameter.type} onSet={(type) => handleParameterSet({type})}>
+              {types.map((type) => <Radio key={type} value={type} label={trans(`wordSearchForm.${type}`)}/>)}
+            </RadioGroup>
           </div>
           {(showOrder) && (
             <div styleName="selection-wrapper">

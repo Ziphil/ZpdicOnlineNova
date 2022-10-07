@@ -156,11 +156,13 @@ function calcChartSpec(histories?: Array<History>): {data: ChartData, maxXAxis: 
     const differences = [];
     for (let i = 0 ; i < histories.length - 1 ; i ++) {
       const difference = histories[i].wordSize - histories[i + 1].wordSize;
-      const trimmedDifference = Math.max(Math.min(difference, 20), 0);
+      const duration = new Date(histories[i].date).getTime() - new Date(histories[i + 1].date).getTime();
+      const revisedDifference = difference / (duration / (24 * 60 * 60 * 1000));
+      const trimmedDifference = Math.max(Math.min(revisedDifference, 20), 0);
       dates.push(new Date(histories[i].date));
       differences.push(trimmedDifference);
     }
-    const data = {x: "date", columns: [["date", ...dates], ["wordSize", ...differences]], types: {wordSize: "area"}} as ChartData;
+    const data = {x: "date", columns: [["date", ...dates], ["wordSize", ...differences]], types: {wordSize: "line"}} as ChartData;
     const maxXAxis = dates[0];
     const minXAxis = new Date(Date.now() - 14 * 24 * 60 * 60 * 1000);
     return {data, maxXAxis, minXAxis, maxYAxis: 20, minYAxis: 0};

@@ -4,8 +4,13 @@ import * as react from "react";
 import {
   ChangeEvent,
   ReactElement,
-  useCallback
+  ReactNode,
+  useCallback,
+  useContext
 } from "react";
+import {
+  radioContext
+} from "/client/component/atom/radio-group";
 import {
   create
 } from "/client/component/create";
@@ -13,36 +18,38 @@ import {
 
 export const Radio = create(
   require("./radio.scss"), "Radio",
-  function ({
-    name,
+  function <V extends {}>({
     value,
+    valueString,
     label,
-    checked,
-    onSet,
-    onChange,
-    className
+    className,
+    children
   }: {
-    name: string,
-    value: string,
-    label: string,
-    checked: boolean,
-    onSet?: (checked: boolean) => void,
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
-    className?: string
+    value: V,
+    valueString?: string,
+    label?: string,
+    className?: string,
+    children?: ReactNode
   }): ReactElement {
 
-    const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
-      onSet?.(event.target.checked);
-      onChange?.(event);
-    }, [onSet, onChange]);
+    const contextValue = useContext(radioContext);
 
+    const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+      if (event.target.checked) {
+        contextValue.onSet?.(value);
+      }
+      contextValue.onChange?.(event);
+    }, [value, contextValue]);
+
+    const checked = contextValue.value === value;
     const node = (
       <label styleName="root" className={className}>
-        <input styleName="original" type="radio" name={name} value={value} checked={checked} onChange={handleChange}/>
+        <input styleName="original" type="radio" name={contextValue.name} value={valueString ?? value.toString()} checked={checked} onChange={handleChange}/>
         <div styleName="box">
           <div styleName="icon"/>
         </div>
-        <span styleName="label">{label}</span>
+        {(label !== undefined) && <span styleName="label">{label}</span>}
+        {children}
       </label>
     );
     return node;
