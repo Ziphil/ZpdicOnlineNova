@@ -125,6 +125,7 @@ export const Dropdown = create(
     const actualOpen = (autoMode !== null) ? currentOpen : open;
     const data = DataUtil.create({
       hidden: !actualOpen,
+      showArrow,
       restrictHeight
     });
     const node = (

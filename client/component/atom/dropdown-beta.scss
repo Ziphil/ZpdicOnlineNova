@@ -25,7 +25,7 @@
 .arrow {
   @include arrow(color(input-background), color(border), 6rpx);
   display: none;
-  .suggestion[data-show-arrow] >& {
+  .root[data-show-arrow] >& {
     display: block;
   }
 }
