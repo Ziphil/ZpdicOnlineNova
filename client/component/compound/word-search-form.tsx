@@ -13,11 +13,12 @@ import {
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Checkbox from "/client/component/atom/checkbox";
+import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
 import Radio from "/client/component/atom/radio";
 import RadioGroup from "/client/component/atom/radio-group";
-import Selection from "/client/component/atom/selection";
+import Selection from "/client/component/atom/selection-beta";
 import AdvancedWordSearchForm from "/client/component/compound/advanced-word-search-form";
 import {
   StylesRecord,
@@ -157,15 +158,25 @@ const WordSearchForm = create(
               <Selection
                 className={styles!["order-mode"]}
                 value={actualParameter.order.mode}
-                specs={orderModeSpecs}
                 onSet={(orderMode) => handleParameterSet({order: {mode: orderMode}})}
-              />
+              >
+                {orderMode.map((orderMode) => (
+                  <DropdownItem key={orderMode} value={orderMode}>
+                    {trans(`wordSearchForm.${orderMode}`)}
+                  </DropdownItem>
+                ))}
+              </Selection>
               <Selection
                 className={styles!["order-direction"]}
                 value={actualParameter.order.direction}
-                specs={orderDirectionSpecs}
                 onSet={(orderDirection) => handleParameterSet({order: {direction: orderDirection}})}
-              />
+              >
+                {WORD_ORDER_DIRECTIONS.map((orderDirection) => (
+                  <DropdownItem key={orderDirection} value={orderDirection}>
+                    <SearchFormOrderModeDropdownNode orderDirection={orderDirection}/>
+                  </DropdownItem>
+                ))}
+              </Selection>
             </div>
           )}
           {(showOrder || showAdvancedSearch) && (
