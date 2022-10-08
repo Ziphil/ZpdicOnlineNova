@@ -274,14 +274,17 @@ const WordPaneRelations = create(
     word: Word | DetailedWord
   }): ReactElement | null {
 
-    const groupedRelations = new Map<string, Array<Relation>>();
-    for (const relation of word.relations) {
-      const title = relation.title;
-      if (groupedRelations.get(title) === undefined) {
-        groupedRelations.set(title, []);
+    const groupedRelations = useMemo(() => {
+      const groupedRelations = new Map<string, Array<Relation>>();
+      for (const relation of word.relations) {
+        const title = relation.title;
+        if (groupedRelations.get(title) === undefined) {
+          groupedRelations.set(title, []);
+        }
+        groupedRelations.get(title)!.push(relation);
       }
-      groupedRelations.get(title)!.push(relation);
-    }
+      return groupedRelations;
+    }, [word.relations]);
     const innerNodes = Array.from(groupedRelations).map(([title, relations], index) => {
       const titleNode = (title !== "") && <span styleName="box">{title}</span>;
       const relationNodes = relations.map((relation, relationIndex) => {
