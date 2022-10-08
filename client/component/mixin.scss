@@ -271,3 +271,51 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     }
   }
 }
+
+@mixin arrow($color, $border-color, $size) {
+  width: $size * 2;
+  height: $size * 2;
+  position: absolute;
+  &::before {
+    border: $size transparent solid;
+    position: absolute;
+    content: "";
+  }
+  &::after {
+    border: $size transparent solid;
+    position: absolute;
+    content: "";
+  }
+  [data-popper-placement^="top"] >&::before {
+    transform: translate(0rpx, $size * 2 + 1rpx);
+    border-top: $size $border-color solid;
+  }
+  [data-popper-placement^="top"] >&::after {
+    transform: translate(0rpx, $size * 2);
+    border-top: $size $color solid;
+  }
+  [data-popper-placement^="bottom"] >&::before {
+    transform: translate(0rpx, -$size * 2 - 1rpx);
+    border-bottom: $size $border-color solid;
+  }
+  [data-popper-placement^="bottom"] >&::after {
+    transform: translate(0rpx, -$size * 2);
+    border-bottom: $size $color solid;
+  }
+  [data-popper-placement^="left"] >&::before {
+    transform: translate($size * 2 + 1rpx, 0rpx);
+    border-left: $size $border-color solid;
+  }
+  [data-popper-placement^="left"] >&::after {
+    transform: translate($size * 2, 0rpx);
+    border-left: $size $color solid;
+  }
+  [data-popper-placement^="right"] >&::before {
+    transform: translate(-$size * 2 - 1rpx, 0rpx);
+    border-right: $size $border-color solid;
+  }
+  [data-popper-placement^="right"] >&::after {
+    transform: translate(-$size * 2, 0rpx);
+    border-right: $size $color solid;
+  }
+}
