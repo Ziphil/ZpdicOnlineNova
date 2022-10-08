@@ -11,6 +11,7 @@ import DictionaryList from "/client/component/compound/dictionary-list";
 import InvitationList from "/client/component/compound/invitation-list";
 import Loading from "/client/component/compound/loading";
 import Menu from "/client/component/compound/menu";
+import MenuItem from "/client/component/compound/menu-item";
 import SettingPane from "/client/component/compound/setting-pane";
 import {
   create
@@ -67,10 +68,6 @@ const DashboardPage = create(
     const transferNotificationCount = transferInvitations.length;
     const notificationCount = editNotificationCount + transferNotificationCount;
     const menuSpecs = [
-      {mode: "dictionary", label: trans("dashboardPage.dictionary"), iconName: "book", badgeValue: dictionaryCount, href: "#dictionary"},
-      {mode: "notification", label: trans("dashboardPage.notification"), iconName: "bell", badgeValue: notificationCount, href: "#notification"},
-      {mode: "account", label: trans("dashboardPage.account"), iconName: "id-card", href: "#account"},
-      {mode: "logout", label: trans("dashboardPage.logout"), iconName: "sign-out-alt", onClick: performLogout}
     ] as const;
     const node = (
       <Page title={trans("dashboardPage.title")}>
@@ -79,7 +76,12 @@ const DashboardPage = create(
             <ActivateUserForm/>
           </div>
         )}
-        <Menu mode={mode} specs={menuSpecs}/>
+        <Menu mode={mode}>
+          <MenuItem mode="dictionary" label={trans("dashboardPage.dictionary")} iconName="book" badgeValue={dictionaryCount} href="#dictionary"/>
+          <MenuItem mode="notification" label={trans("dashboardPage.notification")} iconName="bell" badgeValue={notificationCount} href="#notification"/>
+          <MenuItem mode="account" label={trans("dashboardPage.account")} iconName="id-card" href="#account"/>
+          <MenuItem mode="logout" label={trans("dashboardPage.logout")} iconName="sign-out-alt" onClick={performLogout}/>
+        </Menu>
         <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode}}/>
       </Page>
     );

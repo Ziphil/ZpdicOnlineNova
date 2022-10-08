@@ -9,6 +9,7 @@ import {
 } from "react";
 import Overlay from "/client/component/atom/overlay";
 import Menu from "/client/component/compound/menu";
+import MenuItem from "/client/component/compound/menu-item";
 import {
   create
 } from "/client/component/create";
@@ -36,12 +37,6 @@ const HotkeyHelp = create(
     const [currentGroup, setCurrentGroup] = useState<HotkeyGroup>("general");
     const [, {trans}] = useIntl();
 
-    const menuSpecs = [
-      {mode: "general", label: trans("hotkeyHelp.general"), iconName: "keyboard", onClick: () => setCurrentGroup("general")},
-      {mode: "navigation", label: trans("hotkeyHelp.navigation"), iconName: "location-arrow", onClick: () => setCurrentGroup("navigation")},
-      {mode: "editDictionary", label: trans("hotkeyHelp.editDictionary"), iconName: "edit", onClick: () => setCurrentGroup("editDictionary")},
-      {mode: "searchWords", label: trans("hotkeyHelp.searchWords"), iconName: "search", onClick: () => setCurrentGroup("searchWords")}
-    ] as const;
     const node = (
       <Overlay title={trans("hotkeyHelp.title")} open={open} outsideClosable={true} onClose={onClose}>
         <div styleName="root">
@@ -58,7 +53,12 @@ const HotkeyHelp = create(
               </div>
             </div>
             <div styleName="menu">
-              <Menu mode={currentGroup} specs={menuSpecs} direction="vertical"/>
+              <Menu mode={currentGroup} direction="vertical">
+                <MenuItem mode="general" label={trans("hotkeyHelp.general")} iconName="keyboard" onClick={() => setCurrentGroup("general")}/>
+                <MenuItem mode="navigation" label={trans("hotkeyHelp.navigation")} iconName="location-arrow" onClick={() => setCurrentGroup("navigation")}/>
+                <MenuItem mode="editDictionary" label={trans("hotkeyHelp.editDictionary")} iconName="edit" onClick={() => setCurrentGroup("editDictionary")}/>
+                <MenuItem mode="searchWords" label={trans("hotkeyHelp.searchWords")} iconName="search" onClick={() => setCurrentGroup("searchWords")}/>
+              </Menu>
             </div>
           </div>
         </div>

@@ -2,12 +2,11 @@
 
 import * as react from "react";
 import {
-  MouseEvent,
-  ReactElement
+  ComponentProps,
+  ReactElement,
+  createContext,
+  useMemo
 } from "react";
-import {
-  IconName
-} from "/client/component/atom/icon";
 import MenuItem from "/client/component/compound/menu-item";
 import {
   create
@@ -17,38 +16,36 @@ import {
 } from "/client/util/style-name";
 
 
-const Menu = create(
+type MenuContextValue = {
+  mode?: string,
+  direction: "horizontal" | "vertical"
+};
+export const menuContext = createContext<MenuContextValue>({
+  direction: "horizontal"
+});
+
+
+export const Menu = create(
   require("./menu.scss"), "Menu",
   function ({
     mode,
-    specs,
-    direction = "horizontal"
+    direction = "horizontal",
+    children
   }: {
     mode: string,
-    specs: ReadonlyArray<MenuSpec>,
-    direction?: "horizontal" | "vertical"
+    direction?: "horizontal" | "vertical",
+    children: Array<ReactElement<ComponentProps<typeof MenuItem>>>
   }): ReactElement {
 
-    const itemNodes = specs.map((spec, index) => {
-      const highlight = spec.mode === mode;
-      const itemNode = (
-        <MenuItem
-          key={index}
-          label={spec.label}
-          iconName={spec.iconName}
-          badgeValue={spec.badgeValue}
-          highlight={highlight}
-          href={spec.href}
-          direction={direction}
-          onClick={spec.onClick}
-        />
-      );
-      return itemNode;
-    });
+    const ContextProvider = menuContext["Provider"];
+    const contextValue = useMemo(() => ({mode, direction}), [mode, direction]);
+
     const styleName = StyleNameUtil.create("root", direction);
     const node = (
       <nav styleName={styleName}>
-        {itemNodes}
+        <ContextProvider value={contextValue}>
+          {children}
+        </ContextProvider>
       </nav>
     );
     return node;
@@ -56,7 +53,5 @@ const Menu = create(
   }
 );
 
-
-export type MenuSpec = {mode: string, label: string, iconName: IconName, badgeValue?: string | number, href?: string, onClick?: (event: MouseEvent<HTMLElement>) => void};
 
 export default Menu;
