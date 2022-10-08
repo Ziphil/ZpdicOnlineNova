@@ -2,24 +2,24 @@
 
 import {
   ModifierArguments,
-  Placement,
-  VirtualElement
+  Placement
 } from "@popperjs/core";
 import * as react from "react";
 import {
   ComponentProps,
-  FocusEvent,
-  MouseEvent,
   ReactElement,
   createContext,
-  useCallback,
+  useEffect,
   useMemo,
   useState
 } from "react";
 import {
   usePopper
 } from "react-popper";
-import type DropdownItem from "/client/component/atom/dropdown-item";
+import {
+  useClickAway
+} from "react-use";
+import DropdownItem from "/client/component/atom/dropdown-item";
 import {
   create
 } from "/client/component/create";
@@ -38,26 +38,28 @@ export const dropdownContext = createContext<DropdownContextValue>({
 export const Dropdown = create(
   require("./dropdown-beta.scss"), "Dropdown",
   function <V extends {}>({
-    referenceElement,
     open = false,
-    placement = "bottom",
-    autoMode = "focus",
+    placement = "bottom-start",
+    autoMode = null,
     showArrow = false,
     fillWidth = false,
     restrictHeight = false,
-    onClose,
+    referenceElement,
+    autoElement,
+    onClickOutside,
     onSet,
     className,
     children
   }: {
-    referenceElement: Element | VirtualElement | null,
     open?: boolean,
     placement?: Placement,
     autoMode?: "focus" | "click" | null,
     showArrow?: boolean,
     fillWidth?: boolean,
     restrictHeight?: boolean,
-    onClose?: (event?: FocusEvent<HTMLDivElement> | MouseEvent<HTMLDivElement>) => void,
+    referenceElement: HTMLElement | null,
+    autoElement?: HTMLElement | null,
+    onClickOutside?: () => void,
     onSet?: (value: V) => void,
     className?: string,
     children?: Array<ReactElement<ComponentProps<typeof DropdownItem>>>
@@ -69,56 +71,56 @@ export const Dropdown = create(
     const {styles, attributes} = usePopper(referenceElement, popupElement, {
       placement,
       modifiers: [
-        {name: "offset", options: {offset: [0, 8]}},
+        {name: "offset", options: {offset: (showArrow) ? [0, 8] : [0, -1]}},
         {name: "flip", options: {altBoundary: true}},
         {name: "fillWidth", phase: "beforeWrite", requires: ["computeStyles"], fn: setFillWidth, enabled: fillWidth},
         {name: "arrow", options: {padding: 4, element: arrowElement}, enabled: showArrow}
       ]
     });
 
-    const handleMouseDown = useCallback(function (value: V, event: MouseEvent<HTMLDivElement>): void {
-      onSet?.(value);
-      if (autoMode === "click") {
-        setCurrentOpen(false);
-        onClose?.(event);
-      }
-    }, [autoMode, onClose, onSet, setCurrentOpen]);
-
-    const handleClick = useCallback(function (event: MouseEvent<HTMLDivElement>): void {
-      if (autoMode === "click") {
-        setCurrentOpen(true);
-      }
-    }, [autoMode, setCurrentOpen]);
-
-    const handleClickOutside = useCallback(function (): void {
-      if (autoMode === "click") {
-        setCurrentOpen(false);
-        onClose?.();
-      }
-    }, [autoMode, onClose, setCurrentOpen]);
-
-    const handleFocus = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
+    useEffect(() => {
       if (autoMode === "focus") {
-        setCurrentOpen(true);
+        const handleFocus = function (): void {
+          setCurrentOpen(true);
+        };
+        const handleBlur = function (): void {
+          setCurrentOpen(false);
+        };
+        autoElement?.addEventListener("focus", handleFocus);
+        autoElement?.addEventListener("blur", handleBlur);
+        return () => {
+          autoElement?.removeEventListener("focus", handleFocus);
+          autoElement?.removeEventListener("blur", handleBlur);
+        };
+      } else if (autoMode === "click") {
+        const handleClick = function (): void {
+          setCurrentOpen(true);
+        };
+        autoElement?.addEventListener("click", handleClick);
+        return () => {
+          autoElement?.removeEventListener("click", handleClick);
+        };
+      } else {
+        return () => null;
       }
-    }, [autoMode, setCurrentOpen]);
+    }, [autoMode, autoElement]);
 
-    const handleBlur = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
-      if (autoMode === "focus") {
+    useClickAway({current: popupElement}, () => {
+      if (autoMode === "click") {
         setCurrentOpen(false);
-        onClose?.(event);
       }
-    }, [autoMode, onClose, setCurrentOpen]);
+      onClickOutside?.();
+    });
 
     const ContextProvider = dropdownContext["Provider"];
     const contextValue = useMemo(() => ({onSet}), [onSet]);
+    const actualOpen = (autoMode !== null) ? currentOpen : open;
     const data = DataUtil.create({
-      hidden: !open,
-      showArrow,
+      hidden: !actualOpen,
       restrictHeight
     });
     const node = (
-      <div styleName="suggestion" className={className} ref={setPopupElement} style={styles.popper} {...attributes.popper} {...data}>
+      <div styleName="root" className={className} ref={setPopupElement} style={styles.popper} {...attributes.popper} {...data}>
         <div styleName="arrow" ref={setArrowElement} style={styles.arrow} {...attributes.arrow}/>
         <ContextProvider value={contextValue}>
           {children}
