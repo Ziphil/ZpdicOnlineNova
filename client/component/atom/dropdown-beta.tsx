@@ -12,6 +12,7 @@ import {
   useCallback,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from "react";
 import {
@@ -69,6 +70,7 @@ export const Dropdown = create(
     const [currentOpen, setCurrentOpen] = useState(false);
     const [popupElement, setPopupElement] = useState<HTMLDivElement | null>(null);
     const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
+    const openingRef = useRef(false);
     const {styles, attributes} = usePopper(referenceElement, popupElement, {
       placement,
       modifiers: [
@@ -101,12 +103,13 @@ export const Dropdown = create(
           autoElement?.removeEventListener("blur", handleBlur);
         };
       } else if (autoMode === "click") {
-        const handleClick = function (): void {
+        const handleMouseDown = function (): void {
+          openingRef.current = true;
           setCurrentOpen(true);
         };
-        autoElement?.addEventListener("click", handleClick);
+        autoElement?.addEventListener("mousedown", handleMouseDown);
         return () => {
-          autoElement?.removeEventListener("click", handleClick);
+          autoElement?.removeEventListener("mousedown", handleMouseDown);
         };
       } else {
         return () => null;
@@ -115,8 +118,11 @@ export const Dropdown = create(
 
     useClickAway({current: popupElement}, () => {
       if (autoMode === "click") {
-        setCurrentOpen(false);
+        if (!openingRef.current) {
+          setCurrentOpen(false);
+        }
       }
+      openingRef.current = false;
       onClickOutside?.();
     });
 
