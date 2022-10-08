@@ -49,11 +49,11 @@ export const RadioGroup = create(
     const ContextProvider = radioContext["Provider"];
     const contextValue = useMemo(() => ({value, name, onChange, onSet}), [value, name, onChange, onSet]);
     const node = (
-      <ContextProvider value={contextValue}>
-        <RadioGroupContainer {...{withContainer, className}}>
+      <RadioGroupContainer {...{withContainer, className}}>
+        <ContextProvider value={contextValue}>
           {children}
-        </RadioGroupContainer>
-      </ContextProvider>
+        </ContextProvider>
+      </RadioGroupContainer>
     );
     return node;
 
