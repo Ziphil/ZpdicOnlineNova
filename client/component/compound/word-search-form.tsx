@@ -118,8 +118,6 @@ const WordSearchForm = create(
     const modes = ["both", "name", "equivalent", "content"] as const;
     const types = ["prefix", "part", "exact", "regular"] as const;
     const orderMode = ["unicode", "updatedDate", "createdDate"] as const;
-    const orderModeSpecs = orderMode.map((orderMode) => ({value: orderMode, node: trans(`wordSearchForm.${orderMode}`)}));
-    const orderDirectionSpecs = WORD_ORDER_DIRECTIONS.map((orderDirection) => ({value: orderDirection, node: <SearchFormOrderModeDropdownNode orderDirection={orderDirection}/>}));
     const actualParameter = WordParameter.getNormal(parameter);
     const node = (
       <Fragment>

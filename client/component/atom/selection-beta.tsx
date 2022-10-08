@@ -4,7 +4,6 @@ import * as react from "react";
 import {
   ComponentProps,
   ReactElement,
-  ReactNode,
   useState
 } from "react";
 import Dropdown from "/client/component/atom/dropdown-beta";
@@ -83,7 +82,5 @@ const SelectionSelection = create(
   }
 );
 
-
-export type SelectionSpec<V> = {value: V, node: ReactNode};
 
 export default Selection;
