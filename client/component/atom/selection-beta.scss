@@ -1,0 +1,26 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.label-container {
+  display: block;
+}
+
+.selection {
+  @include input(primary);
+  align-items: center;
+  display: flex;
+  cursor: pointer;
+}
+
+.text {
+  text-align: left;
+  flex-grow: 1;
+  overflow-x: hidden;
+}
+
+.arrow {
+  margin: 0em 0em 0em $input-horizontal-padding;
+  color: color(accent);
+}

@@ -62,7 +62,7 @@ export const Dropdown = create(
     onClickOutside?: () => void,
     onSet?: (value: V) => void,
     className?: string,
-    children?: Array<ReactElement<ComponentProps<typeof DropdownItem>>>
+    children: Array<ReactElement<ComponentProps<typeof DropdownItem>>>
   }): ReactElement {
 
     const [currentOpen, setCurrentOpen] = useState(false);
