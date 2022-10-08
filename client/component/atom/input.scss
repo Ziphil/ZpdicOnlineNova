@@ -47,7 +47,8 @@
 .prefix,
 .suffix {
   display: inline-flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center
 }
 
 .eye {
