@@ -6,13 +6,15 @@ import {
   MouseEvent,
   ReactElement,
   useCallback,
-  useMemo
+  useMemo,
+  useState
 } from "react";
 import {
   AsyncOrSync
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
-import Dropdown from "/client/component/atom/dropdown";
+import Dropdown from "/client/component/atom/dropdown-beta";
+import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import Link from "/client/component/atom/link";
 import Markdown from "/client/component/atom/markdown";
@@ -120,6 +122,8 @@ const WordPaneName = create(
 
     const [, {trans}] = useIntl();
 
+    const [directionReferenceElement, setDirectionReferenceElement] = useState<HTMLElement | null>(null);
+
     const pronunciationText = useMemo(() => {
       if (word.pronunciation !== undefined) {
         if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
@@ -142,54 +146,51 @@ const WordPaneName = create(
         }
       }
     }, [dictionary, word]);
-    const submitDropdownSpecs = [
-      {value: "oneway", node: <WordPaneSubmitDropdownNode direction="oneway"/>},
-      {value: "mutual", node: <WordPaneSubmitDropdownNode direction="mutual"/>}
-    ] as const;
-    const editButtonNode = (showEditLink && !showButton) && (
-      <div styleName="button">
-        <Button label={trans("wordPane.edit")} iconName="edit" variant="simple" hideLabel={true} onClick={openWordEditor}/>
-      </div>
-    );
-    const submitButtonNode = (showButton) && (() => {
-      const directionButtonNode = (showDirectionButton) && (
-        <Dropdown specs={submitDropdownSpecs} placement="right" fillWidth={false} onSet={(direction) => onSubmit?.(direction)}>
-          <Button iconName="ellipsis-h" position="right"/>
-        </Dropdown>
-      );
-      const submitButtonPosition = (showDirectionButton) ? "left" : "alone" as any;
-      const submitButtonNode = (
-        <div styleName="button">
-          <div styleName="dropdown-button">
-            <Button label={trans("wordPane.submit")} iconName="check" position={submitButtonPosition} hideLabel={true} onClick={(event) => onSubmit?.("oneway", event)}/>
-            {directionButtonNode}
-          </div>
-        </div>
-      );
-      return submitButtonNode;
-    })();
-    const pronunciationNode = (pronunciationText !== undefined) && (() => {
-      const pronunciationNode = <div styleName="pronunciation">{pronunciationText}</div>;
-      return pronunciationNode;
-    })();
-    const tagNode = (word.tags.length > 0) && (() => {
-      const tagBoxNodes = word.tags.map((tag, index) => {
-        const tagBoxNode = (tag !== "") && <span styleName="box" key={index}>{tag}</span>;
-        return tagBoxNode;
-      });
-      const tagNode = <div styleName="tag">{tagBoxNodes}</div>;
-      return tagNode;
-    })();
     const node = (
       <div styleName="name-wrapper">
         <div styleName="left">
           <div styleName="name">{word.name}</div>
-          {pronunciationNode}
-          {tagNode}
+          {(pronunciationText !== undefined) && <div styleName="pronunciation">{pronunciationText}</div>}
+          {(word.tags.length > 0) && (
+            <div styleName="tag">
+              {word.tags.map((tag, index) => (tag !== "") && <span styleName="box" key={index}>{tag}</span>)}
+            </div>
+          )}
         </div>
         <div styleName="right">
-          {editButtonNode}
-          {submitButtonNode}
+          {(showEditLink && !showButton) && (
+            <div styleName="button">
+              <Button label={trans("wordPane.edit")} iconName="edit" variant="simple" hideLabel={true} onClick={openWordEditor}/>
+            </div>
+          )}
+          {(showButton) && (
+            <div styleName="button">
+              <div styleName="dropdown-button">
+                <Button
+                  label={trans("wordPane.submit")}
+                  iconName="check"
+                  position={(showDirectionButton) ? "left" : "alone"}
+                  hideLabel={true}
+                  onClick={(event) => onSubmit?.("oneway", event)}
+                />
+                {(showDirectionButton) && (
+                  <>
+                    <Button iconName="ellipsis-h" position="right" nativeRef={setDirectionReferenceElement}/>
+                    <Dropdown
+                      placement="bottom-end"
+                      autoMode="click"
+                      referenceElement={directionReferenceElement}
+                      autoElement={directionReferenceElement}
+                      onSet={onSubmit}
+                    >
+                      <DropdownItem value="oneway"><WordPaneSubmitDropdownNode direction="oneway"/></DropdownItem>
+                      <DropdownItem value="mutual"><WordPaneSubmitDropdownNode direction="mutual"/></DropdownItem>
+                    </Dropdown>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
