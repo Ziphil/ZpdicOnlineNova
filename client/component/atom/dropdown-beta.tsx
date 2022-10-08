@@ -9,6 +9,7 @@ import {
   ComponentProps,
   ReactElement,
   createContext,
+  useCallback,
   useEffect,
   useMemo,
   useState
@@ -78,6 +79,13 @@ export const Dropdown = create(
       ]
     });
 
+    const handleSet = useCallback(function (value: V): void {
+      if (autoMode !== null) {
+        setCurrentOpen(false);
+      }
+      onSet?.(value);
+    }, [autoMode, onSet]);
+
     useEffect(() => {
       if (autoMode === "focus") {
         const handleFocus = function (): void {
@@ -113,7 +121,7 @@ export const Dropdown = create(
     });
 
     const ContextProvider = dropdownContext["Provider"];
-    const contextValue = useMemo(() => ({onSet}), [onSet]);
+    const contextValue = useMemo(() => ({onSet: handleSet}), [handleSet]);
     const actualOpen = (autoMode !== null) ? currentOpen : open;
     const data = DataUtil.create({
       hidden: !actualOpen,
