@@ -33,6 +33,7 @@ import {
 import {
   DictionaryCreator,
   DictionaryModel,
+  DictionaryParameterCreator,
   ExampleModel,
   SuggestionCreator,
   WordCreator,
@@ -223,6 +224,19 @@ export class DictionaryController extends Controller {
       const body = CustomError.ofType("noSuchDictionaryNumber");
       Controller.respondError(response, body);
     }
+  }
+
+  @post(SERVER_PATHS["searchDictionary"])
+  public async [Symbol()](request: Request<"searchDictionary">, response: Response<"searchDictionary">): Promise<void> {
+    const parameter = DictionaryParameterCreator.recreate(request.body.parameter);
+    const offset = request.body.offset;
+    const size = request.body.size;
+    const range = new QueryRange(offset, size);
+    const hitResult = await DictionaryModel.search(parameter, range);
+    const hitDictionaries = await Promise.all(hitResult[0].map((hitDictionary) => DictionaryCreator.createDetailed(hitDictionary)));
+    const hitSize = hitResult[1];
+    const body = [hitDictionaries, hitSize] as any;
+    Controller.respond(response, body);
   }
 
   @post(SERVER_PATHS["searchWord"])

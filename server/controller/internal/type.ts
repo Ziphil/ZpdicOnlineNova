@@ -13,6 +13,7 @@ import {
   DetailedDictionary,
   DetailedWord,
   Dictionary,
+  DictionaryParameter,
   DictionarySettings,
   DictionaryStatistics,
   EditableExample,
@@ -69,6 +70,7 @@ export const SERVER_PATHS = {
   addCommission: "/commission/add",
   discardCommission: "/commission/discard",
   fetchCommissions: "/commission/fetch",
+  searchDictionary: "/dictionary/search",
   searchWord: "/word/search",
   downloadDictionary: "/dictionary/download",
   suggestDictionaryTitles: "/dictionary/suggest/title",
@@ -240,6 +242,13 @@ type ServerSpecs = {
     response: {
       success: WithSize<Commission>,
       error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
+  searchDictionary: {
+    request: {parameter: DictionaryParameter, offset?: number, size?: number},
+    response: {
+      success: {words: WithSize<DetailedDictionary>},
+      error: never
     }
   },
   searchWord: {

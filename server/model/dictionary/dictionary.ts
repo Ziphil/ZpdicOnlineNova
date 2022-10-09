@@ -37,6 +37,7 @@ import {
   DictionaryAuthority,
   DictionaryAuthorityUtil,
   DictionaryFullAuthority,
+  DictionaryParameter,
   DictionarySettings,
   DictionarySettingsCreator,
   DictionarySettingsModel,
@@ -166,6 +167,12 @@ export class DictionarySchema extends DiscardableSchema {
     })();
     const query = rawQuery.sort("-updatedDate -number");
     const dictionaries = await query.exec();
+    return dictionaries;
+  }
+
+  public static async search(parameter: DictionaryParameter, range?: QueryRange): Promise<WithSize<Dictionary>> {
+    const query = parameter.createQuery();
+    const dictionaries = await QueryRange.restrictWithSize(query, range);
     return dictionaries;
   }
 
