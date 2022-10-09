@@ -37,6 +37,7 @@ export const Button = create(
     name,
     label,
     iconName,
+    type,
     position = "alone",
     variant = "normal",
     scheme = "primary",
@@ -51,6 +52,7 @@ export const Button = create(
     name?: string,
     label?: string,
     iconName?: IconName,
+    type?: "button" | "submit" | "reset",
     position?: "alone" | "left" | "right" | "middle",
     variant?: "normal" | "light" | "link" | "simple",
     scheme?: "primary" | "red" | "blue",
@@ -102,7 +104,7 @@ export const Button = create(
       loading
     });
     const node = (
-      <button styleName={styleName} className={className} name={name} disabled={disabled || loading} ref={nativeRef} onClick={handleClick} {...data}>
+      <button styleName={styleName} className={className} name={name} type={type} disabled={disabled || loading} ref={nativeRef} onClick={handleClick} {...data}>
         {(iconName !== undefined) && <Icon className={styles!["icon"]} name={iconName}/>}
         {(label !== undefined) && <span styleName="label">{label}</span>}
         {(reactive) && (
