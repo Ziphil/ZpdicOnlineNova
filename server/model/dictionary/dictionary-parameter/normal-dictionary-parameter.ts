@@ -44,7 +44,7 @@ export class NormalDictionaryParameter extends DictionaryParameter {
         return {};
       }
     })();
-    const query = DictionaryModel.findExist().and([nameFilter, userFilter]).sort(sortKey);
+    const query = DictionaryModel.findExist().ne("secret", true).and([nameFilter, userFilter]).sort(sortKey);
     return query;
   }
 
