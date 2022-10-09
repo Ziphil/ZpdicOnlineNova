@@ -3,7 +3,7 @@
 @import "/client/component/mixin.scss";
 
 
-.example-wrapper {
+.example-container {
   @include line-height;
   text-align: justify;
 }
@@ -25,7 +25,7 @@
   color: schemed-color(accent, red);
 }
 
-.button {
+.button-container {
   margin: $small-margin 0rpx 0rpx 0rpx;
   text-align: right;
 }
