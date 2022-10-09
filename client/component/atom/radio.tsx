@@ -44,7 +44,7 @@ export const Radio = create(
     const checked = contextValue.value === value;
     const node = (
       <label styleName="root" className={className}>
-        <input styleName="original" type="radio" name={contextValue.name} value={valueString ?? value.toString()} checked={checked} onChange={handleChange}/>
+        <input styleName="original" type="radio" name={contextValue.name} value={valueString ?? String(value)} checked={checked} onChange={handleChange}/>
         <div styleName="box">
           <div styleName="icon"/>
         </div>

@@ -4,13 +4,17 @@ import * as react from "react";
 import {
   MouseEvent,
   ReactElement,
-  useCallback
+  useCallback,
+  useContext
 } from "react";
 import Badge from "/client/component/atom/badge";
 import Icon from "/client/component/atom/icon";
 import {
   IconName
 } from "/client/component/atom/icon";
+import {
+  menuContext
+} from "/client/component/compound/menu";
 import {
   StylesRecord,
   create
@@ -26,26 +30,26 @@ import {
 const MenuItem = create(
   require("./menu-item.scss"), "MenuItem",
   function ({
+    mode,
     label,
     iconName,
     badgeValue,
-    highlight,
     href,
-    direction = "horizontal",
     onClick,
     styles
   }: {
+    mode: string,
     label: string,
     iconName: IconName,
     badgeValue?: string | number,
-    highlight: boolean,
     href?: string,
-    direction?: "horizontal" | "vertical",
     onClick?: (event: MouseEvent<HTMLElement>) => void,
     styles?: StylesRecord
   }): ReactElement {
 
     const {pushPath} = usePath();
+
+    const contextValue = useContext(menuContext);
 
     const handleClick = useCallback(function (event: MouseEvent<HTMLElement>): void {
       event.preventDefault();
@@ -55,9 +59,10 @@ const MenuItem = create(
       }
     }, [href, onClick, pushPath]);
 
+    const highlight = contextValue.mode === mode;
     const styleName = StyleNameUtil.create(
       "root",
-      direction,
+      contextValue.direction,
       {if: highlight, true: "highlight"}
     );
     const node = (

@@ -13,7 +13,8 @@ import {
   fas as iconFas
 } from "@fortawesome/free-solid-svg-icons";
 import {
-  ReactLocation
+  ReactLocation,
+  Router
 } from "@tanstack/react-location";
 import * as queryParser from "query-string";
 import * as react from "react";
@@ -76,7 +77,9 @@ const StoryRoot = create(
       <DndProvider backend={DndBackend}>
         <QueryClientProvider client={queryClient}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-            {children}
+            <Router location={location} routes={[]} caseSensitive={true}>
+              {children}
+            </Router>
           </IntlProvider>
         </QueryClientProvider>
       </DndProvider>

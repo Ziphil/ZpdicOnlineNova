@@ -2,8 +2,7 @@
 
 import * as react from "react";
 import {
-  ReactElement,
-  useMemo
+  ReactElement
 } from "react";
 import ContributorList from "/client/component/compound/contributor-list";
 import DashboardButtonForm from "/client/component/compound/dashboard-button-form";
@@ -27,6 +26,15 @@ import {
 } from "/client/util/data";
 
 
+const RAW_CONTRIBUTORS = [
+  {name: "lynn", url: {github: "lynn"}, avatarUrl: {github: "lynn"}},
+  {name: "bluebear94", url: {github: "bluebear94"}, avatarUrl: {github: "bluebear94"}},
+  {name: "nymwa", url: {github: "nymwa"}, avatarUrl: {github: "nymwa"}},
+  {name: "川音リオ", url: {twitter: "KawaneRio"}, avatarUrl: "https://pbs.twimg.com/profile_images/1085673171083091969/t3IjudoH_400x400.jpg"},
+  {name: "炭酸ソーダ", url: {twitter: "na2co3_ftw"}, avatarUrl: {github: "na2co3-ftw"}}
+];
+
+
 const TopPage = create(
   require("./top-page.scss"), "TopPage",
   function ({
@@ -35,12 +43,6 @@ const TopPage = create(
 
     const [me] = useMe();
 
-    const rawContributors = useMemo(() => [
-      {name: "lynn", url: {github: "lynn"}, avatarUrl: {github: "lynn"}},
-      {name: "bluebear94", url: {github: "bluebear94"}, avatarUrl: {github: "bluebear94"}},
-      {name: "nymwa", url: {github: "nymwa"}, avatarUrl: {github: "nymwa"}},
-      {name: "川音リオ", url: {twitter: "KawaneRio"}, avatarUrl: "https://pbs.twimg.com/profile_images/1085673171083091969/t3IjudoH_400x400.jpg"}
-    ], []);
     const loginFormData = DataUtil.create({hidden: me !== null});
     const dashboardFormData = DataUtil.create({hidden: me === null});
     const node = (
@@ -73,7 +75,7 @@ const TopPage = create(
           <div styleName="border last">
             <div styleName="github">
               <GithubButton/>
-              <ContributorList rawContributors={rawContributors}/>
+              <ContributorList rawContributors={RAW_CONTRIBUTORS}/>
             </div>
             <div styleName="gift">
               <GiftPane/>

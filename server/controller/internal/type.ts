@@ -13,6 +13,7 @@ import {
   DetailedDictionary,
   DetailedWord,
   Dictionary,
+  DictionaryParameter,
   DictionarySettings,
   DictionaryStatistics,
   EditableExample,
@@ -70,6 +71,7 @@ export const SERVER_PATHS = {
   discardCommission: "/commission/discard",
   fetchCommissions: "/commission/fetch",
   searchDictionary: "/dictionary/search",
+  searchWord: "/word/search",
   downloadDictionary: "/dictionary/download",
   suggestDictionaryTitles: "/dictionary/suggest/title",
   fetchDictionaryAuthorizedUsers: "/dictionary/user",
@@ -243,6 +245,13 @@ type ServerSpecs = {
     }
   },
   searchDictionary: {
+    request: {parameter: DictionaryParameter, offset?: number, size?: number},
+    response: {
+      success: WithSize<DetailedDictionary>,
+      error: never
+    }
+  },
+  searchWord: {
     request: {number: number, parameter: WordParameter, offset?: number, size?: number},
     response: {
       success: {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>},

@@ -48,7 +48,7 @@ const ExamplePane = create(
 
     const node = (
       <WhitePane clickable={false}>
-        <div styleName="example-wrapper">
+        <div styleName="example-container">
           <div styleName="example">
             <span styleName="sentence">{example.sentence}</span>
             <span styleName="example-separator"/>
@@ -60,7 +60,7 @@ const ExamplePane = create(
             </div>
           )}
         </div>
-        <div styleName="button">
+        <div styleName="button-container">
           <Button label={trans("examplePane.edit")} iconName="edit" variant="simple" onClick={openEditor}/>
         </div>
       </WhitePane>

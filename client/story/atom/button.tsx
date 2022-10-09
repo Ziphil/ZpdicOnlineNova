@@ -47,6 +47,19 @@ export const Simple = createStory(template, {
   }
 });
 
+export const WithIcon = createStory(template, {
+  args: {
+    label: "Button",
+    iconName: "thumbs-up"
+  }
+});
+
+export const OnlyIcon = createStory(template, {
+  args: {
+    iconName: "heart"
+  }
+});
+
 export const Loading = createStory(template, {
   args: {
     label: "Button",

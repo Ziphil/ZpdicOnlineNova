@@ -8,13 +8,14 @@ import {
   useState
 } from "react";
 import Button from "/client/component/atom/button";
+import DropdownItem from "/client/component/atom/dropdown-item";
 import Input from "/client/component/atom/input";
 import {
   Suggest,
   SuggestionSpec
 } from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
-import Selection from "/client/component/atom/selection";
+import Selection from "/client/component/atom/selection-beta";
 import {
   StylesRecord,
   create
@@ -131,8 +132,6 @@ const AdvancedWordSearchFormElement = create(
       return suggest;
     }, [dictionary.number, request]);
 
-    const modeSpecs = ADVANCED_WORD_MODES.map((mode) => ({value: mode, node: trans(`advancedWordSearchForm.${mode}`)}));
-    const typeSpecs = WORD_TYPES.map((type) => ({value: type, node: trans(`advancedWordSearchForm.${type}`)}));
     const modeLabel = (index === 0) ? trans("advancedWordSearchForm.mode") : undefined;
     const typeLabel = (index === 0) ? trans("advancedWordSearchForm.type") : undefined;
     const titleLabel = (index === 0) ? trans("advancedWordSearchForm.title") : undefined;
@@ -143,8 +142,12 @@ const AdvancedWordSearchFormElement = create(
     const searchNode = (
       <div styleName="element">
         <div styleName="form left">
-          <Selection className={styles!["selection"]} value={element.mode} label={modeLabel} specs={modeSpecs} onSet={mutateParameter((parameter, mode) => elements[index].mode = mode)}/>
-          <Selection className={styles!["selection"]} value={element.type} label={typeLabel} specs={typeSpecs} onSet={mutateParameter((parameter, type) => elements[index].type = type)}/>
+          <Selection className={styles!["selection"]} value={element.mode} label={modeLabel} onSet={mutateParameter((parameter, mode) => elements[index].mode = mode)}>
+            {ADVANCED_WORD_MODES.map((mode) => <DropdownItem key={mode} value={mode}>{trans(`advancedWordSearchForm.${mode}`)}</DropdownItem>)}
+          </Selection>
+          <Selection className={styles!["selection"]} value={element.type} label={typeLabel} onSet={mutateParameter((parameter, type) => elements[index].type = type)}>
+            {WORD_TYPES.map((type) => <DropdownItem key={type} value={type}>{trans(`advancedWordSearchForm.${type}`)}</DropdownItem>)}
+          </Selection>
         </div>
         <div styleName="form right">
           <Input className={styles!["title"]} value={element.title} label={titleLabel} suggest={suggest} disabled={titleDisabled} onSet={mutateParameter((parameter, title) => elements[index].title = title)}/>

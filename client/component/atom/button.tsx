@@ -4,6 +4,7 @@ import * as react from "react";
 import {
   MouseEvent,
   ReactElement,
+  Ref,
   useCallback,
   useRef,
   useState
@@ -44,7 +45,8 @@ export const Button = create(
     disabled = false,
     onClick,
     className,
-    styles
+    styles,
+    nativeRef
   }: {
     name?: string,
     label?: string,
@@ -57,7 +59,8 @@ export const Button = create(
     disabled?: boolean,
     onClick?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     className?: string,
-    styles?: StylesRecord
+    styles?: StylesRecord,
+    nativeRef?: Ref<HTMLButtonElement>
   }): ReactElement {
 
     const [loading, setLoading] = useState(false);
@@ -99,7 +102,7 @@ export const Button = create(
       loading
     });
     const node = (
-      <button styleName={styleName} className={className} name={name} disabled={disabled || loading} onClick={handleClick} {...data}>
+      <button styleName={styleName} className={className} name={name} disabled={disabled || loading} ref={nativeRef} onClick={handleClick} {...data}>
         {(iconName !== undefined) && <Icon className={styles!["icon"]} name={iconName}/>}
         {(label !== undefined) && <span styleName="label">{label}</span>}
         {(reactive) && (

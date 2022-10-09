@@ -6,14 +6,15 @@
 .search-form-container {
   width: 100%;
   max-width: $page-width * 0.75;
-  margin: 0rpx auto $huge-margin auto;
+  margin-block-end: $huge-margin;
+  margin-inline: auto;
 }
 
 .suggestion-list-container {
-  margin: 0rpx 0rpx $large-margin 0rpx;
+  margin-block-end: $large-margin;
 }
 
 .pagination-container {
-  margin: $large-margin 0rpx 0rpx 0rpx;
+  margin-block-start: $large-margin;
   text-align: center;
 }

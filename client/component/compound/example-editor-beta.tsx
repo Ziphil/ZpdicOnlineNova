@@ -47,6 +47,7 @@ import {
   LinkedWord,
   Word
 } from "/client/skeleton/dictionary";
+import {DataUtil} from "/client/util/data";
 import {
   deleteAt,
   moveAt
@@ -200,38 +201,31 @@ const ExampleEditorRoot = create(
     const [mainShown, setMainShown] = useState(true);
     const [, {trans}] = useIntl();
 
-    const cancelButtonNode = (
-      <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
-    );
-    const discardButtonNode = (example !== null) && (
-      <Button label={trans("exampleEditor.discard")} iconName="trash-alt" scheme="red" reactive={true} onClick={() => setAlertOpen(true)}/>
-    );
-    const confirmButtonNode = (
-      <Button label={trans("exampleEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editExample}/>
-    );
-    const mainStyleName = StyleNameUtil.create(
-      "main",
-      {if: mainShown, false: "hidden"}
-    );
+
     const headName = (example !== null) ? trans("exampleEditor.existingExample", {number: example.number.toString()}) : trans("exampleEditor.newExample");
     const innerProps = {dictionary, tempExample, mutateExample};
+    const mainData = DataUtil.create({
+      hidden: !mainShown
+    });
     const node = (
       <div styleName="root">
         <div styleName="head-name" onClick={() => setMainShown((mainShown) => !mainShown)}>
           <span styleName="head-icon"><Icon name={(mainShown) ? "circle-chevron-down" : "circle-chevron-right"}/></span>
           {headName}
         </div>
-        <div styleName={mainStyleName}>
+        <div styleName="main" {...mainData}>
           <div styleName="editor">
             <ExampleEditorSentence {...innerProps}/>
             <ExampleEditorWords {...innerProps} {...{openWordChooser}}/>
           </div>
-          <div styleName="confirm-button-wrapper">
+          <div styleName="footer">
             <div/>
-            <div styleName="confirm-button">
-              {cancelButtonNode}
-              {discardButtonNode}
-              {confirmButtonNode}
+            <div styleName="confirm-button-container">
+              <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
+              {(example !== null) && (
+                <Button label={trans("exampleEditor.discard")} iconName="trash-alt" scheme="red" reactive={true} onClick={() => setAlertOpen(true)}/>
+              )}
+              <Button label={trans("exampleEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editExample}/>
             </div>
           </div>
         </div>
@@ -260,13 +254,13 @@ const ExampleEditorSentence = create(
     const [, {trans}] = useIntl();
 
     const node = (
-      <div styleName="container">
+      <div styleName="section">
         <div styleName="head">
           {trans("wordEditor.basic")}
         </div>
-        <div styleName="container-inner">
-          <div styleName="container-item">
-            <div styleName="form-wrapper">
+        <div styleName="section-content">
+          <div styleName="section-item">
+            <div styleName="form-container">
               <div styleName="form sentence">
                 <label>
                   <Label text={trans("exampleEditor.sentence")} position="left"/>
@@ -304,27 +298,21 @@ const ExampleEditorWords = create(
 
     const [, {trans}] = useIntl();
 
-    const innerNodes = tempExample.words.map((word, index) => <ExampleEditorWord key={word.tempId} {...{dictionary, tempExample, word, index, mutateExample, openWordChooser}}/>);
-    const plusNode = (() => {
-      const absentMessage = (tempExample.words.length <= 0) ? trans("exampleEditor.wordAbsent") : "";
-      const plusNode = (
-        <div styleName="plus">
-          <div styleName="absent">{absentMessage}</div>
-          <div styleName="plus-button">
-            <Button iconName="plus" variant="light" onClick={() => openWordChooser(tempExample.words.length)}/>
-          </div>
-        </div>
-      );
-      return plusNode;
-    })();
     const node = (
-      <div styleName="container">
+      <div styleName="section">
         <div styleName="head">
           {trans("exampleEditor.word")}
         </div>
-        <div styleName="container-inner">
-          {innerNodes}
-          {plusNode}
+        <div styleName="section-content">
+          {tempExample.words.map((word, index) => (
+            <ExampleEditorWord key={word.tempId} {...{dictionary, tempExample, word, index, mutateExample, openWordChooser}}/>
+          ))}
+          <div styleName="plus">
+            <div styleName="absent">{(tempExample.words.length <= 0) ? trans("exampleEditor.wordAbsent") : ""}</div>
+            <div styleName="plus-button-container">
+              <Button iconName="plus" variant="light" onClick={() => openWordChooser(tempExample.words.length)}/>
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -361,16 +349,15 @@ const ExampleEditorWord = create(
       mutateExample((tempExample, draggingIndex, hoverIndex) => moveAt(tempExample.words, draggingIndex, hoverIndex))
     );
 
-    const styleName = StyleNameUtil.create(
-      "container-item",
-      {if: dragging, true: "dragging"}
-    );
+    const data = DataUtil.create({
+      dragging
+    });
     const node = (
-      <div styleName={styleName} ref={rootRef}>
+      <div styleName="section-item" ref={rootRef} {...data}>
         <div styleName="handle" ref={handleRef}>
           <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
         </div>
-        <div styleName="form-wrapper">
+        <div styleName="form-container">
           <div styleName="form">
             <div/>
             <ControlGroup className={StyleNameUtil.create(styles!["name"], styles!["word-input"])}>

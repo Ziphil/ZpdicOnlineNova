@@ -90,13 +90,13 @@ const DictionaryPageWordList = create(
     handlePageSet
   }: {
     dictionary: EnhancedDictionary,
-    query: DictionaryQuery,
-    debouncedQuery: DictionaryQuery,
+    query: WordQuery,
+    debouncedQuery: WordQuery,
     canEdit: boolean,
     handlePageSet: (page: number) => unknown
   }): ReactElement {
 
-    const [hitResult] = useSuspenseQuery("searchDictionary", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffset(query.page, 40)}, {keepPreviousData: true});
+    const [hitResult] = useSuspenseQuery("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffset(query.page, 40)}, {keepPreviousData: true});
 
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
@@ -120,20 +120,20 @@ const DictionaryPageWordList = create(
 );
 
 
-function serializeQuery(query: DictionaryQuery): Record<string, unknown> {
+function serializeQuery(query: WordQuery): Record<string, unknown> {
   const search = {...query.parameter.serialize(), page: query.page};
   return search;
 }
 
-function deserializeQuery(search: Record<string, unknown>): DictionaryQuery {
+function deserializeQuery(search: Record<string, unknown>): WordQuery {
   const parameter = WordParameter.deserialize(search);
   const page = (typeof search.page === "string") ? +search.page : 0;
   const showExplanation = Object.keys(search).length <= 0;
   return {parameter, page, showExplanation};
 }
 
-export type DictionaryHitResult = {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>};
-export type DictionaryQuery = {parameter: WordParameter, page: number, showExplanation: boolean};
+export type WordHitResult = {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>};
+export type WordQuery = {parameter: WordParameter, page: number, showExplanation: boolean};
 export type UpdateWordsOptions = {serialize?: boolean, keepShowExplanation?: boolean};
 
 export default DictionaryPage;

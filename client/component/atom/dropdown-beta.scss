@@ -1,0 +1,31 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.root {
+  background-color: color(input-background);
+  border: 1rpx color(border) solid;
+  border-radius: $small-border-radius;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  z-index: 50;
+  &[data-restrict-height] {
+    max-height: 150rpx;
+    overflow-y: auto;
+  }
+  &[data-hidden="true"],
+  &[data-popper-reference-hidden="true"] {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
+.arrow {
+  @include arrow(color(input-background), color(border), 6rpx);
+  display: none;
+  .root[data-show-arrow] >& {
+    display: block;
+  }
+}

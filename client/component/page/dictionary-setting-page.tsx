@@ -11,6 +11,7 @@ import DictionaryStatisticsPane from "/client/component/compound/dictionary-stat
 import HistoryPane from "/client/component/compound/history-pane";
 import Loading from "/client/component/compound/loading";
 import Menu from "/client/component/compound/menu";
+import MenuItem from "/client/component/compound/menu-item";
 import ResourceList from "/client/component/compound/resource-list";
 import SettingPane from "/client/component/compound/setting-pane";
 import WordNameFrequencyPane from "/client/component/compound/word-name-frequency-pane";
@@ -56,17 +57,16 @@ const DictionarySettingPage = create(
     const [] = useSuspenseQuery("checkDictionaryAuthorization", {number, authority: "own"});
 
     const mode = location.hash || "general";
-    const menuSpecs = [
-      {mode: "general", label: trans("dictionarySettingPage.general"), iconName: "info-circle", href: "#general"},
-      {mode: "setting", label: trans("dictionarySettingPage.setting"), iconName: "cog", href: "#setting"},
-      {mode: "access", label: trans("dictionarySettingPage.access"), iconName: "users", href: "#access"},
-      {mode: "request", label: trans("dictionarySettingPage.commission"), iconName: "list-check", badgeValue: commissionSize, href: "#request"},
-      {mode: "resource", label: trans("dictionarySettingPage.resource"), iconName: "image", href: "#resource"},
-      {mode: "statistics", label: trans("dictionarySettingPage.statistics"), iconName: "chart-line", href: "#statistics"}
-    ] as const;
     const node = (
       <Page dictionary={dictionary} showDictionary={true} showAddLink={true} showSettingLink={true}>
-        <Menu mode={mode} specs={menuSpecs}/>
+        <Menu mode={mode}>
+          <MenuItem mode="general" label={trans("dictionarySettingPage.general")} iconName="info-circle" href="#general"/>
+          <MenuItem mode="setting" label={trans("dictionarySettingPage.setting")} iconName="cog" href="#setting"/>
+          <MenuItem mode="access" label={trans("dictionarySettingPage.access")} iconName="users" href="#access"/>
+          <MenuItem mode="request" label={trans("dictionarySettingPage.commission")} iconName="list-check" badgeValue={commissionSize} href="#request"/>
+          <MenuItem mode="resource" label={trans("dictionarySettingPage.resource")} iconName="image" href="#resource"/>
+          <MenuItem mode="statistics" label={trans("dictionarySettingPage.statistics")} iconName="chart-line" href="#statistics"/>
+        </Menu>
         <DictionarySettingPageForms {...{dictionary, mode}}/>
       </Page>
     );

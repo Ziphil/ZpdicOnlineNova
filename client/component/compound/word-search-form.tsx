@@ -13,11 +13,12 @@ import {
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
 import Checkbox from "/client/component/atom/checkbox";
+import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
 import Radio from "/client/component/atom/radio";
 import RadioGroup from "/client/component/atom/radio-group";
-import Selection from "/client/component/atom/selection";
+import Selection from "/client/component/atom/selection-beta";
 import AdvancedWordSearchForm from "/client/component/compound/advanced-word-search-form";
 import {
   StylesRecord,
@@ -40,7 +41,6 @@ const WordSearchForm = create(
   function ({
     dictionary,
     parameter = NormalWordParameter.createEmpty(),
-    searching = false,
     showOrder = false,
     showAdvancedSearch = false,
     enableHotkeys = false,
@@ -49,7 +49,6 @@ const WordSearchForm = create(
   }: {
     dictionary: Dictionary,
     parameter?: WordParameter,
-    searching?: boolean,
     showOrder?: boolean,
     showAdvancedSearch?: boolean,
     enableHotkeys?: boolean,
@@ -117,25 +116,23 @@ const WordSearchForm = create(
     const modes = ["both", "name", "equivalent", "content"] as const;
     const types = ["prefix", "part", "exact", "regular"] as const;
     const orderMode = ["unicode", "updatedDate", "createdDate"] as const;
-    const orderModeSpecs = orderMode.map((orderMode) => ({value: orderMode, node: trans(`wordSearchForm.${orderMode}`)}));
-    const orderDirectionSpecs = WORD_ORDER_DIRECTIONS.map((orderDirection) => ({value: orderDirection, node: <SearchFormOrderModeDropdownNode orderDirection={orderDirection}/>}));
     const actualParameter = WordParameter.getNormal(parameter);
     const node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
           <Input value={actualParameter.text} prefix={<Icon className={styles!["icon"]} name="search"/>} nativeRef={inputRef} onSet={(text) => handleParameterSet({text})}/>
-          <div styleName="radio-wrapper">
+          <div styleName="radio-container">
             <RadioGroup name="mode" value={actualParameter.mode} onSet={(mode) => handleParameterSet({mode})}>
               {modes.map((mode) => <Radio key={mode} value={mode} label={trans(`wordSearchForm.${mode}`)}/>)}
             </RadioGroup>
           </div>
-          <div styleName="radio-wrapper">
+          <div styleName="radio-container">
             <RadioGroup name="type" value={actualParameter.type} onSet={(type) => handleParameterSet({type})}>
               {types.map((type) => <Radio key={type} value={type} label={trans(`wordSearchForm.${type}`)}/>)}
             </RadioGroup>
           </div>
           {(showOrder) && (
-            <div styleName="selection-wrapper">
+            <div styleName="selection-container">
               <Checkbox
                 name="ignoreCase"
                 value="true"
@@ -153,23 +150,36 @@ const WordSearchForm = create(
             </div>
           )}
           {(showOrder) && (
-            <div styleName="selection-wrapper">
+            <div styleName="selection-container">
               <Selection
                 className={styles!["order-mode"]}
                 value={actualParameter.order.mode}
-                specs={orderModeSpecs}
                 onSet={(orderMode) => handleParameterSet({order: {mode: orderMode}})}
-              />
+              >
+                {orderMode.map((orderMode) => (
+                  <DropdownItem key={orderMode} value={orderMode}>
+                    {trans(`wordSearchForm.${orderMode}`)}
+                  </DropdownItem>
+                ))}
+              </Selection>
               <Selection
                 className={styles!["order-direction"]}
                 value={actualParameter.order.direction}
-                specs={orderDirectionSpecs}
                 onSet={(orderDirection) => handleParameterSet({order: {direction: orderDirection}})}
-              />
+              >
+                {WORD_ORDER_DIRECTIONS.map((orderDirection) => (
+                  <DropdownItem key={orderDirection} value={orderDirection}>
+                    <div>
+                      <Icon className={styles!["order-direction-icon"]} name={(orderDirection === "ascending") ? "arrow-down-a-z" : "arrow-down-z-a"}/>
+                      {trans(`wordSearchForm.${orderDirection}`)}
+                    </div>
+                  </DropdownItem>
+                ))}
+              </Selection>
             </div>
           )}
           {(showOrder || showAdvancedSearch) && (
-            <div styleName="selection-wrapper">
+            <div styleName="selection-container">
               {(showOrder) && (
                 <Button
                   label={trans("wordSearchForm.shuffleResult")}
@@ -192,30 +202,6 @@ const WordSearchForm = create(
           />
         )}
       </Fragment>
-    );
-    return node;
-
-  }
-);
-
-
-const SearchFormOrderModeDropdownNode = create(
-  require("./word-search-form.scss"),
-  function ({
-    orderDirection
-  }: {
-    orderDirection: "ascending" | "descending"
-  }): ReactElement {
-
-    const [, {trans}] = useIntl();
-
-    const node = (
-      <div>
-        <span styleName="order-direction-icon">
-          <Icon name={(orderDirection === "ascending") ? "arrow-down-a-z" : "arrow-down-z-a"}/>
-        </span>
-        {trans(`wordSearchForm.${orderDirection}`)}
-      </div>
     );
     return node;
 

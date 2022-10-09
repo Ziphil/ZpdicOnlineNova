@@ -33,6 +33,7 @@ import {
 import {
   DictionaryCreator,
   DictionaryModel,
+  DictionaryParameterCreator,
   ExampleModel,
   SuggestionCreator,
   WordCreator,
@@ -227,6 +228,19 @@ export class DictionaryController extends Controller {
 
   @post(SERVER_PATHS["searchDictionary"])
   public async [Symbol()](request: Request<"searchDictionary">, response: Response<"searchDictionary">): Promise<void> {
+    const parameter = DictionaryParameterCreator.recreate(request.body.parameter);
+    const offset = request.body.offset;
+    const size = request.body.size;
+    const range = new QueryRange(offset, size);
+    const hitResult = await DictionaryModel.search(parameter, range);
+    const hitDictionaries = await Promise.all(hitResult[0].map((hitDictionary) => DictionaryCreator.createDetailed(hitDictionary)));
+    const hitSize = hitResult[1];
+    const body = [hitDictionaries, hitSize] as any;
+    Controller.respond(response, body);
+  }
+
+  @post(SERVER_PATHS["searchWord"])
+  public async [Symbol()](request: Request<"searchWord">, response: Response<"searchWord">): Promise<void> {
     const number = request.body.number;
     const parameter = WordParameterCreator.recreate(request.body.parameter);
     const offset = request.body.offset;
@@ -234,7 +248,7 @@ export class DictionaryController extends Controller {
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const range = new QueryRange(offset, size);
-      const hitResult = await dictionary.search(parameter, range);
+      const hitResult = await dictionary.searchWord(parameter, range);
       const hitWords = await Promise.all(hitResult.words[0].map(WordCreator.createDetailed));
       const hitSize = hitResult.words[1];
       const hitSuggestions = hitResult.suggestions.map(SuggestionCreator.create);

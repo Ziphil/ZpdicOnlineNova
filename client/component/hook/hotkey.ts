@@ -51,11 +51,10 @@ export function useHotkey(name: string, callback: HotkeyCallback, dependencies: 
     if (enabled) {
       Mousetrap.bind(keys, callback);
       setEnabledHotkeyNames((enabledNames) => [...enabledNames, name]);
-      const cleanup = function (): void {
+      return () => {
         Mousetrap.unbind(keys);
         setEnabledHotkeyNames((enabledNames) => enabledNames.filter((enabledName) => enabledName !== name));
       };
-      return cleanup;
     } else {
       return undefined;
     }

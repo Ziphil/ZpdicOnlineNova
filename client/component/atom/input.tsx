@@ -49,7 +49,8 @@ export const Input = create(
     onChange,
     onSet,
     className,
-    nativeRef
+    nativeRef,
+    rootRef
   }: {
     value?: string,
     label?: string,
@@ -66,7 +67,8 @@ export const Input = create(
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
     onSet?: (value: string) => void,
     className?: string,
-    nativeRef?: Ref<HTMLInputElement>
+    nativeRef?: Ref<HTMLInputElement>,
+    rootRef?: Ref<HTMLDivElement>
   }): ReactElement {
 
     const [currentType, setCurrentType] = useState((type === "flexible") ? "password" : type);
@@ -112,7 +114,7 @@ export const Input = create(
     }, [currentType]);
 
     const node = (
-      <div styleName="root" className={className}>
+      <div styleName="root" className={className} ref={rootRef}>
         <Tooltip message={errorMessage}>
           <Dropdown specs={dropdownSpecs} onSet={updateValue}>
             <label styleName="label-container">

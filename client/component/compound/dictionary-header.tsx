@@ -12,7 +12,8 @@ import {
   useState
 } from "react";
 import Button from "/client/component/atom/button";
-import Dropdown from "/client/component/atom/dropdown";
+import Dropdown from "/client/component/atom/dropdown-beta";
+import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import {
   StylesRecord,
@@ -59,6 +60,7 @@ const DictionaryHeader = create(
     const {request} = useRequest();
 
     const [commissionEditorOpen, setCommissionEditorOpen] = useState(false);
+    const [addReferenceElement, setAddReferenceElement] = useState<HTMLElement | null>(null);
 
     const openEditor = useCallback(function (type: "word" | "example"): void {
       if (dictionary !== null) {
@@ -126,10 +128,6 @@ const DictionaryHeader = create(
       setCommissionEditorOpen(true);
     }, [], showAddCommissionLink);
 
-    const addDropdownSpecs = [
-      {value: "word", node: <DictionaryHeaderAddDropdownNode type="word"/>},
-      {value: "example", node: <DictionaryHeaderAddDropdownNode type="example"/>}
-    ] as const;
     const node = (
       <div styleName="root">
         <div styleName="left">
@@ -145,9 +143,20 @@ const DictionaryHeader = create(
         </div>
         <div styleName="right">
           {(showAddLink) && (
-            <Dropdown specs={addDropdownSpecs} showArrow={true} fillWidth={false} restrictHeight={false} autoMode="click" onSet={openEditor}>
-              <Button label={trans("dictionaryHeader.add")} iconName="plus" variant="simple" hideLabel={true}/>
-            </Dropdown>
+            <>
+              <Button label={trans("dictionaryHeader.add")} iconName="plus" variant="simple" hideLabel={true} nativeRef={setAddReferenceElement}/>
+              <Dropdown
+                placement="bottom-end"
+                showArrow={true}
+                autoMode="click"
+                referenceElement={addReferenceElement}
+                autoElement={addReferenceElement}
+                onSet={openEditor}
+              >
+                <DropdownItem value="word"><DictionaryHeaderAddDropdownNode type="word"/></DropdownItem>
+                <DropdownItem value="example"><DictionaryHeaderAddDropdownNode type="example"/></DropdownItem>
+              </Dropdown>
+            </>
           )}
           {(showSettingLink) && (
             <Button label={trans("dictionaryHeader.setting")} iconName="cog" variant="simple" hideLabel={true} onClick={jumpSettingPage}/>

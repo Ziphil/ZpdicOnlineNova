@@ -37,6 +37,7 @@ import {
   DictionaryAuthority,
   DictionaryAuthorityUtil,
   DictionaryFullAuthority,
+  DictionaryParameter,
   DictionarySettings,
   DictionarySettingsCreator,
   DictionarySettingsModel,
@@ -166,6 +167,12 @@ export class DictionarySchema extends DiscardableSchema {
     })();
     const query = rawQuery.sort("-updatedDate -number");
     const dictionaries = await query.exec();
+    return dictionaries;
+  }
+
+  public static async search(parameter: DictionaryParameter, range?: QueryRange): Promise<WithSize<Dictionary>> {
+    const query = parameter.createQuery();
+    const dictionaries = await QueryRange.restrictWithSize(query, range);
     return dictionaries;
   }
 
@@ -367,7 +374,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
-  public async search(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
+  public async searchWord(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     const query = parameter.createQuery(this);
     const suggestionQuery = parameter.createSuggestionQuery(this);
     const wordPromise = QueryRange.restrictWithSize(query, range);
