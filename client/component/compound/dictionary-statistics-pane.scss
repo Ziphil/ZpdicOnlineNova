@@ -9,13 +9,14 @@
   color: color(accent);
 }
 
-.row-wrapper {
-  margin: $large-margin 0rpx 0rpx 0rpx;
+.row-container {
+  margin-block-start: $large-margin;
+  row-gap: $medium-margin;
+  display: flex;
+  flex-direction: column;
 }
 
 .row {
-  @include reset-first-margin;
-  margin: $medium-margin 0rpx 0rpx 0rpx;
   display: flex;
 }
 
@@ -30,10 +31,4 @@
 
 .unit {
   font-size: $tiny-font-size;
-}
-
-.note {
-  margin: 0rpx 0rpx 0rpx 24u;
-  font-size: $small-font-size;
-  color: color(accent);
 }

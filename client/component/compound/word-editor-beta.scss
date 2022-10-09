@@ -34,7 +34,7 @@
 
 .main {
   margin: $medium-margin 0rpx 0rpx 0rpx;
-  &.hidden {
+  &[data-hidden] {
     display: none;
   }
 }
@@ -46,16 +46,16 @@
   color: color(accent);
 }
 
-.container-inner {
+.section-content {
   display: flex;
   flex-direction: column;
   gap: $small-control-vertical-margin;
 }
 
-.container-item {
+.section-item {
   display: flex;
   flex-direction: row;
-  &.dragging {
+  &[data-dragging] {
     opacity: 0.3;
   }
 }
@@ -74,7 +74,7 @@
   color: color(accent);
 }
 
-.form-wrapper {
+.form-container {
   display: flex;
   flex-grow: 1;
   flex-direction: row;
@@ -93,16 +93,18 @@
   &.sentence {
     grid-template-rows: 80rpx 80rpx;
   }
-  >label {
-    display: contents;
-  }
 }
 
-.generate-wrapper {
+.form >label {
+  display: contents;
+}
+
+.generate-container {
   display: flex;
-  & >:nth-child(1) {
-    flex-grow: 1;
-  }
+}
+
+.generate-container >:nth-child(1) {
+  flex-grow: 1;
 }
 
 .title {
@@ -125,7 +127,7 @@
   opacity: $disabled-opacity;
 }
 
-.control-button {
+.control-button-container {
   margin: 0rpx 0rpx 0rpx $small-control-horizontal-margin;
 }
 
@@ -134,18 +136,18 @@
   align-items: flex-end;
 }
 
-.relation-input >*:nth-child(1),
-.word-input >*:nth-child(1) {
+.relation-input >:nth-child(1),
+.word-input >:nth-child(1) {
   flex-grow: 1;
 }
 
-.confirm-button-wrapper {
+.footer {
   margin: $large-margin 0rpx 0rpx 0rpx;
   display: flex;
   justify-content: space-between;
 }
 
-.confirm-button {
+.confirm-button-container {
   display: flex;
-  gap: $control-horizontal-margin;
+  column-gap: $control-horizontal-margin;
 }

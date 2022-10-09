@@ -47,14 +47,14 @@ const DictionaryStatisticsPane = create(
 
     const node = (
       <div styleName="root">
-        <div styleName="radio">
+        <div styleName="radio-container">
           <RadioGroup name="stringType" value={stringType} onSet={setStringType}>
             <Radio value="kept" label={trans("dictionaryStatisticsPane.kept")}/>
             <Radio value="nfd" label={trans("dictionaryStatisticsPane.nfd")}/>
             <Radio value="nfc" label={trans("dictionaryStatisticsPane.nfc")}/>
           </RadioGroup>
         </div>
-        <div styleName="row-wrapper">
+        <div styleName="row-container">
           <div styleName="row">
             <div styleName="item">
               <div styleName="title">{trans("dictionaryStatisticsPane.wordCount")}</div>
