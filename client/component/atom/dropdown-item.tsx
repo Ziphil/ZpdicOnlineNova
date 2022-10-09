@@ -35,7 +35,7 @@ export const DropdownItem = create(
     }, [value, contextValue]);
 
     const node = (
-      <button styleName="root" className={className} onMouseDown={handleMouseDown}>
+      <button styleName="root" className={className} type="button" onMouseDown={handleMouseDown}>
         {children}
       </button>
     );

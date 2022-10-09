@@ -51,9 +51,6 @@ const LoginForm = create(
       pushPath("/reset", {search: {name}});
     }, [name, pushPath]);
 
-    const registerNode = (showRegister) && (
-      <Button label={trans("registerForm.confirm")} iconName="user-plus" variant="simple" onClick={jumpRegister}/>
-    );
     const node = (
       <form styleName="root">
         <Input label={trans("loginForm.userName")} value={name} onSet={(name) => setName(name)}/>
@@ -61,7 +58,9 @@ const LoginForm = create(
         <div styleName="button-group">
           <div styleName="row">
             <Button label={trans("loginForm.confirm")} iconName="sign-in-alt" scheme="blue" reactive={true} onClick={performLogin}/>
-            {registerNode}
+            {(showRegister) && (
+              <Button label={trans("registerForm.confirm")} iconName="user-plus" variant="simple" onClick={jumpRegister}/>
+            )}
           </div>
           <div styleName="row">
             <Button label={trans("loginForm.resetPassword")} iconName="question" variant="simple" onClick={jumpResetPassword}/>

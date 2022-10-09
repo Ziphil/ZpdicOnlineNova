@@ -68,14 +68,14 @@ const PaginationButton = create(
     const node = (
       <div styleName="root">
         <div styleName="button-group leftmost">
-          <button styleName="button" disabled={page <= minPage} onClick={movePreviousPage}>
+          <button styleName="button" type="button" disabled={page <= minPage} onClick={movePreviousPage}>
             <Icon name="arrow-left"/>
           </button>
         </div>
         <div styleName="button-group left">
           {(page > minPage) && (
             <>
-              <button styleName="button" onClick={() => movePage(minPage)}>
+              <button styleName="button" type="button" onClick={() => movePage(minPage)}>
                 {transNumber(minPage + 1)}
               </button>
               <div styleName="icon-container">
@@ -84,19 +84,19 @@ const PaginationButton = create(
             </>
           )}
           {calculateButtonSpecs(page, minPage, maxPage, actualSize, -1).map((spec) => (
-            <button styleName="button" key={spec.page} onClick={() => movePage(spec.page)}>
+            <button styleName="button" key={spec.page} type="button" onClick={() => movePage(spec.page)}>
               {transNumber(spec.page + 1)}
             </button>
           ))}
         </div>
         <div styleName="button-group center">
-          <button styleName="button" disabled={true}>
+          <button styleName="button" type="button" disabled={true}>
             {transNumber(page + 1)}
           </button>
         </div>
         <div styleName="button-group right">
           {calculateButtonSpecs(page, minPage, maxPage, actualSize, 1).map((spec) => (
-            <button styleName="button" key={spec.page} onClick={() => movePage(spec.page)}>
+            <button styleName="button" key={spec.page} type="button" onClick={() => movePage(spec.page)}>
               {transNumber(spec.page + 1)}
             </button>
           ))}
@@ -105,14 +105,14 @@ const PaginationButton = create(
               <div styleName="icon-container">
                 <Icon name="ellipsis-h"/>
               </div>
-              <button styleName="button" onClick={() => movePage(maxPage)}>
+              <button styleName="button" type="button" onClick={() => movePage(maxPage)}>
                 {transNumber(maxPage + 1)}
               </button>
             </>
           )}
         </div>
         <div styleName="button-group rightmost">
-          <button styleName="button" disabled={page >= maxPage} onClick={moveNextPage}>
+          <button styleName="button" type="button" disabled={page >= maxPage} onClick={moveNextPage}>
             <Icon name="arrow-right"/>
           </button>
         </div>

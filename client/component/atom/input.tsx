@@ -190,7 +190,7 @@ const InputInput = create(
           <div styleName="suffix">
             {suffix}
             {(type === "flexible") && (
-              <button styleName="eye" onClick={toggleType} {...eyeData}>
+              <button styleName="eye" type="button" onClick={toggleType} {...eyeData}>
                 <Icon name={(currentType === "password") ? "eye" : "eye-slash"}/>
               </button>
             )}
