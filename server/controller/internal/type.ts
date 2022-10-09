@@ -247,7 +247,7 @@ type ServerSpecs = {
   searchDictionary: {
     request: {parameter: DictionaryParameter, offset?: number, size?: number},
     response: {
-      success: {words: WithSize<DetailedDictionary>},
+      success: WithSize<DetailedDictionary>,
       error: never
     }
   },

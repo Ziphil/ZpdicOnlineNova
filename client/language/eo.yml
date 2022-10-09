@@ -359,6 +359,11 @@ dictionaryPane:
   createdDate: "Kreita je"
   setting: "Agordoj"
   download: "Elŝuti"
+dictionarySearchForm:
+  updatedDate: "Dato de ĝisdatigo"
+  createdDate: "Dato de kreo"
+  ascending: "Kreska"
+  descending: "Malkreska"
 dictionaryStatisticsPane:
   wordCount: "Vortoj"
   wordCountRaw: 

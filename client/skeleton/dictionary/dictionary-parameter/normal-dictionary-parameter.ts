@@ -31,7 +31,7 @@ export class NormalDictionaryParameter extends DictionaryParameter {
     const {text, userId, order} = merge({
       text: "",
       userId: null,
-      order: {mode: "updatedDate", direction: "ascending"}
+      order: {mode: "updatedDate", direction: "descending"}
     }, overrides);
     const skeleton = new NormalDictionaryParameter(text, userId, order);
     return skeleton;

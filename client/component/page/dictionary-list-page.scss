@@ -4,5 +4,7 @@
 
 
 .search-form-container {
-  margin: 0rpx 0rpx $huge-margin 0rpx;
+  width: 100%;
+  max-width: $page-width * 0.75;
+  margin: 0rpx auto $huge-margin auto;
 }

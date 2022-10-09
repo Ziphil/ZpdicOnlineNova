@@ -357,6 +357,11 @@ dictionaryPane:
   createdDate: "作成日時"
   setting: "設定"
   download: "ダウンロード"
+dictionarySearchForm:
+  updatedDate: "更新日時"
+  createdDate: "作成日時"
+  ascending: "昇順"
+  descending: "降順"
 dictionaryStatisticsPane:
   wordCount: "単語数"
   wordCountRaw: 

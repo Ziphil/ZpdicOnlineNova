@@ -359,6 +359,11 @@ dictionaryPane:
   createdDate: "Created at"
   setting: "Settings"
   download: "Download"
+dictionarySearchForm:
+  updatedDate: "Update date"
+  createdDate: "Creation date"
+  ascending: "Asc"
+  descending: "Desc"
 dictionaryStatisticsPane:
   wordCount: "Words"
   wordCountRaw: 
