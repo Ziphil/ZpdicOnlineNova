@@ -69,7 +69,7 @@ export const SERVER_PATHS = {
   addCommission: "/commission/add",
   discardCommission: "/commission/discard",
   fetchCommissions: "/commission/fetch",
-  searchDictionary: "/dictionary/search",
+  searchWord: "/word/search",
   downloadDictionary: "/dictionary/download",
   suggestDictionaryTitles: "/dictionary/suggest/title",
   fetchDictionaryAuthorizedUsers: "/dictionary/user",
@@ -242,7 +242,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionaryNumber">
     }
   },
-  searchDictionary: {
+  searchWord: {
     request: {number: number, parameter: WordParameter, offset?: number, size?: number},
     response: {
       success: {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>},

@@ -96,7 +96,7 @@ const DictionaryPageWordList = create(
     handlePageSet: (page: number) => unknown
   }): ReactElement {
 
-    const [hitResult] = useSuspenseQuery("searchDictionary", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffset(query.page, 40)}, {keepPreviousData: true});
+    const [hitResult] = useSuspenseQuery("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffset(query.page, 40)}, {keepPreviousData: true});
 
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;

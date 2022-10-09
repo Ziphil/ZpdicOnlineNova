@@ -102,7 +102,7 @@ const WordSearcherWordList = create(
     handlePageSet: (page: number) => unknown
   }): ReactElement {
 
-    const [hitResult] = useQuery("searchDictionary", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffset(query.page, 40)}, {keepPreviousData: true});
+    const [hitResult] = useQuery("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffset(query.page, 40)}, {keepPreviousData: true});
 
     const [hitWords, hitSize] = hitResult?.words ?? [[], 0];
     const maxPage = Math.max(Math.ceil(hitSize / 40) - 1, 0);

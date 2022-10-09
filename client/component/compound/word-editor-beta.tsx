@@ -163,7 +163,7 @@ const WordEditor = create(
         await addRelations(editedWord);
         addInformationPopup("wordEdited");
         await onEditConfirm?.(word, event);
-        await invalidateQueries("searchDictionary", (data) => data.number === number);
+        await invalidateQueries("searchWord", (data) => data.number === number);
       }
     }, [dictionary, tempWord, request, onEditConfirm, addInformationPopup, addRelations]);
 
@@ -175,7 +175,7 @@ const WordEditor = create(
         if (response.status === 200) {
           addInformationPopup("wordDiscarded");
           await onDiscardConfirm?.(event);
-          await invalidateQueries("searchDictionary", (data) => data.number === number);
+          await invalidateQueries("searchWord", (data) => data.number === number);
         }
       }
     }, [dictionary, tempWord, request, onDiscardConfirm, addInformationPopup]);

@@ -367,7 +367,7 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
-  public async search(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
+  public async searchWord(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     const query = parameter.createQuery(this);
     const suggestionQuery = parameter.createSuggestionQuery(this);
     const wordPromise = QueryRange.restrictWithSize(query, range);
