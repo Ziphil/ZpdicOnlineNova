@@ -70,7 +70,7 @@ const SelectionSelection = create(
   }): ReactElement {
 
     const node = (
-      <button styleName="selection" ref={setReferenceElement}>
+      <button styleName="selection" type="button" ref={setReferenceElement}>
         <div styleName="text">
           {children.find((element) => element.props.value === value)?.props.children}
         </div>
