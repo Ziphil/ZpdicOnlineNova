@@ -7,3 +7,4 @@ import {
 
 
 export const uploadDictionaryQueue = new Queue("uploadDictionary", REDIS_URI);
+export const addHistoriesQueue = new Queue("addHistories", REDIS_URI);

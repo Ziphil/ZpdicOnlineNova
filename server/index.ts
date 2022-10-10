@@ -29,6 +29,9 @@ import {
   WordController
 } from "/server/controller/internal";
 import {
+  DictionaryModel
+} from "/server/model/dictionary";
+import {
   LogUtil
 } from "/server/util/log";
 import {
@@ -43,6 +46,10 @@ import {
   PORT,
   SENDGRID_KEY
 } from "/server/variable";
+import {
+  addHistoriesQueue,
+  uploadDictionaryQueue
+} from "/worker/queue";
 
 
 export class Main {
@@ -60,6 +67,8 @@ export class Main {
     this.setupAws();
     this.setupDirectories();
     this.setupRouters();
+    this.setupWorkers();
+    this.setupSchedules();
     this.setupStatic();
     this.setupFallbackHandlers();
     this.setupErrorHandler();
@@ -95,7 +104,7 @@ export class Main {
       const time = +tokens["total-time"](request, response, 0)!;
       const body = ("password" in request.body) ? {...request.body, password: "***"} : request.body;
       const logString = JSON.stringify({url, method, status, time, body});
-      return `![request] ${logString}`;
+      return `!<request> ${logString}`;
     });
     this.application.use(middleware);
   }
@@ -139,6 +148,31 @@ export class Main {
     WordController.use(this.application);
   }
 
+  private setupWorkers(): void {
+    uploadDictionaryQueue.process(async (job) => {
+      LogUtil.log("worker/uploadDictionary", job.data);
+      const {number, path, originalPath} = job.data;
+      try {
+        const dictionary = await DictionaryModel.fetchOneByNumber(number);
+        if (dictionary !== null) {
+          await dictionary.upload(path, originalPath);
+          await fs.promises.unlink(path);
+        }
+      } catch (error) {
+        LogUtil.error("worker/uploadDictionary", null, error);
+        throw error;
+      }
+    });
+    addHistoriesQueue.process(async (job) => {
+      LogUtil.log("worker/addHistories", job.data);
+      await HistoryController.addHistories();
+    });
+  }
+
+  private setupSchedules(): void {
+    addHistoriesQueue.add({}, {repeat: {cron: "30 23 * * *", tz: "Asia/Tokyo"}});
+  }
+
   private setupStatic(): void {
     this.application.use("/client", express.static(process.cwd() + "/dist/client"));
     this.application.use("/static", express.static(process.cwd() + "/dist/static"));
@@ -178,7 +212,7 @@ export class Main {
 
   private listen(): void {
     this.application.listen(+PORT, () => {
-      LogUtil.log("server", {port: PORT});
+      LogUtil.log("server", {port: +PORT});
     });
   }
 

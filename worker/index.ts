@@ -4,9 +4,6 @@ import * as typegoose from "@typegoose/typegoose";
 import fs from "fs/promises";
 import mongoose from "mongoose";
 import {
-  schedule
-} from "node-cron";
-import {
   HistoryController
 } from "/server/controller/internal";
 import {
@@ -22,6 +19,7 @@ import {
   MONGO_URI
 } from "/server/variable";
 import {
+  addHistoriesQueue,
   uploadDictionaryQueue
 } from "/worker/queue";
 
@@ -31,7 +29,7 @@ export class Main {
   public async main(): Promise<void> {
     this.setupMongo();
     this.setupWorkers();
-    this.setupCron();
+    this.setupSchedules();
     this.listen();
   }
 
@@ -42,7 +40,7 @@ export class Main {
   }
 
   private setupWorkers(): void {
-    uploadDictionaryQueue.process(async (job, done) => {
+    uploadDictionaryQueue.process(async (job) => {
       LogUtil.log("worker/uploadDictionary", job.data);
       const {number, path, originalPath} = job.data;
       try {
@@ -53,15 +51,17 @@ export class Main {
         }
       } catch (error) {
         LogUtil.error("worker/uploadDictionary", null, error);
+        throw error;
       }
-      done();
+    });
+    addHistoriesQueue.process(async (job) => {
+      LogUtil.log("worker/addHistories", job.data);
+      await HistoryController.addHistories();
     });
   }
 
-  private setupCron(): void {
-    schedule("0 30 23 * * *", async () => {
-      await HistoryController.addHistories();
-    }, {timezone: "Asia/Tokyo"});
+  private setupSchedules(): void {
+    addHistoriesQueue.add({}, {repeat: {cron: "30 23 * * *", tz: "Asia/Tokyo"}});
   }
 
   private listen(): void {
