@@ -169,7 +169,10 @@ export class Main {
   }
 
   private setupSchedules(): void {
-    agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
+    agenda.on("ready", () => {
+      agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
+      agenda.start();
+    });
   }
 
   private setupStatic(): void {

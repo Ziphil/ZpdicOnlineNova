@@ -1,6 +1,8 @@
 //
 
-import Agenda from "agenda";
+import {
+  Agenda
+} from "agenda";
 import {
   MONGO_URI
 } from "/server/variable";
