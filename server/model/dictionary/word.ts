@@ -103,7 +103,7 @@ export class WordSchema extends DiscardableSchema {
       await this.filterRelations(dictionary, resultWord);
       await resultWord.save();
     }
-    LogUtil.log("word/edit", `number: ${dictionary.number} | current: ${currentWord?.id} | result: ${resultWord.id}`);
+    LogUtil.log("model/word/edit", {number: dictionary.number, currentId: currentWord?.id, resultId: resultWord.id});
     return resultWord;
   }
 
@@ -115,7 +115,7 @@ export class WordSchema extends DiscardableSchema {
     } else {
       throw new CustomError("noSuchWordNumber");
     }
-    LogUtil.log("word/discard", `number: ${dictionary.number} | current: ${word.id}`);
+    LogUtil.log("model/word/discard", {number: dictionary.number, currentId: word.id});
     return word;
   }
 
@@ -130,7 +130,7 @@ export class WordSchema extends DiscardableSchema {
         resultWord.updatedDate = new Date();
         await currentWord.flagDiscarded();
         await resultWord.save();
-        LogUtil.log("word/addRelation", `number: ${dictionary.number} | current: ${currentWord?.id} | result: ${resultWord.id}`);
+        LogUtil.log("model/word/addRelation", {number: dictionary.number, currentId: currentWord?.id, resultId: resultWord.id});
         return resultWord;
       } else {
         return null;
@@ -160,7 +160,7 @@ export class WordSchema extends DiscardableSchema {
       }
     }
     const promises = affectedWords.map((affectedWord) => affectedWord.save());
-    LogUtil.log("word/correct-relations-edit", `number: ${dictionary.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
+    LogUtil.log("model/word/correctRelationsByEdit", {number: dictionary.number, affectedIds: affectedWords.map((word) => word.id)});
     await Promise.all(promises);
   }
 
@@ -178,7 +178,7 @@ export class WordSchema extends DiscardableSchema {
     }
     const affectedPromises = affectedWords.map((affectedWord) => affectedWord.flagDiscarded());
     const changedPromises = changedWords.map((changedWord) => changedWord.save());
-    LogUtil.log("word/correct-relations-discard", `number: ${dictionary.number} | affected: ${affectedWords.map((word) => word.id).join(", ")}`);
+    LogUtil.log("model/word/correctRelationsByDiscard", {number: dictionary.number, affectedIds: affectedWords.map((word) => word.id)});
     await Promise.all([...affectedPromises, ...changedPromises]);
   }
 

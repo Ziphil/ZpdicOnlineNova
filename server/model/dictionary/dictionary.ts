@@ -190,8 +190,8 @@ export class DictionarySchema extends DiscardableSchema {
         stream.on("words", (words) => {
           WordModel.insertMany(words);
           count += words.length;
-          LogUtil.log("dictionary/upload", `uploading: ${count}`);
-          LogUtil.log("dictionary/upload", Object.entries(process.memoryUsage()).map(([key, value]) => `${key.toLowerCase()}: ${Math.round(value / 1048576 * 100) / 100}`).join(" | "));
+          LogUtil.log("model/dictionary/upload", {number: this.number, uploadingCount: count});
+          LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
         });
         stream.on("property", (key, value) => {
           if (value !== undefined) {
@@ -214,7 +214,7 @@ export class DictionarySchema extends DiscardableSchema {
         });
         stream.on("error", (error) => {
           this.status = "error";
-          LogUtil.error("dictionary/upload", "error occurred in uploading", error);
+          LogUtil.error("model/dictionary/upload", null, error);
           resolve(this);
         });
         stream.start();
@@ -234,7 +234,7 @@ export class DictionarySchema extends DiscardableSchema {
     this.externalData = {};
     await this.save();
     await WordModel.updateManyDiscarded().where("dictionary", this);
-    LogUtil.log("dictionary/upload", `start uploading | number: ${this.number}`);
+    LogUtil.log("model/dictionary/startUpload", {number: this.number});
   }
 
   public async download(this: Dictionary, path: string): Promise<void> {

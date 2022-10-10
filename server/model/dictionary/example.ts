@@ -96,7 +96,7 @@ export class ExampleSchema extends DiscardableSchema {
       await this.filterWords(dictionary, resultExample);
       await resultExample.save();
     }
-    LogUtil.log("example/edit", `number: ${dictionary.number} | current: ${currentExample?.id} | result: ${resultExample.id}`);
+    LogUtil.log("model/example/edit", {number: dictionary.number, currentId: currentExample?.id, resultId: resultExample.id});
     return resultExample;
   }
 
@@ -107,7 +107,7 @@ export class ExampleSchema extends DiscardableSchema {
     } else {
       throw new CustomError("noSuchExampleNumber");
     }
-    LogUtil.log("word/discard", `number: ${dictionary.number} | current: ${example.id}`);
+    LogUtil.log("model/example/discard", {number: dictionary.number, currentId: example.id});
     return example;
   }
 
