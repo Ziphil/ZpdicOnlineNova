@@ -10,20 +10,16 @@
     "develop:server:webpack": "webpack --mode development --config webpack-server.ts --watch",
     "develop:server:nodemon": "nodemon --inspect dist/index.js",
     "develop:worker:nodemon": "nodemon --inspect dist/worker.js",
-    "develop:service": "node dist/service.js",
     "build": "run-s build:client build:server",
     "build:client": "webpack --mode production --config webpack-client.ts",
     "build:client:analyze": "cross-env ANALYZE=1 npm run build:client",
     "build:server": "webpack --mode production --config webpack-server.ts",
     "start": "node dist/index.js",
-    "start:service": "node dist/service.js",
+    "start:worker": "node dist/worker.js",
     "storybook": "start-storybook -p 6006",
-    "storybook:build": "build-storybook",
     "postinstall": "npm run build",
     "lint": "eslint client/**/*.ts client/**/*.tsx server/**/*.ts",
-    "lint:fix": "eslint --fix client/**/*.ts client/**/*.tsx server/**/*.ts",
-    "command:tsnode": "ts-node -r tsconfig-paths/register",
-    "command:tsc": "tsc"
+    "lint:fix": "eslint --fix client/**/*.ts client/**/*.tsx server/**/*.ts"
   },
   "engines": {
     "node": "16.13.2",

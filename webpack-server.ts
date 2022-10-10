@@ -9,7 +9,6 @@ import externals from "webpack-node-externals";
 const config = {
   entry: {
     index: ["./server/index.ts"],
-    service: ["./server/service.ts"],
     worker: ["./worker/index.ts"]
   },
   output: {
