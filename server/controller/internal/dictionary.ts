@@ -48,8 +48,8 @@ import {
   QueryRange
 } from "/server/util/query";
 import {
-  uploadDictionaryQueue
-} from "/worker/queue";
+  agenda
+} from "/worker/agenda";
 
 
 @controller(SERVER_PATH_PREFIX)
@@ -74,7 +74,7 @@ export class DictionaryController extends Controller {
     if (dictionary) {
       if (request.file!.size <= 5 * 1024 * 1024) {
         const number = dictionary.number;
-        uploadDictionaryQueue.add({number, path, originalPath});
+        agenda.now("uploadDictionary", {number, path, originalPath});
         const body = DictionaryCreator.create(dictionary);
         Controller.respond(response, body);
       } else {

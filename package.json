@@ -62,6 +62,7 @@
     "@sendgrid/mail": "^7.6.0",
     "@tanstack/react-location": "^3.7.4",
     "@typegoose/typegoose": "^9.5.0",
+    "agenda": "^4.3.0",
     "akrantiain": "^1.2.1",
     "aws-sdk": "^2.1067.0",
     "axios": "^0.25.0",

@@ -47,9 +47,8 @@ import {
   SENDGRID_KEY
 } from "/server/variable";
 import {
-  addHistoriesQueue,
-  uploadDictionaryQueue
-} from "/worker/queue";
+  agenda
+} from "/worker/agenda";
 
 
 export class Main {
@@ -149,9 +148,9 @@ export class Main {
   }
 
   private setupWorkers(): void {
-    uploadDictionaryQueue.process(async (job) => {
-      LogUtil.log("worker/uploadDictionary", job.data);
-      const {number, path, originalPath} = job.data;
+    agenda.define("uploadDictionary", async (job, done) => {
+      LogUtil.log("worker/uploadDictionary", job.attrs.data);
+      const {number, path, originalPath} = job.attrs.data ?? {};
       try {
         const dictionary = await DictionaryModel.fetchOneByNumber(number);
         if (dictionary !== null) {
@@ -163,14 +162,14 @@ export class Main {
         throw error;
       }
     });
-    addHistoriesQueue.process(async (job) => {
-      LogUtil.log("worker/addHistories", job.data);
+    agenda.define("addHistories", async (job, done) => {
+      LogUtil.log("worker/addHistories", job.attrs.data);
       await HistoryController.addHistories();
     });
   }
 
   private setupSchedules(): void {
-    addHistoriesQueue.add({}, {repeat: {cron: "30 23 * * *", tz: "Asia/Tokyo"}});
+    agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
   }
 
   private setupStatic(): void {
