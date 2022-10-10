@@ -5,10 +5,11 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "develop": "run-p develop:client develop:server develop:nodemon",
+    "develop": "run-p develop:client develop:server:webpack develop:server:nodemon develop:worker:nodemon",
     "develop:client": "webpack-dev-server --mode development --devtool inline-source-map --config webpack-client.ts --hot",
-    "develop:server": "webpack --mode development --config webpack-server.ts --watch",
-    "develop:nodemon": "nodemon --inspect -L dist/index.js",
+    "develop:server:webpack": "webpack --mode development --config webpack-server.ts --watch",
+    "develop:server:nodemon": "nodemon --inspect dist/index.js",
+    "develop:worker:nodemon": "nodemon --inspect dist/worker.js",
     "develop:service": "node dist/service.js",
     "build": "run-s build:client build:server",
     "build:client": "webpack --mode production --config webpack-client.ts",
@@ -49,7 +50,6 @@
     ],
     "ext": "js",
     "ignore": [
-      "dist/script/**",
       "dist/static/**",
       "dist/client/**",
       "dist/main*"
@@ -70,6 +70,7 @@
     "aws-sdk": "^2.1067.0",
     "axios": "^0.25.0",
     "bcrypt": "^5.0.1",
+    "bull": "^4.10.0",
     "c3": "^0.7.20",
     "codemirror": "^5.65.1",
     "connect-mongo": "^4.6.0",
@@ -136,6 +137,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@types/axios": "^0.14.0",
     "@types/bcrypt": "^5.0.0",
+    "@types/bull": "^3.15.9",
     "@types/c3": "^0.7.8",
     "@types/codemirror": "5.60.5",
     "@types/connect-mongo": "3.1.3",

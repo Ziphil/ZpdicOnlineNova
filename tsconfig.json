@@ -5,6 +5,7 @@
     "paths": {
       "/client*": ["client*"],
       "/server*": ["server*"],
+      "/worker*": ["worker*"],
     },
     "module": "commonjs",
     "target": "es5",
@@ -26,6 +27,7 @@
   },
   "include": [
     "client/**/*",
-    "server/**/*"
+    "server/**/*",
+    "worker/**/*"
   ]
 }

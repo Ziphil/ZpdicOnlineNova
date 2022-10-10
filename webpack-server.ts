@@ -6,10 +6,11 @@ import path from "path";
 import externals from "webpack-node-externals";
 
 
-let config = {
+const config = {
   entry: {
     index: ["./server/index.ts"],
-    service: ["./server/service.ts"]
+    service: ["./server/service.ts"],
+    worker: ["./worker/index.ts"]
   },
   output: {
     path: path.join(__dirname, "dist"),
@@ -56,7 +57,8 @@ let config = {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".yml"],
     alias: {
       "/client": path.resolve(__dirname, "client"),
-      "/server": path.resolve(__dirname, "server")
+      "/server": path.resolve(__dirname, "server"),
+      "/worker": path.resolve(__dirname, "worker"),
     }
   },
   optimization: {
@@ -65,7 +67,7 @@ let config = {
   cache: true
 };
 
-let staticConfig = {
+const staticConfig = {
   entry: [
     ...glob.sync("./client/public/static/*"),
     ...glob.sync("./client/document/**/*.md")
@@ -120,7 +122,8 @@ let staticConfig = {
     extensions: [".scss", ".html", ".md"],
     alias: {
       "/client": path.resolve(__dirname, "client"),
-      "/server": path.resolve(__dirname, "server")
+      "/server": path.resolve(__dirname, "server"),
+      "/worker": path.resolve(__dirname, "worker")
     }
   },
   plugins: [

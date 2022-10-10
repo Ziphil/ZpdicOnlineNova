@@ -13,7 +13,7 @@ import {
 
 dotenv.config({path: "./variable.env"});
 
-let config = {
+const config = {
   entry: ["babel-polyfill", "./client/index.tsx"],
   output: {
     path: path.join(__dirname, "dist", "client"),
@@ -101,7 +101,8 @@ let config = {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".css", ".yml", ".md"],
     alias: {
       "/client": path.resolve(__dirname, "client"),
-      "/server": path.resolve(__dirname, "server")
+      "/server": path.resolve(__dirname, "server"),
+      "/worker": path.resolve(__dirname, "worker")
     },
     fallback: {
       stream: require.resolve("stream-browserify")

@@ -1,9 +1,6 @@
 //
 
 import {
-  promises as fs
-} from "fs";
-import {
   DetailedDictionary,
   UserDictionary
 } from "/client/skeleton/dictionary";
@@ -50,6 +47,9 @@ import {
 import {
   QueryRange
 } from "/server/util/query";
+import {
+  uploadDictionaryQueue
+} from "/worker/queue";
 
 
 @controller(SERVER_PATH_PREFIX)
@@ -73,15 +73,8 @@ export class DictionaryController extends Controller {
     const originalPath = request.file!.originalname;
     if (dictionary) {
       if (request.file!.size <= 5 * 1024 * 1024) {
-        const promise = new Promise(async (resolve, reject) => {
-          try {
-            await dictionary.upload(path, originalPath);
-            await fs.unlink(path);
-            resolve(null);
-          } catch (error) {
-            reject(error);
-          }
-        });
+        const number = dictionary.number;
+        uploadDictionaryQueue.add({number, path, originalPath});
         const body = DictionaryCreator.create(dictionary);
         Controller.respond(response, body);
       } else {
