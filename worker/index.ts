@@ -4,6 +4,12 @@ import * as typegoose from "@typegoose/typegoose";
 import fs from "fs/promises";
 import mongoose from "mongoose";
 import {
+  schedule
+} from "node-cron";
+import {
+  HistoryController
+} from "/server/controller/internal";
+import {
   DictionaryModel
 } from "/server/model/dictionary";
 import {
@@ -25,6 +31,7 @@ export class Main {
   public async main(): Promise<void> {
     this.setupMongo();
     this.setupWorkers();
+    this.setupCron();
     this.listen();
   }
 
@@ -49,6 +56,12 @@ export class Main {
       }
       done();
     });
+  }
+
+  private setupCron(): void {
+    schedule("0 30 23 * * *", async () => {
+      await HistoryController.addHistories();
+    }, {timezone: "Asia/Tokyo"});
   }
 
   private listen(): void {
