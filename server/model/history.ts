@@ -51,7 +51,7 @@ export class HistorySchema {
       const promises = dictionaries.map((dictionary) => HistoryModel.build(dictionary));
       const histories = await Promise.all(promises);
       await HistoryModel.insertMany(histories);
-      LogUtil.log("history/add-all", `saved: ${page * 100 + dictionaries.length}`);
+      LogUtil.log("model/history/addAll", {savingCount: page * 100 + dictionaries.length});
     }
     return size;
   }

@@ -90,12 +90,12 @@ export class Main {
   private setupMorgan(): void {
     const middleware = morgan<Request>((tokens, request, response) => {
       const method = tokens.method(request, response);
-      const status = tokens.status(request, response);
+      const status = +tokens.status(request, response)!;
       const url = tokens.url(request, response);
-      const time = tokens["total-time"](request, response, 0);
+      const time = +tokens["total-time"](request, response, 0)!;
       const body = ("password" in request.body) ? {...request.body, password: "***"} : request.body;
-      const bodyString = JSON.stringify(body);
-      return `![request] ${method} ${status} ${url} | time: ${time}ms | body: ${bodyString}`;
+      const logString = JSON.stringify({url, method, status, time, body});
+      return `![request] ${logString}`;
     });
     this.application.use(middleware);
   }
@@ -170,7 +170,7 @@ export class Main {
 
   private setupErrorHandler(): void {
     const handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
-      LogUtil.error("index", "uncaught error occurred", error);
+      LogUtil.error("server", null, error);
       response.status(500).end();
     };
     this.application.use(handler);
@@ -178,7 +178,7 @@ export class Main {
 
   private listen(): void {
     this.application.listen(+PORT, () => {
-      LogUtil.log("index", `listening | port: ${PORT}`);
+      LogUtil.log("server", {port: PORT});
     });
   }
 

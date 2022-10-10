@@ -119,7 +119,7 @@ export function verifyRecaptcha(): RequestHandler {
       const result = await RecaptchaUtil.verify(recaptchaToken);
       const score = result.score;
       const action = result.action;
-      LogUtil.log("middle/verify-recaptcha", `action: ${action} | score: ${score}`);
+      LogUtil.log("middle/verifyRecaptcha", {action, score});
       if (result.score >= 0.5) {
         request.recaptchaScore = result.score;
         next();
