@@ -149,22 +149,19 @@ export class Main {
 
   private setupWorkers(): void {
     agenda.define("uploadDictionary", async (job, done) => {
-      LogUtil.log("worker/uploadDictionary", job.attrs.data);
       const {number, path, originalPath} = job.attrs.data ?? {};
-      try {
-        const dictionary = await DictionaryModel.fetchOneByNumber(number);
-        if (dictionary !== null) {
-          await dictionary.upload(path, originalPath);
-          await fs.promises.unlink(path);
-        }
-      } catch (error) {
-        LogUtil.error("worker/uploadDictionary", null, error);
-        throw error;
+      LogUtil.log("worker/uploadDictionary", {number});
+      const dictionary = await DictionaryModel.fetchOneByNumber(number);
+      if (dictionary !== null) {
+        await dictionary.upload(path, originalPath);
+        await fs.promises.unlink(path);
       }
+      done();
     });
     agenda.define("addHistories", async (job, done) => {
-      LogUtil.log("worker/addHistories", job.attrs.data);
+      LogUtil.log("worker/addHistories", {});
       await HistoryController.addHistories();
+      done();
     });
   }
 
