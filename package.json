@@ -5,7 +5,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "develop": "run-p develop:client develop:server:webpack develop:server:nodemon develop:worker:nodemon",
+    "develop": "run-p develop:client develop:server:webpack develop:server:nodemon",
     "develop:client": "webpack-dev-server --mode development --devtool inline-source-map --config webpack-client.ts --hot",
     "develop:server:webpack": "webpack --mode development --config webpack-server.ts --watch",
     "develop:server:nodemon": "nodemon --inspect dist/index.js",
