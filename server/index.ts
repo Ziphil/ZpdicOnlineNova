@@ -29,7 +29,8 @@ import {
   WordController
 } from "/server/controller/internal";
 import {
-  DictionaryModel
+  DictionaryModel,
+  WordModel
 } from "/server/model/dictionary";
 import {
   LogUtil
@@ -158,6 +159,11 @@ export class Main {
       }
       done();
     });
+    agenda.define("discardOldHistoryWords", async (job, done) => {
+      LogUtil.log("worker/discardOldHistoryWords", {});
+      await WordModel.discardOldHistory(0);
+      done();
+    });
     agenda.define("addHistories", async (job, done) => {
       LogUtil.log("worker/addHistories", {});
       await HistoryController.addHistories();
@@ -167,6 +173,7 @@ export class Main {
 
   private setupSchedules(): void {
     agenda.on("ready", () => {
+      agenda.every("0 3 * * *", "discardOldHistoryWords", {}, {timezone: "Asia/Tokyo"});
       agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
       agenda.start();
     });

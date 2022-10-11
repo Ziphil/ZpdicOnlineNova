@@ -140,6 +140,14 @@ export class WordSchema extends DiscardableSchema {
     }
   }
 
+  // 古い履歴データを完全に削除します。
+  // 論理削除ではなく物理削除を行うので、もとには戻せません。
+  public static async discardOldHistory(duration: number): Promise<void> {
+    const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
+    const result = await WordModel.deleteMany().lt("removedDate", date);
+    LogUtil.log("model/word/discardOld", {count: result.deletedCount});
+  }
+
   // word に渡された単語データ内の関連語データのうち、現在存在していないものを削除します。
   // この処理は、word 内の関連語データを上書きします。
   private static async filterRelations(dictionary: Dictionary, word: Word): Promise<void> {
