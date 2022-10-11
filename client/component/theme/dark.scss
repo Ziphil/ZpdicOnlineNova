@@ -4,18 +4,18 @@
 @use "/client/component/color.scss" as *;
 
 
-$primary-base-color: hsl(30, 40%, 80%);
-$secondary-base-color: hsl(310, 35%, 80%);
-$red-base-color: hsl(0, 35%, 80%);
-$blue-base-color: hsl(200, 40%, 80%);
+$primary-base-color: hsl(30, 40%, 70%);
+$secondary-base-color: hsl(310, 35%, 70%);
+$red-base-color: hsl(0, 35%, 70%);
+$blue-base-color: hsl(200, 40%, 70%);
 
 $colors: (
-  background: shade($primary-base-color, 90%),
-  strong-background: shade($primary-base-color, 75%),
+  background: shade($primary-base-color, 80%),
+  strong-background: shade($primary-base-color, 65%),
   modal-background: rgba(darken($primary-base-color, 50%), 0.5),
-  white-background: shade($primary-base-color, 95%),
-  input-background: black,
-  text: tint($primary-base-color, 60%),
+  white-background: shade($primary-base-color, 85%),
+  input-background: shade($primary-base-color, 90%),
+  text: tint($primary-base-color, 50%),
   footer-text: $primary-base-color,
   accent: $primary-base-color,
   nprogress: $primary-base-color,
@@ -23,14 +23,14 @@ $colors: (
   border: shade($primary-base-color, 50%),
   light-border: shade($primary-base-color, 75%),
   focus: rgba($primary-base-color, 0.3),
-  highlight-red: hsl(0, 50%, 80%),
-  highlight-orange: hsl(30, 50%, 80%),
-  highlight-lime: hsl(90, 50%, 80%),
-  highlight-green: hsl(120, 50%, 80%),
-  highlight-cyan: hsl(180, 50%, 80%),
-  highlight-sky: hsl(200, 50%, 80%),
-  highlight-purple: hsl(280, 50%, 80%),
-  highlight-magenta: hsl(320, 50%, 80%),
+  highlight-red: hsl(0, 60%, 75%),
+  highlight-orange: hsl(30, 60%, 75%),
+  highlight-lime: hsl(90, 60%, 75%),
+  highlight-green: hsl(120, 60%, 75%),
+  highlight-cyan: hsl(180, 60%, 75%),
+  highlight-sky: hsl(200, 60%, 75%),
+  highlight-purple: hsl(280, 60%, 75%),
+  highlight-magenta: hsl(320, 60%, 75%),
   highlight-gray: hsl(0, 0%, 40%)
 );
 
@@ -52,19 +52,19 @@ $schemed-colors: (
     primary: shade($primary-base-color, 50%),
     red: shade($red-base-color, 50%),
     blue: shade($blue-base-color, 50%),
-    white: white
+    white: black
   ),
   background: (
     primary: shade($primary-base-color, 85%),
     red: shade($red-base-color, 85%),
     blue: shade($blue-base-color, 85%),
-    white: shade($primary-base-color, 95%),
+    white: shade($primary-base-color, 85%),
   ),
   hover-background: (
     primary: shade($primary-base-color, 80%),
     red: shade($red-base-color, 80%),
     blue: shade($blue-base-color, 80%),
-    white: shade($primary-base-color, 98%),
+    white: shade($primary-base-color, 88%),
   ),
   input-shadow: (
     primary: rgba(black, 1),
@@ -72,9 +72,9 @@ $schemed-colors: (
     blue: rgba(black, 1),
   ),
   button-text: (
-    primary: black,
-    red: black,
-    blue: black
+    primary: shade($primary-base-color, 90%),
+    red: shade($red-base-color, 90%),
+    blue: shade($blue-base-color, 90%)
   ),
   button-border: (
     primary: rgba(white, 0.3),
