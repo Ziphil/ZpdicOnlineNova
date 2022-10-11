@@ -22,7 +22,16 @@ $colors: (
   logo: shade($primary-base-color, 40%),
   border: tint($primary-base-color, 50%),
   light-border: tint($primary-base-color, 75%),
-  focus: rgba($primary-base-color, 0.3)
+  focus: rgba($primary-base-color, 0.3),
+  highlight-red: hsl(0, 70%, 40%),
+  highlight-orange: hsl(30, 70%, 40%),
+  highlight-lime: hsl(90, 70%, 40%),
+  highlight-green: hsl(120, 70%, 40%),
+  highlight-cyan: hsl(180, 70%, 40%),
+  highlight-sky: hsl(200, 70%, 40%),
+  highlight-purple: hsl(280, 70%, 40%),
+  highlight-magenta: hsl(320, 70%, 40%),
+  highlight-gray: hsl(0, 0%, 60%)
 );
 
 $schemed-colors: (
