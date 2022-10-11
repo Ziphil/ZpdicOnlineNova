@@ -22,7 +22,7 @@ export const parameters = {
     default: "light",
     list: [
       {name: "light", class: "theme-light", color: "#F7F2ED"},
-      {name: "dark", class: "theme-dark", color: "#161412"}
+      {name: "dark", class: "theme-dark", color: "#2A241E"}
     ],
     target: "html"
   }
