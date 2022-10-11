@@ -33,7 +33,8 @@ import {
 import {
   queryClient,
   useDefaultLocale,
-  useDefaultMe
+  useDefaultMe,
+  useDefaultTheme
 } from "/client/component/hook";
 import InnerRoot from "/client/component/inner-root";
 import {
@@ -85,6 +86,7 @@ const Root = create(
 
     const {ready} = useDefaultMe();
     const {locale, messages} = useDefaultLocale("ja");
+    useDefaultTheme("light");
 
     const handleIntlError = useCallback(function (error: IntlError<any>): void {
       if (error.code !== "MISSING_DATA" && error.code !== "MISSING_TRANSLATION") {
