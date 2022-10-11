@@ -206,6 +206,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   border-radius: $small-border-radius;
   background-color: schemed-color(button-background, $scheme);
   background-image: schemed-color(button-gradient, $scheme);
+  background-origin: border-box;
   white-space: nowrap;
   position: relative;
   cursor: pointer;
@@ -237,6 +238,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   border-radius: $small-border-radius;
   background-color: schemed-color(light-button-background, $scheme);
   background-image: schemed-color(light-button-gradient, $scheme);
+  background-origin: border-box;
   white-space: nowrap;
   position: relative;
   cursor: pointer;

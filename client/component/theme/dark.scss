@@ -1,0 +1,143 @@
+@charset "utf-8";
+
+@use "/client/component/function.scss" as *;
+@use "/client/component/color.scss" as *;
+
+
+$primary-base-color: hsl(30, 40%, 80%);
+$secondary-base-color: hsl(310, 35%, 80%);
+$red-base-color: hsl(0, 35%, 80%);
+$blue-base-color: hsl(200, 40%, 80%);
+
+$colors: (
+  background: shade($primary-base-color, 90%),
+  strong-background: shade($primary-base-color, 75%),
+  modal-background: rgba(darken($primary-base-color, 50%), 0.5),
+  white-background: shade($primary-base-color, 95%),
+  input-background: black,
+  text: tint($primary-base-color, 60%),
+  footer-text: $primary-base-color,
+  accent: $primary-base-color,
+  nprogress: $primary-base-color,
+  logo: tint($primary-base-color, 40%),
+  border: shade($primary-base-color, 50%),
+  light-border: shade($primary-base-color, 75%),
+  focus: rgba($primary-base-color, 0.3)
+);
+
+$schemed-colors: (
+  accent: (
+    primary: $primary-base-color,
+    secondary: $secondary-base-color,
+    red: $red-base-color,
+    blue: $blue-base-color,
+    white: inherit
+  ),
+  hover-accent: (
+    primary: shade($primary-base-color, 30%),
+    secondary: shade($secondary-base-color, 30%),
+    red: shade($red-base-color, 30%),
+    blue: shade($blue-base-color, 30%)
+  ),
+  border: (
+    primary: shade($primary-base-color, 50%),
+    red: shade($red-base-color, 50%),
+    blue: shade($blue-base-color, 50%),
+    white: white
+  ),
+  background: (
+    primary: shade($primary-base-color, 85%),
+    red: shade($red-base-color, 85%),
+    blue: shade($blue-base-color, 85%),
+    white: shade($primary-base-color, 95%),
+  ),
+  hover-background: (
+    primary: shade($primary-base-color, 80%),
+    red: shade($red-base-color, 80%),
+    blue: shade($blue-base-color, 80%),
+    white: shade($primary-base-color, 98%),
+  ),
+  input-shadow: (
+    primary: rgba(black, 1),
+    red: rgba(black, 1),
+    blue: rgba(black, 1),
+  ),
+  button-text: (
+    primary: black,
+    red: black,
+    blue: black
+  ),
+  button-border: (
+    primary: rgba(white, 0.3),
+    red: rgba(white, 0.3),
+    blue: rgba(white, 0.3)
+  ),
+  button-background: (
+    primary: $primary-base-color,
+    red: $red-base-color,
+    blue: $blue-base-color
+  ),
+  hover-button-background: (
+    primary: shade($primary-base-color, 10%),
+    red: shade($red-base-color, 10%),
+    blue: shade($blue-base-color, 10%)
+  ),
+  active-button-background: (
+    primary: tint($primary-base-color, 20%),
+    red: tint($red-base-color, 20%),
+    blue: tint($blue-base-color, 20%)
+  ),
+  button-gradient: (
+    primary: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25)),
+    red: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25)),
+    blue: linear-gradient(to bottom, rgba(black, 0), rgba(black, 0.25)),
+  ),
+  active-button-shadow: (
+    primary: rgba(black, 0.1),
+    red: rgba(black, 0.1),
+    blue: rgba(black, 0.1)
+  ),
+  light-button-text: (
+    primary: $primary-base-color,
+    red: $red-base-color,
+    blue: $blue-base-color
+  ),
+  light-button-background: (
+    primary: shade($primary-base-color, 90%),
+    red: shade($red-base-color, 90%),
+    blue: shade($blue-base-color, 90%)
+  ),
+  hover-light-button-background: (
+    primary: shade($primary-base-color, 82%),
+    red: shade($red-base-color, 82%),
+    blue: shade($blue-base-color, 82%)
+  ),
+  active-light-button-background: (
+    primary: shade($primary-base-color, 65%),
+    red: shade($red-base-color, 65%),
+    blue: shade($blue-base-color, 65%)
+  ),
+  light-button-gradient: (
+    primary: linear-gradient(to bottom, rgba($primary-base-color, 0.2), rgba(black, 0)),
+    red: linear-gradient(to bottom, rgba($red-base-color, 0.2), rgba(black, 0)),
+    blue: linear-gradient(to bottom, rgba($blue-base-color, 0.2), rgba(black, 0))
+  ),
+  active-light-button-shadow: (
+    primary: rgba($primary-base-color, 0.1),
+    red: rgba($red-base-color, 0.1),
+    blue: rgba($blue-base-color, 0.1)
+  ),
+  focus: (
+    primary: rgba($primary-base-color, 0.3),
+    secondary: rgba($secondary-base-color, 0.3),
+    red: rgba($red-base-color, 0.3),
+    blue: rgba($blue-base-color, 0.3)
+  )
+);
+
+
+html[data-theme="dark"],
+html:global(.theme-dark) {
+  @include color-variables($colors, $schemed-colors);
+  --badge-background-color: #{color(accent)};
+}
