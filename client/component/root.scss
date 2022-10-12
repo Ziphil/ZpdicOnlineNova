@@ -39,6 +39,11 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
+html,
+html * {
+  @include scrollbar(schemed-color(accent, primary), schemed-color(hover-accent, primary), transparent);
+}
+
 :focus-visible {
   outline: $focus-size solid color(focus);
 }

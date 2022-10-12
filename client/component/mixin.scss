@@ -321,3 +321,22 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
     border-right: $size $color solid;
   }
 }
+
+@mixin scrollbar($thumb-color, $hover-thumb-color, $track-color) {
+  scrollbar-color: $thumb-color $track-color;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 6rpx;
+    height: 6rpx;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb-color;
+    border-radius: 6rpx;
+    &:hover {
+      background-color: $hover-thumb-color;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $track-color;
+  }
+}
