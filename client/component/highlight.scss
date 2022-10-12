@@ -5,6 +5,10 @@
   color: color(text) !important;
 }
 
+*[class~="CodeMirror-cursor"] {
+  border-left: 1px color(text) solid !important;
+}
+
 *[class~="CodeMirror-selected"] {
   background: schemed-color(background, primary) !important;
 }

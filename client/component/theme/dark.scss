@@ -55,10 +55,10 @@ $schemed-colors: (
     white: black
   ),
   background: (
-    primary: shade($primary-base-color, 85%),
-    red: shade($red-base-color, 85%),
-    blue: shade($blue-base-color, 85%),
-    white: shade($primary-base-color, 85%),
+    primary: shade($primary-base-color, 75%),
+    red: shade($red-base-color, 75%),
+    blue: shade($blue-base-color, 75%),
+    white: shade($primary-base-color, 75%),
   ),
   hover-background: (
     primary: shade($primary-base-color, 80%),
