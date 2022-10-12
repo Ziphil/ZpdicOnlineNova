@@ -161,7 +161,7 @@ export class Main {
     });
     agenda.define("discardOldHistoryWords", async (job, done) => {
       LogUtil.log("worker/discardOldHistoryWords", {});
-      await WordModel.discardOldHistory(0);
+      await WordModel.discardOldHistory(90);
       done();
     });
     agenda.define("addHistories", async (job, done) => {
