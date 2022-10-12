@@ -149,4 +149,5 @@ html[data-theme="dark"],
 html:global(.theme-dark) {
   @include color-variables($colors, $schemed-colors);
   --badge-background-color: #{color(accent)};
+  color-scheme: dark;
 }
