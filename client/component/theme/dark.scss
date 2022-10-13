@@ -12,7 +12,7 @@ $blue-base-color: hsl(200, 40%, 70%);
 $colors: (
   background: shade($primary-base-color, 80%),
   strong-background: shade($primary-base-color, 65%),
-  modal-background: rgba(darken($primary-base-color, 50%), 0.5),
+  modal-background: rgba(black, 0.5),
   white-background: shade($primary-base-color, 85%),
   input-background: shade($primary-base-color, 90%),
   text: tint($primary-base-color, 50%),
