@@ -52,7 +52,7 @@ $schemed-colors: (
     primary: shade($primary-base-color, 50%),
     red: shade($red-base-color, 50%),
     blue: shade($blue-base-color, 50%),
-    white: black
+    white: shade($primary-base-color, 93%),
   ),
   background: (
     primary: shade($primary-base-color, 75%),
