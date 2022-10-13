@@ -73,7 +73,6 @@ const routes = [
   ...createRoute("/document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
   ...createRoute("/document/:firstPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
   ...createRoute("/document", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
-  ...createRoute("/language", () => import("/client/component/page/language-page"), {type: "none"}),
   ...createRoute("/", () => import("/client/component/page/top-page"), {type: "none", loader: loadTopPage})
 ] as Array<Route>;
 

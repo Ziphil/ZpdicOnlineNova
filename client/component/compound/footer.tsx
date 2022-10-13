@@ -45,9 +45,7 @@ const Footer = create(
             <div>
               <Link className={styles!["link"]} href="/document" style="plane">{trans("footer.document")}</Link>
             </div>
-            <div>
-              <Link className={styles!["link"]} href="/language" style="plane">{trans("footer.language")}</Link>
-            </div>
+            <div/>
             <div>
               <Link className={styles!["link"]} href="/contact" style="plane">{trans("footer.contact")}</Link>
             </div>
