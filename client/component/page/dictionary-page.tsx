@@ -34,6 +34,7 @@ import {
 import {
   WithSize
 } from "/server/controller/internal/type";
+import GoogleAdsense from "../atom/google-ad";
 
 
 const DictionaryPage = create(
@@ -64,6 +65,11 @@ const DictionaryPage = create(
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <div styleName="search-form-container">
           <WordSearchForm dictionary={dictionary} parameter={query.parameter} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
+        </div>
+        <div styleName="ad-wrapper">
+          <div styleName="ad-container">
+            <GoogleAdsense clientId="9429549748934508" slotId="2898231395"/>
+          </div>
         </div>
         {(debouncedQuery.showExplanation) ? (
           <Markdown source={dictionary.explanation ?? ""}/>
