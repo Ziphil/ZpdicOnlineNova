@@ -244,6 +244,10 @@ addEditInvitationForm:
 addTransferInvitationForm:
   userName: "User ID to invite"
   confirm: "Invite"
+changeThemeForm:
+  light: "Light"
+  dark: "Dark"
+  confirm: "Change"
 changeDictionaryExplanationForm:
   explanation: "Description"
   confirm: "Change"
@@ -647,6 +651,7 @@ dashboardPage:
   dictionary: "Dictionaries"
   notification: "Notifications"
   account: "Account"
+  appearance: "Appearance"
   logout: "Sign out"
   dictionaryList:
     label: "Dictionaries"
@@ -685,6 +690,10 @@ dashboardPage:
     label: "Delete"
     description: >-
       Delete this user.
+  changeThemeForm:
+    label: "Change theme"
+    description: >-
+      Change the color theme of this website.
 dictionaryListPage:
   title: "Dictionaries"
   updatedDate: "Sort by update date"

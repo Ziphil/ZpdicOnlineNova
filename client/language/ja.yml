@@ -242,6 +242,10 @@ addEditInvitationForm:
 addTransferInvitationForm:
   userName: "招待先ユーザー ID"
   confirm: "招待"
+changeThemeForm:
+  light: "ライト"
+  dark: "ダーク"
+  confirm: "変更"
 changeDictionaryExplanationForm:
   explanation: "説明"
   confirm: "変更"
@@ -644,6 +648,7 @@ dashboardPage:
   dictionary: "辞書"
   notification: "通知"
   account: "アカウント"
+  appearance: "外観"
   logout: "ログアウト"
   dictionaryList:
     label: "辞書一覧"
@@ -682,6 +687,10 @@ dashboardPage:
     label: "削除"
     description: >-
       このユーザーを削除します。
+  changeThemeForm:
+    label: "テーマの変更"
+    description: >-
+      サイトのカラーテーマを変更します。
 dictionaryListPage:
   title: "辞書一覧"
   updatedDate: "更新日時順"

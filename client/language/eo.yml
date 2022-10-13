@@ -244,6 +244,10 @@ addEditInvitationForm:
 addTransferInvitationForm:
   userName: "Uzanta identigilo por inviti"
   confirm: "Inviti"
+changeThemeForm:
+  light: "Hela"
+  dark: "Malhela"
+  confirm: "Ŝanĝi"
 changeDictionaryExplanationForm:
   explanation: "Description"
   confirm: "Ŝanĝi"
@@ -647,6 +651,7 @@ dashboardPage:
   dictionary: "Vortaroj"
   notification: "Sciigoj"
   account: "Konto"
+  appearance: "Ŝajno"
   logout: "Elsaluti"
   dictionaryList:
     label: "Vortaroj"
@@ -685,6 +690,10 @@ dashboardPage:
     label: "Forigi"
     description: >-
       Forigi tiun uzanton.
+  changeThemeForm:
+    label: "Ŝanĝi temon"
+    description: >-
+      Ŝanĝi la koloran temon de tiu retejo.
 dictionaryListPage:
   title: "Vortaroj"
   updatedDate: "Ordigi laŭ dato de ĝisdatigo"
