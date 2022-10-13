@@ -242,6 +242,11 @@ addEditInvitationForm:
 addTransferInvitationForm:
   userName: "招待先ユーザー ID"
   confirm: "招待"
+changeLanguageForm:
+  confirm: "変更"
+  caution: >-
+    翻訳は必ずしも正確ではありません。
+    もし翻訳に不自然な点を見つけましたら、お問い合せフォームからご連絡ください。
 changeThemeForm:
   light: "ライト"
   dark: "ダーク"
@@ -507,10 +512,6 @@ invitationPane:
   userName: "招待者"
   reject: "拒否"
   accept: "承認"
-languageForm:
-  caution: >-
-    翻訳は必ずしも正確ではありません。
-    もし翻訳に不自然な点を見つけましたら、お問い合せフォームからご連絡ください。
 loginForm:
   userName: "ユーザー ID"
   email: "メールアドレス"
@@ -687,6 +688,9 @@ dashboardPage:
     label: "削除"
     description: >-
       このユーザーを削除します。
+  changeLanguageForm:
+    label: "言語の変更"
+    description: <empty>
   changeThemeForm:
     label: "テーマの変更"
     description: >-

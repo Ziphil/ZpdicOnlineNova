@@ -244,6 +244,11 @@ addEditInvitationForm:
 addTransferInvitationForm:
   userName: "User ID to invite"
   confirm: "Invite"
+changeLanguageForm:
+  confirm: "Change"
+  caution: >-
+    The translation may be incorrect.
+    If you find something strange in the translation, please notify us from the contact form.
 changeThemeForm:
   light: "Light"
   dark: "Dark"
@@ -509,10 +514,6 @@ invitationPane:
   userName: "Inviter"
   reject: "Reject"
   accept: "Accept"
-languageForm:
-  caution: >-
-    The translation may be incorrect.
-    If you find something strange in the translation, please notify us from the contact form.
 loginForm:
   userName: "User ID"
   email: "Email address"
@@ -690,6 +691,9 @@ dashboardPage:
     label: "Delete"
     description: >-
       Delete this user.
+  changeLanguageForm:
+    label: "Change language"
+    description: <empty>
   changeThemeForm:
     label: "Change theme"
     description: >-

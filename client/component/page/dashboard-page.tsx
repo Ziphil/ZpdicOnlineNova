@@ -16,6 +16,7 @@ import SettingPane from "/client/component/compound/setting-pane";
 import {
   create
 } from "/client/component/create";
+import ChangeLanguageForm from "/client/component/form/change-language-form";
 import ChangeThemeForm from "/client/component/form/change-theme-form";
 import ChangeUserEmailForm from "/client/component/form/change-user-email-form";
 import ChangeUserNameForm from "/client/component/form/change-user-name-form";
@@ -186,6 +187,12 @@ const DashboardPageForms = create(
     } else if (mode === "appearance") {
       const node = (
         <Suspense fallback={<DashboardPageLoading/>}>
+          <SettingPane
+            label={trans("dashboardPage.changeLanguageForm.label")}
+            description={trans("dashboardPage.changeLanguageForm.description")}
+          >
+            <ChangeLanguageForm/>
+          </SettingPane>
           <SettingPane
             label={trans("dashboardPage.changeThemeForm.label")}
             description={trans("dashboardPage.changeThemeForm.description")}

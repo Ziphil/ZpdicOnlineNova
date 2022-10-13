@@ -244,6 +244,11 @@ addEditInvitationForm:
 addTransferInvitationForm:
   userName: "Uzanta identigilo por inviti"
   confirm: "Inviti"
+changeLanguageForm:
+  confirm: "Ŝanĝi"
+  caution: >-
+    La traduko eble estas malĝusta.
+    Se vi trovos ion strangan en la tradukaĵo, bonvolu sciigi nin per la kontakta formularo.
 changeThemeForm:
   light: "Hela"
   dark: "Malhela"
@@ -509,10 +514,6 @@ invitationPane:
   userName: "Invitanto"
   reject: "Malakcepti"
   accept: "Akcepti"
-languageForm:
-  caution: >-
-    La traduko eble estas malĝusta.
-    Se vi trovos ion strangan en la tradukaĵo, bonvolu sciigi nin per la kontakta formularo.
 loginForm:
   userName: "Uzanta identigilo"
   email: "Retpoŝta adreso"
@@ -690,6 +691,9 @@ dashboardPage:
     label: "Forigi"
     description: >-
       Forigi tiun uzanton.
+  changeLanguageForm:
+    label: "Ŝanĝi lingvon"
+    description: <empty>
   changeThemeForm:
     label: "Ŝanĝi temon"
     description: >-
