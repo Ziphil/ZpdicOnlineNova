@@ -109,3 +109,9 @@ export function escapeHtml(string: string): string {
   });
   return escapedString;
 }
+
+export function createDummyText(length: number): string {
+  const text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
+  const fullText = new Array(length).fill(text).join(" ");
+  return fullText;
+}

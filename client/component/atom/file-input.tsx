@@ -22,7 +22,7 @@ import {
 } from "/client/util/data";
 
 
-const FileInput = create(
+export const FileInput = create(
   require("./file-input.scss"), "FileInput",
   function ({
     file = null,
@@ -71,7 +71,7 @@ const FileInput = create(
         setErrorMessage(null);
       }
       setFileName(fileName);
-    }, [file]);
+    }, [file, validate]);
 
     const inputData = DataUtil.create({
       error: errorMessage !== null

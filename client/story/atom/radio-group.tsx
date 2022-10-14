@@ -23,7 +23,7 @@ export default {
 const template = createTemplate<typeof RadioGroup>((props) => {
   const [value, setValue] = useState(props.value);
   const node = (
-    <RadioGroup {...props} value={value} onSet={setValue}/>
+    <RadioGroup {...props} value={value} onSet={(value) => (props.onSet?.(value), setValue(value))}/>
   );
   return node;
 });

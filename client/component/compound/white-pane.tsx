@@ -16,7 +16,7 @@ import {
 } from "/client/component/hook";
 
 
-const WhitePane = create(
+export const WhitePane = create(
   require("./white-pane.scss"), "WhitePane",
   function ({
     clickable,

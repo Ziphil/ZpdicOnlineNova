@@ -14,7 +14,7 @@ import {
 } from "/client/util/data";
 
 
-const InformationPane = create(
+export const InformationPane = create(
   require("./information-pane.scss"), "InformationPane",
   function ({
     texts,

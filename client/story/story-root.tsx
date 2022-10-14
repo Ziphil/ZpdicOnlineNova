@@ -65,7 +65,7 @@ const StoryRoot = create(
   }): ReactElement {
 
     const {ready} = useDefaultMe();
-    const {locale, messages} = useDefaultLocale("ja");
+    const {locale, messages} = useDefaultLocale("en");
 
     const handleIntlError = useCallback(function (error: IntlError<any>): void {
       if (error.code !== "MISSING_DATA" && error.code !== "MISSING_TRANSLATION") {
@@ -76,7 +76,7 @@ const StoryRoot = create(
     const node = (
       <DndProvider backend={DndBackend}>
         <QueryClientProvider client={queryClient}>
-          <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
+          <IntlProvider defaultLocale="en" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
             <Router location={location} routes={[]} caseSensitive={true}>
               {children}
             </Router>
