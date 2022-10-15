@@ -232,7 +232,7 @@ export class DictionarySchema extends DiscardableSchema {
     this.updatedDate = new Date();
     this.externalData = {};
     await this.save();
-    await WordModel.updateManyDiscarded().where("dictionary", this);
+    await WordModel.deleteManyExist().where("dictionary", this);
     LogUtil.log("model/dictionary/startUpload", {number: this.number});
   }
 
