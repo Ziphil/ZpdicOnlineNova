@@ -117,7 +117,6 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 
 @mixin unordered-list-item($icon, $icon-color, $marker-width) {
   margin-left: $marker-width + $blank-margin;
-  text-align: justify;
   &::before {
     @include icon-font;
     width: $marker-width;
@@ -140,7 +139,6 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 
 @mixin ordered-list-item($number-color) {
   margin-left: 0.9em + $blank-margin;
-  text-align: justify;
   position: relative;
   counter-increment: ordered-list;
   &::before {

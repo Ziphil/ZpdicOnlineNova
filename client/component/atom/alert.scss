@@ -30,7 +30,6 @@
 .text {
   @include line-height;
   margin: 0rpx 0rpx 0rpx $medium-margin;
-  text-align: justify;
 }
 
 .button-group {
