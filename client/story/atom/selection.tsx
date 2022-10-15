@@ -6,7 +6,7 @@ import {
 import DropdownItem from "/client/component/atom/dropdown-item";
 import {
   Selection
-} from "/client/component/atom/selection-beta";
+} from "/client/component/atom/selection";
 import {
   createStory,
   createTemplate

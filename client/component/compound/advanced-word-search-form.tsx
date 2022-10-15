@@ -14,7 +14,7 @@ import {
   SuggestionSpec
 } from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
-import Selection from "/client/component/atom/selection-beta";
+import Selection from "/client/component/atom/selection";
 import {
   StylesRecord,
   create

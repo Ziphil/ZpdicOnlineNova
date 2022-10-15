@@ -16,7 +16,7 @@ import {
 
 
 export const Selection = create(
-  require("./selection-beta.scss"), "Selection",
+  require("./selection.scss"), "Selection",
   function <V extends {}>({
     value,
     label,
@@ -55,7 +55,7 @@ export const Selection = create(
 
 
 const SelectionSelection = create(
-  require("./selection-beta.scss"),
+  require("./selection.scss"),
   function <V>({
     value,
     setReferenceElement,
