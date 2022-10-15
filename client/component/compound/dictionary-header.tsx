@@ -147,7 +147,7 @@ const DictionaryHeader = create(
               <Dropdown
                 placement="bottom-end"
                 showArrow={true}
-                autoMode="click"
+                autoMode="focus"
                 referenceElement={addReferenceElement}
                 autoElement={addReferenceElement}
                 onSet={openEditor}

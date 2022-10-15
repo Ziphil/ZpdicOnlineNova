@@ -177,7 +177,7 @@ const WordPaneName = create(
                     <Button iconName="ellipsis-h" position="right" nativeRef={setDirectionReferenceElement}/>
                     <Dropdown
                       placement="bottom-end"
-                      autoMode="click"
+                      autoMode="focus"
                       referenceElement={directionReferenceElement}
                       autoElement={directionReferenceElement}
                       onSet={onSubmit}

@@ -43,7 +43,7 @@ export const Selection = create(
           <Label text={label} showRequired={showRequired} showOptional={showOptional}/>
           <SelectionSelection {...{value, setReferenceElement, children}}/>
         </label>
-        <Dropdown fillWidth={true} restrictHeight={true} autoMode="click" referenceElement={referenceElement} autoElement={referenceElement} onSet={onSet}>
+        <Dropdown fillWidth={true} restrictHeight={true} autoMode="focus" referenceElement={referenceElement} autoElement={referenceElement} onSet={onSet}>
           {children}
         </Dropdown>
       </div>
