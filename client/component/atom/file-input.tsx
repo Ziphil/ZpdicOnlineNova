@@ -41,6 +41,8 @@ export const FileInput = create(
 
     const [fileName, setFileName] = useState("");
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
+    const [autoElement, setAutoElement] = useState<HTMLInputElement | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
     const [, {trans}] = useIntl();
 
@@ -77,17 +79,18 @@ export const FileInput = create(
     });
     const node = (
       <div styleName="root" className={className}>
-        <Tooltip message={errorMessage}>
-          <div styleName="root-inner">
-            <label styleName="input-container">
-              <Label text={inputLabel} variant={(errorMessage === null) ? "normal" : "error"}/>
-              <input styleName="input" type="text" value={fileName} readOnly={true} ref={inputRef} {...inputData}/>
-            </label>
-            <label styleName="button">
-              {buttonLabel ?? trans("fileInput.button")}
-              <input styleName="original" type="file" onChange={handleChange}/>
-            </label>
-          </div>
+        <div styleName="root-inner">
+          <label styleName="input-container">
+            <Label text={inputLabel} variant={(errorMessage === null) ? "normal" : "error"}/>
+            <input styleName="input" type="text" value={fileName} readOnly={true} ref={inputRef} {...inputData}/>
+          </label>
+          <label styleName="button">
+            {buttonLabel ?? trans("fileInput.button")}
+            <input styleName="original" type="file" onChange={handleChange}/>
+          </label>
+        </div>
+        <Tooltip fillWidth={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
+          {errorMessage}
         </Tooltip>
       </div>
     );

@@ -36,7 +36,7 @@ const template = createTemplate<typeof Dropdown>((props) => {
 
 const templateAutoModeFocus = createTemplate<typeof Dropdown>((props) => {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const [autoElement, setAutoElement] = useState<HTMLDivElement | null>(null);
+  const [autoElement, setAutoElement] = useState<HTMLInputElement | null>(null);
   const node = (
     <Fragment>
       <div style={{display: "flex"}}>
