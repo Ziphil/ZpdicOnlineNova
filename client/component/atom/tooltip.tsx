@@ -100,7 +100,7 @@ export const Tooltip = create(
       openingRef.current = false;
     });
 
-    const actualOpen = (autoMode !== null) ? currentOpen : open;
+    const actualOpen = children && ((autoMode !== null) ? currentOpen : open);
     const data = DataUtil.create({
       hidden: !actualOpen,
       showArrow

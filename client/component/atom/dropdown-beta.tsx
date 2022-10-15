@@ -127,7 +127,7 @@ export const Dropdown = create(
 
     const ContextProvider = dropdownContext["Provider"];
     const contextValue = useMemo(() => ({onSet: handleSet}), [handleSet]);
-    const actualOpen = (autoMode !== null) ? currentOpen : open;
+    const actualOpen = children.length > 0 && ((autoMode !== null) ? currentOpen : open);
     const data = DataUtil.create({
       hidden: !actualOpen,
       showArrow,

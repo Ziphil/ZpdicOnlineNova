@@ -2,10 +2,12 @@
 
 import {
   ChangeEvent,
+  Dispatch,
   FocusEvent,
   ReactElement,
   ReactNode,
   Ref,
+  SetStateAction,
   useCallback,
   useState
 } from "react";
@@ -15,9 +17,6 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
-import {
-  DropdownSpec
-} from "/client/component/atom/dropdown";
 import Dropdown from "/client/component/atom/dropdown-beta";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
@@ -46,7 +45,6 @@ export const Input = create(
     suggest,
     showRequired,
     showOptional,
-    useTooltip = true,
     readOnly = false,
     disabled = false,
     onChange,
@@ -64,7 +62,6 @@ export const Input = create(
     suggest?: Suggest,
     showRequired?: boolean,
     showOptional?: boolean,
-    useTooltip?: boolean,
     readOnly?: boolean,
     disabled?: boolean,
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
@@ -76,7 +73,7 @@ export const Input = create(
 
     const [currentType, setCurrentType] = useState((type === "flexible") ? "password" : type);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
-    const [dropdownSpecs, setDropdownSpecs] = useState<Array<DropdownSpec<string>>>([]);
+    const [dropdownSpecs, setDropdownSpecs] = useState<Array<DropdownSpec>>([]);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
     const [autoElement, setAutoElement] = useState<HTMLInputElement | null>(null);
 
@@ -110,14 +107,6 @@ export const Input = create(
       updateSuggestions(value);
     }, [updateSuggestions]);
 
-    const toggleType = useCallback(function (): void {
-      if (currentType === "text") {
-        setCurrentType("password");
-      } else {
-        setCurrentType("text");
-      }
-    }, [currentType]);
-
     const node = (
       <div styleName="root" className={className} ref={rootRef}>
         <label styleName="label-container">
@@ -127,12 +116,12 @@ export const Input = create(
             showRequired={showRequired}
             showOptional={showOptional}
           />
-          <InputInput {...{value, prefix, suffix, type, currentType, readOnly, disabled, errorMessage, handleChange, handleFocus, toggleType, setReferenceElement, setAutoElement, nativeRef}}/>
+          <InputInput {...{value, prefix, suffix, type, currentType, readOnly, disabled, errorMessage, handleChange, handleFocus, setCurrentType, setReferenceElement, setAutoElement, nativeRef}}/>
         </label>
         <Dropdown fillWidth={true} restrictHeight={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement} onSet={updateValue}>
           {dropdownSpecs.map(({value, node}) => <DropdownItem key={value} value={value}>{node}</DropdownItem>)}
         </Dropdown>
-        <Tooltip fillWidth={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
+        <Tooltip showArrow={true} fillWidth={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
           {errorMessage}
         </Tooltip>
       </div>
@@ -156,7 +145,7 @@ const InputInput = create(
     errorMessage,
     handleChange,
     handleFocus,
-    toggleType,
+    setCurrentType,
     setReferenceElement,
     setAutoElement,
     nativeRef
@@ -171,11 +160,15 @@ const InputInput = create(
     errorMessage: string | null,
     handleChange: (event: ChangeEvent<HTMLInputElement>) => void,
     handleFocus: (event: FocusEvent<HTMLInputElement>) => void,
-    toggleType: () => void,
+    setCurrentType: Dispatch<SetStateAction<"text" | "password">>,
     setReferenceElement: (referenceElement: HTMLDivElement | null) => void,
     setAutoElement: (autoElement: HTMLInputElement | null) => void,
     nativeRef?: Ref<HTMLInputElement>
   }): ReactElement {
+
+    const toggleType = useCallback(function (): void {
+      setCurrentType((currentType) => (currentType === "text") ? "password" : "text");
+    }, [setCurrentType]);
 
     const data = DataUtil.create({
       error: errorMessage !== null,
@@ -214,6 +207,8 @@ const InputInput = create(
   }
 );
 
+
+type DropdownSpec = {value: string, node: ReactNode};
 
 export type SuggestionSpec = {replacement: string, node: ReactNode};
 export type Suggest = (pattern: string) => AsyncOrSync<Array<SuggestionSpec>>;

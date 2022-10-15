@@ -55,7 +55,7 @@ const ChangeUserEmailForm = create(
     const validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(intl, "invalidUserEmail"));
     const node = (
       <form styleName="root">
-        <Input label={trans("changeUserEmailForm.email")} value={email} validate={validate} useTooltip={true} onSet={(email) => setEmail(email)}/>
+        <Input label={trans("changeUserEmailForm.email")} value={email} validate={validate} onSet={(email) => setEmail(email)}/>
         <Button label={trans("changeUserEmailForm.confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
