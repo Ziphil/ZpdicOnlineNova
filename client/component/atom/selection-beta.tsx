@@ -5,7 +5,7 @@ import {
   ReactElement,
   useState
 } from "react";
-import Dropdown from "/client/component/atom/dropdown-beta";
+import Dropdown from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import Label from "/client/component/atom/label";

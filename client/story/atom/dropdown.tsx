@@ -7,7 +7,7 @@ import {
 import Button from "/client/component/atom/button";
 import {
   Dropdown
-} from "/client/component/atom/dropdown-beta";
+} from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Input from "/client/component/atom/input";
 import {

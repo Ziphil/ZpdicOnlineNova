@@ -1,19 +1,26 @@
 //
 
 import {
-  useRef
-} from "react";
+  ModifierArguments,
+  Placement
+} from "@popperjs/core";
 import {
-  FocusEvent,
-  MouseEvent,
+  ComponentProps,
   ReactElement,
-  ReactNode,
+  createContext,
   useCallback,
+  useEffect,
+  useMemo,
+  useRef,
   useState
 } from "react";
 import {
+  usePopper
+} from "react-popper";
+import {
   useClickAway
 } from "react-use";
+import DropdownItem from "/client/component/atom/dropdown-item";
 import {
   create
 } from "/client/component/create";
@@ -22,104 +29,113 @@ import {
 } from "/client/util/data";
 
 
-const Dropdown = create(
+type DropdownContextValue = {
+  onSet?: (value: any) => void
+};
+export const dropdownContext = createContext<DropdownContextValue>({
+});
+
+
+export const Dropdown = create(
   require("./dropdown.scss"), "Dropdown",
-  function <V>({
-    specs,
+  function <V extends {}>({
     open = false,
-    placement = "left",
-    autoMode = "focus",
+    placement = "bottom-start",
+    autoMode = null,
     showArrow = false,
-    fillWidth = true,
-    restrictHeight = true,
-    onClick,
-    onOpen,
-    onClose,
+    fillWidth = false,
+    restrictHeight = false,
+    referenceElement,
+    autoElement,
     onSet,
     className,
     children
   }: {
-    specs: ArrayLike<DropdownSpec<V>>,
     open?: boolean,
-    placement?: "left" | "right",
+    placement?: Placement,
     autoMode?: "focus" | "click" | null,
     showArrow?: boolean,
     fillWidth?: boolean,
     restrictHeight?: boolean,
-    onClick?: (event: MouseEvent<HTMLDivElement>) => void,
-    onOpen?: (event: FocusEvent<HTMLDivElement> | MouseEvent<HTMLDivElement>) => void,
-    onClose?: (event?: FocusEvent<HTMLDivElement> | MouseEvent<HTMLDivElement>) => void,
+    referenceElement: HTMLElement | null,
+    autoElement?: HTMLElement | null,
     onSet?: (value: V) => void,
     className?: string,
-    children?: ReactNode
+    children: Array<ReactElement<ComponentProps<typeof DropdownItem>>>
   }): ReactElement {
 
     const [currentOpen, setCurrentOpen] = useState(false);
-    const suggestionRef = useRef<HTMLDivElement>(null);
-
-    const handleMouseDown = useCallback(function (value: V, event: MouseEvent<HTMLDivElement>): void {
-      onClick?.(event);
-      onSet?.(value);
-      if (autoMode === "click") {
-        setCurrentOpen(false);
-        onClose?.(event);
-      }
-    }, [autoMode, onClick, onClose, onSet, setCurrentOpen]);
-
-    const handleClick = useCallback(function (event: MouseEvent<HTMLDivElement>): void {
-      if (autoMode === "click") {
-        setCurrentOpen(true);
-        onOpen?.(event);
-      }
-    }, [autoMode, onOpen, setCurrentOpen]);
-
-    const handleClickOutside = useCallback(function (): void {
-      if (autoMode === "click") {
-        setCurrentOpen(false);
-        onClose?.();
-      }
-    }, [autoMode, onClose, setCurrentOpen]);
-
-    const handleFocus = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
-      if (autoMode === "focus") {
-        setCurrentOpen(true);
-        onOpen?.(event);
-      }
-    }, [autoMode, onOpen, setCurrentOpen]);
-
-    const handleBlur = useCallback(function (event: FocusEvent<HTMLDivElement>): void {
-      if (autoMode === "focus") {
-        setCurrentOpen(false);
-        onClose?.(event);
-      }
-    }, [autoMode, onClose, setCurrentOpen]);
-
-    useClickAway(suggestionRef, () => {
-      handleClickOutside();
+    const [popupElement, setPopupElement] = useState<HTMLDivElement | null>(null);
+    const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
+    const openingRef = useRef(false);
+    const {styles, attributes} = usePopper(referenceElement, popupElement, {
+      placement,
+      modifiers: [
+        {name: "offset", options: {offset: (showArrow) ? [0, 8] : [0, -1]}},
+        {name: "flip", options: {altBoundary: true}},
+        {name: "fillWidth", phase: "beforeWrite", requires: ["computeStyles"], fn: setFillWidth, enabled: fillWidth},
+        {name: "arrow", options: {padding: 4, element: arrowElement}, enabled: showArrow}
+      ]
     });
 
-    const actualOpen = (autoMode !== null) ? currentOpen : open;
+    const handleSet = useCallback(function (value: V): void {
+      if (autoMode !== null) {
+        setCurrentOpen(false);
+      }
+      onSet?.(value);
+    }, [autoMode, onSet]);
+
+    useEffect(() => {
+      if (autoMode === "focus") {
+        const handleFocus = function (): void {
+          setCurrentOpen(true);
+        };
+        const handleBlur = function (): void {
+          setCurrentOpen(false);
+        };
+        autoElement?.addEventListener("focus", handleFocus);
+        autoElement?.addEventListener("blur", handleBlur);
+        return () => {
+          autoElement?.removeEventListener("focus", handleFocus);
+          autoElement?.removeEventListener("blur", handleBlur);
+        };
+      } else if (autoMode === "click") {
+        const handleMouseDown = function (): void {
+          openingRef.current = true;
+          setCurrentOpen(true);
+        };
+        autoElement?.addEventListener("mousedown", handleMouseDown);
+        return () => {
+          autoElement?.removeEventListener("mousedown", handleMouseDown);
+        };
+      } else {
+        return () => null;
+      }
+    }, [autoMode, autoElement]);
+
+    useClickAway({current: popupElement}, () => {
+      if (autoMode === "click") {
+        if (!openingRef.current) {
+          setCurrentOpen(false);
+        }
+      }
+      openingRef.current = false;
+    });
+
+    const ContextProvider = dropdownContext["Provider"];
+    const contextValue = useMemo(() => ({onSet: handleSet}), [handleSet]);
+    const actualOpen = children.length > 0 && ((autoMode !== null) ? currentOpen : open);
     const data = DataUtil.create({
-      placement,
+      hidden: !actualOpen,
       showArrow,
-      fillWidth,
       restrictHeight
     });
     const node = (
-      <div styleName="root" className={className}>
-        <div onClick={handleClick} onFocus={handleFocus} onBlur={handleBlur}>
+      <div styleName="root" className={className} ref={setPopupElement} style={styles.popper} {...attributes.popper} {...data}>
+        <div styleName="arrow" ref={setArrowElement} style={styles.arrow} {...attributes.arrow}/>
+        <ContextProvider value={contextValue}>
           {children}
-        </div>
-        {(actualOpen && specs.length > 0) && (
-          <div styleName="suggestion" ref={suggestionRef} {...data}>
-            <div styleName="arrow"/>
-            {Array.from(specs).map((spec, index) => (
-              <div styleName="suggestion-item" key={index} tabIndex={0} onMouseDown={(event) => handleMouseDown(spec.value, event)}>
-                {spec.node}
-              </div>
-            ))}
-          </div>
-        )}
+        </ContextProvider>
       </div>
     );
     return node;
@@ -128,6 +144,9 @@ const Dropdown = create(
 );
 
 
-export type DropdownSpec<V> = {value: V, node: ReactNode};
+function setFillWidth({state}: ModifierArguments<{}>): void {
+  state.styles.popper.width = `${state.rects.reference.width}px`;
+}
+
 
 export default Dropdown;

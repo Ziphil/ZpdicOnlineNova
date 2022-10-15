@@ -11,7 +11,7 @@ import {
   useState
 } from "react";
 import Button from "/client/component/atom/button";
-import Dropdown from "/client/component/atom/dropdown-beta";
+import Dropdown from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import {

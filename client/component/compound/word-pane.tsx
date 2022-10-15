@@ -12,7 +12,7 @@ import {
   AsyncOrSync
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
-import Dropdown from "/client/component/atom/dropdown-beta";
+import Dropdown from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import Link from "/client/component/atom/link";
