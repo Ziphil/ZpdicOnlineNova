@@ -6,7 +6,6 @@ import {
   Route,
   RouteMatch
 } from "@tanstack/react-location";
-import * as react from "react";
 import {
   FunctionComponent,
   createElement

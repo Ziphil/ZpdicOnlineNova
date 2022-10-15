@@ -10,7 +10,6 @@ import {
   Router
 } from "@tanstack/react-location";
 import * as queryParser from "query-string";
-import * as react from "react";
 import {
   ReactElement,
   useCallback

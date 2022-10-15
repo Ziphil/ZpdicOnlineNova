@@ -4,7 +4,6 @@ import {
   BaseDecorators,
   Parameters
 } from "@storybook/addons";
-import * as react from "react";
 import {
   createElement
 } from "react";

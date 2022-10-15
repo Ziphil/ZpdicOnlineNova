@@ -1,7 +1,6 @@
 //
 
 import axios from "axios";
-import * as react from "react";
 import {
   ReactElement
 } from "react";

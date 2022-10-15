@@ -8,7 +8,6 @@ import {
   generate as generateChart
 } from "c3";
 import merge from "lodash-es/merge";
-import * as react from "react";
 import {
   ReactElement,
   useCallback,

@@ -3,7 +3,6 @@
 import {
   FontAwesomeIcon
 } from "@fortawesome/react-fontawesome";
-import * as react from "react";
 import {
   ChangeEvent,
   ReactElement,

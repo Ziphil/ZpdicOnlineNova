@@ -4,7 +4,6 @@ import {
   useRouter
 } from "@tanstack/react-location";
 import nprogress from "nprogress";
-import * as react from "react";
 import {
   Fragment,
   ReactElement,

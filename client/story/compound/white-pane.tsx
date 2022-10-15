@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import Button from "/client/component/atom/button";
 import {
   WhitePane

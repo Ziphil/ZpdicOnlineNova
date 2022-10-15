@@ -4,7 +4,6 @@ import {
   ModifierArguments,
   Placement
 } from "@popperjs/core";
-import * as react from "react";
 import {
   ComponentProps,
   ReactElement,

@@ -4,7 +4,6 @@ import cloneDeep from "lodash-es/cloneDeep";
 import {
   nanoid
 } from "nanoid";
-import * as react from "react";
 import {
   Dispatch,
   Fragment,

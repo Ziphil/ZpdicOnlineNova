@@ -3,7 +3,6 @@
 import {
   useRouter
 } from "@tanstack/react-location";
-import * as react from "react";
 import {
   ReactElement,
   useEffect

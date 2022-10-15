@@ -2,7 +2,6 @@
 
 import CodeMirror from "codemirror";
 import "codemirror/addon/runmode/runmode";
-import * as react from "react";
 import {
   ReactElement,
   useCallback,

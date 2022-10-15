@@ -1,7 +1,6 @@
 //
 
 import downloadFile from "js-file-download";
-import * as react from "react";
 import {
   Dispatch,
   ReactElement,

@@ -1,10 +1,11 @@
 //
 
-import * as react from "react";
 import {
   ReactElement
 } from "react";
-import {useMount} from "react-use";
+import {
+  useMount
+} from "react-use";
 import {
   create
 } from "/client/component/create";

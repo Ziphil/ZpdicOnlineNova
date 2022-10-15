@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   MouseEvent,
   ReactElement,
