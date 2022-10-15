@@ -14,6 +14,9 @@ import {
 import {
   useIntl
 } from "/client/component/hook";
+import {
+  DataUtil
+} from "/client/util/data";
 
 
 const GithubButton = create(
@@ -37,12 +40,16 @@ const GithubButton = create(
 
     const githubUrl = "https://github.com/Ziphil/ZpdicOnlineNova";
     const dashboardUrl = "https://ziphil.notion.site/ZpDIC-Online-987030f6505e4cf1ba8fe08121584d93";
+    const starContainerData = DataUtil.create({
+      popperPlacement: "right"
+    });
     const node = (
       <div styleName="root">
         <a styleName="github" href={githubUrl} target="_blank" rel="noreferrer">
           <div styleName="icon-wrapper">
             <div styleName="icon"><Icon name="github"/></div>
-            <div styleName="star-wrapper">
+            <div styleName="star-wrapper" {...starContainerData}>
+              <div styleName="arrow"/>
               <span styleName="star"><Icon name="star"/></span>
               <span styleName="count">{transNumber(starCount)}</span>
             </div>

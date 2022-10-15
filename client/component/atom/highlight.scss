@@ -6,7 +6,7 @@
 .root {
   line-height: $line-height;
   border-radius: $small-border-radius;
-  background-color: white;
+  background-color: color(input-background);
   box-sizing: border-box;
   display: block;
   flex-grow: 1;
