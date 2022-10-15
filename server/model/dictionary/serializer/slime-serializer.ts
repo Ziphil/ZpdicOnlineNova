@@ -50,6 +50,9 @@ export class SlimeSerializer extends Serializer {
     stream.on("error", (error) => {
       this.emit("error", error);
     });
+    writer.on("error", (error) => {
+      this.emit("error", error);
+    });
   }
 
   private createString(word: Word): string {
@@ -58,7 +61,7 @@ export class SlimeSerializer extends Serializer {
     raw["entry"]["id"] = word.number;
     raw["entry"]["form"] = word.name;
     raw["translations"] = [];
-    for (const equivalent of word.equivalents) {
+    for (const equivalent of word.equivalents ?? []) {
       const rawEquivalent = {} as any;
       rawEquivalent["title"] = equivalent.title;
       rawEquivalent["forms"] = equivalent.names;
@@ -66,7 +69,7 @@ export class SlimeSerializer extends Serializer {
     }
     raw["tags"] = word.tags;
     raw["contents"] = [];
-    for (const information of word.informations) {
+    for (const information of word.informations ?? []) {
       const rawInformation = {} as any;
       rawInformation["title"] = information.title;
       if (this.dictionary.settings.enableMarkdown) {
@@ -85,14 +88,14 @@ export class SlimeSerializer extends Serializer {
       raw["contents"].push(rawInformation);
     }
     raw["variations"] = [];
-    for (const variation of word.variations) {
+    for (const variation of word.variations ?? []) {
       const rawVariation = {} as any;
       rawVariation["title"] = variation.title;
       rawVariation["form"] = variation.name;
       raw["variations"].push(rawVariation);
     }
     raw["relations"] = [];
-    for (const relation of word.relations) {
+    for (const relation of word.relations ?? []) {
       const rawRelation = {} as any;
       rawRelation["title"] = relation.title;
       rawRelation["entry"] = {};
