@@ -37,7 +37,7 @@ const SourceTester = create(
       <Fragment>
         <form styleName="root">
           <Highlight source={source} language={language}/>
-          <Button label={trans("sourceTester.try")} variant="link" onClick={() => setExecutorOpen(true)}/>
+          <Button label={trans("sourceTester.try")} variant="light" onClick={() => setExecutorOpen(true)}/>
         </form>
         <SourceTesterExecutor {...{source, language, executorOpen, setExecutorOpen}}/>
       </Fragment>
