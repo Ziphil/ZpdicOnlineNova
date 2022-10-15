@@ -18,21 +18,17 @@ import {
   ErrorBoundary,
   FallbackProps
 } from "react-error-boundary";
-import Drawer from "/client/component/atom/drawer";
 import GoogleAnalytics from "/client/component/atom/google-analytics";
-import ExampleEditor from "/client/component/compound/example-editor-beta";
+import ExampleEditorDrawer from "/client/component/compound/example-editor-drawer";
 import HotkeyHelp from "/client/component/compound/hotkey-help";
-import WordEditor from "/client/component/compound/word-editor-beta";
+import WordEditorDrawer from "/client/component/compound/word-editor-drawer";
 import {
   create
 } from "/client/component/create";
 import {
   QueryError,
-  useExampleEditorProps,
   useHotkey,
-  useIntl,
-  usePath,
-  useWordEditorProps
+  usePath
 } from "/client/component/hook";
 import ErrorPage from "/client/component/page/error-page";
 import LoadingPage from "/client/component/page/loading-page";
@@ -51,11 +47,8 @@ const InnerRoot = create(
     children?: ReactNode
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
     const {pushPath} = usePath();
     const router = useRouter();
-    const [wordEditorProps, wordEditorOpen, setWordEditorOpen] = useWordEditorProps();
-    const [exampleEditorProps, exampleEditorOpen, setExampleEditorOpen] = useExampleEditorProps();
 
     const [hotkeyHelpOpen, setHotkeyHelpOpen] = useState(false);
     const resetErrorBoundaryRef = useRef<(() => void) | null>(null);
@@ -89,9 +82,6 @@ const InnerRoot = create(
     useHotkey("jumpContactPage", () => {
       pushPath("/contact");
     }, []);
-    useHotkey("toggleWordEditor", () => {
-      setWordEditorOpen((wordEditorOpen) => !wordEditorOpen);
-    }, []);
     useHotkey("showHotkeyHelp", () => {
       setHotkeyHelpOpen(true);
     }, []);
@@ -121,34 +111,8 @@ const InnerRoot = create(
             </ScrollTop>
           </Suspense>
         </ErrorBoundary>
-        <Drawer
-          title={trans("wordEditor.title")}
-          iconName="custom-word"
-          badgeValue={(wordEditorProps.length > 0) ? wordEditorProps.length : undefined}
-          tabPosition="top"
-          open={wordEditorOpen}
-          onOpen={() => setWordEditorOpen(true)}
-          onClose={() => setWordEditorOpen(false)}
-          outsideClosable={true}
-        >
-          {wordEditorProps.map((props) => (
-            <WordEditor key={props.id} {...props}/>
-          ))}
-        </Drawer>
-        <Drawer
-          title={trans("exampleEditor.title")}
-          iconName="custom-example"
-          badgeValue={(exampleEditorProps.length > 0) ? exampleEditorProps.length : undefined}
-          tabPosition="bottom"
-          open={exampleEditorOpen}
-          onOpen={() => setExampleEditorOpen(true)}
-          onClose={() => setExampleEditorOpen(false)}
-          outsideClosable={true}
-        >
-          {exampleEditorProps.map((props) => (
-            <ExampleEditor key={props.id} {...props}/>
-          ))}
-        </Drawer>
+        <WordEditorDrawer/>
+        <ExampleEditorDrawer/>
         <HotkeyHelp open={hotkeyHelpOpen} onClose={() => setHotkeyHelpOpen(false)}/>
       </Fragment>
     );
