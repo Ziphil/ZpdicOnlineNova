@@ -20,7 +20,7 @@
 .caution {
   @include line-height($tooltip-line-height);
   margin: $small-margin 0rpx 0rpx 0rpx;
-  font-size: $tiny-font-size;
+  font-size: $small-font-size;
   color: schemed-color(accent, red);
 }
 
