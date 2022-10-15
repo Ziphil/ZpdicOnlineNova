@@ -32,8 +32,8 @@ import {
 type DropdownContextValue = {
   onSet?: (value: any) => void
 };
-export const dropdownContext = createContext<DropdownContextValue>({
-});
+export const dropdownContext = createContext<DropdownContextValue>({});
+export const DropdownContextProvider = dropdownContext["Provider"];
 
 
 export const Dropdown = create(
@@ -122,7 +122,6 @@ export const Dropdown = create(
       openingRef.current = false;
     });
 
-    const ContextProvider = dropdownContext["Provider"];
     const contextValue = useMemo(() => ({onSet: handleSet}), [handleSet]);
     const actualOpen = children.length > 0 && ((autoMode !== null) ? currentOpen : open);
     const data = DataUtil.create({
@@ -133,9 +132,9 @@ export const Dropdown = create(
     const node = (
       <div styleName="root" className={className} ref={setPopupElement} style={styles.popper} {...attributes.popper} {...data}>
         <div styleName="arrow" ref={setArrowElement} style={styles.arrow} {...attributes.arrow}/>
-        <ContextProvider value={contextValue}>
+        <DropdownContextProvider value={contextValue}>
           {children}
-        </ContextProvider>
+        </DropdownContextProvider>
       </div>
     );
     return node;
