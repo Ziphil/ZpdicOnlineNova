@@ -48,11 +48,7 @@ const UploadDictionaryForm = create(
     }, [number, file, requestFile, onSubmit, addInformationPopup]);
 
     const validate = function (file: File): string | null {
-      if (file.size <= 5 * 1024 * 1024) {
-        return null;
-      } else {
-        return PopupUtil.getMessage(intl, "dictionarySizeTooLarge");
-      }
+      return (file.size <= 5 * 1024 * 1024) ? null : PopupUtil.getMessage(intl, "dictionarySizeTooLarge");
     };
     const node = (
       <Fragment>

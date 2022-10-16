@@ -19,6 +19,9 @@ import {
 import {
   DataUtil
 } from "/client/util/data";
+import {
+  mergeRefs
+} from "/client/util/ref";
 
 
 export const FileInput = create(
@@ -72,24 +75,24 @@ export const FileInput = create(
         setErrorMessage(null);
       }
       setFileName(fileName);
-    }, [file, validate]);
+    }, [file]);
 
     const inputData = DataUtil.create({
       error: errorMessage !== null
     });
     const node = (
       <div styleName="root" className={className}>
-        <div styleName="root-inner">
+        <div styleName="root-inner" ref={setReferenceElement}>
           <label styleName="input-container">
             <Label text={inputLabel} variant={(errorMessage === null) ? "normal" : "error"}/>
-            <input styleName="input" type="text" value={fileName} readOnly={true} ref={inputRef} {...inputData}/>
+            <input styleName="input" type="text" value={fileName} readOnly={true} ref={mergeRefs([inputRef, setAutoElement])} {...inputData}/>
           </label>
           <label styleName="button">
             {buttonLabel ?? trans("fileInput.button")}
             <input styleName="original" type="file" onChange={handleChange}/>
           </label>
         </div>
-        <Tooltip fillWidth={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
+        <Tooltip showArrow={true} fillWidth={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
           {errorMessage}
         </Tooltip>
       </div>
