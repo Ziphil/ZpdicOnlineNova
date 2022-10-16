@@ -6,7 +6,7 @@ import {
 import Drawer from "/client/component/atom/drawer";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Selection from "/client/component/atom/selection";
-import WordEditor from "/client/component/compound/word-editor-beta";
+import WordEditor from "/client/component/compound/word-editor";
 import {
   create
 } from "/client/component/create";

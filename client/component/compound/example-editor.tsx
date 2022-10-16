@@ -57,7 +57,7 @@ import {
 
 
 const ExampleEditor = create(
-  require("./example-editor-beta.scss"), "ExampleEditor",
+  require("./example-editor.scss"), "ExampleEditor",
   function ({
     dictionary,
     example,
@@ -176,7 +176,7 @@ const ExampleEditor = create(
 
 
 const ExampleEditorRoot = create(
-  require("./example-editor-beta.scss"),
+  require("./example-editor.scss"),
   function ({
     dictionary,
     example,
@@ -237,7 +237,7 @@ const ExampleEditorRoot = create(
 
 
 const ExampleEditorSentence = create(
-  require("./example-editor-beta.scss"),
+  require("./example-editor.scss"),
   function ({
     dictionary,
     tempExample,
@@ -282,7 +282,7 @@ const ExampleEditorSentence = create(
 
 
 const ExampleEditorWords = create(
-  require("./example-editor-beta.scss"),
+  require("./example-editor.scss"),
   function ({
     dictionary,
     tempExample,
@@ -322,7 +322,7 @@ const ExampleEditorWords = create(
 
 
 const ExampleEditorWord = create(
-  require("./example-editor-beta.scss"),
+  require("./example-editor.scss"),
   function ({
     dictionary,
     tempExample,

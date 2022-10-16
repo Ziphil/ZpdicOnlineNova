@@ -66,7 +66,7 @@ import {
 
 
 const WordEditor = create(
-  require("./word-editor-beta.scss"), "WordEditor",
+  require("./word-editor.scss"), "WordEditor",
   function ({
     dictionary,
     word,
@@ -208,7 +208,7 @@ const WordEditor = create(
 
 
 const WordEditorRoot = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     word,
@@ -267,7 +267,7 @@ const WordEditorRoot = create(
 
 
 const WordEditorName = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -329,7 +329,7 @@ const WordEditorName = create(
 
 
 const WordEditorTags = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -371,7 +371,7 @@ const WordEditorTags = create(
 
 
 const WordEditorTag = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -423,7 +423,7 @@ const WordEditorTag = create(
 
 
 const WordEditorEquivalents = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -465,7 +465,7 @@ const WordEditorEquivalents = create(
 
 
 const WordEditorEquivalent = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -524,7 +524,7 @@ const WordEditorEquivalent = create(
 
 
 const WordEditorInformations = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -566,7 +566,7 @@ const WordEditorInformations = create(
 
 
 const WordEditorInformation = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -626,7 +626,7 @@ const WordEditorInformation = create(
 
 
 const WordEditorVariations = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -668,7 +668,7 @@ const WordEditorVariations = create(
 
 
 const WordEditorVariation = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -727,7 +727,7 @@ const WordEditorVariation = create(
 
 
 const WordEditorRelations = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -771,7 +771,7 @@ const WordEditorRelations = create(
 
 
 const WordEditorRelation = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,

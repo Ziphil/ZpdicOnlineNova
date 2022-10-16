@@ -15,8 +15,8 @@ import {
 import {
   AsyncOrSync
 } from "ts-essentials";
-import type ExampleEditor from "/client/component/compound/example-editor-beta";
-import type WordEditor from "/client/component/compound/word-editor-beta";
+import type ExampleEditor from "/client/component/compound/example-editor";
+import type WordEditor from "/client/component/compound/word-editor";
 import {
   EditableExample,
   EditableWord

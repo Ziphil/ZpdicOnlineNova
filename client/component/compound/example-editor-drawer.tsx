@@ -4,7 +4,7 @@ import {
   ReactElement
 } from "react";
 import Drawer from "/client/component/atom/drawer";
-import ExampleEditor from "/client/component/compound/example-editor-beta";
+import ExampleEditor from "/client/component/compound/example-editor";
 import {
   create
 } from "/client/component/create";
