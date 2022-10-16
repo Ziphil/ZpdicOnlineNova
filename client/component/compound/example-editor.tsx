@@ -46,7 +46,9 @@ import {
   LinkedWord,
   Word
 } from "/client/skeleton/dictionary";
-import {DataUtil} from "/client/util/data";
+import {
+  DataUtil
+} from "/client/util/data";
 import {
   deleteAt,
   moveAt
@@ -61,12 +63,14 @@ const ExampleEditor = create(
   function ({
     dictionary,
     example,
+    onTempSet,
     onEditConfirm,
     onDiscardConfirm,
     onCancel
   }: {
     dictionary: EnhancedDictionary,
     example: Example | null,
+    onTempSet?: (tempExample: TempEditableExample) => void,
     onEditConfirm?: (example: EditableExample, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
     onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
     onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
@@ -84,11 +88,12 @@ const ExampleEditor = create(
       const wrapper = function (...args: T): void {
         setTempExample((tempExample) => {
           setter(tempExample, ...args);
+          onTempSet?.(tempExample);
           return {...tempExample};
         });
       };
       return wrapper;
-    }, [setTempExample]);
+    }, [onTempSet, setTempExample]);
 
     const openWordChooser = useCallback(function (index: number): void {
       editingWordIndexRef.current = index;
@@ -197,34 +202,23 @@ const ExampleEditorRoot = create(
     setAlertOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
-    const [mainShown, setMainShown] = useState(true);
     const [, {trans}] = useIntl();
 
-    const headName = (example !== null) ? trans("exampleEditor.existingExample", {number: example.number.toString()}) : trans("exampleEditor.newExample");
     const innerProps = {dictionary, tempExample, mutateExample};
-    const mainData = DataUtil.create({
-      hidden: !mainShown
-    });
     const node = (
       <div styleName="root">
-        <div styleName="head-name" onClick={() => setMainShown((mainShown) => !mainShown)}>
-          <span styleName="head-icon"><Icon name={(mainShown) ? "circle-chevron-down" : "circle-chevron-right"}/></span>
-          {headName}
+        <div styleName="editor">
+          <ExampleEditorSentence {...innerProps}/>
+          <ExampleEditorWords {...innerProps} {...{openWordChooser}}/>
         </div>
-        <div styleName="main" {...mainData}>
-          <div styleName="editor">
-            <ExampleEditorSentence {...innerProps}/>
-            <ExampleEditorWords {...innerProps} {...{openWordChooser}}/>
-          </div>
-          <div styleName="footer">
-            <div/>
-            <div styleName="confirm-button-container">
-              <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
-              {(example !== null) && (
-                <Button label={trans("exampleEditor.discard")} iconName="trash-alt" scheme="red" reactive={true} onClick={() => setAlertOpen(true)}/>
-              )}
-              <Button label={trans("exampleEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editExample}/>
-            </div>
+        <div styleName="footer">
+          <div/>
+          <div styleName="confirm-button-container">
+            <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
+            {(example !== null) && (
+              <Button label={trans("exampleEditor.discard")} iconName="trash-alt" scheme="red" reactive={true} onClick={() => setAlertOpen(true)}/>
+            )}
+            <Button label={trans("exampleEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editExample}/>
           </div>
         </div>
       </div>
