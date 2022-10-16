@@ -1,7 +1,7 @@
 //
 
 import {
-  ReactElement
+  ReactElement, useEffect
 } from "react";
 import Drawer from "/client/component/atom/drawer";
 import DropdownItem from "/client/component/atom/dropdown-item";
@@ -32,6 +32,12 @@ const WordEditorDrawer = create(
     useHotkey("toggleWordEditor", () => {
       setEditorOpen((wordEditorOpen) => !wordEditorOpen);
     }, []);
+
+    useEffect(() => {
+      if (editorProps.length <= 0) {
+        setEditorOpen(false);
+      }
+    }, [editorProps.length, setEditorOpen]);
 
     const node = (
       <Drawer

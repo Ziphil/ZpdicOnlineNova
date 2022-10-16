@@ -27,6 +27,9 @@ import {
   QueryClientProvider
 } from "react-query";
 import {
+  RecoilRoot
+} from "recoil";
+import {
   create
 } from "/client/component/create";
 import {
@@ -96,11 +99,13 @@ const Root = create(
       <DndProvider backend={DndBackend}>
         <QueryClientProvider client={queryClient}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-            <Router location={location} routes={routes} caseSensitive={true}>
-              <InnerRoot>
-                <Outlet/>
-              </InnerRoot>
-            </Router>
+            <RecoilRoot>
+              <Router location={location} routes={routes} caseSensitive={true}>
+                <InnerRoot>
+                  <Outlet/>
+                </InnerRoot>
+              </Router>
+            </RecoilRoot>
           </IntlProvider>
         </QueryClientProvider>
       </DndProvider>
