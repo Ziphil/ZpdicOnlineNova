@@ -45,6 +45,14 @@
   stroke: color(background);
 }
 
+.root :global(.c3-chart-arc) text {
+  fill: schemed-color(button-text, primary);
+}
+
+.root :global(.c3-legend-item) text {
+  fill: color(text);
+}
+
 .root :global(.c3-target.c3-defocused) {
   opacity: 0.5 !important;
 }
@@ -55,5 +63,5 @@
   line-height: $tooltip-line-height;
   border: 1rpx transparent solid;
   border-radius: $small-border-radius;
-  background-color: white;
+  background-color: color(input-background);
 }

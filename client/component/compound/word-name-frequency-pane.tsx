@@ -65,7 +65,7 @@ function calcChartSpec(frequencies: WordNameFrequencies, othersString: string): 
   const formerColumns = rawColumns.slice(0, 20);
   const otherColumns = (rawColumns.length > 20) ? [[othersString, rawColumns.slice(20, -1).reduce((sum, column) => sum + column[1], 0)]] : [];
   const columns = [...formerColumns, ...otherColumns];
-  const colors = Object.fromEntries([[othersString, "hsl(30, 40%, 50%)"]]);
+  const colors = Object.fromEntries([[othersString, "var(--accent-color)"]]);
   const data = {columns, colors, type: "pie", order: null} as ChartData;
   return {data};
 }

@@ -27,11 +27,16 @@ $colors: (
   highlight-orange: hsl(30, 60%, 75%),
   highlight-lime: hsl(90, 60%, 75%),
   highlight-green: hsl(120, 60%, 75%),
-  highlight-cyan: hsl(180, 60%, 75%),
+  highlight-cyan: hsl(170, 60%, 75%),
   highlight-sky: hsl(200, 60%, 75%),
-  highlight-purple: hsl(280, 60%, 75%),
+  highlight-purple: hsl(270, 60%, 75%),
   highlight-magenta: hsl(320, 60%, 75%),
-  highlight-gray: hsl(0, 0%, 40%)
+  highlight-gray: hsl(0, 0%, 40%),
+  chart-sky: hsl(200, 50%, 65%),
+  chart-green: hsl(120, 35%, 70%),
+  chart-purple: hsl(270, 25%, 70%),
+  chart-yellow: hsl(60, 35%, 70%),
+  chart-magenta: hsl(320, 20%, 70%),
 );
 
 $schemed-colors: (

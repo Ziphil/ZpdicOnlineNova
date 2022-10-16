@@ -71,7 +71,7 @@ const Chart = create(
         pie: {expand: false, label: {format: (value, ratio, id) => id}},
         legend: {show: false, position: "right"},
         tooltip: {contents: renderTooltip},
-        color: {pattern: ["hsl(200, 60%, 45%)", "hsl(140, 45%, 50%)", "hsl(260, 30%, 50%)", "hsl(60, 45%, 50%)", "hsl(330, 30%, 50%)"]}
+        color: {pattern: ["var(--chart-sky-color)", "var(--chart-green-color)", "var(--chart-purple-color)", "var(--chart-yellow-color)", "var(--chart-magenta-color)"]}
       } as ChartConfig;
       const finalConfig = merge(defaultConfig, config);
       chartRef.current = generateChart({bindto: rootRef.current, data, ...finalConfig});
