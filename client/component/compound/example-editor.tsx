@@ -200,7 +200,6 @@ const ExampleEditorRoot = create(
     const [mainShown, setMainShown] = useState(true);
     const [, {trans}] = useIntl();
 
-
     const headName = (example !== null) ? trans("exampleEditor.existingExample", {number: example.number.toString()}) : trans("exampleEditor.newExample");
     const innerProps = {dictionary, tempExample, mutateExample};
     const mainData = DataUtil.create({

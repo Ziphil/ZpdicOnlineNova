@@ -49,7 +49,7 @@ const WordEditorDrawer = create(
             <div styleName="selection-container">
               <Selection label={trans("wordEditorDrawer.editing")} value={editingId} onSet={setEditingId}>
                 {editorProps.map((editorProps) => (
-                  <DropdownItem key={editorProps.id} value={editorProps.id}>{editorProps.id}</DropdownItem>
+                  <DropdownItem key={editorProps.id} value={editorProps.id}>{editorProps.name || trans("wordEditorDrawer.noName")}</DropdownItem>
                 ))}
               </Selection>
             </div>

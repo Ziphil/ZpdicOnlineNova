@@ -72,6 +72,7 @@ const WordEditor = create(
     word,
     defaultName,
     defaultEquivalentName,
+    onTempSet,
     onEditConfirm,
     onDiscardConfirm,
     onCancel
@@ -80,6 +81,7 @@ const WordEditor = create(
     word: Word | null,
     defaultName?: string,
     defaultEquivalentName?: string,
+    onTempSet?: (tempWord: TempEditableWord) => void,
     onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
@@ -98,11 +100,12 @@ const WordEditor = create(
       const wrapper = function (...args: T): void {
         setTempWord((tempWord) => {
           setter(tempWord, ...args);
+          onTempSet?.(tempWord);
           return {...tempWord};
         });
       };
       return wrapper;
-    }, []);
+    }, [onTempSet]);
 
     const openRelationChooser = useCallback(function (index: number): void {
       editingRelationIndexRef.current = index;

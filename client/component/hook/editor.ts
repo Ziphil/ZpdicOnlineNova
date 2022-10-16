@@ -12,9 +12,6 @@ import {
 import {
   createGlobalState
 } from "react-use";
-import {
-  AsyncOrSync
-} from "ts-essentials";
 import type ExampleEditor from "/client/component/compound/example-editor";
 import type WordEditor from "/client/component/compound/word-editor";
 import {
@@ -23,8 +20,8 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-export function createEditor<I, P extends EditorProps<I>>(): [() => (props: P) => void, () => UseEditorPropsReturn<P>] {
-  const useRawEditorProps = createGlobalState<Array<P & {id: string}>>([]);
+export function createEditor<P extends WordEditorProps | ExampleEditorProps>(): [() => (props: P) => void, () => UseEditorPropsReturn<P>] {
+  const useRawEditorProps = createGlobalState<Array<ExtendedEditorProps<P>>>([]);
   const useRawEditorOpen = createGlobalState(false);
   const useRawEditingId = createGlobalState("");
   const useEditor = function (): (props: P) => void {
@@ -33,7 +30,12 @@ export function createEditor<I, P extends EditorProps<I>>(): [() => (props: P) =
     const [, setEditingId] = useRawEditingId();
     const addEditor = useCallback(function (props: P): void {
       const id = nanoid();
-      const onEditConfirm = async function (item: I, event: MouseEvent<HTMLButtonElement>): Promise<void> {
+      const name = ("word" in props) ? props.word?.name : props.example?.sentence;
+      const onTempSet = function (tempItem: any): void {
+        const name = ("name" in tempItem) ? tempItem.name : tempItem.sentence;
+        setEditorProps((editorProps) => editorProps.map((editorProp) => (editorProp.id === id) ? {...editorProp, name} : editorProp));
+      };
+      const onEditConfirm = async function (item: EditableWord & EditableExample, event: MouseEvent<HTMLButtonElement>): Promise<void> {
         await props.onEditConfirm?.(item, event);
         setEditorProps((previousProps) => {
           const nextProps = previousProps.filter((previousProp) => previousProp.id !== id);
@@ -63,7 +65,7 @@ export function createEditor<I, P extends EditorProps<I>>(): [() => (props: P) =
           return nextProps;
         });
       };
-      setEditorProps((previousProps) => [...previousProps, {id, ...props, onEditConfirm, onDiscardConfirm, onCancel}]);
+      setEditorProps((previousProps) => [...previousProps, {id, name, ...props, onTempSet, onEditConfirm, onDiscardConfirm, onCancel}]);
       setEditorOpen(true);
       setEditingId(id);
     }, [setEditorProps, setEditorOpen, setEditingId]);
@@ -78,16 +80,15 @@ export function createEditor<I, P extends EditorProps<I>>(): [() => (props: P) =
   return [useEditor, useEditorProps];
 }
 
-export const [useWordEditor, useWordEditorProps] = createEditor<EditableWord, Parameters<typeof WordEditor>[0]>();
-export const [useExampleEditor, useExampleEditorProps] = createEditor<EditableExample, Parameters<typeof ExampleEditor>[0]>();
+export const [useWordEditor, useWordEditorProps] = createEditor<WordEditorProps>();
+export const [useExampleEditor, useExampleEditorProps] = createEditor<ExampleEditorProps>();
 
-type EditorProps<I> = {
-  onEditConfirm?: (item: I, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
-  onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
-  onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
-};
+type ExtendedEditorProps<P> = P & {id: string, name?: string};
+type WordEditorProps = Parameters<typeof WordEditor>[0];
+type ExampleEditorProps = Parameters<typeof ExampleEditor>[0];
+
 type UseEditorPropsReturn<P> = {
-  editorProps: Array<P & {id: string}>,
+  editorProps: Array<ExtendedEditorProps<P>>,
   editorOpen: boolean,
   setEditorOpen: Dispatch<SetStateAction<boolean>>,
   editingId: string,
