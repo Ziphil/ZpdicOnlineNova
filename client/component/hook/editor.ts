@@ -23,12 +23,14 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-export function createEditor<I, P extends EditorProps<I>>(): [CreateEditorHook<P>, CreateEditorPropsHook<P>] {
+export function createEditor<I, P extends EditorProps<I>>(): [() => (props: P) => void, () => UseEditorPropsReturn<P>] {
   const useRawEditorProps = createGlobalState<Array<P & {id: string}>>([]);
   const useRawEditorOpen = createGlobalState(false);
+  const useRawEditingId = createGlobalState("");
   const useEditor = function (): (props: P) => void {
     const [, setEditorProps] = useRawEditorProps();
     const [, setEditorOpen] = useRawEditorOpen();
+    const [, setEditingId] = useRawEditingId();
     const addEditor = useCallback(function (props: P): void {
       const id = nanoid();
       const onEditConfirm = async function (item: I, event: MouseEvent<HTMLButtonElement>): Promise<void> {
@@ -63,13 +65,15 @@ export function createEditor<I, P extends EditorProps<I>>(): [CreateEditorHook<P
       };
       setEditorProps((previousProps) => [...previousProps, {id, ...props, onEditConfirm, onDiscardConfirm, onCancel}]);
       setEditorOpen(true);
-    }, [setEditorProps, setEditorOpen]);
+      setEditingId(id);
+    }, [setEditorProps, setEditorOpen, setEditingId]);
     return addEditor;
   };
-  const useEditorProps = function (): [Array<P & {id: string}>, boolean, Dispatch<SetStateAction<boolean>>] {
+  const useEditorProps = function (): UseEditorPropsReturn<P> {
     const [editorProps] = useRawEditorProps();
     const [editorOpen, setEditorOpen] = useRawEditorOpen();
-    return [editorProps, editorOpen, setEditorOpen];
+    const [editingId, setEditingId] = useRawEditingId();
+    return {editorProps, editorOpen, setEditorOpen, editingId, setEditingId};
   };
   return [useEditor, useEditorProps];
 }
@@ -82,5 +86,10 @@ type EditorProps<I> = {
   onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>,
   onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
 };
-type CreateEditorHook<P> = () => (props: P) => void;
-type CreateEditorPropsHook<P> = () => [Array<P & {id: string}>, boolean, Dispatch<SetStateAction<boolean>>];
+type UseEditorPropsReturn<P> = {
+  editorProps: Array<P & {id: string}>,
+  editorOpen: boolean,
+  setEditorOpen: Dispatch<SetStateAction<boolean>>,
+  editingId: string,
+  setEditingId: Dispatch<SetStateAction<string>>
+};

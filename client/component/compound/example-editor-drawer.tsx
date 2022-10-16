@@ -22,25 +22,25 @@ const ExampleEditorDrawer = create(
   }): ReactElement {
 
     const [, {trans}] = useIntl();
-    const [exampleEditorProps, exampleEditorOpen, setExampleEditorOpen] = useExampleEditorProps();
+    const {editorProps, editorOpen, setEditorOpen} = useExampleEditorProps();
 
     useHotkey("toggleExampleEditor", () => {
-      setExampleEditorOpen((exampleEditorOpen) => !exampleEditorOpen);
+      setEditorOpen((exampleEditorOpen) => !exampleEditorOpen);
     }, []);
 
     const node = (
       <Drawer
         title={trans("exampleEditor.title")}
         iconName="custom-example"
-        badgeValue={(exampleEditorProps.length > 0) ? exampleEditorProps.length : undefined}
+        badgeValue={(editorProps.length > 0) ? editorProps.length : undefined}
         tabPosition="bottom"
-        open={exampleEditorOpen}
-        onOpen={() => setExampleEditorOpen(true)}
-        onClose={() => setExampleEditorOpen(false)}
+        open={editorOpen}
+        onOpen={() => setEditorOpen(true)}
+        onClose={() => setEditorOpen(false)}
         outsideClosable={true}
       >
-        {exampleEditorProps.map((props) => (
-          <ExampleEditor key={props.id} {...props}/>
+        {editorProps.map((editorProp) => (
+          <ExampleEditor key={editorProp.id} {...editorProp}/>
         ))}
       </Drawer>
     );

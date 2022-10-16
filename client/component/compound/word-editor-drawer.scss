@@ -5,6 +5,9 @@
 
 .selection-container {
   margin-block-end: $huge-margin;
+}
+
+.editor-container {
   &[data-hidden] {
     display: none;
   }

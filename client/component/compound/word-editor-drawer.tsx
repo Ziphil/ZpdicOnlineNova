@@ -1,8 +1,7 @@
 //
 
 import {
-  ReactElement,
-  useState
+  ReactElement
 } from "react";
 import Drawer from "/client/component/atom/drawer";
 import DropdownItem from "/client/component/atom/dropdown-item";
@@ -28,9 +27,7 @@ const WordEditorDrawer = create(
   }): ReactElement {
 
     const [, {trans}] = useIntl();
-    const [editorProps, editorOpen, setEditorOpen] = useWordEditorProps();
-
-    const [editingId, setEditingId] = useState<string>("");
+    const {editorProps, editorOpen, setEditorOpen, editingId, setEditingId} = useWordEditorProps();
 
     useHotkey("toggleWordEditor", () => {
       setEditorOpen((wordEditorOpen) => !wordEditorOpen);
