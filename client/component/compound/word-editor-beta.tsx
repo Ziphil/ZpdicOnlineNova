@@ -233,39 +233,29 @@ const WordEditorRoot = create(
     setResourceListOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
-    const [mainShown, setMainShown] = useState(true);
     const [, {trans}] = useIntl();
 
-    const mainData = DataUtil.create({
-      hidden: !mainShown
-    });
     const innerProps = {dictionary, tempWord, mutateWord, createSuggest};
     const node = (
       <div styleName="root">
-        <div styleName="head-name" onClick={() => setMainShown((mainShown) => !mainShown)}>
-          <span styleName="head-icon"><Icon name={(mainShown) ? "circle-chevron-down" : "circle-chevron-right"}/></span>
-          {tempWord.name}
+        <div styleName="editor">
+          <WordEditorName {...innerProps}/>
+          <WordEditorTags {...innerProps}/>
+          <WordEditorEquivalents {...innerProps}/>
+          <WordEditorInformations {...innerProps}/>
+          <WordEditorVariations {...innerProps}/>
+          <WordEditorRelations {...innerProps} {...{openRelationChooser}}/>
         </div>
-        <div styleName="main" {...mainData}>
-          <div styleName="editor">
-            <WordEditorName {...innerProps}/>
-            <WordEditorTags {...innerProps}/>
-            <WordEditorEquivalents {...innerProps}/>
-            <WordEditorInformations {...innerProps}/>
-            <WordEditorVariations {...innerProps}/>
-            <WordEditorRelations {...innerProps} {...{openRelationChooser}}/>
+        <div styleName="footer">
+          <div styleName="confirm-button-container">
+            <Button label={trans("wordEditor.resource")} iconName="image" onClick={() => setResourceListOpen(true)}/>
           </div>
-          <div styleName="footer">
-            <div styleName="confirm-button-container">
-              <Button label={trans("wordEditor.resource")} iconName="image" onClick={() => setResourceListOpen(true)}/>
-            </div>
-            <div styleName="confirm-button-container">
-              <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
-              {(word !== null) && (
-                <Button label={trans("wordEditor.discard")} iconName="trash-alt" scheme="red" onClick={() => setAlertOpen(true)}/>
-              )}
-              <Button label={trans("wordEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editWord}/>
-            </div>
+          <div styleName="confirm-button-container">
+            <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
+            {(word !== null) && (
+              <Button label={trans("wordEditor.discard")} iconName="trash-alt" scheme="red" onClick={() => setAlertOpen(true)}/>
+            )}
+            <Button label={trans("wordEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editWord}/>
           </div>
         </div>
       </div>

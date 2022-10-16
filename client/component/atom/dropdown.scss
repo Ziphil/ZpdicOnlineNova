@@ -15,8 +15,7 @@
     max-height: 150rpx;
     overflow-y: auto;
   }
-  &[data-hidden="true"],
-  &[data-popper-reference-hidden="true"] {
+  &[data-hidden="true"] {
     visibility: hidden;
     pointer-events: none;
   }

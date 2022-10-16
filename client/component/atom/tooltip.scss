@@ -11,8 +11,7 @@
   border-radius: $small-border-radius;
   pointer-events: none;
   z-index: 50;
-  &[data-hidden="true"],
-  &[data-popper-reference-hidden="true"] {
+  &[data-hidden="true"] {
     visibility: hidden;
     pointer-events: none;
   }

@@ -1,9 +1,12 @@
 //
 
 import {
-  ReactElement
+  ReactElement,
+  useState
 } from "react";
 import Drawer from "/client/component/atom/drawer";
+import DropdownItem from "/client/component/atom/dropdown-item";
+import Selection from "/client/component/atom/selection";
 import WordEditor from "/client/component/compound/word-editor-beta";
 import {
   create
@@ -13,6 +16,9 @@ import {
   useIntl,
   useWordEditorProps
 } from "/client/component/hook";
+import {
+  DataUtil
+} from "/client/util/data";
 
 
 const WordEditorDrawer = create(
@@ -22,27 +28,66 @@ const WordEditorDrawer = create(
   }): ReactElement {
 
     const [, {trans}] = useIntl();
-    const [wordEditorProps, wordEditorOpen, setWordEditorOpen] = useWordEditorProps();
+    const [editorProps, editorOpen, setEditorOpen] = useWordEditorProps();
+
+    const [editingId, setEditingId] = useState<string>("");
 
     useHotkey("toggleWordEditor", () => {
-      setWordEditorOpen((wordEditorOpen) => !wordEditorOpen);
+      setEditorOpen((wordEditorOpen) => !wordEditorOpen);
     }, []);
 
     const node = (
       <Drawer
         title={trans("wordEditor.title")}
         iconName="custom-word"
-        badgeValue={(wordEditorProps.length > 0) ? wordEditorProps.length : undefined}
+        badgeValue={(editorProps.length > 0) ? editorProps.length : undefined}
         tabPosition="top"
-        open={wordEditorOpen}
-        onOpen={() => setWordEditorOpen(true)}
-        onClose={() => setWordEditorOpen(false)}
+        open={editorOpen}
+        onOpen={() => setEditorOpen(true)}
+        onClose={() => setEditorOpen(false)}
         outsideClosable={true}
       >
-        {wordEditorProps.map((props) => (
-          <WordEditor key={props.id} {...props}/>
-        ))}
+        {(editorProps.length > 0) && (
+          <>
+            <div styleName="selection-container">
+              <Selection label={trans("wordEditorDrawer.editing")} value={editingId} onSet={setEditingId}>
+                {editorProps.map((editorProps) => (
+                  <DropdownItem key={editorProps.id} value={editorProps.id}>{editorProps.id}</DropdownItem>
+                ))}
+              </Selection>
+            </div>
+            <div styleName="editor-list">
+              {editorProps.map((editorProps) => (
+                <WordEditorDrawerEditor key={editorProps.id} editingId={editingId} editorProps={editorProps}/>
+              ))}
+            </div>
+          </>
+        )}
       </Drawer>
+    );
+    return node;
+
+  }
+);
+
+
+const WordEditorDrawerEditor = create(
+  require("./word-editor-drawer.scss"),
+  function ({
+    editingId,
+    editorProps
+  }: {
+    editingId: string,
+    editorProps: Parameters<typeof WordEditor>[0] & {id: string}
+  }): ReactElement {
+
+    const data = DataUtil.create({
+      hidden: editingId !== editorProps.id
+    });
+    const node = (
+      <div styleName="editor-container" {...data}>
+        <WordEditor {...editorProps}/>
+      </div>
     );
     return node;
 
