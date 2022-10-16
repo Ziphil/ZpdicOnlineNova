@@ -415,6 +415,9 @@ dictionaryStatisticsPane:
   kept: "Kiel estas"
   nfd: "NFD"
   nfc: "NFC"
+exampleEditorDrawer:
+  editing: "Frazo por redakti"
+  noName: "(Neniu frazo)"
 exampleEditor:
   title: "Redakti ekzemplajn frazojn"
   newExample: "Nova frazo"
@@ -588,6 +591,9 @@ userPane:
   alert: >-
     La redakta permeso de tiu uzanto estos revokita.
     Ĉu vi vere certas?
+wordEditorDrawer:
+  editing: "Vorto por redakti"
+  noName: "(Neniu literumo)"
 wordEditor:
   title: "Redakti vortojn"
   basic: "Bazaj informoj"

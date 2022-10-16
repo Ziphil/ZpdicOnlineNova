@@ -415,6 +415,9 @@ dictionaryStatisticsPane:
   kept: "As is"
   nfd: "NFD"
   nfc: "NFC"
+exampleEditorDrawer:
+  editing: "Sentence to edit"
+  noName: "(No sentence)"
 exampleEditor:
   title: "Edit example sentences"
   newExample: "New sentence"
@@ -588,6 +591,9 @@ userPane:
   alert: >-
     This user's edit permission will be revoked.
     Are you really sure?
+wordEditorDrawer:
+  editing: "Word to edit"
+  noName: "(No spelling)"
 wordEditor:
   title: "Edit words"
   basic: "Basic information"

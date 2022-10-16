@@ -413,6 +413,9 @@ dictionaryStatisticsPane:
   kept: "そのまま"
   nfd: "NFD"
   nfc: "NFC"
+exampleEditorDrawer:
+  editing: "編集中の例文"
+  noName: "(例文未設定)"
 exampleEditor:
   title: "例文編集"
   newExample: "新しい例文"
@@ -585,10 +588,13 @@ userPane:
   alert: >-
     このユーザーの編集権限を解除します。
     本当によろしいですか?
+wordEditorDrawer:
+  editing: "編集中の単語"
+  noName: "(綴り未設定)"
 wordEditor:
   title: "単語編集"
   basic: "基本情報"
-  name: "単語"
+  name: "綴り"
   pronunciation: "発音"
   tag: "タグ"
   equivalent: "訳語"
