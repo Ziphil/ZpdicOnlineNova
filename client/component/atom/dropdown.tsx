@@ -2,11 +2,13 @@
 
 import {
   ModifierArguments,
-  Placement
+  Placement,
+  Instance as PopperInstance
 } from "@popperjs/core";
 import {
   ComponentProps,
   ReactElement,
+  Ref,
   createContext,
   useCallback,
   useEffect,
@@ -27,6 +29,7 @@ import {
 import {
   DataUtil
 } from "/client/util/data";
+import {fillRef} from "/client/util/ref";
 
 
 type DropdownContextValue = {
@@ -48,6 +51,7 @@ export const Dropdown = create(
     referenceElement,
     autoElement,
     onSet,
+    popperRef,
     className,
     children
   }: {
@@ -60,6 +64,7 @@ export const Dropdown = create(
     referenceElement: HTMLElement | null,
     autoElement?: HTMLElement | null,
     onSet?: (value: V) => void,
+    popperRef?: Ref<DropdownPopperInstance>,
     className?: string,
     children: Array<ReactElement<ComponentProps<typeof DropdownItem>>>
   }): ReactElement {
@@ -68,7 +73,7 @@ export const Dropdown = create(
     const [popupElement, setPopupElement] = useState<HTMLDivElement | null>(null);
     const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
     const openingRef = useRef(false);
-    const {styles, attributes} = usePopper(referenceElement, popupElement, {
+    const {styles, attributes, ...popper} = usePopper(referenceElement, popupElement, {
       placement,
       modifiers: [
         {name: "offset", options: {offset: (showArrow) ? [0, 8] : [0, -1]}},
@@ -113,6 +118,12 @@ export const Dropdown = create(
       }
     }, [autoMode, autoElement]);
 
+    useEffect(() => {
+      if (popperRef !== undefined) {
+        fillRef(popperRef, {update: popper.update, forceUpdate: popper.forceUpdate});
+      }
+    }, [popperRef, popper.update, popper.forceUpdate]);
+
     useClickAway({current: popupElement}, () => {
       if (autoMode === "click") {
         if (!openingRef.current) {
@@ -142,6 +153,8 @@ export const Dropdown = create(
   }
 );
 
+
+export type DropdownPopperInstance = Pick<PopperInstance, "update" | "forceUpdate">;
 
 function setFillWidth({state}: ModifierArguments<{}>): void {
   state.styles.popper.width = `${state.rects.reference.width}px`;

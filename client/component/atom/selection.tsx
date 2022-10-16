@@ -3,9 +3,13 @@
 import {
   ComponentProps,
   ReactElement,
+  Ref,
   useState
 } from "react";
 import Dropdown from "/client/component/atom/dropdown";
+import {
+  DropdownPopperInstance
+} from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import Label from "/client/component/atom/label";
@@ -23,6 +27,7 @@ export const Selection = create(
     showRequired,
     showOptional,
     onSet,
+    popperRef,
     className,
     children
   }: {
@@ -31,6 +36,7 @@ export const Selection = create(
     showRequired?: boolean,
     showOptional?: boolean,
     onSet?: (value: V) => void,
+    popperRef?: Ref<DropdownPopperInstance>,
     className?: string,
     children: Array<ReactElement<ComponentProps<typeof DropdownItem>>>
   }): ReactElement {
@@ -43,7 +49,7 @@ export const Selection = create(
           <Label text={label} showRequired={showRequired} showOptional={showOptional}/>
           <SelectionSelection {...{value, setReferenceElement, children}}/>
         </label>
-        <Dropdown fillWidth={true} restrictHeight={true} autoMode="focus" referenceElement={referenceElement} autoElement={referenceElement} onSet={onSet}>
+        <Dropdown fillWidth={true} restrictHeight={true} autoMode="focus" referenceElement={referenceElement} autoElement={referenceElement} onSet={onSet} popperRef={popperRef}>
           {children}
         </Dropdown>
       </div>

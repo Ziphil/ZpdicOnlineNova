@@ -2,9 +2,13 @@
 
 import {
   ReactElement,
-  useEffect
+  useEffect,
+  useRef
 } from "react";
 import Drawer from "/client/component/atom/drawer";
+import {
+  DropdownPopperInstance
+} from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Selection from "/client/component/atom/selection";
 import WordEditor from "/client/component/compound/word-editor";
@@ -29,6 +33,7 @@ const WordEditorDrawer = create(
 
     const [, {trans}] = useIntl();
     const {editorProps, editorOpen, setEditorOpen, editingId, setEditingId} = useWordEditorProps();
+    const popperRef = useRef<DropdownPopperInstance>(null);
 
     useHotkey("toggleWordEditor", () => {
       setEditorOpen((wordEditorOpen) => !wordEditorOpen);
@@ -49,12 +54,13 @@ const WordEditorDrawer = create(
         open={editorOpen}
         onOpen={() => setEditorOpen(true)}
         onClose={() => setEditorOpen(false)}
+        onTransitionEnd={() => popperRef.current?.update()}
         outsideClosable={true}
       >
         {(editorProps.length > 0) && (
           <>
             <div styleName="selection-container">
-              <Selection label={trans("wordEditorDrawer.editing")} value={editingId} onSet={setEditingId}>
+              <Selection label={trans("wordEditorDrawer.editing")} value={editingId} onSet={setEditingId} popperRef={popperRef}>
                 {editorProps.map((editorProps) => (
                   <DropdownItem key={editorProps.id} value={editorProps.id}>{editorProps.name || trans("wordEditorDrawer.noName")}</DropdownItem>
                 ))}

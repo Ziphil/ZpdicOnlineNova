@@ -12,9 +12,6 @@ import {
   useState
 } from "react";
 import {
-  mergeRefs
-} from "react-merge-refs";
-import {
   AsyncOrSync
 } from "ts-essentials";
 import Dropdown from "/client/component/atom/dropdown";
@@ -31,6 +28,9 @@ import {
 import {
   DataUtil
 } from "/client/util/data";
+import {
+  mergeRefs
+} from "/client/util/ref";
 
 
 export const Input = create(
