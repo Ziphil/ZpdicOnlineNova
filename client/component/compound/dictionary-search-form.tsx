@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   ReactElement,
   useCallback,
@@ -12,7 +11,7 @@ import {
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
-import Selection from "/client/component/atom/selection-beta";
+import Selection from "/client/component/atom/selection";
 import {
   StylesRecord,
   create

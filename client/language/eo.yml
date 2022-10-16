@@ -244,6 +244,15 @@ addEditInvitationForm:
 addTransferInvitationForm:
   userName: "Uzanta identigilo por inviti"
   confirm: "Inviti"
+changeLanguageForm:
+  confirm: "Ŝanĝi"
+  caution: >-
+    La traduko eble estas malĝusta.
+    Se vi trovos ion strangan en la tradukaĵo, bonvolu sciigi nin per la kontakta formularo.
+changeThemeForm:
+  light: "Hela"
+  dark: "Malhela"
+  confirm: "Ŝanĝi"
 changeDictionaryExplanationForm:
   explanation: "Description"
   confirm: "Ŝanĝi"
@@ -406,6 +415,9 @@ dictionaryStatisticsPane:
   kept: "Kiel estas"
   nfd: "NFD"
   nfc: "NFC"
+exampleEditorDrawer:
+  editing: "Frazo por redakti"
+  noName: "(Neniu frazo)"
 exampleEditor:
   title: "Redakti ekzemplajn frazojn"
   newExample: "Nova frazo"
@@ -505,10 +517,6 @@ invitationPane:
   userName: "Invitanto"
   reject: "Malakcepti"
   accept: "Akcepti"
-languageForm:
-  caution: >-
-    La traduko eble estas malĝusta.
-    Se vi trovos ion strangan en la tradukaĵo, bonvolu sciigi nin per la kontakta formularo.
 loginForm:
   userName: "Uzanta identigilo"
   email: "Retpoŝta adreso"
@@ -583,6 +591,9 @@ userPane:
   alert: >-
     La redakta permeso de tiu uzanto estos revokita.
     Ĉu vi vere certas?
+wordEditorDrawer:
+  editing: "Vorto por redakti"
+  noName: "(Neniu literumo)"
 wordEditor:
   title: "Redakti vortojn"
   basic: "Bazaj informoj"
@@ -647,6 +658,7 @@ dashboardPage:
   dictionary: "Vortaroj"
   notification: "Sciigoj"
   account: "Konto"
+  appearance: "Ŝajno"
   logout: "Elsaluti"
   dictionaryList:
     label: "Vortaroj"
@@ -685,6 +697,13 @@ dashboardPage:
     label: "Forigi"
     description: >-
       Forigi tiun uzanton.
+  changeLanguageForm:
+    label: "Ŝanĝi lingvon"
+    description: <empty>
+  changeThemeForm:
+    label: "Ŝanĝi temon"
+    description: >-
+      Ŝanĝi la koloran temon de tiu retejo.
 dictionaryListPage:
   title: "Vortaroj"
   updatedDate: "Ordigi laŭ dato de ĝisdatigo"

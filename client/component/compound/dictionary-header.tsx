@@ -1,7 +1,6 @@
 //
 
 import downloadFile from "js-file-download";
-import * as react from "react";
 import {
   Dispatch,
   ReactElement,
@@ -12,7 +11,7 @@ import {
   useState
 } from "react";
 import Button from "/client/component/atom/button";
-import Dropdown from "/client/component/atom/dropdown-beta";
+import Dropdown from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import {
@@ -148,7 +147,7 @@ const DictionaryHeader = create(
               <Dropdown
                 placement="bottom-end"
                 showArrow={true}
-                autoMode="click"
+                autoMode="focus"
                 referenceElement={addReferenceElement}
                 autoElement={addReferenceElement}
                 onSet={openEditor}

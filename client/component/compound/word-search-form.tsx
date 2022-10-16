@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   Fragment,
   ReactElement,
@@ -18,7 +17,7 @@ import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
 import Radio from "/client/component/atom/radio";
 import RadioGroup from "/client/component/atom/radio-group";
-import Selection from "/client/component/atom/selection-beta";
+import Selection from "/client/component/atom/selection";
 import AdvancedWordSearchForm from "/client/component/compound/advanced-word-search-form";
 import {
   StylesRecord,

@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   Fragment,
   ReactElement,
@@ -68,7 +67,7 @@ const ChangeDictionarySourceForm = create(
             onSet={(source) => setSource(source)}
           />
           <div styleName="button">
-            <Button label={trans("changeDictionarySourceForm.try")} variant="link" onClick={() => setExecutorOpen(true)}/>
+            <Button label={trans("changeDictionarySourceForm.try")} variant="light" onClick={() => setExecutorOpen(true)}/>
             <Button label={trans("changeDictionarySourceForm.confirm")} reactive={true} onClick={handleClick}/>
           </div>
         </form>

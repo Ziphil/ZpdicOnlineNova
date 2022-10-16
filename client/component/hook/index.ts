@@ -11,4 +11,5 @@ export * from "./popup";
 export * from "./query-state-beta";
 export * from "./request";
 export * from "./router";
+export * from "./theme";
 export * from "./user";

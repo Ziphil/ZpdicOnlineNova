@@ -1,11 +1,11 @@
 //
 
-import * as react from "react";
 import {
   Fragment,
   MouseEvent,
   ReactElement,
-  ReactNode
+  ReactNode,
+  TransitionEvent
 } from "react";
 import Button from "/client/component/atom/button";
 import Icon from "/client/component/atom/icon";
@@ -38,6 +38,7 @@ const Drawer = create(
     onOpen,
     onClose,
     onBack,
+    onTransitionEnd,
     children
   }: {
     open?: boolean,
@@ -51,6 +52,7 @@ const Drawer = create(
     onOpen?: (event: MouseEvent<HTMLElement>) => void,
     onClose?: (event: MouseEvent<HTMLElement>) => void,
     onBack?: (event: MouseEvent<HTMLButtonElement>) => void,
+    onTransitionEnd?: (event: TransitionEvent<HTMLDivElement>) => void,
     children?: ReactNode
   }): ReactElement {
 
@@ -63,7 +65,7 @@ const Drawer = create(
             <div styleName="background" onClick={onBackgroundClick}/>
           )}
           <div styleName="spacer">
-            <div styleName="content-container" {...contentContainerData}>
+            <div styleName="content-container" onTransitionEnd={onTransitionEnd} {...contentContainerData}>
               {(title !== undefined) && <DrawerHeader {...{title, page, showBack, onClose, onBack}}/>}
               <div styleName="content">
                 {(page !== undefined && Array.isArray(children)) ? children[page] : children}

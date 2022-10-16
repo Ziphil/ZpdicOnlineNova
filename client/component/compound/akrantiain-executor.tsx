@@ -4,7 +4,6 @@ import {
   AKRANTIAIN_VERSION,
   Akrantiain
 } from "akrantiain";
-import * as react from "react";
 import {
   MouseEvent,
   ReactElement,

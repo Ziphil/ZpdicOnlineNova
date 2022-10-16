@@ -6,7 +6,7 @@
 }
 
 @function schemed-color($name, $scheme) {
-  @return var(#{"--" + $scheme + "-" + $name + "-color"});
+  @return var(#{"--" + $scheme + "-" + $name + "-schemed-color"});
 }
 
 @mixin color-variables($colors, $schemed-colors) {
@@ -15,7 +15,7 @@
   }
   @each $name, $colors in $schemed-colors {
     @each $scheme, $color in $colors {
-      #{"--" + $scheme + "-" + $name + "-color"}: #{$color};
+      #{"--" + $scheme + "-" + $name + "-schemed-color"}: #{$color};
     }
   }
 }

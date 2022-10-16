@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   ChangeEvent,
   Fragment,
@@ -24,6 +23,7 @@ export const radioContext = createContext<RadioContextValue>({
   value: null,
   name: ""
 });
+export const RadioContextProvider = radioContext["Provider"];
 
 
 export const RadioGroup = create(
@@ -46,13 +46,12 @@ export const RadioGroup = create(
     children?: ReactNode
   }): ReactElement {
 
-    const ContextProvider = radioContext["Provider"];
     const contextValue = useMemo(() => ({value, name, onChange, onSet}), [value, name, onChange, onSet]);
     const node = (
       <RadioGroupContainer {...{withContainer, className}}>
-        <ContextProvider value={contextValue}>
+        <RadioContextProvider value={contextValue}>
           {children}
-        </ContextProvider>
+        </RadioContextProvider>
       </RadioGroupContainer>
     );
     return node;

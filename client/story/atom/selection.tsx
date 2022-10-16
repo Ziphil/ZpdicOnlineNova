@@ -1,13 +1,12 @@
 //
 
-import * as react from "react";
 import {
   useState
 } from "react";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import {
   Selection
-} from "/client/component/atom/selection-beta";
+} from "/client/component/atom/selection";
 import {
   createStory,
   createTemplate
@@ -22,7 +21,7 @@ export default {
 const template = createTemplate<typeof Selection>((props) => {
   const [value, setValue] = useState(props.value);
   const node = (
-    <Selection {...props} value={value} onSet={setValue}/>
+    <Selection {...props} value={value} onSet={(value) => (props.onSet?.(value), setValue(value))}/>
   );
   return node;
 });

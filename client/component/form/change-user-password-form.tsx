@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   ReactElement,
   useCallback,
@@ -54,7 +53,7 @@ const ChangeUserPasswordForm = create(
     const validate = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
     const node = (
       <form styleName="root">
-        <Input label={trans("changeUserPasswordForm.password")} type="flexible" value={password} validate={validate} useTooltip={true} onSet={(password) => setPassword(password)}/>
+        <Input label={trans("changeUserPasswordForm.password")} type="flexible" value={password} validate={validate} onSet={(password) => setPassword(password)}/>
         <Button label={trans("changeUserPasswordForm.confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );

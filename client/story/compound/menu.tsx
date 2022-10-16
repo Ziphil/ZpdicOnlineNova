@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   Menu
 } from "/client/component/compound/menu";

@@ -1,6 +1,7 @@
 @charset "utf-8";
 
 @use "/client/component/theme/light.scss";
+@use "/client/component/theme/dark.scss";
 @import url("https://fonts.googleapis.com/css2?family=Alegreya+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inconsolata&display=swap");
 @import url("https://fonts.googleapis.com/css?family=Simonetta:400&display=swap");
@@ -36,6 +37,11 @@ body {
   text-decoration-skip-ink: none;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
+}
+
+html,
+html * {
+  @include scrollbar(schemed-color(accent, primary), schemed-color(hover-accent, primary), transparent);
 }
 
 :focus-visible {

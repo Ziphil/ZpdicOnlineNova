@@ -3,7 +3,6 @@
 import {
   Navigate
 } from "@tanstack/react-location";
-import * as react from "react";
 import {
   ReactElement,
   ReactNode

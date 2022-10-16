@@ -43,24 +43,11 @@
   position: relative;
 }
 
-.star-wrapper::before {
-  top: 10rpx;
-  left: -8rpx;
-  margin-left: -8rpx;
-  border: 8rpx transparent solid;
-  border-right: 8rpx color(border) solid;
+.arrow {
+  @include arrow(color(background), color(border), 8rpx);
+  inset-inline-start: 0rpx;
+  inset-block-start: 10rpx;
   position: absolute;
-  content: "";
-}
-
-.star-wrapper::after {
-  top: 10rpx;
-  left: -7rpx;
-  margin-left: -8rpx;
-  border: 8rpx transparent solid;
-  border-right: 8rpx color(background) solid;
-  position: absolute;
-  content: "";
 }
 
 .star {

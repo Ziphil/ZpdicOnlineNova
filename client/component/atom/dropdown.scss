@@ -4,67 +4,27 @@
 
 
 .root {
-  position: relative;
-}
-
-.suggestion {
-  margin: -1rpx 0rpx 0rpx 0rpx;
-  background-color: white;
+  background-color: color(input-background);
   border: 1rpx color(border) solid;
   border-radius: $small-border-radius;
   box-sizing: border-box;
-  display: block;
-  position: absolute;
+  display: flex;
+  flex-direction: column;
   z-index: 50;
-  &[data-placement="left"] {
-    left: 0rpx;
-  }
-  &[data-placement="right"] {
-    right: 0rpx;
-  }
-  &[data-show-arrow] {
-    margin: $small-margin 0rpx 0rpx 0rpx;
-  }
-  &[data-fill-width] {
-    width: 100%;
-  }
   &[data-restrict-height] {
     max-height: 150rpx;
     overflow-y: auto;
   }
-}
-
-.suggestion-item {
-  padding: $input-vertical-padding + line-intrusion($line-height) $input-horizontal-padding;
-  text-align: left;
-  outline: none;
-  &:hover {
-    background-color: schemed-color(background, primary);
-    cursor: pointer;
+  &[data-hidden="true"] {
+    visibility: hidden;
+    pointer-events: none;
   }
 }
 
 .arrow {
+  @include arrow(color(input-background), color(border), 6rpx);
   display: none;
-  .suggestion[data-show-arrow] >& {
+  .root[data-show-arrow] >& {
     display: block;
-  }
-  &::before {
-    top: -16rpx;
-    left: 16rpx;
-    margin-left: -8rpx;
-    border: 8rpx transparent solid;
-    border-bottom: 8rpx color(border) solid;
-    position: absolute;
-    content: "";
-  }
-  &::after {
-    top: -15rpx;
-    left: 16rpx;
-    margin-left: -8rpx;
-    border: 8rpx transparent solid;
-    border-bottom: 8rpx white solid;
-    position: absolute;
-    content: "";
   }
 }

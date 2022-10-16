@@ -12,7 +12,7 @@ $blue-base-color: hsl(200, 40%, 50%);
 $colors: (
   background: tint($primary-base-color, 90%),
   strong-background: tint($primary-base-color, 75%),
-  modal-background: rgba(darken($primary-base-color, 50%), 0.5),
+  modal-background: rgba(black, 0.5),
   white-background: tint($primary-base-color, 95%),
   input-background: white,
   text: shade($primary-base-color, 60%),
@@ -22,7 +22,21 @@ $colors: (
   logo: shade($primary-base-color, 40%),
   border: tint($primary-base-color, 50%),
   light-border: tint($primary-base-color, 75%),
-  focus: rgba($primary-base-color, 0.3)
+  focus: rgba($primary-base-color, 0.3),
+  highlight-red: hsl(0, 70%, 40%),
+  highlight-orange: hsl(30, 70%, 40%),
+  highlight-lime: hsl(90, 70%, 40%),
+  highlight-green: hsl(120, 70%, 40%),
+  highlight-cyan: hsl(170, 70%, 40%),
+  highlight-sky: hsl(200, 70%, 40%),
+  highlight-purple: hsl(270, 70%, 40%),
+  highlight-magenta: hsl(320, 70%, 40%),
+  highlight-gray: hsl(0, 0%, 60%),
+  chart-sky: hsl(200, 60%, 45%),
+  chart-green: hsl(120, 45%, 50%),
+  chart-purple: hsl(270, 30%, 50%),
+  chart-yellow: hsl(60, 45%, 50%),
+  chart-magenta: hsl(320, 30%, 50%)
 );
 
 $schemed-colors: (
@@ -137,7 +151,9 @@ $schemed-colors: (
 
 
 html,
-html[data-theme="light"] {
+html[data-theme="light"],
+html:global(.theme-light) {
   @include color-variables($colors, $schemed-colors);
   --badge-background-color: #{color(accent)};
+  color-scheme: light;
 }

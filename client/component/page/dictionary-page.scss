@@ -10,6 +10,17 @@
   margin-inline: auto;
 }
 
+.ad-wrapper {
+  width: 100%;
+  max-width: $page-width;
+  margin-block-end: $huge-margin;
+  margin-inline: auto;
+}
+
+.ad-container {
+  width: 100%;
+}
+
 .suggestion-list-container {
   margin-block-end: $large-margin;
 }

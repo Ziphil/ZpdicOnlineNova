@@ -1,7 +1,6 @@
 //
 
 import * as queryParser from "query-string";
-import * as react from "react";
 import {
   ReactElement
 } from "react";

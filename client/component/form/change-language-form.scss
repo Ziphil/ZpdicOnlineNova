@@ -1,13 +1,20 @@
 @charset "utf-8";
 
 @import "/client/component/mixin.scss";
-@import "/client/component/compound/login-form.scss";
 
+
+.root {
+  display: flex;
+  align-items: baseline;
+}
+
+.root >*:nth-child(2) {
+  margin: 0rpx 0rpx 0rpx $control-horizontal-margin;
+}
 
 .caution {
   @include line-height;
   margin: $large-margin 0rpx 0rpx 0rpx;
   font-size: $small-font-size;
   color: schemed-color(accent, red);
-  text-align: justify;
 }

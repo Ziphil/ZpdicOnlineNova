@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.selection-container {
+  margin-block-end: $huge-margin;
+}
+
+.editor-container {
+  &[data-hidden] {
+    display: none;
+  }
+}

@@ -1,12 +1,12 @@
 //
 
-import * as react from "react";
 import {
   Fragment,
   ReactElement,
   Suspense,
   useCallback
 } from "react";
+import GoogleAd from "/client/component/atom/google-ad";
 import Markdown from "/client/component/atom/markdown";
 import Loading from "/client/component/compound/loading";
 import PaginationButton from "/client/component/compound/pagination-button";
@@ -64,6 +64,11 @@ const DictionaryPage = create(
       <Page dictionary={dictionary} showDictionary={true} showAddLink={canEdit} showSettingLink={canOwn}>
         <div styleName="search-form-container">
           <WordSearchForm dictionary={dictionary} parameter={query.parameter} showOrder={true} showAdvancedSearch={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
+        </div>
+        <div styleName="ad-wrapper">
+          <div styleName="ad-container">
+            <GoogleAd clientId="9429549748934508" slotId="2898231395"/>
+          </div>
         </div>
         {(debouncedQuery.showExplanation) ? (
           <Markdown source={dictionary.explanation ?? ""}/>

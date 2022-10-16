@@ -1,10 +1,9 @@
-//
+// @ts-nocheck
 
 import {
   BaseDecorators,
   Parameters
 } from "@storybook/addons";
-import * as react from "react";
 import {
   createElement
 } from "react";
@@ -17,6 +16,14 @@ export const parameters = {
   },
   grid: {
     cellSize: 16
+  },
+  themes: {
+    default: "light",
+    list: [
+      {name: "light", class: "theme-light", color: "#F7F2ED"},
+      {name: "dark", class: "theme-dark", color: "#2A241E"}
+    ],
+    target: "html"
   }
 } as Parameters;
 

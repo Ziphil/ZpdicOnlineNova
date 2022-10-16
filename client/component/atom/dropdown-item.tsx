@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   MouseEvent,
   ReactElement,
@@ -10,7 +9,7 @@ import {
 } from "react";
 import {
   dropdownContext
-} from "/client/component/atom/dropdown-beta";
+} from "/client/component/atom/dropdown";
 import {
   create
 } from "/client/component/create";

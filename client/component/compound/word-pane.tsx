@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   Fragment,
   MouseEvent,
@@ -13,7 +12,7 @@ import {
   AsyncOrSync
 } from "ts-essentials";
 import Button from "/client/component/atom/button";
-import Dropdown from "/client/component/atom/dropdown-beta";
+import Dropdown from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import Link from "/client/component/atom/link";
@@ -178,7 +177,7 @@ const WordPaneName = create(
                     <Button iconName="ellipsis-h" position="right" nativeRef={setDirectionReferenceElement}/>
                     <Dropdown
                       placement="bottom-end"
-                      autoMode="click"
+                      autoMode="focus"
                       referenceElement={directionReferenceElement}
                       autoElement={directionReferenceElement}
                       onSet={onSubmit}

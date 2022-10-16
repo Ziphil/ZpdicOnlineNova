@@ -10,7 +10,6 @@ import {
   Router
 } from "@tanstack/react-location";
 import * as queryParser from "query-string";
-import * as react from "react";
 import {
   ReactElement,
   useCallback
@@ -28,12 +27,16 @@ import {
   QueryClientProvider
 } from "react-query";
 import {
+  RecoilRoot
+} from "recoil";
+import {
   create
 } from "/client/component/create";
 import {
   queryClient,
   useDefaultLocale,
-  useDefaultMe
+  useDefaultMe,
+  useDefaultTheme
 } from "/client/component/hook";
 import InnerRoot from "/client/component/inner-root";
 import {
@@ -72,7 +75,6 @@ const routes = [
   ...createRoute("/document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
   ...createRoute("/document/:firstPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
   ...createRoute("/document", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
-  ...createRoute("/language", () => import("/client/component/page/language-page"), {type: "none"}),
   ...createRoute("/", () => import("/client/component/page/top-page"), {type: "none", loader: loadTopPage})
 ] as Array<Route>;
 
@@ -85,6 +87,7 @@ const Root = create(
 
     const {ready} = useDefaultMe();
     const {locale, messages} = useDefaultLocale("ja");
+    useDefaultTheme("light");
 
     const handleIntlError = useCallback(function (error: IntlError<any>): void {
       if (error.code !== "MISSING_DATA" && error.code !== "MISSING_TRANSLATION") {
@@ -96,11 +99,13 @@ const Root = create(
       <DndProvider backend={DndBackend}>
         <QueryClientProvider client={queryClient}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-            <Router location={location} routes={routes} caseSensitive={true}>
-              <InnerRoot>
-                <Outlet/>
-              </InnerRoot>
-            </Router>
+            <RecoilRoot>
+              <Router location={location} routes={routes} caseSensitive={true}>
+                <InnerRoot>
+                  <Outlet/>
+                </InnerRoot>
+              </Router>
+            </RecoilRoot>
           </IntlProvider>
         </QueryClientProvider>
       </DndProvider>

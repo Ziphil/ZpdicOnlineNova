@@ -29,7 +29,8 @@ import {
   WordController
 } from "/server/controller/internal";
 import {
-  DictionaryModel
+  DictionaryModel,
+  WordModel
 } from "/server/model/dictionary";
 import {
   LogUtil
@@ -97,12 +98,14 @@ export class Main {
   // アクセスログを出力する morgan の設定をします。
   private setupMorgan(): void {
     const middleware = morgan<Request>((tokens, request, response) => {
-      const method = tokens.method(request, response);
-      const status = +tokens.status(request, response)!;
-      const url = tokens.url(request, response);
+      const method = tokens["method"](request, response);
+      const status = +tokens["status"](request, response)!;
+      const url = tokens["url"](request, response);
+      const baseUrl = request.baseUrl;
       const time = +tokens["total-time"](request, response, 0)!;
+      const query = request.query;
       const body = ("password" in request.body) ? {...request.body, password: "***"} : request.body;
-      const logString = JSON.stringify({url, method, status, time, body});
+      const logString = JSON.stringify({baseUrl, url, method, status, time, query, body});
       return `!<request> ${logString}`;
     });
     this.application.use(middleware);
@@ -158,6 +161,11 @@ export class Main {
       }
       done();
     });
+    agenda.define("discardOldHistoryWords", async (job, done) => {
+      LogUtil.log("worker/discardOldHistoryWords", {});
+      await WordModel.discardOldHistory(90);
+      done();
+    });
     agenda.define("addHistories", async (job, done) => {
       LogUtil.log("worker/addHistories", {});
       await HistoryController.addHistories();
@@ -167,6 +175,7 @@ export class Main {
 
   private setupSchedules(): void {
     agenda.on("ready", () => {
+      agenda.every("0 3 * * *", "discardOldHistoryWords", {}, {timezone: "Asia/Tokyo"});
       agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
       agenda.start();
     });

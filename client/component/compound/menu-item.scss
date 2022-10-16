@@ -12,20 +12,26 @@ $menu-item-horizontal-padding: 15rpx;
   display: flex;
   cursor: pointer;
   &.horizontal {
-    padding: 0rpx $menu-item-horizontal-padding $menu-item-vertical-padding $menu-item-horizontal-padding;
-    margin-bottom: -1rpx;
-    border-bottom: 6rpx transparent solid;
+    padding-inline: $menu-item-horizontal-padding;
+    padding-block-end: $menu-item-vertical-padding;
+    margin-block-end: -1rpx;
+    border-block-end: 6rpx solid transparent;
+    border-start-start-radius: $small-border-radius;
+    border-start-end-radius: $small-border-radius;
     &:hover {
-      border-bottom: 6rpx solid schemed-color(accent, primary);
+      border-block-end: 6rpx solid schemed-color(accent, primary);
     }
     &.highlight {
-      border-bottom: 6rpx solid schemed-color(accent, secondary);
+      border-block-end: 6rpx solid schemed-color(accent, secondary);
     }
   }
   &.vertical {
-    padding: 5rpx 0rpx 5rpx 10rpx;
-    margin-left: -1rpx;
-    border-left: 6rpx transparent solid;
+    padding-block: 6rpx;
+    padding-inline-start: 10rpx;
+    margin-inline-start: -1rpx;
+    border-inline-start: 6rpx solid transparent;
+    border-start-end-radius: $small-border-radius;
+    border-end-end-radius: $small-border-radius;
     &:hover {
       border-left: 6rpx solid schemed-color(accent, primary);
     }
@@ -37,6 +43,9 @@ $menu-item-horizontal-padding: 15rpx;
     @include bold-font;
     --badge-background-color: #{schemed-color(accent, secondary)};
     color: schemed-color(accent, secondary);
+    &:focus-visible {
+      outline: $focus-size solid schemed-color(focus, secondary);
+    }
   }
 }
 

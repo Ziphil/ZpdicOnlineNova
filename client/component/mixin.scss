@@ -117,7 +117,6 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 
 @mixin unordered-list-item($icon, $icon-color, $marker-width) {
   margin-left: $marker-width + $blank-margin;
-  text-align: justify;
   &::before {
     @include icon-font;
     width: $marker-width;
@@ -140,7 +139,6 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
 
 @mixin ordered-list-item($number-color) {
   margin-left: 0.9em + $blank-margin;
-  text-align: justify;
   position: relative;
   counter-increment: ordered-list;
   &::before {
@@ -206,6 +204,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   border-radius: $small-border-radius;
   background-color: schemed-color(button-background, $scheme);
   background-image: schemed-color(button-gradient, $scheme);
+  background-origin: border-box;
   white-space: nowrap;
   position: relative;
   cursor: pointer;
@@ -237,6 +236,7 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   border-radius: $small-border-radius;
   background-color: schemed-color(light-button-background, $scheme);
   background-image: schemed-color(light-button-gradient, $scheme);
+  background-origin: border-box;
   white-space: nowrap;
   position: relative;
   cursor: pointer;
@@ -317,5 +317,24 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   [data-popper-placement^="right"] >&::after {
     transform: translate(-$size * 2, 0rpx);
     border-right: $size $color solid;
+  }
+}
+
+@mixin scrollbar($thumb-color, $hover-thumb-color, $track-color) {
+  scrollbar-color: $thumb-color $track-color;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 6rpx;
+    height: 6rpx;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $thumb-color;
+    border-radius: 6rpx;
+    &:hover {
+      background-color: $hover-thumb-color;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background-color: $track-color;
   }
 }

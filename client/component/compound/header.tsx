@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   ReactElement
 } from "react";
@@ -59,7 +58,9 @@ const Header = create(
               )}
             </div>
             <div styleName="right">
-              <Button label={trans("header.dictionaryList")} iconName="book" variant="simple" hideLabel={true} onClick={() => pushPath("/list")}/>
+              <div styleName="button-container">
+                <Button label={trans("header.dictionaryList")} iconName="book" variant="simple" hideLabel={true} onClick={() => pushPath("/list")}/>
+              </div>
               {(me !== null) && (
                 <>
                   <div styleName="separator"/>

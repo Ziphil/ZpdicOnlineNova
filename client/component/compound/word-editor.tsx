@@ -4,7 +4,6 @@ import cloneDeep from "lodash-es/cloneDeep";
 import {
   nanoid
 } from "nanoid";
-import * as react from "react";
 import {
   Dispatch,
   Fragment,
@@ -67,12 +66,13 @@ import {
 
 
 const WordEditor = create(
-  require("./word-editor-beta.scss"), "WordEditor",
+  require("./word-editor.scss"), "WordEditor",
   function ({
     dictionary,
     word,
     defaultName,
     defaultEquivalentName,
+    onTempSet,
     onEditConfirm,
     onDiscardConfirm,
     onCancel
@@ -81,6 +81,7 @@ const WordEditor = create(
     word: Word | null,
     defaultName?: string,
     defaultEquivalentName?: string,
+    onTempSet?: (tempWord: TempEditableWord) => void,
     onEditConfirm?: (word: EditableWord, event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onDiscardConfirm?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     onCancel?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>
@@ -99,11 +100,12 @@ const WordEditor = create(
       const wrapper = function (...args: T): void {
         setTempWord((tempWord) => {
           setter(tempWord, ...args);
+          onTempSet?.(tempWord);
           return {...tempWord};
         });
       };
       return wrapper;
-    }, []);
+    }, [onTempSet]);
 
     const openRelationChooser = useCallback(function (index: number): void {
       editingRelationIndexRef.current = index;
@@ -209,7 +211,7 @@ const WordEditor = create(
 
 
 const WordEditorRoot = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     word,
@@ -234,39 +236,29 @@ const WordEditorRoot = create(
     setResourceListOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
-    const [mainShown, setMainShown] = useState(true);
     const [, {trans}] = useIntl();
 
-    const mainData = DataUtil.create({
-      hidden: !mainShown
-    });
     const innerProps = {dictionary, tempWord, mutateWord, createSuggest};
     const node = (
       <div styleName="root">
-        <div styleName="head-name" onClick={() => setMainShown((mainShown) => !mainShown)}>
-          <span styleName="head-icon"><Icon name={(mainShown) ? "circle-chevron-down" : "circle-chevron-right"}/></span>
-          {tempWord.name}
+        <div styleName="editor">
+          <WordEditorName {...innerProps}/>
+          <WordEditorTags {...innerProps}/>
+          <WordEditorEquivalents {...innerProps}/>
+          <WordEditorInformations {...innerProps}/>
+          <WordEditorVariations {...innerProps}/>
+          <WordEditorRelations {...innerProps} {...{openRelationChooser}}/>
         </div>
-        <div styleName="main" {...mainData}>
-          <div styleName="editor">
-            <WordEditorName {...innerProps}/>
-            <WordEditorTags {...innerProps}/>
-            <WordEditorEquivalents {...innerProps}/>
-            <WordEditorInformations {...innerProps}/>
-            <WordEditorVariations {...innerProps}/>
-            <WordEditorRelations {...innerProps} {...{openRelationChooser}}/>
+        <div styleName="footer">
+          <div styleName="confirm-button-container">
+            <Button label={trans("wordEditor.resource")} iconName="image" onClick={() => setResourceListOpen(true)}/>
           </div>
-          <div styleName="footer">
-            <div styleName="confirm-button-container">
-              <Button label={trans("wordEditor.resource")} iconName="image" onClick={() => setResourceListOpen(true)}/>
-            </div>
-            <div styleName="confirm-button-container">
-              <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
-              {(word !== null) && (
-                <Button label={trans("wordEditor.discard")} iconName="trash-alt" scheme="red" onClick={() => setAlertOpen(true)}/>
-              )}
-              <Button label={trans("wordEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editWord}/>
-            </div>
+          <div styleName="confirm-button-container">
+            <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
+            {(word !== null) && (
+              <Button label={trans("wordEditor.discard")} iconName="trash-alt" scheme="red" onClick={() => setAlertOpen(true)}/>
+            )}
+            <Button label={trans("wordEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editWord}/>
           </div>
         </div>
       </div>
@@ -278,7 +270,7 @@ const WordEditorRoot = create(
 
 
 const WordEditorName = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -340,7 +332,7 @@ const WordEditorName = create(
 
 
 const WordEditorTags = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -382,7 +374,7 @@ const WordEditorTags = create(
 
 
 const WordEditorTag = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -434,7 +426,7 @@ const WordEditorTag = create(
 
 
 const WordEditorEquivalents = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -476,7 +468,7 @@ const WordEditorEquivalents = create(
 
 
 const WordEditorEquivalent = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -535,7 +527,7 @@ const WordEditorEquivalent = create(
 
 
 const WordEditorInformations = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -577,7 +569,7 @@ const WordEditorInformations = create(
 
 
 const WordEditorInformation = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -637,7 +629,7 @@ const WordEditorInformation = create(
 
 
 const WordEditorVariations = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -679,7 +671,7 @@ const WordEditorVariations = create(
 
 
 const WordEditorVariation = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -738,7 +730,7 @@ const WordEditorVariation = create(
 
 
 const WordEditorRelations = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,
@@ -782,7 +774,7 @@ const WordEditorRelations = create(
 
 
 const WordEditorRelation = create(
-  require("./word-editor-beta.scss"),
+  require("./word-editor.scss"),
   function ({
     dictionary,
     tempWord,

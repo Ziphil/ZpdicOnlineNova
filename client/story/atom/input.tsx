@@ -1,11 +1,11 @@
 //
 
-import * as react from "react";
 import {
   useState
 } from "react";
 import {
-  Input
+  Input,
+  SuggestionSpec
 } from "/client/component/atom/input";
 import {
   createStory,
@@ -56,3 +56,30 @@ export const Flexible = createStory(template, {
     type: "flexible"
   }
 });
+
+export const Validation = createStory(template, {
+  args: {
+    value: "Input",
+    validate: (value) => (value.match(/^[a-z]+/)) ? null : "The value must consist of only lowercase letters."
+  }
+});
+
+export const SyncSuggestion = createStory(template, {
+  args: {
+    value: "Input",
+    suggest
+  }
+});
+
+export const AsyncSuggestion = createStory(template, {
+  args: {
+    value: "Input",
+    suggest: (pattern) => new Promise((resolve) => setInterval(() => resolve(suggest(pattern)), 500))
+  }
+});
+
+function suggest(pattern: string): Array<SuggestionSpec> {
+  const candidates = ["Apple", "Banana", "Grape", "Orange"];
+  const suggestionSpecs = candidates.filter((candidate) => candidate.includes(pattern)).map((candidate) => ({replacement: candidate, node: candidate}));
+  return suggestionSpecs;
+}

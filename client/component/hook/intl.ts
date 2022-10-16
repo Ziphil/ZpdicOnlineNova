@@ -48,6 +48,7 @@ export function useLocale(): [string, ChangeLocaleCallback] {
     globalLocale = locale;
     setLocale(locale);
     setMessages(messages);
+    document.documentElement.setAttribute("lang", locale);
     localStorage.setItem("locale", locale);
   }, [setLocale, setMessages]);
   return [locale, changeLocale];

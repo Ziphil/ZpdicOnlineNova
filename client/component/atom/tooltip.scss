@@ -4,46 +4,30 @@
 
 
 .root {
-  position: relative;
-}
-
-.tooltip {
-  margin: $small-margin 0rpx 0rpx 0rpx;
-  padding: $tooltip-vertical-padding $tooltip-horizontal-padding;
   font-size: $tiny-font-size;
   color: schemed-color(accent, red);
   background-color: schemed-color(background, red);
   border: 1rpx solid schemed-color(border, red);
   border-radius: $small-border-radius;
-  display: none;
-  position: absolute;
   pointer-events: none;
   z-index: 50;
-  :focus-within +& {
-    display: block;
-  }
-  &::before {
-    top: -16rpx;
-    left: 16rpx;
-    margin-left: -8rpx;
-    border: 8rpx transparent solid;
-    border-bottom: 8rpx solid schemed-color(border, red);
-    position: absolute;
-    content: "";
-  }
-  &::after {
-    top: -15rpx;
-    left: 16rpx;
-    margin-left: -8rpx;
-    border: 8rpx transparent solid;
-    border-bottom: 8rpx solid schemed-color(background, red);
-    position: absolute;
-    content: "";
+  &[data-hidden="true"] {
+    visibility: hidden;
+    pointer-events: none;
   }
 }
 
-.tooltip-text {
+.arrow {
+  @include arrow(schemed-color(background, red), schemed-color(border, red), 6rpx);
+  display: none;
+  .root[data-show-arrow] >& {
+    display: block;
+  }
+}
+
+.text {
   margin: 0rpx;
+  padding-block: $tooltip-vertical-padding;
+  padding-inline: $tooltip-horizontal-padding;
   line-height: $tooltip-line-height;
-  text-align: justify;
 }

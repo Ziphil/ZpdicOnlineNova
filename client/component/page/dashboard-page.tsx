@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   ReactElement,
   Suspense,
@@ -16,6 +15,8 @@ import SettingPane from "/client/component/compound/setting-pane";
 import {
   create
 } from "/client/component/create";
+import ChangeLanguageForm from "/client/component/form/change-language-form";
+import ChangeThemeForm from "/client/component/form/change-theme-form";
 import ChangeUserEmailForm from "/client/component/form/change-user-email-form";
 import ChangeUserNameForm from "/client/component/form/change-user-name-form";
 import ChangeUserPasswordForm from "/client/component/form/change-user-password-form";
@@ -80,6 +81,7 @@ const DashboardPage = create(
           <MenuItem mode="dictionary" label={trans("dashboardPage.dictionary")} iconName="book" badgeValue={dictionaryCount} href="#dictionary"/>
           <MenuItem mode="notification" label={trans("dashboardPage.notification")} iconName="bell" badgeValue={notificationCount} href="#notification"/>
           <MenuItem mode="account" label={trans("dashboardPage.account")} iconName="id-card" href="#account"/>
+          <MenuItem mode="appearance" label={trans("dashboardPage.appearance")} iconName="brush" href="#appearance"/>
           <MenuItem mode="logout" label={trans("dashboardPage.logout")} iconName="sign-out-alt" onClick={performLogout}/>
         </Menu>
         <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode}}/>
@@ -177,6 +179,24 @@ const DashboardPageForms = create(
             description={trans("dashboardPage.discardUserForm.description")}
           >
             <DiscardUserForm onSubmit={() => pushPath("/", {preservePopup: true})}/>
+          </SettingPane>
+        </Suspense>
+      );
+      return node;
+    } else if (mode === "appearance") {
+      const node = (
+        <Suspense fallback={<DashboardPageLoading/>}>
+          <SettingPane
+            label={trans("dashboardPage.changeLanguageForm.label")}
+            description={trans("dashboardPage.changeLanguageForm.description")}
+          >
+            <ChangeLanguageForm/>
+          </SettingPane>
+          <SettingPane
+            label={trans("dashboardPage.changeThemeForm.label")}
+            description={trans("dashboardPage.changeThemeForm.description")}
+          >
+            <ChangeThemeForm/>
           </SettingPane>
         </Suspense>
       );

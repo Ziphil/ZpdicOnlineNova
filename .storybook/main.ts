@@ -19,7 +19,8 @@ const config = {
   addons: [
     "@storybook/addon-essentials",
     "@storybook/addon-links",
-    "@storybook/addon-interactions"
+    "@storybook/addon-interactions",
+    "storybook-addon-themes"
   ],
   framework: "@storybook/react",
   core: {

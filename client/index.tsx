@@ -10,7 +10,6 @@ import {
   fas as iconFas
 } from "@fortawesome/free-solid-svg-icons";
 import nprogress from "nprogress";
-import * as react from "react";
 import {
   createRoot
 } from "react-dom/client";

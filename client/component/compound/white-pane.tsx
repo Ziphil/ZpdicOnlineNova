@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   Fragment,
   MouseEvent,
@@ -16,7 +15,7 @@ import {
 } from "/client/component/hook";
 
 
-const WhitePane = create(
+export const WhitePane = create(
   require("./white-pane.scss"), "WhitePane",
   function ({
     clickable,

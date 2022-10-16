@@ -1,6 +1,5 @@
 //
 
-import * as react from "react";
 import {
   Fragment,
   useState
@@ -8,7 +7,7 @@ import {
 import Button from "/client/component/atom/button";
 import {
   Dropdown
-} from "/client/component/atom/dropdown-beta";
+} from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Input from "/client/component/atom/input";
 import {
@@ -37,7 +36,7 @@ const template = createTemplate<typeof Dropdown>((props) => {
 
 const templateAutoModeFocus = createTemplate<typeof Dropdown>((props) => {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
-  const [autoElement, setAutoElement] = useState<HTMLDivElement | null>(null);
+  const [autoElement, setAutoElement] = useState<HTMLInputElement | null>(null);
   const node = (
     <Fragment>
       <div style={{display: "flex"}}>
