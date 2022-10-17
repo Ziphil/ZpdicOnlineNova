@@ -13,6 +13,11 @@
   background: schemed-color(background, primary) !important;
 }
 
+*[class~="CodeMirror-scrollbar-filler"],
+*[class~="CodeMirror-gutter-filler"] {
+  background-color: transparent !important;
+}
+
 *[class|="cm"] {
   font-weight: normal !important;
   font-style: normal !important;

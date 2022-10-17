@@ -80,6 +80,7 @@ const TextAreaCodeMirror = create(
   require("./text-area.scss"),
   function ({
     value,
+    font,
     language,
     nowrap,
     readOnly,
@@ -88,6 +89,7 @@ const TextAreaCodeMirror = create(
     handleBeforeChange
   }: {
     value: string,
+    font?: "normal" | "monospace",
     language?: string,
     nowrap: boolean,
     readOnly: boolean,
@@ -97,6 +99,7 @@ const TextAreaCodeMirror = create(
   }): ReactElement {
 
     const data = DataUtil.create({
+      font,
       fitHeight: (fitHeight) ? "fit" : "no-fit"
     });
     const modeOptions = CodeMirrorUtil.getModeOptions(language!);

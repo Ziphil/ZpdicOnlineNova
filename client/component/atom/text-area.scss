@@ -26,7 +26,7 @@
 
 .code-wrapper {
   &[data-fit-height="no-fit"] {
-    height: 100%;
+    flex-grow: 1;
   }
 }
 
@@ -41,16 +41,16 @@
 }
 
 .code >div {
-  @include monospace-font;
+  font-family: inherit;
   padding: 0em;
   background: transparent;
   box-sizing: border-box;
+  .code-wrapper[data-font="monospace"] & {
+    @include monospace-font;
+  }
   .code-wrapper[data-fit-height="no-fit"] & {
     height: 100%;
-    top: 0rpx;
-    bottom: 0rpx;
-    left: 0rpx;
-    right: 0rpx;
+    inset: 0rpx;
     position: absolute;
   }
   .code-wrapper[data-fit-height="fit"] & {
@@ -58,10 +58,10 @@
   }
 }
 
-.code >div *[class~="CodeMirror-lines"] {
-  padding: $textarea-vertical-padding 0em !important;
+.code >div [class~="CodeMirror-lines"] {
+  padding-block: $textarea-vertical-padding !important;
 } 
 
-.code >div *[class~="CodeMirror-line"] {
-  padding: 0em $input-horizontal-padding !important;
+.code >div [class~="CodeMirror-line"] {
+  padding-inline: $input-horizontal-padding !important;
 }
