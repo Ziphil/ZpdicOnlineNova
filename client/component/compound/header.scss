@@ -13,6 +13,7 @@
   display: flex;
   justify-content: center;
   position: sticky;
+  inset-block-start: 0rpx;
   z-index: 100;
   @include smartphone {
     padding-inline: $page-small-horizontal-margin;
