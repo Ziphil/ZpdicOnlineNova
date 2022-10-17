@@ -25,15 +25,16 @@
 }
 
 .code-wrapper {
+  @include input(primary);
+  margin: 0rpx;
+  padding: 0rpx;
   &[data-fit-height="no-fit"] {
     flex-grow: 1;
   }
 }
 
 .code {
-  @include input(primary);
   height: 100%;
-  padding: 0rpx;
   display: block;
   resize: none;
   flex-grow: 1;

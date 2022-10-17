@@ -89,7 +89,7 @@ const TextAreaCodeMirror = create(
     handleBeforeChange
   }: {
     value: string,
-    font?: "normal" | "monospace",
+    font: "normal" | "monospace",
     language?: string,
     nowrap: boolean,
     readOnly: boolean,
