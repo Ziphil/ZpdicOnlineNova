@@ -28,6 +28,8 @@
   @include input(primary);
   margin: 0rpx;
   padding: 0rpx;
+  display: flex;
+  flex-direction: column;
   &[data-fit-height="no-fit"] {
     flex-grow: 1;
   }
@@ -65,4 +67,10 @@
 
 .code >div [class~="CodeMirror-line"] {
   padding-inline: $input-horizontal-padding !important;
+}
+
+.button-container {
+  padding-block: 2rpx;
+  padding-inline: $input-horizontal-padding;
+  border-bottom: 1px solid color(border);
 }

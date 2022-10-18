@@ -1,13 +1,21 @@
 //
 
 import {
+  Editor
+} from "codemirror";
+import {
   ChangeEvent,
+  MouseEvent,
   ReactElement,
-  useCallback
+  RefObject,
+  useCallback,
+  useId,
+  useRef
 } from "react";
 import {
   Controlled as CodeMirror
 } from "react-codemirror2";
+import Button from "/client/component/atom/button";
 import Label from "/client/component/atom/label";
 import {
   StylesRecord,
@@ -53,6 +61,8 @@ export const TextArea = create(
     styles?: StylesRecord
   }): ReactElement {
 
+    const labelId = useId();
+
     const handleBeforeChange = useCallback(function (editor: any, data: any, value: string): void {
       onSet?.(value);
     }, [onSet]);
@@ -63,9 +73,9 @@ export const TextArea = create(
       onSet?.(value);
     }, [onChange, onSet]);
 
-    const innerProps = {value, font, language, nowrap, readOnly, fitHeight, styles, handleChange, handleBeforeChange};
+    const innerProps = {value, font, language, nowrap, readOnly, fitHeight, labelId, handleChange, handleBeforeChange};
     const node = (
-      <label styleName="root" className={className}>
+      <label styleName="root" className={className} htmlFor={labelId}>
         <Label text={label} showRequired={showRequired} showOptional={showOptional}/>
         {(language !== undefined) ? <TextAreaCodeMirror {...innerProps}/> : <TextAreaTextArea {...innerProps}/>}
       </label>
@@ -85,6 +95,7 @@ const TextAreaCodeMirror = create(
     nowrap,
     readOnly,
     fitHeight,
+    labelId,
     styles,
     handleBeforeChange
   }: {
@@ -94,9 +105,31 @@ const TextAreaCodeMirror = create(
     nowrap: boolean,
     readOnly: boolean,
     fitHeight: boolean,
+    labelId: string,
     styles?: StylesRecord,
     handleBeforeChange: (editor: any, data: any, value: string) => void
   }): ReactElement {
+
+    const editorRef = useRef<Editor>();
+
+    const handleEditorMount = useCallback(function (editor: Editor): void {
+      const textAreaElement = editor.getWrapperElement().querySelector("textarea");
+      if (textAreaElement !== null) {
+        textAreaElement.id = labelId;
+      }
+      editorRef.current = editor;
+    }, [labelId]);
+
+    function s(event: MouseEvent) {
+      const editor = editorRef.current;
+      if (editor !== undefined) {
+        const doc = editor.getDoc();
+        const fromPosition = doc.getCursor("from");
+        const toPosition = doc.getCursor("to");
+        doc.replaceRange("Hello", fromPosition, toPosition);
+      }
+      event.stopPropagation();
+    }
 
     const data = DataUtil.create({
       font,
@@ -108,7 +141,8 @@ const TextAreaCodeMirror = create(
     const options = {...modeOptions, ...heightOptions, ...otherOptions};
     const node = (
       <div styleName="code-wrapper" {...data}>
-        <CodeMirror className={styles!["code"]} value={value} options={options} onBeforeChange={handleBeforeChange}/>
+        {(language === "markdown") && <TextAreaMarkdownButtonList {...{editorRef}}/>}
+        <CodeMirror className={styles!["code"]} value={value} options={options} onBeforeChange={handleBeforeChange} editorDidMount={handleEditorMount}/>
       </div>
     );
     return node;
@@ -124,12 +158,14 @@ const TextAreaTextArea = create(
     font,
     nowrap,
     readOnly,
+    labelId,
     handleChange
   }: {
     value: string,
     font: "normal" | "monospace",
     nowrap: boolean,
     readOnly: boolean,
+    labelId: string,
     handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
   }): ReactElement {
 
@@ -138,12 +174,50 @@ const TextAreaTextArea = create(
       nowrap
     });
     const node = (
-      <textarea styleName="textarea" value={value} readOnly={readOnly} onChange={handleChange} {...data}/>
+      <textarea styleName="textarea" id={labelId} value={value} readOnly={readOnly} onChange={handleChange} {...data}/>
     );
     return node;
 
   }
 );
 
+
+const TextAreaMarkdownButtonList = create(
+  require("./text-area.scss"),
+  function ({
+    editorRef
+  }: {
+    editorRef: RefObject<Editor | undefined>
+  }): ReactElement {
+
+    const performAction = useCallback(function (action: string): void {
+      const editor = editorRef.current;
+      if (editor) {
+        editor.focus();
+        if (action === "italic") {
+          insertItalic(editor);
+        }
+      }
+    }, [editorRef]);
+
+    const node = (
+      <div styleName="button-container">
+        <Button iconName="italic" variant="simple" type="button" onClick={() => performAction("italic")}/>
+      </div>
+    );
+    return node;
+
+  }
+);
+
+
+function insertItalic(editor: Editor): void {
+  const doc = editor.getDoc();
+  const from = doc.getCursor("from");
+  const to = doc.getCursor("to");
+  doc.replaceRange("*", {line: from.line, ch: from.ch});
+  doc.replaceRange("*", {line: to.line, ch: (from.line === to.line) ? to.ch + 1 : to.ch});
+  setTimeout(() => doc.setSelection({line: from.line, ch: from.ch + 1}, {line: to.line, ch: (from.line === to.line) ? to.ch + 1 : to.ch}), 0);
+}
 
 export default TextArea;
