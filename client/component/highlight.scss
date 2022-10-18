@@ -42,7 +42,8 @@
   color: color(highlight-green);
 }
 
-:global(.cm-s-zpmarkdown .cm-formatting-list) {
+:global(.cm-s-zpmarkdown .cm-formatting-list),
+:global(.cm-s-zpmarkdown .cm-formatting-quote)  {
   color: color(highlight-orange);
 }
 
