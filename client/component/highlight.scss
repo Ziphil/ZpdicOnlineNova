@@ -36,6 +36,16 @@
   color: color(highlight-purple);
 }
 
+:global(.cm-s-zpmarkdown .cm-em),
+:global(.cm-s-zpmarkdown .cm-strong),
+:global(.cm-s-zpmarkdown .cm-strikethrough) {
+  color: color(highlight-green);
+}
+
+:global(.cm-s-zpmarkdown .cm-formatting-list) {
+  color: color(highlight-orange);
+}
+
 :global(.cm-s-zpcddl .cm-keyword),
 :global(.cm-s-zpregexp .cm-keyword) {
   color: color(highlight-sky);

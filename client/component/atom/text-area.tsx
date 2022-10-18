@@ -5,7 +5,6 @@ import {
 } from "codemirror";
 import {
   ChangeEvent,
-  MouseEvent,
   ReactElement,
   RefObject,
   useCallback,
@@ -120,17 +119,6 @@ const TextAreaCodeMirror = create(
       editorRef.current = editor;
     }, [labelId]);
 
-    function s(event: MouseEvent) {
-      const editor = editorRef.current;
-      if (editor !== undefined) {
-        const doc = editor.getDoc();
-        const fromPosition = doc.getCursor("from");
-        const toPosition = doc.getCursor("to");
-        doc.replaceRange("Hello", fromPosition, toPosition);
-      }
-      event.stopPropagation();
-    }
-
     const data = DataUtil.create({
       font,
       fitHeight: (fitHeight) ? "fit" : "no-fit"
@@ -193,16 +181,33 @@ const TextAreaMarkdownButtonList = create(
     const performAction = useCallback(function (action: string): void {
       const editor = editorRef.current;
       if (editor) {
+        const actions = {
+          italic: insertItalic,
+          strikethrough: insertStrikethrough,
+          code: insertCode,
+          unorderedList: insertUnorderedList,
+          orderedList: insertOrderedList,
+          blockquote: insertBlockquote
+        } as Actions;
         editor.focus();
-        if (action === "italic") {
-          insertItalic(editor);
-        }
+        actions[action]?.(editor);
       }
     }, [editorRef]);
 
     const node = (
       <div styleName="button-container">
         <Button iconName="italic" variant="simple" type="button" onClick={() => performAction("italic")}/>
+        <Button iconName="strikethrough" variant="simple" type="button" onClick={() => performAction("strikethrough")}/>
+        <Button iconName="code" variant="simple" type="button" onClick={() => performAction("code")}/>
+        <div styleName="separator"/>
+        <Button iconName="link" variant="simple" type="button" onClick={() => performAction("link")}/>
+        <Button iconName="image" variant="simple" type="button" onClick={() => performAction("image")}/>
+        <div styleName="separator"/>
+        <Button iconName="quote-left" variant="simple" type="button" onClick={() => performAction("blockquote")}/>
+        <Button iconName="list-ul" variant="simple" type="button" onClick={() => performAction("unorderedList")}/>
+        <Button iconName="list-ol" variant="simple" type="button" onClick={() => performAction("orderedList")}/>
+        <Button iconName="table" variant="simple" type="button" onClick={() => performAction("table")}/>
+        <Button iconName="file-code" variant="simple" type="button" onClick={() => performAction("codeBlock")}/>
       </div>
     );
     return node;
@@ -219,5 +224,43 @@ function insertItalic(editor: Editor): void {
   doc.replaceRange("*", {line: to.line, ch: (from.line === to.line) ? to.ch + 1 : to.ch});
   setTimeout(() => doc.setSelection({line: from.line, ch: from.ch + 1}, {line: to.line, ch: (from.line === to.line) ? to.ch + 1 : to.ch}), 0);
 }
+
+function insertStrikethrough(editor: Editor): void {
+  const doc = editor.getDoc();
+  const from = doc.getCursor("from");
+  const to = doc.getCursor("to");
+  doc.replaceRange("~~", {line: from.line, ch: from.ch});
+  doc.replaceRange("~~", {line: to.line, ch: (from.line === to.line) ? to.ch + 2 : to.ch});
+  setTimeout(() => doc.setSelection({line: from.line, ch: from.ch + 2}, {line: to.line, ch: (from.line === to.line) ? to.ch + 2 : to.ch}), 0);
+}
+
+function insertCode(editor: Editor): void {
+  const doc = editor.getDoc();
+  const from = doc.getCursor("from");
+  const to = doc.getCursor("to");
+  doc.replaceRange("`", {line: from.line, ch: from.ch});
+  doc.replaceRange("`", {line: to.line, ch: (from.line === to.line) ? to.ch + 1 : to.ch});
+  setTimeout(() => doc.setSelection({line: from.line, ch: from.ch + 1}, {line: to.line, ch: (from.line === to.line) ? to.ch + 1 : to.ch}), 0);
+}
+
+function insertUnorderedList(editor: Editor): void {
+  const doc = editor.getDoc();
+  const from = doc.getCursor();
+  doc.replaceRange("- ", {line: from.line, ch: 0});
+}
+
+function insertOrderedList(editor: Editor): void {
+  const doc = editor.getDoc();
+  const from = doc.getCursor();
+  doc.replaceRange("1. ", {line: from.line, ch: 0});
+}
+
+function insertBlockquote(editor: Editor): void {
+  const doc = editor.getDoc();
+  const from = doc.getCursor();
+  doc.replaceRange("> ", {line: from.line, ch: 0});
+}
+
+type Actions = Partial<Record<string, (editor: Editor) => void>>;
 
 export default TextArea;

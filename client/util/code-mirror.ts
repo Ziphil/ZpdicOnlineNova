@@ -7,6 +7,7 @@ import "codemirror/addon/mode/simple";
 require("akrantiain/dist/code-mirror/mode");
 require("zatlin/dist/code-mirror/mode");
 require("codemirror/mode/markdown/markdown");
+require("codemirror/mode/gfm/gfm");
 
 CodeMirror.defineSimpleMode("bnf", {
   start: [
@@ -55,7 +56,7 @@ export class CodeMirrorUtil {
     } else if (language === "zatlin") {
       return {theme: "zpakrantiain", mode: {name: "zatlin"}};
     } else if (language === "markdown") {
-      return {theme: "zpmarkdown", mode: {name: "markdown", xml: false, fencedCodeBlockHighlighting: false}};
+      return {theme: "zpmarkdown", mode: {name: "gfm", highlightFormatting: true, xml: false, gitHubSpice: false, taskLists: false, emoji: false, fencedCodeBlockHighlighting: false}};
     } else if (language === "bnf") {
       return {theme: "zpbnf", mode: {name: "bnf"}};
     } else if (language === "cddl") {

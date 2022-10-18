@@ -70,7 +70,21 @@
 }
 
 .button-container {
-  padding-block: 2rpx;
+  padding-block: $input-vertical-padding;
   padding-inline: $input-horizontal-padding;
   border-bottom: 1px solid color(border);
+  display: flex;
+  align-items: center;
+  column-gap: $control-vertical-margin;
+}
+
+.button-container >button {
+  width: 1em;
+  text-align: center;
+}
+
+.separator {
+  width: 0rpx;
+  height: 1em;
+  border-left: 1px solid color(light-border);
 }
