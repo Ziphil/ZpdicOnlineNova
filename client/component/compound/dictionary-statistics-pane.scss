@@ -5,7 +5,7 @@
 
 .title {
   @include bold-font;
-  font-size: $tiny-font-size;
+  font-size: $small-font-size;
   color: color(accent);
 }
 

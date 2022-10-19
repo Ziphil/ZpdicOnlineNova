@@ -114,7 +114,7 @@
 .title {
   @include bold-font;
   margin: $paragraph-margin 0rpx;
-  font-size: $tiny-font-size;
+  font-size: $small-font-size;
   color: color(accent);
   display: block;
 }
