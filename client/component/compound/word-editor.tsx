@@ -613,7 +613,7 @@ const WordEditorInformation = create(
             </label>
             <label>
               <Label text={trans("wordEditor.informationText")} position="left"/>
-              <TextArea className={styles!["text"]} value={information.text} font="monospace" language={language} onSet={mutateWord((tempWord, text) => tempWord.informations[index].text = text)}/>
+              <TextArea className={styles!["text"]} value={information.text} font="monospace" language={language} showButtons={true} onSet={mutateWord((tempWord, text) => tempWord.informations[index].text = text)}/>
             </label>
           </div>
           <div styleName="control-button-container">

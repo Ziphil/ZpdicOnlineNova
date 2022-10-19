@@ -54,6 +54,7 @@ const ChangeDictionaryExplanationForm = create(
           font="monospace"
           language="markdown"
           nowrap={true}
+          showButtons={true}
           value={explanation}
           onSet={(explanation) => setExplanation(explanation)}
         />

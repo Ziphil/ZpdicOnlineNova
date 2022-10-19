@@ -38,6 +38,7 @@ export const TextArea = create(
     nowrap = false,
     readOnly = false,
     fitHeight = false,
+    showButtons = false,
     showRequired,
     showOptional,
     onChange,
@@ -52,6 +53,7 @@ export const TextArea = create(
     nowrap?: boolean,
     readOnly?: boolean,
     fitHeight?: boolean,
+    showButtons?: boolean,
     showRequired?: boolean,
     showOptional?: boolean,
     onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
@@ -72,7 +74,7 @@ export const TextArea = create(
       onSet?.(value);
     }, [onChange, onSet]);
 
-    const innerProps = {value, font, language, nowrap, readOnly, fitHeight, labelId, handleChange, handleBeforeChange};
+    const innerProps = {value, font, language, nowrap, readOnly, fitHeight, showButtons, labelId, handleChange, handleBeforeChange};
     const node = (
       <label styleName="root" className={className} htmlFor={labelId}>
         <Label text={label} showRequired={showRequired} showOptional={showOptional}/>
@@ -94,6 +96,7 @@ const TextAreaCodeMirror = create(
     nowrap,
     readOnly,
     fitHeight,
+    showButtons,
     labelId,
     styles,
     handleBeforeChange
@@ -104,6 +107,7 @@ const TextAreaCodeMirror = create(
     nowrap: boolean,
     readOnly: boolean,
     fitHeight: boolean,
+    showButtons: boolean,
     labelId: string,
     styles?: StylesRecord,
     handleBeforeChange: (editor: any, data: any, value: string) => void
@@ -129,7 +133,7 @@ const TextAreaCodeMirror = create(
     const options = {...modeOptions, ...heightOptions, ...otherOptions};
     const node = (
       <div styleName="code-wrapper" {...data}>
-        {(language === "markdown") && <TextAreaMarkdownButtonList {...{editorRef}}/>}
+        {(showButtons && language === "markdown") && <TextAreaMarkdownButtonList {...{editorRef}}/>}
         <CodeMirror className={styles!["code"]} value={value} options={options} onBeforeChange={handleBeforeChange} editorDidMount={handleEditorMount}/>
       </div>
     );
@@ -188,7 +192,7 @@ const TextAreaMarkdownButtonList = create(
           unorderedList: insertUnorderedList,
           orderedList: insertOrderedList,
           blockquote: insertBlockquote
-        } as Actions;
+        } as EditorActions;
         editor.focus();
         actions[action]?.(editor);
       }
@@ -261,6 +265,6 @@ function insertBlockquote(editor: Editor): void {
   doc.replaceRange("> ", {line: from.line, ch: 0});
 }
 
-type Actions = Partial<Record<string, (editor: Editor) => void>>;
+type EditorActions = Partial<Record<string, (editor: Editor) => void>>;
 
 export default TextArea;

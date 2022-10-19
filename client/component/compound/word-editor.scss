@@ -70,7 +70,7 @@
   align-items: center;
   gap: $small-control-vertical-margin 0rpx;
   &.information {
-    grid-template-rows: auto 150rpx;
+    grid-template-rows: auto 200rpx;
   }
   &.sentence {
     grid-template-rows: 80rpx 80rpx;
