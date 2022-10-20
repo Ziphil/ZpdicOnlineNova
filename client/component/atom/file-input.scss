@@ -20,9 +20,16 @@
   }
 }
 
+.original {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
+}
+
 .input {
   @include input(primary);
-  border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+  border-start-end-radius: 0rpx;
+  border-end-end-radius: 0rpx;
   cursor: pointer;
   .label-container[data-error] & {
     @include input(red);
@@ -33,12 +40,9 @@
 
 .button {
   @include light-button(primary);
-  margin: 0rpx 0rpx 0rpx -1rpx;
-  border-radius: 0rpx $small-border-radius $small-border-radius 0rpx;
-}
-
-.original {
-  position: absolute;
-  opacity: 0;
-  z-index: -1;
+  width: 2.2em;
+  margin-inline-start: -1rpx;
+  padding-inline: 0em;
+  border-start-start-radius: 0rpx;
+  border-end-start-radius: 0rpx;
 }

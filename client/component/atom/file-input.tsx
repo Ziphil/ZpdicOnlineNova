@@ -8,6 +8,7 @@ import {
   useRef,
   useState
 } from "react";
+import Icon from "/client/component/atom/icon";
 import Label from "/client/component/atom/label";
 import Tooltip from "/client/component/atom/tooltip";
 import {
@@ -90,7 +91,7 @@ export const FileInput = create(
               {fileName}
             </div>
             <div styleName="button">
-              {buttonLabel ?? trans("fileInput.button")}
+              <Icon name="ellipsis"/>
             </div>
           </div>
         </label>
