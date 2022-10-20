@@ -13,6 +13,9 @@ import {
 import {
   create
 } from "/client/component/create";
+import {
+  aria
+} from "/client/util/data";
 
 
 export const Radio = create(
@@ -43,9 +46,11 @@ export const Radio = create(
     const checked = contextValue.value === value;
     const node = (
       <label styleName="root" className={className}>
-        <input styleName="original" type="radio" name={contextValue.name} value={valueString ?? String(value)} checked={checked} onChange={handleChange}/>
-        <div styleName="box">
-          <div styleName="icon"/>
+        <div styleName="original-wrapper">
+          <input styleName="original" type="radio" name={contextValue.name} value={valueString ?? String(value)} checked={checked} onChange={handleChange}/>
+          <div styleName="box" {...aria({hidden: true})}>
+            <div styleName="icon"/>
+          </div>
         </div>
         {(label !== undefined) && <span styleName="label">{label}</span>}
         {children}

@@ -4,23 +4,30 @@
 
 
 .root {
+  display: flex;
   cursor: pointer;
 }
 
+.original-wrapper {
+  position: relative;
+}
+
 .original {
-  display: none;
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
 }
 
 .label {
-  padding: 0em 0em 0em $blank-margin;
+  padding-inline-start: $blank-margin;
   position: relative;
 }
 
 .box {
-  bottom: 0.1em;
   width: 1em;
   height: 1em;
-  border: 1rpx color(border) solid;
+  inset-block-end: 0.1em;
+  border: 1rpx solid color(border);
   border-radius: $small-border-radius;
   background-color: color(input-background);
   box-shadow: inset $inset-box-shadow-setting schemed-color(input-shadow, primary);
@@ -30,7 +37,7 @@
   justify-content: center;
   position: relative;
   vertical-align: middle;
-  .original:focus +& {
+  .original:focus-visible +& {
     outline: $focus-size solid color(focus);
   }
 }
