@@ -82,9 +82,6 @@ const ResouceList = create(
 
     const node = (
       <div styleName="root">
-        <div styleName="caution">
-          {trans("resourceList.experimantalCaution")}
-        </div>
         {(showInstruction) && (
           <div styleName="instruction">
             {(dictionary.settings.enableMarkdown) ? trans("resourceList.instruction") : trans("resourceList.markdownCaution")}
