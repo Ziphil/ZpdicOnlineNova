@@ -40,7 +40,7 @@ export const Tooltip = create(
   }: {
     open?: boolean,
     placement?: Placement,
-    autoMode?: "focus" | "click" | null,
+    autoMode?: "focus" | "hover" | "click" | null,
     showArrow?: boolean,
     fillWidth?: boolean,
     referenceElement: HTMLElement | null,
@@ -76,6 +76,19 @@ export const Tooltip = create(
         return () => {
           autoElement?.removeEventListener("focus", handleFocus);
           autoElement?.removeEventListener("blur", handleBlur);
+        };
+      } else if (autoMode === "hover") {
+        const handleMouseEnter = function (): void {
+          setCurrentOpen(true);
+        };
+        const handleMouseLeave = function (): void {
+          setCurrentOpen(false);
+        };
+        autoElement?.addEventListener("mouseenter", handleMouseEnter);
+        autoElement?.addEventListener("mouseleave", handleMouseLeave);
+        return () => {
+          autoElement?.removeEventListener("mouseenter", handleMouseEnter);
+          autoElement?.removeEventListener("mouseleave", handleMouseLeave);
         };
       } else if (autoMode === "click") {
         const handleMouseDown = function (): void {
