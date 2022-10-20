@@ -3,24 +3,32 @@
 @import "/client/component/mixin.scss";
 
 
-.root-inner {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
+.label-container {
+  flex-grow: 1;
 }
 
 .input-container {
+  border-radius: $small-border-radius;
+  display: flex;
+  position: relative;
   flex-grow: 1;
+  .original:focus +& {
+    outline: $focus-size solid color(focus);
+  }
+  .label-container[data-error] .original:focus +& {
+    outline: $focus-size solid schemed-color(focus, red);
+  }
 }
 
 .input {
   @include input(primary);
   border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
-}
-
-.input[data-error] {
-  @include input(red);
-  border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+  cursor: pointer;
+  .label-container[data-error] & {
+    @include input(red);
+    border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+    cursor: pointer;
+  }
 }
 
 .button {
@@ -30,5 +38,7 @@
 }
 
 .original {
-  display: none;
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
 }

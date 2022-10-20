@@ -212,13 +212,13 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   &:hover:not(:disabled) {
     background-color: schemed-color(hover-button-background, $scheme);
   }
-  &:focus:not(:disabled) {
-    outline: $focus-size solid schemed-color(focus, $scheme);
-  }
   &:active:not(:disabled) {
     background-color: schemed-color(active-button-background, $scheme);
     background-image: none;
     box-shadow: inset $inset-box-shadow-setting schemed-color(active-button-shadow, $scheme);
+  }
+  &:focus-visible:not(:disabled) {
+    outline: $focus-size solid schemed-color(focus, $scheme);
   }
   &:disabled {
     opacity: $disabled-opacity;
@@ -244,13 +244,13 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   &:hover:not(:disabled) {
     background-color: schemed-color(hover-light-button-background, $scheme);
   }
-  &:focus:not(:disabled) {
-    outline: $focus-size solid schemed-color(focus, $scheme);
-  }
   &:active:not(:disabled) {
     background-color: schemed-color(active-light-button-background, $scheme);
     background-image: none;
     box-shadow: inset $inset-box-shadow-setting schemed-color(active-light-button-shadow, $scheme);
+  }
+  &:focus-visible:not(:disabled) {
+    outline: $focus-size solid schemed-color(focus, $scheme);
   }
   &:disabled {
     opacity: $disabled-opacity;
