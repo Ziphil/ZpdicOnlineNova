@@ -211,6 +211,18 @@ label:
 overlay:
   back: "Back"
   close: "Close"
+textArea:
+  markdown:
+    italic: "Italic"
+    strikethrough: "Strikethrough"
+    code: "Code"
+    link: "Link"
+    image: "Image"
+    unorderedList: "Unordered list"
+    orderedList: "Ordered list"
+    blockquote: "Blockquote"
+    table: "Table"
+    codeBlock: "Code block"
 changeUserNameForm:
   name: "User ID"
   confirm: "Change"

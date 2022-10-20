@@ -209,6 +209,18 @@ label:
 overlay:
   back: "戻る"
   close: "閉じる"
+textArea:
+  markdown:
+    italic: "斜体"
+    strikethrough: "打ち消し線"
+    code: "コード"
+    link: "リンク"
+    image: "画像"
+    unorderedList: "順序なしリスト"
+    orderedList: "順序ありリスト"
+    blockquote: "引用"
+    table: "表"
+    codeBlock: "コードブロック"
 changeUserNameForm:
   name: "ユーザー ID"
   confirm: "変更"

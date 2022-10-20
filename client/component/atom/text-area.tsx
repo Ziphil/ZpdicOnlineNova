@@ -9,23 +9,31 @@ import {
   RefObject,
   useCallback,
   useId,
-  useRef
+  useRef,
+  useState
 } from "react";
 import {
   Controlled as CodeMirror
 } from "react-codemirror2";
 import Button from "/client/component/atom/button";
 import Label from "/client/component/atom/label";
+import Tooltip from "/client/component/atom/tooltip";
 import {
   StylesRecord,
   create
 } from "/client/component/create";
+import {
+  useIntl
+} from "/client/component/hook";
 import {
   CodeMirrorUtil
 } from "/client/util/code-mirror";
 import {
   DataUtil
 } from "/client/util/data";
+import {
+  MARKDOWN_EDITOR_ACTIONS
+} from "/client/util/editor-action";
 
 
 export const TextArea = create(
@@ -43,8 +51,7 @@ export const TextArea = create(
     showOptional,
     onChange,
     onSet,
-    className,
-    styles
+    className
   }: {
     value?: string,
     label?: string,
@@ -58,8 +65,7 @@ export const TextArea = create(
     showOptional?: boolean,
     onChange?: (event: ChangeEvent<HTMLTextAreaElement>) => void,
     onSet?: (value: string) => void,
-    className?: string,
-    styles?: StylesRecord
+    className?: string
   }): ReactElement {
 
     const labelId = useId();
@@ -182,36 +188,20 @@ const TextAreaMarkdownButtonList = create(
     editorRef: RefObject<Editor | undefined>
   }): ReactElement {
 
-    const performAction = useCallback(function (action: string): void {
-      const editor = editorRef.current;
-      if (editor) {
-        const actions = {
-          italic: insertItalic,
-          strikethrough: insertStrikethrough,
-          code: insertCode,
-          unorderedList: insertUnorderedList,
-          orderedList: insertOrderedList,
-          blockquote: insertBlockquote
-        } as EditorActions;
-        editor.focus();
-        actions[action]?.(editor);
-      }
-    }, [editorRef]);
-
     const node = (
       <div styleName="button-container">
-        <Button iconName="italic" variant="simple" type="button" onClick={() => performAction("italic")}/>
-        <Button iconName="strikethrough" variant="simple" type="button" onClick={() => performAction("strikethrough")}/>
-        <Button iconName="code" variant="simple" type="button" onClick={() => performAction("code")}/>
+        <TextAreaMarkdownButton iconName="italic" actionName="italic" editorRef={editorRef}/>
+        <TextAreaMarkdownButton iconName="strikethrough" actionName="strikethrough" editorRef={editorRef}/>
+        <TextAreaMarkdownButton iconName="code" actionName="code" editorRef={editorRef}/>
         <div styleName="separator"/>
-        <Button iconName="link" variant="simple" type="button" onClick={() => performAction("link")}/>
-        <Button iconName="image" variant="simple" type="button" onClick={() => performAction("image")}/>
+        <TextAreaMarkdownButton iconName="link" actionName="link" editorRef={editorRef}/>
+        <TextAreaMarkdownButton iconName="image" actionName="image" editorRef={editorRef}/>
         <div styleName="separator"/>
-        <Button iconName="quote-left" variant="simple" type="button" onClick={() => performAction("blockquote")}/>
-        <Button iconName="list-ul" variant="simple" type="button" onClick={() => performAction("unorderedList")}/>
-        <Button iconName="list-ol" variant="simple" type="button" onClick={() => performAction("orderedList")}/>
-        <Button iconName="table" variant="simple" type="button" onClick={() => performAction("table")}/>
-        <Button iconName="file-code" variant="simple" type="button" onClick={() => performAction("codeBlock")}/>
+        <TextAreaMarkdownButton iconName="quote-left" actionName="blockquote" editorRef={editorRef}/>
+        <TextAreaMarkdownButton iconName="list-ul" actionName="unorderedList" editorRef={editorRef}/>
+        <TextAreaMarkdownButton iconName="list-ol" actionName="orderedList" editorRef={editorRef}/>
+        <TextAreaMarkdownButton iconName="table" actionName="table" editorRef={editorRef}/>
+        <TextAreaMarkdownButton iconName="file-code" actionName="codeBlock" editorRef={editorRef}/>
       </div>
     );
     return node;
@@ -220,51 +210,40 @@ const TextAreaMarkdownButtonList = create(
 );
 
 
-function insertItalic(editor: Editor): void {
-  const doc = editor.getDoc();
-  const from = doc.getCursor("from");
-  const to = doc.getCursor("to");
-  doc.replaceRange("*", {line: from.line, ch: from.ch});
-  doc.replaceRange("*", {line: to.line, ch: (from.line === to.line) ? to.ch + 1 : to.ch});
-  setTimeout(() => doc.setSelection({line: from.line, ch: from.ch + 1}, {line: to.line, ch: (from.line === to.line) ? to.ch + 1 : to.ch}), 0);
-}
+const TextAreaMarkdownButton = create(
+  require("./text-area.scss"),
+  function ({
+    editorRef,
+    iconName,
+    actionName
+  }: {
+    editorRef: RefObject<Editor | undefined>,
+    iconName: string,
+    actionName: keyof typeof MARKDOWN_EDITOR_ACTIONS
+  }): ReactElement {
 
-function insertStrikethrough(editor: Editor): void {
-  const doc = editor.getDoc();
-  const from = doc.getCursor("from");
-  const to = doc.getCursor("to");
-  doc.replaceRange("~~", {line: from.line, ch: from.ch});
-  doc.replaceRange("~~", {line: to.line, ch: (from.line === to.line) ? to.ch + 2 : to.ch});
-  setTimeout(() => doc.setSelection({line: from.line, ch: from.ch + 2}, {line: to.line, ch: (from.line === to.line) ? to.ch + 2 : to.ch}), 0);
-}
+    const [, {trans}] = useIntl();
+    const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
 
-function insertCode(editor: Editor): void {
-  const doc = editor.getDoc();
-  const from = doc.getCursor("from");
-  const to = doc.getCursor("to");
-  doc.replaceRange("`", {line: from.line, ch: from.ch});
-  doc.replaceRange("`", {line: to.line, ch: (from.line === to.line) ? to.ch + 1 : to.ch});
-  setTimeout(() => doc.setSelection({line: from.line, ch: from.ch + 1}, {line: to.line, ch: (from.line === to.line) ? to.ch + 1 : to.ch}), 0);
-}
+    const performAction = useCallback(function (): void {
+      const editor = editorRef.current;
+      if (editor) {
+        MARKDOWN_EDITOR_ACTIONS[actionName](editor);
+      }
+    }, [editorRef, actionName]);
 
-function insertUnorderedList(editor: Editor): void {
-  const doc = editor.getDoc();
-  const from = doc.getCursor();
-  doc.replaceRange("- ", {line: from.line, ch: 0});
-}
+    const node = (
+      <>
+        <Button iconName={iconName} variant="simple" type="button" nativeRef={setReferenceElement} onClick={performAction}/>
+        <Tooltip placement="top" autoMode="hover" referenceElement={referenceElement} autoElement={referenceElement}>
+          {trans(`textArea.markdown.${actionName}`)}
+        </Tooltip>
+      </>
+    );
+    return node;
 
-function insertOrderedList(editor: Editor): void {
-  const doc = editor.getDoc();
-  const from = doc.getCursor();
-  doc.replaceRange("1. ", {line: from.line, ch: 0});
-}
+  }
+);
 
-function insertBlockquote(editor: Editor): void {
-  const doc = editor.getDoc();
-  const from = doc.getCursor();
-  doc.replaceRange("> ", {line: from.line, ch: 0});
-}
-
-type EditorActions = Partial<Record<string, (editor: Editor) => void>>;
 
 export default TextArea;

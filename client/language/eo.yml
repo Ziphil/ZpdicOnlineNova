@@ -211,6 +211,18 @@ label:
 overlay:
   back: "Reiri"
   close: "Fermi"
+textArea:
+  markdown:
+    italic: "Kursivo"
+    strikethrough: "Trastreko"
+    code: "Fontkodo"
+    link: "Ligilo"
+    image: "Bildo"
+    unorderedList: "Senorda listo"
+    orderedList: "Orda listo"
+    blockquote: "Blokcitaĵo"
+    table: "Tabelo"
+    codeBlock: "Fontkoda bloko"
 changeUserNameForm:
   name: "Uzanta identigilo"
   confirm: "Ŝanĝi"

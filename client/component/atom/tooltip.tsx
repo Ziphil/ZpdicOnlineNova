@@ -53,7 +53,7 @@ export const Tooltip = create(
     const [popupElement, setPopupElement] = useState<HTMLDivElement | null>(null);
     const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
     const openingRef = useRef(false);
-    const {styles, attributes} = usePopper(referenceElement, popupElement, {
+    const {styles, attributes, ...popper} = usePopper(referenceElement, popupElement, {
       placement,
       modifiers: [
         {name: "offset", options: {offset: (showArrow) ? [0, 8] : [0, -1]}},
@@ -66,6 +66,7 @@ export const Tooltip = create(
     useEffect(() => {
       if (autoMode === "focus") {
         const handleFocus = function (): void {
+          popper.update?.();
           setCurrentOpen(true);
         };
         const handleBlur = function (): void {
@@ -79,6 +80,7 @@ export const Tooltip = create(
         };
       } else if (autoMode === "hover") {
         const handleMouseEnter = function (): void {
+          popper.update?.();
           setCurrentOpen(true);
         };
         const handleMouseLeave = function (): void {
@@ -93,6 +95,7 @@ export const Tooltip = create(
       } else if (autoMode === "click") {
         const handleMouseDown = function (): void {
           openingRef.current = true;
+          popper.update?.();
           setCurrentOpen(true);
         };
         autoElement?.addEventListener("mousedown", handleMouseDown);
@@ -102,7 +105,7 @@ export const Tooltip = create(
       } else {
         return () => null;
       }
-    }, [autoMode, autoElement]);
+    }, [autoMode, autoElement, popper]);
 
     useClickAway({current: popupElement}, () => {
       if (autoMode === "click") {
