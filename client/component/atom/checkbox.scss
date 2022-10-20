@@ -37,7 +37,7 @@
   justify-content: center;
   position: relative;
   vertical-align: middle;
-  .original:focus-visible +& {
+  .original:focus +& {
     outline: $focus-size solid color(focus);
   }
 }

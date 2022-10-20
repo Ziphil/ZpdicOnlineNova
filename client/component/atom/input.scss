@@ -10,6 +10,9 @@
 .input {
   @include input(primary);
   display: inline-flex;
+  &[data-error] {
+    @include input(red);
+  }
   [data-control-group] >&:first-child,
   [data-control-group] >:first-child & {
     margin: 0rpx -1rpx 0rpx 0rpx;
@@ -24,10 +27,6 @@
     margin: 0rpx -1rpx 0rpx 0rpx;
     border-radius: 0rpx;
   }
-}
-
-.input[data-error] {
-  @include input(red);
 }
 
 .input-inner {
