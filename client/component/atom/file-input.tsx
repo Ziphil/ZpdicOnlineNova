@@ -18,7 +18,8 @@ import {
   useIntl
 } from "/client/component/hook";
 import {
-  DataUtil
+  aria,
+  data
 } from "/client/util/data";
 import {
   mergeRefs
@@ -78,21 +79,14 @@ export const FileInput = create(
       setFileName(fileName);
     }, [file]);
 
-    const inputData = DataUtil.create({
-      error: errorMessage !== null
-    });
     const node = (
       <div styleName="root" className={className}>
-        <label styleName="label-container" ref={setReferenceElement} {...inputData}>
+        <label styleName="label-container" ref={setReferenceElement} {...data({error: errorMessage !== null})}>
           <Label text={inputLabel} variant={(errorMessage === null) ? "normal" : "error"}/>
           <input styleName="original" type="file" ref={mergeRefs([inputRef, setAutoElement])} onChange={handleChange}/>
-          <div styleName="input-container">
-            <div styleName="input">
-              {fileName}
-            </div>
-            <div styleName="button">
-              <Icon name="ellipsis"/>
-            </div>
+          <div styleName="input-container" {...aria({hidden: true})}>
+            <div styleName="input">{fileName}</div>
+            <div styleName="button"><Icon name="ellipsis"/></div>
           </div>
         </label>
         <Tooltip showArrow={true} fillWidth={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
