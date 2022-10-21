@@ -43,7 +43,6 @@ import {
 import {
   invalidateQueries,
   useDragDrop,
-  useIntl,
   usePopup,
   useRequest,
   useTrans
@@ -58,7 +57,7 @@ import {
   Word
 } from "/client/skeleton/dictionary";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 import {
   deleteAt,
@@ -237,7 +236,7 @@ const WordEditorRoot = create(
     setResourceListOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
 
     const innerProps = {dictionary, tempWord, mutateWord, createSuggest};
     const node = (
@@ -252,14 +251,14 @@ const WordEditorRoot = create(
         </div>
         <div styleName="footer">
           <div styleName="confirm-button-container">
-            <Button label={trans("wordEditor.resource")} iconName="image" onClick={() => setResourceListOpen(true)}/>
+            <Button label={trans("resource")} iconName="image" onClick={() => setResourceListOpen(true)}/>
           </div>
           <div styleName="confirm-button-container">
-            <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
+            <Button label={trans("cancel")} iconName="times" variant="light" onClick={onCancel}/>
             {(word !== null) && (
-              <Button label={trans("wordEditor.discard")} iconName="trash-alt" scheme="red" onClick={() => setAlertOpen(true)}/>
+              <Button label={trans("discard")} iconName="trash-alt" scheme="red" onClick={() => setAlertOpen(true)}/>
             )}
-            <Button label={trans("wordEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editWord}/>
+            <Button label={trans("confirm")} iconName="check" scheme="blue" reactive={true} onClick={editWord}/>
           </div>
         </div>
       </div>
@@ -284,7 +283,7 @@ const WordEditorName = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
 
     const generateName = useCallback(function (zatlin: Zatlin): void {
       try {
@@ -299,25 +298,25 @@ const WordEditorName = create(
     const node = (
       <div styleName="section">
         <div styleName="head">
-          {trans("wordEditor.basic")}
+          {trans("basic")}
         </div>
         <div styleName="section-content">
           <div styleName="section-item">
             <div styleName="form-container">
               <div styleName="form">
                 <label>
-                  <Label text={trans("wordEditor.name")} position="left"/>
+                  <Label text={trans("name")} position="left"/>
                   <div styleName="generate-container">
                     <Input className={styles!["name"]} value={tempWord.name} onSet={mutateWord((tempWord, name) => tempWord.name = name)}/>
                     {(zatlin !== null) && (
                       <div styleName="control-button-container">
-                        <Button label={trans("wordEditor.generate")} variant="light" onClick={() => generateName(zatlin)}/>
+                        <Button label={trans("generate")} variant="light" onClick={() => generateName(zatlin)}/>
                       </div>
                     )}
                   </div>
                 </label>
                 <label>
-                  <Label text={trans("wordEditor.pronunciation")} position="left"/>
+                  <Label text={trans("pronunciation")} position="left"/>
                   <Input className={styles!["name"]} value={tempWord.pronunciation} onSet={mutateWord((tempWord, pronunciation) => tempWord.pronunciation = pronunciation || undefined)}/>
                 </label>
               </div>
@@ -348,19 +347,19 @@ const WordEditorTags = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
 
     const node = (
       <div styleName="section">
         <div styleName="head">
-          {trans("wordEditor.tag")}
+          {trans("tag")}
         </div>
         <div styleName="section-content">
           {tempWord.tags.map((tag, index) => (
             <WordEditorTag key={tag.tempId} {...{dictionary, tempWord, tag, index, mutateWord, createSuggest, styles}}/>
           ))}
           <div styleName="plus">
-            <div styleName="absent">{(tempWord.tags.length <= 0) ? trans("wordEditor.tagAbsent") : ""}</div>
+            <div styleName="absent">{(tempWord.tags.length <= 0) ? trans("tagAbsent") : ""}</div>
             <div styleName="plus-button-container">
               <Button iconName="plus" variant="light" onClick={mutateWord((tempWord) => tempWord.tags.push({tempId: nanoid(), string: ""}))}/>
             </div>
@@ -394,7 +393,6 @@ const WordEditorTag = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
     const [rootRef, handleRef, dragging] = useDragDrop(
       `tag-${dictionary.id}-${tempWord.tempId}`,
       index,
@@ -402,11 +400,8 @@ const WordEditorTag = create(
     );
 
     const suggest = createSuggest("tag");
-    const data = DataUtil.create({
-      dragging
-    });
     const node = (
-      <div styleName="section-item" ref={rootRef} {...data}>
+      <div styleName="section-item" ref={rootRef} {...data({dragging})}>
         <div styleName="handle" ref={handleRef}>
           <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
         </div>
@@ -442,19 +437,19 @@ const WordEditorEquivalents = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
 
     const node = (
       <div styleName="section">
         <div styleName="head">
-          {trans("wordEditor.equivalent")}
+          {trans("equivalent")}
         </div>
         <div styleName="section-content">
           {tempWord.equivalents.map((equivalent, index) => (
             <WordEditorEquivalent key={equivalent.tempId} {...{dictionary, tempWord, equivalent, index, mutateWord, createSuggest, styles}}/>
           ))}
           <div styleName="plus">
-            <div styleName="absent">{(tempWord.equivalents.length <= 0) ? trans("wordEditor.equivalentAbsent") : ""}</div>
+            <div styleName="absent">{(tempWord.equivalents.length <= 0) ? trans("equivalentAbsent") : ""}</div>
             <div styleName="plus-button-container">
               <Button iconName="plus" variant="light" onClick={mutateWord((tempWord) => tempWord.equivalents.push({...Equivalent.createEmpty(), tempId: nanoid(), string: ""}))}/>
             </div>
@@ -488,7 +483,7 @@ const WordEditorEquivalent = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
     const [rootRef, handleRef, dragging] = useDragDrop(
       `equivalent-${dictionary.id}-${tempWord.tempId}`,
       index,
@@ -496,22 +491,19 @@ const WordEditorEquivalent = create(
     );
 
     const suggest = createSuggest("equivalent");
-    const data = DataUtil.create({
-      dragging
-    });
     const node = (
-      <div styleName="section-item" ref={rootRef} {...data}>
+      <div styleName="section-item" ref={rootRef} {...data({dragging})}>
         <div styleName="handle" ref={handleRef}>
           <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
         </div>
         <div styleName="form-container">
           <div styleName="form">
             <label>
-              <Label text={trans("wordEditor.equivalentTitle")} position="left"/>
+              <Label text={trans("equivalentTitle")} position="left"/>
               <Input className={styles!["title"]} value={equivalent.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.equivalents[index].title = title)}/>
             </label>
             <label>
-              <Label text={trans("wordEditor.equivalentNames")} position="left"/>
+              <Label text={trans("equivalentNames")} position="left"/>
               <Input className={styles!["name"]} value={equivalent.string} onSet={mutateWord((tempWord, string) => tempWord.equivalents[index].string = string)}/>
             </label>
           </div>
@@ -543,19 +535,19 @@ const WordEditorInformations = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
 
     const node = (
       <div styleName="section">
         <div styleName="head">
-          {trans("wordEditor.information")}
+          {trans("information")}
         </div>
         <div styleName="section-content">
           {tempWord.informations.map((information, index) => (
             <WordEditorInformation key={information.tempId} {...{dictionary, tempWord, information, index, mutateWord, createSuggest, styles}}/>
           ))}
           <div styleName="plus">
-            <div styleName="absent">{(tempWord.informations.length <= 0) ? trans("wordEditor.informationAbsent") : ""}</div>
+            <div styleName="absent">{(tempWord.informations.length <= 0) ? trans("informationAbsent") : ""}</div>
             <div styleName="plus-button-container">
               <Button iconName="plus" variant="light" onClick={mutateWord((tempWord) => tempWord.informations.push({...Information.createEmpty(), tempId: nanoid()}))}/>
             </div>
@@ -589,7 +581,7 @@ const WordEditorInformation = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
     const [rootRef, handleRef, dragging] = useDragDrop(
       `information-${dictionary.id}-${tempWord.tempId}`,
       index,
@@ -598,22 +590,19 @@ const WordEditorInformation = create(
 
     const language = (dictionary.settings.enableMarkdown) ? "markdown" as const : undefined;
     const suggest = createSuggest("information");
-    const data = DataUtil.create({
-      dragging
-    });
     const node = (
-      <div styleName="section-item" ref={rootRef} {...data}>
+      <div styleName="section-item" ref={rootRef} {...data({dragging})}>
         <div styleName="handle" ref={handleRef}>
           <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
         </div>
         <div styleName="form-container">
           <div styleName="form information">
             <label>
-              <Label text={trans("wordEditor.informationTitle")} position="left"/>
+              <Label text={trans("informationTitle")} position="left"/>
               <Input className={styles!["title"]} value={information.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.informations[index].title = title)}/>
             </label>
             <label>
-              <Label text={trans("wordEditor.informationText")} position="left"/>
+              <Label text={trans("informationText")} position="left"/>
               <TextArea className={styles!["text"]} value={information.text} font="monospace" language={language} showButtons={true} onSet={mutateWord((tempWord, text) => tempWord.informations[index].text = text)}/>
             </label>
           </div>
@@ -645,19 +634,19 @@ const WordEditorVariations = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
 
     const node = (
       <div styleName="section">
         <div styleName="head">
-          {trans("wordEditor.variation")}
+          {trans("variation")}
         </div>
         <div styleName="section-content">
           {tempWord.variations.map((variation, index) => (
             <WordEditorVariation key={variation.tempId} {...{dictionary, tempWord, variation, index, mutateWord, createSuggest, styles}}/>
           ))}
           <div styleName="plus">
-            <div styleName="absent">{(tempWord.variations.length <= 0) ? trans("wordEditor.variationAbsent") : ""}</div>
+            <div styleName="absent">{(tempWord.variations.length <= 0) ? trans("variationAbsent") : ""}</div>
             <div styleName="plus-button-container">
               <Button iconName="plus" variant="light" onClick={mutateWord((tempWord) => tempWord.variations.push({...Variation.createEmpty(), tempId: nanoid()}))}/>
             </div>
@@ -691,7 +680,7 @@ const WordEditorVariation = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
     const [rootRef, handleRef, dragging] = useDragDrop(
       `variation-${dictionary.id}-${tempWord.tempId}`,
       index,
@@ -699,22 +688,19 @@ const WordEditorVariation = create(
     );
 
     const suggest = createSuggest("variation");
-    const data = DataUtil.create({
-      dragging
-    });
     const node = (
-      <div styleName="section-item" ref={rootRef} {...data}>
+      <div styleName="section-item" ref={rootRef} {...data({dragging})}>
         <div styleName="handle" ref={handleRef}>
           <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
         </div>
         <div styleName="form-container">
           <div styleName="form">
             <label>
-              <Label text={trans("wordEditor.variationTitle")} position="left"/>
+              <Label text={trans("variationTitle")} position="left"/>
               <Input className={styles!["title"]} value={variation.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.variations[index].title = title)}/>
             </label>
             <label>
-              <Label text={trans("wordEditor.variationName")} position="left"/>
+              <Label text={trans("variationName")} position="left"/>
               <Input className={styles!["name"]} value={variation.name} onSet={mutateWord((tempWord, name) => tempWord.variations[index].name = name)}/>
             </label>
           </div>
@@ -748,19 +734,19 @@ const WordEditorRelations = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
 
     const node = (
       <div styleName="section">
         <div styleName="head">
-          {trans("wordEditor.relation")}
+          {trans("relation")}
         </div>
         <div styleName="section-content">
           {tempWord.relations.map((relation, index) => (
             <WordEditorRelation key={relation.tempId} {...{dictionary, tempWord, relation, index, mutateWord, createSuggest, openRelationChooser, styles}}/>
           ))}
           <div styleName="plus">
-            <div styleName="absent">{(tempWord.relations.length <= 0) ? trans("wordEditor.relationAbsent") : ""}</div>
+            <div styleName="absent">{(tempWord.relations.length <= 0) ? trans("relationAbsent") : ""}</div>
             <div styleName="plus-button-container">
               <Button iconName="plus" variant="light" onClick={() => openRelationChooser(tempWord.relations.length)}/>
             </div>
@@ -796,7 +782,7 @@ const WordEditorRelation = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
     const [rootRef, handleRef, dragging] = useDragDrop(
       `relation-${dictionary.id}-${tempWord.tempId}`,
       index,
@@ -804,25 +790,22 @@ const WordEditorRelation = create(
     );
 
     const suggest = createSuggest("relation");
-    const data = DataUtil.create({
-      dragging
-    });
     const node = (
-      <div styleName="section-item" ref={rootRef} {...data}>
+      <div styleName="section-item" ref={rootRef} {...data({dragging})}>
         <div styleName="handle" ref={handleRef}>
           <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
         </div>
         <div styleName="form-container">
           <div styleName="form">
             <label>
-              <Label text={trans("wordEditor.relationTitle")} position="left"/>
+              <Label text={trans("relationTitle")} position="left"/>
               <Input className={styles!["title"]} value={relation.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.relations[index].title = title)}/>
             </label>
             <label>
-              <Label text={trans("wordEditor.relationName")} position="left"/>
+              <Label text={trans("relationName")} position="left"/>
               <ControlGroup className={[styles!["name"], styles!["relation-input"]].join(" ")}>
                 <Input value={relation.name} readOnly={true}/>
-                <Button label={trans("wordEditor.selectRelation")} variant="light" onClick={() => openRelationChooser(index)}/>
+                <Button label={trans("selectRelation")} variant="light" onClick={() => openRelationChooser(index)}/>
               </ControlGroup>
             </label>
           </div>

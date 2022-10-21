@@ -22,7 +22,7 @@ const PopupInformationPane = create(
   }: {
   }): ReactElement {
 
-    const [intl] = useIntl();
+    const intl = useIntl();
     const [popupSpecs, {clearPopup}] = usePopup();
 
     const node = (

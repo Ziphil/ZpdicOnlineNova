@@ -42,7 +42,7 @@ const ChangeDictionaryParamNameForm = create(
   }): ReactElement {
 
     const [paramName, setParamName] = useState(currentParamName ?? "");
-    const [intl] = useIntl();
+    const intl = useIntl();
     const {trans} = useTrans("changeDictionaryParamNameForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();

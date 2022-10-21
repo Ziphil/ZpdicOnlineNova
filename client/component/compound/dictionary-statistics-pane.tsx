@@ -28,7 +28,7 @@ const DictionaryStatisticsPane = create(
     dictionary: DetailedDictionary
   }): ReactElement {
 
-    const [intl] = useIntl();
+    const intl = useIntl();
     const {trans, transNode} = useTrans("dictionaryStatisticsPane");
 
     const number = dictionary.number;

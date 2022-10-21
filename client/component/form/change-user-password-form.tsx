@@ -39,7 +39,7 @@ const ChangeUserPasswordForm = create(
   }): ReactElement {
 
     const [password, setPassword] = useState("");
-    const [intl] = useIntl();
+    const intl = useIntl();
     const {trans} = useTrans("changeUserPasswordForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();

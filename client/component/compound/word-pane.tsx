@@ -22,7 +22,7 @@ import {
 } from "/client/component/create";
 import {
   useExampleEditor,
-  useIntl,
+  useTrans,
   useWordEditor
 } from "/client/component/hook";
 import {
@@ -119,7 +119,7 @@ const WordPaneName = create(
     openWordEditor: () => void
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordPane");
 
     const [directionReferenceElement, setDirectionReferenceElement] = useState<HTMLElement | null>(null);
 
@@ -159,14 +159,14 @@ const WordPaneName = create(
         <div styleName="right">
           {(showEditLink && !showButton) && (
             <div styleName="button">
-              <Button label={trans("wordPane.edit")} iconName="edit" variant="simple" hideLabel={true} onClick={openWordEditor}/>
+              <Button label={trans("edit")} iconName="edit" variant="simple" hideLabel={true} onClick={openWordEditor}/>
             </div>
           )}
           {(showButton) && (
             <div styleName="button">
               <div styleName="dropdown-button">
                 <Button
-                  label={trans("wordPane.submit")}
+                  label={trans("submit")}
                   iconName="check"
                   position={(showDirectionButton) ? "left" : "alone"}
                   hideLabel={true}
@@ -335,13 +335,13 @@ const WordPaneExamples = create(
     openExampleEditor: (example: Example) => void
   }): ReactElement | null {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordPane");
 
     const examples = ("examples" in word) ? word.examples : [];
     const innerNodes = examples.map((example, index) => {
       const editButtonNode = (showEditLink && !showButton) && (
         <div styleName="button">
-          <Button label={trans("wordPane.edit")} iconName="edit" variant="simple" hideLabel={true} onClick={() => openExampleEditor(example)}/>
+          <Button label={trans("edit")} iconName="edit" variant="simple" hideLabel={true} onClick={() => openExampleEditor(example)}/>
         </div>
       );
       const innerNode = (
@@ -380,7 +380,7 @@ const WordPaneSubmitDropdownNode = create(
     direction: "oneway" | "mutual"
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordPane");
 
     const node = (
       <div>

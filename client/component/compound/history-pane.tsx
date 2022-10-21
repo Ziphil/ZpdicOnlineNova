@@ -14,8 +14,8 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
-  useSuspenseQuery
+  useSuspenseQuery,
+  useTrans
 } from "/client/component/hook";
 import {
   DetailedDictionary
@@ -35,7 +35,7 @@ const HistoryPane = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {transNumber, transShortDate}] = useIntl();
+    const {transNumber, transShortDate} = useTrans("historyPane");
 
     const number = dictionary.number;
     const from = useMemo(() => new Date(Date.now() - 100 * 24 * 60 * 60 * 1000).toString(), []);

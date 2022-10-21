@@ -54,42 +54,9 @@ export function useLocale(): [string, ChangeLocaleCallback] {
   return [locale, changeLocale];
 }
 
-export function useIntl(): [IntlShape, TransCallbacks] {
+export function useIntl(): IntlShape {
   const intl = useRawIntl();
-  const trans = useCallback(function (id: string, values?: any): any {
-    const defaultMessage = values?.defaultMessage ?? "[?]";
-    const rawMessage = intl.formatMessage({id, defaultMessage}, values);
-    const message = (rawMessage === "<empty>") ? "" : rawMessage;
-    return message;
-  }, [intl]);
-  const transDate = useCallback(function (date: Date | number | string | null | undefined): string {
-    if (date !== null && date !== undefined) {
-      const format = intl.formatMessage({id: "common.dateFormat"});
-      const locale = intl.locale;
-      return DateUtil.format(date, format, locale);
-    } else {
-      return intl.formatMessage({id: "common.dateUndefined"});
-    }
-  }, [intl]);
-  const transShortDate = useCallback(function (date: Date | number | string | null | undefined): string {
-    if (date !== null && date !== undefined) {
-      const format = intl.formatMessage({id: "common.shortDateFormat"});
-      const locale = intl.locale;
-      return DateUtil.format(date, format, locale);
-    } else {
-      return intl.formatMessage({id: "common.dateUndefined"});
-    }
-  }, [intl]);
-  const transNumber = useCallback(function (number: number | null | undefined, digit?: number): string {
-    const options = {minimumFractionDigits: digit, maximumFractionDigits: digit};
-    if (number !== null && number !== undefined) {
-      return intl.formatNumber(number, options);
-    } else {
-      return intl.formatMessage({id: "common.numberUndefined"});
-    }
-  }, [intl]);
-  const transNode = trans;
-  return useMemo(() => [intl, {trans, transNode, transDate, transShortDate, transNumber}], [intl, trans, transNode, transDate, transShortDate, transNumber]);
+  return intl;
 }
 
 export function useTrans(scope?: string): TransCallbacks {

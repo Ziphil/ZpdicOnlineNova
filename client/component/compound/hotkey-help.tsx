@@ -16,7 +16,6 @@ import {
   HotkeyGroup,
   HotkeySpec,
   useHotkeySpecs,
-  useIntl,
   useTrans
 } from "/client/component/hook";
 import {
@@ -80,7 +79,7 @@ const HotkeyHelpTable = create(
     currentGroup: HotkeyGroup
   }): ReactElement | null {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("hotkeyHelp");
     const hotkeySpecs = useHotkeySpecs();
 
     const displayedHotkeySpecs = hotkeySpecs.filter((spec) => spec.group === group);
@@ -112,7 +111,7 @@ const HotkeyHelpTable = create(
               {charNodes}
             </div>
             <div styleName={hotkeyDescriptionStyleName}>
-              {trans(`hotkeyHelp.${spec.name}`)}
+              {trans(spec.name)}
             </div>
           </Fragment>
         );

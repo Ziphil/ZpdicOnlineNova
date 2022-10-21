@@ -24,7 +24,6 @@ import ChangeUserScreenNameForm from "/client/component/form/change-user-screen-
 import CreateDictionaryForm from "/client/component/form/create-dictionary-form";
 import DiscardUserForm from "/client/component/form/discard-user-form";
 import {
-  useIntl,
   useLocation,
   useLogout,
   usePath,
@@ -107,7 +106,7 @@ const DashboardPageForms = create(
   }): ReactElement | null {
 
     const [user, {refetchMe}] = useSuspenseMe();
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("dashboardPage");
     const {pushPath} = usePath();
 
     if (mode === "dictionary") {

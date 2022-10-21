@@ -33,7 +33,7 @@ const UploadDictionaryForm = create(
   }): ReactElement {
 
     const [file, setFile] = useState<File | null>(null);
-    const [intl] = useIntl();
+    const intl = useIntl();
     const {trans} = useTrans("uploadDictionaryForm");
     const {requestFile} = useRequest();
     const [, {addInformationPopup}] = usePopup();

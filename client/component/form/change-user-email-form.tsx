@@ -41,7 +41,7 @@ const ChangeUserEmailForm = create(
   }): ReactElement {
 
     const [email, setEmail] = useState(currentEmail);
-    const [intl] = useIntl();
+    const intl = useIntl();
     const {trans} = useTrans("changeUserEmailForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
