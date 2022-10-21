@@ -21,7 +21,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -117,13 +117,24 @@ export const Tooltip = create(
     });
 
     const actualOpen = children && ((autoMode !== null) ? currentOpen : open);
-    const data = DataUtil.create({
-      hidden: !actualOpen,
-      showArrow
-    });
     const node = (
-      <div styleName="root" className={className} ref={setPopupElement} style={styles.popper} {...attributes.popper} {...data}>
-        <div styleName="arrow" ref={setArrowElement} style={styles.arrow} {...attributes.arrow}/>
+      <div
+        styleName="root"
+        className={className}
+        ref={setPopupElement}
+        style={styles.popper}
+        {...attributes.popper}
+        {...data({
+          hidden: !actualOpen,
+          showArrow
+        })}
+      >
+        <div
+          styleName="arrow"
+          ref={setArrowElement}
+          style={styles.arrow}
+          {...attributes.arrow}
+        />
         <p styleName="text">
           {children}
         </p>

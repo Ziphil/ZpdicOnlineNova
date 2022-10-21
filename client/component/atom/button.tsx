@@ -26,7 +26,7 @@ import {
   CancelablePromise
 } from "/client/util/cancelable";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -93,17 +93,25 @@ export const Button = create(
     });
 
     const styleName = (variant === "simple" || variant === "link") ? "simple" : "button";
-    const data = DataUtil.create({
-      position: (position !== "alone") ? position : undefined,
-      variant,
-      scheme,
-      onlyIcon: label === undefined,
-      link: variant === "link",
-      hideLabel,
-      loading
-    });
     const node = (
-      <button styleName={styleName} className={className} name={name} type={type} disabled={disabled || loading} ref={nativeRef} onClick={handleClick} {...data}>
+      <button
+        styleName={styleName}
+        className={className}
+        name={name}
+        type={type}
+        disabled={disabled || loading}
+        ref={nativeRef}
+        onClick={handleClick}
+        {...data({
+          position: (position !== "alone") ? position : undefined,
+          variant,
+          scheme,
+          onlyIcon: label === undefined,
+          link: variant === "link",
+          hideLabel,
+          loading
+        })}
+      >
         {(iconName !== undefined) && <Icon className={styles!["icon"]} name={iconName}/>}
         {(label !== undefined) && <span styleName="label">{label}</span>}
         {(reactive) && (

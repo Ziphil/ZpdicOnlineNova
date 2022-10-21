@@ -30,7 +30,7 @@
   padding: 0rpx;
   display: flex;
   flex-direction: column;
-  &[data-fit-height="no-fit"] {
+  &:not([data-fit-height]) {
     flex-grow: 1;
   }
 }
@@ -51,12 +51,12 @@
   .code-wrapper[data-font="monospace"] & {
     @include monospace-font;
   }
-  .code-wrapper[data-fit-height="no-fit"] & {
+  .code-wrapper:not([data-fit-height]) & {
     height: 100%;
     inset: 0rpx;
     position: absolute;
   }
-  .code-wrapper[data-fit-height="fit"] & {
+  .code-wrapper[data-fit-height] & {
     height: auto;
   }
 }

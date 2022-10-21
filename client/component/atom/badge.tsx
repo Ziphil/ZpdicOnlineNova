@@ -7,7 +7,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 
 
@@ -21,7 +21,7 @@ export const Badge = create(
     className?: string
   }): ReactElement {
 
-    const [, {transNumber}] = useIntl();
+    const {transNumber} = useTrans("badge");
 
     const actualValue = (typeof value === "number") ? transNumber(value) : value;
     const node = (

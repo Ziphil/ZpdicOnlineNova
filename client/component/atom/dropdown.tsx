@@ -25,7 +25,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 import {
   fillRef
@@ -138,14 +138,25 @@ export const Dropdown = create(
     const contextValue = useMemo(() => ({onSet: handleSet}), [handleSet]);
     const arrayChildren = (Array.isArray(children)) ? children : [children];
     const actualOpen = arrayChildren.length > 0 && ((autoMode !== null) ? currentOpen : open);
-    const data = DataUtil.create({
-      hidden: !actualOpen,
-      showArrow,
-      restrictHeight
-    });
     const node = (
-      <div styleName="root" className={className} ref={setPopupElement} style={styles.popper} {...attributes.popper} {...data}>
-        <div styleName="arrow" ref={setArrowElement} style={styles.arrow} {...attributes.arrow}/>
+      <div
+        styleName="root"
+        className={className}
+        ref={setPopupElement}
+        style={styles.popper}
+        {...attributes.popper}
+        {...data({
+          hidden: !actualOpen,
+          showArrow,
+          restrictHeight
+        })}
+      >
+        <div
+          styleName="arrow"
+          ref={setArrowElement}
+          style={styles.arrow}
+          {...attributes.arrow}
+        />
         <DropdownContextProvider value={contextValue}>
           {children}
         </DropdownContextProvider>

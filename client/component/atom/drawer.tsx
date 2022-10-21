@@ -17,10 +17,10 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -57,7 +57,6 @@ const Drawer = create(
   }): ReactElement {
 
     const onBackgroundClick = (outsideClosable) ? onClose : undefined;
-    const contentContainerData = DataUtil.create({closed: !open});
     const node = (
       <Fragment>
         <Portal>
@@ -65,7 +64,7 @@ const Drawer = create(
             <div styleName="background" onClick={onBackgroundClick}/>
           )}
           <div styleName="spacer">
-            <div styleName="content-container" onTransitionEnd={onTransitionEnd} {...contentContainerData}>
+            <div styleName="content-container" onTransitionEnd={onTransitionEnd} {...data({closed: !open})}>
               {(title !== undefined) && <DrawerHeader {...{title, page, showBack, onClose, onBack}}/>}
               <div styleName="content">
                 {(page !== undefined && Array.isArray(children)) ? children[page] : children}
@@ -102,7 +101,7 @@ const DrawerHeader = create(
     onBack?: (event: MouseEvent<HTMLButtonElement>) => void
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("overlay");
 
     const node = (
       <div styleName="header">
@@ -111,10 +110,10 @@ const DrawerHeader = create(
         </div>
         <div styleName="right">
           {(page !== undefined && ((showBack === undefined && page > 0) || showBack)) && (
-            <Button label={trans("overlay.back")} iconName="backward" variant="simple" hideLabel={true} onClick={onBack}/>
+            <Button label={trans("back")} iconName="backward" variant="simple" hideLabel={true} onClick={onBack}/>
           )}
           {(
-            <Button label={trans("overlay.close")} iconName="times" variant="simple" hideLabel={true} onClick={onClose}/>
+            <Button label={trans("close")} iconName="times" variant="simple" hideLabel={true} onClick={onClose}/>
           )}
         </div>
       </div>
@@ -139,12 +138,11 @@ const DrawerTab = create(
     onOpen?: (event: MouseEvent<HTMLElement>) => void
   }): ReactElement {
 
-    const [, {transNumber}] = useIntl();
+    const {transNumber} = useTrans("overlay");
 
     const actualBadgeValue = (typeof badgeValue === "number") ? transNumber(badgeValue) : badgeValue;
-    const tabData = DataUtil.create({tabPosition});
     const node = (
-      <div styleName="tab" onClick={onOpen} {...tabData}>
+      <div styleName="tab" onClick={onOpen} {...data({tabPosition})}>
         <div styleName="tab-inner">
           <Icon name={iconName}/>
           {(badgeValue !== undefined) && <span styleName="number">{actualBadgeValue}</span>}

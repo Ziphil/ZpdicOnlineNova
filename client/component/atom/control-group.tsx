@@ -8,7 +8,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -22,9 +22,8 @@ const ControlGroup = create(
     children?: ReactNode
   }): ReactElement {
 
-    const data = DataUtil.create({controlGroup: true});
     const node = (
-      <div styleName="root" className={className} {...data}>
+      <div styleName="root" className={className} {...data({controlGroup: true})}>
         {children}
       </div>
     );

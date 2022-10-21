@@ -11,7 +11,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -26,9 +26,8 @@ const Portal = create(
   }): ReactElement {
 
     const container = document.body;
-    const data = DataUtil.create({position});
     const node = (
-      <div className="portal" {...data}>
+      <div className="portal" {...data({position})}>
         {children}
       </div>
     );

@@ -10,7 +10,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -39,15 +39,14 @@ const GoogleAd = create(
       document.head.appendChild(element);
     });
 
-    const data = DataUtil.create({
-      adClient: `ca-pub-${clientId}`,
-      adSlot: `${slotId}`
-    });
     return (
       <ins
         className="adsbygoogle"
         style={{display: "block", width: "100%", height: "90px"}}
-        {...data}
+        {...data({
+          adClient: `ca-pub-${clientId}`,
+          adSlot: `${slotId}`
+        })}
       />
     );
 

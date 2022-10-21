@@ -12,7 +12,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 
 
@@ -40,7 +40,7 @@ const Alert = create(
     onCancel?: (event: MouseEvent<HTMLButtonElement>) => void
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("alert");
 
     const handleConfirm = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       onClose?.(event);
@@ -52,8 +52,6 @@ const Alert = create(
       onCancel?.(event);
     }, [onClose, onCancel]);
 
-    const actualCancelLabel = cancelLabel ?? trans("alert.cancel");
-    const actualConfirmLabel = confirmLabel ?? trans("alert.confirm");
     const node = (
       <Modal open={open} outsideClosable={outsideClosable} onClose={onClose}>
         <div styleName="content">
@@ -62,8 +60,8 @@ const Alert = create(
             <p styleName="text">{text}</p>
           </div>
           <div styleName="button-group">
-            <Button label={actualCancelLabel} variant="light" onClick={handleCancel}/>
-            <Button label={actualConfirmLabel} scheme="red" onClick={handleConfirm}/>
+            <Button label={cancelLabel ?? trans("cancel")} variant="light" onClick={handleCancel}/>
+            <Button label={confirmLabel ?? trans("confirm")} scheme="red" onClick={handleConfirm}/>
           </div>
         </div>
       </Modal>

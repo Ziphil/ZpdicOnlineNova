@@ -26,7 +26,7 @@ import {
   useDebounce
 } from "/client/component/hook";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 import {
   mergeRefs
@@ -170,13 +170,8 @@ const InputInput = create(
       setCurrentType((currentType) => (currentType === "text") ? "password" : "text");
     }, [setCurrentType]);
 
-    const data = DataUtil.create({
-      error: errorMessage !== null,
-      disabled
-    });
-    const eyeData = DataUtil.create({currentType});
     const node = (
-      <div styleName="input" ref={setReferenceElement} {...data}>
+      <div styleName="input" ref={setReferenceElement} {...data({error: errorMessage !== null, disabled})}>
         {(prefix !== undefined) && (
           <div styleName="prefix">{prefix}</div>
         )}
@@ -194,7 +189,7 @@ const InputInput = create(
           <div styleName="suffix">
             {suffix}
             {(type === "flexible") && (
-              <button styleName="eye" type="button" onClick={toggleType} {...eyeData}>
+              <button styleName="eye" type="button" onClick={toggleType} {...data({currentType})}>
                 <Icon name={(currentType === "password") ? "eye" : "eye-slash"}/>
               </button>
             )}

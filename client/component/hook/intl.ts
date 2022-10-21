@@ -92,6 +92,45 @@ export function useIntl(): [IntlShape, TransCallbacks] {
   return useMemo(() => [intl, {trans, transNode, transDate, transShortDate, transNumber}], [intl, trans, transNode, transDate, transShortDate, transNumber]);
 }
 
+export function useTrans(scope?: string): TransCallbacks {
+  const intl = useRawIntl();
+  const trans = useCallback(function (subId: string, values?: any): any {
+    const id = (subId.charAt(0) === ":") ? subId.slice(1) : ((scope !== undefined) ? `${scope}.` : "") + subId;
+    const defaultMessage = values?.defaultMessage ?? "[?]";
+    const rawMessage = intl.formatMessage({id, defaultMessage}, values);
+    const message = (rawMessage === "<empty>") ? "" : rawMessage;
+    return message;
+  }, [intl, scope]);
+  const transDate = useCallback(function (date: Date | number | string | null | undefined): string {
+    if (date !== null && date !== undefined) {
+      const format = intl.formatMessage({id: "common.dateFormat"});
+      const locale = intl.locale;
+      return DateUtil.format(date, format, locale);
+    } else {
+      return intl.formatMessage({id: "common.dateUndefined"});
+    }
+  }, [intl]);
+  const transShortDate = useCallback(function (date: Date | number | string | null | undefined): string {
+    if (date !== null && date !== undefined) {
+      const format = intl.formatMessage({id: "common.shortDateFormat"});
+      const locale = intl.locale;
+      return DateUtil.format(date, format, locale);
+    } else {
+      return intl.formatMessage({id: "common.dateUndefined"});
+    }
+  }, [intl]);
+  const transNumber = useCallback(function (number: number | null | undefined, digit?: number): string {
+    const options = {minimumFractionDigits: digit, maximumFractionDigits: digit};
+    if (number !== null && number !== undefined) {
+      return intl.formatNumber(number, options);
+    } else {
+      return intl.formatMessage({id: "common.numberUndefined"});
+    }
+  }, [intl]);
+  const transNode = trans;
+  return useMemo(() => ({trans, transNode, transDate, transShortDate, transNumber}), [trans, transNode, transDate, transShortDate, transNumber]);
+}
+
 type Messages = Record<string, string>;
 
 type ChangeLocaleCallback = (locale: string) => Promise<void>;

@@ -15,9 +15,6 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
-} from "/client/component/hook";
-import {
   aria,
   data
 } from "/client/util/data";
@@ -49,7 +46,6 @@ export const FileInput = create(
     const [referenceElement, setReferenceElement] = useState<HTMLLabelElement | null>(null);
     const [autoElement, setAutoElement] = useState<HTMLInputElement | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [, {trans}] = useIntl();
 
     const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
       const files = event.target.files;

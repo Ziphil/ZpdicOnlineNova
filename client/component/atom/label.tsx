@@ -7,7 +7,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
   DataUtil
@@ -32,7 +32,7 @@ const Label = create(
     className?: string
   }): ReactElement | null {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("label");
 
     const styleName = DataUtil.create({
       position,
@@ -42,10 +42,10 @@ const Label = create(
       <div styleName="root" className={className} {...styleName}>
         {text}
         {(showRequired) && (
-          <span styleName="required">({trans("label.required")})</span>
+          <span styleName="required">({trans("required")})</span>
         )}
         {(showOptional) && (
-          <span styleName="optional">({trans("label.optional")})</span>
+          <span styleName="optional">({trans("optional")})</span>
         )}
       </div>
     );

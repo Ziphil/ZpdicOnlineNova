@@ -23,13 +23,13 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
   CodeMirrorUtil
 } from "/client/util/code-mirror";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 import {
   MARKDOWN_EDITOR_ACTIONS
@@ -129,16 +129,12 @@ const TextAreaCodeMirror = create(
       editorRef.current = editor;
     }, [labelId]);
 
-    const data = DataUtil.create({
-      font,
-      fitHeight: (fitHeight) ? "fit" : "no-fit"
-    });
     const modeOptions = CodeMirrorUtil.getModeOptions(language!);
     const heightOptions = (fitHeight) ? {viewportMargin: 1 / 0} : {};
     const otherOptions = {readOnly, lineWrapping: !nowrap};
     const options = {...modeOptions, ...heightOptions, ...otherOptions};
     const node = (
-      <div styleName="code-wrapper" {...data}>
+      <div styleName="code-wrapper" {...data({font, fitHeight})}>
         {(showButtons && language === "markdown") && <TextAreaMarkdownButtonList {...{editorRef}}/>}
         <CodeMirror className={styles!["code"]} value={value} options={options} onBeforeChange={handleBeforeChange} editorDidMount={handleEditorMount}/>
       </div>
@@ -167,12 +163,8 @@ const TextAreaTextArea = create(
     handleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void
   }): ReactElement {
 
-    const data = DataUtil.create({
-      font,
-      nowrap
-    });
     const node = (
-      <textarea styleName="textarea" id={labelId} value={value} readOnly={readOnly} onChange={handleChange} {...data}/>
+      <textarea styleName="textarea" id={labelId} value={value} readOnly={readOnly} onChange={handleChange} {...data({font, nowrap})}/>
     );
     return node;
 
@@ -222,7 +214,7 @@ const TextAreaMarkdownButton = create(
     actionName: keyof typeof MARKDOWN_EDITOR_ACTIONS
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("textArea");
     const [referenceElement, setReferenceElement] = useState<HTMLElement | null>(null);
 
     const performAction = useCallback(function (): void {
@@ -236,7 +228,7 @@ const TextAreaMarkdownButton = create(
       <>
         <Button iconName={iconName} variant="simple" type="button" nativeRef={setReferenceElement} onClick={performAction}/>
         <Tooltip placement="top" autoMode="hover" referenceElement={referenceElement} autoElement={referenceElement}>
-          {trans(`textArea.markdown.${actionName}`)}
+          {trans(`markdown.${actionName}`)}
         </Tooltip>
       </>
     );
