@@ -34,7 +34,7 @@ const ChangeDictionaryNameForm = create(
   }): ReactElement {
 
     const [name, setName] = useState(currentName);
-    const {trans} = useTrans("changeDictionaryName");
+    const {trans} = useTrans("changeDictionaryNameForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 

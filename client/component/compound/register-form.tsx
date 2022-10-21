@@ -79,12 +79,12 @@ const RegisterForm = create(
     const validatePassword = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
     const node = (
       <form styleName="root">
-        <Input label={trans("userName")} value={name} validate={validateName} onSet={(name) => setName(name)}/>
-        <Input label={trans("email")} value={email} validate={validateEmail} onSet={(email) => setEmail(email)}/>
-        <Input label={trans("password")} type="flexible" value={password} validate={validatePassword} onSet={(password) => setPassword(password)}/>
+        <Input label={trans(":loginForm.userName")} value={name} validate={validateName} onSet={(name) => setName(name)}/>
+        <Input label={trans(":loginForm.email")} value={email} validate={validateEmail} onSet={(email) => setEmail(email)}/>
+        <Input label={trans(":loginForm.password")} type="flexible" value={password} validate={validatePassword} onSet={(password) => setPassword(password)}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={trans(":registerForm.confirm")} iconName="user-plus" scheme="blue" reactive={true} onClick={performRegister}/>
+            <Button label={trans("confirm")} iconName="user-plus" scheme="blue" reactive={true} onClick={performRegister}/>
           </div>
         </div>
       </form>

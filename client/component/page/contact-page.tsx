@@ -27,9 +27,7 @@ const ContactPage = create(
         <div styleName="title">{trans("title")}</div>
         <div styleName="explanation">
           <p>
-            {transNode("privacy", {
-              link: (parts) => <Link href="/document/other/privacy">{parts}</Link>
-            })}
+            {transNode("privacy", {link: (parts) => <Link href="/document/other/privacy">{parts}</Link>})}
           </p>
           <p>
             {trans("explanation")}
