@@ -19,7 +19,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
   RegexpExecResult,
@@ -45,7 +45,7 @@ const RegexpExecutor = create(
     const [target, setTarget] = useState("");
     const [result, setResult] = useState<RegexpExecResult | null>(null);
     const [errorMessage, setErrorMessage] = useState("");
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("regexpExecutor");
 
     const executeRegexp = useCallback(function (): void {
       try {
@@ -68,11 +68,11 @@ const RegexpExecutor = create(
     }, [defaultSource]);
 
     const node = (
-      <Overlay size="large" title={trans("regexpExecutor.title")} open={open} onClose={handleClose}>
+      <Overlay size="large" title={trans("title")} open={open} onClose={handleClose}>
         <div styleName="root">
           <TextArea
             className={styles!["source"]}
-            label={trans("regexpExecutor.source")}
+            label={trans("source")}
             value={source}
             font="monospace"
             language="regexp"
@@ -82,7 +82,7 @@ const RegexpExecutor = create(
           />
           <TextArea
             className={styles!["target"]}
-            label={trans("regexpExecutor.target")}
+            label={trans("target")}
             value={target}
             font="monospace"
             language="plain"
@@ -90,7 +90,7 @@ const RegexpExecutor = create(
             fitHeight={true}
             onSet={(target) => setTarget(target)}
           />
-          <Button className={styles!["button"]} label={trans("regexpExecutor.execute")} onClick={executeRegexp}/>
+          <Button className={styles!["button"]} label={trans("execute")} onClick={executeRegexp}/>
           <RegexpExecutorResult {...{result, errorMessage}}/>
         </div>
       </Overlay>
@@ -111,7 +111,7 @@ const RegexpExecutorResult = create(
     errorMessage: string
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("regexpExecutor");
 
     const innerNodes = [];
     if (result !== null) {
@@ -140,7 +140,7 @@ const RegexpExecutorResult = create(
     }
     const node = (
       <div styleName="error-message">
-        <Label text={trans("regexpExecutor.result")}/>
+        <Label text={trans("result")}/>
         <div styleName="result-input">
           {innerNodes}
         </div>

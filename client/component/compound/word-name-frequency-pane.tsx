@@ -13,8 +13,8 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
-  useSuspenseQuery
+  useSuspenseQuery,
+  useTrans
 } from "/client/component/hook";
 import {
   DetailedDictionary,
@@ -32,19 +32,19 @@ const WordNameFrequencyPane = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordNameFrequencyPane");
 
     const number = dictionary.number;
     const [frequencies] = useSuspenseQuery("fetchWordNameFrequencies", {number});
 
-    const {data} = calcChartSpec(frequencies, trans("wordNameFrequencyPane.others"));
+    const {data} = calcChartSpec(frequencies, trans("others"));
     const config = {
       padding: {top: 0, bottom: 0, left: 0, right: 0},
       legend: {show: true},
       customTooltip: {
         format: {
-          value: (value, total) => trans("wordNameFrequencyPane.value", {value, total}),
-          percent: (percent) => trans("wordNameFrequencyPane.percent", {percent})
+          value: (value, total) => trans("value", {value, total}),
+          percent: (percent) => trans("percent", {percent})
         }
       }
     } as ChartConfig;

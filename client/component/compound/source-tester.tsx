@@ -16,7 +16,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 
 
@@ -31,13 +31,13 @@ const SourceTester = create(
   }): ReactElement {
 
     const [executorOpen, setExecutorOpen] = useState(false);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("sourceTester");
 
     const node = (
       <Fragment>
         <form styleName="root">
           <Highlight source={source} language={language}/>
-          <Button label={trans("sourceTester.try")} variant="light" onClick={() => setExecutorOpen(true)}/>
+          <Button label={trans("try")} variant="light" onClick={() => setExecutorOpen(true)}/>
         </form>
         <SourceTesterExecutor {...{source, language, executorOpen, setExecutorOpen}}/>
       </Fragment>

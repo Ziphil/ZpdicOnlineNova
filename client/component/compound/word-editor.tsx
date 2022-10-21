@@ -45,7 +45,8 @@ import {
   useDragDrop,
   useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   EditableWord,
@@ -92,7 +93,7 @@ const WordEditor = create(
     const [resourceListOpen, setResourceListOpen] = useState(false);
     const [alertOpen, setAlertOpen] = useState(false);
     const editingRelationIndexRef = useRef<number>();
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditor");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -186,17 +187,17 @@ const WordEditor = create(
     const node = (
       <Fragment>
         <WordEditorRoot {...editorProps}/>
-        <Overlay size="large" title={trans("wordSearcher.title")} open={relationChooserOpen} onClose={() => setRelationChooserOpen(false)}>
+        <Overlay size="large" title={trans(":wordSearcher.title")} open={relationChooserOpen} onClose={() => setRelationChooserOpen(false)}>
           <WordSearcher dictionary={dictionary} style="simple" showButton={true} showDirectionButton={true} onSubmit={editRelation}/>
         </Overlay>
-        <Overlay size="large" title={trans("resourceList.title")} open={resourceListOpen} onClose={() => setResourceListOpen(false)}>
+        <Overlay size="large" title={trans(":resourceList.title")} open={resourceListOpen} onClose={() => setResourceListOpen(false)}>
           <Suspense fallback={<Loading/>}>
             <ResourceList dictionary={dictionary} size={10} showCode={true} showInstruction={true}/>
           </Suspense>
         </Overlay>
         <Alert
-          text={trans("wordEditor.alert")}
-          confirmLabel={trans("wordEditor.alertConfirm")}
+          text={trans("alert")}
+          confirmLabel={trans("alertConfirm")}
           open={alertOpen}
           outsideClosable={true}
           onClose={() => setAlertOpen(false)}

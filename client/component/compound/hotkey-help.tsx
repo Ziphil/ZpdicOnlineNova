@@ -16,7 +16,8 @@ import {
   HotkeyGroup,
   HotkeySpec,
   useHotkeySpecs,
-  useIntl
+  useIntl,
+  useTrans
 } from "/client/component/hook";
 import {
   StyleNameUtil
@@ -34,15 +35,15 @@ const HotkeyHelp = create(
   }): ReactElement {
 
     const [currentGroup, setCurrentGroup] = useState<HotkeyGroup>("general");
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("hotkeyHelp");
 
     const node = (
-      <Overlay title={trans("hotkeyHelp.title")} open={open} outsideClosable={true} onClose={onClose}>
+      <Overlay title={trans("title")} open={open} outsideClosable={true} onClose={onClose}>
         <div styleName="root">
           <div styleName="main">
             <div styleName="content">
               <div styleName="information">
-                {trans("hotkeyHelp.information")}
+                {trans("information")}
               </div>
               <div styleName="table-list">
                 <HotkeyHelpTable group="general" currentGroup={currentGroup}/>
@@ -53,10 +54,10 @@ const HotkeyHelp = create(
             </div>
             <div styleName="menu">
               <Menu mode={currentGroup} direction="vertical">
-                <MenuItem mode="general" label={trans("hotkeyHelp.general")} iconName="keyboard" onClick={() => setCurrentGroup("general")}/>
-                <MenuItem mode="navigation" label={trans("hotkeyHelp.navigation")} iconName="location-arrow" onClick={() => setCurrentGroup("navigation")}/>
-                <MenuItem mode="editDictionary" label={trans("hotkeyHelp.editDictionary")} iconName="edit" onClick={() => setCurrentGroup("editDictionary")}/>
-                <MenuItem mode="searchWords" label={trans("hotkeyHelp.searchWords")} iconName="search" onClick={() => setCurrentGroup("searchWords")}/>
+                <MenuItem mode="general" label={trans("general")} iconName="keyboard" onClick={() => setCurrentGroup("general")}/>
+                <MenuItem mode="navigation" label={trans("navigation")} iconName="location-arrow" onClick={() => setCurrentGroup("navigation")}/>
+                <MenuItem mode="editDictionary" label={trans("editDictionary")} iconName="edit" onClick={() => setCurrentGroup("editDictionary")}/>
+                <MenuItem mode="searchWords" label={trans("searchWords")} iconName="search" onClick={() => setCurrentGroup("searchWords")}/>
               </Menu>
             </div>
           </div>

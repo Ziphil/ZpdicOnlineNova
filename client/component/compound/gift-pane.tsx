@@ -9,7 +9,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 
 
@@ -19,7 +19,7 @@ const GiftPane = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("giftPane");
 
     const jumpAmazon = useCallback(function (): void {
       const url = "https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L?ref_=wl_share";
@@ -29,10 +29,10 @@ const GiftPane = create(
     const node = (
       <div styleName="root">
         <div styleName="information">
-          {trans("giftPane.information")}
+          {trans("information")}
         </div>
         <div styleName="button">
-          <Button label={trans("giftPane.sendGift")} iconName="gift" onClick={jumpAmazon}/>
+          <Button label={trans("sendGift")} iconName="gift" onClick={jumpAmazon}/>
         </div>
       </div>
     );

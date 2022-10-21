@@ -23,7 +23,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 
 
@@ -44,7 +44,7 @@ const ZatlinExecutor = create(
     const [source, setSource] = useState(defaultSource ?? "");
     const [output, setOutput] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("zatlinExecutor");
 
     const executeZatlin = useCallback(function (): void {
       try {
@@ -69,11 +69,11 @@ const ZatlinExecutor = create(
 
     const version = ZATLIN_VERSION;
     const node = (
-      <Overlay size="large" title={trans("zatlinExecutor.title", {version})} open={open} onClose={handleClose}>
+      <Overlay size="large" title={trans("title", {version})} open={open} onClose={handleClose}>
         <div styleName="root">
           <TextArea
             className={styles!["source"]}
-            label={trans("zatlinExecutor.source")}
+            label={trans("source")}
             value={source}
             font="monospace"
             language="zatlin"
@@ -81,11 +81,11 @@ const ZatlinExecutor = create(
             fitHeight={true}
             onSet={(source) => setSource(source)}
           />
-          <Button className={styles!["button"]} label={trans("zatlinExecutor.execute")} onClick={executeZatlin}/>
-          <Input label={trans("zatlinExecutor.output")} value={output} readOnly={true}/>
+          <Button className={styles!["button"]} label={trans("execute")} onClick={executeZatlin}/>
+          <Input label={trans("output")} value={output} readOnly={true}/>
           <TextArea
             className={styles!["error-message"]}
-            label={trans("zatlinExecutor.errorMessage")}
+            label={trans("errorMessage")}
             value={errorMessage}
             font="monospace"
             language="plain"

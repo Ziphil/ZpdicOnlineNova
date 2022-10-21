@@ -12,10 +12,10 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -25,7 +25,7 @@ const GithubButton = create(
   }: {
   }): ReactElement {
 
-    const [, {trans, transNumber}] = useIntl();
+    const {trans, transNumber} = useTrans("githubButton");
 
     const {data: starCount} = useQuery("github", async () => {
       const url = "https://api.github.com/repos/Ziphil/ZpdicOnlineNova";
@@ -40,24 +40,21 @@ const GithubButton = create(
 
     const githubUrl = "https://github.com/Ziphil/ZpdicOnlineNova";
     const dashboardUrl = "https://ziphil.notion.site/ZpDIC-Online-987030f6505e4cf1ba8fe08121584d93";
-    const starContainerData = DataUtil.create({
-      popperPlacement: "right"
-    });
     const node = (
       <div styleName="root">
         <a styleName="github" href={githubUrl} target="_blank" rel="noreferrer">
           <div styleName="icon-wrapper">
             <div styleName="icon"><Icon name="github"/></div>
-            <div styleName="star-wrapper" {...starContainerData}>
+            <div styleName="star-wrapper" {...data({popperPlacement: "right"})}>
               <div styleName="arrow"/>
               <span styleName="star"><Icon name="star"/></span>
               <span styleName="count">{transNumber(starCount)}</span>
             </div>
           </div>
-          <div styleName="text">{trans("githubButton.github")}</div>
+          <div styleName="text">{trans("github")}</div>
         </a>
         <div styleName="dashboard">
-          <a styleName="text" href={dashboardUrl} target="_blank" rel="noreferrer">{trans("githubButton.dashboard")}</a>
+          <a styleName="text" href={dashboardUrl} target="_blank" rel="noreferrer">{trans("dashboard")}</a>
         </div>
       </div>
     );

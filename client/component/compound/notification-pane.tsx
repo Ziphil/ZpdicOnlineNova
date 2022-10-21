@@ -10,7 +10,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
   Notification
@@ -27,7 +27,7 @@ const NotificationPane = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans, transDate}] = useIntl();
+    const {trans, transDate} = useTrans("notificationPane");
 
     const [iconName, iconSlashed] = (() => {
       const type = notification.type;
@@ -51,7 +51,7 @@ const NotificationPane = create(
             <div styleName="date">{transDate(notification.date)}</div>
             <h1 styleName="head">
               {(notification.type === "bugFixed") && (
-                <span styleName="fixed">({trans("notificationPane.fixed")})</span>
+                <span styleName="fixed">({trans("fixed")})</span>
               )}
               {notification.title}
             </h1>

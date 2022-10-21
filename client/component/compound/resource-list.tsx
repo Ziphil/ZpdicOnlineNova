@@ -14,10 +14,10 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
   useRequest,
-  useSuspenseQuery
+  useSuspenseQuery,
+  useTrans
 } from "/client/component/hook";
 import {
   Dictionary
@@ -41,7 +41,7 @@ const ResouceList = create(
     showInstruction?: boolean
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("resouceList");
     const {request} = useRequest();
     const [, {addInformationPopup, addErrorPopup}] = usePopup();
 
@@ -84,12 +84,12 @@ const ResouceList = create(
       <div styleName="root">
         {(showInstruction) && (
           <div styleName="instruction">
-            {(dictionary.settings.enableMarkdown) ? trans("resourceList.instruction") : trans("resourceList.markdownCaution")}
+            {(dictionary.settings.enableMarkdown) ? trans("instruction") : trans("markdownCaution")}
           </div>
         )}
         <div styleName="form">
-          <FileInput inputLabel={trans("resourceList.file")} file={file} onSet={setFile}/>
-          <Button label={trans("resourceList.confirm")} reactive={true} onClick={uploadFile}/>
+          <FileInput inputLabel={trans("file")} file={file} onSet={setFile}/>
+          <Button label={trans("confirm")} reactive={true} onClick={uploadFile}/>
         </div>
         <div styleName="list">
           <PaneList

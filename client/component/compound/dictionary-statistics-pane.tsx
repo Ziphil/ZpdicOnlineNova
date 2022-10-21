@@ -12,7 +12,8 @@ import {
 } from "/client/component/create";
 import {
   useIntl,
-  useSuspenseQuery
+  useSuspenseQuery,
+  useTrans
 } from "/client/component/hook";
 import {
   DetailedDictionary
@@ -27,7 +28,8 @@ const DictionaryStatisticsPane = create(
     dictionary: DetailedDictionary
   }): ReactElement {
 
-    const [intl, {trans, transNode}] = useIntl();
+    const [intl] = useIntl();
+    const {trans, transNode} = useTrans("dictionaryStatisticsPane");
 
     const number = dictionary.number;
     const [statistics] = useSuspenseQuery("fetchDictionaryStatistics", {number});
@@ -48,30 +50,30 @@ const DictionaryStatisticsPane = create(
       <div styleName="root">
         <div styleName="radio-container">
           <RadioGroup name="stringType" value={stringType} onSet={setStringType}>
-            <Radio value="kept" label={trans("dictionaryStatisticsPane.kept")}/>
-            <Radio value="nfd" label={trans("dictionaryStatisticsPane.nfd")}/>
-            <Radio value="nfc" label={trans("dictionaryStatisticsPane.nfc")}/>
+            <Radio value="kept" label={trans("kept")}/>
+            <Radio value="nfd" label={trans("nfd")}/>
+            <Radio value="nfc" label={trans("nfc")}/>
           </RadioGroup>
         </div>
         <div styleName="row-container">
           <div styleName="row">
             <div styleName="item">
-              <div styleName="title">{trans("dictionaryStatisticsPane.wordCount")}</div>
+              <div styleName="title">{trans("wordCount")}</div>
               <div styleName="value-list">
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.wordCountRaw.value", {
+                  {transNode("wordCountRaw.value", {
                     value: statistics.wordCount.raw,
                     unit: (parts) => <span styleName="unit">{parts}</span>
                   })}
                 </div>
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.wordCountTokipona.value", {
+                  {transNode("wordCountTokipona.value", {
                     value: statistics.wordCount.tokipona,
                     unit: (parts) => <span styleName="unit">{parts}</span>
                   })}
                 </div>
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.wordCountCtwi.value", {
+                  {transNode("wordCountCtwi.value", {
                     value: statistics.wordCount.ctwi,
                     valueString: transExtendedNumber(statistics.wordCount.ctwi, 2),
                     unit: (parts) => <span styleName="unit">{parts}</span>
@@ -82,10 +84,10 @@ const DictionaryStatisticsPane = create(
           </div>
           <div styleName="row">
             <div styleName="item">
-              <div styleName="title">{trans("dictionaryStatisticsPane.wordNameLengthAverage.title")}</div>
+              <div styleName="title">{trans("wordNameLengthAverage.title")}</div>
               <div styleName="value-list">
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.wordNameLengthAverage.value", {
+                  {transNode("wordNameLengthAverage.value", {
                     value: statistics.wordNameLengths.average[stringType],
                     unit: (parts) => <span styleName="unit">{parts}</span>
                   })}
@@ -95,10 +97,10 @@ const DictionaryStatisticsPane = create(
           </div>
           <div styleName="row">
             <div styleName="item">
-              <div styleName="title">{trans("dictionaryStatisticsPane.equivalentNameCountWhole.title")}</div>
+              <div styleName="title">{trans("equivalentNameCountWhole.title")}</div>
               <div styleName="value-list">
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.equivalentNameCountWhole.value", {
+                  {transNode("equivalentNameCountWhole.value", {
                     value: statistics.equivalentNameCount.whole,
                     unit: (parts) => <span styleName="unit">{parts}</span>
                   })}
@@ -106,10 +108,10 @@ const DictionaryStatisticsPane = create(
               </div>
             </div>
             <div styleName="item">
-              <div styleName="title">{trans("dictionaryStatisticsPane.equivalentNameCountAverage.title")}</div>
+              <div styleName="title">{trans("equivalentNameCountAverage.title")}</div>
               <div styleName="value-list">
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.equivalentNameCountAverage.value", {
+                  {transNode("equivalentNameCountAverage.value", {
                     value: statistics.equivalentNameCount.average,
                     unit: (parts) => <span styleName="unit">{parts}</span>
                   })}
@@ -119,10 +121,10 @@ const DictionaryStatisticsPane = create(
           </div>
           <div styleName="row">
             <div styleName="item">
-              <div styleName="title">{trans("dictionaryStatisticsPane.informationCountWhole.title")}</div>
+              <div styleName="title">{trans("informationCountWhole.title")}</div>
               <div styleName="value-list">
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.informationCountWhole.value", {
+                  {transNode("informationCountWhole.value", {
                     value: statistics.informationCount.whole,
                     unit: (parts) => <span styleName="unit">{parts}</span>
                   })}
@@ -130,10 +132,10 @@ const DictionaryStatisticsPane = create(
               </div>
             </div>
             <div styleName="item">
-              <div styleName="title">{trans("dictionaryStatisticsPane.informationCountAverage.title")}</div>
+              <div styleName="title">{trans("informationCountAverage.title")}</div>
               <div styleName="value-list">
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.informationCountAverage.value", {
+                  {transNode("informationCountAverage.value", {
                     value: statistics.informationCount.average,
                     unit: (parts) => <span styleName="unit">{parts}</span>
                   })}
@@ -143,10 +145,10 @@ const DictionaryStatisticsPane = create(
           </div>
           <div styleName="row">
             <div styleName="item">
-              <div styleName="title">{trans("dictionaryStatisticsPane.informationTextLengthWhole.title")}</div>
+              <div styleName="title">{trans("informationTextLengthWhole.title")}</div>
               <div styleName="value-list">
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.informationTextLengthWhole.value", {
+                  {transNode("informationTextLengthWhole.value", {
                     value: statistics.informationTextLengths.whole[stringType],
                     unit: (parts) => <span styleName="unit">{parts}</span>
                   })}
@@ -154,10 +156,10 @@ const DictionaryStatisticsPane = create(
               </div>
             </div>
             <div styleName="item">
-              <div styleName="title">{trans("dictionaryStatisticsPane.informationTextLengthAverage.title")}</div>
+              <div styleName="title">{trans("informationTextLengthAverage.title")}</div>
               <div styleName="value-list">
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.informationTextLengthAverage.value", {
+                  {transNode("informationTextLengthAverage.value", {
                     value: statistics.informationTextLengths.average[stringType],
                     unit: (parts) => <span styleName="unit">{parts}</span>
                   })}
@@ -167,10 +169,10 @@ const DictionaryStatisticsPane = create(
           </div>
           <div styleName="row">
             <div styleName="item">
-              <div styleName="title">{trans("dictionaryStatisticsPane.exampleCountWhole.title")}</div>
+              <div styleName="title">{trans("exampleCountWhole.title")}</div>
               <div styleName="value-list">
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.exampleCountWhole.value", {
+                  {transNode("exampleCountWhole.value", {
                     value: statistics.exampleCount.whole,
                     unit: (parts) => <span styleName="unit">{parts}</span>
                   })}
@@ -178,10 +180,10 @@ const DictionaryStatisticsPane = create(
               </div>
             </div>
             <div styleName="item">
-              <div styleName="title">{trans("dictionaryStatisticsPane.exampleCountAverage.title")}</div>
+              <div styleName="title">{trans("exampleCountAverage.title")}</div>
               <div styleName="value-list">
                 <div styleName="value">
-                  {transNode("dictionaryStatisticsPane.exampleCountAverage.value", {
+                  {transNode("exampleCountAverage.value", {
                     value: statistics.exampleCount.average,
                     unit: (parts) => <span styleName="unit">{parts}</span>
                   })}

@@ -12,7 +12,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 
 
@@ -24,7 +24,7 @@ const ContributorList = create(
     rawContributors: Array<RawContributor>
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("contributorList");
 
     const {data: contributors} = useQuery(["contributors", rawContributors], async () => {
       const promises = rawContributors.map(async (rawContributor) => {
@@ -39,7 +39,7 @@ const ContributorList = create(
 
     const node = (
       <div styleName="root">
-        <div styleName="head">{trans("contributorList.title")}</div>
+        <div styleName="head">{trans("title")}</div>
         <ul styleName="list">
           {contributors?.map((contributor) => (
             <li styleName="item" key={contributor.name}>

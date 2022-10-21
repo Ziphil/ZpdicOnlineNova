@@ -18,7 +18,7 @@ import {
 } from "/client/component/create";
 import {
   useHotkey,
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
   DICTIONARY_ORDER_DIRECTIONS,
@@ -44,7 +44,7 @@ const DictionarySearchForm = create(
   }): ReactElement {
 
     const inputRef = useRef<HTMLInputElement>(null);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("dictionarySearchForm");
 
     const handleParameterSet = useCallback(function (nextParameter: DeepPartial<NormalDictionaryParameter>): void {
       if (onParameterSet) {
@@ -78,7 +78,7 @@ const DictionarySearchForm = create(
             >
               {orderMode.map((orderMode) => (
                 <DropdownItem key={orderMode} value={orderMode}>
-                  {trans(`dictionarySearchForm.${orderMode}`)}
+                  {trans(orderMode)}
                 </DropdownItem>
               ))}
             </Selection>
@@ -91,7 +91,7 @@ const DictionarySearchForm = create(
                 <DropdownItem key={orderDirection} value={orderDirection}>
                   <div>
                     <Icon className={styles!["order-direction-icon"]} name={(orderDirection === "ascending") ? "arrow-down-a-z" : "arrow-down-z-a"}/>
-                    {trans(`dictionarySearchForm.${orderDirection}`)}
+                    {trans(orderDirection)}
                   </div>
                 </DropdownItem>
               ))}

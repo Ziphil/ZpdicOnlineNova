@@ -10,16 +10,16 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   useLocation,
   useMe,
-  usePath
+  usePath,
+  useTrans
 } from "/client/component/hook";
 import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -37,18 +37,17 @@ const Header = create(
     preserveQuery?: boolean
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("header");
     const {pushPath} = usePath();
     const location = useLocation();
     const [me] = useMe();
 
-    const titleData = DataUtil.create({small: dictionary !== undefined});
     const node = (
       <header styleName="root">
         <div styleName="content">
           <div styleName="top">
             <div styleName="left">
-              <div styleName="title" {...titleData}>
+              <div styleName="title" {...data({small: dictionary !== undefined})}>
                 <Link href="/" target="self" style="plane">ZpDIC</Link>
               </div>
               {(dictionary !== undefined) && (
@@ -59,7 +58,7 @@ const Header = create(
             </div>
             <div styleName="right">
               <div styleName="button-container">
-                <Button label={trans("header.dictionaryList")} iconName="book" variant="simple" hideLabel={true} onClick={() => pushPath("/list")}/>
+                <Button label={trans("dictionaryList")} iconName="book" variant="simple" hideLabel={true} onClick={() => pushPath("/list")}/>
               </div>
               {(me !== null) && (
                 <>

@@ -9,7 +9,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 
 
@@ -21,7 +21,7 @@ const Footer = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("footer");
 
     const date = new Date();
     const yearString = date.getFullYear().toString();
@@ -39,14 +39,14 @@ const Footer = create(
           </div>
           <div styleName="right">
             <div>
-              <Link className={styles!["link"]} href="/notification" style="plane">{trans("footer.notification")}</Link>
+              <Link className={styles!["link"]} href="/notification" style="plane">{trans("notification")}</Link>
             </div>
             <div>
-              <Link className={styles!["link"]} href="/document" style="plane">{trans("footer.document")}</Link>
+              <Link className={styles!["link"]} href="/document" style="plane">{trans("document")}</Link>
             </div>
             <div/>
             <div>
-              <Link className={styles!["link"]} href="/contact" style="plane">{trans("footer.contact")}</Link>
+              <Link className={styles!["link"]} href="/contact" style="plane">{trans("contact")}</Link>
             </div>
           </div>
         </div>

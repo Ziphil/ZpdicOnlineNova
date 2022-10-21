@@ -13,7 +13,7 @@ import {
 } from "/client/component/create";
 import {
   useHotkey,
-  useIntl,
+  useTrans,
   useWordEditorProps
 } from "/client/component/hook";
 import {
@@ -27,7 +27,7 @@ const WordEditorDrawer = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditorDrawer");
     const {editorProps, editorOpen, setEditorOpen, editingId, setEditingId} = useWordEditorProps();
 
     useHotkey("toggleWordEditor", () => {
@@ -42,7 +42,7 @@ const WordEditorDrawer = create(
 
     const node = (
       <Drawer
-        title={trans("wordEditor.title")}
+        title={trans(":wordEditor.title")}
         iconName="custom-word"
         badgeValue={(editorProps.length > 0) ? editorProps.length : undefined}
         tabPosition="top"
@@ -54,9 +54,9 @@ const WordEditorDrawer = create(
         {(editorProps.length > 0) && (
           <>
             <div styleName="selection-container">
-              <Selection label={trans("wordEditorDrawer.editing")} value={editingId} onSet={setEditingId}>
+              <Selection label={trans("editing")} value={editingId} onSet={setEditingId}>
                 {editorProps.map((editorProps) => (
-                  <DropdownItem key={editorProps.id} value={editorProps.id}>{editorProps.name || trans("wordEditorDrawer.noName")}</DropdownItem>
+                  <DropdownItem key={editorProps.id} value={editorProps.id}>{editorProps.name || trans("noName")}</DropdownItem>
                 ))}
               </Selection>
             </div>

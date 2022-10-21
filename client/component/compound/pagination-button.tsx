@@ -10,8 +10,8 @@ import {
 } from "/client/component/create";
 import {
   useHotkey,
-  useIntl,
-  useMediaQuery
+  useMediaQuery,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -34,7 +34,7 @@ const PaginationButton = create(
   }): ReactElement {
 
     const {smartphone} = useMediaQuery();
-    const [, {transNumber}] = useIntl();
+    const {transNumber} = useTrans("paginationButton");
 
     const movePage = useCallback(function (page: number): void {
       onSet?.(page);

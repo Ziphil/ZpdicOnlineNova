@@ -19,9 +19,9 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   Dictionary
@@ -46,7 +46,7 @@ const ResourcePane = create(
   }): ReactElement {
 
     const [alertOpen, setAlertOpen] = useState(false);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("resourcePane");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -82,12 +82,12 @@ const ResourcePane = create(
             </div>
           </div>
           <div styleName="button">
-            <Button label={trans("resourcePane.discard")} iconName="trash-alt" variant="simple" onClick={() => setAlertOpen(true)}/>
+            <Button label={trans("discard")} iconName="trash-alt" variant="simple" onClick={() => setAlertOpen(true)}/>
           </div>
         </WhitePane>
         <Alert
-          text={trans("resourcePane.alert")}
-          confirmLabel={trans("resourcePane.discard")}
+          text={trans("alert")}
+          confirmLabel={trans("discard")}
           open={alertOpen}
           outsideClosable={true}
           onClose={() => setAlertOpen(false)}

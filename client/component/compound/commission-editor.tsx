@@ -19,9 +19,9 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   Dictionary
@@ -42,7 +42,7 @@ const CommissionEditor = create(
     styles?: StylesRecord
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("commissionEditor");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -60,11 +60,11 @@ const CommissionEditor = create(
     }, [dictionary.number, name, comment, request, onClose, addInformationPopup]);
 
     const node = (
-      <Overlay size="large" title={trans("commissionEditor.title")} open={open} onClose={onClose}>
+      <Overlay size="large" title={trans("title")} open={open} onClose={onClose}>
         <div styleName="root">
-          <Input label={trans("commissionEditor.name")} value={name} onSet={setName}/>
-          <TextArea className={styles!["comment"]} label={trans("commissionEditor.comment")} value={comment} showOptional={true} onSet={setComment}/>
-          <Button className={styles!["button"]} label={trans("commissionEditor.confirm")} iconName="list-check" scheme="blue" reactive={true} onClick={addCommission}/>
+          <Input label={trans("name")} value={name} onSet={setName}/>
+          <TextArea className={styles!["comment"]} label={trans("comment")} value={comment} showOptional={true} onSet={setComment}/>
+          <Button className={styles!["button"]} label={trans("confirm")} iconName="list-check" scheme="blue" reactive={true} onClick={addCommission}/>
         </div>
       </Overlay>
     );

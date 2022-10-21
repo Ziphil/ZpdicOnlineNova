@@ -15,10 +15,10 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   useMe,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -28,7 +28,7 @@ const ContactForm = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("contactForm");
     const [me] = useMe();
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
@@ -59,13 +59,13 @@ const ContactForm = create(
     const disabled = me !== null;
     const node = (
       <form styleName="root">
-        <Input label={trans("contactForm.name")} value={name} disabled={disabled} showOptional={true} onSet={setName}/>
-        <Input label={trans("contactForm.email")} value={email} disabled={disabled} showOptional={true} onSet={setEmail}/>
-        <Input label={trans("contactForm.subject")} value={subject} showOptional={true} onSet={setSubject}/>
-        <TextArea label={trans("contactForm.text")} value={text} onSet={setText}/>
+        <Input label={trans("name")} value={name} disabled={disabled} showOptional={true} onSet={setName}/>
+        <Input label={trans("email")} value={email} disabled={disabled} showOptional={true} onSet={setEmail}/>
+        <Input label={trans("subject")} value={subject} showOptional={true} onSet={setSubject}/>
+        <TextArea label={trans("text")} value={text} onSet={setText}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={trans("contactForm.confirm")} iconName="envelope" scheme="blue" reactive={true} onClick={performSend}/>
+            <Button label={trans("confirm")} iconName="envelope" scheme="blue" reactive={true} onClick={performSend}/>
           </div>
         </div>
       </form>
