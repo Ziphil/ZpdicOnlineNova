@@ -16,7 +16,8 @@ import {
 import {
   useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   createValidate
@@ -40,7 +41,8 @@ const ChangeUserEmailForm = create(
   }): ReactElement {
 
     const [email, setEmail] = useState(currentEmail);
-    const [intl, {trans}] = useIntl();
+    const [intl] = useIntl();
+    const {trans} = useTrans("changeUserEmailForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -55,8 +57,8 @@ const ChangeUserEmailForm = create(
     const validate = createValidate(EMAIL_REGEXP, PopupUtil.getMessage(intl, "invalidUserEmail"));
     const node = (
       <form styleName="root">
-        <Input label={trans("changeUserEmailForm.email")} value={email} validate={validate} onSet={(email) => setEmail(email)}/>
-        <Button label={trans("changeUserEmailForm.confirm")} reactive={true} onClick={handleClick}/>
+        <Input label={trans("email")} value={email} validate={validate} onSet={(email) => setEmail(email)}/>
+        <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;

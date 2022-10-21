@@ -16,7 +16,8 @@ import {
 import {
   useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   createValidate
@@ -38,7 +39,8 @@ const ChangeUserPasswordForm = create(
   }): ReactElement {
 
     const [password, setPassword] = useState("");
-    const [intl, {trans}] = useIntl();
+    const [intl] = useIntl();
+    const {trans} = useTrans("changeUserPasswordForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -53,8 +55,8 @@ const ChangeUserPasswordForm = create(
     const validate = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
     const node = (
       <form styleName="root">
-        <Input label={trans("changeUserPasswordForm.password")} type="flexible" value={password} validate={validate} onSet={(password) => setPassword(password)}/>
-        <Button label={trans("changeUserPasswordForm.confirm")} reactive={true} onClick={handleClick}/>
+        <Input label={trans("password")} type="flexible" value={password} validate={validate} onSet={(password) => setPassword(password)}/>
+        <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;

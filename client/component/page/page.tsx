@@ -17,7 +17,7 @@ import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -39,7 +39,6 @@ const Page = create(
     children?: ReactNode
   }): ReactElement {
 
-    const spacerData = DataUtil.create({showDictionary});
     const node = (
       <div styleName="root" id="page">
         <Helmet>
@@ -47,7 +46,7 @@ const Page = create(
         </Helmet>
         <PopupInformationPane/>
         <Header dictionary={dictionary} showAddLink={showAddLink} showSettingLink={showSettingLink}/>
-        <div styleName="spacer" {...spacerData}>
+        <div styleName="spacer" {...data({showDictionary})}>
           <div styleName="content">
             {children}
           </div>

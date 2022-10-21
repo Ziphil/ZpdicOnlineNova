@@ -10,7 +10,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 
 
@@ -24,16 +24,16 @@ const ChangeUserNameForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("changeUserNameForm");
 
     const node = (
       <Fragment>
         <form styleName="root">
-          <Input label={trans("changeUserNameForm.name")} value={currentName} disabled={true}/>
-          <Button label={trans("changeUserNameForm.confirm")} disabled={true}/>
+          <Input label={trans("name")} value={currentName} disabled={true}/>
+          <Button label={trans("confirm")} disabled={true}/>
         </form>
         <p styleName="caution">
-          {trans("changeUserNameForm.caution")}
+          {trans("caution")}
         </p>
       </Fragment>
     );

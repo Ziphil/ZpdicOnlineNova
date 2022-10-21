@@ -18,9 +18,9 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -40,7 +40,7 @@ const ChangeDictionarySourceForm = create(
 
     const [source, setSource] = useState(currentSource ?? "");
     const [executorOpen, setExecutorOpen] = useState(false);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("changeDictionarySourceForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -59,7 +59,7 @@ const ChangeDictionarySourceForm = create(
       <Fragment>
         <form styleName="root">
           <TextArea
-            label={trans(`changeDictionarySourceForm.${language}`)}
+            label={trans(language)}
             value={source}
             font="monospace"
             language={language}
@@ -67,8 +67,8 @@ const ChangeDictionarySourceForm = create(
             onSet={(source) => setSource(source)}
           />
           <div styleName="button">
-            <Button label={trans("changeDictionarySourceForm.try")} variant="light" onClick={() => setExecutorOpen(true)}/>
-            <Button label={trans("changeDictionarySourceForm.confirm")} reactive={true} onClick={handleClick}/>
+            <Button label={trans("try")} variant="light" onClick={() => setExecutorOpen(true)}/>
+            <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
           </div>
         </form>
         {(language === "akrantiain") ? (

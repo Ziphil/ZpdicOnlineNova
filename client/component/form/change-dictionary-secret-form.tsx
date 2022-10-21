@@ -17,9 +17,9 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -36,7 +36,7 @@ const ChangeDictionarySecretForm = create(
   }): ReactElement {
 
     const [secret, setSecret] = useState(currentSecret);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("changeDictionarySecretForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -53,13 +53,13 @@ const ChangeDictionarySecretForm = create(
       <Fragment>
         <form styleName="root">
           <RadioGroup name="secret" value={secret} onSet={(secret) => setSecret(secret)}>
-            <Radio value={false} label={trans("changeDictionarySecretForm.public")}/>
-            <Radio value={true} label={trans("changeDictionarySecretForm.secret")}/>
+            <Radio value={false} label={trans("public")}/>
+            <Radio value={true} label={trans("secret")}/>
           </RadioGroup>
-          <Button label={trans("changeDictionarySecretForm.confirm")} reactive={true} onClick={handleClick}/>
+          <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
         <p styleName="caution">
-          {trans("changeDictionarySecretForm.caution")}
+          {trans("caution")}
         </p>
       </Fragment>
     );

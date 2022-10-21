@@ -29,7 +29,8 @@ import {
   useLogout,
   usePath,
   useSuspenseMe,
-  useSuspenseQuery
+  useSuspenseQuery,
+  useTrans
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
@@ -46,7 +47,7 @@ const DashboardPage = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("dashboardPage");
     const {pushPath} = usePath();
     const logout = useLogout();
     const location = useLocation();
@@ -68,21 +69,19 @@ const DashboardPage = create(
     const editNotificationCount = editInvitations.length;
     const transferNotificationCount = transferInvitations.length;
     const notificationCount = editNotificationCount + transferNotificationCount;
-    const menuSpecs = [
-    ] as const;
     const node = (
-      <Page title={trans("dashboardPage.title")}>
+      <Page title={trans("title")}>
         {(!me.activated) && (
           <div styleName="activate">
             <ActivateUserForm/>
           </div>
         )}
         <Menu mode={mode}>
-          <MenuItem mode="dictionary" label={trans("dashboardPage.dictionary")} iconName="book" badgeValue={dictionaryCount} href="#dictionary"/>
-          <MenuItem mode="notification" label={trans("dashboardPage.notification")} iconName="bell" badgeValue={notificationCount} href="#notification"/>
-          <MenuItem mode="account" label={trans("dashboardPage.account")} iconName="id-card" href="#account"/>
-          <MenuItem mode="appearance" label={trans("dashboardPage.appearance")} iconName="brush" href="#appearance"/>
-          <MenuItem mode="logout" label={trans("dashboardPage.logout")} iconName="sign-out-alt" onClick={performLogout}/>
+          <MenuItem mode="dictionary" label={trans("dictionary")} iconName="book" badgeValue={dictionaryCount} href="#dictionary"/>
+          <MenuItem mode="notification" label={trans("notification")} iconName="bell" badgeValue={notificationCount} href="#notification"/>
+          <MenuItem mode="account" label={trans("account")} iconName="id-card" href="#account"/>
+          <MenuItem mode="appearance" label={trans("appearance")} iconName="brush" href="#appearance"/>
+          <MenuItem mode="logout" label={trans("logout")} iconName="sign-out-alt" onClick={performLogout}/>
         </Menu>
         <DashboardPageForms {...{dictionaries, editInvitations, transferInvitations, mode}}/>
       </Page>
@@ -115,14 +114,14 @@ const DashboardPageForms = create(
       const node = (
         <Suspense fallback={<DashboardPageLoading/>}>
           <SettingPane
-            label={trans("dashboardPage.dictionaryList.label")}
-            description={trans("dashboardPage.dictionaryList.description")}
+            label={trans("dictionaryList.label")}
+            description={trans("dictionaryList.description")}
           >
             <DictionaryList dictionaries={dictionaries} showLinks={true} size={8}/>
           </SettingPane>
           <SettingPane
-            label={trans("dashboardPage.createDictionaryForm.label")}
-            description={trans("dashboardPage.createDictionaryForm.description")}
+            label={trans("createDictionaryForm.label")}
+            description={trans("createDictionaryForm.description")}
           >
             <CreateDictionaryForm/>
           </SettingPane>
@@ -133,14 +132,14 @@ const DashboardPageForms = create(
       const node = (
         <Suspense fallback={<DashboardPageLoading/>}>
           <SettingPane
-            label={trans("dashboardPage.editInvitationList.label")}
-            description={trans("dashboardPage.editInvitationList.description")}
+            label={trans("editInvitationList.label")}
+            description={trans("editInvitationList.description")}
           >
             <InvitationList invitations={editInvitations} size={8}/>
           </SettingPane>
           <SettingPane
-            label={trans("dashboardPage.transferInvitationList.label")}
-            description={trans("dashboardPage.transferInvitationList.description")}
+            label={trans("transferInvitationList.label")}
+            description={trans("transferInvitationList.description")}
           >
             <InvitationList invitations={transferInvitations} size={8}/>
           </SettingPane>
@@ -151,32 +150,32 @@ const DashboardPageForms = create(
       const node = (
         <Suspense fallback={<DashboardPageLoading/>}>
           <SettingPane
-            label={trans("dashboardPage.changeUserNameForm.label")}
-            description={trans("dashboardPage.changeUserNameForm.description")}
+            label={trans("changeUserNameForm.label")}
+            description={trans("changeUserNameForm.description")}
           >
             <ChangeUserNameForm currentName={user.name} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
-            label={trans("dashboardPage.changeUserScreenNameForm.label")}
-            description={trans("dashboardPage.changeUserScreenNameForm.description")}
+            label={trans("changeUserScreenNameForm.label")}
+            description={trans("changeUserScreenNameForm.description")}
           >
             <ChangeUserScreenNameForm currentScreenName={user.screenName} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
-            label={trans("dashboardPage.changeUserEmailForm.label")}
-            description={trans("dashboardPage.changeUserEmailForm.description")}
+            label={trans("changeUserEmailForm.label")}
+            description={trans("changeUserEmailForm.description")}
           >
             <ChangeUserEmailForm currentEmail={user.email} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
-            label={trans("dashboardPage.changeUserPasswordForm.label")}
-            description={trans("dashboardPage.changeUserPasswordForm.description")}
+            label={trans("changeUserPasswordForm.label")}
+            description={trans("changeUserPasswordForm.description")}
           >
             <ChangeUserPasswordForm/>
           </SettingPane>
           <SettingPane
-            label={trans("dashboardPage.discardUserForm.label")}
-            description={trans("dashboardPage.discardUserForm.description")}
+            label={trans("discardUserForm.label")}
+            description={trans("discardUserForm.description")}
           >
             <DiscardUserForm onSubmit={() => pushPath("/", {preservePopup: true})}/>
           </SettingPane>
@@ -187,14 +186,14 @@ const DashboardPageForms = create(
       const node = (
         <Suspense fallback={<DashboardPageLoading/>}>
           <SettingPane
-            label={trans("dashboardPage.changeLanguageForm.label")}
-            description={trans("dashboardPage.changeLanguageForm.description")}
+            label={trans("changeLanguageForm.label")}
+            description={trans("changeLanguageForm.description")}
           >
             <ChangeLanguageForm/>
           </SettingPane>
           <SettingPane
-            label={trans("dashboardPage.changeThemeForm.label")}
-            description={trans("dashboardPage.changeThemeForm.description")}
+            label={trans("changeThemeForm.label")}
+            description={trans("changeThemeForm.description")}
           >
             <ChangeThemeForm/>
           </SettingPane>

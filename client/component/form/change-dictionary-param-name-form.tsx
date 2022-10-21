@@ -18,7 +18,8 @@ import {
   invalidateQueries,
   useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   PopupUtil
@@ -41,7 +42,8 @@ const ChangeDictionaryParamNameForm = create(
   }): ReactElement {
 
     const [paramName, setParamName] = useState(currentParamName ?? "");
-    const [intl, {trans}] = useIntl();
+    const [intl] = useIntl();
+    const {trans} = useTrans("changeDictionaryParamNameForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -61,8 +63,8 @@ const ChangeDictionaryParamNameForm = create(
     const node = (
       <Fragment>
         <form styleName="root">
-          <Input label={trans("changeDictionaryParamNameForm.paramName")} value={paramName} validate={validate} onSet={(paramName) => setParamName(paramName)}/>
-          <Button label={trans("changeDictionaryParamNameForm.confirm")} reactive={true} onClick={handleClick}/>
+          <Input label={trans("paramName")} value={paramName} validate={validate} onSet={(paramName) => setParamName(paramName)}/>
+          <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
         <p styleName="url">
           {nextUrl}

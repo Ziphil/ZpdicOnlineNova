@@ -11,9 +11,9 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   usePath,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -26,12 +26,12 @@ const CreateDictionaryForm = create(
   }): ReactElement {
 
     const [name, setName] = useState<string | null>(null);
-    const [intl, {trans}] = useIntl();
+    const {trans} = useTrans("createDictionaryForm");
     const {request} = useRequest();
     const {pushPath} = usePath();
 
     const handleClick = useCallback(async function (): Promise<void> {
-      const actualName = name ?? trans("createDictionaryForm.defaultName");
+      const actualName = name ?? trans("defaultName");
       const response = await request("createDictionary", {name: actualName});
       if (response.status === 200) {
         const dictionary = response.data;
@@ -40,11 +40,11 @@ const CreateDictionaryForm = create(
       }
     }, [name, request, trans, onSubmit, pushPath]);
 
-    const actualName = name ?? trans("createDictionaryForm.defaultName");
+    const actualName = name ?? trans("defaultName");
     const node = (
       <form styleName="root">
-        <Input label={trans("createDictionaryForm.name")} value={actualName} onSet={(name) => setName(name)}/>
-        <Button label={trans("createDictionaryForm.confirm")} reactive={true} onClick={handleClick}/>
+        <Input label={trans("name")} value={actualName} onSet={(name) => setName(name)}/>
+        <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;

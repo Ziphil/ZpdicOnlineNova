@@ -17,10 +17,10 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   usePopup,
   useRequest,
-  useSuspenseQuery
+  useSuspenseQuery,
+  useTrans
 } from "/client/component/hook";
 import {
   Dictionary
@@ -39,7 +39,7 @@ const AddEditInvitationForm = create(
     onSubmit?: () => void
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("addEditInvitationForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -74,13 +74,13 @@ const AddEditInvitationForm = create(
       <Fragment>
         <form styleName="root">
           <Input
-            label={trans("addEditInvitationForm.userName")}
+            label={trans("userName")}
             value={userName}
             prefix="@"
             suggest={suggestUsers}
             onSet={setUserName}
           />
-          <Button label={trans("addEditInvitationForm.confirm")} reactive={true} onClick={handleClick}/>
+          <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
         <div styleName="user">
           <UserList users={authorizedUsers} dictionary={dictionary} size={8}/>

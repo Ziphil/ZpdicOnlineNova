@@ -14,7 +14,8 @@ import {
 import {
   useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   PopupUtil
@@ -32,7 +33,8 @@ const UploadDictionaryForm = create(
   }): ReactElement {
 
     const [file, setFile] = useState<File | null>(null);
-    const [intl, {trans}] = useIntl();
+    const [intl] = useIntl();
+    const {trans} = useTrans("uploadDictionaryForm");
     const {requestFile} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -53,11 +55,11 @@ const UploadDictionaryForm = create(
     const node = (
       <Fragment>
         <form styleName="root">
-          <FileInput inputLabel={trans("uploadDictionaryForm.file")} validate={validate} onSet={(file) => setFile(file)}/>
-          <Button label={trans("uploadDictionaryForm.confirm")} reactive={true} onClick={handleClick}/>
+          <FileInput inputLabel={trans("file")} validate={validate} onSet={(file) => setFile(file)}/>
+          <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
         <p styleName="caution">
-          {trans("uploadDictionaryForm.caution")}
+          {trans("caution")}
         </p>
       </Fragment>
     );

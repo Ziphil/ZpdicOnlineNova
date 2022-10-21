@@ -17,9 +17,9 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   DictionarySettings
@@ -41,7 +41,7 @@ const ChangeDictionarySettingsForm = create(
   }): ReactElement | null {
 
     const [value, setValue] = useState<any>(currentSettings[propertyName]);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("changeDictionarySettingsForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -60,16 +60,16 @@ const ChangeDictionarySettingsForm = create(
     } else if (propertyName === "pronunciationTitle") {
       const node = (
         <form styleName="root input">
-          <Input label={trans("changeDictionarySettingsForm.pronunciationTitle")} value={value} onSet={(value) => setValue(value)}/>
-          <Button label={trans("changeDictionarySettingsForm.confirm")} reactive={true} onClick={handleClick}/>
+          <Input label={trans("pronunciationTitle")} value={value} onSet={(value) => setValue(value)}/>
+          <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
       );
       return node;
     } else if (propertyName === "exampleTitle") {
       const node = (
         <form styleName="root input">
-          <Input label={trans("changeDictionarySettingsForm.exampleTitle")} value={value} onSet={(value) => setValue(value)}/>
-          <Button label={trans("changeDictionarySettingsForm.confirm")} reactive={true} onClick={handleClick}/>
+          <Input label={trans("exampleTitle")} value={value} onSet={(value) => setValue(value)}/>
+          <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
       );
       return node;
@@ -77,10 +77,10 @@ const ChangeDictionarySettingsForm = create(
       const node = (
         <form styleName="root radio">
           <RadioGroup name="enableMarkdown" value={value} onSet={(value) => setValue(value)}>
-            <Radio value={true} label={trans("changeDictionarySettingsForm.enableMarkdownTrue")}/>
-            <Radio value={false} label={trans("changeDictionarySettingsForm.enableMarkdownFalse")}/>
+            <Radio value={true} label={trans("enableMarkdownTrue")}/>
+            <Radio value={false} label={trans("enableMarkdownFalse")}/>
           </RadioGroup>
-          <Button label={trans("changeDictionarySettingsForm.confirm")} reactive={true} onClick={handleClick}/>
+          <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
       );
       return node;

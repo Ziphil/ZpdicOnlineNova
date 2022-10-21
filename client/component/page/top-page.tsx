@@ -21,7 +21,7 @@ import {
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -42,8 +42,6 @@ const TopPage = create(
 
     const [me] = useMe();
 
-    const loginFormData = DataUtil.create({hidden: me !== null});
-    const dashboardFormData = DataUtil.create({hidden: me === null});
     const node = (
       <Page title="">
         <div styleName="root">
@@ -53,10 +51,10 @@ const TopPage = create(
             </div>
             <div styleName="login-form-container">
               <FormPane>
-                <div styleName="login-form" {...loginFormData}>
+                <div styleName="login-form" {...data({hidden: me !== null})}>
                   <LoginForm showRegister={true}/>
                 </div>
-                <div styleName="dashboard-button-form" {...dashboardFormData}>
+                <div styleName="dashboard-button-form" {...data({hidden: me === null})}>
                   <DashboardButtonForm/>
                 </div>
               </FormPane>

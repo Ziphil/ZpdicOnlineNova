@@ -28,11 +28,11 @@ import ChangeDictionarySourceForm from "/client/component/form/change-dictionary
 import DiscardDictionaryForm from "/client/component/form/discard-dictionary-form";
 import UploadDictionaryForm from "/client/component/form/upload-dictionary-form";
 import {
-  useIntl,
   useLocation,
   useParams,
   usePath,
-  useSuspenseQuery
+  useSuspenseQuery,
+  useTrans
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
@@ -48,7 +48,7 @@ const DictionarySettingPage = create(
 
     const params = useParams();
     const location = useLocation();
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("dictionarySettingPage");
 
     const number = +params.number;
     const [dictionary] = useSuspenseQuery("fetchDictionary", {number}, {}, EnhancedDictionary.enhance);
@@ -59,12 +59,12 @@ const DictionarySettingPage = create(
     const node = (
       <Page dictionary={dictionary} showDictionary={true} showAddLink={true} showSettingLink={true}>
         <Menu mode={mode}>
-          <MenuItem mode="general" label={trans("dictionarySettingPage.general")} iconName="info-circle" href="#general"/>
-          <MenuItem mode="setting" label={trans("dictionarySettingPage.setting")} iconName="cog" href="#setting"/>
-          <MenuItem mode="access" label={trans("dictionarySettingPage.access")} iconName="users" href="#access"/>
-          <MenuItem mode="request" label={trans("dictionarySettingPage.commission")} iconName="list-check" badgeValue={commissionSize} href="#request"/>
-          <MenuItem mode="resource" label={trans("dictionarySettingPage.resource")} iconName="image" href="#resource"/>
-          <MenuItem mode="statistics" label={trans("dictionarySettingPage.statistics")} iconName="chart-line" href="#statistics"/>
+          <MenuItem mode="general" label={trans("general")} iconName="info-circle" href="#general"/>
+          <MenuItem mode="setting" label={trans("setting")} iconName="cog" href="#setting"/>
+          <MenuItem mode="access" label={trans("access")} iconName="users" href="#access"/>
+          <MenuItem mode="request" label={trans("commission")} iconName="list-check" badgeValue={commissionSize} href="#request"/>
+          <MenuItem mode="resource" label={trans("resource")} iconName="image" href="#resource"/>
+          <MenuItem mode="statistics" label={trans("statistics")} iconName="chart-line" href="#statistics"/>
         </Menu>
         <DictionarySettingPageForms {...{dictionary, mode}}/>
       </Page>
@@ -85,39 +85,39 @@ const DictionarySettingPageForms = create(
     mode: string
   }): ReactElement | null {
 
-    const [, {trans, transNode}] = useIntl();
+    const {trans, transNode} = useTrans("dictionarySettingPage");
     const {pushPath} = usePath();
 
     if (mode === "general") {
       const node = (
         <Suspense fallback={<DictionarySettingPageLoading/>}>
           <SettingPane
-            label={trans("dictionarySettingPage.changeDictionaryNameForm.label")}
-            description={trans("dictionarySettingPage.changeDictionaryNameForm.description")}
+            label={trans("changeDictionaryNameForm.label")}
+            description={trans("changeDictionaryNameForm.description")}
           >
             <ChangeDictionaryNameForm number={dictionary.number} currentName={dictionary.name}/>
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.changeDictionaryParamNameForm.label")}
-            description={trans("dictionarySettingPage.changeDictionaryParamNameForm.description")}
+            label={trans("changeDictionaryParamNameForm.label")}
+            description={trans("changeDictionaryParamNameForm.description")}
           >
             <ChangeDictionaryParamNameForm number={dictionary.number} currentParamName={dictionary.paramName}/>
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.changeDictionarySecretForm.label")}
-            description={trans("dictionarySettingPage.changeDictionarySecretForm.description")}
+            label={trans("changeDictionarySecretForm.label")}
+            description={trans("changeDictionarySecretForm.description")}
           >
             <ChangeDictionarySecretForm number={dictionary.number} currentSecret={dictionary.secret}/>
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.uploadDictionaryForm.label")}
-            description={trans("dictionarySettingPage.uploadDictionaryForm.description")}
+            label={trans("uploadDictionaryForm.label")}
+            description={trans("uploadDictionaryForm.description")}
           >
             <UploadDictionaryForm number={dictionary.number}/>
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.discardDictionaryForm.label")}
-            description={trans("dictionarySettingPage.discardDictionaryForm.description")}
+            label={trans("discardDictionaryForm.label")}
+            description={trans("discardDictionaryForm.description")}
           >
             <DiscardDictionaryForm number={dictionary.number} onSubmit={() => pushPath("/dashboard", {preservePopup: true})}/>
           </SettingPane>
@@ -128,8 +128,8 @@ const DictionarySettingPageForms = create(
       const node = (
         <Suspense fallback={<DictionarySettingPageLoading/>}>
           <SettingPane
-            label={trans("dictionarySettingPage.changeDictionaryExplanationForm.label")}
-            description={trans("dictionarySettingPage.changeDictionaryExplanationForm.description")}
+            label={trans("changeDictionaryExplanationForm.label")}
+            description={trans("changeDictionaryExplanationForm.description")}
             forceWide={true}
           >
             <ChangeDictionaryExplanationForm
@@ -138,8 +138,8 @@ const DictionarySettingPageForms = create(
             />
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.label")}
-            description={transNode("dictionarySettingPage.changeDictionaryAkrantiainSourceForm.description", {
+            label={trans("changeDictionaryAkrantiainSourceForm.label")}
+            description={transNode("changeDictionaryAkrantiainSourceForm.description", {
               link: (parts) => <Link href="/document">{parts}</Link>
             })}
             forceWide={true}
@@ -151,8 +151,8 @@ const DictionarySettingPageForms = create(
             />
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.changeDictionaryZatlinSourceForm.label")}
-            description={transNode("dictionarySettingPage.changeDictionaryZatlinSourceForm.description", {
+            label={trans("changeDictionaryZatlinSourceForm.label")}
+            description={transNode("changeDictionaryZatlinSourceForm.description", {
               link: (parts) => <Link href="/document">{parts}</Link>
             })}
             forceWide={true}
@@ -164,8 +164,8 @@ const DictionarySettingPageForms = create(
             />
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.changeDictionaryPronunciationTitleForm.label")}
-            description={trans("dictionarySettingPage.changeDictionaryPronunciationTitleForm.description")}
+            label={trans("changeDictionaryPronunciationTitleForm.label")}
+            description={trans("changeDictionaryPronunciationTitleForm.description")}
           >
             <ChangeDictionarySettingsForm
               number={dictionary.number}
@@ -174,8 +174,8 @@ const DictionarySettingPageForms = create(
             />
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.changeDictionaryExampleTitleForm.label")}
-            description={trans("dictionarySettingPage.changeDictionaryExampleTitleForm.description")}
+            label={trans("changeDictionaryExampleTitleForm.label")}
+            description={trans("changeDictionaryExampleTitleForm.description")}
           >
             <ChangeDictionarySettingsForm
               number={dictionary.number}
@@ -184,8 +184,8 @@ const DictionarySettingPageForms = create(
             />
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.changeDictionaryEnableMarkdownForm.label")}
-            description={trans("dictionarySettingPage.changeDictionaryEnableMarkdownForm.description")}
+            label={trans("changeDictionaryEnableMarkdownForm.label")}
+            description={trans("changeDictionaryEnableMarkdownForm.description")}
           >
             <ChangeDictionarySettingsForm
               number={dictionary.number}
@@ -200,14 +200,14 @@ const DictionarySettingPageForms = create(
       const node = (
         <Suspense fallback={<DictionarySettingPageLoading/>}>
           <SettingPane
-            label={trans("dictionarySettingPage.addEditInvitationForm.label")}
-            description={trans("dictionarySettingPage.addEditInvitationForm.description")}
+            label={trans("addEditInvitationForm.label")}
+            description={trans("addEditInvitationForm.description")}
           >
             <AddEditInvitationForm number={dictionary.number} dictionary={dictionary}/>
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.addTransferInvitationForm.label")}
-            description={trans("dictionarySettingPage.addTransferInvitationForm.description")}
+            label={trans("addTransferInvitationForm.label")}
+            description={trans("addTransferInvitationForm.description")}
           >
             <AddTransferInvitationForm number={dictionary.number} dictionary={dictionary}/>
           </SettingPane>
@@ -236,21 +236,21 @@ const DictionarySettingPageForms = create(
       const node = (
         <Suspense fallback={<DictionarySettingPageLoading/>}>
           <SettingPane
-            label={trans("dictionarySettingPage.dictionaryStatisticsPane.label")}
-            description={trans("dictionarySettingPage.dictionaryStatisticsPane.description")}
+            label={trans("dictionaryStatisticsPane.label")}
+            description={trans("dictionaryStatisticsPane.description")}
           >
             <DictionaryStatisticsPane dictionary={dictionary}/>
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.historyPane.label")}
-            description={trans("dictionarySettingPage.historyPane.description")}
+            label={trans("historyPane.label")}
+            description={trans("historyPane.description")}
             forceWide={true}
           >
             <HistoryPane dictionary={dictionary}/>
           </SettingPane>
           <SettingPane
-            label={trans("dictionarySettingPage.wordNameFrequencyPane.label")}
-            description={trans("dictionarySettingPage.wordNameFrequencyPane.description")}
+            label={trans("wordNameFrequencyPane.label")}
+            description={trans("wordNameFrequencyPane.description")}
           >
             <WordNameFrequencyPane dictionary={dictionary}/>
           </SettingPane>

@@ -8,7 +8,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 
@@ -19,14 +19,14 @@ const NotFoundPage = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("notFoundPage");
 
     const node = (
       <Page>
         <div styleName="root">
           <div styleName="icon-container"><Icon name="ghost"/></div>
           <div styleName="description">
-            {trans("notFoundPage.description")}
+            {trans("description")}
           </div>
         </div>
       </Page>

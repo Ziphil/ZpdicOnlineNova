@@ -8,7 +8,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 
@@ -19,11 +19,11 @@ const LoginPage = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("loginPage");
 
     const node = (
-      <Page title={trans("loginPage.title")}>
-        <div styleName="title">{trans("loginPage.title")}</div>
+      <Page title={trans("title")}>
+        <div styleName="title">{trans("title")}</div>
         <div styleName="form-container">
           <LoginForm showRegister={false}/>
         </div>

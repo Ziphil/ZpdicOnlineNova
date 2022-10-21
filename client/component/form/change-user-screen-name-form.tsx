@@ -14,9 +14,9 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -31,7 +31,7 @@ const ChangeUserScreenNameForm = create(
   }): ReactElement {
 
     const [screenName, setScreenName] = useState(currentScreenName ?? "");
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("changeUserScreenNameForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -45,8 +45,8 @@ const ChangeUserScreenNameForm = create(
 
     const node = (
       <form styleName="root">
-        <Input label={trans("changeUserScreenNameForm.screenName")} value={screenName} onSet={(screenName) => setScreenName(screenName)}/>
-        <Button label={trans("changeUserScreenNameForm.confirm")} reactive={true} onClick={handleClick}/>
+        <Input label={trans("screenName")} value={screenName} onSet={(screenName) => setScreenName(screenName)}/>
+        <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;

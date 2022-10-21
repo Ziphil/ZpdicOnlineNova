@@ -16,8 +16,8 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
-  useTheme
+  useTheme,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -31,7 +31,7 @@ const ChangeThemeForm = create(
 
     const [currentTheme, changeCurrentTheme] = useTheme();
     const [theme, setTheme] = useState(currentTheme);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("changeThemeForm");
 
     const handleClick = useCallback(async function (): Promise<void> {
       changeCurrentTheme(theme);
@@ -42,10 +42,10 @@ const ChangeThemeForm = create(
       <Fragment>
         <form styleName="root">
           <RadioGroup name="theme" value={theme} onSet={setTheme}>
-            <Radio value="light" label={trans("changeThemeForm.light")}/>
-            <Radio value="dark" label={trans("changeThemeForm.dark")}/>
+            <Radio value="light" label={trans("light")}/>
+            <Radio value="dark" label={trans("dark")}/>
           </RadioGroup>
-          <Button label={trans("changeThemeForm.confirm")} reactive={true} onClick={handleClick}/>
+          <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
       </Fragment>
     );

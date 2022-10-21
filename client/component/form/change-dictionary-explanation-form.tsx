@@ -15,9 +15,9 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -34,7 +34,7 @@ const ChangeDictionaryExplanationForm = create(
   }): ReactElement {
 
     const [explanation, setExplanation] = useState(currentExplanation ?? "");
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("changeDictionaryExplanationForm");
     const {request} = useRequest();
     const [, {addInformationPopup}] = usePopup();
 
@@ -50,7 +50,7 @@ const ChangeDictionaryExplanationForm = create(
     const node = (
       <form styleName="root">
         <TextArea
-          label={trans("changeDictionaryExplanationForm.explanation")}
+          label={trans("explanation")}
           font="monospace"
           language="markdown"
           nowrap={true}
@@ -58,7 +58,7 @@ const ChangeDictionaryExplanationForm = create(
           value={explanation}
           onSet={(explanation) => setExplanation(explanation)}
         />
-        <Button label={trans("changeDictionaryExplanationForm.confirm")} reactive={true} onClick={handleClick}/>
+        <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;
