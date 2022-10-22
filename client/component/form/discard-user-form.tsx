@@ -34,7 +34,7 @@ const DiscardUserForm = create(
     const {trans} = useTrans("discardUserForm");
     const {request} = useRequest();
     const logout = useLogout();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const discardUser = useCallback(async function (): Promise<void> {
       const response = await request("discardUser", {});

@@ -48,7 +48,7 @@ const ResourcePane = create(
     const [alertOpen, setAlertOpen] = useState(false);
     const {trans} = useTrans("resourcePane");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const discardResource = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
       const number = dictionary.number;

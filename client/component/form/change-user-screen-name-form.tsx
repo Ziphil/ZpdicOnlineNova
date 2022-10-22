@@ -33,7 +33,7 @@ const ChangeUserScreenNameForm = create(
     const [screenName, setScreenName] = useState(currentScreenName ?? "");
     const {trans} = useTrans("changeUserScreenNameForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const handleClick = useCallback(async function (): Promise<void> {
       const response = await request("changeUserScreenName", {screenName});

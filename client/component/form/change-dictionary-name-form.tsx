@@ -36,7 +36,7 @@ const ChangeDictionaryNameForm = create(
     const [name, setName] = useState(currentName);
     const {trans} = useTrans("changeDictionaryNameForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const handleClick = useCallback(async function (): Promise<void> {
       const response = await request("changeDictionaryName", {number, name});

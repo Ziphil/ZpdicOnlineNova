@@ -45,7 +45,7 @@ const UserPane = create(
     const [alertOpen, setAlertOpen] = useState(false);
     const {trans} = useTrans("userPane");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const discardAuthorizedUser = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
       if (dictionary !== undefined) {

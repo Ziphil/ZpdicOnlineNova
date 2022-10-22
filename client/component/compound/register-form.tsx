@@ -50,7 +50,7 @@ const RegisterForm = create(
     const {trans} = useTrans("registerForm");
     const {replacePath} = usePath();
     const location = useLocation();
-    const [, {addErrorPopup}] = usePopup();
+    const {addErrorPopup} = usePopup();
 
     const performRegister = useCallback(async function (): Promise<void> {
       const response = await request("registerUser", {name, email, password}, {useRecaptcha: true});

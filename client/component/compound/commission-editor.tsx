@@ -44,7 +44,7 @@ const CommissionEditor = create(
 
     const {trans} = useTrans("commissionEditor");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const [name, setName] = useState("");
     const [comment, setComment] = useState("");

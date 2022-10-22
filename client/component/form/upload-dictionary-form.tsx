@@ -36,7 +36,7 @@ const UploadDictionaryForm = create(
     const intl = useIntl();
     const {trans} = useTrans("uploadDictionaryForm");
     const {requestFile} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const handleClick = useCallback(async function (): Promise<void> {
       const numberString = number.toString();

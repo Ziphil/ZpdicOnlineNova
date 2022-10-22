@@ -21,7 +21,7 @@ const Component = create(
 
     const {trans} = useTrans("");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     return <></>;
 

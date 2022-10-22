@@ -41,7 +41,7 @@ const AddEditInvitationForm = create(
 
     const {trans} = useTrans("addEditInvitationForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const [authorizedUsers] = useSuspenseQuery("fetchDictionaryAuthorizedUsers", {number, authority: "editOnly"});
     const [userName, setUserName] = useState("");

@@ -95,7 +95,7 @@ export function useSuspenseQuery<N extends ProcessName, T = SuccessResponseData<
 }
 
 export function useRequest(): RequestCallbacks {
-  const [, {addErrorPopup}] = usePopup();
+  const {addErrorPopup} = usePopup();
   const setMe = useSetRecoilState(meAtom);
   const request = useCallback(async function <N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
     const response = await rawRequest(name, data, config);

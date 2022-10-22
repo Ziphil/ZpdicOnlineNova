@@ -82,7 +82,7 @@ const ExampleEditor = create(
     const editingWordIndexRef = useRef<number>();
     const {trans} = useTrans("exampleEditor");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const mutateExample = useCallback(function <T extends Array<unknown>>(setter: (tempExample: EditableExample, ...args: T) => void): (...args: T) => void {
       const wrapper = function (...args: T): void {

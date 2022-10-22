@@ -36,7 +36,7 @@ const ChangeDictionaryExplanationForm = create(
     const [explanation, setExplanation] = useState(currentExplanation ?? "");
     const {trans} = useTrans("changeDictionaryExplanationForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const handleClick = useCallback(async function (): Promise<void> {
       const response = await request("changeDictionaryExplanation", {number, explanation});

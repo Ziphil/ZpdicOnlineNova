@@ -94,7 +94,7 @@ const WordEditor = create(
     const editingRelationIndexRef = useRef<number>();
     const {trans} = useTrans("wordEditor");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const mutateWord = useCallback(function <T extends Array<unknown>>(setter: (tempWord: TempEditableWord, ...args: T) => void): (...args: T) => void {
       const wrapper = function (...args: T): void {

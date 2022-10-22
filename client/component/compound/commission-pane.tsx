@@ -50,7 +50,7 @@ const CommissionPane = create(
     const addWordEditor = useWordEditor();
     const {trans} = useTrans("commissionPane");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const discardCommission = useCallback(async function (event: MouseEvent<HTMLButtonElement>, showPopup?: boolean): Promise<void> {
       const number = dictionary.number;

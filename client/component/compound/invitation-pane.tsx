@@ -36,7 +36,7 @@ const InvitationPane = create(
 
     const {trans, transDate} = useTrans("invitationPane");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const respondInvitation = useCallback(async function (event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
       const id = invitation.id;

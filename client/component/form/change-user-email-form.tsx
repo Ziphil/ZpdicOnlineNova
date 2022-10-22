@@ -44,7 +44,7 @@ const ChangeUserEmailForm = create(
     const intl = useIntl();
     const {trans} = useTrans("changeUserEmailForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const handleClick = useCallback(async function (): Promise<void> {
       const response = await request("changeUserEmail", {email});

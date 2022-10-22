@@ -38,7 +38,7 @@ const ChangeDictionarySecretForm = create(
     const [secret, setSecret] = useState(currentSecret);
     const {trans} = useTrans("changeDictionarySecretForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const handleClick = useCallback(async function (): Promise<void> {
       const response = await request("changeDictionarySecret", {number, secret});

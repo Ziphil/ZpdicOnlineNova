@@ -15,7 +15,7 @@ import {
 
 export function usePath(): PathCallbacks {
   const navigate = useNavigate();
-  const [, {clearAllPopups}] = usePopup();
+  const {clearAllPopups} = usePopup();
   const pushPath = useCallback(function (path: string, options?: PathCallbackOptions): void {
     if (!options?.preservePopup) {
       clearAllPopups();

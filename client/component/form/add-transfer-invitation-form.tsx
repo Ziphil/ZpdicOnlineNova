@@ -40,7 +40,7 @@ const AddTransferInvitationForm = create(
     const [userName, setUserName] = useState("");
     const {trans} = useTrans("addTransferInvitationForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const suggestUsers = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const response = await request("suggestUsers", {pattern}, {ignoreError: true});

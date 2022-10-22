@@ -5,14 +5,20 @@ import {
 } from "react";
 import {
   atom,
-  useRecoilState
+  useRecoilValue,
+  useSetRecoilState
 } from "recoil";
 
 
 const popupSpecsAtom = atom<Array<PopupSpec>>({key: "popupSpecs", default: []});
 
-export function usePopup(): [Array<PopupSpec>, PopupCallbacks] {
-  const [popupSpecs, setPopupSpecs] = useRecoilState(popupSpecsAtom);
+export function usePopupSpecs(): Array<PopupSpec> {
+  const popupSpecs = useRecoilValue(popupSpecsAtom);
+  return popupSpecs;
+}
+
+export function usePopup(): PopupCallbacks {
+  const setPopupSpecs = useSetRecoilState(popupSpecsAtom);
   const clearPopup = useCallback(function (id: number): void {
     setPopupSpecs((popupSpecs) => popupSpecs.filter((spec) => spec.id !== id));
   }, [setPopupSpecs]);
@@ -36,7 +42,7 @@ export function usePopup(): [Array<PopupSpec>, PopupCallbacks] {
     const id = addPopup(type, "blue", timeout);
     return id;
   }, [addPopup]);
-  return [popupSpecs, {addErrorPopup, addInformationPopup, clearPopup, clearAllPopups}];
+  return {addErrorPopup, addInformationPopup, clearPopup, clearAllPopups};
 }
 
 type PopupScheme = "red" | "blue";

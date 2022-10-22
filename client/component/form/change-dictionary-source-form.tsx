@@ -42,7 +42,7 @@ const ChangeDictionarySourceForm = create(
     const [executorOpen, setExecutorOpen] = useState(false);
     const {trans} = useTrans("changeDictionarySourceForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const handleClick = useCallback(async function (): Promise<void> {
       const propertyName = language + "Source";

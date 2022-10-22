@@ -31,7 +31,7 @@ const DiscardDictionaryForm = create(
     const [alertOpen, setAlertOpen] = useState(false);
     const {trans} = useTrans("discardDictionaryForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const discardDictionary = useCallback(async function (): Promise<void> {
       const response = await request("discardDictionary", {number});

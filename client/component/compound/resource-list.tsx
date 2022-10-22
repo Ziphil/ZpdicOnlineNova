@@ -43,7 +43,7 @@ const ResouceList = create(
 
     const {trans} = useTrans("resouceList");
     const {request} = useRequest();
-    const [, {addInformationPopup, addErrorPopup}] = usePopup();
+    const {addInformationPopup, addErrorPopup} = usePopup();
 
     const number = dictionary.number;
     const [[resources]] = useSuspenseQuery("fetchResources", {number}, {keepPreviousData: true});

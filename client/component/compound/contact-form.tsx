@@ -31,7 +31,7 @@ const ContactForm = create(
     const {trans} = useTrans("contactForm");
     const [me] = useMe();
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");

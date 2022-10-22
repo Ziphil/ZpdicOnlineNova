@@ -9,7 +9,8 @@ import {
 } from "/client/component/create";
 import {
   useIntl,
-  usePopup
+  usePopup,
+  usePopupSpecs
 } from "/client/component/hook";
 import {
   PopupUtil
@@ -23,7 +24,8 @@ const PopupInformationPane = create(
   }): ReactElement {
 
     const intl = useIntl();
-    const [popupSpecs, {clearPopup}] = usePopup();
+    const popupSpecs = usePopupSpecs();
+    const {clearPopup} = usePopup();
 
     const node = (
       <div styleName="root">

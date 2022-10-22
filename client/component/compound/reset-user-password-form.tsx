@@ -48,7 +48,7 @@ const ResetUserPasswordForm = create(
     const {trans} = useTrans("resetUserPasswordForm");
     const {pushPath} = usePath();
     const location = useLocation();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const issueResetToken = useCallback(async function (): Promise<void> {
       const response = await request("issueUserResetToken", {name, email}, {useRecaptcha: true});

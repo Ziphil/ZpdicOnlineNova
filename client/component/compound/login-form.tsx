@@ -31,7 +31,7 @@ const LoginForm = create(
     const login = useLogin();
     const {trans} = useTrans("loginForm");
     const {pushPath, replacePath} = usePath();
-    const [, {addErrorPopup}] = usePopup();
+    const {addErrorPopup} = usePopup();
 
     const performLogin = useCallback(async function (): Promise<void> {
       const response = await login({name, password}, {ignoreError: true});

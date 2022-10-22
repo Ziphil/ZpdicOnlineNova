@@ -43,7 +43,7 @@ const ChangeDictionarySettingsForm = create(
     const [value, setValue] = useState<any>(currentSettings[propertyName]);
     const {trans} = useTrans("changeDictionarySettingsForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const handleClick = useCallback(async function (): Promise<void> {
       const settings = {[propertyName]: value};

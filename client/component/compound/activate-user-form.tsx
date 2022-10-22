@@ -23,7 +23,7 @@ const ActivateUserForm = create(
 
     const {trans} = useTrans("activateUserForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const issueActivateToken = useCallback(async function (): Promise<void> {
       const response = await request("issueUserActivateToken", {}, {useRecaptcha: true});
