@@ -10,7 +10,7 @@ import {
   useTrans
 } from "/client/component/hook";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -34,12 +34,8 @@ const Label = create(
 
     const {trans} = useTrans("label");
 
-    const styleName = DataUtil.create({
-      position,
-      error: variant === "error"
-    });
     const node = (text !== undefined) && (
-      <div styleName="root" className={className} {...styleName}>
+      <div styleName="root" className={className} {...data({position, error: variant === "error"})}>
         {text}
         {(showRequired) && (
           <span styleName="required">({trans("required")})</span>

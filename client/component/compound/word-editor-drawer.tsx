@@ -17,7 +17,7 @@ import {
   useWordEditorProps
 } from "/client/component/hook";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -85,11 +85,8 @@ const WordEditorDrawerEditor = create(
     editorProps: Parameters<typeof WordEditor>[0] & {id: string}
   }): ReactElement {
 
-    const data = DataUtil.create({
-      hidden: editingId !== editorProps.id
-    });
     const node = (
-      <div styleName="editor-container" {...data}>
+      <div styleName="editor-container" {...data({hidden: editingId !== editorProps.id})}>
         <WordEditor {...editorProps}/>
       </div>
     );
