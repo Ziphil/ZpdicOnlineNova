@@ -9,7 +9,7 @@
   pointer-events: none;
   z-index: 50;
   &[data-scheme="primary"] {
-    color: schemed-color(accent, primary);
+    color: color(text);
     background-color: schemed-color(background, primary);
     border: 1rpx solid schemed-color(border, primary);  
     --arrow-color: #{schemed-color(background, primary)};

@@ -58,7 +58,7 @@ export const Tooltip = create(
     const {styles, attributes, ...popper} = usePopper(referenceElement, popupElement, {
       placement,
       modifiers: [
-        {name: "offset", options: {offset: (showArrow) ? [0, 8] : [0, -1]}},
+        {name: "offset", options: {offset: (showArrow) ? [0, 8] : [0, 1]}},
         {name: "flip", options: {altBoundary: true}},
         {name: "fillWidth", phase: "beforeWrite", requires: ["computeStyles"], fn: setFillWidth, enabled: fillWidth},
         {name: "arrow", options: {padding: 4, element: arrowElement}, enabled: showArrow}
