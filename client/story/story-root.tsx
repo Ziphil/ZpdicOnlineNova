@@ -35,6 +35,9 @@ import {
   QueryClientProvider
 } from "react-query";
 import {
+  RecoilRoot
+} from "recoil";
+import {
   create
 } from "/client/component/create";
 import {
@@ -55,8 +58,29 @@ const location = new ReactLocation({
 });
 
 
-const StoryRoot = create(
-  require("/client/component/root.scss"), "StoryRoot",
+const Root = create(
+  require("/client/component/root.scss"), "Root",
+  function ({
+    children
+  }: {
+    children?: ReactNode
+  }): ReactElement | null {
+
+    const node = (
+      <RecoilRoot>
+        <ProviderRoot>
+          {children}
+        </ProviderRoot>
+      </RecoilRoot>
+    );
+    return node;
+
+  }
+);
+
+
+const ProviderRoot = create(
+  require("/client/component/root.scss"), "ProviderRoot",
   function ({
     children
   }: {
@@ -89,4 +113,4 @@ const StoryRoot = create(
 );
 
 
-export default StoryRoot;
+export default Root;
