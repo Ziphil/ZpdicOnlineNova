@@ -4,14 +4,15 @@ import {
   useCallback
 } from "react";
 import {
-  createGlobalState
-} from "react-use";
+  atom,
+  useRecoilState
+} from "recoil";
 
 
-const usePopupSpecs = createGlobalState<Array<PopupSpec>>([]);
+const popupSpecsAtom = atom<Array<PopupSpec>>({key: "popupSpecs", default: []});
 
 export function usePopup(): [Array<PopupSpec>, PopupCallbacks] {
-  const [popupSpecs, setPopupSpecs] = usePopupSpecs();
+  const [popupSpecs, setPopupSpecs] = useRecoilState(popupSpecsAtom);
   const clearPopup = useCallback(function (id: number): void {
     setPopupSpecs((popupSpecs) => popupSpecs.filter((spec) => spec.id !== id));
   }, [setPopupSpecs]);

@@ -13,7 +13,7 @@ import nprogress from "nprogress";
 import {
   createRoot
 } from "react-dom/client";
-import Root from "/client/component/root";
+import ProviderRoot from "/client/component/root";
 import {
   RECAPTCHA_KEY
 } from "/client/variable";
@@ -56,7 +56,7 @@ export class Main {
     const container = document.getElementById("root");
     if (container) {
       const root = createRoot(container);
-      root.render(<Root/>);
+      root.render(<ProviderRoot/>);
     }
   }
 

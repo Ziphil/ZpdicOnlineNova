@@ -11,10 +11,13 @@ import {
   useQuery as useRawQuery
 } from "react-query";
 import {
+  useSetRecoilState
+} from "recoil";
+import {
   usePopup
 } from "/client/component/hook/popup";
 import {
-  useRawMe
+  meAtom
 } from "/client/component/hook/user";
 import {
   AxiosResponseSpec,
@@ -93,7 +96,7 @@ export function useSuspenseQuery<N extends ProcessName, T = SuccessResponseData<
 
 export function useRequest(): RequestCallbacks {
   const [, {addErrorPopup}] = usePopup();
-  const [, setMe] = useRawMe();
+  const setMe = useSetRecoilState(meAtom);
   const request = useCallback(async function <N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
     const response = await rawRequest(name, data, config);
     if ((config.ignoreError === undefined || !config.ignoreError) && response.status >= 400) {
@@ -121,7 +124,7 @@ export function useRequest(): RequestCallbacks {
 
 export function useLogin(): (data: RequestData<"login">, config?: RequestConfig) => Promise<AxiosResponseSpec<"login">> {
   const {request} = useRequest();
-  const [, setMe] = useRawMe();
+  const setMe = useSetRecoilState(meAtom);
   const login = useCallback(async function (data: RequestData<"login">, config?: RequestConfig): Promise<AxiosResponseSpec<"login">> {
     const response = await request("login", data, config);
     if (response.status === 200) {
@@ -135,7 +138,7 @@ export function useLogin(): (data: RequestData<"login">, config?: RequestConfig)
 
 export function useLogout(): (config?: RequestConfig) => Promise<AxiosResponseSpec<"logout">> {
   const {request} = useRequest();
-  const [, setMe] = useRawMe();
+  const setMe = useSetRecoilState(meAtom);
   const logout = useCallback(async function (config?: RequestConfig): Promise<AxiosResponseSpec<"logout">> {
     const response = await request("logout", {}, config);
     if (response.status === 200) {

@@ -6,9 +6,12 @@ import {
   useState
 } from "react";
 import {
-  createGlobalState,
   useMount
 } from "react-use";
+import {
+  atom,
+  useRecoilState
+} from "recoil";
 import {
   DetailedUser
 } from "/client/skeleton/user";
@@ -22,10 +25,10 @@ import {
 } from "/server/controller/internal/type";
 
 
-export const useRawMe = createGlobalState<DetailedUser | null>(null);
+export const meAtom = atom<DetailedUser | null>({key: "me", default: null});
 
 export function useDefaultMe(): {me: DetailedUser | null, ready: boolean} {
-  const [me, setMe] = useRawMe();
+  const [me, setMe] = useRecoilState(meAtom);
   const [ready, setReady] = useState(false);
   useMount(async () => {
     const url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
@@ -44,7 +47,7 @@ export function useDefaultMe(): {me: DetailedUser | null, ready: boolean} {
 }
 
 export function useMe(): [DetailedUser | null, UserCallbacks] {
-  const [me, setMe] = useRawMe();
+  const [me, setMe] = useRecoilState(meAtom);
   const refetchMe = useCallback(async function (): Promise<void> {
     const url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
     const response = await axios.post<ResponseData<"fetchUser">>(url, {}, {validateStatus: () => true});

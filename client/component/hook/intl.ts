@@ -10,9 +10,14 @@ import {
   useIntl as useRawIntl
 } from "react-intl";
 import {
-  createGlobalState,
   useMount
 } from "react-use";
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState
+} from "recoil";
 import {
   Primitive
 } from "ts-essentials";
@@ -24,13 +29,13 @@ import {
 } from "/client/util/date";
 
 
-const useRawLocale = createGlobalState("ja");
-const useRawMessages = createGlobalState<Messages>({});
+const localeAtom = atom({key: "locale", default: "ja"});
+const messagesAtom = atom<Messages>({key: "messages", default: {}});
 export let globalLocale = "ja";
 
 export function useDefaultLocale(defaultLocale: string): {locale: string, messages: Messages} {
-  const [locale] = useRawLocale();
-  const [messages] = useRawMessages();
+  const locale = useRecoilValue(localeAtom);
+  const messages = useRecoilValue(messagesAtom);
   const [, changeLocale] = useLocale();
   useMount(() => {
     const firstLocale = localStorage.getItem("locale") ?? defaultLocale;
@@ -40,8 +45,8 @@ export function useDefaultLocale(defaultLocale: string): {locale: string, messag
 }
 
 export function useLocale(): [string, ChangeLocaleCallback] {
-  const [locale, setLocale] = useRawLocale();
-  const [, setMessages] = useRawMessages();
+  const [locale, setLocale] = useRecoilState(localeAtom);
+  const setMessages = useSetRecoilState(messagesAtom);
   const changeLocale = useCallback(async function (locale: string): Promise<void> {
     const language = LANGUAGES.find((language) => language.locale === locale) ?? LANGUAGES[0];
     const messages = await language.fetchMessages().then((module) => module.default);

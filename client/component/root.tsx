@@ -85,6 +85,23 @@ const Root = create(
   }: {
   }): ReactElement | null {
 
+    const node = (
+      <RecoilRoot>
+        <ProviderRoot/>
+      </RecoilRoot>
+    );
+    return node;
+
+  }
+);
+
+
+const ProviderRoot = create(
+  require("./root.scss"), "ProviderRoot",
+  function ({
+  }: {
+  }): ReactElement | null {
+
     const {ready} = useDefaultMe();
     const {locale, messages} = useDefaultLocale("ja");
     useDefaultTheme("light");
@@ -99,13 +116,11 @@ const Root = create(
       <DndProvider backend={DndBackend}>
         <QueryClientProvider client={queryClient}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-            <RecoilRoot>
-              <Router location={location} routes={routes} caseSensitive={true}>
-                <InnerRoot>
-                  <Outlet/>
-                </InnerRoot>
-              </Router>
-            </RecoilRoot>
+            <Router location={location} routes={routes} caseSensitive={true}>
+              <InnerRoot>
+                <Outlet/>
+              </InnerRoot>
+            </Router>
           </IntlProvider>
         </QueryClientProvider>
       </DndProvider>
