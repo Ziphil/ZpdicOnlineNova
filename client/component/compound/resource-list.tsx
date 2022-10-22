@@ -41,7 +41,7 @@ const ResouceList = create(
     showInstruction?: boolean
   }): ReactElement {
 
-    const {trans} = useTrans("resouceList");
+    const {trans} = useTrans("resourceList");
     const {request} = useRequest();
     const {addInformationPopup, addErrorPopup} = usePopup();
 
