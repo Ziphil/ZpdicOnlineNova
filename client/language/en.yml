@@ -486,6 +486,7 @@ githubButton:
   github: "View on GitHub"
   dashboard: "Dev dashboard"
 header:
+  appearance: "Appearance"
   dictionaryList: "Dictionaries"
   dashboard: "User page"
 hotkeyHelp:

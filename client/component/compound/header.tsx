@@ -58,6 +58,7 @@ const Header = create(
             </div>
             <div styleName="right">
               <div styleName="button-container">
+                <Button label={trans("appearance")} iconName="brush" variant="simple" hideLabel={true} onClick={() => pushPath("/appearance")}/>
                 <Button label={trans("dictionaryList")} iconName="book" variant="simple" hideLabel={true} onClick={() => pushPath("/list")}/>
               </div>
               {(me !== null) && (

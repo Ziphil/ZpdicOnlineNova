@@ -486,6 +486,7 @@ githubButton:
   github: "Vidi sur GitHub"
   dashboard: "Evolupanelo"
 header:
+  appearance: "Ŝajno"
   dictionaryList: "Vortaroj"
   dashboard: "Uzanta paĝo"
 hotkeyHelp:

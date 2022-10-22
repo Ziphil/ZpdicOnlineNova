@@ -484,6 +484,7 @@ githubButton:
   github: "View on GitHub"
   dashboard: "開発ダッシュボード"
 header:
+  appearance: "外観"
   dictionaryList: "辞書一覧"
   dashboard: "ユーザーページ"
 hotkeyHelp:
