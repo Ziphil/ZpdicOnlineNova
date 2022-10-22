@@ -30,6 +30,7 @@ export const Tooltip = create(
   function ({
     open = false,
     placement = "bottom-start",
+    scheme = "primary",
     autoMode = null,
     showArrow = false,
     fillWidth = false,
@@ -40,6 +41,7 @@ export const Tooltip = create(
   }: {
     open?: boolean,
     placement?: Placement,
+    scheme?: "primary" | "red" | "blue",
     autoMode?: "focus" | "hover" | "click" | null,
     showArrow?: boolean,
     fillWidth?: boolean,
@@ -125,6 +127,7 @@ export const Tooltip = create(
         style={styles.popper}
         {...attributes.popper}
         {...data({
+          scheme,
           hidden: !actualOpen,
           showArrow
         })}

@@ -85,7 +85,7 @@ export const FileInput = create(
             <div styleName="button"><Icon name="ellipsis"/></div>
           </div>
         </label>
-        <Tooltip showArrow={true} fillWidth={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
+        <Tooltip showArrow={true} fillWidth={true} scheme="red" autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
           {errorMessage}
         </Tooltip>
       </div>

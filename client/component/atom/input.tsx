@@ -121,7 +121,7 @@ export const Input = create(
         <Dropdown fillWidth={true} restrictHeight={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement} onSet={updateValue}>
           {dropdownSpecs.map(({value, node}) => <DropdownItem key={value} value={value}>{node}</DropdownItem>)}
         </Dropdown>
-        <Tooltip showArrow={true} fillWidth={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
+        <Tooltip showArrow={true} fillWidth={true} scheme="red" autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
           {errorMessage}
         </Tooltip>
       </div>
