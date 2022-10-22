@@ -36,7 +36,7 @@
 }
 
 .arrow {
-  @include arrow(var(--arrow-color), var(--arrow-border-color), 6rpx);
+  @include arrow(6rpx);
   display: none;
   .root[data-show-arrow] >& {
     display: block;
