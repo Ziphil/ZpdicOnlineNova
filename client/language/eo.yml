@@ -658,6 +658,16 @@ zatlinExecutor:
   output: "Eligo"
   errorMessage: "Erarmesaĝo"
   execute: "Plenumi"
+appearancePage:
+  title: "Agordoj de ŝajno"
+  appearance: "Ŝajno"
+  changeLanguageForm:
+    label: "Ŝanĝi lingvon"
+    description: <empty>
+  changeThemeForm:
+    label: "Ŝanĝi temon"
+    description: >-
+      Ŝanĝi la koloran temon de tiu retejo.
 contactPage:
   title: "Kontakti"
   privacy: >-
@@ -670,7 +680,6 @@ dashboardPage:
   dictionary: "Vortaroj"
   notification: "Sciigoj"
   account: "Konto"
-  appearance: "Ŝajno"
   logout: "Elsaluti"
   dictionaryList:
     label: "Vortaroj"
@@ -709,13 +718,6 @@ dashboardPage:
     label: "Forigi"
     description: >-
       Forigi tiun uzanton.
-  changeLanguageForm:
-    label: "Ŝanĝi lingvon"
-    description: <empty>
-  changeThemeForm:
-    label: "Ŝanĝi temon"
-    description: >-
-      Ŝanĝi la koloran temon de tiu retejo.
 dictionaryListPage:
   title: "Vortaroj"
   updatedDate: "Ordigi laŭ dato de ĝisdatigo"

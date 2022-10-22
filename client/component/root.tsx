@@ -70,6 +70,7 @@ const routes = [
   ...createRoute("/dictionary/:value", () => import("/client/component/page/dictionary-page"), {type: "none"}),
   ...createRoute("/example/:number", () => import("/client/component/page/example-page"), {type: "none", loader: loadExamplePage}),
   ...createRoute("/list", () => import("/client/component/page/dictionary-list-page"), {type: "none", loader: loadDictionaryListPage}),
+  ...createRoute("/appearance", () => import("/client/component/page/appearance-page"), {type: "none"}),
   ...createRoute("/notification", () => import("/client/component/page/notification-page"), {type: "none", loader: loadNotificationPage}),
   ...createRoute("/contact", () => import("/client/component/page/contact-page"), {type: "none"}),
   ...createRoute("/document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),

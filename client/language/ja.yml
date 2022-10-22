@@ -655,6 +655,16 @@ zatlinExecutor:
   output: "出力"
   errorMessage: "エラーメッセージ"
   execute: "実行"
+appearancePage:
+  title: "外観設定"
+  appearance: "外観"
+  changeLanguageForm:
+    label: "言語の変更"
+    description: <empty>
+  changeThemeForm:
+    label: "テーマの変更"
+    description: >-
+      サイトのカラーテーマを変更します。
 contactPage:
   title: "お問い合わせ"
   privacy: >-
@@ -667,7 +677,6 @@ dashboardPage:
   dictionary: "辞書"
   notification: "通知"
   account: "アカウント"
-  appearance: "外観"
   logout: "ログアウト"
   dictionaryList:
     label: "辞書一覧"
@@ -706,13 +715,6 @@ dashboardPage:
     label: "削除"
     description: >-
       このユーザーを削除します。
-  changeLanguageForm:
-    label: "言語の変更"
-    description: <empty>
-  changeThemeForm:
-    label: "テーマの変更"
-    description: >-
-      サイトのカラーテーマを変更します。
 dictionaryListPage:
   title: "辞書一覧"
   updatedDate: "更新日時順"
