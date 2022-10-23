@@ -8,9 +8,6 @@ import {
   SuggestionSpec
 } from "/client/component/atom/input";
 import {
-  createDummyText
-} from "/client/util/misc";
-import {
   createStory,
   createTemplate
 } from "/client/util/story";
@@ -63,7 +60,7 @@ export const Flexible = createStory(template, {
 export const Validation = createStory(template, {
   args: {
     value: "Input",
-    validate: (value) => createDummyText(1)
+    validate: (value) => (value === "") ? {scheme: "red", iconName: "triangle-exclamation", message: "Should not be empty."} : {scheme: "primary", iconName: "circle-check", message: "Looks good."}
   }
 });
 

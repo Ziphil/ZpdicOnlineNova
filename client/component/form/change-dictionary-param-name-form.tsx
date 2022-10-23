@@ -12,6 +12,9 @@ import {
 import Button from "/client/component/atom/button";
 import Input from "/client/component/atom/input";
 import {
+  ValidationSpec
+} from "/client/component/atom/input";
+import {
   create
 } from "/client/component/create";
 import {
@@ -56,10 +59,16 @@ const ChangeDictionaryParamNameForm = create(
       }
     }, [number, paramName, request, onSubmit, addInformationPopup]);
 
+    const validate = useCallback(function (value: string): ValidationSpec | null {
+      if (value === "" || value.match(IDENTIFIER_REGEXP)) {
+        return null;
+      } else {
+        const message = PopupUtil.getMessage(intl, "invalidDictionaryParamName");
+        return {scheme: "red", iconName: "exclamation-triangle", message};
+      }
+    }, [intl]);
+
     const nextUrl = "http://zpdic.ziphil.com/dictionary/" + (paramName || number);
-    const validate = function (value: string): string | null {
-      return (value === "" || value.match(IDENTIFIER_REGEXP)) ? null : PopupUtil.getMessage(intl, "invalidDictionaryParamName");
-    };
     const node = (
       <Fragment>
         <form styleName="root">

@@ -8,10 +8,18 @@
 }
 
 .input {
-  @include input(primary);
   display: inline-flex;
-  &[data-error] {
+  &[data-scheme="primary"] {
+    @include input(primary);
+    --validation-icon-color: #{schemed-color(accent, primary)};
+  }
+  &[data-scheme="red"] {
     @include input(red);
+    --validation-icon-color: #{schemed-color(accent, red)};
+  }
+  &[data-scheme="blue"] {
+    @include input(blue);
+    --validation-icon-color: #{schemed-color(accent, blue)};
   }
   [data-control-group] >&:first-child,
   [data-control-group] >:first-child & {
@@ -50,9 +58,14 @@
   align-items: center
 }
 
+.validation {
+  margin-inline-start: $input-horizontal-padding;
+  color: var(--validation-icon-color);
+}
+
 .eye {
   width: 1.3em;
-  margin: 0em 0em 0em $input-horizontal-padding;
+  margin-inline-start: $input-horizontal-padding;
   color: schemed-color(accent, secondary);
   text-align: center;
   border-radius: $small-border-radius;
