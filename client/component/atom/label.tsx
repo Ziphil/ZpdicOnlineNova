@@ -18,14 +18,14 @@ const Label = create(
   require("./label.scss"), "Label",
   function ({
     text,
-    variant = "normal",
+    scheme = "primary",
     position = "top",
     showRequired = false,
     showOptional = false,
     className
   }: {
     text?: string,
-    variant?: "normal" | "error",
+    scheme?: "primary" | "red" | "blue",
     position?: "top" | "left",
     showRequired?: boolean,
     showOptional?: boolean,
@@ -35,7 +35,7 @@ const Label = create(
     const {trans} = useTrans("label");
 
     const node = (text !== undefined) && (
-      <div styleName="root" className={className} {...data({position, error: variant === "error"})}>
+      <div styleName="root" className={className} {...data({scheme, position})}>
         {text}
         {(showRequired) && (
           <span styleName="required">({trans("required")})</span>

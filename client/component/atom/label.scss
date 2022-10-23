@@ -5,15 +5,20 @@
 
 .root {
   font-size: $tiny-font-size;
-  color: color(accent);
-  &[data-error] {
+  &[data-scheme="primary"] {
+    color: schemed-color(accent, primary);
+  }
+  &[data-scheme="red"] {
     color: schemed-color(accent, red);
   }
+  &[data-scheme="blue"] {
+    color: schemed-color(accent, blue);
+  }
   &[data-position="top"] {
-    margin: 0rpx 0rpx 3rpx 0rpx;
+    margin-block-end: 3rpx;
   }
   &[data-position="left"] {
-    margin: 0rpx 5rpx 0rpx 0rpx;
+    margin-inline-end: 5rpx;
   }
 }
 

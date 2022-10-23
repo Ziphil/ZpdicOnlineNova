@@ -78,7 +78,7 @@ export const FileInput = create(
     const node = (
       <div styleName="root" className={className}>
         <label styleName="label-container" ref={setReferenceElement} {...data({error: errorMessage !== null})}>
-          <Label text={inputLabel} variant={(errorMessage === null) ? "normal" : "error"}/>
+          <Label text={inputLabel} scheme={(errorMessage === null) ? "primary" : "red"}/>
           <input styleName="original" type="file" ref={mergeRefs([inputRef, setAutoElement])} onChange={handleChange}/>
           <div styleName="input-container" {...aria({hidden: true})}>
             <div styleName="input">{fileName}</div>

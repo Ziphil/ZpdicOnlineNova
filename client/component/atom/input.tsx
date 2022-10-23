@@ -120,7 +120,7 @@ export const Input = create(
         <label styleName="label-container">
           <Label
             text={label}
-            variant={(validationSpec === null) ? "normal" : "error"}
+            scheme={validationSpec?.scheme ?? "primary"}
             showRequired={showRequired}
             showOptional={showOptional}
           />
