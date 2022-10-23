@@ -43,15 +43,15 @@ const ChangeLanguageForm = create(
 
     const node = (
       <Fragment>
+        <p styleName="caution">
+          {trans("caution")}
+        </p>
         <form styleName="root">
           <RadioGroup name="theme" value={locale} onSet={setLocale}>
             {LANGUAGES.map((language) => <Radio key={language.locale} value={language.locale} label={language.name}/>)}
           </RadioGroup>
           <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
-        <p styleName="caution">
-          {trans("caution")}
-        </p>
       </Fragment>
     );
     return node;
