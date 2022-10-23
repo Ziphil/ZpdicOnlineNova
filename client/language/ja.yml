@@ -635,6 +635,8 @@ wordEditor:
   resource: "画像"
   selectRelation: "変更"
   alertConfirm: "削除"
+  duplicateName: >-
+    同じ綴りの単語がすでに登録されています。
   alert: >-
     この単語データを永久に削除します。
     削除した後にデータを戻すことはできません。

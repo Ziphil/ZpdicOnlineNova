@@ -25,7 +25,7 @@ import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
 import Icon from "/client/component/atom/icon";
-import Input from "/client/component/atom/input";
+import Input, {ValidationSpec} from "/client/component/atom/input";
 import {
   Suggest,
   SuggestionSpec
@@ -283,6 +283,7 @@ const WordEditorName = create(
   }): ReactElement {
 
     const {trans} = useTrans("wordEditor");
+    const {request} = useRequest();
 
     const generateName = useCallback(function (zatlin: Zatlin): void {
       try {
@@ -292,6 +293,21 @@ const WordEditorName = create(
         console.log(error);
       }
     }, [mutateWord]);
+
+    const validateName = useCallback(async function (name: string): Promise<ValidationSpec | null> {
+      const number = dictionary.number;
+      const response = await request("checkDuplicateWordName", {number, name}, {ignoreError: true});
+      if (response.status === 200 && !("error" in response.data)) {
+        const {duplicate} = response.data;
+        if (duplicate) {
+          return {scheme: "primary", iconName: "circle-info", message: trans("duplicateName")};
+        } else {
+          return null;
+        }
+      } else {
+        return null;
+      }
+    }, [dictionary.number, request, trans]);
 
     const zatlin = dictionary.getZatlin();
     const node = (
@@ -304,7 +320,7 @@ const WordEditorName = create(
             <div styleName="form-container">
               <div styleName="form">
                 <div styleName="generate-container">
-                  <Input label={trans("name")} className={styles!["name"]} value={tempWord.name} onSet={mutateWord((tempWord, name) => tempWord.name = name)}/>
+                  <Input label={trans("name")} className={styles!["name"]} value={tempWord.name} validate={validateName} onSet={mutateWord((tempWord, name) => tempWord.name = name)}/>
                   {(zatlin !== null) && (
                     <div styleName="control-button-container">
                       <Button label={trans("generate")} variant="light" onClick={() => generateName(zatlin)}/>

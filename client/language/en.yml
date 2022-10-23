@@ -638,6 +638,8 @@ wordEditor:
   resource: "Images"
   selectRelation: "Select"
   alertConfirm: "Delete"
+  duplicateName: >-
+    A word with the same spelling has already been registered.
   alert: >-
     This word will be deleted permanently.
     You cannot restore it afterwards.

@@ -85,6 +85,7 @@ export const SERVER_PATHS = {
   fetchAllDictionaries: "/dictionary/list/all",
   fetchOverallAggregation: "/dictionary/aggregate",
   fetchWordNames: "/word/name",
+  checkDuplicateWordName: "/word/name/duplicate",
   fetchExamples: "/example/list",
   fetchInvitations: "/invitation/fetch",
   fetchUploadResourcePost: "/resource/upload",
@@ -346,6 +347,13 @@ type ServerSpecs = {
     request: {number: number, wordNumbers: Array<number>},
     response: {
       success: {names: Record<number, string | null>},
+      error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
+  checkDuplicateWordName: {
+    request: {number: number, name: string},
+    response: {
+      success: {duplicate: boolean},
       error: CustomError<"noSuchDictionaryNumber">
     }
   },

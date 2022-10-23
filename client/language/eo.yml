@@ -638,6 +638,8 @@ wordEditor:
   resource: "Bildoj"
   selectRelation: "Elekti"
   alertConfirm: "Forigi"
+  duplicateName: >-
+    Vorto kun la sama literumo jam estas registrita.
   alert: >-
     Tiu vorto estos forigita konstante.
     Vi ne povas restaŭri ĝin poste.

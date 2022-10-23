@@ -126,4 +126,20 @@ export class WordController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["checkDuplicateWordName"])
+  @before(verifyUser(), verifyDictionary("edit"))
+  public async [Symbol()](request: Request<"checkDuplicateWordName">, response: Response<"checkDuplicateWordName">): Promise<void> {
+    const dictionary = request.dictionary;
+    const name = request.body.name;
+    if (dictionary) {
+      const duplicate = await dictionary.checkDuplicateWordName(name);
+      const body = {duplicate};
+      Controller.respond(response, body);
+    } else {
+      const body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
+
 }
