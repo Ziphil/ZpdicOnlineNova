@@ -82,6 +82,15 @@ export const Input = create(
       onSet?.(value);
     }, [onSet]);
 
+    const updateValidation = useDebounce(async function (value: string): Promise<void> {
+      if (validate !== undefined) {
+        const validationSpec = await validate(value);
+        setValidationSpec(validationSpec);
+      } else {
+        setValidationSpec(null);
+      }
+    }, 500, [validate]);
+
     const updateSuggestions = useDebounce(async function (value: string): Promise<void> {
       if (suggest !== undefined) {
         const suggestionSpecs = await suggest(value);
@@ -102,18 +111,9 @@ export const Input = create(
       updateSuggestions(value);
     }, [updateSuggestions]);
 
-    const validateValue = useCallback(async function (): Promise<void> {
-      if (validate !== undefined) {
-        const validationSpec = await validate(value);
-        setValidationSpec(validationSpec);
-      } else {
-        setValidationSpec(null);
-      }
-    }, [value, validate]);
-
     useEffect(() => {
-      validateValue();
-    }, [validateValue]);
+      updateValidation(value);
+    }, [value, updateValidation]);
 
     const node = (
       <div styleName="root" className={className} ref={rootRef}>
