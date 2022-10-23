@@ -47,31 +47,30 @@ export const FileInput = create(
     const [autoElement, setAutoElement] = useState<HTMLInputElement | null>(null);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
-      const files = event.target.files;
-      if (files && files.length > 0) {
-        const file = files[0];
-        const fileName = file.name;
-        if (validate !== undefined) {
-          const errorMessage = validate(file);
-          setErrorMessage(errorMessage);
-        } else {
-          setErrorMessage(null);
-        }
-        setFileName(fileName);
-        onSet?.(file);
-        inputRef.current?.focus();
-      }
-    }, [validate, onSet]);
-
-    useEffect(() => {
-      const fileName = file?.name ?? "";
+    const updateValidation = useCallback(function (file: File | null): void {
       if (file !== null && validate !== undefined) {
         const errorMessage = validate(file);
         setErrorMessage(errorMessage);
       } else {
         setErrorMessage(null);
       }
+    }, [validate]);
+
+    const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
+      const files = event.target.files;
+      if (files && files.length > 0) {
+        const file = files[0];
+        const fileName = file.name;
+        updateValidation(file);
+        setFileName(fileName);
+        onSet?.(file);
+        inputRef.current?.focus();
+      }
+    }, [updateValidation, onSet]);
+
+    useEffect(() => {
+      const fileName = file?.name ?? "";
+      updateValidation(file);
       setFileName(fileName);
     }, [file]);
 
