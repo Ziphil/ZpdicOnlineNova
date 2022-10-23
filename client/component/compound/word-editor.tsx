@@ -30,7 +30,6 @@ import {
   Suggest,
   SuggestionSpec
 } from "/client/component/atom/input";
-import Label from "/client/component/atom/label";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import Loading from "/client/component/compound/loading";
@@ -65,7 +64,7 @@ import {
 } from "/client/util/misc";
 
 
-const WordEditor = create(
+export const WordEditor = create(
   require("./word-editor.scss"), "WordEditor",
   function ({
     dictionary,
@@ -304,21 +303,15 @@ const WordEditorName = create(
           <div styleName="section-item">
             <div styleName="form-container">
               <div styleName="form">
-                <label>
-                  <Label text={trans("name")} position="left"/>
-                  <div styleName="generate-container">
-                    <Input className={styles!["name"]} value={tempWord.name} onSet={mutateWord((tempWord, name) => tempWord.name = name)}/>
-                    {(zatlin !== null) && (
-                      <div styleName="control-button-container">
-                        <Button label={trans("generate")} variant="light" onClick={() => generateName(zatlin)}/>
-                      </div>
-                    )}
-                  </div>
-                </label>
-                <label>
-                  <Label text={trans("pronunciation")} position="left"/>
-                  <Input className={styles!["name"]} value={tempWord.pronunciation} onSet={mutateWord((tempWord, pronunciation) => tempWord.pronunciation = pronunciation || undefined)}/>
-                </label>
+                <div styleName="generate-container">
+                  <Input label={trans("name")} className={styles!["name"]} value={tempWord.name} onSet={mutateWord((tempWord, name) => tempWord.name = name)}/>
+                  {(zatlin !== null) && (
+                    <div styleName="control-button-container">
+                      <Button label={trans("generate")} variant="light" onClick={() => generateName(zatlin)}/>
+                    </div>
+                  )}
+                </div>
+                <Input className={styles!["name"]} label={trans("pronunciation")} value={tempWord.pronunciation} onSet={mutateWord((tempWord, pronunciation) => tempWord.pronunciation = pronunciation || undefined)}/>
               </div>
             </div>
           </div>
@@ -498,14 +491,8 @@ const WordEditorEquivalent = create(
         </div>
         <div styleName="form-container">
           <div styleName="form">
-            <label>
-              <Label text={trans("equivalentTitle")} position="left"/>
-              <Input className={styles!["title"]} value={equivalent.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.equivalents[index].title = title)}/>
-            </label>
-            <label>
-              <Label text={trans("equivalentNames")} position="left"/>
-              <Input className={styles!["name"]} value={equivalent.string} onSet={mutateWord((tempWord, string) => tempWord.equivalents[index].string = string)}/>
-            </label>
+            <Input className={styles!["title"]} label={trans("equivalentTitle")} value={equivalent.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.equivalents[index].title = title)}/>
+            <Input className={styles!["name"]} label={trans("equivalentNames")} value={equivalent.string} onSet={mutateWord((tempWord, string) => tempWord.equivalents[index].string = string)}/>
           </div>
           <div styleName="control-button-container">
             <Button iconName="minus" variant="light" onClick={mutateWord((tempWord) => deleteAt(tempWord.equivalents, index))}/>
@@ -597,14 +584,8 @@ const WordEditorInformation = create(
         </div>
         <div styleName="form-container">
           <div styleName="form information">
-            <label>
-              <Label text={trans("informationTitle")} position="left"/>
-              <Input className={styles!["title"]} value={information.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.informations[index].title = title)}/>
-            </label>
-            <label>
-              <Label text={trans("informationText")} position="left"/>
-              <TextArea className={styles!["text"]} value={information.text} font="monospace" language={language} showButtons={true} onSet={mutateWord((tempWord, text) => tempWord.informations[index].text = text)}/>
-            </label>
+            <Input className={styles!["title"]} label={trans("informationTitle")} value={information.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.informations[index].title = title)}/>
+            <TextArea className={styles!["text"]} label={trans("informationText")} value={information.text} language={language} showButtons={true} onSet={mutateWord((tempWord, text) => tempWord.informations[index].text = text)}/>
           </div>
           <div styleName="control-button-container">
             <Button iconName="minus" variant="light" onClick={mutateWord((tempWord) => deleteAt(tempWord.informations, index))}/>
@@ -695,14 +676,8 @@ const WordEditorVariation = create(
         </div>
         <div styleName="form-container">
           <div styleName="form">
-            <label>
-              <Label text={trans("variationTitle")} position="left"/>
-              <Input className={styles!["title"]} value={variation.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.variations[index].title = title)}/>
-            </label>
-            <label>
-              <Label text={trans("variationName")} position="left"/>
-              <Input className={styles!["name"]} value={variation.name} onSet={mutateWord((tempWord, name) => tempWord.variations[index].name = name)}/>
-            </label>
+            <Input className={styles!["title"]} label={trans("variationTitle")} value={variation.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.variations[index].title = title)}/>
+            <Input className={styles!["name"]} label={trans("variationName")} value={variation.name} onSet={mutateWord((tempWord, name) => tempWord.variations[index].name = name)}/>
           </div>
           <div styleName="control-button-container">
             <Button iconName="minus" variant="light" onClick={mutateWord((tempWord) => deleteAt(tempWord.variations, index))}/>
@@ -797,17 +772,11 @@ const WordEditorRelation = create(
         </div>
         <div styleName="form-container">
           <div styleName="form">
-            <label>
-              <Label text={trans("relationTitle")} position="left"/>
-              <Input className={styles!["title"]} value={relation.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.relations[index].title = title)}/>
-            </label>
-            <label>
-              <Label text={trans("relationName")} position="left"/>
-              <ControlGroup className={[styles!["name"], styles!["relation-input"]].join(" ")}>
-                <Input value={relation.name} readOnly={true}/>
-                <Button label={trans("selectRelation")} variant="light" onClick={() => openRelationChooser(index)}/>
-              </ControlGroup>
-            </label>
+            <Input className={styles!["title"]} label={trans("relationTitle")} value={relation.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.relations[index].title = title)}/>
+            <ControlGroup className={[styles!["name"], styles!["relation-input"]].join(" ")}>
+              <Input label={trans("relationName")} value={relation.name} readOnly={true}/>
+              <Button label={trans("selectRelation")} variant="light" onClick={() => openRelationChooser(index)}/>
+            </ControlGroup>
           </div>
           <div styleName="control-button-container">
             <Button iconName="minus" variant="light" onClick={mutateWord((tempWord) => deleteAt(tempWord.relations, index))}/>

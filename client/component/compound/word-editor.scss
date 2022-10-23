@@ -6,24 +6,12 @@
 .editor {
   display: flex;
   flex-direction: column;
-  gap: $paragraph-margin;
-}
-
-.head-name {
-  @include bold-font;
-  font-size: $large-font-size;
-  color: color(accent);
-  cursor: pointer;
-}
-
-.head-icon {
-  margin-right: $small-margin;
-  font-size: 16rpx;
+  row-gap: $paragraph-margin;
 }
 
 .head {
   @include bold-font;
-  margin: 0rpx 0rpx $paragraph-margin 0rpx;
+  margin-block-end: $paragraph-margin;
   font-size: $small-font-size;
   color: color(accent);
 }
@@ -31,7 +19,7 @@
 .section-content {
   display: flex;
   flex-direction: column;
-  gap: $small-control-vertical-margin;
+  row-gap: $small-control-vertical-margin;
 }
 
 .section-item {
@@ -44,8 +32,9 @@
 
 .handle {
   width: 10rpx;
-  margin: 0rpx $small-margin 0rpx 0rpx;
-  border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+  margin-inline-end: $control-horizontal-margin;
+  border-start-start-radius: $small-border-radius;
+  border-end-start-radius: $small-border-radius;
   background-color: color(strong-background);
   display: flex;
   align-items: center;
@@ -58,31 +47,21 @@
 
 .form-container {
   display: flex;
-  flex-grow: 1;
   flex-direction: row;
+  flex-grow: 1;
   align-items: flex-end;
 }
 
 .form {
-  display: grid;
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  grid-template-columns: auto 1fr;
-  align-items: center;
-  gap: $small-control-vertical-margin 0rpx;
-  &.information {
-    grid-template-rows: auto 200rpx;
-  }
-  &.sentence {
-    grid-template-rows: 80rpx 80rpx;
-  }
-}
-
-.form >label {
-  display: contents;
+  row-gap: $small-control-vertical-margin;
 }
 
 .generate-container {
   display: flex;
+  align-items: flex-end;
 }
 
 .generate-container >:nth-child(1) {
@@ -94,7 +73,7 @@
 }
 
 .text {
-  height: 100%;
+  height: 200rpx;
 }
 
 .plus {
@@ -110,7 +89,7 @@
 }
 
 .control-button-container {
-  margin: 0rpx 0rpx 0rpx $small-control-horizontal-margin;
+  margin-inline-start: $small-control-horizontal-margin;
 }
 
 .relation-input,
@@ -124,7 +103,7 @@
 }
 
 .footer {
-  margin: $large-margin 0rpx 0rpx 0rpx;
+  margin-block-start: $large-margin;
   display: flex;
   justify-content: space-between;
 }
