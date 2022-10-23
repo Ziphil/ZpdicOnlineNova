@@ -51,7 +51,6 @@ const ChangeDictionaryExplanationForm = create(
       <form styleName="root">
         <TextArea
           label={trans("explanation")}
-          font="monospace"
           language="markdown"
           nowrap={true}
           showButtons={true}
