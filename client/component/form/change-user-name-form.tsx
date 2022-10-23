@@ -32,9 +32,6 @@ const ChangeUserNameForm = create(
           <Input label={trans("name")} value={currentName} disabled={true}/>
           <Button label={trans("confirm")} disabled={true}/>
         </form>
-        <p styleName="caution">
-          {trans("caution")}
-        </p>
       </Fragment>
     );
     return node;

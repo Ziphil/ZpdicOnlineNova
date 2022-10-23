@@ -701,6 +701,7 @@ dashboardPage:
     label: "ユーザー ID の確認"
     description: >-
       このユーザーの ID です。
+      現在はユーザー ID を変更することはできません。
   changeUserScreenNameForm:
     label: "ニックネームの変更"
     description: >-

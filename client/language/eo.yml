@@ -704,6 +704,7 @@ dashboardPage:
     label: "Uzanta identigilo"
     description: >-
       Jen via uzanta identigilo.
+      Nuntempe vi ne povas ŝanĝi vian uzantan identigilon.
   changeUserScreenNameForm:
     label: "Ŝanĝi kromnomon"
     description: >-

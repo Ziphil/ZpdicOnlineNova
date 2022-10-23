@@ -54,13 +54,13 @@ const UploadDictionaryForm = create(
     };
     const node = (
       <Fragment>
+        <p styleName="caution">
+          {trans("caution")}
+        </p>
         <form styleName="root">
           <FileInput inputLabel={trans("file")} validate={validate} onSet={(file) => setFile(file)}/>
           <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
-        <p styleName="caution">
-          {trans("caution")}
-        </p>
       </Fragment>
     );
     return node;

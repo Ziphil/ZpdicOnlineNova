@@ -704,6 +704,7 @@ dashboardPage:
     label: "User ID"
     description: >-
       This is your user ID.
+      Currently you cannot change your user ID.
   changeUserScreenNameForm:
     label: "Change nickname"
     description: >-

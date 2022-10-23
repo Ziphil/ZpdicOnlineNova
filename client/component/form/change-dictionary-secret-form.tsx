@@ -51,6 +51,9 @@ const ChangeDictionarySecretForm = create(
 
     const node = (
       <Fragment>
+        <p styleName="caution">
+          {trans("caution")}
+        </p>
         <form styleName="root">
           <RadioGroup name="secret" value={secret} onSet={(secret) => setSecret(secret)}>
             <Radio value={false} label={trans("public")}/>
@@ -58,9 +61,6 @@ const ChangeDictionarySecretForm = create(
           </RadioGroup>
           <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
-        <p styleName="caution">
-          {trans("caution")}
-        </p>
       </Fragment>
     );
     return node;
