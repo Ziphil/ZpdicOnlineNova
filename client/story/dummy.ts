@@ -3,6 +3,7 @@
 import {
   DetailedDictionary,
   Dictionary,
+  Example,
   Word
 } from "/client/skeleton/dictionary";
 import {
@@ -74,6 +75,20 @@ export const DUMMY_WORD = {
   createdDate: "2012-01-23T12:34:56.789Z",
   updatedDate: "2022-12-03T12:34:56.789Z"
 } as Word;
+
+export const DUMMY_EXAMPLE = {
+  id: "1",
+  number: 1,
+  words: [{
+    number: 1,
+    name: "Dummy word"
+  }, {
+    number: 3,
+    name: "Another dummy word"
+  }],
+  sentence: "This is a dummy sentence.",
+  translation: "This is a dummy translation."
+} as Example;
 
 export const DUMMY_ZATLIN_SOURCE = `
   cons = "k" | "g" | "t" | "d" | "p" | "b" | "s" | "h";

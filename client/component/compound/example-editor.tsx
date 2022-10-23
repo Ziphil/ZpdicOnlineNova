@@ -23,7 +23,6 @@ import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
 import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
-import Label from "/client/component/atom/label";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import WordSearcher from "/client/component/compound/word-searcher";
@@ -58,7 +57,7 @@ import {
 } from "/client/util/style-name";
 
 
-const ExampleEditor = create(
+export const ExampleEditor = create(
   require("./example-editor.scss"), "ExampleEditor",
   function ({
     dictionary,
@@ -214,7 +213,7 @@ const ExampleEditorRoot = create(
         <div styleName="footer">
           <div/>
           <div styleName="confirm-button-container">
-            <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
+            <Button label={trans(":wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
             {(example !== null) && (
               <Button label={trans("discard")} iconName="trash-alt" scheme="red" reactive={true} onClick={() => setAlertOpen(true)}/>
             )}
@@ -248,20 +247,14 @@ const ExampleEditorSentence = create(
     const node = (
       <div styleName="section">
         <div styleName="head">
-          {trans("wordEditor.basic")}
+          {trans(":wordEditor.basic")}
         </div>
         <div styleName="section-content">
           <div styleName="section-item">
             <div styleName="form-container">
-              <div styleName="form sentence">
-                <label>
-                  <Label text={trans("sentence")} position="left"/>
-                  <TextArea className={styles!["text"]} value={tempExample.sentence} onSet={mutateExample((tempExample, sentence) => tempExample.sentence = sentence)}/>
-                </label>
-                <label>
-                  <Label text={trans("translation")} position="left"/>
-                  <TextArea className={styles!["text"]} value={tempExample.translation} onSet={mutateExample((tempExample, translation) => tempExample.translation = translation)}/>
-                </label>
+              <div styleName="form">
+                <TextArea className={styles!["sentence"]} label={trans("sentence")} value={tempExample.sentence} onSet={mutateExample((tempExample, sentence) => tempExample.sentence = sentence)}/>
+                <TextArea className={styles!["sentence"]} label={trans("translation")} value={tempExample.translation} onSet={mutateExample((tempExample, translation) => tempExample.translation = translation)}/>
               </div>
             </div>
           </div>
@@ -348,13 +341,12 @@ const ExampleEditorWord = create(
         </div>
         <div styleName="form-container">
           <div styleName="form">
-            <div/>
             <ControlGroup className={StyleNameUtil.create(styles!["name"], styles!["word-input"])}>
               <Input value={word.name ?? trans("wordNameUndefined")} readOnly={true}/>
               <Button label={trans("selectWord")} variant="light" onClick={() => openWordChooser(index)}/>
             </ControlGroup>
           </div>
-          <div styleName="control-button">
+          <div styleName="control-button-container">
             <Button iconName="minus" variant="light" onClick={mutateExample((tempExample) => deleteAt(tempExample.words, index))}/>
           </div>
         </div>
