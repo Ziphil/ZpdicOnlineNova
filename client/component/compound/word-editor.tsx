@@ -320,7 +320,13 @@ const WordEditorName = create(
             <div styleName="form-container">
               <div styleName="form">
                 <div styleName="generate-container">
-                  <Input label={trans("name")} className={styles!["name"]} value={tempWord.name} validate={validateName} onSet={mutateWord((tempWord, name) => tempWord.name = name)}/>
+                  <Input
+                    label={trans("name")}
+                    className={styles!["name"]}
+                    value={tempWord.name}
+                    validate={dictionary.settings.enableDuplicateName ? validateName : undefined}
+                    onSet={mutateWord((tempWord, name) => tempWord.name = name)}
+                  />
                   {(zatlin !== null) && (
                     <div styleName="control-button-container">
                       <Button label={trans("generate")} variant="light" onClick={() => generateName(zatlin)}/>
