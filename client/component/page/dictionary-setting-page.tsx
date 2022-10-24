@@ -193,6 +193,16 @@ const DictionarySettingPageForms = create(
               propertyName="enableMarkdown"
             />
           </SettingPane>
+          <SettingPane
+            label={trans("changeDictionaryEnableDuplicateName.label")}
+            description={trans("changeDictionaryEnableDuplicateName.description")}
+          >
+            <ChangeDictionarySettingsForm
+              number={dictionary.number}
+              currentSettings={dictionary.settings}
+              propertyName="enableDuplicateName"
+            />
+          </SettingPane>
         </Suspense>
       );
       return node;

@@ -286,6 +286,8 @@ changeDictionarySettingsForm:
   exampleTitle: "Title of sentences"
   enableMarkdownTrue: "Enable"
   enableMarkdownFalse: "Disable"
+  enableDuplicateNameTrue: "Enable"
+  enableDuplicateNameFalse: "Disable"
   confirm: "Change"
 changeDictionarySourceForm:
   akrantiain: "Snoj code for Akrantiain"
@@ -776,7 +778,12 @@ dictionarySettingPage:
   changeDictionaryEnableMarkdownForm:
     label: "Enable or disable Markdown"
     description: >-
-      If you set this enabled, you can write contents of words in Markdown format.
+      If you enable this feature, you can write contents of words in Markdown format.
+  changeDictionaryEnableDuplicateName:
+    label: "Enable or disable duplicate spelling check"
+    description: >-
+      If you enable this feature, when you enter a spelling in the word editor, it will check whether there is already a word with the same spelling and inform you as a popup.
+      Note that this only checks duplication, so it does not prevent you from registering a word with the same spelling.
   uploadDictionaryForm:
     label: "Upload"
     description: >-

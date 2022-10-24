@@ -60,7 +60,7 @@ const ChangeDictionarySettingsForm = create(
     } else if (propertyName === "pronunciationTitle") {
       const node = (
         <form styleName="root input">
-          <Input label={trans("pronunciationTitle")} value={value} onSet={(value) => setValue(value)}/>
+          <Input label={trans("pronunciationTitle")} value={value} onSet={setValue}/>
           <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
       );
@@ -68,7 +68,7 @@ const ChangeDictionarySettingsForm = create(
     } else if (propertyName === "exampleTitle") {
       const node = (
         <form styleName="root input">
-          <Input label={trans("exampleTitle")} value={value} onSet={(value) => setValue(value)}/>
+          <Input label={trans("exampleTitle")} value={value} onSet={setValue}/>
           <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
       );
@@ -76,9 +76,20 @@ const ChangeDictionarySettingsForm = create(
     } else if (propertyName === "enableMarkdown") {
       const node = (
         <form styleName="root radio">
-          <RadioGroup name="enableMarkdown" value={value} onSet={(value) => setValue(value)}>
+          <RadioGroup name="enableMarkdown" value={value} onSet={setValue}>
             <Radio value={true} label={trans("enableMarkdownTrue")}/>
             <Radio value={false} label={trans("enableMarkdownFalse")}/>
+          </RadioGroup>
+          <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
+        </form>
+      );
+      return node;
+    } else if (propertyName === "enableDuplicateName") {
+      const node = (
+        <form styleName="root radio">
+          <RadioGroup name="enableDuplicateName" value={value} onSet={setValue}>
+            <Radio value={true} label={trans("enableDuplicateNameTrue")}/>
+            <Radio value={false} label={trans("enableDuplicateNameFalse")}/>
           </RadioGroup>
           <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>

@@ -286,6 +286,8 @@ changeDictionarySettingsForm:
   exampleTitle: "Titolo por frazoj"
   enableMarkdownTrue: "Ebligita"
   enableMarkdownFalse: "Malebligita"
+  enableDuplicateNameTrue: "Ebligita"
+  enableDuplicateNameFalse: "Malebligita"
   confirm: "Ŝanĝi"
 changeDictionarySourceForm:
   akrantiain: "Fontkodo por Akrantiain"
@@ -774,9 +776,14 @@ dictionarySettingPage:
     description: >-
       Ŝanĝi la titolon por ekzemplaj frazoj, kiu estos montrata en la paĝo de la vortaro.
   changeDictionaryEnableMarkdownForm:
-    label: "Ebligi aŭ malebligi Markdown"
+    label: "Ebligi Markdown"
     description: >-
-      Se vi ebligos tiun, vi povos skribi enhavojn de vortoj en Markdown.
+      Se vi ebligos tiun funkcion, vi povos skribi enhavojn de vortoj en Markdown.
+  changeDictionaryEnableDuplicateName:
+    label: "Ebligi kontrolon de duoblan literumon"
+    description: >- 
+      Se vi ebligas tiun funkcion, kiam vi tajpos literumon en la vortredaktilo, ĝi kontrolos ĉu jam ekzistas vorto kun la sama literumo kaj informos vin kiel ŝprucfenestro.
+      Notu, ke tio nur kontrolos duoblon, do ĝi ne malhelpos vin registri vorton kun la sama literumo.
   uploadDictionaryForm:
     label: "Alŝuti"
     description: >-
