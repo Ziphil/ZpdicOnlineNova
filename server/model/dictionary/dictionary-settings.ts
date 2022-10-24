@@ -29,6 +29,9 @@ export class DictionarySettingsSchema {
   @prop({required: true})
   public enableMarkdown!: boolean;
 
+  @prop({required: true})
+  public enableDuplicateName!: boolean;
+
   public static createDefault(): DictionarySettings {
     const punctuations = [",", "、"];
     const pronunciationTitle = "Pronunciation";
@@ -50,7 +53,8 @@ export class DictionarySettingsCreator {
     const pronunciationTitle = raw.pronunciationTitle;
     const exampleTitle = raw.exampleTitle;
     const enableMarkdown = raw.enableMarkdown;
-    const skeleton = {akrantiainSource, zatlinSource, punctuations, pronunciationTitle, exampleTitle, enableMarkdown};
+    const enableDuplicateName = raw.enableDuplicateName;
+    const skeleton = {akrantiainSource, zatlinSource, punctuations, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName};
     return skeleton;
   }
 
