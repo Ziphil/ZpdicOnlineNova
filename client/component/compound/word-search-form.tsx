@@ -112,7 +112,7 @@ const WordSearchForm = create(
       handleParameterSet({type: "regular"});
     }, [handleParameterSet], enableHotkeys);
 
-    const modes = ["both", "name", "equivalent", "content"] as const;
+    const modes = ["both", "name", "equivalent", "tag", "content"] as const;
     const types = ["prefix", "part", "exact", "regular"] as const;
     const orderMode = ["unicode", "updatedDate", "createdDate"] as const;
     const actualParameter = WordParameter.getNormal(parameter);

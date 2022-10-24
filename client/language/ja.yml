@@ -578,6 +578,7 @@ wordSearchForm:
   both: "単語＋訳語"
   name: "単語"
   equivalent: "訳語"
+  tag: "タグ"
   content: "全文"
   prefix: "前方"
   part: "部分"
