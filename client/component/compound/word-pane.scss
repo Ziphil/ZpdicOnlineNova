@@ -102,13 +102,13 @@
 }
 
 .box {
-  bottom: 0.1em;
-  margin: 0em 0.5em 0em 0em;
-  padding: 0.1em 0.2em;
-  font-size: 70%;
-  border: 1rpx color(border) solid;
+  inset-block-end: 0.1em;
+  margin-inline-end: 0.5em;
+  padding-block: 0.1em;
+  padding-inline: 0.2em;
+  font-size: 80%;
+  border: 1rpx solid color(border);
   border-radius: $small-border-radius;
-  position: relative;
 }
 
 .title {

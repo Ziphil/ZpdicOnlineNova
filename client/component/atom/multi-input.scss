@@ -1,0 +1,92 @@
+@charset "utf-8";
+
+@import "/client/component/mixin.scss";
+
+
+.label-container {
+  display: block;
+}
+
+.input {
+  display: inline-flex;
+  &[data-scheme="primary"] {
+    @include input(primary);
+    --validation-icon-color: #{schemed-color(accent, primary)};
+  }
+  &[data-scheme="red"] {
+    @include input(red);
+    --validation-icon-color: #{schemed-color(accent, red)};
+  }
+  &[data-scheme="blue"] {
+    @include input(blue);
+    --validation-icon-color: #{schemed-color(accent, blue)};
+  }
+  [data-control-group] >&:first-child,
+  [data-control-group] >:first-child & {
+    margin: 0rpx -1rpx 0rpx 0rpx;
+    border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+  }
+  [data-control-group] >&:last-child,
+  [data-control-group] >:last-child & {
+    border-radius: 0rpx $small-border-radius $small-border-radius 0rpx;
+  }
+  [data-control-group] >&:not(:first-child):not(:last-child),
+  [data-control-group] >:not(:first-child):not(:last-child) & {
+    margin: 0rpx -1rpx 0rpx 0rpx;
+    border-radius: 0rpx;
+  }
+}
+
+.value-list {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: $blank-margin;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.value {
+  padding-block: 0.1em;
+  padding-inline: 0.2em;
+  font-size: 80%;
+  border: 1rpx solid color(border);
+  border-radius: $small-border-radius;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+}
+
+.value-button {
+  margin-inline-start: $blank-margin;
+  color: schemed-color(accent, primary);
+  border-radius: $small-border-radius;
+  cursor: pointer;
+  &:hover {
+    color: schemed-color(hover-accent, primary)
+  }
+}
+
+.input-inner {
+  margin: 0rpx;
+  padding: 0rpx;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  line-height: inherit;
+  background: none;
+  border: none;
+  outline: none;
+  flex-grow: 1;
+}
+
+.prefix,
+.suffix {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center
+}
+
+.validation {
+  margin-inline-start: $input-horizontal-padding;
+  color: var(--validation-icon-color);
+}
