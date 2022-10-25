@@ -131,8 +131,9 @@ export class WordController extends Controller {
   public async [Symbol()](request: Request<"checkDuplicateWordName">, response: Response<"checkDuplicateWordName">): Promise<void> {
     const dictionary = request.dictionary;
     const name = request.body.name;
+    const excludedWordName = request.body.excludedWordNumber;
     if (dictionary) {
-      const duplicate = await dictionary.checkDuplicateWordName(name);
+      const duplicate = await dictionary.checkDuplicateWordName(name, excludedWordName);
       const body = {duplicate};
       Controller.respond(response, body);
     } else {

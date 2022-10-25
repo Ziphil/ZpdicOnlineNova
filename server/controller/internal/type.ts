@@ -351,7 +351,7 @@ type ServerSpecs = {
     }
   },
   checkDuplicateWordName: {
-    request: {number: number, name: string},
+    request: {number: number, name: string, excludedWordNumber?: number},
     response: {
       success: {duplicate: boolean},
       error: CustomError<"noSuchDictionaryNumber">

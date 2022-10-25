@@ -278,8 +278,12 @@ export class DictionarySchema extends DiscardableSchema {
     return names;
   }
 
-  public async checkDuplicateWordName(this: Dictionary, name: string): Promise<boolean> {
-    const word = await WordModel.findOneExist().where("dictionary", this).where("name", name);
+  public async checkDuplicateWordName(this: Dictionary, name: string, excludedWordNumber?: number): Promise<boolean> {
+    let query = WordModel.findOneExist().where("dictionary", this).where("name", name);
+    if (excludedWordNumber !== undefined) {
+      query = query.ne("number", excludedWordNumber);
+    }
+    const word = await query.exec();
     return word !== null;
   }
 

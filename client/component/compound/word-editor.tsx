@@ -296,7 +296,8 @@ const WordEditorName = create(
 
     const validateName = useCallback(async function (name: string): Promise<ValidationSpec | null> {
       const number = dictionary.number;
-      const response = await request("checkDuplicateWordName", {number, name}, {ignoreError: true});
+      const excludedWordNumber = tempWord.number;
+      const response = await request("checkDuplicateWordName", {number, name, excludedWordNumber}, {ignoreError: true});
       if (response.status === 200 && !("error" in response.data)) {
         const {duplicate} = response.data;
         if (duplicate) {
@@ -307,7 +308,7 @@ const WordEditorName = create(
       } else {
         return null;
       }
-    }, [dictionary.number, request, trans]);
+    }, [dictionary.number, tempWord.number, request, trans]);
 
     const zatlin = dictionary.getZatlin();
     const node = (
