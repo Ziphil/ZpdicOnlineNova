@@ -3,15 +3,15 @@
 
 export class Relation {
 
-  public title!: string;
+  public titles!: Array<string>;
   public number!: number;
   public name!: string;
 
   public static createEmpty(): Relation {
-    const title = "";
+    const titles = [] as Array<string>;
     const number = -1;
     const name = "";
-    const skeleton = {title, number, name};
+    const skeleton = {titles, number, name};
     return skeleton;
   }
 

@@ -50,10 +50,10 @@ export const DUMMY_WORD = {
   pronunciation: "/dʌmi/",
   tags: ["Tag 1", "Tag 2"],
   equivalents: [{
-    title: "Noun",
+    titles: ["Noun"],
     names: ["Equivalent 1", "Equivalent 2", "Equivalent 3"]
   }, {
-    title: "Adjective",
+    titles: ["Adjective"],
     names: ["Equivalent 1", "Equivalent 2"]
   }],
   informations: [{
@@ -68,7 +68,7 @@ export const DUMMY_WORD = {
     name: "words"
   }],
   relations: [{
-    title: "Antonym",
+    titles: ["Antonym"],
     number: 2,
     name: "Antonym word"
   }],

@@ -25,11 +25,13 @@ import Alert from "/client/component/atom/alert";
 import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
 import Icon from "/client/component/atom/icon";
-import Input, {ValidationSpec} from "/client/component/atom/input";
+import Input from "/client/component/atom/input";
 import {
   Suggest,
-  SuggestionSpec
+  SuggestionSpec,
+  ValidationSpec
 } from "/client/component/atom/input";
+import MultiInput from "/client/component/atom/multi-input";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import Loading from "/client/component/compound/loading";
@@ -147,7 +149,7 @@ export const WordEditor = create(
         const inverseRelation = Relation.createEmpty();
         inverseRelation.number = editedWord.number;
         inverseRelation.name = editedWord.name;
-        inverseRelation.title = relation.title;
+        inverseRelation.titles = relation.titles;
         return {wordNumber: relation.number, relation: inverseRelation};
       });
       if (specs.length > 0) {
@@ -242,7 +244,6 @@ const WordEditorRoot = create(
       <div styleName="root">
         <div styleName="editor">
           <WordEditorName {...innerProps}/>
-          <WordEditorTags {...innerProps}/>
           <WordEditorEquivalents {...innerProps}/>
           <WordEditorInformations {...innerProps}/>
           <WordEditorVariations {...innerProps}/>
@@ -335,98 +336,9 @@ const WordEditorName = create(
                   )}
                 </div>
                 <Input className={styles!["name"]} label={trans("pronunciation")} value={tempWord.pronunciation} onSet={mutateWord((tempWord, pronunciation) => tempWord.pronunciation = pronunciation || undefined)}/>
+                <MultiInput className={styles!["name"]} label={trans("tag")} values={tempWord.tags} onSet={mutateWord((tempWord, tags) => tempWord.tags = tags)}/>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    );
-    return node;
-
-  }
-);
-
-
-const WordEditorTags = create(
-  require("./word-editor.scss"),
-  function ({
-    dictionary,
-    tempWord,
-    mutateWord,
-    createSuggest,
-    styles
-  }: {
-    dictionary: EnhancedDictionary,
-    tempWord: TempEditableWord,
-    mutateWord: MutateWordCallback,
-    createSuggest: (propertyName: string) => Suggest,
-    styles?: StylesRecord
-  }): ReactElement {
-
-    const {trans} = useTrans("wordEditor");
-
-    const node = (
-      <div styleName="section">
-        <div styleName="head">
-          {trans("tag")}
-        </div>
-        <div styleName="section-content">
-          {tempWord.tags.map((tag, index) => (
-            <WordEditorTag key={tag.tempId} {...{dictionary, tempWord, tag, index, mutateWord, createSuggest, styles}}/>
-          ))}
-          <div styleName="plus">
-            <div styleName="absent">{(tempWord.tags.length <= 0) ? trans("tagAbsent") : ""}</div>
-            <div styleName="plus-button-container">
-              <Button iconName="plus" variant="light" onClick={mutateWord((tempWord) => tempWord.tags.push({tempId: nanoid(), string: ""}))}/>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-    return node;
-
-  }
-);
-
-
-const WordEditorTag = create(
-  require("./word-editor.scss"),
-  function ({
-    dictionary,
-    tempWord,
-    tag,
-    index,
-    mutateWord,
-    createSuggest,
-    styles
-  }: {
-    dictionary: EnhancedDictionary,
-    tempWord: TempEditableWord,
-    tag: TempTag,
-    index: number,
-    mutateWord: MutateWordCallback,
-    createSuggest: (propertyName: string) => Suggest,
-    styles?: StylesRecord
-  }): ReactElement {
-
-    const [rootRef, handleRef, dragging] = useDragDrop(
-      `tag-${dictionary.id}-${tempWord.tempId}`,
-      index,
-      mutateWord((tempWord, draggingIndex, hoverIndex) => moveAt(tempWord.tags, draggingIndex, hoverIndex))
-    );
-
-    const suggest = createSuggest("tag");
-    const node = (
-      <div styleName="section-item" ref={rootRef} {...data({dragging})}>
-        <div styleName="handle" ref={handleRef}>
-          <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
-        </div>
-        <div styleName="form-container">
-          <div styleName="form">
-            <Input className={styles!["title"]} value={tag.string} suggest={suggest} onSet={mutateWord((tempWord, tag) => tempWord.tags[index].string = tag)}/>
-          </div>
-          <div styleName="control-button-container">
-            <Button iconName="minus" variant="light" onClick={mutateWord((tempWord) => deleteAt(tempWord.tags, index))}/>
           </div>
         </div>
       </div>
@@ -514,7 +426,7 @@ const WordEditorEquivalent = create(
         </div>
         <div styleName="form-container">
           <div styleName="form">
-            <Input className={styles!["title"]} label={trans("equivalentTitle")} value={equivalent.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.equivalents[index].title = title)}/>
+            <MultiInput className={styles!["title"]} label={trans("equivalentTitle")} values={equivalent.titles} suggest={suggest} onSet={mutateWord((tempWord, titles) => tempWord.equivalents[index].titles = titles)}/>
             <Input className={styles!["name"]} label={trans("equivalentNames")} value={equivalent.string} onSet={mutateWord((tempWord, string) => tempWord.equivalents[index].string = string)}/>
           </div>
           <div styleName="control-button-container">
@@ -795,7 +707,7 @@ const WordEditorRelation = create(
         </div>
         <div styleName="form-container">
           <div styleName="form">
-            <Input className={styles!["title"]} label={trans("relationTitle")} value={relation.title} suggest={suggest} onSet={mutateWord((tempWord, title) => tempWord.relations[index].title = title)}/>
+            <MultiInput className={styles!["title"]} label={trans("relationTitle")} values={relation.titles} suggest={suggest} onSet={mutateWord((tempWord, titles) => tempWord.relations[index].titles = titles)}/>
             <ControlGroup className={[styles!["name"], styles!["relation-input"]].join(" ")}>
               <Input label={trans("relationName")} value={relation.name} readOnly={true}/>
               <Button label={trans("selectRelation")} variant="light" onClick={() => openRelationChooser(index)}/>
@@ -819,11 +731,11 @@ function createTempWord(word: EditableWord | null, defaultName?: string, default
     tempWord.name = defaultName;
   }
   if (defaultEquivalentName) {
-    const equivalent = {title: "", names: [defaultEquivalentName]};
+    const equivalent = {titles: [], names: [defaultEquivalentName]};
     tempWord.equivalents.push(equivalent);
   }
   const tempId = nanoid();
-  const tags = tempWord.tags.map((tag) => ({tempId: nanoid(), string: tag}));
+  const tags = tempWord.tags;
   const equivalents = tempWord.equivalents.map((equivalent) => ({...equivalent, tempId: nanoid(), string: equivalent.names.join(", ")}));
   const informations = tempWord.informations.map((information) => ({...information, tempId: nanoid()}));
   const variations = tempWord.variations.map((variation) => ({...variation, tempId: nanoid()}));
@@ -832,15 +744,14 @@ function createTempWord(word: EditableWord | null, defaultName?: string, default
 }
 
 function recreateWord(tempWord: TempEditableWord): EditableWord {
-  const tags = tempWord.tags.map((tag) => tag.string);
   const equivalents = tempWord.equivalents.map((equivalent) => ({...equivalent, names: equivalent.string.split(/\s*(?:,|、|・)\s*/)}));
-  const word = {...tempWord, tags, equivalents};
+  const word = {...tempWord, equivalents};
   return word;
 }
 
 type TempEditableWord = Omit<EditableWord, "tags" | "equivalents" | "informations" | "variations" | "relations"> & {
   tempId: string,
-  tags: Array<TempTag>,
+  tags: Array<string>,
   equivalents: Array<TempEquivalent>,
   informations: Array<TempInformation>,
   variations: Array<TempVariation>,

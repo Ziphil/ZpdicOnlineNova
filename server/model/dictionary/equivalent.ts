@@ -11,8 +11,8 @@ import {
 
 export class EquivalentSchema {
 
-  @prop({required: true})
-  public title!: string;
+  @prop({required: true, type: String})
+  public titles!: Array<string>;
 
   @prop({required: true, type: String})
   public names!: Array<string>;
@@ -23,9 +23,9 @@ export class EquivalentSchema {
 export class EquivalentCreator {
 
   public static create(raw: Equivalent): EquivalentSkeleton {
-    const title = raw.title;
+    const titles = raw.titles;
     const names = raw.names;
-    const skeleton = {title, names};
+    const skeleton = {titles, names};
     return skeleton;
   }
 

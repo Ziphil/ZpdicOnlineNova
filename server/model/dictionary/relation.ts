@@ -11,8 +11,8 @@ import {
 
 export class RelationSchema {
 
-  @prop({required: true})
-  public title!: string;
+  @prop({required: true, type: String})
+  public titles!: Array<string>;
 
   @prop({required: true})
   public number!: number;
@@ -26,10 +26,10 @@ export class RelationSchema {
 export class RelationCreator {
 
   public static create(raw: Relation): RelationSkeleton {
-    const title = raw.title;
+    const titles = raw.titles;
     const number = raw.number;
     const name = raw.name;
-    const skeleton = {title, number, name};
+    const skeleton = {titles, number, name};
     return skeleton;
   }
 
