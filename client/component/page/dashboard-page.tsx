@@ -24,8 +24,8 @@ import DiscardUserForm from "/client/component/form/discard-user-form";
 import {
   useLocation,
   useLogout,
+  useMe,
   usePath,
-  useSuspenseMe,
   useSuspenseQuery,
   useTrans
 } from "/client/component/hook";
@@ -52,7 +52,7 @@ const DashboardPage = create(
     const [dictionaries] = useSuspenseQuery("fetchDictionaries", {});
     const [editInvitations] = useSuspenseQuery("fetchInvitations", {type: "edit"});
     const [transferInvitations] = useSuspenseQuery("fetchInvitations", {type: "transfer"});
-    const [me] = useSuspenseMe();
+    const [me] = useMe();
 
     const performLogout = useCallback(async function (): Promise<void> {
       const response = await logout();
@@ -68,7 +68,7 @@ const DashboardPage = create(
     const notificationCount = editNotificationCount + transferNotificationCount;
     const node = (
       <Page title={trans("title")}>
-        {(!me.activated) && (
+        {(me !== null && !me.activated) && (
           <div styleName="activate">
             <ActivateUserForm/>
           </div>
@@ -102,7 +102,7 @@ const DashboardPageForms = create(
     mode: string
   }): ReactElement | null {
 
-    const [user, {refetchMe}] = useSuspenseMe();
+    const [me, {refetchMe}] = useMe();
     const {trans} = useTrans("dashboardPage");
     const {pushPath} = usePath();
 
@@ -143,25 +143,25 @@ const DashboardPageForms = create(
       );
       return node;
     } else if (mode === "account") {
-      const node = (
+      const node = (me !== null) && (
         <Suspense fallback={<DashboardPageLoading/>}>
           <SettingPane
             label={trans("changeUserNameForm.label")}
             description={trans("changeUserNameForm.description")}
           >
-            <ChangeUserNameForm currentName={user.name} onSubmit={refetchMe}/>
+            <ChangeUserNameForm currentName={me.name} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
             label={trans("changeUserScreenNameForm.label")}
             description={trans("changeUserScreenNameForm.description")}
           >
-            <ChangeUserScreenNameForm currentScreenName={user.screenName} onSubmit={refetchMe}/>
+            <ChangeUserScreenNameForm currentScreenName={me.screenName} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
             label={trans("changeUserEmailForm.label")}
             description={trans("changeUserEmailForm.description")}
           >
-            <ChangeUserEmailForm currentEmail={user.email} onSubmit={refetchMe}/>
+            <ChangeUserEmailForm currentEmail={me.email} onSubmit={refetchMe}/>
           </SettingPane>
           <SettingPane
             label={trans("changeUserPasswordForm.label")}
@@ -177,7 +177,7 @@ const DashboardPageForms = create(
           </SettingPane>
         </Suspense>
       );
-      return node;
+      return node || null;
     } else {
       return null;
     }

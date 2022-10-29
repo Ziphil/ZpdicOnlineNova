@@ -20,6 +20,7 @@ import * as queryParser from "query-string";
 import {
   ReactElement,
   ReactNode,
+  Suspense,
   useCallback
 } from "react";
 import {
@@ -28,6 +29,9 @@ import {
 import {
   HTML5Backend as DndBackend
 } from "react-dnd-html5-backend";
+import {
+  ErrorBoundary
+} from "react-error-boundary";
 import {
   IntlProvider
 } from "react-intl";
@@ -42,8 +46,7 @@ import {
 } from "/client/component/create";
 import {
   queryClient,
-  useDefaultLocale,
-  useDefaultMe
+  useDefaultLocale
 } from "/client/component/hook";
 
 
@@ -67,11 +70,15 @@ const Root = create(
   }): ReactElement | null {
 
     const node = (
-      <RecoilRoot>
-        <ProviderRoot>
-          {children}
-        </ProviderRoot>
-      </RecoilRoot>
+      <ErrorBoundary fallbackRender={() => <div>Please Reload</div>}>
+        <Suspense fallback={<div/>}>
+          <RecoilRoot>
+            <ProviderRoot>
+              {children}
+            </ProviderRoot>
+          </RecoilRoot>
+        </Suspense>
+      </ErrorBoundary>
     );
     return node;
 
@@ -87,7 +94,6 @@ const ProviderRoot = create(
     children?: ReactNode
   }): ReactElement {
 
-    const {ready} = useDefaultMe();
     const {locale, messages} = useDefaultLocale("en");
 
     const handleIntlError = useCallback(function (error: IntlError<any>): void {

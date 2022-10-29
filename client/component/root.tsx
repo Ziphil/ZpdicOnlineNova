@@ -12,6 +12,7 @@ import {
 import * as queryParser from "query-string";
 import {
   ReactElement,
+  Suspense,
   useCallback
 } from "react";
 import {
@@ -20,6 +21,9 @@ import {
 import {
   HTML5Backend as DndBackend
 } from "react-dnd-html5-backend";
+import {
+  ErrorBoundary
+} from "react-error-boundary";
 import {
   IntlProvider
 } from "react-intl";
@@ -35,7 +39,6 @@ import {
 import {
   queryClient,
   useDefaultLocale,
-  useDefaultMe,
   useDefaultTheme
 } from "/client/component/hook";
 import InnerRoot from "/client/component/inner-root";
@@ -87,9 +90,13 @@ const Root = create(
   }): ReactElement | null {
 
     const node = (
-      <RecoilRoot>
-        <ProviderRoot/>
-      </RecoilRoot>
+      <ErrorBoundary fallbackRender={() => <div>Please Reload</div>}>
+        <Suspense fallback={<div/>}>
+          <RecoilRoot>
+            <ProviderRoot/>
+          </RecoilRoot>
+        </Suspense>
+      </ErrorBoundary>
     );
     return node;
 
@@ -103,7 +110,6 @@ const ProviderRoot = create(
   }: {
   }): ReactElement | null {
 
-    const {ready} = useDefaultMe();
     const {locale, messages} = useDefaultLocale("ja");
     useDefaultTheme("light");
 
@@ -113,7 +119,7 @@ const ProviderRoot = create(
       }
     }, []);
 
-    const node = (ready) && (
+    const node = (
       <DndProvider backend={DndBackend}>
         <QueryClientProvider client={queryClient}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
@@ -126,7 +132,7 @@ const ProviderRoot = create(
         </QueryClientProvider>
       </DndProvider>
     );
-    return node || null;
+    return node;
 
   }
 );
