@@ -31,6 +31,7 @@ const ErrorPage = create(
 
     const handleClick = useCallback(function (): void {
       pushPath("/");
+      location.reload();
     }, [pushPath]);
 
     const node = (
