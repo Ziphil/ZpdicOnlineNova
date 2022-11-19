@@ -10,31 +10,10 @@
   font-feature-settings: "lnum" 1;
 }
 
-.title {
-  margin: 0rpx;
-  font-family: $special-font-family;
-  font-size: 120rpx; 
+.logo {
+  width: 380rpx;
+  line-height: 1;
   @include smartphone {
-    font-size: 120rpx * 0.8;
-  }
-}
-
-.subtitle {
-  left: 1.2em;
-  margin: -15u 0rpx 0rpx 0rpx;
-  font-family: $special-font-family;
-  font-size: 50rpx;
-  letter-spacing: 0.2em;
-  position: relative;
-  @include smartphone {
-    font-size: 50rpx * 0.8;
-  }
-}
-
-.version {
-  margin: $small-margin 0rpx 0rpx 0rpx;
-  font-size: $large-font-size;
-  @include smartphone {
-    display: none;
+    width: 380rpx * 0.8;
   }
 }

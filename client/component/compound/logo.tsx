@@ -6,9 +6,6 @@ import {
 import {
   create
 } from "/client/component/create";
-import {
-  VERSION
-} from "/client/variable";
 
 
 const Logo = create(
@@ -19,9 +16,7 @@ const Logo = create(
 
     const node = (
       <div styleName="root">
-        <div styleName="title">ZpDIC</div>
-        <div styleName="subtitle">Online</div>
-        <div styleName="version">ver {VERSION}</div>
+        <img styleName="logo" src="/static/logo.svg"/>
       </div>
     );
     return node;
