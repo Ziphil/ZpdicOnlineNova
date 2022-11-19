@@ -25,18 +25,10 @@ const GoogleAd = create(
   }): ReactElement | null {
 
     useMount(() => {
-      const element = document.createElement("script");
-      element.id = "google-ads-sdk";
-      element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-      element.crossOrigin = "anonymous";
-      element.async = true;
-      element.onload = function (): void {
-        const anyWindow = window as any;
-        if (anyWindow.adsbygoogle) {
-          anyWindow.adsbygoogle.push({});
-        }
-      };
-      document.head.appendChild(element);
+      const anyWindow = window as any;
+      if (anyWindow) {
+        (anyWindow.adsbygoogle = anyWindow.adsbygoogle || []).push({});
+      }
     });
 
     return (

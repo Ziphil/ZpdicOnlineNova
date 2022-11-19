@@ -24,6 +24,7 @@ export class Main {
   public main(): void {
     this.appendIconElement();
     this.appendRecaptchaElement();
+    this.appendGoogleAdElement();
     this.setupTheme();
     this.setupNprogress();
     this.render();
@@ -41,6 +42,15 @@ export class Main {
   private appendRecaptchaElement(): void {
     const element = document.createElement("script");
     element.src = "https://www.google.com/recaptcha/api.js?render=" + RECAPTCHA_KEY;
+    document.head.appendChild(element);
+  }
+
+  private appendGoogleAdElement(): void {
+    const element = document.createElement("script");
+    element.id = "google-ads-sdk";
+    element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+    element.crossOrigin = "anonymous";
+    element.async = true;
     document.head.appendChild(element);
   }
 
