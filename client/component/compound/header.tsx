@@ -15,12 +15,11 @@ import {
   usePath,
   useTrans
 } from "/client/component/hook";
+import LogoSvg from "/client/public/logo.svg";
+import SymbolSvg from "/client/public/symbol.svg";
 import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
-import {
-  data
-} from "/client/util/data";
 
 
 const Header = create(
@@ -47,13 +46,19 @@ const Header = create(
         <div styleName="content">
           <div styleName="top">
             <div styleName="left">
-              <div styleName="title" {...data({small: dictionary !== undefined})}>
-                <Link href="/" target="self" style="plane">ZpDIC</Link>
-              </div>
-              {(dictionary !== undefined) && (
-                <div styleName="dictionary-name">
+              {(dictionary === undefined) ? (
+                <h1>
+                  <Link styleName="link" href="/" target="self" style="plane">
+                    <LogoSvg styleName="logo" alt="ZpDIC Online"/>
+                  </Link>
+                </h1>
+              ) : (
+                <h1 styleName="dictionary-name">
+                  <Link styleName="link" href="/" target="self" style="plane">
+                    <SymbolSvg styleName="symbol" alt=""/>
+                  </Link>
                   <Link href={"/dictionary/" + dictionary.number + ((preserveQuery) ? location.searchString : "")} target="self" style="plane">{dictionary.name}</Link>
-                </div>
+                </h1>
               )}
             </div>
             <div styleName="right">
