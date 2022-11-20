@@ -221,6 +221,7 @@ const TextAreaMarkdownButton = create(
       const editor = editorRef.current;
       if (editor) {
         MARKDOWN_EDITOR_ACTIONS[actionName](editor);
+        editor.focus();
       }
     }, [editorRef, actionName]);
 
