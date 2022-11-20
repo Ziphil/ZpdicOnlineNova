@@ -6,6 +6,8 @@ import {
 import {
   create
 } from "/client/component/create";
+import LogoSvg from "/client/public/logo.svg";
+import SymbolSvg from "/client/public/symbol.svg";
 
 
 const Logo = create(
@@ -16,7 +18,8 @@ const Logo = create(
 
     const node = (
       <div styleName="root">
-        <img styleName="logo" src="/static/logo.svg"/>
+        <SymbolSvg styleName="symbol"/>
+        <LogoSvg styleName="logo"/>
       </div>
     );
     return node;
