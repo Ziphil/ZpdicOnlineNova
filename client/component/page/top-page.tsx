@@ -26,8 +26,9 @@ import {
 
 
 const RAW_CONTRIBUTORS = [
-  {name: "lynn", url: {github: "lynn"}, avatarUrl: {github: "lynn"}},
+  {name: "ゆりです。", url: {twitter: "udl_design"}, avatarUrl: "https://pbs.twimg.com/profile_images/1567141188788191232/8itkryuL_400x400.jpg"},
   {name: "bluebear94", url: {github: "bluebear94"}, avatarUrl: {github: "bluebear94"}},
+  {name: "lynn", url: {github: "lynn"}, avatarUrl: {github: "lynn"}},
   {name: "nymwa", url: {github: "nymwa"}, avatarUrl: {github: "nymwa"}},
   {name: "川音リオ", url: {twitter: "KawaneRio"}, avatarUrl: "https://pbs.twimg.com/profile_images/1085673171083091969/t3IjudoH_400x400.jpg"},
   {name: "炭酸ソーダ", url: {twitter: "na2co3_ftw"}, avatarUrl: {github: "na2co3-ftw"}}
