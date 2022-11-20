@@ -180,16 +180,20 @@ const MultiInputInput = create(
     }, [updateSuggestions]);
 
     const handleBlur = useCallback(function (event: FocusEvent<HTMLInputElement>): void {
-      onSet?.([...values, inputValue]);
-      setInputValue("");
+      if (inputValue !== "") {
+        onSet?.([...values, inputValue]);
+        setInputValue("");
+      }
     }, [values, inputValue, onSet]);
 
     const handleKeyDown = useCallback(function (event: KeyboardEvent<HTMLInputElement>): void {
       if (event.key === "Enter") {
         if (!event.nativeEvent.isComposing) {
           event.preventDefault();
-          onSet?.([...values, inputValue]);
-          setInputValue("");
+          if (inputValue !== "") {
+            onSet?.([...values, inputValue]);
+            setInputValue("");
+          }
         }
       } else if (event.key === "Backspace") {
         const target = event.currentTarget;
