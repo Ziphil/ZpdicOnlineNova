@@ -57,7 +57,9 @@ const Header = create(
                   <Link styleName="link" href="/" target="self" style="plane">
                     <SymbolSvg styleName="symbol" alt=""/>
                   </Link>
-                  <Link href={"/dictionary/" + dictionary.number + ((preserveQuery) ? location.searchString : "")} target="self" style="plane">{dictionary.name}</Link>
+                  <Link href={"/dictionary/" + dictionary.number + ((preserveQuery) ? location.searchString : "")} target="self" style="plane">
+                    {dictionary.name}
+                  </Link>
                 </h1>
               )}
             </div>
