@@ -179,6 +179,11 @@ const MultiInputInput = create(
       updateSuggestions(inputValue);
     }, [updateSuggestions]);
 
+    const handleBlur = useCallback(function (event: FocusEvent<HTMLInputElement>): void {
+      onSet?.([...values, inputValue]);
+      setInputValue("");
+    }, [values, inputValue, onSet]);
+
     const handleKeyDown = useCallback(function (event: KeyboardEvent<HTMLInputElement>): void {
       if (event.key === "Enter") {
         if (!event.nativeEvent.isComposing) {
@@ -223,6 +228,7 @@ const MultiInputInput = create(
             disabled={disabled}
             onChange={handleChange}
             onFocus={handleFocus}
+            onBlur={handleBlur}
             onKeyDown={handleKeyDown}
             ref={(nativeRef !== undefined) ? mergeRefs([nativeRef, setAutoElement]) : setAutoElement}
           />
