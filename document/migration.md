@@ -35,13 +35,16 @@ db.users.updateMany({}, {$set: {"activated": true}});
 Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
 ```
 db.dictionaries.updateMany({}, {$set: {"settings.enableDuplicateName": true}});
-db.words.find({}).forEach(function (word) {
-  word.equivalents.forEach(function (equivalent) {
-    equivalent.titles = [equivalent.title];
-  });
-  word.relations.forEach(function (relation) {
-    relation.titles = [relation.title];
-  });
-  db.words.save(word);
-});
+db.words.updateMany({}, [{$set: {
+  "equivalents": {$map: {
+    input: "$equivalents",
+    in: {"titles": ["$$this.title"], "names": "$$this.names"}
+  }}
+}}]);
+db.words.updateMany({}, [{$set: {
+  "relations": {$map: {
+    input: "$relations",
+    in: {"titles": ["$$this.title"], "number": "$$this.number", "name": "$$this.name"}
+  }}
+}}]);
 ```
