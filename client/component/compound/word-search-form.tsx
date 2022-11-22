@@ -34,7 +34,7 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-const WordSearchForm = create(
+export const WordSearchForm = create(
   require("./word-search-form.scss"), "WordSearchForm",
   function ({
     dictionary,
