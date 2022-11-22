@@ -25,7 +25,7 @@ export const Basic = createStory(template, {
   }
 });
 
-export const WithOthers = createStory(template, {
+export const WithExtraForms = createStory(template, {
   args: {
     dictionary: DUMMY_DICTIONARY,
     showOrder: true,
