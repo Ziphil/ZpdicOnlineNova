@@ -19,7 +19,6 @@ import {
   IconName
 } from "/client/component/atom/icon";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -45,7 +44,6 @@ export const Button = create(
     disabled = false,
     onClick,
     className,
-    styles,
     nativeRef
   }: {
     name?: string,
@@ -60,7 +58,6 @@ export const Button = create(
     disabled?: boolean,
     onClick?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     className?: string,
-    styles?: StylesRecord,
     nativeRef?: Ref<HTMLButtonElement>
   }): ReactElement {
 
@@ -112,7 +109,7 @@ export const Button = create(
           loading
         })}
       >
-        {(iconName !== undefined) && <Icon className={styles!["icon"]} name={iconName}/>}
+        {(iconName !== undefined) && <Icon styleName="icon" name={iconName}/>}
         {(label !== undefined) && <span styleName="label">{label}</span>}
         {(reactive) && (
           <span styleName="spinner-wrapper">

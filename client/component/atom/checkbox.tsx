@@ -10,7 +10,6 @@ import {
   useCallback
 } from "react";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -28,8 +27,7 @@ export const Checkbox = create(
     onSet,
     onChange,
     className,
-    children,
-    styles
+    children
   }: {
     name: string,
     value: string,
@@ -38,8 +36,7 @@ export const Checkbox = create(
     onSet?: (checked: boolean) => void,
     onChange?: (event: ChangeEvent<HTMLInputElement>) => void,
     className?: string,
-    children?: ReactNode,
-    styles?: StylesRecord
+    children?: ReactNode
   }): ReactElement {
 
     const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
@@ -52,7 +49,7 @@ export const Checkbox = create(
         <div styleName="original-wrapper">
           <input styleName="original" type="checkbox" name={name} value={value} checked={checked} onChange={handleChange}/>
           <div styleName="box" {...aria({hidden: true})}>
-            <FontAwesomeIcon className={styles!["icon"]} icon="check"/>
+            <FontAwesomeIcon styleName="icon" icon="check"/>
           </div>
         </div>
         {(label !== undefined) && <span styleName="label">{label}</span>}

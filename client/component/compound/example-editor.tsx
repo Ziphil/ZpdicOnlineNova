@@ -27,7 +27,6 @@ import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import WordSearcher from "/client/component/compound/word-searcher";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -52,9 +51,6 @@ import {
   deleteAt,
   moveAt
 } from "/client/util/misc";
-import {
-  StyleNameUtil
-} from "/client/util/style-name";
 
 
 export const ExampleEditor = create(
@@ -233,13 +229,11 @@ const ExampleEditorSentence = create(
   function ({
     dictionary,
     tempExample,
-    mutateExample,
-    styles
+    mutateExample
   }: {
     dictionary: EnhancedDictionary,
     tempExample: TempEditableExample,
-    mutateExample: MutateExampleCallback,
-    styles?: StylesRecord
+    mutateExample: MutateExampleCallback
   }): ReactElement {
 
     const {trans} = useTrans("exampleEditor");
@@ -253,8 +247,8 @@ const ExampleEditorSentence = create(
           <div styleName="section-item">
             <div styleName="form-container">
               <div styleName="form">
-                <TextArea className={styles!["sentence"]} label={trans("sentence")} value={tempExample.sentence} onSet={mutateExample((tempExample, sentence) => tempExample.sentence = sentence)}/>
-                <TextArea className={styles!["sentence"]} label={trans("translation")} value={tempExample.translation} onSet={mutateExample((tempExample, translation) => tempExample.translation = translation)}/>
+                <TextArea styleName="sentence" label={trans("sentence")} value={tempExample.sentence} onSet={mutateExample((tempExample, sentence) => tempExample.sentence = sentence)}/>
+                <TextArea styleName="sentence" label={trans("translation")} value={tempExample.translation} onSet={mutateExample((tempExample, translation) => tempExample.translation = translation)}/>
               </div>
             </div>
           </div>
@@ -315,16 +309,14 @@ const ExampleEditorWord = create(
     word,
     index,
     mutateExample,
-    openWordChooser,
-    styles
+    openWordChooser
   }: {
     dictionary: EnhancedDictionary,
     tempExample: TempEditableExample,
     word: LinkedWord,
     index: number,
     mutateExample: MutateExampleCallback,
-    openWordChooser: (index: number) => void,
-    styles?: StylesRecord
+    openWordChooser: (index: number) => void
   }): ReactElement {
 
     const {trans} = useTrans("exampleEditor");
@@ -341,7 +333,7 @@ const ExampleEditorWord = create(
         </div>
         <div styleName="form-container">
           <div styleName="form">
-            <ControlGroup className={StyleNameUtil.create(styles!["name"], styles!["word-input"])}>
+            <ControlGroup styleName="name word-input">
               <Input value={word.name ?? trans("wordNameUndefined")} readOnly={true}/>
               <Button label={trans("selectWord")} variant="light" onClick={() => openWordChooser(index)}/>
             </ControlGroup>

@@ -5,7 +5,6 @@ import {
 } from "react";
 import Link from "/client/component/atom/link";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -16,9 +15,7 @@ import {
 const Footer = create(
   require("./footer.scss"), "Footer",
   function ({
-    styles
   }: {
-    styles?: StylesRecord
   }): ReactElement {
 
     const {trans} = useTrans("footer");
@@ -39,14 +36,14 @@ const Footer = create(
           </div>
           <div styleName="right">
             <div>
-              <Link className={styles!["link"]} href="/notification" style="plane">{trans("notification")}</Link>
+              <Link styleName="link" href="/notification" style="plane">{trans("notification")}</Link>
             </div>
             <div>
-              <Link className={styles!["link"]} href="/document" style="plane">{trans("document")}</Link>
+              <Link styleName="link" href="/document" style="plane">{trans("document")}</Link>
             </div>
             <div/>
             <div>
-              <Link className={styles!["link"]} href="/contact" style="plane">{trans("contact")}</Link>
+              <Link styleName="link" href="/contact" style="plane">{trans("contact")}</Link>
             </div>
           </div>
         </div>

@@ -12,7 +12,6 @@ import {
 import Icon from "/client/component/atom/icon";
 import Label from "/client/component/atom/label";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 
@@ -63,13 +62,11 @@ const SelectionSelection = create(
   function <V>({
     value,
     setReferenceElement,
-    children,
-    styles
+    children
   }: {
     value: V,
     setReferenceElement: (referenceElement: HTMLButtonElement | null) => void,
-    children: ReactElement | Array<ReactElement>,
-    styles?: StylesRecord
+    children: ReactElement | Array<ReactElement>
   }): ReactElement {
 
     const arrayChildren = (Array.isArray(children)) ? children : [children];
@@ -78,7 +75,7 @@ const SelectionSelection = create(
         <div styleName="text">
           {arrayChildren.find((element) => element.props.value === value)?.props.children}
         </div>
-        <Icon className={styles!["arrow"]} name="angle-down"/>
+        <Icon styleName="arrow" name="angle-down"/>
       </button>
     );
     return node;

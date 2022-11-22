@@ -20,7 +20,6 @@ import RadioGroup from "/client/component/atom/radio-group";
 import Selection from "/client/component/atom/selection";
 import AdvancedWordSearchForm from "/client/component/compound/advanced-word-search-form";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -43,16 +42,14 @@ const WordSearchForm = create(
     showOrder = false,
     showAdvancedSearch = false,
     enableHotkeys = false,
-    onParameterSet,
-    styles
+    onParameterSet
   }: {
     dictionary: Dictionary,
     parameter?: WordParameter,
     showOrder?: boolean,
     showAdvancedSearch?: boolean,
     enableHotkeys?: boolean,
-    onParameterSet?: (parameter: WordParameter) => void,
-    styles?: StylesRecord
+    onParameterSet?: (parameter: WordParameter) => void
   }): ReactElement {
 
     const [searchFormOpen, setSearchFormOpen] = useState(false);
@@ -119,7 +116,7 @@ const WordSearchForm = create(
     const node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-          <Input value={actualParameter.text} prefix={<Icon className={styles!["icon"]} name="search"/>} nativeRef={inputRef} onSet={(text) => handleParameterSet({text})}/>
+          <Input value={actualParameter.text} prefix={<Icon styleName="icon" name="search"/>} nativeRef={inputRef} onSet={(text) => handleParameterSet({text})}/>
           <div styleName="radio-container">
             <RadioGroup name="mode" value={actualParameter.mode} onSet={(mode) => handleParameterSet({mode})}>
               {modes.map((mode) => <Radio key={mode} value={mode} label={trans(mode)}/>)}
@@ -151,7 +148,7 @@ const WordSearchForm = create(
           {(showOrder) && (
             <div styleName="selection-container">
               <Selection
-                className={styles!["order-mode"]}
+                styleName="order-mode"
                 value={actualParameter.order.mode}
                 onSet={(orderMode) => handleParameterSet({order: {mode: orderMode}})}
               >
@@ -162,14 +159,14 @@ const WordSearchForm = create(
                 ))}
               </Selection>
               <Selection
-                className={styles!["order-direction"]}
+                styleName="order-direction"
                 value={actualParameter.order.direction}
                 onSet={(orderDirection) => handleParameterSet({order: {direction: orderDirection}})}
               >
                 {WORD_ORDER_DIRECTIONS.map((orderDirection) => (
                   <DropdownItem key={orderDirection} value={orderDirection}>
                     <div>
-                      <Icon className={styles!["order-direction-icon"]} name={(orderDirection === "ascending") ? "arrow-down-a-z" : "arrow-down-z-a"}/>
+                      <Icon styleName="order-direction-icon" name={(orderDirection === "ascending") ? "arrow-down-a-z" : "arrow-down-z-a"}/>
                       {trans(orderDirection)}
                     </div>
                   </DropdownItem>

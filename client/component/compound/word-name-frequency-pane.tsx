@@ -9,7 +9,6 @@ import {
   ChartData
 } from "/client/component/atom/chart";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -25,11 +24,9 @@ import {
 const WordNameFrequencyPane = create(
   require("./word-name-frequency-pane.scss"), "WordNameFrequencyPane",
   function ({
-    dictionary,
-    styles
+    dictionary
   }: {
-    dictionary: DetailedDictionary,
-    styles?: StylesRecord
+    dictionary: DetailedDictionary
   }): ReactElement {
 
     const {trans} = useTrans("wordNameFrequencyPane");
@@ -50,7 +47,7 @@ const WordNameFrequencyPane = create(
     } as ChartConfig;
     const node = (
       <div styleName="root">
-        <Chart className={styles!["chart"]} data={data} config={config}/>
+        <Chart styleName="chart" data={data} config={config}/>
       </div>
     );
     return node;

@@ -14,7 +14,6 @@ import {
 } from "/client/component/atom/chart";
 import WhitePane from "/client/component/compound/white-pane";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -40,8 +39,7 @@ const DictionaryPane = create(
     showCreatedDate = false,
     showChart = true,
     showSettingLink = false,
-    showDownloadLink = false,
-    styles
+    showDownloadLink = false
   }: {
     dictionary: DetailedDictionary,
     showUser?: boolean,
@@ -49,8 +47,7 @@ const DictionaryPane = create(
     showCreatedDate?: boolean,
     showChart?: boolean,
     showSettingLink?: boolean,
-    showDownloadLink?: boolean,
-    styles?: StylesRecord
+    showDownloadLink?: boolean
   }): ReactElement {
 
     const {request} = useRequest();
@@ -127,8 +124,8 @@ const DictionaryPane = create(
           </div>
           <div styleName="right">
             {useMemo(() => (showChart && chartSpec && config) && (
-              <Chart className={styles!["chart"]} data={chartSpec.data} config={config}/>
-            ), [chartSpec, config, showChart, styles])}
+              <Chart styleName="chart" data={chartSpec.data} config={config}/>
+            ), [chartSpec, config, showChart])}
           </div>
         </div>
         {(showSettingLink || showDownloadLink) && (

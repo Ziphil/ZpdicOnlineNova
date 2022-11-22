@@ -15,7 +15,6 @@ import Label from "/client/component/atom/label";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -32,13 +31,11 @@ const RegexpExecutor = create(
   function ({
     defaultSource,
     open,
-    onClose,
-    styles
+    onClose
   }: {
     defaultSource?: string,
     open: boolean,
-    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>,
-    styles?: StylesRecord
+    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>
   }): ReactElement {
 
     const [source, setSource] = useState(defaultSource ?? "");
@@ -71,7 +68,7 @@ const RegexpExecutor = create(
       <Overlay size="large" title={trans("title")} open={open} onClose={handleClose}>
         <div styleName="root">
           <TextArea
-            className={styles!["source"]}
+            styleName="source"
             label={trans("source")}
             value={source}
             font="monospace"
@@ -81,7 +78,7 @@ const RegexpExecutor = create(
             onSet={(source) => setSource(source)}
           />
           <TextArea
-            className={styles!["target"]}
+            styleName="target"
             label={trans("target")}
             value={target}
             font="monospace"
@@ -90,7 +87,7 @@ const RegexpExecutor = create(
             fitHeight={true}
             onSet={(target) => setTarget(target)}
           />
-          <Button className={styles!["button"]} label={trans("execute")} onClick={executeRegexp}/>
+          <Button styleName="button" label={trans("execute")} onClick={executeRegexp}/>
           <RegexpExecutorResult {...{result, errorMessage}}/>
         </div>
       </Overlay>

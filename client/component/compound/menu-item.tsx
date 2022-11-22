@@ -15,7 +15,6 @@ import {
   menuContext
 } from "/client/component/compound/menu";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -34,16 +33,14 @@ const MenuItem = create(
     iconName,
     badgeValue,
     href,
-    onClick,
-    styles
+    onClick
   }: {
     mode: string,
     label: string,
     iconName: IconName,
     badgeValue?: string | number,
     href?: string,
-    onClick?: (event: MouseEvent<HTMLElement>) => void,
-    styles?: StylesRecord
+    onClick?: (event: MouseEvent<HTMLElement>) => void
   }): ReactElement {
 
     const {pushPath} = usePath();
@@ -66,13 +63,13 @@ const MenuItem = create(
     );
     const node = (
       <a styleName={styleName} href={href} onClick={handleClick}>
-        <Icon className={styles!["icon"]} name={iconName}/>
+        <Icon styleName="icon" name={iconName}/>
         <span styleName="text">
           <span styleName="dummy">{label}</span>
           {label}
         </span>
         {(badgeValue !== undefined && badgeValue > 0) && (
-          <Badge className={styles!["badge"]} value={badgeValue}/>
+          <Badge styleName="badge" value={badgeValue}/>
         )}
       </a>
     );

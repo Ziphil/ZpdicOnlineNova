@@ -14,7 +14,6 @@ import Input from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -33,13 +32,11 @@ const CommissionEditor = create(
   function ({
     dictionary,
     open,
-    onClose,
-    styles
+    onClose
   }: {
     dictionary: Dictionary,
     open: boolean,
-    onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>,
-    styles?: StylesRecord
+    onClose?: (event: MouseEvent<HTMLElement>) => AsyncOrSync<void>
   }): ReactElement {
 
     const {trans} = useTrans("commissionEditor");
@@ -63,8 +60,8 @@ const CommissionEditor = create(
       <Overlay size="large" title={trans("title")} open={open} onClose={onClose}>
         <div styleName="root">
           <Input label={trans("name")} value={name} onSet={setName}/>
-          <TextArea className={styles!["comment"]} label={trans("comment")} value={comment} showOptional={true} onSet={setComment}/>
-          <Button className={styles!["button"]} label={trans("confirm")} iconName="list-check" scheme="blue" reactive={true} onClick={addCommission}/>
+          <TextArea styleName="comment" label={trans("comment")} value={comment} showOptional={true} onSet={setComment}/>
+          <Button styleName="button" label={trans("confirm")} iconName="list-check" scheme="blue" reactive={true} onClick={addCommission}/>
         </div>
       </Overlay>
     );

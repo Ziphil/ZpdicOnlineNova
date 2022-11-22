@@ -19,7 +19,6 @@ import Input from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -32,13 +31,11 @@ const AkrantiainExecutor = create(
   function ({
     defaultSource,
     open,
-    onClose,
-    styles
+    onClose
   }: {
     defaultSource?: string,
     open: boolean,
-    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>,
-    styles?: StylesRecord
+    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>
   }): ReactElement {
 
     const {trans} = useTrans("akrantiainExecutor");
@@ -74,7 +71,7 @@ const AkrantiainExecutor = create(
       <Overlay size="large" title={trans("title", {version})} open={open} onClose={handleClose}>
         <div styleName="root">
           <TextArea
-            className={styles!["source"]}
+            styleName="source"
             label={trans("source")}
             value={source}
             font="monospace"
@@ -83,11 +80,11 @@ const AkrantiainExecutor = create(
             fitHeight={true}
             onSet={setSource}
           />
-          <Input label={trans("input")} value={input} onSet={setInput}/>
-          <Button className={styles!["button"]} label={trans("execute")} onClick={executeAkrantiain}/>
-          <Input label={trans("output")} value={output} readOnly={true}/>
+          <Input styleName="input" label={trans("input")} value={input} onSet={setInput}/>
+          <Button styleName="button" label={trans("execute")} onClick={executeAkrantiain}/>
+          <Input styleName="input" label={trans("output")} value={output} readOnly={true}/>
           <TextArea
-            className={styles!["error-message"]}
+            styleName="error-message"
             label={trans("errorMessage")}
             value={errorMessage}
             font="monospace"

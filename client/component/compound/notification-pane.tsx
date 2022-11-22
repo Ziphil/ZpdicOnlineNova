@@ -6,7 +6,6 @@ import {
 import Icon from "/client/component/atom/icon";
 import Markdown from "/client/component/atom/markdown";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -20,11 +19,9 @@ import {
 const NotificationPane = create(
   require("./notification-pane.scss"), "NotificationPane",
   function ({
-    notification,
-    styles
+    notification
   }: {
-    notification: Notification,
-    styles?: StylesRecord
+    notification: Notification
   }): ReactElement {
 
     const {trans, transDate} = useTrans("notificationPane");
@@ -57,7 +54,7 @@ const NotificationPane = create(
             </h1>
           </div>
         </div>
-        <Markdown className={styles!["content"]} source={notification.text}/>
+        <Markdown styleName="content" source={notification.text}/>
       </div>
     );
     return node;

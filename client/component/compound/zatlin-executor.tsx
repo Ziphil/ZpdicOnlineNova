@@ -19,7 +19,6 @@ import Input from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -32,13 +31,11 @@ const ZatlinExecutor = create(
   function ({
     defaultSource,
     open,
-    onClose,
-    styles
+    onClose
   }: {
     defaultSource?: string,
     open: boolean,
-    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>,
-    styles?: StylesRecord
+    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>
   }): ReactElement {
 
     const [source, setSource] = useState(defaultSource ?? "");
@@ -72,7 +69,7 @@ const ZatlinExecutor = create(
       <Overlay size="large" title={trans("title", {version})} open={open} onClose={handleClose}>
         <div styleName="root">
           <TextArea
-            className={styles!["source"]}
+            styleName="source"
             label={trans("source")}
             value={source}
             font="monospace"
@@ -81,10 +78,10 @@ const ZatlinExecutor = create(
             fitHeight={true}
             onSet={(source) => setSource(source)}
           />
-          <Button className={styles!["button"]} label={trans("execute")} onClick={executeZatlin}/>
+          <Button styleName="button" label={trans("execute")} onClick={executeZatlin}/>
           <Input label={trans("output")} value={output} readOnly={true}/>
           <TextArea
-            className={styles!["error-message"]}
+            styleName="error-message"
             label={trans("errorMessage")}
             value={errorMessage}
             font="monospace"

@@ -19,7 +19,6 @@ import Button from "/client/component/atom/button";
 import Label from "/client/component/atom/label";
 import Tooltip from "/client/component/atom/tooltip";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -104,7 +103,6 @@ const TextAreaCodeMirror = create(
     fitHeight,
     showButtons,
     labelId,
-    styles,
     handleBeforeChange
   }: {
     value: string,
@@ -115,7 +113,6 @@ const TextAreaCodeMirror = create(
     fitHeight: boolean,
     showButtons: boolean,
     labelId: string,
-    styles?: StylesRecord,
     handleBeforeChange: (editor: any, data: any, value: string) => void
   }): ReactElement {
 
@@ -136,7 +133,7 @@ const TextAreaCodeMirror = create(
     const node = (
       <div styleName="code-wrapper" {...data({font, fitHeight})}>
         {(false) && <TextAreaMarkdownButtonList {...{editorRef}}/>}
-        <CodeMirror className={styles!["code"]} value={value} options={options} onBeforeChange={handleBeforeChange} editorDidMount={handleEditorMount}/>
+        <CodeMirror styleName="code" value={value} options={options} onBeforeChange={handleBeforeChange} editorDidMount={handleEditorMount}/>
       </div>
     );
     return node;

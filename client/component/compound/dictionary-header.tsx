@@ -15,7 +15,6 @@ import Dropdown from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
@@ -173,18 +172,16 @@ const DictionaryHeader = create(
 const DictionaryHeaderAddDropdownNode = create(
   require("./dictionary-header.scss"),
   function ({
-    type,
-    styles
+    type
   }: {
-    type: "word" | "example",
-    styles?: StylesRecord
+    type: "word" | "example"
   }): ReactElement {
 
     const {trans} = useTrans("dictionaryHeader");
 
     const node = (
       <div styleName="dropdown-node">
-        <Icon className={styles!["icon"]} name={(type === "word") ? "custom-word" : "custom-example"}/>
+        <Icon styleName="icon" name={(type === "word") ? "custom-word" : "custom-example"}/>
         {trans(`add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
       </div>
     );
