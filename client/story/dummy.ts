@@ -1,6 +1,7 @@
 //
 
 import {
+  AdvancedWordParameter,
   DetailedDictionary,
   Dictionary,
   Example,
@@ -98,3 +99,17 @@ export const DUMMY_ZATLIN_SOURCE = `
   syll = cons (vowel | diph | long) ("" | cons);
   % syll | syll syll;
 `;
+
+export const DUMMY_ADVANCED_WORD_PARAMETER = Object.assign(AdvancedWordParameter.createEmpty(), {
+  elements: [{
+    text: "Search 1",
+    title: "Tag 1",
+    mode: "name",
+    type: "suffix"
+  }, {
+    text: "Search 2",
+    title: "Tag 2",
+    mode: "content",
+    type: "part"
+  }]
+});
