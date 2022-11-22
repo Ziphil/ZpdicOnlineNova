@@ -135,7 +135,7 @@ const TextAreaCodeMirror = create(
     const options = {...modeOptions, ...heightOptions, ...otherOptions};
     const node = (
       <div styleName="code-wrapper" {...data({font, fitHeight})}>
-        {(showButtons && language === "markdown") && <TextAreaMarkdownButtonList {...{editorRef}}/>}
+        {(false) && <TextAreaMarkdownButtonList {...{editorRef}}/>}
         <CodeMirror className={styles!["code"]} value={value} options={options} onBeforeChange={handleBeforeChange} editorDidMount={handleEditorMount}/>
       </div>
     );
