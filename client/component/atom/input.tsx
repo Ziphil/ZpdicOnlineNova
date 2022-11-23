@@ -44,6 +44,7 @@ export const Input = create(
     type = "text",
     validate,
     suggest,
+    debounceValidate = false,
     showRequired,
     showOptional,
     readOnly = false,
@@ -61,6 +62,7 @@ export const Input = create(
     type?: "text" | "password" | "flexible",
     validate?: Validate,
     suggest?: Suggest,
+    debounceValidate?: boolean,
     showRequired?: boolean,
     showOptional?: boolean,
     readOnly?: boolean,
@@ -82,38 +84,46 @@ export const Input = create(
       onSet?.(value);
     }, [onSet]);
 
-    const updateValidation = useDebounce(async function (value: string): Promise<void> {
+    const updateValidation = useCallback(async function (value: string): Promise<void> {
       if (validate !== undefined) {
         const validationSpec = await validate(value);
         setValidationSpec(validationSpec);
       } else {
         setValidationSpec(null);
       }
-    }, 500, [validate]);
+    }, [validate]);
 
-    const updateSuggestions = useDebounce(async function (value: string): Promise<void> {
+    const updateValidationDebounced = useDebounce(async function (value: string): Promise<void> {
+      updateValidation(value);
+    }, 500, [updateValidation]);
+
+    const updateSuggestions = useCallback(async function (value: string): Promise<void> {
       if (suggest !== undefined) {
         const suggestionSpecs = await suggest(value);
         const dropdownSpecs = suggestionSpecs.map((suggestionSpec) => ({value: suggestionSpec.replacement, node: suggestionSpec.node}));
         setDropdownSpecs(dropdownSpecs);
       }
-    }, 500, [suggest]);
+    }, [suggest]);
+
+    const updateSuggestionsDebounced = useDebounce(async function (value: string): Promise<void> {
+      updateSuggestions(value);
+    }, 500, [updateSuggestions]);
 
     const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
       const value = event.target.value;
       updateValue(value);
-      updateSuggestions(value);
+      updateSuggestionsDebounced(value);
       onChange?.(event);
-    }, [onChange, updateValue, updateSuggestions]);
+    }, [onChange, updateValue, updateSuggestionsDebounced]);
 
     const handleFocus = useCallback(function (event: FocusEvent<HTMLInputElement>): void {
       const value = event.target.value;
-      updateSuggestions(value);
-    }, [updateSuggestions]);
+      updateSuggestionsDebounced(value);
+    }, [updateSuggestionsDebounced]);
 
     useEffect(() => {
-      updateValidation(value);
-    }, [value, updateValidation]);
+      ((debounceValidate) ? updateValidationDebounced : updateValidation)(value);
+    }, [value, debounceValidate, updateValidationDebounced, updateValidation]);
 
     const node = (
       <div styleName="root" className={className} ref={rootRef}>

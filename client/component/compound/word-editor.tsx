@@ -324,6 +324,7 @@ const WordEditorName = create(
                     styleName="name"
                     value={tempWord.name}
                     validate={dictionary.settings.enableDuplicateName ? validateName : undefined}
+                    debounceValidate={true}
                     onSet={mutateWord((tempWord, name) => tempWord.name = name)}
                   />
                   {(zatlin !== null) && (
