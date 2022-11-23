@@ -84,7 +84,7 @@ export function calcOffset(page: number, size: number): {offset: number, size: n
 export function createValidate(pattern: RegExp | ((value: string) => boolean), message?: string): Validate {
   if (pattern instanceof RegExp) {
     const validate = function (value: string): ValidationSpec | null {
-      if (value.match(pattern)) {
+      if (value === "" || value.match(pattern)) {
         return null;
       } else {
         return {scheme: "red", iconName: "exclamation-triangle", message: message ?? ""};
@@ -93,7 +93,7 @@ export function createValidate(pattern: RegExp | ((value: string) => boolean), m
     return validate;
   } else {
     const validate = function (value: string): ValidationSpec | null {
-      if (pattern(value)) {
+      if (value === "" || pattern(value)) {
         return null;
       } else {
         return {scheme: "red", iconName: "exclamation-triangle", message: message ?? ""};
