@@ -8,7 +8,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
   Dictionary,
@@ -26,15 +26,15 @@ const SuggestionPane = create(
     suggestion: Suggestion
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("suggestionPane");
 
     const href = "/dictionary/" + dictionary.number + "?text=" + encodeURIComponent(suggestion.word.name) + "&mode=name&type=exact&page=0";
     const nameNode = <Link href={href} target="self">{suggestion.word.name}</Link>;
     const title = suggestion.title;
     const node = (
       <li styleName="root">
-        <span styleName="maybe">{trans("suggestionPane.maybe")}</span>
-        {trans("suggestionPane.suggestion", {nameNode, title})}
+        <span styleName="maybe">{trans("maybe")}</span>
+        {trans("suggestion", {nameNode, title})}
       </li>
     );
     return node;

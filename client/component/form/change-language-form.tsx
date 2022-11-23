@@ -16,8 +16,8 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
-  useLocale
+  useLocale,
+  useTrans
 } from "/client/component/hook";
 import {
   LANGUAGES
@@ -34,7 +34,7 @@ const ChangeLanguageForm = create(
 
     const [currentLocale, changeCurrentLocale] = useLocale();
     const [locale, setLocale] = useState(currentLocale);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("changeLanguageForm");
 
     const handleClick = useCallback(async function (): Promise<void> {
       changeCurrentLocale(locale);
@@ -43,15 +43,15 @@ const ChangeLanguageForm = create(
 
     const node = (
       <Fragment>
+        <p styleName="caution">
+          {trans("caution")}
+        </p>
         <form styleName="root">
           <RadioGroup name="theme" value={locale} onSet={setLocale}>
             {LANGUAGES.map((language) => <Radio key={language.locale} value={language.locale} label={language.name}/>)}
           </RadioGroup>
-          <Button label={trans("changeLanguageForm.confirm")} reactive={true} onClick={handleClick}/>
+          <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
-        <p styleName="caution">
-          {trans("changeLanguageForm.caution")}
-        </p>
       </Fragment>
     );
     return node;

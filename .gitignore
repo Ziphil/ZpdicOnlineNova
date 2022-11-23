@@ -1,6 +1,7 @@
 node_modules
 dist
 file
+resource
 *.code-workspace
 *.env
 .vscode

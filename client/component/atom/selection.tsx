@@ -1,7 +1,6 @@
 //
 
 import {
-  ComponentProps,
   ReactElement,
   Ref,
   useState
@@ -10,11 +9,9 @@ import Dropdown from "/client/component/atom/dropdown";
 import {
   DropdownPopperInstance
 } from "/client/component/atom/dropdown";
-import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import Label from "/client/component/atom/label";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 
@@ -38,7 +35,7 @@ export const Selection = create(
     onSet?: (value: V) => void,
     popperRef?: Ref<DropdownPopperInstance>,
     className?: string,
-    children: Array<ReactElement<ComponentProps<typeof DropdownItem>>>
+    children: ReactElement | Array<ReactElement>
   }): ReactElement {
 
     const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
@@ -65,21 +62,20 @@ const SelectionSelection = create(
   function <V>({
     value,
     setReferenceElement,
-    children,
-    styles
+    children
   }: {
     value: V,
     setReferenceElement: (referenceElement: HTMLButtonElement | null) => void,
-    children: Array<ReactElement<ComponentProps<typeof DropdownItem>>>,
-    styles?: StylesRecord
+    children: ReactElement | Array<ReactElement>
   }): ReactElement {
 
+    const arrayChildren = (Array.isArray(children)) ? children : [children];
     const node = (
       <button styleName="selection" type="button" ref={setReferenceElement}>
         <div styleName="text">
-          {children.find((element) => element.props.value === value)?.props.children}
+          {arrayChildren.find((element) => element.props.value === value)?.props.children}
         </div>
-        <Icon className={styles!["arrow"]} name="angle-down"/>
+        <Icon styleName="arrow" name="angle-down"/>
       </button>
     );
     return node;

@@ -13,12 +13,11 @@ import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
 import Selection from "/client/component/atom/selection";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
   useHotkey,
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
   DICTIONARY_ORDER_DIRECTIONS,
@@ -33,18 +32,16 @@ const DictionarySearchForm = create(
     parameter = NormalDictionaryParameter.createEmpty(),
     showOrder = false,
     enableHotkeys = false,
-    onParameterSet,
-    styles
+    onParameterSet
   }: {
     parameter?: DictionaryParameter,
     showOrder?: boolean,
     enableHotkeys?: boolean,
-    onParameterSet?: (parameter: DictionaryParameter) => void,
-    styles?: StylesRecord
+    onParameterSet?: (parameter: DictionaryParameter) => void
   }): ReactElement {
 
     const inputRef = useRef<HTMLInputElement>(null);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("dictionarySearchForm");
 
     const handleParameterSet = useCallback(function (nextParameter: DeepPartial<NormalDictionaryParameter>): void {
       if (onParameterSet) {
@@ -68,30 +65,30 @@ const DictionarySearchForm = create(
     const actualParameter = parameter as NormalDictionaryParameter;
     const node = (
       <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-        <Input value={actualParameter.text} prefix={<Icon className={styles!["icon"]} name="search"/>} nativeRef={inputRef} onSet={(text) => handleParameterSet({text})}/>
+        <Input value={actualParameter.text} prefix={<Icon styleName="icon" name="search"/>} nativeRef={inputRef} onSet={(text) => handleParameterSet({text})}/>
         {(showOrder) && (
           <div styleName="selection-container">
             <Selection
-              className={styles!["order-mode"]}
+              styleName="order-mode"
               value={actualParameter.order.mode}
               onSet={(orderMode) => handleParameterSet({order: {mode: orderMode}})}
             >
               {orderMode.map((orderMode) => (
                 <DropdownItem key={orderMode} value={orderMode}>
-                  {trans(`dictionarySearchForm.${orderMode}`)}
+                  {trans(orderMode)}
                 </DropdownItem>
               ))}
             </Selection>
             <Selection
-              className={styles!["order-direction"]}
+              styleName="order-direction"
               value={actualParameter.order.direction}
               onSet={(orderDirection) => handleParameterSet({order: {direction: orderDirection}})}
             >
               {DICTIONARY_ORDER_DIRECTIONS.map((orderDirection) => (
                 <DropdownItem key={orderDirection} value={orderDirection}>
                   <div>
-                    <Icon className={styles!["order-direction-icon"]} name={(orderDirection === "ascending") ? "arrow-down-a-z" : "arrow-down-z-a"}/>
-                    {trans(`dictionarySearchForm.${orderDirection}`)}
+                    <Icon styleName="order-direction-icon" name={(orderDirection === "ascending") ? "arrow-down-a-z" : "arrow-down-z-a"}/>
+                    {trans(orderDirection)}
                   </div>
                 </DropdownItem>
               ))}

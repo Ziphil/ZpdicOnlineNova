@@ -15,9 +15,9 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   Invitation
@@ -34,9 +34,9 @@ const InvitationPane = create(
     onSubmit?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<unknown>
   }): ReactElement {
 
-    const [, {trans, transDate}] = useIntl();
+    const {trans, transDate} = useTrans("invitationPane");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const respondInvitation = useCallback(async function (event: MouseEvent<HTMLButtonElement>, accept: boolean): Promise<void> {
       const id = invitation.id;
@@ -66,14 +66,14 @@ const InvitationPane = create(
           <div styleName="left">
             <div styleName="name">{name}</div>
             <div styleName="information">
-              <div styleName="information-item">{trans("invitationPane.createdDate")} — {transDate(createdDate)}</div>
-              <div styleName="information-item">{trans("invitationPane.userName")} — {invitation.dictionary.user.screenName}</div>
+              <div styleName="information-item">{trans("createdDate")} — {transDate(createdDate)}</div>
+              <div styleName="information-item">{trans("userName")} — {invitation.dictionary.user.screenName}</div>
             </div>
           </div>
         </div>
         <div styleName="button-group">
-          <Button label={trans("invitationPane.reject")} iconName="ban" scheme="red" reactive={true} onClick={(event) => respondInvitation(event, false)}/>
-          <Button label={trans("invitationPane.accept")} iconName="thumbs-up" scheme="blue" reactive={true} onClick={(event) => respondInvitation(event, true)}/>
+          <Button label={trans("reject")} iconName="ban" scheme="red" reactive={true} onClick={(event) => respondInvitation(event, false)}/>
+          <Button label={trans("accept")} iconName="thumbs-up" scheme="blue" reactive={true} onClick={(event) => respondInvitation(event, true)}/>
         </div>
       </WhitePane>
     );

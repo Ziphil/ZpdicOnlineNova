@@ -3,32 +3,46 @@
 @import "/client/component/mixin.scss";
 
 
-.root-inner {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
+.label-container {
+  flex-grow: 1;
 }
 
 .input-container {
+  border-radius: $small-border-radius;
+  display: flex;
+  position: relative;
   flex-grow: 1;
+  .original:focus +& {
+    outline: $focus-size solid color(focus);
+  }
+  .label-container[data-error] .original:focus +& {
+    outline: $focus-size solid schemed-color(focus, red);
+  }
+}
+
+.original {
+  position: absolute;
+  opacity: 0;
+  z-index: -1;
 }
 
 .input {
   @include input(primary);
-  border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
-}
-
-.input[data-error] {
-  @include input(red);
-  border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+  border-start-end-radius: 0rpx;
+  border-end-end-radius: 0rpx;
+  cursor: pointer;
+  .label-container[data-error] & {
+    @include input(red);
+    border-radius: $small-border-radius 0rpx 0rpx $small-border-radius;
+    cursor: pointer;
+  }
 }
 
 .button {
   @include light-button(primary);
-  margin: 0rpx 0rpx 0rpx -1rpx;
-  border-radius: 0rpx $small-border-radius $small-border-radius 0rpx;
-}
-
-.original {
-  display: none;
+  width: 2.2em;
+  margin-inline-start: -1rpx;
+  padding-inline: 0em;
+  border-start-start-radius: 0rpx;
+  border-end-start-radius: 0rpx;
 }

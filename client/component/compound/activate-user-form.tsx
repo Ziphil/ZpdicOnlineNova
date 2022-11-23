@@ -9,9 +9,9 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -21,9 +21,9 @@ const ActivateUserForm = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("activateUserForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const issueActivateToken = useCallback(async function (): Promise<void> {
       const response = await request("issueUserActivateToken", {}, {useRecaptcha: true});
@@ -35,10 +35,10 @@ const ActivateUserForm = create(
     const node = (
       <form styleName="root">
         <div styleName="caution">
-          {trans("activateUserForm.caution")}
+          {trans("caution")}
         </div>
         <div styleName="button-container">
-          <Button label={trans("activateUserForm.send")} variant="light" scheme="red" reactive={false} onClick={issueActivateToken}/>
+          <Button label={trans("send")} variant="light" scheme="red" reactive={false} onClick={issueActivateToken}/>
         </div>
       </form>
     );

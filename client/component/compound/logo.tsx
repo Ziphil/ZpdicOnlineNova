@@ -6,9 +6,8 @@ import {
 import {
   create
 } from "/client/component/create";
-import {
-  VERSION
-} from "/client/variable";
+import LogoSvg from "/client/public/logo.svg";
+import SymbolSvg from "/client/public/symbol.svg";
 
 
 const Logo = create(
@@ -19,9 +18,8 @@ const Logo = create(
 
     const node = (
       <div styleName="root">
-        <div styleName="title">ZpDIC</div>
-        <div styleName="subtitle">Online</div>
-        <div styleName="version">ver {VERSION}</div>
+        <SymbolSvg styleName="symbol"/>
+        <LogoSvg styleName="logo"/>
       </div>
     );
     return node;

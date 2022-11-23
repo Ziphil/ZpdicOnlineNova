@@ -50,6 +50,17 @@ const templateAutoModeFocus = createTemplate<typeof Tooltip>((props) => {
   return node;
 });
 
+const templateAutoModeHover = createTemplate<typeof Tooltip>((props) => {
+  const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
+  const node = (
+    <Fragment>
+      <div ref={setReferenceElement}>Hover</div>
+      <Tooltip {...props} referenceElement={referenceElement} autoElement={referenceElement}/>
+    </Fragment>
+  );
+  return node;
+});
+
 const templateAutoModeClick = createTemplate<typeof Tooltip>((props) => {
   const [referenceElement, setReferenceElement] = useState<HTMLButtonElement | null>(null);
   const node = (
@@ -89,6 +100,13 @@ export const FillWidth = createStory(template, {
 export const AutoModeFocus = createStory(templateAutoModeFocus, {
   args: {
     autoMode: "focus",
+    children: createDummyText(1)
+  }
+});
+
+export const AutoModeHover = createStory(templateAutoModeHover, {
+  args: {
+    autoMode: "hover",
     children: createDummyText(1)
   }
 });

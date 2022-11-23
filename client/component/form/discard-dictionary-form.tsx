@@ -12,9 +12,9 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -29,9 +29,9 @@ const DiscardDictionaryForm = create(
   }): ReactElement {
 
     const [alertOpen, setAlertOpen] = useState(false);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("discardDictionaryForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const discardDictionary = useCallback(async function (): Promise<void> {
       const response = await request("discardDictionary", {number});
@@ -43,15 +43,15 @@ const DiscardDictionaryForm = create(
 
     const node = (
       <Fragment>
-        <form styleName="root">
-          <Button label={trans("discardDictionaryForm.confirm")} reactive={true} scheme="red" onClick={() => setAlertOpen(true)}/>
-        </form>
         <p styleName="caution">
-          {trans("discardDictionaryForm.caution")}
+          {trans("caution")}
         </p>
+        <form styleName="root">
+          <Button label={trans("confirm")} reactive={true} scheme="red" onClick={() => setAlertOpen(true)}/>
+        </form>
         <Alert
-          text={trans("discardDictionaryForm.alert")}
-          confirmLabel={trans("discardDictionaryForm.confirm")}
+          text={trans("alert")}
+          confirmLabel={trans("confirm")}
           open={alertOpen}
           outsideClosable={true}
           onClose={() => setAlertOpen(false)}

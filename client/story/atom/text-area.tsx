@@ -75,3 +75,12 @@ export const FitHeight = createStory(template, {
     fitHeight: true
   }
 });
+
+export const MarkdownActionButtons = createStory(template, {
+  args: {
+    value: "*Italic* ~~Strikethrough~~ `Code`\n[Link](https://example.com) ![Image](https://example.com)\n- List 1\n- List 2\n1. List 1\n2. List 2",
+    font: "monospace",
+    language: "markdown",
+    showButtons: true
+  }
+});

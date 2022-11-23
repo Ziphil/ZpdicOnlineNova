@@ -16,10 +16,10 @@ import {
 import {
   useExampleEditorProps,
   useHotkey,
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -29,7 +29,7 @@ const ExampleEditorDrawer = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("exampleEditorDrawer");
     const {editorProps, editorOpen, setEditorOpen, editingId, setEditingId} = useExampleEditorProps();
     const popperRef = useRef<DropdownPopperInstance>(null);
 
@@ -45,7 +45,7 @@ const ExampleEditorDrawer = create(
 
     const node = (
       <Drawer
-        title={trans("exampleEditor.title")}
+        title={trans(":exampleEditor.title")}
         iconName="custom-example"
         badgeValue={(editorProps.length > 0) ? editorProps.length : undefined}
         tabPosition="bottom"
@@ -58,9 +58,9 @@ const ExampleEditorDrawer = create(
         {(editorProps.length > 0) && (
           <>
             <div styleName="selection-container">
-              <Selection label={trans("exampleEditorDrawer.editing")} value={editingId} onSet={setEditingId} popperRef={popperRef}>
+              <Selection label={trans("editing")} value={editingId} onSet={setEditingId} popperRef={popperRef}>
                 {editorProps.map((editorProps) => (
-                  <DropdownItem key={editorProps.id} value={editorProps.id}>{editorProps.name || trans("exampleEditorDrawer.noName")}</DropdownItem>
+                  <DropdownItem key={editorProps.id} value={editorProps.id}>{editorProps.name || trans("noName")}</DropdownItem>
                 ))}
               </Selection>
             </div>
@@ -89,11 +89,8 @@ const ExampleEditorDrawerEditor = create(
     editorProps: Parameters<typeof ExampleEditor>[0] & {id: string}
   }): ReactElement {
 
-    const data = DataUtil.create({
-      hidden: editingId !== editorProps.id
-    });
     const node = (
-      <div styleName="editor-container" {...data}>
+      <div styleName="editor-container" {...data({hidden: editingId !== editorProps.id})}>
         <ExampleEditor {...editorProps}/>
       </div>
     );

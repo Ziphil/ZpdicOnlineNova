@@ -63,7 +63,7 @@ export class SlimeSerializer extends Serializer {
     raw["translations"] = [];
     for (const equivalent of word.equivalents ?? []) {
       const rawEquivalent = {} as any;
-      rawEquivalent["title"] = equivalent.title;
+      rawEquivalent["title"] = equivalent.titles[0] ?? "";
       rawEquivalent["forms"] = equivalent.names;
       raw["translations"].push(rawEquivalent);
     }
@@ -97,7 +97,7 @@ export class SlimeSerializer extends Serializer {
     raw["relations"] = [];
     for (const relation of word.relations ?? []) {
       const rawRelation = {} as any;
-      rawRelation["title"] = relation.title;
+      rawRelation["title"] = relation.titles[0] ?? "";
       rawRelation["entry"] = {};
       rawRelation["entry"]["id"] = relation.number;
       rawRelation["entry"]["form"] = relation.name;

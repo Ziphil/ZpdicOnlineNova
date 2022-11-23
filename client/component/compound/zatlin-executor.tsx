@@ -19,11 +19,10 @@ import Input from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 
 
@@ -32,19 +31,17 @@ const ZatlinExecutor = create(
   function ({
     defaultSource,
     open,
-    onClose,
-    styles
+    onClose
   }: {
     defaultSource?: string,
     open: boolean,
-    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>,
-    styles?: StylesRecord
+    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>
   }): ReactElement {
 
     const [source, setSource] = useState(defaultSource ?? "");
     const [output, setOutput] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("zatlinExecutor");
 
     const executeZatlin = useCallback(function (): void {
       try {
@@ -69,11 +66,11 @@ const ZatlinExecutor = create(
 
     const version = ZATLIN_VERSION;
     const node = (
-      <Overlay size="large" title={trans("zatlinExecutor.title", {version})} open={open} onClose={handleClose}>
+      <Overlay size="large" title={trans("title", {version})} open={open} onClose={handleClose}>
         <div styleName="root">
           <TextArea
-            className={styles!["source"]}
-            label={trans("zatlinExecutor.source")}
+            styleName="source"
+            label={trans("source")}
             value={source}
             font="monospace"
             language="zatlin"
@@ -81,11 +78,11 @@ const ZatlinExecutor = create(
             fitHeight={true}
             onSet={(source) => setSource(source)}
           />
-          <Button className={styles!["button"]} label={trans("zatlinExecutor.execute")} onClick={executeZatlin}/>
-          <Input label={trans("zatlinExecutor.output")} value={output} readOnly={true}/>
+          <Button styleName="button" label={trans("execute")} onClick={executeZatlin}/>
+          <Input label={trans("output")} value={output} readOnly={true}/>
           <TextArea
-            className={styles!["error-message"]}
-            label={trans("zatlinExecutor.errorMessage")}
+            styleName="error-message"
+            label={trans("errorMessage")}
             value={errorMessage}
             font="monospace"
             language="plain"

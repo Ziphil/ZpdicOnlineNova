@@ -6,11 +6,10 @@ import {
 import Icon from "/client/component/atom/icon";
 import Markdown from "/client/component/atom/markdown";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
   Notification
@@ -20,14 +19,12 @@ import {
 const NotificationPane = create(
   require("./notification-pane.scss"), "NotificationPane",
   function ({
-    notification,
-    styles
+    notification
   }: {
-    notification: Notification,
-    styles?: StylesRecord
+    notification: Notification
   }): ReactElement {
 
-    const [, {trans, transDate}] = useIntl();
+    const {trans, transDate} = useTrans("notificationPane");
 
     const [iconName, iconSlashed] = (() => {
       const type = notification.type;
@@ -51,13 +48,13 @@ const NotificationPane = create(
             <div styleName="date">{transDate(notification.date)}</div>
             <h1 styleName="head">
               {(notification.type === "bugFixed") && (
-                <span styleName="fixed">({trans("notificationPane.fixed")})</span>
+                <span styleName="fixed">({trans("fixed")})</span>
               )}
               {notification.title}
             </h1>
           </div>
         </div>
-        <Markdown className={styles!["content"]} source={notification.text}/>
+        <Markdown styleName="content" source={notification.text}/>
       </div>
     );
     return node;

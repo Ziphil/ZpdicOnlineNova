@@ -17,42 +17,42 @@ import {
 export class NormalDictionaryParameter extends DictionaryParameter {
 
   public text: string;
-  public userId: string | null;
+  public userName: string | null;
   public order: DictionaryOrder;
 
-  private constructor(text: string, userId: string | null, order: DictionaryOrder) {
+  private constructor(text: string, userName: string | null, order: DictionaryOrder) {
     super();
     this.text = text;
-    this.userId = userId;
+    this.userName = userName;
     this.order = order;
   }
 
   public static createEmpty(overrides: DeepPartial<NormalDictionaryParameter> = {}): NormalDictionaryParameter {
-    const {text, userId, order} = merge({
+    const {text, userName, order} = merge({
       text: "",
-      userId: null,
+      userName: null,
       order: {mode: "updatedDate", direction: "descending"}
     }, overrides);
-    const skeleton = new NormalDictionaryParameter(text, userId, order);
+    const skeleton = new NormalDictionaryParameter(text, userName, order);
     return skeleton;
   }
 
   public static deserializeEach(search: Record<string, unknown>): NormalDictionaryParameter {
     const text = (typeof search.text === "string") ? search.text : undefined;
-    const userId = (typeof search.userId === "string") ? search.userId : undefined;
+    const userName = (typeof search.userName === "string") ? search.userName : undefined;
     const orderMode = (typeof search.orderMode === "string") ? DictionaryOrderModeUtil.cast(search.orderMode) : undefined;
     const orderDirection = (typeof search.orderDirection === "string") ? DictionaryOrderDirectionUtil.cast(search.orderDirection) : undefined;
     const order = {mode: orderMode, direction: orderDirection};
-    const parameter = NormalDictionaryParameter.createEmpty({text, userId, order});
+    const parameter = NormalDictionaryParameter.createEmpty({text, userName, order});
     return parameter;
   }
 
   public serialize(): Record<string, unknown> {
     const text = this.text;
-    const userId = this.userId;
+    const userName = this.userName;
     const orderMode = this.order.mode;
     const orderDirection = this.order.direction;
-    const search = {text, userId, orderMode, orderDirection};
+    const search = {text, userName, orderMode, orderDirection};
     return search;
   }
 

@@ -13,6 +13,7 @@
   display: flex;
   justify-content: center;
   position: sticky;
+  inset-block-start: 0rpx;
   z-index: 100;
   @include smartphone {
     padding-inline: $page-small-horizontal-margin;
@@ -30,21 +31,36 @@
   justify-content: space-between;
 }
 
-.title {
-  font-family: $special-font-family;
-  font-size: 32rpx;
-  color: color(accent);
-  letter-spacing: 0.1em;
-  line-height: 1;
-  &[data-small] {
-    font-size: $medium-font-size;
+.logo {
+  height: 32rpx;
+  margin-block-end: -6rpx;
+  path {
+    fill: color(accent) !important;
   }
 }
 
 .dictionary-name {
   @include bold-font;
-  margin-block-start: div($tiny-margin + $small-margin, 2);
+  column-gap: $medium-margin;
   font-size: $huge-font-size;
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  line-height: 0;
+}
+
+.symbol {
+  height: 24rpx;
+  overflow: inherit;
+  path {
+    fill: color(accent) !important;
+    stroke: color(accent);
+    stroke-width: 2;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;  
+  }
 }
 
 .right {

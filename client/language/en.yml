@@ -211,6 +211,18 @@ label:
 overlay:
   back: "Back"
   close: "Close"
+textArea:
+  markdown:
+    italic: "Italic"
+    strikethrough: "Strikethrough"
+    code: "Code"
+    link: "Link"
+    image: "Image"
+    unorderedList: "Unordered list"
+    orderedList: "Ordered list"
+    blockquote: "Blockquote"
+    table: "Table"
+    codeBlock: "Code block"
 changeUserNameForm:
   name: "User ID"
   confirm: "Change"
@@ -274,6 +286,8 @@ changeDictionarySettingsForm:
   exampleTitle: "Title of sentences"
   enableMarkdownTrue: "Enable"
   enableMarkdownFalse: "Disable"
+  enableDuplicateNameTrue: "Enable"
+  enableDuplicateNameFalse: "Disable"
   confirm: "Change"
 changeDictionarySourceForm:
   akrantiain: "Snoj code for Akrantiain"
@@ -474,6 +488,7 @@ githubButton:
   github: "View on GitHub"
   dashboard: "Dev dashboard"
 header:
+  appearance: "Appearance"
   dictionaryList: "Dictionaries"
   dashboard: "User page"
 hotkeyHelp:
@@ -566,6 +581,7 @@ wordSearchForm:
   both: "Both"
   name: "Headword"
   equivalent: "Translation"
+  tag: "Tag"
   content: "Whole"
   prefix: "Prefix"
   part: "Partial"
@@ -599,18 +615,18 @@ wordEditor:
   basic: "Basic information"
   name: "Spelling"
   pronunciation: "Pronunciation"
-  tag: "Tags"
+  tag: "Tags (multiple allowed)"
   equivalent: "Translations"
-  equivalentTitle: "Title"
-  equivalentNames: "Translations"
+  equivalentTitle: "Parts of speech (multiple allowed)"
+  equivalentNames: "Translations (seperated by commas)"
   information: "Contents"
-  informationTitle: "Title"
+  informationTitle: "Heading"
   informationText: "Content"
   variation: "Variation forms"
-  variationTitle: "Title"
+  variationTitle: "Kind"
   variationName: "Form"
   relation: "Related words"
-  relationTitle: "Title"
+  relationTitle: "Kinds (multiple allowed)"
   relationName: "Word"
   tagAbsent: "No tags"
   equivalentAbsent: "No translations"
@@ -625,6 +641,8 @@ wordEditor:
   resource: "Images"
   selectRelation: "Select"
   alertConfirm: "Delete"
+  duplicateName: >-
+    A word with the same spelling has already been registered.
   alert: >-
     This word will be deleted permanently.
     You cannot restore it afterwards.
@@ -646,6 +664,16 @@ zatlinExecutor:
   output: "Output"
   errorMessage: "Error message"
   execute: "Execute"
+appearancePage:
+  title: "Appearance settings"
+  appearance: "Appearance"
+  changeLanguageForm:
+    label: "Change language"
+    description: <empty>
+  changeThemeForm:
+    label: "Change theme"
+    description: >-
+      Change the color theme of this website.
 contactPage:
   title: "Contact"
   privacy: >-
@@ -658,7 +686,6 @@ dashboardPage:
   dictionary: "Dictionaries"
   notification: "Notifications"
   account: "Account"
-  appearance: "Appearance"
   logout: "Sign out"
   dictionaryList:
     label: "Dictionaries"
@@ -682,6 +709,7 @@ dashboardPage:
     label: "User ID"
     description: >-
       This is your user ID.
+      Currently you cannot change your user ID.
   changeUserScreenNameForm:
     label: "Change nickname"
     description: >-
@@ -697,13 +725,6 @@ dashboardPage:
     label: "Delete"
     description: >-
       Delete this user.
-  changeLanguageForm:
-    label: "Change language"
-    description: <empty>
-  changeThemeForm:
-    label: "Change theme"
-    description: >-
-      Change the color theme of this website.
 dictionaryListPage:
   title: "Dictionaries"
   updatedDate: "Sort by update date"
@@ -758,7 +779,12 @@ dictionarySettingPage:
   changeDictionaryEnableMarkdownForm:
     label: "Enable or disable Markdown"
     description: >-
-      If you set this enabled, you can write contents of words in Markdown format.
+      If you enable this feature, you can write contents of words in Markdown format.
+  changeDictionaryEnableDuplicateName:
+    label: "Enable or disable duplicate spelling check"
+    description: >-
+      If you enable this feature, when you enter a spelling in the word editor, it will check whether there is already a word with the same spelling and inform you as a popup.
+      Note that this only checks duplication, so it does not prevent you from registering a word with the same spelling.
   uploadDictionaryForm:
     label: "Upload"
     description: >-

@@ -11,10 +11,10 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   useLogin,
   usePath,
-  usePopup
+  usePopup,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -29,9 +29,9 @@ const LoginForm = create(
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const login = useLogin();
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("loginForm");
     const {pushPath, replacePath} = usePath();
-    const [, {addErrorPopup}] = usePopup();
+    const {addErrorPopup} = usePopup();
 
     const performLogin = useCallback(async function (): Promise<void> {
       const response = await login({name, password}, {ignoreError: true});
@@ -52,17 +52,17 @@ const LoginForm = create(
 
     const node = (
       <form styleName="root">
-        <Input label={trans("loginForm.userName")} value={name} onSet={(name) => setName(name)}/>
-        <Input label={trans("loginForm.password")} type="flexible" value={password} onSet={(password) => setPassword(password)}/>
+        <Input label={trans("userName")} value={name} onSet={(name) => setName(name)}/>
+        <Input label={trans("password")} type="flexible" value={password} onSet={(password) => setPassword(password)}/>
         <div styleName="button-group">
           <div styleName="row">
-            <Button label={trans("loginForm.confirm")} iconName="sign-in-alt" scheme="blue" reactive={true} onClick={performLogin}/>
+            <Button label={trans("confirm")} iconName="sign-in-alt" scheme="blue" reactive={true} onClick={performLogin}/>
             {(showRegister) && (
-              <Button label={trans("registerForm.confirm")} iconName="user-plus" variant="simple" onClick={jumpRegister}/>
+              <Button label={trans(":registerForm.confirm")} iconName="user-plus" variant="simple" onClick={jumpRegister}/>
             )}
           </div>
           <div styleName="row">
-            <Button label={trans("loginForm.resetPassword")} iconName="question" variant="simple" onClick={jumpResetPassword}/>
+            <Button label={trans("resetPassword")} iconName="question" variant="simple" onClick={jumpResetPassword}/>
           </div>
         </div>
       </form>

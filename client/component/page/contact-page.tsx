@@ -9,7 +9,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 
@@ -20,19 +20,17 @@ const ContactPage = create(
   }: {
   }): ReactElement {
 
-    const [, {trans, transNode}] = useIntl();
+    const {trans, transNode} = useTrans("contactPage");
 
     const node = (
-      <Page title={trans("contactPage.title")}>
-        <div styleName="title">{trans("contactPage.title")}</div>
+      <Page title={trans("title")}>
+        <div styleName="title">{trans("title")}</div>
         <div styleName="explanation">
           <p>
-            {transNode("contactPage.privacy", {
-              link: (parts) => <Link href="/document/other/privacy">{parts}</Link>
-            })}
+            {transNode("privacy", {link: (parts) => <Link href="/document/other/privacy">{parts}</Link>})}
           </p>
           <p>
-            {trans("contactPage.explanation")}
+            {trans("explanation")}
           </p>
         </div>
         <div styleName="form-container">

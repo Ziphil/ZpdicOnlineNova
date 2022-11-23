@@ -32,7 +32,7 @@
 .head {
   @include bold-font;
   margin: 0rpx 0rpx $paragraph-margin 0rpx;
-  font-size: $tiny-font-size;
+  font-size: $small-font-size;
   color: color(accent);
 }
 

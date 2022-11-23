@@ -20,12 +20,11 @@ import RadioGroup from "/client/component/atom/radio-group";
 import Selection from "/client/component/atom/selection";
 import AdvancedWordSearchForm from "/client/component/compound/advanced-word-search-form";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
   useHotkey,
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
   Dictionary,
@@ -35,7 +34,7 @@ import {
 } from "/client/skeleton/dictionary";
 
 
-const WordSearchForm = create(
+export const WordSearchForm = create(
   require("./word-search-form.scss"), "WordSearchForm",
   function ({
     dictionary,
@@ -43,21 +42,19 @@ const WordSearchForm = create(
     showOrder = false,
     showAdvancedSearch = false,
     enableHotkeys = false,
-    onParameterSet,
-    styles
+    onParameterSet
   }: {
     dictionary: Dictionary,
     parameter?: WordParameter,
     showOrder?: boolean,
     showAdvancedSearch?: boolean,
     enableHotkeys?: boolean,
-    onParameterSet?: (parameter: WordParameter) => void,
-    styles?: StylesRecord
+    onParameterSet?: (parameter: WordParameter) => void
   }): ReactElement {
 
     const [searchFormOpen, setSearchFormOpen] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordSearchForm");
 
     const handleParameterSet = useCallback(function (nextParameter: DeepPartial<NormalWordParameter>): void {
       if (onParameterSet) {
@@ -112,22 +109,22 @@ const WordSearchForm = create(
       handleParameterSet({type: "regular"});
     }, [handleParameterSet], enableHotkeys);
 
-    const modes = ["both", "name", "equivalent", "content"] as const;
+    const modes = ["both", "name", "equivalent", "tag", "content"] as const;
     const types = ["prefix", "part", "exact", "regular"] as const;
     const orderMode = ["unicode", "updatedDate", "createdDate"] as const;
     const actualParameter = WordParameter.getNormal(parameter);
     const node = (
       <Fragment>
         <form styleName="root" onSubmit={(event) => event.preventDefault()}>
-          <Input value={actualParameter.text} prefix={<Icon className={styles!["icon"]} name="search"/>} nativeRef={inputRef} onSet={(text) => handleParameterSet({text})}/>
+          <Input value={actualParameter.text} prefix={<Icon styleName="icon" name="search"/>} nativeRef={inputRef} onSet={(text) => handleParameterSet({text})}/>
           <div styleName="radio-container">
             <RadioGroup name="mode" value={actualParameter.mode} onSet={(mode) => handleParameterSet({mode})}>
-              {modes.map((mode) => <Radio key={mode} value={mode} label={trans(`wordSearchForm.${mode}`)}/>)}
+              {modes.map((mode) => <Radio key={mode} value={mode} label={trans(mode)}/>)}
             </RadioGroup>
           </div>
           <div styleName="radio-container">
             <RadioGroup name="type" value={actualParameter.type} onSet={(type) => handleParameterSet({type})}>
-              {types.map((type) => <Radio key={type} value={type} label={trans(`wordSearchForm.${type}`)}/>)}
+              {types.map((type) => <Radio key={type} value={type} label={trans(type)}/>)}
             </RadioGroup>
           </div>
           {(showOrder) && (
@@ -135,14 +132,14 @@ const WordSearchForm = create(
               <Checkbox
                 name="ignoreCase"
                 value="true"
-                label={trans("wordSearchForm.ignoreCase")}
+                label={trans("ignoreCase")}
                 checked={actualParameter.options.ignore.case}
                 onSet={(ignoreCase) => handleParameterSet({options: {ignore: {case: ignoreCase}}})}
               />
               <Checkbox
                 name="enableSuggestions"
                 value="true"
-                label={trans("wordSearchForm.enableSuggestions")}
+                label={trans("enableSuggestions")}
                 checked={actualParameter.options.enableSuggestions}
                 onSet={(enableSuggestions) => handleParameterSet({options: {enableSuggestions}})}
               />
@@ -151,26 +148,26 @@ const WordSearchForm = create(
           {(showOrder) && (
             <div styleName="selection-container">
               <Selection
-                className={styles!["order-mode"]}
+                styleName="order-mode"
                 value={actualParameter.order.mode}
                 onSet={(orderMode) => handleParameterSet({order: {mode: orderMode}})}
               >
                 {orderMode.map((orderMode) => (
                   <DropdownItem key={orderMode} value={orderMode}>
-                    {trans(`wordSearchForm.${orderMode}`)}
+                    {trans(orderMode)}
                   </DropdownItem>
                 ))}
               </Selection>
               <Selection
-                className={styles!["order-direction"]}
+                styleName="order-direction"
                 value={actualParameter.order.direction}
                 onSet={(orderDirection) => handleParameterSet({order: {direction: orderDirection}})}
               >
                 {WORD_ORDER_DIRECTIONS.map((orderDirection) => (
                   <DropdownItem key={orderDirection} value={orderDirection}>
                     <div>
-                      <Icon className={styles!["order-direction-icon"]} name={(orderDirection === "ascending") ? "arrow-down-a-z" : "arrow-down-z-a"}/>
-                      {trans(`wordSearchForm.${orderDirection}`)}
+                      <Icon styleName="order-direction-icon" name={(orderDirection === "ascending") ? "arrow-down-a-z" : "arrow-down-z-a"}/>
+                      {trans(orderDirection)}
                     </div>
                   </DropdownItem>
                 ))}
@@ -181,13 +178,13 @@ const WordSearchForm = create(
             <div styleName="selection-container">
               {(showOrder) && (
                 <Button
-                  label={trans("wordSearchForm.shuffleResult")}
+                  label={trans("shuffleResult")}
                   iconName="shuffle"
                   variant="simple"
                   onClick={() => handleParameterSet({options: {shuffleSeed: Date.now().toString()}})}
                 />
               )}
-              {(showAdvancedSearch) && <Button label={trans("wordSearchForm.advancedSearch")} iconName="search-plus" variant="simple" onClick={() => setSearchFormOpen(true)}/>}
+              {(showAdvancedSearch) && <Button label={trans("advancedSearch")} iconName="search-plus" variant="simple" onClick={() => setSearchFormOpen(true)}/>}
             </div>
           )}
         </form>

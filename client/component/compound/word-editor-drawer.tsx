@@ -2,13 +2,9 @@
 
 import {
   ReactElement,
-  useEffect,
-  useRef
+  useEffect
 } from "react";
 import Drawer from "/client/component/atom/drawer";
-import {
-  DropdownPopperInstance
-} from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Selection from "/client/component/atom/selection";
 import WordEditor from "/client/component/compound/word-editor";
@@ -17,11 +13,11 @@ import {
 } from "/client/component/create";
 import {
   useHotkey,
-  useIntl,
+  useTrans,
   useWordEditorProps
 } from "/client/component/hook";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -31,9 +27,8 @@ const WordEditorDrawer = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordEditorDrawer");
     const {editorProps, editorOpen, setEditorOpen, editingId, setEditingId} = useWordEditorProps();
-    const popperRef = useRef<DropdownPopperInstance>(null);
 
     useHotkey("toggleWordEditor", () => {
       setEditorOpen((wordEditorOpen) => !wordEditorOpen);
@@ -47,22 +42,21 @@ const WordEditorDrawer = create(
 
     const node = (
       <Drawer
-        title={trans("wordEditor.title")}
+        title={trans(":wordEditor.title")}
         iconName="custom-word"
         badgeValue={(editorProps.length > 0) ? editorProps.length : undefined}
         tabPosition="top"
         open={editorOpen}
         onOpen={() => setEditorOpen(true)}
         onClose={() => setEditorOpen(false)}
-        onTransitionEnd={() => popperRef.current?.update()}
         outsideClosable={true}
       >
         {(editorProps.length > 0) && (
           <>
             <div styleName="selection-container">
-              <Selection label={trans("wordEditorDrawer.editing")} value={editingId} onSet={setEditingId} popperRef={popperRef}>
+              <Selection label={trans("editing")} value={editingId} onSet={setEditingId}>
                 {editorProps.map((editorProps) => (
-                  <DropdownItem key={editorProps.id} value={editorProps.id}>{editorProps.name || trans("wordEditorDrawer.noName")}</DropdownItem>
+                  <DropdownItem key={editorProps.id} value={editorProps.id}>{editorProps.name || trans("noName")}</DropdownItem>
                 ))}
               </Selection>
             </div>
@@ -91,11 +85,8 @@ const WordEditorDrawerEditor = create(
     editorProps: Parameters<typeof WordEditor>[0] & {id: string}
   }): ReactElement {
 
-    const data = DataUtil.create({
-      hidden: editingId !== editorProps.id
-    });
     const node = (
-      <div styleName="editor-container" {...data}>
+      <div styleName="editor-container" {...data({hidden: editingId !== editorProps.id})}>
         <WordEditor {...editorProps}/>
       </div>
     );

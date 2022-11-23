@@ -4,12 +4,12 @@
 @import "/client/component/mixin.scss";
 
 
-$logo-horizontal-margin: 100rpx;
+$logo-horizontal-margin: 90rpx;
 $github-horizontal-margin: 75rpx;
 $top-content-vertical-margin: 50rpx;
 
 .top {
-  max-width: $page-width * 0.85;
+  max-width: $page-width;
   margin-inline: auto;
   display: flex;
   flex-direction: row;
@@ -21,9 +21,9 @@ $top-content-vertical-margin: 50rpx;
 }
 
 .logo {
-  margin: 0rpx $logo-horizontal-margin 0rpx 0rpx;
+  margin-inline-end: $logo-horizontal-margin;
   @include smartphone {
-    margin: 0rpx;
+    margin-inline-end: 0rpx;
   }
 }
 
@@ -32,7 +32,7 @@ $top-content-vertical-margin: 50rpx;
   @include smartphone {
     width: 100%;
     max-width: div($page-width, 2);
-    margin: $huge-margin 0rpx 0rpx 0rpx;
+    margin-block-start: $huge-margin;
   }
 }
 
@@ -45,10 +45,7 @@ $top-content-vertical-margin: 50rpx;
   flex-direction: column;
   justify-content: center;
   position: absolute;
-  top: 0rpx;
-  bottom: 0rpx;
-  left: 0rpx;
-  right: 0rpx;
+  inset: 0rpx;
   @include smartphone {
     position: relative;
   }

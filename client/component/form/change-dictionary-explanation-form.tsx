@@ -15,9 +15,9 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -34,9 +34,9 @@ const ChangeDictionaryExplanationForm = create(
   }): ReactElement {
 
     const [explanation, setExplanation] = useState(currentExplanation ?? "");
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("changeDictionaryExplanationForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const handleClick = useCallback(async function (): Promise<void> {
       const response = await request("changeDictionaryExplanation", {number, explanation});
@@ -50,14 +50,14 @@ const ChangeDictionaryExplanationForm = create(
     const node = (
       <form styleName="root">
         <TextArea
-          label={trans("changeDictionaryExplanationForm.explanation")}
-          font="monospace"
+          label={trans("explanation")}
           language="markdown"
           nowrap={true}
+          showButtons={true}
           value={explanation}
           onSet={(explanation) => setExplanation(explanation)}
         />
-        <Button label={trans("changeDictionaryExplanationForm.confirm")} reactive={true} onClick={handleClick}/>
+        <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;

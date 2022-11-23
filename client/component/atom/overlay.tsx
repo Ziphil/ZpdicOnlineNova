@@ -11,10 +11,10 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -42,10 +42,9 @@ const Overlay = create(
     children?: ReactNode
   }): ReactElement {
 
-    const contentContainerData = DataUtil.create({size});
     const node = (
       <Modal open={open} outsideClosable={outsideClosable} onClose={onClose}>
-        <div styleName="content-container" {...contentContainerData}>
+        <div styleName="content-container" {...data({size})}>
           {(title !== undefined) && <OverlayHeader {...{title, page, showBack, onClose, onBack}}/>}
           <div styleName="content">
             {(page !== undefined && Array.isArray(children)) ? children[page] : children}
@@ -75,7 +74,7 @@ const OverlayHeader = create(
     onBack?: (event: MouseEvent<HTMLButtonElement>) => void
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("overlay");
 
     const node = (
       <div styleName="header">
@@ -84,10 +83,10 @@ const OverlayHeader = create(
         </div>
         <div styleName="right">
           {(page !== undefined && ((showBack === undefined && page > 0) || showBack)) && (
-            <Button label={trans("overlay.back")} iconName="backward" variant="simple" hideLabel={true} onClick={onBack}/>
+            <Button label={trans("back")} iconName="backward" variant="simple" hideLabel={true} onClick={onBack}/>
           )}
           {(
-            <Button label={trans("overlay.close")} iconName="times" variant="simple" hideLabel={true} onClick={onClose}/>
+            <Button label={trans("close")} iconName="times" variant="simple" hideLabel={true} onClick={onClose}/>
           )}
         </div>
       </div>

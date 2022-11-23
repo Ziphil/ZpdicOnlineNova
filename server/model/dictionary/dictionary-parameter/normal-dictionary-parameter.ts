@@ -9,6 +9,9 @@ import {
   DictionaryParameter
 } from "/server/model/dictionary/dictionary-parameter/dictionary-parameter";
 import {
+  UserModel
+} from "/server/model/user";
+import {
   escapeRegexp
 } from "/server/util/misc";
 import {
@@ -19,33 +22,34 @@ import {
 export class NormalDictionaryParameter extends DictionaryParameter {
 
   public text: string;
-  public userId: string | null;
+  public userName: string | null;
   public order: DictionaryOrder;
 
-  public constructor(text: string, userId: string | null, order: DictionaryOrder) {
+  public constructor(text: string, userName: string | null, order: DictionaryOrder) {
     super();
     this.text = text;
-    this.userId = userId;
+    this.userName = userName;
     this.order = order;
   }
 
   public createQuery(): QueryLike<Array<Dictionary>, Dictionary> {
+    const needle = new RegExp(escapeRegexp(this.text));
     const sortKey = DictionaryParameter.createSortKey(this.order);
-    const nameFilter = (() => {
-      const needle = new RegExp(escapeRegexp(this.text));
-      const filter = DictionaryModel.find().where("name", needle).getFilter();
-      return filter;
-    })();
-    const userFilter = (() => {
-      if (this.userId !== null) {
-        const filter = DictionaryModel.find().where("user", this.userId).getFilter();
-        return filter;
-      } else {
-        return {};
-      }
-    })();
-    const query = DictionaryModel.findExist().ne("secret", true).and([nameFilter, userFilter]).sort(sortKey);
-    return query;
+    if (this.userName !== null) {
+      const promise = (async () => {
+        const user = await UserModel.findOne().where("name", this.userName);
+        if (user !== null) {
+          const dictionaries = await DictionaryModel.findExist().ne("secret", true).where("name", needle).where("user", user).sort(sortKey);
+          return dictionaries;
+        } else {
+          return [];
+        }
+      })();
+      return promise;
+    } else {
+      const query = DictionaryModel.findExist().ne("secret", true).where("name", needle).sort(sortKey);
+      return query;
+    }
   }
 
 }

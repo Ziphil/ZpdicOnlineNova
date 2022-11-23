@@ -43,7 +43,7 @@ export class DictionaryParameterCreator {
 
   public static recreate(skeleton: Jsonify<DictionaryParameterSkeleton>): DictionaryParameter {
     const castSkeleton = skeleton as NormalDictionaryParameterSkeleton;
-    const raw = new NormalDictionaryParameter(castSkeleton.text, castSkeleton.userId, castSkeleton.order);
+    const raw = new NormalDictionaryParameter(castSkeleton.text, castSkeleton.userName, castSkeleton.order);
     return raw;
   }
 

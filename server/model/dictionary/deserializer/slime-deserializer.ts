@@ -102,9 +102,9 @@ export class SlimeDeserializer extends Deserializer {
     const name = raw["entry"]["form"];
     const equivalents = [];
     for (const rawEquivalent of raw["translations"] ?? []) {
-      const title = rawEquivalent["title"] ?? "";
+      const titles = (rawEquivalent["title"]) ? rawEquivalent["title"] : [];
       const names = rawEquivalent["forms"] ?? [];
-      const equivalent = new EquivalentModel({title, names});
+      const equivalent = new EquivalentModel({titles, names});
       equivalents.push(equivalent);
     }
     const tags = raw["tags"] ?? [];
@@ -135,10 +135,10 @@ export class SlimeDeserializer extends Deserializer {
     }
     const relations = [];
     for (const rawRelation of raw["relations"] ?? []) {
-      const title = rawRelation["title"] ?? "";
+      const titles = (rawRelation["title"]) ? [rawRelation["title"]] : [];
       const number = parseInt(rawRelation["entry"]["id"], 10);
       const name = rawRelation["entry"]["form"];
-      const relation = new RelationModel({title, number, name});
+      const relation = new RelationModel({titles, number, name});
       relations.push(relation);
     }
     const updatedDate = new Date();

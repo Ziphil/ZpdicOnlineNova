@@ -31,7 +31,7 @@ const FormPane = create(
     children?: ReactNode
   }): ReactElement {
 
-    const [intl] = useIntl();
+    const intl = useIntl();
 
     const node = (
       <div>

@@ -1,12 +1,10 @@
 //
 
 import {
-  ComponentProps,
   ReactElement,
   createContext,
   useMemo
 } from "react";
-import MenuItem from "/client/component/compound/menu-item";
 import {
   create
 } from "/client/component/create";
@@ -33,7 +31,7 @@ export const Menu = create(
   }: {
     mode: string,
     direction?: "horizontal" | "vertical",
-    children: Array<ReactElement<ComponentProps<typeof MenuItem>>>
+    children: ReactElement | Array<ReactElement>
   }): ReactElement {
 
     const ContextProvider = menuContext["Provider"];

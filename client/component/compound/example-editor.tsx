@@ -23,21 +23,19 @@ import Button from "/client/component/atom/button";
 import ControlGroup from "/client/component/atom/control-group";
 import Icon from "/client/component/atom/icon";
 import Input from "/client/component/atom/input";
-import Label from "/client/component/atom/label";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import WordSearcher from "/client/component/compound/word-searcher";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
   invalidateQueries,
   useDragDrop,
-  useIntl,
   usePopup,
   useRequest,
-  useStateWithCallback
+  useStateWithCallback,
+  useTrans
 } from "/client/component/hook";
 import {
   EditableExample,
@@ -47,18 +45,15 @@ import {
   Word
 } from "/client/skeleton/dictionary";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 import {
   deleteAt,
   moveAt
 } from "/client/util/misc";
-import {
-  StyleNameUtil
-} from "/client/util/style-name";
 
 
-const ExampleEditor = create(
+export const ExampleEditor = create(
   require("./example-editor.scss"), "ExampleEditor",
   function ({
     dictionary,
@@ -80,9 +75,9 @@ const ExampleEditor = create(
     const [wordChooserOpen, setWordChooserOpen] = useState(false);
     const [alertOpen, setAlertOpen] = useState(false);
     const editingWordIndexRef = useRef<number>();
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("exampleEditor");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const mutateExample = useCallback(function <T extends Array<unknown>>(setter: (tempExample: EditableExample, ...args: T) => void): (...args: T) => void {
       const wrapper = function (...args: T): void {
@@ -161,12 +156,12 @@ const ExampleEditor = create(
     const node = (
       <Fragment>
         <ExampleEditorRoot {...editorProps}/>
-        <Overlay size="large" title={trans("wordSearcher.title")} open={wordChooserOpen} onClose={() => setWordChooserOpen(false)}>
+        <Overlay size="large" title={trans(":wordSearcher.title")} open={wordChooserOpen} onClose={() => setWordChooserOpen(false)}>
           <WordSearcher dictionary={dictionary} style="simple" showButton={true} onSubmit={editWord}/>
         </Overlay>
         <Alert
-          text={trans("exampleEditor.alert")}
-          confirmLabel={trans("exampleEditor.alertConfirm")}
+          text={trans("alert")}
+          confirmLabel={trans("alertConfirm")}
           open={alertOpen}
           outsideClosable={true}
           onClose={() => setAlertOpen(false)}
@@ -202,7 +197,7 @@ const ExampleEditorRoot = create(
     setAlertOpen: Dispatch<SetStateAction<boolean>>
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("exampleEditor");
 
     const innerProps = {dictionary, tempExample, mutateExample};
     const node = (
@@ -214,11 +209,11 @@ const ExampleEditorRoot = create(
         <div styleName="footer">
           <div/>
           <div styleName="confirm-button-container">
-            <Button label={trans("wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
+            <Button label={trans(":wordEditor.cancel")} iconName="times" variant="light" onClick={onCancel}/>
             {(example !== null) && (
-              <Button label={trans("exampleEditor.discard")} iconName="trash-alt" scheme="red" reactive={true} onClick={() => setAlertOpen(true)}/>
+              <Button label={trans("discard")} iconName="trash-alt" scheme="red" reactive={true} onClick={() => setAlertOpen(true)}/>
             )}
-            <Button label={trans("exampleEditor.confirm")} iconName="check" scheme="blue" reactive={true} onClick={editExample}/>
+            <Button label={trans("confirm")} iconName="check" scheme="blue" reactive={true} onClick={editExample}/>
           </div>
         </div>
       </div>
@@ -234,34 +229,26 @@ const ExampleEditorSentence = create(
   function ({
     dictionary,
     tempExample,
-    mutateExample,
-    styles
+    mutateExample
   }: {
     dictionary: EnhancedDictionary,
     tempExample: TempEditableExample,
-    mutateExample: MutateExampleCallback,
-    styles?: StylesRecord
+    mutateExample: MutateExampleCallback
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("exampleEditor");
 
     const node = (
       <div styleName="section">
         <div styleName="head">
-          {trans("wordEditor.basic")}
+          {trans(":wordEditor.basic")}
         </div>
         <div styleName="section-content">
           <div styleName="section-item">
             <div styleName="form-container">
-              <div styleName="form sentence">
-                <label>
-                  <Label text={trans("exampleEditor.sentence")} position="left"/>
-                  <TextArea className={styles!["text"]} value={tempExample.sentence} onSet={mutateExample((tempExample, sentence) => tempExample.sentence = sentence)}/>
-                </label>
-                <label>
-                  <Label text={trans("exampleEditor.translation")} position="left"/>
-                  <TextArea className={styles!["text"]} value={tempExample.translation} onSet={mutateExample((tempExample, translation) => tempExample.translation = translation)}/>
-                </label>
+              <div styleName="form">
+                <TextArea styleName="sentence" label={trans("sentence")} value={tempExample.sentence} onSet={mutateExample((tempExample, sentence) => tempExample.sentence = sentence)}/>
+                <TextArea styleName="sentence" label={trans("translation")} value={tempExample.translation} onSet={mutateExample((tempExample, translation) => tempExample.translation = translation)}/>
               </div>
             </div>
           </div>
@@ -288,19 +275,19 @@ const ExampleEditorWords = create(
     openWordChooser: (index: number) => void
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("exampleEditor");
 
     const node = (
       <div styleName="section">
         <div styleName="head">
-          {trans("exampleEditor.word")}
+          {trans("word")}
         </div>
         <div styleName="section-content">
           {tempExample.words.map((word, index) => (
             <ExampleEditorWord key={word.tempId} {...{dictionary, tempExample, word, index, mutateExample, openWordChooser}}/>
           ))}
           <div styleName="plus">
-            <div styleName="absent">{(tempExample.words.length <= 0) ? trans("exampleEditor.wordAbsent") : ""}</div>
+            <div styleName="absent">{(tempExample.words.length <= 0) ? trans("wordAbsent") : ""}</div>
             <div styleName="plus-button-container">
               <Button iconName="plus" variant="light" onClick={() => openWordChooser(tempExample.words.length)}/>
             </div>
@@ -322,42 +309,36 @@ const ExampleEditorWord = create(
     word,
     index,
     mutateExample,
-    openWordChooser,
-    styles
+    openWordChooser
   }: {
     dictionary: EnhancedDictionary,
     tempExample: TempEditableExample,
     word: LinkedWord,
     index: number,
     mutateExample: MutateExampleCallback,
-    openWordChooser: (index: number) => void,
-    styles?: StylesRecord
+    openWordChooser: (index: number) => void
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("exampleEditor");
     const [rootRef, handleRef, dragging] = useDragDrop(
       `example-word-${dictionary.id}-${tempExample.tempId}`,
       index,
       mutateExample((tempExample, draggingIndex, hoverIndex) => moveAt(tempExample.words, draggingIndex, hoverIndex))
     );
 
-    const data = DataUtil.create({
-      dragging
-    });
     const node = (
-      <div styleName="section-item" ref={rootRef} {...data}>
+      <div styleName="section-item" ref={rootRef} {...data({dragging})}>
         <div styleName="handle" ref={handleRef}>
           <div styleName="handle-icon"><Icon name="grip-vertical"/></div>
         </div>
         <div styleName="form-container">
           <div styleName="form">
-            <div/>
-            <ControlGroup className={StyleNameUtil.create(styles!["name"], styles!["word-input"])}>
-              <Input value={word.name ?? trans("exampleEditor.wordNameUndefined")} readOnly={true}/>
-              <Button label={trans("exampleEditor.selectWord")} variant="light" onClick={() => openWordChooser(index)}/>
+            <ControlGroup styleName="name word-input">
+              <Input value={word.name ?? trans("wordNameUndefined")} readOnly={true}/>
+              <Button label={trans("selectWord")} variant="light" onClick={() => openWordChooser(index)}/>
             </ControlGroup>
           </div>
-          <div styleName="control-button">
+          <div styleName="control-button-container">
             <Button iconName="minus" variant="light" onClick={mutateExample((tempExample) => deleteAt(tempExample.words, index))}/>
           </div>
         </div>

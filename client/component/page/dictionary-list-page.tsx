@@ -10,10 +10,10 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   useMediaQuery,
   useQueryState,
-  useSuspenseQuery
+  useSuspenseQuery,
+  useTrans
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
@@ -34,7 +34,7 @@ const DictionaryListPage = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("dictionaryListPage");
     const {smartphone} = useMediaQuery();
 
     const [query, debouncedQuery, setQuery] = useQueryState(serializeQuery, deserializeQuery, 500);
@@ -51,7 +51,7 @@ const DictionaryListPage = create(
 
     const column = (smartphone) ? 1 : 2;
     const node = (
-      <Page title={trans("dictionaryListPage.title")}>
+      <Page title={trans("title")}>
         <div styleName="search-form-container">
           <DictionarySearchForm parameter={query.parameter} showOrder={true} enableHotkeys={true} onParameterSet={handleParameterSet}/>
         </div>

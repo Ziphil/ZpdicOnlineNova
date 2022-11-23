@@ -14,10 +14,10 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
   useRequest,
-  useSuspenseQuery
+  useSuspenseQuery,
+  useTrans
 } from "/client/component/hook";
 import {
   Dictionary
@@ -41,9 +41,9 @@ const ResouceList = create(
     showInstruction?: boolean
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("resourceList");
     const {request} = useRequest();
-    const [, {addInformationPopup, addErrorPopup}] = usePopup();
+    const {addInformationPopup, addErrorPopup} = usePopup();
 
     const number = dictionary.number;
     const [[resources]] = useSuspenseQuery("fetchResources", {number}, {keepPreviousData: true});
@@ -82,17 +82,14 @@ const ResouceList = create(
 
     const node = (
       <div styleName="root">
-        <div styleName="caution">
-          {trans("resourceList.experimantalCaution")}
-        </div>
         {(showInstruction) && (
           <div styleName="instruction">
-            {(dictionary.settings.enableMarkdown) ? trans("resourceList.instruction") : trans("resourceList.markdownCaution")}
+            {(dictionary.settings.enableMarkdown) ? trans("instruction") : trans("markdownCaution")}
           </div>
         )}
         <div styleName="form">
-          <FileInput inputLabel={trans("resourceList.file")} file={file} onSet={setFile}/>
-          <Button label={trans("resourceList.confirm")} reactive={true} onClick={uploadFile}/>
+          <FileInput inputLabel={trans("file")} file={file} onSet={setFile}/>
+          <Button label={trans("confirm")} reactive={true} onClick={uploadFile}/>
         </div>
         <div styleName="list">
           <PaneList

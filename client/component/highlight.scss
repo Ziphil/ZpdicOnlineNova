@@ -13,6 +13,11 @@
   background: schemed-color(background, primary) !important;
 }
 
+*[class~="CodeMirror-scrollbar-filler"],
+*[class~="CodeMirror-gutter-filler"] {
+  background-color: transparent !important;
+}
+
 *[class|="cm"] {
   font-weight: normal !important;
   font-style: normal !important;
@@ -29,6 +34,17 @@
 
 :global(.cm-s-zpmarkdown .cm-comment) {
   color: color(highlight-purple);
+}
+
+:global(.cm-s-zpmarkdown .cm-em),
+:global(.cm-s-zpmarkdown .cm-strong),
+:global(.cm-s-zpmarkdown .cm-strikethrough) {
+  color: color(highlight-green);
+}
+
+:global(.cm-s-zpmarkdown .cm-formatting-list),
+:global(.cm-s-zpmarkdown .cm-formatting-quote)  {
+  color: color(highlight-orange);
 }
 
 :global(.cm-s-zpcddl .cm-keyword),

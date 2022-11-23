@@ -41,10 +41,12 @@
   border-radius: $large-border-radius;
   display: inline-block;
   position: relative;
+  --arrow-color: #{color(background)};
+  --arrow-border-color: #{color(border)};
 }
 
 .arrow {
-  @include arrow(color(background), color(border), 8rpx);
+  @include arrow(8rpx);
   inset-inline-start: 0rpx;
   inset-block-start: 10rpx;
   position: absolute;

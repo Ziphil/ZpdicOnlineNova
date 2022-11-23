@@ -21,13 +21,14 @@ import {
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
 const RAW_CONTRIBUTORS = [
-  {name: "lynn", url: {github: "lynn"}, avatarUrl: {github: "lynn"}},
+  {name: "ゆりです。", url: {twitter: "udl_design"}, avatarUrl: "https://pbs.twimg.com/profile_images/1567141188788191232/8itkryuL_400x400.jpg"},
   {name: "bluebear94", url: {github: "bluebear94"}, avatarUrl: {github: "bluebear94"}},
+  {name: "lynn", url: {github: "lynn"}, avatarUrl: {github: "lynn"}},
   {name: "nymwa", url: {github: "nymwa"}, avatarUrl: {github: "nymwa"}},
   {name: "川音リオ", url: {twitter: "KawaneRio"}, avatarUrl: "https://pbs.twimg.com/profile_images/1085673171083091969/t3IjudoH_400x400.jpg"},
   {name: "炭酸ソーダ", url: {twitter: "na2co3_ftw"}, avatarUrl: {github: "na2co3-ftw"}}
@@ -42,8 +43,6 @@ const TopPage = create(
 
     const [me] = useMe();
 
-    const loginFormData = DataUtil.create({hidden: me !== null});
-    const dashboardFormData = DataUtil.create({hidden: me === null});
     const node = (
       <Page title="">
         <div styleName="root">
@@ -53,10 +52,10 @@ const TopPage = create(
             </div>
             <div styleName="login-form-container">
               <FormPane>
-                <div styleName="login-form" {...loginFormData}>
+                <div styleName="login-form" {...data({hidden: me !== null})}>
                   <LoginForm showRegister={true}/>
                 </div>
-                <div styleName="dashboard-button-form" {...dashboardFormData}>
+                <div styleName="dashboard-button-form" {...data({hidden: me === null})}>
                   <DashboardButtonForm/>
                 </div>
               </FormPane>

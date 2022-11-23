@@ -211,6 +211,18 @@ label:
 overlay:
   back: "Reiri"
   close: "Fermi"
+textArea:
+  markdown:
+    italic: "Kursivo"
+    strikethrough: "Trastreko"
+    code: "Fontkodo"
+    link: "Ligilo"
+    image: "Bildo"
+    unorderedList: "Senorda listo"
+    orderedList: "Orda listo"
+    blockquote: "Blokcitaĵo"
+    table: "Tabelo"
+    codeBlock: "Fontkoda bloko"
 changeUserNameForm:
   name: "Uzanta identigilo"
   confirm: "Ŝanĝi"
@@ -274,6 +286,8 @@ changeDictionarySettingsForm:
   exampleTitle: "Titolo por frazoj"
   enableMarkdownTrue: "Ebligita"
   enableMarkdownFalse: "Malebligita"
+  enableDuplicateNameTrue: "Ebligita"
+  enableDuplicateNameFalse: "Malebligita"
   confirm: "Ŝanĝi"
 changeDictionarySourceForm:
   akrantiain: "Fontkodo por Akrantiain"
@@ -474,6 +488,7 @@ githubButton:
   github: "Vidi sur GitHub"
   dashboard: "Evolupanelo"
 header:
+  appearance: "Ŝajno"
   dictionaryList: "Vortaroj"
   dashboard: "Uzanta paĝo"
 hotkeyHelp:
@@ -566,6 +581,7 @@ wordSearchForm:
   both: "Ambaŭ"
   name: "Kapvorto"
   equivalent: "Tradukaĵo"
+  tag: "Etikedo"
   content: "Tuto"
   prefix: "Prefiksa"
   part: "Parta"
@@ -599,18 +615,18 @@ wordEditor:
   basic: "Bazaj informoj"
   name: "Literumo"
   pronunciation: "Prononco"
-  tag: "Etikedoj"
+  tag: "Etikedoj (multobloj permesitaj)"
   equivalent: "Tradukaĵoj"
-  equivalentTitle: "Titlo"
-  equivalentNames: "Tradukaĵoj"
+  equivalentTitle: "Vortospecoj (multobloj permesitaj)"
+  equivalentNames: "Tradukaĵoj (apartigitaj per komoj) "
   information: "Enhavoj"
   informationTitle: "Titlo"
   informationText: "Enhavo"
   variation: "Variaĵaj formoj"
-  variationTitle: "Titlo"
+  variationTitle: "Speco"
   variationName: "Formo"
   relation: "Rilataj vortoj"
-  relationTitle: "Titlo"
+  relationTitle: "Specoj (multobloj permesitaj)"
   relationName: "Vorto"
   tagAbsent: "Neniuj etikedoj"
   equivalentAbsent: "Neniuj tradukaĵoj"
@@ -625,6 +641,8 @@ wordEditor:
   resource: "Bildoj"
   selectRelation: "Elekti"
   alertConfirm: "Forigi"
+  duplicateName: >-
+    Vorto kun la sama literumo jam estas registrita.
   alert: >-
     Tiu vorto estos forigita konstante.
     Vi ne povas restaŭri ĝin poste.
@@ -646,6 +664,16 @@ zatlinExecutor:
   output: "Eligo"
   errorMessage: "Erarmesaĝo"
   execute: "Plenumi"
+appearancePage:
+  title: "Agordoj de ŝajno"
+  appearance: "Ŝajno"
+  changeLanguageForm:
+    label: "Ŝanĝi lingvon"
+    description: <empty>
+  changeThemeForm:
+    label: "Ŝanĝi temon"
+    description: >-
+      Ŝanĝi la koloran temon de tiu retejo.
 contactPage:
   title: "Kontakti"
   privacy: >-
@@ -658,7 +686,6 @@ dashboardPage:
   dictionary: "Vortaroj"
   notification: "Sciigoj"
   account: "Konto"
-  appearance: "Ŝajno"
   logout: "Elsaluti"
   dictionaryList:
     label: "Vortaroj"
@@ -682,6 +709,7 @@ dashboardPage:
     label: "Uzanta identigilo"
     description: >-
       Jen via uzanta identigilo.
+      Nuntempe vi ne povas ŝanĝi vian uzantan identigilon.
   changeUserScreenNameForm:
     label: "Ŝanĝi kromnomon"
     description: >-
@@ -697,13 +725,6 @@ dashboardPage:
     label: "Forigi"
     description: >-
       Forigi tiun uzanton.
-  changeLanguageForm:
-    label: "Ŝanĝi lingvon"
-    description: <empty>
-  changeThemeForm:
-    label: "Ŝanĝi temon"
-    description: >-
-      Ŝanĝi la koloran temon de tiu retejo.
 dictionaryListPage:
   title: "Vortaroj"
   updatedDate: "Ordigi laŭ dato de ĝisdatigo"
@@ -756,9 +777,14 @@ dictionarySettingPage:
     description: >-
       Ŝanĝi la titolon por ekzemplaj frazoj, kiu estos montrata en la paĝo de la vortaro.
   changeDictionaryEnableMarkdownForm:
-    label: "Ebligi aŭ malebligi Markdown"
+    label: "Ebligi Markdown"
     description: >-
-      Se vi ebligos tiun, vi povos skribi enhavojn de vortoj en Markdown.
+      Se vi ebligos tiun funkcion, vi povos skribi enhavojn de vortoj en Markdown.
+  changeDictionaryEnableDuplicateName:
+    label: "Ebligi kontrolon de duoblan literumon"
+    description: >- 
+      Se vi ebligas tiun funkcion, kiam vi tajpos literumon en la vortredaktilo, ĝi kontrolos ĉu jam ekzistas vorto kun la sama literumo kaj informos vin kiel ŝprucfenestro.
+      Notu, ke tio nur kontrolos duoblon, do ĝi ne malhelpos vin registri vorton kun la sama literumo.
   uploadDictionaryForm:
     label: "Alŝuti"
     description: >-

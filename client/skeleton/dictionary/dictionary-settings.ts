@@ -9,5 +9,6 @@ export class DictionarySettings {
   public pronunciationTitle!: string;
   public exampleTitle!: string;
   public enableMarkdown!: boolean;
+  public enableDuplicateName!: boolean;
 
 }

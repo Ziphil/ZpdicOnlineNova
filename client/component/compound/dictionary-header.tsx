@@ -15,15 +15,14 @@ import Dropdown from "/client/component/atom/dropdown";
 import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
   useExampleEditor,
   useHotkey,
-  useIntl,
   usePath,
   useRequest,
+  useTrans,
   useWordEditor
 } from "/client/component/hook";
 import {
@@ -54,7 +53,7 @@ const DictionaryHeader = create(
 
     const addWordEditor = useWordEditor();
     const addExampleEditor = useExampleEditor();
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("dictionaryHeader");
     const {pushPath} = usePath();
     const {request} = useRequest();
 
@@ -131,19 +130,19 @@ const DictionaryHeader = create(
       <div styleName="root">
         <div styleName="left">
           {(showExampleLink) && (
-            <Button label={trans("dictionaryHeader.example")} iconName="custom-example" variant="simple" hideLabel={true} onClick={jumpExamplePage}/>
+            <Button label={trans("example")} iconName="custom-example" variant="simple" hideLabel={true} onClick={jumpExamplePage}/>
           )}
           {(showAddCommissionLink) && (
-            <Button label={trans("dictionaryHeader.addCommission")} iconName="list-check" variant="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
+            <Button label={trans("addCommission")} iconName="list-check" variant="simple" hideLabel={true} onClick={() => setCommissionEditorOpen(true)}/>
           )}
           {(showDownloadLink) && (
-            <Button label={trans("dictionaryHeader.download")} iconName="download" variant="simple" hideLabel={true} onClick={downloadDictionary}/>
+            <Button label={trans("download")} iconName="download" variant="simple" hideLabel={true} onClick={downloadDictionary}/>
           )}
         </div>
         <div styleName="right">
           {(showAddLink) && (
             <>
-              <Button label={trans("dictionaryHeader.add")} iconName="plus" variant="simple" hideLabel={true} nativeRef={setAddReferenceElement}/>
+              <Button label={trans("add")} iconName="plus" variant="simple" hideLabel={true} nativeRef={setAddReferenceElement}/>
               <Dropdown
                 placement="bottom-end"
                 showArrow={true}
@@ -158,7 +157,7 @@ const DictionaryHeader = create(
             </>
           )}
           {(showSettingLink) && (
-            <Button label={trans("dictionaryHeader.setting")} iconName="cog" variant="simple" hideLabel={true} onClick={jumpSettingPage}/>
+            <Button label={trans("setting")} iconName="cog" variant="simple" hideLabel={true} onClick={jumpSettingPage}/>
           )}
         </div>
         <DictionaryHeaderOverlays {...{dictionary, commissionEditorOpen, setCommissionEditorOpen}}/>
@@ -173,19 +172,17 @@ const DictionaryHeader = create(
 const DictionaryHeaderAddDropdownNode = create(
   require("./dictionary-header.scss"),
   function ({
-    type,
-    styles
+    type
   }: {
-    type: "word" | "example",
-    styles?: StylesRecord
+    type: "word" | "example"
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("dictionaryHeader");
 
     const node = (
       <div styleName="dropdown-node">
-        <Icon className={styles!["icon"]} name={(type === "word") ? "custom-word" : "custom-example"}/>
-        {trans(`dictionaryHeader.add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
+        <Icon styleName="icon" name={(type === "word") ? "custom-word" : "custom-example"}/>
+        {trans(`add${type.charAt(0).toUpperCase() + type.slice(1)}`)}
       </div>
     );
     return node;

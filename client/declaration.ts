@@ -1,6 +1,14 @@
 //
 
 
+declare module "*.svg" {
+
+  let data: any;
+  export default data;
+
+}
+
+
 declare module "*.yml" {
 
   let data: Record<string, string>;

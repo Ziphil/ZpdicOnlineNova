@@ -30,3 +30,21 @@ db.users.updateMany({}, {$set: {"activated": true}});
 
 ユーザーごとに照合済みかどうかを変えたい場合は、個別に `activated` プロパティの設定をしてください。
 ただし、全てのユーザーが `activated` プロパティをもつようにしてください。
+
+### ver 2.38.0 → ver 2.39.0
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```
+db.dictionaries.updateMany({}, {$set: {"settings.enableDuplicateName": true}});
+db.words.updateMany({}, [{$set: {
+  "equivalents": {$map: {
+    input: "$equivalents",
+    in: {"titles": ["$$this.title"], "names": "$$this.names"}
+  }}
+}}]);
+db.words.updateMany({}, [{$set: {
+  "relations": {$map: {
+    input: "$relations",
+    in: {"titles": ["$$this.title"], "number": "$$this.number", "name": "$$this.name"}
+  }}
+}}]);
+```

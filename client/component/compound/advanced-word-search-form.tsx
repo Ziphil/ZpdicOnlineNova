@@ -16,12 +16,11 @@ import {
 import Overlay from "/client/component/atom/overlay";
 import Selection from "/client/component/atom/selection";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
-  useIntl,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   ADVANCED_WORD_MODES,
@@ -36,7 +35,7 @@ import {
 } from "/client/util/misc";
 
 
-const AdvancedWordSearchForm = create(
+export const AdvancedWordSearchForm = create(
   require("./advanced-word-search-form.scss"), "AdvancedWordSearchForm",
   function ({
     dictionary,
@@ -52,7 +51,7 @@ const AdvancedWordSearchForm = create(
     onConfirm?: (parameter: WordParameter, event: MouseEvent<HTMLButtonElement>) => void
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("advancedWordSearchForm");
 
     const [parameter, setParameter] = useState((defaultParameter instanceof AdvancedWordParameter) ? defaultParameter : AdvancedWordParameter.createEmpty());
 
@@ -77,7 +76,7 @@ const AdvancedWordSearchForm = create(
 
     const elements = parameter.elements;
     const node = (
-      <Overlay size="large" title={trans("advancedWordSearchForm.overlayTitle")} open={open} onClose={handleClose}>
+      <Overlay size="large" title={trans("overlayTitle")} open={open} onClose={handleClose}>
         {elements.map((element, index) => (
           <AdvancedWordSearchFormElement key={index} {...{index, element, elements, dictionary, mutateParameter}}/>
         ))}
@@ -85,7 +84,7 @@ const AdvancedWordSearchForm = create(
           <Button iconName="plus" variant="light" onClick={mutateParameter((parameter) => elements.push(AdvancedWordParameterElement.createEmpty()))}/>
         </div>
         <div styleName="confirm-button-container">
-          <Button label={trans("advancedWordSearchForm.confirm")} iconName="check" scheme="blue" onClick={confirmParameter}/>
+          <Button label={trans("confirm")} iconName="check" scheme="blue" onClick={confirmParameter}/>
         </div>
       </Overlay>
     );
@@ -102,18 +101,16 @@ const AdvancedWordSearchFormElement = create(
     element,
     elements,
     dictionary,
-    mutateParameter,
-    styles
+    mutateParameter
   }: {
     index: number,
     element: AdvancedWordParameterElement,
     elements: Array<AdvancedWordParameterElement>,
     dictionary: Dictionary,
-    mutateParameter: <T extends Array<unknown>>(setter: (parameter: AdvancedWordParameter, ...args: T) => void) => (...args: T) => void,
-    styles?: StylesRecord
+    mutateParameter: <T extends Array<unknown>>(setter: (parameter: AdvancedWordParameter, ...args: T) => void) => (...args: T) => void
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("advancedWordSearchForm");
     const {request} = useRequest();
 
     const createSuggest = useCallback(function (propertyName: string): Suggest {
@@ -131,26 +128,26 @@ const AdvancedWordSearchFormElement = create(
       return suggest;
     }, [dictionary.number, request]);
 
-    const modeLabel = (index === 0) ? trans("advancedWordSearchForm.mode") : undefined;
-    const typeLabel = (index === 0) ? trans("advancedWordSearchForm.type") : undefined;
-    const titleLabel = (index === 0) ? trans("advancedWordSearchForm.title") : undefined;
-    const textLabel = (index === 0) ? trans("advancedWordSearchForm.text") : undefined;
+    const modeLabel = (index === 0) ? trans("mode") : undefined;
+    const typeLabel = (index === 0) ? trans("type") : undefined;
+    const titleLabel = (index === 0) ? trans("title") : undefined;
+    const textLabel = (index === 0) ? trans("text") : undefined;
     const titleDisabled = element.mode !== "equivalent" && element.mode !== "information";
     const deleteDisabled = elements.length <= 1;
     const suggest = (titleDisabled) ? undefined : createSuggest(element.mode);
     const searchNode = (
       <div styleName="element">
         <div styleName="form left">
-          <Selection className={styles!["selection"]} value={element.mode} label={modeLabel} onSet={mutateParameter((parameter, mode) => elements[index].mode = mode)}>
-            {ADVANCED_WORD_MODES.map((mode) => <DropdownItem key={mode} value={mode}>{trans(`advancedWordSearchForm.${mode}`)}</DropdownItem>)}
+          <Selection styleName="selection" value={element.mode} label={modeLabel} onSet={mutateParameter((parameter, mode) => elements[index].mode = mode)}>
+            {ADVANCED_WORD_MODES.map((mode) => <DropdownItem key={mode} value={mode}>{trans(mode)}</DropdownItem>)}
           </Selection>
-          <Selection className={styles!["selection"]} value={element.type} label={typeLabel} onSet={mutateParameter((parameter, type) => elements[index].type = type)}>
-            {WORD_TYPES.map((type) => <DropdownItem key={type} value={type}>{trans(`advancedWordSearchForm.${type}`)}</DropdownItem>)}
+          <Selection styleName="selection" value={element.type} label={typeLabel} onSet={mutateParameter((parameter, type) => elements[index].type = type)}>
+            {WORD_TYPES.map((type) => <DropdownItem key={type} value={type}>{trans(type)}</DropdownItem>)}
           </Selection>
         </div>
         <div styleName="form right">
-          <Input className={styles!["title"]} value={element.title} label={titleLabel} suggest={suggest} disabled={titleDisabled} onSet={mutateParameter((parameter, title) => elements[index].title = title)}/>
-          <Input className={styles!["text"]} value={element.text} label={textLabel} onSet={mutateParameter((parameter, text) => elements[index].text = text)}/>
+          <Input styleName="title" value={element.title} label={titleLabel} suggest={suggest} disabled={titleDisabled} onSet={mutateParameter((parameter, title) => elements[index].title = title)}/>
+          <Input styleName="text" value={element.text} label={textLabel} onSet={mutateParameter((parameter, text) => elements[index].text = text)}/>
         </div>
         <div styleName="control-button-container">
           <Button iconName="minus" variant="light" disabled={deleteDisabled} onClick={mutateParameter((parameter) => deleteAt(elements, index))}/>

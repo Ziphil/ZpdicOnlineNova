@@ -10,7 +10,7 @@
 .head {
   @include bold-font;
   color: color(accent);
-  font-size: $tiny-font-size;
+  font-size: $small-font-size;
 }
 
 .list {

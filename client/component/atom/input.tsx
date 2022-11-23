@@ -9,6 +9,7 @@ import {
   Ref,
   SetStateAction,
   useCallback,
+  useEffect,
   useState
 } from "react";
 import {
@@ -26,7 +27,7 @@ import {
   useDebounce
 } from "/client/component/hook";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 import {
   mergeRefs
@@ -43,6 +44,7 @@ export const Input = create(
     type = "text",
     validate,
     suggest,
+    debounceValidate = false,
     showRequired,
     showOptional,
     readOnly = false,
@@ -58,8 +60,9 @@ export const Input = create(
     prefix?: ReactNode,
     suffix?: ReactNode,
     type?: "text" | "password" | "flexible",
-    validate?: (value: string) => string | null,
+    validate?: Validate,
     suggest?: Suggest,
+    debounceValidate?: boolean,
     showRequired?: boolean,
     showOptional?: boolean,
     readOnly?: boolean,
@@ -72,57 +75,72 @@ export const Input = create(
   }): ReactElement {
 
     const [currentType, setCurrentType] = useState((type === "flexible") ? "password" : type);
-    const [errorMessage, setErrorMessage] = useState<string | null>(null);
+    const [validationSpec, setValidationSpec] = useState<ValidationSpec | null>(null);
     const [dropdownSpecs, setDropdownSpecs] = useState<Array<DropdownSpec>>([]);
     const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null);
     const [autoElement, setAutoElement] = useState<HTMLInputElement | null>(null);
 
     const updateValue = useCallback(function (value: string): void {
-      if (validate !== undefined) {
-        const errorMessage = validate(value);
-        setErrorMessage(errorMessage);
-      } else {
-        setErrorMessage(null);
-      }
       onSet?.(value);
-    }, [validate, onSet]);
+    }, [onSet]);
 
-    const updateSuggestions = useDebounce(async function (value: string): Promise<void> {
+    const updateValidation = useCallback(async function (value: string): Promise<void> {
+      if (validate !== undefined) {
+        const validationSpec = await validate(value);
+        setValidationSpec(validationSpec);
+      } else {
+        setValidationSpec(null);
+      }
+    }, [validate]);
+
+    const updateValidationDebounced = useDebounce(async function (value: string): Promise<void> {
+      updateValidation(value);
+    }, 500, [updateValidation]);
+
+    const updateSuggestions = useCallback(async function (value: string): Promise<void> {
       if (suggest !== undefined) {
         const suggestionSpecs = await suggest(value);
         const dropdownSpecs = suggestionSpecs.map((suggestionSpec) => ({value: suggestionSpec.replacement, node: suggestionSpec.node}));
         setDropdownSpecs(dropdownSpecs);
       }
-    }, 500, [suggest]);
+    }, [suggest]);
+
+    const updateSuggestionsDebounced = useDebounce(async function (value: string): Promise<void> {
+      updateSuggestions(value);
+    }, 500, [updateSuggestions]);
 
     const handleChange = useCallback(function (event: ChangeEvent<HTMLInputElement>): void {
       const value = event.target.value;
       updateValue(value);
-      updateSuggestions(value);
+      updateSuggestionsDebounced(value);
       onChange?.(event);
-    }, [onChange, updateValue, updateSuggestions]);
+    }, [onChange, updateValue, updateSuggestionsDebounced]);
 
     const handleFocus = useCallback(function (event: FocusEvent<HTMLInputElement>): void {
       const value = event.target.value;
-      updateSuggestions(value);
-    }, [updateSuggestions]);
+      updateSuggestionsDebounced(value);
+    }, [updateSuggestionsDebounced]);
+
+    useEffect(() => {
+      ((debounceValidate) ? updateValidationDebounced : updateValidation)(value);
+    }, [value, debounceValidate, updateValidationDebounced, updateValidation]);
 
     const node = (
       <div styleName="root" className={className} ref={rootRef}>
         <label styleName="label-container">
           <Label
             text={label}
-            variant={(errorMessage === null) ? "normal" : "error"}
+            scheme={validationSpec?.scheme ?? "primary"}
             showRequired={showRequired}
             showOptional={showOptional}
           />
-          <InputInput {...{value, prefix, suffix, type, currentType, readOnly, disabled, errorMessage, handleChange, handleFocus, setCurrentType, setReferenceElement, setAutoElement, nativeRef}}/>
+          <InputInput {...{value, prefix, suffix, type, currentType, readOnly, disabled, validationSpec, handleChange, handleFocus, setCurrentType, setReferenceElement, setAutoElement, nativeRef}}/>
         </label>
         <Dropdown fillWidth={true} restrictHeight={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement} onSet={updateValue}>
           {dropdownSpecs.map(({value, node}) => <DropdownItem key={value} value={value}>{node}</DropdownItem>)}
         </Dropdown>
-        <Tooltip showArrow={true} fillWidth={true} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
-          {errorMessage}
+        <Tooltip showArrow={true} fillWidth={true} scheme={validationSpec?.scheme} autoMode="focus" referenceElement={referenceElement} autoElement={autoElement}>
+          {validationSpec?.message}
         </Tooltip>
       </div>
     );
@@ -142,7 +160,7 @@ const InputInput = create(
     currentType,
     readOnly,
     disabled,
-    errorMessage,
+    validationSpec,
     handleChange,
     handleFocus,
     setCurrentType,
@@ -157,7 +175,7 @@ const InputInput = create(
     currentType: "text" | "password",
     readOnly: boolean,
     disabled: boolean,
-    errorMessage: string | null,
+    validationSpec: ValidationSpec | null,
     handleChange: (event: ChangeEvent<HTMLInputElement>) => void,
     handleFocus: (event: FocusEvent<HTMLInputElement>) => void,
     setCurrentType: Dispatch<SetStateAction<"text" | "password">>,
@@ -170,13 +188,10 @@ const InputInput = create(
       setCurrentType((currentType) => (currentType === "text") ? "password" : "text");
     }, [setCurrentType]);
 
-    const data = DataUtil.create({
-      error: errorMessage !== null,
-      disabled
-    });
-    const eyeData = DataUtil.create({currentType});
+    const scheme = validationSpec?.scheme ?? "primary";
+    const hasSuffix = suffix !== undefined || (validationSpec !== null && validationSpec.iconName !== undefined) || type === "flexible";
     const node = (
-      <div styleName="input" ref={setReferenceElement} {...data}>
+      <div styleName="input" ref={setReferenceElement} {...data({scheme, disabled})}>
         {(prefix !== undefined) && (
           <div styleName="prefix">{prefix}</div>
         )}
@@ -190,11 +205,16 @@ const InputInput = create(
           onFocus={handleFocus}
           ref={(nativeRef !== undefined) ? mergeRefs([nativeRef, setAutoElement]) : setAutoElement}
         />
-        {(suffix !== undefined || type === "flexible") && (
+        {(hasSuffix) && (
           <div styleName="suffix">
             {suffix}
+            {(validationSpec !== null && validationSpec.iconName !== undefined) && (
+              <div styleName="validation">
+                <Icon name={validationSpec.iconName}/>
+              </div>
+            )}
             {(type === "flexible") && (
-              <button styleName="eye" type="button" onClick={toggleType} {...eyeData}>
+              <button styleName="eye" type="button" onClick={toggleType} {...data({currentType})}>
                 <Icon name={(currentType === "password") ? "eye" : "eye-slash"}/>
               </button>
             )}
@@ -209,6 +229,9 @@ const InputInput = create(
 
 
 type DropdownSpec = {value: string, node: ReactNode};
+
+export type ValidationSpec = {scheme: "primary" | "red" | "blue", iconName?: string, message: string};
+export type Validate = (value: string) => AsyncOrSync<ValidationSpec | null>;
 
 export type SuggestionSpec = {replacement: string, node: ReactNode};
 export type Suggest = (pattern: string) => AsyncOrSync<Array<SuggestionSpec>>;

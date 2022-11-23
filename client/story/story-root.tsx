@@ -20,6 +20,7 @@ import * as queryParser from "query-string";
 import {
   ReactElement,
   ReactNode,
+  Suspense,
   useCallback
 } from "react";
 import {
@@ -29,18 +30,23 @@ import {
   HTML5Backend as DndBackend
 } from "react-dnd-html5-backend";
 import {
+  ErrorBoundary
+} from "react-error-boundary";
+import {
   IntlProvider
 } from "react-intl";
 import {
   QueryClientProvider
 } from "react-query";
 import {
+  RecoilRoot
+} from "recoil";
+import {
   create
 } from "/client/component/create";
 import {
   queryClient,
-  useDefaultLocale,
-  useDefaultMe
+  useDefaultLocale
 } from "/client/component/hook";
 
 
@@ -55,15 +61,39 @@ const location = new ReactLocation({
 });
 
 
-const StoryRoot = create(
-  require("/client/component/root.scss"), "StoryRoot",
+const Root = create(
+  require("/client/component/root.scss"), "Root",
+  function ({
+    children
+  }: {
+    children?: ReactNode
+  }): ReactElement | null {
+
+    const node = (
+      <ErrorBoundary fallbackRender={() => <div>Please Reload</div>}>
+        <Suspense fallback={<div/>}>
+          <RecoilRoot>
+            <ProviderRoot>
+              {children}
+            </ProviderRoot>
+          </RecoilRoot>
+        </Suspense>
+      </ErrorBoundary>
+    );
+    return node;
+
+  }
+);
+
+
+const ProviderRoot = create(
+  require("/client/component/root.scss"), "ProviderRoot",
   function ({
     children
   }: {
     children?: ReactNode
   }): ReactElement {
 
-    const {ready} = useDefaultMe();
     const {locale, messages} = useDefaultLocale("en");
 
     const handleIntlError = useCallback(function (error: IntlError<any>): void {
@@ -89,4 +119,4 @@ const StoryRoot = create(
 );
 
 
-export default StoryRoot;
+export default Root;

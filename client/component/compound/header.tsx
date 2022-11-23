@@ -10,17 +10,16 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   useLocation,
   useMe,
-  usePath
+  usePath,
+  useTrans
 } from "/client/component/hook";
+import LogoSvg from "/client/public/logo.svg";
+import SymbolSvg from "/client/public/symbol.svg";
 import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
-import {
-  DataUtil
-} from "/client/util/data";
 
 
 const Header = create(
@@ -37,29 +36,37 @@ const Header = create(
     preserveQuery?: boolean
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("header");
     const {pushPath} = usePath();
     const location = useLocation();
     const [me] = useMe();
 
-    const titleData = DataUtil.create({small: dictionary !== undefined});
     const node = (
       <header styleName="root">
         <div styleName="content">
           <div styleName="top">
             <div styleName="left">
-              <div styleName="title" {...titleData}>
-                <Link href="/" target="self" style="plane">ZpDIC</Link>
-              </div>
-              {(dictionary !== undefined) && (
-                <div styleName="dictionary-name">
-                  <Link href={"/dictionary/" + dictionary.number + ((preserveQuery) ? location.searchString : "")} target="self" style="plane">{dictionary.name}</Link>
-                </div>
+              {(dictionary === undefined) ? (
+                <h1>
+                  <Link styleName="link" href="/" target="self" style="plane">
+                    <LogoSvg styleName="logo" alt="ZpDIC Online"/>
+                  </Link>
+                </h1>
+              ) : (
+                <h1 styleName="dictionary-name">
+                  <Link styleName="link" href="/" target="self" style="plane">
+                    <SymbolSvg styleName="symbol" alt=""/>
+                  </Link>
+                  <Link href={"/dictionary/" + dictionary.number + ((preserveQuery) ? location.searchString : "")} target="self" style="plane">
+                    {dictionary.name}
+                  </Link>
+                </h1>
               )}
             </div>
             <div styleName="right">
               <div styleName="button-container">
-                <Button label={trans("header.dictionaryList")} iconName="book" variant="simple" hideLabel={true} onClick={() => pushPath("/list")}/>
+                <Button label={trans("appearance")} iconName="brush" variant="simple" hideLabel={true} onClick={() => pushPath("/appearance")}/>
+                <Button label={trans("dictionaryList")} iconName="book" variant="simple" hideLabel={true} onClick={() => pushPath("/list")}/>
               </div>
               {(me !== null) && (
                 <>

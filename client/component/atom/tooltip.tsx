@@ -21,7 +21,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -30,6 +30,7 @@ export const Tooltip = create(
   function ({
     open = false,
     placement = "bottom-start",
+    scheme = "primary",
     autoMode = null,
     showArrow = false,
     fillWidth = false,
@@ -40,7 +41,8 @@ export const Tooltip = create(
   }: {
     open?: boolean,
     placement?: Placement,
-    autoMode?: "focus" | "click" | null,
+    scheme?: "primary" | "red" | "blue",
+    autoMode?: "focus" | "hover" | "click" | null,
     showArrow?: boolean,
     fillWidth?: boolean,
     referenceElement: HTMLElement | null,
@@ -53,10 +55,10 @@ export const Tooltip = create(
     const [popupElement, setPopupElement] = useState<HTMLDivElement | null>(null);
     const [arrowElement, setArrowElement] = useState<HTMLDivElement | null>(null);
     const openingRef = useRef(false);
-    const {styles, attributes} = usePopper(referenceElement, popupElement, {
+    const {styles, attributes, ...popper} = usePopper(referenceElement, popupElement, {
       placement,
       modifiers: [
-        {name: "offset", options: {offset: (showArrow) ? [0, 8] : [0, -1]}},
+        {name: "offset", options: {offset: (showArrow) ? [0, 8] : [0, 1]}},
         {name: "flip", options: {altBoundary: true}},
         {name: "fillWidth", phase: "beforeWrite", requires: ["computeStyles"], fn: setFillWidth, enabled: fillWidth},
         {name: "arrow", options: {padding: 4, element: arrowElement}, enabled: showArrow}
@@ -66,6 +68,7 @@ export const Tooltip = create(
     useEffect(() => {
       if (autoMode === "focus") {
         const handleFocus = function (): void {
+          popper.update?.();
           setCurrentOpen(true);
         };
         const handleBlur = function (): void {
@@ -77,9 +80,24 @@ export const Tooltip = create(
           autoElement?.removeEventListener("focus", handleFocus);
           autoElement?.removeEventListener("blur", handleBlur);
         };
+      } else if (autoMode === "hover") {
+        const handleMouseEnter = function (): void {
+          popper.update?.();
+          setCurrentOpen(true);
+        };
+        const handleMouseLeave = function (): void {
+          setCurrentOpen(false);
+        };
+        autoElement?.addEventListener("mouseenter", handleMouseEnter);
+        autoElement?.addEventListener("mouseleave", handleMouseLeave);
+        return () => {
+          autoElement?.removeEventListener("mouseenter", handleMouseEnter);
+          autoElement?.removeEventListener("mouseleave", handleMouseLeave);
+        };
       } else if (autoMode === "click") {
         const handleMouseDown = function (): void {
           openingRef.current = true;
+          popper.update?.();
           setCurrentOpen(true);
         };
         autoElement?.addEventListener("mousedown", handleMouseDown);
@@ -89,7 +107,7 @@ export const Tooltip = create(
       } else {
         return () => null;
       }
-    }, [autoMode, autoElement]);
+    }, [autoMode, autoElement, popper]);
 
     useClickAway({current: popupElement}, () => {
       if (autoMode === "click") {
@@ -101,13 +119,25 @@ export const Tooltip = create(
     });
 
     const actualOpen = children && ((autoMode !== null) ? currentOpen : open);
-    const data = DataUtil.create({
-      hidden: !actualOpen,
-      showArrow
-    });
     const node = (
-      <div styleName="root" className={className} ref={setPopupElement} style={styles.popper} {...attributes.popper} {...data}>
-        <div styleName="arrow" ref={setArrowElement} style={styles.arrow} {...attributes.arrow}/>
+      <div
+        styleName="root"
+        className={className}
+        ref={setPopupElement}
+        style={styles.popper}
+        {...attributes.popper}
+        {...data({
+          scheme,
+          hidden: !actualOpen,
+          showArrow
+        })}
+      >
+        <div
+          styleName="arrow"
+          ref={setArrowElement}
+          style={styles.arrow}
+          {...attributes.arrow}
+        />
         <p styleName="text">
           {children}
         </p>

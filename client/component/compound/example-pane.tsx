@@ -15,7 +15,7 @@ import {
 } from "/client/component/create";
 import {
   useExampleEditor,
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import {
   EditableExample,
@@ -39,7 +39,7 @@ const ExamplePane = create(
   }): ReactElement {
 
     const addExampleEditor = useExampleEditor();
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("examplePane");
 
     const openEditor = useCallback(function (): void {
       addExampleEditor({dictionary, example, onEditConfirm, onDiscardConfirm});
@@ -55,12 +55,12 @@ const ExamplePane = create(
           </div>
           {(example.words.length <= 0) && (
             <div styleName="caution">
-              {trans("examplePane.caution")}
+              {trans("caution")}
             </div>
           )}
         </div>
         <div styleName="button-container">
-          <Button label={trans("examplePane.edit")} iconName="edit" variant="simple" onClick={openEditor}/>
+          <Button label={trans("edit")} iconName="edit" variant="simple" onClick={openEditor}/>
         </div>
       </WhitePane>
     );

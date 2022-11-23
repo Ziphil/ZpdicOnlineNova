@@ -9,8 +9,10 @@ import {
   useEffect
 } from "react";
 import {
-  createGlobalState
-} from "react-use";
+  atom,
+  useRecoilValue,
+  useSetRecoilState
+} from "recoil";
 
 
 const HOTKEY_SPECS = [
@@ -42,10 +44,10 @@ const HOTKEY_SPECS = [
   {name: "changeSearchTypeToRegular", group: "searchWords", subgroup: 3, keys: ["m"]}
 ];
 
-const useEnabledHotkeyNames = createGlobalState<Array<string>>([]);
+const enabledHotkeyNamesAtom = atom<Array<string>>({key: "enabledHotkeyNames", default: []});
 
 export function useHotkey(name: string, callback: HotkeyCallback, dependencies: DependencyList, enabled: boolean = true): void {
-  const [, setEnabledHotkeyNames] = useEnabledHotkeyNames();
+  const setEnabledHotkeyNames = useSetRecoilState(enabledHotkeyNamesAtom);
   const keys = HOTKEY_SPECS.find((spec) => spec.name === name)?.keys ?? [];
   useEffect(() => {
     if (enabled) {
@@ -62,7 +64,7 @@ export function useHotkey(name: string, callback: HotkeyCallback, dependencies: 
 }
 
 export function useHotkeySpecs(): Array<HotkeySpec> {
-  const [enabledHotkeyNames] = useEnabledHotkeyNames();
+  const enabledHotkeyNames = useRecoilValue(enabledHotkeyNamesAtom);
   const specs = HOTKEY_SPECS.map((rawSpec) => {
     const enabled = enabledHotkeyNames.some((enabledName) => enabledName === rawSpec.name);
     return {...rawSpec, enabled};

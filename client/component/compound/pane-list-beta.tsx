@@ -11,7 +11,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 import {
   slices
@@ -83,9 +83,8 @@ const PaneListDivPanes = create(
     children: (item: T) => ReactNode
   }): ReactElement {
 
-    const data = DataUtil.create({variant});
     const node = (
-      <div styleName="div-pane" style={{gridTemplateColumns: `repeat(${column}, 1fr)`}} {...data}>
+      <div styleName="div-pane" style={{gridTemplateColumns: `repeat(${column}, 1fr)`}} {...data({variant})}>
         {items.map(children)}
       </div>
     );
@@ -111,9 +110,8 @@ const PaneListTablePanes = create(
     children: (item: T) => ReactNode
   }): ReactElement {
 
-    const data = DataUtil.create({variant});
     const node = (
-      <table styleName="table-pane" {...data}>
+      <table styleName="table-pane" {...data({variant})}>
         <tbody>
           {slices(items, column, true).map((rowItems, index) => (
             <tr key={index}>
@@ -155,11 +153,10 @@ const PaneListPaginationButton = create(
     onPageSet?: (page: number) => void
   }): ReactElement {
 
-    const data = DataUtil.create({empty: items.length <= 0});
     const minPage = 0;
     const maxPage = Math.max(Math.ceil(hitSize / size) - 1, 0);
     const node = (
-      <div styleName="pagination" {...data}>
+      <div styleName="pagination" {...data({empty: items.length <= 0})}>
         <PaginationButton page={page} minPage={minPage} maxPage={maxPage} onSet={onPageSet}/>
       </div>
     );

@@ -18,9 +18,9 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
   useRequest,
+  useTrans,
   useWordEditor
 } from "/client/component/hook";
 import {
@@ -48,9 +48,9 @@ const CommissionPane = create(
 
     const [alertOpen, setAlertOpen] = useState(false);
     const addWordEditor = useWordEditor();
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("commissionPane");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const discardCommission = useCallback(async function (event: MouseEvent<HTMLButtonElement>, showPopup?: boolean): Promise<void> {
       const number = dictionary.number;
@@ -93,13 +93,13 @@ const CommissionPane = create(
             )}
           </div>
           <div styleName="button-container">
-            <Button label={trans("commissionPane.discard")} iconName="trash-alt" variant="simple" onClick={() => setAlertOpen(true)}/>
-            <Button label={trans("commissionPane.add")} iconName="plus" variant="simple" onClick={openEditor}/>
+            <Button label={trans("discard")} iconName="trash-alt" variant="simple" onClick={() => setAlertOpen(true)}/>
+            <Button label={trans("add")} iconName="plus" variant="simple" onClick={openEditor}/>
           </div>
         </WhitePane>
         <Alert
-          text={trans("commissionPane.alert")}
-          confirmLabel={trans("commissionPane.discard")}
+          text={trans("alert")}
+          confirmLabel={trans("discard")}
           open={alertOpen}
           outsideClosable={true}
           onClose={() => setAlertOpen(false)}

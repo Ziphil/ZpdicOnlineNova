@@ -10,7 +10,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -25,29 +25,20 @@ const GoogleAd = create(
   }): ReactElement | null {
 
     useMount(() => {
-      const element = document.createElement("script");
-      element.id = "google-ads-sdk";
-      element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
-      element.crossOrigin = "anonymous";
-      element.async = true;
-      element.onload = function (): void {
-        const anyWindow = window as any;
-        if (anyWindow.adsbygoogle) {
-          anyWindow.adsbygoogle.push({});
-        }
-      };
-      document.head.appendChild(element);
+      const anyWindow = window as any;
+      if (anyWindow) {
+        (anyWindow.adsbygoogle = anyWindow.adsbygoogle || []).push({});
+      }
     });
 
-    const data = DataUtil.create({
-      adClient: `ca-pub-${clientId}`,
-      adSlot: `${slotId}`
-    });
     return (
       <ins
         className="adsbygoogle"
         style={{display: "block", width: "100%", height: "90px"}}
-        {...data}
+        {...data({
+          adClient: `ca-pub-${clientId}`,
+          adSlot: `${slotId}`
+        })}
       />
     );
 

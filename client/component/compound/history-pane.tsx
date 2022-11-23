@@ -10,12 +10,11 @@ import {
   ChartData
 } from "/client/component/atom/chart";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
-  useIntl,
-  useSuspenseQuery
+  useSuspenseQuery,
+  useTrans
 } from "/client/component/hook";
 import {
   DetailedDictionary
@@ -28,14 +27,12 @@ import {
 const HistoryPane = create(
   require("./history-pane.scss"), "HistoryPane",
   function ({
-    dictionary,
-    styles
+    dictionary
   }: {
-    dictionary: DetailedDictionary,
-    styles?: StylesRecord
+    dictionary: DetailedDictionary
   }): ReactElement {
 
-    const [, {transNumber, transShortDate}] = useIntl();
+    const {transNumber, transShortDate} = useTrans("historyPane");
 
     const number = dictionary.number;
     const from = useMemo(() => new Date(Date.now() - 100 * 24 * 60 * 60 * 1000).toString(), []);
@@ -53,7 +50,7 @@ const HistoryPane = create(
     } as ChartConfig;
     const node = (
       <div styleName="root">
-        <Chart className={styles!["chart"]} data={data} config={config}/>
+        <Chart styleName="chart" data={data} config={config}/>
       </div>
     );
     return node;

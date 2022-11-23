@@ -4,12 +4,15 @@ import {
   useCallback
 } from "react";
 import {
-  createGlobalState,
   useMount
 } from "react-use";
+import {
+  atom,
+  useRecoilState
+} from "recoil";
 
 
-const useRawTheme = createGlobalState("light");
+const themeAtom = atom({key: "theme", default: "light"});
 
 export function useDefaultTheme(defaultTheme: string): void {
   const [, changeTheme] = useTheme();
@@ -20,7 +23,7 @@ export function useDefaultTheme(defaultTheme: string): void {
 }
 
 export function useTheme(): [string, ChangeThemeCallback] {
-  const [theme, setTheme] = useRawTheme();
+  const [theme, setTheme] = useRecoilState(themeAtom);
   const changeTheme = useCallback(function (theme: string): void {
     setTheme(theme);
     document.documentElement.dataset.theme = theme;

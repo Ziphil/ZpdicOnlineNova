@@ -14,14 +14,13 @@ import {
 } from "/client/component/atom/chart";
 import WhitePane from "/client/component/compound/white-pane";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
-  useIntl,
   usePath,
   useQuery,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   DetailedDictionary
@@ -40,8 +39,7 @@ const DictionaryPane = create(
     showCreatedDate = false,
     showChart = true,
     showSettingLink = false,
-    showDownloadLink = false,
-    styles
+    showDownloadLink = false
   }: {
     dictionary: DetailedDictionary,
     showUser?: boolean,
@@ -49,12 +47,11 @@ const DictionaryPane = create(
     showCreatedDate?: boolean,
     showChart?: boolean,
     showSettingLink?: boolean,
-    showDownloadLink?: boolean,
-    styles?: StylesRecord
+    showDownloadLink?: boolean
   }): ReactElement {
 
     const {request} = useRequest();
-    const [, {trans, transDate}] = useIntl();
+    const {trans, transDate} = useTrans("dictionaryPane");
     const {pushPath} = usePath();
 
     const number = dictionary.number;
@@ -115,29 +112,29 @@ const DictionaryPane = create(
             <div styleName="name">{name}</div>
             <div styleName="information">
               {(showUpdatedDate) && (
-                <div styleName="information-item">{trans("dictionaryPane.updatedDate")} — {transDate(dictionary.updatedDate)}</div>
+                <div styleName="information-item">{trans("updatedDate")} — {transDate(dictionary.updatedDate)}</div>
               )}
               {(showCreatedDate) && (
-                <div styleName="information-item">{trans("dictionaryPane.createdDate")} — {transDate(dictionary.createdDate)}</div>
+                <div styleName="information-item">{trans("createdDate")} — {transDate(dictionary.createdDate)}</div>
               )}
               {(showUser) && (
-                <div styleName="information-item">{trans("dictionaryPane.userName")} — {dictionary.user.screenName}</div>
+                <div styleName="information-item">{trans("userName")} — {dictionary.user.screenName}</div>
               )}
             </div>
           </div>
           <div styleName="right">
             {useMemo(() => (showChart && chartSpec && config) && (
-              <Chart className={styles!["chart"]} data={chartSpec.data} config={config}/>
-            ), [chartSpec, config, showChart, styles])}
+              <Chart styleName="chart" data={chartSpec.data} config={config}/>
+            ), [chartSpec, config, showChart])}
           </div>
         </div>
         {(showSettingLink || showDownloadLink) && (
           <div styleName="button-group">
             {(showSettingLink) && (
-              <Button label={trans("dictionaryPane.setting")} iconName="cog" variant="simple" onClick={jumpSettingPage}/>
+              <Button label={trans("setting")} iconName="cog" variant="simple" onClick={jumpSettingPage}/>
             )}
             {(showDownloadLink) && (
-              <Button label={trans("dictionaryPane.download")} iconName="download" variant="simple" onClick={downloadDictionary}/>
+              <Button label={trans("download")} iconName="download" variant="simple" onClick={downloadDictionary}/>
             )}
           </div>
         )}

@@ -9,7 +9,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -25,9 +25,8 @@ export const InformationPane = create(
     onClose?: (event: MouseEvent<HTMLButtonElement>) => void
   }): ReactElement {
 
-    const data = DataUtil.create({scheme});
     const node = (
-      <div styleName="root" {...data}>
+      <div styleName="root" {...data({scheme})}>
         <ul styleName="list">
           {texts.map((text, index) => <li key={index}>{text}</li>)}
         </ul>

@@ -11,6 +11,8 @@
   display: flex;
   flex-direction: column;
   z-index: 50;
+  --arrow-color: #{color(input-background)};
+  --arrow-border-color: #{color(border)};
   &[data-restrict-height] {
     max-height: 150rpx;
     overflow-y: auto;
@@ -22,7 +24,7 @@
 }
 
 .arrow {
-  @include arrow(color(input-background), color(border), 6rpx);
+  @include arrow(6rpx);
   display: none;
   .root[data-show-arrow] >& {
     display: block;

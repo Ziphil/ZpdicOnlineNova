@@ -212,13 +212,13 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   &:hover:not(:disabled) {
     background-color: schemed-color(hover-button-background, $scheme);
   }
-  &:focus:not(:disabled) {
-    outline: $focus-size solid schemed-color(focus, $scheme);
-  }
   &:active:not(:disabled) {
     background-color: schemed-color(active-button-background, $scheme);
     background-image: none;
     box-shadow: inset $inset-box-shadow-setting schemed-color(active-button-shadow, $scheme);
+  }
+  &:focus-visible:not(:disabled) {
+    outline: $focus-size solid schemed-color(focus, $scheme);
   }
   &:disabled {
     opacity: $disabled-opacity;
@@ -244,13 +244,13 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   &:hover:not(:disabled) {
     background-color: schemed-color(hover-light-button-background, $scheme);
   }
-  &:focus:not(:disabled) {
-    outline: $focus-size solid schemed-color(focus, $scheme);
-  }
   &:active:not(:disabled) {
     background-color: schemed-color(active-light-button-background, $scheme);
     background-image: none;
     box-shadow: inset $inset-box-shadow-setting schemed-color(active-light-button-shadow, $scheme);
+  }
+  &:focus-visible:not(:disabled) {
+    outline: $focus-size solid schemed-color(focus, $scheme);
   }
   &:disabled {
     opacity: $disabled-opacity;
@@ -272,51 +272,51 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   }
 }
 
-@mixin arrow($color, $border-color, $size) {
+@mixin arrow($size) {
   width: $size * 2;
   height: $size * 2;
   position: absolute;
   &::before {
-    border: $size transparent solid;
+    border: $size solid transparent;
     position: absolute;
     content: "";
   }
   &::after {
-    border: $size transparent solid;
+    border: $size solid transparent;
     position: absolute;
     content: "";
   }
   [data-popper-placement^="top"] >&::before {
     transform: translate(0rpx, $size * 2 + 1rpx);
-    border-top: $size $border-color solid;
+    border-top-color: var(--arrow-border-color);
   }
   [data-popper-placement^="top"] >&::after {
     transform: translate(0rpx, $size * 2);
-    border-top: $size $color solid;
+    border-top-color: var(--arrow-color);
   }
   [data-popper-placement^="bottom"] >&::before {
     transform: translate(0rpx, -$size * 2 - 1rpx);
-    border-bottom: $size $border-color solid;
+    border-bottom-color: var(--arrow-border-color);
   }
   [data-popper-placement^="bottom"] >&::after {
     transform: translate(0rpx, -$size * 2);
-    border-bottom: $size $color solid;
+    border-bottom-color: var(--arrow-color);
   }
   [data-popper-placement^="left"] >&::before {
     transform: translate($size * 2 + 1rpx, 0rpx);
-    border-left: $size $border-color solid;
+    border-left-color: var(--arrow-border-color);
   }
   [data-popper-placement^="left"] >&::after {
     transform: translate($size * 2, 0rpx);
-    border-left: $size $color solid;
+    border-left-color: var(--arrow-color);
   }
   [data-popper-placement^="right"] >&::before {
     transform: translate(-$size * 2 - 1rpx, 0rpx);
-    border-right: $size $border-color solid;
+    border-right-color: var(--arrow-border-color);
   }
   [data-popper-placement^="right"] >&::after {
     transform: translate(-$size * 2, 0rpx);
-    border-right: $size $color solid;
+    border-right-color: var(--arrow-color);
   }
 }
 
@@ -336,5 +336,9 @@ $icon-font-family: "Font Awesome 5 Pro", "Font Awesome 5 Free", "Font Awesome 5 
   }
   &::-webkit-scrollbar-track {
     background-color: $track-color;
+  }
+  &::-webkit-scrollbar-corner,
+  &::-webkit-resizer {
+    display: none;
   }
 }

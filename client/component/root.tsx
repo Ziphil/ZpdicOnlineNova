@@ -12,6 +12,7 @@ import {
 import * as queryParser from "query-string";
 import {
   ReactElement,
+  Suspense,
   useCallback
 } from "react";
 import {
@@ -20,6 +21,9 @@ import {
 import {
   HTML5Backend as DndBackend
 } from "react-dnd-html5-backend";
+import {
+  ErrorBoundary
+} from "react-error-boundary";
 import {
   IntlProvider
 } from "react-intl";
@@ -35,7 +39,6 @@ import {
 import {
   queryClient,
   useDefaultLocale,
-  useDefaultMe,
   useDefaultTheme
 } from "/client/component/hook";
 import InnerRoot from "/client/component/inner-root";
@@ -70,6 +73,7 @@ const routes = [
   ...createRoute("/dictionary/:value", () => import("/client/component/page/dictionary-page"), {type: "none"}),
   ...createRoute("/example/:number", () => import("/client/component/page/example-page"), {type: "none", loader: loadExamplePage}),
   ...createRoute("/list", () => import("/client/component/page/dictionary-list-page"), {type: "none", loader: loadDictionaryListPage}),
+  ...createRoute("/appearance", () => import("/client/component/page/appearance-page"), {type: "none"}),
   ...createRoute("/notification", () => import("/client/component/page/notification-page"), {type: "none", loader: loadNotificationPage}),
   ...createRoute("/contact", () => import("/client/component/page/contact-page"), {type: "none"}),
   ...createRoute("/document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
@@ -85,7 +89,27 @@ const Root = create(
   }: {
   }): ReactElement | null {
 
-    const {ready} = useDefaultMe();
+    const node = (
+      <ErrorBoundary fallbackRender={() => <div>Please Reload</div>}>
+        <Suspense fallback={<div/>}>
+          <RecoilRoot>
+            <ProviderRoot/>
+          </RecoilRoot>
+        </Suspense>
+      </ErrorBoundary>
+    );
+    return node;
+
+  }
+);
+
+
+const ProviderRoot = create(
+  require("./root.scss"), "ProviderRoot",
+  function ({
+  }: {
+  }): ReactElement | null {
+
     const {locale, messages} = useDefaultLocale("ja");
     useDefaultTheme("light");
 
@@ -95,22 +119,20 @@ const Root = create(
       }
     }, []);
 
-    const node = (ready) && (
+    const node = (
       <DndProvider backend={DndBackend}>
         <QueryClientProvider client={queryClient}>
           <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-            <RecoilRoot>
-              <Router location={location} routes={routes} caseSensitive={true}>
-                <InnerRoot>
-                  <Outlet/>
-                </InnerRoot>
-              </Router>
-            </RecoilRoot>
+            <Router location={location} routes={routes} caseSensitive={true}>
+              <InnerRoot>
+                <Outlet/>
+              </InnerRoot>
+            </Router>
           </IntlProvider>
         </QueryClientProvider>
       </DndProvider>
     );
-    return node || null;
+    return node;
 
   }
 );

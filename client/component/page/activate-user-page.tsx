@@ -29,7 +29,7 @@ const ActivateUserPage = create(
     const location = useLocation();
     const {pushPath} = usePath();
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     useMount(async () => {
       const search = queryParser.parse(location.searchString);

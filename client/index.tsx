@@ -13,7 +13,7 @@ import nprogress from "nprogress";
 import {
   createRoot
 } from "react-dom/client";
-import Root from "/client/component/root";
+import ProviderRoot from "/client/component/root";
 import {
   RECAPTCHA_KEY
 } from "/client/variable";
@@ -24,6 +24,7 @@ export class Main {
   public main(): void {
     this.appendIconElement();
     this.appendRecaptchaElement();
+    this.appendGoogleAdElement();
     this.setupTheme();
     this.setupNprogress();
     this.render();
@@ -44,6 +45,15 @@ export class Main {
     document.head.appendChild(element);
   }
 
+  private appendGoogleAdElement(): void {
+    const element = document.createElement("script");
+    element.id = "google-ads-sdk";
+    element.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js";
+    element.crossOrigin = "anonymous";
+    element.async = true;
+    document.head.appendChild(element);
+  }
+
   private setupTheme(): void {
     document.documentElement.setAttribute("data-theme", "light");
   }
@@ -56,7 +66,7 @@ export class Main {
     const container = document.getElementById("root");
     if (container) {
       const root = createRoot(container);
-      root.render(<Root/>);
+      root.render(<ProviderRoot/>);
     }
   }
 

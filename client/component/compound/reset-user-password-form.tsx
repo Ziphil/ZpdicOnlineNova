@@ -18,7 +18,8 @@ import {
   useLocation,
   usePath,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   createValidate
@@ -43,10 +44,11 @@ const ResetUserPasswordForm = create(
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const {request} = useRequest();
-    const [intl, {trans}] = useIntl();
+    const intl = useIntl();
+    const {trans} = useTrans("resetUserPasswordForm");
     const {pushPath} = usePath();
     const location = useLocation();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const issueResetToken = useCallback(async function (): Promise<void> {
       const response = await request("issueUserResetToken", {name, email}, {useRecaptcha: true});
@@ -75,10 +77,10 @@ const ResetUserPasswordForm = create(
       const validate = createValidate(rawValidatePassword, PopupUtil.getMessage(intl, "invalidUserPassword"));
       const node = (
         <form styleName="root">
-          <Input label={trans("resetUserPasswordForm.newPassword")} value={password} validate={validate} onSet={(password) => setPassword(password)}/>
+          <Input label={trans("newPassword")} value={password} validate={validate} onSet={(password) => setPassword(password)}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label={trans("resetUserPasswordForm.reset")} iconName="check" scheme="blue" reactive={true} onClick={resetPassword}/>
+              <Button label={trans("reset")} iconName="check" scheme="blue" reactive={true} onClick={resetPassword}/>
             </div>
           </div>
         </form>
@@ -87,11 +89,11 @@ const ResetUserPasswordForm = create(
     } else {
       const node = (
         <form styleName="root">
-          <Input label={trans("loginForm.userName")} value={name} onSet={(name) => setName(name)}/>
-          <Input label={trans("loginForm.email")} value={email} onSet={(email) => setEmail(email)}/>
+          <Input label={trans(":loginForm.userName")} value={name} onSet={(name) => setName(name)}/>
+          <Input label={trans(":loginForm.email")} value={email} onSet={(email) => setEmail(email)}/>
           <div styleName="button-group">
             <div styleName="row">
-              <Button label={trans("resetUserPasswordForm.issue")} iconName="envelope" scheme="blue" reactive={true} onClick={issueResetToken}/>
+              <Button label={trans("issue")} iconName="envelope" scheme="blue" reactive={true} onClick={issueResetToken}/>
             </div>
           </div>
         </form>

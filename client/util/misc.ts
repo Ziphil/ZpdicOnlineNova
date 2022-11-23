@@ -3,6 +3,10 @@
 import {
   Repeat
 } from "typescript-tuple";
+import {
+  Validate,
+  ValidationSpec
+} from "/client/component/atom/input";
 
 
 export function swap<T>(array: Array<T>, index: number, direction: 1 | -1): Array<T> {
@@ -77,15 +81,23 @@ export function calcOffset(page: number, size: number): {offset: number, size: n
   return {offset, size};
 }
 
-export function createValidate(pattern: RegExp | ((value: string) => boolean), message?: string): (value: string) => string | null {
+export function createValidate(pattern: RegExp | ((value: string) => boolean), message?: string): Validate {
   if (pattern instanceof RegExp) {
-    const validate = function (value: string): string | null {
-      return (value.match(pattern)) ? null : (message ?? "");
+    const validate = function (value: string): ValidationSpec | null {
+      if (value === "" || value.match(pattern)) {
+        return null;
+      } else {
+        return {scheme: "red", iconName: "exclamation-triangle", message: message ?? ""};
+      }
     };
     return validate;
   } else {
-    const validate = function (value: string): string | null {
-      return (pattern(value)) ? null : (message ?? "");
+    const validate = function (value: string): ValidationSpec | null {
+      if (value === "" || pattern(value)) {
+        return null;
+      } else {
+        return {scheme: "red", iconName: "exclamation-triangle", message: message ?? ""};
+      }
     };
     return validate;
   }

@@ -22,7 +22,7 @@ import {
 } from "/client/component/create";
 import {
   useExampleEditor,
-  useIntl,
+  useTrans,
   useWordEditor
 } from "/client/component/hook";
 import {
@@ -119,7 +119,7 @@ const WordPaneName = create(
     openWordEditor: () => void
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordPane");
 
     const [directionReferenceElement, setDirectionReferenceElement] = useState<HTMLElement | null>(null);
 
@@ -159,14 +159,14 @@ const WordPaneName = create(
         <div styleName="right">
           {(showEditLink && !showButton) && (
             <div styleName="button">
-              <Button label={trans("wordPane.edit")} iconName="edit" variant="simple" hideLabel={true} onClick={openWordEditor}/>
+              <Button label={trans("edit")} iconName="edit" variant="simple" hideLabel={true} onClick={openWordEditor}/>
             </div>
           )}
           {(showButton) && (
             <div styleName="button">
               <div styleName="dropdown-button">
                 <Button
-                  label={trans("wordPane.submit")}
+                  label={trans("submit")}
                   iconName="check"
                   position={(showDirectionButton) ? "left" : "alone"}
                   hideLabel={true}
@@ -207,21 +207,20 @@ const WordPaneEquivalents = create(
     word: Word | DetailedWord
   }): ReactElement | null {
 
-    const innerNodes = word.equivalents.map((equivalent, index) => {
-      const titleNode = (equivalent.title !== "") && <span styleName="box">{equivalent.title}</span>;
-      const innerNode = (
-        <span styleName="equivalent" key={index}>
-          {titleNode}
-          {equivalent.names.join(", ")}
-          <br/>
-        </span>
-      );
-      return innerNode;
-    });
-    const node = (innerNodes.length > 0) && (
+    const node = (word.equivalents.length > 0) && (
       <div styleName="container">
         <p styleName="text">
-          {innerNodes}
+          {word.equivalents.map((equivalent, index) => (
+            <span styleName="equivalent" key={index}>
+              {(equivalent.titles.length > 0) && (
+                <span styleName="box-list">
+                  {equivalent.titles.map((title, titleIndex) => <span key={`${title}-${titleIndex}`} styleName="box">{title}</span>)}
+                </span>
+              )}
+              {equivalent.names.join(", ")}
+              <br/>
+            </span>
+          ))}
         </p>
       </div>
     );
@@ -274,42 +273,37 @@ const WordPaneRelations = create(
   }): ReactElement | null {
 
     const groupedRelations = useMemo(() => {
-      const groupedRelations = new Map<string, Array<Relation>>();
+      const groupedRelations = new Map<string, [Array<string>, Array<Relation>]>();
       for (const relation of word.relations) {
-        const title = relation.title;
-        if (groupedRelations.get(title) === undefined) {
-          groupedRelations.set(title, []);
+        const titles = relation.titles;
+        const titleString = titles.join("\n");
+        if (groupedRelations.get(titleString) === undefined) {
+          groupedRelations.set(titleString, [titles, []]);
         }
-        groupedRelations.get(title)!.push(relation);
+        groupedRelations.get(titleString)![1].push(relation);
       }
       return groupedRelations;
     }, [word.relations]);
-    const innerNodes = Array.from(groupedRelations).map(([title, relations], index) => {
-      const titleNode = (title !== "") && <span styleName="box">{title}</span>;
-      const relationNodes = relations.map((relation, relationIndex) => {
-        const href = "/dictionary/" + dictionary.number + "?text=" + encodeURIComponent(relation.name) + "&mode=name&type=exact&page=0";
-        const relationNode = (
-          <Fragment key={relationIndex}>
-            {(relationIndex === 0) ? "" : ", "}
-            <Link href={href} target="self">{relation.name}</Link>
-          </Fragment>
-        );
-        return relationNode;
-      });
-      const innerNode = (
-        <span styleName="relations" key={index}>
-          <span styleName="confer"/>
-          {titleNode}
-          {relationNodes}
-          <br/>
-        </span>
-      );
-      return innerNode;
-    });
-    const node = (innerNodes.length > 0) && (
+    const node = (groupedRelations.size > 0) && (
       <div styleName="container">
         <p styleName="text">
-          {innerNodes}
+          {Array.from(groupedRelations).map(([titleString, [titles, relations]], index) => (
+            <span styleName="relations" key={index}>
+              <span styleName="confer"/>
+              {(titles.length > 0) && (
+                <span styleName="box-list">
+                  {titles.map((title, titleIndex) => <span key={`${title}-${titleIndex}`} styleName="box">{title}</span>)}
+                </span>
+              )}
+              {relations.map((relation, relationIndex) => (
+                <Fragment key={relationIndex}>
+                  {(relationIndex === 0) ? "" : ", "}
+                  <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(relation.name)}&mode=name&type=exact&page=0`} target="self">{relation.name}</Link>
+                </Fragment>
+              ))}
+              <br/>
+            </span>
+          ))}
         </p>
       </div>
     );
@@ -335,13 +329,13 @@ const WordPaneExamples = create(
     openExampleEditor: (example: Example) => void
   }): ReactElement | null {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordPane");
 
     const examples = ("examples" in word) ? word.examples : [];
     const innerNodes = examples.map((example, index) => {
       const editButtonNode = (showEditLink && !showButton) && (
         <div styleName="button">
-          <Button label={trans("wordPane.edit")} iconName="edit" variant="simple" hideLabel={true} onClick={() => openExampleEditor(example)}/>
+          <Button label={trans("edit")} iconName="edit" variant="simple" hideLabel={true} onClick={() => openExampleEditor(example)}/>
         </div>
       );
       const innerNode = (
@@ -380,7 +374,7 @@ const WordPaneSubmitDropdownNode = create(
     direction: "oneway" | "mutual"
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("wordPane");
 
     const node = (
       <div>

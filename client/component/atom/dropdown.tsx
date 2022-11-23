@@ -6,7 +6,6 @@ import {
   Instance as PopperInstance
 } from "@popperjs/core";
 import {
-  ComponentProps,
   ReactElement,
   Ref,
   createContext,
@@ -22,14 +21,15 @@ import {
 import {
   useClickAway
 } from "react-use";
-import DropdownItem from "/client/component/atom/dropdown-item";
 import {
   create
 } from "/client/component/create";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
-import {fillRef} from "/client/util/ref";
+import {
+  fillRef
+} from "/client/util/ref";
 
 
 type DropdownContextValue = {
@@ -66,7 +66,7 @@ export const Dropdown = create(
     onSet?: (value: V) => void,
     popperRef?: Ref<DropdownPopperInstance>,
     className?: string,
-    children: Array<ReactElement<ComponentProps<typeof DropdownItem>>>
+    children: ReactElement | Array<ReactElement>
   }): ReactElement {
 
     const [currentOpen, setCurrentOpen] = useState(false);
@@ -93,6 +93,7 @@ export const Dropdown = create(
     useEffect(() => {
       if (autoMode === "focus") {
         const handleFocus = function (): void {
+          popper.update?.();
           setCurrentOpen(true);
         };
         const handleBlur = function (): void {
@@ -107,6 +108,7 @@ export const Dropdown = create(
       } else if (autoMode === "click") {
         const handleMouseDown = function (): void {
           openingRef.current = true;
+          popper.update?.();
           setCurrentOpen(true);
         };
         autoElement?.addEventListener("mousedown", handleMouseDown);
@@ -116,7 +118,7 @@ export const Dropdown = create(
       } else {
         return () => null;
       }
-    }, [autoMode, autoElement]);
+    }, [autoMode, autoElement, popper]);
 
     useEffect(() => {
       if (popperRef !== undefined) {
@@ -134,15 +136,27 @@ export const Dropdown = create(
     });
 
     const contextValue = useMemo(() => ({onSet: handleSet}), [handleSet]);
-    const actualOpen = children.length > 0 && ((autoMode !== null) ? currentOpen : open);
-    const data = DataUtil.create({
-      hidden: !actualOpen,
-      showArrow,
-      restrictHeight
-    });
+    const arrayChildren = (Array.isArray(children)) ? children : [children];
+    const actualOpen = arrayChildren.length > 0 && ((autoMode !== null) ? currentOpen : open);
     const node = (
-      <div styleName="root" className={className} ref={setPopupElement} style={styles.popper} {...attributes.popper} {...data}>
-        <div styleName="arrow" ref={setArrowElement} style={styles.arrow} {...attributes.arrow}/>
+      <div
+        styleName="root"
+        className={className}
+        ref={setPopupElement}
+        style={styles.popper}
+        {...attributes.popper}
+        {...data({
+          hidden: !actualOpen,
+          showArrow,
+          restrictHeight
+        })}
+      >
+        <div
+          styleName="arrow"
+          ref={setArrowElement}
+          style={styles.arrow}
+          {...attributes.arrow}
+        />
         <DropdownContextProvider value={contextValue}>
           {children}
         </DropdownContextProvider>

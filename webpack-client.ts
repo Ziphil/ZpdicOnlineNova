@@ -77,6 +77,14 @@ const config = {
         ]
       },
       {
+        test: /\.svg$/,
+        use: [
+          {
+            loader: "@svgr/webpack"
+          }
+        ]
+      },
+      {
         test: /\.yml$/,
         use: [
           {

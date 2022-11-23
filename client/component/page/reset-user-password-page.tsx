@@ -13,7 +13,7 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 import Page from "/client/component/page/page";
 
@@ -24,7 +24,7 @@ const ResetUserPasswordPage = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("resetUserPasswordPage");
     const location = useLocation();
 
     const tokenKey = useMemo(() => {
@@ -33,8 +33,8 @@ const ResetUserPasswordPage = create(
       return tokenKey;
     }, [location.search]);
     const node = (
-      <Page title={trans("resetUserPasswordPage.title")}>
-        <div styleName="title">{trans("resetUserPasswordPage.title")}</div>
+      <Page title={trans("title")}>
+        <div styleName="title">{trans("title")}</div>
         <div styleName="form-container">
           <ResetUserPasswordForm tokenKey={tokenKey}/>
         </div>

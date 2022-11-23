@@ -60,7 +60,7 @@ export const Flexible = createStory(template, {
 export const Validation = createStory(template, {
   args: {
     value: "Input",
-    validate: (value) => (value.match(/^[a-z]+/)) ? null : "The value must consist of only lowercase letters."
+    validate: (value) => (value === "") ? {scheme: "red", iconName: "triangle-exclamation", message: "Should not be empty."} : {scheme: "primary", iconName: "circle-check", message: "Looks good."}
   }
 });
 

@@ -5,36 +5,31 @@
 
 .root {
   color: color(logo);
+  column-gap: 90rpx * 0.53856;  
   text-align: center;
   font-variant-numeric: lining-nums;
   font-feature-settings: "lnum" 1;
+  display: flex;
+  align-items: center;
 }
 
-.title {
-  margin: 0rpx;
-  font-family: $special-font-family;
-  font-size: 120rpx; 
+.symbol {
+  width: 90rpx;
+  path {
+    fill: color(logo) !important;
+  }
   @include smartphone {
-    font-size: 120rpx * 0.8;
+    width: 100rpx * 0.8;
   }
 }
 
-.subtitle {
-  left: 1.2em;
-  margin: -15u 0rpx 0rpx 0rpx;
-  font-family: $special-font-family;
-  font-size: 50rpx;
-  letter-spacing: 0.2em;
-  position: relative;
-  @include smartphone {
-    font-size: 50rpx * 0.8;
+.logo {
+  width: 340rpx;
+  margin-block-end: -24rpx;
+  path {
+    fill: color(logo) !important;
   }
-}
-
-.version {
-  margin: $small-margin 0rpx 0rpx 0rpx;
-  font-size: $large-font-size;
   @include smartphone {
-    display: none;
+    width: 340rpx * 0.8;
   }
 }

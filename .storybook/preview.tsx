@@ -7,7 +7,7 @@ import {
 import {
   createElement
 } from "react";
-import StoryRoot from "../client/story/story-root";
+import Root from "../client/story/story-root";
 
 
 export const parameters = {
@@ -29,10 +29,10 @@ export const parameters = {
 
 export const decorators = [
   (story) => (
-    <StoryRoot>
+    <Root>
       <div id="story-wrapper">
         {createElement(story)}
       </div>
-    </StoryRoot>
+    </Root>
   )
 ] as BaseDecorators<any>

@@ -9,9 +9,9 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   useLogout,
-  usePath
+  usePath,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -21,7 +21,7 @@ const DashboardButtonForm = create(
   }: {
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("dashboardButtonForm");
     const {pushPath} = usePath();
     const logout = useLogout();
 
@@ -39,10 +39,10 @@ const DashboardButtonForm = create(
     const node = (
       <form styleName="root">
         <div styleName="row">
-          <Button label={trans("dashboardButtonForm.dashboard")} iconName="house-user" scheme="blue" onClick={jumpDashboard}/>
+          <Button label={trans("dashboard")} iconName="house-user" scheme="blue" onClick={jumpDashboard}/>
         </div>
         <div styleName="row">
-          <Button label={trans("dashboardButtonForm.logout")} iconName="sign-out-alt" variant="simple" onClick={performLogout}/>
+          <Button label={trans("logout")} iconName="sign-out-alt" variant="simple" onClick={performLogout}/>
         </div>
       </form>
     );

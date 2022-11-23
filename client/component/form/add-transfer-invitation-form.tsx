@@ -16,9 +16,9 @@ import {
   create
 } from "/client/component/create";
 import {
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 import {
   Dictionary
@@ -38,9 +38,9 @@ const AddTransferInvitationForm = create(
   }): ReactElement {
 
     const [userName, setUserName] = useState("");
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("addTransferInvitationForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const suggestUsers = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const response = await request("suggestUsers", {pattern}, {ignoreError: true});
@@ -70,13 +70,13 @@ const AddTransferInvitationForm = create(
       <Fragment>
         <form styleName="root">
           <Input
-            label={trans("addTransferInvitationForm.userName")}
+            label={trans("userName")}
             value={userName}
             prefix="@"
             suggest={suggestUsers}
             onSet={(userName) => setUserName(userName)}
           />
-          <Button label={trans("addTransferInvitationForm.confirm")} reactive={true} onClick={handleClick}/>
+          <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
         </form>
       </Fragment>
     );

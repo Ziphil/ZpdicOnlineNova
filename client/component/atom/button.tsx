@@ -19,14 +19,13 @@ import {
   IconName
 } from "/client/component/atom/icon";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
   CancelablePromise
 } from "/client/util/cancelable";
 import {
-  DataUtil
+  data
 } from "/client/util/data";
 
 
@@ -45,7 +44,6 @@ export const Button = create(
     disabled = false,
     onClick,
     className,
-    styles,
     nativeRef
   }: {
     name?: string,
@@ -60,7 +58,6 @@ export const Button = create(
     disabled?: boolean,
     onClick?: (event: MouseEvent<HTMLButtonElement>) => AsyncOrSync<void>,
     className?: string,
-    styles?: StylesRecord,
     nativeRef?: Ref<HTMLButtonElement>
   }): ReactElement {
 
@@ -93,18 +90,26 @@ export const Button = create(
     });
 
     const styleName = (variant === "simple" || variant === "link") ? "simple" : "button";
-    const data = DataUtil.create({
-      position: (position !== "alone") ? position : undefined,
-      variant,
-      scheme,
-      onlyIcon: label === undefined,
-      link: variant === "link",
-      hideLabel,
-      loading
-    });
     const node = (
-      <button styleName={styleName} className={className} name={name} type={type} disabled={disabled || loading} ref={nativeRef} onClick={handleClick} {...data}>
-        {(iconName !== undefined) && <Icon className={styles!["icon"]} name={iconName}/>}
+      <button
+        styleName={styleName}
+        className={className}
+        name={name}
+        type={type}
+        disabled={disabled || loading}
+        ref={nativeRef}
+        onClick={handleClick}
+        {...data({
+          position: (position !== "alone") ? position : undefined,
+          variant,
+          scheme,
+          onlyIcon: label === undefined,
+          link: variant === "link",
+          hideLabel,
+          loading
+        })}
+      >
+        {(iconName !== undefined) && <Icon styleName="icon" name={iconName}/>}
         {(label !== undefined) && <span styleName="label">{label}</span>}
         {(reactive) && (
           <span styleName="spinner-wrapper">

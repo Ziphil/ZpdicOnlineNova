@@ -15,9 +15,9 @@ import {
 } from "/client/component/create";
 import {
   invalidateQueries,
-  useIntl,
   usePopup,
-  useRequest
+  useRequest,
+  useTrans
 } from "/client/component/hook";
 
 
@@ -34,9 +34,9 @@ const ChangeDictionaryNameForm = create(
   }): ReactElement {
 
     const [name, setName] = useState(currentName);
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("changeDictionaryNameForm");
     const {request} = useRequest();
-    const [, {addInformationPopup}] = usePopup();
+    const {addInformationPopup} = usePopup();
 
     const handleClick = useCallback(async function (): Promise<void> {
       const response = await request("changeDictionaryName", {number, name});
@@ -49,8 +49,8 @@ const ChangeDictionaryNameForm = create(
 
     const node = (
       <form styleName="root">
-        <Input label={trans("changeDictionaryNameForm.name")} value={name} onSet={(name) => setName(name)}/>
-        <Button label={trans("changeDictionaryNameForm.confirm")} reactive={true} onClick={handleClick}/>
+        <Input label={trans("name")} value={name} onSet={(name) => setName(name)}/>
+        <Button label={trans("confirm")} reactive={true} onClick={handleClick}/>
       </form>
     );
     return node;

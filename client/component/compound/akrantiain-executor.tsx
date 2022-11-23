@@ -19,11 +19,10 @@ import Input from "/client/component/atom/input";
 import Overlay from "/client/component/atom/overlay";
 import TextArea from "/client/component/atom/text-area";
 import {
-  StylesRecord,
   create
 } from "/client/component/create";
 import {
-  useIntl
+  useTrans
 } from "/client/component/hook";
 
 
@@ -32,16 +31,14 @@ const AkrantiainExecutor = create(
   function ({
     defaultSource,
     open,
-    onClose,
-    styles
+    onClose
   }: {
     defaultSource?: string,
     open: boolean,
-    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>,
-    styles?: StylesRecord
+    onClose?: (event: MouseEvent<HTMLElement>, source: string) => AsyncOrSync<void>
   }): ReactElement {
 
-    const [, {trans}] = useIntl();
+    const {trans} = useTrans("akrantiainExecutor");
 
     const [source, setSource] = useState(defaultSource ?? "");
     const [input, setInput] = useState("");
@@ -71,11 +68,11 @@ const AkrantiainExecutor = create(
 
     const version = AKRANTIAIN_VERSION;
     const node = (
-      <Overlay size="large" title={trans("akrantiainExecutor.title", {version})} open={open} onClose={handleClose}>
+      <Overlay size="large" title={trans("title", {version})} open={open} onClose={handleClose}>
         <div styleName="root">
           <TextArea
-            className={styles!["source"]}
-            label={trans("akrantiainExecutor.source")}
+            styleName="source"
+            label={trans("source")}
             value={source}
             font="monospace"
             language="akrantiain"
@@ -83,12 +80,12 @@ const AkrantiainExecutor = create(
             fitHeight={true}
             onSet={setSource}
           />
-          <Input label={trans("akrantiainExecutor.input")} value={input} onSet={(input) => setInput(input)}/>
-          <Button className={styles!["button"]} label={trans("akrantiainExecutor.execute")} onClick={executeAkrantiain}/>
-          <Input label={trans("akrantiainExecutor.output")} value={output} readOnly={true}/>
+          <Input styleName="input" label={trans("input")} value={input} onSet={setInput}/>
+          <Button styleName="button" label={trans("execute")} onClick={executeAkrantiain}/>
+          <Input styleName="input" label={trans("output")} value={output} readOnly={true}/>
           <TextArea
-            className={styles!["error-message"]}
-            label={trans("akrantiainExecutor.errorMessage")}
+            styleName="error-message"
+            label={trans("errorMessage")}
             value={errorMessage}
             font="monospace"
             language="plain"
