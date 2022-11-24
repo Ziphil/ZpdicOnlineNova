@@ -31,6 +31,7 @@ const RAW_CONTRIBUTORS = [
   {name: "lynn", url: {github: "lynn"}, avatarUrl: {github: "lynn"}},
   {name: "nymwa", url: {github: "nymwa"}, avatarUrl: {github: "nymwa"}},
   {name: "川音リオ", url: {twitter: "KawaneRio"}, avatarUrl: "https://pbs.twimg.com/profile_images/1085673171083091969/t3IjudoH_400x400.jpg"},
+  {name: "Qunoxts", url: {twitter: "Qunoxts"}, avatarUrl: "https://pbs.twimg.com/profile_images/1321519766830415872/8HbvaYFT_400x400.jpg"},
   {name: "炭酸ソーダ", url: {twitter: "na2co3_ftw"}, avatarUrl: {github: "na2co3-ftw"}}
 ];
 
