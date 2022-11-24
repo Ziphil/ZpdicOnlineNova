@@ -58,8 +58,12 @@ export class AdvancedWordParameterElement extends WordParameter {
     const needle = WordParameter.createNeedle(this.text, this.type, {case: false});
     const eachFilters = keys.map((key) => {
       let eachQuery = WordModel.find().where(key, needle);
-      if (this.title && (this.mode === "equivalent" || this.mode === "information")) {
-        eachQuery = eachQuery.where(`${this.mode}s.title`, this.title);
+      if (this.title) {
+        if (this.mode === "equivalent") {
+          eachQuery = eachQuery.where("equivalents.titles", this.title);
+        } else if (this.mode === "information") {
+          eachQuery = eachQuery.where("informations.title", this.title);
+        }
       }
       const eachFilter = eachQuery.getFilter();
       return eachFilter;
