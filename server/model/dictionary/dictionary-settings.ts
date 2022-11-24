@@ -37,7 +37,8 @@ export class DictionarySettingsSchema {
     const pronunciationTitle = "Pronunciation";
     const exampleTitle = "Examples";
     const enableMarkdown = false;
-    const settings = new DictionarySettingsModel({punctuations, pronunciationTitle, exampleTitle, enableMarkdown});
+    const enableDuplicateName = true;
+    const settings = new DictionarySettingsModel({punctuations, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName});
     return settings;
   }
 
