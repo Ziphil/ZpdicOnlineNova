@@ -93,20 +93,24 @@ export function checkUser(authority?: string): RequestHandler {
 // そもそも該当する辞書が存在しない場合、request オブジェクトの dictionary プロパティの値は undefined のまま、次の処理を行います。
 export function verifyDictionary(authority: DictionaryAuthority): RequestHandler {
   const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
-    const user = request.user!;
-    const number = parseInt(request.query.number || request.body.number, 10);
-    const dictionary = await DictionaryModel.fetchOneByNumber(number);
-    if (dictionary) {
-      const hasAuthority = await dictionary.hasAuthority(user, authority);
-      if (hasAuthority) {
-        request.dictionary = dictionary;
-        next();
+    try {
+      const user = request.user!;
+      const number = parseInt(request.query.number || request.body.number, 10);
+      const dictionary = await DictionaryModel.fetchOneByNumber(number);
+      if (dictionary) {
+        const hasAuthority = await dictionary.hasAuthority(user, authority);
+        if (hasAuthority) {
+          request.dictionary = dictionary;
+          next();
+        } else {
+          const body = CustomError.ofType("notEnoughDictionaryAuthority");
+          response.status(403).send(body).end();
+        }
       } else {
-        const body = CustomError.ofType("notEnoughDictionaryAuthority");
-        response.status(403).send(body).end();
+        next();
       }
-    } else {
-      next();
+    } catch (error) {
+      next(error);
     }
   };
   return handler;

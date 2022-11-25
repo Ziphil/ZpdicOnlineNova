@@ -31,6 +31,20 @@
   justify-content: space-between;
 }
 
+.logo-container {
+  column-gap: $medium-margin;
+  display: flex;
+  align-items: center;
+}
+
+.dictionary-name-container {
+  @include bold-font;
+  column-gap: $medium-margin;
+  font-size: $huge-font-size;
+  display: flex;
+  align-items: center;
+}
+
 .logo {
   height: 32rpx;
   margin-block-end: -6rpx;
@@ -39,15 +53,11 @@
   }
 }
 
-.dictionary-name {
-  @include bold-font;
-  column-gap: $medium-margin;
-  font-size: $huge-font-size;
-  display: flex;
-  align-items: center;
+.version {
+  color: color(accent);
 }
 
-.link {
+.logo-link {
   line-height: 0;
 }
 
