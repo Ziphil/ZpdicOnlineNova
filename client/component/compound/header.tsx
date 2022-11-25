@@ -20,6 +20,7 @@ import SymbolSvg from "/client/public/symbol.svg";
 import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
+import {VERSION} from "/client/variable";
 
 
 const Header = create(
@@ -47,14 +48,17 @@ const Header = create(
           <div styleName="top">
             <div styleName="left">
               {(dictionary === undefined) ? (
-                <h1>
-                  <Link styleName="link" href="/" target="self" style="plane">
+                <h1 styleName="logo-container">
+                  <Link styleName="logo-link" href="/" target="self" style="plane">
                     <LogoSvg styleName="logo" alt="ZpDIC Online"/>
                   </Link>
+                  <div styleName="version">
+                    {VERSION}
+                  </div>
                 </h1>
               ) : (
-                <h1 styleName="dictionary-name">
-                  <Link styleName="link" href="/" target="self" style="plane">
+                <h1 styleName="dictionary-name-container">
+                  <Link styleName="logo-link" href="/" target="self" style="plane">
                     <SymbolSvg styleName="symbol" alt=""/>
                   </Link>
                   <Link href={"/dictionary/" + dictionary.number + ((preserveQuery) ? location.searchString : "")} target="self" style="plane">
