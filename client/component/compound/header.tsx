@@ -20,7 +20,9 @@ import SymbolSvg from "/client/public/symbol.svg";
 import {
   EnhancedDictionary
 } from "/client/skeleton/dictionary";
-import {VERSION} from "/client/variable";
+import {
+  VERSION
+} from "/client/variable";
 
 
 const Header = create(
