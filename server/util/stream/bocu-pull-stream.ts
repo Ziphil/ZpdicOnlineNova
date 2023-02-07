@@ -55,9 +55,9 @@ export class BocuPullStream extends PullStream {
     return this.stream.read();
   }
 
-  // 指定されたオフセット位置からデータを読み込み、それを BOCU-1 でエンコードされた文字列だと解釈して、デコードした結果を返します。
-  // 終端もしくは 0x0 に到達するまでバイトを読み込みます。
-  // オフセット位置に null が指定されると、内部で保持されているオフセット位置を利用して読み込みを行い、その後に読み込んだバイト数分だけ内部のオフセット位置を進めます。
+  /** 指定されたオフセット位置からデータを読み込み、それを BOCU-1 でエンコードされた文字列だと解釈して、デコードした結果を返します。
+   * 終端もしくは 0x0 に到達するまでバイトを読み込みます。
+   * オフセット位置に `null` が指定されると、内部で保持されているオフセット位置を利用して読み込みを行い、その後に読み込んだバイト数分だけ内部のオフセット位置を進めます。*/
   public readBocuString(includeBytes?: false): string;
   public readBocuString(includeBytes: true): [string, Array<number>];
   public readBocuString(includeBytes?: boolean): string | [string, Array<number>] {

@@ -37,8 +37,8 @@ export class CancelablePromise<T> implements Promise<T> {
     return this.finally(onFinally);
   }
 
-  // このオブジェクトが表す処理を行った後に then や catch で登録された処理を実行するのをキャンセルします。
-  // このオブジェクトが表す処理そのものが中断されるわけではありません。
+  /** このオブジェクトが表す処理を行った後に `then` や `catch` で登録された処理を実行するのをキャンセルします。
+   * このオブジェクトが表す処理そのものが中断されるわけではありません。*/
   public cancel(): void {
     this.canceled = true;
   }

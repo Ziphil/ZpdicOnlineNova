@@ -75,7 +75,7 @@ export class Main {
     this.listen();
   }
 
-  // リクエストボディをパースするミドルウェアの設定をします。
+  /** リクエストボディをパースするミドルウェアの設定をします。*/
   private setupBodyParsers(): void {
     const urlencodedParser = express.urlencoded({extended: false});
     const jsonParser = express.json();
@@ -88,14 +88,14 @@ export class Main {
     this.application.use(middleware);
   }
 
-  // ファイルをアップロードする処理を行う Multer の設定をします。
-  // アップロードされたファイルは upload フォルダ内に保存するようにしています。
+  /** ファイルをアップロードする処理を行う Multer の設定をします。
+   * アップロードされたファイルは upload フォルダ内に保存するようにしています。*/
   private setupMulter(): void {
     const middleware = multer({dest: "./dist/upload/"}).single("file");
     this.application.use("/internal*", middleware);
   }
 
-  // アクセスログを出力する morgan の設定をします。
+  /** アクセスログを出力する morgan の設定をします。*/
   private setupMorgan(): void {
     const middleware = morgan<Request>((tokens, request, response) => {
       const method = tokens["method"](request, response);
@@ -111,8 +111,8 @@ export class Main {
     this.application.use(middleware);
   }
 
-  // MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
-  // typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。
+  /** MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
+   * typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。*/
   private setupMongo(): void {
     MongoUtil.setCheckRequired("String");
     mongoose.connect(MONGO_URI);
@@ -129,13 +129,13 @@ export class Main {
     aws.config.update({credentials, region});
   }
 
-  // 内部処理で用いるディレクトリを用意します。
+  /** 内部処理で用いるディレクトリを用意します。*/
   private setupDirectories(): void {
     fs.mkdirSync("./dist/download", {recursive: true});
   }
 
-  // ルーターの設定を行います。
-  // このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。
+  /** ルーターの設定を行います。
+   * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
   private setupRouters(): void {
     CommissionController.use(this.application);
     DebugController.use(this.application);
@@ -186,9 +186,9 @@ export class Main {
     this.application.use("/static", express.static(process.cwd() + "/dist/static"));
   }
 
-  // ルーターで設定されていない URL にアクセスされたときのフォールバックの設定をします。
-  // フロントエンドから呼び出すためのエンドポイント用 URL で処理が存在しないものにアクセスされた場合は、404 エラーを返します。
-  // そうでない場合は、フロントエンドのトップページを返します。
+  /** ルーターで設定されていない URL にアクセスされたときのフォールバックの設定をします。
+   * フロントエンドから呼び出すためのエンドポイント用 URL で処理が存在しないものにアクセスされた場合は、404 エラーを返します。
+   * そうでない場合は、フロントエンドのトップページを返します。*/
   private setupFallbackHandlers(): void {
     const internalHandler = function (request: Request, response: Response, next: NextFunction): void {
       const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;

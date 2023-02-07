@@ -34,8 +34,8 @@ export abstract class WordParameter {
 
   public abstract createQuery(dictionary: Dictionary): QueryLike<Array<Word>, Word>;
 
-  // この検索パラメータからサジェストされる単語を検索するためのクエリを返します。
-  // 何もサジェストする必要がない場合は null を返します。
+  /** この検索パラメータからサジェストされる単語を検索するためのクエリを返します。
+   * 何もサジェストする必要がない場合は `null` を返します。*/
   public abstract createSuggestionQuery(dictionary: Dictionary): Aggregate<Array<RawSuggestion>> | null;
 
   protected static createKeys(mode: WordMode): Array<string> {

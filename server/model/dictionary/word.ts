@@ -74,10 +74,10 @@ export class WordSchema extends DiscardableSchema {
   @prop()
   public updatedDate?: Date;
 
-  // 辞書に登録されている単語を編集します。
-  // 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
-  // そうでない場合は、渡された単語データを新しいデータとして追加します。
-  // 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。
+  /** 辞書に登録されている単語を編集します。
+   * 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
+   * そうでない場合は、渡された単語データを新しいデータとして追加します。
+   * 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。*/
   public static async edit(dictionary: Dictionary, word: EditableWordSkeleton): Promise<Word> {
     const currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", word.number);
     let resultWord;
@@ -140,24 +140,24 @@ export class WordSchema extends DiscardableSchema {
     }
   }
 
-  // 古い履歴データを完全に削除します。
-  // 論理削除ではなく物理削除を行うので、もとには戻せません。
+  /** 古い履歴データを完全に削除します。
+   * 論理削除ではなく物理削除を行うので、もとには戻せません。*/
   public static async discardOldHistory(duration: number): Promise<void> {
     const date = new Date(Date.now() - duration * 24 * 60 * 60 * 1000);
     const result = await WordModel.deleteMany().lt("removedDate", date);
     LogUtil.log("model/word/discardOld", {count: result.deletedCount});
   }
 
-  // word に渡された単語データ内の関連語データのうち、現在存在していないものを削除します。
-  // この処理は、word 内の関連語データを上書きします。
+  /** `word` に渡された単語データ内の関連語データのうち、現在存在していないものを削除します。
+   * この処理は、`word` 内の関連語データを上書きします。*/
   private static async filterRelations(dictionary: Dictionary, word: Word): Promise<void> {
     const relationNumbers = word.relations.map((relation) => relation.number);
     const relationWords = await WordModel.findExist().where("dictionary", dictionary).where("number", relationNumbers);
     word.relations = word.relations.filter((relation) => relationWords.some((relationWord) => relationWord.number === relation.number));
   }
 
-  // 単語データの編集によって単語の綴りが変化した場合に、それによって起こり得る関連語データの不整合を修正します。
-  // この処理では、既存の単語データを上書きするので、編集履歴は残りません。
+  /** 単語データの編集によって単語の綴りが変化した場合に、それによって起こり得る関連語データの不整合を修正します。
+   * この処理では、既存の単語データを上書きするので、編集履歴は残りません。*/
   private static async correctRelationsByEdit(dictionary: Dictionary, word: Word): Promise<void> {
     const affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("relations.number", word.number);
     for (const affectedWord of affectedWords) {
@@ -172,9 +172,9 @@ export class WordSchema extends DiscardableSchema {
     await Promise.all(promises);
   }
 
-  // 単語データを削除した場合に、それによって起こり得る関連語データの不整合を修正します。
-  // この処理では、修正が必要な既存の単語データを論理削除した上で、関連語データの不整合を修正した新しい単語データを作成します。
-  // そのため、この処理の内容は、修正を行った単語データに編集履歴として残ります。
+  /** 単語データを削除した場合に、それによって起こり得る関連語データの不整合を修正します。
+   * この処理では、修正が必要な既存の単語データを論理削除した上で、関連語データの不整合を修正した新しい単語データを作成します。
+   * そのため、この処理の内容は、修正を行った単語データに編集履歴として残ります。*/
   private static async correctRelationsByDiscard(dictionary: Dictionary, word: Word): Promise<void> {
     const affectedWords = await WordModel.findExist().where("dictionary", dictionary).where("relations.number", word.number);
     const changedWords = [];
@@ -190,7 +190,7 @@ export class WordSchema extends DiscardableSchema {
     await Promise.all([...affectedPromises, ...changedPromises]);
   }
 
-  // この単語データをコピーした新しい単語データを返します。
+  /** この単語データをコピーした新しい単語データを返します。*/
   public copy(this: Word): Word {
     const dictionary = this.dictionary;
     const number = this.number;
