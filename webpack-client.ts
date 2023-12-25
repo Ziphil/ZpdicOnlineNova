@@ -137,7 +137,12 @@ const config = {
       analyzerMode: (!!process.env["ANALYZE"]) ? "static" : "disabled",
       reportFilename: path.join(__dirname, "dist", "client", "stats.html")
     }),
-    new EnvironmentPlugin(["npm_package_version", "RECAPTCHA_KEY", "AWS_STORAGE_BUCKET", "ANALYTICS_ID"])
+    new EnvironmentPlugin({
+      "npm_package_version": "",
+      "RECAPTCHA_KEY": "",
+      "AWS_STORAGE_BUCKET": "",
+      "ANALYTICS_ID": ""
+    })
   ]
 };
 

@@ -5,7 +5,7 @@ import seedrandom from "seedrandom";
 
 export class Random {
 
-  private random: ReturnType<typeof seedrandom>;
+  private random: () => number;
 
   public constructor(seed: string) {
     this.random = seedrandom(seed);

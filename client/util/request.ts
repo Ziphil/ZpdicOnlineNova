@@ -41,7 +41,7 @@ export async function request<N extends ProcessName>(name: N, data: RequestData<
     } catch (error) {
       if (error.code === "ECONNABORTED") {
         const data = undefined as any;
-        return {status: 408, statusText: "Request Timeout", headers: {}, data, config};
+        return {status: 408, statusText: "Request Timeout", headers: {}, data, config} as any;
       } else {
         throw error;
       }
