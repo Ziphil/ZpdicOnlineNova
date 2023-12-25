@@ -4,20 +4,20 @@ import dotenv from "dotenv";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
 import {EnvironmentPlugin} from "webpack";
-import {BundleAnalyzerPlugin} from "webpack-bundle-analyzer";
 
 
 dotenv.config({path: "./variable.env"});
 
 const config = {
-  entry: ["babel-polyfill", "./client/index.tsx"],
+  entry: ["babel-polyfill", "./client-new/index.tsx"],
   output: {
-    path: path.join(__dirname, "dist", "client"),
-    publicPath: "/client/",
+    path: path.join(__dirname, "dist", "client-new"),
+    publicPath: "/client-new/",
     filename: "./bundle.js",
     chunkFilename: "./chunk-[name].js"
   },
   devtool: "source-map",
+  stats: "errors-only",
   module: {
     rules: [
       {
@@ -104,7 +104,7 @@ const config = {
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".scss", ".css", ".yml", ".md"],
     alias: {
-      "/client": path.resolve(__dirname, "client"),
+      "/client-new": path.resolve(__dirname, "client-new"),
       "/server": path.resolve(__dirname, "server"),
       "/worker": path.resolve(__dirname, "worker")
     },
@@ -112,14 +112,22 @@ const config = {
       stream: require.resolve("stream-browserify")
     }
   },
+  devServer: {
+    port: 3000,
+    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, "dist", "client-new")
+    },
+    proxy: {
+      "/internal": "http://localhost:8050",
+      "/external": "http://localhost:8050",
+      "/static": "http://localhost:8050"
+    }
+  },
   plugins: [
     new HtmlWebpackPlugin({
-      template: "./client/public/index.html",
+      template: "./client-new/public/index.html",
       title: "ZpDIC Online"
-    }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: (!!process.env["ANALYZE"]) ? "static" : "disabled",
-      reportFilename: path.join(__dirname, "dist", "client", "stats.html")
     }),
     new EnvironmentPlugin({
       "npm_package_version": "",

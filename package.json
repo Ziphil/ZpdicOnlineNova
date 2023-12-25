@@ -6,13 +6,13 @@
   "main": "dist/index.js",
   "scripts": {
     "develop": "run-p develop:client develop:server:webpack develop:server:nodemon",
-    "develop:client": "webpack-dev-server --mode development --devtool inline-source-map --config webpack-client.ts --hot",
+    "develop:client": "webpack-dev-server --mode development --devtool inline-source-map --config webpack-client-new.ts --hot",
     "develop:server:webpack": "webpack --mode development --config webpack-server.ts --watch",
     "develop:server:nodemon": "nodemon --inspect dist/index.js",
     "develop:worker:nodemon": "nodemon --inspect dist/worker.js",
-    "build": "run-s build:client build:server",
-    "build:client": "webpack --mode production --config webpack-client.ts",
-    "build:client:analyze": "cross-env ANALYZE=1 npm run build:client",
+    "build": "run-s build:client:old build:client:new build:server",
+    "build:client:old": "webpack --mode production --config webpack-client.ts",
+    "build:client:new": "webpack --mode production --config webpack-client-new.ts",
     "build:server": "webpack --mode production --config webpack-server.ts",
     "start": "node dist/index.js",
     "start:worker": "node dist/worker.js",
@@ -42,6 +42,41 @@
           "ignore": [
             "styleName"
           ]
+        }
+      ],
+      "import/order": [
+        "warn",
+        {
+          "groups": [
+            [
+              "builtin",
+              "external"
+            ],
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+            "object"
+          ],
+          "pathGroups": [
+            {
+              "pattern": "/client/**",
+              "group": "internal"
+            },
+            {
+              "pattern": "/client-new/**",
+              "group": "internal"
+            },
+            {
+              "pattern": "/server/**",
+              "group": "internal"
+            }
+          ],
+          "alphabetize": {
+            "order": "asc",
+            "caseInsensitive": false
+          },
+          "newlines-between": "never"
         }
       ]
     }
@@ -125,7 +160,7 @@
     "websocket-extensions": ">=0.1.4",
     "xml-js": "^1.6.11",
     "zatlin": "^1.2.2",
-    "zographia": "^0.0.0"
+    "zographia": "^0.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
