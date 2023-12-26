@@ -1,12 +1,8 @@
 //
 
 import * as cssTree from "css-tree";
-import {
-  Dimension
-} from "css-tree";
-import {
-  getOptions
-} from "loader-utils";
+import {Dimension} from "css-tree";
+import {getOptions} from "loader-utils";
 
 
 function convert(this: any, source: string) {

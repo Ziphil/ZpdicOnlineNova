@@ -54,7 +54,7 @@ const config = {
             options: {modules: {localIdentName: "[name]_[local]_[hash:base64:5]"}, url: false}
           },
           {
-            loader: "./node_modules/zographia/loader/convert-unit.ts"
+            loader: "./loader/convert-unit-new.ts"
           },
           {
             loader: "sass-loader"
