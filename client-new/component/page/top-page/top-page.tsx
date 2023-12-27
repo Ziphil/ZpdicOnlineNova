@@ -2,8 +2,8 @@
 
 import {ReactElement} from "react";
 import {AdditionalProps} from "zographia";
-import {Logo} from "/client-new/component/atom/logo";
 import {create} from "/client-new/component/create";
+import {Hero} from "./hero";
 
 
 export const TopPage = create(
@@ -16,7 +16,7 @@ export const TopPage = create(
 
     return (
       <main styleName="root" {...rest}>
-        <Logo/>
+        <Hero/>
       </main>
     );
 

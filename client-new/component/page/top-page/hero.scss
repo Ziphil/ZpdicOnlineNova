@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  @include theme("light") {
+    --background-color: leveled-color("primary", 9);
+    --logo-color: leveled-color("primary", 3);
+  }
+}
+
+.root {
+  padding-inline: 10zu;
+  background-color: var(--background-color);
+}
+
+.logo {
+  color: var(--logo-color);
+}

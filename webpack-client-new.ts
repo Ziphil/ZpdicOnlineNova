@@ -106,7 +106,11 @@ const config = {
     alias: {
       "/client-new": path.resolve(__dirname, "client-new"),
       "/server": path.resolve(__dirname, "server"),
-      "/worker": path.resolve(__dirname, "worker")
+      "/worker": path.resolve(__dirname, "worker"),
+      "react": path.resolve(__dirname, "node_modules/react"),
+      "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
+      "react-intl": path.resolve(__dirname, "node_modules/react-intl"),
+      "recoil": path.resolve(__dirname, "node_modules/recoil")
     },
     fallback: {
       stream: require.resolve("stream-browserify")
