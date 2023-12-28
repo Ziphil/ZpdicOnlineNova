@@ -1,6 +1,6 @@
 //
 
-import {ReactElement, ReactNode, Suspense} from "react";
+import {ReactElement, ReactNode} from "react";
 import {ErrorBoundary} from "react-error-boundary";
 import {QueryClientProvider} from "react-query";
 import {create} from "/client-new/component/create";
@@ -17,11 +17,9 @@ export const ProviderRoot = create(
 
     return (
       <ErrorBoundary fallbackRender={() => <div>Please Reload</div>}>
-        <Suspense fallback={<div/>}>
-          <QueryClientProvider client={queryClient}>
-            {children}
-          </QueryClientProvider>
-        </Suspense>
+        <QueryClientProvider client={queryClient}>
+          {children}
+        </QueryClientProvider>
       </ErrorBoundary>
     );
 
