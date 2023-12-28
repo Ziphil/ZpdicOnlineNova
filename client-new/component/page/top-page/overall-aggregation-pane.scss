@@ -16,8 +16,8 @@
   padding-inline: 10zu;
   color: var(--text-color);
   background-color: var(--background-color);
-  background-image: var(--noise-background-image);
-  box-shadow: var(--stain-shadow-setting) var(--stain-color);
+  background-image: var(--glob-noise-background-image);
+  box-shadow: var(--glob-stain-shadow-setting) var(--stain-color);
 }
 
 .inner {
@@ -36,8 +36,8 @@
 }
 
 .count {
+  @include bold-font;
   font-size: 10zu;
-  font-weight: bold;
   font-feature-settings: "onum" 1;
   letter-spacing: 0.1em;
   text-indent: 0.1em;
