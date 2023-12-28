@@ -24,7 +24,7 @@
   max-width: 200zu;
   margin-inline: auto;
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   justify-content: center;
 }
 
