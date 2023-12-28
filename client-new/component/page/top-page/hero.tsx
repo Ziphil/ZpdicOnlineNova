@@ -25,13 +25,13 @@ export const Hero = create(
           {trans("catch")}
         </p>
         <div styleName="button-group">
-          <Link styleName="button" variant="light">
+          <Link styleName="button" scheme="secondary" variant="light">
             <LinkIconbag><GeneralIcon icon={faSignIn}/></LinkIconbag>
-            {trans("login")}
+            {trans("button.login")}
           </Link>
           <Link styleName="link">
             <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
-            {trans("dictionary")}
+            {trans("button.dictionary")}
           </Link>
         </div>
         <div styleName="decoration" {...aria({hidden: true})}>

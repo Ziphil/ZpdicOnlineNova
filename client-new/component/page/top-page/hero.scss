@@ -7,19 +7,19 @@
   @include theme("light") {
     --logo-text-color: #{leveled-color("primary", 1)};
     --catch-text-color: #{leveled-color("primary", 1)};
-    --button-border-color: #{leveled-color("primary", 9)};
-    --button-box-shadow-color: #{leveled-color("primary", 9, 0.3)};
-    --link-text-color: #{leveled-color("primary", 1)};
-    --link-hover-text-color: #{leveled-color("primary", 2)};
+    --button-border-color: #{leveled-color("secondary", 9)};
+    --button-box-shadow-color: #{leveled-color("secondary", 9, 0.3)};
+    --link-text-color: #{leveled-color("secondary", 1)};
+    --link-hover-text-color: #{leveled-color("secondary", 2)};
     --decoration-text-color: #{leveled-color("primary", 9, 0.3)};
     --background-color: #{leveled-color("primary", 8)};
-    --stain-color: #{single-color("black", 0.2)};
+    --stain-color: #{single-color("black", 0.1)};
   }
 }
 
 .root {
-  padding-inline: 10zu;
   padding-block: 16zu;
+  padding-inline: 10zu;
   background-color: var(--background-color);
   background-image: var(--noise-background-image);
   box-shadow: var(--stain-shadow-setting) var(--stain-color);
@@ -87,5 +87,6 @@
   z-index: 0;
   position: absolute;
   pointer-events: none;
+  user-select: none;
   overflow: hidden;
 }

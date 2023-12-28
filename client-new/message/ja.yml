@@ -1,4 +1,9 @@
 topPage:
-  login: "ログイン · 新規登録"
-  dictionary: "辞書一覧"
+  button:
+    login: "ログイン · 新規登録"
+    dictionary: "辞書一覧"
+  aggregation:
+    dictionary: "辞書"
+    word: "単語"
+    example: "例文"
   catch: "Draw your own universe with conlang"

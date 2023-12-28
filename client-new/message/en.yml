@@ -1,2 +1,9 @@
 topPage:
+  button:
+    login: "Sign in · Sign up"
+    dictionary: "List of dictionaries"
+  aggregation:
+    dictionary: "Dictionaries"
+    word: "Words"
+    example: "Sentences"
   catch: "Draw your own universe with conlang"

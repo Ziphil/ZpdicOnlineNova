@@ -1,2 +1,9 @@
 topPage:
-  catch: "Desegnu vian propran universon per Conlingvo"
+  button:
+    login: "Ensaluti · Enskribiĝi"
+    dictionary: "Listo de vortaroj"
+  aggregation:
+    dictionary: "Vortaroj"
+    word: "Vortoj"
+    example: "Frazoj"
+  catch: "Desegnu vian propran universon per conlingvo"
