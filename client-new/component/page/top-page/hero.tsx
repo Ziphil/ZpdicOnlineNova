@@ -2,8 +2,9 @@
 
 import {faBook, faSignIn} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, GeneralIcon, Link, LinkIconbag, aria, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, LinkIconbag, aria, useTrans} from "zographia";
 import {Logo} from "/client-new/component/atom/logo";
+import {TransitionLink} from "/client-new/component/atom/transition-link";
 import {create} from "/client-new/component/create";
 import {DECORATION_TEXT} from "./hero-constant";
 
@@ -25,14 +26,14 @@ export const Hero = create(
           {trans("catch")}
         </p>
         <div styleName="button-group">
-          <Link styleName="button" scheme="secondary" variant="light">
+          <TransitionLink styleName="button" to="/login" scheme="secondary" variant="light">
             <LinkIconbag><GeneralIcon icon={faSignIn}/></LinkIconbag>
             {trans("button.login")}
-          </Link>
-          <Link styleName="link">
+          </TransitionLink>
+          <TransitionLink styleName="link" to="/dictionary">
             <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
             {trans("button.dictionary")}
-          </Link>
+          </TransitionLink>
         </div>
         <div styleName="decoration" {...aria({hidden: true})}>
           {DECORATION_TEXT}
