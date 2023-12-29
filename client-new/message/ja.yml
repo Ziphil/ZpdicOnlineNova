@@ -1,3 +1,6 @@
+notificationList:
+  fixed: "修正済み"
+
 topPage:
   button:
     login: "ログイン · 新規登録"
@@ -6,4 +9,7 @@ topPage:
     dictionary: "辞書"
     word: "単語"
     example: "例文"
+  heading:
+    notification: "最新のお知らせ"
+  moreNotifications: "他のお知らせも見る"
   catch: "Draw your own universe with conlang"

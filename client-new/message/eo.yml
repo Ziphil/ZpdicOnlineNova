@@ -1,3 +1,6 @@
+notificationList:
+  fixed: "Riparita"
+
 topPage:
   button:
     login: "Ensaluti · Enskribiĝi"
@@ -6,4 +9,7 @@ topPage:
     dictionary: "Vortaroj"
     word: "Vortoj"
     example: "Frazoj"
+  heading:
+    notification: "Lastatempaj sciigoj"
+  moreNotifications: "Vidi pli da sciigoj"
   catch: "Desegnu vian propran universon per conlingvo"

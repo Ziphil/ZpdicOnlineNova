@@ -1,3 +1,6 @@
+notificationList:
+  fixed: "Fixed"
+  
 topPage:
   button:
     login: "Sign in · Sign up"
@@ -6,4 +9,7 @@ topPage:
     dictionary: "Dictionaries"
     word: "Words"
     example: "Sentences"
+  heading:
+    notification: "Latest notification"
+  moreNotifications: "See more notifications"
   catch: "Draw your own universe with conlang"
