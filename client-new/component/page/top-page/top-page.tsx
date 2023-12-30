@@ -1,7 +1,9 @@
 //
 
+import {faRight} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, LinkIconbag, useTrans} from "zographia";
+import {TransitionLink} from "/client-new/component/atom/transition-link";
 import {NotificationList} from "/client-new/component/compound/notification-list";
 import {create} from "/client-new/component/create";
 import {Hero} from "./hero";
@@ -27,8 +29,15 @@ export const TopPage = create(
         <div styleName="main">
           <section>
             <h2 styleName="heading">{trans("heading.notification")}</h2>
-            <NotificationList size={10}/>
+            <NotificationList size={1} showPagination={false}/>
+            <div styleName="link">
+              <TransitionLink to="/notification">
+                <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
+                {trans("moreNotifications")}
+              </TransitionLink>
+            </div>
           </section>
+          <hr styleName="divider"/>
         </div>
       </main>
     );
