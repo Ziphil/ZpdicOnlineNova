@@ -1,6 +1,8 @@
 notificationList:
   fixed: "Riparita"
 
+notificationListPage:
+  notification: "Antaŭaj sciigoj"
 topPage:
   button:
     login: "Ensaluti · Enskribiĝi"

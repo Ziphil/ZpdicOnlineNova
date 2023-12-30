@@ -1,6 +1,8 @@
 notificationList:
   fixed: "修正済み"
 
+notificationListPage:
+  notification: "過去のお知らせ"
 topPage:
   button:
     login: "ログイン · 新規登録"

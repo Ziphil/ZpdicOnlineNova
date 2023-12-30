@@ -17,9 +17,8 @@
 }
 
 .main {
-  max-width: 240zu;
-  margin-block-start: 16zu;
-  margin-inline: auto;
+  margin-block-start: 12zu;
+  margin-block-end: 16zu;
   flex: 1 1 auto;
 }
 
@@ -35,6 +34,6 @@
 }
 
 .divider {
-  margin-block: 16zu;
+  margin-block: 12zu;
   border-block-start: 1px solid var(--divider-border-color);
 }

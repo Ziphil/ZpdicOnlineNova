@@ -20,7 +20,7 @@ export const NotificationPane = create(
 
     const {trans, transDate} = useTrans("notificationList");
 
-    const node = (
+    return (
       <Card styleName="root" {...rest}>
         <CardBody>
           <div styleName="top">
@@ -41,7 +41,6 @@ export const NotificationPane = create(
         </CardBody>
       </Card>
     );
-    return node;
 
   }
 );

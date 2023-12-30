@@ -1,0 +1,17 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  @include theme("light") {
+    --heading-text-color: #{leveled-color("primary", 5)};
+  }
+}
+
+.heading {
+  @include bold-font;
+  margin-block-end: 4zu; 
+  font-size: 6zu;
+  color: var(--heading-text-color);
+}

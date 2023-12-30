@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1 1 auto;
+  &[data-insert-padding] {
+    padding-block-start: 12zu;
+    padding-block-end: 16zu;
+    padding-inline: 10zu;  
+  }
+}

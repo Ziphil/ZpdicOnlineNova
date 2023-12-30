@@ -6,7 +6,8 @@ import {create} from "/client-new/component/create";
 
 
 const router = createBrowserRouter([
-  {path: "/", lazy: () => import("/client-new/component/page/top-page")}
+  {path: "/", lazy: () => import("/client-new/component/page/top-page")},
+  {path: "/notification", lazy: () => import("/client-new/component/page/notification-list-page")}
 ], {basename: "/next"});
 
 

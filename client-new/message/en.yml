@@ -1,6 +1,8 @@
 notificationList:
   fixed: "Fixed"
   
+notificationListPage:
+  notification: "News"
 topPage:
   button:
     login: "Sign in · Sign up"
@@ -10,6 +12,6 @@ topPage:
     word: "Words"
     example: "Sentences"
   heading:
-    notification: "Latest notification"
-  moreNotifications: "See more notifications"
+    notification: "Latest news"
+  moreNotifications: "See more news"
   catch: "Draw your own universe with conlang"
