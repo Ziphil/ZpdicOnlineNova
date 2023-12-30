@@ -2,7 +2,8 @@
 
 import {IconDefinition, faBug, faBugSlash, faInfoCircle, faSparkles} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Card, CardBody, GeneralIcon, Markdown, MultiLineText, Tag, useTrans} from "zographia";
+import {AdditionalProps, Card, CardBody, GeneralIcon, MultiLineText, Tag, useTrans} from "zographia";
+import {Markdown} from "/client-new/component/atom/markdown";
 import {create} from "/client-new/component/create";
 import {Notification} from "/client-new/skeleton";
 
@@ -34,7 +35,7 @@ export const NotificationPane = create(
           {(notification.type === "bugFixed") && (
             <Tag styleName="badge" is="span" scheme="secondary">{trans("fixed")}</Tag>
           )}
-          <Markdown styleName="text">
+          <Markdown styleName="text" mode="normal">
             {notification.text}
           </Markdown>
         </CardBody>
