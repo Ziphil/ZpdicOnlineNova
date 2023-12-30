@@ -3,7 +3,7 @@
 import {ReactElement, Ref} from "react";
 import {AdditionalProps, aria} from "zographia";
 import {createWithRef} from "/client-new/component/create";
-import LogoSvg from "/client-new/public/logo.svg";
+import LogotypeSvg from "/client-new/public/logo.svg";
 import SymbolSvg from "/client-new/public/symbol.svg";
 
 
@@ -19,7 +19,7 @@ export const Logo = createWithRef(
     return (
       <div styleName="root" role="img" {...aria({label: "ZpDIC Online"})} {...rest}>
         <SymbolSvg styleName="symbol"/>
-        <LogoSvg styleName="logo"/>
+        <LogotypeSvg styleName="logo"/>
       </div>
     );
 
