@@ -8,6 +8,9 @@ import {create} from "/client-new/component/create";
 import {messageInventory} from "/client-new/message";
 
 
+require("./root.scss");
+
+
 export const Root = create(
   null, "Root",
   function ({

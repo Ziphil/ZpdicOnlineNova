@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+
+:global(#root) {
+  display: flex;
+  flex-direction: column;
+}
+
+:global(.grecaptcha-badge) {
+  visibility: hidden;
+}
