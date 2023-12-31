@@ -6,8 +6,8 @@ import {create} from "/client-new/component/create";
 import {DetailedDictionary, UserDictionary} from "/client-new/skeleton";
 
 
-export const DictionaryPane = create(
-  require("./dictionary-pane.scss"), "DictionaryPane",
+export const DictionaryCard = create(
+  require("./dictionary-card.scss"), "DictionaryCard",
   function ({
     dictionary,
     ...rest

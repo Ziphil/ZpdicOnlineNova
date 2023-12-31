@@ -4,7 +4,7 @@ import {ReactElement} from "react";
 import {AdditionalProps, List, ListBody, ListEmptyView, ListPagination} from "zographia";
 import {create} from "/client-new/component/create";
 import {DetailedDictionary, UserDictionary} from "/client-new/skeleton";
-import {DictionaryPane} from "./dictionary-pane";
+import {DictionaryCard} from "./dictionary-card";
 
 
 export const DictionaryList = create(
@@ -28,7 +28,7 @@ export const DictionaryList = create(
     return (
       <List styleName="root" items={dictionaries} size={size} hitSize={hitSize} page={page} onPageSet={onPageSet} {...rest}>
         <ListBody styleName="body">
-          {(dictionary) => <DictionaryPane key={dictionary.id} dictionary={dictionary}/>}
+          {(dictionary) => <DictionaryCard key={dictionary.id} dictionary={dictionary}/>}
           <ListEmptyView/>
         </ListBody>
         <ListPagination styleName="pagination"/>

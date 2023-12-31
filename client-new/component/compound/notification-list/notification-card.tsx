@@ -8,8 +8,8 @@ import {create} from "/client-new/component/create";
 import {Notification} from "/client-new/skeleton";
 
 
-export const NotificationPane = create(
-  require("./notification-pane.scss"), "NotificationPane",
+export const NotificationCard = create(
+  require("./notification-card.scss"), "NotificationCard",
   function ({
     notification,
     ...rest
@@ -21,7 +21,7 @@ export const NotificationPane = create(
     const {trans, transDate} = useTrans("notificationList");
 
     return (
-      <Card styleName="root" {...rest}>
+      <Card styleName="root" padding="wide" {...rest}>
         <CardBody>
           <div styleName="top">
             <div styleName="icon">
