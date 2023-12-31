@@ -1,7 +1,7 @@
 //
 
 import {ReactElement, ReactNode} from "react";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, data} from "zographia";
 import {create} from "/client-new/component/create";
 
 
@@ -12,13 +12,13 @@ export const MainContainer = create(
     children,
     ...rest
   }: {
-    width?: "normal" | "full",
+    width?: "normal" | "wide",
     children?: ReactNode,
     className?: string
   } & AdditionalProps): ReactElement {
 
     return (
-      <div styleName="root" {...rest}>
+      <div styleName="root" {...data({width})} {...rest}>
         {children}
       </div>
     );

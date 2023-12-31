@@ -4,6 +4,12 @@
 
 
 .root {
-  max-width: 240zu;
+  width: 100%;
   margin-inline: auto;
+  &[data-width="normal"] {
+    max-width: 240zu;
+  }
+  &[data-width="wide"] {
+    max-width: 320zu;
+  }
 }

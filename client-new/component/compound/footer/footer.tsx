@@ -2,7 +2,7 @@
 
 import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
-import {AdditionalProps, MultiLineText} from "zographia";
+import {AdditionalProps, Link, MultiLineText} from "zographia";
 import {create} from "/client-new/component/create";
 
 
@@ -24,7 +24,7 @@ export const Footer = create(
           </div>
           <MultiLineText styleName="recaptcha" lineHeight="short">
             This site is protected by reCAPTCHA.<br/>
-            The Google <a href="https://policies.google.com/privacy" target="_blank" rel="noreferrer">Privacy Policy</a> and <a href="https://policies.google.com/terms" target="_blank" rel="noreferrer">Terms of Service</a> apply.
+            The Google <Link href="https://policies.google.com/privacy" scheme="gray" target="_blank">Privacy Policy</Link> and <Link href="https://policies.google.com/terms" scheme="gray" target="_blank">Terms of Service</Link> apply.
           </MultiLineText>
         </div>
         <div styleName="right">
