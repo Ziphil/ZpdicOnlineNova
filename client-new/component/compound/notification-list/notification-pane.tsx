@@ -28,8 +28,12 @@ export const NotificationPane = create(
               <GeneralIcon icon={getIcon(notification.type)}/>
             </div>
             <div styleName="heading-container">
-              <MultiLineText styleName="heading" is="h3">{notification.title}</MultiLineText>
-              <time styleName="date" dateTime={notification.date}>{transDate(notification.date)}</time>
+              <MultiLineText styleName="title" is="h3">
+                {notification.title}
+              </MultiLineText>
+              <time styleName="date" dateTime={notification.date}>
+                {transDate(notification.date)}
+              </time>
             </div>
           </div>
           {(notification.type === "bugFixed") && (

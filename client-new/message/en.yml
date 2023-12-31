@@ -1,3 +1,6 @@
+dictionaryList:
+  updatedDate: "Updated at"
+  createdDate: "Created at"
 notificationList:
   fixed: "Fixed"
   

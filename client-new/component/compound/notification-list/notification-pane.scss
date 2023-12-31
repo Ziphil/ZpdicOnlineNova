@@ -22,7 +22,7 @@
   flex: 1 1 auto;
 }
 
-.heading {
+.title {
   @include bold-font;
   font-size: 6zu;
   color: var(--glob-secondary-heading-text-color);

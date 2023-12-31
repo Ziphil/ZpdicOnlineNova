@@ -10,6 +10,11 @@
   --glob-border-color: #{leveled-color("gray", 1)};
 }
 
+body {
+  overflow-x: auto;
+  overflow-y: scroll;
+}
+
 :global(#root) {
   display: flex;
   flex-direction: column;

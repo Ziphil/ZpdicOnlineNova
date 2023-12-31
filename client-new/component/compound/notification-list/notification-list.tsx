@@ -37,6 +37,3 @@ export const NotificationList = create(
 
   }
 );
-
-
-export default NotificationList;

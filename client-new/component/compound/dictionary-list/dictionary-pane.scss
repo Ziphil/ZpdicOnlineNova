@@ -1,0 +1,30 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.name {
+  @include bold-font;
+  font-size: 5zu;
+  color: var(--glob-secondary-heading-text-color);
+}
+
+.user {
+  margin-block-start: 1zu;
+}
+
+.table {
+  margin-block-start: 2zu;
+  row-gap: 0.5zu;
+  font-size: 3zu;
+  color: var(--glob-mute-text-color);
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+}
+
+.table-value {
+  &::before {
+    margin-inline: var(--glob-blank-gap);
+    content: "—";
+  }
+}
