@@ -5,14 +5,15 @@
 
 .root {
   @include theme("light") {
-    --border-color: #{leveled-color("prmary", 9)};
-    --background-color: #{leveled-color("primary", 8)};
-    --stain-color: #{single-color("black", 0.1)};
+    --logo-text-color: #{leveled-color("primary", 7)};
+    --border-color: #{leveled-color("primary", 3)};
+    --background-color: #{leveled-color("primary", 0)};
+    --stain-color: #{single-color("stain-light", 0.1)};
   }
 }
 
 .root {
-  height: 16zu;
+  height: 12zu;
   padding-inline: 10zu;
   inset-block-start: 0zu;
   border-block-end: solid 1zx var(--border-color);
@@ -24,4 +25,20 @@
   position: sticky;
   z-index: 1000;
   flex: 0 0 auto;
+}
+
+.left {
+  column-gap: 3zu;
+  color: var(--logo-text-color);
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  font-size: 6zu;
+  cursor: pointer;
+}
+
+.version {
+  font-size: 3.5zu;
 }

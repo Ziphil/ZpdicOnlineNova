@@ -3,14 +3,6 @@
 @use "zographia/source/component/function.scss" as *;
 
 
-.root {
-  @include theme("light") {
-    --heading-text-color: #{leveled-color("secondary", 5)};
-    --date-text-color: #{leveled-color("gray", 5)};
-    --icon-color: #{leveled-color("secondary", 5)};
-  }
-}
-
 .top {
   column-gap: 3zu;
   display: flex;
@@ -19,7 +11,7 @@
 
 .icon {
   font-size: 8zu;
-  color: var(--icon-color);
+  color: var(--glob-secondary-heading-text-color);
   flex: 0 0 auto;
 }
 
@@ -33,12 +25,12 @@
 .heading {
   @include bold-font;
   font-size: 6zu;
-  color: var(--heading-text-color);
+  color: var(--glob-secondary-heading-text-color);
 }
 
 .date {
   font-size: 3.5zu;
-  color: var(--date-text-color);
+  color: var(--glob-mute-text-color);
 }
 
 .badge {

@@ -12,7 +12,7 @@ const router = createBrowserRouter([
 
 
 export const Routing = create(
-  require("./routing.scss"), "Routing",
+  null, "Routing",
   function ({
   }: {
   }): ReactElement {

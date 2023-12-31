@@ -4,15 +4,10 @@
 
 
 .root {
-  @include theme("light") {
-    --border-color: #{leveled-color("gray", 1)};
-  }
-}
-
-.root {
   margin-inline: 10zu;
   padding-block: 2zu;
-  border-block-start: solid 1zx var(--border-color);
+  color: var(--glob-mute-text-color);
+  border-block-start: solid 1zx var(--glob-border-color);
   display: flex;
   justify-content: space-between;
   flex: 0 0 auto;
