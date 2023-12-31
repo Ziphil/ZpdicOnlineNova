@@ -5,8 +5,8 @@
 
 .name {
   @include bold-font;
-  font-size: 5zu;
-  color: var(--glob-secondary-heading-text-color);
+  font-size: 4.5zu;
+  color: var(--glob-primary-heading-text-color);
 }
 
 .user {
