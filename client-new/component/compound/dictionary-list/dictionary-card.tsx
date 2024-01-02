@@ -1,7 +1,8 @@
 //
 
+import {faUser} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Card, CardBody, SingleLineText, useTrans} from "zographia";
+import {AdditionalProps, Card, CardBody, GeneralIcon, SingleLineText, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 import {DetailedDictionary, UserDictionary} from "/client-new/skeleton";
 
@@ -27,6 +28,7 @@ export const DictionaryCard = create(
                 {dictionary.name}
               </SingleLineText>
               <div styleName="user">
+                <GeneralIcon styleName="icon" icon={faUser}/>
                 {dictionary.user.screenName}
               </div>
             </div>

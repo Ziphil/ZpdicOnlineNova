@@ -28,7 +28,7 @@ export const DictionaryListPage = create(
       <Page {...rest}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
-            <SearchDictionaryForm/>
+            <SearchDictionaryForm styleName="form"/>
           </div>
           <div styleName="right">
             <DictionaryList dictionaries={hitDictionaries} size={20} hitSize={hitSize} page={page} onPageSet={setPage}/>

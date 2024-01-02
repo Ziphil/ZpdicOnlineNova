@@ -21,6 +21,8 @@ export const SearchDictionaryForm = create(
             <GeneralIcon styleName="icon" icon={faSearch}/>
           </InputAddon>
         </Input>
+        <div styleName="row">
+        </div>
       </form>
     );
     return node;

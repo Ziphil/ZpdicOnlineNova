@@ -8,3 +8,8 @@
   display: grid;
   grid-template-columns: 2fr 5fr;
 }
+
+.form {
+  inset-block-start: calc(24zu + 1zx);
+  position: sticky;
+}
