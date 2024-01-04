@@ -4,17 +4,10 @@
 
 
 .root {
-  row-gap: 2zu;
-  display: flex;
-  flex-direction: column;
+  width: 40zu;
 }
 
 .icon {
+  margin-inline-end: var(--glob-blank-gap);
   color: var(--glob-mute-text-color);
-}
-
-.row {
-  column-gap: 4zu;
-  display: flex;
-  justify-content: center;
 }

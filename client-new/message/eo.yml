@@ -3,6 +3,14 @@ dictionaryList:
   createdDate: "Kreita je"
 notificationList:
   fixed: "Riparita"
+orderDirectionSelect:
+  ascending: "Kreska"
+  descending: "Malkreska"
+orderModeSelect:
+  unicode: "Nomo"
+  custom: "Propra ordo"
+  updatedDate: "Dato de ĝisdatigo"
+  createdDate: "Dato de kreo"
 
 notificationListPage:
   notification: "Antaŭaj sciigoj"

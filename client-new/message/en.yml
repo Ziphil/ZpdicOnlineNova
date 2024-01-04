@@ -3,6 +3,14 @@ dictionaryList:
   createdDate: "Created at"
 notificationList:
   fixed: "Fixed"
+orderDirectionSelect:
+  ascending: "Ascending"
+  descending: "Descending"
+orderModeSelect:
+  unicode: "Name"
+  custom: "Custom"
+  updatedDate: "Update date"
+  createdDate: "Creation date"
   
 notificationListPage:
   notification: "News"
