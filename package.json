@@ -151,6 +151,7 @@
     "react-responsive": "^9.0.0-beta.6",
     "react-router-dom": "^6.21.1",
     "react-use": "^17.3.2",
+    "recharts": "^2.10.3",
     "recoil": "^0.7.7",
     "remark-gfm": "^3.0.1",
     "remove-markdown": "^0.3.0",

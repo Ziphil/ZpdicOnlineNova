@@ -3,6 +3,23 @@
 @use "zographia/source/component/function.scss" as *;
 
 
+.body {
+  display: flex;
+  align-items: center;
+}
+
+.left {
+  flex: 1 1 auto;
+}
+
+.right {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  flex: 0 0 auto;
+}
+
 .name {
   @include bold-font;
   font-size: 4.5zu;
@@ -32,4 +49,9 @@
     margin-inline: var(--glob-blank-gap);
     content: "—";
   }
+}
+
+.word-count {
+  @include bold-font;
+  color: var(--glob-mute-text-color);
 }

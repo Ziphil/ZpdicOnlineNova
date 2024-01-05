@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  width: 32zu;
+  height: 8zu;
+  flex: 0 0 auto;
+}
+
+.root svg {
+  overflow: visible;
+}
+
+.area :global(.recharts-area-area) {
+  fill: leveled-color("gray", 5);
+  fill-opacity: 0.2;
+}
+
+.area :global(.recharts-area-curve) {
+  stroke: leveled-color("gray", 5);
+  fill-opacity: 1;
+}
+
+.area :global(.recharts-area-dot) {
+  display: none;
+}
