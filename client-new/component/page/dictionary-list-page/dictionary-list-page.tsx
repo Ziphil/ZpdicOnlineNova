@@ -1,13 +1,14 @@
 //
 
-import {ReactElement, useState} from "react";
-import {AdditionalProps, useTrans} from "zographia";
+import {ReactElement, useCallback} from "react";
+import {AdditionalProps} from "zographia";
 import {DictionaryList} from "/client-new/component/compound/dictionary-list";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {SearchDictionaryForm} from "/client-new/component/compound/search-dictionary-form";
 import {create} from "/client-new/component/create";
+import {useParamsState} from "/client-new/hook/params-state";
 import {useSuspenseQuery} from "/client-new/hook/request";
-import {NormalDictionaryParameter} from "/client-new/skeleton";
+import {DictionaryParameter} from "/client-new/skeleton";
 import {calcOffsetSpec} from "/client-new/util/misc";
 
 
@@ -19,19 +20,26 @@ export const DictionaryListPage = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionaryListPage");
+    const [query, debouncedQuery, setQuery] = useParamsState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
+    const [[hitDictionaries, hitSize]] = useSuspenseQuery("searchDictionary", {parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 20)}, {keepPreviousData: true});
 
-    const [page, setPage] = useState(0);
-    const [[hitDictionaries, hitSize]] = useSuspenseQuery("searchDictionary", {parameter: NormalDictionaryParameter.EMPTY, ...calcOffsetSpec(page, 20)}, {keepPreviousData: true});
+    const handleParameterSet = useCallback(function (parameter: DictionaryParameter): void {
+      setQuery({...query, parameter, page: 0});
+    }, [query, setQuery]);
+
+    const handlePageSet = useCallback(function (page: number): void {
+      setQuery({...query, page});
+      window.scrollTo(0, 0);
+    }, [query, setQuery]);
 
     return (
       <Page {...rest}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
-            <SearchDictionaryForm styleName="form"/>
+            <SearchDictionaryForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
           </div>
           <div styleName="right">
-            <DictionaryList dictionaries={hitDictionaries} size={20} hitSize={hitSize} page={page} onPageSet={setPage}/>
+            <DictionaryList dictionaries={hitDictionaries} size={20} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>
           </div>
         </MainContainer>
       </Page>
@@ -39,3 +47,18 @@ export const DictionaryListPage = create(
 
   }
 );
+
+
+function serializeQuery(query: DictionaryQuery): URLSearchParams {
+  const params = DictionaryParameter.serialize(query.parameter);
+  params.set("page", query.page.toString());
+  return params;
+}
+
+function deserializeQuery(params: URLSearchParams): DictionaryQuery {
+  const parameter = DictionaryParameter.deserialize(params);
+  const page = (params.get("page") !== null) ? +params.get("page")! : 0;
+  return {parameter, page};
+}
+
+type DictionaryQuery = {parameter: DictionaryParameter, page: number};
