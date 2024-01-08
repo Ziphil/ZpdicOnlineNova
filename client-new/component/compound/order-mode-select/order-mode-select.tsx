@@ -14,7 +14,7 @@ export const OrderModeSelect = create(
     ...rest
   }: {
     orderMode: M,
-    orderModeOptions: Array<M>,
+    orderModeOptions: ReadonlyArray<M>,
     onSet?: (orderMode: M) => unknown,
     className?: string
   } & AdditionalProps): ReactElement {

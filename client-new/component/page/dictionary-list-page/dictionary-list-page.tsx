@@ -1,6 +1,6 @@
 //
 
-import {ReactElement, useCallback} from "react";
+import {ReactElement, SetStateAction, useCallback} from "react";
 import {AdditionalProps} from "zographia";
 import {DictionaryList} from "/client-new/component/compound/dictionary-list";
 import {MainContainer, Page} from "/client-new/component/compound/page";
@@ -9,7 +9,7 @@ import {create} from "/client-new/component/create";
 import {useParamsState} from "/client-new/hook/params-state";
 import {useSuspenseQuery} from "/client-new/hook/request";
 import {DictionaryParameter} from "/client-new/skeleton";
-import {calcOffsetSpec} from "/client-new/util/misc";
+import {calcOffsetSpec, resolveStateAction} from "/client-new/util/misc";
 
 
 export const DictionaryListPage = create(
@@ -23,9 +23,12 @@ export const DictionaryListPage = create(
     const [query, debouncedQuery, setQuery] = useParamsState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
     const [[hitDictionaries, hitSize]] = useSuspenseQuery("searchDictionary", {parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 20)}, {keepPreviousData: true});
 
-    const handleParameterSet = useCallback(function (parameter: DictionaryParameter): void {
-      setQuery({...query, parameter, page: 0});
-    }, [query, setQuery]);
+    const handleParameterSet = useCallback(function (parameter: SetStateAction<DictionaryParameter>): void {
+      setQuery((prevQuery) => {
+        const nextParameter = resolveStateAction(parameter, prevQuery.parameter);
+        return {parameter: nextParameter, page: 0};
+      });
+    }, [setQuery]);
 
     const handlePageSet = useCallback(function (page: number): void {
       setQuery({...query, page});

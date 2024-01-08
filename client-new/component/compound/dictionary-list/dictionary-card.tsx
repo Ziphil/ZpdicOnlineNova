@@ -46,7 +46,7 @@ export const DictionaryCard = create(
               <dd styleName="table-value">{transDate(dictionary.createdDate)}</dd>
             </dl>
           </div>
-          {(histories !== undefined) && (
+          {(histories !== undefined && histories.length > 0) && (
             <div styleName="right">
               <DictionaryHistoryChart dictionary={dictionary} histories={histories}/>
               <div styleName="word-count">

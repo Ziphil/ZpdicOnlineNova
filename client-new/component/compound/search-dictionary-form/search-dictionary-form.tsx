@@ -2,13 +2,12 @@
 
 import {faSearch} from "@fortawesome/sharp-regular-svg-icons";
 import merge from "lodash-es/merge";
-import {ReactElement, useCallback} from "react";
-import {DeepPartial} from "ts-essentials";
+import {Dispatch, ReactElement, SetStateAction, useCallback} from "react";
 import {AdditionalProps, GeneralIcon, Input, InputAddon} from "zographia";
-import {OrderDirectionSelect} from "/client-new/component/compound/order-direction-select";
+import {OrderDirection, OrderDirectionSelect} from "/client-new/component/compound/order-direction-select";
 import {OrderModeSelect} from "/client-new/component/compound/order-mode-select";
 import {create} from "/client-new/component/create";
-import {DictionaryParameter, NormalDictionaryParameter} from "/client-new/skeleton";
+import {DICTIONARY_ORDER_MODES, DictionaryOrderMode, DictionaryParameter} from "/client-new/skeleton";
 import {preventDefault} from "/client-new/util/form";
 
 
@@ -20,16 +19,21 @@ export const SearchDictionaryForm = create(
     ...rest
   }: {
     parameter: DictionaryParameter,
-    onParameterSet?: (parameter: DictionaryParameter) => unknown,
+    onParameterSet?: Dispatch<SetStateAction<DictionaryParameter>>,
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const handleParameterSet = useCallback(function (partialParameter: DeepPartial<NormalDictionaryParameter>): void {
-      if (onParameterSet !== undefined) {
-        const nextParameter = merge(parameter, partialParameter);
-        onParameterSet(nextParameter);
-      }
-    }, [parameter, onParameterSet]);
+    const handleTextSet = useCallback(function (text: string): void {
+      onParameterSet?.((prevParameter) => merge({}, prevParameter, {text}));
+    }, [onParameterSet]);
+
+    const handleOrderModeSet = useCallback(function (orderMode: DictionaryOrderMode): void {
+      onParameterSet?.((prevParameter) => merge({}, prevParameter, {order: {mode: orderMode}}));
+    }, [onParameterSet]);
+
+    const handleOrderDirectionSet = useCallback(function (orderDirection: OrderDirection): void {
+      onParameterSet?.((prevParameter) => merge({}, prevParameter, {order: {direction: orderDirection}}));
+    }, [onParameterSet]);
 
     const node = (
       <form styleName="root" onSubmit={preventDefault} {...rest}>
@@ -37,7 +41,7 @@ export const SearchDictionaryForm = create(
           styleName="input"
           type="search"
           value={parameter.text}
-          onSet={(text) => handleParameterSet({text})}
+          onSet={handleTextSet}
         >
           <InputAddon position="left">
             <GeneralIcon styleName="icon" icon={faSearch}/>
@@ -45,13 +49,13 @@ export const SearchDictionaryForm = create(
         </Input>
         <div styleName="row">
           <OrderModeSelect
-            orderModeOptions={["createdDate", "updatedDate"]}
+            orderModeOptions={DICTIONARY_ORDER_MODES}
             orderMode={parameter.order.mode}
-            onSet={(orderMode) => handleParameterSet({order: {mode: orderMode}})}
+            onSet={handleOrderModeSet}
           />
           <OrderDirectionSelect
             orderDirection={parameter.order.direction}
-            onSet={(orderDirection) => handleParameterSet({order: {direction: orderDirection}})}
+            onSet={handleOrderDirectionSet}
           />
         </div>
       </form>
