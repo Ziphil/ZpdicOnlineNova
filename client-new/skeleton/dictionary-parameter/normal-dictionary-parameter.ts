@@ -23,10 +23,10 @@ export namespace NormalDictionaryParameter {
   } satisfies NormalDictionaryParameter;
 
   export function deserialize(search: Search): NormalDictionaryParameter {
-    const text = (search.get("text") !== null) ? search.get("text") : undefined;
-    const userName = (search.get("userName") !== null) ? search.get("userName") : undefined;
-    const orderMode = (search.get("orderMode") !== null) ? DictionaryOrderModeUtil.cast(search.get("orderMode")) : undefined;
-    const orderDirection = (search.get("orderDirection") !== null) ? DictionaryOrderDirectionUtil.cast(search.get("orderDirection")) : undefined;
+    const text = (search.has("text")) ? search.get("text") : undefined;
+    const userName = (search.has("userName")) ? search.get("userName") : undefined;
+    const orderMode = (search.has("orderMode")) ? DictionaryOrderModeUtil.cast(search.get("orderMode")) : undefined;
+    const orderDirection = (search.has("orderDirection")) ? DictionaryOrderDirectionUtil.cast(search.get("orderDirection")) : undefined;
     const order = {mode: orderMode, direction: orderDirection};
     const parameter = merge({}, EMPTY, {text, userName, order});
     return parameter;
