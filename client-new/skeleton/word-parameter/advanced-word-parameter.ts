@@ -2,7 +2,30 @@
 
 import rison from "rison";
 import {Search} from "/client-new/hook/search";
-import {WORD_MODES, WordMode, WordType} from "/client-new/skeleton/word-parameter/word-parameter";
+import {WordType} from "/client-new/skeleton/word-parameter/word-parameter";
+import {LiteralType} from "/server/util/literal-type";
+
+
+export interface AdvancedWordParameterElement {
+
+  text: string;
+  title: string;
+  mode: AdvancedWordMode;
+  type: WordType;
+
+}
+
+
+export namespace AdvancedWordParameterElement {
+
+  export const EMPTY = {
+    text: "",
+    title: "",
+    mode: "name",
+    type: "exact"
+  } satisfies AdvancedWordParameterElement;
+
+}
 
 
 export interface AdvancedWordParameter {
@@ -38,27 +61,5 @@ export namespace AdvancedWordParameter {
 }
 
 
-export interface AdvancedWordParameterElement {
-
-  text: string;
-  title: string;
-  mode: AdvancedWordMode;
-  type: WordType;
-
-}
-
-
-export namespace AdvancedWordParameterElement {
-
-  export const EMPTY = {
-    text: "",
-    title: "",
-    mode: "name",
-    type: "exact"
-  } satisfies AdvancedWordParameterElement;
-
-}
-
-
-export const ADVANCED_WORD_MODES = WORD_MODES.filter((mode) => mode !== "both") as Array<AdvancedWordMode>;
-export type AdvancedWordMode = Exclude<WordMode, "both">;
+export const ADVANCED_WORD_MODES = ["name", "equivalent", "tag", "information", "content"] as const;
+export type AdvancedWordMode = LiteralType<typeof ADVANCED_WORD_MODES>;
