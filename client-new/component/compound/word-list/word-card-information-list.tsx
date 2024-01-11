@@ -28,9 +28,13 @@ export const WordCardInformationList = create(
               {information.title}
             </h4>
             {(dictionary.settings.enableMarkdown) ? (
-              <Markdown styleName="markdown" mode="normal">{information.text}</Markdown>
+              <Markdown styleName="markdown" mode="normal">
+                {information.text}
+              </Markdown>
             ) : (
-              <MultiLineText styleName="text">{information.text}</MultiLineText>
+              <MultiLineText styleName="text">
+                {information.text}
+              </MultiLineText>
             )}
           </section>
         ))}

@@ -1,6 +1,6 @@
 //
 
-import {ReactElement} from "react";
+import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag} from "zographia";
 import {DetailedWord, Word} from "/client/skeleton/dictionary";
 import {create} from "/client-new/component/create";
@@ -19,23 +19,25 @@ export const WordCardHeading = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const pronunciation = useMemo(() => getPronunciation(dictionary, word), [dictionary, word]);
+
     return (
       <div styleName="root" {...rest}>
+        {(word.tags.length > 0) && (
+          <div styleName="tag">
+            {word.tags.map((tag, index) => (
+              <Tag key={index} variant="solid">{tag}</Tag>
+            ))}
+          </div>
+        )}
         <div styleName="name-container">
           <MultiLineText styleName="name" is="h3">
             {word.name}
           </MultiLineText>
           <div styleName="pronunciation">
-            {getPronunciation(dictionary, word)}
+            {pronunciation}
           </div>
         </div>
-        {(word.tags.length > 0) && (
-          <div styleName="tag">
-            {word.tags.map((tag, index) => (
-              <Tag key={index}>{tag}</Tag>
-            ))}
-          </div>
-        )}
       </div>
     );
 
