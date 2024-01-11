@@ -23,6 +23,7 @@
   display: flex;
   justify-content: space-between;
   position: sticky;
+  view-transition-name: header;
   z-index: 1000;
   flex: 0 0 auto;
 }

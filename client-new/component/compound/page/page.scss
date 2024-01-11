@@ -11,9 +11,54 @@
 
 .main {
   flex: 1 1 auto;
+  view-transition-name: main;
   &[data-insert-padding] {
     padding-block-start: 12zu;
     padding-block-end: 16zu;
     padding-inline: 10zu;  
+  }
+}
+
+::view-transition-old(main) {
+  animation: fade-out 0.2s ease both, slide-to-bottom 0.2s ease both;
+}
+
+::view-transition-new(main) {
+  animation: fade-in 0.2s 0.1s ease both, slide-from-bottom 0.2s 0.1s ease both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-to-bottom {
+  from {
+    transform: translate(0zu, 0zu);
+  }
+  to {
+    transform: translate(0zu, 4zu)
+  }
+}
+
+@keyframes slide-from-bottom {
+  from {
+    transform: translate(0zu, 4zu);
+  }
+  to {
+    transform: translate(0zu, 0zu)
   }
 }
