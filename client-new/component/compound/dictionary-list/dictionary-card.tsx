@@ -1,9 +1,10 @@
 //
 
-import {faNote, faUser} from "@fortawesome/sharp-regular-svg-icons";
+import {faNote, faRight, faUser} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
-import {AdditionalProps, Card, CardBody, GeneralIcon, SingleLineText, useTrans} from "zographia";
+import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, useTrans} from "zographia";
+import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
 import {useQuery} from "/client-new/hook/request";
 import {DetailedDictionary, UserDictionary} from "/client-new/skeleton";
@@ -56,6 +57,12 @@ export const DictionaryCard = create(
             </div>
           )}
         </CardBody>
+        <CardFooter>
+          <Link styleName="link" scheme="secondary" href={`/dictionary/${dictionary.paramName || dictionary.number}`}>
+            <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
+            {trans("go")}
+          </Link>
+        </CardFooter>
       </Card>
     );
 

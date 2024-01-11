@@ -1,6 +1,7 @@
 dictionaryList:
   updatedDate: "Updated at"
   createdDate: "Created at"
+  go: "See dictionary"
 notificationList:
   fixed: "Fixed"
 orderDirectionSelect:
