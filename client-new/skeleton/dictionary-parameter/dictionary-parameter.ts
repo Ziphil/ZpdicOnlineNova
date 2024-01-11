@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
+import type {Search} from "/client-new/hook/search";
 import {NormalDictionaryParameter} from "/client-new/skeleton/dictionary-parameter/normal-dictionary-parameter";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
@@ -19,12 +20,12 @@ export type DictionaryOrder = {mode: DictionaryOrderMode, direction: DictionaryO
 
 export namespace DictionaryParameter {
 
-  export function deserialize(params: URLSearchParams): DictionaryParameter {
-    const parameter = NormalDictionaryParameter.deserialize(params);
+  export function deserialize(search: Search): DictionaryParameter {
+    const parameter = NormalDictionaryParameter.deserialize(search);
     return parameter;
   }
 
-  export function serialize(parameter: DictionaryParameter): URLSearchParams {
+  export function serialize(parameter: DictionaryParameter): Search {
     const params = NormalDictionaryParameter.serialize(parameter);
     return params;
   }
