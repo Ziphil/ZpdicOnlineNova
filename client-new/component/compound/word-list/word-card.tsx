@@ -1,10 +1,12 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps, Card, CardBody, useTrans} from "zographia";
+import {AdditionalProps, Card, CardBody} from "zographia";
 import {DetailedWord, Word} from "/client/skeleton/dictionary";
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
+import {WordCardHeading} from "./word-card-heading";
+import {WordCardInformationList} from "./word-card-information-list";
 
 
 export const WordCard = create(
@@ -19,12 +21,11 @@ export const WordCard = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNumber, transDate} = useTrans("wordList");
-
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
-          {word.name}
+          <WordCardHeading dictionary={dictionary} word={word}/>
+          <WordCardInformationList dictionary={dictionary} word={word}/>
         </CardBody>
       </Card>
     );
