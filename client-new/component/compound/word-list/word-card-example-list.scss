@@ -5,9 +5,16 @@
 
 .root {
   margin-block-start: 3zu;
-  row-gap: 1.5zu;
+  row-gap: 3zu;
   display: flex;
   flex-direction: column;
+}
+
+.heading {
+  @include bold-font;
+  margin-block-end: 3zu;
+  font-size: 3.5zu;
+  color: var(--glob-primary-heading-text-color);
 }
 
 .item {
@@ -25,14 +32,6 @@
   flex: 1 1 auto;
 }
 
-.punctuation {
+.separator {
   color: var(--glob-mute-text-color);
-}
-
-.tag {
-  margin-inline-end: 2zu;
-  inset-block-end: 0.1em;
-  line-height: 1;
-  display: inline-block;
-  position: relative;
 }

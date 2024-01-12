@@ -2,9 +2,8 @@
 
 import {ReactElement} from "react";
 import {AdditionalProps, List, ListBody, ListEmptyView, ListPagination} from "zographia";
-import {DetailedWord, Word} from "/client/skeleton/dictionary";
 import {create} from "/client-new/component/create";
-import {EnhancedDictionary} from "/client-new/skeleton";
+import {DetailedWord, EnhancedDictionary, Word} from "/client-new/skeleton";
 import {WordCard} from "./word-card";
 
 

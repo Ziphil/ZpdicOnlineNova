@@ -2,10 +2,9 @@
 
 import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText} from "zographia";
-import {DetailedWord, Word} from "/client/skeleton/dictionary";
 import {Markdown} from "/client-new/component/atom/markdown";
 import {create} from "/client-new/component/create";
-import {EnhancedDictionary} from "/client-new/skeleton";
+import {DetailedWord, EnhancedDictionary, Word} from "/client-new/skeleton";
 
 
 export const WordCardInformationList = create(

@@ -2,9 +2,8 @@
 
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag} from "zographia";
-import {DetailedWord, Word} from "/client/skeleton/dictionary";
 import {create} from "/client-new/component/create";
-import {EnhancedDictionary} from "/client-new/skeleton";
+import {DetailedWord, EnhancedDictionary, Word} from "/client-new/skeleton";
 
 
 export const WordCardHeading = create(

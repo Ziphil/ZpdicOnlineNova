@@ -1,10 +1,9 @@
 //
 
-import {ReactElement} from "react";
+import {Fragment, ReactElement} from "react";
 import {AdditionalProps, MultiLineText, Tag} from "zographia";
-import {DetailedWord, Word} from "/client/skeleton/dictionary";
 import {create} from "/client-new/component/create";
-import {EnhancedDictionary} from "/client-new/skeleton";
+import {DetailedWord, EnhancedDictionary, Word} from "/client-new/skeleton";
 
 
 export const WordCardEquivalentList = create(
@@ -26,7 +25,12 @@ export const WordCardEquivalentList = create(
             {equivalent.titles.map((title, index) => (!!title) && (
               <Tag key={index} styleName="tag" variant="light">{title}</Tag>
             ))}
-            {equivalent.names.join(", ")}
+            {equivalent.names.map((name, index) => (
+              <Fragment key={index}>
+                {(index > 0) && <span styleName="punctuation"> · </span>}
+                <span>{name}</span>
+              </Fragment>
+            ))}
           </MultiLineText>
         ))}
       </div>

@@ -1,11 +1,12 @@
 //
 
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHandPointRight} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, useMemo} from "react";
-import {AdditionalProps, MultiLineText, Tag} from "zographia";
-import {DetailedWord, Relation, Word} from "/client/skeleton/dictionary";
+import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
-import {EnhancedDictionary} from "/client-new/skeleton";
+import {DetailedWord, EnhancedDictionary, Relation, Word} from "/client-new/skeleton";
 
 
 export const WordCardRelationList = create(
@@ -25,19 +26,24 @@ export const WordCardRelationList = create(
     return (groupedRelations.length > 0) ? (
       <div styleName="root" {...rest}>
         {groupedRelations.map(([, [titles, relations]], index) => (
-          <MultiLineText styleName="text" key={index} is="div">
-            {titles.map((title, index) => (!!title) && (
-              <Tag key={index} styleName="tag" variant="light">{title}</Tag>
-            ))}
-            {relations.map((relation, index) => (
-              <Fragment key={index}>
-                {(index > 0) && ", "}
-                <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(relation.name)}&mode=name&type=exact&page=0`} scheme="secondary">
-                  {relation.name}
-                </Link>
-              </Fragment>
-            ))}
-          </MultiLineText>
+          <div styleName="item" key={index}>
+            <span styleName="icon" {...aria({hidden: true})}>
+              <FontAwesomeIcon icon={faHandPointRight}/>
+            </span>
+            <MultiLineText styleName="text" is="span">
+              {titles.map((title, index) => (!!title) && (
+                <Tag key={index} styleName="tag" variant="light">{title}</Tag>
+              ))}
+              {relations.map((relation, index) => (
+                <Fragment key={index}>
+                  {(index > 0) && <span styleName="punctuation"> · </span>}
+                  <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(relation.name)}&mode=name&type=exact&page=0`} scheme="secondary">
+                    {relation.name}
+                  </Link>
+                </Fragment>
+              ))}
+            </MultiLineText>
+          </div>
         ))}
       </div>
     ) : null;

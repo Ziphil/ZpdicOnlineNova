@@ -10,9 +10,14 @@
   flex-direction: column;
 }
 
+.punctuation {
+  color: var(--glob-mute-text-color);
+}
+
 .tag {
   margin-inline-end: 2zu;
   inset-block-end: 0.1em;
+  line-height: 1;
   display: inline-block;
   position: relative;
 }

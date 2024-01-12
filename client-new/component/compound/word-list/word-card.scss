@@ -3,7 +3,18 @@
 @use "zographia/source/component/function.scss" as *;
 
 
+.root {
+  @include theme("light") {
+    --divider-color: #{leveled-color("gray", 1)};
+  }
+}
+
 .body {
   display: flex;
   flex-direction: column;
+}
+
+.divider {
+  margin-block-start: 3zu;
+  border-block-start: dashed 1zx var(--divider-color);
 }
