@@ -47,15 +47,15 @@ export const WordCardHeading = create(
 function getPronunciation(dictionary: EnhancedDictionary, word: Word | DetailedWord): string | undefined {
   if (word.pronunciation !== undefined) {
     if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
-      return word.pronunciation;
+      return word.pronunciation.trim();
     } else {
-      return "/" + word.pronunciation + "/";
+      return "/" + word.pronunciation.trim() + "/";
     }
   } else {
     if (dictionary.akrantiain !== null) {
       try {
         const pronunciation = dictionary.akrantiain.convert(word.name);
-        return "/" + pronunciation + "/";
+        return "/" + pronunciation.trim() + "/";
       } catch (error) {
         console.error(error);
         return undefined;
