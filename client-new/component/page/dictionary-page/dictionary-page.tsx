@@ -1,15 +1,16 @@
 //
 
-import {ReactElement, useCallback, useMemo} from "react";
+import {ReactElement, SetStateAction, useCallback, useMemo} from "react";
 import {useParams} from "react-router-dom";
 import {AdditionalProps} from "zographia";
 import {MainContainer, Page} from "/client-new/component/compound/page";
+import {SearchWordForm} from "/client-new/component/compound/search-word-form";
 import {WordList} from "/client-new/component/compound/word-list";
 import {create} from "/client-new/component/create";
 import {useSuspenseQuery} from "/client-new/hook/request";
 import {Search, useSearchState} from "/client-new/hook/search";
 import {EnhancedDictionary, WordParameter} from "/client-new/skeleton";
-import {calcOffsetSpec} from "/client-new/util/misc";
+import {calcOffsetSpec, resolveStateAction} from "/client-new/util/misc";
 
 
 export const DictionaryPage = create(
@@ -30,6 +31,13 @@ export const DictionaryPage = create(
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
 
+    const handleParameterSet = useCallback(function (parameter: SetStateAction<WordParameter>): void {
+      setQuery((prevQuery) => {
+        const nextParameter = resolveStateAction(parameter, prevQuery.parameter);
+        return {parameter: nextParameter, page: 0, showExplanation: false};
+      });
+    }, [setQuery]);
+
     const handlePageSet = useCallback(function (page: number): void {
       setQuery({...query, page});
       window.scrollTo(0, 0);
@@ -39,6 +47,7 @@ export const DictionaryPage = create(
       <Page {...rest}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
+            <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
           </div>
           <div styleName="right">
             <WordList dictionary={enhancedDictionary} words={hitWords} size={40} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>

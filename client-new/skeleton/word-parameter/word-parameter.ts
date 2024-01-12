@@ -46,4 +46,12 @@ export namespace WordParameter {
     }
   }
 
+  export function toNormal(parameter: WordParameter): NormalWordParameter {
+    if ("elements" in parameter) {
+      return NormalWordParameter.EMPTY;
+    } else {
+      return parameter;
+    }
+  }
+
 }

@@ -8,10 +8,26 @@ orderDirectionSelect:
   ascending: "昇順"
   descending: "降順"
 orderModeSelect:
-  unicode: "名前"
+  unicode: "名前 (Unicode)"
   custom: "独自順"
   updatedDate: "更新日時"
   createdDate: "作成日時"
+searchWordForm:
+  mode:
+    name: "単語"
+    equivalent: "訳語"
+    both: "単語＋訳語"
+    tag: "タグ"
+    information: "内容"
+    content: "全文"
+  type:
+    prefix: "前方"
+    suffix: "後方"
+    part: "部分"
+    exact: "完全"
+    regular: "正規"
+  ignoreCase: "大小文字を区別しない"
+  enableSuggestions: "変化形サジェストを行う"
 
 notificationListPage:
   notification: "過去のお知らせ"

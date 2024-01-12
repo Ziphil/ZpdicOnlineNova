@@ -12,6 +12,22 @@ orderModeSelect:
   custom: "Custom"
   updatedDate: "Update date"
   createdDate: "Creation date"
+searchWordForm:
+  mode:
+    name: "Headword"
+    equivalent: "Translation"
+    both: "Both"
+    tag: "Tag"
+    information: "Contents"
+    content: "Whole"
+  type:
+    prefix: "Prefix"
+    suffix: "Suffix"
+    part: "Partial"
+    exact: "Exact"
+    regular: "Regexp"
+  ignoreCase: "Ignore case"
+  enableSuggestions: "Suggest variations"
   
 notificationListPage:
   notification: "News"

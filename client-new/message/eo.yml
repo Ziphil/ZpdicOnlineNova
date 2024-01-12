@@ -12,6 +12,22 @@ orderModeSelect:
   custom: "Propra ordo"
   updatedDate: "Dato de ĝisdatigo"
   createdDate: "Dato de kreo"
+searchWordForm:
+  mode:
+    name: "Kapvorto"
+    equivalent: "Tradukaĵo"
+    both: "Ambaŭ"
+    tag: "Etikedo"
+    information: "Enhavo"
+    content: "Tuto"
+  type:
+    prefix: "Prefiksa"
+    suffix: "Sufiksa"
+    part: "Parta"
+    exact: "Ekzakta"
+    regular: "Regesp"
+  ignoreCase: "Ignori usklecon"
+  enableSuggestions: "Sugesti variaĵojn"
 
 notificationListPage:
   notification: "Antaŭaj sciigoj"
