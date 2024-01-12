@@ -27,7 +27,8 @@ searchWordForm:
     exact: "完全"
     regular: "正規"
   ignoreCase: "大小文字を区別しない"
-  enableSuggestions: "変化形サジェストを行う"
+  enableSuggestions: "変化形をサジェスト"
+  shuffleResult: "検索結果をシャッフル"
 
 notificationListPage:
   notification: "過去のお知らせ"

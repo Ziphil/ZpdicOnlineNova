@@ -28,6 +28,7 @@ searchWordForm:
     regular: "Regexp"
   ignoreCase: "Ignore case"
   enableSuggestions: "Suggest variations"
+  shuffleResult: "Shuffle result"
   
 notificationListPage:
   notification: "News"

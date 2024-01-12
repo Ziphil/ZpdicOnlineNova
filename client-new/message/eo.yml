@@ -28,6 +28,7 @@ searchWordForm:
     regular: "Regesp"
   ignoreCase: "Ignori usklecon"
   enableSuggestions: "Sugesti variaĵojn"
+  shuffleResult: "Miksi rezultojn"
 
 notificationListPage:
   notification: "Antaŭaj sciigoj"
