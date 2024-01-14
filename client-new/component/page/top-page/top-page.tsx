@@ -32,7 +32,7 @@ export const TopPage = create(
             <h2 styleName="heading">{trans("heading.notification")}</h2>
             <NotificationList size={1} showPagination={false}/>
             <div styleName="link">
-              <Link href="/notification">
+              <Link href="/notification" scheme="secondary" variant="underline">
                 <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
                 {trans("moreNotifications")}
               </Link>

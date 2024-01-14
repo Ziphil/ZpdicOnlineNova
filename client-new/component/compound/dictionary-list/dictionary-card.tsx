@@ -33,7 +33,9 @@ export const DictionaryCard = create(
           <div styleName="left">
             <div>
               <SingleLineText styleName="name" is="h3">
-                {dictionary.name}
+                <Link href={`/dictionary/${dictionary.paramName || dictionary.number}`}>
+                  {dictionary.name}
+                </Link>
               </SingleLineText>
               <div styleName="user">
                 <GeneralIcon styleName="icon" icon={faUser}/>
@@ -58,7 +60,7 @@ export const DictionaryCard = create(
           )}
         </CardBody>
         <CardFooter>
-          <Link styleName="link" scheme="secondary" href={`/dictionary/${dictionary.paramName || dictionary.number}`}>
+          <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${dictionary.paramName || dictionary.number}`}>
             <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
             {trans("go")}
           </Link>

@@ -23,15 +23,15 @@ export const OverallAggregationPane = create(
         <div styleName="inner">
           <div styleName="item">
             <div styleName="count">{transNumber(aggregations.dictionary.count)}</div>
-            <div styleName="label">{trans("aggregation.dictionary")}</div>
+            <div styleName="label">{trans("aggregation.dictionary", {count: aggregations.dictionary.count})}</div>
           </div>
           <div styleName="item">
             <div styleName="count">{transNumber(aggregations.word.count)}</div>
-            <div styleName="label">{trans("aggregation.word")}</div>
+            <div styleName="label">{trans("aggregation.word", {count: aggregations.word.count})}</div>
           </div>
           <div styleName="item">
             <div styleName="count">{transNumber(aggregations.example.count)}</div>
-            <div styleName="label">{trans("aggregation.example")}</div>
+            <div styleName="label">{trans("aggregation.example", {count: aggregations.example.count})}</div>
           </div>
         </div>
       </div>

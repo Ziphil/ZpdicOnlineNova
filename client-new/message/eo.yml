@@ -3,7 +3,11 @@ dictionaryList:
   createdDate: "Kreita je"
   go: "Vidi vortaron"
 notificationList:
-  fixed: "Riparita"
+  tag:
+    update: "Ĝisdatigo"
+    bug: "Neĝusteco"
+    info: "Alia"
+    bugFixed: "Riparita"
 orderDirectionSelect:
   ascending: "Kreska"
   descending: "Malkreska"
@@ -37,9 +41,9 @@ topPage:
     login: "Ensaluti · Enskribiĝi"
     dictionary: "Listo de vortaroj"
   aggregation:
-    dictionary: "Vortaroj"
-    word: "Vortoj"
-    example: "Frazoj"
+    dictionary: "{count, plural, one {Vortaro} other {Vortaroj}}"
+    word: "{count, plural, one {Vorto} other {Vortoj}}"
+    example: "{count, plural, one {Frazo} other {Frazoj}}"
   heading:
     notification: "Lastatempaj sciigoj"
   moreNotifications: "Vidi pli da sciigoj"

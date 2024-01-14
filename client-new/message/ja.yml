@@ -3,7 +3,11 @@ dictionaryList:
   createdDate: "作成日時"
   go: "辞書ページへ"
 notificationList:
-  fixed: "修正済み"
+  tag:
+    update: "アップデート"
+    bug: "不具合"
+    info: "その他"
+    fixed: "修正済み"
 orderDirectionSelect:
   ascending: "昇順"
   descending: "降順"

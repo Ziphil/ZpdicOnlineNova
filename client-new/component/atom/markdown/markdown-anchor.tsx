@@ -17,7 +17,7 @@ export const MarkdownAnchor = create(
   } & AnchorHTMLAttributes<HTMLAnchorElement>): ReactElement {
 
     return (
-      <Link href={href ?? ""} {...rest}>
+      <Link href={href ?? ""} scheme="secondary" variant="underline" {...rest}>
         {children}
       </Link>
     );

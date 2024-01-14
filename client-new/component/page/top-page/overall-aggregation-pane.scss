@@ -38,7 +38,6 @@
 .count {
   @include bold-font;
   font-size: 10zu;
-  font-feature-settings: "onum" 1;
   letter-spacing: 0.1em;
   text-indent: 0.1em;
 }

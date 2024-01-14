@@ -21,8 +21,12 @@ export const NotificationCard = create(
     const {trans, transDate} = useTrans("notificationList");
 
     return (
-      <Card styleName="root" padding="wide" {...rest}>
+      <Card styleName="root" {...rest}>
         <CardBody>
+          <div styleName="tag">
+            <Tag is="span" variant="solid">{trans(`tag.${(notification.type === "bugFixed") ? "bug" : notification.type}`)}</Tag>
+            {(notification.type === "bugFixed") && <Tag is="span" variant="light">{trans("tag.fixed")}</Tag>}
+          </div>
           <div styleName="top">
             <div styleName="icon">
               <GeneralIcon icon={getIcon(notification.type)}/>
@@ -36,9 +40,6 @@ export const NotificationCard = create(
               </time>
             </div>
           </div>
-          {(notification.type === "bugFixed") && (
-            <Tag styleName="badge" is="span" scheme="secondary">{trans("fixed")}</Tag>
-          )}
           <Markdown styleName="text" mode="normal">
             {notification.text}
           </Markdown>

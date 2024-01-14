@@ -58,8 +58,9 @@
 }
 
 .button {
-  width: 64zu;
+  min-width: 64zu;
   padding-block: 3zu;
+  padding-inline: 4zu;
   font-size: 5zu;
   border-color: var(--button-border-color) !important;
   box-shadow: var(--box-shadow-setting) var(--button-box-shadow-color);

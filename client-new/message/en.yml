@@ -3,7 +3,11 @@ dictionaryList:
   createdDate: "Created at"
   go: "See dictionary"
 notificationList:
-  fixed: "Fixed"
+  tag:
+    update: "Update"
+    bug: "Bug"
+    info: "Other"
+    fixed: "Fixed"
 orderDirectionSelect:
   ascending: "Ascending"
   descending: "Descending"
@@ -37,9 +41,9 @@ topPage:
     login: "Sign in · Sign up"
     dictionary: "List of dictionaries"
   aggregation:
-    dictionary: "Dictionaries"
-    word: "Words"
-    example: "Sentences"
+    dictionary: "{count, plural, one {Dictionary} other {Dictionaries}}"
+    word: "{count, plural, one {Word} other {Words}}"
+    example: "{count, plural, one {Sentence} other {Sentences}}"
   heading:
     notification: "Latest news"
   moreNotifications: "See more news"
