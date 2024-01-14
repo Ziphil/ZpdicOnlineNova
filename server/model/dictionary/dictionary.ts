@@ -176,8 +176,8 @@ export class DictionarySchema extends DiscardableSchema {
     return dictionaries;
   }
 
-  // この辞書に登録されている単語データを全て削除し、ファイルから読み込んだデータを代わりに保存します。
-  // 辞書の内部データも、ファイルから読み込んだものに更新されます。
+  /** この辞書に登録されている単語データを全て削除し、ファイルから読み込んだデータを代わりに保存します。
+   * 辞書の内部データも、ファイルから読み込んだものに更新されます。*/
   public async upload(this: Dictionary, path: string, originalPath: string): Promise<Dictionary> {
     await this.startUpload();
     const settings = this.settings as any;
@@ -254,8 +254,8 @@ export class DictionarySchema extends DiscardableSchema {
     await promise;
   }
 
-  // この辞書を削除 (削除フラグを付加) します。
-  // 削除した辞書を後で削除する直前の状態に戻せるように、この辞書に属する単語データの削除は行いません。
+  /** この辞書を削除 (削除フラグを付加) します。
+   * 削除した辞書を後で削除する直前の状態に戻せるように、この辞書に属する単語データの削除は行いません。*/
   public async discard(this: Dictionary): Promise<void> {
     await InvitationModel.deleteMany({}).where("dictionary", this);
     await this.flagDiscarded();
@@ -381,7 +381,7 @@ export class DictionarySchema extends DiscardableSchema {
     }
   }
 
-  // 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。
+  /** 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。*/
   public async searchWord(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     const query = parameter.createQuery(this);
     const suggestionQuery = parameter.createSuggestionQuery(this);

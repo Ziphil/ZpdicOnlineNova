@@ -68,7 +68,7 @@ const MenuItem = create(
           <span styleName="dummy">{label}</span>
           {label}
         </span>
-        {(badgeValue !== undefined && badgeValue > 0) && (
+        {(badgeValue !== undefined && +badgeValue > 0) && (
           <Badge styleName="badge" value={badgeValue}/>
         )}
       </a>

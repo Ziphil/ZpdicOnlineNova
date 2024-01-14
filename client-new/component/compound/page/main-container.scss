@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  width: 100%;
+  margin-inline: auto;
+  &[data-width="normal"] {
+    max-width: 240zu;
+  }
+  &[data-width="wide"] {
+    max-width: 320zu;
+  }
+}

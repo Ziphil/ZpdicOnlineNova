@@ -3,12 +3,8 @@
 import dotenv from "dotenv";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
-import {
-  EnvironmentPlugin
-} from "webpack";
-import {
-  BundleAnalyzerPlugin
-} from "webpack-bundle-analyzer";
+import {EnvironmentPlugin} from "webpack";
+import {BundleAnalyzerPlugin} from "webpack-bundle-analyzer";
 
 
 dotenv.config({path: "./variable.env"});
@@ -116,18 +112,6 @@ const config = {
       stream: require.resolve("stream-browserify")
     }
   },
-  devServer: {
-    port: 3000,
-    historyApiFallback: true,
-    static: {
-      directory: path.join(__dirname, "dist", "client")
-    },
-    proxy: {
-      "/internal": "http://localhost:8050",
-      "/external": "http://localhost:8050",
-      "/static": "http://localhost:8050"
-    }
-  },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./client/public/index.html",
@@ -137,7 +121,12 @@ const config = {
       analyzerMode: (!!process.env["ANALYZE"]) ? "static" : "disabled",
       reportFilename: path.join(__dirname, "dist", "client", "stats.html")
     }),
-    new EnvironmentPlugin(["npm_package_version", "RECAPTCHA_KEY", "AWS_STORAGE_BUCKET", "ANALYTICS_ID"])
+    new EnvironmentPlugin({
+      "npm_package_version": "",
+      "RECAPTCHA_KEY": "",
+      "AWS_STORAGE_BUCKET": "",
+      "ANALYTICS_ID": ""
+    })
   ]
 };
 

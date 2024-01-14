@@ -1,0 +1,50 @@
+dictionaryList:
+  updatedDate: "更新日時"
+  createdDate: "作成日時"
+  go: "辞書ページへ"
+notificationList:
+  tag:
+    update: "アップデート"
+    bug: "不具合"
+    info: "その他"
+    fixed: "修正済み"
+orderDirectionSelect:
+  ascending: "昇順"
+  descending: "降順"
+orderModeSelect:
+  unicode: "名前 (Unicode)"
+  custom: "独自順"
+  updatedDate: "更新日時"
+  createdDate: "作成日時"
+searchWordForm:
+  mode:
+    name: "単語"
+    equivalent: "訳語"
+    both: "単語＋訳語"
+    tag: "タグ"
+    information: "内容"
+    content: "全文"
+  type:
+    prefix: "前方"
+    suffix: "後方"
+    part: "部分"
+    exact: "完全"
+    regular: "正規"
+  ignoreCase: "大小文字を区別しない"
+  enableSuggestions: "変化形をサジェスト"
+  shuffleResult: "検索結果をシャッフル"
+
+notificationListPage:
+  notification: "過去のお知らせ"
+topPage:
+  button:
+    login: "ログイン · 新規登録"
+    dictionary: "辞書一覧"
+  aggregation:
+    dictionary: "辞書"
+    word: "単語"
+    example: "例文"
+  heading:
+    notification: "最新のお知らせ"
+  moreNotifications: "他のお知らせも見る"
+  catch: "Draw your own universe with conlang"

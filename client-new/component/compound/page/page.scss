@@ -1,0 +1,56 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.main {
+  flex: 1 1 auto;
+  view-transition-name: main;
+  &[data-insert-padding] {
+    padding-block-start: 12zu;
+    padding-block-end: 16zu;
+    padding-inline: 10zu;  
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes slide-to-left {
+  from {
+    transform: translate(0zu, 0zu);
+  }
+  to {
+    transform: translate(-8zu, 0zu)
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    transform: translate(8zu, 0zu);
+  }
+  to {
+    transform: translate(0zu, 0zu)
+  }
+}

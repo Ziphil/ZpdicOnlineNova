@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  width: 40zu;
+}
+
+.icon {
+  margin-inline-end: var(--glob-blank-gap);
+  color: var(--glob-mute-text-color);
+}

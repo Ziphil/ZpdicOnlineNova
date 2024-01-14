@@ -1,0 +1,50 @@
+dictionaryList:
+  updatedDate: "Ĝisdatigita je"
+  createdDate: "Kreita je"
+  go: "Vidi vortaron"
+notificationList:
+  tag:
+    update: "Ĝisdatigo"
+    bug: "Neĝusteco"
+    info: "Alia"
+    bugFixed: "Riparita"
+orderDirectionSelect:
+  ascending: "Kreska"
+  descending: "Malkreska"
+orderModeSelect:
+  unicode: "Nomo"
+  custom: "Propra ordo"
+  updatedDate: "Dato de ĝisdatigo"
+  createdDate: "Dato de kreo"
+searchWordForm:
+  mode:
+    name: "Kapvorto"
+    equivalent: "Tradukaĵo"
+    both: "Ambaŭ"
+    tag: "Etikedo"
+    information: "Enhavo"
+    content: "Tuto"
+  type:
+    prefix: "Prefiksa"
+    suffix: "Sufiksa"
+    part: "Parta"
+    exact: "Ekzakta"
+    regular: "Regesp"
+  ignoreCase: "Ignori usklecon"
+  enableSuggestions: "Sugesti variaĵojn"
+  shuffleResult: "Miksi rezultojn"
+
+notificationListPage:
+  notification: "Antaŭaj sciigoj"
+topPage:
+  button:
+    login: "Ensaluti · Enskribiĝi"
+    dictionary: "Listo de vortaroj"
+  aggregation:
+    dictionary: "{count, plural, one {Vortaro} other {Vortaroj}}"
+    word: "{count, plural, one {Vorto} other {Vortoj}}"
+    example: "{count, plural, one {Frazo} other {Frazoj}}"
+  heading:
+    notification: "Lastatempaj sciigoj"
+  moreNotifications: "Vidi pli da sciigoj"
+  catch: "Desegnu vian propran universon per conlingvo"

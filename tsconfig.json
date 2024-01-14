@@ -4,6 +4,7 @@
     "baseUrl": "./",
     "paths": {
       "/client*": ["client*"],
+      "/client-new*": ["client-new*"],
       "/server*": ["server*"],
       "/worker*": ["worker*"],
     },
@@ -25,6 +26,7 @@
   },
   "include": [
     "client/**/*",
+    "client-new/**/*",
     "server/**/*",
     "worker/**/*"
   ]

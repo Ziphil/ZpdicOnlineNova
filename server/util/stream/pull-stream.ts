@@ -9,11 +9,11 @@ import {
 
 export abstract class PullStream {
 
-  // データを読み込んで、buffer に渡されたバッファに対して offset に指定された位置から書き込みます。
-  // このとき、length に指定されたバイト数分だけデータを読み込みます。
-  // length を省略した場合は、buffer の長さと同じ値が指定されたものと見なされます。
-  // ここで指定されたバイト数分のデータが残っていない場合は、エラーは発生させずに、単にデータを最後まで読み込みます。
-  // 実際に読み込まれたバイト数を返します。
+  /** データを読み込んで、`buffer` に渡されたバッファに対して `offset` に指定された位置から書き込みます。
+   * このとき、`length` に指定されたバイト数分だけデータを読み込みます。
+   * `length` を省略した場合は、`buffer` の長さと同じ値が指定されたものと見なされます。
+   * ここで指定されたバイト数分のデータが残っていない場合は、エラーは発生させずに、単にデータを最後まで読み込みます。
+   * 実際に読み込まれたバイト数を返します。*/
   public abstract pull(buffer: Buffer, offset: number, length?: number): number;
 
   public skip(length: number): number {
@@ -22,8 +22,8 @@ export abstract class PullStream {
     return readLength;
   }
 
-  // 1 バイト分を読み込んで返します。
-  // すでにデータの終端に到達していて読み込むデータが存在しない場合は、-1 を返します。
+  /** 1 バイト分を読み込んで返します。
+   * すでにデータの終端に到達していて読み込むデータが存在しない場合は、`-1` を返します。*/
   public read(): number {
     const buffer = Buffer.alloc(1);
     const readLength = this.pull(buffer, 0);
@@ -45,8 +45,8 @@ export abstract class PullStream {
     }
   }
 
-  // 指定されたバイト数分だけデータを読み込み、リトルエンディアンで符号なし整数に変換して返します。
-  // バイト数が足りなかった場合はエラーが発生します。
+  /** 指定されたバイト数分だけデータを読み込み、リトルエンディアンで符号なし整数に変換して返します。
+   * バイト数が足りなかった場合はエラーが発生します。*/
   public readUIntLE(length: number): number {
     const buffer = Buffer.alloc(length);
     const readLength = this.pull(buffer, 0);
@@ -58,8 +58,8 @@ export abstract class PullStream {
     }
   }
 
-  // 指定されたバイト数分だけデータを読み込み、ビッグエンディアンで符号なし整数に変換して返します。
-  // バイト数が足りなかった場合はエラーが発生します。
+  /** 指定されたバイト数分だけデータを読み込み、ビッグエンディアンで符号なし整数に変換して返します。
+   * バイト数が足りなかった場合はエラーが発生します。*/
   public readUIntBE(length: number): number {
     const buffer = Buffer.alloc(length);
     const readLength = this.pull(buffer, 0, length);

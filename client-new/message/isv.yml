@@ -1,0 +1,50 @@
+dictionaryList:
+  updatedDate: "Updated at"
+  createdDate: "Created at"
+  go: "See dictionary"
+notificationList:
+  tag:
+    update: "Актуализација"
+    bug: "Погрєшка"
+    info: "Ина"
+    fixed: "Изправјена"
+orderDirectionSelect:
+  ascending: "Ascending"
+  descending: "Descending"
+orderModeSelect:
+  unicode: "Name"
+  custom: "Custom"
+  updatedDate: "Update date"
+  createdDate: "Creation date"
+searchWordForm:
+  mode:
+    name: "Headword"
+    equivalent: "Translation"
+    both: "Both"
+    tag: "Tag"
+    information: "Contents"
+    content: "Whole"
+  type:
+    prefix: "Prefix"
+    suffix: "Suffix"
+    part: "Partial"
+    exact: "Exact"
+    regular: "Regexp"
+  ignoreCase: "Ignore case"
+  enableSuggestions: "Suggest variations"
+  shuffleResult: "Shuffle result"
+  
+notificationListPage:
+  notification: "Новости"
+topPage:
+  button:
+    login: "Пријавити се · Записати се"
+    dictionary: "Список словников"
+  aggregation:
+    dictionary: "{count, plural, one {Словник} many {Словникы} other {Словников}}"
+    word: "{count, plural, one {Слово} many {Слова} other {Слов}}"
+    example: "{count, plural, one {Рєченје} many {Рєченја} other {Рєчениј}}"
+  heading:
+    notification: "Послєдње новости"
+  moreNotifications: "Читати новости вече"
+  catch: "Рысујте свој всесвєт со сконструованым језыком"

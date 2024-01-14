@@ -59,9 +59,9 @@ export class UserSchema {
   @prop()
   public authority?: string;
 
-  // 渡された情報からユーザーを作成し、データベースに保存します。
-  // このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
-  // 渡されたパスワードは自動的にハッシュ化されます。
+  /** 渡された情報からユーザーを作成し、データベースに保存します。
+   * このとき、名前が妥当な文字列かどうか、およびすでに同じ名前のユーザーが存在しないかどうかを検証し、不適切だった場合はエラーを発生させます。
+   * 渡されたパスワードは自動的にハッシュ化されます。*/
   public static async register(name: string, email: string, password: string): Promise<{user: User, key: string}> {
     const formerNameUser = await UserModel.findOne().where("name", name);
     const formerEmailUser = await UserModel.findOne().where("email", email);
@@ -81,8 +81,8 @@ export class UserSchema {
     }
   }
 
-  // 渡された名前とパスワードに合致するユーザーを返します。
-  // 渡された名前のユーザーが存在しない場合や、パスワードが誤っている場合は、null を返します。
+  /** 渡された名前とパスワードに合致するユーザーを返します。
+   * 渡された名前のユーザーが存在しない場合や、パスワードが誤っている場合は、`null` を返します。*/
   public static async authenticate(name: string, password: string): Promise<User | null> {
     const user = await UserModel.findOne().where("name", name);
     if (user && user.comparePassword(password)) {
@@ -136,9 +136,9 @@ export class UserSchema {
     }
   }
 
-  // 与えられたリセットトークンのキーを用いてパスワードをリセットします。
-  // パスワードのリセットに成功した場合と、トークンの有効期限が切れていた場合は、再び同じトークンを使えないようトークンを削除します。
-  // パスワードが不正 (文字数が少ないなど) だった場合は、トークンは削除しません。
+  /** 与えられたリセットトークンのキーを用いてパスワードをリセットします。
+   * パスワードのリセットに成功した場合と、トークンの有効期限が切れていた場合は、再び同じトークンを使えないようトークンを削除します。
+   * パスワードが不正 (文字数が少ないなど) だった場合は、トークンは削除しません。**/
   public static async resetPassword(key: string, password: string, timeout: number): Promise<User> {
     const name = ResetTokenModel.getName(key);
     const user = await UserModel.findOne().where("resetToken.name", name);
@@ -215,8 +215,8 @@ export class UserSchema {
     return this;
   }
 
-  // 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
-  // データベースへの保存は行わないので、別途保存処理を行ってください。
+  /** 引数に渡された生パスワードをハッシュ化して、自身のプロパティを上書きします。
+   * データベースへの保存は行わないので、別途保存処理を行ってください。*/
   private async encryptPassword(password: string): Promise<void> {
     if (!validatePassword(password)) {
       throw new CustomError("invalidUserPassword");
