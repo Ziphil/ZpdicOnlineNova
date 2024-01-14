@@ -19,14 +19,6 @@
   }
 }
 
-::view-transition-old(main) {
-  animation: fade-out 0.2s ease both, slide-to-bottom 0.2s ease both;
-}
-
-::view-transition-new(main) {
-  animation: fade-in 0.2s 0.1s ease both, slide-from-bottom 0.2s 0.1s ease both;
-}
-
 @keyframes fade-in {
   from {
     opacity: 0;
@@ -45,18 +37,18 @@
   }
 }
 
-@keyframes slide-to-bottom {
+@keyframes slide-to-left {
   from {
     transform: translate(0zu, 0zu);
   }
   to {
-    transform: translate(0zu, 4zu)
+    transform: translate(-8zu, 0zu)
   }
 }
 
-@keyframes slide-from-bottom {
+@keyframes slide-from-right {
   from {
-    transform: translate(0zu, 4zu);
+    transform: translate(8zu, 0zu);
   }
   to {
     transform: translate(0zu, 0zu)

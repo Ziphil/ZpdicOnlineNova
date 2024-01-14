@@ -5,12 +5,7 @@ import * as typegoose from "@typegoose/typegoose";
 import aws from "aws-sdk";
 import cookieParser from "cookie-parser";
 import express from "express";
-import {
-  Express,
-  NextFunction,
-  Request,
-  Response
-} from "express";
+import {Express, NextFunction, Request, Response} from "express";
 import fs from "fs";
 import mongoose from "mongoose";
 import morgan from "morgan";
@@ -28,16 +23,9 @@ import {
   UserController,
   WordController
 } from "/server/controller/internal";
-import {
-  DictionaryModel,
-  WordModel
-} from "/server/model/dictionary";
-import {
-  LogUtil
-} from "/server/util/log";
-import {
-  MongoUtil
-} from "/server/util/mongo";
+import {DictionaryModel, WordModel} from "/server/model/dictionary";
+import {LogUtil} from "/server/util/log";
+import {MongoUtil} from "/server/util/mongo";
 import {
   AWS_KEY,
   AWS_REGION,
@@ -47,9 +35,7 @@ import {
   PORT,
   SENDGRID_KEY
 } from "/server/variable";
-import {
-  agenda
-} from "/worker/agenda";
+import {agenda} from "/worker/agenda";
 
 
 export class Main {
@@ -183,6 +169,7 @@ export class Main {
 
   private setupStatic(): void {
     this.application.use("/client", express.static(process.cwd() + "/dist/client"));
+    this.application.use("/client-new", express.static(process.cwd() + "/dist/client-new"));
     this.application.use("/static", express.static(process.cwd() + "/dist/static"));
   }
 
@@ -193,6 +180,18 @@ export class Main {
     const internalHandler = function (request: Request, response: Response, next: NextFunction): void {
       const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
       response.status(404).end();
+    };
+    const nextOtherHandler = function (request: Request, response: Response, next: NextFunction): void {
+      const method = request.method;
+      if ((method === "GET" || method === "HEAD") && request.accepts("html")) {
+        response.sendFile(process.cwd() + "/dist/client-new/index.html", (error) => {
+          if (error) {
+            next(error);
+          }
+        });
+      } else {
+        next();
+      }
     };
     const otherHandler = function (request: Request, response: Response, next: NextFunction): void {
       const method = request.method;
@@ -207,6 +206,7 @@ export class Main {
       }
     };
     this.application.use("/internal*", internalHandler);
+    this.application.use("/next*", nextOtherHandler);
     this.application.use("*", otherHandler);
   }
 

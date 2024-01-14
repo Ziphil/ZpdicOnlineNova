@@ -10,7 +10,7 @@ export const Link = createWithRef(
   require("./link.scss"), "Link",
   function ({
     href,
-    useTransition = true,
+    useTransition = false,
     children,
     ...rest
   }: {

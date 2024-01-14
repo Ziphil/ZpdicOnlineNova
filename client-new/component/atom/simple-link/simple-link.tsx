@@ -9,7 +9,7 @@ export const SimpleLink = createWithRef(
   require("./simple-link.scss"), "SimpleLink",
   function ({
     href,
-    useTransition = true,
+    useTransition = false,
     children,
     ...rest
   }: {
