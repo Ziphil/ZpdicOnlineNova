@@ -164,7 +164,7 @@
     "websocket-extensions": ">=0.1.4",
     "xml-js": "^1.6.11",
     "zatlin": "^1.2.2",
-    "zographia": "^0.0.1"
+    "zographia": "^0.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",
