@@ -36,7 +36,7 @@ export const WordCardRelationList = create(
               ))}
               {relations.map((relation, index) => (
                 <Fragment key={index}>
-                  {(index > 0) && <span styleName="punctuation"> · </span>}
+                  {(index > 0) && <span styleName="punctuation">, </span>}
                   <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(relation.name)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
                     {relation.name}
                   </Link>
