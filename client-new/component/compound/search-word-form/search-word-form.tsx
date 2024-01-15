@@ -140,7 +140,7 @@ export const SearchWordForm = create(
           />
         </div>
         <div styleName="row">
-          <Button variant="text" scheme="secondary" onClick={shuffleResult}>
+          <Button scheme="secondary" variant="underline" onClick={shuffleResult}>
             <ButtonIconbag><GeneralIcon icon={faShuffle}/></ButtonIconbag>
             {trans("shuffleResult")}
           </Button>
