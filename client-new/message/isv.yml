@@ -45,6 +45,6 @@ topPage:
     word: "{count, plural, one {Слово} many {Слова} other {Слов}}"
     example: "{count, plural, one {Рєченје} many {Рєченја} other {Рєчениј}}"
   heading:
-    notification: "Послєдње новости"
+    notification: "Послєдне новости"
   moreNotifications: "Читати новости вече"
   catch: "Рысујте свој всесвєт со сконструованым језыком"

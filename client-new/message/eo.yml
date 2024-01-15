@@ -35,7 +35,7 @@ searchWordForm:
   shuffleResult: "Miksi rezultojn"
 
 notificationListPage:
-  notification: "Antaŭaj sciigoj"
+  notification: "Antaŭaj novaĵoj"
 topPage:
   button:
     login: "Ensaluti · Enskribiĝi"
@@ -45,6 +45,6 @@ topPage:
     word: "{count, plural, one {Vorto} other {Vortoj}}"
     example: "{count, plural, one {Frazo} other {Frazoj}}"
   heading:
-    notification: "Lastatempaj sciigoj"
-  moreNotifications: "Vidi pli da sciigoj"
+    notification: "Lastatempaj novaĵoj"
+  moreNotifications: "Legi pli da novaĵoj"
   catch: "Desegnu vian propran universon per conlingvo"
