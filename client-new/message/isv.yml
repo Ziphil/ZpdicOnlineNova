@@ -1,6 +1,6 @@
 dictionaryList:
-  updatedDate: "Updated at"
-  createdDate: "Created at"
+  updatedDate: "Актуализованы"
+  createdDate: "Созданы"
   go: "See dictionary"
 notificationList:
   tag:
@@ -9,8 +9,8 @@ notificationList:
     info: "Ина"
     fixed: "Изправјена"
 orderDirectionSelect:
-  ascending: "Ascending"
-  descending: "Descending"
+  ascending: "Повышајучи"
+  descending: "Малєјучи"
 orderModeSelect:
   unicode: "Name"
   custom: "Custom"
@@ -18,18 +18,18 @@ orderModeSelect:
   createdDate: "Creation date"
 searchWordForm:
   mode:
-    name: "Headword"
-    equivalent: "Translation"
-    both: "Both"
-    tag: "Tag"
-    information: "Contents"
-    content: "Whole"
+    name: "Слово"
+    equivalent: "Прєвод"
+    both: "Оба"
+    tag: "Значка"
+    information: "Содржанје"
+    content: "Цєлы"
   type:
-    prefix: "Prefix"
-    suffix: "Suffix"
-    part: "Partial"
-    exact: "Exact"
-    regular: "Regexp"
+    prefix: "Префиксны"
+    suffix: "Суфиксны"
+    part: "Честичны"
+    exact: "Точны"
+    regular: "Регекс"
   ignoreCase: "Ignore case"
   enableSuggestions: "Suggest variations"
   shuffleResult: "Shuffle result"

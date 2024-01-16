@@ -29,7 +29,7 @@ searchWordForm:
     suffix: "Suffix"
     part: "Partial"
     exact: "Exact"
-    regular: "Regexp"
+    regular: "Regex"
   ignoreCase: "Ignore case"
   enableSuggestions: "Suggest variations"
   shuffleResult: "Shuffle result"
