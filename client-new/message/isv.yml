@@ -12,10 +12,10 @@ orderDirectionSelect:
   ascending: "Повышајучи"
   descending: "Малєјучи"
 orderModeSelect:
-  unicode: "Name"
+  unicode: "Име"
   custom: "Custom"
-  updatedDate: "Update date"
-  createdDate: "Creation date"
+  updatedDate: "Дата актуализованја"
+  createdDate: "Дата созданја"
 searchWordForm:
   mode:
     name: "Слово"
@@ -30,9 +30,9 @@ searchWordForm:
     part: "Честичны"
     exact: "Точны"
     regular: "Регекс"
-  ignoreCase: "Ignore case"
-  enableSuggestions: "Suggest variations"
-  shuffleResult: "Shuffle result"
+  ignoreCase: "Игноровати велике/мале буквы"
+  enableSuggestions: "Прєдлагати вариације"
+  shuffleResult: "Мєшати резултаты"
   
 notificationListPage:
   notification: "Новости"

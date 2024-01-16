@@ -123,6 +123,8 @@ export const SearchWordForm = create(
             <Checkbox checked={actualParameter.options.ignore.case} onSet={handleIgnoreCaseSet}/>
             <CheckableLabel>{trans("ignoreCase")}</CheckableLabel>
           </CheckableContainer>
+        </div>
+        <div styleName="radio-group">
           <CheckableContainer>
             <Checkbox checked={actualParameter.options.enableSuggestions} onSet={handleEnableSuggestionsSet}/>
             <CheckableLabel>{trans("enableSuggestions")}</CheckableLabel>

@@ -32,7 +32,7 @@ searchWordForm:
     regular: "Regex"
   ignoreCase: "Ignore case"
   enableSuggestions: "Suggest variations"
-  shuffleResult: "Shuffle result"
+  shuffleResult: "Shuffle results"
   
 notificationListPage:
   notification: "News"
