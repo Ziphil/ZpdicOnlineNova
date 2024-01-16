@@ -7,7 +7,7 @@ import {MainContainer, Page} from "/client-new/component/compound/page";
 import {SearchWordForm} from "/client-new/component/compound/search-word-form";
 import {WordList} from "/client-new/component/compound/word-list";
 import {create} from "/client-new/component/create";
-import {useSuspenseQuery} from "/client-new/hook/request";
+import {useSuspenseResponse} from "/client-new/hook/request";
 import {Search, useSearchState} from "/client-new/hook/search";
 import {EnhancedDictionary, WordParameter} from "/client-new/skeleton";
 import {calcOffsetSpec, resolveStateAction} from "/client-new/util/misc";
@@ -23,11 +23,11 @@ export const DictionaryPage = create(
 
     const {identifier} = useParams();
     const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
-    const [dictionary] = useSuspenseQuery("fetchDictionary", {number, paramName}, {refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
+    const [dictionary] = useSuspenseResponse("fetchDictionary", {number, paramName}, {refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
     const enhancedDictionary = useMemo(() => EnhancedDictionary.enhance(dictionary), [dictionary]);
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [hitResult] = useSuspenseQuery("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 40)}, {keepPreviousData: true});
+    const [hitResult] = useSuspenseResponse("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 40)}, {keepPreviousData: true});
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
 

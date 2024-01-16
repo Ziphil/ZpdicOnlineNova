@@ -1,3 +1,38 @@
+toast:
+  error:
+    recaptchaError: >-
+      reCAPTCHA がエラーを返しました。
+      もう一度お試しください。
+    recaptchaRejected: >-
+      reCAPTCHA による認証に失敗しました。
+      もう一度お試しください。
+    awsError: >-
+      エラーが発生しました。
+      もう一度お試しください。
+    unauthenticated: >-
+      ログインしていません。
+      ログインし直してください。
+    forbidden: >-
+      このコンテンツにアクセスする権限がありません。
+    serverNotFound: >-
+      実行すべき処理を行う API が見つかりませんでした。
+      アップデートが行われた可能性がありますので、ページを更新してください。
+    serverError: >-
+      サーバーでエラーが発生しました。
+      時間を置いてもう一度お試しください。
+    serverTimeout: >-
+      サーバーが時間内に応答しませんでした。
+      時間を置いてもう一度お試しください。
+    requestTimeout: >-
+      サーバーが時間内に応答しませんでした。
+      時間を置いてもう一度お試しください。
+    messageNotFound: >-
+      ポップアップ用のメッセージが設定されていません。
+      設定ミスの可能性がありますので、お手数ですが管理者までご連絡ください。
+    unexpected: >-
+      予期しないエラーが発生しました。
+      お手数ですが管理者までご連絡ください。
+
 dictionaryList:
   updatedDate: "更新日時"
   createdDate: "作成日時"

@@ -6,7 +6,7 @@ import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
-import {useQuery} from "/client-new/hook/request";
+import {useResponse} from "/client-new/hook/request";
 import {DetailedDictionary, UserDictionary} from "/client-new/skeleton";
 import {DictionaryHistoryChart} from "./dictionary-history-chart";
 
@@ -25,7 +25,7 @@ export const DictionaryCard = create(
 
     const number = dictionary.number;
     const from = useMemo(() => dayjs().subtract(16, "day").toISOString(), []);
-    const [histories] = useQuery("fetchHistories", {number, from}, {staleTime: 1 / 0, refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
+    const [histories] = useResponse("fetchHistories", {number, from}, {staleTime: 1 / 0, refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
 
     return (
       <Card styleName="root" {...rest}>

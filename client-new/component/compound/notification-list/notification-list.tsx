@@ -3,7 +3,7 @@
 import {ReactElement, useState} from "react";
 import {AdditionalProps, List, ListBody, ListEmptyView, ListPagination} from "zographia";
 import {create} from "/client-new/component/create";
-import {useSuspenseQuery} from "/client-new/hook/request";
+import {useSuspenseResponse} from "/client-new/hook/request";
 import {calcOffsetSpec} from "/client-new/util/misc";
 import {NotificationCard} from "./notification-card";
 
@@ -21,7 +21,7 @@ export const NotificationList = create(
   } & AdditionalProps): ReactElement {
 
     const [page, setPage] = useState(0);
-    const [[hitNotifications, hitSize]] = useSuspenseQuery("fetchNotifications", calcOffsetSpec(page, size), {keepPreviousData: true});
+    const [[hitNotifications, hitSize]] = useSuspenseResponse("fetchNotifications", calcOffsetSpec(page, size), {keepPreviousData: true});
 
     return (
       <List styleName="root" items={hitNotifications} size={size} hitSize={hitSize} page={page} onPageSet={setPage} {...rest}>

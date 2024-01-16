@@ -3,7 +3,7 @@
 import {ReactElement} from "react";
 import {AdditionalProps, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
-import {useSuspenseQuery} from "/client-new/hook/request";
+import {useSuspenseResponse} from "/client-new/hook/request";
 
 
 export const OverallAggregationPane = create(
@@ -16,7 +16,7 @@ export const OverallAggregationPane = create(
 
     const {trans, transNumber} = useTrans("topPage");
 
-    const [aggregations] = useSuspenseQuery("fetchOverallAggregation", {});
+    const [aggregations] = useSuspenseResponse("fetchOverallAggregation", {});
 
     return (
       <div styleName="root" {...rest}>
