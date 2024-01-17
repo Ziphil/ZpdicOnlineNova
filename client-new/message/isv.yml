@@ -32,7 +32,7 @@ searchWordForm:
     regular: "Регекс"
   ignoreCase: "Игноровати велике/мале буквы"
   enableSuggestions: "Прєдлагати вариације"
-  shuffleResult: "Мєшати резултаты"
+  shuffleResult: "Смєшати резултаты"
   
 notificationListPage:
   notification: "Новости"
