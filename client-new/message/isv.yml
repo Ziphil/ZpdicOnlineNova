@@ -41,9 +41,9 @@ topPage:
     login: "Пријавити се · Записати се"
     dictionary: "Список словников"
   aggregation:
-    dictionary: "{count, plural, one {Словник} many {Словникы} other {Словников}}"
-    word: "{count, plural, one {Слово} many {Слова} other {Слов}}"
-    example: "{count, plural, one {Рєченје} many {Рєченја} other {Рєчениј}}"
+    dictionary: "{count, plural, one {Словник} few {Словникы} other {Словников}}"
+    word: "{count, plural, one {Слово} few {Слова} other {Слов}}"
+    example: "{count, plural, one {Рєченје} few {Рєченја} other {Рєчениј}}"
   heading:
     notification: "Послєдне новости"
   moreNotifications: "Читати новости вече"
