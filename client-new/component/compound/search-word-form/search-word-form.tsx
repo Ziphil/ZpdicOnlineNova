@@ -11,6 +11,7 @@ import {
   CheckableContainer,
   CheckableLabel,
   Checkbox,
+  ControlGroup,
   GeneralIcon,
   Input,
   InputAddon,
@@ -131,15 +132,17 @@ export const SearchWordForm = create(
           </CheckableContainer>
         </div>
         <div styleName="row">
-          <OrderModeSelect
-            orderModeOptions={FORM_WORD_ORDER_MODES}
-            orderMode={actualParameter.order.mode}
-            onSet={handleOrderModeSet}
-          />
-          <OrderDirectionSelect
-            orderDirection={actualParameter.order.direction}
-            onSet={handleOrderDirectionSet}
-          />
+          <ControlGroup>
+            <OrderModeSelect
+              orderModeOptions={FORM_WORD_ORDER_MODES}
+              orderMode={actualParameter.order.mode}
+              onSet={handleOrderModeSet}
+            />
+            <OrderDirectionSelect
+              orderDirection={actualParameter.order.direction}
+              onSet={handleOrderDirectionSet}
+            />
+          </ControlGroup>
         </div>
         <div styleName="row">
           <Button scheme="secondary" variant="underline" onClick={shuffleResult}>

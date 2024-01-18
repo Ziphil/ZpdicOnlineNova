@@ -35,7 +35,7 @@ toast:
 dictionaryList:
   updatedDate: "Актуализованы"
   createdDate: "Созданы"
-  go: "See dictionary"
+  go: "Зрєти словник"
 notificationList:
   tag:
     update: "Актуализација"

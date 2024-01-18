@@ -3,7 +3,7 @@
 import {faSearch} from "@fortawesome/sharp-regular-svg-icons";
 import merge from "lodash-es/merge";
 import {Dispatch, ReactElement, SetStateAction, useCallback} from "react";
-import {AdditionalProps, GeneralIcon, Input, InputAddon} from "zographia";
+import {AdditionalProps, ControlGroup, GeneralIcon, Input, InputAddon} from "zographia";
 import {OrderDirection, OrderDirectionSelect} from "/client-new/component/compound/order-direction-select";
 import {OrderModeSelect} from "/client-new/component/compound/order-mode-select";
 import {create} from "/client-new/component/create";
@@ -48,15 +48,17 @@ export const SearchDictionaryForm = create(
           </InputAddon>
         </Input>
         <div styleName="row">
-          <OrderModeSelect
-            orderModeOptions={DICTIONARY_ORDER_MODES}
-            orderMode={parameter.order.mode}
-            onSet={handleOrderModeSet}
-          />
-          <OrderDirectionSelect
-            orderDirection={parameter.order.direction}
-            onSet={handleOrderDirectionSet}
-          />
+          <ControlGroup>
+            <OrderModeSelect
+              orderModeOptions={DICTIONARY_ORDER_MODES}
+              orderMode={parameter.order.mode}
+              onSet={handleOrderModeSet}
+            />
+            <OrderDirectionSelect
+              orderDirection={parameter.order.direction}
+              onSet={handleOrderDirectionSet}
+            />
+          </ControlGroup>
         </div>
       </form>
     );
