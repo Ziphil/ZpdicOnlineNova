@@ -15,9 +15,10 @@ toast:
     forbidden: >-
       You are not authorized to access this content.
     serverNotFound: >-
-      The server may have been updated; please refresh the page.
+      The server may have been updated.
+      Please refresh the page.
     serverError: >-
-      An error occurred in the server.
+      An error occurred on the server.
       Please try again after a while.
     serverTimeout: >-
       Couldn't get a response from the server.

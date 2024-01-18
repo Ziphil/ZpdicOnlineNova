@@ -17,8 +17,8 @@ toast:
     serverNotFound: >-
       The server may have been updated; please refresh the page.
     serverError: >-
-      An error occurred in the server.
-      Please try again after a while.
+      На серверу догодил се блуд.
+      Πрошу попробуј опет по нєктором врємени.
     serverTimeout: >-
       Couldn't get a response from the server.
       Please try again after a while.
@@ -30,7 +30,7 @@ toast:
       Please notify the administrator.
     unexpected: >-
       Догодил се неочекиваны блуд.
-      Please notify the administrator.
+      Πрошу увєдоми администратору.
       
 dictionaryList:
   updatedDate: "Актуализованы"
