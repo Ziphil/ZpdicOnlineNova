@@ -1,3 +1,37 @@
+toast:
+  error:
+    recaptchaError: >-
+      The reCAPTCHA system returned an error.
+      Please try again.
+    recaptchaRejected: >-
+      Failed to authenticate by the reCAPTCHA system.
+      Please try again.
+    awsError: >-
+      Something failed.
+      Please try again.
+    unauthenticated: >-
+      You are not signed in.
+      Please sign in again.
+    forbidden: >-
+      You are not authorized to access this content.
+    serverNotFound: >-
+      The server may have been updated; please refresh the page.
+    serverError: >-
+      An error occurred in the server.
+      Please try again after a while.
+    serverTimeout: >-
+      Couldn't get a response from the server.
+      Please try again after a while.
+    requestTimeout: >-
+      Couldn't get a response from the server.
+      Please try again after a while.
+    messageNotFound: >-
+      There is no message configured for this popup.
+      Please notify the administrator.
+    unexpected: >-
+      Догодил се неочекиваны блуд.
+      Please notify the administrator.
+      
 dictionaryList:
   updatedDate: "Актуализованы"
   createdDate: "Созданы"
