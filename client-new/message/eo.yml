@@ -1,3 +1,9 @@
+dictionaryHeader:
+  tab:
+    dictionary: "Vortaro"
+    example: "Frazoj"
+    info: "Detaloj"
+    setting: "Detaloj · Agordoj"
 dictionaryList:
   updatedDate: "Ĝisdatigita je"
   createdDate: "Kreita je"
@@ -36,12 +42,8 @@ searchWordForm:
   enableSuggestions: "Sugesti variaĵojn"
   shuffleResult: "Miksi rezultojn"
 
-dictionaryHeader:
-  tab:
-    dictionary: "Vortaro"
-    example: "Frazoj"
-    info: "Detaloj"
-    setting: "Detaloj · Agordoj"
+dictionaryPage:
+  add: "Krei novan vorton"
 notificationListPage:
   notification: "Antaŭaj novaĵoj"
 topPage:

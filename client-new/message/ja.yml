@@ -76,6 +76,8 @@ searchWordForm:
   enableSuggestions: "変化形をサジェスト"
   shuffleResult: "検索結果をシャッフル"
 
+dictionaryPage:
+  add: "新しい単語を作成"
 notificationListPage:
   notification: "過去のお知らせ"
 topPage:

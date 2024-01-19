@@ -1,8 +1,9 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
+import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, SetStateAction, useCallback, useMemo} from "react";
 import {useParams} from "react-router-dom";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
 import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
@@ -22,6 +23,8 @@ export const DictionaryPage = create(
   }: {
     className?: string
   } & AdditionalProps): ReactElement {
+
+    const {trans} = useTrans("dictionaryPage");
 
     const {identifier} = useParams();
     const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
@@ -55,6 +58,10 @@ export const DictionaryPage = create(
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
             <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+            <Button>
+              <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+              {trans("add")}
+            </Button>
           </div>
           <div styleName="right">
             <WordList dictionary={enhancedDictionary} words={hitWords} size={40} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>

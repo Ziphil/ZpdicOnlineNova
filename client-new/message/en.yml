@@ -77,6 +77,8 @@ searchWordForm:
   enableSuggestions: "Suggest variations"
   shuffleResult: "Shuffle results"
   
+dictionaryPage:
+  add: "Create new word"
 notificationListPage:
   notification: "News"
 topPage:

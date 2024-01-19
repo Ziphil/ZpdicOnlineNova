@@ -76,6 +76,8 @@ searchWordForm:
   enableSuggestions: "Прєдлагати вариације"
   shuffleResult: "Смєшати резултаты"
   
+dictionaryPage:
+  add: "Создати ново слово"
 notificationListPage:
   notification: "Новости"
 topPage:
