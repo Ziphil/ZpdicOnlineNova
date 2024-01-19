@@ -41,7 +41,7 @@ notificationList:
   tag:
     update: "Update"
     bug: "Bug"
-    info: "Other"
+    info: "Other info"
     fixed: "Fixed"
 orderDirectionSelect:
   ascending: "Ascending"

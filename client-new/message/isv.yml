@@ -40,7 +40,7 @@ notificationList:
   tag:
     update: "Актуализација"
     bug: "Погрєшка"
-    info: "Ина"
+    info: "Ина информација"
     fixed: "Изправјена"
 orderDirectionSelect:
   ascending: "Повышајучи"

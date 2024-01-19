@@ -6,8 +6,8 @@ notificationList:
   tag:
     update: "Ĝisdatigo"
     bug: "Neĝusteco"
-    info: "Alia"
-    bugFixed: "Riparita"
+    info: "Alia informo"
+    fixed: "Riparita"
 orderDirectionSelect:
   ascending: "Kreska"
   descending: "Malkreska"
