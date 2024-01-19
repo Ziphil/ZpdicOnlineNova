@@ -1,10 +1,10 @@
 toast:
   error:
     recaptchaError: >-
-      reCAPTCHA がエラーを返しました。
+      エラーが発生しました。
       もう一度お試しください。
     recaptchaRejected: >-
-      reCAPTCHA による認証に失敗しました。
+      バックグラウンドの認証に失敗しました。
       もう一度お試しください。
     awsError: >-
       エラーが発生しました。

@@ -1,22 +1,22 @@
 toast:
   error:
     recaptchaError: >-
-      The reCAPTCHA system returned an error.
-      Please try again.
+      Нєчто не удал се.
+      Πрошу попробуј опет.
     recaptchaRejected: >-
-      Failed to authenticate by the reCAPTCHA system.
-      Please try again.
+      Background authentication failed.
+      Πрошу попробуј опет.
     awsError: >-
-      Something failed.
-      Please try again.
+      Нєчто не удал се.
+      Πрошу попробуј опет.
     unauthenticated: >-
       You are not signed in.
       Please sign in again.
     forbidden: >-
       You are not authorized to access this content.
     serverNotFound: >-
-      The server may have been updated.
-      Please refresh the page.
+      Сервер можно обновјены.
+      Πрошу освєжи страницу.
     serverError: >-
       На серверу догодил се блуд.
       Πрошу попробуј опет по нєктором врємени.
@@ -28,7 +28,7 @@ toast:
       Πрошу попробуј опет по нєктором врємени.
     messageNotFound: >-
       There is no message configured for this popup.
-      Please notify the administrator.
+      Πрошу увєдоми администратору.
     unexpected: >-
       Догодил се неочекиваны блуд.
       Πрошу увєдоми администратору.

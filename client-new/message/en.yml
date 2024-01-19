@@ -1,10 +1,10 @@
 toast:
   error:
     recaptchaError: >-
-      The reCAPTCHA system returned an error.
+      Something failed.
       Please try again.
     recaptchaRejected: >-
-      Failed to authenticate by the reCAPTCHA system.
+      Background authentication failed.
       Please try again.
     awsError: >-
       Something failed.

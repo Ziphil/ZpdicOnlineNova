@@ -1,10 +1,10 @@
 toast:
   error:
     recaptchaError: >-
-      La sistemo reCAPTCHA vekis eraron.
+      Io fiaskis.
       Bonvolu reprovi.
     recaptchaRejected: >-
-      Malsukcesis aŭtentikigi per la sistemo reCAPTCHA.
+      Fona aŭtentikigo malsukcesis.
       Bonvolu reprovi.
     awsError: >-
       Io fiaskis.
