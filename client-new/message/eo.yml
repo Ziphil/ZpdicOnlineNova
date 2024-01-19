@@ -1,3 +1,38 @@
+toast:
+  error:
+    recaptchaError: >-
+      La sistemo reCAPTCHA vekis eraron.
+      Bonvolu reprovi.
+    recaptchaRejected: >-
+      Malsukcesis aŭtentikigi per la sistemo reCAPTCHA.
+      Bonvolu reprovi.
+    awsError: >-
+      Io fiaskis.
+      Bonvolu reprovi.
+    unauthenticated: >-
+      Vi ne estas ensalutinta.
+      Bonvolu denove ensaluti.
+    forbidden: >-
+      Vi ne rajtas aliri tiun enhavon.
+    serverNotFound: >-
+      La servilo eble estis ĝisdatigita.
+      Bonvolu refreŝigi la paĝon.
+    serverError: >-
+      Eraro okazis en la servilo.
+      Bonvolu provi denove post iom da tempo.
+    serverTimeout: >-
+      Ne eblis ricevi respondon de la servilo.
+      Bonvolu provi denove post iom da tempo.
+    requestTimeout: >-
+      Ne eblis ricevi respondon de la servilo.
+      Bonvolu provi denove post iom da tempo.
+    messageNotFound: >-
+      Ne estas mesaĝo agordita por tiu ŝprucfenestro.
+      Bonvolu sciigi la administranton.
+    unexpected: >-
+      Neatendita eraro okazis.
+      Bonvolu sciigi la administranton.
+
 dictionaryHeader:
   tab:
     dictionary: "Vortaro"

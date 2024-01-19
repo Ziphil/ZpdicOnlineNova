@@ -15,16 +15,17 @@ toast:
     forbidden: >-
       You are not authorized to access this content.
     serverNotFound: >-
-      The server may have been updated; please refresh the page.
+      The server may have been updated.
+      Please refresh the page.
     serverError: >-
       На серверу догодил се блуд.
       Πрошу попробуј опет по нєктором врємени.
     serverTimeout: >-
-      Couldn't get a response from the server.
-      Please try again after a while.
+      Не удал се достати одзыв од сервера.
+      Πрошу попробуј опет по нєктором врємени.
     requestTimeout: >-
-      Couldn't get a response from the server.
-      Please try again after a while.
+      Не удал се достати одзыв од сервера.
+      Πрошу попробуј опет по нєктором врємени.
     messageNotFound: >-
       There is no message configured for this popup.
       Please notify the administrator.
