@@ -21,6 +21,13 @@
   box-shadow: var(--glob-stain-shadow-setting) var(--stain-color);
 }
 
+.name {
+  @include bold-font;
+  font-size: 8zu;
+  color: var(--glob-secondary-heading-text-color);
+}
+
 .tab-list {
+  margin-block-start: 6zu;
   border-block-end: none;
 }

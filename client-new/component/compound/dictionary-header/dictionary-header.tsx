@@ -2,7 +2,7 @@
 
 import {faBook, faCircleInfo, faCog, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, GeneralIcon, Tab, TabIconbag, TabList, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, SingleLineText, Tab, TabIconbag, TabList, useTrans} from "zographia";
 import {MainContainer} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
 import {useSuspenseResponse} from "/client-new/hook/request";
@@ -28,6 +28,9 @@ export const DictionaryHeader = create(
     return (
       <header styleName="root" {...rest}>
         <MainContainer width="wide">
+          <SingleLineText styleName="name" is="h2">
+            {dictionary.name}
+          </SingleLineText>
           <TabList styleName="tab-list" value={tabValue ?? ""}>
             <Tab value="dictionary">
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>
