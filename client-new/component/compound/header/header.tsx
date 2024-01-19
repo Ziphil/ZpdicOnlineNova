@@ -16,7 +16,7 @@ export const Header = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const node = (
+    return (
       <header styleName="root" {...rest}>
         <div styleName="left">
           <SimpleLink styleName="logo" href="/">
@@ -30,7 +30,6 @@ export const Header = create(
         </div>
       </header>
     );
-    return node;
 
   }
 );

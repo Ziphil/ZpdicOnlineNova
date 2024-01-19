@@ -3,6 +3,7 @@
 import {ReactElement, SetStateAction, useCallback} from "react";
 import {AdditionalProps} from "zographia";
 import {DictionaryList} from "/client-new/component/compound/dictionary-list";
+import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {SearchDictionaryForm} from "/client-new/component/compound/search-dictionary-form";
 import {create} from "/client-new/component/create";
@@ -36,7 +37,7 @@ export const DictionaryListPage = create(
     }, [query, setQuery]);
 
     return (
-      <Page {...rest}>
+      <Page headerNode={<Header/>} {...rest}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
             <SearchDictionaryForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>

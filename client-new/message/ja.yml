@@ -32,6 +32,12 @@ toast:
       予期しないエラーが発生しました。
       お手数ですが管理者までご連絡ください。
 
+dictionaryHeader:
+  tab:
+    dictionary: "辞書"
+    example: "例文"
+    info: "詳細情報"
+    setting: "詳細情報 · 設定"
 dictionaryList:
   updatedDate: "更新日時"
   createdDate: "作成日時"

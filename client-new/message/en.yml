@@ -33,6 +33,12 @@ toast:
       An unexpected error occurred.
       Please notify the administrator.
 
+dictionaryHeader:
+  tab:
+    dictionary: "Dictionary"
+    example: "Sentences"
+    info: "Details"
+    setting: "Details · Settings"
 dictionaryList:
   updatedDate: "Updated at"
   createdDate: "Created at"

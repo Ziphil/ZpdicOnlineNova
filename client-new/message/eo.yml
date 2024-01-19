@@ -36,6 +36,12 @@ searchWordForm:
   enableSuggestions: "Sugesti variaĵojn"
   shuffleResult: "Miksi rezultojn"
 
+dictionaryHeader:
+  tab:
+    dictionary: "Vortaro"
+    example: "Frazoj"
+    info: "Detaloj"
+    setting: "Detaloj · Agordoj"
 notificationListPage:
   notification: "Antaŭaj novaĵoj"
 topPage:

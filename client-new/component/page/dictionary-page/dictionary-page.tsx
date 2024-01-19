@@ -1,8 +1,10 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
-import {ReactElement, SetStateAction, useCallback, useMemo} from "react";
+import {Fragment, ReactElement, SetStateAction, useCallback, useMemo} from "react";
 import {useParams} from "react-router-dom";
 import {AdditionalProps} from "zographia";
+import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
+import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {SearchWordForm} from "/client-new/component/compound/search-word-form";
 import {WordList} from "/client-new/component/compound/word-list";
@@ -44,7 +46,12 @@ export const DictionaryPage = create(
     }, [query, setQuery]);
 
     return (
-      <Page {...rest}>
+      <Page {...rest} headerNode={(
+        <Fragment>
+          <Header/>
+          <DictionaryHeader dictionary={enhancedDictionary} tabValue="dictionary"/>
+        </Fragment>
+      )}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
             <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>

@@ -16,7 +16,7 @@ export const Footer = create(
 
     const yearString = useMemo(() => dayjs().get("year").toString(), []);
 
-    const node = (
+    return (
       <footer styleName="root" {...rest}>
         <div styleName="left">
           <div styleName="copyright">
@@ -24,14 +24,13 @@ export const Footer = create(
           </div>
           <MultiLineText styleName="recaptcha" lineHeight="short">
             This site is protected by reCAPTCHA.<br/>
-            The Google <Link href="https://policies.google.com/privacy" scheme="gray" target="_blank">Privacy Policy</Link> and <Link href="https://policies.google.com/terms" scheme="gray" target="_blank">Terms of Service</Link> apply.
+            The Google <Link href="https://policies.google.com/privacy" scheme="gray" variant="underline" target="_blank">Privacy Policy</Link> and <Link href="https://policies.google.com/terms" scheme="gray" variant="underline" target="_blank">Terms of Service</Link> apply.
           </MultiLineText>
         </div>
         <div styleName="right">
         </div>
       </footer>
     );
-    return node;
 
   }
 );

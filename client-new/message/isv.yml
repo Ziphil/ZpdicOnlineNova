@@ -32,6 +32,12 @@ toast:
       Догодил се неочекиваны блуд.
       Πрошу увєдоми администратору.
       
+dictionaryHeader:
+  tab:
+    dictionary: "Словник"
+    example: "Рєченја"
+    info: "Подробности"
+    setting: "Подробности · Настројкы"
 dictionaryList:
   updatedDate: "Актуализованы"
   createdDate: "Созданы"

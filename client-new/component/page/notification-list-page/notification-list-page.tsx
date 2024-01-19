@@ -2,6 +2,7 @@
 
 import {ReactElement} from "react";
 import {AdditionalProps, useTrans} from "zographia";
+import {Header} from "/client-new/component/compound/header";
 import {NotificationList} from "/client-new/component/compound/notification-list";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
@@ -18,7 +19,7 @@ export const NotificationListPage = create(
     const {trans} = useTrans("notificationListPage");
 
     return (
-      <Page {...rest}>
+      <Page headerNode={<Header/>} {...rest}>
         <MainContainer>
           <h2 styleName="heading">{trans("notification")}</h2>
           <NotificationList size={10}/>
