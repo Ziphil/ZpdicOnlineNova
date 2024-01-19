@@ -12,7 +12,9 @@ orderDirectionSelect:
   ascending: "Kreska"
   descending: "Malkreska"
 orderModeSelect:
-  unicode: "Nomo"
+  unicode: "Unikodo"
+  dictionaryName: "Nomo"
+  wordName: "Kapvorto"
   custom: "Propra ordo"
   updatedDate: "Dato de ĝisdatigo"
   createdDate: "Dato de kreo"

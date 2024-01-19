@@ -136,6 +136,7 @@ export const SearchWordForm = create(
             <OrderModeSelect
               orderModeOptions={FORM_WORD_ORDER_MODES}
               orderMode={actualParameter.order.mode}
+              unicodeAlt="wordName"
               onSet={handleOrderModeSet}
             />
             <OrderDirectionSelect

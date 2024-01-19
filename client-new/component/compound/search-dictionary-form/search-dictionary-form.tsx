@@ -52,6 +52,7 @@ export const SearchDictionaryForm = create(
             <OrderModeSelect
               orderModeOptions={DICTIONARY_ORDER_MODES}
               orderMode={parameter.order.mode}
+              unicodeAlt="dictionaryName"
               onSet={handleOrderModeSet}
             />
             <OrderDirectionSelect

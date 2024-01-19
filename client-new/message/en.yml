@@ -47,7 +47,9 @@ orderDirectionSelect:
   ascending: "Ascending"
   descending: "Descending"
 orderModeSelect:
-  unicode: "Name"
+  unicode: "Unicode"
+  dictionaryName: "Name"
+  wordName: "Headword"
   custom: "Custom"
   updatedDate: "Update date"
   createdDate: "Creation date"

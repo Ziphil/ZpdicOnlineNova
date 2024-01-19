@@ -46,7 +46,9 @@ orderDirectionSelect:
   ascending: "昇順"
   descending: "降順"
 orderModeSelect:
-  unicode: "名前 (Unicode)"
+  unicode: "Unicode"
+  dictionaryName: "名前"
+  wordName: "単語"
   custom: "独自順"
   updatedDate: "更新日時"
   createdDate: "作成日時"

@@ -46,7 +46,9 @@ orderDirectionSelect:
   ascending: "Повышајучи"
   descending: "Малєјучи"
 orderModeSelect:
-  unicode: "Име"
+  unicode: "Уникод"
+  dictionaryName: "Име"
+  wordName: "Слово"
   custom: "Custom"
   updatedDate: "Дата актуализованја"
   createdDate: "Дата созданја"
