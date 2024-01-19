@@ -40,7 +40,9 @@ export const DictionaryListPage = create(
       <Page headerNode={<Header/>} {...rest}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
-            <SearchDictionaryForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+            <div styleName="sticky">
+              <SearchDictionaryForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+            </div>
           </div>
           <div styleName="right">
             <DictionaryList dictionaries={hitDictionaries} size={20} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>

@@ -57,11 +57,13 @@ export const DictionaryPage = create(
       )}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
-            <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
-            <Button>
-              <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-              {trans("add")}
-            </Button>
+            <div styleName="sticky">
+              <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+              <Button>
+                <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+                {trans("add")}
+              </Button>
+            </div>
           </div>
           <div styleName="right">
             <WordList dictionary={enhancedDictionary} words={hitWords} size={40} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>
