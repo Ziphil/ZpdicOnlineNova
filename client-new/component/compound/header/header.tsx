@@ -4,6 +4,7 @@ import {ReactElement} from "react";
 import {AdditionalProps} from "zographia";
 import {Logo} from "/client-new/component/atom/logo";
 import {SimpleLink} from "/client-new/component/atom/simple-link";
+import {ChangeLocaleForm} from "/client-new/component/compound/change-locale-form";
 import {create} from "/client-new/component/create";
 import {VERSION} from "/client-new/variable";
 
@@ -27,6 +28,9 @@ export const Header = create(
           </div>
         </div>
         <div styleName="right">
+          <div styleName="menu">
+            <ChangeLocaleForm/>
+          </div>
         </div>
       </header>
     );

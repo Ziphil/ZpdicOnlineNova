@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.trigger {
+  @include theme("light") {
+    --text-color: #{leveled-color("primary", 7)};
+    --hover-text-color: #{leveled-color("primary", 8)};
+  }
+}
+
+.trigger {
+  color: var(--text-color);
+  cursor: pointer;
+  &:hover {
+    color: var(--hover-text-color);
+  }
+}
+
+.icon {
+  margin-inline-end: var(--glob-blank-gap);
+}
+
+.angle {
+  margin-inline-start: var(--glob-blank-gap);
+}
