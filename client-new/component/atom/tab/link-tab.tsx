@@ -2,12 +2,12 @@
 
 import {ComponentProps, ReactElement, ReactNode, Ref, useCallback} from "react";
 import {Path, Link as RouterLink} from "react-router-dom";
-import {Link as ZographiaLink} from "zographia";
+import {Tab as ZographiaTab} from "zographia";
 import {createWithRef} from "/client-new/component/create";
 
 
-export const Link = createWithRef(
-  require("./link.scss"), "Link",
+export const LinkTab = createWithRef(
+  require("./link-tab.scss"), "LinkTab",
   function ({
     href,
     useTransition = false,
@@ -19,7 +19,7 @@ export const Link = createWithRef(
     children?: ReactNode,
     className?: string,
     ref?: Ref<HTMLAnchorElement>
-  } & Omit<ComponentProps<typeof ZographiaLink>, "href" | "is">): ReactElement {
+  } & Omit<ComponentProps<typeof ZographiaTab>, "is">): ReactElement {
 
     const renderComponent = useCallback(function (props: any): ReactElement {
       return (
@@ -28,9 +28,9 @@ export const Link = createWithRef(
     }, [href, useTransition]);
 
     return (
-      <ZographiaLink styleName="root" is={renderComponent} {...rest}>
+      <ZographiaTab styleName="root" is={renderComponent} {...rest}>
         {children}
-      </ZographiaLink>
+      </ZographiaTab>
     );
 
   }

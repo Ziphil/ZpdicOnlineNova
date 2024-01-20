@@ -2,7 +2,8 @@
 
 import {faBook, faCircleInfo, faCog, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, GeneralIcon, SingleLineText, Tab, TabIconbag, TabList, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
+import {LinkTab} from "/client-new/component/atom/tab";
 import {MainContainer} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
 import {useSuspenseResponse} from "/client-new/hook/request";
@@ -32,24 +33,24 @@ export const DictionaryHeader = create(
             {dictionary.name}
           </SingleLineText>
           <TabList styleName="tab-list" value={tabValue ?? ""}>
-            <Tab value="dictionary">
+            <LinkTab value="dictionary" href={`/dictionary/${dictionary.number}`}>
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>
               {trans("tab.dictionary")}
-            </Tab>
-            <Tab value="example">
+            </LinkTab>
+            <LinkTab value="example" href={`/dictionary/${dictionary.number}/sentences`}>
               <TabIconbag><GeneralIcon icon={faQuotes}/></TabIconbag>
               {trans("tab.example")}
-            </Tab>
+            </LinkTab>
             {(canOwn) ? (
-              <Tab value="info">
+              <LinkTab value="info" href={`/dictionary/${dictionary.number}/settings`}>
                 <TabIconbag><GeneralIcon icon={faCog}/></TabIconbag>
                 {trans("tab.setting")}
-              </Tab>
+              </LinkTab>
             ) : (
-              <Tab value="info">
+              <LinkTab value="info" href={`/dictionary/${dictionary.number}/info`}>
                 <TabIconbag><GeneralIcon icon={faCircleInfo}/></TabIconbag>
                 {trans("tab.info")}
-              </Tab>
+              </LinkTab>
             )}
           </TabList>
         </MainContainer>
