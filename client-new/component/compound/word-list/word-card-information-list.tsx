@@ -23,9 +23,11 @@ export const WordCardInformationList = create(
       <div styleName="root" {...rest}>
         {word.informations.map((information, index) => (
           <section key={index}>
-            <h4 styleName="heading">
-              {information.title}
-            </h4>
+            {(!!information.title) && (
+              <h4 styleName="heading">
+                {information.title}
+              </h4>
+            )}
             {(dictionary.settings.enableMarkdown) ? (
               <Markdown styleName="markdown" mode="normal">
                 {information.text}
