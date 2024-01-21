@@ -45,7 +45,7 @@ dictionaryList:
   go: "Зрєти словник"
 loginForm:
   label:
-    userName: "Име употрєбитеља"
+    name: "Име употрєбитеља"
     password: "Парола"
   button:
     confirm: "Пријавити се"

@@ -45,7 +45,7 @@ dictionaryList:
   go: "辞書ページへ"
 loginForm:
   label:
-    userName: "ユーザー ID"
+    name: "ユーザー ID"
     password: "パスワード"
   button:
     confirm: "ログイン"

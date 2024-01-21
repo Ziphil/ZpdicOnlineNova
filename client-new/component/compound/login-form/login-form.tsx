@@ -16,6 +16,7 @@ import {
 } from "zographia";
 import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
+import {useLogin} from "./login-form-hook";
 
 
 export const LoginForm = create(
@@ -28,15 +29,18 @@ export const LoginForm = create(
 
     const {trans} = useTrans("loginForm");
 
+    const {form: {register}, handleSubmit} = useLogin();
+
     return (
       <form styleName="root" {...rest}>
         <div styleName="control">
           <ControlContainer>
-            <ControlLabel>{trans("label.userName")}</ControlLabel>
+            <ControlLabel>{trans("label.name")}</ControlLabel>
             <Input
               autoFocus={true}
               autoComplete="username"
               required={true}
+              {...register("name")}
             />
           </ControlContainer>
           <ControlContainer>
@@ -44,11 +48,12 @@ export const LoginForm = create(
             <PasswordInput
               autoComplete="current-password"
               required={true}
+              {...register("password")}
             />
           </ControlContainer>
         </div>
         <div styleName="button">
-          <Button type="submit">
+          <Button type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faArrowRightToBracket}/></ButtonIconbag>
             {trans("button.confirm")}
           </Button>

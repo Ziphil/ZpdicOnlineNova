@@ -45,7 +45,7 @@ dictionaryList:
   go: "Vidi vortaron"
 loginForm:
   label:
-    userName: "Salutnomo"
+    name: "Salutnomo"
     password: "Pasvorto"
   button:
     confirm: "Ensaluti"

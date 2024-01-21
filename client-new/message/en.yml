@@ -45,7 +45,7 @@ dictionaryList:
   go: "See dictionary"
 loginForm:
   label:
-    userName: "Username"
+    name: "Username"
     password: "Password"
   button:
     confirm: "Sign in"
