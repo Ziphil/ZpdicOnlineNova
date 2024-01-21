@@ -24,7 +24,7 @@ export const ChangeLocaleForm = create(
     const locale = useLocale();
     const changeLocale = useChangeLocale();
 
-    const node = (
+    return (
       <Menu styleName="root" triggerType="hover" placement="bottom-end" {...rest} trigger={(
         <button styleName="trigger" type="button">
           <GeneralIcon styleName="icon" icon={faGlobe}/>
@@ -38,7 +38,6 @@ export const ChangeLocaleForm = create(
         <MenuItem onClick={() => changeLocale("isv")}>{LOCALE_NAMES["isv"]}</MenuItem>
       </Menu>
     );
-    return node;
 
   }
 );

@@ -43,6 +43,15 @@ dictionaryList:
   updatedDate: "更新日時"
   createdDate: "作成日時"
   go: "辞書ページへ"
+loginForm:
+  label:
+    userName: "ユーザー ID"
+    password: "パスワード"
+  button:
+    confirm: "ログイン"
+    register: "新規登録"
+    resetPassword: "パスワードリセット"
+  or: "or"
 notificationList:
   tag:
     update: "アップデート"
@@ -79,6 +88,8 @@ searchWordForm:
 
 dictionaryPage:
   add: "新しい単語を作成"
+loginPage:
+  title: "ログイン"
 notificationListPage:
   notification: "過去のお知らせ"
 topPage:

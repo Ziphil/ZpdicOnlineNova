@@ -43,6 +43,15 @@ dictionaryList:
   updatedDate: "Актуализованы"
   createdDate: "Созданы"
   go: "Зрєти словник"
+loginForm:
+  label:
+    userName: "Име употрєбитеља"
+    password: "Парола"
+  button:
+    confirm: "Пријавити се"
+    register: "Записати се"
+    resetPassword: "Reset password"
+  or: "или"
 notificationList:
   tag:
     update: "Актуализација"
@@ -79,6 +88,8 @@ searchWordForm:
   
 dictionaryPage:
   add: "Создати ново слово"
+loginPage:
+  title: "Пријавити се"
 notificationListPage:
   notification: "Новости"
 topPage:

@@ -9,7 +9,8 @@ const router = createBrowserRouter([
   {path: "/", lazy: () => import("/client-new/component/page/top-page")},
   {path: "/dictionary", lazy: () => import("/client-new/component/page/dictionary-list-page")},
   {path: "/dictionary/:identifier", lazy: () => import("/client-new/component/page/dictionary-page")},
-  {path: "/notification", lazy: () => import("/client-new/component/page/notification-list-page")}
+  {path: "/notification", lazy: () => import("/client-new/component/page/notification-list-page")},
+  {path: "/login", lazy: () => import("/client-new/component/page/login-page")}
 ], {basename: "/next"});
 
 

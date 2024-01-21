@@ -43,6 +43,15 @@ dictionaryList:
   updatedDate: "Ĝisdatigita je"
   createdDate: "Kreita je"
   go: "Vidi vortaron"
+loginForm:
+  label:
+    userName: "Salutnomo"
+    password: "Pasvorto"
+  button:
+    confirm: "Ensaluti"
+    register: "Krei konton"
+    resetPassword: "Restarigi pasvorton"
+  or: "aŭ"
 notificationList:
   tag:
     update: "Ĝisdatigo"
@@ -79,6 +88,8 @@ searchWordForm:
 
 dictionaryPage:
   add: "Krei novan vorton"
+loginPage:
+  title: "Ensaluti"
 notificationListPage:
   notification: "Antaŭaj novaĵoj"
 topPage:

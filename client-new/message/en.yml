@@ -43,6 +43,15 @@ dictionaryList:
   updatedDate: "Updated at"
   createdDate: "Created at"
   go: "See dictionary"
+loginForm:
+  label:
+    userName: "Username"
+    password: "Password"
+  button:
+    confirm: "Sign in"
+    register: "Create account"
+    resetPassword: "Reset password"
+  or: "or"
 notificationList:
   tag:
     update: "Update"
@@ -73,12 +82,14 @@ searchWordForm:
     part: "Partial"
     exact: "Exact"
     regular: "Regex"
-  ignoreCase: "Ignore case"
+  ignoreCase: "Ignore letter case"
   enableSuggestions: "Suggest variations"
   shuffleResult: "Shuffle results"
   
 dictionaryPage:
   add: "Create new word"
+loginPage:
+  title: "Sign in"
 notificationListPage:
   notification: "News"
 topPage:
