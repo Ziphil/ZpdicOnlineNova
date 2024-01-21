@@ -2,36 +2,36 @@ toast:
   error:
     recaptchaError: >-
       Нєчто не удал се.
-      Πрошу попробуј опет.
+      Πрошу попробујте опет.
     recaptchaRejected: >-
       Background authentication failed.
-      Πрошу попробуј опет.
+      Πрошу попробујте опет.
     awsError: >-
       Нєчто не удал се.
-      Πрошу попробуј опет.
+      Πрошу попробујте опет.
     unauthenticated: >-
-      You are not signed in.
-      Please sign in again.
+      Вы не јесте пријавили се.
+      Прошу пријавите се опет.
     forbidden: >-
       You are not authorized to access this content.
     serverNotFound: >-
       Сервер можно обновјены.
-      Πрошу освєжи страницу.
+      Πрошу освєжите страницу.
     serverError: >-
       На серверу догодил се блуд.
-      Πрошу попробуј опет по нєктором врємени.
+      Πрошу попробујте опет по нєктором врємени.
     serverTimeout: >-
       Не удал се достати одзыв од сервера.
-      Πрошу попробуј опет по нєктором врємени.
+      Πрошу попробујте опет по нєктором врємени.
     requestTimeout: >-
       Не удал се достати одзыв од сервера.
-      Πрошу попробуј опет по нєктором врємени.
+      Πрошу попробујте опет по нєктором врємени.
     messageNotFound: >-
       There is no message configured for this popup.
-      Πрошу увєдоми администратору.
+      Πрошу увєдомите администратору.
     unexpected: >-
       Догодил се неочекиваны блуд.
-      Πрошу увєдоми администратору.
+      Πрошу увєдомите администратору.
       
 dictionaryHeader:
   tab:
@@ -45,11 +45,11 @@ dictionaryList:
   go: "Зрєти словник"
 loginForm:
   label:
-    name: "Име употрєбитеља"
+    name: "Користничско име"
     password: "Парола"
   button:
     confirm: "Пријавити се"
-    register: "Записати се"
+    register: "Изтворити конто"
     resetPassword: "Reset password"
   or: "или"
 notificationList:
