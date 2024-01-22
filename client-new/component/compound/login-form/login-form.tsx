@@ -14,6 +14,7 @@ import {
   PasswordInput,
   useTrans
 } from "zographia";
+import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
 import {useLogin} from "./login-form-hook";
@@ -29,7 +30,8 @@ export const LoginForm = create(
 
     const {trans} = useTrans("loginForm");
 
-    const {form: {register}, handleSubmit} = useLogin();
+    const {form, handleSubmit} = useLogin();
+    const {register, getFieldState, formState: {errors}} = form;
 
     return (
       <form styleName="root" {...rest}>
@@ -37,19 +39,23 @@ export const LoginForm = create(
           <ControlContainer>
             <ControlLabel>{trans("label.name")}</ControlLabel>
             <Input
+              error={getFieldState("name").error !== undefined}
               autoFocus={true}
               autoComplete="username"
               required={true}
               {...register("name")}
             />
+            <ControlErrorMessage name="name" form={form} trans={trans}/>
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.password")}</ControlLabel>
             <PasswordInput
+              error={getFieldState("password").error !== undefined}
               autoComplete="current-password"
               required={true}
               {...register("password")}
             />
+            <ControlErrorMessage name="password" form={form} trans={trans}/>
           </ControlContainer>
         </div>
         <div styleName="button">

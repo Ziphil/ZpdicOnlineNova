@@ -52,6 +52,11 @@ loginForm:
     register: "新規登録"
     resetPassword: "パスワードリセット"
   or: "or"
+  error:
+    nameRequired: >-
+      ユーザー ID を入力してください。
+    passwordRequired: >-
+      パスワードを入力してください。
 notificationList:
   tag:
     update: "アップデート"

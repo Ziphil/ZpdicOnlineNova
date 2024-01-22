@@ -52,6 +52,11 @@ loginForm:
     register: "Krei konton"
     resetPassword: "Restarigi pasvorton"
   or: "aŭ"
+  error:
+    nameRequired: >-
+      Enigu vian salutnomon.
+    passwordRequired: >-
+      Enigu vian pasvorton.
 notificationList:
   tag:
     update: "Ĝisdatigo"

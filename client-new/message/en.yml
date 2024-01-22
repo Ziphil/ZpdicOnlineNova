@@ -52,6 +52,11 @@ loginForm:
     register: "Create account"
     resetPassword: "Reset password"
   or: "or"
+  error:
+    nameRequired: >-
+      Enter your username.
+    passwordRequired: >-
+      Enter your password.
 notificationList:
   tag:
     update: "Update"

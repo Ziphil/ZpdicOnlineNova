@@ -52,6 +52,11 @@ loginForm:
     register: "Изтворити конто"
     resetPassword: "Reset password"
   or: "или"
+  error:
+    nameRequired: >-
+      Впишите ваше користничско име.
+    passwordRequired: >-
+      Впишите вашу паролу.
 notificationList:
   tag:
     update: "Актуализација"
