@@ -84,11 +84,16 @@ registerForm:
   error:
     nameRequired: >-
       Впишите користничско име.
-    passwordTooShort:
-    passwordTooLong:
+    emailRequired: >-
+      Впишите адресу е-пошты.
+    passwordTooShort: >-
+      Палора муси имєти не мење 6 знаков.
+    passwordTooLong: >-
+      Палора муси имєти не боље 50 знаков.
     passwordRequired: >-
       Впишите паролу.
-    agreeRequired:
+    agreeRequired: >-
+      In order to use this application, you must read and agree to the privacy policy.
 searchWordForm:
   mode:
     name: "Слово"

@@ -82,10 +82,16 @@ registerForm:
   button:
     confirm: "Krei konton"
   error:
-    nameRequired:
-    passwordTooShort:
-    passwordTooLong:
-    passwordRequired:
+    nameRequired: >-
+      Enigu salutnomon.
+    emailRequired: >-
+      Enigu retpoŝtan adreson.
+    passwordTooShort: >-
+      La pasvorto devas havi almenaŭ 6 signojn.
+    passwordTooLong: >-
+      La pasvorto devas havi apenaŭ 50 signojn.
+    passwordRequired: >-
+      Enigu pasvorton.
     agreeRequired: >-
       Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la privateca politiko.
 searchWordForm:

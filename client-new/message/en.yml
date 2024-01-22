@@ -76,16 +76,22 @@ orderModeSelect:
 registerForm:
   label:
     name: "Username"
-    email: "Email"
+    email: "Email address"
     password: "Password"
     agree: "Agree to the <link>privacy policy</link>"
   button:
     confirm: "Create account"
   error:
     nameRequired:
+      Enter a username.
+    emailRequired:
+      Enter an email address.
     passwordTooShort:
+      The password must contain at least 6 characters.
     passwordTooLong:
+      The password must contain no more than 50 characters.
     passwordRequired:
+      Enter a password.
     agreeRequired: >-
       In order to use this application, you must read and agree to the privacy policy.
 searchWordForm:

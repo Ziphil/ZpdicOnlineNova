@@ -84,8 +84,12 @@ registerForm:
   error:
     nameRequired: >-
       ユーザー ID を入力してください。
-    passwordTooShort:
+    emailRequired: >-
+      メールアドレスを入力してください。
+    passwordTooShort: >-
+      パスワードは 6 文字以上である必要があります。
     passwordTooLong:
+      パスワードは 50 文字以下である必要があります。
     passwordRequired: >-
       パスワードを入力してください。
     agreeRequired: >-
