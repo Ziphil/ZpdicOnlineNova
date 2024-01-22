@@ -1,4 +1,9 @@
 toast:
+  success:
+    login: >-
+      ログインに成功しました。
+    register: >-
+      アカウントを作成しました。
   error:
     recaptchaError: >-
       エラーが発生しました。

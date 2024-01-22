@@ -1,4 +1,9 @@
 toast:
+  success:
+    login: >-
+      Sukcesis ensaluti.
+    register: >-
+      Sukcesis krei vian konton.
   error:
     recaptchaError: >-
       Io fiaskis.

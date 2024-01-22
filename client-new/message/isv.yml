@@ -1,4 +1,9 @@
 toast:
+  success:
+    login: >-
+      Successfully signed in.
+    register: >-
+      Successfully created your account.
   error:
     recaptchaError: >-
       Нєчто не удал се.

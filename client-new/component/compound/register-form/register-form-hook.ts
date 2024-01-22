@@ -5,6 +5,7 @@ import {BaseSyntheticEvent, useMemo} from "react";
 import {UseFormReturn, useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {Asserts, boolean, object, string} from "yup";
+import {useLoginRequest} from "/client-new/hook/auth";
 import {useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
 import type {RequestData} from "/server/controller/internal/type";
@@ -35,15 +36,20 @@ export function useRegisterForm(): RegisterFormSpec {
     resolver: yupResolver(schema)
   });
   const request = useRequest();
-  const {dispatchErrorToast} = useToast();
+  const login = useLoginRequest();
+  const {dispatchSuccessToast} = useToast();
   const navigate = useNavigate();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("registerUser", getQuery(value), {useRecaptcha: true});
     if (response.status === 200 && !("error" in response.data)) {
       const body = response.data;
-      navigate(`/user/${body.name}`);
+      const loginResponse = await login({name: body.name, password: value.password});
+      if (loginResponse.status === 200) {
+        dispatchSuccessToast("register");
+        navigate(`/user/${body.name}`);
+      }
     }
-  }), [request, navigate, form]);
+  }), [request, login, navigate, form, dispatchSuccessToast]);
   return {form, handleSubmit};
 }
 

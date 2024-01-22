@@ -31,17 +31,18 @@ export function useLoginForm(): LoginFormSpec {
     resolver: yupResolver(schema)
   });
   const login = useLoginRequest();
-  const {dispatchErrorToast} = useToast();
+  const {dispatchSuccessToast, dispatchErrorToast} = useToast();
   const navigate = useNavigate();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await login(getQuery(value));
     if (response.status === 200 && !("error" in response.data)) {
       const body = response.data;
+      dispatchSuccessToast("login");
       navigate(`/user/${body.user.name}`);
     } else {
       dispatchErrorToast("loginFailed");
     }
-  }), [login, navigate, form, dispatchErrorToast]);
+  }), [login, navigate, form, dispatchSuccessToast, dispatchErrorToast]);
   return {form, handleSubmit};
 }
 
