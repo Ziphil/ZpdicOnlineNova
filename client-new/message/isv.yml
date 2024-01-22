@@ -98,7 +98,7 @@ registerForm:
     passwordRequired: >-
       Впишите паролу.
     agreeRequired: >-
-      In order to use this application, you must read and agree to the privacy policy.
+      Да бы употрєбјати то примєњенје, вы мусите прочитати и согласити се с политикоју приватности.
 searchWordForm:
   mode:
     name: "Слово"
