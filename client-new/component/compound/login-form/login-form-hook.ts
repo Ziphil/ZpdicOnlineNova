@@ -1,11 +1,11 @@
 //
 
-import {yupResolver} from "@hookform/resolvers/yup";
 import {BaseSyntheticEvent, useMemo} from "react";
-import {UseFormReturn, useForm} from "react-hook-form";
+import {UseFormReturn} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {Asserts, object, string} from "yup";
 import {useLoginRequest} from "/client-new/hook/auth";
+import {useForm} from "/client-new/hook/form";
 import {useToast} from "/client-new/hook/toast";
 import type {RequestData} from "/server/controller/internal/type";
 
@@ -14,7 +14,7 @@ const schema = object({
   name: string().required("nameRequired"),
   password: string().required("passwordRequired")
 });
-const DEFAULT_FORM_VALUE = {
+const defaultValue = {
   name: "",
   password: ""
 } satisfies FormValue;
@@ -26,10 +26,7 @@ export type LoginFormSpec = {
 };
 
 export function useLoginForm(): LoginFormSpec {
-  const form = useForm<FormValue>({
-    defaultValues: DEFAULT_FORM_VALUE,
-    resolver: yupResolver(schema)
-  });
+  const form = useForm<FormValue>(schema, defaultValue, {});
   const login = useLoginRequest();
   const {dispatchSuccessToast, dispatchErrorToast} = useToast();
   const navigate = useNavigate();
