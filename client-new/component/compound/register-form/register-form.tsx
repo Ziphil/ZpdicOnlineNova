@@ -1,37 +1,41 @@
 //
 
-import {faArrowRightToBracket, faQuestion, faUserPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {faUserPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {
   AdditionalProps,
   Button,
   ButtonIconbag,
+  CheckableContainer,
+  CheckableLabel,
+  Checkbox,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
   Input,
-  LinkIconbag,
   PasswordInput,
   useTrans
 } from "zographia";
 import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
-import {useLoginForm} from "./login-form-hook";
+import {useRegisterForm} from "./register-form-hook";
 
 
-export const LoginForm = create(
-  require("./login-form.scss"), "LoginForm",
+export const RegisterForm = create(
+  require("./register-form.scss"), "RegisterForm",
   function ({
     ...rest
   }: {
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("loginForm");
+    const {trans, transNode} = useTrans("registerForm");
 
-    const {form, handleSubmit} = useLoginForm();
+    const {form, handleSubmit} = useRegisterForm();
     const {register, getFieldState, formState: {errors}} = form;
+
+    console.log(form);
 
     return (
       <form styleName="root" {...rest}>
@@ -48,6 +52,17 @@ export const LoginForm = create(
             <ControlErrorMessage name="name" form={form} trans={trans}/>
           </ControlContainer>
           <ControlContainer>
+            <ControlLabel>{trans("label.email")}</ControlLabel>
+            <Input
+              error={getFieldState("email").error !== undefined}
+              type="email"
+              autoComplete="email"
+              required={true}
+              {...register("email")}
+            />
+            <ControlErrorMessage name="email" form={form} trans={trans}/>
+          </ControlContainer>
+          <ControlContainer>
             <ControlLabel>{trans("label.password")}</ControlLabel>
             <PasswordInput
               error={getFieldState("password").error !== undefined}
@@ -57,25 +72,27 @@ export const LoginForm = create(
             />
             <ControlErrorMessage name="password" form={form} trans={trans}/>
           </ControlContainer>
+          <ControlContainer>
+            <CheckableContainer>
+              <Checkbox
+                error={getFieldState("agree").error !== undefined}
+                required={true}
+                {...register("agree")}
+              />
+              <CheckableLabel>
+                {transNode("label.agree", {
+                  link: (parts) => <Link href="/document/other/privacy" scheme="secondary" variant="underline" target="_blank">{parts}</Link>
+                })}
+              </CheckableLabel>
+            </CheckableContainer>
+            <ControlErrorMessage name="agree" form={form} trans={trans}/>
+          </ControlContainer>
         </div>
         <div styleName="button">
           <Button type="submit" onClick={handleSubmit}>
-            <ButtonIconbag><GeneralIcon icon={faArrowRightToBracket}/></ButtonIconbag>
+            <ButtonIconbag><GeneralIcon icon={faUserPlus}/></ButtonIconbag>
             {trans("button.confirm")}
           </Button>
-          <Link href="/reset" scheme="secondary" variant="underline">
-            <LinkIconbag><GeneralIcon icon={faQuestion}/></LinkIconbag>
-            {trans("button.resetPassword")}
-          </Link>
-        </div>
-        <div styleName="separator" role="separator">
-          {trans("or")}
-        </div>
-        <div styleName="button">
-          <Link href="/register" variant="light">
-            <LinkIconbag><GeneralIcon icon={faUserPlus}/></LinkIconbag>
-            {trans("button.register")}
-          </Link>
         </div>
       </form>
     );

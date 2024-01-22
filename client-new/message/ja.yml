@@ -73,6 +73,23 @@ orderModeSelect:
   custom: "独自順"
   updatedDate: "更新日時"
   createdDate: "作成日時"
+registerForm:
+  label:
+    name: "ユーザー ID"
+    email: "メールアドレス"
+    password: "パスワード"
+    agree: "<link>プライバシーポリシー</link>に同意する"
+  button:
+    confirm: "新規登録"
+  error:
+    nameRequired: >-
+      ユーザー ID を入力してください。
+    passwordTooShort:
+    passwordTooLong:
+    passwordRequired: >-
+      パスワードを入力してください。
+    agreeRequired: >-
+      このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
 searchWordForm:
   mode:
     name: "単語"
@@ -97,6 +114,8 @@ loginPage:
   title: "ログイン"
 notificationListPage:
   notification: "過去のお知らせ"
+registerPage:
+  title: "新規登録"
 topPage:
   button:
     login: "ログイン · 新規登録"

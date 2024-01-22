@@ -25,8 +25,13 @@
   flex-direction: column;
 }
 
+.notice {
+  margin-block-end: 6zu;
+  font-size: 3.5zu;
+}
+
 .button {
-  margin-block-start: 4zu;
+  margin-block-start: 5zu;
   row-gap: 3zu;
   display: flex;
   flex-direction: column;

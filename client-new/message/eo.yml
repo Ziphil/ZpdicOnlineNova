@@ -73,6 +73,21 @@ orderModeSelect:
   custom: "Propra ordo"
   updatedDate: "Dato de ĝisdatigo"
   createdDate: "Dato de kreo"
+registerForm:
+  label:
+    name: "Salutnomo"
+    email: "Retpoŝta adreso"
+    password: "Pasvorto"
+    agree: "Konsenti pri la <link>privateca politiko</link>"
+  button:
+    confirm: "Krei konton"
+  error:
+    nameRequired:
+    passwordTooShort:
+    passwordTooLong:
+    passwordRequired:
+    agreeRequired: >-
+      Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la privateca politiko.
 searchWordForm:
   mode:
     name: "Kapvorto"
@@ -97,6 +112,8 @@ loginPage:
   title: "Ensaluti"
 notificationListPage:
   notification: "Antaŭaj novaĵoj"
+registerPage:
+  title: "Enskribiĝi"
 topPage:
   button:
     login: "Ensaluti · Enskribiĝi"

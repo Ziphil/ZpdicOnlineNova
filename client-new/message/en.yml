@@ -73,6 +73,21 @@ orderModeSelect:
   custom: "Custom"
   updatedDate: "Update date"
   createdDate: "Creation date"
+registerForm:
+  label:
+    name: "Username"
+    email: "Email"
+    password: "Password"
+    agree: "Agree to the <link>privacy policy</link>"
+  button:
+    confirm: "Create account"
+  error:
+    nameRequired:
+    passwordTooShort:
+    passwordTooLong:
+    passwordRequired:
+    agreeRequired: >-
+      In order to use this application, you must read and agree to the privacy policy.
 searchWordForm:
   mode:
     name: "Headword"
@@ -97,6 +112,8 @@ loginPage:
   title: "Sign in"
 notificationListPage:
   notification: "News"
+registerPage:
+  title: "Sign up"
 topPage:
   button:
     login: "Sign in · Sign up"

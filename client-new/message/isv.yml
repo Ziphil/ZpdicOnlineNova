@@ -73,6 +73,22 @@ orderModeSelect:
   custom: "Custom"
   updatedDate: "Дата актуализованја"
   createdDate: "Дата созданја"
+registerForm:
+  label:
+    name: "Користничско име"
+    email: "Адреса е-пошты"
+    password: "Парола"
+    agree: "Согласны с <link>политикоју приватности</link>"
+  button:
+    confirm: "Изтворити конто"
+  error:
+    nameRequired: >-
+      Впишите користничско име.
+    passwordTooShort:
+    passwordTooLong:
+    passwordRequired: >-
+      Впишите паролу.
+    agreeRequired:
 searchWordForm:
   mode:
     name: "Слово"
@@ -97,6 +113,8 @@ loginPage:
   title: "Пријавити се"
 notificationListPage:
   notification: "Новости"
+registerPage:
+  title: "Записати се"
 topPage:
   button:
     login: "Пријавити се · Записати се"
