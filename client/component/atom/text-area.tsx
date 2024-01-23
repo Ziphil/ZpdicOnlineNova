@@ -83,7 +83,7 @@ export const TextArea = create(
     const node = (
       <label styleName="root" className={className} htmlFor={labelId}>
         <Label text={label} showRequired={showRequired} showOptional={showOptional}/>
-        {(language !== undefined) ? <TextAreaCodeMirror {...innerProps}/> : <TextAreaTextArea {...innerProps}/>}
+        <TextAreaTextArea {...innerProps}/>
       </label>
     );
     return node;
