@@ -1,6 +1,6 @@
 //
 
-import {DictionaryListPage} from "./error-page";
+import {ErrorPage} from "./error-page";
 
 
-export const Component = DictionaryListPage;
+export const Component = ErrorPage;
