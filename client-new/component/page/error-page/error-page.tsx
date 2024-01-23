@@ -25,7 +25,7 @@ export const ErrorPage = create(
           {(isRouteErrorResponse(error) && error.status === 404) ? (
             <NotFoundView/>
           ) : (
-            "ERROR"
+            JSON.stringify(error)
           )}
         </MainContainer>
       </Page>
