@@ -1,6 +1,3 @@
 //
 
-import {ErrorPage} from "./error-page";
-
-
-export const Component = ErrorPage;
+export * from "./error-page";

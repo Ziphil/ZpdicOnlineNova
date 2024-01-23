@@ -3,7 +3,7 @@
 import {ReactElement, Suspense} from "react";
 import {Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from "react-router-dom";
 import {create} from "/client-new/component/create";
-import {ErrorPage} from "/client-new/component/page/error-page/error-page";
+import {ErrorPage} from "/client-new/component/page/error-page";
 
 
 const router = createBrowserRouter(createRoutesFromElements(
