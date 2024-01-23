@@ -126,6 +126,14 @@ searchWordForm:
   
 dictionaryPage:
   add: "Create new word"
+errorPage:
+  title:
+    notFound: "Not\nFound"
+  message:
+    notFound: >-
+      The page you requested could not be found.
+      Please make sure that you type the correct address.
+      It is also possible that the page you are looking for has been deleted or moved to another location.
 loginPage:
   title: "Sign in"
 notificationListPage:

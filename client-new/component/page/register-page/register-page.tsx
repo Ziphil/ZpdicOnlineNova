@@ -21,7 +21,7 @@ export const RegisterPage = create(
 
     return (
       <Page styleName="root" headerNode={<Header/>} {...rest}>
-        <MainContainer styleName="container">
+        <MainContainer styleName="main">
           <div styleName="top">
             <Logo styleName="logo"/>
             <h2 styleName="title">{trans("title")}</h2>

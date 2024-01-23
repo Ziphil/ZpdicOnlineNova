@@ -1,32 +1,32 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps, useTrans} from "zographia";
-import {Logo} from "/client-new/component/atom/logo";
+import {isRouteErrorResponse, useRouteError} from "react-router-dom";
+import {AdditionalProps} from "zographia";
 import {Header} from "/client-new/component/compound/header";
-import {LoginForm} from "/client-new/component/compound/login-form";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
+import {NotFoundView} from "./not-found-view";
 
 
-export const LoginPage = create(
-  require("./login-page.scss"), "LoginPage",
+export const ErrorPage = create(
+  require("./error-page.scss"), "ErrorPage",
   function ({
     ...rest
   }: {
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("loginPage");
+    const error = useRouteError();
 
     return (
       <Page styleName="root" headerNode={<Header/>} {...rest}>
         <MainContainer styleName="main">
-          <div styleName="top">
-            <Logo styleName="logo"/>
-            <h2 styleName="title">{trans("title")}</h2>
-          </div>
-          <LoginForm/>
+          {(isRouteErrorResponse(error) && error.status === 404) ? (
+            <NotFoundView/>
+          ) : (
+            "ERROR"
+          )}
         </MainContainer>
       </Page>
     );

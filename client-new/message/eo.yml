@@ -126,6 +126,14 @@ searchWordForm:
 
 dictionaryPage:
   add: "Krei novan vorton"
+errorPage:
+  title:
+    notFound: "Ne\nTrovita"
+  message:
+    notFound: >-
+      La paĝo kiun vi petas ne estis trovita.
+      Bonvolu certigi ke vi tajpas la korektan adreson.
+      Ankaŭ eblas, ke la paĝo kiun vi serĉas estis forigita aŭ movita al alia loko.
 loginPage:
   title: "Ensaluti"
 notificationListPage:

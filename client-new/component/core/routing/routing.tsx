@@ -1,18 +1,21 @@
 //
 
 import {ReactElement, Suspense} from "react";
-import {RouterProvider, createBrowserRouter} from "react-router-dom";
+import {Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from "react-router-dom";
 import {create} from "/client-new/component/create";
+import {ErrorPage} from "/client-new/component/page/error-page/error-page";
 
 
-const router = createBrowserRouter([
-  {path: "/", lazy: () => import("/client-new/component/page/top-page")},
-  {path: "/dictionary", lazy: () => import("/client-new/component/page/dictionary-list-page")},
-  {path: "/dictionary/:identifier", lazy: () => import("/client-new/component/page/dictionary-page")},
-  {path: "/notification", lazy: () => import("/client-new/component/page/notification-list-page")},
-  {path: "/login", lazy: () => import("/client-new/component/page/login-page")},
-  {path: "/register", lazy: () => import("/client-new/component/page/register-page")}
-], {basename: "/next"});
+const router = createBrowserRouter(createRoutesFromElements(
+  <Route path="/" errorElement={<ErrorPage/>}>
+    <Route path="/" lazy={() => import("/client-new/component/page/top-page")}/>
+    <Route path="/dictionary" lazy={() => import("/client-new/component/page/dictionary-list-page")}/>
+    <Route path="/dictionary/:identifier" lazy={() => import("/client-new/component/page/dictionary-page")}/>
+    <Route path="/notification" lazy={() => import("/client-new/component/page/notification-list-page")}/>
+    <Route path="/login" lazy={() => import("/client-new/component/page/login-page")}/>
+    <Route path="/register" lazy={() => import("/client-new/component/page/register-page")}/>
+  </Route>
+), {basename: "/next"});
 
 
 export const Routing = create(

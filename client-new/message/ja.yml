@@ -125,6 +125,14 @@ searchWordForm:
 
 dictionaryPage:
   add: "新しい単語を作成"
+errorPage:
+  title:
+    notFound: "Not\nFound"
+  message:
+    notFound: >-
+      参照しようとしたページが見つかりませんでした。
+      指定した URL が正しいか確認してください。
+      もしくは、お探しのページは削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
 loginPage:
   title: "ログイン"
 notificationListPage:
