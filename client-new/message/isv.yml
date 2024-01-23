@@ -88,8 +88,8 @@ registerForm:
     confirm: "Изтворити конто"
   error:
     nameInvalid: >-
-      The username must be composed of alphanumeric characters, underscores and hyphens.
-      It must also contain at least one non-digit.
+      Користничско име муси состојати се из алфабетно-цифровых знаков, подчрчников и дефисов.
+      Оно такоже муси имєти хот бы једну нецифру.
     nameTooLong: >-
       Користничско име муси имєти не боље 30 знаков.
     nameRequired: >-
