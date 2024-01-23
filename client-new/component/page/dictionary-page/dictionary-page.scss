@@ -9,7 +9,15 @@
   grid-template-columns: minmax(112zu, 2fr) 5fr;
 }
 
-.form {
+.sticky {
   inset-block-start: calc(24zu + 1zx);
+  row-gap: 6zu;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: sticky;
+}
+
+.form {
+  align-self: stretch;
 }

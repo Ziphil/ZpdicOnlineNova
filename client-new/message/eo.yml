@@ -1,21 +1,111 @@
+toast:
+  success:
+    login: >-
+      Sukcesis ensaluti.
+    register: >-
+      Sukcesis krei vian konton.
+  error:
+    recaptchaError: >-
+      Io fiaskis.
+      Bonvolu reprovi.
+    recaptchaRejected: >-
+      Fona aŭtentikigo malsukcesis.
+      Bonvolu reprovi.
+    awsError: >-
+      Io fiaskis.
+      Bonvolu reprovi.
+    unauthenticated: >-
+      Vi ne estas ensalutinta.
+      Bonvolu denove ensaluti.
+    forbidden: >-
+      Vi ne rajtas aliri tiun enhavon.
+    serverNotFound: >-
+      La servilo eble estis ĝisdatigita.
+      Bonvolu refreŝigi la paĝon.
+    serverError: >-
+      Eraro okazis en la servilo.
+      Bonvolu provi denove post iom da tempo.
+    serverTimeout: >-
+      Ne eblis ricevi respondon de la servilo.
+      Bonvolu provi denove post iom da tempo.
+    requestTimeout: >-
+      Ne eblis ricevi respondon de la servilo.
+      Bonvolu provi denove post iom da tempo.
+    messageNotFound: >-
+      Ne estas mesaĝo agordita por tiu ŝprucfenestro.
+      Bonvolu sciigi la administranton.
+    unexpected: >-
+      Neatendita eraro okazis.
+      Bonvolu sciigi la administranton.
+
+dictionaryHeader:
+  tab:
+    dictionary: "Vortaro"
+    example: "Frazoj"
+    info: "Detaloj"
+    setting: "Detaloj · Agordoj"
 dictionaryList:
   updatedDate: "Ĝisdatigita je"
   createdDate: "Kreita je"
   go: "Vidi vortaron"
+loginForm:
+  label:
+    name: "Salutnomo"
+    password: "Pasvorto"
+  button:
+    confirm: "Ensaluti"
+    register: "Krei konton"
+    resetPassword: "Restarigi pasvorton"
+  or: "aŭ"
+  error:
+    nameRequired: >-
+      Enigu vian salutnomon.
+    passwordRequired: >-
+      Enigu vian pasvorton.
 notificationList:
   tag:
     update: "Ĝisdatigo"
     bug: "Neĝusteco"
-    info: "Alia"
-    bugFixed: "Riparita"
+    info: "Alia informo"
+    fixed: "Riparita"
 orderDirectionSelect:
   ascending: "Kreska"
   descending: "Malkreska"
 orderModeSelect:
-  unicode: "Nomo"
+  unicode: "Unikodo"
+  dictionaryName: "Nomo"
+  wordName: "Kapvorto"
   custom: "Propra ordo"
   updatedDate: "Dato de ĝisdatigo"
   createdDate: "Dato de kreo"
+registerForm:
+  label:
+    name: "Salutnomo"
+    email: "Retpoŝta adreso"
+    password: "Pasvorto"
+    agree: "Konsenti pri la <link>privateca politiko</link>"
+  button:
+    confirm: "Krei konton"
+  error:
+    nameInvalid: >-
+      La salutnomo devas ampleksi alfanombraj signoj, substrekoj kaj streketoj.
+      Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon.
+    nameTooLong: >-
+      La salutnomo devas havi apenaŭ 30 signojn.
+    nameRequired: >-
+      Enigu salutnomon.
+    emailInvalid: >-
+      Enigu validan retpoŝtan adreson.
+    emailRequired: >-
+      Enigu retpoŝtan adreson.
+    passwordTooShort: >-
+      La pasvorto devas havi almenaŭ 6 signojn.
+    passwordTooLong: >-
+      La pasvorto devas havi apenaŭ 50 signojn.
+    passwordRequired: >-
+      Enigu pasvorton.
+    agreeRequired: >-
+      Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la privateca politiko.
 searchWordForm:
   mode:
     name: "Kapvorto"
@@ -34,8 +124,22 @@ searchWordForm:
   enableSuggestions: "Sugesti variaĵojn"
   shuffleResult: "Miksi rezultojn"
 
+dictionaryPage:
+  add: "Krei novan vorton"
+errorPage:
+  title:
+    notFound: "Ne\nTrovita"
+  message:
+    notFound: >-
+      La paĝo kiun vi petas ne estis trovita.
+      Bonvolu certigi ke vi tajpas la korektan adreson.
+      Ankaŭ eblas, ke la paĝo kiun vi serĉas estis forigita aŭ movita al alia loko.
+loginPage:
+  title: "Ensaluti"
 notificationListPage:
-  notification: "Antaŭaj sciigoj"
+  notification: "Antaŭaj novaĵoj"
+registerPage:
+  title: "Enskribiĝi"
 topPage:
   button:
     login: "Ensaluti · Enskribiĝi"
@@ -45,6 +149,6 @@ topPage:
     word: "{count, plural, one {Vorto} other {Vortoj}}"
     example: "{count, plural, one {Frazo} other {Frazoj}}"
   heading:
-    notification: "Lastatempaj sciigoj"
-  moreNotifications: "Vidi pli da sciigoj"
+    notification: "Lastatempaj novaĵoj"
+  moreNotifications: "Legi pli da novaĵoj"
   catch: "Desegnu vian propran universon per conlingvo"

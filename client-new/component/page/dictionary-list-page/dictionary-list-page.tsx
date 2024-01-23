@@ -3,10 +3,11 @@
 import {ReactElement, SetStateAction, useCallback} from "react";
 import {AdditionalProps} from "zographia";
 import {DictionaryList} from "/client-new/component/compound/dictionary-list";
+import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {SearchDictionaryForm} from "/client-new/component/compound/search-dictionary-form";
 import {create} from "/client-new/component/create";
-import {useSuspenseQuery} from "/client-new/hook/request";
+import {useSuspenseResponse} from "/client-new/hook/request";
 import {Search, useSearchState} from "/client-new/hook/search";
 import {DictionaryParameter} from "/client-new/skeleton";
 import {calcOffsetSpec, resolveStateAction} from "/client-new/util/misc";
@@ -21,7 +22,7 @@ export const DictionaryListPage = create(
   } & AdditionalProps): ReactElement {
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [[hitDictionaries, hitSize]] = useSuspenseQuery("searchDictionary", {parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 20)}, {keepPreviousData: true});
+    const [[hitDictionaries, hitSize]] = useSuspenseResponse("searchDictionary", {parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 20)}, {keepPreviousData: true});
 
     const handleParameterSet = useCallback(function (parameter: SetStateAction<DictionaryParameter>): void {
       setQuery((prevQuery) => {
@@ -36,10 +37,12 @@ export const DictionaryListPage = create(
     }, [query, setQuery]);
 
     return (
-      <Page {...rest}>
+      <Page headerNode={<Header/>} {...rest}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
-            <SearchDictionaryForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+            <div styleName="sticky">
+              <SearchDictionaryForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+            </div>
           </div>
           <div styleName="right">
             <DictionaryList dictionaries={hitDictionaries} size={20} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>

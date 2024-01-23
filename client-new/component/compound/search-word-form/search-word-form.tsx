@@ -11,6 +11,7 @@ import {
   CheckableContainer,
   CheckableLabel,
   Checkbox,
+  ControlGroup,
   GeneralIcon,
   Input,
   InputAddon,
@@ -123,24 +124,29 @@ export const SearchWordForm = create(
             <Checkbox checked={actualParameter.options.ignore.case} onSet={handleIgnoreCaseSet}/>
             <CheckableLabel>{trans("ignoreCase")}</CheckableLabel>
           </CheckableContainer>
+        </div>
+        <div styleName="radio-group">
           <CheckableContainer>
             <Checkbox checked={actualParameter.options.enableSuggestions} onSet={handleEnableSuggestionsSet}/>
             <CheckableLabel>{trans("enableSuggestions")}</CheckableLabel>
           </CheckableContainer>
         </div>
         <div styleName="row">
-          <OrderModeSelect
-            orderModeOptions={FORM_WORD_ORDER_MODES}
-            orderMode={actualParameter.order.mode}
-            onSet={handleOrderModeSet}
-          />
-          <OrderDirectionSelect
-            orderDirection={actualParameter.order.direction}
-            onSet={handleOrderDirectionSet}
-          />
+          <ControlGroup>
+            <OrderModeSelect
+              orderModeOptions={FORM_WORD_ORDER_MODES}
+              orderMode={actualParameter.order.mode}
+              unicodeAlt="wordName"
+              onSet={handleOrderModeSet}
+            />
+            <OrderDirectionSelect
+              orderDirection={actualParameter.order.direction}
+              onSet={handleOrderDirectionSet}
+            />
+          </ControlGroup>
         </div>
         <div styleName="row">
-          <Button variant="text" scheme="secondary" onClick={shuffleResult}>
+          <Button scheme="secondary" variant="underline" onClick={shuffleResult}>
             <ButtonIconbag><GeneralIcon icon={faShuffle}/></ButtonIconbag>
             {trans("shuffleResult")}
           </Button>

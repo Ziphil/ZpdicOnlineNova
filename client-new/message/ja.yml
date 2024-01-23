@@ -1,7 +1,67 @@
+toast:
+  success:
+    login: >-
+      ログインに成功しました。
+    register: >-
+      アカウントを作成しました。
+  error:
+    recaptchaError: >-
+      エラーが発生しました。
+      もう一度お試しください。
+    recaptchaRejected: >-
+      バックグラウンドの認証に失敗しました。
+      もう一度お試しください。
+    awsError: >-
+      エラーが発生しました。
+      もう一度お試しください。
+    unauthenticated: >-
+      ログインしていません。
+      ログインした後にもう一度お試しください。
+    forbidden: >-
+      このコンテンツにアクセスする権限がありません。
+    serverNotFound: >-
+      アップデートが行われた可能性があります。
+      ページを更新してください。
+    serverError: >-
+      サーバーでエラーが発生しました。
+      時間を置いてもう一度お試しください。
+    serverTimeout: >-
+      サーバーが時間内に応答しませんでした。
+      時間を置いてもう一度お試しください。
+    requestTimeout: >-
+      サーバーが時間内に応答しませんでした。
+      時間を置いてもう一度お試しください。
+    messageNotFound: >-
+      ポップアップ用のメッセージが設定されていません。
+      設定ミスの可能性がありますので、お手数ですが管理者までご連絡ください。
+    unexpected: >-
+      予期しないエラーが発生しました。
+      お手数ですが管理者までご連絡ください。
+
+dictionaryHeader:
+  tab:
+    dictionary: "辞書"
+    example: "例文"
+    info: "詳細情報"
+    setting: "詳細情報 · 設定"
 dictionaryList:
   updatedDate: "更新日時"
   createdDate: "作成日時"
   go: "辞書ページへ"
+loginForm:
+  label:
+    name: "ユーザー ID"
+    password: "パスワード"
+  button:
+    confirm: "ログイン"
+    register: "新規登録"
+    resetPassword: "パスワードリセット"
+  or: "or"
+  error:
+    nameRequired: >-
+      ユーザー ID を入力してください。
+    passwordRequired: >-
+      パスワードを入力してください。
 notificationList:
   tag:
     update: "アップデート"
@@ -12,10 +72,39 @@ orderDirectionSelect:
   ascending: "昇順"
   descending: "降順"
 orderModeSelect:
-  unicode: "名前 (Unicode)"
+  unicode: "Unicode"
+  dictionaryName: "名前"
+  wordName: "単語"
   custom: "独自順"
   updatedDate: "更新日時"
   createdDate: "作成日時"
+registerForm:
+  label:
+    name: "ユーザー ID"
+    email: "メールアドレス"
+    password: "パスワード"
+    agree: "<link>プライバシーポリシー</link>に同意する"
+  button:
+    confirm: "新規登録"
+  error:
+    nameInvalid: >-
+      ユーザー ID は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
+    nameTooLong: >-
+      ユーザー ID は 30 文字以下である必要があります。
+    nameRequired: >-
+      ユーザー ID を入力してください。
+    emailInvalid: >-
+      正しい形式のメールアドレスを入力してください。
+    emailRequired: >-
+      メールアドレスを入力してください。
+    passwordTooShort: >-
+      パスワードは 6 文字以上である必要があります。
+    passwordTooLong:
+      パスワードは 50 文字以下である必要があります。
+    passwordRequired: >-
+      パスワードを入力してください。
+    agreeRequired: >-
+      このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
 searchWordForm:
   mode:
     name: "単語"
@@ -34,8 +123,22 @@ searchWordForm:
   enableSuggestions: "変化形をサジェスト"
   shuffleResult: "検索結果をシャッフル"
 
+dictionaryPage:
+  add: "新しい単語を作成"
+errorPage:
+  title:
+    notFound: "Not\nFound"
+  message:
+    notFound: >-
+      参照しようとしたページが見つかりませんでした。
+      指定した URL が正しいか確認してください。
+      もしくは、お探しのページは削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
+loginPage:
+  title: "ログイン"
 notificationListPage:
   notification: "過去のお知らせ"
+registerPage:
+  title: "新規登録"
 topPage:
   button:
     login: "ログイン · 新規登録"

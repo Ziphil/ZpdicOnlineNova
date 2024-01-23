@@ -1,13 +1,16 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
-import {ReactElement, SetStateAction, useCallback, useMemo} from "react";
+import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {Fragment, ReactElement, SetStateAction, useCallback, useMemo} from "react";
 import {useParams} from "react-router-dom";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
+import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {SearchWordForm} from "/client-new/component/compound/search-word-form";
 import {WordList} from "/client-new/component/compound/word-list";
 import {create} from "/client-new/component/create";
-import {useSuspenseQuery} from "/client-new/hook/request";
+import {useSuspenseResponse} from "/client-new/hook/request";
 import {Search, useSearchState} from "/client-new/hook/search";
 import {EnhancedDictionary, WordParameter} from "/client-new/skeleton";
 import {calcOffsetSpec, resolveStateAction} from "/client-new/util/misc";
@@ -21,13 +24,15 @@ export const DictionaryPage = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {trans} = useTrans("dictionaryPage");
+
     const {identifier} = useParams();
     const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
-    const [dictionary] = useSuspenseQuery("fetchDictionary", {number, paramName}, {refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
+    const [dictionary] = useSuspenseResponse("fetchDictionary", {number, paramName}, {refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
     const enhancedDictionary = useMemo(() => EnhancedDictionary.enhance(dictionary), [dictionary]);
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [hitResult] = useSuspenseQuery("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 40)}, {keepPreviousData: true});
+    const [hitResult] = useSuspenseResponse("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 40)}, {keepPreviousData: true});
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
 
@@ -44,10 +49,21 @@ export const DictionaryPage = create(
     }, [query, setQuery]);
 
     return (
-      <Page {...rest}>
+      <Page {...rest} headerNode={(
+        <Fragment>
+          <Header/>
+          <DictionaryHeader dictionary={enhancedDictionary} tabValue="dictionary"/>
+        </Fragment>
+      )}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
-            <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+            <div styleName="sticky">
+              <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+              <Button>
+                <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+                {trans("add")}
+              </Button>
+            </div>
           </div>
           <div styleName="right">
             <WordList dictionary={enhancedDictionary} words={hitWords} size={40} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>

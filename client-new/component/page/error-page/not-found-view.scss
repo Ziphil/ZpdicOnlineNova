@@ -1,0 +1,52 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  @include theme("light") {
+    --icon-color: #{leveled-color("primary", 7)};
+    --text-color: #{leveled-color("primary", 5)};
+  }
+}
+
+.root {
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  column-gap: 6zu;
+  display: flex;
+  align-items: center
+}
+
+.code {
+  @include bold-font;
+  font-size: 16zu;
+  color: var(--text-color);
+  display: flex;
+  justify-content: flex-end;
+  flex: 1 1 0zu;
+}
+
+.title {
+  @include bold-font;
+  font-size: 6zu;
+  color: var(--text-color);
+  white-space: pre-wrap;
+  flex: 1 1 0zu;
+}
+
+.icon {
+  font-size: 16zu;
+  color: var(--icon-color);
+  flex: 0 0 auto;
+}
+
+.message {
+  margin-block-start: 10zu;
+  width: 100%;
+  max-width: 120zu;
+  align-self: center;
+}

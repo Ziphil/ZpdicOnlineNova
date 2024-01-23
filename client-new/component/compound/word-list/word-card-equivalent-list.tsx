@@ -18,6 +18,8 @@ export const WordCardEquivalentList = create(
     className?: string
   } & AdditionalProps): ReactElement | null {
 
+    const punctuation = getPunctuation(dictionary);
+
     return (word.equivalents.length > 0) ? (
       <div styleName="root" {...rest}>
         {word.equivalents.map((equivalent, index) => (
@@ -27,7 +29,7 @@ export const WordCardEquivalentList = create(
             ))}
             {equivalent.names.map((name, index) => (
               <Fragment key={index}>
-                {(index > 0) && <span styleName="punctuation"> · </span>}
+                {(index > 0) && <span styleName="punctuation">{punctuation}</span>}
                 <span>{name}</span>
               </Fragment>
             ))}
@@ -38,3 +40,13 @@ export const WordCardEquivalentList = create(
 
   }
 );
+
+
+function getPunctuation(dictionary: EnhancedDictionary): string {
+  const punctuation = dictionary.settings.punctuations[0] ?? ",";
+  if (punctuation.match(/^[\x20-\x7E]*$/)) {
+    return punctuation + " ";
+  } else {
+    return punctuation;
+  }
+}

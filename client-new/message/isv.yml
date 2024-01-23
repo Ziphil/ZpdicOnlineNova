@@ -1,50 +1,154 @@
+toast:
+  success:
+    login: >-
+      Successfully signed in.
+    register: >-
+      Successfully created your account.
+  error:
+    recaptchaError: >-
+      Нєчто не удал се.
+      Πрошу попробујте опет.
+    recaptchaRejected: >-
+      Background authentication failed.
+      Πрошу попробујте опет.
+    awsError: >-
+      Нєчто не удал се.
+      Πрошу попробујте опет.
+    unauthenticated: >-
+      Вы не јесте пријавили се.
+      Прошу пријавите се опет.
+    forbidden: >-
+      You are not authorized to access this content.
+    serverNotFound: >-
+      Сервер можно обновјены.
+      Πрошу освєжите страницу.
+    serverError: >-
+      На серверу догодил се блуд.
+      Πрошу попробујте опет по нєктором врємени.
+    serverTimeout: >-
+      Не удал се достати одзыв од сервера.
+      Πрошу попробујте опет по нєктором врємени.
+    requestTimeout: >-
+      Не удал се достати одзыв од сервера.
+      Πрошу попробујте опет по нєктором врємени.
+    messageNotFound: >-
+      There is no message configured for this popup.
+      Πрошу увєдомите администратору.
+    unexpected: >-
+      Догодил се неочекиваны блуд.
+      Πрошу увєдомите администратору.
+      
+dictionaryHeader:
+  tab:
+    dictionary: "Словник"
+    example: "Рєченја"
+    info: "Подробности"
+    setting: "Подробности · Настројкы"
 dictionaryList:
-  updatedDate: "Updated at"
-  createdDate: "Created at"
-  go: "See dictionary"
+  updatedDate: "Актуализованы"
+  createdDate: "Созданы"
+  go: "Зрєти словник"
+loginForm:
+  label:
+    name: "Користничско име"
+    password: "Парола"
+  button:
+    confirm: "Пријавити се"
+    register: "Изтворити конто"
+    resetPassword: "Reset password"
+  or: "или"
+  error:
+    nameRequired: >-
+      Впишите ваше користничско име.
+    passwordRequired: >-
+      Впишите вашу паролу.
 notificationList:
   tag:
     update: "Актуализација"
     bug: "Погрєшка"
-    info: "Ина"
+    info: "Ина информација"
     fixed: "Изправјена"
 orderDirectionSelect:
-  ascending: "Ascending"
-  descending: "Descending"
+  ascending: "Повышајучи"
+  descending: "Малєјучи"
 orderModeSelect:
-  unicode: "Name"
+  unicode: "Уникод"
+  dictionaryName: "Име"
+  wordName: "Слово"
   custom: "Custom"
-  updatedDate: "Update date"
-  createdDate: "Creation date"
+  updatedDate: "Дата актуализованја"
+  createdDate: "Дата созданја"
+registerForm:
+  label:
+    name: "Користничско име"
+    email: "Адреса е-пошты"
+    password: "Парола"
+    agree: "Согласны с <link>политикоју приватности</link>"
+  button:
+    confirm: "Изтворити конто"
+  error:
+    nameInvalid: >-
+      Користничско име муси состојати се из алфабетно-цифровых знаков, подчрчников и дефисов.
+      Оно такоже муси имєти хот бы једну нецифру.
+    nameTooLong: >-
+      Користничско име муси имєти не боље 30 знаков.
+    nameRequired: >-
+      Впишите користничско име.
+    emailInvalid: >-
+      Enter a valid email address.
+    emailRequired: >-
+      Впишите адресу е-пошты.
+    passwordTooShort: >-
+      Палора муси имєти не мење 6 знаков.
+    passwordTooLong: >-
+      Палора муси имєти не боље 50 знаков.
+    passwordRequired: >-
+      Впишите паролу.
+    agreeRequired: >-
+      Да бы употрєбјати то примєњенје, вы мусите прочитати и согласити се с политикоју приватности.
 searchWordForm:
   mode:
-    name: "Headword"
-    equivalent: "Translation"
-    both: "Both"
-    tag: "Tag"
-    information: "Contents"
-    content: "Whole"
+    name: "Слово"
+    equivalent: "Прєвод"
+    both: "Оба"
+    tag: "Значка"
+    information: "Содржанје"
+    content: "Цєлы"
   type:
-    prefix: "Prefix"
-    suffix: "Suffix"
-    part: "Partial"
-    exact: "Exact"
-    regular: "Regexp"
-  ignoreCase: "Ignore case"
-  enableSuggestions: "Suggest variations"
-  shuffleResult: "Shuffle result"
+    prefix: "Префиксны"
+    suffix: "Суфиксны"
+    part: "Честичны"
+    exact: "Точны"
+    regular: "Регекс"
+  ignoreCase: "Игноровати велике/мале буквы"
+  enableSuggestions: "Прєдлагати вариације"
+  shuffleResult: "Смєшати резултаты"
   
+dictionaryPage:
+  add: "Создати ново слово"
+errorPage:
+  title:
+    notFound: "Не\nНајдены"
+  message:
+    notFound: >-
+      The page you requested could not be found.
+      Please make sure that you type the correct address.
+      It is also possible that the page you are looking for has been deleted or moved to another location.
+loginPage:
+  title: "Пријавити се"
 notificationListPage:
   notification: "Новости"
+registerPage:
+  title: "Записати се"
 topPage:
   button:
     login: "Пријавити се · Записати се"
     dictionary: "Список словников"
   aggregation:
-    dictionary: "{count, plural, one {Словник} many {Словникы} other {Словников}}"
-    word: "{count, plural, one {Слово} many {Слова} other {Слов}}"
-    example: "{count, plural, one {Рєченје} many {Рєченја} other {Рєчениј}}"
+    dictionary: "{count, plural, one {Словник} few {Словникы} other {Словников}}"
+    word: "{count, plural, one {Слово} few {Слова} other {Слов}}"
+    example: "{count, plural, one {Рєченје} few {Рєченја} other {Рєчениј}}"
   heading:
-    notification: "Послєдње новости"
+    notification: "Послєдне новости"
   moreNotifications: "Читати новости вече"
   catch: "Рысујте свој всесвєт со сконструованым језыком"

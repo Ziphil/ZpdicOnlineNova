@@ -22,7 +22,7 @@ export const TopPage = create(
     const {trans} = useTrans("topPage");
 
     return (
-      <Page styleName="root" showHeader={false} insertPadding={false} {...rest}>
+      <Page styleName="root" insertPadding={false} {...rest}>
         <div styleName="top">
           <Hero/>
           <OverallAggregationPane/>

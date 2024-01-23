@@ -1,21 +1,111 @@
+toast:
+  success:
+    login: >-
+      Successfully signed in.
+    register: >-
+      Successfully created your account.
+  error:
+    recaptchaError: >-
+      Something failed.
+      Please try again.
+    recaptchaRejected: >-
+      Background authentication failed.
+      Please try again.
+    awsError: >-
+      Something failed.
+      Please try again.
+    unauthenticated: >-
+      You are not signed in.
+      Please try again after signing in.
+    forbidden: >-
+      You are not authorized to access this content.
+    serverNotFound: >-
+      The server may have been updated.
+      Please refresh the page.
+    serverError: >-
+      An error occurred on the server.
+      Please try again after a while.
+    serverTimeout: >-
+      Couldn't get a response from the server.
+      Please try again after a while.
+    requestTimeout: >-
+      Couldn't get a response from the server.
+      Please try again after a while.
+    messageNotFound: >-
+      There is no message configured for this popup.
+      Please notify the administrator.
+    unexpected: >-
+      An unexpected error occurred.
+      Please notify the administrator.
+
+dictionaryHeader:
+  tab:
+    dictionary: "Dictionary"
+    example: "Sentences"
+    info: "Details"
+    setting: "Details · Settings"
 dictionaryList:
   updatedDate: "Updated at"
   createdDate: "Created at"
   go: "See dictionary"
+loginForm:
+  label:
+    name: "Username"
+    password: "Password"
+  button:
+    confirm: "Sign in"
+    register: "Create account"
+    resetPassword: "Reset password"
+  or: "or"
+  error:
+    nameRequired: >-
+      Enter your username.
+    passwordRequired: >-
+      Enter your password.
 notificationList:
   tag:
     update: "Update"
     bug: "Bug"
-    info: "Other"
+    info: "Other info"
     fixed: "Fixed"
 orderDirectionSelect:
   ascending: "Ascending"
   descending: "Descending"
 orderModeSelect:
-  unicode: "Name"
+  unicode: "Unicode"
+  dictionaryName: "Name"
+  wordName: "Headword"
   custom: "Custom"
   updatedDate: "Update date"
   createdDate: "Creation date"
+registerForm:
+  label:
+    name: "Username"
+    email: "Email address"
+    password: "Password"
+    agree: "Agree to the <link>privacy policy</link>"
+  button:
+    confirm: "Create account"
+  error:
+    nameInvalid: >-
+      The username must be composed of alphanumeric characters, underscores and hyphens.
+      It must also contain at least one non-digit.
+    nameTooLong: >-
+      The username must contain no more than 30 characters.
+    nameRequired:
+      Enter a username.
+    emailInvalid: >-
+      Enter a valid email address.
+    emailRequired:
+      Enter an email address.
+    passwordTooShort:
+      The password must contain at least 6 characters.
+    passwordTooLong:
+      The password must contain no more than 50 characters.
+    passwordRequired:
+      Enter a password.
+    agreeRequired: >-
+      In order to use this application, you must read and agree to the privacy policy.
 searchWordForm:
   mode:
     name: "Headword"
@@ -29,13 +119,27 @@ searchWordForm:
     suffix: "Suffix"
     part: "Partial"
     exact: "Exact"
-    regular: "Regexp"
-  ignoreCase: "Ignore case"
+    regular: "Regex"
+  ignoreCase: "Ignore letter case"
   enableSuggestions: "Suggest variations"
-  shuffleResult: "Shuffle result"
+  shuffleResult: "Shuffle results"
   
+dictionaryPage:
+  add: "Create new word"
+errorPage:
+  title:
+    notFound: "Not\nFound"
+  message:
+    notFound: >-
+      The page you requested could not be found.
+      Please make sure that you type the correct address.
+      It is also possible that the page you are looking for has been deleted or moved to another location.
+loginPage:
+  title: "Sign in"
 notificationListPage:
   notification: "News"
+registerPage:
+  title: "Sign up"
 topPage:
   button:
     login: "Sign in · Sign up"
@@ -46,5 +150,5 @@ topPage:
     example: "{count, plural, one {Sentence} other {Sentences}}"
   heading:
     notification: "Latest news"
-  moreNotifications: "See more news"
+  moreNotifications: "Read more news"
   catch: "Draw your own universe with conlang"

@@ -10,11 +10,13 @@ export const OrderModeSelect = create(
   function <M extends OrderMode>({
     orderMode,
     orderModeOptions,
+    unicodeAlt = "unicode",
     onSet,
     ...rest
   }: {
     orderMode: M,
     orderModeOptions: ReadonlyArray<M>,
+    unicodeAlt?: "unicode" | "dictionaryName" | "wordName",
     onSet?: (orderMode: M) => unknown,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -24,8 +26,8 @@ export const OrderModeSelect = create(
     return (
       <Select styleName="root" value={orderMode} onSet={onSet} {...rest}>
         {(orderModeOptions.includes("unicode" as M)) && (
-          <SelectOption value="unicode" label={trans("unicode")}>
-            {trans("unicode")}
+          <SelectOption value="unicode" label={trans(unicodeAlt)}>
+            {trans(unicodeAlt)}
           </SelectOption>
         )}
         {(orderModeOptions.includes("custom" as M)) && (
