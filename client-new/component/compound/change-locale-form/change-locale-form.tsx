@@ -25,7 +25,7 @@ export const ChangeLocaleForm = create(
     const changeLocale = useChangeLocale();
 
     return (
-      <Menu styleName="root" triggerType="hover" placement="bottom-end" {...rest} trigger={(
+      <Menu styleName="root" triggerType="click" placement="bottom-end" {...rest} trigger={(
         <button styleName="trigger" type="button">
           <GeneralIcon styleName="icon" icon={faGlobe}/>
           {LOCALE_NAMES[locale]}
