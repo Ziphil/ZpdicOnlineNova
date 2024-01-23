@@ -87,8 +87,15 @@ registerForm:
   button:
     confirm: "Create account"
   error:
+    nameInvalid: >-
+      The username must be composed of alphanumeric characters, underscores and hyphens.
+      It must also contain at least one non-digit.
+    nameTooLong: >-
+      The username must contain no more than 30 characters.
     nameRequired:
       Enter a username.
+    emailInvalid: >-
+      Enter a valid email address.
     emailRequired:
       Enter an email address.
     passwordTooShort:

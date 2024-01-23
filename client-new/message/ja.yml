@@ -87,8 +87,14 @@ registerForm:
   button:
     confirm: "新規登録"
   error:
+    nameInvalid: >-
+      ユーザー ID は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
+    nameTooLong: >-
+      ユーザー ID は 30 文字以下である必要があります。
     nameRequired: >-
       ユーザー ID を入力してください。
+    emailInvalid: >-
+      正しい形式のメールアドレスを入力してください。
     emailRequired: >-
       メールアドレスを入力してください。
     passwordTooShort: >-

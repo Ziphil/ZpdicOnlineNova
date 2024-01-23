@@ -8,11 +8,12 @@ import {useLoginRequest} from "/client-new/hook/auth";
 import {useForm} from "/client-new/hook/form";
 import {useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
+import {IDENTIFIER_REGEXP} from "/client-new/util/validation";
 import type {RequestData} from "/server/controller/internal/type";
 
 
 const schema = object({
-  name: string().required("nameRequired"),
+  name: string().matches(IDENTIFIER_REGEXP, "nameInvalid").max(30, "nameTooLong").required("nameRequired"),
   email: string().email("emailInvalid").required("emailRequired"),
   password: string().min(6, "passwordTooShort").max(50, "passwordTooLong").required("passwordRequired"),
   agree: boolean().oneOf([true], "agreeRequired")

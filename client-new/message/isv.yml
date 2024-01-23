@@ -87,8 +87,15 @@ registerForm:
   button:
     confirm: "Изтворити конто"
   error:
+    nameInvalid: >-
+      The username must be composed of alphanumeric characters, underscores and hyphens.
+      It must also contain at least one non-digit.
+    nameTooLong: >-
+      Користничско име муси имєти не боље 30 знаков.
     nameRequired: >-
       Впишите користничско име.
+    emailInvalid: >-
+      Enter a valid email address.
     emailRequired: >-
       Впишите адресу е-пошты.
     passwordTooShort: >-

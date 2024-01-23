@@ -87,8 +87,15 @@ registerForm:
   button:
     confirm: "Krei konton"
   error:
+    nameInvalid: >-
+      La salutnomo devas ampleksi alfanombraj signoj, substrekoj kaj streketoj.
+      Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon.
+    nameTooLong: >-
+      La salutnomo devas havi apenaŭ 30 signojn.
     nameRequired: >-
       Enigu salutnomon.
+    emailInvalid: >-
+      Enigu validan retpoŝtan adreson.
     emailRequired: >-
       Enigu retpoŝtan adreson.
     passwordTooShort: >-
