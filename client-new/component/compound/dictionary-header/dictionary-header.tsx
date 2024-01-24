@@ -14,10 +14,12 @@ export const DictionaryHeader = create(
   require("./dictionary-header.scss"), "DictionaryHeader",
   function ({
     dictionary,
+    width = "normal",
     tabValue,
     ...rest
   }: {
     dictionary: DetailedDictionary,
+    width?: "normal" | "wide",
     tabValue: "dictionary" | "example" | "info" | null,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -28,7 +30,7 @@ export const DictionaryHeader = create(
 
     return (
       <header styleName="root" {...rest}>
-        <MainContainer width="wide">
+        <MainContainer width={width}>
           <SingleLineText styleName="name" is="h2">
             {dictionary.name}
           </SingleLineText>

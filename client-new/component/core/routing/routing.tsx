@@ -11,6 +11,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" lazy={() => import("/client-new/component/page/top-page")}/>
     <Route path="/dictionary" lazy={() => import("/client-new/component/page/dictionary-list-page")}/>
     <Route path="/dictionary/:identifier" lazy={() => import("/client-new/component/page/dictionary-page")}/>
+    <Route path="/dictionary/:identifier/word/:wordNumber" lazy={() => import("/client-new/component/page/edit-word-page")}/>
     <Route path="/notification" lazy={() => import("/client-new/component/page/notification-list-page")}/>
     <Route path="/login" lazy={() => import("/client-new/component/page/login-page")}/>
     <Route path="/register" lazy={() => import("/client-new/component/page/register-page")}/>

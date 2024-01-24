@@ -2,7 +2,7 @@
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, SetStateAction, useCallback, useMemo} from "react";
-import {useParams} from "react-router-dom";
+import {useHref, useParams} from "react-router-dom";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
 import {Header} from "/client-new/component/compound/header";
@@ -37,6 +37,8 @@ export const DictionaryPage = create(
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
 
+    const addWordPageUrl = useHref(`/dictionary/${dictionary.number}/word/new`);
+
     const handleParameterSet = useCallback(function (parameter: SetStateAction<WordParameter>): void {
       setQuery((prevQuery) => {
         const nextParameter = resolveStateAction(parameter, prevQuery.parameter);
@@ -49,11 +51,15 @@ export const DictionaryPage = create(
       window.scrollTo(0, 0);
     }, [query, setQuery]);
 
+    const addWord = useCallback(function (): void {
+      window.open(addWordPageUrl);
+    }, [addWordPageUrl]);
+
     return (
       <Page {...rest} headerNode={(
         <Fragment>
           <Header/>
-          <DictionaryHeader dictionary={enhancedDictionary} tabValue="dictionary"/>
+          <DictionaryHeader dictionary={enhancedDictionary} width="wide" tabValue="dictionary"/>
         </Fragment>
       )}>
         <MainContainer styleName="main" width="wide">
@@ -61,7 +67,7 @@ export const DictionaryPage = create(
             <div styleName="sticky">
               <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
               {(canOwn) && (
-                <Button variant="light">
+                <Button variant="light" onClick={addWord}>
                   <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
                   {trans("add")}
                 </Button>
