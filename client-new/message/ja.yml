@@ -48,6 +48,19 @@ dictionaryList:
   updatedDate: "更新日時"
   createdDate: "作成日時"
   go: "辞書ページへ"
+editWordForm:
+  heading:
+    basic: "基本情報"
+    equivalents: "訳語"
+    informations: "内容"
+    variations: "変化形"
+    relations: "関連語"
+  label:
+    name: "綴り"
+    pronunciation: "発音記号"
+    tags: "タグ (品詞など)"
+  button:
+    generate: "生成"
 loginForm:
   label:
     name: "ユーザー ID"

@@ -48,6 +48,19 @@ dictionaryList:
   updatedDate: "Актуализованы"
   createdDate: "Созданы"
   go: "Зрєти словник"
+editWordForm:
+  heading:
+    basic: "Основне информације"
+    equivalents: "Прєводы"
+    informations: "Содржанја"
+    variations: "Variation forms"
+    relations: "Свезане слова"
+  label:
+    name: "Правописанје"
+    pronunciation: "Изговор"
+    tags: "Значкы"
+  button:
+    generate: "Произвести"
 loginForm:
   label:
     name: "Користничско име"
@@ -88,7 +101,7 @@ registerForm:
     confirm: "Изтворити конто"
   error:
     nameInvalid: >-
-      Користничско име муси состојати се из алфабетно-цифровых знаков, подчрчников и дефисов.
+      Користничско име муси состојати се из алфабетно-цифровых знаков, подчрок и дефисов.
       Оно такоже муси имєти хот бы једну нецифру.
     nameTooLong: >-
       Користничско име муси имєти не боље 30 знаков.

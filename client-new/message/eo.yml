@@ -48,6 +48,19 @@ dictionaryList:
   updatedDate: "Ĝisdatigita je"
   createdDate: "Kreita je"
   go: "Vidi vortaron"
+editWordForm:
+  heading:
+    basic: "Bazaj informoj"
+    equivalents: "Tradukaĵoj"
+    informations: "Enhavoj"
+    variations: "Variaĵaj formoj"
+    relations: "Rilataj vortoj"
+  label:
+    name: "Literumo"
+    pronunciation: "Prononco"
+    tags: "Etikedoj"
+  button:
+    generate: "Generi"
 loginForm:
   label:
     name: "Salutnomo"

@@ -10,14 +10,18 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
+import {EnhancedDictionary} from "/client-new/skeleton";
+import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
 import {useEditWordForm} from "./edit-word-form-hook";
 
 
 export const EditWordForm = create(
   require("./edit-word-form.scss"), "EditWordForm",
   function ({
+    dictionary,
     ...rest
   }: {
+    dictionary: EnhancedDictionary,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -28,6 +32,7 @@ export const EditWordForm = create(
 
     return (
       <form styleName="root" {...rest}>
+        <EditWordFormBasicSection dictionary={dictionary} form={form}/>
         <div styleName="button">
           <Button type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faUserPlus}/></ButtonIconbag>

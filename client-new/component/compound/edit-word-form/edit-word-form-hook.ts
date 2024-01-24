@@ -10,12 +10,13 @@ import type {RequestData} from "/server/controller/internal/type";
 
 const defaultValue = {
   name: "",
-  email: "",
-  password: "",
-  agree: false
+  pronunciation: "",
+  tags: []
 } satisfies FormValue;
 type FormValue = {
-
+  name: string,
+  pronunciation: string,
+  tags: Array<string>
 };
 
 export type EditWordFormSpec = {
@@ -28,7 +29,7 @@ export function useEditWordForm(): EditWordFormSpec {
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = null as any;
+    const response = request as any;
     if (response.status === 200 && !("error" in response.data)) {
       dispatchSuccessToast("editWord");
     }

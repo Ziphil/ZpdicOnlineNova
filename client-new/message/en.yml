@@ -48,6 +48,19 @@ dictionaryList:
   updatedDate: "Updated at"
   createdDate: "Created at"
   go: "See dictionary"
+editWordForm:
+  heading:
+    basic: "Basic information"
+    equivalents: "Translations"
+    informations: "Contents"
+    variations: "Variation forms"
+    relations: "Related words"
+  label:
+    name: "Spelling"
+    pronunciation: "Pronunciation"
+    tags: "Tags"
+  button:
+    generate: "Generate"
 loginForm:
   label:
     name: "Username"

@@ -35,7 +35,7 @@ export const EditWordPage = create(
         </Fragment>
       )}>
         <MainContainer styleName="main">
-          <EditWordForm/>
+          <EditWordForm dictionary={enhancedDictionary}/>
         </MainContainer>
       </Page>
     );
