@@ -29,6 +29,7 @@ export const DictionaryPage = create(
     const {identifier} = useParams();
     const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
     const [dictionary] = useSuspenseResponse("fetchDictionary", {number, paramName}, {refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
+    const [canOwn] = useSuspenseResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "own"});
     const enhancedDictionary = useMemo(() => EnhancedDictionary.enhance(dictionary), [dictionary]);
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
@@ -59,10 +60,12 @@ export const DictionaryPage = create(
           <div styleName="left">
             <div styleName="sticky">
               <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
-              <Button>
-                <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-                {trans("add")}
-              </Button>
+              {(canOwn) && (
+                <Button variant="light">
+                  <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+                  {trans("add")}
+                </Button>
+              )}
             </div>
           </div>
           <div styleName="right">

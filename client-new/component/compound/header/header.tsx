@@ -7,7 +7,6 @@ import {SimpleLink} from "/client-new/component/atom/simple-link";
 import {ChangeLocaleForm} from "/client-new/component/compound/change-locale-form";
 import {create} from "/client-new/component/create";
 import {useMe} from "/client-new/hook/auth";
-import {VERSION} from "/client-new/variable";
 
 
 export const Header = create(
@@ -27,7 +26,7 @@ export const Header = create(
             <Logo/>
           </SimpleLink>
           <div styleName="version">
-            {VERSION}
+            {me?.screenName ?? me?.name ?? "<Guest>"}
           </div>
         </div>
         <div styleName="right">
