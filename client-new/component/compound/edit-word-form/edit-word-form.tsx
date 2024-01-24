@@ -12,6 +12,7 @@ import {
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
+import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
 import {useEditWordForm} from "./edit-word-form-hook";
 
 
@@ -25,14 +26,14 @@ export const EditWordForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNode} = useTrans("editWordForm");
+    const {trans} = useTrans("editWordForm");
 
     const {form, handleSubmit} = useEditWordForm();
-    const {register, getFieldState, formState: {errors}} = form;
 
     return (
       <form styleName="root" {...rest}>
         <EditWordFormBasicSection dictionary={dictionary} form={form}/>
+        <EditWordFormEquivalentSection dictionary={dictionary} form={form}/>
         <div styleName="button">
           <Button type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faUserPlus}/></ButtonIconbag>

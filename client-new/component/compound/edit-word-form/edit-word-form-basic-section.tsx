@@ -32,9 +32,9 @@ export const EditWordFormBasicSection = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNode} = useTrans("editWordForm");
+    const {trans} = useTrans("editWordForm");
 
-    const {register, getFieldState, formState: {errors}} = form;
+    const {register, control} = form;
 
     const generateName = useCallback(function (): void {
       if (dictionary.zatlin !== null) {
@@ -87,7 +87,7 @@ export const EditWordFormBasicSection = create(
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.tags")}</ControlLabel>
-            <Controller name="tags" control={form.control} render={({field}) => (
+            <Controller name="tags" control={control} render={({field}) => (
               <TagInput values={field.value} onSet={field.onChange}/>
             )}/>
           </ControlContainer>

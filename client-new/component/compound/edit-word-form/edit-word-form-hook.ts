@@ -11,12 +11,18 @@ import type {RequestData} from "/server/controller/internal/type";
 const defaultValue = {
   name: "",
   pronunciation: "",
-  tags: []
+  tags: [],
+  equivalents: []
 } satisfies FormValue;
 type FormValue = {
   name: string,
   pronunciation: string,
-  tags: Array<string>
+  tags: Array<string>,
+  equivalents: Array<{
+    tempId: string,
+    titles: Array<string>,
+    nameString: string
+  }>
 };
 
 export type EditWordFormSpec = {
