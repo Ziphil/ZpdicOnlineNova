@@ -59,6 +59,18 @@ editWordForm:
     name: "Spelling"
     pronunciation: "Pronunciation"
     tags: "Tags"
+    equivalent:
+      titles: "Parts of speech"
+      names: "Translations (comma-separated)"
+    information:
+      title: "Heading"
+      text: "Content"
+    variation:
+      title: "Kind"
+      name: "Form"
+    relation:
+      title: "Kinds"
+      name: "Word"
   button:
     generate: "Generate"
 loginForm:

@@ -59,6 +59,18 @@ editWordForm:
     name: "Literumo"
     pronunciation: "Prononco"
     tags: "Etikedoj"
+    equivalent:
+      titles: "Vortospecoj"
+      names: "Tradukaĵoj (apartigitaj per komoj)"
+    information:
+      title: "Titlo"
+      text: "Enhavo"
+    variation:
+      title: "Speco"
+      name: "Formo"
+    relation:
+      title: "Specoj"
+      name: "Vorto"
   button:
     generate: "Generi"
 loginForm:

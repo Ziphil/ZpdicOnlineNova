@@ -3,6 +3,12 @@
 @use "zographia/source/component/function.scss" as *;
 
 
+.root {
+  @include theme("light") {
+    --border-color: #{leveled-color("gray", 1)};
+  }
+}
+
 .heading {
   @include bold-font;
   margin-block-end: 4zu;
@@ -10,19 +16,50 @@
   color: var(--glob-primary-heading-text-color);
 }
 
-.control {
+.item-list {
   row-gap: 4zu;
   display: flex;
   flex-direction: column;
 }
 
-.row {
-  column-gap: 2zu;
+.item {
+  padding-block: 4zu;
+  padding-inline-end: 4zu;
+  border-radius: var(--glob-border-radius);
+  border: solid 1zx var(--border-color);
   display: flex;
-  >:nth-child(1) {
-    flex: 1 1 auto;
-  }
-  >:nth-child(2) {
-    flex: 0 0 auto;
-  }
+}
+
+.grip {
+  margin-block: -4zu;
+  margin-inline-end: 4zu;
+  padding-inline: 1zu;
+  background-color: var(--border-color);
+  color: var(--glob-mute-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+}
+
+.minus {
+  margin-inline-start: 4zu;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.field-list {
+  row-gap: 4zu;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.plus {
+  display: flex;
+}
+
+.textarea {
+  height: 32zu;
 }

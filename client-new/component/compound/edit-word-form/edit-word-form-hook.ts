@@ -12,7 +12,18 @@ const defaultValue = {
   name: "",
   pronunciation: "",
   tags: [],
-  equivalents: []
+  equivalents: [{
+    tempId: "default",
+    titles: [],
+    nameString: ""
+  }],
+  informations: [{
+    tempId: "default",
+    title: "",
+    text: ""
+  }],
+  variations: [],
+  relations: []
 } satisfies FormValue;
 type FormValue = {
   name: string,
@@ -22,6 +33,22 @@ type FormValue = {
     tempId: string,
     titles: Array<string>,
     nameString: string
+  }>,
+  informations: Array<{
+    tempId: string,
+    title: string,
+    text: string
+  }>,
+  variations: Array<{
+    tempId: string,
+    title: string,
+    name: string
+  }>,
+  relations: Array<{
+    tempId: string,
+    titles: Array<string>,
+    number: number,
+    name: string
   }>
 };
 

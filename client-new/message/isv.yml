@@ -59,6 +59,18 @@ editWordForm:
     name: "Правописанје"
     pronunciation: "Изговор"
     tags: "Значкы"
+    equivalent:
+      titles: "Чести молвы"
+      names: "Прєводы (раздєљене запетыми)"
+    information:
+      title: "Heading"
+      text: "Содржанје"
+    variation:
+      title: "Kind"
+      name: "Form"
+    relation:
+      title: "Kinds"
+      name: "Слово"
   button:
     generate: "Произвести"
 loginForm:

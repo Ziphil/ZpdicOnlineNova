@@ -58,7 +58,19 @@ editWordForm:
   label:
     name: "綴り"
     pronunciation: "発音記号"
-    tags: "タグ (品詞など)"
+    tags: "タグ"
+    equivalent:
+      titles: "品詞"
+      names: "訳語 (コンマ区切り)"
+    information:
+      title: "見出し"
+      text: "内容"
+    variation:
+      title: "種類"
+      name: "変化形"
+    relation:
+      title: "分類 (複数可)"
+      name: "関連語"
   button:
     generate: "生成"
 loginForm:

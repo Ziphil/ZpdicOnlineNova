@@ -14,6 +14,8 @@ import {EnhancedDictionary} from "/client-new/skeleton";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
 import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
 import {useEditWordForm} from "./edit-word-form-hook";
+import {EditWordFormInformationSection} from "./edit-word-form-information-section";
+import {EditWordFormVariationSection} from "./edit-word-form-variation-section";
 
 
 export const EditWordForm = create(
@@ -32,8 +34,12 @@ export const EditWordForm = create(
 
     return (
       <form styleName="root" {...rest}>
-        <EditWordFormBasicSection dictionary={dictionary} form={form}/>
-        <EditWordFormEquivalentSection dictionary={dictionary} form={form}/>
+        <div styleName="main">
+          <EditWordFormBasicSection dictionary={dictionary} form={form}/>
+          <EditWordFormEquivalentSection dictionary={dictionary} form={form}/>
+          <EditWordFormInformationSection dictionary={dictionary} form={form}/>
+          <EditWordFormVariationSection dictionary={dictionary} form={form}/>
+        </div>
         <div styleName="button">
           <Button type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faUserPlus}/></ButtonIconbag>

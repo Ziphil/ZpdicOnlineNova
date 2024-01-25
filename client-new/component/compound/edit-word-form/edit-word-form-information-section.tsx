@@ -3,7 +3,7 @@
 import {faGripVertical, faMinus, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {nanoid} from "nanoid";
 import {ReactElement, useCallback} from "react";
-import {Controller, useFieldArray} from "react-hook-form";
+import {useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -11,7 +11,7 @@ import {
   ControlLabel,
   GeneralIcon,
   Input,
-  TagInput,
+  Textarea,
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
@@ -19,8 +19,8 @@ import {EnhancedDictionary} from "/client-new/skeleton";
 import {EditWordFormSpec} from "./edit-word-form-hook";
 
 
-export const EditWordFormEquivalentSection = create(
-  require("./edit-word-form-equivalent-section.scss"), "EditWordFormEquivalentSection",
+export const EditWordFormInformationSection = create(
+  require("./edit-word-form-information-section.scss"), "EditWordFormInformationSection",
   function ({
     dictionary,
     form,
@@ -34,46 +34,44 @@ export const EditWordFormEquivalentSection = create(
     const {trans} = useTrans("editWordForm");
 
     const {register, control} = form;
-    const equivalentsSpec = useFieldArray({control, name: "equivalents"});
+    const informationsSpec = useFieldArray({control, name: "informations"});
 
-    const addEquivalent = useCallback(function (): void {
-      equivalentsSpec.append({
+    const addInformation = useCallback(function (): void {
+      informationsSpec.append({
         tempId: nanoid(),
-        titles: [],
-        nameString: ""
+        title: "",
+        text: ""
       });
-    }, [equivalentsSpec]);
+    }, [informationsSpec]);
 
     return (
       <section styleName="root" {...rest}>
-        <h3 styleName="heading">{trans("heading.equivalents")}</h3>
+        <h3 styleName="heading">{trans("heading.informations")}</h3>
         <div styleName="item-list">
-          {equivalentsSpec.fields.map((equivalent, index) => (
-            <div styleName="item" key={equivalent.tempId}>
+          {informationsSpec.fields.map((information, index) => (
+            <div styleName="item" key={information.tempId}>
               <div styleName="grip">
                 <GeneralIcon icon={faGripVertical}/>
               </div>
               <fieldset styleName="field-list">
                 <ControlContainer>
-                  <ControlLabel>{trans("label.equivalent.titles")}</ControlLabel>
-                  <Controller name={`equivalents.${index}.titles`} control={form.control} render={({field}) => (
-                    <TagInput values={field.value} onSet={field.onChange}/>
-                  )}/>
+                  <ControlLabel>{trans("label.information.title")}</ControlLabel>
+                  <Input {...register(`informations.${index}.title`)}/>
                 </ControlContainer>
                 <ControlContainer>
-                  <ControlLabel>{trans("label.equivalent.names")}</ControlLabel>
-                  <Input {...register(`equivalents.${index}.nameString`)}/>
+                  <ControlLabel>{trans("label.information.text")}</ControlLabel>
+                  <Textarea styleName="textarea" {...register(`informations.${index}.text`)}/>
                 </ControlContainer>
               </fieldset>
               <div styleName="minus">
-                <Button scheme="gray" variant="light" onClick={() => equivalentsSpec.remove(index)}>
+                <Button scheme="gray" variant="light" onClick={() => informationsSpec.remove(index)}>
                   <GeneralIcon icon={faMinus}/>
                 </Button>
               </div>
             </div>
           ))}
           <div styleName="plus">
-            <Button scheme="gray" variant="light" onClick={addEquivalent}>
+            <Button scheme="gray" variant="light" onClick={addInformation}>
               <GeneralIcon icon={faPlus}/>
             </Button>
           </div>
