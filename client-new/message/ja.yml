@@ -69,7 +69,7 @@ editWordForm:
       title: "種類"
       name: "変化形"
     relation:
-      title: "分類 (複数可)"
+      titles: "分類"
       name: "関連語"
   button:
     generate: "生成"

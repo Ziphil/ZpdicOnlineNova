@@ -69,7 +69,7 @@ editWordForm:
       title: "Speco"
       name: "Formo"
     relation:
-      title: "Specoj"
+      titles: "Specoj"
       name: "Vorto"
   button:
     generate: "Generi"

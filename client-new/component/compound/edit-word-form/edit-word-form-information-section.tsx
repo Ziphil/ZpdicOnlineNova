@@ -20,7 +20,7 @@ import {EditWordFormSpec} from "./edit-word-form-hook";
 
 
 export const EditWordFormInformationSection = create(
-  require("./edit-word-form-information-section.scss"), "EditWordFormInformationSection",
+  require("./edit-word-form-equivalent-section.scss"), "EditWordFormInformationSection",
   function ({
     dictionary,
     form,

@@ -3,23 +3,24 @@
 import {faGripVertical, faMinus, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {nanoid} from "nanoid";
 import {ReactElement, useCallback} from "react";
-import {useFieldArray} from "react-hook-form";
+import {Controller, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
-  Input,
+  TagInput,
   useTrans
 } from "zographia";
+import {RelationWordSelect} from "/client-new/component/atom/relation-word-select";
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {EditWordFormSpec} from "./edit-word-form-hook";
 
 
-export const EditWordFormVariationSection = create(
-  require("./edit-word-form-equivalent-section.scss"), "EditWordFormVariationSection",
+export const EditWordFormRelationSection = create(
+  require("./edit-word-form-equivalent-section.scss"), "EditWordFormRelationSection",
   function ({
     dictionary,
     form,
@@ -33,44 +34,48 @@ export const EditWordFormVariationSection = create(
     const {trans} = useTrans("editWordForm");
 
     const {register, control} = form;
-    const variationsSpec = useFieldArray({control, name: "variations"});
+    const relationsSpec = useFieldArray({control, name: "relations"});
 
-    const addVariation = useCallback(function (): void {
-      variationsSpec.append({
+    const addRelation = useCallback(function (): void {
+      relationsSpec.append({
         tempId: nanoid(),
-        title: "",
-        name: ""
+        titles: [],
+        word: null
       });
-    }, [variationsSpec]);
+    }, [relationsSpec]);
 
     return (
       <section styleName="root" {...rest}>
-        <h3 styleName="heading">{trans("heading.variations")}</h3>
+        <h3 styleName="heading">{trans("heading.relations")}</h3>
         <div styleName="item-list">
-          {variationsSpec.fields.map((variation, index) => (
-            <div styleName="item" key={variation.tempId}>
+          {relationsSpec.fields.map((relation, index) => (
+            <div styleName="item" key={relation.tempId}>
               <div styleName="grip">
                 <GeneralIcon icon={faGripVertical}/>
               </div>
               <fieldset styleName="field-list">
                 <ControlContainer>
-                  <ControlLabel>{trans("label.variation.title")}</ControlLabel>
-                  <Input {...register(`variations.${index}.title`)}/>
+                  <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
+                  <Controller name={`relations.${index}.titles`} control={form.control} render={({field}) => (
+                    <TagInput values={field.value} onSet={field.onChange}/>
+                  )}/>
                 </ControlContainer>
                 <ControlContainer>
-                  <ControlLabel>{trans("label.variation.name")}</ControlLabel>
-                  <Input {...register(`variations.${index}.name`)}/>
+                  <ControlLabel>{trans("label.relation.name")}</ControlLabel>
+                  <Controller name={`relations.${index}.word`} control={form.control} render={({field}) => (
+                    <RelationWordSelect dictionary={dictionary} word={field.value} onSet={field.onChange}/>
+                  )}/>
                 </ControlContainer>
               </fieldset>
               <div styleName="minus">
-                <Button scheme="gray" variant="light" onClick={() => variationsSpec.remove(index)}>
+                <Button scheme="gray" variant="light" onClick={() => relationsSpec.remove(index)}>
                   <GeneralIcon icon={faMinus}/>
                 </Button>
               </div>
             </div>
           ))}
           <div styleName="plus">
-            <Button scheme="gray" variant="light" onClick={addVariation}>
+            <Button scheme="gray" variant="light" onClick={addRelation}>
               <GeneralIcon icon={faPlus}/>
             </Button>
           </div>

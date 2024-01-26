@@ -9,6 +9,7 @@ import {
   GeneralIcon,
   useTrans
 } from "zographia";
+import {EditWordFormRelationSection} from "/client-new/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
@@ -39,6 +40,7 @@ export const EditWordForm = create(
           <EditWordFormEquivalentSection dictionary={dictionary} form={form}/>
           <EditWordFormInformationSection dictionary={dictionary} form={form}/>
           <EditWordFormVariationSection dictionary={dictionary} form={form}/>
+          <EditWordFormRelationSection dictionary={dictionary} form={form}/>
         </div>
         <div styleName="button">
           <Button type="submit" onClick={handleSubmit}>

@@ -69,7 +69,7 @@ editWordForm:
       title: "Kind"
       name: "Form"
     relation:
-      title: "Kinds"
+      titles: "Kinds"
       name: "Word"
   button:
     generate: "Generate"
