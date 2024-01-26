@@ -12,11 +12,13 @@ import {
   ControlLabel,
   GeneralIcon,
   Input,
+  SuggestionSpec,
   Textarea,
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
+import {request} from "/client-new/util/request";
 import {EditWordFormSpec} from "./edit-word-form-hook";
 
 
@@ -45,6 +47,22 @@ export const EditWordFormInformationSection = create(
       });
     }, [informationsOperations]);
 
+    const suggestInformationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
+      const number = dictionary.number;
+      try {
+        const response = await request("suggestDictionaryTitles", {number, pattern, propertyName: "information"}, {ignoreError: true});
+        if (response.status === 200 && !("error" in response.data)) {
+          const titles = response.data;
+          const suggestions = titles.map((title) => ({replacement: title, node: title}));
+          return suggestions;
+        } else {
+          return [];
+        }
+      } catch {
+        return [];
+      }
+    }, [dictionary.number]);
+
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.informations")}</h3>
@@ -57,7 +75,7 @@ export const EditWordFormInformationSection = create(
               <fieldset styleName="field-list">
                 <ControlContainer>
                   <ControlLabel>{trans("label.information.title")}</ControlLabel>
-                  <Input {...register(`informations.${index}.title`)}/>
+                  <Input suggest={suggestInformationTitle} {...register(`informations.${index}.title`)}/>
                 </ControlContainer>
                 <ControlContainer>
                   <ControlLabel>{trans("label.information.text")}</ControlLabel>

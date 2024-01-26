@@ -35,8 +35,6 @@ export const RegisterForm = create(
     const {form, handleSubmit} = useRegisterForm();
     const {register, getFieldState, formState: {errors}} = form;
 
-    console.log(form);
-
     return (
       <form styleName="root" {...rest}>
         <div styleName="control">

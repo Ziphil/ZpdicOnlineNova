@@ -11,12 +11,14 @@ import {
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  SuggestionSpec,
   TagInput,
   useTrans
 } from "zographia";
 import {RelationWordSelect} from "/client-new/component/atom/relation-word-select";
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
+import {request} from "/client-new/util/request";
 import {EditWordFormSpec} from "./edit-word-form-hook";
 
 
@@ -45,6 +47,22 @@ export const EditWordFormRelationSection = create(
       });
     }, [relationOperations]);
 
+    const suggestRelationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
+      const number = dictionary.number;
+      try {
+        const response = await request("suggestDictionaryTitles", {number, pattern, propertyName: "relation"}, {ignoreError: true});
+        if (response.status === 200 && !("error" in response.data)) {
+          const titles = response.data;
+          const suggestions = titles.map((title) => ({replacement: title, node: title}));
+          return suggestions;
+        } else {
+          return [];
+        }
+      } catch {
+        return [];
+      }
+    }, [dictionary.number]);
+
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.relations")}</h3>
@@ -58,7 +76,7 @@ export const EditWordFormRelationSection = create(
                 <ControlContainer>
                   <ControlLabel>{trans("label.relation.titles")}</ControlLabel>
                   <Controller name={`relations.${index}.titles`} control={form.control} render={({field}) => (
-                    <TagInput values={field.value} onSet={field.onChange}/>
+                    <TagInput values={field.value} suggest={suggestRelationTitle} onSet={field.onChange}/>
                   )}/>
                 </ControlContainer>
                 <ControlContainer>

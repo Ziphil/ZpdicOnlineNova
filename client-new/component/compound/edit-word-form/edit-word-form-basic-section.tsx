@@ -12,11 +12,13 @@ import {
   ControlLabel,
   GeneralIcon,
   Input,
+  SuggestionSpec,
   TagInput,
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
+import {request} from "/client-new/util/request";
 import {EditWordFormSpec} from "./edit-word-form-hook";
 
 
@@ -57,6 +59,22 @@ export const EditWordFormBasicSection = create(
       };
     }, [dictionary, form]);
 
+    const suggestTag = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
+      const number = dictionary.number;
+      try {
+        const response = await request("suggestDictionaryTitles", {number, pattern, propertyName: "tag"}, {ignoreError: true});
+        if (response.status === 200 && !("error" in response.data)) {
+          const titles = response.data;
+          const suggestions = titles.map((title) => ({replacement: title, node: title}));
+          return suggestions;
+        } else {
+          return [];
+        }
+      } catch {
+        return [];
+      }
+    }, [dictionary.number]);
+
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.basic")}</h3>
@@ -88,7 +106,7 @@ export const EditWordFormBasicSection = create(
           <ControlContainer>
             <ControlLabel>{trans("label.tags")}</ControlLabel>
             <Controller name="tags" control={control} render={({field}) => (
-              <TagInput values={field.value} onSet={field.onChange}/>
+              <TagInput tagVariant="solid" values={field.value} suggest={suggestTag} onSet={field.onChange}/>
             )}/>
           </ControlContainer>
         </div>

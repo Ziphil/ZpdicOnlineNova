@@ -12,10 +12,12 @@ import {
   ControlLabel,
   GeneralIcon,
   Input,
+  SuggestionSpec,
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
+import {request} from "/client-new/util/request";
 import {EditWordFormSpec} from "./edit-word-form-hook";
 
 
@@ -44,6 +46,22 @@ export const EditWordFormVariationSection = create(
       });
     }, [variationOperations]);
 
+    const suggestVariationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
+      const number = dictionary.number;
+      try {
+        const response = await request("suggestDictionaryTitles", {number, pattern, propertyName: "variation"}, {ignoreError: true});
+        if (response.status === 200 && !("error" in response.data)) {
+          const titles = response.data;
+          const suggestions = titles.map((title) => ({replacement: title, node: title}));
+          return suggestions;
+        } else {
+          return [];
+        }
+      } catch {
+        return [];
+      }
+    }, [dictionary.number]);
+
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.variations")}</h3>
@@ -56,7 +74,7 @@ export const EditWordFormVariationSection = create(
               <fieldset styleName="field-list">
                 <ControlContainer>
                   <ControlLabel>{trans("label.variation.title")}</ControlLabel>
-                  <Input {...register(`variations.${index}.title`)}/>
+                  <Input suggest={suggestVariationTitle} {...register(`variations.${index}.title`)}/>
                 </ControlContainer>
                 <ControlContainer>
                   <ControlLabel>{trans("label.variation.name")}</ControlLabel>
