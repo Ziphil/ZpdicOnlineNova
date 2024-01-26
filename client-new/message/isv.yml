@@ -43,7 +43,7 @@ dictionaryHeader:
     dictionary: "Словник"
     example: "Рєченја"
     info: "Подробности"
-    setting: "Подробности · Настројкы"
+    setting: "Настројкы"
 dictionaryList:
   updatedDate: "Актуализованы"
   createdDate: "Созданы"
@@ -53,7 +53,7 @@ editWordForm:
     basic: "Основне информације"
     equivalents: "Прєводы"
     informations: "Содржанја"
-    variations: "Variation forms"
+    variations: "Вариације"
     relations: "Свезане слова"
   label:
     name: "Правописанје"
@@ -67,20 +67,20 @@ editWordForm:
       text: "Содржанје"
     variation:
       title: "Род"
-      name: "Form"
+      name: "Форма"
     relation:
       titles: "Роды"
       name: "Слово"
   absent:
     equivalent: "Нема прєводов"
     information: "Нема содржаниј"
-    variation: "No variation forms"
+    variation: "Нема вариациј"
     relation: "Нема свезаных слов"
   button:
     add:
       equivalent: "Додати прєвод"
       information: "Додати содржанје"
-      variation: "Add variation form"
+      variation: "Додати вариацију"
       relation: "Додати свезано слово"
     generate: "Произвести"
 loginForm:
