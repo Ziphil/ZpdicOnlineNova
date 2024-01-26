@@ -7,6 +7,7 @@ import {Controller, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
+  ButtonIconbag,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
@@ -34,21 +35,21 @@ export const EditWordFormRelationSection = create(
     const {trans} = useTrans("editWordForm");
 
     const {register, control} = form;
-    const relationsSpec = useFieldArray({control, name: "relations"});
+    const {fields: relations, ...relationOperations} = useFieldArray({control, name: "relations"});
 
     const addRelation = useCallback(function (): void {
-      relationsSpec.append({
+      relationOperations.append({
         tempId: nanoid(),
         titles: [],
         word: null
       });
-    }, [relationsSpec]);
+    }, [relationOperations]);
 
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.relations")}</h3>
         <div styleName="item-list">
-          {relationsSpec.fields.map((relation, index) => (
+          {(relations.length > 0) ? relations.map((relation, index) => (
             <div styleName="item" key={relation.tempId}>
               <div styleName="grip">
                 <GeneralIcon icon={faGripVertical}/>
@@ -68,15 +69,20 @@ export const EditWordFormRelationSection = create(
                 </ControlContainer>
               </fieldset>
               <div styleName="minus">
-                <Button scheme="gray" variant="light" onClick={() => relationsSpec.remove(index)}>
+                <Button scheme="gray" variant="light" onClick={() => relationOperations.remove(index)}>
                   <GeneralIcon icon={faMinus}/>
                 </Button>
               </div>
             </div>
-          ))}
+          )) : (
+            <p styleName="absent">
+              {trans("absent.relation")}
+            </p>
+          )}
           <div styleName="plus">
             <Button scheme="gray" variant="light" onClick={addRelation}>
-              <GeneralIcon icon={faPlus}/>
+              <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+              {trans("button.add.relation")}
             </Button>
           </div>
         </div>

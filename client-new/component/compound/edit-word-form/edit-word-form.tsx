@@ -1,6 +1,6 @@
 //
 
-import {faUserPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {
   AdditionalProps,
@@ -44,7 +44,7 @@ export const EditWordForm = create(
         </div>
         <div styleName="button">
           <Button type="submit" onClick={handleSubmit}>
-            <ButtonIconbag><GeneralIcon icon={faUserPlus}/></ButtonIconbag>
+            <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
             {trans("button.confirm")}
           </Button>
         </div>

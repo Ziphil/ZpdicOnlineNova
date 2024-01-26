@@ -60,6 +60,15 @@
   display: flex;
 }
 
+.note {
+  font-size: 3zu;
+  font-weight: normal;
+}
+
+.absent {
+  color: var(--glob-mute-text-color); 
+}
+
 .textarea {
   height: 32zu;
 }

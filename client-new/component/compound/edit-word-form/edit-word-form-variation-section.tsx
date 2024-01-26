@@ -7,6 +7,7 @@ import {useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
+  ButtonIconbag,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
@@ -33,21 +34,21 @@ export const EditWordFormVariationSection = create(
     const {trans} = useTrans("editWordForm");
 
     const {register, control} = form;
-    const variationsSpec = useFieldArray({control, name: "variations"});
+    const {fields: variations, ...variationOperations} = useFieldArray({control, name: "variations"});
 
     const addVariation = useCallback(function (): void {
-      variationsSpec.append({
+      variationOperations.append({
         tempId: nanoid(),
         title: "",
         name: ""
       });
-    }, [variationsSpec]);
+    }, [variationOperations]);
 
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.variations")}</h3>
         <div styleName="item-list">
-          {variationsSpec.fields.map((variation, index) => (
+          {(variations.length > 0) ? variations.map((variation, index) => (
             <div styleName="item" key={variation.tempId}>
               <div styleName="grip">
                 <GeneralIcon icon={faGripVertical}/>
@@ -63,15 +64,20 @@ export const EditWordFormVariationSection = create(
                 </ControlContainer>
               </fieldset>
               <div styleName="minus">
-                <Button scheme="gray" variant="light" onClick={() => variationsSpec.remove(index)}>
+                <Button scheme="gray" variant="light" onClick={() => variationOperations.remove(index)}>
                   <GeneralIcon icon={faMinus}/>
                 </Button>
               </div>
             </div>
-          ))}
+          )) : (
+            <p styleName="absent">
+              {trans("absent.variation")}
+            </p>
+          )}
           <div styleName="plus">
             <Button scheme="gray" variant="light" onClick={addVariation}>
-              <GeneralIcon icon={faPlus}/>
+              <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+              {trans("button.add.variation")}
             </Button>
           </div>
         </div>

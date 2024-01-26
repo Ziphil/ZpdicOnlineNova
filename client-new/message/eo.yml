@@ -61,7 +61,7 @@ editWordForm:
     tags: "Etikedoj"
     equivalent:
       titles: "Vortospecoj"
-      names: "Tradukaĵoj (apartigitaj per komoj)"
+      names: "Tradukaĵoj <note>(apartigitaj per komoj)</note>"
     information:
       title: "Titlo"
       text: "Enhavo"
@@ -71,7 +71,17 @@ editWordForm:
     relation:
       titles: "Specoj"
       name: "Vorto"
+  absent:
+    equivalent: "Neniuj tradukaĵoj"
+    information: "Neniuj enhavoj"
+    variation: "Neniuj variaĵaj formoj"
+    relation: "Neniuj rilataj vortoj"
   button:
+    add:
+      equivalent: "Aldoni tradukaĵon"
+      information: "Aldoni enhavon"
+      variation: "Aldoni variaĵan formon"
+      relation: "Aldoni rilatan vorton"
     generate: "Generi"
 loginForm:
   label:

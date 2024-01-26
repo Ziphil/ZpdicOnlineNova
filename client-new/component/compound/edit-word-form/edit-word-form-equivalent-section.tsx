@@ -7,6 +7,7 @@ import {Controller, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
+  ButtonIconbag,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
@@ -31,24 +32,24 @@ export const EditWordFormEquivalentSection = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("editWordForm");
+    const {trans, transNode} = useTrans("editWordForm");
 
     const {register, control} = form;
-    const equivalentsSpec = useFieldArray({control, name: "equivalents"});
+    const {fields: equivalents, ...equivalentOperations} = useFieldArray({control, name: "equivalents"});
 
     const addEquivalent = useCallback(function (): void {
-      equivalentsSpec.append({
+      equivalentOperations.append({
         tempId: nanoid(),
         titles: [],
         nameString: ""
       });
-    }, [equivalentsSpec]);
+    }, [equivalentOperations]);
 
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.equivalents")}</h3>
         <div styleName="item-list">
-          {equivalentsSpec.fields.map((equivalent, index) => (
+          {(equivalents.length > 0) ? equivalents.map((equivalent, index) => (
             <div styleName="item" key={equivalent.tempId}>
               <div styleName="grip">
                 <GeneralIcon icon={faGripVertical}/>
@@ -61,20 +62,29 @@ export const EditWordFormEquivalentSection = create(
                   )}/>
                 </ControlContainer>
                 <ControlContainer>
-                  <ControlLabel>{trans("label.equivalent.names")}</ControlLabel>
+                  <ControlLabel>
+                    {transNode("label.equivalent.names", {
+                      note: (parts) => <span styleName="note">{parts}</span>
+                    })}
+                  </ControlLabel>
                   <Input {...register(`equivalents.${index}.nameString`)}/>
                 </ControlContainer>
               </fieldset>
               <div styleName="minus">
-                <Button scheme="gray" variant="light" onClick={() => equivalentsSpec.remove(index)}>
+                <Button scheme="gray" variant="light" onClick={() => equivalentOperations.remove(index)}>
                   <GeneralIcon icon={faMinus}/>
                 </Button>
               </div>
             </div>
-          ))}
+          )) : (
+            <p styleName="absent">
+              {trans("absent.equivalent")}
+            </p>
+          )}
           <div styleName="plus">
             <Button scheme="gray" variant="light" onClick={addEquivalent}>
-              <GeneralIcon icon={faPlus}/>
+              <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+              {trans("button.add.equivalent")}
             </Button>
           </div>
         </div>

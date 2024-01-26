@@ -7,6 +7,7 @@ import {useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
+  ButtonIconbag,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
@@ -34,21 +35,21 @@ export const EditWordFormInformationSection = create(
     const {trans} = useTrans("editWordForm");
 
     const {register, control} = form;
-    const informationsSpec = useFieldArray({control, name: "informations"});
+    const {fields: informations, ...informationsOperations} = useFieldArray({control, name: "informations"});
 
     const addInformation = useCallback(function (): void {
-      informationsSpec.append({
+      informationsOperations.append({
         tempId: nanoid(),
         title: "",
         text: ""
       });
-    }, [informationsSpec]);
+    }, [informationsOperations]);
 
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.informations")}</h3>
         <div styleName="item-list">
-          {informationsSpec.fields.map((information, index) => (
+          {(informations.length > 0) ? informations.map((information, index) => (
             <div styleName="item" key={information.tempId}>
               <div styleName="grip">
                 <GeneralIcon icon={faGripVertical}/>
@@ -64,15 +65,20 @@ export const EditWordFormInformationSection = create(
                 </ControlContainer>
               </fieldset>
               <div styleName="minus">
-                <Button scheme="gray" variant="light" onClick={() => informationsSpec.remove(index)}>
+                <Button scheme="gray" variant="light" onClick={() => informationsOperations.remove(index)}>
                   <GeneralIcon icon={faMinus}/>
                 </Button>
               </div>
             </div>
-          ))}
+          )) : (
+            <p styleName="absent">
+              {trans("absent.information")}
+            </p>
+          )}
           <div styleName="plus">
             <Button scheme="gray" variant="light" onClick={addInformation}>
-              <GeneralIcon icon={faPlus}/>
+              <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+              {trans("button.add.information")}
             </Button>
           </div>
         </div>

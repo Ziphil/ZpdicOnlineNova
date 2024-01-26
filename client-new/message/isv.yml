@@ -61,17 +61,27 @@ editWordForm:
     tags: "Значкы"
     equivalent:
       titles: "Чести молвы"
-      names: "Прєводы (раздєљене запетыми)"
+      names: "Прєводы <note>(раздєљене запетыми)</note>"
     information:
-      title: "Heading"
+      title: "Заглавје"
       text: "Содржанје"
     variation:
-      title: "Kind"
+      title: "Род"
       name: "Form"
     relation:
-      titles: "Kinds"
+      titles: "Роды"
       name: "Слово"
+  absent:
+    equivalent: "Нема прєводов"
+    information: "Нема содржаниј"
+    variation: "No variation forms"
+    relation: "Нема свезаных слов"
   button:
+    add:
+      equivalent: "Додати прєвод"
+      information: "Додати содржанје"
+      variation: "Add variation form"
+      relation: "Додати свезано слово"
     generate: "Произвести"
 loginForm:
   label:

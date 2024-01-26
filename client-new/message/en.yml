@@ -61,7 +61,7 @@ editWordForm:
     tags: "Tags"
     equivalent:
       titles: "Parts of speech"
-      names: "Translations (comma-separated)"
+      names: "Translations <note>(comma-separated)</note>"
     information:
       title: "Heading"
       text: "Content"
@@ -71,7 +71,17 @@ editWordForm:
     relation:
       titles: "Kinds"
       name: "Word"
+  absent:
+    equivalent: "No translations"
+    information: "No contents"
+    variation: "No variation forms"
+    relation: "No related words"
   button:
+    add:
+      equivalent: "Add translation"
+      information: "Add content"
+      variation: "Add variation form"
+      relation: "Add related word"
     generate: "Generate"
 loginForm:
   label:

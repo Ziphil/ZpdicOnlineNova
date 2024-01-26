@@ -61,7 +61,7 @@ editWordForm:
     tags: "タグ"
     equivalent:
       titles: "品詞"
-      names: "訳語 (コンマ区切り)"
+      names: "訳語 <note>(コンマ区切り)</note>"
     information:
       title: "見出し"
       text: "内容"
@@ -71,7 +71,17 @@ editWordForm:
     relation:
       titles: "分類"
       name: "関連語"
+  absent:
+    equivalent: "訳語が登録されていません"
+    information: "内容が登録されていません"
+    variation: "変化形が登録されていません"
+    relation: "関連語が登録されていません"
   button:
+    add:
+      equivalent: "訳語を追加"
+      information: "内容を追加"
+      variation: "変化形を追加"
+      relation: "関連語を追加"
     generate: "生成"
 loginForm:
   label:
