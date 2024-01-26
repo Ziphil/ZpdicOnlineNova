@@ -31,7 +31,7 @@ export const EditWordForm = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {form, handleSubmit} = useEditWordForm();
+    const {form, handleSubmit} = useEditWordForm(dictionary);
 
     return (
       <form styleName="root" {...rest}>

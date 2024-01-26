@@ -12,19 +12,19 @@ import {IDENTIFIER_REGEXP} from "/client-new/util/validation";
 import type {RequestData} from "/server/controller/internal/type";
 
 
-const schema = object({
+const SCHEMA = object({
   name: string().matches(IDENTIFIER_REGEXP, "nameInvalid").max(30, "nameTooLong").required("nameRequired"),
   email: string().email("emailInvalid").required("emailRequired"),
   password: string().min(6, "passwordTooShort").max(50, "passwordTooLong").required("passwordRequired"),
   agree: boolean().oneOf([true], "agreeRequired")
 });
-const defaultValue = {
+const DEFAULT_VALUE = {
   name: "",
   email: "",
   password: "",
   agree: false
 } satisfies FormValue;
-type FormValue = Asserts<typeof schema>;
+type FormValue = Asserts<typeof SCHEMA>;
 
 export type RegisterFormSpec = {
   form: UseFormReturn<FormValue>,
@@ -32,7 +32,7 @@ export type RegisterFormSpec = {
 };
 
 export function useRegisterForm(): RegisterFormSpec {
-  const form = useForm<FormValue>(schema, defaultValue, {});
+  const form = useForm<FormValue>(SCHEMA, DEFAULT_VALUE, {});
   const request = useRequest();
   const login = useLoginRequest();
   const {dispatchSuccessToast} = useToast();

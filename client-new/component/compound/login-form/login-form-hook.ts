@@ -10,15 +10,15 @@ import {useToast} from "/client-new/hook/toast";
 import type {RequestData} from "/server/controller/internal/type";
 
 
-const schema = object({
+const SCHEMA = object({
   name: string().required("nameRequired"),
   password: string().required("passwordRequired")
 });
-const defaultValue = {
+const DEFAULT_VALUE = {
   name: "",
   password: ""
 } satisfies FormValue;
-type FormValue = Asserts<typeof schema>;
+type FormValue = Asserts<typeof SCHEMA>;
 
 export type LoginFormSpec = {
   form: UseFormReturn<FormValue>,
@@ -26,7 +26,7 @@ export type LoginFormSpec = {
 };
 
 export function useLoginForm(): LoginFormSpec {
-  const form = useForm<FormValue>(schema, defaultValue, {});
+  const form = useForm<FormValue>(SCHEMA, DEFAULT_VALUE, {});
   const login = useLoginRequest();
   const {dispatchSuccessToast, dispatchErrorToast} = useToast();
   const navigate = useNavigate();
