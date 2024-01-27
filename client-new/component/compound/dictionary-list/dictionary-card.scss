@@ -52,6 +52,5 @@
 }
 
 .word-count {
-  @include bold-font;
   color: var(--glob-mute-text-color);
 }

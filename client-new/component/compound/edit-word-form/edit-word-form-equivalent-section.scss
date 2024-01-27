@@ -11,28 +11,28 @@
 
 .heading {
   @include bold-font;
-  margin-block-end: 4zu;
-  font-size: 5zu;
+  margin-block-end: 3zu;
+  font-size: 6zu;
   color: var(--glob-primary-heading-text-color);
 }
 
 .item-list {
-  row-gap: 4zu;
+  row-gap: 3zu;
   display: flex;
   flex-direction: column;
 }
 
 .item {
-  padding-block: 4zu;
-  padding-inline-end: 4zu;
+  padding-block: 3zu;
+  padding-inline-end: 3zu;
   border-radius: var(--glob-border-radius);
   border: solid 1zx var(--border-color);
   display: flex;
 }
 
 .grip {
-  margin-block: -4zu;
-  margin-inline-end: 4zu;
+  margin-block: -3zu;
+  margin-inline-end: 3zu;
   padding-inline: 1zu;
   background-color: var(--border-color);
   color: var(--glob-mute-text-color);
@@ -44,14 +44,14 @@
 }
 
 .minus {
-  margin-inline-start: 4zu;
+  margin-inline-start: 3zu;
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
 
 .field-list {
-  row-gap: 4zu;
+  row-gap: 3zu;
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
