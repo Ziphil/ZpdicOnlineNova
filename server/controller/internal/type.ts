@@ -84,6 +84,7 @@ export const SERVER_PATHS = {
   fetchDictionaries: "/dictionary/list",
   fetchAllDictionaries: "/dictionary/list/all",
   fetchOverallAggregation: "/dictionary/aggregate",
+  fetchWord: "/word/fetch",
   fetchWordNames: "/word/name",
   checkDuplicateWordName: "/word/name/duplicate",
   fetchExamples: "/example/list",
@@ -341,6 +342,13 @@ type ServerSpecs = {
     response: {
       success: {dictionary: Aggregation, word: Aggregation, example: Aggregation, user: Aggregation},
       error: never
+    }
+  },
+  fetchWord: {
+    request: {number: number, wordNumber: number},
+    response: {
+      success: DetailedWord,
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber">
     }
   },
   fetchWordNames: {

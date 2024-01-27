@@ -12,22 +12,20 @@ import {useSuspenseResponse} from "/client-new/hook/request";
 import {EnhancedDictionary} from "/client-new/skeleton";
 
 
-export const EditWordPage = create(
-  require("./edit-word-page.scss"), "EditWordPage",
+export const AddWordPage = create(
+  require("./add-word-page.scss"), "AddWordPage",
   function ({
     ...rest
   }: {
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("editWordPage");
+    const {trans} = useTrans("addWordPage");
 
-    const {identifier, wordNumber} = useParams();
+    const {identifier} = useParams();
     const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
     const [dictionary] = useSuspenseResponse("fetchDictionary", {number, paramName}, RESPONSE_CONFIG);
     const enhancedDictionary = useMemo(() => EnhancedDictionary.enhance(dictionary), [dictionary]);
-
-    const [word] = useSuspenseResponse("fetchWord", {number: dictionary.number, wordNumber: +wordNumber!}, RESPONSE_CONFIG);
 
     return (
       <Page {...rest} headerNode={(
@@ -37,7 +35,7 @@ export const EditWordPage = create(
         </Fragment>
       )}>
         <MainContainer styleName="main">
-          <EditWordForm dictionary={enhancedDictionary} word={word}/>
+          <EditWordForm dictionary={enhancedDictionary} word={null}/>
         </MainContainer>
       </Page>
     );

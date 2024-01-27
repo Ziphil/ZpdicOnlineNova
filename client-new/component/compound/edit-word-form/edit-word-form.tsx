@@ -11,7 +11,7 @@ import {
 } from "zographia";
 import {EditWordFormRelationSection} from "/client-new/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client-new/component/create";
-import {EnhancedDictionary} from "/client-new/skeleton";
+import {EnhancedDictionary, Word} from "/client-new/skeleton";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
 import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
 import {useEditWordForm} from "./edit-word-form-hook";
@@ -23,15 +23,17 @@ export const EditWordForm = create(
   require("./edit-word-form.scss"), "EditWordForm",
   function ({
     dictionary,
+    word,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
+    word: Word | null,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
-    const {form, handleSubmit} = useEditWordForm(dictionary);
+    const {form, handleSubmit} = useEditWordForm(dictionary, word);
 
     return (
       <form styleName="root" {...rest}>

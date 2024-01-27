@@ -17,6 +17,12 @@
   color: var(--glob-primary-heading-text-color);
 }
 
+.list {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
+}
+
 .item {
   column-gap: var(--glob-blank-gap);
   display: flex;
