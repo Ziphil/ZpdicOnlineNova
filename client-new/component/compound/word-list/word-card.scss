@@ -18,3 +18,8 @@
   margin-block-start: 3zu;
   border-block-start: dashed 1zx var(--divider-color);
 }
+
+.footer {
+  column-gap: 4zu;
+  display: flex;
+}

@@ -28,7 +28,7 @@ export const WordCardHeading = create(
         {(debug || word.tags.length >= 0) && (
           <div styleName="tag">
             {(debug) && (
-              <Tag scheme="gray">{transNumber(word.number)}</Tag>
+              <span styleName="number">#{transNumber(word.number)}</span>
             )}
             {word.tags.map((tag, index) => (
               <Tag key={index} variant="solid">{tag}</Tag>

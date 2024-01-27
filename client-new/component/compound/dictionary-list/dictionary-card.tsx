@@ -62,7 +62,7 @@ export const DictionaryCard = create(
         <CardFooter>
           <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${dictionary.paramName || dictionary.number}`}>
             <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
-            {trans("go")}
+            {trans("button.see")}
           </Link>
         </CardFooter>
       </Card>

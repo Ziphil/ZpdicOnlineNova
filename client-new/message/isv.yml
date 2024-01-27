@@ -47,7 +47,8 @@ dictionaryHeader:
 dictionaryList:
   updatedDate: "Актуализованы"
   createdDate: "Созданы"
-  go: "Зрєти словник"
+  button:
+    see: "Зрєти словник"
 editWordForm:
   heading:
     basic: "Основне информације"
@@ -158,6 +159,10 @@ searchWordForm:
   ignoreCase: "Игноровати велике/мале буквы"
   enableSuggestions: "Прєдлагати вариације"
   shuffleResult: "Смєшати резултаты"
+wordList:
+  button:
+    edit: "Правити"
+    discard: "Одстранити"
   
 dictionaryPage:
   add: "Создати ново слово"

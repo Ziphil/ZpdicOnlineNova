@@ -47,7 +47,8 @@ dictionaryHeader:
 dictionaryList:
   updatedDate: "Updated at"
   createdDate: "Created at"
-  go: "See dictionary"
+  button:
+    see: "See dictionary"
 editWordForm:
   heading:
     basic: "Basic information"
@@ -158,6 +159,10 @@ searchWordForm:
   ignoreCase: "Ignore letter case"
   enableSuggestions: "Suggest variations"
   shuffleResult: "Shuffle results"
+wordList:
+  button:
+    edit: "Edit"
+    discard: "Delete"
   
 dictionaryPage:
   add: "Create new word"

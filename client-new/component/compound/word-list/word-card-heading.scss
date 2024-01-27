@@ -9,10 +9,16 @@
   flex-direction: column;
 }
 
+.number {
+  font-size: 3zu;
+  color: var(--glob-mute-text-color);
+}
+
 .tag {
   row-gap: 1.5zu;
   column-gap: 2zu;
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
 }
 

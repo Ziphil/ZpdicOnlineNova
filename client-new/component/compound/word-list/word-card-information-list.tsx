@@ -29,7 +29,7 @@ export const WordCardInformationList = create(
               </h4>
             )}
             {(dictionary.settings.enableMarkdown) ? (
-              <Markdown styleName="markdown" mode="normal">
+              <Markdown styleName="markdown" mode="normal" compact={true}>
                 {information.text}
               </Markdown>
             ) : (

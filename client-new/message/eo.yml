@@ -47,7 +47,8 @@ dictionaryHeader:
 dictionaryList:
   updatedDate: "Ĝisdatigita je"
   createdDate: "Kreita je"
-  go: "Vidi vortaron"
+  button:
+    see: "Vidi vortaron"
 editWordForm:
   heading:
     basic: "Bazaj informoj"
@@ -158,6 +159,10 @@ searchWordForm:
   ignoreCase: "Ignori usklecon"
   enableSuggestions: "Sugesti variaĵojn"
   shuffleResult: "Miksi rezultojn"
+wordList:
+  button:
+    edit: "Redakti"
+    discard: "Forigi"
 
 dictionaryPage:
   add: "Krei novan vorton"
