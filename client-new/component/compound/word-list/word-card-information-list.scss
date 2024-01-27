@@ -4,6 +4,12 @@
 
 
 .root {
+  @include theme("light") {
+    --heading-text-color: #{leveled-color("gray", 7)};
+  }
+}
+
+.root {
   margin-block-start: 3zu;
   row-gap: 3zu;
   display: flex;
@@ -14,7 +20,7 @@
   @include bold-font;
   margin-block-end: 2zu;
   font-size: 3.5zu;
-  color: var(--glob-primary-heading-text-color);
+  color: var(--heading-text-color);
 }
 
 .text {
