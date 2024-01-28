@@ -161,7 +161,7 @@ searchWordForm:
   shuffleResult: "Смєшати резултаты"
 wordList:
   button:
-    edit: "Правити"
+    edit: "Измєнити"
     discard: "Одстранити"
   
 dictionaryPage:
