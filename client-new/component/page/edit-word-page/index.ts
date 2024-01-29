@@ -1,6 +1,3 @@
 //
 
-import {EditWordPage} from "./edit-word-page";
-
-
-export const Component = EditWordPage;
+export {EditWordPage as Component} from "./edit-word-page";

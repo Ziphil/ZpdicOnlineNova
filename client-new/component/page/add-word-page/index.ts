@@ -1,6 +1,3 @@
 //
 
-import {AddWordPage} from "./add-word-page";
-
-
-export const Component = AddWordPage;
+export {AddWordPage as Component} from "./add-word-page";

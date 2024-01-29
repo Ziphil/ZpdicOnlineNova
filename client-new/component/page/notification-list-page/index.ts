@@ -1,6 +1,3 @@
 //
 
-import {NotificationListPage} from "./notification-list-page";
-
-
-export const Component = NotificationListPage;
+export {NotificationListPage as Component} from "./notification-list-page";

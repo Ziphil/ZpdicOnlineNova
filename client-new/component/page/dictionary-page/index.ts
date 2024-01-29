@@ -1,6 +1,3 @@
 //
 
-import {DictionaryPage} from "./dictionary-page";
-
-
-export const Component = DictionaryPage;
+export {DictionaryPage as Component} from "./dictionary-page";
