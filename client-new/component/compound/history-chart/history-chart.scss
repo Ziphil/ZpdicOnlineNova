@@ -5,7 +5,7 @@
 
 .root {
   @include theme("light") {
-    --area-stroke-color: #{leveled-color("blue", 5)};
+    --area-stroke-color: #{leveled-color("primary", 5)};
   }
 }
 
