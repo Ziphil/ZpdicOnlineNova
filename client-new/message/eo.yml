@@ -42,7 +42,7 @@ dictionaryHeader:
   tab:
     dictionary: "Vortaro"
     example: "Frazoj"
-    info: "Detaloj"
+    information: "Detaloj"
     setting: "Agordoj"
 dictionaryList:
   updatedDate: "Ĝisdatigita je"

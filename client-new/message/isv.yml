@@ -42,7 +42,7 @@ dictionaryHeader:
   tab:
     dictionary: "Словник"
     example: "Рєченја"
-    info: "Подробности"
+    information: "Подробности"
     setting: "Настројкы"
 dictionaryList:
   updatedDate: "Актуализованы"

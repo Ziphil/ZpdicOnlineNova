@@ -43,9 +43,9 @@ export const DictionaryHeader = create(
               <TabIconbag><GeneralIcon icon={faQuotes}/></TabIconbag>
               {trans("tab.example")}
             </LinkTab>
-            <LinkTab value="info" href={`/dictionary/${dictionary.number}/info`}>
+            <LinkTab value="information" href={`/dictionary/${dictionary.number}/info`}>
               <TabIconbag><GeneralIcon icon={faCircleInfo}/></TabIconbag>
-              {trans("tab.info")}
+              {trans("tab.information")}
             </LinkTab>
             {(canOwn) && (
               <LinkTab value="info" href={`/dictionary/${dictionary.number}/settings`}>

@@ -42,7 +42,7 @@ dictionaryHeader:
   tab:
     dictionary: "Dictionary"
     example: "Sentences"
-    info: "Details"
+    information: "Details"
     setting: "Settings"
 dictionaryList:
   updatedDate: "Updated at"
