@@ -168,10 +168,10 @@ dictionaryPage:
   add: "Создати ново слово"
 dictionaryInformationPage:
   heading:
-    history: "Word count history"
+    history: "Хисторија коликости слов"
   description: 
     history: >-
-      The following chart shows the number of words in this dictionary for the last 100 days.
+      На слєдујучем диаграму показываје се коликост слов в том словнику за послєдных 100 дње.
       The word count is recorded every day at around 14:30 (UTC).
 errorPage:
   title:
