@@ -165,6 +165,13 @@ wordList:
 
 dictionaryPage:
   add: "新しい単語を作成"
+dictionaryInformationPage:
+  heading:
+    history: "単語数推移"
+  description: 
+    history: >-
+      この辞書の直近 100 日間の単語数の推移です。
+      単語数は毎日 23 時 30 分頃 (JST, UTC+9) に記録されます。
 errorPage:
   title:
     notFound: "Not\nFound"

@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  @include theme("light") {
+    --area-stroke-color: #{leveled-color("blue", 5)};
+  }
+}
+
+.root {
+  width: 100%;
+  height: 64zu;
+  font-size: 3zu;
+}
+
+.root svg {
+  overflow: visible;
+}
+
+.area :global(.recharts-area-area) {
+  fill: var(--area-stroke-color);
+  fill-opacity: 0.2;
+}
+
+.area :global(.recharts-area-curve) {
+  stroke: var(--area-stroke-color);
+  fill-opacity: 1;
+}
+
+.area :global(.recharts-area-dot) {
+  display: none;
+}
+
+.axis :global(.recharts-cartesian-axis-line),
+.axis :global(.recharts-cartesian-axis-tick-line) {
+  stroke: var(--glob-mute-text-color);
+}
+
+.axis :global(.recharts-cartesian-axis-tick-value) {
+  fill: var(--glob-mute-text-color);
+}

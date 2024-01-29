@@ -166,6 +166,13 @@ wordList:
 
 dictionaryPage:
   add: "Krei novan vorton"
+dictionaryInformationPage:
+  heading:
+    history: "Historio de nombro da vortoj"
+  description: 
+    history: >-
+      La sekva diagramo montras la historio de la nombro da vortoj en tiu vortaro dum la lastaj 100 tagoj.
+      La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
 errorPage:
   title:
     notFound: "Ne\nTrovita"

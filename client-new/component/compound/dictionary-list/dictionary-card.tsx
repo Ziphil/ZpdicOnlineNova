@@ -8,7 +8,7 @@ import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
 import {useResponse} from "/client-new/hook/request";
 import {DetailedDictionary, UserDictionary} from "/client-new/skeleton";
-import {DictionaryHistoryChart} from "./dictionary-history-chart";
+import {DictionaryCardHistoryChart} from "./dictionary-card-history-chart";
 
 
 export const DictionaryCard = create(
@@ -51,7 +51,7 @@ export const DictionaryCard = create(
           </div>
           {(histories !== undefined && histories.length > 0) && (
             <div styleName="right">
-              <DictionaryHistoryChart dictionary={dictionary} histories={histories}/>
+              <DictionaryCardHistoryChart dictionary={dictionary} histories={histories}/>
               <div styleName="word-count">
                 <GeneralIcon styleName="icon" icon={faNote}/>
                 {transNumber(histories[0].wordSize)}

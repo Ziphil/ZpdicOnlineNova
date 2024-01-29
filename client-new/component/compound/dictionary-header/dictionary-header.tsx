@@ -20,7 +20,7 @@ export const DictionaryHeader = create(
   }: {
     dictionary: DetailedDictionary,
     width?: "normal" | "wide",
-    tabValue: "dictionary" | "example" | "info" | null,
+    tabValue: "dictionary" | "example" | "information" | "setting" | null,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -48,7 +48,7 @@ export const DictionaryHeader = create(
               {trans("tab.information")}
             </LinkTab>
             {(canOwn) && (
-              <LinkTab value="info" href={`/dictionary/${dictionary.number}/settings`}>
+              <LinkTab value="setting" href={`/dictionary/${dictionary.number}/settings`}>
                 <TabIconbag><GeneralIcon icon={faCog}/></TabIconbag>
                 {trans("tab.setting")}
               </LinkTab>

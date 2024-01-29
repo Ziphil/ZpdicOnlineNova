@@ -166,6 +166,13 @@ wordList:
   
 dictionaryPage:
   add: "Создати ново слово"
+dictionaryInformationPage:
+  heading:
+    history: "Word count history"
+  description: 
+    history: >-
+      The following chart shows the number of words in this dictionary for the last 100 days.
+      The word count is recorded every day at around 14:30 (UTC).
 errorPage:
   title:
     notFound: "Не\nНајдены"
