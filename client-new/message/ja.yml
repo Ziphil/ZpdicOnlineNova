@@ -168,10 +168,13 @@ dictionaryPage:
 dictionaryInformationPage:
   heading:
     history: "単語数推移"
+    wordNameFrequency: "文字頻度"
   description: 
     history: >-
       この辞書の直近 100 日間の単語数の推移です。
       単語数は毎日 23 時 30 分頃 (JST, UTC+9) に記録されます。
+    wordNameFrequency: >-
+      見出し語に使われている各文字の出現頻度です。
 errorPage:
   title:
     notFound: "Not\nFound"

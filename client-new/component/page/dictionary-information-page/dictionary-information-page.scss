@@ -3,6 +3,12 @@
 @use "zographia/source/component/function.scss" as *;
 
 
+.main {
+  row-gap: 6zu;
+  display: flex;
+  flex-direction: column;
+}
+
 .heading {
   @include bold-font;
   margin-block-end: 3zu;

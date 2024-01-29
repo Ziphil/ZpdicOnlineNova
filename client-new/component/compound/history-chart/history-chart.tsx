@@ -65,7 +65,7 @@ function calcChartDataSpec(histories: Array<History>, wordSize: number): {data: 
   const data = [
     ...histories.reverse().map((history) => ({date: dayjs(history.date).valueOf(), wordSize: history.wordSize})),
     {date: nowDate, wordSize}
-  ];
+  ].sort((firstData, secondData) => firstData.date - secondData.date);
   const spec = {
     data,
     dateDomain: [dayjs().subtract(100, "day").startOf("hour").valueOf(), nowDate] as AxisDomain

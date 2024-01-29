@@ -7,6 +7,7 @@ import {DictionaryHeader} from "/client-new/component/compound/dictionary-header
 import {Header} from "/client-new/component/compound/header";
 import {HistoryChart} from "/client-new/component/compound/history-chart";
 import {MainContainer, Page} from "/client-new/component/compound/page";
+import {WordNameFrequencyChart} from "/client-new/component/compound/word-name-frequency-chart";
 import {create} from "/client-new/component/create";
 import {useSuspenseResponse} from "/client-new/hook/request";
 import {EnhancedDictionary} from "/client-new/skeleton";
@@ -41,6 +42,13 @@ export const DictionaryInformationPage = create(
               {trans("description.history")}
             </MultiLineText>
             <HistoryChart dictionary={enhancedDictionary}/>
+          </section>
+          <section>
+            <h3 styleName="heading">{trans("heading.wordNameFrequency")}</h3>
+            <MultiLineText styleName="description">
+              {trans("description.wordNameFrequency")}
+            </MultiLineText>
+            <WordNameFrequencyChart dictionary={enhancedDictionary}/>
           </section>
         </MainContainer>
       </Page>
