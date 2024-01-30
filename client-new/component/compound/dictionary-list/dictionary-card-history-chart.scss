@@ -5,6 +5,7 @@
 
 .root {
   @include theme("light") {
+    --area-fill-color: #{leveled-color("gray", 1)};
     --area-stroke-color: #{leveled-color("gray", 5)};
   }
 }
@@ -20,8 +21,7 @@
 }
 
 .area :global(.recharts-area-area) {
-  fill: var(--area-stroke-color);
-  fill-opacity: 0.2;
+  fill: var(--area-fill-color);
 }
 
 .area :global(.recharts-area-curve) {

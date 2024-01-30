@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {Fragment, ReactElement, useMemo} from "react";
+import {Fragment, ReactElement, Suspense, useMemo} from "react";
 import {useParams} from "react-router-dom";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
@@ -41,14 +41,18 @@ export const DictionaryInformationPage = create(
             <MultiLineText styleName="description">
               {trans("description.history")}
             </MultiLineText>
-            <HistoryChart dictionary={enhancedDictionary}/>
+            <Suspense>
+              <HistoryChart dictionary={enhancedDictionary}/>
+            </Suspense>
           </section>
           <section>
             <h3 styleName="heading">{trans("heading.wordNameFrequency")}</h3>
             <MultiLineText styleName="description">
               {trans("description.wordNameFrequency")}
             </MultiLineText>
-            <WordNameFrequencyChart dictionary={enhancedDictionary}/>
+            <Suspense>
+              <WordNameFrequencyChart dictionary={enhancedDictionary}/>
+            </Suspense>
           </section>
         </MainContainer>
       </Page>

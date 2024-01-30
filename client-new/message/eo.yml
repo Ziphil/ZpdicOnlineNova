@@ -163,6 +163,8 @@ wordList:
   button:
     edit: "Redakti"
     discard: "Forigi"
+wordNameFrequencyChart:
+  other: "Aliaj"
 
 dictionaryPage:
   add: "Krei novan vorton"

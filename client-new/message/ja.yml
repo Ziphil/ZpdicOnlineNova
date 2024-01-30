@@ -162,6 +162,8 @@ wordList:
   button:
     edit: "編集"
     discard: "削除"
+wordNameFrequencyChart:
+  other: "その他"
 
 dictionaryPage:
   add: "新しい単語を作成"
