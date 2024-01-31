@@ -8,6 +8,7 @@ import {AdditionalProps, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 import {useSuspenseResponse} from "/client-new/hook/request";
 import {Dictionary, History} from "/client-new/skeleton";
+import {HistoryChartTooltip} from "./history-chart-tooltip";
 
 
 export const HistoryChart = create(
@@ -33,7 +34,13 @@ export const HistoryChart = create(
       <div styleName="root" {...rest}>
         <ResponsiveContainer>
           <AreaChart data={dataSpec.data} margin={{top: 0, right: 0, bottom: 0, left: 0}}>
-            <Area styleName="area" dataKey="wordSize" isAnimationActive={false} fillOpacity={1}/>
+            <Area
+              styleName="area"
+              dataKey="wordSize"
+              isAnimationActive={false}
+              activeDot={{strokeWidth: 0, r: 3}}
+              fillOpacity={1}
+            />
             <XAxis
               styleName="axis"
               dataKey="date"
@@ -51,7 +58,11 @@ export const HistoryChart = create(
               tickCount={5}
               tickFormatter={(wordSize) => transNumber(wordSize, 0)}
             />
-            <Tooltip/>
+            <Tooltip
+              cursor={{strokeDasharray: "3 3"}}
+              content={<HistoryChartTooltip/>}
+              isAnimationActive={false}
+            />
           </AreaChart>
         </ResponsiveContainer>
       </div>
