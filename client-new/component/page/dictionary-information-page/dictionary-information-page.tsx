@@ -2,7 +2,7 @@
 
 import {Fragment, ReactElement, Suspense, useMemo} from "react";
 import {useParams} from "react-router-dom";
-import {AdditionalProps, MultiLineText, useTrans} from "zographia";
+import {AdditionalProps, Card, CardBody, MultiLineText, useTrans} from "zographia";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
 import {Header} from "/client-new/component/compound/header";
 import {HistoryChart} from "/client-new/component/compound/history-chart";
@@ -42,7 +42,11 @@ export const DictionaryInformationPage = create(
               {trans("description.history")}
             </MultiLineText>
             <Suspense>
-              <HistoryChart dictionary={enhancedDictionary}/>
+              <Card>
+                <CardBody>
+                  <HistoryChart dictionary={enhancedDictionary}/>
+                </CardBody>
+              </Card>
             </Suspense>
           </section>
           <section>
@@ -51,7 +55,11 @@ export const DictionaryInformationPage = create(
               {trans("description.wordNameFrequency")}
             </MultiLineText>
             <Suspense>
-              <WordNameFrequencyChart dictionary={enhancedDictionary}/>
+              <Card>
+                <CardBody>
+                  <WordNameFrequencyChart dictionary={enhancedDictionary}/>
+                </CardBody>
+              </Card>
             </Suspense>
           </section>
         </MainContainer>

@@ -2,7 +2,7 @@
 
 import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
-import {Area, AreaChart, ResponsiveContainer, XAxis, YAxis} from "recharts";
+import {Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
 import {AxisDomain} from "recharts/types/util/types";
 import {AdditionalProps, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
@@ -46,11 +46,12 @@ export const HistoryChart = create(
             />
             <YAxis
               styleName="axis"
-              domain={["dataMin", "dataMax"]}
+              domain={dataSpec.wordSizeDomain}
               width={40}
               tickCount={5}
-              tickFormatter={(wordSize) => transNumber(wordSize)}
+              tickFormatter={(wordSize) => transNumber(wordSize, 0)}
             />
+            <Tooltip/>
           </AreaChart>
         </ResponsiveContainer>
       </div>
@@ -60,15 +61,20 @@ export const HistoryChart = create(
 );
 
 
-function calcChartDataSpec(histories: Array<History>, wordSize: number): {data: Array<{date: number, wordSize: number}>, dateDomain: AxisDomain} {
+function calcChartDataSpec(histories: Array<History>, wordSize: number): {data: Array<{date: number, wordSize: number}>, dateDomain: AxisDomain, wordSizeDomain: AxisDomain} {
   const nowDate = dayjs().valueOf();
-  const data = [
-    ...histories.reverse().map((history) => ({date: dayjs(history.date).valueOf(), wordSize: history.wordSize})),
-    {date: nowDate, wordSize}
-  ].sort((firstData, secondData) => firstData.date - secondData.date);
+  const beforeData = histories.map((history) => ({date: dayjs(history.date).valueOf(), wordSize: history.wordSize}));
+  const data = [...beforeData, {date: nowDate, wordSize}];
+  data.sort((firstData, secondData) => firstData.date - secondData.date);
+  const wordSizes = data.map((item) => item.wordSize);
+  const maxWordSize = Math.max(...wordSizes);
+  const minWordSize = Math.min(...wordSizes);
+  const maxWordSizeDomain = Math.round(maxWordSize + Math.max((maxWordSize - minWordSize) * 0.05, 10));
+  const minWordSizeDomain = Math.round(Math.max(minWordSize - Math.max((maxWordSize - minWordSize) * 0.05, 10), 0));
   const spec = {
     data,
-    dateDomain: [dayjs().subtract(100, "day").startOf("hour").valueOf(), nowDate] as AxisDomain
+    dateDomain: [dayjs().subtract(100, "day").startOf("hour").valueOf(), nowDate] as AxisDomain,
+    wordSizeDomain: [minWordSizeDomain, maxWordSizeDomain] as AxisDomain
   };
   return spec;
 }
