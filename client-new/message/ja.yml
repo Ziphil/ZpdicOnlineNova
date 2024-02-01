@@ -160,6 +160,11 @@ searchWordForm:
   ignoreCase: "大小文字を区別しない"
   enableSuggestions: "変化形をサジェスト"
   shuffleResult: "検索結果をシャッフル"
+userHeader:
+  tab:
+    dictionary: "辞書"
+    notification: "通知"
+    setting: "設定"
 wordList:
   button:
     edit: "編集"

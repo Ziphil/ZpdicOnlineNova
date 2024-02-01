@@ -161,6 +161,11 @@ searchWordForm:
   ignoreCase: "Ignori usklecon"
   enableSuggestions: "Sugesti variaĵojn"
   shuffleResult: "Miksi rezultojn"
+userHeader:
+  tab:
+    dictionary: "Vortaroj"
+    notification: "Sciigoj"
+    setting: "Agordoj"
 wordList:
   button:
     edit: "Redakti"

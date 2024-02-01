@@ -161,6 +161,11 @@ searchWordForm:
   ignoreCase: "Ignore letter case"
   enableSuggestions: "Suggest variations"
   shuffleResult: "Shuffle results"
+userHeader:
+  tab:
+    dictionary: "Dictionaries"
+    notification: "Notifications"
+    setting: "Settings"
 wordList:
   button:
     edit: "Edit"

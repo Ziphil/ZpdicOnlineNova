@@ -161,6 +161,11 @@ searchWordForm:
   ignoreCase: "Игноровати велике/мале буквы"
   enableSuggestions: "Прєдлагати вариације"
   shuffleResult: "Смєшати резултаты"
+userHeader:
+  tab:
+    dictionary: "Словникы"
+    notification: "Увєдомјенја"
+    setting: "Настројкы"
 wordList:
   button:
     edit: "Измєнити"
