@@ -84,6 +84,8 @@ editWordForm:
       variation: "Add variation form"
       relation: "Add related word"
     generate: "Generate"
+header:
+  userPage: "User page"
 loginForm:
   label:
     name: "Username"
@@ -183,9 +185,10 @@ errorPage:
     notFound: "Not\nFound"
   message:
     notFound: >-
-      The page you requested could not be found.
-      Please make sure that you type the correct address.
-      It is also possible that the page you are looking for has been deleted or moved to another location.
+      The page you are looking for could not be found.
+      It may have been deleted or moved to another location, so please try looking again from the top page.
+  button:
+    top: "Back to top page"
 loginPage:
   title: "Sign in"
 notificationListPage:

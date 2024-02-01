@@ -20,7 +20,7 @@ toast:
     forbidden: >-
       Вы не јесте уполномочјени получати доступ к тому содржанју.
     serverNotFound: >-
-      Сервер можно обновјены.
+      Сервер можно был обновјены.
       Πрошу освєжите страницу.
     serverError: >-
       На серверу догодил се блуд.
@@ -84,6 +84,8 @@ editWordForm:
       variation: "Додати вариацију"
       relation: "Додати свезано слово"
     generate: "Произвести"
+header:
+  userPage: "Користничска страница"
 loginForm:
   label:
     name: "Користничско име"
@@ -183,9 +185,10 @@ errorPage:
     notFound: "Не\nНајдены"
   message:
     notFound: >-
-      The page you requested could not be found.
-      Please make sure that you type the correct address.
-      It is also possible that the page you are looking for has been deleted or moved to another location.
+      Страница ктору вы ишчете не была најдена.
+      Она можно была одстрањена или прємєшчена в ино мєсто, затом прошу попробујте поискати ју опет из врхној странице.
+  button:
+    top: "Back to top page"
 loginPage:
   title: "Пријавити се"
 notificationListPage:

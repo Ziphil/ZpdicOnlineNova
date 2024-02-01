@@ -84,6 +84,8 @@ editWordForm:
       variation: "変化形を追加"
       relation: "関連語を追加"
     generate: "生成"
+header:
+  userPage: "ユーザーページ"
 loginForm:
   label:
     name: "ユーザー ID"
@@ -182,9 +184,10 @@ errorPage:
     notFound: "Not\nFound"
   message:
     notFound: >-
-      参照しようとしたページが見つかりませんでした。
-      指定した URL が正しいか確認してください。
-      もしくは、お探しのページは削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
+      お探しのページが見つかりませんでした。
+      削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
+  button:
+    topPage: "トップページへ"
 loginPage:
   title: "ログイン"
 notificationListPage:

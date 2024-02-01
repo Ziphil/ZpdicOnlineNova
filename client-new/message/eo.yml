@@ -84,6 +84,8 @@ editWordForm:
       variation: "Aldoni variaĵan formon"
       relation: "Aldoni rilatan vorton"
     generate: "Generi"
+header:
+  userPage: "Uzanta paĝo"
 loginForm:
   label:
     name: "Salutnomo"
@@ -183,9 +185,10 @@ errorPage:
     notFound: "Ne\nTrovita"
   message:
     notFound: >-
-      La paĝo kiun vi petas ne estis trovita.
-      Bonvolu certigi ke vi tajpas la korektan adreson.
-      Ankaŭ eblas, ke la paĝo kiun vi serĉas estis forigita aŭ movita al alia loko.
+      La paĝo kiun vi serĉas ne estis trovita.
+      Ĝi eble estis forigita aŭ movita al alia loko, do bonvolu provi serĉi denove el la ĉefpaĝo.
+  button:
+    topPage: "Reiri al la ĉefpaĝo"
 loginPage:
   title: "Ensaluti"
 notificationListPage:

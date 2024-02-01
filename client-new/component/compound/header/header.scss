@@ -45,10 +45,16 @@
 }
 
 .right {
+  column-gap: 4zu;
   display: flex;
   align-items: center;
 }
 
 .menu {
   display: flex;
+}
+
+.avatar {
+  font-size: 6zu;
+  display: block;
 }

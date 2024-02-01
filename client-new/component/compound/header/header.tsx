@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, Avatar, useTrans} from "zographia";
 import {Logo} from "/client-new/component/atom/logo";
 import {SimpleLink} from "/client-new/component/atom/simple-link";
 import {ChangeLocaleForm} from "/client-new/component/compound/change-locale-form";
@@ -17,6 +17,8 @@ export const Header = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {trans} = useTrans("header");
+
     const me = useMe();
 
     return (
@@ -25,14 +27,18 @@ export const Header = create(
           <SimpleLink styleName="logo" href="/">
             <Logo/>
           </SimpleLink>
-          <div styleName="version">
-            {me?.screenName ?? me?.name ?? "<Guest>"}
-          </div>
         </div>
         <div styleName="right">
           <div styleName="menu">
             <ChangeLocaleForm/>
           </div>
+          {(me !== null) && (
+            <div styleName="rightmost">
+              <SimpleLink href={`/user/${me.name}`}>
+                <Avatar styleName="avatar" url={null} alt={trans("userPage")}/>
+              </SimpleLink>
+            </div>
+          )}
         </div>
       </header>
     );
