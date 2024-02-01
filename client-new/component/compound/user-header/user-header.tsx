@@ -17,15 +17,17 @@ export const UserHeader = create(
     user,
     width = "normal",
     tabValue,
+    dictionaryCount,
     ...rest
   }: {
     user: User,
     width?: "normal" | "wide",
-    tabValue: "dictionary" | "example" | "information" | "setting" | null,
+    tabValue: "dictionary" | "notification" | "setting" | null,
+    dictionaryCount: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("userHeader");
+    const {trans, transNumber} = useTrans("userHeader");
 
     const me = useMe();
 
@@ -33,9 +35,7 @@ export const UserHeader = create(
       <header styleName="root" {...rest}>
         <MainContainer width={width}>
           <div styleName="top">
-            <div>
-              <UserAvatar styleName="avatar" user={user}/>
-            </div>
+            <UserAvatar styleName="avatar" user={user}/>
             <div styleName="name-container">
               <SingleLineText styleName="screen-name" is="h2">
                 {user.screenName}
@@ -49,6 +49,7 @@ export const UserHeader = create(
             <LinkTab value="dictionary" href={`/user/${user.name}`}>
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>
               {trans("tab.dictionary")}
+              {transNumber(dictionaryCount)}
             </LinkTab>
             {(user.id === me?.id) && (
               <LinkTab value="notification" href={`/user/${user.name}/notifications`}>

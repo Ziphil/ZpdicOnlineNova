@@ -47,6 +47,10 @@ dictionaryHeader:
 dictionaryList:
   updatedDate: "更新日時"
   createdDate: "作成日時"
+  tag:
+    own: "管理者"
+    edit: "編集のみ"
+    view: "閲覧のみ"
   button:
     see: "辞書ページへ"
 editWordForm:

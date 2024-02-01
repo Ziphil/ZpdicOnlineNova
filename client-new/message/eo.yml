@@ -47,6 +47,10 @@ dictionaryHeader:
 dictionaryList:
   updatedDate: "Ĝisdatigita je"
   createdDate: "Kreita je"
+  tag:
+    own: "Posedanto"
+    edit: "Redakto nur"
+    view: "Vido nur"
   button:
     see: "Vidi vortaron"
 editWordForm:

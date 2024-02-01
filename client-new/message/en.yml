@@ -47,6 +47,10 @@ dictionaryHeader:
 dictionaryList:
   updatedDate: "Updated at"
   createdDate: "Created at"
+  tag:
+    own: "Owner"
+    edit: "Edit only"
+    view: "View only"
   button:
     see: "See dictionary"
 editWordForm:

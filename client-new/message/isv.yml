@@ -40,13 +40,17 @@ toast:
       
 dictionaryHeader:
   tab:
-    dictionary: "Словник"
+    dictionary: "Властник"
     example: "Рєченја"
     information: "Подробности"
     setting: "Настројкы"
 dictionaryList:
   updatedDate: "Актуализованы"
   createdDate: "Созданы"
+  tag:
+    own: "Власник"
+    edit: "Edit only"
+    view: "View only"
   button:
     see: "Зрєти словник"
 editWordForm:

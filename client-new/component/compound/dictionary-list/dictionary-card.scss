@@ -32,6 +32,12 @@
   align-items: center;
 }
 
+.tag {
+  margin-block-end: 2zu;
+  column-gap: 2zu;
+  display: flex;
+}
+
 .avatar {
   margin-inline-end: var(--glob-blank-gap);
 }

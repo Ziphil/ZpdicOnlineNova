@@ -155,14 +155,22 @@ export class DictionarySchema extends DiscardableSchema {
     return dictionary;
   }
 
-  public static async fetchByUser(user: User, authority: DictionaryAuthority): Promise<Array<Dictionary>> {
+  public static async fetchByUser(user: User, authority: DictionaryAuthority, includeSecret: boolean = true): Promise<Array<Dictionary>> {
     const ownQuery = DictionaryModel.findExist().where("user", user);
     const editQuery = DictionaryModel.findExist().where("editUsers", user);
     const rawQuery = (() => {
       if (authority === "own") {
-        return ownQuery;
+        if (includeSecret) {
+          return ownQuery;
+        } else {
+          return ownQuery.ne("secret", true);
+        }
       } else {
-        return DictionaryModel.findExist().or([ownQuery.getFilter(), editQuery.getFilter()]);
+        if (includeSecret) {
+          return DictionaryModel.findExist().or([ownQuery.getFilter(), editQuery.getFilter()]);
+        } else {
+          return DictionaryModel.findExist().or([ownQuery.getFilter(), editQuery.getFilter()]).ne("secret", true);
+        }
       }
     })();
     const query = rawQuery.sort("-updatedDate -number");

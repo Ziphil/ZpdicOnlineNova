@@ -12,6 +12,9 @@ export const DictionaryList = create(
   function ({
     dictionaries,
     size,
+    showUser = false,
+    showChart = false,
+    showAuthority = false,
     hitSize,
     page,
     onPageSet,
@@ -19,6 +22,9 @@ export const DictionaryList = create(
   }: {
     dictionaries: Array<DetailedDictionary | UserDictionary>,
     size: number,
+    showUser?: boolean,
+    showChart?: boolean,
+    showAuthority?: boolean,
     hitSize?: number,
     page?: number,
     onPageSet?: (page: number) => unknown,
@@ -28,7 +34,15 @@ export const DictionaryList = create(
     return (
       <List styleName="root" items={dictionaries} size={size} hitSize={hitSize} page={page} onPageSet={onPageSet} {...rest}>
         <ListBody styleName="body">
-          {(dictionary) => <DictionaryCard key={dictionary.id} dictionary={dictionary}/>}
+          {(dictionary) => (
+            <DictionaryCard
+              key={dictionary.id}
+              dictionary={dictionary}
+              showUser={showUser}
+              showChart={showChart}
+              showAuthority={showAuthority}
+            />
+          )}
           <ListEmptyView/>
         </ListBody>
         <ListPagination styleName="pagination"/>

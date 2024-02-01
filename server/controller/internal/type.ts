@@ -82,6 +82,7 @@ export const SERVER_PATHS = {
   fetchWordNameFrequencies: "/dictionary/fetch/frequency",
   fetchDictionaryStatistics: "/dictionary/fetch/statistics",
   fetchDictionaries: "/dictionary/list",
+  fetchUserDictionaries: "/dictionary/list/user",
   fetchAllDictionaries: "/dictionary/list/all",
   fetchOverallAggregation: "/dictionary/aggregate",
   fetchWord: "/word/fetch",
@@ -329,6 +330,13 @@ type ServerSpecs = {
     response: {
       success: Array<UserDictionary>,
       error: never
+    }
+  },
+  fetchUserDictionaries: {
+    request: {name: string},
+    response: {
+      success: Array<UserDictionary>,
+      error: CustomError<"noSuchUser">
     }
   },
   fetchAllDictionaries: {
