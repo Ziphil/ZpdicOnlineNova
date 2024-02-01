@@ -208,6 +208,7 @@ topPage:
   button:
     login: "Пријавити се · Записати се"
     dictionary: "Список словников"
+    userPage: "Користничска страница"
   aggregation:
     dictionary: "{count, plural, one {Словник} few {Словникы} other {Словников}}"
     word: "{count, plural, one {Слово} few {Слова} other {Слов}}"

@@ -207,6 +207,7 @@ topPage:
   button:
     login: "ログイン · 新規登録"
     dictionary: "辞書一覧"
+    userPage: "ユーザーページ"
   aggregation:
     dictionary: "辞書"
     word: "単語"

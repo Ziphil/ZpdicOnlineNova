@@ -208,6 +208,7 @@ topPage:
   button:
     login: "Sign in · Sign up"
     dictionary: "List of dictionaries"
+    userPage: "User page"
   aggregation:
     dictionary: "{count, plural, one {Dictionary} other {Dictionaries}}"
     word: "{count, plural, one {Word} other {Words}}"
