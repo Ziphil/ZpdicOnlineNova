@@ -22,22 +22,27 @@
 
 .name {
   @include bold-font;
-  font-size: 4.5zu;
+  font-size: 5zu;
   color: var(--glob-primary-heading-text-color);
 }
 
 .user {
-  margin-block-start: 1.5zu;
+  margin-block-start: 2zu;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  margin-inline-end: var(--glob-blank-gap);
 }
 
 .icon {
   margin-inline-end: var(--glob-blank-gap);
-  color: var(--glob-mute-text-color);
 }
 
 .table {
   margin-block-start: 2zu;
-  row-gap: 0.5zu;
+  row-gap: 1zu;
   font-size: 3zu;
   color: var(--glob-mute-text-color);
   display: grid;

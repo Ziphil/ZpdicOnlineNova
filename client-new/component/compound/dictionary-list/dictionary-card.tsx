@@ -1,10 +1,12 @@
 //
 
-import {faNote, faRight, faUser} from "@fortawesome/sharp-regular-svg-icons";
+import {faNote, faRight} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
+import {SimpleLink} from "/client-new/component/atom/simple-link";
+import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {create} from "/client-new/component/create";
 import {useResponse} from "/client-new/hook/request";
 import {DetailedDictionary, UserDictionary} from "/client-new/skeleton";
@@ -38,8 +40,12 @@ export const DictionaryCard = create(
                 </Link>
               </SingleLineText>
               <div styleName="user">
-                <GeneralIcon styleName="icon" icon={faUser}/>
-                {dictionary.user.screenName}
+                <UserAvatar styleName="avatar" user={dictionary.user}/>
+                <SingleLineText is="span">
+                  <SimpleLink href={`/user/${dictionary.user.name}`}>
+                    {dictionary.user.screenName}
+                  </SimpleLink>
+                </SingleLineText>
               </div>
             </div>
             <dl styleName="table">

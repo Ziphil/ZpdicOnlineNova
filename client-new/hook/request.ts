@@ -43,21 +43,25 @@ export function useRequestFile(): typeof rawRequestFile {
   return requestFile;
 }
 
-export function useResponse<N extends ProcessName>(name: N, data: RequestData<N>, config: ResponseConfig<N> = {}): [SuccessResponseData<N> | undefined, unknown, ResponseRest<N>] {
-  const {data: queryData, error: queryError, ...rest} = useRawQuery<ResponseData<N>>([name, data], async () => {
-    const response = await rawRequest(name, data, config);
-    if (response.status !== 200) {
-      console.error(response);
-      throw new QueryError(name, data, response);
+export function useResponse<N extends ProcessName>(name: N, data: RequestData<N> | FalsyData, config: ResponseConfig<N> = {}): [SuccessResponseData<N> | undefined, unknown, ResponseRest<N>] {
+  const {data: responseData, error: responseError, ...rest} = useRawQuery<ResponseData<N>>([name, data], async () => {
+    if (data) {
+      const response = await rawRequest(name, data, config);
+      if (response.status !== 200) {
+        console.error(response);
+        throw new QueryError(name, data, response);
+      } else {
+        return response.data;
+      }
     } else {
-      return response.data;
+      throw new Error("[BUG] cannot happen");
     }
-  }, config);
-  return [queryData, queryError, rest];
+  }, {...config, enabled: !!data});
+  return [responseData, responseError, rest];
 }
 
 export function useSuspenseResponse<N extends ProcessName>(name: N, data: RequestData<N>, config: ResponseConfig<N> = {}): [SuccessResponseData<N>, ResponseRest<N>] {
-  const {data: queryData, ...rest} = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
+  const {data: responseData, ...rest} = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
     const response = await rawRequest(name, data, config);
     if (response.status !== 200) {
       console.error(response);
@@ -66,8 +70,8 @@ export function useSuspenseResponse<N extends ProcessName>(name: N, data: Reques
       return response.data;
     }
   }, {suspense: true, ...config});
-  if (queryData !== undefined) {
-    return [queryData, rest];
+  if (responseData !== undefined) {
+    return [responseData, rest];
   } else {
     throw new Error("[BUG] suspensed query returns undefined");
   }
@@ -96,3 +100,5 @@ export async function invalidateResponses<N extends ProcessName>(name: N, predic
 
 type ResponseConfig<N extends ProcessName> = RequestConfig & UseQueryOptions<ResponseData<N>>;
 type ResponseRest<N extends ProcessName> = Omit<UseQueryResult<ResponseData<N>>, "data" | "error">;
+
+type FalsyData = undefined | null | false;

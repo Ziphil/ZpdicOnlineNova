@@ -104,6 +104,7 @@ export const SERVER_PATHS = {
   resetUserPassword: "/user/reset/reset",
   discardUser: "/user/discard",
   fetchUser: "/user/fetch",
+  fetchOtherUser: "/user/fetch/other",
   suggestUsers: "/user/suggest",
   addNotification: "/notification/add",
   fetchNotifications: "/notification/fetch",
@@ -482,6 +483,13 @@ type ServerSpecs = {
     response: {
       success: DetailedUser,
       error: never
+    }
+  },
+  fetchOtherUser: {
+    request: {name: string},
+    response: {
+      success: User,
+      error: CustomError<"noSuchUser">
     }
   },
   suggestUsers: {

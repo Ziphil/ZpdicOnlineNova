@@ -251,6 +251,19 @@ export class UserController extends Controller {
     Controller.respond(response, body);
   }
 
+  @post(SERVER_PATHS["fetchOtherUser"])
+  public async [Symbol()](request: Request<"fetchOtherUser">, response: Response<"fetchOtherUser">): Promise<void> {
+    const name = request.body.name;
+    const user = await UserModel.fetchOneByName(name);
+    if (user !== null) {
+      const body = UserCreator.create(user);
+      Controller.respond(response, body);
+    } else {
+      const body = CustomError.ofType("noSuchUser");
+      Controller.respondError(response, body);
+    }
+  }
+
   @post(SERVER_PATHS["suggestUsers"])
   public async [Symbol()](request: Request<"suggestUsers">, response: Response<"suggestUsers">): Promise<void> {
     const pattern = request.body.pattern;
