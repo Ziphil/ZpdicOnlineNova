@@ -76,9 +76,9 @@ export const DictionaryPage = create(
             </div>
           </div>
           <div styleName="right">
-            {(debouncedQuery.showExplanation) ? (
+            {(debouncedQuery.showExplanation && !!dictionary.explanation) ? (
               <Markdown mode="normal">
-                {dictionary.explanation ?? ""}
+                {dictionary.explanation}
               </Markdown>
             ) : (
               <WordList dictionary={enhancedDictionary} words={hitWords} size={40} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>
