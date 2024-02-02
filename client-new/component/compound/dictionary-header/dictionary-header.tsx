@@ -1,6 +1,6 @@
 //
 
-import {faBook, faCircleInfo, faCog, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
+import {faBook, faCircleInfo, faCog, faListCheck, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
 import {LinkTab} from "/client-new/component/atom/tab";
@@ -47,6 +47,12 @@ export const DictionaryHeader = create(
               <TabIconbag><GeneralIcon icon={faCircleInfo}/></TabIconbag>
               {trans("tab.information")}
             </LinkTab>
+            {(canOwn) && (
+              <LinkTab value="commission" href={`/dictionary/${dictionary.number}/requests`}>
+                <TabIconbag><GeneralIcon icon={faListCheck}/></TabIconbag>
+                {trans("tab.commission")}
+              </LinkTab>
+            )}
             {(canOwn) && (
               <LinkTab value="setting" href={`/dictionary/${dictionary.number}/settings`}>
                 <TabIconbag><GeneralIcon icon={faCog}/></TabIconbag>

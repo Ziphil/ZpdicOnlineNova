@@ -43,6 +43,7 @@ dictionaryHeader:
     dictionary: "Властник"
     example: "Рєченја"
     information: "Подробности"
+    commission: "Просбы"
     setting: "Настројкы"
 dictionaryList:
   updatedDate: "Актуализованы"

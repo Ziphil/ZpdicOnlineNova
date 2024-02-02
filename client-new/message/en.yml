@@ -43,6 +43,7 @@ dictionaryHeader:
     dictionary: "Dictionary"
     example: "Sentences"
     information: "Details"
+    commission: "Requests"
     setting: "Settings"
 dictionaryList:
   updatedDate: "Updated at"

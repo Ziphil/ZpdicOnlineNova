@@ -43,6 +43,7 @@ dictionaryHeader:
     dictionary: "Vortaro"
     example: "Frazoj"
     information: "Detaloj"
+    commission: "Petoj"
     setting: "Agordoj"
 dictionaryList:
   updatedDate: "Ĝisdatigita je"
