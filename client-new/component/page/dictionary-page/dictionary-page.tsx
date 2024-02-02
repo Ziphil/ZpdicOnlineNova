@@ -4,6 +4,7 @@ import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, SetStateAction, useCallback, useMemo} from "react";
 import {useHref, useParams} from "react-router-dom";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {Markdown} from "/client-new/component/atom/markdown";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
 import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
@@ -75,7 +76,13 @@ export const DictionaryPage = create(
             </div>
           </div>
           <div styleName="right">
-            <WordList dictionary={enhancedDictionary} words={hitWords} size={40} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>
+            {(debouncedQuery.showExplanation) ? (
+              <Markdown mode="normal">
+                {dictionary.explanation ?? ""}
+              </Markdown>
+            ) : (
+              <WordList dictionary={enhancedDictionary} words={hitWords} size={40} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>
+            )}
           </div>
         </MainContainer>
       </Page>
