@@ -39,6 +39,7 @@ export const HistoryChart = create(
               dataKey="wordSize"
               isAnimationActive={false}
               activeDot={{strokeWidth: 0, r: 3}}
+              strokeWidth={2}
               fillOpacity={1}
             />
             <XAxis

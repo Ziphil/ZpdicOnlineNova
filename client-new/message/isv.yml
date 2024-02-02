@@ -189,7 +189,7 @@ dictionaryInformationPage:
       На слєдујучем диаграму показываје се коликост слов в том словнику за послєдных 100 дње.
       Коликост слов јест записывана кажды дењ приблизно в 14:30 (UTC).
     wordNameFrequency: >-
-      The following chart shows how frequent each character appears in the headwords in this dictionary.
+      На слєдујучем диаграму показываје се како често кажды знак појавјаје се в словах того словника.
 errorPage:
   title:
     notFound: "Не\nНајдены"
