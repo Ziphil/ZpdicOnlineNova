@@ -2,7 +2,7 @@
 
 import {faBell, faBook, faCog} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
+import {AdditionalProps, Badge, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
 import {LinkTab} from "/client-new/component/atom/tab";
 import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {MainContainer} from "/client-new/component/compound/page";
@@ -49,7 +49,9 @@ export const UserHeader = create(
             <LinkTab value="dictionary" href={`/user/${user.name}`}>
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>
               {trans("tab.dictionary")}
-              {transNumber(dictionaryCount)}
+              <Badge styleName="badge" scheme={(tabValue === "dictionary") ? "secondary" : "gray"} variant="solid">
+                {transNumber(dictionaryCount)}
+              </Badge>
             </LinkTab>
             {(user.id === me?.id) && (
               <LinkTab value="notification" href={`/user/${user.name}/notifications`}>

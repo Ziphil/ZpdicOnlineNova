@@ -1,7 +1,8 @@
 //
 
+import {faPenSwirl} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, Ref} from "react";
-import {AdditionalProps, Avatar} from "zographia";
+import {AdditionalProps, Avatar, AvatarFallbackIconContainer, GeneralIcon} from "zographia";
 import {createWithRef} from "/client-new/component/create";
 import {useResponse} from "/client-new/hook/request";
 import {User} from "/client-new/skeleton";
@@ -21,16 +22,20 @@ export const UserAvatar = createWithRef(
     const [innerUser] = useResponse("fetchOtherUser", (typeof user === "string") && {name: user});
     const actualUser = (typeof user === "string") ? innerUser : user;
 
-    const fallbackHue = (actualUser !== undefined) ? getFallbackHue(actualUser.id) : 0;
+    const hue = (actualUser !== undefined) ? getIdHue(actualUser.id) : 0;
 
     return (
-      <Avatar url={null} fallbackHue={fallbackHue} {...rest}/>
+      <Avatar url={null} {...rest}>
+        <AvatarFallbackIconContainer hue={hue}>
+          <GeneralIcon icon={faPenSwirl}/>
+        </AvatarFallbackIconContainer>
+      </Avatar>
     );
 
   }
 );
 
 
-function getFallbackHue(id: string): number {
+function getIdHue(id: string): number {
   return parseInt(id.slice(0, 8), 16) % 360;
 }

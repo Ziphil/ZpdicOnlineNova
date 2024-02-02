@@ -52,3 +52,7 @@
   margin-block-start: 6zu;
   border-block-end: none;
 }
+
+.badge {
+  margin-inline-start: var(--glob-blank-gap);
+}

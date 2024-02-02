@@ -1,9 +1,10 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps, Avatar, useTrans} from "zographia";
+import {AdditionalProps, useTrans} from "zographia";
 import {Logo} from "/client-new/component/atom/logo";
 import {SimpleLink} from "/client-new/component/atom/simple-link";
+import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {ChangeLocaleForm} from "/client-new/component/compound/change-locale-form";
 import {create} from "/client-new/component/create";
 import {useMe} from "/client-new/hook/auth";
@@ -35,7 +36,7 @@ export const Header = create(
           {(me !== null) && (
             <div styleName="rightmost">
               <SimpleLink href={`/user/${me.name}`}>
-                <Avatar styleName="avatar" url={null} alt={trans("userPage")}/>
+                <UserAvatar styleName="avatar" user={me}/>
               </SimpleLink>
             </div>
           )}
