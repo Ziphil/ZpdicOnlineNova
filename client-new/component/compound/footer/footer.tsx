@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Link, MultiLineText} from "zographia";
 import {create} from "/client-new/component/create";
+import {VERSION} from "/client-new/variable";
 
 
 export const Footer = create(
@@ -19,8 +20,13 @@ export const Footer = create(
     return (
       <footer styleName="root" {...rest}>
         <div styleName="left">
+          <div styleName="title-container">
+            <span styleName="title">ZpDIC Online</span>
+            <span styleName="version">{VERSION}</span>
+          </div>
           <div styleName="copyright">
-            © 2020–{yearString} Ziphil<br/>
+            <span>© 2020–{yearString}</span>
+            <span>Ziphil</span>
           </div>
           <MultiLineText styleName="recaptcha" lineHeight="short">
             This site is protected by reCAPTCHA.<br/>

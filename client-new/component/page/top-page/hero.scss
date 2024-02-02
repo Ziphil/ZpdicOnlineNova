@@ -6,7 +6,7 @@
 .root {
   @include theme("light") {
     --logo-text-color: #{leveled-color("primary", 1)};
-    --catch-text-color: #{leveled-color("primary", 1)};
+    --catch-text-color: #{leveled-color("primary", 2)};
     --button-border-color: #{leveled-color("secondary", 9)};
     --button-box-shadow-color: #{leveled-color("secondary", 9, 0.3)};
     --link-text-color: #{leveled-color("secondary", 1)};
@@ -38,9 +38,8 @@
 }
 
 .catch {
-  margin-block-start: 10zu;
-  font-family: "EB Garamond";
-  font-size: 8zu;
+  margin-block-start: 12zu;
+  font-size: 7zu;
   letter-spacing: 0.15em;
   text-indent: 0.15em;
   color: var(--catch-text-color);
@@ -80,8 +79,7 @@
   inset-inline-start: 50%;
   width: 120%;
   height: 300%;
-  font-family: "EB Garamond";
-  font-size: 8zu;
+  font-size: 6zu;
   line-height: 1.3;
   color: var(--decoration-text-color);
   transform: translate(-50%, -50%) rotate(-20deg);
