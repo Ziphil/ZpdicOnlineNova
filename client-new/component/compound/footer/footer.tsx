@@ -28,7 +28,7 @@ export const Footer = create(
             <span>© 2020–{yearString}</span>
             <span>Ziphil</span>
           </div>
-          <MultiLineText styleName="recaptcha" lineHeight="short">
+          <MultiLineText styleName="recaptcha" lineHeight="narrow">
             This site is protected by reCAPTCHA.<br/>
             The Google <Link href="https://policies.google.com/privacy" scheme="gray" variant="underline" target="_blank">Privacy Policy</Link> and <Link href="https://policies.google.com/terms" scheme="gray" variant="underline" target="_blank">Terms of Service</Link> apply.
           </MultiLineText>
