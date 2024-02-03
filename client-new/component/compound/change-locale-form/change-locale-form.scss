@@ -19,7 +19,16 @@
 }
 
 .icon {
-  margin-inline-end: var(--glob-blank-gap);
+  @include device("mobile") {
+    font-size: 5zu;
+  }
+}
+
+.locale {
+  margin-inline-start: var(--glob-blank-gap);
+  @include device("mobile") {
+    display: none;
+  }
 }
 
 .angle {

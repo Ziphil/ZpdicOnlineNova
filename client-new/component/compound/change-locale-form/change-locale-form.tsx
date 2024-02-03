@@ -28,7 +28,7 @@ export const ChangeLocaleForm = create(
       <Menu styleName="root" triggerType="click" placement="bottom-end" {...rest} trigger={(
         <button styleName="trigger" type="button">
           <GeneralIcon styleName="icon" icon={faGlobe}/>
-          {LOCALE_NAMES[locale]}
+          <span styleName="locale">{LOCALE_NAMES[locale]}</span>
           <GeneralIcon styleName="angle" icon={faAngleDown}/>
         </button>
       )}>
