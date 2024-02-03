@@ -44,7 +44,7 @@ export function useRequestFile(): typeof rawRequestFile {
 }
 
 export function useResponse<N extends ProcessName>(name: N, data: RequestData<N> | FalsyData, config: ResponseConfig<N> = {}): [SuccessResponseData<N> | undefined, unknown, ResponseRest<N>] {
-  const {data: responseData, error: responseError, ...rest} = useRawQuery<ResponseData<N>>([name, data], async () => {
+  const responseResult = useRawQuery<ResponseData<N>>([name, data], async () => {
     if (data) {
       const response = await rawRequest(name, data, config);
       if (response.status !== 200) {
@@ -57,11 +57,13 @@ export function useResponse<N extends ProcessName>(name: N, data: RequestData<N>
       throw new Error("[BUG] cannot happen");
     }
   }, {...config, enabled: !!data});
-  return [responseData, responseError, rest];
+  const responseData = responseResult.data;
+  const responseError = responseResult.error;
+  return [responseData, responseError, responseResult];
 }
 
 export function useSuspenseResponse<N extends ProcessName>(name: N, data: RequestData<N>, config: ResponseConfig<N> = {}): [SuccessResponseData<N>, ResponseRest<N>] {
-  const {data: responseData, ...rest} = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
+  const responseResult = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
     const response = await rawRequest(name, data, config);
     if (response.status !== 200) {
       console.error(response);
@@ -70,8 +72,9 @@ export function useSuspenseResponse<N extends ProcessName>(name: N, data: Reques
       return response.data;
     }
   }, {suspense: true, ...config});
+  const responseData = responseResult.data;
   if (responseData !== undefined) {
-    return [responseData, rest];
+    return [responseData, responseResult];
   } else {
     throw new Error("[BUG] suspensed query returns undefined");
   }
