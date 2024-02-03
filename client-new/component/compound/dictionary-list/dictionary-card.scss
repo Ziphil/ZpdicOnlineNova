@@ -20,6 +20,12 @@
   flex: 0 0 auto;
 }
 
+.tag {
+  margin-block-end: 2zu;
+  column-gap: 2zu;
+  display: flex;
+}
+
 .name {
   @include bold-font;
   font-size: 5zu;
@@ -30,12 +36,6 @@
   margin-block-start: 2zu;
   display: flex;
   align-items: center;
-}
-
-.tag {
-  margin-block-end: 2zu;
-  column-gap: 2zu;
-  display: flex;
 }
 
 .avatar {
