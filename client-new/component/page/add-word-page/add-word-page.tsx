@@ -3,7 +3,6 @@
 import {Fragment, ReactElement, useMemo} from "react";
 import {useParams} from "react-router-dom";
 import {AdditionalProps, useTrans} from "zographia";
-import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
 import {EditWordForm} from "/client-new/component/compound/edit-word-form";
 import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
@@ -31,7 +30,6 @@ export const AddWordPage = create(
       <Page {...rest} headerNode={(
         <Fragment>
           <Header/>
-          <DictionaryHeader dictionary={enhancedDictionary} tabValue="dictionary"/>
         </Fragment>
       )}>
         <MainContainer styleName="main">
