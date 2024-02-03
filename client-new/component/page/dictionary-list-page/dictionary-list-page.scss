@@ -6,7 +6,11 @@
 .main {
   column-gap: 10zu;
   display: grid;
-  grid-template-columns: minmax(112zu, 2fr) 5fr;
+  grid-template-columns: 112zu 1fr;
+  @media (max-width: 320zu) {
+    row-gap: 6zu;
+    grid-template-columns: 1fr;
+  }
 }
 
 .sticky {

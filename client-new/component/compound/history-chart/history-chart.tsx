@@ -55,7 +55,7 @@ export const HistoryChart = create(
             <YAxis
               styleName="axis"
               domain={dataSpec.wordSizeDomain}
-              width={40}
+              width={32}
               tickCount={5}
               tickFormatter={(wordSize) => transNumber(wordSize, 0)}
             />

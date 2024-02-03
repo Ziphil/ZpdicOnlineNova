@@ -10,11 +10,17 @@
     --box-shadow-color: #{leveled-color("gray", 5, 0.2)};
     --stain-color: #{single-color("stain-light", 0.05)};
   }
+  @include device("desktop") {
+    --padding-inline: var(--glob-page-horizontal-padding-desktop);
+  }
+  @include device("mobile") {
+    --padding-inline: var(--glob-page-horizontal-padding-mobile);
+  }
 }
 
 .root {
   padding-block-start: 8zu;
-  padding-inline: 10zu;
+  padding-inline: var(--padding-inline);
   border-block-end: solid 1zx var(--border-color);
   background-color: var(--background-color);
   background-image: var(--glob-noise-background-image);

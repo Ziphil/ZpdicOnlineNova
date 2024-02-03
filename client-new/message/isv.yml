@@ -40,7 +40,7 @@ toast:
       
 dictionaryHeader:
   tab:
-    dictionary: "Властник"
+    dictionary: "Словник"
     example: "Рєченја"
     information: "Подробности"
     commission: "Просбы"
@@ -49,7 +49,7 @@ dictionaryList:
   updatedDate: "Актуализованы"
   createdDate: "Созданы"
   tag:
-    own: "Власник"
+    own: "Властник"
     edit: "Edit only"
     view: "View only"
   button:
