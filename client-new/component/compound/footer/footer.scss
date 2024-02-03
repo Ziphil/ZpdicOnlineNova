@@ -4,13 +4,36 @@
 
 
 .root {
-  margin-inline: 10zu;
+  @include device("desktop") {
+    --margin-inline: var(--glob-page-horizontal-padding-desktop);
+  }
+  @include device("mobile") {
+    --margin-inline: var(--glob-page-horizontal-padding-mobile);
+  }
+}
+
+.root {
+  margin-inline: var(--margin-inline);
   padding-block: 3zu;
   color: var(--glob-mute-text-color);
   border-block-start: solid 1zx var(--glob-border-color);
   display: flex;
-  justify-content: space-between;
   flex: 0 0 auto;
+  @include device("desktop") {
+    justify-content: space-between;
+  }
+  @include device("mobile") {
+    flex-direction: column;
+  }
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  @include device("mobile") {
+    align-items: center;
+    align-self: center;
+  }
 }
 
 .title-container {
@@ -43,4 +66,7 @@
 .recaptcha {
   margin-block-start: 2zu;
   font-size: 3zu;
+  @include device("mobile") {
+    text-align: center;
+  }
 }

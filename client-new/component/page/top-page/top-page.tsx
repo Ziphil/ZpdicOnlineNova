@@ -27,19 +27,21 @@ export const TopPage = create(
           <Hero/>
           <OverallAggregationPane/>
         </div>
-        <MainContainer styleName="main">
-          <section>
-            <h2 styleName="heading">{trans("heading.notification")}</h2>
-            <NotificationList size={1} showPagination={false}/>
-            <div styleName="link">
-              <Link href="/notification" scheme="secondary" variant="underline">
-                <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
-                {trans("moreNotifications")}
-              </Link>
-            </div>
-          </section>
-          <hr styleName="divider"/>
-        </MainContainer>
+        <div styleName="main">
+          <MainContainer>
+            <section>
+              <h2 styleName="heading">{trans("heading.notification")}</h2>
+              <NotificationList size={1} showPagination={false}/>
+              <div styleName="link">
+                <Link href="/notification" scheme="secondary" variant="underline">
+                  <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
+                  {trans("moreNotifications")}
+                </Link>
+              </div>
+            </section>
+            <hr styleName="divider"/>
+          </MainContainer>
+        </div>
       </Page>
     );
 

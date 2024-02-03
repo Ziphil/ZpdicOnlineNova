@@ -15,6 +15,14 @@
     --background-color: #{leveled-color("primary", 8)};
     --stain-color: #{single-color("black", 0.1)};
   }
+  @include device("desktop") {
+    --logo-font-size: #{zu(32)};
+    --catch-font-size: #{zu(7)};
+  }
+  @include device("mobile") {
+    --logo-font-size: #{zu(20)};
+    --catch-font-size: #{zu(6)};
+  }
 }
 
 .root {
@@ -32,18 +40,23 @@
 }
 
 .logo {
-  font-size: 32zu;
+  font-size: var(--logo-font-size);
   color: var(--logo-text-color);
   z-index: 1;
 }
 
 .catch {
   margin-block-start: 12zu;
-  font-size: 7zu;
+  font-size: var(--catch-font-size);
   letter-spacing: 0.15em;
   text-indent: 0.15em;
   color: var(--catch-text-color);
+  text-align: center;
   z-index: 1;
+}
+
+.catch-line {
+  display: inline-block;
 }
 
 .button-group {

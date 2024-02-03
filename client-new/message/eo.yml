@@ -217,4 +217,4 @@ topPage:
   heading:
     notification: "Lastatempaj novaĵoj"
   moreNotifications: "Legi pli da novaĵoj"
-  catch: "Desegnu vian propran universon per conlingvo"
+  catch: "<line>Desegnu</line> <line>vian propran universon</line> <line>per conlingvo</line>"

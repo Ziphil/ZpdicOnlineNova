@@ -10,11 +10,17 @@
     --background-color: #{leveled-color("primary", 0)};
     --stain-color: #{single-color("stain-light", 0.1)};
   }
+  @include device("desktop") {
+    --padding-inline: var(--glob-page-horizontal-padding-desktop);
+  }
+  @include device("mobile") {
+    --padding-inline: var(--glob-page-horizontal-padding-mobile);
+  }
 }
 
 .root {
   height: 12zu;
-  padding-inline: 10zu;
+  padding-inline: var(--padding-inline);
   inset-block-start: 0zu;
   border-block-end: solid 1zx var(--border-color);
   background-color: var(--background-color);

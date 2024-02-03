@@ -2,7 +2,7 @@
 
 import {faBook, faSignIn, faUser} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, GeneralIcon, LinkIconbag, aria, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, LinkIconbag, MultiLineText, aria, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
 import {Logo} from "/client-new/component/atom/logo";
 import {create} from "/client-new/component/create";
@@ -18,16 +18,18 @@ export const Hero = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("topPage");
+    const {trans, transNode} = useTrans("topPage");
 
     const me = useMe();
 
     return (
       <div styleName="root" {...rest}>
         <Logo styleName="logo"/>
-        <p styleName="catch">
-          {trans("catch")}
-        </p>
+        <MultiLineText styleName="catch" is="p" lineHeight="short">
+          {transNode("catch", {
+            line: (parts) => <span styleName="catch-line">{parts}</span>
+          })}
+        </MultiLineText>
         <div styleName="button-group">
           {(me !== null) ? (
             <Link styleName="button" href={`/user/${me.name}`} scheme="secondary" variant="light">

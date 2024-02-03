@@ -32,7 +32,7 @@ export const NotificationCard = create(
               <GeneralIcon icon={getIcon(notification.type)}/>
             </div>
             <div styleName="heading-container">
-              <MultiLineText styleName="title" is="h3">
+              <MultiLineText styleName="title" is="h3" lineHeight="short">
                 {notification.title}
               </MultiLineText>
               <time styleName="date" dateTime={notification.date}>

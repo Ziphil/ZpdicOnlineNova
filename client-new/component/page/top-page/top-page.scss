@@ -3,6 +3,15 @@
 @use "zographia/source/component/function.scss" as *;
 
 
+.root {
+  @include device("desktop") {
+    --padding-inline: var(--glob-page-horizontal-padding-desktop);
+  }
+  @include device("mobile") {
+    --padding-inline: var(--glob-page-horizontal-padding-mobile);
+  }
+}
+
 .top {
   display: flex;
   flex-direction: column;
@@ -12,6 +21,7 @@
 .main {
   margin-block-start: 12zu;
   margin-block-end: 16zu;
+  padding-inline: var(--padding-inline);
   flex: 1 1 auto;
 }
 
@@ -27,6 +37,6 @@
 }
 
 .divider {
-  margin-block: 12zu;
+  margin-block: 6zu;
   border-block-start: 1px solid var(--glob-border-color);
 }
