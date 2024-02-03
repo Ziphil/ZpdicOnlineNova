@@ -89,6 +89,10 @@ editWordForm:
       variation: "変化形を追加"
       relation: "関連語を追加"
     generate: "生成"
+exampleList:
+  button:
+    edit: "編集"
+    discard: "削除"
 header:
   userPage: "ユーザーページ"
 loginForm:
@@ -148,6 +152,9 @@ registerForm:
       パスワードを入力してください。
     agreeRequired: >-
       このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
+searchExampleForm:
+  information: >-
+    例文検索は今後のアップデートで利用できるようになる予定です。
 searchWordForm:
   mode:
     name: "単語"

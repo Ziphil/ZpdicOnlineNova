@@ -89,6 +89,10 @@ editWordForm:
       variation: "Add variation form"
       relation: "Add related word"
     generate: "Generate"
+exampleList:
+  button:
+    edit: "Edit"
+    discard: "Delete"
 header:
   userPage: "User page"
 loginForm:
@@ -149,6 +153,9 @@ registerForm:
       Enter a password.
     agreeRequired: >-
       In order to use this application, you must read and agree to the privacy policy.
+searchExampleForm:
+  information: >-
+    Searching for example sentences will be available in a future update.
 searchWordForm:
   mode:
     name: "Headword"

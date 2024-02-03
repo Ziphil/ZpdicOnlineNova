@@ -89,6 +89,10 @@ editWordForm:
       variation: "Додати вариацију"
       relation: "Додати свезано слово"
     generate: "Произвести"
+exampleList:
+  button:
+    edit: "Измєнити"
+    discard: "Одстранити"
 header:
   userPage: "Користничска страница"
 loginForm:
@@ -149,6 +153,9 @@ registerForm:
       Впишите паролу.
     agreeRequired: >-
       Да бы употрєбјати то примєњенје, вы мусите прочитати и согласити се с политикоју приватности.
+searchExampleForm:
+  information: >-
+    Searching for example sentences will be available in a future update.
 searchWordForm:
   mode:
     name: "Слово"

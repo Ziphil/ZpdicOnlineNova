@@ -89,6 +89,10 @@ editWordForm:
       variation: "Aldoni variaĵan formon"
       relation: "Aldoni rilatan vorton"
     generate: "Generi"
+exampleList:
+  button:
+    edit: "Redakti"
+    discard: "Forigi"
 header:
   userPage: "Uzanta paĝo"
 loginForm:
@@ -149,6 +153,9 @@ registerForm:
       Enigu pasvorton.
     agreeRequired: >-
       Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la privateca politiko.
+searchExampleForm:
+  information: >-
+    Serĉi ekzemplajn frazojn estos disponebla en estonta ĝisdatigo.
 searchWordForm:
   mode:
     name: "Kapvorto"
