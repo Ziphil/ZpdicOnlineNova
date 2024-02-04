@@ -1,6 +1,5 @@
 //
 
-import {nanoid} from "nanoid";
 import {BaseSyntheticEvent, useMemo} from "react";
 import {UseFormReturn} from "react-hook-form";
 import {RelationWord} from "/client-new/component/atom/relation-word-select";
@@ -17,12 +16,10 @@ const DEFAULT_VALUE = {
   pronunciation: "",
   tags: [],
   equivalents: [{
-    tempId: "default",
     titles: [],
     nameString: ""
   }],
   informations: [{
-    tempId: "default",
     title: "",
     text: ""
   }],
@@ -35,22 +32,18 @@ type FormValue = {
   pronunciation: string,
   tags: Array<string>,
   equivalents: Array<{
-    tempId: string,
     titles: Array<string>,
     nameString: string
   }>,
   informations: Array<{
-    tempId: string,
     title: string,
     text: string
   }>,
   variations: Array<{
-    tempId: string,
     title: string,
     name: string
   }>,
   relations: Array<{
-    tempId: string,
     titles: Array<string>,
     word: RelationWord | null
   }>
@@ -84,22 +77,18 @@ function getFormValue(word: Word): FormValue {
     pronunciation: word.pronunciation || "",
     tags: word.tags,
     equivalents: word.equivalents.map((equivalent) => ({
-      tempId: nanoid(),
       titles: equivalent.titles,
       nameString: equivalent.names.join(", ")
     })),
     informations: word.informations.map((information) => ({
-      tempId: nanoid(),
       title: information.title,
       text: information.text
     })),
     variations: word.variations.map((variation) => ({
-      tempId: nanoid(),
       title: variation.title,
       name: variation.name
     })),
     relations: word.relations.map((relation) => ({
-      tempId: nanoid(),
       titles: relation.titles,
       word: {
         number: relation.number,
