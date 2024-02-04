@@ -206,6 +206,8 @@ errorPage:
       Ĝi eble estis forigita aŭ movita al alia loko, do bonvolu provi serĉi denove el la ĉefpaĝo.
   button:
     topPage: "Reiri al la ĉefpaĝo"
+examplePage:
+  add: "Krei novan frazon"
 loginPage:
   title: "Ensaluti"
 notificationListPage:

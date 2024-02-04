@@ -4,15 +4,6 @@
 
 
 .root {
-  @include device("desktop") {
-    --padding-inline: var(--glob-page-horizontal-padding-desktop);
-  }
-  @include device("mobile") {
-    --padding-inline: var(--glob-page-horizontal-padding-mobile);
-  }
-}
-
-.root {
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
@@ -24,7 +15,7 @@
   &[data-insert-padding] {
     padding-block-start: 12zu;
     padding-block-end: 16zu;
-    padding-inline: var(--padding-inline);
+    padding-inline: var(--glob-page-horizontal-padding);
   }
 }
 

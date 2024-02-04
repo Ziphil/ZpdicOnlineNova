@@ -2,7 +2,7 @@
 
 import {faEdit, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 import {useResponse} from "/client-new/hook/request";
 import {EnhancedDictionary, Example} from "/client-new/skeleton";
@@ -27,11 +27,13 @@ export const ExampleCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
-          <div>
-            {example.sentence}
-          </div>
-          <div>
-            {example.translation}
+          <div styleName="parallel">
+            <MultiLineText is="p">
+              {example.sentence}
+            </MultiLineText>
+            <MultiLineText is="p">
+              {example.translation}
+            </MultiLineText>
           </div>
         </CardBody>
         {(canEdit) && (

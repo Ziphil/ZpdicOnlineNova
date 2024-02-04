@@ -206,6 +206,8 @@ errorPage:
       It may have been deleted or moved to another location, so please try looking again from the top page.
   button:
     top: "Back to top page"
+examplePage:
+  add: "Create new sentence"
 loginPage:
   title: "Sign in"
 notificationListPage:

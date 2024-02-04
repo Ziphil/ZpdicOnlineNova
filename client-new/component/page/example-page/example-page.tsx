@@ -23,7 +23,7 @@ export const ExamplePage = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionaryPage");
+    const {trans} = useTrans("examplePage");
 
     const {identifier} = useParams();
     const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];

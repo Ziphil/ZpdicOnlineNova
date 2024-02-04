@@ -8,6 +8,12 @@
   flex-direction: column;
 }
 
+.parallel {
+  column-gap: 3zu;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .footer {
   column-gap: 3zu;
   display: flex;

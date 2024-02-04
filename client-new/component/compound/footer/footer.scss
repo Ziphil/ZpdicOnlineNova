@@ -4,16 +4,7 @@
 
 
 .root {
-  @include device("desktop") {
-    --margin-inline: var(--glob-page-horizontal-padding-desktop);
-  }
-  @include device("mobile") {
-    --margin-inline: var(--glob-page-horizontal-padding-mobile);
-  }
-}
-
-.root {
-  margin-inline: var(--margin-inline);
+  margin-inline: var(--glob-page-horizontal-padding);
   padding-block: 3zu;
   color: var(--glob-mute-text-color);
   border-block-start: solid 1zx var(--glob-border-color);

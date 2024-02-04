@@ -206,6 +206,8 @@ errorPage:
       Она можно была одстрањена или прємєшчена в ино мєсто, затом прошу попробујте поискати ју опет из врхној странице.
   button:
     top: "Back to top page"
+examplePage:
+  add: "Создати ново рєченје"
 loginPage:
   title: "Пријавити се"
 notificationListPage:

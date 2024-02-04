@@ -205,6 +205,8 @@ errorPage:
       削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
   button:
     topPage: "トップページへ"
+examplePage:
+  add: "新しい単語を作成"
 loginPage:
   title: "ログイン"
 notificationListPage:

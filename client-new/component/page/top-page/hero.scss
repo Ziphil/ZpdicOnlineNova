@@ -16,12 +16,12 @@
     --stain-color: #{single-color("black", 0.1)};
   }
   @include device("desktop") {
-    --logo-font-size: #{zu(32)};
-    --catch-font-size: #{zu(7)};
+    --logo-font-size: 32zu;
+    --catch-font-size: 7zu;
   }
   @include device("mobile") {
-    --logo-font-size: #{zu(20)};
-    --catch-font-size: #{zu(6)};
+    --logo-font-size: 20zu;
+    --catch-font-size: 6zu;
   }
 }
 
