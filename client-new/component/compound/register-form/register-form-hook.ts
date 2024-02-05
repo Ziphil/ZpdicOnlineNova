@@ -8,6 +8,7 @@ import {useLoginRequest} from "/client-new/hook/auth";
 import {useForm} from "/client-new/hook/form";
 import {useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
+import {switchResponse} from "/client-new/util/response";
 import {IDENTIFIER_REGEXP} from "/client-new/util/validation";
 import type {RequestData} from "/server/controller/internal/type";
 
@@ -26,12 +27,12 @@ const DEFAULT_VALUE = {
 } satisfies FormValue;
 type FormValue = Asserts<typeof SCHEMA>;
 
-export type RegisterFormSpec = {
+export type RegisterSpec = {
   form: UseFormReturn<FormValue>,
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useRegisterForm(): RegisterFormSpec {
+export function useRegisterUser(): RegisterSpec {
   const form = useForm<FormValue>(SCHEMA, DEFAULT_VALUE, {});
   const request = useRequest();
   const login = useLoginRequest();
@@ -39,14 +40,13 @@ export function useRegisterForm(): RegisterFormSpec {
   const navigate = useNavigate();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("registerUser", getQuery(value), {useRecaptcha: true});
-    if (response.status === 200 && !("error" in response.data)) {
-      const body = response.data;
+    await switchResponse(response, async (body) => {
       const loginResponse = await login({name: body.name, password: value.password});
-      if (loginResponse.status === 200) {
+      await switchResponse(loginResponse, async () => {
         dispatchSuccessToast("register");
         navigate(`/user/${body.name}`);
-      }
-    }
+      });
+    });
   }), [request, login, navigate, form, dispatchSuccessToast]);
   return {form, handleSubmit};
 }

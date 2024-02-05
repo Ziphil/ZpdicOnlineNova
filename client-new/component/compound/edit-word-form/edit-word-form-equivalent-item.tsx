@@ -18,7 +18,7 @@ import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {request} from "/client-new/util/request";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
-import {EditWordFormSpec} from "./edit-word-form-hook";
+import {EditWordSpec} from "./edit-word-form-hook";
 
 
 export const EditWordFormEquivalentItem = create(
@@ -31,7 +31,7 @@ export const EditWordFormEquivalentItem = create(
     ...rest
   }: {
     dictionary: EnhancedDictionary,
-    form: EditWordFormSpec["form"],
+    form: EditWordSpec["form"],
     dndId: string,
     index: number,
     className?: string

@@ -50,12 +50,12 @@ type FormValue = {
   }>
 };
 
-export type EditWordFormSpec = {
+export type EditWordSpec = {
   form: UseFormReturn<FormValue>,
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useEditWordForm(dictionary: Dictionary, word: Word | null): EditWordFormSpec {
+export function useEditWord(dictionary: Dictionary, word: Word | null): EditWordSpec {
   const form = useForm<FormValue>((word !== null) ? getFormValue(word) : DEFAULT_VALUE, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();

@@ -19,7 +19,7 @@ import {
 import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
-import {useRegisterForm} from "./register-form-hook";
+import {useRegisterUser} from "./register-form-hook";
 
 
 export const RegisterForm = create(
@@ -32,7 +32,7 @@ export const RegisterForm = create(
 
     const {trans, transNode} = useTrans("registerForm");
 
-    const {form, handleSubmit} = useRegisterForm();
+    const {form, handleSubmit} = useRegisterUser();
     const {register, getFieldState, formState: {errors}} = form;
 
     return (

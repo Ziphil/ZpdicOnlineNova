@@ -13,7 +13,7 @@ import {
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
-import {EditWordFormSpec} from "./edit-word-form-hook";
+import {EditWordSpec} from "./edit-word-form-hook";
 import {EditWordFormRelationItem} from "./edit-word-form-relation-item";
 
 
@@ -25,7 +25,7 @@ export const EditWordFormRelationSection = create(
     ...rest
   }: {
     dictionary: EnhancedDictionary,
-    form: EditWordFormSpec["form"],
+    form: EditWordSpec["form"],
     className?: string
   } & AdditionalProps): ReactElement {
 

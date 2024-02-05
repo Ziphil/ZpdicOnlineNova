@@ -7,6 +7,7 @@ import {Asserts, object, string} from "yup";
 import {useLoginRequest} from "/client-new/hook/auth";
 import {useForm} from "/client-new/hook/form";
 import {useToast} from "/client-new/hook/toast";
+import {switchResponse} from "/client-new/util/response";
 import type {RequestData} from "/server/controller/internal/type";
 
 
@@ -20,25 +21,24 @@ const DEFAULT_VALUE = {
 } satisfies FormValue;
 type FormValue = Asserts<typeof SCHEMA>;
 
-export type LoginFormSpec = {
+export type LoginSpec = {
   form: UseFormReturn<FormValue>,
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useLoginForm(): LoginFormSpec {
+export function useLogin(): LoginSpec {
   const form = useForm<FormValue>(SCHEMA, DEFAULT_VALUE, {});
   const login = useLoginRequest();
   const {dispatchSuccessToast, dispatchErrorToast} = useToast();
   const navigate = useNavigate();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await login(getQuery(value));
-    if (response.status === 200 && !("error" in response.data)) {
-      const body = response.data;
+    await switchResponse(response, async (body) => {
       dispatchSuccessToast("login");
       navigate(`/user/${body.user.name}`);
-    } else {
+    }, async () => {
       dispatchErrorToast("loginFailed");
-    }
+    });
   }), [login, navigate, form, dispatchSuccessToast, dispatchErrorToast]);
   return {form, handleSubmit};
 }

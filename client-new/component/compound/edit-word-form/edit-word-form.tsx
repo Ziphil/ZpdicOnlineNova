@@ -14,7 +14,7 @@ import {create} from "/client-new/component/create";
 import {EnhancedDictionary, Word} from "/client-new/skeleton";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
 import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
-import {useEditWordForm} from "./edit-word-form-hook";
+import {useEditWord} from "./edit-word-form-hook";
 import {EditWordFormInformationSection} from "./edit-word-form-information-section";
 import {EditWordFormVariationSection} from "./edit-word-form-variation-section";
 
@@ -33,7 +33,7 @@ export const EditWordForm = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {form, handleSubmit} = useEditWordForm(dictionary, word);
+    const {form, handleSubmit} = useEditWord(dictionary, word);
 
     return (
       <form styleName="root" {...rest}>

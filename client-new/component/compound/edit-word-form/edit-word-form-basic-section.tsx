@@ -19,7 +19,7 @@ import {
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {request} from "/client-new/util/request";
-import {EditWordFormSpec} from "./edit-word-form-hook";
+import {EditWordSpec} from "./edit-word-form-hook";
 
 
 export const EditWordFormBasicSection = create(
@@ -30,7 +30,7 @@ export const EditWordFormBasicSection = create(
     ...rest
   }: {
     dictionary: EnhancedDictionary,
-    form: EditWordFormSpec["form"],
+    form: EditWordSpec["form"],
     className?: string
   } & AdditionalProps): ReactElement {
 

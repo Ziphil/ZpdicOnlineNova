@@ -14,7 +14,7 @@ import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordFormEquivalentItem} from "./edit-word-form-equivalent-item";
-import {EditWordFormSpec} from "./edit-word-form-hook";
+import {EditWordSpec} from "./edit-word-form-hook";
 
 
 export const EditWordFormEquivalentSection = create(
@@ -25,7 +25,7 @@ export const EditWordFormEquivalentSection = create(
     ...rest
   }: {
     dictionary: EnhancedDictionary,
-    form: EditWordFormSpec["form"],
+    form: EditWordSpec["form"],
     className?: string
   } & AdditionalProps): ReactElement {
 
