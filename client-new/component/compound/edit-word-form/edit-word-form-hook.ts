@@ -7,6 +7,7 @@ import {useForm} from "/client-new/hook/form";
 import {invalidateResponses, useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
 import {Dictionary, Word} from "/client-new/skeleton";
+import {switchResponse} from "/client-new/util/response";
 import type {RequestData} from "/server/controller/internal/type";
 
 
@@ -59,13 +60,13 @@ export function useEditWordForm(dictionary: Dictionary, word: Word | null): Edit
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
+    const adding = value.number === null;
     const response = await request("editWord", getQuery(dictionary, value));
-    if (response.status === 200 && !("error" in response.data)) {
-      const body = response.data;
+    await switchResponse(response, async (body) => {
       form.setValue("number", body.number);
-      dispatchSuccessToast("editWord");
+      dispatchSuccessToast((adding) ? "addWord" : "changeWord");
       await invalidateResponses("searchWord", (query) => query.number === dictionary.number);
-    }
+    });
   }), [dictionary, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
 }

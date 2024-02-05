@@ -4,6 +4,12 @@ toast:
       ログインに成功しました。
     register: >-
       アカウントを作成しました。
+    addWord: >-
+      単語を新しく作成しました。
+    changeWord: >-
+      単語を編集しました。
+    discardWord: >-
+      単語を削除しました。
   error:
     recaptchaError: >-
       エラーが発生しました。

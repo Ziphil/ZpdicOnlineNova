@@ -4,6 +4,12 @@ toast:
       Sukcesis ensaluti.
     register: >-
       Sukcesis krei vian konton.
+    addWord: >-
+      Sukcesis krei novan vorton.
+    changeWord: >-
+      Sukcesis redakti la vorton.
+    discardWord: >-
+      Sukcesis forigi la vorton.
   error:
     recaptchaError: >-
       Io fiaskis.

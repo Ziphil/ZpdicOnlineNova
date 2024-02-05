@@ -4,6 +4,12 @@ toast:
       Successfully signed in.
     register: >-
       Successfully created your account.
+    addWord: >-
+      Successfully created a new word.
+    changeWord: >-
+      Successfully edited the word.
+    discardWord: >-
+      Successfully deleted the word.
   error:
     recaptchaError: >-
       Something failed.
