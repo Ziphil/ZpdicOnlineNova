@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement, SetStateAction, useCallback, useMemo} from "react";
-import {useHref, useParams} from "react-router-dom";
+import {Fragment, ReactElement, SetStateAction, useCallback} from "react";
+import {useHref} from "react-router-dom";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {Markdown} from "/client-new/component/atom/markdown";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
@@ -11,9 +11,10 @@ import {MainContainer, Page} from "/client-new/component/compound/page";
 import {SearchWordForm} from "/client-new/component/compound/search-word-form";
 import {WordList} from "/client-new/component/compound/word-list";
 import {create} from "/client-new/component/create";
+import {useDictionary} from "/client-new/hook/dictionary";
 import {useSuspenseResponse} from "/client-new/hook/request";
 import {Search, useSearchState} from "/client-new/hook/search";
-import {EnhancedDictionary, WordParameter} from "/client-new/skeleton";
+import {WordParameter} from "/client-new/skeleton";
 import {calcOffsetSpec, resolveStateAction} from "/client-new/util/misc";
 
 
@@ -27,11 +28,8 @@ export const DictionaryPage = create(
 
     const {trans} = useTrans("dictionaryPage");
 
-    const {identifier} = useParams();
-    const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
-    const [dictionary] = useSuspenseResponse("fetchDictionary", {number, paramName}, {refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
+    const dictionary = useDictionary();
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
-    const enhancedDictionary = useMemo(() => EnhancedDictionary.enhance(dictionary), [dictionary]);
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
     const [hitResult] = useSuspenseResponse("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 40)}, {keepPreviousData: true});
@@ -60,7 +58,7 @@ export const DictionaryPage = create(
       <Page {...rest} headerNode={(
         <Fragment>
           <Header/>
-          <DictionaryHeader dictionary={enhancedDictionary} width="wide" tabValue="dictionary"/>
+          <DictionaryHeader dictionary={dictionary} width="wide" tabValue="dictionary"/>
         </Fragment>
       )}>
         <MainContainer styleName="main" width="wide">
@@ -81,7 +79,7 @@ export const DictionaryPage = create(
                 {dictionary.explanation}
               </Markdown>
             ) : (
-              <WordList dictionary={enhancedDictionary} words={hitWords} size={40} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>
+              <WordList dictionary={dictionary} words={hitWords} size={40} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>
             )}
           </div>
         </MainContainer>

@@ -1,45 +1,40 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {Fragment, ReactElement} from "react";
-import {useParams} from "react-router-dom";
 import {AdditionalProps, useTrans} from "zographia";
-import {EditWordForm} from "/client-new/component/compound/edit-word-form";
+import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
 import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
 import {useDictionary} from "/client-new/hook/dictionary";
-import {useSuspenseResponse} from "/client-new/hook/request";
 
 
-export const EditWordPage = create(
-  require("./edit-word-page.scss"), "EditWordPage",
+export const DictionarySettingPage = create(
+  require("./dictionary-setting-page.scss"), "DictionarySettingPage",
   function ({
     ...rest
   }: {
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("editWordPage");
+    const {trans} = useTrans("dictionarySettingPage");
 
-    const {wordNumber} = useParams();
     const dictionary = useDictionary();
-
-    const [word] = useSuspenseResponse("fetchWord", {number: dictionary.number, wordNumber: +wordNumber!}, RESPONSE_CONFIG);
 
     return (
       <Page {...rest} headerNode={(
         <Fragment>
           <Header/>
+          <DictionaryHeader dictionary={dictionary} tabValue="setting"/>
         </Fragment>
       )}>
         <MainContainer styleName="main">
-          <EditWordForm dictionary={dictionary} word={word}/>
+          <section>
+            <h3 styleName="heading">{trans("heading.history")}</h3>
+          </section>
         </MainContainer>
       </Page>
     );
 
   }
 );
-
-
-const RESPONSE_CONFIG = {refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false};

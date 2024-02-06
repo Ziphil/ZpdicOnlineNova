@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {Fragment, ReactElement, Suspense, useMemo} from "react";
-import {useParams} from "react-router-dom";
+import {Fragment, ReactElement, Suspense} from "react";
 import {AdditionalProps, Card, CardBody, MultiLineText, useTrans} from "zographia";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
 import {Header} from "/client-new/component/compound/header";
@@ -9,8 +8,7 @@ import {HistoryChart} from "/client-new/component/compound/history-chart";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {WordNameFrequencyChart} from "/client-new/component/compound/word-name-frequency-chart";
 import {create} from "/client-new/component/create";
-import {useSuspenseResponse} from "/client-new/hook/request";
-import {EnhancedDictionary} from "/client-new/skeleton";
+import {useDictionary} from "/client-new/hook/dictionary";
 
 
 export const DictionaryInformationPage = create(
@@ -23,16 +21,13 @@ export const DictionaryInformationPage = create(
 
     const {trans} = useTrans("dictionaryInformationPage");
 
-    const {identifier} = useParams();
-    const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
-    const [dictionary] = useSuspenseResponse("fetchDictionary", {number, paramName}, {refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
-    const enhancedDictionary = useMemo(() => EnhancedDictionary.enhance(dictionary), [dictionary]);
+    const dictionary = useDictionary();
 
     return (
       <Page {...rest} headerNode={(
         <Fragment>
           <Header/>
-          <DictionaryHeader dictionary={enhancedDictionary} tabValue="information"/>
+          <DictionaryHeader dictionary={dictionary} tabValue="information"/>
         </Fragment>
       )}>
         <MainContainer styleName="main">
@@ -44,7 +39,7 @@ export const DictionaryInformationPage = create(
             <Suspense>
               <Card>
                 <CardBody>
-                  <HistoryChart dictionary={enhancedDictionary}/>
+                  <HistoryChart dictionary={dictionary}/>
                 </CardBody>
               </Card>
             </Suspense>
@@ -57,7 +52,7 @@ export const DictionaryInformationPage = create(
             <Suspense>
               <Card>
                 <CardBody>
-                  <WordNameFrequencyChart dictionary={enhancedDictionary}/>
+                  <WordNameFrequencyChart dictionary={dictionary}/>
                 </CardBody>
               </Card>
             </Suspense>
