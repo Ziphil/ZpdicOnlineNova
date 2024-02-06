@@ -1,8 +1,10 @@
 //
 
-import {faEdit, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, useTrans} from "zographia";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEdit, faHandPointRight, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {Fragment, ReactElement} from "react";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, aria, useTrans} from "zographia";
+import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
 import {useResponse} from "/client-new/hook/request";
 import {EnhancedDictionary, Example} from "/client-new/skeleton";
@@ -22,7 +24,10 @@ export const ExampleCard = create(
 
     const {trans, transNumber, transDate} = useTrans("exampleList");
 
-    const [canEdit] = useResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
+    const number = dictionary.number;
+    const wordNumbers = example.words.map((word) => word.number);
+    const [canEdit] = useResponse("fetchDictionaryAuthorization", {number, authority: "edit"});
+    const [wordNameSpec] = useResponse("fetchWordNames", {number, wordNumbers}, {ignoreError: true});
 
     return (
       <Card styleName="root" {...rest}>
@@ -33,6 +38,21 @@ export const ExampleCard = create(
             </MultiLineText>
             <MultiLineText is="p">
               {example.translation}
+            </MultiLineText>
+          </div>
+          <div styleName="word">
+            <span styleName="icon" {...aria({hidden: true})}>
+              <FontAwesomeIcon icon={faHandPointRight}/>
+            </span>
+            <MultiLineText styleName="text" is="span">
+              {example.words.map((word, index) => (
+                <Fragment key={index}>
+                  {(index > 0) && <span styleName="punctuation">, </span>}
+                  <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(word.name ?? wordNameSpec?.names[word.number] ?? "")}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
+                    {word.name ?? wordNameSpec?.names[word.number] ?? "?"}
+                  </Link>
+                </Fragment>
+              ))}
             </MultiLineText>
           </div>
         </CardBody>
