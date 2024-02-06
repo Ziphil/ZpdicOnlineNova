@@ -217,7 +217,7 @@ dictionaryInformationPage:
       The chart below shows how frequent each character appears in the headwords in this dictionary.
 dictionarySettingPage:
   tab:
-    appearance: "Appearance"
+    general: "General"
     editing: "Editing"
     authority: "Permissions"
 dictionarySettingGeneralPart:
@@ -227,6 +227,10 @@ dictionarySettingGeneralPart:
   description:
     paramName: >-
       Setting this will replace the number in the dictionary URL with the name set here.
+  label:
+    name: "Name"
+  button:
+    change: "Change"
 errorPage:
   title:
     notFound: "Not\nFound"

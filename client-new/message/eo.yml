@@ -217,7 +217,7 @@ dictionaryInformationPage:
       La sekva diagramo montras kiom ofta ĉiu signo aperas en la kapvortoj en tiu vortaro.
 dictionarySettingPage:
   tab:
-    appearance: "Aspekto"
+    general: "Ĝenerala"
     editing: "Redaktado"
     authority: "Permesoj"
 dictionarySettingGeneralPart:
@@ -227,6 +227,10 @@ dictionarySettingGeneralPart:
   description:
     paramName: >-
       Agordi ĝi anstataŭigos la identigan numeron en la retadreso de la vortaro per la nomo tie agordita.
+  label:
+    name: "Nomo"
+  button:
+    change: "Ŝanĝi"
 errorPage:
   title:
     notFound: "Ne\nTrovita"

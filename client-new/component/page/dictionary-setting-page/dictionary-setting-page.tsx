@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faPalette, faPen, faUsers} from "@fortawesome/sharp-regular-svg-icons";
+import {faPen, faSliders, faUsers} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {Outlet, useParams} from "react-router-dom";
 import {AdditionalProps, GeneralIcon, TabIconbag, TabList, useTrans} from "zographia";
@@ -33,10 +33,10 @@ export const DictionarySettingPage = create(
         </Fragment>
       )}>
         <MainContainer styleName="main">
-          <TabList styleName="tab-list" value={tabValue || "appearance"} scheme="primary">
-            <LinkTab value="appearance" href={`/dictionary/${dictionary.number}/settings`}>
-              <TabIconbag><GeneralIcon icon={faPalette}/></TabIconbag>
-              {trans("tab.appearance")}
+          <TabList styleName="tab-list" value={tabValue || "general"} scheme="primary">
+            <LinkTab value="general" href={`/dictionary/${dictionary.number}/settings`}>
+              <TabIconbag><GeneralIcon icon={faSliders}/></TabIconbag>
+              {trans("tab.general")}
             </LinkTab>
             <LinkTab value="editing" href={`/dictionary/${dictionary.number}/settings/editing`}>
               <TabIconbag><GeneralIcon icon={faPen}/></TabIconbag>

@@ -217,7 +217,7 @@ dictionaryInformationPage:
       На слєдујучем диаграму показываје се како често кажды знак појавјаје се в словах того словника.
 dictionarySettingPage:
   tab:
-    appearance: "Изглед"
+    general: "Обчи"
     editing: "Editing"
     authority: "Позвољенја"
 dictionarySettingGeneralPart:
@@ -227,6 +227,10 @@ dictionarySettingGeneralPart:
   description:
     paramName: >-
       Setting this will replace the number in the dictionary URL with the name set here.
+  label:
+    name: "Име"
+  button:
+    change: "Измєнити"
 errorPage:
   title:
     notFound: "Не\nНајдены"
