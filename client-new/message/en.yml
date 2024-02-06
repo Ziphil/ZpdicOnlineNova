@@ -100,6 +100,7 @@ editWordForm:
       relation: "Add related word"
     generate: "Generate"
 exampleList:
+  noWord: "No words linked"
   button:
     edit: "Edit"
     discard: "Delete"

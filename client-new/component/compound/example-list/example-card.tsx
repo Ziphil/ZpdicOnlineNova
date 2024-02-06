@@ -45,14 +45,18 @@ export const ExampleCard = create(
               <FontAwesomeIcon icon={faHandPointRight}/>
             </span>
             <MultiLineText styleName="text" is="span">
-              {example.words.map((word, index) => (
+              {(example.words.length > 0) ? example.words.map((word, index) => (
                 <Fragment key={index}>
                   {(index > 0) && <span styleName="punctuation">, </span>}
                   <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(word.name ?? wordNameSpec?.names[word.number] ?? "")}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
                     {word.name ?? wordNameSpec?.names[word.number] ?? "?"}
                   </Link>
                 </Fragment>
-              ))}
+              )) : (
+                <p styleName="absent">
+                  {trans("noWord")}
+                </p>
+              )}
             </MultiLineText>
           </div>
         </CardBody>

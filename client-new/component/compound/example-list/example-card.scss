@@ -34,6 +34,10 @@
   color: var(--glob-mute-text-color);
 }
 
+.absent {
+  color: var(--glob-mute-text-color); 
+}
+
 .footer {
   column-gap: 3zu;
   display: flex;

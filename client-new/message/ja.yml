@@ -100,6 +100,7 @@ editWordForm:
       relation: "関連語を追加"
     generate: "生成"
 exampleList:
+  noWord: "関連付けられた単語がありません"
   button:
     edit: "編集"
     discard: "削除"
