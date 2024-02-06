@@ -215,6 +215,18 @@ dictionaryInformationPage:
       Коликост слов јест записывана кажды дењ приблизно в 14:30 (UTC).
     wordNameFrequency: >-
       На слєдујучем диаграму показываје се како често кажды знак појавјаје се в словах того словника.
+dictionarySettingPage:
+  tab:
+    appearance: "Изглед"
+    editing: "Editing"
+    authority: "Позвољенја"
+dictionarySettingGeneralPart:
+  heading:
+    name: "Име"
+    paramName: "Адресно име"
+  description:
+    paramName: >-
+      Setting this will replace the number in the dictionary URL with the name set here.
 errorPage:
   title:
     notFound: "Не\nНајдены"

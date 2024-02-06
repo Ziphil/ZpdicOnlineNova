@@ -215,6 +215,18 @@ dictionaryInformationPage:
       La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
     wordNameFrequency: >-
       La sekva diagramo montras kiom ofta ĉiu signo aperas en la kapvortoj en tiu vortaro.
+dictionarySettingPage:
+  tab:
+    appearance: "Aspekto"
+    editing: "Redaktado"
+    authority: "Permesoj"
+dictionarySettingGeneralPart:
+  heading:
+    name: "Nomo"
+    paramName: "Retadresa nomo"
+  description:
+    paramName: >-
+      Agordi ĝi anstataŭigos la identigan numeron en la retadreso de la vortaro per la nomo tie agordita.
 errorPage:
   title:
     notFound: "Ne\nTrovita"

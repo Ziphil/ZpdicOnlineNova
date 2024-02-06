@@ -4,20 +4,11 @@
 
 
 .main {
-  row-gap: 6zu;
   display: flex;
   flex-direction: column;
 }
 
-.heading {
-  @include bold-font;
-  margin-block-end: 3zu;
-  font-size: 5zu;
-  color: var(--glob-primary-heading-text-color);
-}
-
-.description {
-  margin-block-end: 4zu;
-  font-size: 3.5zu;
-  color: var(--glob-mute-text-color);
+.tab-list {
+  margin-block-start: 4zu;
+  margin-block-end: 12zu;
 }

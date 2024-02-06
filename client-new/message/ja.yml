@@ -214,6 +214,18 @@ dictionaryInformationPage:
       単語数は毎日 23 時 30 分頃 (JST, UTC+9) に記録されます。
     wordNameFrequency: >-
       見出し語に使われている各文字の出現頻度です。
+dictionarySettingPage:
+  tab:
+    appearance: "表示"
+    editing: "編集"
+    authority: "権限"
+dictionarySettingGeneralPart:
+  heading:
+    name: "名前"
+    paramName: "URL 用名称"
+  description:
+    paramName: >-
+      これを設定すると、辞書ページの URL として、番号の部分をこの名称に置き換えたものが利用できるようになります。
 errorPage:
   title:
     notFound: "Not\nFound"

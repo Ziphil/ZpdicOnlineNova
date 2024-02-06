@@ -215,6 +215,18 @@ dictionaryInformationPage:
       The word count is recorded every day at around 14:30 (UTC).
     wordNameFrequency: >-
       The chart below shows how frequent each character appears in the headwords in this dictionary.
+dictionarySettingPage:
+  tab:
+    appearance: "Appearance"
+    editing: "Editing"
+    authority: "Permissions"
+dictionarySettingGeneralPart:
+  heading:
+    name: "Name"
+    paramName: "URL name"
+  description:
+    paramName: >-
+      Setting this will replace the number in the dictionary URL with the name set here.
 errorPage:
   title:
     notFound: "Not\nFound"
