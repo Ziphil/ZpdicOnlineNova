@@ -44,6 +44,10 @@ toast:
       An unexpected error occurred.
       Please notify the administrator.
 
+alertDialog:
+  confirm: "Konfirmi"
+  cancel: "Nuligi"
+
 dictionaryHeader:
   tab:
     dictionary: "Dictionary"
@@ -188,6 +192,13 @@ wordList:
   button:
     edit: "Edit"
     discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This word will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
 wordNameFrequencyChart:
   other: "Others"
   

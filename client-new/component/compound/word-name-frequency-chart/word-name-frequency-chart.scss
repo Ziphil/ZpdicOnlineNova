@@ -19,6 +19,10 @@
   overflow: visible;
 }
 
+.pie-chart * {
+  outline: none;
+}
+
 .pie :global(.recharts-pie-sector) path {
   stroke: var(--pie-stroke-color);
 }

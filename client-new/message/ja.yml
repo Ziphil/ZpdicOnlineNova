@@ -44,6 +44,10 @@ toast:
       予期しないエラーが発生しました。
       お手数ですが管理者までご連絡ください。
 
+alertDialog:
+  confirm: "決定"
+  cancel: "キャンセル"
+
 dictionaryHeader:
   tab:
     dictionary: "辞書"
@@ -187,6 +191,13 @@ wordList:
   button:
     edit: "編集"
     discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この単語を削除します。
+        削除した後にデータを戻すことはできません。
+        本当によろしいですか?
+      confirm: "削除"
 wordNameFrequencyChart:
   other: "その他"
 

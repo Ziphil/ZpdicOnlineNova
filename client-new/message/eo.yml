@@ -44,6 +44,10 @@ toast:
       Neatendita eraro okazis.
       Bonvolu sciigi la administranton.
 
+alertDialog:
+  confirm: "Konfirmi"
+  cancel: "Nuligi"
+
 dictionaryHeader:
   tab:
     dictionary: "Vortaro"
@@ -188,6 +192,13 @@ wordList:
   button:
     edit: "Redakti"
     discard: "Forigi"
+  dialog:
+    discard:
+      message: >-
+        Tiu vorto estos forigita konstante.
+        Vi ne povas restaŭri ĝin poste.
+        Ĉu vi vere certas?
+      confirm: "Forigi"
 wordNameFrequencyChart:
   other: "Aliaj"
 

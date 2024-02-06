@@ -43,6 +43,10 @@ toast:
     unexpected: >-
       Догодил се неочекиваны блуд.
       Πрошу увєдомите администратору.
+
+alertDialog:
+  confirm: "Confirm"
+  cancel: "Одрєкти"
       
 dictionaryHeader:
   tab:
@@ -188,6 +192,13 @@ wordList:
   button:
     edit: "Измєнити"
     discard: "Одстранити"
+  dialog:
+    discard:
+      message: >-
+        This word will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Одстранити"
 wordNameFrequencyChart:
   other: "Ине"
   
