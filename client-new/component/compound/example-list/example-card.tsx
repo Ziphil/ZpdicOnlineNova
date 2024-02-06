@@ -58,11 +58,11 @@ export const ExampleCard = create(
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">
-            <Button scheme="primary" variant="light">
+            <Button scheme="secondary" variant="underline">
               <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
               {trans("button.edit")}
             </Button>
-            <Button scheme="red" variant="light">
+            <Button scheme="red" variant="underline">
               <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
               {trans("button.discard")}
             </Button>

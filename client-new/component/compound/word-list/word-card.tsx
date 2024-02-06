@@ -44,11 +44,11 @@ export const WordCard = create(
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">
-            <Button scheme="primary" variant="light" onClick={startEditWord}>
+            <Button scheme="secondary" variant="underline" onClick={startEditWord}>
               <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
               {trans("button.edit")}
             </Button>
-            <Button scheme="red" variant="light" onClick={discardWord}>
+            <Button scheme="red" variant="underline" onClick={discardWord}>
               <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
               {trans("button.discard")}
             </Button>
