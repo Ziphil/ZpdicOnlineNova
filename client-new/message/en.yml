@@ -223,12 +223,18 @@ dictionarySettingPage:
 dictionarySettingGeneralPart:
   heading:
     name: "Name"
-    paramName: "URL name"
+    paramName: "Identifier for URL"
+    explanation: "Description"
+    secret: "Visibility in dictionary lists"
   description:
     paramName: >-
-      Setting this will replace the number in the dictionary URL with the name set here.
+      This setting will replace the number in the dictionary URL with the specified identifier.
+    explanation: >-
+      This is displayed on the dictionary page before searching.
+      You can use some Markdown syntax here.
   label:
-    name: "Name"
+    public: "Show"
+    secret: "Hide"
   button:
     change: "Change"
 errorPage:

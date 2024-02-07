@@ -4,8 +4,8 @@ import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Input, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
-import {useChangeDictionaryName} from "/client-new/component/page/dictionary-setting-general-part/change-dictionary-name-form-hook";
 import {Dictionary} from "/client-new/skeleton";
+import {useChangeDictionaryName} from "./change-dictionary-name-form-hook";
 
 
 export const ChangeDictionaryNameForm = create(

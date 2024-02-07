@@ -223,12 +223,18 @@ dictionarySettingPage:
 dictionarySettingGeneralPart:
   heading:
     name: "名前"
-    paramName: "URL 用名称"
+    paramName: "URL 用識別子"
+    explanation: "説明"
+    secret: "一覧ページでの表示/非表示"
   description:
     paramName: >-
-      これを設定すると、辞書ページの URL として、番号の部分をこの名称に置き換えたものが利用できるようになります。
+      これを設定すると、辞書ページの URL として、番号の部分をこの識別子に置き換えたものが利用できるようになります。
+    explanation: >-
+      この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
+      一部の Markdown 形式に対応しています。
   label:
-    name: "名前"
+    public: "表示"
+    secret: "非表示"
   button:
     change: "変更"
 errorPage:

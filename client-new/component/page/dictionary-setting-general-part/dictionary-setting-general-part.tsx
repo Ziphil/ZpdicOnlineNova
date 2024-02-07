@@ -5,8 +5,10 @@ import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {EnhancedDictionary} from "/client/skeleton/dictionary";
 import {create} from "/client-new/component/create";
+import {ChangeDictionaryExplanationForm} from "./change-dictionary-explanation-form";
 import {ChangeDictionaryNameForm} from "./change-dictionary-name-form";
 import {ChangeDictionaryParamNameForm} from "./change-dictionary-param-name-form";
+import {ChangeDictionarySecretForm} from "./change-dictionary-secret-form";
 
 
 export const DictionarySettingGeneralPart = create(
@@ -33,6 +35,17 @@ export const DictionarySettingGeneralPart = create(
             {trans("description.paramName")}
           </MultiLineText>
           <ChangeDictionaryParamNameForm dictionary={dictionary}/>
+        </section>
+        <section styleName="section">
+          <h3 styleName="heading">{trans("heading.explanation")}</h3>
+          <MultiLineText styleName="description">
+            {trans("description.explanation")}
+          </MultiLineText>
+          <ChangeDictionaryExplanationForm dictionary={dictionary}/>
+        </section>
+        <section styleName="section">
+          <h3 styleName="heading">{trans("heading.secret")}</h3>
+          <ChangeDictionarySecretForm dictionary={dictionary}/>
         </section>
       </div>
     );

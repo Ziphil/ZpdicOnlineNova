@@ -2,15 +2,14 @@
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {useHref} from "react-router-dom";
-import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Input, InputAddon, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Textarea, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 import {Dictionary} from "/client-new/skeleton";
-import {useChangeDictionaryParamName} from "./change-dictionary-param-name-form-hook";
+import {useChangeDictionaryExplanation} from "./change-dictionary-explanation-form-hook";
 
 
-export const ChangeDictionaryParamNameForm = create(
-  require("./change-dictionary-name-form.scss"), "ChangeDictionaryParamNameForm",
+export const ChangeDictionaryExplanationForm = create(
+  require("./change-dictionary-name-form.scss"), "ChangeDictionaryExplanationForm",
   function ({
     dictionary,
     ...rest
@@ -21,17 +20,13 @@ export const ChangeDictionaryParamNameForm = create(
 
     const {trans} = useTrans("dictionarySettingGeneralPart");
 
-    const {form, handleSubmit} = useChangeDictionaryParamName(dictionary);
+    const {form, handleSubmit} = useChangeDictionaryExplanation(dictionary);
     const {register} = form;
-
-    const prefix = location.origin + useHref("/dictionary/");
 
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
-          <Input styleName="input" placeholder={dictionary.number.toString()} {...register("paramName")}>
-            <InputAddon styleName="prefix" position="left" hasGap={false}>{prefix}</InputAddon>
-          </Input>
+          <Textarea styleName="textarea" {...register("explanation")}/>
         </ControlContainer>
         <div>
           <Button onClick={handleSubmit} variant="light">

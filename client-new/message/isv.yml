@@ -223,12 +223,18 @@ dictionarySettingPage:
 dictionarySettingGeneralPart:
   heading:
     name: "Име"
-    paramName: "Адресно име"
+    paramName: "Идентификатор дља URL-адресы"
+    explanation: "Опис"
+    secret: "Видимост в списках словников"
   description:
     paramName: >-
-      Setting this will replace the number in the dictionary URL with the name set here.
+      This setting will replace the number in the dictionary URL with the specified identifier.
+    explanation: >-
+      This is displayed on the dictionary page before searching.
+      You can use some Markdown syntax here.
   label:
-    name: "Име"
+    public: "Show"
+    secret: "Hide"
   button:
     change: "Измєнити"
 errorPage:

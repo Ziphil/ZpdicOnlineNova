@@ -223,12 +223,18 @@ dictionarySettingPage:
 dictionarySettingGeneralPart:
   heading:
     name: "Nomo"
-    paramName: "Retadresa nomo"
+    paramName: "Identigilo por retadreso"
+    explanation: "Priskribo"
+    secret: "Videbleco en listoj de vortaroj"
   description:
     paramName: >-
-      Agordi ĝi anstataŭigos la identigan numeron en la retadreso de la vortaro per la nomo tie agordita.
+      Tiu agordo anstataŭigos la numeron en la retadreso de la vortaro per la specifita identigilo.
+    explanation: >-
+      Tio estas montrata sur la paĝo de la vortaro antaŭ serĉado.
+      Vi povas uzi iun sintakson de Markdown.
   label:
-    name: "Nomo"
+    public: "Videbla"
+    secret: "Nevidebla"
   button:
     change: "Ŝanĝi"
 errorPage:
