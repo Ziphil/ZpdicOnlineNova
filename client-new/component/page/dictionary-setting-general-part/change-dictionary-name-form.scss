@@ -8,3 +8,15 @@
   display: flex;
   flex-direction: column;
 }
+
+.row {
+  column-gap: 3zu;
+  display: flex;
+  align-items: flex-end;
+  >:nth-child(1) {
+    flex: 1 1 auto;
+  }
+  >:nth-child(2) {
+    flex: 0 0 auto;
+  }
+}
