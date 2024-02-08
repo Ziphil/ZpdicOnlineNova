@@ -220,6 +220,20 @@ dictionarySettingPage:
     general: "Обчи"
     editing: "Editing"
     authority: "Позвољенја"
+dictionarySettingEditingPart:
+  heading:
+    akrantiainSource: "Source code for Akrantiain"
+    zatlinSource: "Source code for Zatlin"
+  description:
+    akrantiainSource: >-
+      Akrantiain is a system that automatically generates phonetic symbols based on the spelling of words.
+      If you set the source code, Akrantiain will automatically generate a phonetic symbol from a spelling and display it next to the spelling.
+      If a word has a specified pronunciation, it will be displayed instead.
+      For more information on Akrantiain's syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+    zatlinSource: >-
+      Zatlin is a system that generates random spellings of words.
+      If you set the source code, a “Generate” button will appear in the word editor, allowing you to generate a spelling by Zatlin.
+      For more information on Zatlin's syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
 dictionarySettingGeneralPart:
   heading:
     name: "Име"

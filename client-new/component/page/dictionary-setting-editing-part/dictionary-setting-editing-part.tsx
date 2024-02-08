@@ -1,10 +1,11 @@
-/* eslint-disable react/jsx-closing-bracket-location */
+//
 
 import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
-import {AdditionalProps, useTrans} from "zographia";
+import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {EnhancedDictionary} from "/client/skeleton/dictionary";
 import {create} from "/client-new/component/create";
+import {ChangeDictionarySourceForm} from "./change-dictionary-source-form";
 
 
 export const DictionarySettingEditingPart = create(
@@ -22,10 +23,18 @@ export const DictionarySettingEditingPart = create(
     return (
       <div styleName="root" {...rest}>
         <section styleName="section">
-          <h3 styleName="heading">{trans("heading.akrantiain")}</h3>
+          <h3 styleName="heading">{trans("heading.akrantiainSource")}</h3>
+          <MultiLineText styleName="description">
+            {trans("description.akrantiainSource")}
+          </MultiLineText>
+          <ChangeDictionarySourceForm dictionary={dictionary} language="akrantiain"/>
         </section>
         <section styleName="section">
-          <h3 styleName="heading">{trans("heading.zatlin")}</h3>
+          <h3 styleName="heading">{trans("heading.zatlinSource")}</h3>
+          <MultiLineText styleName="description">
+            {trans("description.zatlinSource")}
+          </MultiLineText>
+          <ChangeDictionarySourceForm dictionary={dictionary} language="zatlin"/>
         </section>
       </div>
     );

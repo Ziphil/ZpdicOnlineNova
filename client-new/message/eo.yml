@@ -220,6 +220,20 @@ dictionarySettingPage:
     general: "Ĝenerala"
     editing: "Redaktado"
     authority: "Permesoj"
+dictionarySettingEditingPart:
+  heading:
+    akrantiainSource: "Fontkodo por Akrantiain"
+    zatlinSource: "Fontkodo por Zatlin"
+  description:
+    akrantiainSource: >-
+      Akrantiain estas aparato kiu aŭtomate generas fonetikajn simbolojn surbaze de la literumo de vortoj.
+      Se vi agordos la fontkodon, Akrantiain aŭtomate generos fonetikan simbolon el literumo kaj montros ĝin apud la literumo.
+      Se vorto havas specifitan prononcon, ĝi estos anstataŭe montrita.
+      Por pliaj informoj pri la sintakso de Akrantiain, bonvolu rilati al la <link>dokumentaro</link> (nuntempe disponebla nur en la japana).
+    zatlinSource: >-
+      Zatlin estas aparato kiu generas aleatorajn literumojn de vortoj.
+      Se vi agordos la fontkodon, butono “Generi” aperos en la redaktilo de vorto, permesante al vi generi literumon pere de Zatlin.
+      Por pliaj informoj pri la sintakso de Zatlin, bonvolu rilati al la <link>dokumentaro</link> (nuntempe disponebla nur en la japana).
 dictionarySettingGeneralPart:
   heading:
     name: "Nomo"
