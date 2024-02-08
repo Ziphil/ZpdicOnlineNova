@@ -2,7 +2,7 @@
 
 import {faPen, faSliders, faUsers} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
-import {Outlet, useParams} from "react-router-dom";
+import {Outlet, useMatch} from "react-router-dom";
 import {AdditionalProps, GeneralIcon, TabIconbag, TabList, useTrans} from "zographia";
 import {LinkTab} from "/client-new/component/atom/tab";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
@@ -22,7 +22,7 @@ export const DictionarySettingPage = create(
 
     const {trans} = useTrans("dictionarySettingPage");
 
-    const {tabValue} = useParams();
+    const match = useMatch("/dictionary/:dictionaryNumber/settings/:tabValue");
     const dictionary = useDictionary();
 
     return (
@@ -33,7 +33,7 @@ export const DictionarySettingPage = create(
         </Fragment>
       )}>
         <MainContainer styleName="main">
-          <TabList styleName="tab-list" value={tabValue || "general"} scheme="primary">
+          <TabList styleName="tab-list" value={match?.params.tabValue || "general"} scheme="primary">
             <LinkTab value="general" href={`/dictionary/${dictionary.number}/settings`}>
               <TabIconbag><GeneralIcon icon={faSliders}/></TabIconbag>
               {trans("tab.general")}

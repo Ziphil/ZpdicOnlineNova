@@ -4,10 +4,11 @@ import {ReactElement, Suspense} from "react";
 import {Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from "react-router-dom";
 import {create} from "/client-new/component/create";
 import {ErrorPage} from "/client-new/component/page/error-page";
+import {ToplevelRoute} from "./toplevel-route";
 
 
 const router = createBrowserRouter(createRoutesFromElements(
-  <Route path="/" errorElement={<ErrorPage/>}>
+  <Route path="/" element={<ToplevelRoute/>} errorElement={<ErrorPage/>}>
     <Route path="/" lazy={() => import("/client-new/component/page/top-page")}/>
     <Route path="/dictionary" lazy={() => import("/client-new/component/page/dictionary-list-page")}/>
     <Route path="/dictionary/:identifier" lazy={() => import("/client-new/component/page/dictionary-page")}/>
@@ -16,6 +17,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/dictionary/:identifier/settings" lazy={() => import("/client-new/component/page/dictionary-setting-page")}>
       <Route index={true} lazy={() => import("../../page/dictionary-setting-general-part")}/>
       <Route path="general" lazy={() => import("../../page/dictionary-setting-general-part")}/>
+      <Route path="editing" lazy={() => import("../../page/dictionary-setting-editing-part")}/>
     </Route>
     <Route path="/dictionary/:identifier/word/new" lazy={() => import("/client-new/component/page/add-word-page")}/>
     <Route path="/dictionary/:identifier/word/:wordNumber" lazy={() => import("/client-new/component/page/edit-word-page")}/>
