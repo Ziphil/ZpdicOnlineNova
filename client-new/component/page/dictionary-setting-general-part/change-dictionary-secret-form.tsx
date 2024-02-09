@@ -29,11 +29,11 @@ export const ChangeDictionarySecretForm = create(
           <div styleName="radio-group">
             <CheckableContainer>
               <Radio value="false" {...register("secret")}/>
-              <CheckableLabel>{trans("label.public")}</CheckableLabel>
+              <CheckableLabel>{trans("label.secret.false")}</CheckableLabel>
             </CheckableContainer>
             <CheckableContainer>
               <Radio value="true" {...register("secret")}/>
-              <CheckableLabel>{trans("label.secret")}</CheckableLabel>
+              <CheckableLabel>{trans("label.secret.true")}</CheckableLabel>
             </CheckableContainer>
           </div>
         </ControlContainer>

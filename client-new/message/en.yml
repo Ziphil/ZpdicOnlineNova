@@ -224,6 +224,10 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Source code for Akrantiain"
     zatlinSource: "Source code for Zatlin"
+    enableMarkdown: "Markdown"
+    enableDuplicateName: "Duplicate spelling check"
+    exampleTitle: "Heading for sentences"
+    pronunciationTitle: "Heading for pronunciations"
   description:
     akrantiainSource: >-
       Akrantiain is a system that automatically generates phonetic symbols based on the spelling of words.
@@ -234,6 +238,24 @@ dictionarySettingEditingPart:
       Zatlin is a system that generates random spellings of words.
       If you set the source code here, a “Generate” button will appear in the word editor, allowing you to generate a spelling by Zatlin.
       For more information on Zatlin's syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+    enableMarkdown: >-
+      Enabling this feature will allow you to write the contents of words in Markdown format.
+    enableDuplicateName: >-
+      If you enable this feature, when you enter a spelling in the word editor, it will tell you whether the dictionary already has a word with the same spelling.
+      Note that it only checks for spelling duplication and does not prevent you from registering a word with the same spelling.
+    exampleTitle: >-
+      The heading of example sentence sections, which is displayed in word cards.
+    pronunciationTitle: >-
+      The heading of pronunciation sections, which will be used when the dictionary is output in OTM-JSON format.
+  label:
+    enableMarkdown:
+      true: "Enable"
+      false: "Disable"
+    enableDuplicateName:
+      true: "Enable"
+      false: "Disable"
+  button:
+    change: "Change"
 dictionarySettingGeneralPart:
   heading:
     name: "Name"
@@ -247,8 +269,9 @@ dictionarySettingGeneralPart:
       This is displayed on the dictionary page before searching.
       You can use some Markdown syntax here.
   label:
-    public: "Show"
-    secret: "Hide"
+    secret:
+      false: "Show"
+      true: "Hide"
   button:
     change: "Change"
 errorPage:

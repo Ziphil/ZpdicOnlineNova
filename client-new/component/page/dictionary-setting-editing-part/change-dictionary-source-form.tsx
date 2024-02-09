@@ -20,7 +20,7 @@ export const ChangeDictionarySourceForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionarySettingGeneralPart");
+    const {trans} = useTrans("dictionarySettingEditingPart");
 
     const {form, handleSubmit} = useChangeDictionarySource(dictionary, language);
     const {register} = form;

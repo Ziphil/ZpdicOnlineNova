@@ -73,7 +73,7 @@ editWordForm:
     relations: "Rilataj vortoj"
   label:
     name: "Literumo"
-    pronunciation: "Prononco"
+    pronunciation: "Elparolo"
     tags: "Etikedoj"
     equivalent:
       titles: "Vortospecoj"
@@ -224,6 +224,10 @@ dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Fontkodo por Akrantiain"
     zatlinSource: "Fontkodo por Zatlin"
+    enableMarkdown: "Markdown"
+    enableDuplicateName: "Kontrolon de duoblan literumon"
+    exampleTitle: "Titolo por frazoj"
+    pronunciationTitle: "Titolo por elparoloj"
   description:
     akrantiainSource: >-
       Akrantiain estas aparato kiu aŭtomate generas fonetikajn simbolojn surbaze de la literumo de vortoj.
@@ -234,6 +238,24 @@ dictionarySettingEditingPart:
       Zatlin estas aparato kiu generas aleatorajn literumojn de vortoj.
       Se vi agordos la fontkodon, butono “Generi” aperos en la redaktilo de vorto, permesante al vi generi literumon pere de Zatlin.
       Por pliaj informoj pri la sintakso de Zatlin, bonvolu rilati al la <link>dokumentaro</link> (nuntempe disponebla nur en la japana).
+    enableMarkdown: >-
+      Ebligi tiun funkcion permesos al vi skribi la enhavojn de vortoj en Markdown.
+    enableDuplicateName: >-
+      Se vi ebligos tiun funkcion, kiam vi tajpos literumon en la redaktilo de vorto, ĝi diros al vi ĉu la vortaro jam havas vorto kun la sama literumo.
+      Notu, ke ĝi nur kontrolas duobligon de literumoj kaj ne malhelpas vin registri vorton kun la sama literumo.
+    exampleTitle: >-
+      Jen la titolo de sekcioj de ekzempla frazoj, kiu estas montrata en kartoj de vorto.
+    pronunciationTitle: >-
+      Jen la titolo de sekcioj de elparolo, kiu estos uzata kiam la vortaro estos eligita en formato OTM-JSON.
+  label:
+    enableMarkdown:
+      true: "Ebligita"
+      false: "Malebligita"
+    enableDuplicateName:
+      true: "Ebligita"
+      false: "Malebligita"
+  button:
+    change: "Ŝanĝi"
 dictionarySettingGeneralPart:
   heading:
     name: "Nomo"
@@ -247,8 +269,9 @@ dictionarySettingGeneralPart:
       Tio estas montrata sur la paĝo de la vortaro antaŭ serĉado.
       Vi povas uzi iun sintakson de Markdown.
   label:
-    public: "Videbla"
-    secret: "Nevidebla"
+    secret:
+      false: "Videbla"
+      true: "Nevidebla"
   button:
     change: "Ŝanĝi"
 errorPage:
