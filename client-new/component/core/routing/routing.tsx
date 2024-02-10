@@ -15,9 +15,10 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/dictionary/:identifier/sentences" lazy={() => import("/client-new/component/page/example-page")}/>
     <Route path="/dictionary/:identifier/info" lazy={() => import("/client-new/component/page/dictionary-information-page")}/>
     <Route path="/dictionary/:identifier/settings" lazy={() => import("/client-new/component/page/dictionary-setting-page")}>
-      <Route index={true} lazy={() => import("../../page/dictionary-setting-general-part")}/>
-      <Route path="general" lazy={() => import("../../page/dictionary-setting-general-part")}/>
-      <Route path="editing" lazy={() => import("../../page/dictionary-setting-editing-part")}/>
+      <Route index={true} lazy={() => import("/client-new/component/page/dictionary-setting-general-part")}/>
+      <Route path="general" lazy={() => import("/client-new/component/page/dictionary-setting-general-part")}/>
+      <Route path="editing" lazy={() => import("/client-new/component/page/dictionary-setting-editing-part")}/>
+      <Route path="permissions" lazy={() => import("/client-new/component/page/dictionary-setting-authority-part")}/>
     </Route>
     <Route path="/dictionary/:identifier/word/new" lazy={() => import("/client-new/component/page/add-word-page")}/>
     <Route path="/dictionary/:identifier/word/:wordNumber" lazy={() => import("/client-new/component/page/edit-word-page")}/>

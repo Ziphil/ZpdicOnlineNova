@@ -219,6 +219,14 @@ dictionarySettingPage:
     general: "一般"
     editing: "編集"
     authority: "権限"
+dictionarySettingAuthorityPart:
+  heading:
+    editInvitation: "編集権限"
+    transferInvitation: "譲渡"
+  description:
+    editInvitation: >-
+      この辞書の編集権限を保有しているユーザーです。
+      これらのユーザーは、単語の編集や削除はできますが、辞書の設定変更や削除はできません。
 dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Akrantiain ソースコード"

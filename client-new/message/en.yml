@@ -220,6 +220,14 @@ dictionarySettingPage:
     general: "General"
     editing: "Editing"
     authority: "Permissions"
+dictionarySettingAuthorityPart:
+  heading:
+    editInvitation: "Editing permission"
+    transferInvitation: "Transfer"
+  description:
+    editInvitation: >-
+      The following users have permission to edit this dictionary.
+      They can edit and delete words, but they cannot change the dictionary settings or delete the dictionary itself.
 dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Source code for Akrantiain"

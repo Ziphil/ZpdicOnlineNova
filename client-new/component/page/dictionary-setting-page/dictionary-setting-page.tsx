@@ -22,7 +22,7 @@ export const DictionarySettingPage = create(
 
     const {trans} = useTrans("dictionarySettingPage");
 
-    const match = useMatch("/dictionary/:dictionaryNumber/settings/:tabValue");
+    const match = useMatch("/dictionary/:dictionaryNumber/settings/:tabPath");
     const dictionary = useDictionary();
 
     return (
@@ -33,7 +33,7 @@ export const DictionarySettingPage = create(
         </Fragment>
       )}>
         <MainContainer styleName="main">
-          <TabList styleName="tab-list" value={match?.params.tabValue || "general"} scheme="primary">
+          <TabList styleName="tab-list" value={match?.params.tabPath || "general"} scheme="primary">
             <LinkTab value="general" href={`/dictionary/${dictionary.number}/settings`}>
               <TabIconbag><GeneralIcon icon={faSliders}/></TabIconbag>
               {trans("tab.general")}
@@ -42,7 +42,7 @@ export const DictionarySettingPage = create(
               <TabIconbag><GeneralIcon icon={faPen}/></TabIconbag>
               {trans("tab.editing")}
             </LinkTab>
-            <LinkTab value="authority" href={`/dictionary/${dictionary.number}/settings/access`}>
+            <LinkTab value="permissions" href={`/dictionary/${dictionary.number}/settings/permissions`}>
               <TabIconbag><GeneralIcon icon={faUsers}/></TabIconbag>
               {trans("tab.authority")}
             </LinkTab>

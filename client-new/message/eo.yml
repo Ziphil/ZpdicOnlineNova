@@ -211,15 +211,23 @@ dictionaryInformationPage:
     wordNameFrequency: "Frekvenco de signoj"
   description: 
     history: >-
-      La sekva diagramo montras la historio de la nombro da vortoj en tiu vortaro dum la lastaj 100 tagoj.
+      La jena diagramo montras la historio de la nombro da vortoj en tiu vortaro dum la lastaj 100 tagoj.
       La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
     wordNameFrequency: >-
-      La sekva diagramo montras kiom ofta ĉiu signo aperas en la kapvortoj en tiu vortaro.
+      La jena diagramo montras kiom ofta ĉiu signo aperas en la kapvortoj en tiu vortaro.
 dictionarySettingPage:
   tab:
     general: "Ĝenerala"
     editing: "Redaktado"
     authority: "Permesoj"
+dictionarySettingAuthorityPart:
+  heading:
+    editInvitation: "Permeso por redaktado"
+    transferInvitation: "Transdonado"
+  description:
+    editInvitation: >-
+      La jenaj uzantoj havas permeson redakti tiun vortaron.
+      Ili povas redakti kaj forigi vortojn, sed ili ne povas ŝanĝi la agordojn de la vortaro aŭ forigi la vortaron mem.
 dictionarySettingEditingPart:
   heading:
     akrantiainSource: "Fontkodo por Akrantiain"
