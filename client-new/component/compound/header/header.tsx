@@ -1,7 +1,9 @@
 //
 
+import {faBook} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, LinkIconbag, useTrans} from "zographia";
+import {Link} from "/client-new/component/atom/link";
 import {Logo} from "/client-new/component/atom/logo";
 import {SimpleLink} from "/client-new/component/atom/simple-link";
 import {UserAvatar} from "/client-new/component/atom/user-avatar";
@@ -28,6 +30,12 @@ export const Header = create(
           <SimpleLink styleName="logo" href="/">
             <Logo/>
           </SimpleLink>
+          <nav styleName="navigation">
+            <Link styleName="link" href="/dictionary" variant="unstyledUnderline">
+              <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
+              {trans("dictionaryList")}
+            </Link>
+          </nav>
         </div>
         <div styleName="right">
           <div styleName="menu">

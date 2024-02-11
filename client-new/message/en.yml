@@ -105,6 +105,7 @@ exampleList:
     edit: "Edit"
     discard: "Delete"
 header:
+  dictionaryList: "Dictionaries"
   userPage: "User page"
 loginForm:
   label:

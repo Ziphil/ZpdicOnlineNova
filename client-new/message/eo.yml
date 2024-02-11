@@ -105,6 +105,7 @@ exampleList:
     edit: "Redakti"
     discard: "Forigi"
 header:
+  dictionaryList: "Vortaroj"
   userPage: "Uzanta paĝo"
 loginForm:
   label:
