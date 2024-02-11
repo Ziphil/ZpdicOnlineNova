@@ -23,6 +23,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/dictionary/:identifier/word/new" lazy={() => import("/client-new/component/page/add-word-page")}/>
     <Route path="/dictionary/:identifier/word/:wordNumber" lazy={() => import("/client-new/component/page/edit-word-page")}/>
     <Route path="/user/:name" lazy={() => import("/client-new/component/page/user-page")}/>
+    <Route path="/user/:name/settings" lazy={() => import("/client-new/component/page/user-setting-page")}/>
     <Route path="/notification" lazy={() => import("/client-new/component/page/notification-list-page")}/>
     <Route path="/login" lazy={() => import("/client-new/component/page/login-page")}/>
     <Route path="/register" lazy={() => import("/client-new/component/page/register-page")}/>

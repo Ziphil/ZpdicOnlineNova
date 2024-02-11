@@ -32,7 +32,7 @@ export const UserPage = create(
       <Page {...rest} headerNode={(
         <Fragment>
           <Header/>
-          <UserHeader user={user} tabValue="dictionary" dictionaryCount={dictionaries.length}/>
+          <UserHeader user={user} tabValue="dictionary"/>
         </Fragment>
       )}>
         <MainContainer styleName="main">

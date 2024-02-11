@@ -8,6 +8,7 @@ import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {MainContainer} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
 import {useMe} from "/client-new/hook/auth";
+import {useResponse} from "/client-new/hook/request";
 import {User} from "/client-new/skeleton";
 
 
@@ -17,19 +18,18 @@ export const UserHeader = create(
     user,
     width = "normal",
     tabValue,
-    dictionaryCount,
     ...rest
   }: {
     user: User,
     width?: "normal" | "wide",
     tabValue: "dictionary" | "notification" | "setting" | null,
-    dictionaryCount: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans, transNumber} = useTrans("userHeader");
 
     const me = useMe();
+    const [dictionaries] = useResponse("fetchUserDictionaries", {name: user.name});
 
     return (
       <header styleName="root" {...rest}>
@@ -50,7 +50,7 @@ export const UserHeader = create(
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>
               {trans("tab.dictionary")}
               <Badge styleName="badge" scheme={(tabValue === "dictionary") ? "secondary" : "gray"} variant="solid">
-                {transNumber(dictionaryCount)}
+                {transNumber(dictionaries?.length)}
               </Badge>
             </LinkTab>
             {(user.id === me?.id) && (
