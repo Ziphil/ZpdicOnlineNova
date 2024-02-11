@@ -34,3 +34,14 @@
 .angle {
   margin-inline-start: var(--glob-blank-gap);
 }
+
+.item {
+  row-gap: 1zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.code {
+  font-size: 3zu;
+  color: var(--glob-mute-text-color);
+}
