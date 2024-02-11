@@ -316,3 +316,13 @@ topPage:
     notification: "最新のお知らせ"
   moreNotifications: "他のお知らせも見る"
   catch: "<line>Draw</line> <line>your own universe</line> <line>with conlang</line>"
+userSettingPage:
+  heading:
+    screenName: "ニックネーム"
+    email: "メールアドレス"
+    password: "パスワード"
+  label:
+    currentPassword: "現在のパスワード"
+    newPassword: "新しいパスワード"
+  button:
+    change: "変更"

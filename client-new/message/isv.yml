@@ -264,6 +264,11 @@ dictionarySettingEditingPart:
       false: "Disable"
   button:
     change: "Измєнити"
+    editInvitation:
+      add: "編集権限をユーザーに付与"
+      discard: "解除"
+    transferInvitation:
+      add: "別ユーザーに譲渡"
 dictionarySettingGeneralPart:
   heading:
     name: "Име"
@@ -312,3 +317,13 @@ topPage:
     notification: "Послєдне новости"
   moreNotifications: "Читати новости вече"
   catch: "<line>Рысујте</line> <line>свој всесвєт</line> <line>со сконструованым језыком</line>"
+userSettingPage:
+  heading:
+    screenName: "ニックネーム"
+    email: "メールアドレス"
+    password: "パスワード"
+  label:
+    currentPassword: "現在のパスワード"
+    newPassword: "新しいパスワード"
+  button:
+    change: "変更"

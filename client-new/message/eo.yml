@@ -264,6 +264,11 @@ dictionarySettingEditingPart:
       false: "Malebligita"
   button:
     change: "Ŝanĝi"
+    editInvitation:
+      add: "編集権限をユーザーに付与"
+      discard: "解除"
+    transferInvitation:
+      add: "別ユーザーに譲渡"
 dictionarySettingGeneralPart:
   heading:
     name: "Nomo"
@@ -312,3 +317,13 @@ topPage:
     notification: "Lastatempaj novaĵoj"
   moreNotifications: "Legi pli da novaĵoj"
   catch: "<line>Desegnu</line> <line>vian propran universon</line> <line>per conlingvo</line>"
+userSettingPage:
+  heading:
+    screenName: "ニックネーム"
+    email: "メールアドレス"
+    password: "パスワード"
+  label:
+    currentPassword: "現在のパスワード"
+    newPassword: "新しいパスワード"
+  button:
+    change: "変更"
