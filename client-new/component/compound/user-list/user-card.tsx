@@ -29,11 +29,11 @@ export const UserCard = create(
           <div styleName="top">
             <UserAvatar styleName="avatar" user={user}/>
             <div styleName="name-container">
-              <SingleLineText styleName="screen-name">
-                <Link href={`/user/${user.name}`} variant="unstyledSimple">
+              <Link styleName="screen-name" href={`/user/${user.name}`} variant="unstyledSimple">
+                <SingleLineText>
                   {user.screenName}
-                </Link>
-              </SingleLineText>
+                </SingleLineText>
+              </Link>
               <SingleLineText styleName="name">
                 @{user.name}
               </SingleLineText>

@@ -49,11 +49,11 @@ export const DictionaryCard = create(
                 )}
               </div>
             )}
-            <SingleLineText styleName="name" is="h3">
-              <Link href={`/dictionary/${dictionary.paramName || dictionary.number}`} variant="unstyledSimple">
+            <Link styleName="name" href={`/dictionary/${dictionary.paramName || dictionary.number}`} variant="unstyledSimple">
+              <SingleLineText is="h3">
                 {dictionary.name}
-              </Link>
-            </SingleLineText>
+              </SingleLineText>
+            </Link>
             {(showUser) && (
               <div styleName="user">
                 <UserAvatar styleName="avatar" user={dictionary.user}/>

@@ -6,6 +6,7 @@ import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {EnhancedDictionary} from "/client/skeleton/dictionary";
 import {create} from "/client-new/component/create";
 import {AddEditInvitationForm} from "./add-edit-invitation-form";
+import {AddTransferInvitationForm} from "./add-transfer-invitation-form";
 
 
 export const DictionarySettingAuthorityPart = create(
@@ -31,6 +32,7 @@ export const DictionarySettingAuthorityPart = create(
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.transferInvitation")}</h3>
+          <AddTransferInvitationForm dictionary={dictionary}/>
         </section>
       </div>
     );

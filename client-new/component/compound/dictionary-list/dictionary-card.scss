@@ -9,6 +9,8 @@
 }
 
 .left {
+  display: flex;
+  flex-direction: column;
   flex: 1 1 auto;
 }
 
@@ -30,6 +32,10 @@
   @include bold-font;
   font-size: 5zu;
   color: var(--glob-primary-heading-text-color);
+  align-self: flex-start;
+  &:hover {
+    color: var(--glob-primary-heading-hover-text-color);
+  }
 }
 
 .user {
