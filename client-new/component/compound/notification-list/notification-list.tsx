@@ -24,7 +24,7 @@ export const NotificationList = create(
     const [[hitNotifications, hitSize]] = useSuspenseResponse("fetchNotifications", calcOffsetSpec(page, size), {keepPreviousData: true});
 
     return (
-      <List styleName="root" items={hitNotifications} size={size} hitSize={hitSize} page={page} onPageSet={setPage} {...rest}>
+      <List styleName="root" items={hitNotifications} pageSpec={{size, hitSize, page, onPageSet: setPage}} {...rest}>
         <ListBody styleName="body">
           {(notification) => <NotificationCard key={notification.id} notification={notification}/>}
           <ListEmptyView/>

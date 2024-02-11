@@ -4,6 +4,12 @@ toast:
       ログインに成功しました。
     register: >-
       アカウントを作成しました。
+    addWord: >-
+      単語を新しく作成しました。
+    changeWord: >-
+      単語を編集しました。
+    discardWord: >-
+      単語を削除しました。
   error:
     recaptchaError: >-
       エラーが発生しました。
@@ -38,16 +44,69 @@ toast:
       予期しないエラーが発生しました。
       お手数ですが管理者までご連絡ください。
 
+alertDialog:
+  confirm: "決定"
+  cancel: "キャンセル"
+
 dictionaryHeader:
   tab:
     dictionary: "辞書"
     example: "例文"
-    info: "詳細情報"
-    setting: "詳細情報 · 設定"
+    information: "詳細情報"
+    commission: "造語依頼"
+    setting: "設定"
 dictionaryList:
   updatedDate: "更新日時"
   createdDate: "作成日時"
-  go: "辞書ページへ"
+  tag:
+    own: "管理者"
+    edit: "編集のみ"
+    view: "閲覧のみ"
+  button:
+    see: "辞書ページへ"
+editWordForm:
+  heading:
+    basic: "基本情報"
+    equivalents: "訳語"
+    informations: "内容"
+    variations: "変化形"
+    relations: "関連語"
+  label:
+    name: "綴り"
+    pronunciation: "発音記号"
+    tags: "タグ"
+    equivalent:
+      titles: "品詞"
+      names: "訳語 <note>(コンマ区切り)</note>"
+    information:
+      title: "見出し"
+      text: "内容"
+    variation:
+      title: "種類"
+      name: "変化形"
+    relation:
+      titles: "分類"
+      name: "関連語"
+  absent:
+    equivalent: "訳語が登録されていません"
+    information: "内容が登録されていません"
+    variation: "変化形が登録されていません"
+    relation: "関連語が登録されていません"
+  button:
+    add:
+      equivalent: "訳語を追加"
+      information: "内容を追加"
+      variation: "変化形を追加"
+      relation: "関連語を追加"
+    generate: "生成"
+exampleList:
+  noWord: "関連付けられた単語がありません"
+  button:
+    edit: "編集"
+    discard: "削除"
+header:
+  dictionaryList: "辞書一覧"
+  userPage: "ユーザーページ"
 loginForm:
   label:
     name: "ユーザー ID"
@@ -105,6 +164,9 @@ registerForm:
       パスワードを入力してください。
     agreeRequired: >-
       このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
+searchExampleForm:
+  information: >-
+    例文検索は今後のアップデートで利用できるようになる予定です。
 searchWordForm:
   mode:
     name: "単語"
@@ -122,17 +184,120 @@ searchWordForm:
   ignoreCase: "大小文字を区別しない"
   enableSuggestions: "変化形をサジェスト"
   shuffleResult: "検索結果をシャッフル"
+userHeader:
+  tab:
+    dictionary: "辞書"
+    notification: "通知"
+    setting: "設定"
+wordList:
+  button:
+    edit: "編集"
+    discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この単語を削除します。
+        削除した後にデータを戻すことはできません。
+        本当によろしいですか?
+      confirm: "削除"
+wordNameFrequencyChart:
+  other: "その他"
 
 dictionaryPage:
   add: "新しい単語を作成"
+dictionaryInformationPage:
+  heading:
+    history: "単語数推移"
+    wordNameFrequency: "文字頻度"
+  description: 
+    history: >-
+      この辞書の直近 100 日間の単語数の推移です。
+      単語数は毎日 23 時 30 分頃 (JST, UTC+9) に記録されます。
+    wordNameFrequency: >-
+      見出し語に使われている各文字の出現頻度です。
+dictionarySettingPage:
+  tab:
+    general: "一般"
+    editing: "編集"
+    authority: "権限"
+dictionarySettingAuthorityPart:
+  heading:
+    editInvitation: "編集権限"
+    transferInvitation: "譲渡"
+  description:
+    editInvitation: >-
+      この辞書の編集権限を保有しているユーザーです。
+      これらのユーザーは、単語の編集や削除はできますが、辞書の設定変更や削除はできません。
+dictionarySettingEditingPart:
+  heading:
+    akrantiainSource: "Akrantiain ソースコード"
+    zatlinSource: "Zatlin ソースコード"
+    enableMarkdown: "Markdown"
+    enableDuplicateName: "重複綴りチェック"
+    exampleTitle: "例文データの見出し"
+    pronunciationTitle: "発音データの見出し"
+  description:
+    akrantiainSource: >-
+      Akrantiain とは、単語の綴りから発音記号を自動生成するためのシステムです。 
+      Akrantiain 用のソースコードを設定しておくと、Akrantiain を用いて自動的に単語の発音記号が生成され、単語の横に表示されるようになります。
+      単語に個別の発音が指定されているときは、そちらが優先されます。
+      Akrantiain の構文については<link>ドキュメント</link>をご覧ください。  
+    zatlinSource: >-
+      Zatlin とは、単語の綴りをランダムに生成するためのシステムです。 
+      Zatlin 用のソースコードを設定しておくと、単語編集画面で単語欄の横に「生成」ボタンが表示され、Zatlin を用いて綴りを生成できるようになります。
+      Zatlin の構文については<link>ドキュメント</link>をご覧ください。
+    enableMarkdown: >-
+      これを有効にしておくと、単語データの内容欄を Markdown 形式で書くことができるようになります。
+    enableDuplicateName: >-
+      これを有効にしておくと、単語編集画面で綴りを入力した際に、同じ綴りの単語がすでに存在しているかが表示されるようになります。
+      なお、あくまでこの機能は綴りの重複をチェックするのみで、同じ綴りの単語を登録できるなくなるわけではありません。
+    exampleTitle: >-
+      単語カードに例文を表示する際の見出しです。
+    pronunciationTitle: >-
+      辞書を OTM-JSON 形式で出力したときに発音データが格納される内容欄の見出しです。
+  label:
+    enableMarkdown:
+      true: "有効"
+      false: "無効"
+    enableDuplicateName:
+      true: "有効"
+      false: "無効"
+  button:
+    change: "変更"
+    editInvitation:
+      add: "編集権限をユーザーに付与"
+      discard: "解除"
+    transferInvitation:
+      add: "別ユーザーに譲渡"
+dictionarySettingGeneralPart:
+  heading:
+    name: "名前"
+    paramName: "URL 用識別子"
+    explanation: "説明"
+    secret: "一覧ページでの表示/非表示"
+  description:
+    paramName: >-
+      これを設定すると、辞書ページの URL として、番号の部分をこの識別子に置き換えたものが利用できるようになります。
+    explanation: >-
+      この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
+      一部の Markdown 形式に対応しています。
+  label:
+    secret:
+      false: "表示"
+      true: "非表示"
+  button:
+    change: "変更"
 errorPage:
   title:
     notFound: "Not\nFound"
   message:
     notFound: >-
-      参照しようとしたページが見つかりませんでした。
-      指定した URL が正しいか確認してください。
-      もしくは、お探しのページは削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
+      お探しのページが見つかりませんでした。
+      削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
+  button:
+    topPage: "トップページへ"
+examplePage:
+  add: "新しい単語を作成"
 loginPage:
   title: "ログイン"
 notificationListPage:
@@ -143,6 +308,7 @@ topPage:
   button:
     login: "ログイン · 新規登録"
     dictionary: "辞書一覧"
+    userPage: "ユーザーページ"
   aggregation:
     dictionary: "辞書"
     word: "単語"
@@ -150,4 +316,14 @@ topPage:
   heading:
     notification: "最新のお知らせ"
   moreNotifications: "他のお知らせも見る"
-  catch: "Draw your own universe with conlang"
+  catch: "<line>Draw</line> <line>your own universe</line> <line>with conlang</line>"
+userSettingPage:
+  heading:
+    screenName: "ニックネーム"
+    email: "メールアドレス"
+    password: "パスワード"
+  label:
+    currentPassword: "現在のパスワード"
+    newPassword: "新しいパスワード"
+  button:
+    change: "変更"

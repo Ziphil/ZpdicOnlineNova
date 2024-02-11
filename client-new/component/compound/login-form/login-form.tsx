@@ -17,7 +17,7 @@ import {
 import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
-import {useLoginForm} from "./login-form-hook";
+import {useLogin} from "./login-form-hook";
 
 
 export const LoginForm = create(
@@ -30,7 +30,7 @@ export const LoginForm = create(
 
     const {trans} = useTrans("loginForm");
 
-    const {form, handleSubmit} = useLoginForm();
+    const {form, handleSubmit} = useLogin();
     const {register, getFieldState, formState: {errors}} = form;
 
     return (

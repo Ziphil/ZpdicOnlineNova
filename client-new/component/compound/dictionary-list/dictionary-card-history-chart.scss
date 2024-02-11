@@ -4,6 +4,13 @@
 
 
 .root {
+  @include theme("light") {
+    --area-fill-color: #{leveled-color("gray", 1)};
+    --area-stroke-color: #{leveled-color("gray", 5)};
+  }
+}
+
+.root {
   width: 32zu;
   height: 8zu;
   flex: 0 0 auto;
@@ -14,12 +21,11 @@
 }
 
 .area :global(.recharts-area-area) {
-  fill: leveled-color("gray", 5);
-  fill-opacity: 0.2;
+  fill: var(--area-fill-color);
 }
 
 .area :global(.recharts-area-curve) {
-  stroke: leveled-color("gray", 5);
+  stroke: var(--area-stroke-color);
   fill-opacity: 1;
 }
 

@@ -10,16 +10,19 @@ export const Markdown = create(
   require("./markdown.scss"), "Markdown",
   function ({
     mode,
+    compact = false,
     children,
     ...rest
   }: {
     mode: "normal" | "document",
+    compact?: boolean,
     children: string,
     className?: string
   } & AdditionalProps): ReactElement {
 
     return (
       <ZographiaMarkdown
+        compact={compact}
         disallowedElements={(mode === "normal") ? ["h1", "h2", "h3", "h4", "h5", "h6"] : null}
         components={{a: MarkdownAnchor}}
         {...rest}

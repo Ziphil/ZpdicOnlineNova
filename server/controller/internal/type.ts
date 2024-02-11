@@ -82,8 +82,10 @@ export const SERVER_PATHS = {
   fetchWordNameFrequencies: "/dictionary/fetch/frequency",
   fetchDictionaryStatistics: "/dictionary/fetch/statistics",
   fetchDictionaries: "/dictionary/list",
+  fetchUserDictionaries: "/dictionary/list/user",
   fetchAllDictionaries: "/dictionary/list/all",
   fetchOverallAggregation: "/dictionary/aggregate",
+  fetchWord: "/word/fetch",
   fetchWordNames: "/word/name",
   checkDuplicateWordName: "/word/name/duplicate",
   fetchExamples: "/example/list",
@@ -103,6 +105,7 @@ export const SERVER_PATHS = {
   resetUserPassword: "/user/reset/reset",
   discardUser: "/user/discard",
   fetchUser: "/user/fetch",
+  fetchOtherUser: "/user/fetch/other",
   suggestUsers: "/user/suggest",
   addNotification: "/notification/add",
   fetchNotifications: "/notification/fetch",
@@ -329,6 +332,13 @@ type ServerSpecs = {
       error: never
     }
   },
+  fetchUserDictionaries: {
+    request: {name: string},
+    response: {
+      success: Array<UserDictionary>,
+      error: CustomError<"noSuchUser">
+    }
+  },
   fetchAllDictionaries: {
     request: {order: string, offset?: number, size?: number},
     response: {
@@ -341,6 +351,13 @@ type ServerSpecs = {
     response: {
       success: {dictionary: Aggregation, word: Aggregation, example: Aggregation, user: Aggregation},
       error: never
+    }
+  },
+  fetchWord: {
+    request: {number: number, wordNumber: number},
+    response: {
+      success: DetailedWord,
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber">
     }
   },
   fetchWordNames: {
@@ -474,6 +491,13 @@ type ServerSpecs = {
     response: {
       success: DetailedUser,
       error: never
+    }
+  },
+  fetchOtherUser: {
+    request: {name: string},
+    response: {
+      success: User,
+      error: CustomError<"noSuchUser">
     }
   },
   suggestUsers: {

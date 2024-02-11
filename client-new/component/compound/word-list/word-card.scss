@@ -5,6 +5,7 @@
 
 .root {
   @include theme("light") {
+    --information-heading-text-color: #{leveled-color("gray", 7)};
     --divider-color: #{leveled-color("gray", 1)};
   }
 }
@@ -14,7 +15,7 @@
   flex-direction: column;
 }
 
-.divider {
-  margin-block-start: 3zu;
-  border-block-start: dashed 1zx var(--divider-color);
+.footer {
+  column-gap: 3zu;
+  display: flex;
 }

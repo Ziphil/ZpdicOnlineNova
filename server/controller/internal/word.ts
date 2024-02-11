@@ -22,6 +22,7 @@ import {
   SERVER_PATH_PREFIX
 } from "/server/controller/internal/type";
 import {
+  DictionaryModel,
   WordCreator
 } from "/server/model/dictionary";
 
@@ -104,6 +105,26 @@ export class WordController extends Controller {
           }
         })();
         Controller.respondError(response, body, error);
+      }
+    } else {
+      const body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
+  @post(SERVER_PATHS["fetchWord"])
+  public async [Symbol()](request: Request<"fetchWord">, response: Response<"fetchWord">): Promise<void> {
+    const number = request.body.number;
+    const wordNumber = request.body.wordNumber;
+    const dictionary = await DictionaryModel.fetchOneByNumber(number);
+    if (dictionary) {
+      const word = await dictionary.fetchOneWordByNumber(wordNumber);
+      if (word) {
+        const body = await WordCreator.createDetailed(word);
+        Controller.respond(response, body);
+      } else {
+        const body = CustomError.ofType("noSuchWordNumber");
+        Controller.respondError(response, body);
       }
     } else {
       const body = CustomError.ofType("noSuchDictionaryNumber");

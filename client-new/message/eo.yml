@@ -4,6 +4,12 @@ toast:
       Sukcesis ensaluti.
     register: >-
       Sukcesis krei vian konton.
+    addWord: >-
+      Sukcesis krei novan vorton.
+    changeWord: >-
+      Sukcesis redakti la vorton.
+    discardWord: >-
+      Sukcesis forigi la vorton.
   error:
     recaptchaError: >-
       Io fiaskis.
@@ -38,16 +44,69 @@ toast:
       Neatendita eraro okazis.
       Bonvolu sciigi la administranton.
 
+alertDialog:
+  confirm: "Konfirmi"
+  cancel: "Nuligi"
+
 dictionaryHeader:
   tab:
     dictionary: "Vortaro"
     example: "Frazoj"
-    info: "Detaloj"
-    setting: "Detaloj · Agordoj"
+    information: "Detaloj"
+    commission: "Petoj"
+    setting: "Agordoj"
 dictionaryList:
   updatedDate: "Ĝisdatigita je"
   createdDate: "Kreita je"
-  go: "Vidi vortaron"
+  tag:
+    own: "Posedanto"
+    edit: "Redakto nur"
+    view: "Vido nur"
+  button:
+    see: "Vidi vortaron"
+editWordForm:
+  heading:
+    basic: "Bazaj informoj"
+    equivalents: "Tradukaĵoj"
+    informations: "Enhavoj"
+    variations: "Variaĵaj formoj"
+    relations: "Rilataj vortoj"
+  label:
+    name: "Literumo"
+    pronunciation: "Elparolo"
+    tags: "Etikedoj"
+    equivalent:
+      titles: "Vortospecoj"
+      names: "Tradukaĵoj <note>(apartigitaj per komoj)</note>"
+    information:
+      title: "Titlo"
+      text: "Enhavo"
+    variation:
+      title: "Speco"
+      name: "Formo"
+    relation:
+      titles: "Specoj"
+      name: "Vorto"
+  absent:
+    equivalent: "Neniuj tradukaĵoj"
+    information: "Neniuj enhavoj"
+    variation: "Neniuj variaĵaj formoj"
+    relation: "Neniuj rilataj vortoj"
+  button:
+    add:
+      equivalent: "Aldoni tradukaĵon"
+      information: "Aldoni enhavon"
+      variation: "Aldoni variaĵan formon"
+      relation: "Aldoni rilatan vorton"
+    generate: "Generi"
+exampleList:
+  noWord: "Neniuj vortoj ligitaj"
+  button:
+    edit: "Redakti"
+    discard: "Forigi"
+header:
+  dictionaryList: "Vortaroj"
+  userPage: "Uzanta paĝo"
 loginForm:
   label:
     name: "Salutnomo"
@@ -106,6 +165,9 @@ registerForm:
       Enigu pasvorton.
     agreeRequired: >-
       Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la privateca politiko.
+searchExampleForm:
+  information: >-
+    Serĉi ekzemplajn frazojn estos disponebla en estonta ĝisdatigo.
 searchWordForm:
   mode:
     name: "Kapvorto"
@@ -123,17 +185,120 @@ searchWordForm:
   ignoreCase: "Ignori usklecon"
   enableSuggestions: "Sugesti variaĵojn"
   shuffleResult: "Miksi rezultojn"
+userHeader:
+  tab:
+    dictionary: "Vortaroj"
+    notification: "Sciigoj"
+    setting: "Agordoj"
+wordList:
+  button:
+    edit: "Redakti"
+    discard: "Forigi"
+  dialog:
+    discard:
+      message: >-
+        Tiu vorto estos forigita konstante.
+        Vi ne povas restaŭri ĝin poste.
+        Ĉu vi vere certas?
+      confirm: "Forigi"
+wordNameFrequencyChart:
+  other: "Aliaj"
 
 dictionaryPage:
   add: "Krei novan vorton"
+dictionaryInformationPage:
+  heading:
+    history: "Historio de nombro da vortoj"
+    wordNameFrequency: "Frekvenco de signoj"
+  description: 
+    history: >-
+      La jena diagramo montras la historio de la nombro da vortoj en tiu vortaro dum la lastaj 100 tagoj.
+      La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
+    wordNameFrequency: >-
+      La jena diagramo montras kiom ofta ĉiu signo aperas en la kapvortoj en tiu vortaro.
+dictionarySettingPage:
+  tab:
+    general: "Ĝenerala"
+    editing: "Redaktado"
+    authority: "Permesoj"
+dictionarySettingAuthorityPart:
+  heading:
+    editInvitation: "Permeso por redaktado"
+    transferInvitation: "Transdonado"
+  description:
+    editInvitation: >-
+      La jenaj uzantoj havas permeson redakti tiun vortaron.
+      Ili povas redakti kaj forigi vortojn, sed ili ne povas ŝanĝi la agordojn de la vortaro aŭ forigi la vortaron mem.
+dictionarySettingEditingPart:
+  heading:
+    akrantiainSource: "Fontkodo por Akrantiain"
+    zatlinSource: "Fontkodo por Zatlin"
+    enableMarkdown: "Markdown"
+    enableDuplicateName: "Kontrolon de duoblan literumon"
+    exampleTitle: "Titolo por frazoj"
+    pronunciationTitle: "Titolo por elparoloj"
+  description:
+    akrantiainSource: >-
+      Akrantiain estas aparato kiu aŭtomate generas fonetikajn simbolojn surbaze de la literumo de vortoj.
+      Se vi agordos la fontkodon, Akrantiain aŭtomate generos fonetikan simbolon el literumo kaj montros ĝin apud la literumo.
+      Se vorto havas specifitan prononcon, ĝi estos anstataŭe montrita.
+      Por pliaj informoj pri la sintakso de Akrantiain, bonvolu rilati al la <link>dokumentaro</link> (nuntempe disponebla nur en la japana).
+    zatlinSource: >-
+      Zatlin estas aparato kiu generas aleatorajn literumojn de vortoj.
+      Se vi agordos la fontkodon, butono “Generi” aperos en la redaktilo de vorto, permesante al vi generi literumon pere de Zatlin.
+      Por pliaj informoj pri la sintakso de Zatlin, bonvolu rilati al la <link>dokumentaro</link> (nuntempe disponebla nur en la japana).
+    enableMarkdown: >-
+      Ebligi tiun funkcion permesos al vi skribi la enhavojn de vortoj en Markdown.
+    enableDuplicateName: >-
+      Se vi ebligos tiun funkcion, kiam vi tajpos literumon en la redaktilo de vorto, ĝi diros al vi ĉu la vortaro jam havas vorto kun la sama literumo.
+      Notu, ke ĝi nur kontrolas duobligon de literumoj kaj ne malhelpas vin registri vorton kun la sama literumo.
+    exampleTitle: >-
+      Jen la titolo de sekcioj de ekzempla frazoj, kiu estas montrata en kartoj de vorto.
+    pronunciationTitle: >-
+      Jen la titolo de sekcioj de elparolo, kiu estos uzata kiam la vortaro estos eligita en formato OTM-JSON.
+  label:
+    enableMarkdown:
+      true: "Ebligita"
+      false: "Malebligita"
+    enableDuplicateName:
+      true: "Ebligita"
+      false: "Malebligita"
+  button:
+    change: "Ŝanĝi"
+    editInvitation:
+      add: "編集権限をユーザーに付与"
+      discard: "解除"
+    transferInvitation:
+      add: "別ユーザーに譲渡"
+dictionarySettingGeneralPart:
+  heading:
+    name: "Nomo"
+    paramName: "Identigilo por retadreso"
+    explanation: "Priskribo"
+    secret: "Videbleco en listoj de vortaroj"
+  description:
+    paramName: >-
+      Tiu agordo anstataŭigos la numeron en la retadreso de la vortaro per la specifita identigilo.
+    explanation: >-
+      Tio estas montrata sur la paĝo de la vortaro antaŭ serĉado.
+      Vi povas uzi iun sintakson de Markdown.
+  label:
+    secret:
+      false: "Videbla"
+      true: "Nevidebla"
+  button:
+    change: "Ŝanĝi"
 errorPage:
   title:
     notFound: "Ne\nTrovita"
   message:
     notFound: >-
-      La paĝo kiun vi petas ne estis trovita.
-      Bonvolu certigi ke vi tajpas la korektan adreson.
-      Ankaŭ eblas, ke la paĝo kiun vi serĉas estis forigita aŭ movita al alia loko.
+      La paĝo kiun vi serĉas ne estis trovita.
+      Ĝi eble estis forigita aŭ movita al alia loko, do bonvolu provi serĉi denove el la ĉefpaĝo.
+  button:
+    topPage: "Reiri al la ĉefpaĝo"
+examplePage:
+  add: "Krei novan frazon"
 loginPage:
   title: "Ensaluti"
 notificationListPage:
@@ -144,6 +309,7 @@ topPage:
   button:
     login: "Ensaluti · Enskribiĝi"
     dictionary: "Listo de vortaroj"
+    userPage: "Uzanta paĝo"
   aggregation:
     dictionary: "{count, plural, one {Vortaro} other {Vortaroj}}"
     word: "{count, plural, one {Vorto} other {Vortoj}}"
@@ -151,4 +317,14 @@ topPage:
   heading:
     notification: "Lastatempaj novaĵoj"
   moreNotifications: "Legi pli da novaĵoj"
-  catch: "Desegnu vian propran universon per conlingvo"
+  catch: "<line>Desegnu</line> <line>vian propran universon</line> <line>per conlingvo</line>"
+userSettingPage:
+  heading:
+    screenName: "ニックネーム"
+    email: "メールアドレス"
+    password: "パスワード"
+  label:
+    currentPassword: "現在のパスワード"
+    newPassword: "新しいパスワード"
+  button:
+    change: "変更"

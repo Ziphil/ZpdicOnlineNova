@@ -6,7 +6,7 @@ import type {Dimension} from "css-tree";
 
 function convert(this: any, source: string): string {
   const options = this.getOptions();
-  const tree = cssTree.parse(source);
+  const tree = cssTree.parse(source, {parseCustomProperty: true});
   cssTree.walk(tree, (node) => {
     if (node.type === "Dimension") {
       const convertResult = convertUnit(node);

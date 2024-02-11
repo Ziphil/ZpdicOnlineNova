@@ -1,0 +1,77 @@
+/* eslint-disable react/jsx-closing-bracket-location */
+
+import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {ReactElement, useCallback} from "react";
+import {useFieldArray} from "react-hook-form";
+import {
+  AdditionalProps,
+  Button,
+  ButtonIconbag,
+  GeneralIcon,
+  useTrans
+} from "zographia";
+import {create} from "/client-new/component/create";
+import {EnhancedDictionary} from "/client-new/skeleton";
+import {EditWordFormDndContext} from "./edit-word-form-dnd";
+import {EditWordSpec} from "./edit-word-form-hook";
+import {EditWordFormInformationItem} from "./edit-word-form-information-item";
+
+
+export const EditWordFormInformationSection = create(
+  require("./edit-word-form-equivalent-section.scss"), "EditWordFormInformationSection",
+  function ({
+    dictionary,
+    form,
+    ...rest
+  }: {
+    dictionary: EnhancedDictionary,
+    form: EditWordSpec["form"],
+    className?: string
+  } & AdditionalProps): ReactElement {
+
+    const {trans} = useTrans("editWordForm");
+
+    const {control} = form;
+    const {fields: informations, ...informationOperations} = useFieldArray({control, name: "informations"});
+
+    const addInformation = useCallback(function (): void {
+      informationOperations.append({
+        title: "",
+        text: ""
+      });
+    }, [informationOperations]);
+
+    return (
+      <section styleName="root" {...rest}>
+        <h3 styleName="heading">{trans("heading.informations")}</h3>
+        <div styleName="item-list">
+          {(informations.length > 0) ? (
+            <EditWordFormDndContext values={informations} valueOperations={informationOperations}>
+              {informations.map((information, index) => (
+                <EditWordFormInformationItem
+                  styleName="item"
+                  key={information.id}
+                  dictionary={dictionary}
+                  form={form}
+                  dndId={information.id}
+                  index={index}
+                />
+              ))}
+            </EditWordFormDndContext>
+          ) : (
+            <p styleName="absent">
+              {trans("absent.information")}
+            </p>
+          )}
+          <div styleName="plus">
+            <Button scheme="gray" variant="light" onClick={addInformation}>
+              <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+              {trans("button.add.information")}
+            </Button>
+          </div>
+        </div>
+      </section>
+    );
+
+  }
+);

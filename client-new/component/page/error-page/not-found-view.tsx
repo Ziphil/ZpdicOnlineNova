@@ -23,7 +23,7 @@ export const NotFoundView = create(
           <div styleName="icon">
             <GeneralIcon icon={faCatSpace}/>
           </div>
-          <MultiLineText styleName="title" lineHeight="short">
+          <MultiLineText styleName="title" lineHeight="narrowest">
             {trans("title.notFound")}
           </MultiLineText>
         </div>

@@ -1,9 +1,11 @@
 //
 
-import {faBook, faCircleInfo, faCog, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
+import {faBook, faCircleInfo, faCog, faListCheck, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
+import {Link} from "/client-new/component/atom/link";
 import {LinkTab} from "/client-new/component/atom/tab";
+import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {MainContainer} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
 import {useSuspenseResponse} from "/client-new/hook/request";
@@ -14,11 +16,13 @@ export const DictionaryHeader = create(
   require("./dictionary-header.scss"), "DictionaryHeader",
   function ({
     dictionary,
+    width = "normal",
     tabValue,
     ...rest
   }: {
     dictionary: DetailedDictionary,
-    tabValue: "dictionary" | "example" | "info" | null,
+    width?: "normal" | "wide",
+    tabValue: "dictionary" | "example" | "information" | "commission" | "setting" | null,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -28,10 +32,18 @@ export const DictionaryHeader = create(
 
     return (
       <header styleName="root" {...rest}>
-        <MainContainer width="wide">
+        <MainContainer width={width}>
           <SingleLineText styleName="name" is="h2">
             {dictionary.name}
           </SingleLineText>
+          <div styleName="user">
+            <UserAvatar styleName="avatar" user={dictionary.user}/>
+            <SingleLineText is="span">
+              <Link href={`/user/${dictionary.user.name}`} variant="unstyledSimple">
+                {dictionary.user.screenName}
+              </Link>
+            </SingleLineText>
+          </div>
           <TabList styleName="tab-list" value={tabValue ?? ""}>
             <LinkTab value="dictionary" href={`/dictionary/${dictionary.number}`}>
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>
@@ -41,15 +53,20 @@ export const DictionaryHeader = create(
               <TabIconbag><GeneralIcon icon={faQuotes}/></TabIconbag>
               {trans("tab.example")}
             </LinkTab>
-            {(canOwn) ? (
-              <LinkTab value="info" href={`/dictionary/${dictionary.number}/settings`}>
+            <LinkTab value="information" href={`/dictionary/${dictionary.number}/info`}>
+              <TabIconbag><GeneralIcon icon={faCircleInfo}/></TabIconbag>
+              {trans("tab.information")}
+            </LinkTab>
+            {(canOwn) && (
+              <LinkTab value="commission" href={`/dictionary/${dictionary.number}/requests`}>
+                <TabIconbag><GeneralIcon icon={faListCheck}/></TabIconbag>
+                {trans("tab.commission")}
+              </LinkTab>
+            )}
+            {(canOwn) && (
+              <LinkTab value="setting" href={`/dictionary/${dictionary.number}/settings`}>
                 <TabIconbag><GeneralIcon icon={faCog}/></TabIconbag>
                 {trans("tab.setting")}
-              </LinkTab>
-            ) : (
-              <LinkTab value="info" href={`/dictionary/${dictionary.number}/info`}>
-                <TabIconbag><GeneralIcon icon={faCircleInfo}/></TabIconbag>
-                {trans("tab.info")}
               </LinkTab>
             )}
           </TabList>

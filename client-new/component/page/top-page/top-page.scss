@@ -12,6 +12,7 @@
 .main {
   margin-block-start: 12zu;
   margin-block-end: 16zu;
+  padding-inline: var(--glob-page-horizontal-padding);
   flex: 1 1 auto;
 }
 
@@ -27,6 +28,6 @@
 }
 
 .divider {
-  margin-block: 12zu;
+  margin-block: 6zu;
   border-block-start: 1px solid var(--glob-border-color);
 }

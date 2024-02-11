@@ -4,20 +4,60 @@
 
 
 .root {
-  margin-inline: 10zu;
+  margin-inline: var(--glob-page-horizontal-padding);
   padding-block: 3zu;
   color: var(--glob-mute-text-color);
   border-block-start: solid 1zx var(--glob-border-color);
   display: flex;
-  justify-content: space-between;
   flex: 0 0 auto;
+  @include device("desktop") {
+    justify-content: space-between;
+  }
+  @include device("mobile") {
+    flex-direction: column;
+  }
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  @include device("mobile") {
+    align-items: center;
+    align-self: center;
+  }
+}
+
+.title-container {
+  column-gap: 2zu;
+  display: flex;
+  align-items: center;
+}
+
+.title {
+  @include bold-font;
+  font-size: 4.5zu;
+}
+
+.version {
+  padding-block: 0.5zu;
+  padding-inline: 1zu;
+  font-size: 3zu;
+  border-radius: var(--glob-border-radius);
+  border: solid 1zx var(--glob-border-color);
 }
 
 .copyright {
+  margin-block-start: 2zu;
+  column-gap: 2zu;
   font-size: 3.5zu;
+  display: flex;
+  align-items: baseline;
 }
 
 .recaptcha {
   margin-block-start: 2zu;
   font-size: 3zu;
+  @include device("mobile") {
+    text-align: center;
+  }
 }

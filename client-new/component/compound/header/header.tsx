@@ -1,13 +1,15 @@
 //
 
+import {faBook} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, GeneralIcon, LinkIconbag, useTrans} from "zographia";
+import {Link} from "/client-new/component/atom/link";
 import {Logo} from "/client-new/component/atom/logo";
 import {SimpleLink} from "/client-new/component/atom/simple-link";
+import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {ChangeLocaleForm} from "/client-new/component/compound/change-locale-form";
 import {create} from "/client-new/component/create";
 import {useMe} from "/client-new/hook/auth";
-import {VERSION} from "/client-new/variable";
 
 
 export const Header = create(
@@ -18,6 +20,8 @@ export const Header = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {trans} = useTrans("header");
+
     const me = useMe();
 
     return (
@@ -26,14 +30,24 @@ export const Header = create(
           <SimpleLink styleName="logo" href="/">
             <Logo/>
           </SimpleLink>
-          <div styleName="version">
-            {VERSION}
-          </div>
+          <nav styleName="navigation">
+            <Link styleName="link" href="/dictionary" variant="unstyledUnderline">
+              <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
+              {trans("dictionaryList")}
+            </Link>
+          </nav>
         </div>
         <div styleName="right">
           <div styleName="menu">
             <ChangeLocaleForm/>
           </div>
+          {(me !== null) && (
+            <div styleName="rightmost">
+              <SimpleLink href={`/user/${me.name}`}>
+                <UserAvatar styleName="avatar" user={me}/>
+              </SimpleLink>
+            </div>
+          )}
         </div>
       </header>
     );

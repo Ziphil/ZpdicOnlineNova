@@ -1,7 +1,7 @@
 //
 
 import {ReactElement, useMemo} from "react";
-import {AdditionalProps, MultiLineText, Tag} from "zographia";
+import {AdditionalProps, MultiLineText, Tag, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 import {DetailedWord, EnhancedDictionary, Word} from "/client-new/skeleton";
 
@@ -18,12 +18,18 @@ export const WordCardHeading = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {transNumber} = useTrans("wordCard");
+
+    const debug = location.hostname === "localhost";
     const pronunciation = useMemo(() => getPronunciation(dictionary, word), [dictionary, word]);
 
     return (
       <div styleName="root" {...rest}>
-        {(word.tags.length > 0) && (
+        {(debug || word.tags.length >= 0) && (
           <div styleName="tag">
+            {(debug) && (
+              <span styleName="number">#{transNumber(word.number)}</span>
+            )}
             {word.tags.map((tag, index) => (
               <Tag key={index} variant="solid">{tag}</Tag>
             ))}

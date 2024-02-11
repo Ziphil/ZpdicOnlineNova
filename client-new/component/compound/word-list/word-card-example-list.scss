@@ -12,9 +12,15 @@
 
 .heading {
   @include bold-font;
-  margin-block-end: 3zu;
+  margin-block-end: 2zu;
   font-size: 3.5zu;
-  color: var(--glob-primary-heading-text-color);
+  color: var(--information-heading-text-color);
+}
+
+.list {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
 }
 
 .item {

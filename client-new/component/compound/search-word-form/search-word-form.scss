@@ -4,6 +4,9 @@
 
 
 .root {
+  width: 100%;
+  max-width: 160zu;
+  margin-inline: auto;
   row-gap: 2zu;
   display: flex;
   flex-direction: column;

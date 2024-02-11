@@ -6,6 +6,8 @@
 .root {
   @include theme("light") {
     --logo-text-color: #{leveled-color("primary", 7)};
+    --link-text-color: #{leveled-color("primary", 7)};
+    --link-hover-text-color: #{leveled-color("primary", 8)};
     --border-color: #{leveled-color("primary", 3)};
     --background-color: #{leveled-color("primary", 0)};
     --stain-color: #{single-color("stain-light", 0.1)};
@@ -14,7 +16,7 @@
 
 .root {
   height: 12zu;
-  padding-inline: 10zu;
+  padding-inline: var(--glob-page-horizontal-padding);
   inset-block-start: 0zu;
   border-block-end: solid 1zx var(--border-color);
   background-color: var(--background-color);
@@ -29,26 +31,41 @@
 }
 
 .left {
-  column-gap: 3zu;
-  color: var(--logo-text-color);
+  column-gap: 6zu;
   display: flex;
   align-items: center;
 }
 
 .logo {
   font-size: 6zu;
+  color: var(--logo-text-color);
   cursor: pointer;
 }
 
-.version {
-  font-size: 3.5zu;
+.navigation {
+  column-gap: 4zu;
+  display: flex;
+  align-items: center;
+}
+
+.link {
+  color: var(--link-text-color);
+  &:hover {
+    color: var(--link-hover-text-color);
+  }
 }
 
 .right {
+  column-gap: 4zu;
   display: flex;
   align-items: center;
 }
 
 .menu {
   display: flex;
+}
+
+.avatar {
+  font-size: 7zu;
+  display: block;
 }

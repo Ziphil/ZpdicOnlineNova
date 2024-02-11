@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  row-gap: 8zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.section {
+  display: flex;
+  flex-direction: column; 
+}
+
+.heading {
+  @include bold-font;
+  margin-block-end: 4zu;
+  font-size: 5zu;
+  color: var(--glob-primary-heading-text-color);
+}
+
+.description {
+  margin-block-start: -1zu;
+  margin-block-end: 4zu;
+  font-size: 3.5zu;
+  color: var(--glob-mute-text-color);
+}

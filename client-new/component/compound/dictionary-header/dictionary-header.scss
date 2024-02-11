@@ -14,7 +14,7 @@
 
 .root {
   padding-block-start: 8zu;
-  padding-inline: 10zu;
+  padding-inline: var(--glob-page-horizontal-padding);
   border-block-end: solid 1zx var(--border-color);
   background-color: var(--background-color);
   background-image: var(--glob-noise-background-image);
@@ -27,7 +27,18 @@
   color: var(--glob-secondary-heading-text-color);
 }
 
+.user {
+  margin-block-start: 2zu;
+  font-size: 5zu;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  margin-inline-end: var(--glob-blank-gap);
+}
+
 .tab-list {
-  margin-block-start: 6zu;
+  margin-block-start: 8zu;
   border-block-end: none;
 }

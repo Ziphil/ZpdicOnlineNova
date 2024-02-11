@@ -1,6 +1,3 @@
 //
 
-import {TopPage} from "./top-page";
-
-
-export const Component = TopPage;
+export {TopPage as Component} from "./top-page";

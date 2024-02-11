@@ -1,6 +1,3 @@
 //
 
-import {LoginPage} from "./login-page";
-
-
-export const Component = LoginPage;
+export {LoginPage as Component} from "./login-page";

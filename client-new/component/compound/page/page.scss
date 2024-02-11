@@ -12,10 +12,14 @@
 .main {
   flex: 1 1 auto;
   view-transition-name: main;
-  &[data-insert-padding] {
-    padding-block-start: 12zu;
+  &[data-insert-top-padding] {
+    padding-block-start: 10zu;
+  }
+  &[data-insert-bottom-padding] {
     padding-block-end: 16zu;
-    padding-inline: 10zu;  
+  }
+  &[data-insert-horizontal-padding] {
+    padding-inline: var(--glob-page-horizontal-padding);
   }
 }
 

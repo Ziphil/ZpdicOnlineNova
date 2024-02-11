@@ -387,6 +387,34 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
+  @post(SERVER_PATHS["fetchUserDictionaries"])
+  @before(checkUser())
+  public async [Symbol()](request: Request<"fetchUserDictionaries">, response: Response<"fetchUserDictionaries">): Promise<void> {
+    const me = request.user;
+    const name = request.body.name;
+    const user = await UserModel.fetchOneByName(name);
+    if (user) {
+      const authority = (me?.id === user.id) ? "edit" : "own";
+      const includeSecret = me?.id === user.id;
+      const dictionaries = await DictionaryModel.fetchByUser(user, authority, includeSecret);
+      const body = await Promise.all(dictionaries.map((dictionary) => {
+        const promise = new Promise<UserDictionary>(async (resolve, reject) => {
+          try {
+            const skeleton = await DictionaryCreator.createUser(dictionary, user);
+            resolve(skeleton);
+          } catch (error) {
+            reject(error);
+          }
+        });
+        return promise;
+      }));
+      Controller.respond(response, body);
+    } else {
+      const body = CustomError.ofType("noSuchUser");
+      Controller.respondError(response, body);
+    }
+  }
+
   @post(SERVER_PATHS["fetchAllDictionaries"])
   public async [Symbol()](request: Request<"fetchAllDictionaries">, response: Response<"fetchAllDictionaries">): Promise<void> {
     const order = request.body.order;

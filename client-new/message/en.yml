@@ -4,6 +4,12 @@ toast:
       Successfully signed in.
     register: >-
       Successfully created your account.
+    addWord: >-
+      Successfully created a new word.
+    changeWord: >-
+      Successfully edited the word.
+    discardWord: >-
+      Successfully deleted the word.
   error:
     recaptchaError: >-
       Something failed.
@@ -38,16 +44,69 @@ toast:
       An unexpected error occurred.
       Please notify the administrator.
 
+alertDialog:
+  confirm: "Konfirmi"
+  cancel: "Nuligi"
+
 dictionaryHeader:
   tab:
     dictionary: "Dictionary"
     example: "Sentences"
-    info: "Details"
-    setting: "Details · Settings"
+    information: "Details"
+    commission: "Requests"
+    setting: "Settings"
 dictionaryList:
   updatedDate: "Updated at"
   createdDate: "Created at"
-  go: "See dictionary"
+  tag:
+    own: "Owner"
+    edit: "Edit only"
+    view: "View only"
+  button:
+    see: "See dictionary"
+editWordForm:
+  heading:
+    basic: "Basic information"
+    equivalents: "Translations"
+    informations: "Contents"
+    variations: "Variation forms"
+    relations: "Related words"
+  label:
+    name: "Spelling"
+    pronunciation: "Pronunciation"
+    tags: "Tags"
+    equivalent:
+      titles: "Parts of speech"
+      names: "Translations <note>(comma-separated)</note>"
+    information:
+      title: "Heading"
+      text: "Content"
+    variation:
+      title: "Kind"
+      name: "Form"
+    relation:
+      titles: "Kinds"
+      name: "Word"
+  absent:
+    equivalent: "No translations"
+    information: "No contents"
+    variation: "No variation forms"
+    relation: "No related words"
+  button:
+    add:
+      equivalent: "Add translation"
+      information: "Add content"
+      variation: "Add variation form"
+      relation: "Add related word"
+    generate: "Generate"
+exampleList:
+  noWord: "No words linked"
+  button:
+    edit: "Edit"
+    discard: "Delete"
+header:
+  dictionaryList: "Dictionaries"
+  userPage: "User page"
 loginForm:
   label:
     name: "Username"
@@ -106,6 +165,9 @@ registerForm:
       Enter a password.
     agreeRequired: >-
       In order to use this application, you must read and agree to the privacy policy.
+searchExampleForm:
+  information: >-
+    Searching for example sentences will be available in a future update.
 searchWordForm:
   mode:
     name: "Headword"
@@ -123,17 +185,120 @@ searchWordForm:
   ignoreCase: "Ignore letter case"
   enableSuggestions: "Suggest variations"
   shuffleResult: "Shuffle results"
+userHeader:
+  tab:
+    dictionary: "Dictionaries"
+    notification: "Notifications"
+    setting: "Settings"
+wordList:
+  button:
+    edit: "Edit"
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This word will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
+wordNameFrequencyChart:
+  other: "Others"
   
 dictionaryPage:
   add: "Create new word"
+dictionaryInformationPage:
+  heading:
+    history: "Word count history"
+    wordNameFrequency: "Character frequency"
+  description: 
+    history: >-
+      The chart below shows the number of words in this dictionary over the last 100 days.
+      The word count is recorded every day at around 14:30 (UTC).
+    wordNameFrequency: >-
+      The chart below shows how frequent each character appears in the headwords in this dictionary.
+dictionarySettingPage:
+  tab:
+    general: "General"
+    editing: "Editing"
+    authority: "Permissions"
+dictionarySettingAuthorityPart:
+  heading:
+    editInvitation: "Editing permission"
+    transferInvitation: "Transfer"
+  description:
+    editInvitation: >-
+      The following users have permission to edit this dictionary.
+      They can edit and delete words, but they cannot change the dictionary settings or delete the dictionary itself.
+dictionarySettingEditingPart:
+  heading:
+    akrantiainSource: "Source code for Akrantiain"
+    zatlinSource: "Source code for Zatlin"
+    enableMarkdown: "Markdown"
+    enableDuplicateName: "Duplicate spelling check"
+    exampleTitle: "Heading for sentences"
+    pronunciationTitle: "Heading for pronunciations"
+  description:
+    akrantiainSource: >-
+      Akrantiain is a system that automatically generates phonetic symbols based on the spelling of words.
+      If you set the source code here, Akrantiain will automatically generate a phonetic symbol from a spelling and display it next to the spelling.
+      If a word has a specified pronunciation, it will be displayed instead.
+      For more information on Akrantiain's syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+    zatlinSource: >-
+      Zatlin is a system that generates random spellings of words.
+      If you set the source code here, a “Generate” button will appear in the word editor, allowing you to generate a spelling by Zatlin.
+      For more information on Zatlin's syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+    enableMarkdown: >-
+      Enabling this feature will allow you to write the contents of words in Markdown format.
+    enableDuplicateName: >-
+      If you enable this feature, when you enter a spelling in the word editor, it will tell you whether the dictionary already has a word with the same spelling.
+      Note that it only checks for spelling duplication and does not prevent you from registering a word with the same spelling.
+    exampleTitle: >-
+      The heading of example sentence sections, which is displayed in word cards.
+    pronunciationTitle: >-
+      The heading of pronunciation sections, which will be used when the dictionary is output in OTM-JSON format.
+  label:
+    enableMarkdown:
+      true: "Enable"
+      false: "Disable"
+    enableDuplicateName:
+      true: "Enable"
+      false: "Disable"
+  button:
+    change: "Change"
+    editInvitation:
+      add: "編集権限をユーザーに付与"
+      discard: "解除"
+    transferInvitation:
+      add: "別ユーザーに譲渡"
+dictionarySettingGeneralPart:
+  heading:
+    name: "Name"
+    paramName: "Identifier for URL"
+    explanation: "Description"
+    secret: "Visibility in dictionary lists"
+  description:
+    paramName: >-
+      This setting will replace the number in the dictionary URL with the specified identifier.
+    explanation: >-
+      This is displayed on the dictionary page before searching.
+      You can use some Markdown syntax here.
+  label:
+    secret:
+      false: "Show"
+      true: "Hide"
+  button:
+    change: "Change"
 errorPage:
   title:
     notFound: "Not\nFound"
   message:
     notFound: >-
-      The page you requested could not be found.
-      Please make sure that you type the correct address.
-      It is also possible that the page you are looking for has been deleted or moved to another location.
+      The page you are looking for could not be found.
+      It may have been deleted or moved to another location, so please try looking again from the top page.
+  button:
+    top: "Back to top page"
+examplePage:
+  add: "Create new sentence"
 loginPage:
   title: "Sign in"
 notificationListPage:
@@ -144,6 +309,7 @@ topPage:
   button:
     login: "Sign in · Sign up"
     dictionary: "List of dictionaries"
+    userPage: "User page"
   aggregation:
     dictionary: "{count, plural, one {Dictionary} other {Dictionaries}}"
     word: "{count, plural, one {Word} other {Words}}"
@@ -151,4 +317,14 @@ topPage:
   heading:
     notification: "Latest news"
   moreNotifications: "Read more news"
-  catch: "Draw your own universe with conlang"
+  catch: "<line>Draw</line> <line>your own universe</line> <line>with conlang</line>"
+userSettingPage:
+  heading:
+    screenName: "ニックネーム"
+    email: "メールアドレス"
+    password: "パスワード"
+  label:
+    currentPassword: "現在のパスワード"
+    newPassword: "新しいパスワード"
+  button:
+    change: "変更"

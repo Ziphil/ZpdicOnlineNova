@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.body {
+  row-gap: 4zu;
+  column-gap: 4zu;
+  display: grid;
+  @include device("desktop") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include device("mobile") {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.pagination {
+  margin-block-start: 3zu;
+}

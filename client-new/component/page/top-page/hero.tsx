@@ -1,11 +1,12 @@
 //
 
-import {faBook, faSignIn} from "@fortawesome/sharp-regular-svg-icons";
+import {faBook, faSignIn, faUser} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, GeneralIcon, LinkIconbag, aria, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, LinkIconbag, MultiLineText, aria, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
 import {Logo} from "/client-new/component/atom/logo";
 import {create} from "/client-new/component/create";
+import {useMe} from "/client-new/hook/auth";
 import {DECORATION_TEXT} from "./hero-constant";
 
 
@@ -17,20 +18,31 @@ export const Hero = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("topPage");
+    const {trans, transNode} = useTrans("topPage");
+
+    const me = useMe();
 
     return (
       <div styleName="root" {...rest}>
         <Logo styleName="logo"/>
-        <p styleName="catch">
-          {trans("catch")}
-        </p>
+        <MultiLineText styleName="catch" is="p" lineHeight="narrow">
+          {transNode("catch", {
+            line: (parts) => <span styleName="catch-line">{parts}</span>
+          })}
+        </MultiLineText>
         <div styleName="button-group">
-          <Link styleName="button" href="/login" scheme="secondary" variant="light">
-            <LinkIconbag><GeneralIcon icon={faSignIn}/></LinkIconbag>
-            {trans("button.login")}
-          </Link>
-          <Link styleName="link" href="/dictionary">
+          {(me !== null) ? (
+            <Link styleName="button" href={`/user/${me.name}`} scheme="secondary" variant="light">
+              <LinkIconbag><GeneralIcon icon={faUser}/></LinkIconbag>
+              {trans("button.userPage")}
+            </Link>
+          ) : (
+            <Link styleName="button" href="/login" scheme="secondary" variant="light">
+              <LinkIconbag><GeneralIcon icon={faSignIn}/></LinkIconbag>
+              {trans("button.login")}
+            </Link>
+          )}
+          <Link styleName="link" href="/dictionary" variant="simple">
             <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
             {trans("button.dictionary")}
           </Link>

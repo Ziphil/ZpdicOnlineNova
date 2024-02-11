@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  @include theme("light") {
+    --pie-stroke-color: #{single-color("white")};
+  }
+}
+
+.root {
+  width: 100%;
+  height: 80zu;
+  font-size: 3zu;
+}
+
+.root svg {
+  overflow: visible;
+}
+
+.pie-chart * {
+  outline: none;
+}
+
+.pie :global(.recharts-pie-sector) path {
+  stroke: var(--pie-stroke-color);
+}

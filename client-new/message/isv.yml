@@ -4,6 +4,12 @@ toast:
       Successfully signed in.
     register: >-
       Successfully created your account.
+    addWord: >-
+      Successfully created a new word.
+    changeWord: >-
+      Successfully edited the word.
+    discardWord: >-
+      Successfully deleted the word.
   error:
     recaptchaError: >-
       Нєчто не удал се.
@@ -18,9 +24,9 @@ toast:
       Вы не јесте пријавили се.
       Прошу пријавите се опет.
     forbidden: >-
-      You are not authorized to access this content.
+      Вы не јесте уполномочјени получати доступ к тому содржанју.
     serverNotFound: >-
-      Сервер можно обновјены.
+      Сервер можно был обновјены.
       Πрошу освєжите страницу.
     serverError: >-
       На серверу догодил се блуд.
@@ -37,17 +43,70 @@ toast:
     unexpected: >-
       Догодил се неочекиваны блуд.
       Πрошу увєдомите администратору.
+
+alertDialog:
+  confirm: "Confirm"
+  cancel: "Одрєкти"
       
 dictionaryHeader:
   tab:
     dictionary: "Словник"
     example: "Рєченја"
-    info: "Подробности"
-    setting: "Подробности · Настројкы"
+    information: "Подробности"
+    commission: "Просбы"
+    setting: "Настројкы"
 dictionaryList:
   updatedDate: "Актуализованы"
   createdDate: "Созданы"
-  go: "Зрєти словник"
+  tag:
+    own: "Властник"
+    edit: "Edit only"
+    view: "View only"
+  button:
+    see: "Зрєти словник"
+editWordForm:
+  heading:
+    basic: "Основне информације"
+    equivalents: "Прєводы"
+    informations: "Содржанја"
+    variations: "Вариације"
+    relations: "Свезане слова"
+  label:
+    name: "Правописанје"
+    pronunciation: "Изговор"
+    tags: "Значкы"
+    equivalent:
+      titles: "Чести молвы"
+      names: "Прєводы <note>(раздєљене запетыми)</note>"
+    information:
+      title: "Заглавје"
+      text: "Содржанје"
+    variation:
+      title: "Род"
+      name: "Форма"
+    relation:
+      titles: "Роды"
+      name: "Слово"
+  absent:
+    equivalent: "Нема прєводов"
+    information: "Нема содржаниј"
+    variation: "Нема вариациј"
+    relation: "Нема свезаных слов"
+  button:
+    add:
+      equivalent: "Додати прєвод"
+      information: "Додати содржанје"
+      variation: "Додати вариацију"
+      relation: "Додати свезано слово"
+    generate: "Произвести"
+exampleList:
+  noWord: "No words linked"
+  button:
+    edit: "Измєнити"
+    discard: "Одстранити"
+header:
+  dictionaryList: "Словникы"
+  userPage: "Користничска страница"
 loginForm:
   label:
     name: "Користничско име"
@@ -88,7 +147,7 @@ registerForm:
     confirm: "Изтворити конто"
   error:
     nameInvalid: >-
-      Користничско име муси состојати се из алфабетно-цифровых знаков, подчрчников и дефисов.
+      Користничско име муси состојати се из алфабетно-цифровых знаков, подчрок и дефисов.
       Оно такоже муси имєти хот бы једну нецифру.
     nameTooLong: >-
       Користничско име муси имєти не боље 30 знаков.
@@ -106,6 +165,9 @@ registerForm:
       Впишите паролу.
     agreeRequired: >-
       Да бы употрєбјати то примєњенје, вы мусите прочитати и согласити се с политикоју приватности.
+searchExampleForm:
+  information: >-
+    Searching for example sentences will be available in a future update.
 searchWordForm:
   mode:
     name: "Слово"
@@ -123,17 +185,120 @@ searchWordForm:
   ignoreCase: "Игноровати велике/мале буквы"
   enableSuggestions: "Прєдлагати вариације"
   shuffleResult: "Смєшати резултаты"
+userHeader:
+  tab:
+    dictionary: "Словникы"
+    notification: "Увєдомјенја"
+    setting: "Настројкы"
+wordList:
+  button:
+    edit: "Измєнити"
+    discard: "Одстранити"
+  dialog:
+    discard:
+      message: >-
+        This word will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Одстранити"
+wordNameFrequencyChart:
+  other: "Ине"
   
 dictionaryPage:
   add: "Создати ново слово"
+dictionaryInformationPage:
+  heading:
+    history: "Хисторија коликости слов"
+    wordNameFrequency: "Честота знаков"
+  description: 
+    history: >-
+      На слєдујучем диаграму показываје се коликост слов в том словнику за послєдных 100 дње.
+      Коликост слов јест записывана кажды дењ приблизно в 14:30 (UTC).
+    wordNameFrequency: >-
+      На слєдујучем диаграму показываје се како често кажды знак појавјаје се в словах того словника.
+dictionarySettingPage:
+  tab:
+    general: "Обчи"
+    editing: "Editing"
+    authority: "Позвољенја"
+dictionarySettingAuthorityPart:
+  heading:
+    editInvitation: "Editing permission"
+    transferInvitation: "Transfer"
+  description:
+    editInvitation: >-
+      The following users have permission to edit this dictionary.
+      They can edit and delete words, but they cannot change the dictionary settings or delete the dictionary itself.
+dictionarySettingEditingPart:
+  heading:
+    akrantiainSource: "Изходны код дља Акрантјајна"
+    zatlinSource: "Изходны код дља Затлина"
+    enableMarkdown: "Маркдаун"
+    enableDuplicateName: "Duplicate spelling check"
+    exampleTitle: "Heading for sentences"
+    pronunciationTitle: "Heading for pronunciations"
+  description:
+    akrantiainSource: >-
+      Akrantiain is a system that automatically generates phonetic symbols based on the spelling of words.
+      If you set the source code, Akrantiain will automatically generate a phonetic symbol from a spelling and display it next to the spelling.
+      If a word has a specified pronunciation, it will be displayed instead.
+      For more information on Akrantiain's syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+    zatlinSource: >-
+      Zatlin is a system that generates random spellings of words.
+      If you set the source code, a “Generate” button will appear in the word editor, allowing you to generate a spelling by Zatlin.
+      For more information on Zatlin's syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+    enableMarkdown: >-
+      Enabling this feature will allow you to write the contents of words in Markdown format.
+    enableDuplicateName: >-
+      If you enable this feature, when you enter a spelling in the word editor, it will tell you whether a word with the same spelling already exists.
+      Note that it only checks for spelling duplication and does not prevent you from registering a word with the same spelling.
+    exampleTitle: >-
+      The heading of example sentence sections, which is displayed in word cards.
+    pronunciationTitle: >-
+      The heading of pronunciation sections, which is used when the dictionary is output in OTM-JSON format.
+  label:
+    enableMarkdown:
+      true: "Enable"
+      false: "Disable"
+    enableDuplicateName:
+      true: "Enable"
+      false: "Disable"
+  button:
+    change: "Измєнити"
+    editInvitation:
+      add: "編集権限をユーザーに付与"
+      discard: "解除"
+    transferInvitation:
+      add: "別ユーザーに譲渡"
+dictionarySettingGeneralPart:
+  heading:
+    name: "Име"
+    paramName: "Идентификатор дља URL-адресы"
+    explanation: "Опис"
+    secret: "Видимост в списках словников"
+  description:
+    paramName: >-
+      This setting will replace the number in the dictionary URL with the specified identifier.
+    explanation: >-
+      This is displayed on the dictionary page before searching.
+      You can use some Markdown syntax here.
+  label:
+    secret:
+      false: "Show"
+      true: "Hide"
+  button:
+    change: "Измєнити"
 errorPage:
   title:
     notFound: "Не\nНајдены"
   message:
     notFound: >-
-      The page you requested could not be found.
-      Please make sure that you type the correct address.
-      It is also possible that the page you are looking for has been deleted or moved to another location.
+      Страница ктору вы ишчете не была најдена.
+      Она можно была одстрањена или прємєшчена в ино мєсто, затом прошу попробујте поискати ју опет из главној странице.
+  button:
+    top: "Врнути се к главној страници"
+examplePage:
+  add: "Создати ново рєченје"
 loginPage:
   title: "Пријавити се"
 notificationListPage:
@@ -144,6 +309,7 @@ topPage:
   button:
     login: "Пријавити се · Записати се"
     dictionary: "Список словников"
+    userPage: "Користничска страница"
   aggregation:
     dictionary: "{count, plural, one {Словник} few {Словникы} other {Словников}}"
     word: "{count, plural, one {Слово} few {Слова} other {Слов}}"
@@ -151,4 +317,14 @@ topPage:
   heading:
     notification: "Послєдне новости"
   moreNotifications: "Читати новости вече"
-  catch: "Рысујте свој всесвєт со сконструованым језыком"
+  catch: "<line>Рысујте</line> <line>свој всесвєт</line> <line>со сконструованым језыком</line>"
+userSettingPage:
+  heading:
+    screenName: "ニックネーム"
+    email: "メールアドレス"
+    password: "パスワード"
+  label:
+    currentPassword: "現在のパスワード"
+    newPassword: "新しいパスワード"
+  button:
+    change: "変更"

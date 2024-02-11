@@ -18,21 +18,39 @@
   background-color: var(--background-color);
   background-image: var(--glob-noise-background-image);
   box-shadow: var(--glob-stain-shadow-setting) var(--stain-color);
-}
-
-.inner {
-  max-width: 200zu;
-  margin-inline: auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-content: center;
-}
-
-.item {
-  row-gap: 2zu;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.inner {
+  width: 100%;
+  max-width: 200zu;
+  @include device("desktop") {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+  }
+  @include device("mobile") {
+    row-gap: 2zu;
+    column-gap: 2zu;
+    display: grid;
+    grid-template-columns: repeat(2, max-content);
+    align-items: baseline;
+    justify-content: center;
+  }
+}
+
+.item {
+  @include device("desktop") {
+    row-gap: 2zu;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  @include device("mobile") {
+    display: contents;
+  }
 }
 
 .count {
@@ -40,6 +58,9 @@
   font-size: 10zu;
   letter-spacing: 0.1em;
   text-indent: 0.1em;
+  @include device("mobile") {
+    text-align: end;
+  }
 }
 
 .label {

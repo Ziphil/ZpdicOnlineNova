@@ -9,8 +9,8 @@ import {create} from "/client-new/component/create";
 import {DetailedDictionary, History, UserDictionary} from "/client-new/skeleton";
 
 
-export const DictionaryHistoryChart = create(
-  require("./dictionary-history-chart.scss"), "DictionaryHistoryChart",
+export const DictionaryCardHistoryChart = create(
+  require("./dictionary-card-history-chart.scss"), "DictionaryCardHistoryChart",
   function ({
     dictionary,
     histories,

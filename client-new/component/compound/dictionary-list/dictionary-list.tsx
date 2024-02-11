@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps, List, ListBody, ListEmptyView, ListPagination} from "zographia";
+import {AdditionalProps, List, ListBody, ListEmptyView, ListPagination, PageSpec} from "zographia";
 import {create} from "/client-new/component/create";
 import {DetailedDictionary, UserDictionary} from "/client-new/skeleton";
 import {DictionaryCard} from "./dictionary-card";
@@ -11,24 +11,32 @@ export const DictionaryList = create(
   require("./dictionary-list.scss"), "DictionaryList",
   function ({
     dictionaries,
-    size,
-    hitSize,
-    page,
-    onPageSet,
+    pageSpec,
+    showUser = false,
+    showChart = false,
+    showAuthority = false,
     ...rest
   }: {
     dictionaries: Array<DetailedDictionary | UserDictionary>,
-    size: number,
-    hitSize?: number,
-    page?: number,
-    onPageSet?: (page: number) => unknown,
+    pageSpec: PageSpec,
+    showUser?: boolean,
+    showChart?: boolean,
+    showAuthority?: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
 
     return (
-      <List styleName="root" items={dictionaries} size={size} hitSize={hitSize} page={page} onPageSet={onPageSet} {...rest}>
+      <List styleName="root" items={dictionaries} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(dictionary) => <DictionaryCard key={dictionary.id} dictionary={dictionary}/>}
+          {(dictionary) => (
+            <DictionaryCard
+              key={dictionary.id}
+              dictionary={dictionary}
+              showUser={showUser}
+              showChart={showChart}
+              showAuthority={showAuthority}
+            />
+          )}
           <ListEmptyView/>
         </ListBody>
         <ListPagination styleName="pagination"/>

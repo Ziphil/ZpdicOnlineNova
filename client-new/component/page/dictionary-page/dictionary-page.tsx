@@ -1,18 +1,20 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement, SetStateAction, useCallback, useMemo} from "react";
-import {useParams} from "react-router-dom";
+import {Fragment, ReactElement, SetStateAction, useCallback} from "react";
+import {useHref} from "react-router-dom";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {Markdown} from "/client-new/component/atom/markdown";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
 import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {SearchWordForm} from "/client-new/component/compound/search-word-form";
 import {WordList} from "/client-new/component/compound/word-list";
 import {create} from "/client-new/component/create";
+import {useDictionary} from "/client-new/hook/dictionary";
 import {useSuspenseResponse} from "/client-new/hook/request";
 import {Search, useSearchState} from "/client-new/hook/search";
-import {EnhancedDictionary, WordParameter} from "/client-new/skeleton";
+import {WordParameter} from "/client-new/skeleton";
 import {calcOffsetSpec, resolveStateAction} from "/client-new/util/misc";
 
 
@@ -26,15 +28,15 @@ export const DictionaryPage = create(
 
     const {trans} = useTrans("dictionaryPage");
 
-    const {identifier} = useParams();
-    const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
-    const [dictionary] = useSuspenseResponse("fetchDictionary", {number, paramName}, {refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
-    const enhancedDictionary = useMemo(() => EnhancedDictionary.enhance(dictionary), [dictionary]);
+    const dictionary = useDictionary();
+    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
     const [hitResult] = useSuspenseResponse("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 40)}, {keepPreviousData: true});
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
+
+    const addWordPageUrl = useHref(`/dictionary/${dictionary.number}/word/new`);
 
     const handleParameterSet = useCallback(function (parameter: SetStateAction<WordParameter>): void {
       setQuery((prevQuery) => {
@@ -48,25 +50,37 @@ export const DictionaryPage = create(
       window.scrollTo(0, 0);
     }, [query, setQuery]);
 
+    const addWord = useCallback(function (): void {
+      window.open(addWordPageUrl);
+    }, [addWordPageUrl]);
+
     return (
       <Page {...rest} headerNode={(
         <Fragment>
           <Header/>
-          <DictionaryHeader dictionary={enhancedDictionary} tabValue="dictionary"/>
+          <DictionaryHeader dictionary={dictionary} width="wide" tabValue="dictionary"/>
         </Fragment>
       )}>
         <MainContainer styleName="main" width="wide">
           <div styleName="left">
             <div styleName="sticky">
               <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
-              <Button>
-                <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-                {trans("add")}
-              </Button>
+              {(canEdit) && (
+                <Button variant="light" onClick={addWord}>
+                  <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+                  {trans("add")}
+                </Button>
+              )}
             </div>
           </div>
           <div styleName="right">
-            <WordList dictionary={enhancedDictionary} words={hitWords} size={40} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>
+            {(debouncedQuery.showExplanation && !!dictionary.explanation) ? (
+              <Markdown mode="normal">
+                {dictionary.explanation}
+              </Markdown>
+            ) : (
+              <WordList dictionary={dictionary} words={hitWords} pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+            )}
           </div>
         </MainContainer>
       </Page>
