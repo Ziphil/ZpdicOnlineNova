@@ -25,7 +25,7 @@ export const WordCardHeading = create(
 
     return (
       <div styleName="root" {...rest}>
-        {(debug || word.tags.length >= 0) && (
+        {(debug || word.tags.length > 0) && (
           <div styleName="tag">
             {(debug) && (
               <span styleName="number">#{transNumber(word.number)}</span>
