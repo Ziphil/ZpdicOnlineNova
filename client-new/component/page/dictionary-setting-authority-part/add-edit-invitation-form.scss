@@ -2,3 +2,10 @@
 
 @use "zographia/source/component/function.scss" as *;
 @forward "/client-new/component/page/dictionary-setting-general-part/change-dictionary-name-form.scss";
+
+
+.root-table {
+  row-gap: 4zu;
+  display: flex;
+  flex-direction: column;
+}

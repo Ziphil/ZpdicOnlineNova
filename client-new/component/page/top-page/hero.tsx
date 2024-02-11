@@ -42,7 +42,7 @@ export const Hero = create(
               {trans("button.login")}
             </Link>
           )}
-          <Link styleName="link" href="/dictionary">
+          <Link styleName="link" href="/dictionary" variant="simple">
             <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
             {trans("button.dictionary")}
           </Link>
