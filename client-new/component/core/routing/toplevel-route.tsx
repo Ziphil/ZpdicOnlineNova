@@ -1,8 +1,9 @@
 //
 
-import {ReactElement, useEffect} from "react";
+import {ReactElement, Suspense, useEffect} from "react";
 import {Outlet, useLocation} from "react-router-dom";
 import {create} from "/client-new/component/create";
+import {LoadingPage} from "/client-new/component/page/loading-page";
 import {sendAnalyticsEvent} from "/client-new/util/gtag";
 
 
@@ -19,7 +20,9 @@ export const ToplevelRoute = create(
     }, [location]);
 
     return (
-      <Outlet/>
+      <Suspense fallback={<LoadingPage/>}>
+        <Outlet/>
+      </Suspense>
     );
 
   }

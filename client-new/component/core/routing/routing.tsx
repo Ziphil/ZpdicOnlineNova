@@ -1,6 +1,6 @@
 //
 
-import {ReactElement, Suspense} from "react";
+import {ReactElement} from "react";
 import {Route, RouterProvider, createBrowserRouter, createRoutesFromElements} from "react-router-dom";
 import {create} from "/client-new/component/create";
 import {ErrorPage} from "/client-new/component/page/error-page";
@@ -40,9 +40,7 @@ export const Routing = create(
   }): ReactElement {
 
     return (
-      <Suspense fallback={<div/>}>
-        <RouterProvider router={router}/>
-      </Suspense>
+      <RouterProvider router={router}/>
     );
 
   }
