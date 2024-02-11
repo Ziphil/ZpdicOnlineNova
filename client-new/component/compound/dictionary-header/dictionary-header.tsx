@@ -3,7 +3,7 @@
 import {faBook, faCircleInfo, faCog, faListCheck, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
-import {SimpleLink} from "/client-new/component/atom/simple-link";
+import {Link} from "/client-new/component/atom/link";
 import {LinkTab} from "/client-new/component/atom/tab";
 import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {MainContainer} from "/client-new/component/compound/page";
@@ -39,9 +39,9 @@ export const DictionaryHeader = create(
           <div styleName="user">
             <UserAvatar styleName="avatar" user={dictionary.user}/>
             <SingleLineText is="span">
-              <SimpleLink href={`/user/${dictionary.user.name}`}>
+              <Link href={`/user/${dictionary.user.name}`} variant="unstyledSimple">
                 {dictionary.user.screenName}
-              </SimpleLink>
+              </Link>
             </SingleLineText>
           </div>
           <TabList styleName="tab-list" value={tabValue ?? ""}>

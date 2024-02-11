@@ -79,7 +79,7 @@ export const DictionaryPage = create(
                 {dictionary.explanation}
               </Markdown>
             ) : (
-              <WordList dictionary={dictionary} words={hitWords} size={40} hitSize={hitSize} page={query.page} onPageSet={handlePageSet}/>
+              <WordList dictionary={dictionary} words={hitWords} pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}}/>
             )}
           </div>
         </MainContainer>

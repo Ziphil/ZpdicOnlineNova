@@ -30,7 +30,7 @@ export const Footer = create(
           </div>
           <MultiLineText styleName="recaptcha" lineHeight="narrow">
             This site is protected by reCAPTCHA.<br/>
-            The Google <Link href="https://policies.google.com/privacy" scheme="gray" variant="underline" target="_blank">Privacy Policy</Link> and <Link href="https://policies.google.com/terms" scheme="gray" variant="underline" target="_blank">Terms of Service</Link> apply.
+            The Google <Link href="https://policies.google.com/privacy" scheme="gray" variant="unstyledUnderline" target="_blank">Privacy Policy</Link> and <Link href="https://policies.google.com/terms" scheme="gray" variant="unstyledUnderline" target="_blank">Terms of Service</Link> apply.
           </MultiLineText>
         </div>
         <div styleName="right">

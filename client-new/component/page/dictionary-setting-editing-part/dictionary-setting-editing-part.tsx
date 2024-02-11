@@ -4,6 +4,7 @@ import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {EnhancedDictionary} from "/client/skeleton/dictionary";
+import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
 import {ChangeDictionarySettingsForm} from "./change-dictionary-settings-form";
 import {ChangeDictionarySourceForm} from "./change-dictionary-source-form";
@@ -17,7 +18,7 @@ export const DictionarySettingEditingPart = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionarySettingEditingPart");
+    const {trans, transNode} = useTrans("dictionarySettingEditingPart");
 
     const {dictionary} = useOutletContext<{dictionary: EnhancedDictionary}>();
 
@@ -26,14 +27,18 @@ export const DictionarySettingEditingPart = create(
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.akrantiainSource")}</h3>
           <MultiLineText styleName="description">
-            {trans("description.akrantiainSource")}
+            {transNode("description.akrantiainSource", {
+              link: (parts) => <Link href="/document" variant="unstyledUnderline">{parts}</Link>
+            })}
           </MultiLineText>
           <ChangeDictionarySourceForm dictionary={dictionary} language="akrantiain"/>
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.zatlinSource")}</h3>
           <MultiLineText styleName="description">
-            {trans("description.zatlinSource")}
+            {transNode("description.zatlinSource", {
+              link: (parts) => <Link href="/document" variant="unstyledUnderline">{parts}</Link>
+            })}
           </MultiLineText>
           <ChangeDictionarySourceForm dictionary={dictionary} language="zatlin"/>
         </section>

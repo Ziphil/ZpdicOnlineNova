@@ -62,7 +62,7 @@ export const ExamplePage = create(
             </div>
           </div>
           <div styleName="right">
-            <ExampleList dictionary={dictionary} examples={hitExamples} size={40} hitSize={hitSize} page={page} onPageSet={handlePageSet}/>
+            <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 40, hitSize, page, onPageSet: handlePageSet}}/>
           </div>
         </MainContainer>
       </Page>

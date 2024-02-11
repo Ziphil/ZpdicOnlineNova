@@ -5,7 +5,6 @@ import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, Tag, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
-import {SimpleLink} from "/client-new/component/atom/simple-link";
 import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {create} from "/client-new/component/create";
 import {useResponse} from "/client-new/hook/request";
@@ -51,7 +50,7 @@ export const DictionaryCard = create(
               </div>
             )}
             <SingleLineText styleName="name" is="h3">
-              <Link href={`/dictionary/${dictionary.paramName || dictionary.number}`}>
+              <Link href={`/dictionary/${dictionary.paramName || dictionary.number}`} variant="unstyledSimple">
                 {dictionary.name}
               </Link>
             </SingleLineText>
@@ -59,9 +58,9 @@ export const DictionaryCard = create(
               <div styleName="user">
                 <UserAvatar styleName="avatar" user={dictionary.user}/>
                 <SingleLineText is="span">
-                  <SimpleLink href={`/user/${dictionary.user.name}`}>
+                  <Link href={`/user/${dictionary.user.name}`} variant="unstyledSimple">
                     {dictionary.user.screenName}
-                  </SimpleLink>
+                  </Link>
                 </SingleLineText>
               </div>
             )}

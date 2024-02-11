@@ -37,7 +37,7 @@ export const UserPage = create(
       )}>
         <MainContainer styleName="main">
           <section>
-            <DictionaryList dictionaries={dictionaries} size={20} showChart={true} showAuthority={me?.id === user.id}/>
+            <DictionaryList dictionaries={dictionaries} pageSpec={{size: 40}} showChart={true} showAuthority={me?.id === user.id}/>
           </section>
         </MainContainer>
       </Page>
