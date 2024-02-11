@@ -87,7 +87,7 @@ export const SearchWordForm = create(
       handleSet({options: {shuffleSeed: Date.now().toString()}});
     }, [handleSet]);
 
-    const node = (
+    return (
       <form styleName="root" onSubmit={preventDefault} {...rest}>
         <Input
           styleName="input"
@@ -153,7 +153,6 @@ export const SearchWordForm = create(
         </div>
       </form>
     );
-    return node;
 
   }
 );

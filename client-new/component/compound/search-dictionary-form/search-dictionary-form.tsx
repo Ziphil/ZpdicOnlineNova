@@ -35,7 +35,7 @@ export const SearchDictionaryForm = create(
       onParameterSet?.((prevParameter) => merge({}, prevParameter, {order: {direction: orderDirection}}));
     }, [onParameterSet]);
 
-    const node = (
+    return (
       <form styleName="root" onSubmit={preventDefault} {...rest}>
         <Input
           styleName="input"
@@ -63,7 +63,6 @@ export const SearchDictionaryForm = create(
         </div>
       </form>
     );
-    return node;
 
   }
 );
