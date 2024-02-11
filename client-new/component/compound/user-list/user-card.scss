@@ -29,3 +29,8 @@
   font-size: 3.5zu;
   color: var(--glob-mute-text-color);
 }
+
+.footer {
+  column-gap: 3zu;
+  display: flex;
+}

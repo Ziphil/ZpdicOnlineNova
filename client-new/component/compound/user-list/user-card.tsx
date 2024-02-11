@@ -1,8 +1,8 @@
 //
 
 import {IconDefinition, faBug, faBugSlash, faInfoCircle, faSparkles} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement} from "react";
-import {AdditionalProps, Card, CardBody, SingleLineText, useTrans} from "zographia";
+import {ReactElement, ReactNode} from "react";
+import {AdditionalProps, Card, CardBody, CardFooter, SingleLineText, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
 import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {create} from "/client-new/component/create";
@@ -13,9 +13,11 @@ export const UserCard = create(
   require("./user-card.scss"), "UserCard",
   function ({
     user,
+    renderFooter,
     ...rest
   }: {
     user: User,
+    renderFooter?: (user: User) => ReactNode,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -38,6 +40,11 @@ export const UserCard = create(
             </div>
           </div>
         </CardBody>
+        {(renderFooter !== undefined) && (
+          <CardFooter styleName="footer">
+            {renderFooter(user)}
+          </CardFooter>
+        )}
       </Card>
     );
 

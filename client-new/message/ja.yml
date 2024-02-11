@@ -263,8 +263,11 @@ dictionarySettingEditingPart:
       false: "無効"
   button:
     change: "変更"
-    addEditInvitation: "編集権限をユーザーに付与"
-    addTransferInvitation: "別ユーザーに譲渡"
+    editInvitation:
+      add: "編集権限をユーザーに付与"
+      discard: "解除"
+    transferInvitation:
+      add: "別ユーザーに譲渡"
 dictionarySettingGeneralPart:
   heading:
     name: "名前"

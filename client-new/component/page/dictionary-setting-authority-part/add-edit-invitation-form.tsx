@@ -1,6 +1,6 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
-import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {faBan, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {UserList} from "/client-new/component/compound/user-list";
@@ -29,10 +29,15 @@ export const AddEditInvitationForm = create(
         <div>
           <Button type="submit" variant="light">
             <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-            {trans("button.addEditInvitation")}
+            {trans("button.editInvitation.add")}
           </Button>
         </div>
-        <UserList users={authorizedUsers} pageSpec={{size: 20}}/>
+        <UserList users={authorizedUsers} pageSpec={{size: 20}} renderFooter={(user) => (
+          <Button type="submit" scheme="red" variant="underline">
+            <ButtonIconbag><GeneralIcon icon={faBan}/></ButtonIconbag>
+            {trans("button.editInvitation.discard")}
+          </Button>
+        )}/>
       </form>
     );
 
