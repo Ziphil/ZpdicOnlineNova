@@ -8,20 +8,17 @@ import {MainContainer, Page} from "/client-new/component/compound/page";
 import {UserHeader} from "/client-new/component/compound/user-header";
 import {create} from "/client-new/component/create";
 import {useMe} from "/client-new/hook/auth";
-import {ChangeMyEmailForm} from "./change-my-email-form";
-import {ChangeMyPasswordForm} from "./change-my-password-form";
-import {ChangeMyScreenNameForm} from "./change-my-screen-name-form";
 
 
-export const UserSettingPage = create(
-  require("./user-setting-page.scss"), "UserSettingPage",
+export const UserNotificationPage = create(
+  require("./user-notification-page.scss"), "UserNotificationPage",
   function ({
     ...rest
   }: {
     className?: string
   } & AdditionalProps): ReactElement | null {
 
-    const {trans} = useTrans("userSettingPage");
+    const {trans} = useTrans("userNotificationPage");
 
     const me = useMe();
     const {name} = useParams();
@@ -30,22 +27,11 @@ export const UserSettingPage = create(
       <Page {...rest} headerNode={(
         <Fragment>
           <Header/>
-          <UserHeader user={me} tabValue="setting"/>
+          <UserHeader user={me} tabValue="notification"/>
         </Fragment>
       )}>
         <MainContainer styleName="main">
-          <section styleName="section">
-            <h3 styleName="heading">{trans("heading.screenName")}</h3>
-            <ChangeMyScreenNameForm me={me}/>
-          </section>
-          <section styleName="section">
-            <h3 styleName="heading">{trans("heading.email")}</h3>
-            <ChangeMyEmailForm me={me}/>
-          </section>
-          <section styleName="section">
-            <h3 styleName="heading">{trans("heading.password")}</h3>
-            <ChangeMyPasswordForm me={me}/>
-          </section>
+          UNDER CONSTRUCTION
         </MainContainer>
       </Page>
     ) : null;

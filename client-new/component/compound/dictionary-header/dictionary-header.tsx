@@ -22,7 +22,7 @@ export const DictionaryHeader = create(
   }: {
     dictionary: DetailedDictionary,
     width?: "normal" | "wide",
-    tabValue: "dictionary" | "example" | "information" | "setting" | null,
+    tabValue: "dictionary" | "example" | "information" | "commission" | "setting" | null,
     className?: string
   } & AdditionalProps): ReactElement {
 
