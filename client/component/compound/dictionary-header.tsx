@@ -11,8 +11,6 @@ import {
   useState
 } from "react";
 import Button from "/client/component/atom/button";
-import Dropdown from "/client/component/atom/dropdown";
-import DropdownItem from "/client/component/atom/dropdown-item";
 import Icon from "/client/component/atom/icon";
 import {
   create
@@ -142,18 +140,8 @@ const DictionaryHeader = create(
         <div styleName="right">
           {(showAddLink) && (
             <>
-              <Button label={trans("add")} iconName="plus" variant="simple" hideLabel={true} nativeRef={setAddReferenceElement}/>
-              <Dropdown
-                placement="bottom-end"
-                showArrow={true}
-                autoMode="focus"
-                referenceElement={addReferenceElement}
-                autoElement={addReferenceElement}
-                onSet={openEditor}
-              >
-                <DropdownItem value="word"><DictionaryHeaderAddDropdownNode type="word"/></DropdownItem>
-                <DropdownItem value="example"><DictionaryHeaderAddDropdownNode type="example"/></DropdownItem>
-              </Dropdown>
+              <Button label={trans("addExample")} iconName="plus" variant="simple" onClick={() => openEditor("example")}/>
+              <Button label={trans("addWord")} iconName="plus" variant="simple" onClick={() => openEditor("word")}/>
             </>
           )}
           {(showSettingLink) && (

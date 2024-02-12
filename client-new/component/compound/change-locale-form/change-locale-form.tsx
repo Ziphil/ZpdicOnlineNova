@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-closing-bracket-location */
+/* eslint-disable react/jsx-closing-bracket-location, no-useless-computed-key */
 
 import {faAngleDown, faGlobe} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
@@ -32,10 +32,12 @@ export const ChangeLocaleForm = create(
           <GeneralIcon styleName="angle" icon={faAngleDown}/>
         </button>
       )}>
-        <MenuItem onClick={() => changeLocale("ja")}>{LOCALE_NAMES["ja"]}</MenuItem>
-        <MenuItem onClick={() => changeLocale("en")}>{LOCALE_NAMES["en"]}</MenuItem>
-        <MenuItem onClick={() => changeLocale("eo")}>{LOCALE_NAMES["eo"]}</MenuItem>
-        <MenuItem onClick={() => changeLocale("isv")}>{LOCALE_NAMES["isv"]}</MenuItem>
+        {Object.keys(LOCALE_NAMES).map((locale) => (
+          <MenuItem styleName="item" key={locale} onClick={() => changeLocale(locale)}>
+            <div styleName="name">{LOCALE_NAMES[locale]}</div>
+            <div styleName="code">{locale}</div>
+          </MenuItem>
+        ))}
       </Menu>
     );
 
@@ -44,8 +46,9 @@ export const ChangeLocaleForm = create(
 
 
 const LOCALE_NAMES = {
-  ja: "日本語",
-  en: "English",
-  eo: "Esperanto",
-  isv: "Меҗусловјанскы"
+  ["ja"]: "日本語",
+  ["en"]: "English",
+  ["eo"]: "Esperanto",
+  ["isv-Cyrl"]: "Меҗусловјанскы",
+  ["isv-Latn"]: "Meǆuslovjansky"
 } as Record<string, string>;
