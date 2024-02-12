@@ -1,9 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, SetStateAction, useCallback} from "react";
-import {useHref} from "react-router-dom";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {AdditionalProps, useTrans} from "zographia";
 import {Markdown} from "/client-new/component/atom/markdown";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
 import {Header} from "/client-new/component/compound/header";
@@ -29,14 +27,11 @@ export const DictionaryPage = create(
     const {trans} = useTrans("dictionaryPage");
 
     const dictionary = useDictionary();
-    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
     const [hitResult] = useSuspenseResponse("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 40)}, {keepPreviousData: true});
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
-
-    const addWordPageUrl = useHref(`/dictionary/${dictionary.number}/word/new`);
 
     const handleParameterSet = useCallback(function (parameter: SetStateAction<WordParameter>): void {
       setQuery((prevQuery) => {
@@ -50,10 +45,6 @@ export const DictionaryPage = create(
       window.scrollTo(0, 0);
     }, [query, setQuery]);
 
-    const addWord = useCallback(function (): void {
-      window.open(addWordPageUrl);
-    }, [addWordPageUrl]);
-
     return (
       <Page {...rest} headerNode={(
         <Fragment>
@@ -65,12 +56,6 @@ export const DictionaryPage = create(
           <div styleName="left">
             <div styleName="sticky">
               <SearchWordForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
-              {(canEdit) && (
-                <Button variant="light" onClick={addWord}>
-                  <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-                  {trans("add")}
-                </Button>
-              )}
             </div>
           </div>
           <div styleName="right">

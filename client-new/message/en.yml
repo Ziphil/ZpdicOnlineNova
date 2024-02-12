@@ -55,6 +55,11 @@ dictionaryHeader:
     information: "Details"
     commission: "Requests"
     setting: "Settings"
+  button:
+    addWord: "Create word"
+    addExample: "Create sentence"
+    addCommission: "Request"
+    download: "Download"
 dictionaryList:
   updatedDate: "Updated at"
   createdDate: "Created at"

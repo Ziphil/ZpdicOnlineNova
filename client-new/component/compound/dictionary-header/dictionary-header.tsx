@@ -10,6 +10,9 @@ import {MainContainer} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
 import {useSuspenseResponse} from "/client-new/hook/request";
 import {DetailedDictionary} from "/client-new/skeleton";
+import {AddCommissionButton} from "./add-commission-button";
+import {AddExampleButton} from "./add-example-button";
+import {AddWordButton} from "./add-word-button";
 
 
 export const DictionaryHeader = create(
@@ -28,21 +31,35 @@ export const DictionaryHeader = create(
 
     const {trans} = useTrans("dictionaryHeader");
 
+    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
     const [canOwn] = useSuspenseResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "own"});
 
     return (
       <header styleName="root" {...rest}>
         <MainContainer width={width}>
-          <SingleLineText styleName="name" is="h2">
-            {dictionary.name}
-          </SingleLineText>
-          <div styleName="user">
-            <UserAvatar styleName="avatar" user={dictionary.user}/>
-            <SingleLineText is="span">
-              <Link href={`/user/${dictionary.user.name}`} variant="unstyledSimple">
-                {dictionary.user.screenName}
-              </Link>
+          <div styleName="top">
+            <SingleLineText styleName="name" is="h2">
+              {dictionary.name}
             </SingleLineText>
+            <div styleName="user">
+              <UserAvatar styleName="avatar" user={dictionary.user}/>
+              <SingleLineText is="span">
+                <Link href={`/user/${dictionary.user.name}`} variant="unstyledSimple">
+                  {dictionary.user.screenName}
+                </Link>
+              </SingleLineText>
+            </div>
+          </div>
+          <div styleName="operation">
+            {(canEdit) && (
+              <div styleName="operation-row">
+                <AddWordButton dictionary={dictionary}/>
+                <AddExampleButton dictionary={dictionary}/>
+              </div>
+            )}
+            <div styleName="operation-row">
+              <AddCommissionButton dictionary={dictionary}/>
+            </div>
           </div>
           <TabList styleName="tab-list" value={tabValue ?? ""}>
             <LinkTab value="dictionary" href={`/dictionary/${dictionary.number}`}>

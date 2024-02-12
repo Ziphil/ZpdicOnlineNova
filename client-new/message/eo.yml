@@ -55,6 +55,11 @@ dictionaryHeader:
     information: "Detaloj"
     commission: "Petoj"
     setting: "Agordoj"
+  button:
+    addWord: "Krei vorton"
+    addExample: "Krei frazon"
+    addCommission: "Peti"
+    download: "Elŝuti"
 dictionaryList:
   updatedDate: "Ĝisdatigita je"
   createdDate: "Kreita je"

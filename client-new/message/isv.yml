@@ -55,6 +55,11 @@ dictionaryHeader:
     information: "Подробности"
     commission: "Просбы"
     setting: "Настројкы"
+  button:
+    addWord: "Create word"
+    addExample: "Create sentence"
+    addCommission: "Request"
+    download: "Download"
 dictionaryList:
   updatedDate: "Актуализованы"
   createdDate: "Созданы"

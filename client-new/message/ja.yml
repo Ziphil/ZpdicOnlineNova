@@ -55,6 +55,11 @@ dictionaryHeader:
     information: "詳細情報"
     commission: "造語依頼"
     setting: "設定"
+  button:
+    addWord: "単語を追加"
+    addExample: "例文を追加"
+    addCommission: "造語依頼"
+    download: "ダウンロード"
 dictionaryList:
   updatedDate: "更新日時"
   createdDate: "作成日時"
