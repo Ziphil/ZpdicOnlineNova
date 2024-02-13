@@ -3,41 +3,41 @@
 import {IconDefinition, faCheck, faClose, faExclamationTriangle} from "@fortawesome/sharp-regular-svg-icons";
 import {MouseEvent, useCallback} from "react";
 import {
+  Alert,
+  AlertBody,
+  AlertCloseButton,
+  AlertContent,
+  AlertFooter,
+  AlertIconContainer,
+  AlertPane,
   Button,
   ButtonIconbag,
-  Dialog,
-  DialogBody,
-  DialogCloseButton,
-  DialogContent,
-  DialogFooter,
-  DialogIconContainer,
-  DialogPane,
   GeneralIcon,
   MultiLineText,
-  useDialog as useRawDialog,
+  useAlert as useRawAlert,
   useTrans
 } from "zographia";
 
 
-export function useAlertDialog(): (config: AlertDialogConfig) => void {
-  const {trans} = useTrans("alertDialog");
-  const openDialog = useRawDialog();
-  const openAlertDialog = useCallback(function (config: AlertDialogConfig): void {
-    openDialog((close) => (
-      <Dialog scheme="red">
-        <DialogPane>
-          <DialogCloseButton/>
-          <DialogBody>
-            <DialogIconContainer>
+export function useCommonAlert(): (config: CommonAlertConfig) => void {
+  const {trans} = useTrans("alertAlert");
+  const openAlert = useRawAlert();
+  const openAlertAlert = useCallback(function (config: CommonAlertConfig): void {
+    openAlert((close) => (
+      <Alert scheme="red">
+        <AlertPane>
+          <AlertCloseButton/>
+          <AlertBody>
+            <AlertIconContainer>
               <GeneralIcon icon={faExclamationTriangle}/>
-            </DialogIconContainer>
-            <DialogContent>
+            </AlertIconContainer>
+            <AlertContent>
               <MultiLineText>
                 {config.message}
               </MultiLineText>
-            </DialogContent>
-          </DialogBody>
-          <DialogFooter>
+            </AlertContent>
+          </AlertBody>
+          <AlertFooter>
             <Button scheme="gray" variant="light" onClick={close}>
               <ButtonIconbag><GeneralIcon icon={config.cancelIcon ?? faClose}/></ButtonIconbag>
               {config.cancelLabel ?? trans("cancel")}
@@ -46,15 +46,15 @@ export function useAlertDialog(): (config: AlertDialogConfig) => void {
               <ButtonIconbag><GeneralIcon icon={config.confirmIcon ?? faCheck}/></ButtonIconbag>
               {config.confirmLabel ?? trans("confirm")}
             </Button>
-          </DialogFooter>
-        </DialogPane>
-      </Dialog>
+          </AlertFooter>
+        </AlertPane>
+      </Alert>
     ));
-  }, [openDialog, trans]);
-  return openAlertDialog;
+  }, [openAlert, trans]);
+  return openAlertAlert;
 }
 
-export type AlertDialogConfig = {
+export type CommonAlertConfig = {
   message: string,
   cancelLabel?: string,
   confirmLabel?: string,
