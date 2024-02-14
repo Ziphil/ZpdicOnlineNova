@@ -3,6 +3,15 @@
 import {IconDefinition} from "@fortawesome/fontawesome-common-types";
 
 
+export const fakBookCirclePlus = {
+  prefix: "fak",
+  iconName: "book-circle-plus" as any,
+  icon: [
+    640, 512, [], "",
+    "M0 88C0 39.4 39.4 0 88 0L424 0l24 0 0 24 0 174.6c-17.2 4.9-33.4 12.3-48 21.8L400 48 88 48C65.9 48 48 65.9 48 88l0 270.7c9.8-4.3 20.6-6.7 32-6.7l240.7 0c-.5 5.3-.7 10.6-.7 16c0 10.9 1 21.6 2.9 32L80 400c-17.7 0-32 14.3-32 32s14.3 32 32 32l268.5 0c12.3 18.8 28 35.1 46.3 48L80 512c-44.2 0-80-35.8-80-80c0-2.7 .1-5.4 .4-8L0 424 0 88zm128 24l24 0 176 0 24 0 0 48-24 0-176 0-24 0 0-48zm0 80l24 0 176 0 24 0 0 48-24 0-176 0-24 0 0-48zM352 368c0-79.5 64.5-144 144-144s144 64.5 144 144s-64.5 144-144 144s-144-64.5-144-144zm64-16l0 32 64 0 0 64 32 0 0-64 64 0 0-32-64 0 0-64-32 0 0 64-64 0z"
+  ]
+} satisfies IconDefinition;
+
 export const fakNoteCirclePlus = {
   prefix: "fak",
   iconName: "note-circle-plus" as any,

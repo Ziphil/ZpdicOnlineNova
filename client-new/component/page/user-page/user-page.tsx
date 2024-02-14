@@ -10,6 +10,7 @@ import {UserHeader} from "/client-new/component/compound/user-header";
 import {create} from "/client-new/component/create";
 import {useMe} from "/client-new/hook/auth";
 import {useSuspenseResponse} from "/client-new/hook/request";
+import {AddDictionaryButton} from "./add-dictionary-button";
 
 
 export const UserPage = create(
@@ -36,6 +37,11 @@ export const UserPage = create(
         </Fragment>
       )}>
         <MainContainer styleName="main">
+          {(me?.id === user.id) && (
+            <section>
+              <AddDictionaryButton/>
+            </section>
+          )}
           <section>
             <DictionaryList dictionaries={dictionaries} pageSpec={{size: 40}} showChart={true} showAuthority={me?.id === user.id}/>
           </section>
