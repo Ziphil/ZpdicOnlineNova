@@ -69,6 +69,7 @@ dictionaryList:
     view: "Vido nur"
   button:
     see: "Vidi vortaron"
+    setting: "Agordi"
 editWordForm:
   heading:
     basic: "Bazaj informoj"

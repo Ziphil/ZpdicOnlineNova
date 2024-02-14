@@ -15,6 +15,7 @@ export const DictionaryList = create(
     showUser = false,
     showChart = false,
     showAuthority = false,
+    showSettingLink = false,
     ...rest
   }: {
     dictionaries: Array<DetailedDictionary | UserDictionary>,
@@ -22,6 +23,7 @@ export const DictionaryList = create(
     showUser?: boolean,
     showChart?: boolean,
     showAuthority?: boolean,
+    showSettingLink?: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -35,6 +37,7 @@ export const DictionaryList = create(
               showUser={showUser}
               showChart={showChart}
               showAuthority={showAuthority}
+              showSettingLink={showSettingLink}
             />
           )}
           <ListEmptyView/>

@@ -69,6 +69,7 @@ dictionaryList:
     view: "閲覧のみ"
   button:
     see: "辞書ページへ"
+    setting: "設定"
 editWordForm:
   heading:
     basic: "基本情報"

@@ -43,7 +43,13 @@ export const UserPage = create(
             </section>
           )}
           <section>
-            <DictionaryList dictionaries={dictionaries} pageSpec={{size: 40}} showChart={true} showAuthority={me?.id === user.id}/>
+            <DictionaryList
+              dictionaries={dictionaries}
+              pageSpec={{size: 40}}
+              showChart={true}
+              showAuthority={me?.id === user.id}
+              showSettingLink={me?.id === user.id}
+            />
           </section>
         </MainContainer>
       </Page>

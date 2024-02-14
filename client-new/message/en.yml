@@ -69,6 +69,7 @@ dictionaryList:
     view: "View only"
   button:
     see: "See dictionary"
+    setting: "Settings"
 editWordForm:
   heading:
     basic: "Basic information"
