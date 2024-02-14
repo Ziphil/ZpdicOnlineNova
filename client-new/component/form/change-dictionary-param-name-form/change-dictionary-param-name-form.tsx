@@ -10,7 +10,7 @@ import {useChangeDictionaryParamName} from "./change-dictionary-param-name-form-
 
 
 export const ChangeDictionaryParamNameForm = create(
-  require("./change-dictionary-name-form.scss"), "ChangeDictionaryParamNameForm",
+  require("../common.scss"), "ChangeDictionaryParamNameForm",
   function ({
     dictionary,
     ...rest
@@ -19,7 +19,7 @@ export const ChangeDictionaryParamNameForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionarySettingGeneralPart");
+    const {trans} = useTrans("changeDictionaryParamNameForm");
 
     const {form, handleSubmit} = useChangeDictionaryParamName(dictionary);
     const {register} = form;
@@ -36,7 +36,7 @@ export const ChangeDictionaryParamNameForm = create(
         <div>
           <Button onClick={handleSubmit} variant="light">
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.change")}
+            {trans(":commonForm.button.change")}
           </Button>
         </div>
       </form>

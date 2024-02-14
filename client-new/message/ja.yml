@@ -208,6 +208,29 @@ wordList:
 wordNameFrequencyChart:
   other: "その他"
 
+commonForm:
+  button:
+    change: "変更"
+addEditInvitationForm:
+  button:
+    add: "編集権限をユーザーに付与"
+    discard: "解除"
+addTransferInvitationForm:
+  button:
+    add: "別ユーザーに譲渡"
+changeDictionarySettingsForm:
+  label:
+    enableMarkdown:
+      true: "有効"
+      false: "無効"
+    enableDuplicateName:
+      true: "有効"
+      false: "無効"
+changeDictionarySecretForm:
+  label:
+    false: "表示"
+    true: "非表示"
+
 dictionaryPage:
   add: "新しい単語を作成"
 dictionaryInformationPage:
@@ -260,20 +283,6 @@ dictionarySettingEditingPart:
       単語カードに例文を表示する際の見出しです。
     pronunciationTitle: >-
       辞書を OTM-JSON 形式で出力したときに発音データが格納される内容欄の見出しです。
-  label:
-    enableMarkdown:
-      true: "有効"
-      false: "無効"
-    enableDuplicateName:
-      true: "有効"
-      false: "無効"
-  button:
-    change: "変更"
-    editInvitation:
-      add: "編集権限をユーザーに付与"
-      discard: "解除"
-    transferInvitation:
-      add: "別ユーザーに譲渡"
 dictionarySettingGeneralPart:
   heading:
     name: "名前"
@@ -286,12 +295,6 @@ dictionarySettingGeneralPart:
     explanation: >-
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
       一部の Markdown 形式に対応しています。
-  label:
-    secret:
-      false: "表示"
-      true: "非表示"
-  button:
-    change: "変更"
 errorPage:
   title:
     notFound: "Not\nFound"

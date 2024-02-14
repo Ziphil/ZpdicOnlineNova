@@ -2,14 +2,14 @@
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Input, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Textarea, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 import {Dictionary} from "/client-new/skeleton";
-import {useChangeDictionaryName} from "./change-dictionary-name-form-hook";
+import {useChangeDictionaryExplanation} from "./change-dictionary-explanation-form-hook";
 
 
-export const ChangeDictionaryNameForm = create(
-  require("./change-dictionary-name-form.scss"), "ChangeDictionaryNameForm",
+export const ChangeDictionaryExplanationForm = create(
+  require("../common.scss"), "ChangeDictionaryExplanationForm",
   function ({
     dictionary,
     ...rest
@@ -18,20 +18,20 @@ export const ChangeDictionaryNameForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionarySettingGeneralPart");
+    const {trans} = useTrans("changeDictionaryExplanationForm");
 
-    const {form, handleSubmit} = useChangeDictionaryName(dictionary);
+    const {form, handleSubmit} = useChangeDictionaryExplanation(dictionary);
     const {register} = form;
 
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
-          <Input {...register("name")}/>
+          <Textarea styleName="textarea" {...register("explanation")}/>
         </ControlContainer>
         <div>
           <Button onClick={handleSubmit} variant="light">
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.change")}
+            {trans(":commonForm.button.change")}
           </Button>
         </div>
       </form>

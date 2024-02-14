@@ -19,7 +19,7 @@ export const AddEditInvitationForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionarySettingEditingPart");
+    const {trans} = useTrans("addEditInvitationForm");
 
     const number = dictionary.number;
     const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number, authority: "editOnly"});
@@ -29,13 +29,13 @@ export const AddEditInvitationForm = create(
         <div>
           <Button type="submit" variant="light">
             <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-            {trans("button.editInvitation.add")}
+            {trans("button.add")}
           </Button>
         </div>
         <UserList users={authorizedUsers} pageSpec={{size: 20}} renderFooter={(user) => (
           <Button scheme="red" variant="underline">
             <ButtonIconbag><GeneralIcon icon={faBan}/></ButtonIconbag>
-            {trans("button.editInvitation.discard")}
+            {trans("button.discard")}
           </Button>
         )}/>
       </form>

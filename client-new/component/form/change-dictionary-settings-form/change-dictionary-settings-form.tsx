@@ -20,7 +20,7 @@ import {useChangeDictionarySettings} from "./change-dictionary-settings-form-hoo
 
 
 export const ChangeDictionarySettingsForm = create(
-  require("./change-dictionary-source-form.scss"), "ChangeDictionarySettingsForm",
+  require("../common.scss"), "ChangeDictionarySettingsForm",
   function <N extends keyof DictionarySettings>({
     dictionary,
     propertyName,
@@ -31,7 +31,7 @@ export const ChangeDictionarySettingsForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionarySettingEditingPart");
+    const {trans} = useTrans("changeDictionarySettingsForm");
 
     const {form, handleSubmit} = useChangeDictionarySettings(dictionary, propertyName);
     const {register} = form;
@@ -76,7 +76,7 @@ export const ChangeDictionarySettingsForm = create(
         <div>
           <Button onClick={handleSubmit} variant="light">
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.change")}
+            {trans(":commonForm.button.change")}
           </Button>
         </div>
       </form>

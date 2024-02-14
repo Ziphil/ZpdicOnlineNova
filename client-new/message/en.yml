@@ -208,6 +208,29 @@ wordList:
       confirm: "Delete"
 wordNameFrequencyChart:
   other: "Others"
+
+commonForm:
+  button:
+    change: "Change"
+addEditInvitationForm:
+  button:
+    add: "編集権限をユーザーに付与"
+    discard: "解除"
+addTransferInvitationForm:
+  button:
+    add: "別ユーザーに譲渡"
+changeDictionarySettingsForm:
+  label:
+    enableMarkdown:
+      true: "Enable"
+      false: "Disable"
+    enableDuplicateName:
+      true: "Enable"
+      false: "Disable"
+changeDictionarySecretForm:
+  label:
+    false: "Show"
+    true: "Hide"
   
 dictionaryPage:
   add: "Create new word"
@@ -261,20 +284,6 @@ dictionarySettingEditingPart:
       The heading of example sentence sections, which is displayed in word cards.
     pronunciationTitle: >-
       The heading of pronunciation sections, which will be used when the dictionary is output in OTM-JSON format.
-  label:
-    enableMarkdown:
-      true: "Enable"
-      false: "Disable"
-    enableDuplicateName:
-      true: "Enable"
-      false: "Disable"
-  button:
-    change: "Change"
-    editInvitation:
-      add: "編集権限をユーザーに付与"
-      discard: "解除"
-    transferInvitation:
-      add: "別ユーザーに譲渡"
 dictionarySettingGeneralPart:
   heading:
     name: "Name"
@@ -287,12 +296,7 @@ dictionarySettingGeneralPart:
     explanation: >-
       This is displayed on the dictionary page before searching.
       You can use some Markdown syntax here.
-  label:
-    secret:
-      false: "Show"
-      true: "Hide"
-  button:
-    change: "Change"
+
 errorPage:
   title:
     notFound: "Not\nFound"

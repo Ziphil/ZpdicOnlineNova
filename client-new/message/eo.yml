@@ -209,6 +209,29 @@ wordList:
 wordNameFrequencyChart:
   other: "Aliaj"
 
+commonForm:
+  button:
+    change: "Ŝanĝi"
+addEditInvitationForm:
+  button:
+    add: "編集権限をユーザーに付与"
+    discard: "解除"
+addTransferInvitationForm:
+  button:
+    add: "別ユーザーに譲渡"
+changeDictionarySettingsForm:
+  label:
+    enableMarkdown:
+      true: "Ebligita"
+      false: "Malebligita"
+    enableDuplicateName:
+      true: "Ebligita"
+      false: "Malebligita"
+changeDictionarySecretForm:
+  label:
+    false: "Videbla"
+    true: "Nevidebla"
+
 dictionaryPage:
   add: "Krei novan vorton"
 dictionaryInformationPage:
@@ -261,20 +284,6 @@ dictionarySettingEditingPart:
       Jen la titolo de sekcioj de ekzempla frazoj, kiu estas montrata en kartoj de vorto.
     pronunciationTitle: >-
       Jen la titolo de sekcioj de elparolo, kiu estos uzata kiam la vortaro estos eligita en formato OTM-JSON.
-  label:
-    enableMarkdown:
-      true: "Ebligita"
-      false: "Malebligita"
-    enableDuplicateName:
-      true: "Ebligita"
-      false: "Malebligita"
-  button:
-    change: "Ŝanĝi"
-    editInvitation:
-      add: "編集権限をユーザーに付与"
-      discard: "解除"
-    transferInvitation:
-      add: "別ユーザーに譲渡"
 dictionarySettingGeneralPart:
   heading:
     name: "Nomo"
@@ -287,12 +296,6 @@ dictionarySettingGeneralPart:
     explanation: >-
       Tio estas montrata sur la paĝo de la vortaro antaŭ serĉado.
       Vi povas uzi iun sintakson de Markdown.
-  label:
-    secret:
-      false: "Videbla"
-      true: "Nevidebla"
-  button:
-    change: "Ŝanĝi"
 errorPage:
   title:
     notFound: "Ne\nTrovita"

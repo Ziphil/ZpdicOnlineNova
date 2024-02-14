@@ -5,8 +5,8 @@ import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {EnhancedDictionary} from "/client/skeleton/dictionary";
 import {create} from "/client-new/component/create";
-import {AddEditInvitationForm} from "./add-edit-invitation-form";
-import {AddTransferInvitationForm} from "./add-transfer-invitation-form";
+import {AddEditInvitationForm} from "/client-new/component/form/add-edit-invitation-form";
+import {AddTransferInvitationForm} from "/client-new/component/form/add-transfer-invitation-form";
 
 
 export const DictionarySettingAuthorityPart = create(

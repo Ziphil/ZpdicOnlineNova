@@ -208,6 +208,29 @@ wordList:
       confirm: "Одстранити"
 wordNameFrequencyChart:
   other: "Ине"
+
+commonForm:
+  button:
+    change: "Измєнити"
+addEditInvitationForm:
+  button:
+    add: "編集権限をユーザーに付与"
+    discard: "解除"
+addTransferInvitationForm:
+  button:
+    add: "別ユーザーに譲渡"
+changeDictionarySettingsForm:
+  label:
+    enableMarkdown:
+      true: "Enable"
+      false: "Disable"
+    enableDuplicateName:
+      true: "Enable"
+      false: "Disable"
+changeDictionarySecretForm:
+  label:
+    false: "Show"
+    true: "Hide"
   
 dictionaryPage:
   add: "Создати ново слово"
@@ -261,20 +284,6 @@ dictionarySettingEditingPart:
       The heading of example sentence sections, which is displayed in word cards.
     pronunciationTitle: >-
       The heading of pronunciation sections, which is used when the dictionary is output in OTM-JSON format.
-  label:
-    enableMarkdown:
-      true: "Enable"
-      false: "Disable"
-    enableDuplicateName:
-      true: "Enable"
-      false: "Disable"
-  button:
-    change: "Измєнити"
-    editInvitation:
-      add: "編集権限をユーザーに付与"
-      discard: "解除"
-    transferInvitation:
-      add: "別ユーザーに譲渡"
 dictionarySettingGeneralPart:
   heading:
     name: "Име"
@@ -287,12 +296,6 @@ dictionarySettingGeneralPart:
     explanation: >-
       This is displayed on the dictionary page before searching.
       You can use some Markdown syntax here.
-  label:
-    secret:
-      false: "Show"
-      true: "Hide"
-  button:
-    change: "Измєнити"
 errorPage:
   title:
     notFound: "Не\nНајдены"

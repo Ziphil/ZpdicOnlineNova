@@ -1,39 +1,37 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Textarea, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Input, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 import {Dictionary} from "/client-new/skeleton";
-import {useChangeDictionarySource} from "./change-dictionary-source-form-hook";
+import {useChangeDictionaryName} from "./change-dictionary-name-form-hook";
 
 
-export const ChangeDictionarySourceForm = create(
-  require("./change-dictionary-source-form.scss"), "ChangeDictionarySourceForm",
+export const ChangeDictionaryNameForm = create(
+  require("../common.scss"), "ChangeDictionaryNameForm",
   function ({
     dictionary,
-    language,
     ...rest
   }: {
     dictionary: Dictionary,
-    language: "akrantiain" | "zatlin",
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionarySettingEditingPart");
+    const {trans} = useTrans("changeDictionaryNameForm");
 
-    const {form, handleSubmit} = useChangeDictionarySource(dictionary, language);
+    const {form, handleSubmit} = useChangeDictionaryName(dictionary);
     const {register} = form;
 
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
-          <Textarea styleName="textarea" {...register("source")}/>
+          <Input {...register("name")}/>
         </ControlContainer>
         <div>
           <Button onClick={handleSubmit} variant="light">
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.change")}
+            {trans(":commonForm.button.change")}
           </Button>
         </div>
       </form>

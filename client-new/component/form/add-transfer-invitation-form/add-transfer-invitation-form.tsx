@@ -8,7 +8,7 @@ import {Dictionary} from "/client-new/skeleton";
 
 
 export const AddTransferInvitationForm = create(
-  require("./add-edit-invitation-form.scss"), "AddTransferInvitationForm",
+  require("../common.scss"), "AddTransferInvitationForm",
   function ({
     dictionary,
     ...rest
@@ -17,14 +17,14 @@ export const AddTransferInvitationForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionarySettingEditingPart");
+    const {trans} = useTrans("addTransferInvitationForm");
 
     return (
-      <form styleName="root-table" {...rest}>
+      <form styleName="root" {...rest}>
         <div>
           <Button type="submit" scheme="red" variant="light">
             <ButtonIconbag><GeneralIcon icon={faRocketLaunch}/></ButtonIconbag>
-            {trans("button.transferInvitation.add")}
+            {trans("button.add")}
           </Button>
         </div>
       </form>

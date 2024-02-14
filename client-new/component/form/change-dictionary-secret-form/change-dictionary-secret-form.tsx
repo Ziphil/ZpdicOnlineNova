@@ -9,7 +9,7 @@ import {useChangeDictionarySecret} from "./change-dictionary-secret-form-hook";
 
 
 export const ChangeDictionarySecretForm = create(
-  require("./change-dictionary-name-form.scss"), "ChangeDictionarySecretForm",
+  require("../common.scss"), "ChangeDictionarySecretForm",
   function ({
     dictionary,
     ...rest
@@ -18,7 +18,7 @@ export const ChangeDictionarySecretForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionarySettingGeneralPart");
+    const {trans} = useTrans("changeDictionarySecretForm");
 
     const {form, handleSubmit} = useChangeDictionarySecret(dictionary);
     const {register} = form;
@@ -29,18 +29,18 @@ export const ChangeDictionarySecretForm = create(
           <div styleName="radio-group">
             <CheckableContainer>
               <Radio value="false" {...register("secret")}/>
-              <CheckableLabel>{trans("label.secret.false")}</CheckableLabel>
+              <CheckableLabel>{trans("label.false")}</CheckableLabel>
             </CheckableContainer>
             <CheckableContainer>
               <Radio value="true" {...register("secret")}/>
-              <CheckableLabel>{trans("label.secret.true")}</CheckableLabel>
+              <CheckableLabel>{trans("label.true")}</CheckableLabel>
             </CheckableContainer>
           </div>
         </ControlContainer>
         <div>
           <Button onClick={handleSubmit} variant="light">
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.change")}
+            {trans(":commonForm.button.change")}
           </Button>
         </div>
       </form>
