@@ -8,9 +8,9 @@ import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {UserHeader} from "/client-new/component/compound/user-header";
 import {create} from "/client-new/component/create";
+import {AddDictionaryButton} from "/client-new/component/form/add-dictionary-button";
 import {useMe} from "/client-new/hook/auth";
 import {useSuspenseResponse} from "/client-new/hook/request";
-import {AddDictionaryButton} from "./add-dictionary-button";
 
 
 export const UserPage = create(

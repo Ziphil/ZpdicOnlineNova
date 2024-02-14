@@ -219,6 +219,13 @@ addEditInvitationForm:
 addTransferInvitationForm:
   button:
     add: "別ユーザーに譲渡"
+addDictionaryButton:
+  heading: "新しい辞書を作成"
+  label:
+    name: "名前"
+  button:
+    open: "新しい辞書を作成"
+    confirm: "決定"
 changeDictionarySettingsForm:
   label:
     enableMarkdown:

@@ -18,7 +18,7 @@ import {
 } from "zographia";
 import {fakBookCirclePlus} from "/client-new/component/atom/icon";
 import {create} from "/client-new/component/create";
-import {useAddDictionary} from "/client-new/component/page/user-page/add-dictionary-button-hook";
+import {useAddDictionary} from "./add-dictionary-button-hook";
 
 
 export const AddDictionaryButton = create(
@@ -29,7 +29,7 @@ export const AddDictionaryButton = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("userPage");
+    const {trans} = useTrans("addDictionaryButton");
 
     const [open, setOpen] = useState(false);
 
@@ -40,13 +40,13 @@ export const AddDictionaryButton = create(
       <Fragment>
         <Button variant="light" onClick={() => setOpen(true)} {...rest}>
           <ButtonIconbag><GeneralIcon icon={fakBookCirclePlus}/></ButtonIconbag>
-          {trans("button.addDictionary")}
+          {trans("button.open")}
         </Button>
         <Dialog open={open} onOpenSet={setOpen}>
           <DialogPane>
             <DialogCloseButton/>
             <DialogBody is="form">
-              <h2 styleName="heading">{trans("heading.addDictionary")}</h2>
+              <h2 styleName="heading">{trans("heading")}</h2>
               <div styleName="control">
                 <ControlContainer>
                   <ControlLabel>
