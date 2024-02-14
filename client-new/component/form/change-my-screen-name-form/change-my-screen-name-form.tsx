@@ -9,7 +9,7 @@ import {useChangeMyScreenName} from "./change-my-screen-name-form-hook";
 
 
 export const ChangeMyScreenNameForm = create(
-  require("./change-my-email-form.scss"), "ChangeMyScreenNameForm",
+  require("../common.scss"), "ChangeMyScreenNameForm",
   function ({
     me,
     ...rest
@@ -18,7 +18,7 @@ export const ChangeMyScreenNameForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("userSettingPage");
+    const {trans} = useTrans("changeMyScreenNameForm");
 
     const {form, handleSubmit} = useChangeMyScreenName(me);
     const {register} = form;
@@ -31,7 +31,7 @@ export const ChangeMyScreenNameForm = create(
         <div>
           <Button onClick={handleSubmit} variant="light">
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.change")}
+            {trans(":commonForm.button.change")}
           </Button>
         </div>
       </form>

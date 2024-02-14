@@ -231,6 +231,10 @@ changeDictionarySecretForm:
   label:
     false: "Videbla"
     true: "Nevidebla"
+changeMyPasswordForm:
+  label:
+    currentPassword: "現在のパスワード"
+    newPassword: "新しいパスワード"
 
 dictionaryPage:
   add: "Krei novan vorton"
@@ -331,8 +335,3 @@ userSettingPage:
     screenName: "ニックネーム"
     email: "メールアドレス"
     password: "パスワード"
-  label:
-    currentPassword: "現在のパスワード"
-    newPassword: "新しいパスワード"
-  button:
-    change: "変更"

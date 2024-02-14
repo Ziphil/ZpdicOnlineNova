@@ -9,7 +9,7 @@ import {useChangeMyPassword} from "./change-my-password-form-hook";
 
 
 export const ChangeMyPasswordForm = create(
-  require("./change-my-email-form.scss"), "ChangeMyPasswordForm",
+  require("../common.scss"), "ChangeMyPasswordForm",
   function ({
     me,
     ...rest
@@ -18,7 +18,7 @@ export const ChangeMyPasswordForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("userSettingPage");
+    const {trans} = useTrans("changeMyPasswordForm");
 
     const {form, handleSubmit} = useChangeMyPassword(me);
     const {register} = form;
@@ -36,7 +36,7 @@ export const ChangeMyPasswordForm = create(
         <div>
           <Button onClick={handleSubmit} variant="light">
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.change")}
+            {trans(":commonForm.button.change")}
           </Button>
         </div>
       </form>

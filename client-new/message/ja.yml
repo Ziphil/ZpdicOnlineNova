@@ -230,6 +230,10 @@ changeDictionarySecretForm:
   label:
     false: "表示"
     true: "非表示"
+changeMyPasswordForm:
+  label:
+    currentPassword: "現在のパスワード"
+    newPassword: "新しいパスワード"
 
 dictionaryPage:
   add: "新しい単語を作成"
@@ -336,8 +340,3 @@ userSettingPage:
     screenName: "ニックネーム"
     email: "メールアドレス"
     password: "パスワード"
-  label:
-    currentPassword: "現在のパスワード"
-    newPassword: "新しいパスワード"
-  button:
-    change: "変更"

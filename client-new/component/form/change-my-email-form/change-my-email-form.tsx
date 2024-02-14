@@ -9,7 +9,7 @@ import {useChangeMyEmail} from "./change-my-email-form-hook";
 
 
 export const ChangeMyEmailForm = create(
-  require("./change-my-email-form.scss"), "ChangeMyEmailForm",
+  require("../common.scss"), "ChangeMyEmailForm",
   function ({
     me,
     ...rest
@@ -18,7 +18,7 @@ export const ChangeMyEmailForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("userSettingPage");
+    const {trans} = useTrans("changeMyEmailForm");
 
     const {form, handleSubmit} = useChangeMyEmail(me);
     const {register} = form;
@@ -31,7 +31,7 @@ export const ChangeMyEmailForm = create(
         <div>
           <Button onClick={handleSubmit} variant="light">
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.change")}
+            {trans(":commonForm.button.change")}
           </Button>
         </div>
       </form>

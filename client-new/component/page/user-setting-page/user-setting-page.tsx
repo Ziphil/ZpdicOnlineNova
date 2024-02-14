@@ -7,10 +7,10 @@ import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {UserHeader} from "/client-new/component/compound/user-header";
 import {create} from "/client-new/component/create";
+import {ChangeMyEmailForm} from "/client-new/component/form/change-my-email-form";
+import {ChangeMyPasswordForm} from "/client-new/component/form/change-my-password-form";
+import {ChangeMyScreenNameForm} from "/client-new/component/form/change-my-screen-name-form";
 import {useMe} from "/client-new/hook/auth";
-import {ChangeMyEmailForm} from "./change-my-email-form";
-import {ChangeMyPasswordForm} from "./change-my-password-form";
-import {ChangeMyScreenNameForm} from "./change-my-screen-name-form";
 
 
 export const UserSettingPage = create(
