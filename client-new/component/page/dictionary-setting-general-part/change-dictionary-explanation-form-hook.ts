@@ -27,8 +27,8 @@ export function useChangeDictionaryExplanation(dictionary: Dictionary): ChangeDi
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("changeDictionaryExplanation", {number: dictionary.number, explanation: value.explanation ?? ""});
     await switchResponse(response, async () => {
-      dispatchSuccessToast("changeDictionaryExplanation");
       await invalidateResponses("fetchDictionary", (data) => data.number === dictionary.number);
+      dispatchSuccessToast("changeDictionaryExplanation");
     });
   }), [dictionary.number, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};

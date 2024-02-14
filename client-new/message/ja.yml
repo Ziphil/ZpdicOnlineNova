@@ -322,6 +322,12 @@ topPage:
     notification: "最新のお知らせ"
   moreNotifications: "他のお知らせも見る"
   catch: "<line>Draw</line> <line>your own universe</line> <line>with conlang</line>"
+userPage:
+  label:
+    name: "名前"
+  button:
+    addDictionary: "新しい辞書を作成"
+    confirm: "決定"
 userSettingPage:
   heading:
     screenName: "ニックネーム"

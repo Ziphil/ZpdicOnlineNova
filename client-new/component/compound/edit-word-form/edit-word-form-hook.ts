@@ -64,8 +64,8 @@ export function useEditWord(dictionary: Dictionary, word: Word | null): EditWord
     const response = await request("editWord", getQuery(dictionary, value));
     await switchResponse(response, async (body) => {
       form.setValue("number", body.number);
-      dispatchSuccessToast((adding) ? "addWord" : "changeWord");
       await invalidateResponses("searchWord", (query) => query.number === dictionary.number);
+      dispatchSuccessToast((adding) ? "addWord" : "changeWord");
     });
   }), [dictionary, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};

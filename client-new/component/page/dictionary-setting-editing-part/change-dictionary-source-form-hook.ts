@@ -27,8 +27,8 @@ export function useChangeDictionarySource(dictionary: Dictionary, language: "akr
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {[`${language}Source`]: value.source ?? ""}});
     await switchResponse(response, async () => {
-      dispatchSuccessToast(`changeDictionarySettings.${language}Source`);
       await invalidateResponses("fetchDictionary", (data) => data.number === dictionary.number);
+      dispatchSuccessToast(`changeDictionarySettings.${language}Source`);
     });
   }), [dictionary.number, language, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};

@@ -27,8 +27,8 @@ export function useChangeDictionarySecret(dictionary: Dictionary): ChangeDiction
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("changeDictionarySecret", {number: dictionary.number, secret: value.secret === "true"});
     await switchResponse(response, async () => {
-      dispatchSuccessToast("changeDictionarySecret");
       await invalidateResponses("fetchDictionary", (data) => data.number === dictionary.number);
+      dispatchSuccessToast("changeDictionarySecret");
     });
   }), [dictionary.number, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};

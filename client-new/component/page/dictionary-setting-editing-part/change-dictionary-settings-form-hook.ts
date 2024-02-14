@@ -28,8 +28,8 @@ export function useChangeDictionarySettings<N extends keyof DictionarySettings>(
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("changeDictionarySettings", getQuery(dictionary, propertyName, value));
     await switchResponse(response, async () => {
-      dispatchSuccessToast(`changeDictionarySettings.${propertyName}`);
       await invalidateResponses("fetchDictionary", (data) => data.number === dictionary.number);
+      dispatchSuccessToast(`changeDictionarySettings.${propertyName}`);
     });
   }), [dictionary, propertyName, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};

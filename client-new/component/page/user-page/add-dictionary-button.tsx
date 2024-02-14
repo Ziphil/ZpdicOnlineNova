@@ -1,14 +1,28 @@
 //
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement, useCallback, useState} from "react";
-import {AdditionalProps, Button, ButtonIconbag, ControlContainer, ControlLabel, Dialog, DialogBody, DialogCloseButton, DialogPane, GeneralIcon, Input, useTrans} from "zographia";
+import {Fragment, ReactElement, useState} from "react";
+import {
+  AdditionalProps,
+  Button,
+  ButtonIconbag,
+  ControlContainer,
+  ControlLabel,
+  Dialog,
+  DialogBody,
+  DialogCloseButton,
+  DialogPane,
+  GeneralIcon,
+  Input,
+  useTrans
+} from "zographia";
 import {fakBookCirclePlus} from "/client-new/component/atom/icon";
 import {create} from "/client-new/component/create";
+import {useAddDictionary} from "/client-new/component/page/user-page/add-dictionary-button-hook";
 
 
 export const AddDictionaryButton = create(
-  null, "AddDictionaryButton",
+  require("./add-dictionary-button.scss"), "AddDictionaryButton",
   function ({
     ...rest
   }: {
@@ -19,28 +33,29 @@ export const AddDictionaryButton = create(
 
     const [open, setOpen] = useState(false);
 
-    const openDialog = useCallback(function (): void {
-      setOpen(true);
-    }, []);
+    const {form, handleSubmit} = useAddDictionary();
+    const {register, formState: {errors}} = form;
 
     return (
       <Fragment>
-        <Button variant="light" onClick={openDialog} {...rest}>
+        <Button variant="light" onClick={() => setOpen(true)} {...rest}>
           <ButtonIconbag><GeneralIcon icon={fakBookCirclePlus}/></ButtonIconbag>
           {trans("button.addDictionary")}
         </Button>
         <Dialog open={open} onOpenSet={setOpen}>
           <DialogPane>
             <DialogCloseButton/>
-            <DialogBody>
-              <ControlContainer>
-                <ControlLabel>
-                  {trans("label.name")}
-                </ControlLabel>
-                <Input/>
-              </ControlContainer>
-              <div>
-                <Button>
+            <DialogBody is="form">
+              <div styleName="control">
+                <ControlContainer>
+                  <ControlLabel>
+                    {trans("label.name")}
+                  </ControlLabel>
+                  <Input {...register("name")}/>
+                </ControlContainer>
+              </div>
+              <div styleName="button">
+                <Button type="submit" onClick={handleSubmit}>
                   <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
                   {trans("button.confirm")}
                 </Button>

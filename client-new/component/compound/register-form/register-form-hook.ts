@@ -43,8 +43,8 @@ export function useRegisterUser(): RegisterSpec {
     await switchResponse(response, async (body) => {
       const loginResponse = await login({name: body.name, password: value.password});
       await switchResponse(loginResponse, async () => {
-        dispatchSuccessToast("register");
         navigate(`/user/${body.name}`);
+        dispatchSuccessToast("register");
       });
     });
   }), [request, login, navigate, form, dispatchSuccessToast]);

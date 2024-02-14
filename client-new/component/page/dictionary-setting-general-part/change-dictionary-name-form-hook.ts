@@ -27,8 +27,8 @@ export function useChangeDictionaryName(dictionary: Dictionary): ChangeDictionar
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("changeDictionaryName", {number: dictionary.number, name: value.name});
     await switchResponse(response, async () => {
-      dispatchSuccessToast("changeDictionaryName");
       await invalidateResponses("fetchDictionary", (data) => data.number === dictionary.number);
+      dispatchSuccessToast("changeDictionaryName");
     });
   }), [dictionary.number, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
