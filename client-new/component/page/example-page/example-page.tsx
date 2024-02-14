@@ -1,9 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, useCallback, useState} from "react";
-import {useHref} from "react-router-dom";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {AdditionalProps, useTrans} from "zographia";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
 import {ExampleList} from "/client-new/component/compound/example-list";
 import {Header} from "/client-new/component/compound/header";
@@ -26,21 +24,14 @@ export const ExamplePage = create(
     const {trans} = useTrans("examplePage");
 
     const dictionary = useDictionary();
-    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
 
     const [page, setPage] = useState(0);
     const [[hitExamples, hitSize]] = useSuspenseResponse("fetchExamples", {number: dictionary.number, ...calcOffsetSpec(page, 40)}, {keepPreviousData: true});
-
-    const addExamplePageUrl = useHref(`/dictionary/${dictionary.number}/sentence/new`);
 
     const handlePageSet = useCallback(function (page: number): void {
       setPage(page);
       window.scrollTo(0, 0);
     }, []);
-
-    const addExample = useCallback(function (): void {
-      window.open(addExamplePageUrl);
-    }, [addExamplePageUrl]);
 
     return (
       <Page {...rest} headerNode={(
@@ -53,12 +44,6 @@ export const ExamplePage = create(
           <div styleName="left">
             <div styleName="sticky">
               <SearchExampleForm styleName="form"/>
-              {(canEdit) && (
-                <Button variant="light" onClick={addExample}>
-                  <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-                  {trans("add")}
-                </Button>
-              )}
             </div>
           </div>
           <div styleName="right">
