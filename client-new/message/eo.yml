@@ -44,7 +44,7 @@ toast:
       Neatendita eraro okazis.
       Bonvolu sciigi la administranton.
 
-alertDialog:
+commonAlert:
   confirm: "Konfirmi"
   cancel: "Nuligi"
 

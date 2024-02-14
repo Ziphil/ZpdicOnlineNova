@@ -4,7 +4,7 @@ import {faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {useCallback} from "react";
 import {useHref} from "react-router-dom";
 import {useTrans} from "zographia";
-import {useCommonAlert} from "/client-new/hook/dialog";
+import {useCommonAlert} from "/client-new/hook/alert";
 import {invalidateResponses, useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
 import {Dictionary, Word} from "/client-new/skeleton";

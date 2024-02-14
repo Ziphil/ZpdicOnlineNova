@@ -44,7 +44,7 @@ toast:
       Догодил се неочекиваны блуд.
       Πрошу увєдомите администратору.
 
-alertDialog:
+commonAlert:
   confirm: "Confirm"
   cancel: "Одрєкти"
       

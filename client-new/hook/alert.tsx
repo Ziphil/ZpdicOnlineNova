@@ -20,7 +20,7 @@ import {
 
 
 export function useCommonAlert(): (config: CommonAlertConfig) => void {
-  const {trans} = useTrans("alertAlert");
+  const {trans} = useTrans("commonAlert");
   const openAlert = useRawAlert();
   const openAlertAlert = useCallback(function (config: CommonAlertConfig): void {
     openAlert((close) => (

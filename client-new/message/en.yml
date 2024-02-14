@@ -44,7 +44,7 @@ toast:
       An unexpected error occurred.
       Please notify the administrator.
 
-alertDialog:
+commonAlert:
   confirm: "Konfirmi"
   cancel: "Nuligi"
 

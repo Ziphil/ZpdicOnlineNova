@@ -44,7 +44,7 @@ toast:
       予期しないエラーが発生しました。
       お手数ですが管理者までご連絡ください。
 
-alertDialog:
+commonAlert:
   confirm: "決定"
   cancel: "キャンセル"
 
