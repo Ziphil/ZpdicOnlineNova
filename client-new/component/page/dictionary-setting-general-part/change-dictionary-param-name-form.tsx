@@ -24,7 +24,7 @@ export const ChangeDictionaryParamNameForm = create(
     const {form, handleSubmit} = useChangeDictionaryParamName(dictionary);
     const {register} = form;
 
-    const prefix = location.origin + useHref("/dictionary/");
+    const prefix = location.host + useHref("/dictionary/");
 
     return (
       <form styleName="root" {...rest}>

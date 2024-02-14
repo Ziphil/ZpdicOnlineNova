@@ -3,6 +3,16 @@
 @use "zographia/source/component/function.scss" as *;
 
 
+.heading {
+  @include bold-font;
+  margin-block-end: 6zu;
+  font-size: 6zu;
+  color: var(--glob-secondary-heading-text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .control {
   row-gap: 3zu;
   display: flex;

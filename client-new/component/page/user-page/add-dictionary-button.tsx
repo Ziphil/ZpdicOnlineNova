@@ -46,6 +46,7 @@ export const AddDictionaryButton = create(
           <DialogPane>
             <DialogCloseButton/>
             <DialogBody is="form">
+              <h2 styleName="heading">{trans("heading.addDictionary")}</h2>
               <div styleName="control">
                 <ControlContainer>
                   <ControlLabel>
