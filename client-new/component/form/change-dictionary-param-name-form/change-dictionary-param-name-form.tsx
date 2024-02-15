@@ -10,7 +10,7 @@ import {useChangeDictionaryParamName} from "./change-dictionary-param-name-form-
 
 
 export const ChangeDictionaryParamNameForm = create(
-  require("../common.scss"), "ChangeDictionaryParamNameForm",
+  require("./change-dictionary-param-name-form.scss"), "ChangeDictionaryParamNameForm",
   function ({
     dictionary,
     ...rest

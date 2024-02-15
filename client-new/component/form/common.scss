@@ -35,7 +35,26 @@
   height: 64zu;
 }
 
-.prefix {
-  font-size: 3zu;
-  color: var(--glob-mute-text-color);
+.dialog-heading {
+  @include bold-font;
+  margin-block-end: 6zu;
+  font-size: 6zu;
+  color: var(--glob-secondary-heading-text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dialog-control {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.dialog-button {
+  margin-block-start: 4zu;
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }

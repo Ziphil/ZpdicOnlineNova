@@ -22,7 +22,7 @@ import {useAddDictionary} from "./add-dictionary-button-hook";
 
 
 export const AddDictionaryButton = create(
-  require("./add-dictionary-button.scss"), "AddDictionaryButton",
+  require("../common.scss"), "AddDictionaryButton",
   function ({
     ...rest
   }: {
@@ -46,8 +46,8 @@ export const AddDictionaryButton = create(
           <DialogPane>
             <DialogCloseButton/>
             <DialogBody is="form">
-              <h2 styleName="heading">{trans("heading")}</h2>
-              <div styleName="control">
+              <h2 styleName="dialog-heading">{trans("heading")}</h2>
+              <div styleName="dialog-control">
                 <ControlContainer>
                   <ControlLabel>
                     {trans("label.name")}
@@ -55,7 +55,7 @@ export const AddDictionaryButton = create(
                   <Input {...register("name")}/>
                 </ControlContainer>
               </div>
-              <div styleName="button">
+              <div styleName="dialog-button">
                 <Button type="submit" onClick={handleSubmit}>
                   <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
                   {trans("button.confirm")}

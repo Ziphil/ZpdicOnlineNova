@@ -213,10 +213,14 @@ commonForm:
   button:
     change: "変更"
 addEditInvitationForm:
+  heading: "編集権限を付与"
   empty: "編集権限のあるユーザーはいません"
+  label:
+    user: "招待するユーザー"
   button:
     add: "編集権限をユーザーに付与"
     discard: "解除"
+    confirm: "決定"
 addTransferInvitationForm:
   button:
     add: "別ユーザーに譲渡"
