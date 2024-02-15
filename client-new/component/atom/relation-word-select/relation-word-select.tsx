@@ -5,6 +5,7 @@ import {AsyncSelect, AsyncSelectOption} from "zographia";
 import {create} from "/client-new/component/create";
 import {Dictionary, NormalWordParameter} from "/client-new/skeleton";
 import {request} from "/client-new/util/request";
+import {switchResponse} from "/client-new/util/response";
 
 
 export const RelationWordSelect = create(
@@ -25,12 +26,12 @@ export const RelationWordSelect = create(
       const number = dictionary.number;
       const parameter = {...NormalWordParameter.EMPTY, text: pattern, mode: "name"};
       const response = await request("searchWord", {number, parameter, offset: 0, size: 20}, {ignoreError: true});
-      if (response.status === 200 && !("error" in response.data)) {
-        const {words: [hitWords]} = response.data;
+      return switchResponse(response, (data) => {
+        const {words: [hitWords]} = data;
         return hitWords;
-      } else {
+      }, (error) => {
         return [];
-      }
+      });
     }, [dictionary.number]);
 
     return (

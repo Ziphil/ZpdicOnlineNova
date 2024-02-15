@@ -15,6 +15,10 @@
   }
 }
 
+.loading {
+  grid-column: 1 / -1;
+}
+
 .pagination {
   margin-block-start: 3zu;
 }

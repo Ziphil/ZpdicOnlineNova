@@ -32,7 +32,7 @@ export const AddEditInvitationForm = create(
             {trans("button.add")}
           </Button>
         </div>
-        <UserList users={authorizedUsers} pageSpec={{size: 20}} renderFooter={(user) => (
+        <UserList users={authorizedUsers} pageSpec={{size: 20}} emptyMessage={trans("empty")} renderFooter={(user) => (
           <Button scheme="red" variant="underline">
             <ButtonIconbag><GeneralIcon icon={faBan}/></ButtonIconbag>
             {trans("button.discard")}

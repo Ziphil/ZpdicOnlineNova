@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps, List, ListBody, ListEmptyView, ListPagination, PageSpec} from "zographia";
+import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec} from "zographia";
 import {create} from "/client-new/component/create";
 import {DetailedDictionary, UserDictionary} from "/client-new/skeleton";
 import {DictionaryCard} from "./dictionary-card";
@@ -40,6 +40,7 @@ export const DictionaryList = create(
               showSettingLink={showSettingLink}
             />
           )}
+          <ListLoadingView/>
           <ListEmptyView/>
         </ListBody>
         <ListPagination styleName="pagination"/>

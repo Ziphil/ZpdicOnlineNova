@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps, List, ListBody, ListEmptyView, ListPagination, PageSpec} from "zographia";
+import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec} from "zographia";
 import {create} from "/client-new/component/create";
 import {DetailedWord, EnhancedDictionary, Word} from "/client-new/skeleton";
 import {WordCard} from "./word-card";
@@ -25,6 +25,7 @@ export const WordList = create(
       <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
           {(word) => <WordCard key={word.id} dictionary={dictionary} word={word}/>}
+          <ListLoadingView/>
           <ListEmptyView/>
         </ListBody>
         <ListPagination styleName="pagination"/>
