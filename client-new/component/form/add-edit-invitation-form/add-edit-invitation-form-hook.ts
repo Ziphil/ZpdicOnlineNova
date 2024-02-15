@@ -6,15 +6,15 @@ import {Asserts, mixed, object} from "yup";
 import {useForm} from "/client-new/hook/form";
 import {invalidateResponses, useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
-import {Dictionary} from "/client-new/skeleton";
+import {Dictionary, User} from "/client-new/skeleton";
 import {switchResponse} from "/client-new/util/response";
 
 
 const SCHEMA = object({
-  user: mixed<any>().nullable()
+  user: mixed<User>().required("required")
 });
 const DEFAULT_VALUE = {
-  user: null
+  user: null as any
 } satisfies FormValue;
 type FormValue = Asserts<typeof SCHEMA>;
 
