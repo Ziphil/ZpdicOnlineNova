@@ -4,8 +4,8 @@
 
 
 .body {
-  row-gap: 4zu;
-  column-gap: 4zu;
+  row-gap: 3zu;
+  column-gap: 3zu;
   display: grid;
   @include device("desktop") {
     grid-template-columns: repeat(2, 1fr);
