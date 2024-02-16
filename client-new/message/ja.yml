@@ -218,12 +218,16 @@ addEditInvitationForm:
   label:
     user: "招待するユーザー"
   button:
-    add: "編集権限をユーザーに付与"
+    open: "編集権限をユーザーに付与"
     discard: "解除"
     confirm: "決定"
 addTransferInvitationForm:
+  heading: "譲渡"
+  label:
+    user: "譲渡先のユーザー"
   button:
-    add: "別ユーザーに譲渡"
+    open: "別ユーザーに譲渡"
+    confirm: "決定"
 addDictionaryButton:
   heading: "新しい辞書を作成"
   label:

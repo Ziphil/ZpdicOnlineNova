@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-closing-bracket-location */
+//
 
 import {faBan, faCheck, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, SyntheticEvent, useCallback, useState} from "react";
@@ -44,6 +44,10 @@ export const AddEditInvitationForm = create(
 
     const [open, setOpen] = useState(false);
 
+    const openDialog = useCallback(() => {
+      setOpen(true);
+    }, []);
+
     const handleSubmitAndClose = useCallback(async function (event: SyntheticEvent): Promise<void> {
       await handleSubmit(event);
       setOpen(false);
@@ -53,9 +57,9 @@ export const AddEditInvitationForm = create(
       <Fragment>
         <form styleName="root-table" {...rest}>
           <div>
-            <Button type="submit" variant="light" onClick={() => setOpen(true)}>
+            <Button type="submit" variant="light" onClick={openDialog}>
               <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-              {trans("button.add")}
+              {trans("button.open")}
             </Button>
           </div>
           <UserList users={authorizedUsers} pageSpec={{size: 20}} emptyMessage={trans("empty")} renderFooter={(user) => (
@@ -63,7 +67,8 @@ export const AddEditInvitationForm = create(
               <ButtonIconbag><GeneralIcon icon={faBan}/></ButtonIconbag>
               {trans("button.discard")}
             </Button>
-          )}/>
+          )}
+          />
         </form>
         <Dialog open={open} onOpenSet={setOpen}>
           <DialogPane>
@@ -77,7 +82,8 @@ export const AddEditInvitationForm = create(
                   </ControlLabel>
                   <Controller name="user" control={control} render={({field}) => (
                     <UserSelect user={field.value} onSet={field.onChange}/>
-                  )}/>
+                  )}
+                  />
                 </ControlContainer>
               </div>
               <div styleName="dialog-button">
