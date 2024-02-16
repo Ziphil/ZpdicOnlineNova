@@ -6,7 +6,7 @@ import {RelationWord} from "/client-new/component/atom/relation-word-select";
 import {useForm} from "/client-new/hook/form";
 import {invalidateResponses, useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
-import {Dictionary, Word} from "/client-new/skeleton";
+import {Dictionary, EditableWord, Word} from "/client-new/skeleton";
 import {switchResponse} from "/client-new/util/response";
 import type {RequestData} from "/server/controller/internal/type";
 
@@ -55,19 +55,21 @@ export type EditWordSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useEditWord(dictionary: Dictionary, word: Word | null): EditWordSpec {
+export function useEditWord(dictionary: Dictionary, word: Word | null, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
   const form = useForm<FormValue>((word !== null) ? getFormValue(word) : DEFAULT_VALUE, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const adding = value.number === null;
-    const response = await request("editWord", getQuery(dictionary, value));
+    const query = getQuery(dictionary, value);
+    const response = await request("editWord", query);
     await switchResponse(response, async (body) => {
       form.setValue("number", body.number);
       await invalidateResponses("searchWord", (query) => query.number === dictionary.number);
+      await onSubmit?.(query.word);
       dispatchSuccessToast((adding) ? "addWord" : "changeWord");
     });
-  }), [dictionary, request, form, dispatchSuccessToast]);
+  }), [dictionary, onSubmit, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
 }
 

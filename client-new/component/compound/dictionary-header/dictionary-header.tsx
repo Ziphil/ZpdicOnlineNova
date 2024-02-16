@@ -9,7 +9,7 @@ import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {MainContainer} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
 import {useSuspenseResponse} from "/client-new/hook/request";
-import {DetailedDictionary} from "/client-new/skeleton";
+import {EnhancedDictionary} from "/client-new/skeleton";
 import {AddCommissionButton} from "./add-commission-button";
 import {AddExampleButton} from "./add-example-button";
 import {AddWordButton} from "./add-word-button";
@@ -23,7 +23,7 @@ export const DictionaryHeader = create(
     tabValue,
     ...rest
   }: {
-    dictionary: DetailedDictionary,
+    dictionary: EnhancedDictionary,
     width?: "normal" | "wide",
     tabValue: "dictionary" | "example" | "information" | "commission" | "setting" | null,
     className?: string

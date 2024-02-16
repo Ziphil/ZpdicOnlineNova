@@ -70,6 +70,9 @@ dictionaryList:
   button:
     see: "Зрєти словник"
     setting: "Настрајати"
+editWordDialog:
+  button:
+    external: "別タブで表示"
 editWordForm:
   heading:
     basic: "Основне информације"

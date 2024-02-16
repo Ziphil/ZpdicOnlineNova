@@ -70,6 +70,9 @@ dictionaryList:
   button:
     see: "辞書ページへ"
     setting: "設定"
+editWordDialog:
+  button:
+    external: "別タブで表示"
 editWordForm:
   heading:
     basic: "基本情報"
