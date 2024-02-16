@@ -12,11 +12,12 @@
 
 .root {
   width: 100%;
-  max-width: 96zu;
+  max-width: 120zu;
   padding: 6zu;
   border-radius: var(--glob-border-radius);
   border: solid 1zx var(--border-color);
   box-shadow: var(--glob-box-shadow-setting) var(--box-shadow-color);
+  box-sizing: border-box;
 }
 
 .control {
