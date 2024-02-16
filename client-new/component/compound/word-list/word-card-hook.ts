@@ -2,7 +2,6 @@
 
 import {faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {useCallback} from "react";
-import {useHref} from "react-router-dom";
 import {useTrans} from "zographia";
 import {useCommonAlert} from "/client-new/hook/alert";
 import {invalidateResponses, useRequest} from "/client-new/hook/request";
@@ -10,14 +9,6 @@ import {useToast} from "/client-new/hook/toast";
 import {Dictionary, Word} from "/client-new/skeleton";
 import {switchResponse} from "/client-new/util/response";
 
-
-export function useStartEditWord(dictionary: Dictionary, word: Word): () => void {
-  const editWordPageUrl = useHref(`/dictionary/${dictionary.number}/word/${word.number}`);
-  const execute = useCallback(function (): void {
-    window.open(editWordPageUrl);
-  }, [editWordPageUrl]);
-  return execute;
-}
 
 export function useDiscardWord(dictionary: Dictionary, word: Word): () => void {
   const {trans} = useTrans("wordList");
