@@ -53,7 +53,7 @@ export const EditWordDialog = create(
     return (
       <Fragment>
         {cloneElement(trigger, {onClick: openDialog})}
-        <Dialog open={open} onOpenSet={setOpen} {...rest}>
+        <Dialog open={open} onOpenSet={setOpen} height="full" {...rest}>
           <DialogPane styleName="pane">
             <DialogCloseButton/>
             <DialogOutsideButtonContainer>
