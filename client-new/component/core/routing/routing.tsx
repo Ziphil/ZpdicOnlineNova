@@ -21,7 +21,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="editing" lazy={() => import("/client-new/component/page/dictionary-setting-editing-part")}/>
       <Route path="permissions" lazy={() => import("/client-new/component/page/dictionary-setting-authority-part")}/>
     </Route>
-    <Route path="/dictionary/:identifier/word/new" lazy={() => import("/client-new/component/page/add-word-page")}/>
+    <Route path="/dictionary/:identifier/word/new" lazy={() => import("/client-new/component/page/edit-word-page")}/>
     <Route path="/dictionary/:identifier/word/:wordNumber" lazy={() => import("/client-new/component/page/edit-word-page")}/>
     <Route path="/user/:name" lazy={() => import("/client-new/component/page/user-page")}/>
     <Route path="/user/:name/notifications" lazy={() => import("/client-new/component/page/user-notification-page")}/>
