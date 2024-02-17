@@ -36,7 +36,7 @@ export const EditExampleDialog = create(
     const {trans} = useTrans("editExampleDialog");
 
     const [open, setOpen] = useState(false);
-    const addExamplePageUrl = useHref(`/dictionary/${dictionary.number}/example/new`);
+    const addExamplePageUrl = useHref(`/dictionary/${dictionary.number}/example/${(example !== null) ? example.number : "new"}`);
 
     const openDialog = useCallback(function (): void {
       setOpen(true);

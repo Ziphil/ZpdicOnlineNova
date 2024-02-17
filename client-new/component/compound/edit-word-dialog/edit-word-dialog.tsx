@@ -36,7 +36,7 @@ export const EditWordDialog = create(
     const {trans} = useTrans("editWordDialog");
 
     const [open, setOpen] = useState(false);
-    const addWordPageUrl = useHref(`/dictionary/${dictionary.number}/word/new`);
+    const addWordPageUrl = useHref(`/dictionary/${dictionary.number}/word/${(word !== null) ? word.number : "new"}`);
 
     const openDialog = useCallback(function (): void {
       setOpen(true);

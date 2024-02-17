@@ -86,6 +86,27 @@ export class ExampleController extends Controller {
     }
   }
 
+  @post(SERVER_PATHS["fetchExample"])
+  @before()
+  public async [Symbol()](request: Request<"fetchExample">, response: Response<"fetchExample">): Promise<void> {
+    const number = request.body.number;
+    const exampleNumber = request.body.exampleNumber;
+    const dictionary = await DictionaryModel.fetchOneByNumber(number);
+    if (dictionary) {
+      const example = await dictionary.fetchOneExampleByNumber(exampleNumber);
+      if (example) {
+        const body = ExampleCreator.create(example);
+        Controller.respond(response, body);
+      } else {
+        const body = CustomError.ofType("noSuchExampleNumber");
+        Controller.respondError(response, body);
+      }
+    } else {
+      const body = CustomError.ofType("noSuchDictionaryNumber");
+      Controller.respondError(response, body);
+    }
+  }
+
   @post(SERVER_PATHS["fetchExamples"])
   @before()
   public async [Symbol()](request: Request<"fetchExamples">, response: Response<"fetchExamples">): Promise<void> {
