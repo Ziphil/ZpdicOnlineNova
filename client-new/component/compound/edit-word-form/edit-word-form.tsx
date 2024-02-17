@@ -2,13 +2,7 @@
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {
-  AdditionalProps,
-  Button,
-  ButtonIconbag,
-  GeneralIcon,
-  useTrans
-} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {EditWordFormRelationSection} from "/client-new/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client-new/component/create";
 import {EditableWord, EnhancedDictionary, Word} from "/client-new/skeleton";

@@ -3,8 +3,9 @@
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {fakQuotesCirclePlus} from "/client-new/component/atom/icon";
+import {EditExampleDialog} from "/client-new/component/compound/edit-example-dialog";
 import {create} from "/client-new/component/create";
-import {DetailedDictionary} from "/client-new/skeleton";
+import {EnhancedDictionary} from "/client-new/skeleton";
 
 
 export const AddExampleButton = create(
@@ -13,17 +14,20 @@ export const AddExampleButton = create(
     dictionary,
     ...rest
   }: {
-    dictionary: DetailedDictionary,
+    dictionary: EnhancedDictionary,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("dictionaryHeader");
 
     return (
-      <Button variant="light" {...rest}>
-        <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
-        {trans("button.addExample")}
-      </Button>
+      <EditExampleDialog dictionary={dictionary} example={null} trigger={(
+        <Button variant="light" {...rest}>
+          <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
+          {trans("button.addExample")}
+        </Button>
+      )}
+      />
     );
 
   }

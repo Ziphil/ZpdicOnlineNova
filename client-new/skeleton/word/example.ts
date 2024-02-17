@@ -6,9 +6,9 @@ import {LinkedWord} from "/client-new/skeleton/word/linked-word";
 export interface EditableExample {
 
   number?: number;
-  words: Array<LinkedWord>;
   sentence: string;
   translation: string;
+  words: Array<LinkedWord>;
 
 }
 
