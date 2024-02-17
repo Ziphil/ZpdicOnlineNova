@@ -70,6 +70,18 @@ dictionaryList:
   button:
     see: "Зрєти словник"
     setting: "Настрајати"
+editExampleDialog:
+  button:
+    external: "別タブで表示"
+editExampleForm:
+  heading:
+    basic: "対訳"
+    words: "使用単語"
+  label:
+    sentence: "この言語での例文"
+    translation: "自然言語訳"
+  button:
+    confirm: "決定"
 editWordDialog:
   button:
     external: "別タブで表示"
