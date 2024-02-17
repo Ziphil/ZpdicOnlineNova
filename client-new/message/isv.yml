@@ -378,7 +378,7 @@ topPage:
     notification: "Послєдне новости"
   moreNotifications: "Читати новости вече"
   catch: "<line>Рысујте</line> <line>свој всесвєт</line> <line>со сконструованым језыком</line>"
-userSettingPage:
+userSettingPart:
   heading:
     screenName: "ニックネーム"
     email: "メールアドレス"

@@ -378,7 +378,7 @@ topPage:
     notification: "Lastatempaj novaĵoj"
   moreNotifications: "Legi pli da novaĵoj"
   catch: "<line>Desegnu</line> <line>vian propran universon</line> <line>per conlingvo</line>"
-userSettingPage:
+userSettingPart:
   heading:
     screenName: "ニックネーム"
     email: "メールアドレス"
