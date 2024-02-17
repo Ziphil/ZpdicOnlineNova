@@ -125,6 +125,13 @@ exampleList:
   button:
     edit: "Edit"
     discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This example sentence will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
 header:
   dictionaryList: "Dictionaries"
   userPage: "User page"

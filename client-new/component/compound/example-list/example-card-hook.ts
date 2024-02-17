@@ -6,24 +6,24 @@ import {useTrans} from "zographia";
 import {useCommonAlert} from "/client-new/hook/alert";
 import {invalidateResponses, useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
-import {Dictionary, Word} from "/client-new/skeleton";
+import {Dictionary, Example} from "/client-new/skeleton";
 import {switchResponse} from "/client-new/util/response";
 
 
-export function useDiscardWord(dictionary: Dictionary, word: Word): () => void {
-  const {trans} = useTrans("wordList");
+export function useDiscardExample(dictionary: Dictionary, example: Example): () => void {
+  const {trans} = useTrans("exampleList");
   const request = useRequest();
   const openAlert = useCommonAlert();
   const {dispatchSuccessToast} = useToast();
   const doRequest = useCallback(async function (): Promise<void> {
     const number = dictionary.number;
-    const wordNumber = word.number;
-    const response = await request("discardWord", {number, wordNumber});
+    const exampleNumber = example.number;
+    const response = await request("discardExample", {number, exampleNumber});
     await switchResponse(response, async () => {
-      await invalidateResponses("searchWord", (query) => query.number === dictionary.number);
-      dispatchSuccessToast("discardWord");
+      await invalidateResponses("fetchExamples", (query) => query.number === dictionary.number);
+      dispatchSuccessToast("discardExample");
     });
-  }, [dictionary.number, word.number, request, dispatchSuccessToast]);
+  }, [dictionary.number, example.number, request, dispatchSuccessToast]);
   const execute = useCallback(function (): void {
     openAlert({
       message: trans("dialog.discard.message"),

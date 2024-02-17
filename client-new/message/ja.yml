@@ -125,6 +125,13 @@ exampleList:
   button:
     edit: "編集"
     discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この例文を削除します。
+        削除した後にデータを戻すことはできません。
+        本当によろしいですか?
+      confirm: "削除"
 header:
   dictionaryList: "辞書一覧"
   userPage: "ユーザーページ"

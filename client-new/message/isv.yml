@@ -125,6 +125,13 @@ exampleList:
   button:
     edit: "Измєнити"
     discard: "Одстранити"
+  dialog:
+    discard:
+      message: >-
+        This example sentence will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Одстранити"
 header:
   dictionaryList: "Словникы"
   userPage: "Користничска страница"
