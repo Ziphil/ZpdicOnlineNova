@@ -48,6 +48,13 @@ commonAlert:
   confirm: "Konfirmi"
   cancel: "Nuligi"
 
+addCommissionDialog:
+  heading: "造語依頼"
+  label:
+    name: "単語"
+    comment: "コメント"
+  button:
+    confirm: "決定"
 dictionaryHeader:
   tab:
     dictionary: "Vortaro"

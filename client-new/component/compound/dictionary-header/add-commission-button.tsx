@@ -1,10 +1,11 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
 import {faListCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {AddCommissionDialog} from "/client-new/component/compound/add-commission-dialog";
 import {create} from "/client-new/component/create";
-import {DetailedDictionary} from "/client-new/skeleton";
+import {EnhancedDictionary} from "/client-new/skeleton";
 
 
 export const AddCommissionButton = create(
@@ -13,17 +14,19 @@ export const AddCommissionButton = create(
     dictionary,
     ...rest
   }: {
-    dictionary: DetailedDictionary,
+    dictionary: EnhancedDictionary,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("dictionaryHeader");
 
     return (
-      <Button scheme="secondary" variant="underline" {...rest}>
-        <ButtonIconbag><GeneralIcon icon={faListCheck}/></ButtonIconbag>
-        {trans("button.addCommission")}
-      </Button>
+      <AddCommissionDialog dictionary={dictionary} trigger={(
+        <Button scheme="secondary" variant="underline" {...rest}>
+          <ButtonIconbag><GeneralIcon icon={faListCheck}/></ButtonIconbag>
+          {trans("button.addCommission")}
+        </Button>
+      )}/>
     );
 
   }

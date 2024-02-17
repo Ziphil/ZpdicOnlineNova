@@ -48,6 +48,13 @@ commonAlert:
   confirm: "決定"
   cancel: "キャンセル"
 
+addCommissionDialog:
+  heading: "造語依頼"
+  label:
+    name: "単語"
+    comment: "コメント"
+  button:
+    confirm: "決定"
 dictionaryHeader:
   tab:
     dictionary: "辞書"

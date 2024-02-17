@@ -44,7 +44,7 @@ export const AddEditInvitationForm = create(
 
     const [open, setOpen] = useState(false);
 
-    const openDialog = useCallback(() => {
+    const openDialog = useCallback(function (): void {
       setOpen(true);
     }, []);
 
