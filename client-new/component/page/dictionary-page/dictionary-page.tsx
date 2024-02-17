@@ -18,7 +18,7 @@ export const DictionaryPage = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const match = useMatch("/dictionary/:dictionaryNumber/:tabPath");
+    const match = useMatch("/dictionary/:dictionaryNumber/:tabPath/:subTabPath?");
     const tabValue = getTabValue(match?.params.tabPath);
     const width = (tabValue === "dictionary" || tabValue === "example") ? "wide" : "normal";
     const insertTopPadding = tabValue !== "setting";
