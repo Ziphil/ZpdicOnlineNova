@@ -1,14 +1,12 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {Fragment, ReactElement, useMemo} from "react";
-import {useParams} from "react-router-dom";
+import {Fragment, ReactElement} from "react";
 import {AdditionalProps, useTrans} from "zographia";
 import {EditWordForm} from "/client-new/component/compound/edit-word-form";
 import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
-import {useSuspenseResponse} from "/client-new/hook/request";
-import {EnhancedDictionary} from "/client-new/skeleton";
+import {useDictionary} from "/client-new/hook/dictionary";
 
 
 export const AddWordPage = create(
@@ -21,10 +19,7 @@ export const AddWordPage = create(
 
     const {trans} = useTrans("addWordPage");
 
-    const {identifier} = useParams();
-    const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
-    const [dictionary] = useSuspenseResponse("fetchDictionary", {number, paramName}, RESPONSE_CONFIG);
-    const enhancedDictionary = useMemo(() => EnhancedDictionary.enhance(dictionary), [dictionary]);
+    const dictionary = useDictionary();
 
     return (
       <Page {...rest} headerNode={(
@@ -33,13 +28,10 @@ export const AddWordPage = create(
         </Fragment>
       )}>
         <MainContainer styleName="main">
-          <EditWordForm dictionary={enhancedDictionary} word={null}/>
+          <EditWordForm dictionary={dictionary} word={null}/>
         </MainContainer>
       </Page>
     );
 
   }
 );
-
-
-const RESPONSE_CONFIG = {refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false};
