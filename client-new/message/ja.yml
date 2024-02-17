@@ -286,9 +286,7 @@ changeMyPasswordForm:
     currentPassword: "現在のパスワード"
     newPassword: "新しいパスワード"
 
-dictionaryPage:
-  add: "新しい単語を作成"
-dictionaryInformationPage:
+dictionaryInformationPart:
   heading:
     history: "単語数推移"
     wordNameFrequency: "文字頻度"
@@ -298,7 +296,7 @@ dictionaryInformationPage:
       単語数は毎日 23 時 30 分頃 (JST, UTC+9) に記録されます。
     wordNameFrequency: >-
       見出し語に使われている各文字の出現頻度です。
-dictionarySettingPage:
+dictionarySettingPart:
   tab:
     general: "一般"
     editing: "編集"

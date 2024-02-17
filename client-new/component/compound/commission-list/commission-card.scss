@@ -3,7 +3,12 @@
 @use "zographia/source/component/function.scss" as *;
 
 
-.main {
+.body {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+}
+
+.footer {
+  column-gap: 3zu;
+  display: flex;
 }

@@ -286,9 +286,7 @@ changeMyPasswordForm:
     currentPassword: "現在のパスワード"
     newPassword: "新しいパスワード"
 
-dictionaryPage:
-  add: "Krei novan vorton"
-dictionaryInformationPage:
+dictionaryInformationPart:
   heading:
     history: "Historio de nombro da vortoj"
     wordNameFrequency: "Frekvenco de signoj"
@@ -298,7 +296,7 @@ dictionaryInformationPage:
       La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
     wordNameFrequency: >-
       La jena diagramo montras kiom ofta ĉiu signo aperas en la kapvortoj en tiu vortaro.
-dictionarySettingPage:
+dictionarySettingPart:
   tab:
     general: "Ĝenerala"
     editing: "Redaktado"

@@ -3,7 +3,7 @@
 @use "zographia/source/component/function.scss" as *;
 
 
-.main {
+.root {
   column-gap: 10zu;
   display: grid;
   grid-template-columns: 112zu 1fr;

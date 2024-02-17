@@ -3,7 +3,12 @@
 @use "zographia/source/component/function.scss" as *;
 
 
-.main {
+.body {
+  row-gap: 3zu;
   display: flex;
   flex-direction: column;
+}
+
+.pagination {
+  margin-block-start: 3zu;
 }

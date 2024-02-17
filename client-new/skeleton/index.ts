@@ -16,6 +16,7 @@ export * from "./word/word";
 export * from "./word-parameter/word-parameter";
 export * from "./word-parameter/advanced-word-parameter";
 export * from "./word-parameter/normal-word-parameter";
+export * from "./commission";
 export * from "./history";
 export * from "./notification";
 export * from "./user";

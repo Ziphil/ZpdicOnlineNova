@@ -286,9 +286,7 @@ changeMyPasswordForm:
     currentPassword: "現在のパスワード"
     newPassword: "新しいパスワード"
   
-dictionaryPage:
-  add: "Создати ново слово"
-dictionaryInformationPage:
+dictionaryInformationPart:
   heading:
     history: "Хисторија коликости слов"
     wordNameFrequency: "Честота знаков"
@@ -298,7 +296,7 @@ dictionaryInformationPage:
       Коликост слов јест записывана кажды дењ приблизно в 14:30 (UTC).
     wordNameFrequency: >-
       На слєдујучем диаграму показываје се како често кажды знак појавјаје се в словах того словника.
-dictionarySettingPage:
+dictionarySettingPart:
   tab:
     general: "Обчи"
     editing: "Editing"

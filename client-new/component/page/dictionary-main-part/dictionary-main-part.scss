@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  column-gap: 10zu;
+  display: grid;
+  grid-template-columns: 112zu 1fr;
+  @media (max-width: 320zu) {
+    row-gap: 6zu;
+    grid-template-columns: 1fr;
+  }
+}
+
+.sticky {
+  inset-block-start: calc(24zu + 1zx);
+  row-gap: 6zu;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: sticky;
+}
+
+.form {
+  align-self: stretch;
+}
