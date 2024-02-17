@@ -7,6 +7,8 @@ import {create} from "/client-new/component/create";
 import {EditableExample, EnhancedDictionary, Example} from "/client-new/skeleton";
 import {EditExampleFormBasicSection} from "./edit-example-form-basic-section";
 import {useEditExample} from "./edit-example-form-hook";
+import {EditExampleFormWordSection} from "./edit-example-form-word-section";
+
 
 export const EditExampleForm = create(
   require("./edit-example-form.scss"), "EditExampleForm",
@@ -30,6 +32,7 @@ export const EditExampleForm = create(
       <form styleName="root" {...rest}>
         <div styleName="main">
           <EditExampleFormBasicSection dictionary={dictionary} form={form}/>
+          <EditExampleFormWordSection dictionary={dictionary} form={form}/>
         </div>
         <div styleName="button">
           <Button type="submit" onClick={handleSubmit}>

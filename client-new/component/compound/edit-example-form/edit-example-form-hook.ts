@@ -21,7 +21,7 @@ type FormValue = {
   number: number | null,
   sentence: string,
   translation: string,
-  words: Array<RelationWord>
+  words: Array<RelationWord | null>
 };
 
 export type EditExampleSpec = {
@@ -67,8 +67,8 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editEx
       number: value.number ?? undefined,
       sentence: value.sentence,
       translation: value.translation,
-      words: value.words.map((word) => ({
-        number: word.number
+      words: value.words.filter((rawWord) => rawWord !== null).map((rawWord) => ({
+        number: rawWord!.number
       }))
     }
   } satisfies RequestData<"editExample">;

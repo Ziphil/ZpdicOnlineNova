@@ -80,7 +80,11 @@ editExampleForm:
   label:
     sentence: "この言語での例文"
     translation: "自然言語訳"
+  absent:
+    word: "使用単語が登録されていません"
   button:
+    add:
+      word: "使用単語を追加"
     confirm: "決定"
 editWordDialog:
   button:
@@ -120,6 +124,7 @@ editWordForm:
       variation: "変化形を追加"
       relation: "関連語を追加"
     generate: "生成"
+    confirm: "決定"
 exampleList:
   noWord: "関連付けられた単語がありません"
   button:

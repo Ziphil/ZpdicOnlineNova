@@ -1,0 +1,77 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  @include theme("light") {
+    --border-color: #{leveled-color("gray", 1)};
+    --background-color: #{single-color("background-light")};
+  }
+}
+
+.heading {
+  @include bold-font;
+  margin-block-end: 3zu;
+  font-size: 5zu;
+  color: var(--glob-primary-heading-text-color);
+}
+
+.item-list {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  padding-block: 3zu;
+  padding-inline-end: 3zu;
+  border-radius: var(--glob-border-radius);
+  border: solid 1zx var(--border-color);
+  background-color: var(--background-color);
+  display: flex;
+}
+
+.grip {
+  margin-block: -3zu;
+  margin-inline-end: 3zu;
+  padding-inline: 1zu;
+  background-color: var(--border-color);
+  color: var(--glob-mute-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: move;
+  flex: 0 0 auto;
+}
+
+.minus {
+  margin-inline-start: 3zu;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.field-list {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.plus {
+  display: flex;
+}
+
+.note {
+  font-size: 3zu;
+  font-weight: normal;
+}
+
+.absent {
+  color: var(--glob-mute-text-color); 
+}
+
+.textarea {
+  height: 32zu;
+}
