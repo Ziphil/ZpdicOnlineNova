@@ -4,8 +4,14 @@
 
 
 .body {
+  row-gap: 2zu;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+}
+
+.comment {
+  font-size: 3.5zu;
+  color: var(--glob-mute-text-color);
 }
 
 .footer {

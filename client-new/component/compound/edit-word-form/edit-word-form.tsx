@@ -22,7 +22,7 @@ export const EditWordForm = create(
     ...rest
   }: {
     dictionary: EnhancedDictionary,
-    word: Word | null,
+    word: Word | EditableWord | null,
     onSubmit?: (word: EditableWord) => void,
     className?: string
   } & AdditionalProps): ReactElement {

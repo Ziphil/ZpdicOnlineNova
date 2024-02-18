@@ -55,6 +55,10 @@ addCommissionDialog:
     comment: "コメント"
   button:
     confirm: "決定"
+commissionList:
+  button:
+    add: "造語"
+    discard: "削除"
 dictionaryHeader:
   tab:
     dictionary: "Vortaro"

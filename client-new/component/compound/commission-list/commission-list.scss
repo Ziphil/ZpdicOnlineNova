@@ -5,8 +5,15 @@
 
 .body {
   row-gap: 3zu;
-  display: flex;
-  flex-direction: column;
+  column-gap: 3zu;
+  display: grid;
+  align-items: flex-start;
+  @include device("desktop") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include device("mobile") {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .pagination {

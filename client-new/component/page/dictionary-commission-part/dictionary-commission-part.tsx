@@ -24,7 +24,7 @@ export const DictionaryCommissionPart = create(
 
     return (
       <div styleName="root" {...rest}>
-        <CommissionList commissions={hitCommissions} pageSpec={{size: 40, hitSize, page, onPageSet: setPage}}/>
+        <CommissionList dictionary={dictionary} commissions={hitCommissions} pageSpec={{size: 40, hitSize, page, onPageSet: setPage}}/>
       </div>
     );
 

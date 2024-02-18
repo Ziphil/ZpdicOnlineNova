@@ -16,7 +16,7 @@ import {
 } from "zographia";
 import {EditWordForm} from "/client-new/component/compound/edit-word-form";
 import {create} from "/client-new/component/create";
-import {EnhancedDictionary, Word} from "/client-new/skeleton";
+import {EditableWord, EnhancedDictionary, Word} from "/client-new/skeleton";
 
 
 export const EditWordDialog = create(
@@ -28,7 +28,7 @@ export const EditWordDialog = create(
     ...rest
   }: {
     dictionary: EnhancedDictionary,
-    word: Word | null,
+    word: Word | EditableWord | null,
     trigger: ReactElement,
     className?: string
   }): ReactElement {
