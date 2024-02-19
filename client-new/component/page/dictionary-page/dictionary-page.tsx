@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {Fragment, ReactElement} from "react";
+import {Fragment, ReactElement, Suspense} from "react";
 import {Outlet, useMatch} from "react-router";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, LoadingIcon} from "zographia";
 import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
 import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
@@ -33,7 +33,13 @@ export const DictionaryPage = create(
         </Fragment>
       )}>
         <MainContainer styleName="main" width={width}>
-          <Outlet/>
+          <Suspense fallback={(
+            <div styleName="loading">
+              <LoadingIcon/>
+            </div>
+          )}>
+            <Outlet/>
+          </Suspense>
         </MainContainer>
       </Page>
     );
