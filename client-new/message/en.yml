@@ -59,6 +59,12 @@ commissionList:
   button:
     add: "造語"
     discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この造語依頼を削除します。
+        本当によろしいですか?
+      confirm: "削除"
 dictionaryHeader:
   tab:
     dictionary: "Dictionary"

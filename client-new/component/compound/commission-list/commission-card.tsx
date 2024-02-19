@@ -6,6 +6,7 @@ import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, Gene
 import {EditWordDialog} from "/client-new/component/compound/edit-word-dialog";
 import {create} from "/client-new/component/create";
 import {Commission, EditableWord, EnhancedDictionary} from "/client-new/skeleton";
+import {useDiscardCommission} from "./commission-card-hook";
 
 
 export const CommissionCard = create(
@@ -23,6 +24,8 @@ export const CommissionCard = create(
     const {trans} = useTrans("commissionList");
 
     const word = useMemo(() => getWord(commission), [commission]);
+
+    const discardCommission = useDiscardCommission(dictionary, commission);
 
     return (
       <Card styleName="root" {...rest}>
@@ -43,7 +46,7 @@ export const CommissionCard = create(
               {trans("button.add")}
             </Button>
           )}/>
-          <Button scheme="red" variant="underline">
+          <Button scheme="red" variant="underline" onClick={discardCommission}>
             <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
             {trans("button.discard")}
           </Button>
