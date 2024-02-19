@@ -311,6 +311,7 @@ dictionarySettingPart:
     general: "Ĝenerala"
     editing: "Redaktado"
     authority: "Permesoj"
+    file: "Dosiero"
 dictionarySettingAuthorityPart:
   heading:
     editInvitation: "Permeso por redaktado"

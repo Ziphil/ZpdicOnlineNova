@@ -311,6 +311,7 @@ dictionarySettingPart:
     general: "一般"
     editing: "編集"
     authority: "権限"
+    file: "ファイル"
 dictionarySettingAuthorityPart:
   heading:
     editInvitation: "編集権限"

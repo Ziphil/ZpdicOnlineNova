@@ -1,6 +1,6 @@
 //
 
-import {faPen, faSliders, faUsers} from "@fortawesome/sharp-regular-svg-icons";
+import {faFile, faPen, faSliders, faUsers} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {Outlet, useMatch} from "react-router-dom";
 import {AdditionalProps, GeneralIcon, TabIconbag, TabList, useTrans} from "zographia";
@@ -20,12 +20,13 @@ export const DictionarySettingPart = create(
     const {trans} = useTrans("dictionarySettingPart");
 
     const match = useMatch("/dictionary/:dictionaryNumber/settings/:tabPath");
-    const tabValue = match?.params.tabPath || "general";
+    const tabValue = getTabValue(match?.params.tabPath);
+
     const dictionary = useDictionary();
 
     return (
       <div styleName="root" {...rest}>
-        <TabList styleName="tab-list" value={tabValue} scheme="primary">
+        <TabList styleName="tab-list" value={tabValue ?? ""} scheme="primary">
           <LinkTab value="general" href={`/dictionary/${dictionary.number}/settings`}>
             <TabIconbag><GeneralIcon icon={faSliders}/></TabIconbag>
             {trans("tab.general")}
@@ -34,9 +35,13 @@ export const DictionarySettingPart = create(
             <TabIconbag><GeneralIcon icon={faPen}/></TabIconbag>
             {trans("tab.editing")}
           </LinkTab>
-          <LinkTab value="permissions" href={`/dictionary/${dictionary.number}/settings/permissions`}>
+          <LinkTab value="authority" href={`/dictionary/${dictionary.number}/settings/permissions`}>
             <TabIconbag><GeneralIcon icon={faUsers}/></TabIconbag>
             {trans("tab.authority")}
+          </LinkTab>
+          <LinkTab value="file" href={`/dictionary/${dictionary.number}/settings/file`}>
+            <TabIconbag><GeneralIcon icon={faFile}/></TabIconbag>
+            {trans("tab.file")}
           </LinkTab>
         </TabList>
         <Outlet context={{dictionary}}/>
@@ -45,3 +50,18 @@ export const DictionarySettingPart = create(
 
   }
 );
+
+
+function getTabValue(tabPath: string | undefined): string | null {
+  if (tabPath === undefined) {
+    return "general";
+  } else if (tabPath === "editing") {
+    return "editing";
+  } else if (tabPath === "permissions") {
+    return "authority";
+  } else if (tabPath === "file") {
+    return "file";
+  } else {
+    return null;
+  }
+}

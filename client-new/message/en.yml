@@ -312,6 +312,7 @@ dictionarySettingPart:
     general: "General"
     editing: "Editing"
     authority: "Permissions"
+    file: "File"
 dictionarySettingAuthorityPart:
   heading:
     editInvitation: "Editing permission"

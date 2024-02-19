@@ -311,6 +311,7 @@ dictionarySettingPart:
     general: "Обчи"
     editing: "Editing"
     authority: "Позвољенја"
+    file: "File"
 dictionarySettingAuthorityPart:
   heading:
     editInvitation: "Editing permission"
