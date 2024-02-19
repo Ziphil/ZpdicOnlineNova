@@ -3,7 +3,7 @@
 import {faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {useCallback} from "react";
 import {useTrans} from "zographia";
-import {useCommonAlert} from "/client-new/hook/alert";
+import {useCommonAlert} from "/client-new/component/atom/common-alert";
 import {invalidateResponses, useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
 import {Dictionary, Word} from "/client-new/skeleton";

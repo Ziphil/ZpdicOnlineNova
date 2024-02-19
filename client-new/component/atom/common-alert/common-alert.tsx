@@ -1,7 +1,7 @@
-//
+/* eslint-disable no-useless-computed-key */
 
 import {IconDefinition, faCheck, faClose, faExclamationTriangle} from "@fortawesome/sharp-regular-svg-icons";
-import {MouseEvent, useCallback} from "react";
+import {MouseEvent, ReactElement, useCallback} from "react";
 import {
   Alert,
   AlertBody,
@@ -14,17 +14,32 @@ import {
   ButtonIconbag,
   GeneralIcon,
   MultiLineText,
-  useAlert as useRawAlert,
   useTrans
 } from "zographia";
+import {create} from "/client-new/component/create";
 
 
-export function useCommonAlert(): (config: CommonAlertConfig) => void {
-  const {trans} = useTrans("commonAlert");
-  const openAlert = useRawAlert();
-  const openCommonAlert = useCallback(function (config: CommonAlertConfig): void {
-    openAlert((close) => (
-      <Alert scheme="red">
+export const CommonAlert = create(
+  null, "CommonAlert",
+  function ({
+    config,
+    close,
+    ...rest
+  }: {
+    config: CommonAlertConfig,
+    close: () => void,
+    className?: string
+  }): ReactElement | null {
+
+    const {trans} = useTrans("commonAlert");
+
+    const handleConfirm = useCallback(async function (event: MouseEvent<HTMLButtonElement>): Promise<void> {
+      await config.onConfirm(event);
+      close();
+    }, [config, close]);
+
+    return (
+      <Alert scheme="red" {...rest}>
         <AlertPane>
           <AlertCloseButton/>
           <AlertBody>
@@ -42,17 +57,18 @@ export function useCommonAlert(): (config: CommonAlertConfig) => void {
               <ButtonIconbag><GeneralIcon icon={config.cancelIcon ?? faClose}/></ButtonIconbag>
               {config.cancelLabel ?? trans("cancel")}
             </Button>
-            <Button scheme="red" onClick={(event) => (config.onConfirm(event), close())}>
+            <Button scheme="red" onClick={handleConfirm}>
               <ButtonIconbag><GeneralIcon icon={config.confirmIcon ?? faCheck}/></ButtonIconbag>
               {config.confirmLabel ?? trans("confirm")}
             </Button>
           </AlertFooter>
         </AlertPane>
       </Alert>
-    ));
-  }, [openAlert, trans]);
-  return openCommonAlert;
-}
+    );
+
+  }
+);
+
 
 export type CommonAlertConfig = {
   message: string,
