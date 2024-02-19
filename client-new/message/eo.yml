@@ -49,22 +49,22 @@ commonAlert:
   cancel: "Nuligi"
 
 addCommissionDialog:
-  heading: "造語依頼"
+  heading: "Peti kreado de vorto"
   label:
-    name: "単語"
-    comment: "コメント"
+    name: "Vorto"
+    comment: "Komento"
   button:
-    confirm: "決定"
+    confirm: "Konfirmi"
 commissionList:
   button:
-    add: "造語"
-    discard: "削除"
+    add: "Krei"
+    discard: "Forigi"
   dialog:
     discard:
       message: >-
-        この造語依頼を削除します。
-        本当によろしいですか?
-      confirm: "削除"
+        Tiu peto estos forigita konstante.
+        Ĉu vi vere certas?
+      confirm: "Forigi"
 dictionaryHeader:
   tab:
     dictionary: "Vortaro"
@@ -89,22 +89,22 @@ dictionaryList:
     setting: "Agordi"
 editExampleDialog:
   button:
-    external: "別タブで表示"
+    external: "Malfermi en nova langeto"
 editExampleForm:
   heading:
-    basic: "対訳"
-    words: "使用単語"
+    basic: "Paralela traduko"
+    words: "Enhavitaj vortoj"
   label:
-    sentence: "この言語での例文"
-    translation: "自然言語訳"
+    sentence: "Frazo en tiu conlingvo"
+    translation: "Tradukaĵo en naturan lingvon"
   absent:
-    word: "使用単語が登録されていません"
+    word: "Neniuj enhavitaj vortoj specifitaj"
   button:
     add:
-      word: "使用単語を追加"
+      word: "Aldoni enhavitan vorton"
 editWordDialog:
   button:
-    external: "別タブで表示"
+    external: "Malfermi en nova langeto"
 editWordForm:
   heading:
     basic: "Bazaj informoj"
@@ -257,28 +257,28 @@ commonForm:
   button:
     change: "Ŝanĝi"
 addEditInvitationForm:
-  heading: "編集権限を付与"
-  empty: "編集権限のあるユーザーはいません"
+  heading: "Doni redaktan permeson"
+  empty: "Neniuj uzantoj havas redaktan permeson"
   label:
-    user: "招待するユーザー"
+    user: "Doni permeson al"
   button:
-    open: "編集権限をユーザーに付与"
-    discard: "解除"
-    confirm: "決定"
+    open: "Doni redaktan permeson"
+    discard: "Revoki"
+    confirm: "Konfirmi"
 addTransferInvitationForm:
-  heading: "譲渡"
+  heading: "Transdoni"
   label:
-    user: "譲渡先のユーザー"
+    user: "Transdoni al"
   button:
-    open: "別ユーザーに譲渡"
-    confirm: "決定"
+    open: "Transdoni"
+    confirm: "Konfirmi"
 addDictionaryButton:
-  heading: "新しい辞書を作成"
+  heading: "Krei novan vortaron"
   label:
-    name: "名前"
+    name: "Nomo"
   button:
-    open: "新しい辞書を作成"
-    confirm: "決定"
+    open: "Krei novan vortaron"
+    confirm: "Konfirmi"
 changeDictionarySettingsForm:
   label:
     enableMarkdown:
@@ -293,8 +293,8 @@ changeDictionarySecretForm:
     true: "Nevidebla"
 changeMyPasswordForm:
   label:
-    currentPassword: "現在のパスワード"
-    newPassword: "新しいパスワード"
+    currentPassword: "Nuna pasvorto"
+    newPassword: "Nova pasvorto"
 
 dictionaryInformationPart:
   heading:
@@ -331,7 +331,7 @@ dictionarySettingEditingPart:
     akrantiainSource: >-
       Akrantiain estas aparato kiu aŭtomate generas fonetikajn simbolojn surbaze de la literumo de vortoj.
       Se vi agordos la fontkodon, Akrantiain aŭtomate generos fonetikan simbolon el literumo kaj montros ĝin apud la literumo.
-      Se vorto havas specifitan prononcon, ĝi estos anstataŭe montrita.
+      Se vorto havas specifitan elparolon, ĝi estos anstataŭe montrita.
       Por pliaj informoj pri la sintakso de Akrantiain, bonvolu rilati al la <link>dokumentaro</link> (nuntempe disponebla nur en la japana).
     zatlinSource: >-
       Zatlin estas aparato kiu generas aleatorajn literumojn de vortoj.
@@ -390,6 +390,6 @@ topPage:
   catch: "<line>Desegnu</line> <line>vian propran universon</line> <line>per conlingvo</line>"
 userSettingPart:
   heading:
-    screenName: "ニックネーム"
-    email: "メールアドレス"
-    password: "パスワード"
+    screenName: "Kromnomo"
+    email: "Retpoŝta adreso"
+    password: "Pasvorto"

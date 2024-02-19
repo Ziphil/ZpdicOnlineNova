@@ -49,22 +49,22 @@ commonAlert:
   cancel: "Cancel"
 
 addCommissionDialog:
-  heading: "造語依頼"
+  heading: "Request word creation"
   label:
-    name: "単語"
-    comment: "コメント"
+    name: "Word"
+    comment: "Comment"
   button:
-    confirm: "決定"
+    confirm: "Confirm"
 commissionList:
   button:
-    add: "造語"
-    discard: "削除"
+    add: "Create"
+    discard: "Delete"
   dialog:
     discard:
       message: >-
-        この造語依頼を削除します。
-        本当によろしいですか?
-      confirm: "削除"
+        This request will be deleted permanently.
+        Are you really sure?
+      confirm: "Delete"
 dictionaryHeader:
   tab:
     dictionary: "Dictionary"
@@ -89,22 +89,23 @@ dictionaryList:
     setting: "Settings"
 editExampleDialog:
   button:
-    external: "別タブで表示"
+    external: "Open in new tab"
 editExampleForm:
   heading:
-    basic: "対訳"
-    words: "使用単語"
+    basic: "Parallel translation"
+    words: "Included words"
   label:
-    sentence: "この言語での例文"
-    translation: "自然言語訳"
+    sentence: "Sentence in this conlang"
+    translation: "Translation into natural language"
   absent:
-    word: "使用単語が登録されていません"
+    word: "No included words specified"
   button:
     add:
-      word: "使用単語を追加"
+      word: "Add included words"
+    confirm: "Confirm"
 editWordDialog:
   button:
-    external: "別タブで表示"
+    external: "Open in new tab"
 editWordForm:
   heading:
     basic: "Basic information"
@@ -257,28 +258,28 @@ commonForm:
   button:
     change: "Change"
 addEditInvitationForm:
-  heading: "編集権限を付与"
-  empty: "編集権限のあるユーザーはいません"
+  heading: "Grant editing permission"
+  empty: "No users have editing permission"
   label:
-    user: "招待するユーザー"
+    user: "Grant permission to"
   button:
-    open: "編集権限をユーザーに付与"
-    discard: "解除"
-    confirm: "決定"
+    open: "Grant editing permission"
+    discard: "Revoke"
+    confirm: "Confirm"
 addTransferInvitationForm:
-  heading: "譲渡"
+  heading: "Transfer"
   label:
-    user: "譲渡先のユーザー"
+    user: "Transfer to"
   button:
-    open: "別ユーザーに譲渡"
-    confirm: "決定"
+    open: "Transfer"
+    confirm: "Confirm"
 addDictionaryButton:
-  heading: "新しい辞書を作成"
+  heading: "Create new dictionary"
   label:
-    name: "名前"
+    name: "Name"
   button:
-    open: "新しい辞書を作成"
-    confirm: "決定"
+    open: "Create new dictionary"
+    confirm: "Confirm"
 changeDictionarySettingsForm:
   label:
     enableMarkdown:
@@ -293,8 +294,8 @@ changeDictionarySecretForm:
     true: "Hide"
 changeMyPasswordForm:
   label:
-    currentPassword: "現在のパスワード"
-    newPassword: "新しいパスワード"
+    currentPassword: "Current password"
+    newPassword: "New password"
 
 dictionaryInformationPart:
   heading:
@@ -391,6 +392,6 @@ topPage:
   catch: "<line>Draw</line> <line>your own universe</line> <line>with conlang</line>"
 userSettingPart:
   heading:
-    screenName: "ニックネーム"
-    email: "メールアドレス"
-    password: "パスワード"
+    screenName: "Nickname"
+    email: "Email address"
+    password: "Password"
