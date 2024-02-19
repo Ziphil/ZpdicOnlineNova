@@ -69,7 +69,16 @@
 }
 
 .absent {
-  color: var(--glob-mute-text-color); 
+  min-height: 8zu;
+  padding-block: 3zu;
+  padding-inline: 3zu;
+  color: var(--glob-mute-text-color);
+  border-radius: var(--glob-border-radius);
+  border: solid 1zx var(--border-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .textarea {
