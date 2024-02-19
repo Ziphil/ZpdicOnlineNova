@@ -3,7 +3,7 @@
 import {Fragment, ReactElement, Suspense} from "react";
 import {Outlet, useMatch} from "react-router";
 import {AdditionalProps, LoadingIcon} from "zographia";
-import {DictionaryHeader} from "/client-new/component/compound/dictionary-header";
+import {DictionaryHeader, DictionaryHeaderTabValue} from "/client-new/component/compound/dictionary-header";
 import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
@@ -48,7 +48,7 @@ export const DictionaryPage = create(
 );
 
 
-function getTabValue(tabPath: string | undefined): "dictionary" | "example" | "information" | "commission" | "setting" | null {
+function getTabValue(tabPath: string | undefined): DictionaryHeaderTabValue {
   if (tabPath === undefined) {
     return "dictionary";
   } else if (tabPath === "sentences") {

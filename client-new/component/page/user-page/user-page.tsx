@@ -5,7 +5,7 @@ import {Outlet, useMatch, useParams} from "react-router-dom";
 import {AdditionalProps, LoadingIcon} from "zographia";
 import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
-import {UserHeader} from "/client-new/component/compound/user-header";
+import {UserHeader, UserHeaderTabValue} from "/client-new/component/compound/user-header";
 import {create} from "/client-new/component/create";
 import {useSuspenseResponse} from "/client-new/hook/request";
 
@@ -47,7 +47,7 @@ export const UserPage = create(
 );
 
 
-function getTabValue(tabPath: string | undefined): "dictionary" | "notification" | "setting" | null {
+function getTabValue(tabPath: string | undefined): UserHeaderTabValue {
   if (tabPath === undefined) {
     return "dictionary";
   } else if (tabPath === "notifications") {

@@ -22,7 +22,7 @@ export const UserHeader = create(
   }: {
     user: User,
     width?: "normal" | "wide",
-    tabValue: "dictionary" | "notification" | "setting" | null,
+    tabValue: UserHeaderTabValue,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -72,3 +72,6 @@ export const UserHeader = create(
 
   }
 );
+
+
+export type UserHeaderTabValue = "dictionary" | "notification" | "setting" | null;

@@ -25,7 +25,7 @@ export const DictionaryHeader = create(
   }: {
     dictionary: EnhancedDictionary,
     width?: "normal" | "wide",
-    tabValue: "dictionary" | "example" | "information" | "commission" | "setting" | null,
+    tabValue: DictionaryHeaderTabValue,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -93,3 +93,6 @@ export const DictionaryHeader = create(
 
   }
 );
+
+
+export type DictionaryHeaderTabValue = "dictionary" | "example" | "information" | "commission" | "setting" | null;
