@@ -17,6 +17,7 @@ import {
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {request} from "/client-new/util/request";
+import {switchResponse} from "/client-new/util/response";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
 import {EditWordSpec} from "./edit-word-form-hook";
 
@@ -47,13 +48,13 @@ export const EditWordFormInformationItem = create(
       const number = dictionary.number;
       try {
         const response = await request("suggestDictionaryTitles", {number, pattern, propertyName: "information"}, {ignoreError: true});
-        if (response.status === 200 && !("error" in response.data)) {
-          const titles = response.data;
+        return switchResponse(response, (data) => {
+          const titles = data;
           const suggestions = titles.map((title) => ({replacement: title, node: title}));
           return suggestions;
-        } else {
+        }, () => {
           return [];
-        }
+        });
       } catch {
         return [];
       }
