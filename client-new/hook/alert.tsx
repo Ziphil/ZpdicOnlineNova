@@ -22,7 +22,7 @@ import {
 export function useCommonAlert(): (config: CommonAlertConfig) => void {
   const {trans} = useTrans("commonAlert");
   const openAlert = useRawAlert();
-  const openAlertAlert = useCallback(function (config: CommonAlertConfig): void {
+  const openCommonAlert = useCallback(function (config: CommonAlertConfig): void {
     openAlert((close) => (
       <Alert scheme="red">
         <AlertPane>
@@ -42,7 +42,7 @@ export function useCommonAlert(): (config: CommonAlertConfig) => void {
               <ButtonIconbag><GeneralIcon icon={config.cancelIcon ?? faClose}/></ButtonIconbag>
               {config.cancelLabel ?? trans("cancel")}
             </Button>
-            <Button scheme="red" onClick={config.onConfirm}>
+            <Button scheme="red" onClick={(event) => (config.onConfirm(event), close())}>
               <ButtonIconbag><GeneralIcon icon={config.confirmIcon ?? faCheck}/></ButtonIconbag>
               {config.confirmLabel ?? trans("confirm")}
             </Button>
@@ -51,7 +51,7 @@ export function useCommonAlert(): (config: CommonAlertConfig) => void {
       </Alert>
     ));
   }, [openAlert, trans]);
-  return openAlertAlert;
+  return openCommonAlert;
 }
 
 export type CommonAlertConfig = {
