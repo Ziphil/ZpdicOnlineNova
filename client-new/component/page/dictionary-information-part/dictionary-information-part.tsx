@@ -1,6 +1,6 @@
 //
 
-import {ReactElement, Suspense} from "react";
+import {ReactElement} from "react";
 import {AdditionalProps, Card, CardBody, MultiLineText, useTrans} from "zographia";
 import {HistoryChart} from "/client-new/component/compound/history-chart";
 import {WordNameFrequencyChart} from "/client-new/component/compound/word-name-frequency-chart";
@@ -27,26 +27,22 @@ export const DictionaryInformationPart = create(
           <MultiLineText styleName="description">
             {trans("description.history")}
           </MultiLineText>
-          <Suspense>
-            <Card>
-              <CardBody>
-                <HistoryChart dictionary={dictionary}/>
-              </CardBody>
-            </Card>
-          </Suspense>
+          <Card>
+            <CardBody>
+              <HistoryChart dictionary={dictionary}/>
+            </CardBody>
+          </Card>
         </section>
         <section>
           <h3 styleName="heading">{trans("heading.wordNameFrequency")}</h3>
           <MultiLineText styleName="description">
             {trans("description.wordNameFrequency")}
           </MultiLineText>
-          <Suspense>
-            <Card>
-              <CardBody>
-                <WordNameFrequencyChart dictionary={dictionary}/>
-              </CardBody>
-            </Card>
-          </Suspense>
+          <Card>
+            <CardBody>
+              <WordNameFrequencyChart dictionary={dictionary}/>
+            </CardBody>
+          </Card>
         </section>
       </div>
     );
