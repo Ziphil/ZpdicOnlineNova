@@ -25,8 +25,8 @@ export const CommissionList = create(
       <List styleName="root" items={commissions} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
           {(commission) => <CommissionCard key={commission.id} dictionary={dictionary} commission={commission}/>}
-          <ListLoadingView/>
-          <ListEmptyView/>
+          <ListLoadingView styleName="loading"/>
+          <ListEmptyView styleName="loading"/>
         </ListBody>
         <ListPagination styleName="pagination"/>
       </List>
