@@ -129,6 +129,7 @@ editWordForm:
     relation:
       titles: "Specoj"
       name: "Vorto"
+      mutual: "Fari tiun rilaton reciproka"
   absent:
     equivalent: "Neniuj tradukaĵoj"
     information: "Neniuj enhavoj"

@@ -129,6 +129,7 @@ editWordForm:
     relation:
       titles: "分類"
       name: "関連語"
+      mutual: "この関連語を双方向にする"
   absent:
     equivalent: "訳語が登録されていません"
     information: "内容が登録されていません"

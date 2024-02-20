@@ -129,6 +129,7 @@ editWordForm:
     relation:
       titles: "Kinds"
       name: "Word"
+      mutual: "Make this relation mutual"
   absent:
     equivalent: "No translations"
     information: "No contents"

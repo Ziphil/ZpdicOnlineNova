@@ -129,6 +129,7 @@ editWordForm:
     relation:
       titles: "Роды"
       name: "Слово"
+      mutual: "Make this relation mutual"
   absent:
     equivalent: "Нема прєводов"
     information: "Нема содржаниј"

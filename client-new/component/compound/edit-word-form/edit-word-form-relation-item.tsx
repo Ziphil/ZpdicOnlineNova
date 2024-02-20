@@ -6,6 +6,9 @@ import {Controller, useFieldArray} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
+  CheckableContainer,
+  CheckableLabel,
+  Checkbox,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
@@ -77,6 +80,12 @@ export const EditWordFormRelationItem = create(
             <Controller name={`relations.${index}.word`} control={form.control} render={({field}) => (
               <RelationWordSelect dictionary={dictionary} word={field.value} onSet={field.onChange}/>
             )}/>
+          </ControlContainer>
+          <ControlContainer>
+            <CheckableContainer>
+              <Checkbox {...register(`relations.${index}.mutual`)}/>
+              <CheckableLabel>{trans("label.relation.mutual")}</CheckableLabel>
+            </CheckableContainer>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
