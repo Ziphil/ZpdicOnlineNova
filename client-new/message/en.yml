@@ -372,6 +372,13 @@ dictionarySettingFilePart:
   heading:
     upload: "Import"
     download: "Export"
+  description:
+    upload: >-
+      Import the contents of a file and overwrite the current data.
+      The supported formats are: OneToMany-JSON format (with extension .json) and PDIC format (with extension .dic).
+    download: >-
+      Export the dictionary data in the extended OneToMany-JSON format.
+      See also the <link>documentation</link> for detailed specification.
 dictionarySettingGeneralPart:
   heading:
     name: "Name"

@@ -371,6 +371,13 @@ dictionarySettingFilePart:
   heading:
     upload: "インポート"
     download: "エクスポート"
+  description:
+    upload: >-
+      ファイルの内容をインポートして、現在のデータを上書きします。
+      OneToMany-JSON 形式 (拡張子 .json) と PDIC 形式 (拡張子 .dic) に対応しています。
+    download: >-
+      この辞書のデータを拡張 OneToMany-JSON 形式でエクスポートします。
+      詳細な仕様については<link>ドキュメント</link>をご覧ください。
 dictionarySettingGeneralPart:
   heading:
     name: "名前"

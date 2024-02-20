@@ -372,6 +372,13 @@ dictionarySettingFilePart:
   heading:
     upload: "Importi"
     download: "Eksporti"
+  description:
+    upload: >-
+      Importi la enhavon de dosiero kaj anstataŭigi la aktualan datumon.
+      La subtenataj formatoj estas: OneToMany-JSON (kun finaĵo .json) kaj PDIC (kun finaĵo .dic).
+    download: >-
+      Eksporti la datumon de la vortaro en la etendita OneToMany-JSON.
+      Vidu ankaŭ la <link>dokumentaron</link> por detala specifo.
 dictionarySettingGeneralPart:
   heading:
     name: "Nomo"
