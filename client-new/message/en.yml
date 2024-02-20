@@ -84,6 +84,7 @@ dictionaryList:
     own: "Owner"
     edit: "Edit only"
     view: "View only"
+    secret: "Hidden"
   button:
     see: "See dictionary"
     setting: "Settings"

@@ -84,6 +84,7 @@ dictionaryList:
     own: "Posedanto"
     edit: "Redakto nur"
     view: "Vido nur"
+    secret: "Nevidebla"
   button:
     see: "Vidi vortaron"
     setting: "Agordi"

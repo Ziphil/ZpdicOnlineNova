@@ -1,6 +1,6 @@
 //
 
-import {faCog, faNote, faRight} from "@fortawesome/sharp-regular-svg-icons";
+import {faCog, faLockKeyhole, faNote, faRight} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, Tag, useTrans} from "zographia";
@@ -48,6 +48,12 @@ export const DictionaryCard = create(
                   <Tag variant="light">{trans("tag.edit")}</Tag>
                 ) : (
                   <Tag variant="light">{trans("tag.view")}</Tag>
+                )}
+                {(dictionary.secret) && (
+                  <span styleName="secret">
+                    <GeneralIcon styleName="secret-icon" icon={faLockKeyhole}/>
+                    {trans("tag.secret")}
+                  </span>
                 )}
               </div>
             )}

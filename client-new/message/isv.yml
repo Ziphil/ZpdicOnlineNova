@@ -84,6 +84,7 @@ dictionaryList:
     own: "Властник"
     edit: "Edit only"
     view: "View only"
+    secret: "Hidden"
   button:
     see: "Зрєти словник"
     setting: "Настрајати"

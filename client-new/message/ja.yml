@@ -84,6 +84,7 @@ dictionaryList:
     own: "管理者"
     edit: "編集のみ"
     view: "閲覧のみ"
+    secret: "非表示"
   button:
     see: "辞書ページへ"
     setting: "設定"
