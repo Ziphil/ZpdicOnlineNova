@@ -69,6 +69,7 @@ dictionaryHeader:
   tab:
     dictionary: "辞書"
     example: "例文"
+    resource: "画像"
     information: "詳細情報"
     commission: "造語依頼"
     setting: "設定"
@@ -280,6 +281,13 @@ addDictionaryButton:
     name: "名前"
   button:
     open: "新しい辞書を作成"
+    confirm: "決定"
+addResourceButton:
+  heading: "画像をアップロード"
+  label:
+    file: "画像ファイル"
+  button:
+    open: "画像をアップロード"
     confirm: "決定"
 changeDictionarySettingsForm:
   label:

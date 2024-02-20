@@ -69,6 +69,7 @@ dictionaryHeader:
   tab:
     dictionary: "Словник"
     example: "Рєченја"
+    resource: "Images"
     information: "Подробности"
     commission: "Просбы"
     setting: "Настројкы"
@@ -282,6 +283,13 @@ addDictionaryButton:
   button:
     open: "新しい辞書を作成"
     confirm: "決定"
+addResourceButton:
+  heading: "Upload image"
+  label:
+    file: "Image file"
+  button:
+    open: "Upload image"
+    confirm: "Confirm"
 changeDictionarySettingsForm:
   label:
     enableMarkdown:

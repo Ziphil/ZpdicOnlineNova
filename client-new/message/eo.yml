@@ -69,6 +69,7 @@ dictionaryHeader:
   tab:
     dictionary: "Vortaro"
     example: "Frazoj"
+    resource: "Bildoj"
     information: "Detaloj"
     commission: "Petoj"
     setting: "Agordoj"
@@ -281,6 +282,13 @@ addDictionaryButton:
     name: "Nomo"
   button:
     open: "Krei novan vortaron"
+    confirm: "Konfirmi"
+addResourceButton:
+  heading: "Alŝuti bildon"
+  label:
+    file: "Bilda dosiero"
+  button:
+    open: "Alŝuti bildon"
     confirm: "Konfirmi"
 changeDictionarySettingsForm:
   label:

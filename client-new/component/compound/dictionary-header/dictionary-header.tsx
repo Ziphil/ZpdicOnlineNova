@@ -1,6 +1,6 @@
 //
 
-import {faBook, faCircleInfo, faCog, faListCheck, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
+import {faBook, faCircleInfo, faCog, faImage, faListCheck, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
@@ -70,16 +70,22 @@ export const DictionaryHeader = create(
               <TabIconbag><GeneralIcon icon={faQuotes}/></TabIconbag>
               {trans("tab.example")}
             </LinkTab>
-            <LinkTab value="information" href={`/dictionary/${dictionary.number}/info`}>
-              <TabIconbag><GeneralIcon icon={faCircleInfo}/></TabIconbag>
-              {trans("tab.information")}
-            </LinkTab>
             {(canOwn) && (
               <LinkTab value="commission" href={`/dictionary/${dictionary.number}/requests`}>
                 <TabIconbag><GeneralIcon icon={faListCheck}/></TabIconbag>
                 {trans("tab.commission")}
               </LinkTab>
             )}
+            {(canEdit) && (
+              <LinkTab value="resource" href={`/dictionary/${dictionary.number}/resources`}>
+                <TabIconbag><GeneralIcon icon={faImage}/></TabIconbag>
+                {trans("tab.resource")}
+              </LinkTab>
+            )}
+            <LinkTab value="information" href={`/dictionary/${dictionary.number}/info`}>
+              <TabIconbag><GeneralIcon icon={faCircleInfo}/></TabIconbag>
+              {trans("tab.information")}
+            </LinkTab>
             {(canOwn) && (
               <LinkTab value="setting" href={`/dictionary/${dictionary.number}/settings`}>
                 <TabIconbag><GeneralIcon icon={faCog}/></TabIconbag>
@@ -95,4 +101,4 @@ export const DictionaryHeader = create(
 );
 
 
-export type DictionaryHeaderTabValue = "dictionary" | "example" | "information" | "commission" | "setting" | null;
+export type DictionaryHeaderTabValue = "dictionary" | "example" | "resource" | "information" | "commission" | "setting" | null;

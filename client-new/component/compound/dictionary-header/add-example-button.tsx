@@ -1,4 +1,4 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
@@ -26,8 +26,7 @@ export const AddExampleButton = create(
           <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
           {trans("button.addExample")}
         </Button>
-      )}
-      />
+      )}/>
     );
 
   }

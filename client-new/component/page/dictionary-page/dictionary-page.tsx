@@ -53,6 +53,8 @@ function getTabValue(tabPath: string | undefined): DictionaryHeaderTabValue {
     return "dictionary";
   } else if (tabPath === "sentences") {
     return "example";
+  } else if (tabPath === "resources") {
+    return "resource";
   } else if (tabPath === "info") {
     return "information";
   } else if (tabPath === "requests") {

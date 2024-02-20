@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faBan, faCheck, faPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {faCheck, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, SyntheticEvent, useCallback, useState} from "react";
 import {Controller} from "react-hook-form";
 import {
@@ -13,19 +13,17 @@ import {
   DialogBody,
   DialogCloseButton,
   DialogPane,
+  FileInput,
   GeneralIcon,
   useTrans
 } from "zographia";
-import {UserSelect} from "/client-new/component/atom/user-select";
-import {UserList} from "/client-new/component/compound/user-list";
 import {create} from "/client-new/component/create";
-import {useResponse} from "/client-new/hook/request";
 import {Dictionary} from "/client-new/skeleton";
-import {useAddEditInvitation} from "./add-edit-invitation-form-hook";
+import {useAddResource} from "./add-resource-button-hook";
 
 
-export const AddEditInvitationForm = create(
-  require("./add-edit-invitation-form.scss"), "AddEditInvitationForm",
+export const AddResourceButton = create(
+  require("./add-resource-button.scss"), "AddResourceButton",
   function ({
     dictionary,
     ...rest
@@ -34,12 +32,9 @@ export const AddEditInvitationForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("addEditInvitationForm");
+    const {trans} = useTrans("addResourceButton");
 
-    const number = dictionary.number;
-    const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number, authority: "editOnly"});
-
-    const {form, handleSubmit} = useAddEditInvitation(dictionary);
+    const {form, handleSubmit} = useAddResource(dictionary);
     const {control, formState: {errors}} = form;
 
     const [open, setOpen] = useState(false);
@@ -55,20 +50,10 @@ export const AddEditInvitationForm = create(
 
     return (
       <Fragment>
-        <form styleName="root-table" {...rest}>
-          <div>
-            <Button type="submit" variant="light" onClick={openDialog}>
-              <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-              {trans("button.open")}
-            </Button>
-          </div>
-          <UserList users={authorizedUsers} pageSpec={{size: 20}} emptyMessage={trans("empty")} renderFooter={(user) => (
-            <Button scheme="red" variant="underline">
-              <ButtonIconbag><GeneralIcon icon={faBan}/></ButtonIconbag>
-              {trans("button.discard")}
-            </Button>
-          )}/>
-        </form>
+        <Button variant="light" onClick={openDialog} {...rest}>
+          <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+          {trans("button.open")}
+        </Button>
         <Dialog open={open} onOpenSet={setOpen}>
           <DialogPane>
             <DialogCloseButton/>
@@ -77,10 +62,10 @@ export const AddEditInvitationForm = create(
               <div styleName="dialog-control">
                 <ControlContainer>
                   <ControlLabel>
-                    {trans("label.user")}
+                    {trans("label.file")}
                   </ControlLabel>
-                  <Controller name="user" control={control} render={({field}) => (
-                    <UserSelect user={field.value} onSet={field.onChange}/>
+                  <Controller name="file" control={control} render={({field}) => (
+                    <FileInput value={field.value} onSet={field.onChange} multiple={false}/>
                   )}/>
                 </ControlContainer>
               </div>

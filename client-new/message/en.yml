@@ -69,6 +69,7 @@ dictionaryHeader:
   tab:
     dictionary: "Dictionary"
     example: "Sentences"
+    resource: "Images"
     information: "Details"
     commission: "Requests"
     setting: "Settings"
@@ -281,6 +282,13 @@ addDictionaryButton:
     name: "Name"
   button:
     open: "Create new dictionary"
+    confirm: "Confirm"
+addResourceButton:
+  heading: "Upload image"
+  label:
+    file: "Image file"
+  button:
+    open: "Upload image"
     confirm: "Confirm"
 changeDictionarySettingsForm:
   label:

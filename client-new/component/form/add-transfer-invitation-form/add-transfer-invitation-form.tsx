@@ -1,4 +1,4 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
 import {faCheck, faRocketLaunch} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, SyntheticEvent, useCallback, useState} from "react";
@@ -68,8 +68,7 @@ export const AddTransferInvitationForm = create(
                   </ControlLabel>
                   <Controller name="user" control={control} render={({field}) => (
                     <UserSelect user={field.value} onSet={field.onChange}/>
-                  )}
-                  />
+                  )}/>
                 </ControlContainer>
               </div>
               <div styleName="dialog-button">
