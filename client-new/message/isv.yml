@@ -306,6 +306,16 @@ changeMyPasswordForm:
   label:
     currentPassword: "現在のパスワード"
     newPassword: "新しいパスワード"
+downloadDictionaryButton:
+  button:
+    start: "Export"
+uploadDictionaryButton:
+  heading: "Import"
+  label:
+    file: "File"
+  button:
+    open: "Import"
+    confirm: "Confirm"
   
 dictionaryInformationPart:
   heading:
@@ -358,6 +368,10 @@ dictionarySettingEditingPart:
       The heading of example sentence sections, which is displayed in word cards.
     pronunciationTitle: >-
       The heading of pronunciation sections, which is used when the dictionary is output in OTM-JSON format.
+dictionarySettingFilePart:
+  heading:
+    upload: "Import"
+    download: "Export"
 dictionarySettingGeneralPart:
   heading:
     name: "Име"

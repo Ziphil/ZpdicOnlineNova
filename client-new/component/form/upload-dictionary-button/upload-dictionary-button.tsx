@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faCheck, faPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {faCheck, faFileImport} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, SyntheticEvent, useCallback, useState} from "react";
 import {Controller} from "react-hook-form";
 import {
@@ -18,23 +18,23 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
-import {Dictionary} from "/client-new/skeleton";
-import {useAddResource} from "./add-resource-button-hook";
+import {DetailedDictionary} from "/client-new/skeleton";
+import {useUploadDictionary} from "./upload-dictionary-button-hook";
 
 
-export const AddResourceButton = create(
-  require("../common.scss"), "AddResourceButton",
+export const UploadDictionaryButton = create(
+  require("../common.scss"), "UploadDictionaryButton",
   function ({
     dictionary,
     ...rest
   }: {
-    dictionary: Dictionary,
+    dictionary: DetailedDictionary,
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("addResourceButton");
+    const {trans} = useTrans("uploadDictionaryButton");
 
-    const {form, handleSubmit} = useAddResource(dictionary);
+    const {form, handleSubmit} = useUploadDictionary(dictionary);
     const {control, formState: {errors}} = form;
 
     const [open, setOpen] = useState(false);
@@ -50,10 +50,12 @@ export const AddResourceButton = create(
 
     return (
       <Fragment>
-        <Button variant="light" onClick={openDialog} {...rest}>
-          <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-          {trans("button.open")}
-        </Button>
+        <div>
+          <Button variant="light" onClick={openDialog} {...rest}>
+            <ButtonIconbag><GeneralIcon icon={faFileImport}/></ButtonIconbag>
+            {trans("button.open")}
+          </Button>
+        </div>
         <Dialog open={open} onOpenSet={setOpen}>
           <DialogPane>
             <DialogCloseButton/>
@@ -83,3 +85,16 @@ export const AddResourceButton = create(
 
   }
 );
+
+
+function getFileName(disposition: string): string {
+  const match = disposition.match(/filename="(.+)"/);
+  const encodedMatch = disposition.match(/filename\*=UTF-8''(.+)$/);
+  if (encodedMatch !== null) {
+    return decodeURIComponent(encodedMatch[1]).replace(/\+/g, " ");
+  } else if (match !== null) {
+    return match[1];
+  } else {
+    return "dictionary.json";
+  }
+}

@@ -305,6 +305,16 @@ changeMyPasswordForm:
   label:
     currentPassword: "現在のパスワード"
     newPassword: "新しいパスワード"
+downloadDictionaryButton:
+  button:
+    start: "エクスポート"
+uploadDictionaryButton:
+  heading: "インポート"
+  label:
+    file: "ファイル"
+  button:
+    open: "インポート"
+    confirm: "決定"
 
 dictionaryInformationPart:
   heading:
@@ -357,6 +367,10 @@ dictionarySettingEditingPart:
       単語カードに例文を表示する際の見出しです。
     pronunciationTitle: >-
       辞書を OTM-JSON 形式で出力したときに発音データが格納される内容欄の見出しです。
+dictionarySettingFilePart:
+  heading:
+    upload: "インポート"
+    download: "エクスポート"
 dictionarySettingGeneralPart:
   heading:
     name: "名前"

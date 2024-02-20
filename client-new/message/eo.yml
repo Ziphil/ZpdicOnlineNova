@@ -306,6 +306,16 @@ changeMyPasswordForm:
   label:
     currentPassword: "Nuna pasvorto"
     newPassword: "Nova pasvorto"
+downloadDictionaryButton:
+  button:
+    start: "Eksporti"
+uploadDictionaryButton:
+  heading: "Importi"
+  label:
+    file: "Dosiero"
+  button:
+    open: "Importi"
+    confirm: "Konfirmi"
 
 dictionaryInformationPart:
   heading:
@@ -358,6 +368,10 @@ dictionarySettingEditingPart:
       Jen la titolo de sekcioj de ekzemplaj frazoj, kiu estas montrata en kartoj de vorto.
     pronunciationTitle: >-
       Jen la titolo de sekcioj de elparolo, kiu estos uzata kiam la vortaro estos eligita en formato OTM-JSON.
+dictionarySettingFilePart:
+  heading:
+    upload: "Importi"
+    download: "Eksporti"
 dictionarySettingGeneralPart:
   heading:
     name: "Nomo"

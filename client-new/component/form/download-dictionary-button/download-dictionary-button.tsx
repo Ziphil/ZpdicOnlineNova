@@ -1,6 +1,6 @@
 //
 
-import {faDownload} from "@fortawesome/sharp-regular-svg-icons";
+import {faFileExport} from "@fortawesome/sharp-regular-svg-icons";
 import downloadFile from "js-file-download";
 import {ReactElement, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
@@ -20,7 +20,7 @@ export const DownloadDictionaryButton = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionaryHeader");
+    const {trans} = useTrans("downloadDictionaryButton");
 
     const request = useRequest();
 
@@ -37,10 +37,12 @@ export const DownloadDictionaryButton = create(
     }, [dictionary, request]);
 
     return (
-      <Button scheme="secondary" variant="underline" onClick={downloadDictionary} {...rest}>
-        <ButtonIconbag><GeneralIcon icon={faDownload}/></ButtonIconbag>
-        {trans("button.download")}
-      </Button>
+      <div>
+        <Button variant="light" onClick={downloadDictionary} {...rest}>
+          <ButtonIconbag><GeneralIcon icon={faFileExport}/></ButtonIconbag>
+          {trans("button.start")}
+        </Button>
+      </div>
     );
 
   }
