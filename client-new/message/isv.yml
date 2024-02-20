@@ -102,6 +102,7 @@ editExampleForm:
   button:
     add:
       word: "使用単語を追加"
+    confirm: "決定"
 editWordDialog:
   button:
     external: "別タブで表示"

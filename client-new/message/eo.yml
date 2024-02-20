@@ -102,6 +102,7 @@ editExampleForm:
   button:
     add:
       word: "Aldoni enhavitan vorton"
+    confirm: "Konfirmi"
 editWordDialog:
   button:
     external: "Malfermi en nova langeto"

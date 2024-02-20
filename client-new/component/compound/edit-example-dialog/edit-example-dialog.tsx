@@ -55,13 +55,13 @@ export const EditExampleDialog = create(
         {cloneElement(trigger, {onClick: openDialog})}
         <Dialog open={open} onOpenSet={setOpen} height="full" {...rest}>
           <DialogPane styleName="pane">
-            <DialogCloseButton/>
             <DialogOutsideButtonContainer>
               <DialogOutsideButton onClick={openExternal}>
                 <DialogOutsideButtonIconbag><GeneralIcon icon={faArrowUpRightFromSquare}/></DialogOutsideButtonIconbag>
                 {trans("button.external")}
               </DialogOutsideButton>
             </DialogOutsideButtonContainer>
+            <DialogCloseButton/>
             <DialogBody>
               <EditExampleForm dictionary={dictionary} example={example} onSubmit={closeDialog}/>
             </DialogBody>

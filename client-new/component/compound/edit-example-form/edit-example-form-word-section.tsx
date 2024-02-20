@@ -12,7 +12,9 @@ import {
 } from "zographia";
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
+import {EditExampleFormDndContext} from "./edit-example-form-dnd";
 import {EditExampleSpec} from "./edit-example-form-hook";
+import {EditExampleFormWordItem} from "./edit-example-form-word-item";
 
 
 export const EditExampleFormWordSection = create(
@@ -32,7 +34,7 @@ export const EditExampleFormWordSection = create(
     const {control} = form;
     const {fields: words, ...wordOperations} = useFieldArray({control, name: "words"});
 
-    const addEquivalent = useCallback(function (): void {
+    const addWord = useCallback(function (): void {
       wordOperations.append(null);
     }, [wordOperations]);
 
@@ -41,14 +43,25 @@ export const EditExampleFormWordSection = create(
         <h3 styleName="heading">{trans("heading.words")}</h3>
         <div styleName="item-list">
           {(words.length > 0) ? (
-            <div>TO BE IMPLEMENTED</div>
+            <EditExampleFormDndContext values={words} valueOperations={wordOperations}>
+              {words.map((word, index) => (
+                <EditExampleFormWordItem
+                  styleName="item"
+                  key={word.id}
+                  dictionary={dictionary}
+                  form={form}
+                  dndId={word.id}
+                  index={index}
+                />
+              ))}
+            </EditExampleFormDndContext>
           ) : (
             <p styleName="absent">
               {trans("absent.word")}
             </p>
           )}
           <div styleName="plus">
-            <Button scheme="gray" variant="light" onClick={addEquivalent}>
+            <Button scheme="gray" variant="light" onClick={addWord}>
               <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
               {trans("button.add.word")}
             </Button>
