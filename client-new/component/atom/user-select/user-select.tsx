@@ -42,7 +42,7 @@ export const UserSelect = create(
         renderLabel={(user) => user.screenName}
         {...rest}
       >
-        {(user) => <UserSelectOption user={user}/>}
+        {(user) => <UserSelectOption key={user.id} user={user}/>}
       </AsyncSelect>
     );
 

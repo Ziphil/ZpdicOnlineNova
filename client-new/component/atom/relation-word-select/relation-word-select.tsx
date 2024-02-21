@@ -44,7 +44,7 @@ export const RelationWordSelect = create(
         renderLabel={(word) => word.name}
         {...rest}
       >
-        {(word) => <RelationWordSelectOption dictionary={dictionary} word={word}/>}
+        {(word) => <RelationWordSelectOption key={word.number} dictionary={dictionary} word={word}/>}
       </AsyncSelect>
     );
 
