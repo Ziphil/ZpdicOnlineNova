@@ -69,6 +69,12 @@ dictionaryAuthorizedUserList:
   empty: "No users have editing permission"
   button:
     discard: "Revoke"
+  dialog:
+    discard:
+      message: >-
+        The permission of this user will be revoked.
+        Are you really sure?
+      confirm: "Revoke"
 dictionaryHeader:
   tab:
     dictionary: "Словник"

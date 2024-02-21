@@ -1,13 +1,13 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 //
 
-import {faBan} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, PageSpec, useTrans} from "zographia";
+import {AdditionalProps, PageSpec, useTrans} from "zographia";
 import {UserList} from "/client-new/component/compound/user-list";
 import {create} from "/client-new/component/create";
 import {useResponse} from "/client-new/hook/request";
 import {EnhancedDictionary} from "/client-new/skeleton";
+import {DictionaryAuthorizedUserFooter} from "./dictionary-authorized-user-footer";
 
 
 export const DictionaryAuthorizedUserList = create(
@@ -29,10 +29,7 @@ export const DictionaryAuthorizedUserList = create(
 
     return (
       <UserList users={authorizedUsers} pageSpec={{size: 20}} emptyMessage={trans("empty")} {...rest} renderFooter={(user) => (
-        <Button scheme="red" variant="underline">
-          <ButtonIconbag><GeneralIcon icon={faBan}/></ButtonIconbag>
-          {trans("button.discard")}
-        </Button>
+        <DictionaryAuthorizedUserFooter dictionary={dictionary} user={user}/>
       )}/>
     );
 

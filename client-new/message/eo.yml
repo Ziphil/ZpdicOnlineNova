@@ -69,6 +69,12 @@ dictionaryAuthorizedUserList:
   empty: "Neniuj uzantoj havas redaktan permeson"
   button:
     discard: "Revoki"
+  dialog:
+    discard:
+      message: >-
+        La permeso de tiu uzanto estos revokita.
+        Ĉu vi vere certas?
+      confirm: "Revoki"
 dictionaryHeader:
   tab:
     dictionary: "Vortaro"

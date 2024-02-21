@@ -69,6 +69,12 @@ dictionaryAuthorizedUserList:
   empty: "編集権限のあるユーザーはいません"
   button:
     discard: "解除"
+  dialog:
+    discard:
+      message: >-
+        このユーザーの編集権限を解除します。
+        本当によろしいですか?
+      confirm: "解除"
 dictionaryHeader:
   tab:
     dictionary: "辞書"
