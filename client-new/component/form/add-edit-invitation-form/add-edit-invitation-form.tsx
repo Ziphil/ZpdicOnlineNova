@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faBan, faCheck, faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement, SyntheticEvent, useCallback, useState} from "react";
+import {Fragment, ReactElement} from "react";
 import {Controller} from "react-hook-form";
 import {
   AdditionalProps,
@@ -16,9 +16,11 @@ import {
   GeneralIcon,
   useTrans
 } from "zographia";
+import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {UserSelect} from "/client-new/component/atom/user-select";
 import {UserList} from "/client-new/component/compound/user-list";
 import {create} from "/client-new/component/create";
+import {useDialogOpen} from "/client-new/hook/dialog";
 import {useResponse} from "/client-new/hook/request";
 import {Dictionary} from "/client-new/skeleton";
 import {useAddEditInvitation} from "./add-edit-invitation-form-hook";
@@ -40,18 +42,8 @@ export const AddEditInvitationForm = create(
     const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number, authority: "editOnly"});
 
     const {form, handleSubmit} = useAddEditInvitation(dictionary);
-    const {control, formState: {errors}} = form;
-
-    const [open, setOpen] = useState(false);
-
-    const openDialog = useCallback(function (): void {
-      setOpen(true);
-    }, []);
-
-    const handleSubmitAndClose = useCallback(async function (event: SyntheticEvent): Promise<void> {
-      await handleSubmit(event);
-      setOpen(false);
-    }, [handleSubmit]);
+    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen(handleSubmit);
+    const {control, getFieldState, formState: {errors}} = form;
 
     return (
       <Fragment>
@@ -80,8 +72,9 @@ export const AddEditInvitationForm = create(
                     {trans("label.user")}
                   </ControlLabel>
                   <Controller name="user" control={control} render={({field}) => (
-                    <UserSelect user={field.value} onSet={field.onChange}/>
+                    <UserSelect user={field.value} onSet={field.onChange} error={getFieldState("user").error !== undefined}/>
                   )}/>
+                  <ControlErrorMessage name="user" form={form} trans={trans}/>
                 </ControlContainer>
               </div>
               <div styleName="dialog-button">

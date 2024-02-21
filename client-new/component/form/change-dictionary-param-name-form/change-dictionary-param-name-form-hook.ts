@@ -8,11 +8,11 @@ import {invalidateResponses, useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
 import {Dictionary} from "/client-new/skeleton";
 import {switchResponse} from "/client-new/util/response";
-import {IDENTIFIER_REGEXP} from "/server/model/validation";
+import {IDENTIFIER_REGEXP} from "/client-new/util/validation";
 
 
 const SCHEMA = object({
-  paramName: string().matches(IDENTIFIER_REGEXP, "paramNameInvalid")
+  paramName: string().matches(IDENTIFIER_REGEXP, "invalid").max(30, "tooLong")
 });
 type FormValue = Asserts<typeof SCHEMA>;
 

@@ -11,8 +11,8 @@ import {switchResponse} from "/client-new/util/response";
 
 
 const SCHEMA = object({
-  currentPassword: string().required(),
-  newPassword: string().required()
+  currentPassword: string().required("currentRequired"),
+  newPassword: string().min(6, "tooShort").max(50, "tooLong").required("newRequired")
 });
 type FormValue = Asserts<typeof SCHEMA>;
 

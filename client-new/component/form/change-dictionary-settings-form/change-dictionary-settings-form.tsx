@@ -74,7 +74,7 @@ export const ChangeDictionarySettingsForm = create(
           </ControlContainer>
         ) : null}
         <div>
-          <Button onClick={handleSubmit} variant="light">
+          <Button variant="light" type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
             {trans(":commonForm.button.change")}
           </Button>

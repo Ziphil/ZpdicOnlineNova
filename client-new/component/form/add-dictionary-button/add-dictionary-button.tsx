@@ -1,7 +1,7 @@
 //
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement, useState} from "react";
+import {Fragment, ReactElement} from "react";
 import {
   AdditionalProps,
   Button,
@@ -16,8 +16,10 @@ import {
   Input,
   useTrans
 } from "zographia";
+import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {fakBookCirclePlus} from "/client-new/component/atom/icon";
 import {create} from "/client-new/component/create";
+import {useDialogOpen} from "/client-new/hook/dialog";
 import {useAddDictionary} from "./add-dictionary-button-hook";
 
 
@@ -31,17 +33,18 @@ export const AddDictionaryButton = create(
 
     const {trans} = useTrans("addDictionaryButton");
 
-    const [open, setOpen] = useState(false);
-
     const {form, handleSubmit} = useAddDictionary();
-    const {register, formState: {errors}} = form;
+    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen(handleSubmit);
+    const {register, getFieldState, formState: {errors}} = form;
 
     return (
       <Fragment>
-        <Button variant="light" onClick={() => setOpen(true)} {...rest}>
-          <ButtonIconbag><GeneralIcon icon={fakBookCirclePlus}/></ButtonIconbag>
-          {trans("button.open")}
-        </Button>
+        <div>
+          <Button variant="light" onClick={openDialog} {...rest}>
+            <ButtonIconbag><GeneralIcon icon={fakBookCirclePlus}/></ButtonIconbag>
+            {trans("button.open")}
+          </Button>
+        </div>
         <Dialog open={open} onOpenSet={setOpen}>
           <DialogPane>
             <DialogCloseButton/>
@@ -52,11 +55,12 @@ export const AddDictionaryButton = create(
                   <ControlLabel>
                     {trans("label.name")}
                   </ControlLabel>
-                  <Input {...register("name")}/>
+                  <Input error={getFieldState("name").error !== undefined} {...register("name")}/>
+                  <ControlErrorMessage name="name" form={form} trans={trans}/>
                 </ControlContainer>
               </div>
               <div styleName="dialog-button">
-                <Button type="submit" onClick={handleSubmit}>
+                <Button type="submit" onClick={handleSubmitAndClose}>
                   <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
                   {trans("button.confirm")}
                 </Button>

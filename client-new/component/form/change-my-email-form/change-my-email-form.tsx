@@ -3,6 +3,7 @@
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Input, useTrans} from "zographia";
+import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {create} from "/client-new/component/create";
 import {DetailedUser} from "/client-new/skeleton";
 import {useChangeMyEmail} from "./change-my-email-form-hook";
@@ -21,15 +22,16 @@ export const ChangeMyEmailForm = create(
     const {trans} = useTrans("changeMyEmailForm");
 
     const {form, handleSubmit} = useChangeMyEmail(me);
-    const {register} = form;
+    const {register, getFieldState, formState: {errors}} = form;
 
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
-          <Input type="email" autoComplete="email" {...register("email")}/>
+          <Input type="email" autoComplete="email" error={!!getFieldState("email").error} {...register("email")}/>
+          <ControlErrorMessage name="email" form={form} trans={trans}/>
         </ControlContainer>
         <div>
-          <Button onClick={handleSubmit} variant="light">
+          <Button variant="light" type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
             {trans(":commonForm.button.change")}
           </Button>

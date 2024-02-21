@@ -269,6 +269,9 @@ addEditInvitationForm:
     open: "編集権限をユーザーに付与"
     discard: "解除"
     confirm: "決定"
+  error:
+    required: >-
+      Select a user.
 addTransferInvitationForm:
   heading: "譲渡"
   label:
@@ -276,6 +279,9 @@ addTransferInvitationForm:
   button:
     open: "譲渡"
     confirm: "決定"
+  error:
+    required: >-
+      Select a user.
 addDictionaryButton:
   heading: "新しい辞書を作成"
   label:
@@ -283,6 +289,9 @@ addDictionaryButton:
   button:
     open: "新しい辞書を作成"
     confirm: "決定"
+  error:
+    required: >-
+      Enter a name.
 addResourceButton:
   heading: "Upload image"
   label:
@@ -296,6 +305,17 @@ addResourceButton:
     tooLarge: >-
       The file is too large.
       You cannot upload files larger than 1 MB.
+changeDictionaryNameForm:
+  error:
+    required: >-
+      Enter a name.
+changeDictionaryParamNameForm:
+  error:
+    invalid: >-
+      The identifier must be composed of alphanumeric characters, underscores and hyphens.
+      It must also contain at least one non-digit.
+    tooLong: >-
+      The identifier must contain no more than 30 characters.
 changeDictionarySettingsForm:
   label:
     enableMarkdown:
@@ -308,10 +328,29 @@ changeDictionarySecretForm:
   label:
     false: "Show"
     true: "Hide"
+changeMyEmailForm:
+  error:
+    invalid: >-
+      Enter a valid email address.
+    required:
+      Enter an email address.
 changeMyPasswordForm:
   label:
     currentPassword: "現在のパスワード"
     newPassword: "新しいパスワード"
+  error:
+    tooShort: >-
+      The password must contain at least 6 characters.
+    tooLong: >-
+      The password must contain no more than 50 characters.
+    currentRequired: >-
+      Enter your current password.
+    newRequired: >-
+      Enter a new password.
+changeMyScreenNameForm:
+  error:
+    required: >-
+      Enter a nickname.
 downloadDictionaryButton:
   button:
     start: "Export"

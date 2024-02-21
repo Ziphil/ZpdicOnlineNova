@@ -268,6 +268,9 @@ addEditInvitationForm:
     open: "編集権限をユーザーに付与"
     discard: "解除"
     confirm: "決定"
+  error:
+    required: >-
+      ユーザーを選択してください。
 addTransferInvitationForm:
   heading: "譲渡"
   label:
@@ -275,6 +278,9 @@ addTransferInvitationForm:
   button:
     open: "譲渡"
     confirm: "決定"
+  error:
+    required: >-
+      ユーザーを選択してください。
 addDictionaryButton:
   heading: "新しい辞書を作成"
   label:
@@ -282,6 +288,9 @@ addDictionaryButton:
   button:
     open: "新しい辞書を作成"
     confirm: "決定"
+  error:
+    required: >-
+      名前を選択してください。
 addResourceButton:
   heading: "画像をアップロード"
   label:
@@ -295,6 +304,16 @@ addResourceButton:
     tooLarge: >-
       ファイルのサイズが大きすぎます。
       1 MB より大きなファイルはアップロードすることができません。
+changeDictionaryNameForm:
+  error:
+    required: >-
+      名前を入力してください。
+changeDictionaryParamNameForm:
+  error:
+    invalid: >-
+      識別子は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
+    tooLong: >-
+      識別子は 30 文字以下である必要があります。
 changeDictionarySettingsForm:
   label:
     enableMarkdown:
@@ -307,10 +326,29 @@ changeDictionarySecretForm:
   label:
     false: "表示"
     true: "非表示"
+changeMyEmailForm:
+  error:
+    invalid: >-
+      正しい形式のメールアドレスを入力してください。
+    required: >-
+      メールアドレスを入力してください。
 changeMyPasswordForm:
   label:
     currentPassword: "現在のパスワード"
     newPassword: "新しいパスワード"
+  error:
+    tooShort: >-
+      パスワードは 6 文字以上である必要があります。
+    tooLong: >-
+      パスワードは 50 文字以下である必要があります。
+    currentRequired: >-
+      現在のパスワードを入力してください。
+    newRequired: >-
+      新しいパスワードを入力してください。
+changeMyScreenNameForm:
+  error:
+    required: >-
+      ニックネームを入力してください。
 downloadDictionaryButton:
   button:
     start: "エクスポート"

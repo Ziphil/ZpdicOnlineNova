@@ -269,6 +269,9 @@ addEditInvitationForm:
     open: "Doni redaktan permeson"
     discard: "Revoki"
     confirm: "Konfirmi"
+  error:
+    required: >-
+      Elektu uzanton.
 addTransferInvitationForm:
   heading: "Transdoni"
   label:
@@ -276,6 +279,9 @@ addTransferInvitationForm:
   button:
     open: "Transdoni"
     confirm: "Konfirmi"
+  error:
+    required: >-
+      Elektu uzanton.
 addDictionaryButton:
   heading: "Krei novan vortaron"
   label:
@@ -283,6 +289,9 @@ addDictionaryButton:
   button:
     open: "Krei novan vortaron"
     confirm: "Konfirmi"
+  error:
+    required: >-
+      Enigu nomon.
 addResourceButton:
   heading: "Alŝuti bildon"
   label:
@@ -296,6 +305,17 @@ addResourceButton:
     tooLarge: >-
       La dosiero estas tro granda.
       Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
+changeDictionaryNameForm:
+  error:
+    required: >-
+      Enigu nomon.
+changeDictionaryParamNameForm:
+  error:
+    invalid: >-
+      La identigilo devas ampleksi alfanombraj signoj, substrekoj kaj streketoj.
+      Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon.
+    tooLong: >-
+      La identigilo devas havi apenaŭ 30 signojn.
 changeDictionarySettingsForm:
   label:
     enableMarkdown:
@@ -308,10 +328,29 @@ changeDictionarySecretForm:
   label:
     false: "Videbla"
     true: "Nevidebla"
+changeMyEmailForm:
+  error:
+    invalid: >-
+      Enigu validan retpoŝtan adreson.
+    required: >-
+      Enigu retpoŝtan adreson.
 changeMyPasswordForm:
   label:
     currentPassword: "Nuna pasvorto"
     newPassword: "Nova pasvorto"
+  error:
+    tooShort: >-
+      La pasvorto devas havi almenaŭ 6 signojn.
+    tooLong: >-
+      La pasvorto devas havi apenaŭ 50 signojn.
+    currentRequired: >-
+      Enigu vian nunan pasvorton.
+    newRequired: >-
+      Enigu novan pasvorton.
+changeMyScreenNameForm:
+  error:
+    required: >-
+      Enigu kromnomon.
 downloadDictionaryButton:
   button:
     start: "Eksporti"

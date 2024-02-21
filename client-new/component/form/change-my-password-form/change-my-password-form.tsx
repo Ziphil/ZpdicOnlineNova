@@ -3,6 +3,7 @@
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, ControlContainer, ControlLabel, GeneralIcon, PasswordInput, useTrans} from "zographia";
+import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {create} from "/client-new/component/create";
 import {DetailedUser} from "/client-new/skeleton";
 import {useChangeMyPassword} from "./change-my-password-form-hook";
@@ -21,20 +22,22 @@ export const ChangeMyPasswordForm = create(
     const {trans} = useTrans("changeMyPasswordForm");
 
     const {form, handleSubmit} = useChangeMyPassword(me);
-    const {register} = form;
+    const {register, getFieldState, formState: {errors}} = form;
 
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
           <ControlLabel>{trans("label.currentPassword")}</ControlLabel>
-          <PasswordInput autoComplete="current-password" {...register("currentPassword")}/>
+          <PasswordInput autoComplete="current-password" error={!!getFieldState("currentPassword").error} {...register("currentPassword")}/>
+          <ControlErrorMessage name="currentPassword" form={form} trans={trans}/>
         </ControlContainer>
         <ControlContainer>
           <ControlLabel>{trans("label.newPassword")}</ControlLabel>
-          <PasswordInput autoComplete="new-password" {...register("newPassword")}/>
+          <PasswordInput autoComplete="new-password" error={!!getFieldState("newPassword").error} {...register("newPassword")}/>
+          <ControlErrorMessage name="newPassword" form={form} trans={trans}/>
         </ControlContainer>
         <div>
-          <Button onClick={handleSubmit} variant="light">
+          <Button variant="light" type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
             {trans(":commonForm.button.change")}
           </Button>

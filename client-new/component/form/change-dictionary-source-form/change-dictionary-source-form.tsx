@@ -31,7 +31,7 @@ export const ChangeDictionarySourceForm = create(
           <Textarea styleName="textarea" {...register("source")}/>
         </ControlContainer>
         <div>
-          <Button onClick={handleSubmit} variant="light">
+          <Button variant="light" type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
             {trans(":commonForm.button.change")}
           </Button>

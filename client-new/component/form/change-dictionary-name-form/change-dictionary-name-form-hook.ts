@@ -11,7 +11,7 @@ import {switchResponse} from "/client-new/util/response";
 
 
 const SCHEMA = object({
-  name: string().required()
+  name: string().required("required")
 });
 type FormValue = Asserts<typeof SCHEMA>;
 

@@ -1,6 +1,6 @@
 //
 
-import {BaseSyntheticEvent, useMemo} from "react";
+import {BaseSyntheticEvent, useCallback} from "react";
 import {UseFormReturn} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {Asserts, object, string} from "yup";
@@ -21,7 +21,7 @@ type FormValue = Asserts<typeof SCHEMA>;
 
 export type AddDictionarySpec = {
   form: UseFormReturn<FormValue>,
-  handleSubmit: (event: BaseSyntheticEvent) => void
+  handleSubmit: (event: BaseSyntheticEvent, onSubmit?: () => unknown) => void
 };
 
 export function useAddDictionary(): AddDictionarySpec {
@@ -30,13 +30,16 @@ export function useAddDictionary(): AddDictionarySpec {
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const navigate = useNavigate();
-  const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = await request("createDictionary", {name: value.name});
-    await switchResponse(response, async (body) => {
-      await invalidateResponses("fetchUserDictionaries", (request) => request.name === me?.name);
-      navigate(`/dictionary/${body.number}`);
-      dispatchSuccessToast("createDictionary");
-    });
-  }), [request, me, navigate, form, dispatchSuccessToast]);
+  const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: () => unknown): Promise<void> {
+    await form.handleSubmit(async (value) => {
+      const response = await request("createDictionary", {name: value.name});
+      await switchResponse(response, async (body) => {
+        await invalidateResponses("fetchUserDictionaries", (request) => request.name === me?.name);
+        await onSubmit?.();
+        navigate(`/dictionary/${body.number}`);
+        dispatchSuccessToast("createDictionary");
+      });
+    })(event);
+  }, [request, me, navigate, form, dispatchSuccessToast]);
   return {form, handleSubmit};
 }

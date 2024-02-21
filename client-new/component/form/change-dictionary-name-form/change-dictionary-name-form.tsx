@@ -3,6 +3,7 @@
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Input, useTrans} from "zographia";
+import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {create} from "/client-new/component/create";
 import {Dictionary} from "/client-new/skeleton";
 import {useChangeDictionaryName} from "./change-dictionary-name-form-hook";
@@ -21,15 +22,16 @@ export const ChangeDictionaryNameForm = create(
     const {trans} = useTrans("changeDictionaryNameForm");
 
     const {form, handleSubmit} = useChangeDictionaryName(dictionary);
-    const {register} = form;
+    const {register, getFieldState, formState: {errors}} = form;
 
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
-          <Input {...register("name")}/>
+          <Input error={!!getFieldState("name").error} {...register("name")}/>
+          <ControlErrorMessage name="name" form={form} trans={trans}/>
         </ControlContainer>
         <div>
-          <Button onClick={handleSubmit} variant="light">
+          <Button variant="light" type="submit" onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
             {trans(":commonForm.button.change")}
           </Button>

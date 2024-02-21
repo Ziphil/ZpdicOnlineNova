@@ -1,7 +1,7 @@
 //
 
 
-export const IDENTIFIER_REGEXP = /^[a-zA-Z0-9_-]*[a-zA-Z_-]+[a-zA-Z0-9_-]*$/;
+export const IDENTIFIER_REGEXP = /^$|^[a-zA-Z0-9_-]*[a-zA-Z_-]+[a-zA-Z0-9_-]*$/;
 
 export function validateFileSize(limitSizeInMb: number): (file: File) => boolean {
   const validator = function (file: File): boolean {

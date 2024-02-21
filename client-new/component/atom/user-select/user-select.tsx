@@ -12,10 +12,12 @@ export const UserSelect = create(
   require("./user-select.scss"), "UserSelect",
   function ({
     user,
+    error,
     onSet,
     ...rest
   }: {
     user: User | null,
+    error?: boolean,
     onSet: (user: User) => unknown,
     className?: string
   }): ReactElement {
@@ -30,7 +32,7 @@ export const UserSelect = create(
     }, []);
 
     return (
-      <AsyncSelect styleName="root" value={user} onSet={onSet} loadOptions={loadOptions} {...rest}>
+      <AsyncSelect styleName="root" value={user} error={error} onSet={onSet} loadOptions={loadOptions} {...rest}>
         {(user) => (
           <AsyncSelectOption>
             {user.screenName}
