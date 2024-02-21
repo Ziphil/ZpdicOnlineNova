@@ -218,6 +218,16 @@ registerForm:
       Enigu pasvorton.
     agreeRequired: >-
       Por uzi tiun aplikaĵon, vi devas legi kaj konsenti pri la privateca politiko.
+resourceList:
+  button:
+    discard: "Forigi"
+  dialog:
+    discard:
+      message: >-
+        Tiu bildo estos forigita konstante.
+        Vi ne povas restaŭri ĝin poste.
+        Ĉu vi vere certas?
+      confirm: "Forigi"
 searchExampleForm:
   information: >-
     Serĉi ekzemplajn frazojn estos disponebla en estonta ĝisdatigo.

@@ -217,6 +217,16 @@ registerForm:
       パスワードを入力してください。
     agreeRequired: >-
       このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
+resourceList:
+  button:
+    discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この画像を削除します。
+        削除した後にデータを戻すことはできません。
+        本当によろしいですか?
+      confirm: "削除"
 searchExampleForm:
   information: >-
     例文検索は今後のアップデートで利用できるようになる予定です。

@@ -218,6 +218,16 @@ registerForm:
       Enter a password.
     agreeRequired: >-
       In order to use this application, you must read and agree to the privacy policy.
+resourceList:
+  button:
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This image will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
 searchExampleForm:
   information: >-
     Searching for example sentences will be available in a future update.

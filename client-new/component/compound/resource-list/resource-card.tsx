@@ -1,10 +1,12 @@
 //
 
+import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Card, CardBody, SingleLineText, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, SingleLineText, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 import {Dictionary} from "/client-new/skeleton";
 import {getAwsFileUrl} from "/client-new/util/aws";
+import {useDiscardResource} from "./resource-card-hook";
 
 
 export const ResourceCard = create(
@@ -19,7 +21,9 @@ export const ResourceCard = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transDate} = useTrans("resourceList");
+    const {trans} = useTrans("resourceList");
+
+    const discardResource = useDiscardResource(dictionary, resource);
 
     return (
       <Card styleName="root" {...rest}>
@@ -31,6 +35,12 @@ export const ResourceCard = create(
             {resource}
           </SingleLineText>
         </CardBody>
+        <CardFooter>
+          <Button scheme="red" variant="underline" onClick={discardResource}>
+            <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
+            {trans("button.discard")}
+          </Button>
+        </CardFooter>
       </Card>
     );
 
