@@ -289,6 +289,12 @@ addResourceButton:
   button:
     open: "画像をアップロード"
     confirm: "決定"
+  error:
+    required: >-
+      画像ファイルを選択してください。
+    tooLarge: >-
+      ファイルのサイズが大きすぎます。
+      1 MB より大きなファイルはアップロードすることができません。
 changeDictionarySettingsForm:
   label:
     enableMarkdown:

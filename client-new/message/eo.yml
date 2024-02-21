@@ -290,6 +290,12 @@ addResourceButton:
   button:
     open: "Alŝuti bildon"
     confirm: "Konfirmi"
+  error:
+    required: >-
+      Elektu bildan dosieron.
+    tooLarge: >-
+      La dosiero estas tro granda.
+      Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
 changeDictionarySettingsForm:
   label:
     enableMarkdown:

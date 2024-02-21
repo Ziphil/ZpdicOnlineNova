@@ -290,6 +290,12 @@ addResourceButton:
   button:
     open: "Upload image"
     confirm: "Confirm"
+  error:
+    required: >-
+      Select an image file.
+    tooLarge: >-
+      The file is too large.
+      You cannot upload files larger than 1 MB.
 changeDictionarySettingsForm:
   label:
     enableMarkdown:

@@ -17,6 +17,7 @@ import {
   GeneralIcon,
   useTrans
 } from "zographia";
+import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {create} from "/client-new/component/create";
 import {Dictionary} from "/client-new/skeleton";
 import {useAddResource} from "./add-resource-button-hook";
@@ -35,7 +36,7 @@ export const AddResourceButton = create(
     const {trans} = useTrans("addResourceButton");
 
     const {form, handleSubmit} = useAddResource(dictionary);
-    const {control, formState: {errors}} = form;
+    const {control, getFieldState, formState: {errors}} = form;
 
     const [open, setOpen] = useState(false);
 
@@ -44,8 +45,7 @@ export const AddResourceButton = create(
     }, []);
 
     const handleSubmitAndClose = useCallback(async function (event: SyntheticEvent): Promise<void> {
-      await handleSubmit(event);
-      setOpen(false);
+      await handleSubmit(event, () => setOpen(false));
     }, [handleSubmit]);
 
     return (
@@ -65,8 +65,15 @@ export const AddResourceButton = create(
                     {trans("label.file")}
                   </ControlLabel>
                   <Controller name="file" control={control} render={({field}) => (
-                    <FileInput value={field.value} onSet={field.onChange} multiple={false}/>
+                    <FileInput
+                      value={field.value}
+                      onSet={field.onChange}
+                      error={getFieldState("file").error !== undefined}
+                      accepts={["image/*"]}
+                      multiple={false}
+                    />
                   )}/>
+                  <ControlErrorMessage name="file" form={form} trans={trans}/>
                 </ControlContainer>
               </div>
               <div styleName="dialog-button">
