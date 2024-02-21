@@ -170,6 +170,10 @@ exampleList:
 header:
   dictionaryList: "辞書一覧"
   userPage: "ユーザーページ"
+invitationList:
+  button:
+    accept: "承認"
+    reject: "拒否"
 loginForm:
   label:
     name: "ユーザー ID"

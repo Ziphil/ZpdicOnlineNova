@@ -170,6 +170,10 @@ exampleList:
 header:
   dictionaryList: "Словникы"
   userPage: "Користничска страница"
+invitationList:
+  button:
+    accept: "Accept"
+    reject: "Reject"
 loginForm:
   label:
     name: "Користничско име"

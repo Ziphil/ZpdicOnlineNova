@@ -170,6 +170,10 @@ exampleList:
 header:
   dictionaryList: "Vortaroj"
   userPage: "Uzanta paĝo"
+invitationList:
+  button:
+    accept: "Akcepti"
+    reject: "Malakcepti"
 loginForm:
   label:
     name: "Salutnomo"

@@ -170,6 +170,10 @@ exampleList:
 header:
   dictionaryList: "Dictionaries"
   userPage: "User page"
+invitationList:
+  button:
+    accept: "Accept"
+    reject: "Reject"
 loginForm:
   label:
     name: "Username"

@@ -18,5 +18,6 @@ export * from "./word-parameter/advanced-word-parameter";
 export * from "./word-parameter/normal-word-parameter";
 export * from "./commission";
 export * from "./history";
+export * from "./invitation";
 export * from "./notification";
 export * from "./user";

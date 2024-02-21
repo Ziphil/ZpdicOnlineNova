@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.body {
+  display: flex;
+  align-items: center;
+}
+
+.footer {
+  column-gap: 3zu;
+  display: flex;
+}
