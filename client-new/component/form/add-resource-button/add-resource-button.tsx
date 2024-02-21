@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {faCheck, faPlus} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement, SyntheticEvent, useCallback, useState} from "react";
+import {Fragment, ReactElement} from "react";
 import {Controller} from "react-hook-form";
 import {
   AdditionalProps,
@@ -19,6 +19,7 @@ import {
 } from "zographia";
 import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {create} from "/client-new/component/create";
+import {useDialogOpen} from "/client-new/hook/dialog";
 import {Dictionary} from "/client-new/skeleton";
 import {useAddResource} from "./add-resource-button-hook";
 
@@ -36,17 +37,8 @@ export const AddResourceButton = create(
     const {trans} = useTrans("addResourceButton");
 
     const {form, handleSubmit} = useAddResource(dictionary);
+    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen(handleSubmit);
     const {control, getFieldState, formState: {errors}} = form;
-
-    const [open, setOpen] = useState(false);
-
-    const openDialog = useCallback(function (): void {
-      setOpen(true);
-    }, []);
-
-    const handleSubmitAndClose = useCallback(async function (event: SyntheticEvent): Promise<void> {
-      await handleSubmit(event, () => setOpen(false));
-    }, [handleSubmit]);
 
     return (
       <Fragment>

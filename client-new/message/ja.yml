@@ -321,6 +321,12 @@ uploadDictionaryButton:
   button:
     open: "インポート"
     confirm: "決定"
+  error:
+    required: >-
+      ファイルを選択してください。
+    tooLarge: >-
+      ファイルのサイズが大きすぎます。
+      5 MB より大きなファイルはアップロードすることができません。
 
 dictionaryInformationPart:
   heading:

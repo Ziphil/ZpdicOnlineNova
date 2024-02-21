@@ -322,6 +322,12 @@ uploadDictionaryButton:
   button:
     open: "Import"
     confirm: "Confirm"
+  error:
+    required: >-
+      Select an image file.
+    tooLarge: >-
+      The file is too large.
+      You cannot upload files larger than 5 MB.
   
 dictionaryInformationPart:
   heading:

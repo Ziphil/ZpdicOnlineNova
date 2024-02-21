@@ -322,6 +322,12 @@ uploadDictionaryButton:
   button:
     open: "Importi"
     confirm: "Konfirmi"
+  error:
+    required: >-
+      Elektu dosieron.
+    tooLarge: >-
+      La dosiero estas tro granda.
+      Vi ne povas alŝuti dosierojn pli grandajn ol 5 MB.
 
 dictionaryInformationPart:
   heading:
