@@ -21,3 +21,9 @@
   font-size: 3.5zu;
   color: var(--glob-mute-text-color);
 }
+
+.list-container {
+  row-gap: 4zu;
+  display: flex;
+  flex-direction: column;
+}

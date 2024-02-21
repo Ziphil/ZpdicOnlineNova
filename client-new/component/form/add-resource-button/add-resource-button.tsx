@@ -42,10 +42,12 @@ export const AddResourceButton = create(
 
     return (
       <Fragment>
-        <Button variant="light" onClick={openDialog} {...rest}>
-          <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-          {trans("button.open")}
-        </Button>
+        <div>
+          <Button variant="light" onClick={openDialog} {...rest}>
+            <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+            {trans("button.open")}
+          </Button>
+        </div>
         <Dialog open={open} onOpenSet={setOpen}>
           <DialogPane>
             <DialogCloseButton/>

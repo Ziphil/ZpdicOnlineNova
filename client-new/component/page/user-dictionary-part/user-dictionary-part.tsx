@@ -26,19 +26,19 @@ export const UserDictionaryPart = create(
 
     return (
       <div styleName="root" {...rest}>
-        {(me?.id === user.id) && (
-          <section>
-            <AddDictionaryButton/>
-          </section>
-        )}
         <section>
-          <DictionaryList
-            dictionaries={dictionaries}
-            pageSpec={{size: 40}}
-            showChart={true}
-            showAuthority={me?.id === user.id}
-            showSettingLink={me?.id === user.id}
-          />
+          <div styleName="list-container">
+            {(me?.id === user.id) && (
+              <AddDictionaryButton/>
+            )}
+            <DictionaryList
+              dictionaries={dictionaries}
+              pageSpec={{size: 40}}
+              showChart={true}
+              showAuthority={me?.id === user.id}
+              showSettingLink={me?.id === user.id}
+            />
+          </div>
         </section>
       </div>
     );

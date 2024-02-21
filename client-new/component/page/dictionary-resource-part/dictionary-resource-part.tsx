@@ -25,10 +25,10 @@ export const DictionaryResourcePart = create(
     return (
       <div styleName="root" {...rest}>
         <section>
-          <AddResourceButton dictionary={dictionary}/>
-        </section>
-        <section>
-          <ResourceList dictionary={dictionary} resources={resources} pageSpec={{size: 40}}/>
+          <div styleName="list-container">
+            <AddResourceButton dictionary={dictionary}/>
+            <ResourceList dictionary={dictionary} resources={resources} pageSpec={{size: 40}}/>
+          </div>
         </section>
       </div>
     );
