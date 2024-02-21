@@ -65,6 +65,10 @@ commissionList:
         この造語依頼を削除します。
         本当によろしいですか?
       confirm: "削除"
+dictionaryAuthorizedUserList:
+  empty: "編集権限のあるユーザーはいません"
+  button:
+    discard: "解除"
 dictionaryHeader:
   tab:
     dictionary: "辞書"
@@ -269,19 +273,17 @@ wordNameFrequencyChart:
 commonForm:
   button:
     change: "変更"
-addEditInvitationForm:
+addEditInvitationButton:
   heading: "編集権限を付与"
-  empty: "編集権限のあるユーザーはいません"
   label:
     user: "権限を付与するユーザー"
   button:
     open: "編集権限をユーザーに付与"
-    discard: "解除"
     confirm: "決定"
   error:
     required: >-
       ユーザーを選択してください。
-addTransferInvitationForm:
+addTransferInvitationButton:
   heading: "譲渡"
   label:
     user: "譲渡先のユーザー"

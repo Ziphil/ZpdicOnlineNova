@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faBan, faCheck, faPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {faCheck, faRocketLaunch} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {Controller} from "react-hook-form";
 import {
@@ -18,16 +18,14 @@ import {
 } from "zographia";
 import {ControlErrorMessage} from "/client-new/component/atom/control-container";
 import {UserSelect} from "/client-new/component/atom/user-select";
-import {UserList} from "/client-new/component/compound/user-list";
 import {create} from "/client-new/component/create";
 import {useDialogOpen} from "/client-new/hook/dialog";
-import {useResponse} from "/client-new/hook/request";
 import {Dictionary} from "/client-new/skeleton";
-import {useAddEditInvitation} from "./add-edit-invitation-form-hook";
+import {useAddTransferInvitation} from "./add-transfer-invitation-button-hook";
 
 
-export const AddEditInvitationForm = create(
-  require("./add-edit-invitation-form.scss"), "AddEditInvitationForm",
+export const AddTransferInvitationButton = create(
+  require("../common.scss"), "AddTransferInvitationButton",
   function ({
     dictionary,
     ...rest
@@ -36,31 +34,20 @@ export const AddEditInvitationForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("addEditInvitationForm");
+    const {trans} = useTrans("addTransferInvitationButton");
 
-    const number = dictionary.number;
-    const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number, authority: "editOnly"});
-
-    const {form, handleSubmit} = useAddEditInvitation(dictionary);
+    const {form, handleSubmit} = useAddTransferInvitation(dictionary);
     const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen(handleSubmit);
     const {control, getFieldState, formState: {errors}} = form;
 
     return (
       <Fragment>
-        <form styleName="root-table" {...rest}>
-          <div>
-            <Button type="submit" variant="light" onClick={openDialog}>
-              <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-              {trans("button.open")}
-            </Button>
-          </div>
-          <UserList users={authorizedUsers} pageSpec={{size: 20}} emptyMessage={trans("empty")} renderFooter={(user) => (
-            <Button scheme="red" variant="underline">
-              <ButtonIconbag><GeneralIcon icon={faBan}/></ButtonIconbag>
-              {trans("button.discard")}
-            </Button>
-          )}/>
-        </form>
+        <div>
+          <Button scheme="red" variant="light" onClick={openDialog} {...rest}>
+            <ButtonIconbag><GeneralIcon icon={faRocketLaunch}/></ButtonIconbag>
+            {trans("button.open")}
+          </Button>
+        </div>
         <Dialog open={open} onOpenSet={setOpen}>
           <DialogPane>
             <DialogCloseButton/>

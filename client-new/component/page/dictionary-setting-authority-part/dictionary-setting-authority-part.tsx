@@ -3,10 +3,11 @@
 import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
-import {EnhancedDictionary} from "/client/skeleton/dictionary";
+import {DictionaryAuthorizedUserList} from "/client-new/component/compound/dictionary-authorized-user-list";
 import {create} from "/client-new/component/create";
-import {AddEditInvitationForm} from "/client-new/component/form/add-edit-invitation-form";
-import {AddTransferInvitationForm} from "/client-new/component/form/add-transfer-invitation-form";
+import {AddEditInvitationButton} from "/client-new/component/form/add-edit-invitation-button";
+import {AddTransferInvitationButton} from "/client-new/component/form/add-transfer-invitation-button";
+import {EnhancedDictionary} from "/client-new/skeleton";
 
 
 export const DictionarySettingAuthorityPart = create(
@@ -28,11 +29,14 @@ export const DictionarySettingAuthorityPart = create(
           <MultiLineText styleName="description">
             {trans("description.editInvitation")}
           </MultiLineText>
-          <AddEditInvitationForm dictionary={dictionary}/>
+          <div styleName="list-container">
+            <AddEditInvitationButton dictionary={dictionary}/>
+            <DictionaryAuthorizedUserList dictionary={dictionary} pageSpec={{size: 20}}/>
+          </div>
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.transferInvitation")}</h3>
-          <AddTransferInvitationForm dictionary={dictionary}/>
+          <AddTransferInvitationButton dictionary={dictionary}/>
         </section>
       </div>
     );

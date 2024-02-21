@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faCheck, faRocketLaunch} from "@fortawesome/sharp-regular-svg-icons";
+import {faCheck, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {Controller} from "react-hook-form";
 import {
@@ -21,11 +21,11 @@ import {UserSelect} from "/client-new/component/atom/user-select";
 import {create} from "/client-new/component/create";
 import {useDialogOpen} from "/client-new/hook/dialog";
 import {Dictionary} from "/client-new/skeleton";
-import {useAddTransferInvitation} from "./add-transfer-invitation-form-hook";
+import {useAddEditInvitation} from "./add-edit-invitation-button-hook";
 
 
-export const AddTransferInvitationForm = create(
-  require("../common.scss"), "AddTransferInvitationForm",
+export const AddEditInvitationButton = create(
+  require("../common.scss"), "AddEditInvitationButton",
   function ({
     dictionary,
     ...rest
@@ -34,17 +34,17 @@ export const AddTransferInvitationForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("addTransferInvitationForm");
+    const {trans} = useTrans("addEditInvitationButton");
 
-    const {form, handleSubmit} = useAddTransferInvitation(dictionary);
+    const {form, handleSubmit} = useAddEditInvitation(dictionary);
     const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen(handleSubmit);
     const {control, getFieldState, formState: {errors}} = form;
 
     return (
       <Fragment>
         <div>
-          <Button scheme="red" variant="light" onClick={openDialog} {...rest}>
-            <ButtonIconbag><GeneralIcon icon={faRocketLaunch}/></ButtonIconbag>
+          <Button type="submit" variant="light" onClick={openDialog} {...rest}>
+            <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
             {trans("button.open")}
           </Button>
         </div>

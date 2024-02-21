@@ -3,11 +3,11 @@
 import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
-import {EnhancedDictionary} from "/client/skeleton/dictionary";
 import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
 import {DownloadDictionaryButton} from "/client-new/component/form/download-dictionary-button";
 import {UploadDictionaryButton} from "/client-new/component/form/upload-dictionary-button";
+import {EnhancedDictionary} from "/client-new/skeleton";
 
 
 export const DictionarySettingFilePart = create(

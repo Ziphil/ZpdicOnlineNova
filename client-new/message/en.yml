@@ -65,6 +65,10 @@ commissionList:
         This request will be deleted permanently.
         Are you really sure?
       confirm: "Delete"
+dictionaryAuthorizedUserList:
+  empty: "No users have editing permission"
+  button:
+    discard: "Revoke"
 dictionaryHeader:
   tab:
     dictionary: "Dictionary"
@@ -270,19 +274,17 @@ wordNameFrequencyChart:
 commonForm:
   button:
     change: "Change"
-addEditInvitationForm:
+addEditInvitationButton:
   heading: "Grant editing permission"
-  empty: "No users have editing permission"
   label:
     user: "Grant permission to"
   button:
     open: "Grant editing permission"
-    discard: "Revoke"
     confirm: "Confirm"
   error:
     required: >-
       Select a user.
-addTransferInvitationForm:
+addTransferInvitationButton:
   heading: "Transfer"
   label:
     user: "Transfer to"

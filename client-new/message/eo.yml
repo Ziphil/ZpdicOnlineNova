@@ -65,6 +65,10 @@ commissionList:
         Tiu peto estos forigita konstante.
         Ĉu vi vere certas?
       confirm: "Forigi"
+dictionaryAuthorizedUserList:
+  empty: "Neniuj uzantoj havas redaktan permeson"
+  button:
+    discard: "Revoki"
 dictionaryHeader:
   tab:
     dictionary: "Vortaro"
@@ -270,19 +274,17 @@ wordNameFrequencyChart:
 commonForm:
   button:
     change: "Ŝanĝi"
-addEditInvitationForm:
+addEditInvitationButton:
   heading: "Doni redaktan permeson"
-  empty: "Neniuj uzantoj havas redaktan permeson"
   label:
     user: "Doni permeson al"
   button:
     open: "Doni redaktan permeson"
-    discard: "Revoki"
     confirm: "Konfirmi"
   error:
     required: >-
       Elektu uzanton.
-addTransferInvitationForm:
+addTransferInvitationButton:
   heading: "Transdoni"
   label:
     user: "Transdoni al"

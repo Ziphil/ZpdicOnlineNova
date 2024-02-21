@@ -3,12 +3,12 @@
 import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
-import {EnhancedDictionary} from "/client/skeleton/dictionary";
 import {create} from "/client-new/component/create";
 import {ChangeDictionaryExplanationForm} from "/client-new/component/form/change-dictionary-explanation-form";
 import {ChangeDictionaryNameForm} from "/client-new/component/form/change-dictionary-name-form";
 import {ChangeDictionaryParamNameForm} from "/client-new/component/form/change-dictionary-param-name-form";
 import {ChangeDictionarySecretForm} from "/client-new/component/form/change-dictionary-secret-form";
+import {EnhancedDictionary} from "/client-new/skeleton";
 
 
 export const DictionarySettingGeneralPart = create(
