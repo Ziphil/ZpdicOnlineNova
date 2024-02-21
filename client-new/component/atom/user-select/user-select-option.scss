@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+
+.root {
+  column-gap: 2zu;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  font-size: 6zu;
+}
+
+.name-container {
+  row-gap: 1zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.name {
+  font-size: 3.5zu;
+  color: var(--glob-mute-text-color);
+}

@@ -1,11 +1,12 @@
 /* eslint-disable no-useless-computed-key */
 
 import {ReactElement, useCallback} from "react";
-import {AsyncSelect, AsyncSelectOption} from "zographia";
+import {AsyncSelect} from "zographia";
 import {create} from "/client-new/component/create";
 import {User} from "/client-new/skeleton";
 import {request} from "/client-new/util/request";
 import {switchResponse} from "/client-new/util/response";
+import {UserSelectOption} from "./user-select-option";
 
 
 export const UserSelect = create(
@@ -32,13 +33,16 @@ export const UserSelect = create(
     }, []);
 
     return (
-      <AsyncSelect styleName="root" value={user} error={error} onSet={onSet} loadOptions={loadOptions} {...rest}>
-        {(user) => (
-          <AsyncSelectOption>
-            {user.screenName}
-            (@{user.name})
-          </AsyncSelectOption>
-        )}
+      <AsyncSelect
+        styleName="root"
+        value={user}
+        error={error}
+        onSet={onSet}
+        loadOptions={loadOptions}
+        renderLabel={(user) => user.screenName}
+        {...rest}
+      >
+        {(user) => <UserSelectOption user={user}/>}
       </AsyncSelect>
     );
 
