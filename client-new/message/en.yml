@@ -171,9 +171,19 @@ header:
   dictionaryList: "Dictionaries"
   userPage: "User page"
 invitationList:
+  tag:
+    edit: "Editing permission"
+    transfer: "Transfer"
+  explanation:
+    edit: >-
+      <user></user> has invited you to edit this dictionary.
+      Once you accept, you will be able to edit the dictionary.
+    transfer: >-
+      <user></user> is going to transfer this dictionary to you.
+      Once you accept, you will replace them as the owner of the dictionary.
   button:
     accept: "Accept"
-    reject: "Reject"
+    reject: "Decline"
 loginForm:
   label:
     name: "Username"

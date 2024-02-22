@@ -171,6 +171,16 @@ header:
   dictionaryList: "辞書一覧"
   userPage: "ユーザーページ"
 invitationList:
+  tag:
+    edit: "編集権限"
+    transfer: "譲渡"
+  explanation:
+    edit: >-
+      <user></user> がこの辞書の編集権限を付与しようとしています。
+      これを承認すると、この辞書を編集できるようになります。
+    transfer: >-
+      <user></user> がこの辞書を譲渡しようとしています。
+      これを承認すると、この辞書の管理者に代わりになります。
   button:
     accept: "承認"
     reject: "拒否"

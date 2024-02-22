@@ -171,6 +171,16 @@ header:
   dictionaryList: "Vortaroj"
   userPage: "Uzanta paĝo"
 invitationList:
+  tag:
+    edit: "Redaktan permeson"
+    transfer: "Transdonado"
+  explanation:
+    edit: >-
+      <user></user> invitis vin redakti tiun vortaron.
+      Se vi akceptos, vi povos redakti la vortaron.
+    transfer: >-
+      <user></user> volas transdoni al vi tiun vortaron.
+      Se vi akceptos, vi anstataŭigos rin kiel la posedanto de la vortaro.
   button:
     accept: "Akcepti"
     reject: "Malakcepti"
