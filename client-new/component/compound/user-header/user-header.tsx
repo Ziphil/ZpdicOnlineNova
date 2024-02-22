@@ -35,6 +35,9 @@ export const UserHeader = create(
     const logout = useLogoutRequest();
 
     const [dictionaries] = useResponse("fetchUserDictionaries", {name: user.name});
+    const [editInvitations] = useResponse("fetchInvitations", (user.id === me?.id) && {type: "edit"});
+    const [transferInvitations] = useResponse("fetchInvitations", (user.id === me?.id) && {type: "transfer"});
+    const invitations = (editInvitations !== undefined && transferInvitations !== undefined) ? [...editInvitations, ...transferInvitations] : undefined;
 
     const logoutAndBack = useCallback(async function (): Promise<void> {
       await logout();
@@ -69,6 +72,11 @@ export const UserHeader = create(
               <LinkTab value="notification" href={`/user/${user.name}/notifications`}>
                 <TabIconbag><GeneralIcon icon={faBell}/></TabIconbag>
                 {trans("tab.notification")}
+                {(invitations !== undefined && invitations.length > 0) && (
+                  <Badge styleName="badge" scheme={(tabValue === "notification") ? "secondary" : "gray"} variant="solid">
+                    {transNumber(invitations.length)}
+                  </Badge>
+                )}
               </LinkTab>
             )}
             {(user.id === me?.id) && (
