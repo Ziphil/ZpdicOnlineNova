@@ -492,6 +492,10 @@ notificationListPage:
   notification: "Новости"
 registerPage:
   title: "Записати се"
+resetUserPasswordPage:
+  title:
+    issue: "Reset password"
+    reset: "Reset password"
 topPage:
   button:
     login: "Пријавити се · Записати се"

@@ -492,6 +492,10 @@ notificationListPage:
   notification: "Antaŭaj novaĵoj"
 registerPage:
   title: "Enskribiĝi"
+resetUserPasswordPage:
+  title:
+    issue: "Restarigi pasvorton"
+    reset: "Restarigi pasvorton"
 topPage:
   button:
     login: "Ensaluti · Enskribiĝi"

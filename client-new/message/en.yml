@@ -493,6 +493,10 @@ notificationListPage:
   notification: "News"
 registerPage:
   title: "Sign up"
+resetUserPasswordPage:
+  title:
+    issue: "Reset password"
+    reset: "Reset password"
 topPage:
   button:
     login: "Sign in · Sign up"
