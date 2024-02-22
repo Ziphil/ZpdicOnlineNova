@@ -1,13 +1,14 @@
 //
 
-import {faBell, faBook, faCog} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement} from "react";
-import {AdditionalProps, Badge, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
+import {faBell, faBook, faCog, faSignOut} from "@fortawesome/sharp-regular-svg-icons";
+import {ReactElement, useCallback} from "react";
+import {useNavigate} from "react-router-dom";
+import {AdditionalProps, Badge, GeneralIcon, SingleLineText, Tab, TabIconbag, TabList, useTrans} from "zographia";
 import {LinkTab} from "/client-new/component/atom/tab";
 import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {MainContainer} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
-import {useMe} from "/client-new/hook/auth";
+import {useLogoutRequest, useMe} from "/client-new/hook/auth";
 import {useResponse} from "/client-new/hook/request";
 import {User} from "/client-new/skeleton";
 
@@ -28,8 +29,17 @@ export const UserHeader = create(
 
     const {trans, transNumber} = useTrans("userHeader");
 
+    const navigate = useNavigate();
+
     const me = useMe();
+    const logout = useLogoutRequest();
+
     const [dictionaries] = useResponse("fetchUserDictionaries", {name: user.name});
+
+    const logoutAndBack = useCallback(async function (): Promise<void> {
+      await logout();
+      navigate("/");
+    }, [logout, navigate]);
 
     return (
       <header styleName="root" {...rest}>
@@ -49,9 +59,11 @@ export const UserHeader = create(
             <LinkTab value="dictionary" href={`/user/${user.name}`}>
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>
               {trans("tab.dictionary")}
-              <Badge styleName="badge" scheme={(tabValue === "dictionary") ? "secondary" : "gray"} variant="solid">
-                {transNumber(dictionaries?.length)}
-              </Badge>
+              {(dictionaries !== undefined) && (
+                <Badge styleName="badge" scheme={(tabValue === "dictionary") ? "secondary" : "gray"} variant="solid">
+                  {transNumber(dictionaries.length)}
+                </Badge>
+              )}
             </LinkTab>
             {(user.id === me?.id) && (
               <LinkTab value="notification" href={`/user/${user.name}/notifications`}>
@@ -64,6 +76,12 @@ export const UserHeader = create(
                 <TabIconbag><GeneralIcon icon={faCog}/></TabIconbag>
                 {trans("tab.setting")}
               </LinkTab>
+            )}
+            {(user.id === me?.id) && (
+              <Tab value="logout" onClick={logoutAndBack}>
+                <TabIconbag><GeneralIcon icon={faSignOut}/></TabIconbag>
+                {trans("tab.logout")}
+              </Tab>
             )}
           </TabList>
         </MainContainer>

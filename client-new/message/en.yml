@@ -267,6 +267,7 @@ userHeader:
     dictionary: "Dictionaries"
     notification: "Notifications"
     setting: "Settings"
+    logout: "Sign out"
 wordList:
   button:
     edit: "Edit"

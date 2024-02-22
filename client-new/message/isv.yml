@@ -267,6 +267,7 @@ userHeader:
     dictionary: "Словникы"
     notification: "Увєдомјенја"
     setting: "Настројкы"
+    logout: "Sign out"
 wordList:
   button:
     edit: "Измєнити"

@@ -266,6 +266,7 @@ userHeader:
     dictionary: "辞書"
     notification: "通知"
     setting: "設定"
+    logout: "ログアウト"
 wordList:
   button:
     edit: "編集"

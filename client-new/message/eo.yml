@@ -267,6 +267,7 @@ userHeader:
     dictionary: "Vortaroj"
     notification: "Sciigoj"
     setting: "Agordoj"
+    logout: "Elsaluti"
 wordList:
   button:
     edit: "Redakti"
