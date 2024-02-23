@@ -19,6 +19,7 @@ import {Link} from "/client-new/component/atom/link";
 import {UserAvatar} from "/client-new/component/atom/user-avatar";
 import {create} from "/client-new/component/create";
 import {Invitation} from "/client-new/skeleton";
+import {useAcceptInvitation, useRejectInvitation} from "./invitation-card-hook";
 
 
 export const InvitationCard = create(
@@ -32,6 +33,9 @@ export const InvitationCard = create(
   } & AdditionalProps): ReactElement {
 
     const {trans, transNode, transDate} = useTrans("invitationList");
+
+    const acceptInvitation = useAcceptInvitation(invitation);
+    const rejectInvitation = useRejectInvitation(invitation);
 
     return (
       <Card styleName="root" {...rest}>
@@ -59,11 +63,11 @@ export const InvitationCard = create(
           </MultiLineText>
         </CardBody>
         <CardFooter styleName="footer">
-          <Button scheme="secondary" variant="underline">
+          <Button scheme="secondary" variant="underline" onClick={acceptInvitation}>
             <ButtonIconbag><GeneralIcon icon={faThumbsUp}/></ButtonIconbag>
             {trans("button.accept")}
           </Button>
-          <Button scheme="red" variant="underline">
+          <Button scheme="red" variant="underline" onClick={rejectInvitation}>
             <ButtonIconbag><GeneralIcon icon={faBan}/></ButtonIconbag>
             {trans("button.reject")}
           </Button>

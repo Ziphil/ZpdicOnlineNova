@@ -181,6 +181,12 @@ invitationList:
     transfer: >-
       <user></user> volas transdoni al vi tiun vortaron.
       Se vi akceptos, vi anstataŭigos rin kiel la posedanto de la vortaro.
+  dialog:
+    reject:
+      message: >-
+        Vi penas malakcepti tiun inviton.
+        Ĉu vi vere certas?
+      confirm: "Malakcepti"
   button:
     accept: "Akcepti"
     reject: "Malakcepti"

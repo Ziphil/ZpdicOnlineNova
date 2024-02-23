@@ -181,6 +181,12 @@ invitationList:
     transfer: >-
       <user></user> がこの辞書を譲渡しようとしています。
       これを承認すると、この辞書の管理者に代わりになります。
+  dialog:
+    reject:
+      message: >-
+        この招待を拒否します。
+        本当によろしいですか?
+      confirm: "拒否"
   button:
     accept: "承認"
     reject: "拒否"

@@ -181,6 +181,12 @@ invitationList:
     transfer: >-
       <user></user> is going to transfer this dictionary to you.
       Once you accept, you will replace them as the owner of the dictionary.
+  dialog:
+    reject:
+      message: >-
+        You are going to decline this invitation.
+        Are you really sure?
+      confirm: "Decline"
   button:
     accept: "Accept"
     reject: "Reject"
