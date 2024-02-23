@@ -10,5 +10,10 @@
 }
 
 .button {
-  margin-block-start: 6zu;
+  margin-block-start: 8zu;
+  padding-block-start: 4zu;
+  border-block-start: solid 1zx var(--glob-border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
