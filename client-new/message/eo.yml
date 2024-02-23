@@ -529,14 +529,17 @@ dictionarySettingGeneralPart:
       Tio estas montrata sur la paĝo de la vortaro antaŭ serĉado.
       Vi povas uzi iun sintakson de Markdown.
 errorPage:
-  title:
+  heading:
     notFound: "Ne\nTrovita"
   message:
     notFound: >-
       La paĝo kiun vi serĉas ne estis trovita.
       Ĝi eble estis forigita aŭ movita al alia loko, do bonvolu provi serĉi denove el la ĉefpaĝo.
+    error: >-
+      Neatendita eraro okazis.
+      Bonvolu kontakti la administranton kun la jena erara mesaĝo.
   button:
-    topPage: "Reiri al la ĉefpaĝo"
+    back: "Reiri al ĉefpaĝo"
 examplePage:
   add: "Krei novan frazon"
 loginPage:

@@ -530,14 +530,17 @@ dictionarySettingGeneralPart:
       You can use some Markdown syntax here.
 
 errorPage:
-  title:
+  heading:
     notFound: "Not\nFound"
   message:
     notFound: >-
       The page you are looking for could not be found.
       It may have been deleted or moved to another location, so please try looking again from the top page.
+    error: >-
+      An unexpected error has occurred.
+      Please contact the administrator with the following error message.
   button:
-    top: "Back to top page"
+    back: "Back to top page"
 examplePage:
   add: "Create new sentence"
 loginPage:

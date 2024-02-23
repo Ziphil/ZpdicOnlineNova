@@ -6,6 +6,7 @@ import {AdditionalProps} from "zographia";
 import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
+import {ErrorView} from "./error-view";
 import {NotFoundView} from "./not-found-view";
 
 
@@ -25,7 +26,7 @@ export const ErrorPage = create(
           {(isRouteErrorResponse(error) && error.status === 404) ? (
             <NotFoundView/>
           ) : (
-            JSON.stringify(error)
+            <ErrorView error={error}/>
           )}
         </MainContainer>
       </Page>

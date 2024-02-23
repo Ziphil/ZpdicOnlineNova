@@ -1,17 +1,19 @@
 //
 
-import {faGhost, faLeft} from "@fortawesome/sharp-regular-svg-icons";
+import {faBomb, faLeft} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, LinkIconbag, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
 
 
-export const NotFoundView = create(
-  require("./not-found-view.scss"), "NotFoundView",
+export const ErrorView = create(
+  require("./not-found-view.scss"), "ErrorView",
   function ({
+    error,
     ...rest
   }: {
+    error: unknown,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -20,17 +22,18 @@ export const NotFoundView = create(
     return (
       <div styleName="root" {...rest}>
         <div styleName="top">
-          <div styleName="code">404</div>
+          <div styleName="code"/>
           <div styleName="icon">
-            <GeneralIcon icon={faGhost}/>
+            <GeneralIcon icon={faBomb}/>
           </div>
-          <MultiLineText styleName="heading" is="div" lineHeight="narrowest">
-            {trans("heading.notFound")}
-          </MultiLineText>
+          <div styleName="heading"/>
         </div>
         <MultiLineText styleName="message">
-          {trans("message.notFound")}
+          {trans("message.error")}
         </MultiLineText>
+        <pre styleName="error">
+          {(error instanceof Error) ? `Error ${error.name}\n${error.message}\n\n${error.stack}` : JSON.stringify(error, null, 2)}
+        </pre>
         <div styleName="button">
           <Link href="/" variant="solid">
             <LinkIconbag><GeneralIcon icon={faLeft}/></LinkIconbag>

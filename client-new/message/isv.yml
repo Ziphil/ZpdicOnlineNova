@@ -529,14 +529,17 @@ dictionarySettingGeneralPart:
       This is displayed on the dictionary page before searching.
       You can use some Markdown syntax here.
 errorPage:
-  title:
+  heading:
     notFound: "Не\nНајдены"
   message:
     notFound: >-
       Страница ктору вы ишчете не была најдена.
       Она можно была одстрањена или прємєшчена в ино мєсто, затом прошу попробујте поискати ју опет из главној странице.
+    error: >-
+      An unexpected error has occurred.
+      Please contact the administrator with the following error message.
   button:
-    top: "Врнути се к главној страници"
+    back: "Врнути се к главној страници"
 examplePage:
   add: "Создати ново рєченје"
 loginPage:
