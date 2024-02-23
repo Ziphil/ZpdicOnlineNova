@@ -44,26 +44,93 @@ toast:
       予期しないエラーが発生しました。
       お手数ですが管理者までご連絡ください。
 
-alertDialog:
+commonAlert:
   confirm: "決定"
   cancel: "キャンセル"
 
+addCommissionDialog:
+  heading: "造語依頼"
+  label:
+    name: "単語"
+    comment: "コメント"
+  button:
+    confirm: "決定"
+commissionList:
+  empty: "造語依頼はされていません"
+  button:
+    add: "造語"
+    discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この造語依頼を削除します。
+        本当によろしいですか?
+      confirm: "削除"
+contactForm:
+  label:
+    name: "名前"
+    email: "メールアドレス"
+    subject: "件名"
+    text: "お問い合わせ内容"
+    agree: "<link>プライバシーポリシー</link>に同意する"
+  button:
+    confirm: "送信"
+dictionaryAuthorizedUserList:
+  empty: "編集権限のあるユーザーはいません"
+  button:
+    discard: "解除"
+  dialog:
+    discard:
+      message: >-
+        このユーザーの編集権限を解除します。
+        本当によろしいですか?
+      confirm: "解除"
 dictionaryHeader:
   tab:
     dictionary: "辞書"
     example: "例文"
+    resource: "画像"
     information: "詳細情報"
     commission: "造語依頼"
     setting: "設定"
+  button:
+    addWord: "単語を追加"
+    addExample: "例文を追加"
+    addCommission: "造語依頼"
+    download: "ダウンロード"
 dictionaryList:
+  empty: 
+    user: "辞書は作成されていません"
+    all: "該当する辞書は見つかりませんでした"
   updatedDate: "更新日時"
   createdDate: "作成日時"
   tag:
     own: "管理者"
     edit: "編集のみ"
     view: "閲覧のみ"
+    secret: "非表示"
   button:
     see: "辞書ページへ"
+    setting: "設定"
+editExampleDialog:
+  button:
+    external: "別タブで表示"
+editExampleForm:
+  heading:
+    basic: "対訳"
+    words: "使用単語"
+  label:
+    sentence: "この言語での例文"
+    translation: "自然言語訳"
+  absent:
+    word: "使用単語が登録されていません"
+  button:
+    add:
+      word: "使用単語を追加"
+    confirm: "決定"
+editWordDialog:
+  button:
+    external: "別タブで表示"
 editWordForm:
   heading:
     basic: "基本情報"
@@ -87,6 +154,7 @@ editWordForm:
     relation:
       titles: "分類"
       name: "関連語"
+      mutual: "この関連語を双方向にする"
   absent:
     equivalent: "訳語が登録されていません"
     information: "内容が登録されていません"
@@ -99,28 +167,49 @@ editWordForm:
       variation: "変化形を追加"
       relation: "関連語を追加"
     generate: "生成"
+    confirm: "決定"
 exampleList:
-  noWord: "関連付けられた単語がありません"
+  empty: "例文は作成されていません"
+  noWord: "使用単語が登録されていません"
   button:
     edit: "編集"
     discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この例文を削除します。
+        削除した後にデータを戻すことはできません。
+        本当によろしいですか?
+      confirm: "削除"
+footer:
+  link:
+    notification: "お知らせ"
+    contact: "お問い合わせ"
+    document: "ドキュメント"
 header:
   dictionaryList: "辞書一覧"
   userPage: "ユーザーページ"
-loginForm:
-  label:
-    name: "ユーザー ID"
-    password: "パスワード"
+invitationList:
+  empty: "通知はありません"
+  tag:
+    edit: "編集権限"
+    transfer: "譲渡"
+  explanation:
+    edit: >-
+      <user></user> がこの辞書の編集権限を付与しようとしています。
+      これを承認すると、この辞書を編集できるようになります。
+    transfer: >-
+      <user></user> がこの辞書を譲渡しようとしています。
+      これを承認すると、この辞書の管理者に代わりになります。
+  dialog:
+    reject:
+      message: >-
+        この招待を拒否します。
+        本当によろしいですか?
+      confirm: "拒否"
   button:
-    confirm: "ログイン"
-    register: "新規登録"
-    resetPassword: "パスワードリセット"
-  or: "or"
-  error:
-    nameRequired: >-
-      ユーザー ID を入力してください。
-    passwordRequired: >-
-      パスワードを入力してください。
+    accept: "承認"
+    reject: "拒否"
 notificationList:
   tag:
     update: "アップデート"
@@ -137,33 +226,17 @@ orderModeSelect:
   custom: "独自順"
   updatedDate: "更新日時"
   createdDate: "作成日時"
-registerForm:
-  label:
-    name: "ユーザー ID"
-    email: "メールアドレス"
-    password: "パスワード"
-    agree: "<link>プライバシーポリシー</link>に同意する"
+resourceList:
+  empty: "画像は登録されていません"
   button:
-    confirm: "新規登録"
-  error:
-    nameInvalid: >-
-      ユーザー ID は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
-    nameTooLong: >-
-      ユーザー ID は 30 文字以下である必要があります。
-    nameRequired: >-
-      ユーザー ID を入力してください。
-    emailInvalid: >-
-      正しい形式のメールアドレスを入力してください。
-    emailRequired: >-
-      メールアドレスを入力してください。
-    passwordTooShort: >-
-      パスワードは 6 文字以上である必要があります。
-    passwordTooLong:
-      パスワードは 50 文字以下である必要があります。
-    passwordRequired: >-
-      パスワードを入力してください。
-    agreeRequired: >-
-      このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
+    discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この画像を削除します。
+        削除した後にデータを戻すことはできません。
+        本当によろしいですか?
+      confirm: "削除"
 searchExampleForm:
   information: >-
     例文検索は今後のアップデートで利用できるようになる予定です。
@@ -189,10 +262,14 @@ userHeader:
     dictionary: "辞書"
     notification: "通知"
     setting: "設定"
+    logout: "ログアウト"
 wordList:
+  empty: "該当する単語は見つかりませんでした"
   button:
     edit: "編集"
     discard: "削除"
+    create: "作成"
+    commission: "造語依頼"
   dialog:
     discard:
       message: >-
@@ -202,10 +279,181 @@ wordList:
       confirm: "削除"
 wordNameFrequencyChart:
   other: "その他"
+loginForm:
+  label:
+    name: "ユーザー ID"
+    password: "パスワード"
+  button:
+    confirm: "ログイン"
+    register: "新規登録"
+    resetPassword: "パスワードリセット"
+  or: "or"
+  error:
+    nameRequired: >-
+      ユーザー ID を入力してください。
+    passwordRequired: >-
+      パスワードを入力してください。
+registerForm:
+  label:
+    name: &label.name "ユーザー ID"
+    email: &label.email "メールアドレス"
+    password: "パスワード"
+    agree: "<link>プライバシーポリシー</link>に同意する"
+  button:
+    confirm: "新規登録"
+  error:
+    nameInvalid: >-
+      ユーザー ID は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
+    nameTooLong: >-
+      ユーザー ID は 30 文字以下である必要があります。
+    nameRequired: &error.nameRequired >-
+      ユーザー ID を入力してください。
+    emailInvalid: &error.emailInvalid >-
+      正しい形式のメールアドレスを入力してください。
+    emailRequired: &error.emailRequired >-
+      メールアドレスを入力してください。
+    passwordTooShort: &error.passwordTooShort >-
+      パスワードは 6 文字以上である必要があります。
+    passwordTooLong: &error.passwordTooLong >-
+      パスワードは 50 文字以下である必要があります。
+    passwordRequired: &error.passwordRequired >-
+      パスワードを入力してください。
+    agreeRequired: >-
+      このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
+issueUserResetTokenForm:
+  label:
+    name: *label.name
+    email: *label.email
+  error:
+    nameRequired: *error.nameRequired
+    emailInvalid: *error.emailInvalid
+    emailRequired: *error.emailRequired
+  button:
+    confirm: "送信"
+resetUserPasswordForm:
+  label:
+    password: "新しいパスワード"
+  error:
+    tooShort: *error.passwordTooShort
+    tooLong: *error.passwordTooLong
+    required: *error.passwordRequired
+  button:
+    confirm: "リセット"
 
-dictionaryPage:
-  add: "新しい単語を作成"
-dictionaryInformationPage:
+commonForm:
+  button:
+    change: "変更"
+addEditInvitationButton:
+  heading: "編集権限を付与"
+  label:
+    user: "権限を付与するユーザー"
+  button:
+    open: "編集権限をユーザーに付与"
+    confirm: "決定"
+  error:
+    required: >-
+      ユーザーを選択してください。
+addTransferInvitationButton:
+  heading: "譲渡"
+  label:
+    user: "譲渡先のユーザー"
+  button:
+    open: "譲渡"
+    confirm: "決定"
+  error:
+    required: >-
+      ユーザーを選択してください。
+addDictionaryButton:
+  heading: "新しい辞書を作成"
+  label:
+    name: "名前"
+  button:
+    open: "新しい辞書を作成"
+    confirm: "決定"
+  error:
+    required: >-
+      名前を選択してください。
+addResourceButton:
+  heading: "画像をアップロード"
+  label:
+    file: "画像ファイル"
+  button:
+    open: "画像をアップロード"
+    confirm: "決定"
+  error:
+    required: >-
+      画像ファイルを選択してください。
+    tooLarge: >-
+      ファイルのサイズが大きすぎます。
+      1 MB より大きなファイルはアップロードすることができません。
+changeDictionaryNameForm:
+  error:
+    required: >-
+      名前を入力してください。
+changeDictionaryParamNameForm:
+  error:
+    invalid: >-
+      識別子は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
+    tooLong: >-
+      識別子は 30 文字以下である必要があります。
+changeDictionarySettingsForm:
+  label:
+    enableMarkdown:
+      true: "有効"
+      false: "無効"
+    enableDuplicateName:
+      true: "有効"
+      false: "無効"
+changeDictionarySecretForm:
+  label:
+    false: "表示"
+    true: "非表示"
+changeMyEmailForm:
+  error:
+    invalid: >-
+      正しい形式のメールアドレスを入力してください。
+    required: >-
+      メールアドレスを入力してください。
+changeMyPasswordForm:
+  label:
+    currentPassword: "現在のパスワード"
+    newPassword: "新しいパスワード"
+  error:
+    tooShort: >-
+      パスワードは 6 文字以上である必要があります。
+    tooLong: >-
+      パスワードは 50 文字以下である必要があります。
+    currentRequired: >-
+      現在のパスワードを入力してください。
+    newRequired: >-
+      新しいパスワードを入力してください。
+changeMyScreenNameForm:
+  error:
+    required: >-
+      ニックネームを入力してください。
+downloadDictionaryButton:
+  button:
+    start: "エクスポート"
+uploadDictionaryButton:
+  heading: "インポート"
+  label:
+    file: "ファイル"
+  button:
+    open: "インポート"
+    confirm: "決定"
+  error:
+    required: >-
+      ファイルを選択してください。
+    tooLarge: >-
+      ファイルのサイズが大きすぎます。
+      5 MB より大きなファイルはアップロードすることができません。
+
+contactPage:
+  heading: "お問い合わせ"
+  explanation: |-
+    匿名でのお問い合わせをご希望の場合は、ログアウトした状態で「名前」欄を空欄にした上で送信してください。
+    なお、辞書の設定や編集などに関わるような、ユーザーの権限が必要になる内容に関するお問い合わせの場合、匿名では対応できない場合がありますのでご了承ください。
+dictionaryInformationPart:
   heading:
     history: "単語数推移"
     wordNameFrequency: "文字頻度"
@@ -215,11 +463,12 @@ dictionaryInformationPage:
       単語数は毎日 23 時 30 分頃 (JST, UTC+9) に記録されます。
     wordNameFrequency: >-
       見出し語に使われている各文字の出現頻度です。
-dictionarySettingPage:
+dictionarySettingPart:
   tab:
     general: "一般"
     editing: "編集"
     authority: "権限"
+    file: "ファイル"
 dictionarySettingAuthorityPart:
   heading:
     editInvitation: "編集権限"
@@ -255,20 +504,17 @@ dictionarySettingEditingPart:
       単語カードに例文を表示する際の見出しです。
     pronunciationTitle: >-
       辞書を OTM-JSON 形式で出力したときに発音データが格納される内容欄の見出しです。
-  label:
-    enableMarkdown:
-      true: "有効"
-      false: "無効"
-    enableDuplicateName:
-      true: "有効"
-      false: "無効"
-  button:
-    change: "変更"
-    editInvitation:
-      add: "編集権限をユーザーに付与"
-      discard: "解除"
-    transferInvitation:
-      add: "別ユーザーに譲渡"
+dictionarySettingFilePart:
+  heading:
+    upload: "インポート"
+    download: "エクスポート"
+  description:
+    upload: >-
+      ファイルの内容をインポートして、現在のデータを上書きします。
+      OneToMany-JSON 形式 (拡張子 .json) と PDIC 形式 (拡張子 .dic) に対応しています。
+    download: >-
+      この辞書のデータを拡張 OneToMany-JSON 形式でエクスポートします。
+      詳細な仕様については<link>ドキュメント</link>をご覧ください。
 dictionarySettingGeneralPart:
   heading:
     name: "名前"
@@ -281,21 +527,18 @@ dictionarySettingGeneralPart:
     explanation: >-
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
       一部の Markdown 形式に対応しています。
-  label:
-    secret:
-      false: "表示"
-      true: "非表示"
-  button:
-    change: "変更"
 errorPage:
-  title:
+  heading:
     notFound: "Not\nFound"
   message:
     notFound: >-
       お探しのページが見つかりませんでした。
       削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
+    error: >-
+      原因不明のエラーが発生しました。
+      お手数ですが、以下のエラーメッセージとともに管理者にご連絡ください。
   button:
-    topPage: "トップページへ"
+    back: "トップページへ"
 examplePage:
   add: "新しい単語を作成"
 loginPage:
@@ -304,6 +547,10 @@ notificationListPage:
   notification: "過去のお知らせ"
 registerPage:
   title: "新規登録"
+resetUserPasswordPage:
+  title:
+    issue: "パスワードリセット"
+    reset: "パスワードリセット"
 topPage:
   button:
     login: "ログイン · 新規登録"
@@ -316,14 +563,9 @@ topPage:
   heading:
     notification: "最新のお知らせ"
   moreNotifications: "他のお知らせも見る"
-  catch: "<line>Draw</line> <line>your own universe</line> <line>with conlang</line>"
-userSettingPage:
+  catch: "Draw<wbr></wbr> your own universe<wbr></wbr> with conlang"
+userSettingPart:
   heading:
     screenName: "ニックネーム"
     email: "メールアドレス"
     password: "パスワード"
-  label:
-    currentPassword: "現在のパスワード"
-    newPassword: "新しいパスワード"
-  button:
-    change: "変更"

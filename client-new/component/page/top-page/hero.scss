@@ -52,15 +52,12 @@
   text-indent: 0.15em;
   color: var(--catch-text-color);
   text-align: center;
+  white-space: nowrap;
   z-index: 1;
 }
 
-.catch-line {
-  display: inline-block;
-}
-
 .button-group {
-  margin-block-start: 16zu;
+  margin-block-start: 12zu;
   row-gap: 4zu;
   display: flex;
   flex-direction: column;

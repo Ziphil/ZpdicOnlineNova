@@ -38,6 +38,25 @@
   margin-inline-end: var(--glob-blank-gap);
 }
 
+.operation {
+  margin-block-start: 4zu;
+  column-gap: 4zu;
+  row-gap: 3zu;
+  display: flex;
+  @include device("desktop") {
+    flex-direction: row;
+  }
+  @include device("mobile") {
+    flex-direction: column;
+  }
+}
+
+.operation-row {
+  column-gap: 4zu;
+  display: flex;
+  align-items: center;
+}
+
 .tab-list {
   margin-block-start: 8zu;
   border-block-end: none;

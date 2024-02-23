@@ -53,6 +53,7 @@ export const EditWordFormEquivalentSection = create(
                   key={equivalent.id}
                   dictionary={dictionary}
                   form={form}
+                  equivalentOperations={equivalentOperations}
                   dndId={equivalent.id}
                   index={index}
                 />

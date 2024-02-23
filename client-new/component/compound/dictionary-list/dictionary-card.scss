@@ -26,6 +26,16 @@
   margin-block-end: 2zu;
   column-gap: 2zu;
   display: flex;
+  align-items: center;
+}
+
+.secret {
+  font-size: 3zu;
+  color: var(--glob-mute-text-color);
+}
+
+.secret-icon {
+  margin-inline-end: var(--glob-blank-gap);
 }
 
 .name {
@@ -70,4 +80,9 @@
 
 .word-count {
   color: var(--glob-mute-text-color);
+}
+
+.footer {
+  column-gap: 3zu;
+  display: flex;
 }

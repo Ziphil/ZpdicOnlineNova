@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+
+.root {
+  row-gap: 1zu;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.equivalent {
+  font-size: 3.5zu;
+  color: var(--glob-mute-text-color);
+}

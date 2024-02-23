@@ -12,6 +12,7 @@ import {
   request as rawRequest,
   requestFile as rawRequestFile
 } from "/client-new/util/request";
+import {switchResponse} from "/client-new/util/response";
 import {ProcessName, RequestData, ResponseData, SuccessResponseData} from "/server/controller/internal/type";
 
 
@@ -47,12 +48,11 @@ export function useResponse<N extends ProcessName>(name: N, data: RequestData<N>
   const responseResult = useRawQuery<ResponseData<N>>([name, data], async () => {
     if (data) {
       const response = await rawRequest(name, data, config);
-      if (response.status !== 200) {
-        console.error(response);
+      return switchResponse(response, (data) => {
+        return data;
+      }, () => {
         throw new QueryError(name, data, response);
-      } else {
-        return response.data;
-      }
+      });
     } else {
       throw new Error("[BUG] cannot happen");
     }
@@ -65,12 +65,11 @@ export function useResponse<N extends ProcessName>(name: N, data: RequestData<N>
 export function useSuspenseResponse<N extends ProcessName>(name: N, data: RequestData<N>, config: ResponseConfig<N> = {}): [SuccessResponseData<N>, ResponseRest<N>] {
   const responseResult = useRawQuery<SuccessResponseData<N>>([name, data], async () => {
     const response = await rawRequest(name, data, config);
-    if (response.status !== 200) {
-      console.error(response);
+    return switchResponse(response, (data) => {
+      return data;
+    }, () => {
       throw new QueryError(name, data, response);
-    } else {
-      return response.data;
-    }
+    });
   }, {suspense: true, ...config});
   const responseData = responseResult.data;
   if (responseData !== undefined) {
@@ -78,6 +77,18 @@ export function useSuspenseResponse<N extends ProcessName>(name: N, data: Reques
   } else {
     throw new Error("[BUG] suspensed query returns undefined");
   }
+}
+
+export async function fetchResponse<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<SuccessResponseData<N>> {
+  const responseResult = await queryClient.fetchQuery([name, data], async () => {
+    const response = await rawRequest(name, data, config);
+    return switchResponse(response, (data) => {
+      return data;
+    }, () => {
+      throw new QueryError(name, data, response);
+    });
+  });
+  return responseResult;
 }
 
 export async function prefetchResponse<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<void> {

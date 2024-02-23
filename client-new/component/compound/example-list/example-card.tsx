@@ -1,13 +1,15 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faHandPointRight, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, aria, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
+import {EditExampleDialog} from "/client-new/component/compound/edit-example-dialog";
 import {create} from "/client-new/component/create";
 import {useResponse} from "/client-new/hook/request";
 import {EnhancedDictionary, Example} from "/client-new/skeleton";
+import {useDiscardExample} from "./example-card-hook";
 
 
 export const ExampleCard = create(
@@ -22,12 +24,14 @@ export const ExampleCard = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNumber, transDate} = useTrans("exampleList");
+    const {trans} = useTrans("exampleList");
 
     const number = dictionary.number;
     const wordNumbers = example.words.map((word) => word.number);
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {number, authority: "edit"});
     const [wordNameSpec] = useResponse("fetchWordNames", {number, wordNumbers}, {ignoreError: true});
+
+    const discardExample = useDiscardExample(dictionary, example);
 
     return (
       <Card styleName="root" {...rest}>
@@ -62,11 +66,13 @@ export const ExampleCard = create(
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">
-            <Button scheme="secondary" variant="underline">
-              <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
-              {trans("button.edit")}
-            </Button>
-            <Button scheme="red" variant="underline">
+            <EditExampleDialog dictionary={dictionary} example={example} trigger={(
+              <Button scheme="secondary" variant="underline">
+                <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
+                {trans("button.edit")}
+              </Button>
+            )}/>
+            <Button scheme="red" variant="underline" onClick={discardExample}>
               <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
               {trans("button.discard")}
             </Button>

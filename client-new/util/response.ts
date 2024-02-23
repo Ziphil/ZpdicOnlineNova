@@ -5,7 +5,7 @@ import {ErrorResponseData, ProcessName, SuccessResponseData} from "/server/contr
 
 
 export function switchResponse<N extends ProcessName, R>(response: AxiosResponseSpec<N>, whenSuccess: (body: SuccessResponseData<N>) => R, whenError?: (body: ErrorResponseData<N>) => R): R {
-  if (!("error" in response.data)) {
+  if (!(typeof response.data === "object" && "error" in response.data)) {
     const body = response.data;
     return whenSuccess(body);
   } else {

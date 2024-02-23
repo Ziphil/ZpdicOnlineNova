@@ -39,9 +39,11 @@ export const WordCardHeading = create(
           <MultiLineText styleName="name" is="h3">
             {word.name}
           </MultiLineText>
-          <div styleName="pronunciation">
-            {pronunciation}
-          </div>
+          {(!!pronunciation) && (
+            <div styleName="pronunciation">
+              {pronunciation}
+            </div>
+          )}
         </div>
       </div>
     );
@@ -51,7 +53,7 @@ export const WordCardHeading = create(
 
 
 function getPronunciation(dictionary: EnhancedDictionary, word: Word | DetailedWord): string | undefined {
-  if (word.pronunciation !== undefined) {
+  if (!!word.pronunciation) {
     if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
       return word.pronunciation.trim();
     } else {

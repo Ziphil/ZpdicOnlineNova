@@ -12,11 +12,12 @@
 
 .root {
   width: 100%;
-  max-width: 96zu;
+  max-width: 120zu;
   padding: 6zu;
   border-radius: var(--glob-border-radius);
   border: solid 1zx var(--border-color);
   box-shadow: var(--glob-box-shadow-setting) var(--box-shadow-color);
+  box-sizing: border-box;
 }
 
 .control {
@@ -36,10 +37,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  .separator +& {
+    margin-block-start: 4zu;
+  }
 }
 
 .separator {
-  margin-block: 5zu;
+  margin-block: 4zu;
   column-gap: 2zu;
   font-size: 3zu;
   letter-spacing: 0.1em;

@@ -44,26 +44,93 @@ toast:
       Догодил се неочекиваны блуд.
       Πрошу увєдомите администратору.
 
-alertDialog:
+commonAlert:
   confirm: "Confirm"
   cancel: "Одрєкти"
-      
+
+addCommissionDialog:
+  heading: "造語依頼"
+  label:
+    name: "単語"
+    comment: "コメント"
+  button:
+    confirm: "決定"
+commissionList:
+  empty: "No words are requested"
+  button:
+    add: "造語"
+    discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この造語依頼を削除します。
+        本当によろしいですか?
+      confirm: "削除"
+contactForm:
+  label:
+    name: "Name"
+    email: "Email address"
+    subject: "Subject"
+    text: "Message"
+    agree: "Agree to the <link>privacy policy</link>"
+  button:
+    confirm: "Send"
+dictionaryAuthorizedUserList:
+  empty: "No users have editing permission"
+  button:
+    discard: "Revoke"
+  dialog:
+    discard:
+      message: >-
+        The permission of this user will be revoked.
+        Are you really sure?
+      confirm: "Revoke"
 dictionaryHeader:
   tab:
     dictionary: "Словник"
     example: "Рєченја"
+    resource: "Images"
     information: "Подробности"
     commission: "Просбы"
     setting: "Настројкы"
+  button:
+    addWord: "Create word"
+    addExample: "Create sentence"
+    addCommission: "Request"
+    download: "Download"
 dictionaryList:
+  empty: 
+    user: "No dictionaries are created"
+    all: "No matching dictionaries were found"
   updatedDate: "Актуализованы"
   createdDate: "Созданы"
   tag:
     own: "Властник"
     edit: "Edit only"
     view: "View only"
+    secret: "Hidden"
   button:
     see: "Зрєти словник"
+    setting: "Настрајати"
+editExampleDialog:
+  button:
+    external: "別タブで表示"
+editExampleForm:
+  heading:
+    basic: "対訳"
+    words: "使用単語"
+  label:
+    sentence: "この言語での例文"
+    translation: "自然言語訳"
+  absent:
+    word: "使用単語が登録されていません"
+  button:
+    add:
+      word: "使用単語を追加"
+    confirm: "決定"
+editWordDialog:
+  button:
+    external: "別タブで表示"
 editWordForm:
   heading:
     basic: "Основне информације"
@@ -87,6 +154,7 @@ editWordForm:
     relation:
       titles: "Роды"
       name: "Слово"
+      mutual: "Make this relation mutual"
   absent:
     equivalent: "Нема прєводов"
     information: "Нема содржаниј"
@@ -99,28 +167,49 @@ editWordForm:
       variation: "Додати вариацију"
       relation: "Додати свезано слово"
     generate: "Произвести"
+    confirm: "Confirm"
 exampleList:
-  noWord: "No words linked"
+  empty: "No example sentences are created"
+  noWord: "No words specified"
   button:
     edit: "Измєнити"
     discard: "Одстранити"
+  dialog:
+    discard:
+      message: >-
+        This example sentence will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Одстранити"
+footer:
+  link:
+    notification: "News"
+    contact: "Contact"
+    document: "Documentation"
 header:
   dictionaryList: "Словникы"
   userPage: "Користничска страница"
-loginForm:
-  label:
-    name: "Користничско име"
-    password: "Парола"
+invitationList:
+  empty: "No notifications"
+  tag:
+    edit: "Editing permission"
+    transfer: "Transfer"
+  explanation:
+    edit: >-
+      <user></user> has invited you to edit this dictionary.
+      Once you accept, you will be able to edit the dictionary.
+    transfer: >-
+      <user></user> is going to transfer this dictionary to you.
+      Once you accept, you will replace them as the owner of the dictionary.
+  dialog:
+    reject:
+      message: >-
+        You are going to decline this invitation.
+        Are you really sure?
+      confirm: "Decline"
   button:
-    confirm: "Пријавити се"
-    register: "Изтворити конто"
-    resetPassword: "Reset password"
-  or: "или"
-  error:
-    nameRequired: >-
-      Впишите ваше користничско име.
-    passwordRequired: >-
-      Впишите вашу паролу.
+    accept: "Accept"
+    reject: "Reject"
 notificationList:
   tag:
     update: "Актуализација"
@@ -135,36 +224,19 @@ orderModeSelect:
   dictionaryName: "Име"
   wordName: "Слово"
   custom: "Custom"
-  updatedDate: "Дата актуализованја"
-  createdDate: "Дата созданја"
-registerForm:
-  label:
-    name: "Користничско име"
-    email: "Адреса е-пошты"
-    password: "Парола"
-    agree: "Согласны с <link>политикоју приватности</link>"
+  updatedDate: "Актуализованје"
+  createdDate: "Созданје"
+resourceList:
+  empty: "No images are uploaded"
   button:
-    confirm: "Изтворити конто"
-  error:
-    nameInvalid: >-
-      Користничско име муси состојати се из алфабетно-цифровых знаков, подчрок и дефисов.
-      Оно такоже муси имєти хот бы једну нецифру.
-    nameTooLong: >-
-      Користничско име муси имєти не боље 30 знаков.
-    nameRequired: >-
-      Впишите користничско име.
-    emailInvalid: >-
-      Enter a valid email address.
-    emailRequired: >-
-      Впишите адресу е-пошты.
-    passwordTooShort: >-
-      Палора муси имєти не мење 6 знаков.
-    passwordTooLong: >-
-      Палора муси имєти не боље 50 знаков.
-    passwordRequired: >-
-      Впишите паролу.
-    agreeRequired: >-
-      Да бы употрєбјати то примєњенје, вы мусите прочитати и согласити се с политикоју приватности.
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This image will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
 searchExampleForm:
   information: >-
     Searching for example sentences will be available in a future update.
@@ -190,10 +262,14 @@ userHeader:
     dictionary: "Словникы"
     notification: "Увєдомјенја"
     setting: "Настројкы"
+    logout: "Sign out"
 wordList:
+  empty: "No matching words were found"
   button:
     edit: "Измєнити"
     discard: "Одстранити"
+    create: "Create"
+    commission: "Request creation"
   dialog:
     discard:
       message: >-
@@ -203,10 +279,183 @@ wordList:
       confirm: "Одстранити"
 wordNameFrequencyChart:
   other: "Ине"
-  
-dictionaryPage:
-  add: "Создати ново слово"
-dictionaryInformationPage:
+loginForm:
+  label:
+    name: "Користничско име"
+    password: "Парола"
+  button:
+    confirm: "Пријавити се"
+    register: "Изтворити конто"
+    resetPassword: "Reset password"
+  or: "или"
+  error:
+    nameRequired: >-
+      Впишите ваше користничско име.
+    passwordRequired: >-
+      Впишите вашу паролу.
+registerForm:
+  label:
+    name: &label.name "Користничско име"
+    email: &label.email "Адреса е-пошты"
+    password: "Парола"
+    agree: "Согласны с <link>политикоју приватности</link>"
+  button:
+    confirm: "Изтворити конто"
+  error:
+    nameInvalid: >-
+      Користничско име муси состојати се из алфабетно-цифровых знаков, подчрок и дефисов.
+      Оно такоже муси имєти хот бы једну нецифру.
+    nameTooLong: >-
+      Користничско име муси имєти не боље 30 знаков.
+    nameRequired: &error.nameRequired >-
+      Впишите користничско име.
+    emailInvalid: &error.emailInvalid >-
+      Enter a valid email address.
+    emailRequired: &error.emailRequired >-
+      Впишите адресу е-пошты.
+    passwordTooShort: &error.passwordTooShort >-
+      Палора муси имєти не мење 6 знаков.
+    passwordTooLong: &error.passwordTooLong >-
+      Палора муси имєти не боље 50 знаков.
+    passwordRequired: &error.passwordRequired >-
+      Впишите паролу.
+    agreeRequired: >-
+      Да бы употрєбјати то примєњенје, вы мусите прочитати и согласити се с политикоју приватности.
+issueUserResetTokenForm:
+  label:
+    name: *label.name
+    email: *label.email
+  error:
+    nameRequired: *error.nameRequired
+    emailInvalid: *error.emailInvalid
+    emailRequired: *error.emailRequired
+  button:
+    confirm: "Send"
+resetUserPasswordForm:
+  label:
+    password: "New password"
+  error:
+    tooShort: *error.passwordTooShort
+    tooLong: *error.passwordTooLong
+    required: *error.passwordRequired
+  button:
+    confirm: "Reset"
+
+commonForm:
+  button:
+    change: "Измєнити"
+addEditInvitationButton:
+  heading: "編集権限を付与"
+  label:
+    user: "権限を付与するユーザー"
+  button:
+    open: "編集権限をユーザーに付与"
+    confirm: "決定"
+  error:
+    required: >-
+      Select a user.
+addTransferInvitationButton:
+  heading: "譲渡"
+  label:
+    user: "譲渡先のユーザー"
+  button:
+    open: "譲渡"
+    confirm: "決定"
+  error:
+    required: >-
+      Select a user.
+addDictionaryButton:
+  heading: "新しい辞書を作成"
+  label:
+    name: "名前"
+  button:
+    open: "新しい辞書を作成"
+    confirm: "決定"
+  error:
+    required: >-
+      Enter a name.
+addResourceButton:
+  heading: "Upload image"
+  label:
+    file: "Image file"
+  button:
+    open: "Upload image"
+    confirm: "Confirm"
+  error:
+    required: >-
+      Select an image file.
+    tooLarge: >-
+      The file is too large.
+      You cannot upload files larger than 1 MB.
+changeDictionaryNameForm:
+  error:
+    required: >-
+      Enter a name.
+changeDictionaryParamNameForm:
+  error:
+    invalid: >-
+      The identifier must be composed of alphanumeric characters, underscores and hyphens.
+      It must also contain at least one non-digit.
+    tooLong: >-
+      The identifier must contain no more than 30 characters.
+changeDictionarySettingsForm:
+  label:
+    enableMarkdown:
+      true: "Enable"
+      false: "Disable"
+    enableDuplicateName:
+      true: "Enable"
+      false: "Disable"
+changeDictionarySecretForm:
+  label:
+    false: "Show"
+    true: "Hide"
+changeMyEmailForm:
+  error:
+    invalid: >-
+      Enter a valid email address.
+    required:
+      Enter an email address.
+changeMyPasswordForm:
+  label:
+    currentPassword: "現在のパスワード"
+    newPassword: "新しいパスワード"
+  error:
+    tooShort: >-
+      The password must contain at least 6 characters.
+    tooLong: >-
+      The password must contain no more than 50 characters.
+    currentRequired: >-
+      Enter your current password.
+    newRequired: >-
+      Enter a new password.
+changeMyScreenNameForm:
+  error:
+    required: >-
+      Enter a nickname.
+downloadDictionaryButton:
+  button:
+    start: "Export"
+uploadDictionaryButton:
+  heading: "Import"
+  label:
+    file: "File"
+  button:
+    open: "Import"
+    confirm: "Confirm"
+  error:
+    required: >-
+      Select an image file.
+    tooLarge: >-
+      The file is too large.
+      You cannot upload files larger than 5 MB.
+
+contactPage:
+  heading: "Contact"
+  explanation: |-
+    If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
+    Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
+dictionaryInformationPart:
   heading:
     history: "Хисторија коликости слов"
     wordNameFrequency: "Честота знаков"
@@ -216,11 +465,12 @@ dictionaryInformationPage:
       Коликост слов јест записывана кажды дењ приблизно в 14:30 (UTC).
     wordNameFrequency: >-
       На слєдујучем диаграму показываје се како често кажды знак појавјаје се в словах того словника.
-dictionarySettingPage:
+dictionarySettingPart:
   tab:
     general: "Обчи"
     editing: "Editing"
     authority: "Позвољенја"
+    file: "File"
 dictionarySettingAuthorityPart:
   heading:
     editInvitation: "Editing permission"
@@ -256,20 +506,17 @@ dictionarySettingEditingPart:
       The heading of example sentence sections, which is displayed in word cards.
     pronunciationTitle: >-
       The heading of pronunciation sections, which is used when the dictionary is output in OTM-JSON format.
-  label:
-    enableMarkdown:
-      true: "Enable"
-      false: "Disable"
-    enableDuplicateName:
-      true: "Enable"
-      false: "Disable"
-  button:
-    change: "Измєнити"
-    editInvitation:
-      add: "編集権限をユーザーに付与"
-      discard: "解除"
-    transferInvitation:
-      add: "別ユーザーに譲渡"
+dictionarySettingFilePart:
+  heading:
+    upload: "Import"
+    download: "Export"
+  description:
+    upload: >-
+      Import the contents of a file and overwrite the current data.
+      The supported formats are: OneToMany-JSON format (with extension .json) and PDIC format (with extension .dic).
+    download: >-
+      Export the dictionary data in the extended OneToMany-JSON format.
+      See also the <link>documentation</link> for detailed specification.
 dictionarySettingGeneralPart:
   heading:
     name: "Име"
@@ -282,21 +529,18 @@ dictionarySettingGeneralPart:
     explanation: >-
       This is displayed on the dictionary page before searching.
       You can use some Markdown syntax here.
-  label:
-    secret:
-      false: "Show"
-      true: "Hide"
-  button:
-    change: "Измєнити"
 errorPage:
-  title:
+  heading:
     notFound: "Не\nНајдены"
   message:
     notFound: >-
       Страница ктору вы ишчете не была најдена.
       Она можно была одстрањена или прємєшчена в ино мєсто, затом прошу попробујте поискати ју опет из главној странице.
+    error: >-
+      An unexpected error has occurred.
+      Please contact the administrator with the following error message.
   button:
-    top: "Врнути се к главној страници"
+    back: "Врнути се к главној страници"
 examplePage:
   add: "Создати ново рєченје"
 loginPage:
@@ -305,6 +549,10 @@ notificationListPage:
   notification: "Новости"
 registerPage:
   title: "Записати се"
+resetUserPasswordPage:
+  title:
+    issue: "Reset password"
+    reset: "Reset password"
 topPage:
   button:
     login: "Пријавити се · Записати се"
@@ -317,14 +565,9 @@ topPage:
   heading:
     notification: "Послєдне новости"
   moreNotifications: "Читати новости вече"
-  catch: "<line>Рысујте</line> <line>свој всесвєт</line> <line>со сконструованым језыком</line>"
-userSettingPage:
+  catch: "Рысујте<wbr></wbr> свој всесвєт<wbr></wbr> со сконструованым језыком"
+userSettingPart:
   heading:
     screenName: "ニックネーム"
     email: "メールアドレス"
     password: "パスワード"
-  label:
-    currentPassword: "現在のパスワード"
-    newPassword: "新しいパスワード"
-  button:
-    change: "変更"

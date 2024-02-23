@@ -368,6 +368,12 @@ export class DictionarySchema extends DiscardableSchema {
     }
   }
 
+  public async fetchOneExampleByNumber(this: Dictionary, number: number): Promise<Example | null> {
+    const query = ExampleModel.findOneExist().where("dictionary", this).where("number", number);
+    const example = await query.exec();
+    return example;
+  }
+
   public async editExample(this: Dictionary, example: EditableExampleSkeleton): Promise<Example> {
     if (this.status !== "saving") {
       const resultExample = await ExampleModel.edit(this, example);

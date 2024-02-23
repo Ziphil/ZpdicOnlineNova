@@ -1,7 +1,7 @@
 //
 
 import {faRight} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement} from "react";
+import {ReactElement, Suspense} from "react";
 import {AdditionalProps, GeneralIcon, LinkIconbag, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
 import {NotificationList} from "/client-new/component/compound/notification-list";
@@ -28,19 +28,21 @@ export const TopPage = create(
           <OverallAggregationPane/>
         </div>
         <div styleName="main">
-          <MainContainer>
-            <section>
-              <h2 styleName="heading">{trans("heading.notification")}</h2>
-              <NotificationList size={1} showPagination={false}/>
-              <div styleName="link">
-                <Link href="/notification" scheme="secondary" variant="underline">
-                  <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
-                  {trans("moreNotifications")}
-                </Link>
-              </div>
-            </section>
-            <hr styleName="divider"/>
-          </MainContainer>
+          <Suspense>
+            <MainContainer>
+              <section>
+                <h2 styleName="heading">{trans("heading.notification")}</h2>
+                <NotificationList size={1} showPagination={false}/>
+                <div styleName="link">
+                  <Link href="/notification" scheme="secondary" variant="underline">
+                    <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
+                    {trans("moreNotifications")}
+                  </Link>
+                </div>
+              </section>
+              <hr styleName="divider"/>
+            </MainContainer>
+          </Suspense>
         </div>
       </Page>
     );

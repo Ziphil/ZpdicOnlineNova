@@ -37,7 +37,8 @@ export const EditWordFormRelationSection = create(
     const addRelation = useCallback(function (): void {
       relationOperations.append({
         titles: [],
-        word: null
+        word: null,
+        mutual: false
       });
     }, [relationOperations]);
 
@@ -53,6 +54,7 @@ export const EditWordFormRelationSection = create(
                   key={relation.id}
                   dictionary={dictionary}
                   form={form}
+                  relationOperations={relationOperations}
                   dndId={relation.id}
                   index={index}
                 />

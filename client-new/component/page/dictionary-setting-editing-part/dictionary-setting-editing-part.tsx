@@ -3,11 +3,11 @@
 import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, MultiLineText, useTrans} from "zographia";
-import {EnhancedDictionary} from "/client/skeleton/dictionary";
 import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
-import {ChangeDictionarySettingsForm} from "./change-dictionary-settings-form";
-import {ChangeDictionarySourceForm} from "./change-dictionary-source-form";
+import {ChangeDictionarySettingsForm} from "/client-new/component/form/change-dictionary-settings-form";
+import {ChangeDictionarySourceForm} from "/client-new/component/form/change-dictionary-source-form";
+import {EnhancedDictionary} from "/client-new/skeleton";
 
 
 export const DictionarySettingEditingPart = create(

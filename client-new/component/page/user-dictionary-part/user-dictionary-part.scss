@@ -1,0 +1,16 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  row-gap: 6zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.list-container {
+  row-gap: 4zu;
+  display: flex;
+  flex-direction: column;
+}

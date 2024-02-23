@@ -2,7 +2,7 @@
 
 import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {useFieldArray} from "react-hook-form";
+import {UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -17,6 +17,7 @@ import {useEditWordFormDndItem} from "/client-new/component/compound/edit-word-f
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {request} from "/client-new/util/request";
+import {switchResponse} from "/client-new/util/response";
 import {EditWordSpec} from "./edit-word-form-hook";
 
 
@@ -25,12 +26,14 @@ export const EditWordFormVariationItem = create(
   function ({
     dictionary,
     form,
+    variationOperations,
     dndId,
     index,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     form: EditWordSpec["form"],
+    variationOperations: Omit<UseFieldArrayReturn<any, "variations">, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -38,21 +41,20 @@ export const EditWordFormVariationItem = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {register, control} = form;
-    const {fields: variations, ...variationOperations} = useFieldArray({control, name: "variations"});
+    const {register} = form;
     const {paneProps, gripProps} = useEditWordFormDndItem(dndId);
 
     const suggestVariationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
       try {
         const response = await request("suggestDictionaryTitles", {number, pattern, propertyName: "variation"}, {ignoreError: true});
-        if (response.status === 200 && !("error" in response.data)) {
-          const titles = response.data;
+        return switchResponse(response, (data) => {
+          const titles = data;
           const suggestions = titles.map((title) => ({replacement: title, node: title}));
           return suggestions;
-        } else {
+        }, () => {
           return [];
-        }
+        });
       } catch {
         return [];
       }

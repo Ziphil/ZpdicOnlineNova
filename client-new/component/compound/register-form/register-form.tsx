@@ -64,7 +64,7 @@ export const RegisterForm = create(
             <ControlLabel>{trans("label.password")}</ControlLabel>
             <PasswordInput
               error={getFieldState("password").error !== undefined}
-              autoComplete="current-password"
+              autoComplete="new-password"
               required={true}
               {...register("password")}
             />

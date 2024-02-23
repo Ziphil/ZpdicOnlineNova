@@ -12,7 +12,7 @@ export const MainContainer = create(
     children,
     ...rest
   }: {
-    width?: "normal" | "wide",
+    width?: "normal" | "narrow" | "wide",
     children?: ReactNode,
     className?: string
   } & AdditionalProps): ReactElement {

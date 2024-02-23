@@ -2,7 +2,7 @@
 
 import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {Controller, useFieldArray} from "react-hook-form";
+import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -17,6 +17,7 @@ import {
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {request} from "/client-new/util/request";
+import {switchResponse} from "/client-new/util/response";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
 import {EditWordSpec} from "./edit-word-form-hook";
 
@@ -26,12 +27,14 @@ export const EditWordFormEquivalentItem = create(
   function ({
     dictionary,
     form,
+    equivalentOperations,
     dndId,
     index,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     form: EditWordSpec["form"],
+    equivalentOperations: Omit<UseFieldArrayReturn<any, "equivalents">, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -39,21 +42,20 @@ export const EditWordFormEquivalentItem = create(
 
     const {trans, transNode} = useTrans("editWordForm");
 
-    const {register, control} = form;
-    const {fields: equivalents, ...equivalentOperations} = useFieldArray({control, name: "equivalents"});
+    const {register} = form;
     const {paneProps, gripProps} = useEditWordFormDndItem(dndId);
 
     const suggestEquivalentTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
       try {
         const response = await request("suggestDictionaryTitles", {number, pattern, propertyName: "equivalent"}, {ignoreError: true});
-        if (response.status === 200 && !("error" in response.data)) {
-          const titles = response.data;
+        return switchResponse(response, (data) => {
+          const titles = data;
           const suggestions = titles.map((title) => ({replacement: title, node: title}));
           return suggestions;
-        } else {
+        }, () => {
           return [];
-        }
+        });
       } catch {
         return [];
       }

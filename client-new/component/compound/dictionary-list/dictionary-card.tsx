@@ -1,6 +1,6 @@
 //
 
-import {faNote, faRight} from "@fortawesome/sharp-regular-svg-icons";
+import {faCog, faLockKeyhole, faNote, faRight} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, Tag, useTrans} from "zographia";
@@ -19,12 +19,14 @@ export const DictionaryCard = create(
     showUser,
     showChart,
     showAuthority,
+    showSettingLink,
     ...rest
   }: {
     dictionary: DetailedDictionary | UserDictionary,
     showUser: boolean,
     showChart: boolean,
     showAuthority: boolean,
+    showSettingLink: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -32,7 +34,8 @@ export const DictionaryCard = create(
 
     const number = dictionary.number;
     const from = useMemo(() => dayjs().subtract(16, "day").toISOString(), []);
-    const [histories] = useResponse("fetchHistories", (showChart) && {number, from}, {staleTime: 1 / 0, refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false});
+    const [histories] = useResponse("fetchHistories", (showChart) && {number, from}, RESPONSE_CONFIG);
+    const [canOwn] = useResponse("fetchDictionaryAuthorization", (showSettingLink) && {number, authority: "own"});
 
     return (
       <Card styleName="root" {...rest}>
@@ -46,6 +49,12 @@ export const DictionaryCard = create(
                   <Tag variant="light">{trans("tag.edit")}</Tag>
                 ) : (
                   <Tag variant="light">{trans("tag.view")}</Tag>
+                )}
+                {(dictionary.secret) && (
+                  <span styleName="secret">
+                    <GeneralIcon styleName="secret-icon" icon={faLockKeyhole}/>
+                    {trans("tag.secret")}
+                  </span>
                 )}
               </div>
             )}
@@ -81,14 +90,23 @@ export const DictionaryCard = create(
             </div>
           )}
         </CardBody>
-        <CardFooter>
+        <CardFooter styleName="footer">
           <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${dictionary.paramName || dictionary.number}`}>
             <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
             {trans("button.see")}
           </Link>
+          {(showSettingLink && canOwn) && (
+            <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${dictionary.paramName || dictionary.number}/settings`}>
+              <LinkIconbag><GeneralIcon icon={faCog}/></LinkIconbag>
+              {trans("button.setting")}
+            </Link>
+          )}
         </CardFooter>
       </Card>
     );
 
   }
 );
+
+
+const RESPONSE_CONFIG = {staleTime: 1 / 0, refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false};

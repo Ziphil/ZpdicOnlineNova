@@ -1,15 +1,16 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
 import {faEdit, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, useTrans} from "zographia";
+import {EditWordDialog} from "/client-new/component/compound/edit-word-dialog";
 import {create} from "/client-new/component/create";
 import {useResponse} from "/client-new/hook/request";
 import {DetailedWord, EnhancedDictionary, Word} from "/client-new/skeleton";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
 import {WordCardHeading} from "./word-card-heading";
-import {useDiscardWord, useStartEditWord} from "./word-card-hook";
+import {useDiscardWord} from "./word-card-hook";
 import {WordCardInformationList} from "./word-card-information-list";
 import {WordCardRelationList} from "./word-card-relation-list";
 
@@ -30,7 +31,6 @@ export const WordCard = create(
 
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
 
-    const startEditWord = useStartEditWord(dictionary, word);
     const discardWord = useDiscardWord(dictionary, word);
 
     return (
@@ -44,10 +44,12 @@ export const WordCard = create(
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">
-            <Button scheme="secondary" variant="underline" onClick={startEditWord}>
-              <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
-              {trans("button.edit")}
-            </Button>
+            <EditWordDialog dictionary={dictionary} word={word} trigger={(
+              <Button scheme="secondary" variant="underline">
+                <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
+                {trans("button.edit")}
+              </Button>
+            )}/>
             <Button scheme="red" variant="underline" onClick={discardWord}>
               <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
               {trans("button.discard")}

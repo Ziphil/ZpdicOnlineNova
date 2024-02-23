@@ -88,6 +88,7 @@ export const SERVER_PATHS = {
   fetchWord: "/word/fetch",
   fetchWordNames: "/word/name",
   checkDuplicateWordName: "/word/name/duplicate",
+  fetchExample: "/example/fetch",
   fetchExamples: "/example/list",
   fetchInvitations: "/invitation/fetch",
   fetchUploadResourcePost: "/resource/upload",
@@ -372,6 +373,13 @@ type ServerSpecs = {
     response: {
       success: {duplicate: boolean},
       error: CustomError<"noSuchDictionaryNumber">
+    }
+  },
+  fetchExample: {
+    request: {number: number, exampleNumber: number},
+    response: {
+      success: Example,
+      error: CustomError<"noSuchDictionaryNumber" | "noSuchExampleNumber">
     }
   },
   fetchExamples: {

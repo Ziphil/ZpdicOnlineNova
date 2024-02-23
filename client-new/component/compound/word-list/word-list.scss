@@ -4,7 +4,13 @@
 
 
 .body {
-  row-gap: 4zu;
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.empty {
+  row-gap: 2zu;
   display: flex;
   flex-direction: column;
 }

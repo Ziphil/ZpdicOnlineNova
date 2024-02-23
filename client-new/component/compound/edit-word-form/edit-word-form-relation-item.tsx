@@ -2,10 +2,13 @@
 
 import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {Controller, useFieldArray} from "react-hook-form";
+import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
+  CheckableContainer,
+  CheckableLabel,
+  Checkbox,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
@@ -17,6 +20,7 @@ import {RelationWordSelect} from "/client-new/component/atom/relation-word-selec
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {request} from "/client-new/util/request";
+import {switchResponse} from "/client-new/util/response";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
 import {EditWordSpec} from "./edit-word-form-hook";
 
@@ -26,12 +30,14 @@ export const EditWordFormRelationItem = create(
   function ({
     dictionary,
     form,
+    relationOperations,
     dndId,
     index,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     form: EditWordSpec["form"],
+    relationOperations: Omit<UseFieldArrayReturn<any, "relations">, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -39,21 +45,20 @@ export const EditWordFormRelationItem = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {register, control} = form;
-    const {fields: relations, ...relationOperations} = useFieldArray({control, name: "relations"});
+    const {register} = form;
     const {paneProps, gripProps} = useEditWordFormDndItem(dndId);
 
     const suggestRelationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
       try {
         const response = await request("suggestDictionaryTitles", {number, pattern, propertyName: "relation"}, {ignoreError: true});
-        if (response.status === 200 && !("error" in response.data)) {
-          const titles = response.data;
+        return switchResponse(response, (data) => {
+          const titles = data;
           const suggestions = titles.map((title) => ({replacement: title, node: title}));
           return suggestions;
-        } else {
+        }, () => {
           return [];
-        }
+        });
       } catch {
         return [];
       }
@@ -76,6 +81,12 @@ export const EditWordFormRelationItem = create(
             <Controller name={`relations.${index}.word`} control={form.control} render={({field}) => (
               <RelationWordSelect dictionary={dictionary} word={field.value} onSet={field.onChange}/>
             )}/>
+          </ControlContainer>
+          <ControlContainer>
+            <CheckableContainer>
+              <Checkbox {...register(`relations.${index}.mutual`)}/>
+              <CheckableLabel>{trans("label.relation.mutual")}</CheckableLabel>
+            </CheckableContainer>
           </ControlContainer>
         </fieldset>
         <div styleName="minus">

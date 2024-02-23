@@ -1,6 +1,6 @@
 //
 
-import {faBook, faSignIn, faUser} from "@fortawesome/sharp-regular-svg-icons";
+import {faBook, faSignInAlt, faUser} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, LinkIconbag, MultiLineText, aria, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
@@ -27,7 +27,8 @@ export const Hero = create(
         <Logo styleName="logo"/>
         <MultiLineText styleName="catch" is="p" lineHeight="narrow">
           {transNode("catch", {
-            line: (parts) => <span styleName="catch-line">{parts}</span>
+            line: (parts) => <span styleName="catch-line">{parts}</span>,
+            wbr: () => <wbr/>
           })}
         </MultiLineText>
         <div styleName="button-group">
@@ -38,7 +39,7 @@ export const Hero = create(
             </Link>
           ) : (
             <Link styleName="button" href="/login" scheme="secondary" variant="light">
-              <LinkIconbag><GeneralIcon icon={faSignIn}/></LinkIconbag>
+              <LinkIconbag><GeneralIcon icon={faSignInAlt}/></LinkIconbag>
               {trans("button.login")}
             </Link>
           )}

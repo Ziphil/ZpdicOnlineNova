@@ -2,11 +2,12 @@
 
 import {BaseSyntheticEvent, useMemo} from "react";
 import {UseFormReturn} from "react-hook-form";
+import {noop} from "ts-essentials";
 import {RelationWord} from "/client-new/component/atom/relation-word-select";
 import {useForm} from "/client-new/hook/form";
 import {invalidateResponses, useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
-import {Dictionary, Word} from "/client-new/skeleton";
+import {Dictionary, EditableWord, Relation, Word} from "/client-new/skeleton";
 import {switchResponse} from "/client-new/util/response";
 import type {RequestData} from "/server/controller/internal/type";
 
@@ -46,7 +47,8 @@ type FormValue = {
   }>,
   relations: Array<{
     titles: Array<string>,
-    word: RelationWord | null
+    word: RelationWord | null,
+    mutual: boolean
   }>
 };
 
@@ -55,7 +57,7 @@ export type EditWordSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useEditWord(dictionary: Dictionary, word: Word | null): EditWordSpec {
+export function useEditWord(dictionary: Dictionary, word: Word | EditableWord | null, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
   const form = useForm<FormValue>((word !== null) ? getFormValue(word) : DEFAULT_VALUE, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
@@ -63,17 +65,20 @@ export function useEditWord(dictionary: Dictionary, word: Word | null): EditWord
     const adding = value.number === null;
     const response = await request("editWord", getQuery(dictionary, value));
     await switchResponse(response, async (body) => {
+      const word = body;
       form.setValue("number", body.number);
-      dispatchSuccessToast((adding) ? "addWord" : "changeWord");
+      await request("addRelations", getQueryForRelations(dictionary, word, value)).catch(noop);
       await invalidateResponses("searchWord", (query) => query.number === dictionary.number);
+      await onSubmit?.(word);
+      dispatchSuccessToast((adding) ? "addWord" : "changeWord");
     });
-  }), [dictionary, request, form, dispatchSuccessToast]);
+  }), [dictionary, onSubmit, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
 }
 
-function getFormValue(word: Word): FormValue {
+function getFormValue(word: Word | EditableWord): FormValue {
   const value = {
-    number: word.number,
+    number: word.number ?? null,
     name: word.name,
     pronunciation: word.pronunciation || "",
     tags: word.tags,
@@ -94,7 +99,8 @@ function getFormValue(word: Word): FormValue {
       word: {
         number: relation.number,
         name: relation.name
-      }
+      },
+      mutual: false
     }))
   } satisfies FormValue;
   return value;
@@ -121,5 +127,20 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
       }))
     }
   } satisfies RequestData<"editWord">;
+  return query;
+}
+
+function getQueryForRelations(dictionary: Dictionary, editedWord: Word, value: FormValue): RequestData<"addRelations"> {
+  const number = dictionary.number;
+  const specs = value.relations.filter((relation) => relation.word !== null && relation.mutual).map((relation) => {
+    const inverseRelation = {
+      ...Relation.EMPTY,
+      number: editedWord.number,
+      name: editedWord.name,
+      titles: relation.titles
+    };
+    return {wordNumber: relation.word!.number, relation: inverseRelation};
+  });
+  const query = {number, specs};
   return query;
 }

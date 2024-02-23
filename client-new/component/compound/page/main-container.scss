@@ -9,6 +9,9 @@
   &[data-width="normal"] {
     max-width: 240zu;
   }
+  &[data-width="narrow"] {
+    max-width: 180zu;
+  }
   &[data-width="wide"] {
     max-width: 320zu;
   }

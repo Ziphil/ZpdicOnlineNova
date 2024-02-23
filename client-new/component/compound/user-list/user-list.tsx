@@ -1,7 +1,7 @@
 //
 
 import {ReactElement, ReactNode} from "react";
-import {AdditionalProps, List, ListBody, ListEmptyView, ListPagination, PageSpec} from "zographia";
+import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec} from "zographia";
 import {create} from "/client-new/component/create";
 import {User} from "/client-new/skeleton/user";
 import {UserCard} from "./user-card";
@@ -13,11 +13,13 @@ export const UserList = create(
     users,
     pageSpec,
     renderFooter,
+    emptyMessage,
     ...rest
   }: {
     users: Array<User> | undefined,
     pageSpec: PageSpec,
     renderFooter?: (user: User) => ReactNode,
+    emptyMessage?: string,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -25,7 +27,10 @@ export const UserList = create(
       <List styleName="root" items={users} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
           {(user) => <UserCard key={user.id} user={user} renderFooter={renderFooter}/>}
-          <ListEmptyView/>
+          <ListLoadingView styleName="loading"/>
+          <ListEmptyView styleName="loading">
+            {emptyMessage}
+          </ListEmptyView>
         </ListBody>
         <ListPagination styleName="pagination"/>
       </List>
