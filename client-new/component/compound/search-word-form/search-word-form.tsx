@@ -17,6 +17,9 @@ import {
   InputAddon,
   Radio,
   RadioGroup,
+  Select,
+  SelectOption,
+  useResponsiveDevice,
   useTrans
 } from "zographia";
 import {OrderDirection, OrderDirectionSelect} from "/client-new/component/compound/order-direction-select";
@@ -39,6 +42,8 @@ export const SearchWordForm = create(
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("searchWordForm");
+
+    const device = useResponsiveDevice();
 
     const actualParameter = WordParameter.toNormal(parameter);
 
@@ -99,26 +104,43 @@ export const SearchWordForm = create(
             <GeneralIcon styleName="icon" icon={faSearch}/>
           </InputAddon>
         </Input>
-        <div styleName="radio-group">
-          <RadioGroup name="mode" value={actualParameter.mode} onSet={handleModeSet}>
-            {FORM_WORD_MODES.map((mode) => (
-              <CheckableContainer key={mode}>
-                <Radio value={mode}/>
-                <CheckableLabel>{trans(`mode.${mode}`)}</CheckableLabel>
-              </CheckableContainer>
-            ))}
-          </RadioGroup>
-        </div>
-        <div styleName="radio-group">
-          <RadioGroup name="type" value={actualParameter.type} onSet={handleTypeSet}>
-            {FORM_WORD_TYPES.map((type) => (
-              <CheckableContainer key={type}>
-                <Radio value={type}/>
-                <CheckableLabel>{trans(`type.${type}`)}</CheckableLabel>
-              </CheckableContainer>
-            ))}
-          </RadioGroup>
-        </div>
+        {(device === "desktop") ? (
+          <>
+            <div styleName="radio-group">
+              <RadioGroup name="mode" value={actualParameter.mode} onSet={handleModeSet}>
+                {FORM_WORD_MODES.map((mode) => (
+                  <CheckableContainer key={mode}>
+                    <Radio value={mode}/>
+                    <CheckableLabel>{trans(`mode.${mode}`)}</CheckableLabel>
+                  </CheckableContainer>
+                ))}
+              </RadioGroup>
+            </div>
+            <div styleName="radio-group">
+              <RadioGroup name="type" value={actualParameter.type} onSet={handleTypeSet}>
+                {FORM_WORD_TYPES.map((type) => (
+                  <CheckableContainer key={type}>
+                    <Radio value={type}/>
+                    <CheckableLabel>{trans(`type.${type}`)}</CheckableLabel>
+                  </CheckableContainer>
+                ))}
+              </RadioGroup>
+            </div>
+          </>
+        ) : (
+          <div styleName="select-group">
+            <Select styleName="select" value={actualParameter.mode} onSet={handleModeSet}>
+              {FORM_WORD_MODES.map((mode) => (
+                <SelectOption key={mode} value={mode} label={trans(`mode.${mode}`)}>{trans(`mode.${mode}`)}</SelectOption>
+              ))}
+            </Select>
+            <Select styleName="select" value={actualParameter.type} onSet={handleTypeSet}>
+              {FORM_WORD_TYPES.map((type) => (
+                <SelectOption key={type} value={type} label={trans(`type.${type}`)}>{trans(`type.${type}`)}</SelectOption>
+              ))}
+            </Select>
+          </div>
+        )}
         <div styleName="radio-group">
           <CheckableContainer>
             <Checkbox checked={actualParameter.options.ignore.case} onSet={handleIgnoreCaseSet}/>

@@ -217,8 +217,8 @@ orderModeSelect:
   dictionaryName: "Name"
   wordName: "Headword"
   custom: "Custom"
-  updatedDate: "Update date"
-  createdDate: "Creation date"
+  updatedDate: "Update time"
+  createdDate: "Creation time"
 resourceList:
   button:
     discard: "Delete"

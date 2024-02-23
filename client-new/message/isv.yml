@@ -217,8 +217,8 @@ orderModeSelect:
   dictionaryName: "Име"
   wordName: "Слово"
   custom: "Custom"
-  updatedDate: "Дата актуализованја"
-  createdDate: "Дата созданја"
+  updatedDate: "Актуализованје"
+  createdDate: "Созданје"
 resourceList:
   button:
     discard: "Delete"

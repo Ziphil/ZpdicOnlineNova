@@ -22,6 +22,16 @@
   justify-content: center;
 }
 
+.select-group {
+  column-gap: 4zu;
+  display: flex;
+  justify-content: center;
+}
+
+.select {
+  width: 40zu;
+}
+
 .row {
   column-gap: 4zu;
   display: flex;
