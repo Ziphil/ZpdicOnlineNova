@@ -24,7 +24,7 @@ export const ExampleList = create(
     return (
       <List styleName="root" items={examples} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(example) => <ExampleCard key={dictionary.id} dictionary={dictionary} example={example}/>}
+          {(example) => <ExampleCard key={example.id} dictionary={dictionary} example={example}/>}
           <ListEmptyView/>
         </ListBody>
         <ListPagination styleName="pagination"/>
