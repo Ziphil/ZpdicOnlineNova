@@ -36,6 +36,8 @@ export const DictionaryCard = create(
     const from = useMemo(() => dayjs().subtract(16, "day").toISOString(), []);
     const [histories] = useResponse("fetchHistories", (showChart) && {number, from}, RESPONSE_CONFIG);
 
+    const [canOwn] = useResponse("fetchDictionaryAuthorization", (showSettingLink) && {number: dictionary.number, authority: "own"});
+
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
@@ -94,7 +96,7 @@ export const DictionaryCard = create(
             <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
             {trans("button.see")}
           </Link>
-          {(showSettingLink) && (
+          {(showSettingLink && canOwn) && (
             <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${dictionary.paramName || dictionary.number}/settings`}>
               <LinkIconbag><GeneralIcon icon={faCog}/></LinkIconbag>
               {trans("button.setting")}

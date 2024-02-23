@@ -1,6 +1,6 @@
 //
 
-import {faBell, faBook, faCog, faSignOut} from "@fortawesome/sharp-regular-svg-icons";
+import {faBell, faBook, faCog, faSignOutAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {useNavigate} from "react-router-dom";
 import {AdditionalProps, Badge, GeneralIcon, SingleLineText, Tab, TabIconbag, TabList, useTrans} from "zographia";
@@ -87,7 +87,7 @@ export const UserHeader = create(
             )}
             {(user.id === me?.id) && (
               <Tab value="logout" onClick={logoutAndBack}>
-                <TabIconbag><GeneralIcon icon={faSignOut}/></TabIconbag>
+                <TabIconbag><GeneralIcon icon={faSignOutAlt}/></TabIconbag>
                 {trans("tab.logout")}
               </Tab>
             )}
