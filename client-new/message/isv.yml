@@ -185,6 +185,7 @@ footer:
   link:
     notification: "News"
     contact: "Contact"
+    document: "Documentation"
 header:
   dictionaryList: "Словникы"
   userPage: "Користничска страница"
@@ -564,7 +565,7 @@ topPage:
   heading:
     notification: "Послєдне новости"
   moreNotifications: "Читати новости вече"
-  catch: "<line>Рысујте</line> <line>свој всесвєт</line> <line>со сконструованым језыком</line>"
+  catch: "Рысујте<wbr></wbr> свој всесвєт<wbr></wbr> со сконструованым језыком"
 userSettingPart:
   heading:
     screenName: "ニックネーム"

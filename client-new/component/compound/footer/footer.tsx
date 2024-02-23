@@ -43,6 +43,9 @@ export const Footer = create(
           <Link scheme="gray" variant="unstyledUnderline" href="/contact">
             {trans("link.contact")}
           </Link>
+          <Link scheme="gray" variant="unstyledUnderline" href="/document">
+            {trans("link.document")}
+          </Link>
         </div>
       </footer>
     );

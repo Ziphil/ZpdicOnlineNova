@@ -185,6 +185,7 @@ footer:
   link:
     notification: "News"
     contact: "Contact"
+    document: "Documentation"
 header:
   dictionaryList: "Dictionaries"
   userPage: "User page"
@@ -565,7 +566,7 @@ topPage:
   heading:
     notification: "Latest news"
   moreNotifications: "Read more news"
-  catch: "<line>Draw</line> <line>your own universe</line> <line>with conlang</line>"
+  catch: "Draw<wbr></wbr> your own universe<wbr></wbr> with conlang"
 userSettingPart:
   heading:
     screenName: "Nickname"

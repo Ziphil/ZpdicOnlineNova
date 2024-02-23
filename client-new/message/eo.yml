@@ -185,6 +185,7 @@ footer:
   link:
     notification: "Novaĵoj"
     contact: "Kontakti"
+    document: "Dokumentaro"
 header:
   dictionaryList: "Vortaroj"
   userPage: "Uzanta paĝo"
@@ -564,7 +565,7 @@ topPage:
   heading:
     notification: "Lastatempa novaĵo"
   moreNotifications: "Legi pli da novaĵoj"
-  catch: "<line>Desegnu</line> <line>vian propran universon</line> <line>per conlingvo</line>"
+  catch: "Desegnu<wbr></wbr> vian propran universon<wbr></wbr> per conlingvo"
 userSettingPart:
   heading:
     screenName: "Kromnomo"

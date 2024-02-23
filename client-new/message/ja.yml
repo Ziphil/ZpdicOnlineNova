@@ -185,6 +185,7 @@ footer:
   link:
     notification: "お知らせ"
     contact: "お問い合わせ"
+    document: "ドキュメント"
 header:
   dictionaryList: "辞書一覧"
   userPage: "ユーザーページ"
@@ -562,7 +563,7 @@ topPage:
   heading:
     notification: "最新のお知らせ"
   moreNotifications: "他のお知らせも見る"
-  catch: "<line>Draw</line> <line>your own universe</line> <line>with conlang</line>"
+  catch: "Draw<wbr></wbr> your own universe<wbr></wbr> with conlang"
 userSettingPart:
   heading:
     screenName: "ニックネーム"
