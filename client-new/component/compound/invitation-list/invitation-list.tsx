@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec} from "zographia";
+import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 import {Invitation} from "/client-new/skeleton";
 import {InvitationCard} from "./invitation-card";
@@ -23,12 +23,16 @@ export const InvitationList = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {trans} = useTrans("invitationList");
+
     return (
       <List styleName="root" items={invitations} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
           {(invitation) => <InvitationCard key={invitation.id} invitation={invitation}/>}
           <ListLoadingView/>
-          <ListEmptyView/>
+          <ListEmptyView>
+            {trans("empty")}
+          </ListEmptyView>
         </ListBody>
         <ListPagination styleName="pagination"/>
       </List>

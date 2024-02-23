@@ -56,6 +56,7 @@ addCommissionDialog:
   button:
     confirm: "決定"
 commissionList:
+  empty: "造語依頼はされていません"
   button:
     add: "造語"
     discard: "削除"
@@ -98,6 +99,9 @@ dictionaryHeader:
     addCommission: "造語依頼"
     download: "ダウンロード"
 dictionaryList:
+  empty: 
+    user: "辞書は作成されていません"
+    all: "該当する辞書は見つかりませんでした"
   updatedDate: "更新日時"
   createdDate: "作成日時"
   tag:
@@ -165,7 +169,8 @@ editWordForm:
     generate: "生成"
     confirm: "決定"
 exampleList:
-  noWord: "関連付けられた単語がありません"
+  empty: "例文は作成されていません"
+  noWord: "使用単語が登録されていません"
   button:
     edit: "編集"
     discard: "削除"
@@ -184,6 +189,7 @@ header:
   dictionaryList: "辞書一覧"
   userPage: "ユーザーページ"
 invitationList:
+  empty: "通知はありません"
   tag:
     edit: "編集権限"
     transfer: "譲渡"
@@ -220,6 +226,7 @@ orderModeSelect:
   updatedDate: "更新日時"
   createdDate: "作成日時"
 resourceList:
+  empty: "画像は登録されていません"
   button:
     discard: "削除"
   dialog:
@@ -256,9 +263,12 @@ userHeader:
     setting: "設定"
     logout: "ログアウト"
 wordList:
+  empty: "該当する単語は見つかりませんでした"
   button:
     edit: "編集"
     discard: "削除"
+    create: "作成"
+    commission: "造語依頼"
   dialog:
     discard:
       message: >-

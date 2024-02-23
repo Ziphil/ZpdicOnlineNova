@@ -23,6 +23,8 @@ export const DictionaryMainPart = create(
 
     const dictionary = useDictionary();
 
+    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
+
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
     const [hitResult] = useSuspenseResponse("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 40)}, {keepPreviousData: true});
     const [hitWords, hitSize] = hitResult.words;
@@ -53,7 +55,7 @@ export const DictionaryMainPart = create(
               {dictionary.explanation}
             </Markdown>
           ) : (
-            <WordList dictionary={dictionary} words={hitWords} pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+            <WordList dictionary={dictionary} words={hitWords} canEdit={canEdit} pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}}/>
           )}
         </div>
       </div>

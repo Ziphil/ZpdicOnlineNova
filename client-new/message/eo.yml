@@ -56,6 +56,7 @@ addCommissionDialog:
   button:
     confirm: "Konfirmi"
 commissionList:
+  empty: "Neniuj vortoj estas petitaj"
   button:
     add: "Krei"
     discard: "Forigi"
@@ -98,6 +99,9 @@ dictionaryHeader:
     addCommission: "Peti"
     download: "Elŝuti"
 dictionaryList:
+  empty: 
+    user: "Neniuj vortaroj estas kreitaj"
+    all: "Neniuj kongruaj vortaroj estis trovitaj"
   updatedDate: "Ĝisdatigita je"
   createdDate: "Kreita je"
   tag:
@@ -165,7 +169,8 @@ editWordForm:
     generate: "Generi"
     confirm: "Konfirmi"
 exampleList:
-  noWord: "Neniuj vortoj ligitaj"
+  empty: "Neniuj ekzemplaj frazoj estas kreitaj"
+  word: "Neniuj vortoj specifitaj"
   button:
     edit: "Redakti"
     discard: "Forigi"
@@ -184,6 +189,7 @@ header:
   dictionaryList: "Vortaroj"
   userPage: "Uzanta paĝo"
 invitationList:
+  empty: "Neniuj sciigoj"
   tag:
     edit: "Redaktan permeson"
     transfer: "Transdonado"
@@ -220,6 +226,7 @@ orderModeSelect:
   updatedDate: "Ĝisdatigado"
   createdDate: "Kreado"
 resourceList:
+  empty: "Neniuj bildoj estas alŝutitaj"
   button:
     discard: "Forigi"
   dialog:
@@ -256,9 +263,12 @@ userHeader:
     setting: "Agordoj"
     logout: "Elsaluti"
 wordList:
+  empty: "Neniuj kongruaj vortoj estis trovitaj"
   button:
     edit: "Redakti"
     discard: "Forigi"
+    create: "Krei"
+    commission: "Peti kreado"
   dialog:
     discard:
       message: >-

@@ -9,6 +9,12 @@
   flex-direction: column;
 }
 
+.empty {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
+}
+
 .pagination {
   margin-block-start: 3zu;
 }

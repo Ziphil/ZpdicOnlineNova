@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec} from "zographia";
+import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 import {DetailedDictionary, UserDictionary} from "/client-new/skeleton";
 import {DictionaryCard} from "./dictionary-card";
@@ -11,6 +11,7 @@ export const DictionaryList = create(
   require("./dictionary-list.scss"), "DictionaryList",
   function ({
     dictionaries,
+    type,
     pageSpec,
     showUser = false,
     showChart = false,
@@ -19,6 +20,7 @@ export const DictionaryList = create(
     ...rest
   }: {
     dictionaries: Array<DetailedDictionary | UserDictionary>,
+    type: "user" | "all",
     pageSpec: PageSpec,
     showUser?: boolean,
     showChart?: boolean,
@@ -26,6 +28,8 @@ export const DictionaryList = create(
     showSettingLink?: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
+
+    const {trans} = useTrans("dictionaryList");
 
     return (
       <List styleName="root" items={dictionaries} pageSpec={pageSpec} {...rest}>
@@ -41,7 +45,9 @@ export const DictionaryList = create(
             />
           )}
           <ListLoadingView/>
-          <ListEmptyView/>
+          <ListEmptyView>
+            {trans(`empty.${type}`)}
+          </ListEmptyView>
         </ListBody>
         <ListPagination styleName="pagination"/>
       </List>

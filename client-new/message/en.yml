@@ -56,6 +56,7 @@ addCommissionDialog:
   button:
     confirm: "Confirm"
 commissionList:
+  empty: "No words are requested"
   button:
     add: "Create"
     discard: "Delete"
@@ -98,6 +99,9 @@ dictionaryHeader:
     addCommission: "Request"
     download: "Download"
 dictionaryList:
+  empty: 
+    user: "No dictionaries are created"
+    all: "No matching dictionaries were found"
   updatedDate: "Updated at"
   createdDate: "Created at"
   tag:
@@ -165,7 +169,8 @@ editWordForm:
     generate: "Generate"
     confirm: "Confirm"
 exampleList:
-  noWord: "No words linked"
+  empty: "No example sentences are created"
+  noWord: "No words specified"
   button:
     edit: "Edit"
     discard: "Delete"
@@ -184,6 +189,7 @@ header:
   dictionaryList: "Dictionaries"
   userPage: "User page"
 invitationList:
+  empty: "No notifications"
   tag:
     edit: "Editing permission"
     transfer: "Transfer"
@@ -220,6 +226,7 @@ orderModeSelect:
   updatedDate: "Update time"
   createdDate: "Creation time"
 resourceList:
+  empty: "No images are uploaded"
   button:
     discard: "Delete"
   dialog:
@@ -256,9 +263,12 @@ userHeader:
     setting: "Settings"
     logout: "Sign out"
 wordList:
+  empty: "No matching words were found"
   button:
     edit: "Edit"
     discard: "Delete"
+    create: "Create"
+    commission: "Request creation"
   dialog:
     discard:
       message: >-

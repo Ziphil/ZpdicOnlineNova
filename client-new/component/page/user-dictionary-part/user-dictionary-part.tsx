@@ -33,6 +33,7 @@ export const UserDictionaryPart = create(
             )}
             <DictionaryList
               dictionaries={dictionaries}
+              type="user"
               pageSpec={{size: 40}}
               showChart={true}
               showAuthority={me?.id === user.id}

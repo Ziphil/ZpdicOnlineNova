@@ -56,6 +56,7 @@ addCommissionDialog:
   button:
     confirm: "決定"
 commissionList:
+  empty: "No words are requested"
   button:
     add: "造語"
     discard: "削除"
@@ -98,6 +99,9 @@ dictionaryHeader:
     addCommission: "Request"
     download: "Download"
 dictionaryList:
+  empty: 
+    user: "No dictionaries are created"
+    all: "No matching dictionaries were found"
   updatedDate: "Актуализованы"
   createdDate: "Созданы"
   tag:
@@ -165,7 +169,8 @@ editWordForm:
     generate: "Произвести"
     confirm: "Confirm"
 exampleList:
-  noWord: "No words linked"
+  empty: "No example sentences are created"
+  noWord: "No words specified"
   button:
     edit: "Измєнити"
     discard: "Одстранити"
@@ -184,6 +189,7 @@ header:
   dictionaryList: "Словникы"
   userPage: "Користничска страница"
 invitationList:
+  empty: "No notifications"
   tag:
     edit: "Editing permission"
     transfer: "Transfer"
@@ -220,6 +226,7 @@ orderModeSelect:
   updatedDate: "Актуализованје"
   createdDate: "Созданје"
 resourceList:
+  empty: "No images are uploaded"
   button:
     discard: "Delete"
   dialog:
@@ -256,9 +263,12 @@ userHeader:
     setting: "Настројкы"
     logout: "Sign out"
 wordList:
+  empty: "No matching words were found"
   button:
     edit: "Измєнити"
     discard: "Одстранити"
+    create: "Create"
+    commission: "Request creation"
   dialog:
     discard:
       message: >-

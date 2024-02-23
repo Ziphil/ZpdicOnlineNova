@@ -45,7 +45,7 @@ export const DictionaryListPage = create(
             </div>
           </div>
           <div styleName="right">
-            <DictionaryList dictionaries={hitDictionaries} pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}} showUser={true} showChart={true}/>
+            <DictionaryList dictionaries={hitDictionaries} type="all" pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}} showUser={true} showChart={true}/>
           </div>
         </MainContainer>
       </Page>
