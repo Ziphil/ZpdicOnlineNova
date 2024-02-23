@@ -36,6 +36,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     </Route>
     <Route path="/notification" lazy={() => import("/client-new/component/page/notification-list-page")}/>
     <Route path="/contact" lazy={() => import("/client-new/component/page/contact-page")}/>
+    <Route path="/document/*" lazy={() => import("/client-new/component/page/document-page")}/>
     <Route path="/login" lazy={() => import("/client-new/component/page/login-page")}/>
     <Route path="/register" lazy={() => import("/client-new/component/page/register-page")}/>
     <Route path="/reset" lazy={() => import("/client-new/component/page/reset-user-password-page")}/>

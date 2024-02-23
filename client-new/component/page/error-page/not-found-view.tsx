@@ -1,6 +1,6 @@
 //
 
-import {faCatSpace} from "@fortawesome/sharp-regular-svg-icons";
+import {faGhost} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
@@ -21,7 +21,7 @@ export const NotFoundView = create(
         <div styleName="top">
           <div styleName="code">404</div>
           <div styleName="icon">
-            <GeneralIcon icon={faCatSpace}/>
+            <GeneralIcon icon={faGhost}/>
           </div>
           <MultiLineText styleName="title" lineHeight="narrowest">
             {trans("title.notFound")}
