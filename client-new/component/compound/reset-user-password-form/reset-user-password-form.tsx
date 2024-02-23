@@ -1,6 +1,5 @@
 //
 
-import {faKey} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {
   AdditionalProps,
@@ -13,6 +12,7 @@ import {
   useTrans
 } from "zographia";
 import {ControlErrorMessage} from "/client-new/component/atom/control-container";
+import {fakKeyRotate} from "/client-new/component/atom/icon";
 import {create} from "/client-new/component/create";
 import {useResetUserPassword} from "./reset-user-password-form-hook";
 
@@ -48,7 +48,7 @@ export const ResetUserPasswordForm = create(
         </div>
         <div styleName="button">
           <Button type="submit" onClick={handleSubmit}>
-            <ButtonIconbag><GeneralIcon icon={faKey}/></ButtonIconbag>
+            <ButtonIconbag><GeneralIcon icon={fakKeyRotate}/></ButtonIconbag>
             {trans("button.confirm")}
           </Button>
         </div>

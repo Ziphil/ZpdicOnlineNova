@@ -1,6 +1,6 @@
 //
 
-import {faArrowRightToBracket, faQuestion, faUserPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {faSignInAlt, faUserPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {
   AdditionalProps,
@@ -15,6 +15,7 @@ import {
   useTrans
 } from "zographia";
 import {ControlErrorMessage} from "/client-new/component/atom/control-container";
+import {fakKeyRotate} from "/client-new/component/atom/icon";
 import {Link} from "/client-new/component/atom/link";
 import {create} from "/client-new/component/create";
 import {useLogin} from "./login-form-hook";
@@ -60,11 +61,11 @@ export const LoginForm = create(
         </div>
         <div styleName="button">
           <Button type="submit" onClick={handleSubmit}>
-            <ButtonIconbag><GeneralIcon icon={faArrowRightToBracket}/></ButtonIconbag>
+            <ButtonIconbag><GeneralIcon icon={faSignInAlt}/></ButtonIconbag>
             {trans("button.confirm")}
           </Button>
           <Link href="/reset" scheme="secondary" variant="underline">
-            <LinkIconbag><GeneralIcon icon={faQuestion}/></LinkIconbag>
+            <LinkIconbag><GeneralIcon icon={fakKeyRotate}/></LinkIconbag>
             {trans("button.resetPassword")}
           </Link>
         </div>
