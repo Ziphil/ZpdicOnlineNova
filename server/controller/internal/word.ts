@@ -133,10 +133,11 @@ export class WordController extends Controller {
   }
 
   @post(SERVER_PATHS["fetchWordNames"])
-  @before(verifyUser(), verifyDictionary("edit"))
+  @before(verifyUser())
   public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
-    const dictionary = request.dictionary;
+    const number = request.body.number;
     const wordNumbers = request.body.wordNumbers;
+    const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const names = await dictionary.fetchWordNames(wordNumbers);
       const body = {names};
