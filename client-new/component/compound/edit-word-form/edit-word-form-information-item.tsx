@@ -2,7 +2,7 @@
 
 import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {useFieldArray} from "react-hook-form";
+import {UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -27,12 +27,14 @@ export const EditWordFormInformationItem = create(
   function ({
     dictionary,
     form,
+    informationOperations,
     dndId,
     index,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     form: EditWordSpec["form"],
+    informationOperations: Omit<UseFieldArrayReturn<any, "informations">, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -40,8 +42,7 @@ export const EditWordFormInformationItem = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {register, control} = form;
-    const {fields: informations, ...informationsOperations} = useFieldArray({control, name: "informations"});
+    const {register} = form;
     const {paneProps, gripProps} = useEditWordFormDndItem(dndId);
 
     const suggestInformationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
@@ -76,7 +77,7 @@ export const EditWordFormInformationItem = create(
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <Button scheme="gray" variant="light" onClick={() => informationsOperations.remove(index)}>
+          <Button scheme="gray" variant="light" onClick={() => informationOperations.remove(index)}>
             <GeneralIcon icon={faMinus}/>
           </Button>
         </div>

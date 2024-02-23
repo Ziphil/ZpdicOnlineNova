@@ -2,7 +2,7 @@
 
 import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {useFieldArray} from "react-hook-form";
+import {UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -26,12 +26,14 @@ export const EditWordFormVariationItem = create(
   function ({
     dictionary,
     form,
+    variationOperations,
     dndId,
     index,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     form: EditWordSpec["form"],
+    variationOperations: Omit<UseFieldArrayReturn<any, "variations">, "fields">,
     dndId: string,
     index: number,
     className?: string
@@ -39,8 +41,7 @@ export const EditWordFormVariationItem = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {register, control} = form;
-    const {fields: variations, ...variationOperations} = useFieldArray({control, name: "variations"});
+    const {register} = form;
     const {paneProps, gripProps} = useEditWordFormDndItem(dndId);
 
     const suggestVariationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {

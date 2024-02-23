@@ -54,6 +54,7 @@ export const EditWordFormRelationSection = create(
                   key={relation.id}
                   dictionary={dictionary}
                   form={form}
+                  relationOperations={relationOperations}
                   dndId={relation.id}
                   index={index}
                 />

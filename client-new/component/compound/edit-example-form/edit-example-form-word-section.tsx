@@ -50,6 +50,7 @@ export const EditExampleFormWordSection = create(
                   key={word.id}
                   dictionary={dictionary}
                   form={form}
+                  wordOperations={wordOperations}
                   dndId={word.id}
                   index={index}
                 />

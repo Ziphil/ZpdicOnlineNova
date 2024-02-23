@@ -53,6 +53,7 @@ export const EditWordFormInformationSection = create(
                   key={information.id}
                   dictionary={dictionary}
                   form={form}
+                  informationOperations={informationOperations}
                   dndId={information.id}
                   index={index}
                 />

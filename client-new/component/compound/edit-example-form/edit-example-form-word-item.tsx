@@ -2,7 +2,7 @@
 
 import {faGripVertical, faMinus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {Controller, useFieldArray} from "react-hook-form";
+import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
@@ -22,21 +22,21 @@ export const EditExampleFormWordItem = create(
   function ({
     dictionary,
     form,
+    wordOperations,
     dndId,
     index,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     form: EditExampleSpec["form"],
+    wordOperations: Omit<UseFieldArrayReturn<any, "words">, "fields">,
     dndId: string,
     index: number,
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNode} = useTrans("editExampleForm");
+    const {trans} = useTrans("editExampleForm");
 
-    const {register, control} = form;
-    const {fields: words, ...equivalentOperations} = useFieldArray({control, name: "words"});
     const {paneProps, gripProps} = useEditExampleFormDndItem(dndId);
 
     return (
@@ -52,7 +52,7 @@ export const EditExampleFormWordItem = create(
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <Button scheme="gray" variant="light" onClick={() => equivalentOperations.remove(index)}>
+          <Button scheme="gray" variant="light" onClick={() => wordOperations.remove(index)}>
             <GeneralIcon icon={faMinus}/>
           </Button>
         </div>

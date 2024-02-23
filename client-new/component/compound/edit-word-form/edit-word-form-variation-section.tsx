@@ -53,6 +53,7 @@ export const EditWordFormVariationSection = create(
                   key={variation.id}
                   dictionary={dictionary}
                   form={form}
+                  variationOperations={variationOperations}
                   dndId={variation.id}
                   index={index}
                 />
