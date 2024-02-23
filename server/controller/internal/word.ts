@@ -133,7 +133,6 @@ export class WordController extends Controller {
   }
 
   @post(SERVER_PATHS["fetchWordNames"])
-  @before(verifyUser())
   public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
     const number = request.body.number;
     const wordNumbers = request.body.wordNumbers;
