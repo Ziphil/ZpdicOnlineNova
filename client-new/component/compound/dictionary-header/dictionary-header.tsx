@@ -1,18 +1,19 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
-import {faBook, faCircleInfo, faCog, faImage, faListCheck, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
+import {faBook, faCircleInfo, faCog, faCommentQuestion, faImage, faListCheck, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
+import {fakNoteCirclePlus, fakQuotesCirclePlus} from "/client-new/component/atom/icon";
 import {Link} from "/client-new/component/atom/link";
 import {LinkTab} from "/client-new/component/atom/tab";
 import {UserAvatar} from "/client-new/component/atom/user-avatar";
+import {AddCommissionDialog} from "/client-new/component/compound/add-commission-dialog";
+import {EditExampleDialog} from "/client-new/component/compound/edit-example-dialog";
+import {EditWordDialog} from "/client-new/component/compound/edit-word-dialog";
 import {MainContainer} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
 import {useSuspenseResponse} from "/client-new/hook/request";
 import {EnhancedDictionary} from "/client-new/skeleton";
-import {AddCommissionButton} from "./add-commission-button";
-import {AddExampleButton} from "./add-example-button";
-import {AddWordButton} from "./add-word-button";
 
 
 export const DictionaryHeader = create(
@@ -53,12 +54,27 @@ export const DictionaryHeader = create(
           <div styleName="operation">
             {(canEdit) && (
               <div styleName="operation-row">
-                <AddWordButton dictionary={dictionary}/>
-                <AddExampleButton dictionary={dictionary}/>
+                <EditWordDialog dictionary={dictionary} word={null} trigger={(
+                  <Button variant="light" {...rest}>
+                    <ButtonIconbag><GeneralIcon icon={fakNoteCirclePlus}/></ButtonIconbag>
+                    {trans("button.addWord")}
+                  </Button>
+                )}/>
+                <EditExampleDialog dictionary={dictionary} example={null} trigger={(
+                  <Button variant="light" {...rest}>
+                    <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
+                    {trans("button.addExample")}
+                  </Button>
+                )}/>
               </div>
             )}
             <div styleName="operation-row">
-              <AddCommissionButton dictionary={dictionary}/>
+              <AddCommissionDialog dictionary={dictionary} trigger={(
+                <Button scheme="secondary" variant="underline" {...rest}>
+                  <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
+                  {trans("button.addCommission")}
+                </Button>
+              )}/>
             </div>
           </div>
           <TabList styleName="tab-list" value={tabValue ?? ""}>
