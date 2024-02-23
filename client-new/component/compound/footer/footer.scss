@@ -11,9 +11,12 @@
   display: flex;
   flex: 0 0 auto;
   @include device("desktop") {
+    column-gap: var(--glob-page-horizontal-padding);
+    flex-direction: row;
     justify-content: space-between;
   }
   @include device("mobile") {
+    row-gap: 3zu;
     flex-direction: column;
   }
 }
@@ -59,5 +62,20 @@
   font-size: 3zu;
   @include device("mobile") {
     text-align: center;
+  }
+}
+
+.right {
+  display: flex;
+  @include device("desktop") {
+    row-gap: 2zu;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+  }
+  @include device("mobile") {
+    column-gap: 4zu;
+    flex-direction: row;
+    justify-content: center;
   }
 }

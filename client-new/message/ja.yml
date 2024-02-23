@@ -176,6 +176,10 @@ exampleList:
         削除した後にデータを戻すことはできません。
         本当によろしいですか?
       confirm: "削除"
+footer:
+  link:
+    notification: "お知らせ"
+    contact: "お問い合わせ"
 header:
   dictionaryList: "辞書一覧"
   userPage: "ユーザーページ"

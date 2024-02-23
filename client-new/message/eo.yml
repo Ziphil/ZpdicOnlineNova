@@ -176,6 +176,10 @@ exampleList:
         Vi ne povas restaŭri ĝin poste.
         Ĉu vi vere certas?
       confirm: "Forigi"
+footer:
+  link:
+    notification: "Novaĵoj"
+    contact: "Kontakti"
 header:
   dictionaryList: "Vortaroj"
   userPage: "Uzanta paĝo"
@@ -545,7 +549,7 @@ topPage:
     word: "{count, plural, one {Vorto} other {Vortoj}}"
     example: "{count, plural, one {Frazo} other {Frazoj}}"
   heading:
-    notification: "Lastatempaj novaĵoj"
+    notification: "Lastatempa novaĵo"
   moreNotifications: "Legi pli da novaĵoj"
   catch: "<line>Desegnu</line> <line>vian propran universon</line> <line>per conlingvo</line>"
 userSettingPart:

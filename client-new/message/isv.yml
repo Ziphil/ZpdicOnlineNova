@@ -176,6 +176,10 @@ exampleList:
         You cannot restore it afterwards.
         Are you really sure?
       confirm: "Одстранити"
+footer:
+  link:
+    notification: "News"
+    contact: "Contact"
 header:
   dictionaryList: "Словникы"
   userPage: "Користничска страница"
