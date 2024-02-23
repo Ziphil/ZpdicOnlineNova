@@ -65,6 +65,15 @@ commissionList:
         Tiu peto estos forigita konstante.
         Ĉu vi vere certas?
       confirm: "Forigi"
+contactForm:
+  label:
+    name: "Nomo"
+    email: "Retpoŝta adreso"
+    subject: "Temo"
+    text: "Mesaĝo"
+    agree: "Konsenti pri la <link>privateca politiko</link>"
+  button:
+    confirm: "Sendi"
 dictionaryAuthorizedUserList:
   empty: "Neniuj uzantoj havas redaktan permeson"
   button:
@@ -426,6 +435,11 @@ uploadDictionaryButton:
       La dosiero estas tro granda.
       Vi ne povas alŝuti dosierojn pli grandajn ol 5 MB.
 
+contactPage:
+  heading: "Kontakti"
+  explanation: |-
+    Se vi volas sendi vian demandon anonime, bonvolu elsaluti kaj poste lasi malplena la kampon “Nomo”.
+    Bonvolu noti, ke ni eble ne povos respondi al via anonima peto se ĝi koncernas ion kiu bezonas la aŭtoritaton de uzanto, kiel agordado aŭ redaktado de vortaro.
 dictionaryInformationPart:
   heading:
     history: "Historio de nombro da vortoj"

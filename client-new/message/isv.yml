@@ -65,6 +65,15 @@ commissionList:
         この造語依頼を削除します。
         本当によろしいですか?
       confirm: "削除"
+contactForm:
+  label:
+    name: "Name"
+    email: "Email address"
+    subject: "Subject"
+    text: "Message"
+    agree: "Agree to the <link>privacy policy</link>"
+  button:
+    confirm: "Send"
 dictionaryAuthorizedUserList:
   empty: "No users have editing permission"
   button:
@@ -425,7 +434,12 @@ uploadDictionaryButton:
     tooLarge: >-
       The file is too large.
       You cannot upload files larger than 5 MB.
-  
+
+contactPage:
+  heading: "Contact"
+  explanation: |-
+    If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
+    Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
 dictionaryInformationPart:
   heading:
     history: "Хисторија коликости слов"

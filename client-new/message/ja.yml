@@ -65,6 +65,15 @@ commissionList:
         この造語依頼を削除します。
         本当によろしいですか?
       confirm: "削除"
+contactForm:
+  label:
+    name: "名前"
+    email: "メールアドレス"
+    subject: "件名"
+    text: "お問い合わせ内容"
+    agree: "<link>プライバシーポリシー</link>に同意する"
+  button:
+    confirm: "送信"
 dictionaryAuthorizedUserList:
   empty: "編集権限のあるユーザーはいません"
   button:
@@ -424,6 +433,11 @@ uploadDictionaryButton:
       ファイルのサイズが大きすぎます。
       5 MB より大きなファイルはアップロードすることができません。
 
+contactPage:
+  heading: "お問い合わせ"
+  explanation: |-
+    匿名でのお問い合わせをご希望の場合は、ログアウトした状態で「名前」欄を空欄にした上で送信してください。
+    なお、辞書の設定や編集などに関わるような、ユーザーの権限が必要になる内容に関するお問い合わせの場合、匿名では対応できない場合がありますのでご了承ください。
 dictionaryInformationPart:
   heading:
     history: "単語数推移"
