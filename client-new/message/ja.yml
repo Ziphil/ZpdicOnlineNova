@@ -184,20 +184,6 @@ invitationList:
   button:
     accept: "承認"
     reject: "拒否"
-loginForm:
-  label:
-    name: "ユーザー ID"
-    password: "パスワード"
-  button:
-    confirm: "ログイン"
-    register: "新規登録"
-    resetPassword: "パスワードリセット"
-  or: "or"
-  error:
-    nameRequired: >-
-      ユーザー ID を入力してください。
-    passwordRequired: >-
-      パスワードを入力してください。
 notificationList:
   tag:
     update: "アップデート"
@@ -214,33 +200,6 @@ orderModeSelect:
   custom: "独自順"
   updatedDate: "更新日時"
   createdDate: "作成日時"
-registerForm:
-  label:
-    name: "ユーザー ID"
-    email: "メールアドレス"
-    password: "パスワード"
-    agree: "<link>プライバシーポリシー</link>に同意する"
-  button:
-    confirm: "新規登録"
-  error:
-    nameInvalid: >-
-      ユーザー ID は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
-    nameTooLong: >-
-      ユーザー ID は 30 文字以下である必要があります。
-    nameRequired: >-
-      ユーザー ID を入力してください。
-    emailInvalid: >-
-      正しい形式のメールアドレスを入力してください。
-    emailRequired: >-
-      メールアドレスを入力してください。
-    passwordTooShort: >-
-      パスワードは 6 文字以上である必要があります。
-    passwordTooLong:
-      パスワードは 50 文字以下である必要があります。
-    passwordRequired: >-
-      パスワードを入力してください。
-    agreeRequired: >-
-      このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
 resourceList:
   button:
     discard: "削除"
@@ -290,6 +249,66 @@ wordList:
       confirm: "削除"
 wordNameFrequencyChart:
   other: "その他"
+loginForm:
+  label:
+    name: "ユーザー ID"
+    password: "パスワード"
+  button:
+    confirm: "ログイン"
+    register: "新規登録"
+    resetPassword: "パスワードリセット"
+  or: "or"
+  error:
+    nameRequired: >-
+      ユーザー ID を入力してください。
+    passwordRequired: >-
+      パスワードを入力してください。
+registerForm:
+  label:
+    name: &label.name "ユーザー ID"
+    email: &label.email "メールアドレス"
+    password: "パスワード"
+    agree: "<link>プライバシーポリシー</link>に同意する"
+  button:
+    confirm: "新規登録"
+  error:
+    nameInvalid: >-
+      ユーザー ID は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
+    nameTooLong: >-
+      ユーザー ID は 30 文字以下である必要があります。
+    nameRequired: &error.nameRequired >-
+      ユーザー ID を入力してください。
+    emailInvalid: &error.emailInvalid >-
+      正しい形式のメールアドレスを入力してください。
+    emailRequired: &error.emailRequired >-
+      メールアドレスを入力してください。
+    passwordTooShort: &error.passwordTooShort >-
+      パスワードは 6 文字以上である必要があります。
+    passwordTooLong: &error.passwordTooLong >-
+      パスワードは 50 文字以下である必要があります。
+    passwordRequired: &error.passwordRequired >-
+      パスワードを入力してください。
+    agreeRequired: >-
+      このアプリケーションを利用していただくには、プライバシーポリシーをお読みいただき同意していただく必要があります。
+issueUserResetTokenForm:
+  label:
+    name: *label.name
+    email: *label.email
+  error:
+    nameRequired: *error.nameRequired
+    emailInvalid: *error.emailInvalid
+    emailRequired: *error.emailRequired
+  button:
+    confirm: "送信"
+resetUserPasswordForm:
+  label:
+    password: "新しいパスワード"
+  error:
+    tooShort: *error.passwordTooShort
+    tooLong: *error.passwordTooLong
+    required: *error.passwordRequired
+  button:
+    confirm: "リセット"
 
 commonForm:
   button:

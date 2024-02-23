@@ -11,7 +11,7 @@ import type {RequestData} from "/server/controller/internal/type";
 
 
 const SCHEMA = object({
-  password: string().min(6, "passwordTooShort").max(50, "passwordTooLong").required("passwordRequired")
+  password: string().min(6, "tooShort").max(50, "tooLong").required("required")
 });
 const DEFAULT_VALUE = {
   password: ""

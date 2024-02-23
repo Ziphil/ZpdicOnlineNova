@@ -1,6 +1,6 @@
 //
 
-import {faEnvelope} from "@fortawesome/sharp-regular-svg-icons";
+import {faKey} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {
   AdditionalProps,
@@ -27,7 +27,7 @@ export const ResetUserPasswordForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("registerForm");
+    const {trans} = useTrans("resetUserPasswordForm");
 
     const {form, handleSubmit} = useResetUserPassword(tokenKey);
     const {register, getFieldState, formState: {errors}} = form;
@@ -48,7 +48,7 @@ export const ResetUserPasswordForm = create(
         </div>
         <div styleName="button">
           <Button type="submit" onClick={handleSubmit}>
-            <ButtonIconbag><GeneralIcon icon={faEnvelope}/></ButtonIconbag>
+            <ButtonIconbag><GeneralIcon icon={faKey}/></ButtonIconbag>
             {trans("button.confirm")}
           </Button>
         </div>

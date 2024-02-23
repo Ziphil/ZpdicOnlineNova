@@ -25,7 +25,7 @@ export const IssueUserResetTokenForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("registerForm");
+    const {trans} = useTrans("issueUserResetTokenForm");
 
     const {form, handleSubmit} = useIssueUserResetToken();
     const {register, getFieldState, formState: {errors}} = form;

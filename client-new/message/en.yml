@@ -184,20 +184,6 @@ invitationList:
   button:
     accept: "Accept"
     reject: "Decline"
-loginForm:
-  label:
-    name: "Username"
-    password: "Password"
-  button:
-    confirm: "Sign in"
-    register: "Create account"
-    resetPassword: "Reset password"
-  or: "or"
-  error:
-    nameRequired: >-
-      Enter your username.
-    passwordRequired: >-
-      Enter your password.
 notificationList:
   tag:
     update: "Update"
@@ -214,34 +200,6 @@ orderModeSelect:
   custom: "Custom"
   updatedDate: "Update date"
   createdDate: "Creation date"
-registerForm:
-  label:
-    name: "Username"
-    email: "Email address"
-    password: "Password"
-    agree: "Agree to the <link>privacy policy</link>"
-  button:
-    confirm: "Create account"
-  error:
-    nameInvalid: >-
-      The username must be composed of alphanumeric characters, underscores and hyphens.
-      It must also contain at least one non-digit.
-    nameTooLong: >-
-      The username must contain no more than 30 characters.
-    nameRequired:
-      Enter a username.
-    emailInvalid: >-
-      Enter a valid email address.
-    emailRequired:
-      Enter an email address.
-    passwordTooShort:
-      The password must contain at least 6 characters.
-    passwordTooLong:
-      The password must contain no more than 50 characters.
-    passwordRequired:
-      Enter a password.
-    agreeRequired: >-
-      In order to use this application, you must read and agree to the privacy policy.
 resourceList:
   button:
     discard: "Delete"
@@ -291,6 +249,67 @@ wordList:
       confirm: "Delete"
 wordNameFrequencyChart:
   other: "Others"
+loginForm:
+  label:
+    name: "Username"
+    password: "Password"
+  button:
+    confirm: "Sign in"
+    register: "Create account"
+    resetPassword: "Reset password"
+  or: "or"
+  error:
+    nameRequired: >-
+      Enter your username.
+    passwordRequired: >-
+      Enter your password.
+registerForm:
+  label:
+    name: &label.name "Username"
+    email: &label.email "Email address"
+    password: "Password"
+    agree: "Agree to the <link>privacy policy</link>"
+  button:
+    confirm: "Create account"
+  error:
+    nameInvalid: >-
+      The username must be composed of alphanumeric characters, underscores and hyphens.
+      It must also contain at least one non-digit.
+    nameTooLong: >-
+      The username must contain no more than 30 characters.
+    nameRequired: &error.nameRequired >-
+      Enter a username.
+    emailInvalid: &error.emailInvalid >-
+      Enter a valid email address.
+    emailRequired: &error.emailRequired >-
+      Enter an email address.
+    passwordTooShort: &error.passwordTooShort >-
+      The password must contain at least 6 characters.
+    passwordTooLong: &error.passwordTooLong >-
+      The password must contain no more than 50 characters.
+    passwordRequired: &error.passwordRequired >-
+      Enter a password.
+    agreeRequired: >-
+      In order to use this application, you must read and agree to the privacy policy.
+issueUserResetTokenForm:
+  label:
+    name: *label.name
+    email: *label.email
+  error:
+    nameRequired: *error.nameRequired
+    emailInvalid: *error.emailInvalid
+    emailRequired: *error.emailRequired
+  button:
+    confirm: "Send"
+resetUserPasswordForm:
+  label:
+    password: "New password"
+  error:
+    tooShort: *error.passwordTooShort
+    tooLong: *error.passwordTooLong
+    required: *error.passwordRequired
+  button:
+    confirm: "Reset"
 
 commonForm:
   button:

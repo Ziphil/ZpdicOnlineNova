@@ -31,7 +31,7 @@ export const InvitationCard = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNode, transNumber, transDate} = useTrans("invitationList");
+    const {trans, transNode, transDate} = useTrans("invitationList");
 
     return (
       <Card styleName="root" {...rest}>

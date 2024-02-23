@@ -184,20 +184,6 @@ invitationList:
   button:
     accept: "Accept"
     reject: "Reject"
-loginForm:
-  label:
-    name: "Користничско име"
-    password: "Парола"
-  button:
-    confirm: "Пријавити се"
-    register: "Изтворити конто"
-    resetPassword: "Reset password"
-  or: "или"
-  error:
-    nameRequired: >-
-      Впишите ваше користничско име.
-    passwordRequired: >-
-      Впишите вашу паролу.
 notificationList:
   tag:
     update: "Актуализација"
@@ -214,34 +200,6 @@ orderModeSelect:
   custom: "Custom"
   updatedDate: "Дата актуализованја"
   createdDate: "Дата созданја"
-registerForm:
-  label:
-    name: "Користничско име"
-    email: "Адреса е-пошты"
-    password: "Парола"
-    agree: "Согласны с <link>политикоју приватности</link>"
-  button:
-    confirm: "Изтворити конто"
-  error:
-    nameInvalid: >-
-      Користничско име муси состојати се из алфабетно-цифровых знаков, подчрок и дефисов.
-      Оно такоже муси имєти хот бы једну нецифру.
-    nameTooLong: >-
-      Користничско име муси имєти не боље 30 знаков.
-    nameRequired: >-
-      Впишите користничско име.
-    emailInvalid: >-
-      Enter a valid email address.
-    emailRequired: >-
-      Впишите адресу е-пошты.
-    passwordTooShort: >-
-      Палора муси имєти не мење 6 знаков.
-    passwordTooLong: >-
-      Палора муси имєти не боље 50 знаков.
-    passwordRequired: >-
-      Впишите паролу.
-    agreeRequired: >-
-      Да бы употрєбјати то примєњенје, вы мусите прочитати и согласити се с политикоју приватности.
 resourceList:
   button:
     discard: "Delete"
@@ -291,6 +249,67 @@ wordList:
       confirm: "Одстранити"
 wordNameFrequencyChart:
   other: "Ине"
+loginForm:
+  label:
+    name: "Користничско име"
+    password: "Парола"
+  button:
+    confirm: "Пријавити се"
+    register: "Изтворити конто"
+    resetPassword: "Reset password"
+  or: "или"
+  error:
+    nameRequired: >-
+      Впишите ваше користничско име.
+    passwordRequired: >-
+      Впишите вашу паролу.
+registerForm:
+  label:
+    name: &label.name "Користничско име"
+    email: &label.email "Адреса е-пошты"
+    password: "Парола"
+    agree: "Согласны с <link>политикоју приватности</link>"
+  button:
+    confirm: "Изтворити конто"
+  error:
+    nameInvalid: >-
+      Користничско име муси состојати се из алфабетно-цифровых знаков, подчрок и дефисов.
+      Оно такоже муси имєти хот бы једну нецифру.
+    nameTooLong: >-
+      Користничско име муси имєти не боље 30 знаков.
+    nameRequired: &error.nameRequired >-
+      Впишите користничско име.
+    emailInvalid: &error.emailInvalid >-
+      Enter a valid email address.
+    emailRequired: &error.emailRequired >-
+      Впишите адресу е-пошты.
+    passwordTooShort: &error.passwordTooShort >-
+      Палора муси имєти не мење 6 знаков.
+    passwordTooLong: &error.passwordTooLong >-
+      Палора муси имєти не боље 50 знаков.
+    passwordRequired: &error.passwordRequired >-
+      Впишите паролу.
+    agreeRequired: >-
+      Да бы употрєбјати то примєњенје, вы мусите прочитати и согласити се с политикоју приватности.
+issueUserResetTokenForm:
+  label:
+    name: *label.name
+    email: *label.email
+  error:
+    nameRequired: *error.nameRequired
+    emailInvalid: *error.emailInvalid
+    emailRequired: *error.emailRequired
+  button:
+    confirm: "Send"
+resetUserPasswordForm:
+  label:
+    password: "New password"
+  error:
+    tooShort: *error.passwordTooShort
+    tooLong: *error.passwordTooLong
+    required: *error.passwordRequired
+  button:
+    confirm: "Reset"
 
 commonForm:
   button:
