@@ -47,6 +47,16 @@ const Page = create(
         <PopupInformationPane/>
         <Header dictionary={dictionary} showAddLink={showAddLink} showSettingLink={showSettingLink}/>
         <div styleName="spacer" {...data({showDictionary})}>
+          <div styleName="info">
+            <p styleName="info-message">
+              ZpDIC Online は今年中に全面リニューアルを予定しています。
+              リニューアル後に使われる新しいデザインのベータ版を公開中です。
+              ぜひお試しください!
+            </p>
+            <a styleName="info-link" href="/next" target="_blank">
+              ベータ版を試す
+            </a>
+          </div>
           <div styleName="content">
             {children}
           </div>

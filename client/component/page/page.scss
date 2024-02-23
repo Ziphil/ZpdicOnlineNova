@@ -19,6 +19,26 @@
   }
 }
 
+.info {
+  @include color-pane(blue);
+  width: 100%;
+  max-width: 600rpx;
+  margin: 0rpx auto $page-top-margin auto;
+  padding: $medium-margin $medium-margin;
+  row-gap: $medium-margin;
+  display: flex;
+  flex-direction: column;
+}
+
+.info-message {
+  @include line-height;
+}
+
+.info-link {
+  @include button(blue);
+  align-self: center;
+}
+
 .content {
   width: 100%;
   max-width: $page-width;
