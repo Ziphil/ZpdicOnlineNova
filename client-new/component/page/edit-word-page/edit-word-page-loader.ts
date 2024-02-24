@@ -4,7 +4,7 @@ import {LoaderFunctionArgs} from "react-router-dom";
 import {fetchResponse} from "/client-new/hook/request";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {Word} from "/client-new/skeleton";
-import {QueryError} from "/client-new/util/error";
+import {ResponseError} from "/client-new/util/error";
 
 
 export type EditWordPageLoaderData = {
@@ -30,7 +30,7 @@ export async function loadEditWordPage({params}: LoaderFunctionArgs): Promise<Ed
 }
 
 function convertError(error: unknown): unknown {
-  if (QueryError.isQueryError(error)) {
+  if (ResponseError.isResponseError(error)) {
     if (error.type === "noSuchDictionaryNumber" || error.type === "noSuchDictionaryParamName" || error.type === "noSuchWordNumber") {
       return new Response(JSON.stringify(error), {status: 404});
     } else {

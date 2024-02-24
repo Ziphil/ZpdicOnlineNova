@@ -3,7 +3,7 @@
 import {useCallback} from "react";
 import {QueryClient, UseQueryOptions, UseQueryResult, useQuery as useRawQuery} from "react-query";
 import {useToast} from "/client-new/hook/toast";
-import {QueryError} from "/client-new/util/error";
+import {ResponseError} from "/client-new/util/error";
 import {
   AxiosResponseSpec,
   RequestConfig,
@@ -51,7 +51,7 @@ export function useResponse<N extends ProcessName>(name: N, data: RequestData<N>
       return switchResponse(response, (data) => {
         return data;
       }, () => {
-        throw new QueryError(name, data, response);
+        throw new ResponseError(name, data, response);
       });
     } else {
       throw new Error("[BUG] cannot happen");
@@ -68,7 +68,7 @@ export function useSuspenseResponse<N extends ProcessName>(name: N, data: Reques
     return switchResponse(response, (data) => {
       return data;
     }, () => {
-      throw new QueryError(name, data, response);
+      throw new ResponseError(name, data, response);
     });
   }, {suspense: true, ...config});
   const responseData = responseResult.data;
@@ -85,7 +85,7 @@ export async function fetchResponse<N extends ProcessName>(name: N, data: Reques
     return switchResponse(response, (data) => {
       return data;
     }, () => {
-      throw new QueryError(name, data, response);
+      throw new ResponseError(name, data, response);
     });
   });
   return responseResult;
@@ -97,7 +97,7 @@ export async function prefetchResponse<N extends ProcessName>(name: N, data: Req
     return switchResponse(response, (data) => {
       return data;
     }, () => {
-      throw new QueryError(name, data, response);
+      throw new ResponseError(name, data, response);
     });
   });
 }

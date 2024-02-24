@@ -2,7 +2,7 @@
 
 import {LoaderFunctionArgs} from "react-router-dom";
 import {fetchResponse} from "/client-new/hook/request";
-import {QueryError} from "/client-new/util/error";
+import {ResponseError} from "/client-new/util/error";
 
 
 export async function loadDictionaryPage({params}: LoaderFunctionArgs): Promise<null> {
@@ -17,7 +17,7 @@ export async function loadDictionaryPage({params}: LoaderFunctionArgs): Promise<
 }
 
 function convertError(error: unknown): unknown {
-  if (QueryError.isQueryError(error)) {
+  if (ResponseError.isResponseError(error)) {
     if (error.type === "noSuchDictionaryNumber" || error.type === "noSuchDictionaryParamName") {
       return new Response(JSON.stringify(error), {status: 404});
     } else {
