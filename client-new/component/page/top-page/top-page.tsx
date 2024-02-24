@@ -2,7 +2,7 @@
 
 import {faRight} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, Suspense} from "react";
-import {AdditionalProps, GeneralIcon, LinkIconbag, MultiLineText, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, GoogleAdsense, LinkIconbag, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
 import {NotificationList} from "/client-new/component/compound/notification-list";
 import {MainContainer, Page} from "/client-new/component/compound/page";
@@ -44,6 +44,9 @@ export const TopPage = create(
         <div styleName="main-outer">
           <MainContainer styleName="main">
             <Suspense>
+              <div styleName="adsense">
+                <GoogleAdsense clientId="9429549748934508" slotId="2898231395"/>
+              </div>
               <section styleName="section">
                 <h2 styleName="heading">{trans("heading.gift")}</h2>
                 <GiftView/>

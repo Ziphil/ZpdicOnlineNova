@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {ReactElement, SetStateAction, useCallback} from "react";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, GoogleAdsense} from "zographia";
 import {Markdown} from "/client-new/component/atom/markdown";
 import {SearchWordForm} from "/client-new/component/compound/search-word-form";
 import {SuggestionCard} from "/client-new/component/compound/suggestion-card";
@@ -51,6 +51,9 @@ export const DictionaryMainPart = create(
           </div>
         </div>
         <div styleName="right">
+          <div styleName="adsense">
+            <GoogleAdsense clientId="9429549748934508" slotId="2898231395"/>
+          </div>
           {(debouncedQuery.showExplanation && !!dictionary.explanation) ? (
             <Markdown mode="normal">
               {dictionary.explanation}

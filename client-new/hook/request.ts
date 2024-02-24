@@ -16,7 +16,15 @@ import {switchResponse} from "/client-new/util/response";
 import {ProcessName, RequestData, ResponseData, SuccessResponseData} from "/server/controller/internal/type";
 
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false
+    }
+  }
+});
 
 export function useRequest(): typeof rawRequest {
   const {dispatchErrorToast} = useToast();
