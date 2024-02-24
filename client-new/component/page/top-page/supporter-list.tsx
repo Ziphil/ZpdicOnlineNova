@@ -1,6 +1,6 @@
 //
 
-import {faFish} from "@fortawesome/sharp-regular-svg-icons";
+import {faUser} from "@fortawesome/sharp-regular-svg-icons";
 import axios from "axios";
 import {ReactElement} from "react";
 import {useQuery} from "react-query";
@@ -34,7 +34,7 @@ export const SupporterList = create(
         {resolvedSupporters?.map((resolvedSupporter) => (
           <li styleName="item" key={resolvedSupporter.name}>
             <Avatar styleName="avatar" url={resolvedSupporter.avatarUrl}>
-              <AvatarFallbackIconContainer hue={30}><GeneralIcon icon={faFish}/></AvatarFallbackIconContainer>
+              <AvatarFallbackIconContainer hue={30}><GeneralIcon icon={faUser}/></AvatarFallbackIconContainer>
             </Avatar>
             {(resolvedSupporter.linkUrl !== undefined) ? (
               <Link href={resolvedSupporter.linkUrl} scheme="secondary" target="_blank">{resolvedSupporter.name}</Link>

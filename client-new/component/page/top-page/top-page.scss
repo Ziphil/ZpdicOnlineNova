@@ -23,9 +23,16 @@
 }
 
 .row {
-  column-gap: 8zu;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  @include device("desktop") {
+    column-gap: 8zu;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include device("mobile") {
+    row-gap: 8zu;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .section {
