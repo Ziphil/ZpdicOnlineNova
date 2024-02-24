@@ -257,6 +257,9 @@ searchWordForm:
   ignoreCase: "Ignore letter case"
   enableSuggestions: "Suggest variations"
   shuffleResult: "Shuffle results"
+suggestionCard:
+  maybe: "Do you mean…"
+  message: "{title} <mute>of</mute> {nameNode}"
 userHeader:
   tab:
     dictionary: "Dictionaries"

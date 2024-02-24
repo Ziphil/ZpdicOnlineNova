@@ -257,6 +257,9 @@ searchWordForm:
   ignoreCase: "Ignori usklecon"
   enableSuggestions: "Sugesti variaĵojn"
   shuffleResult: "Miksi rezultojn"
+suggestionCard:
+  maybe: "Ĉu vi celas…"
+  message: "{title} <mute>de</mute> {nameNode}"
 userHeader:
   tab:
     dictionary: "Vortaroj"

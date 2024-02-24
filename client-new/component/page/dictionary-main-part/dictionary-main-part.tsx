@@ -4,6 +4,7 @@ import {ReactElement, SetStateAction, useCallback} from "react";
 import {AdditionalProps} from "zographia";
 import {Markdown} from "/client-new/component/atom/markdown";
 import {SearchWordForm} from "/client-new/component/compound/search-word-form";
+import {SuggestionCard} from "/client-new/component/compound/suggestion-card";
 import {WordList} from "/client-new/component/compound/word-list";
 import {create} from "/client-new/component/create";
 import {useDictionary} from "/client-new/hook/dictionary";
@@ -55,7 +56,10 @@ export const DictionaryMainPart = create(
               {dictionary.explanation}
             </Markdown>
           ) : (
-            <WordList dictionary={dictionary} words={hitWords} canEdit={canEdit} pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+            <div styleName="main">
+              <SuggestionCard dictionary={dictionary} suggestions={hitSuggestions}/>
+              <WordList dictionary={dictionary} words={hitWords} canEdit={canEdit} showEmpty={hitSuggestions.length <= 0} pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+            </div>
           )}
         </div>
       </div>

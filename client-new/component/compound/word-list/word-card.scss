@@ -6,7 +6,6 @@
 .root {
   @include theme("light") {
     --information-heading-text-color: #{leveled-color("gray", 7)};
-    --divider-color: #{leveled-color("gray", 1)};
   }
 }
 

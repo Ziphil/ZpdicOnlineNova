@@ -257,6 +257,9 @@ searchWordForm:
   ignoreCase: "Игноровати велике/мале буквы"
   enableSuggestions: "Прєдлагати вариације"
   shuffleResult: "Смєшати резултаты"
+suggestionCard:
+  maybe: "Do you mean…"
+  message: "{title} <mute>of</mute> {nameNode}"
 userHeader:
   tab:
     dictionary: "Словникы"

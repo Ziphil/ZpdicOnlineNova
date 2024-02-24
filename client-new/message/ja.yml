@@ -257,6 +257,9 @@ searchWordForm:
   ignoreCase: "大小文字を区別しない"
   enableSuggestions: "変化形をサジェスト"
   shuffleResult: "検索結果をシャッフル"
+suggestionCard:
+  maybe: "もしかして…"
+  message: "{nameNode} <mute>の</mute> {title}"
 userHeader:
   tab:
     dictionary: "辞書"

@@ -16,12 +16,14 @@ export const WordList = create(
     dictionary,
     words,
     canEdit,
+    showEmpty = true,
     pageSpec,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     words: Array<Word | DetailedWord>,
     canEdit: boolean,
+    showEmpty?: boolean,
     pageSpec: PageSpec,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -33,24 +35,28 @@ export const WordList = create(
         <ListBody styleName="body">
           {(word) => <WordCard key={word.id} dictionary={dictionary} word={word}/>}
           <ListLoadingView/>
-          <ListEmptyView styleName="empty">
-            <span>{trans("empty")}</span>
-            {(canEdit) ? (
-              <EditWordDialog dictionary={dictionary} word={null} trigger={(
-                <Button scheme="gray" variant="light">
-                  <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-                  {trans("button.create")}
-                </Button>
-              )}/>
-            ) : (
-              <AddCommissionDialog dictionary={dictionary} trigger={(
-                <Button scheme="gray" variant="light">
-                  <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
-                  {trans("button.commission")}
-                </Button>
-              )}/>
-            )}
-          </ListEmptyView>
+          {(showEmpty) ? (
+            <ListEmptyView styleName="empty">
+              <span>{trans("empty")}</span>
+              {(canEdit) ? (
+                <EditWordDialog dictionary={dictionary} word={null} trigger={(
+                  <Button scheme="gray" variant="light">
+                    <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+                    {trans("button.create")}
+                  </Button>
+                )}/>
+              ) : (
+                <AddCommissionDialog dictionary={dictionary} trigger={(
+                  <Button scheme="gray" variant="light">
+                    <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
+                    {trans("button.commission")}
+                  </Button>
+                )}/>
+              )}
+            </ListEmptyView>
+          ) : (
+            <div/>
+          )}
         </ListBody>
         <ListPagination styleName="pagination"/>
       </List>
