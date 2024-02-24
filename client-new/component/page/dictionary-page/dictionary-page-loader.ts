@@ -6,7 +6,6 @@ import {ResponseError} from "/client-new/util/error";
 
 
 export async function loadDictionaryPage({params}: LoaderFunctionArgs): Promise<null> {
-  console.log("loader!");
   const {identifier} = params;;
   const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
   try {
