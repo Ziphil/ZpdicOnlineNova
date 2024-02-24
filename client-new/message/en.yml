@@ -570,10 +570,28 @@ topPage:
     dictionary: "{count, plural, one {Dictionary} other {Dictionaries}}"
     word: "{count, plural, one {Word} other {Words}}"
     example: "{count, plural, one {Sentence} other {Sentences}}"
+  catch: "Draw{wbr} your own universe{wbr} with conlang"
   heading:
+    gift: "I need your support"
     notification: "Latest news"
-  moreNotifications: "Read more news"
-  catch: "Draw<wbr></wbr> your own universe<wbr></wbr> with conlang"
+    github: "GitHub"
+    supporter: "Supporters"
+  message:
+    gift: >-
+      ZpDIC Online is being developed and maintained by a single programmer, but it costs several hundred dollars per year to keep the service running.
+      To maintain and improve the service, your support is needed!
+      If you like this application, please send a gift to the developer via the button below.
+  description:
+    github: >-
+      The source code of this application is available on GitHub.
+      I hope you find it useful.
+    supporter: >-
+      Here are the people who have supported this application in some way.
+      I would like to take this opportunity to thank them.
+  subbutton:
+    gift: "Send gift"
+    notification: "Read more news"
+    github: "View on Github"
 userSettingPart:
   heading:
     screenName: "Nickname"

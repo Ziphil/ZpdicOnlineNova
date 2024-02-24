@@ -569,10 +569,28 @@ topPage:
     dictionary: "{count, plural, one {Vortaro} other {Vortaroj}}"
     word: "{count, plural, one {Vorto} other {Vortoj}}"
     example: "{count, plural, one {Frazo} other {Frazoj}}"
+  catch: "Desegnu{wbr} vian propran universon{wbr} per conlingvo"
   heading:
+    gift: "Mi bezonas vian subtenon"
     notification: "Lastatempa novaĵo"
-  moreNotifications: "Legi pli da novaĵoj"
-  catch: "Desegnu<wbr></wbr> vian propran universon<wbr></wbr> per conlingvo"
+    github: "GitHub"
+    supporter: "Subtenantoj"
+  message:
+    gift: >-
+      ZpDIC Online estas evoluigata kaj prizorgata de ununura programisto, sed kostas kelkcent dolarojn jare por konservi la servon.
+      Por daŭrigi kaj plibonigi la servon, via subteno estas necesa!
+      Se vi ŝatas tiun aplikaĵon, bonvolu sendi donacon al la programisto per la suba butono.
+  description:
+    github: >-
+      La fontkodo de tiu aplikaĵo estas havebla ĉe GitHub.
+      Mi esperas ke vi trovos ĝin utila.
+    supporter: >-
+      Jen la homoj kiuj iel subtenis tiun aplikaĵon.
+      Mi ŝatus profiti tiun okazon por danki ilin.
+  subbutton:
+    gift: "Sendi donacon"
+    notification: "Legi pli da novaĵoj"
+    github: "Vidi sur Github"
 userSettingPart:
   heading:
     screenName: "Kromnomo"

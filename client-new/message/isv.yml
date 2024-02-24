@@ -569,10 +569,28 @@ topPage:
     dictionary: "{count, plural, one {Словник} few {Словникы} other {Словников}}"
     word: "{count, plural, one {Слово} few {Слова} other {Слов}}"
     example: "{count, plural, one {Рєченје} few {Рєченја} other {Рєчениј}}"
+  catch: "Рысујте{wbr} свој всесвєт{wbr} со сконструованым језыком"
   heading:
+    gift: "I need your support"
     notification: "Послєдне новости"
-  moreNotifications: "Читати новости вече"
-  catch: "Рысујте<wbr></wbr> свој всесвєт<wbr></wbr> со сконструованым језыком"
+    github: "GitHub"
+    supporter: "Supporters"
+  message:
+    gift: >-
+      ZpDIC Online is being developed and maintained by a single programmer, but it costs several hundred dollars per year to keep the service running.
+      To maintain and improve the service, your support is needed!
+      If you like this application, please send a gift to the developer via the button below.
+  description:
+    github: >-
+      The source code of this application is available on GitHub.
+      I hope you find it useful.
+    supporter: >-
+      Here are the people who have supported this application in some way.
+      I would like to take this opportunity to thank them.
+  subbutton:
+    gift: "Send gift"
+    notification: "Читати новости вече"
+    github: "View on Github"
 userSettingPart:
   heading:
     screenName: "ニックネーム"

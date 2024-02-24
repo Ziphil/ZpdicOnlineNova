@@ -567,10 +567,28 @@ topPage:
     dictionary: "辞書"
     word: "単語"
     example: "例文"
+  catch: "Draw{wbr} your own universe{wbr} with conlang"
   heading:
+    gift: "支援のお願い"
     notification: "最新のお知らせ"
-  moreNotifications: "他のお知らせも見る"
-  catch: "Draw<wbr></wbr> your own universe<wbr></wbr> with conlang"
+    github: "GitHub"
+    supporter: "スペシャルサンクス"
+  message:
+    gift: >-
+      ZpDIC Online は個人によって開発および保守されていますが、サービスの維持だけで年間数万円ほどかかってしまいます。
+      サービスの持続および向上には、皆様の支援が必要です。
+      もしこのアプリが気に入りましたら、ぜひ下記のボタンから開発者にギフトをお送りください。
+  description:
+    github: >-
+      このアプリケーションのソースコードは GitHub 上で公開されています。
+      何かの参考になりましたら幸いです。
+    supporter: >-
+      何らかの形でこのアプリケーションを支援してくださった方たちです。
+      この場を借りてお礼申し上げます。
+  subbutton:
+    gift: "ギフトを送る"
+    notification: "他のお知らせも見る"
+    github: "Github で見る"
 userSettingPart:
   heading:
     screenName: "ニックネーム"
