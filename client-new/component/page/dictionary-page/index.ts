@@ -1,4 +1,4 @@
 //
 
 export {DictionaryPage as Component} from "./dictionary-page";
-export {loadDictionaryPage as loader} from "./dictionary-page-loader";
+export {loadDictionaryPage as loader, shouldRevalidateDictionaryPage as shouldRevalidate} from "./dictionary-page-loader";

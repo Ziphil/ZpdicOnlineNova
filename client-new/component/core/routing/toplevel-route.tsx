@@ -17,7 +17,7 @@ export const ToplevelRoute = create(
 
     useEffect(() => {
       sendAnalyticsEvent("page_view", [["page_path", location.pathname]]);
-    }, [location]);
+    }, [location.pathname]);
 
     return (
       <Suspense fallback={<LoadingPage/>}>

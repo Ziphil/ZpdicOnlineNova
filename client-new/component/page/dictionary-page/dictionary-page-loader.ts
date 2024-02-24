@@ -1,11 +1,12 @@
 //
 
-import {LoaderFunctionArgs} from "react-router-dom";
+import {LoaderFunctionArgs, ShouldRevalidateFunctionArgs} from "react-router-dom";
 import {fetchResponse} from "/client-new/hook/request";
 import {ResponseError} from "/client-new/util/error";
 
 
 export async function loadDictionaryPage({params}: LoaderFunctionArgs): Promise<null> {
+  console.log("loader!");
   const {identifier} = params;;
   const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
   try {
@@ -14,6 +15,10 @@ export async function loadDictionaryPage({params}: LoaderFunctionArgs): Promise<
   } catch (error) {
     throw convertError(error);
   }
+}
+
+export function shouldRevalidateDictionaryPage({currentUrl, nextUrl}: ShouldRevalidateFunctionArgs): boolean {
+  return currentUrl.pathname !== nextUrl.pathname;
 }
 
 function convertError(error: unknown): unknown {
