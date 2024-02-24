@@ -590,7 +590,7 @@ topPage:
   subbutton:
     gift: "Sendi donacon"
     notification: "Legi pli da novaĵoj"
-    github: "Vidi sur Github"
+    github: "Vidi sur GitHub"
 userSettingPart:
   heading:
     screenName: "Kromnomo"

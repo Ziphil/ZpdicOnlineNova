@@ -588,7 +588,7 @@ topPage:
   subbutton:
     gift: "ギフトを送る"
     notification: "他のお知らせも見る"
-    github: "Github で見る"
+    github: "GitHub で見る"
 userSettingPart:
   heading:
     screenName: "ニックネーム"

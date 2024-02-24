@@ -590,7 +590,7 @@ topPage:
   subbutton:
     gift: "Send gift"
     notification: "Читати новости вече"
-    github: "View on Github"
+    github: "View on GitHub"
 userSettingPart:
   heading:
     screenName: "ニックネーム"
