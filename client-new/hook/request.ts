@@ -94,11 +94,11 @@ export async function fetchResponse<N extends ProcessName>(name: N, data: Reques
 export async function prefetchResponse<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<void> {
   await queryClient.prefetchQuery([name, data], async () => {
     const response = await rawRequest(name, data, config);
-    if (response.status !== 200) {
+    return switchResponse(response, (data) => {
+      return data;
+    }, () => {
       throw new QueryError(name, data, response);
-    } else {
-      return response.data;
-    }
+    });
   });
 }
 

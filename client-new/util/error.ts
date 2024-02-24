@@ -20,7 +20,7 @@ export class QueryError<N extends ProcessName> extends Error {
     this.name = "QueryError";
     this.queryName = name;
     this.status = response.status;
-    this.type = response.data?.type;
+    this.type = response.data?.type ?? "unexpected";
     this.requestData = data;
     this.responseData = response.data;
   }
