@@ -13,7 +13,7 @@ export class QueryError<N extends ProcessName> extends Error {
   public responseData: ResponseData<N>;
 
   public constructor(name: N, data: RequestData<N>, response: AxiosResponseSpec<N>) {
-    super(`${response.status} ${name} | ${JSON.stringify(data)}`);
+    super(`${response.status} ${response.data?.type} <- ${name} ${JSON.stringify(data)}`);
     if (Error.captureStackTrace) {
       Error.captureStackTrace(this, QueryError);
     }
