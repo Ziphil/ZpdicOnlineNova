@@ -19,6 +19,8 @@ import {ProcessName, RequestData, ResponseData, SuccessResponseData} from "/serv
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      cacheTime: 1000 * 60 * 60,
+      staleTime: 1000 * 60 * 10,
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       refetchOnReconnect: false
