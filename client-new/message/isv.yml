@@ -532,10 +532,14 @@ dictionarySettingGeneralPart:
 errorPage:
   heading:
     notFound: "Не\nНајдены"
+    forbidden: "Access\nDenied"
   message:
     notFound: >-
       Страница ктору вы ишчете не была најдена.
       Она можно была одстрањена или прємєшчена в ино мєсто, затом прошу попробујте поискати ју опет из главној странице.
+    forbidden: >-
+      You don't have permission to view this page.
+      Please return to the top page for other contents.
     error: >-
       An unexpected error has occurred.
       Please contact the administrator with the following error message.

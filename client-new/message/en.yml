@@ -533,10 +533,14 @@ dictionarySettingGeneralPart:
 errorPage:
   heading:
     notFound: "Not\nFound"
+    forbidden: "Access\nDenied"
   message:
     notFound: >-
       The page you are looking for could not be found.
       It may have been deleted or moved to another location, so please try looking again from the top page.
+    forbidden: >-
+      You don't have permission to view this page.
+      Please return to the top page for other contents.
     error: >-
       An unexpected error has occurred.
       Please contact the administrator with the following error message.

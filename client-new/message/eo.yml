@@ -532,10 +532,14 @@ dictionarySettingGeneralPart:
 errorPage:
   heading:
     notFound: "Ne\nTrovita"
+    forbidden: "Aliro\nMalpermesita"
   message:
     notFound: >-
       La paĝo kiun vi serĉas ne estis trovita.
       Ĝi eble estis forigita aŭ movita al alia loko, do bonvolu provi serĉi denove el la ĉefpaĝo.
+    forbidden: >-
+      Vi ne havas permeson vidi tiun paĝon.
+      Bonvolu reveni al la ĉefpaĝo por aliaj enhavoj.
     error: >-
       Neatendita eraro okazis.
       Bonvolu kontakti la administranton kun la jena erara mesaĝo.

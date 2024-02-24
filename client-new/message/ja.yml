@@ -530,10 +530,14 @@ dictionarySettingGeneralPart:
 errorPage:
   heading:
     notFound: "Not\nFound"
+    forbidden: "Access\nDenied"
   message:
     notFound: >-
       お探しのページが見つかりませんでした。
       削除されたか別の場所に移動された可能性がありますので、トップページから再度お探しください。
+    forbidden: >-
+      このページにアクセスする権限がありません。
+      トップページに戻り、他のコンテンツをお探しください。
     error: >-
       原因不明のエラーが発生しました。
       お手数ですが、以下のエラーメッセージとともに管理者にご連絡ください。

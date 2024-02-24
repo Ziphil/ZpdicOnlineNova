@@ -5,12 +5,17 @@ import {fetchResponse} from "/client-new/hook/request";
 import {QueryError} from "/client-new/util/error";
 
 
-export async function loadDictionaryPage({params}: LoaderFunctionArgs): Promise<null> {
+export async function loadDictionarySettingPart({params}: LoaderFunctionArgs): Promise<null> {
   const {identifier} = params;;
   const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
   try {
     const dictionary = await fetchResponse("fetchDictionary", {number, paramName});
-    return null;
+    const canOwn = await fetchResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "own"});
+    if (canOwn) {
+      return null;
+    } else {
+      throw new Response(null, {status: 403});
+    }
   } catch (error) {
     throw convertError(error);
   }

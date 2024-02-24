@@ -25,8 +25,8 @@ export class QueryError<N extends ProcessName> extends Error {
     this.responseData = response.data;
   }
 
-  public static isQueryError(error: Error): error is QueryError<ProcessName> {
-    return error.name === "QueryError";
+  public static isQueryError(error: unknown): error is QueryError<ProcessName> {
+    return error instanceof Error && error.name === "QueryError";
   }
 
 }

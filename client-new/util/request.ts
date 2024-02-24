@@ -2,14 +2,9 @@
 
 import axios from "axios";
 import {AxiosRequestConfig, AxiosResponse} from "axios";
+import {appendValueToFormData, toFormData} from "/client-new/util/form-data";
 import {RECAPTCHA_KEY} from "/client-new/variable";
-import {
-  ProcessName,
-  RequestData,
-  ResponseData,
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
+import {ProcessName, RequestData, ResponseData, SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/controller/internal/type";
 
 
 const client = axios.create({timeout: 10000, validateStatus: () => true});
@@ -24,7 +19,7 @@ export async function request<N extends ProcessName>(name: N, data: RequestData<
   if (config.useRecaptcha) {
     const action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : name;
     const recaptchaToken = await grecaptcha.execute(RECAPTCHA_KEY, {action});
-    appendValue(data, "recaptchaToken", recaptchaToken);
+    appendValueToFormData(data, "recaptchaToken", recaptchaToken);
   }
   try {
     const response = await client.request({method: "post", url, ...config, data});
@@ -77,24 +72,6 @@ export function determineErrorToastType(response: AxiosResponse<any>): string {
   } else {
     return "unexpected";
   }
-}
-
-function appendValue(data: FormData | Record<string, any>, key: string, value: string): void {
-  if (data !== undefined) {
-    if (data instanceof FormData) {
-      data.append("key", "value");
-    } else {
-      data[key] = value;
-    }
-  }
-}
-
-function toFormData(data: Record<string, any>): FormData {
-  const formData = new FormData();
-  for (const [key, value] of Object.entries(data)) {
-    formData.append(key, value);
-  }
-  return formData;
 }
 
 type AdditionalRequestConfig = {
