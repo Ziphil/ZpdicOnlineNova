@@ -1,7 +1,8 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {ReactElement, useCallback, useState} from "react";
-import {AdditionalProps, GoogleAdsense} from "zographia";
+import {AdditionalProps} from "zographia";
+import {GoogleAdsense} from "/client-new/component/atom/google-adsense";
 import {ExampleList} from "/client-new/component/compound/example-list";
 import {SearchExampleForm} from "/client-new/component/compound/search-example-form";
 import {create} from "/client-new/component/create";
