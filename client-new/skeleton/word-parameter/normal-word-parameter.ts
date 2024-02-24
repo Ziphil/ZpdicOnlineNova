@@ -35,7 +35,7 @@ export namespace NormalWordParameter {
     options: {
       ignore: {case: false},
       shuffleSeed: null,
-      enableSuggestions: false
+      enableSuggestions: true
     }
   } satisfies NormalWordParameter;
 
