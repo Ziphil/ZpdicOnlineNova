@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  @include theme("light") {
+    --text-color: #{leveled-color("primary", 5)};
+    --link-text-color: #{leveled-color("secondary", 5)};
+    --link-hover-text-color: #{leveled-color("secondary", 6)};
+    --border-color: #{leveled-color("primary", 1)};
+    --background-color: #{single-color("background-light")};
+  }
+}
+
+.root {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-self: flex-start;
+  cursor: pointer;
+}
+
+.star {
+  column-gap: 3zu;
+  display: flex;
+  align-items: center;
+  color: var(--text-color);
+}
+
+.github-icon {
+  font-size: 8zu;
+}
+
+.balloon {
+  padding-block: 1.5zu;
+  padding-inline: 2zu;
+  column-gap: 1zu;
+  font-size: 6zu;
+  border: solid 1zx var(--border-color);
+  border-radius: var(--glob-border-radius);
+  display: flex;
+  position: relative;
+}
+
+.arrow {
+  inset-inline: -1zx;
+  inset-block: 50%;
+  width: 2zu;
+  height: 2zu;
+  background-color: var(--background-color);
+  border-start-start-radius: var(--glob-border-radius);
+  border-block-start: solid 1zx var(--border-color);
+  border-inline-start: solid 1zx var(--border-color);
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(-45deg);
+  z-index: 1;
+}
+
+.text {
+  color: var(--link-text-color);
+  text-decoration-line: underline;
+  text-decoration-color: var(--link-text-color);
+  transition: 0.1s color, 0.1s text-decoration-color;
+  .root:hover & {
+    color: var(--link-hover-text-color);
+    text-decoration-color: transparent;
+  }
+}

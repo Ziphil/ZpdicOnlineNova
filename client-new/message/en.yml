@@ -257,6 +257,9 @@ searchWordForm:
   ignoreCase: "Ignore letter case"
   enableSuggestions: "Suggest variations"
   shuffleResult: "Shuffle results"
+suggestionCard:
+  maybe: "Do you mean…"
+  message: "{title} <mute>of</mute> {nameNode}"
 userHeader:
   tab:
     dictionary: "Dictionaries"
@@ -533,10 +536,14 @@ dictionarySettingGeneralPart:
 errorPage:
   heading:
     notFound: "Not\nFound"
+    forbidden: "Access\nDenied"
   message:
     notFound: >-
       The page you are looking for could not be found.
       It may have been deleted or moved to another location, so please try looking again from the top page.
+    forbidden: >-
+      You don't have permission to view this page.
+      Please return to the top page for other contents.
     error: >-
       An unexpected error has occurred.
       Please contact the administrator with the following error message.
@@ -563,10 +570,28 @@ topPage:
     dictionary: "{count, plural, one {Dictionary} other {Dictionaries}}"
     word: "{count, plural, one {Word} other {Words}}"
     example: "{count, plural, one {Sentence} other {Sentences}}"
+  catch: "Draw{wbr} your own universe{wbr} with conlang"
   heading:
+    gift: "I need your support"
     notification: "Latest news"
-  moreNotifications: "Read more news"
-  catch: "Draw<wbr></wbr> your own universe<wbr></wbr> with conlang"
+    github: "GitHub"
+    supporter: "Supporters"
+  message:
+    gift: >-
+      ZpDIC Online is being developed and maintained by a single programmer, but it costs several hundred dollars per year to keep the service running.
+      To maintain and improve the service, your support is needed!
+      If you like this application, please send a gift to the developer via the button below.
+  description:
+    github: >-
+      The source code of this application is available on GitHub.
+      I hope you find it useful.
+    supporter: >-
+      Here are the people who have supported this application in some way.
+      I would like to take this opportunity to thank them.
+  subbutton:
+    gift: "Send gift"
+    notification: "Read more news"
+    github: "View on GitHub"
 userSettingPart:
   heading:
     screenName: "Nickname"

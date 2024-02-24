@@ -1,0 +1,21 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  row-gap: 2zu;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.item {
+  list-style: none;
+}
+
+.avatar {
+  margin-block: -0.25em;
+  margin-inline-end: var(--glob-blank-gap);
+  inset-block-end: 0em;
+  position: relative;
+}

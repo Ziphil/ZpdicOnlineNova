@@ -26,7 +26,7 @@ export const ResourceList = create(
     return (
       <List styleName="root" items={resources} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(resource) => <ResourceCard key={resource.id} dictionary={dictionary} resource={resource}/>}
+          {(resource) => <ResourceCard key={resource} dictionary={dictionary} resource={resource}/>}
           <ListLoadingView styleName="loading"/>
           <ListEmptyView styleName="loading">
             {trans("empty")}

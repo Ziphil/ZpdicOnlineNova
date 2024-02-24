@@ -3,7 +3,7 @@
 import {useCallback} from "react";
 import {QueryClient, UseQueryOptions, UseQueryResult, useQuery as useRawQuery} from "react-query";
 import {useToast} from "/client-new/hook/toast";
-import {QueryError} from "/client-new/util/error";
+import {ResponseError} from "/client-new/util/error";
 import {
   AxiosResponseSpec,
   RequestConfig,
@@ -16,7 +16,17 @@ import {switchResponse} from "/client-new/util/response";
 import {ProcessName, RequestData, ResponseData, SuccessResponseData} from "/server/controller/internal/type";
 
 
-export const queryClient = new QueryClient();
+export const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      cacheTime: 1000 * 60 * 60,
+      staleTime: 1000 * 60 * 10,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      refetchOnReconnect: false
+    }
+  }
+});
 
 export function useRequest(): typeof rawRequest {
   const {dispatchErrorToast} = useToast();
@@ -51,7 +61,7 @@ export function useResponse<N extends ProcessName>(name: N, data: RequestData<N>
       return switchResponse(response, (data) => {
         return data;
       }, () => {
-        throw new QueryError(name, data, response);
+        throw new ResponseError(name, data, response);
       });
     } else {
       throw new Error("[BUG] cannot happen");
@@ -68,7 +78,7 @@ export function useSuspenseResponse<N extends ProcessName>(name: N, data: Reques
     return switchResponse(response, (data) => {
       return data;
     }, () => {
-      throw new QueryError(name, data, response);
+      throw new ResponseError(name, data, response);
     });
   }, {suspense: true, ...config});
   const responseData = responseResult.data;
@@ -85,7 +95,7 @@ export async function fetchResponse<N extends ProcessName>(name: N, data: Reques
     return switchResponse(response, (data) => {
       return data;
     }, () => {
-      throw new QueryError(name, data, response);
+      throw new ResponseError(name, data, response);
     });
   });
   return responseResult;
@@ -94,11 +104,11 @@ export async function fetchResponse<N extends ProcessName>(name: N, data: Reques
 export async function prefetchResponse<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<void> {
   await queryClient.prefetchQuery([name, data], async () => {
     const response = await rawRequest(name, data, config);
-    if (response.status !== 200) {
-      throw new QueryError(name, data, response);
-    } else {
-      return response.data;
-    }
+    return switchResponse(response, (data) => {
+      return data;
+    }, () => {
+      throw new ResponseError(name, data, response);
+    });
   });
 }
 

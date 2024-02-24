@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {ReactElement, useCallback, useState} from "react";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, GoogleAdsense} from "zographia";
 import {ExampleList} from "/client-new/component/compound/example-list";
 import {SearchExampleForm} from "/client-new/component/compound/search-example-form";
 import {create} from "/client-new/component/create";
@@ -36,6 +36,9 @@ export const DictionaryExamplePart = create(
           </div>
         </div>
         <div styleName="right">
+          <div styleName="adsense">
+            <GoogleAdsense clientId="9429549748934508" slotId="2898231395"/>
+          </div>
           <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 40, hitSize, page, onPageSet: handlePageSet}}/>
         </div>
       </div>

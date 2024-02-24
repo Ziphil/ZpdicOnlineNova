@@ -34,7 +34,7 @@ import {
 export class ResourceController extends Controller {
 
   @post(SERVER_PATHS["fetchUploadResourcePost"])
-  @before(verifyRecaptcha(), verifyUser(), verifyDictionary("own"))
+  @before(verifyRecaptcha(), verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"fetchUploadResourcePost">, response: Response<"fetchUploadResourcePost">): Promise<void> {
     const dictionary = request.dictionary!;
     const name = request.body.name;
@@ -63,7 +63,7 @@ export class ResourceController extends Controller {
   }
 
   @post(SERVER_PATHS["discardResource"])
-  @before(verifyUser(), verifyDictionary("own"))
+  @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"discardResource">, response: Response<"discardResource">): Promise<void> {
     const dictionary = request.dictionary!;
     const name = request.body.name;
@@ -83,7 +83,7 @@ export class ResourceController extends Controller {
   }
 
   @post(SERVER_PATHS["fetchResources"])
-  @before(verifyUser(), verifyDictionary("own"))
+  @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"fetchResources">, response: Response<"fetchResources">): Promise<void> {
     const dictionary = request.dictionary!;
     const offset = request.body.offset;
