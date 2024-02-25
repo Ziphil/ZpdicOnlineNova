@@ -122,6 +122,10 @@ export async function invalidateResponses<N extends ProcessName>(name: N, predic
   }});
 }
 
+export async function invalidateAllResponses(): Promise<void> {
+  await queryClient.invalidateQueries();
+}
+
 type ResponseConfig<N extends ProcessName> = RequestConfig & UseQueryOptions<ResponseData<N>>;
 type ResponseRest<N extends ProcessName> = Omit<UseQueryResult<ResponseData<N>>, "data" | "error">;
 
