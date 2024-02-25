@@ -33,7 +33,7 @@ export const SupporterList = create(
       <ul styleName="root" {...rest}>
         {resolvedSupporters?.map((resolvedSupporter) => (
           <li styleName="item" key={resolvedSupporter.name}>
-            <Avatar styleName="avatar" url={resolvedSupporter.avatarUrl}>
+            <Avatar styleName="avatar" url={resolvedSupporter.avatarUrl} inline={true}>
               <AvatarFallbackIconContainer hue={30}><GeneralIcon icon={faUser}/></AvatarFallbackIconContainer>
             </Avatar>
             {(resolvedSupporter.linkUrl !== undefined) ? (

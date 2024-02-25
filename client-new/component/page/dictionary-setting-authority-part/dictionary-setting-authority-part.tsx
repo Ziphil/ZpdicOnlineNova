@@ -2,7 +2,7 @@
 
 import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
-import {AdditionalProps, MultiLineText, useTrans} from "zographia";
+import {AdditionalProps, MultiLineText, data, useTrans} from "zographia";
 import {DictionaryAuthorizedUserList} from "/client-new/component/compound/dictionary-authorized-user-list";
 import {create} from "/client-new/component/create";
 import {AddEditInvitationButton} from "/client-new/component/form/add-edit-invitation-button";
@@ -35,7 +35,7 @@ export const DictionarySettingAuthorityPart = create(
           </div>
         </section>
         <section styleName="section">
-          <h3 styleName="heading">{trans("heading.transferInvitation")}</h3>
+          <h3 styleName="heading" {...data({danger: true})}>{trans("heading.transferInvitation")}</h3>
           <AddTransferInvitationButton dictionary={dictionary}/>
         </section>
       </div>

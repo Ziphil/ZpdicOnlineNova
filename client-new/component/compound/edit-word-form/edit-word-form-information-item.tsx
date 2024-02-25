@@ -5,10 +5,10 @@ import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
-  Button,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  IconButton,
   Input,
   SuggestionSpec,
   Textarea,
@@ -77,9 +77,9 @@ export const EditWordFormInformationItem = create(
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <Button scheme="gray" variant="light" onClick={() => informationOperations.remove(index)}>
+          <IconButton scheme="gray" variant="light" label={trans("discard.information")} onClick={() => informationOperations.remove(index)}>
             <GeneralIcon icon={faMinus}/>
-          </Button>
+          </IconButton>
         </div>
       </div>
     );

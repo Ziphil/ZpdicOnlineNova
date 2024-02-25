@@ -40,6 +40,7 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/login" lazy={() => import("/client-new/component/page/login-page")}/>
     <Route path="/register" lazy={() => import("/client-new/component/page/register-page")}/>
     <Route path="/reset" lazy={() => import("/client-new/component/page/reset-user-password-page")}/>
+    <Route path="/activate" lazy={() => import("/client-new/component/page/activate-me-page")}/>
   </Route>
 ), {basename: "/next"});
 

@@ -127,6 +127,8 @@ editExampleForm:
   button:
     add:
       word: "使用単語を追加"
+    discard:
+      word: "削除"
     confirm: "決定"
 editWordDialog:
   button:
@@ -166,6 +168,11 @@ editWordForm:
       information: "内容を追加"
       variation: "変化形を追加"
       relation: "関連語を追加"
+    discard:
+      equivalent: "削除"
+      information: "削除"
+      variation: "削除"
+      relation: "削除"
     generate: "生成"
     confirm: "決定"
 exampleList:
@@ -196,10 +203,10 @@ invitationList:
     transfer: "譲渡"
   explanation:
     edit: >-
-      <user></user> がこの辞書の編集権限を付与しようとしています。
+      {userNode} がこの辞書の編集権限を付与しようとしています。
       これを承認すると、この辞書を編集できるようになります。
     transfer: >-
-      <user></user> がこの辞書を譲渡しようとしています。
+      {userNode} がこの辞書を譲渡しようとしています。
       これを承認すると、この辞書の管理者に代わりになります。
   dialog:
     reject:
@@ -266,6 +273,13 @@ userHeader:
     notification: "通知"
     setting: "設定"
     logout: "ログアウト"
+  button:
+    issueActivateToken: "メールを再送信"
+  callout:
+    activate: >-
+      このユーザーはまだアクティベートされていません。
+      アカウント作成時に送られたメールの指示に従って、ユーザーをアクティベートしてください。
+      アクティベートされていないユーザーは、機能を制限される可能性があります。
 wordList:
   empty: "該当する単語は見つかりませんでした"
   button:
@@ -434,6 +448,24 @@ changeMyScreenNameForm:
   error:
     required: >-
       ニックネームを入力してください。
+discardDictionaryButton:
+  button:
+    submit: "削除"
+  dialog:
+    message: >-
+      この辞書を削除します。
+      削除した後にデータを戻すことはできません。
+      本当によろしいですか?
+    confirm: "削除"
+discardMeButton:
+  button:
+    submit: "削除"
+  dialog:
+    message: >-
+      アカウントを削除します。
+      削除した後にデータを戻すことはできません。
+      本当によろしいですか?
+    confirm: "削除"
 downloadDictionaryButton:
   button:
     start: "エクスポート"
@@ -523,13 +555,21 @@ dictionarySettingGeneralPart:
     name: "名前"
     paramName: "URL 用識別子"
     explanation: "説明"
-    secret: "一覧ページでの表示/非表示"
+    secret: "辞書一覧での表示/非表示"
+    discard: "削除"
   description:
     paramName: >-
       これを設定すると、辞書ページの URL として、番号の部分をこの識別子に置き換えたものが利用できるようになります。
     explanation: >-
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
       一部の Markdown 形式に対応しています。
+    secret: >-
+      これを「非表示」に設定すると、この辞書が辞書一覧に表示されなくなります。
+      ただし、辞書ページの URL を知っている人は直接アクセスすることができます。
+  callout:
+    discard: >-
+      この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
+      後からデータを復元することはできないので、慎重に行ってください。
 errorPage:
   heading:
     notFound: "Not\nFound"
@@ -594,3 +634,8 @@ userSettingPart:
     screenName: "ニックネーム"
     email: "メールアドレス"
     password: "パスワード"
+    discard: "アカウント削除"
+  callout:
+    discard: >-
+      アカウントを削除すると、所有している辞書も全て削除されます。
+      後からデータを復元することはできないので、慎重に行ってください。

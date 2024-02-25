@@ -4,7 +4,7 @@ import axios from "axios";
 import {useCallback} from "react";
 import {atom, useRecoilValue, useSetRecoilState} from "recoil";
 import {AxiosResponseSpec, RequestConfig} from "/client/util/request";
-import {useRequest} from "/client-new/hook/request";
+import {invalidateAllResponses, useRequest} from "/client-new/hook/request";
 import {DetailedUser} from "/client-new/skeleton";
 import {setAnalyticsProperties} from "/client-new/util/gtag";
 import {RequestData, ResponseData, SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/controller/internal/type";
@@ -47,6 +47,7 @@ export function useLogoutRequest(): (config?: RequestConfig) => Promise<AxiosRes
     const response = await request("logout", {}, config);
     if (response.status === 200) {
       setMe(null);
+      await invalidateAllResponses();
     }
     return response;
   }, [request, setMe]);

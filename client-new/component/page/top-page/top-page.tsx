@@ -2,7 +2,8 @@
 
 import {faRight} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, Suspense} from "react";
-import {AdditionalProps, GeneralIcon, GoogleAdsense, LinkIconbag, MultiLineText, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, LinkIconbag, MultiLineText, useTrans} from "zographia";
+import {GoogleAdsense} from "/client-new/component/atom/google-adsense";
 import {Link} from "/client-new/component/atom/link";
 import {NotificationList} from "/client-new/component/compound/notification-list";
 import {MainContainer, Page} from "/client-new/component/compound/page";

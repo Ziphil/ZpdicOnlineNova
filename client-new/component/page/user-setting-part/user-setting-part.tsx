@@ -1,12 +1,14 @@
 //
 
+import {faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {useParams} from "react-router-dom";
-import {AdditionalProps, useTrans} from "zographia";
+import {AdditionalProps, Callout, CalloutBody, CalloutIconContainer, GeneralIcon, MultiLineText, data, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 import {ChangeMyEmailForm} from "/client-new/component/form/change-my-email-form";
 import {ChangeMyPasswordForm} from "/client-new/component/form/change-my-password-form";
 import {ChangeMyScreenNameForm} from "/client-new/component/form/change-my-screen-name-form";
+import {DiscardMeButton} from "/client-new/component/form/discard-me-button";
 import {useMe} from "/client-new/hook/auth";
 
 
@@ -36,6 +38,18 @@ export const UserSettingPart = create(
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.password")}</h3>
           <ChangeMyPasswordForm me={me}/>
+        </section>
+        <section styleName="section">
+          <h3 styleName="heading" {...data({danger: true})}>{trans("heading.discard")}</h3>
+          <Callout styleName="callout" scheme="red">
+            <CalloutIconContainer><GeneralIcon icon={faTriangleExclamation}/></CalloutIconContainer>
+            <CalloutBody>
+              <MultiLineText is="p">
+                {trans("callout.discard")}
+              </MultiLineText>
+            </CalloutBody>
+          </Callout>
+          <DiscardMeButton/>
         </section>
       </div>
     ) : null;

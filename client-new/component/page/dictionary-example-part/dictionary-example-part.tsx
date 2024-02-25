@@ -37,9 +37,7 @@ export const DictionaryExamplePart = create(
           </div>
         </div>
         <div styleName="right">
-          <div styleName="adsense">
-            <GoogleAdsense clientId="9429549748934508" slotId="2898231395"/>
-          </div>
+          <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
           <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 40, hitSize, page, onPageSet: handlePageSet}}/>
         </div>
       </div>

@@ -127,6 +127,8 @@ editExampleForm:
   button:
     add:
       word: "使用単語を追加"
+    discard:
+      word: "Remove"
     confirm: "決定"
 editWordDialog:
   button:
@@ -166,6 +168,11 @@ editWordForm:
       information: "Додати содржанје"
       variation: "Додати вариацију"
       relation: "Додати свезано слово"
+    discard:
+      equivalent: "Remove"
+      information: "Remove"
+      variation: "Remove"
+      relation: "Remove"
     generate: "Произвести"
     confirm: "Confirm"
 exampleList:
@@ -196,10 +203,10 @@ invitationList:
     transfer: "Transfer"
   explanation:
     edit: >-
-      <user></user> has invited you to edit this dictionary.
+      {userNode} has invited you to edit this dictionary.
       Once you accept, you will be able to edit the dictionary.
     transfer: >-
-      <user></user> is going to transfer this dictionary to you.
+      {userNode} is going to transfer this dictionary to you.
       Once you accept, you will replace them as the owner of the dictionary.
   dialog:
     reject:
@@ -266,6 +273,13 @@ userHeader:
     notification: "Увєдомјенја"
     setting: "Настројкы"
     logout: "Sign out"
+  button:
+    issueActivateToken: "Resend mail"
+  callout:
+    activate: >-
+      This user has not yet been activated.
+      To activate, please follow the instructions in the mail you received when creating your account.
+      Unactivated users may have limited functionality.
 wordList:
   empty: "No matching words were found"
   button:
@@ -436,6 +450,24 @@ changeMyScreenNameForm:
   error:
     required: >-
       Enter a nickname.
+discardDictionaryButton:
+  button:
+    submit: "Delete"
+  dialog:
+    message: >-
+      This dictionary will be deleted permanently.
+      You cannot restore it afterwards.
+      Are you really sure?
+    confirm: "Delete"
+discardMeButton:
+  button:
+    submit: "Delete"
+  dialog:
+    message: >-
+      Your account will be deleted permanently.
+      You cannot restore it afterwards.
+      Are you really sure?
+    confirm: "Delete"
 downloadDictionaryButton:
   button:
     start: "Export"
@@ -526,12 +558,20 @@ dictionarySettingGeneralPart:
     paramName: "Идентификатор дља URL-адресы"
     explanation: "Опис"
     secret: "Видимост в списках словников"
+    discard: "Delete"
   description:
     paramName: >-
       This setting will replace the number in the dictionary URL with the specified identifier.
     explanation: >-
       This is displayed on the dictionary page before searching.
       You can use some Markdown syntax here.
+    secret: >-
+      If you set this to “Hide”, this dictionary will not appear in dictionary lists.
+      However, anyone who knows the URL of the dictionary page can still access it directly.
+  callout:
+    discard: >-
+      Deleting this dictionary will also delete all the relevant data, including words and example sentences.
+      Please be certain, as there is no going back.
 errorPage:
   heading:
     notFound: "Не\nНајдены"
@@ -596,3 +636,8 @@ userSettingPart:
     screenName: "ニックネーム"
     email: "メールアドレス"
     password: "パスワード"
+    discard: "Delete account"
+  callout:
+    discard: >-
+      Deleting your account will also delete all the dictionaries you own.
+      Please be certain, as there is no going back.

@@ -5,10 +5,10 @@ import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
-  Button,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  IconButton,
   Input,
   SuggestionSpec,
   TagInput,
@@ -83,9 +83,9 @@ export const EditWordFormEquivalentItem = create(
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <Button scheme="gray" variant="light" onClick={() => equivalentOperations.remove(index)}>
+          <IconButton scheme="gray" variant="light" label={trans("discard.equivalent")} onClick={() => equivalentOperations.remove(index)}>
             <GeneralIcon icon={faMinus}/>
-          </Button>
+          </IconButton>
         </div>
       </div>
     );

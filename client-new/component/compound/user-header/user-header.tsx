@@ -11,6 +11,7 @@ import {create} from "/client-new/component/create";
 import {useLogoutRequest, useMe} from "/client-new/hook/auth";
 import {useResponse} from "/client-new/hook/request";
 import {User} from "/client-new/skeleton";
+import {ActivateMeCallout} from "./activate-me-callout";
 
 
 export const UserHeader = create(
@@ -58,6 +59,11 @@ export const UserHeader = create(
               </SingleLineText>
             </div>
           </div>
+          {(me !== null && me.name === user.name && !me.activated) && (
+            <div styleName="activate">
+              <ActivateMeCallout/>
+            </div>
+          )}
           <TabList styleName="tab-list" value={tabValue ?? ""}>
             <LinkTab value="dictionary" href={`/user/${user.name}`}>
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>

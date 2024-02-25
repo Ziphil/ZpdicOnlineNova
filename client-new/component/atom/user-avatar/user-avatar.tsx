@@ -12,9 +12,11 @@ export const UserAvatar = createWithRef(
   null, "UserAvatar",
   function ({
     user,
+    inline,
     ...rest
   }: {
     user: User | string,
+    inline?: boolean,
     className?: string,
     ref?: Ref<HTMLSpanElement>
   } & AdditionalProps): ReactElement {
@@ -25,7 +27,7 @@ export const UserAvatar = createWithRef(
     const hue = (actualUser !== undefined) ? getIdHue(actualUser.id) : 0;
 
     return (
-      <Avatar url={null} {...rest}>
+      <Avatar url={null} inline={inline} {...rest}>
         <AvatarFallbackIconContainer hue={hue}>
           <GeneralIcon icon={faPenSwirl}/>
         </AvatarFallbackIconContainer>

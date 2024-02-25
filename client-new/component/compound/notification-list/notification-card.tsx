@@ -1,6 +1,7 @@
 //
 
 import {IconDefinition, faBug, faBugSlash, faInfoCircle, faSparkles} from "@fortawesome/sharp-regular-svg-icons";
+import dayjs from "dayjs";
 import {ReactElement} from "react";
 import {AdditionalProps, Card, CardBody, GeneralIcon, MultiLineText, Tag, useTrans} from "zographia";
 import {Markdown} from "/client-new/component/atom/markdown";
@@ -35,9 +36,9 @@ export const NotificationCard = create(
               <MultiLineText styleName="title" is="h3" lineHeight="narrowest">
                 {notification.title}
               </MultiLineText>
-              <time styleName="date" dateTime={notification.date}>
-                {transDate(notification.date)}
-              </time>
+              <div styleName="date">
+                <time dateTime={dayjs(notification.date).toISOString()}>{transDate(notification.date)}</time>
+              </div>
             </div>
           </div>
           <Markdown styleName="text" mode="normal">

@@ -18,7 +18,12 @@
   @include bold-font;
   margin-block-end: 4zu;
   font-size: 5zu;
-  color: var(--glob-primary-heading-text-color);
+  &[data-danger] {
+    color: var(--glob-red-heading-text-color);
+  }
+  &:not([data-danger]) {
+    color: var(--glob-primary-heading-text-color);
+  }
 }
 
 .description {
@@ -26,6 +31,10 @@
   margin-block-end: 4zu;
   font-size: 3.5zu;
   color: var(--glob-mute-text-color);
+}
+
+.callout {
+  margin-block-end: 4zu;
 }
 
 .list-container {

@@ -1,6 +1,7 @@
 //
 
 import {faBan, faThumbsUp} from "@fortawesome/sharp-regular-svg-icons";
+import dayjs from "dayjs";
 import {ReactElement} from "react";
 import {
   AdditionalProps,
@@ -49,13 +50,13 @@ export const InvitationCard = create(
             </SingleLineText>
           </Link>
           <div styleName="date">
-            {transDate(invitation.createdDate)}
+            <time dateTime={dayjs(invitation.createdDate).toISOString()}>{transDate(invitation.createdDate)}</time>
           </div>
           <MultiLineText styleName="explanation" is="p">
             {transNode(`explanation.${invitation.type}`, {
-              user: (parts) => (
+              userNode: (
                 <Link styleName="user-link" href={`/user/${invitation.dictionary.user.name}`} variant="unstyledUnderline">
-                  <UserAvatar styleName="avatar" user={invitation.dictionary.user}/>
+                  <UserAvatar styleName="avatar" user={invitation.dictionary.user} inline={true}/>
                   {invitation.dictionary.user.screenName}
                 </Link>
               )

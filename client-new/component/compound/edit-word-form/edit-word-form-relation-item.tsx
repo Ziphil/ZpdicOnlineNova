@@ -5,13 +5,13 @@ import {ReactElement, useCallback} from "react";
 import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
-  Button,
   CheckableContainer,
   CheckableLabel,
   Checkbox,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  IconButton,
   SuggestionSpec,
   TagInput,
   useTrans
@@ -90,9 +90,9 @@ export const EditWordFormRelationItem = create(
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <Button scheme="gray" variant="light" onClick={() => relationOperations.remove(index)}>
+          <IconButton scheme="gray" variant="light" label={trans("discard.relation")} onClick={() => relationOperations.remove(index)}>
             <GeneralIcon icon={faMinus}/>
-          </Button>
+          </IconButton>
         </div>
       </div>
     );

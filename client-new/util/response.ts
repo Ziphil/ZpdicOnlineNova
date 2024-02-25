@@ -4,8 +4,10 @@ import {AxiosResponseSpec} from "/client-new/util/request";
 import {ErrorResponseData, ProcessName, SuccessResponseData} from "/server/controller/internal/type";
 
 
-export function switchResponse<N extends ProcessName, R>(response: AxiosResponseSpec<N>, whenSuccess: (body: SuccessResponseData<N>) => R, whenError?: (body: ErrorResponseData<N>) => R): R {
-  if (!(typeof response.data === "object" && "error" in response.data)) {
+export function switchResponse<N extends ProcessName, R>(response: AxiosResponseSpec<N>, whenSuccess: (body: SuccessResponseData<N>) => R): R | void;
+export function switchResponse<N extends ProcessName, R>(response: AxiosResponseSpec<N>, whenSuccess: (body: SuccessResponseData<N>) => R, whenError: (body: ErrorResponseData<N>) => R): R;
+export function switchResponse<N extends ProcessName, R>(response: AxiosResponseSpec<N>, whenSuccess: (body: SuccessResponseData<N>) => R, whenError?: (body: ErrorResponseData<N>) => R): R | undefined {
+  if (!(response.data !== null && typeof response.data === "object" && "error" in response.data)) {
     const body = response.data;
     return whenSuccess(body);
   } else {
@@ -13,7 +15,7 @@ export function switchResponse<N extends ProcessName, R>(response: AxiosResponse
       const body = response.data;
       return whenError(body);
     } else {
-      throw response.data;
+      return undefined;
     }
   }
 }

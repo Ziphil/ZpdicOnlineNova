@@ -127,6 +127,8 @@ editExampleForm:
   button:
     add:
       word: "Aldoni enhavitan vorton"
+    discard:
+      word: "Remove"
     confirm: "Konfirmi"
 editWordDialog:
   button:
@@ -166,6 +168,11 @@ editWordForm:
       information: "Aldoni enhavon"
       variation: "Aldoni variaĵan formon"
       relation: "Aldoni rilatan vorton"
+    discard:
+      equivalent: "Forigi"
+      information: "Forigi"
+      variation: "Forigi"
+      relation: "Forigi"
     generate: "Generi"
     confirm: "Konfirmi"
 exampleList:
@@ -196,10 +203,10 @@ invitationList:
     transfer: "Transdonado"
   explanation:
     edit: >-
-      <user></user> invitis vin redakti tiun vortaron.
+      {userNode} invitis vin redakti tiun vortaron.
       Se vi akceptos, vi povos redakti la vortaron.
     transfer: >-
-      <user></user> volas transdoni al vi tiun vortaron.
+      {userNode} volas transdoni al vi tiun vortaron.
       Se vi akceptos, vi anstataŭigos rin kiel la posedanto de la vortaro.
   dialog:
     reject:
@@ -266,6 +273,13 @@ userHeader:
     notification: "Sciigoj"
     setting: "Agordoj"
     logout: "Elsaluti"
+  button:
+    issueActivateToken: "Resendi retpoŝton"
+  callout:
+    activate: >-
+      Tiu uzanto ankoraŭ ne estas aktivigita.
+      Por aktivigi, bonvolu sekvi la instrukciojn en la retpoŝto kiun vi ricevis dum kreado de via konto.
+      Neaktivigitaj uzantoj eble havas limigitan funkciecon.
 wordList:
   empty: "Neniuj kongruaj vortoj estis trovitaj"
   button:
@@ -436,6 +450,24 @@ changeMyScreenNameForm:
   error:
     required: >-
       Enigu kromnomon.
+discardDictionaryButton:
+  button:
+    submit: "Forigi"
+  dialog:
+    message: >-
+      Tiu vortaro estos forigita konstante.
+      Vi ne povas restaŭri ĝin poste.
+      Ĉu vi vere certas?
+    confirm: "Forigi"
+discardMeButton:
+  button:
+    submit: "Forigi"
+  dialog:
+    message: >-
+      Via konto estos forigita konstante.
+      Vi ne povas restaŭri ĝin poste.
+      Ĉu vi vere certas?
+    confirm: "Forigi"
 downloadDictionaryButton:
   button:
     start: "Eksporti"
@@ -526,12 +558,20 @@ dictionarySettingGeneralPart:
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
     secret: "Videbleco en listoj de vortaroj"
+    discard: "Forigi"
   description:
     paramName: >-
       Tiu agordo anstataŭigos la numeron en la retadreso de la vortaro per la specifita identigilo.
     explanation: >-
       Tio estas montrata sur la paĝo de la vortaro antaŭ serĉado.
       Vi povas uzi iun sintakson de Markdown.
+    secret: >-
+      Se vi agordos tiun al “Nevidebla”, la vortaro ne aperos en listoj de vortaroj.
+      Tamen ĉiu, kiu konas la retadreso de la paĝo de la vortaro, povas ankoraŭ rekte aliri ĝin.
+  callout:
+    discard: >-
+      Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.
+      Bonvolu esti certa, ĉar ne estas reiro.
 errorPage:
   heading:
     notFound: "Ne\nTrovita"
@@ -596,3 +636,8 @@ userSettingPart:
     screenName: "Kromnomo"
     email: "Retpoŝta adreso"
     password: "Pasvorto"
+    discard: "Forigi konton"
+  callout:
+    discard: >-
+      Forigi vian konton ankaŭ forigos ĉiujn vortarojn kiujn vi posedas.
+      Bonvolu esti certa, ĉar ne estas reiro.
