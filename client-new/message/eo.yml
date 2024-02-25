@@ -196,10 +196,10 @@ invitationList:
     transfer: "Transdonado"
   explanation:
     edit: >-
-      <user></user> invitis vin redakti tiun vortaron.
+      {userNode} invitis vin redakti tiun vortaron.
       Se vi akceptos, vi povos redakti la vortaron.
     transfer: >-
-      <user></user> volas transdoni al vi tiun vortaron.
+      {userNode} volas transdoni al vi tiun vortaron.
       Se vi akceptos, vi anstataŭigos rin kiel la posedanto de la vortaro.
   dialog:
     reject:

@@ -75,9 +75,9 @@ export const DictionaryCard = create(
             )}
             <dl styleName="table">
               <dt styleName="table-label">{trans("updatedDate")}</dt>
-              <dd styleName="table-value">{transDate(dictionary.updatedDate)}</dd>
+              <dd styleName="table-value"><time dateTime={dayjs(dictionary.updatedDate).toISOString()}>{transDate(dictionary.updatedDate)}</time></dd>
               <dt styleName="table-label">{trans("createdDate")}</dt>
-              <dd styleName="table-value">{transDate(dictionary.createdDate)}</dd>
+              <dd styleName="table-value"><time dateTime={dayjs(dictionary.createdDate).toISOString()}>{transDate(dictionary.createdDate)}</time></dd>
             </dl>
           </div>
           {(showChart && histories !== undefined && histories.length > 0) && (

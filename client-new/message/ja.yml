@@ -196,10 +196,10 @@ invitationList:
     transfer: "譲渡"
   explanation:
     edit: >-
-      <user></user> がこの辞書の編集権限を付与しようとしています。
+      {userNode} がこの辞書の編集権限を付与しようとしています。
       これを承認すると、この辞書を編集できるようになります。
     transfer: >-
-      <user></user> がこの辞書を譲渡しようとしています。
+      {userNode} がこの辞書を譲渡しようとしています。
       これを承認すると、この辞書の管理者に代わりになります。
   dialog:
     reject:

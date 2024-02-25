@@ -14,8 +14,8 @@
 }
 
 .avatar {
-  margin-block: -0.25em;
+  margin-block: -0.0625em;
   margin-inline-end: var(--glob-blank-gap);
-  inset-block-end: 0em;
+  inset-block-end: -0.125em;
   position: relative;
 }
