@@ -452,6 +452,15 @@ discardDictionaryButton:
       You cannot restore it afterwards.
       Are you really sure?
     confirm: "Delete"
+discardMeButton:
+  button:
+    submit: "Delete"
+  dialog:
+    message: >-
+      Your account will be deleted permanently.
+      You cannot restore it afterwards.
+      Are you really sure?
+    confirm: "Delete"
 downloadDictionaryButton:
   button:
     start: "Export"
@@ -620,3 +629,8 @@ userSettingPart:
     screenName: "ニックネーム"
     email: "メールアドレス"
     password: "パスワード"
+    discard: "Delete account"
+  callout:
+    discard: >-
+      Deleting your account will also delete all the dictionaries you own.
+      Please be certain, as there is no going back.

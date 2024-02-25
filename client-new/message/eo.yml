@@ -452,6 +452,15 @@ discardDictionaryButton:
       Vi ne povas restaŭri ĝin poste.
       Ĉu vi vere certas?
     confirm: "Forigi"
+discardMeButton:
+  button:
+    submit: "Forigi"
+  dialog:
+    message: >-
+      Via konto estos forigita konstante.
+      Vi ne povas restaŭri ĝin poste.
+      Ĉu vi vere certas?
+    confirm: "Forigi"
 downloadDictionaryButton:
   button:
     start: "Eksporti"
@@ -620,3 +629,8 @@ userSettingPart:
     screenName: "Kromnomo"
     email: "Retpoŝta adreso"
     password: "Pasvorto"
+    discard: "Forigi konton"
+  callout:
+    discard: >-
+      Forigi vian konton ankaŭ forigos ĉiujn vortarojn kiujn vi posedas.
+      Bonvolu esti certa, ĉar ne estas reiro.

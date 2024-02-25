@@ -450,6 +450,15 @@ discardDictionaryButton:
       削除した後にデータを戻すことはできません。
       本当によろしいですか?
     confirm: "削除"
+discardMeButton:
+  button:
+    submit: "削除"
+  dialog:
+    message: >-
+      アカウントを削除します。
+      削除した後にデータを戻すことはできません。
+      本当によろしいですか?
+    confirm: "削除"
 downloadDictionaryButton:
   button:
     start: "エクスポート"
@@ -618,3 +627,8 @@ userSettingPart:
     screenName: "ニックネーム"
     email: "メールアドレス"
     password: "パスワード"
+    discard: "アカウント削除"
+  callout:
+    discard: >-
+      アカウントを削除すると、所有している辞書も全て削除されます。
+      後からデータを復元することはできないので、慎重に行ってください。
