@@ -57,7 +57,7 @@ export const DictionarySettingGeneralPart = create(
           <Callout styleName="callout" scheme="red">
             <CalloutIconContainer><GeneralIcon icon={faTriangleExclamation}/></CalloutIconContainer>
             <CalloutBody>
-              <MultiLineText>
+              <MultiLineText is="p">
                 {trans("callout.discard")}
               </MultiLineText>
             </CalloutBody>
