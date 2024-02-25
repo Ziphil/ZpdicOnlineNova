@@ -7,13 +7,15 @@ import {create} from "/client-new/component/create";
 
 
 export const GoogleAdsense = create(
-  null, "GoogleAdsense",
+  require("./google-adsense.scss"), "GoogleAdsense",
   function ({
     clientId,
-    slotId
+    slotId,
+    ...rest
   }: {
     clientId: string,
-    slotId: string
+    slotId: string,
+    className?: string
   }): ReactElement {
 
     useMount(() => {
@@ -24,14 +26,16 @@ export const GoogleAdsense = create(
     });
 
     return (
-      <ins
-        className="adsbygoogle"
-        style={{display: "block", width: "100%", height: "90px"}}
-        {...data({
-          adClient: `ca-pub-${clientId}`,
-          adSlot: `${slotId}`
-        })}
-      />
+      <div styleName="root" {...rest}>
+        <ins
+          className="adsbygoogle"
+          style={{display: "block", width: "100%", height: "90px"}}
+          {...data({
+            adClient: `ca-pub-${clientId}`,
+            adSlot: `${slotId}`
+          })}
+        />
+      </div>
     );
 
   }

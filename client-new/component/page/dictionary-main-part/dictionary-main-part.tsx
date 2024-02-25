@@ -52,9 +52,7 @@ export const DictionaryMainPart = create(
           </div>
         </div>
         <div styleName="right">
-          <div styleName="adsense">
-            <GoogleAdsense clientId="9429549748934508" slotId="2898231395"/>
-          </div>
+          <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
           {(debouncedQuery.showExplanation && !!dictionary.explanation) ? (
             <Markdown mode="normal">
               {dictionary.explanation}
