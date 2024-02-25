@@ -127,6 +127,8 @@ editExampleForm:
   button:
     add:
       word: "Add included words"
+    discard:
+      word: "Remove"
     confirm: "Confirm"
 editWordDialog:
   button:
@@ -166,6 +168,11 @@ editWordForm:
       information: "Add content"
       variation: "Add variation form"
       relation: "Add related word"
+    discard:
+      equivalent: "Remove"
+      information: "Remove"
+      variation: "Remove"
+      relation: "Remove"
     generate: "Generate"
     confirm: "Confirm"
 exampleList:

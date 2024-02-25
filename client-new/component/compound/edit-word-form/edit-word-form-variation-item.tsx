@@ -5,10 +5,10 @@ import {ReactElement, useCallback} from "react";
 import {UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
-  Button,
   ControlContainer,
   ControlLabel,
   GeneralIcon,
+  IconButton,
   Input,
   SuggestionSpec,
   useTrans
@@ -76,9 +76,9 @@ export const EditWordFormVariationItem = create(
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <Button scheme="gray" variant="light" onClick={() => variationOperations.remove(index)}>
+          <IconButton scheme="gray" variant="light" label={trans("discard.variation")} onClick={() => variationOperations.remove(index)}>
             <GeneralIcon icon={faMinus}/>
-          </Button>
+          </IconButton>
         </div>
       </div>
     );

@@ -5,9 +5,9 @@ import {ReactElement} from "react";
 import {Controller, UseFieldArrayReturn} from "react-hook-form";
 import {
   AdditionalProps,
-  Button,
   ControlContainer,
   GeneralIcon,
+  IconButton,
   useTrans
 } from "zographia";
 import {RelationWordSelect} from "/client-new/component/atom/relation-word-select";
@@ -52,9 +52,9 @@ export const EditExampleFormWordItem = create(
           </ControlContainer>
         </fieldset>
         <div styleName="minus">
-          <Button scheme="gray" variant="light" onClick={() => wordOperations.remove(index)}>
+          <IconButton scheme="gray" variant="light" label={trans("discard.word")} onClick={() => wordOperations.remove(index)}>
             <GeneralIcon icon={faMinus}/>
-          </Button>
+          </IconButton>
         </div>
       </div>
     );

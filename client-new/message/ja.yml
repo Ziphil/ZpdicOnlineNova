@@ -127,6 +127,8 @@ editExampleForm:
   button:
     add:
       word: "使用単語を追加"
+    discard:
+      word: "削除"
     confirm: "決定"
 editWordDialog:
   button:
@@ -166,6 +168,11 @@ editWordForm:
       information: "内容を追加"
       variation: "変化形を追加"
       relation: "関連語を追加"
+    discard:
+      equivalent: "削除"
+      information: "削除"
+      variation: "削除"
+      relation: "削除"
     generate: "生成"
     confirm: "決定"
 exampleList:

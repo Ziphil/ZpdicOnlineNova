@@ -127,6 +127,8 @@ editExampleForm:
   button:
     add:
       word: "Aldoni enhavitan vorton"
+    discard:
+      word: "Remove"
     confirm: "Konfirmi"
 editWordDialog:
   button:
@@ -166,6 +168,11 @@ editWordForm:
       information: "Aldoni enhavon"
       variation: "Aldoni variaĵan formon"
       relation: "Aldoni rilatan vorton"
+    discard:
+      equivalent: "Forigi"
+      information: "Forigi"
+      variation: "Forigi"
+      relation: "Forigi"
     generate: "Generi"
     confirm: "Konfirmi"
 exampleList:

@@ -127,6 +127,8 @@ editExampleForm:
   button:
     add:
       word: "使用単語を追加"
+    discard:
+      word: "Remove"
     confirm: "決定"
 editWordDialog:
   button:
@@ -166,6 +168,11 @@ editWordForm:
       information: "Додати содржанје"
       variation: "Додати вариацију"
       relation: "Додати свезано слово"
+    discard:
+      equivalent: "Remove"
+      information: "Remove"
+      variation: "Remove"
+      relation: "Remove"
     generate: "Произвести"
     confirm: "Confirm"
 exampleList:
