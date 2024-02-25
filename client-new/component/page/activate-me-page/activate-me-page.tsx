@@ -6,11 +6,11 @@ import {AdditionalProps} from "zographia";
 import {create} from "/client-new/component/create";
 import {LoadingPage} from "/client-new/component/page/loading-page";
 import {useSearch} from "/client-new/hook/search";
-import {useActivateUser} from "./activate-user-page-hook";
+import {useActivateUser} from "./activate-me-page-hook";
 
 
-export const ActivateUserPage = create(
-  null, "ActivateUserPage",
+export const ActivateMePage = create(
+  null, "ActivateMePage",
   function ({
     ...rest
   }: {
