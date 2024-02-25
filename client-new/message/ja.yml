@@ -441,6 +441,15 @@ changeMyScreenNameForm:
   error:
     required: >-
       ニックネームを入力してください。
+discardDictionaryButton:
+  button:
+    submit: "削除"
+  dialog:
+    message: >-
+      この辞書を削除します。
+      削除した後にデータを戻すことはできません。
+      本当によろしいですか?
+    confirm: "削除"
 downloadDictionaryButton:
   button:
     start: "エクスポート"
@@ -530,13 +539,21 @@ dictionarySettingGeneralPart:
     name: "名前"
     paramName: "URL 用識別子"
     explanation: "説明"
-    secret: "一覧ページでの表示/非表示"
+    secret: "辞書一覧での表示/非表示"
+    discard: "削除"
   description:
     paramName: >-
       これを設定すると、辞書ページの URL として、番号の部分をこの識別子に置き換えたものが利用できるようになります。
     explanation: >-
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
       一部の Markdown 形式に対応しています。
+    secret: >-
+      これを「非表示」に設定すると、この辞書が辞書一覧に表示されなくなります。
+      ただし、辞書ページの URL を知っている人は直接アクセスすることができます。
+  callout:
+    discard: >-
+      この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
+      後からデータを復元することはできないので、慎重に行ってください。
 errorPage:
   heading:
     notFound: "Not\nFound"

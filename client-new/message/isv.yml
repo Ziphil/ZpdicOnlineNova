@@ -443,6 +443,15 @@ changeMyScreenNameForm:
   error:
     required: >-
       Enter a nickname.
+discardDictionaryButton:
+  button:
+    submit: "Delete"
+  dialog:
+    message: >-
+      This dictionary will be deleted permanently.
+      You cannot restore it afterwards.
+      Are you really sure?
+    confirm: "Delete"
 downloadDictionaryButton:
   button:
     start: "Export"
@@ -533,12 +542,20 @@ dictionarySettingGeneralPart:
     paramName: "Идентификатор дља URL-адресы"
     explanation: "Опис"
     secret: "Видимост в списках словников"
+    discard: "Delete"
   description:
     paramName: >-
       This setting will replace the number in the dictionary URL with the specified identifier.
     explanation: >-
       This is displayed on the dictionary page before searching.
       You can use some Markdown syntax here.
+    secret: >-
+      If you set this to “Hide”, this dictionary will not appear in dictionary lists.
+      However, anyone who knows the URL of the dictionary page can still access it directly.
+  callout:
+    discard: >-
+      Deleting this dictionary will also delete all the relevant data, including words and example sentences.
+      Please be certain, as there is no going back.
 errorPage:
   heading:
     notFound: "Не\nНајдены"
