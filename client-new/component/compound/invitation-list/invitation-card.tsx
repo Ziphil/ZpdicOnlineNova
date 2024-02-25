@@ -56,7 +56,7 @@ export const InvitationCard = create(
             {transNode(`explanation.${invitation.type}`, {
               userNode: (
                 <Link styleName="user-link" href={`/user/${invitation.dictionary.user.name}`} variant="unstyledUnderline">
-                  <UserAvatar styleName="avatar" user={invitation.dictionary.user}/>
+                  <UserAvatar styleName="avatar" user={invitation.dictionary.user} inline={true}/>
                   {invitation.dictionary.user.screenName}
                 </Link>
               )
