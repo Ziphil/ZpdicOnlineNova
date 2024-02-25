@@ -273,6 +273,13 @@ userHeader:
     notification: "Sciigoj"
     setting: "Agordoj"
     logout: "Elsaluti"
+  button:
+    issueActivateToken: "Resendi retpoŝton"
+  callout:
+    activate: >-
+      Tiu uzanto ankoraŭ ne estas aktivigita.
+      Por aktivigi, bonvolu sekvi la instrukciojn en la retpoŝto kiun vi ricevis dum kreado de via konto.
+      Neaktivigitaj uzantoj eble havas limigitan funkciecon.
 wordList:
   empty: "Neniuj kongruaj vortoj estis trovitaj"
   button:

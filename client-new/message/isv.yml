@@ -273,6 +273,13 @@ userHeader:
     notification: "Увєдомјенја"
     setting: "Настројкы"
     logout: "Sign out"
+  button:
+    issueActivateToken: "Resend mail"
+  callout:
+    activate: >-
+      This user has not yet been activated.
+      To activate, please follow the instructions in the mail you received when creating your account.
+      Unactivated users may have limited functionality.
 wordList:
   empty: "No matching words were found"
   button:

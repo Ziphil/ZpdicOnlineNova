@@ -273,6 +273,13 @@ userHeader:
     notification: "通知"
     setting: "設定"
     logout: "ログアウト"
+  button:
+    issueActivateToken: "メールを再送信"
+  callout:
+    activate: >-
+      このユーザーはまだアクティベートされていません。
+      アカウント作成時に送られたメールの指示に従って、ユーザーをアクティベートしてください。
+      アクティベートされていないユーザーは、機能を制限される可能性があります。
 wordList:
   empty: "該当する単語は見つかりませんでした"
   button:
