@@ -16,20 +16,16 @@
   color: var(--glob-mute-text-color);
 }
 
-.radio-group {
-  column-gap: 4zu;
-  display: flex;
-  justify-content: center;
-}
-
 .select-group {
-  column-gap: 4zu;
   display: flex;
-  justify-content: center;
-}
-
-.select {
-  width: 40zu;
+  @include device("desktop") {
+    row-gap: 2zu;
+    flex-direction: column;  
+  }
+  @include device("mobile") {
+    column-gap: 4zu;
+    justify-content: center;
+  }
 }
 
 .row {

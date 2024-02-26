@@ -131,6 +131,21 @@ toast:
 commonAlert:
   confirm: "決定"
   cancel: "キャンセル"
+wordModeSelect:
+  label:
+    name: "単語"
+    equivalent: "訳語"
+    both: "単語＋訳語"
+    tag: "タグ"
+    information: "内容"
+    content: "全文"
+wordTypeSelect:
+  label:
+    prefix: "前方"
+    suffix: "後方"
+    part: "部分"
+    exact: "完全"
+    regular: "正規"
 
 addCommissionDialog:
   heading: "造語依頼"
@@ -332,22 +347,11 @@ searchExampleForm:
   information: >-
     例文検索は今後のアップデートで利用できるようになる予定です。
 searchWordForm:
-  mode:
-    name: "単語"
-    equivalent: "訳語"
-    both: "単語＋訳語"
-    tag: "タグ"
-    information: "内容"
-    content: "全文"
-  type:
-    prefix: "前方"
-    suffix: "後方"
-    part: "部分"
-    exact: "完全"
-    regular: "正規"
-  ignoreCase: "大小文字を区別しない"
-  enableSuggestions: "変化形をサジェスト"
-  shuffleResult: "検索結果をシャッフル"
+  label:
+    ignoreCase: "大小文字を区別しない"
+    enableSuggestions: "変化形をサジェスト"
+  button:
+    shuffleResult: "検索結果をシャッフル"
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"

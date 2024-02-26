@@ -131,6 +131,21 @@ toast:
 commonAlert:
   confirm: "Confirm"
   cancel: "Cancel"
+wordModeSelect:
+  label:
+    name: "Headword"
+    equivalent: "Translation"
+    both: "Both"
+    tag: "Tag"
+    information: "Contents"
+    content: "Whole"
+wordTypeSelect:
+  label:
+    prefix: "Prefix"
+    suffix: "Suffix"
+    part: "Partial"
+    exact: "Exact"
+    regular: "Regex"
 
 addCommissionDialog:
   heading: "Request word creation"
@@ -332,22 +347,11 @@ searchExampleForm:
   information: >-
     Searching for example sentences will be available in a future update.
 searchWordForm:
-  mode:
-    name: "Headword"
-    equivalent: "Translation"
-    both: "Both"
-    tag: "Tag"
-    information: "Contents"
-    content: "Whole"
-  type:
-    prefix: "Prefix"
-    suffix: "Suffix"
-    part: "Partial"
-    exact: "Exact"
-    regular: "Regex"
-  ignoreCase: "Ignore letter case"
-  enableSuggestions: "Suggest variations"
-  shuffleResult: "Shuffle results"
+  label:
+    ignoreCase: "Ignore letter case"
+    enableSuggestions: "Suggest variations"
+  button:
+    shuffleResult: "Shuffle results"
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"

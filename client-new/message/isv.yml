@@ -131,6 +131,21 @@ toast:
 commonAlert:
   confirm: "Confirm"
   cancel: "Одрєкти"
+wordModeSelect:
+  label:
+    name: "Слово"
+    equivalent: "Прєвод"
+    both: "Оба"
+    tag: "Значка"
+    information: "Содржанје"
+    content: "Цєлы"
+wordTypeSelect:
+  label:
+    prefix: "Префиксны"
+    suffix: "Суфиксны"
+    part: "Честичны"
+    exact: "Точны"
+    regular: "Регекс"
 
 addCommissionDialog:
   heading: "造語依頼"
@@ -332,22 +347,11 @@ searchExampleForm:
   information: >-
     Searching for example sentences will be available in a future update.
 searchWordForm:
-  mode:
-    name: "Слово"
-    equivalent: "Прєвод"
-    both: "Оба"
-    tag: "Значка"
-    information: "Содржанје"
-    content: "Цєлы"
-  type:
-    prefix: "Префиксны"
-    suffix: "Суфиксны"
-    part: "Честичны"
-    exact: "Точны"
-    regular: "Регекс"
-  ignoreCase: "Игноровати велике/мале буквы"
-  enableSuggestions: "Прєдлагати вариације"
-  shuffleResult: "Смєшати резултаты"
+  label:
+    ignoreCase: "Игноровати велике/мале буквы"
+    enableSuggestions: "Прєдлагати вариације"
+  button:
+    shuffleResult: "Смєшати резултаты"
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"

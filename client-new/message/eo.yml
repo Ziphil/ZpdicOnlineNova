@@ -131,6 +131,21 @@ toast:
 commonAlert:
   confirm: "Konfirmi"
   cancel: "Nuligi"
+wordModeSelect:
+  label:
+    name: "Kapvorto"
+    equivalent: "Tradukaĵo"
+    both: "Ambaŭ"
+    tag: "Etikedo"
+    information: "Enhavo"
+    content: "Tuto"
+wordTypeSelect:
+  label:
+    prefix: "Prefiksa"
+    suffix: "Sufiksa"
+    part: "Parta"
+    exact: "Ekzakta"
+    regular: "Regesp"
 
 addCommissionDialog:
   heading: "Peti kreado de vorto"
@@ -332,22 +347,11 @@ searchExampleForm:
   information: >-
     Serĉi ekzemplajn frazojn estos disponebla en estonta ĝisdatigo.
 searchWordForm:
-  mode:
-    name: "Kapvorto"
-    equivalent: "Tradukaĵo"
-    both: "Ambaŭ"
-    tag: "Etikedo"
-    information: "Enhavo"
-    content: "Tuto"
-  type:
-    prefix: "Prefiksa"
-    suffix: "Sufiksa"
-    part: "Parta"
-    exact: "Ekzakta"
-    regular: "Regesp"
-  ignoreCase: "Ignori usklecon"
-  enableSuggestions: "Sugesti variaĵojn"
-  shuffleResult: "Miksi rezultojn"
+  label:
+    ignoreCase: "Ignori usklecon"
+    enableSuggestions: "Sugesti variaĵojn"
+  button:
+    shuffleResult: "Miksi rezultojn"
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"

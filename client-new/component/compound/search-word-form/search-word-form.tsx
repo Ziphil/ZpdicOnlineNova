@@ -15,13 +15,11 @@ import {
   GeneralIcon,
   Input,
   InputAddon,
-  Radio,
-  RadioGroup,
-  Select,
-  SelectOption,
   useResponsiveDevice,
   useTrans
 } from "zographia";
+import {WordModeSelect} from "/client-new/component/atom/word-mode-select";
+import {WordTypeSelect} from "/client-new/component/atom/word-type-select";
 import {OrderDirection, OrderDirectionSelect} from "/client-new/component/compound/order-direction-select";
 import {OrderModeSelect} from "/client-new/component/compound/order-mode-select";
 import {create} from "/client-new/component/create";
@@ -104,53 +102,20 @@ export const SearchWordForm = create(
             <GeneralIcon styleName="icon" icon={faSearch}/>
           </InputAddon>
         </Input>
-        {(device === "desktop") ? (
-          <>
-            <div styleName="radio-group">
-              <RadioGroup name="mode" value={actualParameter.mode} onSet={handleModeSet}>
-                {FORM_WORD_MODES.map((mode) => (
-                  <CheckableContainer key={mode}>
-                    <Radio value={mode}/>
-                    <CheckableLabel>{trans(`mode.${mode}`)}</CheckableLabel>
-                  </CheckableContainer>
-                ))}
-              </RadioGroup>
-            </div>
-            <div styleName="radio-group">
-              <RadioGroup name="type" value={actualParameter.type} onSet={handleTypeSet}>
-                {FORM_WORD_TYPES.map((type) => (
-                  <CheckableContainer key={type}>
-                    <Radio value={type}/>
-                    <CheckableLabel>{trans(`type.${type}`)}</CheckableLabel>
-                  </CheckableContainer>
-                ))}
-              </RadioGroup>
-            </div>
-          </>
-        ) : (
-          <div styleName="select-group">
-            <Select styleName="select" value={actualParameter.mode} onSet={handleModeSet}>
-              {FORM_WORD_MODES.map((mode) => (
-                <SelectOption key={mode} value={mode} label={trans(`mode.${mode}`)}>{trans(`mode.${mode}`)}</SelectOption>
-              ))}
-            </Select>
-            <Select styleName="select" value={actualParameter.type} onSet={handleTypeSet}>
-              {FORM_WORD_TYPES.map((type) => (
-                <SelectOption key={type} value={type} label={trans(`type.${type}`)}>{trans(`type.${type}`)}</SelectOption>
-              ))}
-            </Select>
-          </div>
-        )}
-        <div styleName="radio-group">
+        <div styleName="select-group">
+          <WordModeSelect mode={actualParameter.mode} onSet={handleModeSet} kind="flexible" optionModes={FORM_WORD_MODES}/>
+          <WordTypeSelect type={actualParameter.type} onSet={handleTypeSet} kind="flexible" optionTypes={FORM_WORD_TYPES}/>
+        </div>
+        <div styleName="row">
           <CheckableContainer>
             <Checkbox checked={actualParameter.options.ignore.case} onSet={handleIgnoreCaseSet}/>
-            <CheckableLabel>{trans("ignoreCase")}</CheckableLabel>
+            <CheckableLabel>{trans("label.ignoreCase")}</CheckableLabel>
           </CheckableContainer>
         </div>
-        <div styleName="radio-group">
+        <div styleName="row">
           <CheckableContainer>
             <Checkbox checked={actualParameter.options.enableSuggestions} onSet={handleEnableSuggestionsSet}/>
-            <CheckableLabel>{trans("enableSuggestions")}</CheckableLabel>
+            <CheckableLabel>{trans("label.enableSuggestions")}</CheckableLabel>
           </CheckableContainer>
         </div>
         <div styleName="row">
@@ -170,7 +135,7 @@ export const SearchWordForm = create(
         <div styleName="row">
           <Button scheme="secondary" variant="underline" onClick={shuffleResult}>
             <ButtonIconbag><GeneralIcon icon={faShuffle}/></ButtonIconbag>
-            {trans("shuffleResult")}
+            {trans("button.shuffleResult")}
           </Button>
         </div>
       </form>
