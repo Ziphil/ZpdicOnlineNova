@@ -113,12 +113,6 @@ export const SearchWordForm = create(
           </CheckableContainer>
         </div>
         <div styleName="row">
-          <CheckableContainer>
-            <Checkbox checked={actualParameter.options.enableSuggestions} onSet={handleEnableSuggestionsSet}/>
-            <CheckableLabel>{trans("label.enableSuggestions")}</CheckableLabel>
-          </CheckableContainer>
-        </div>
-        <div styleName="row">
           <ControlGroup>
             <OrderModeSelect
               orderModeOptions={FORM_WORD_ORDER_MODES}

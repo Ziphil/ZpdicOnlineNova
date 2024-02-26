@@ -348,7 +348,7 @@ searchExampleForm:
     例文検索は今後のアップデートで利用できるようになる予定です。
 searchWordForm:
   label:
-    ignoreCase: "大小文字を区別しない"
+    ignoreCase: "大小文字の違いを無視"
     enableSuggestions: "変化形をサジェスト"
   button:
     shuffleResult: "検索結果をシャッフル"
