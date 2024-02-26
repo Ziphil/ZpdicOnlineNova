@@ -14,6 +14,7 @@ import {
 } from "zographia";
 import {create} from "/client-new/component/create";
 import {WordParameter} from "/client-new/skeleton";
+import {SearchWordAdvancedDialogElementSection} from "./search-word-advanced-dialog-element-section";
 import {useSearchWordAdvanced} from "./search-word-advanced-dialog-hook";
 
 
@@ -52,10 +53,11 @@ export const SearchWordAdvancedDialog = create(
     return (
       <Fragment>
         {cloneElement(trigger, {onClick: openDialog})}
-        <Dialog open={open} onOpenSet={setOpen} {...rest}>
+        <Dialog open={open} onOpenSet={setOpen} height="full" {...rest}>
           <DialogPane>
             <DialogCloseButton/>
-            <DialogBody is="form">
+            <DialogBody>
+              <SearchWordAdvancedDialogElementSection form={form}/>
               <div styleName="button">
                 <Button type="submit" onClick={handleSubmitAndClose}>
                   <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>

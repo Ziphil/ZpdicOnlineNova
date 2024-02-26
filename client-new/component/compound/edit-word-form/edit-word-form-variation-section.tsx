@@ -44,7 +44,7 @@ export const EditWordFormVariationSection = create(
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.variations")}</h3>
-        <div styleName="item-list">
+        <div styleName="list">
           {(variations.length > 0) ? (
             <EditWordFormDndContext values={variations} valueOperations={variationOperations}>
               {variations.map((variation, index) => (

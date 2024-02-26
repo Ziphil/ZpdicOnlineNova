@@ -24,12 +24,12 @@ type FormValue = {
   }>
 };
 
-export type AddCommissionSpec = {
+export type SearchWordAdvancedSpec = {
   form: UseFormReturn<FormValue>,
   handleSubmit: (event: BaseSyntheticEvent, onSubmit?: (parameter: AdvancedWordParameter) => AsyncOrSync<void>) => Promise<void>
 };
 
-export function useSearchWordAdvanced(): AddCommissionSpec {
+export function useSearchWordAdvanced(): SearchWordAdvancedSpec {
   const form = useForm<FormValue>(DEFAULT_VALUE, {});
   const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: (parameter: AdvancedWordParameter) => AsyncOrSync<void>): Promise<void> {
     await form.handleSubmit(async (value) => {

@@ -346,6 +346,16 @@ resourceList:
 searchExampleForm:
   information: >-
     Serĉi ekzemplajn frazojn estos disponebla en estonta ĝisdatigo.
+searchWordAdvancedDialog:
+  label:
+    mode: "Gamo"
+    type: "Metodo"
+    title: "Speco"
+    text: "Ŝlosilvorto"
+  button:
+    add:
+      element: "Aldoni kondiĉon"
+    confirm: "Konfirmi"
 searchWordForm:
   label:
     ignoreCase: "Ignori usklecon"

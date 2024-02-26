@@ -346,6 +346,16 @@ resourceList:
 searchExampleForm:
   information: >-
     例文検索は今後のアップデートで利用できるようになる予定です。
+searchWordAdvancedDialog:
+  label:
+    mode: "検索範囲"
+    type: "検索方式"
+    title: "分類"
+    text: "検索内容"
+  button:
+    add:
+      element: "条件を追加"
+    confirm: "決定"
 searchWordForm:
   label:
     ignoreCase: "大小文字の違いを無視"

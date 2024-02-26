@@ -45,7 +45,7 @@ export const EditWordFormRelationSection = create(
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.relations")}</h3>
-        <div styleName="item-list">
+        <div styleName="list">
           {(relations.length > 0) ? (
             <EditWordFormDndContext values={relations} valueOperations={relationOperations}>
               {relations.map((relation, index) => (

@@ -346,6 +346,16 @@ resourceList:
 searchExampleForm:
   information: >-
     Searching for example sentences will be available in a future update.
+searchWordAdvancedDialog:
+  label:
+    mode: "Scope"
+    type: "Method"
+    title: "Kind"
+    text: "Keyword"
+  button:
+    add:
+      element: "Add condition"
+    confirm: "Confirm"
 searchWordForm:
   label:
     ignoreCase: "Игноровати велике/мале буквы"

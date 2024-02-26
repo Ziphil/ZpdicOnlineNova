@@ -44,7 +44,7 @@ export const EditWordFormInformationSection = create(
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.informations")}</h3>
-        <div styleName="item-list">
+        <div styleName="list">
           {(informations.length > 0) ? (
             <EditWordFormDndContext values={informations} valueOperations={informationOperations}>
               {informations.map((information, index) => (

@@ -41,7 +41,7 @@ export const EditExampleFormWordSection = create(
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.words")}</h3>
-        <div styleName="item-list">
+        <div styleName="list">
           {(words.length > 0) ? (
             <EditExampleFormDndContext values={words} valueOperations={wordOperations}>
               {words.map((word, index) => (
