@@ -1,15 +1,99 @@
 toast:
   success:
+    addDictionary: >-
+      A new dictionary has been created.
+    discardDictionary: >-
+      The dictionary has been deleted.
+    uploadDictionary: >-
+      Your file has been uploaded.
+      Please wait a moment for your data to be reflected.
+    changeDictionaryName: >-
+      The name has been changed.
+    changeDictionaryParamName: >-
+      The identifier has been changed.
+    changeDictionaryExplanation: >-
+      The description has been changed.
+    changeDictionarySecret: >-
+      The setting has been changed.
+    changeDictionarySettings:
+      akrantiainSource: >-
+        The setting has been changed.
+      zatlinSource: >-
+        The setting has been changed.
+      exampleTitle: >-
+        The setting has been changed.
+      pronunciationTitle: >-
+        The setting has been changed.
+      enableMarkdown: >-
+        The setting has been changed.
+      enableDuplicateName: >-
+        The setting has been changed.
+    discardDictionaryAuthorizedUser: >-
+      The permission has been revoked.
+    addWord: >-
+      A new word has been created.
+    changeWord: >-
+      The word has been edited.
+    discardWord: >-
+      The word has been deleted.
+    addExample: >-
+      A new example sentence has been created.
+    changeExample: >-
+      The example sentence has been edited.
+    discardExample: >-
+      The example sentence has been deleted.
+    addCommission: >-
+      A new request has been sent.
+    discardCommission: >-
+      The request has been deleted.
+    addResource: >-
+      An image has been uploaded.
+    discardResource: >-
+      The image has been deleted.
+    addInvitation:
+      edit: >-
+        The invitation has been sent.
+        The editing permission will be granted once the user accepts it.
+      transfer: >-
+        The invitation has been sent.
+        The dictionary will be transferred once the user accepts it.
+    acceptInvitation:
+      edit: >-
+        You have accepted the invitation.
+        You can edit the dictionary from now on.
+      transfer: >-
+        You have accepted the invitation.
+        You are now the owner of the dictionary.
+    rejectInvitation:
+      edit: >-
+        You have declined the invitation.
+      transfer: >-
+        You have declined the invitation.
+    discardMe:
+      Your account has been deleted.
+    changeMyScreenName:
+      Your nickname has been changed.
+    changeMyEmail:
+      Your email address has been changed.
+    changeMyPassword:
+      Your password has been changed.
+    issueMyActivateToken:
+      We sent an email to you.
+      Please follow the instructions in the email.
+    activateUser:
+      Your account has been activated.
+    issueUserResetToken:
+      We sent an email to you.
+      Please follow the instructions in the email.
+    resetUserPassword:
+      Your password has been reset.
+      Please sign in with your new password.
     login: >-
       Successfully signed in.
     register: >-
-      Successfully created your account.
-    addWord: >-
-      Successfully created a new word.
-    changeWord: >-
-      Successfully edited the word.
-    discardWord: >-
-      Successfully deleted the word.
+      Your account has been created.
+    contact:
+      Your inquiry has been sent.
   error:
     recaptchaError: >-
       Something failed.
@@ -274,11 +358,11 @@ userHeader:
     setting: "Settings"
     logout: "Sign out"
   button:
-    issueActivateToken: "Resend mail"
+    issueActivateToken: "Resend email"
   callout:
     activate: >-
       This user has not yet been activated.
-      To activate, please follow the instructions in the mail you received when creating your account.
+      To activate, please follow the instructions in the email you received when creating your account.
       Unactivated users may have limited functionality.
 wordList:
   empty: "No matching words were found"

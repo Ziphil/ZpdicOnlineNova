@@ -1,15 +1,99 @@
 toast:
   success:
+    addDictionary: >-
+      Nova vortaro kreitas.
+    discardDictionary: >-
+      La vortaro forigitas.
+    uploadDictionary: >-
+      La dosiero alŝutitas.
+      Bonvolu atendi momenton por ke via datumo reflektiĝos.
+    changeDictionaryName: >-
+      La nomo ŝanĝitas.
+    changeDictionaryParamName: >-
+      La identigilo ŝanĝitas.
+    changeDictionaryExplanation: >-
+      La priskribo ŝanĝitas.
+    changeDictionarySecret: >-
+      La agordo ŝanĝitas.
+    changeDictionarySettings:
+      akrantiainSource: >-
+        La agordo ŝanĝitas.
+      zatlinSource: >-
+        La agordo ŝanĝitas.
+      exampleTitle: >-
+        La agordo ŝanĝitas.
+      pronunciationTitle: >-
+        La agordo ŝanĝitas.
+      enableMarkdown: >-
+        La agordo ŝanĝitas.
+      enableDuplicateName: >-
+        La agordo ŝanĝitas.
+    discardDictionaryAuthorizedUser: >-
+      La permeso revokitas.
+    addWord: >-
+      Nova vorto kreitas.
+    changeWord: >-
+      La vorto redaktitas.
+    discardWord: >-
+      La vorto forigitas.
+    addExample: >-
+      Nova ekzempla frazo kreitas.
+    changeExample: >-
+      La ekzempla frazo redaktitas.
+    discardExample: >-
+      La ekzempla frazo forigitas.
+    addCommission: >-
+      Nova peto kreitas.
+    discardCommission: >-
+      La peto forigitas.
+    addResource: >-
+      La bildo alŝutitas.
+    discardResource: >-
+      La bildo forigitas.
+    addInvitation:
+      edit: >-
+        La invito senditas.
+        La redakta permeso estos donita kiam la uzanto akceptos ĝin.
+      transfer: >-
+        La invito senditas.
+        La vortaro estos transdonita kiam la uzanto akceptos ĝin.
+    acceptInvitation:
+      edit: >-
+        Vi akceptis la inviton.
+        Vi povas redakti la vortaron de nun.
+      transfer: >-
+        Vi akceptis la inviton.
+        Vi estas nun la posedanto de la vortaro.
+    rejectInvitation:
+      edit: >-
+        Vi malakceptis la inviton.
+      transfer: >-
+        Vi malakceptis la inviton.
+    discardMe:
+      Via konto forigitas.
+    changeMyScreenName:
+      Via kromnomo ŝanĝitas.
+    changeMyEmail:
+      Via retpoŝta adreso ŝanĝitas.
+    changeMyPassword:
+      Via pasvorto ŝanĝitas.
+    issueMyActivateToken:
+      Ni sendis retpoŝton al vi.
+      Bonvolu sekvi la instrukciojn en la retpoŝto.
+    activateUser:
+      Via konto aktivigitas.
+    issueUserResetToken:
+      Ni sendis retpoŝton al vi.
+      Bonvolu sekvi la instrukciojn en la retpoŝto.
+    resetUserPassword:
+      Via pasvorto restarigitas.
+      Bonvolu ensaluti per via nova pasvorto.
     login: >-
       Sukcesis ensaluti.
     register: >-
-      Sukcesis krei vian konton.
-    addWord: >-
-      Sukcesis krei novan vorton.
-    changeWord: >-
-      Sukcesis redakti la vorton.
-    discardWord: >-
-      Sukcesis forigi la vorton.
+      Via konto kreitas.
+    contact:
+      Via mesaĝo senditas.
   error:
     recaptchaError: >-
       Io fiaskis.

@@ -1,15 +1,99 @@
 toast:
   success:
-    login: >-
-      ログインに成功しました。
-    register: >-
-      アカウントを作成しました。
+    addDictionary: >-
+      辞書を新しく作成しました。
+    discardDictionary: >-
+      辞書を削除しました。
+    uploadDictionary: >-
+      ファイルをアップロードしました。
+      データが反映されるまで少々お待ちください。
+    changeDictionaryName: >-
+      名前を変更しました。
+    changeDictionaryParamName: >-
+      識別子を変更しました。
+    changeDictionaryExplanation: >-
+      説明を変更しました。
+    changeDictionarySecret: >-
+      設定を変更しました。
+    changeDictionarySettings:
+      akrantiainSource: >-
+        設定を変更しました。
+      zatlinSource: >-
+        設定を変更しました。
+      exampleTitle: >-
+        設定を変更しました。
+      pronunciationTitle: >-
+        設定を変更しました。
+      enableMarkdown: >-
+        設定を変更しました。
+      enableDuplicateName: >-
+        設定を変更しました。
+    discardDictionaryAuthorizedUser: >-
+      編集権限を解除しました。
     addWord: >-
       単語を新しく作成しました。
     changeWord: >-
       単語を編集しました。
     discardWord: >-
       単語を削除しました。
+    addExample: >-
+      例文を新しく作成しました。
+    changeExample: >-
+      例文を編集しました。
+    discardExample: >-
+      例文を削除しました。
+    addCommission: >-
+      造語依頼を行いました。
+    discardCommission: >-
+      造語依頼を削除しました。
+    addResource: >-
+      画像をアップロードしました。
+    discardResource: >-
+      画像を削除しました。
+    addInvitation:
+      edit: >-
+        招待を行いました。
+        相手のユーザーがこれを承認した時点で、編集権限が付与されます。
+      transfer: >-
+        招待を行いました。
+        相手ユーザーがこれを承認した時点で、辞書が譲渡されます。
+    acceptInvitation:
+      edit: >-
+        招待を承認しました。
+        以降、この辞書を編集することができます。
+      transfer: >-
+        招待を承認しました。
+        以降、この辞書の管理者になります。
+    rejectInvitation:
+      edit: >-
+        招待を拒否しました。
+      transfer: >-
+        招待を拒否しました。
+    discardMe: >-
+      アカウントを削除しました。
+    changeMyScreenName: >-
+      ニックネームを変更しました。
+    changeMyEmail: >-
+      メールアドレスを変更しました。
+    changeMyPassword: >-
+      パスワードを変更しました。
+    issueMyActivateToken: >-
+      メールを送信しました。
+      メールの指示に従って操作を進めてください。
+    activateUser: >-
+      アカウントをアクティベートしました。
+    issueUserResetToken: >-
+      メールを送信しました。
+      メールの指示に従って操作を進めてください。
+    resetUserPassword: >-
+      パスワードをリセットしました。
+      新しいパスワードを用いてログインしてください。
+    login: >-
+      ログインしました。
+    register: >-
+      アカウントを作成しました。
+    contact: >-
+      お問い合わせを送信しました。
   error:
     recaptchaError: >-
       エラーが発生しました。

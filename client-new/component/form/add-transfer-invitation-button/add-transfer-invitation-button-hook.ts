@@ -32,7 +32,7 @@ export function useAddTransferInvitation(dictionary: Dictionary): AddTransferInv
       const response = await request("addInvitation", {number: dictionary.number, type: "transfer", userName: value.user.name});
       await switchResponse(response, async (body) => {
         await onSubmit?.();
-        dispatchSuccessToast("addTransferInvitation");
+        dispatchSuccessToast("addInvitation.transfer");
       });
     })(event);
   }, [dictionary.number, request, form, dispatchSuccessToast]);

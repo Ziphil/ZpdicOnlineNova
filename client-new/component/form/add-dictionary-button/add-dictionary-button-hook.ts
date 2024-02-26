@@ -37,7 +37,7 @@ export function useAddDictionary(): AddDictionarySpec {
         await invalidateResponses("fetchUserDictionaries", (request) => request.name === me?.name);
         await onSubmit?.();
         navigate(`/dictionary/${body.number}`);
-        dispatchSuccessToast("createDictionary");
+        dispatchSuccessToast("addDictionary");
       });
     })(event);
   }, [request, me, navigate, form, dispatchSuccessToast]);

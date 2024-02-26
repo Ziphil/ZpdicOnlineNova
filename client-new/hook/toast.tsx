@@ -1,6 +1,6 @@
 //
 
-import {faCircleInfo} from "@fortawesome/sharp-regular-svg-icons";
+import {faCircleCheck, faCircleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, ReactNode, useCallback} from "react";
 import {GeneralIcon, Toast, ToastBody, ToastContent, ToastIconContainer, useToast as useRawToast, useTrans} from "zographia";
 
@@ -12,7 +12,7 @@ export function useToast(): ToastCallbacks {
     dispatchToast(
       <Toast scheme="red">
         <ToastIconContainer>
-          <GeneralIcon icon={faCircleInfo}/>
+          <GeneralIcon icon={faCircleExclamation}/>
         </ToastIconContainer>
         <ToastBody>
           <ToastContent>
@@ -26,7 +26,7 @@ export function useToast(): ToastCallbacks {
     dispatchToast(
       <Toast scheme="blue">
         <ToastIconContainer>
-          <GeneralIcon icon={faCircleInfo}/>
+          <GeneralIcon icon={faCircleCheck}/>
         </ToastIconContainer>
         <ToastBody>
           <ToastContent>

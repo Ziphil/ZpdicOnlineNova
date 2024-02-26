@@ -32,7 +32,7 @@ export function useAddEditInvitation(dictionary: Dictionary): AddEditInvitationS
       const response = await request("addInvitation", {number: dictionary.number, type: "edit", userName: value.user.name});
       await switchResponse(response, async (body) => {
         await onSubmit?.();
-        dispatchSuccessToast("addEditInvitation");
+        dispatchSuccessToast("addInvitation.edit");
       });
     })(event);
   }, [dictionary.number, request, form, dispatchSuccessToast]);
