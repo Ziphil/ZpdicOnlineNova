@@ -1,4 +1,4 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
 import {faMagnifyingGlassPlus, faSearch, faShuffle} from "@fortawesome/sharp-regular-svg-icons";
 import merge from "lodash-es/merge";
@@ -15,13 +15,13 @@ import {
   GeneralIcon,
   Input,
   InputAddon,
-  useResponsiveDevice,
   useTrans
 } from "zographia";
 import {WordModeSelect} from "/client-new/component/atom/word-mode-select";
 import {WordTypeSelect} from "/client-new/component/atom/word-type-select";
 import {OrderDirection, OrderDirectionSelect} from "/client-new/component/compound/order-direction-select";
 import {OrderModeSelect} from "/client-new/component/compound/order-mode-select";
+import {SearchWordAdvancedDialog} from "/client-new/component/compound/search-word-advanced-dialog";
 import {create} from "/client-new/component/create";
 import {NormalWordParameter, WordModeUtil, WordOrderMode, WordParameter, WordTypeUtil} from "/client-new/skeleton";
 import {preventDefault} from "/client-new/util/form";
@@ -40,8 +40,6 @@ export const SearchWordForm = create(
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("searchWordForm");
-
-    const device = useResponsiveDevice();
 
     const actualParameter = WordParameter.toNormal(parameter);
 
@@ -72,10 +70,6 @@ export const SearchWordForm = create(
 
     const handleIgnoreCaseSet = useCallback(function (ignoreCase: boolean): void {
       handleSet({options: {ignore: {case: ignoreCase}}});
-    }, [handleSet]);
-
-    const handleEnableSuggestionsSet = useCallback(function (enableSuggestions: boolean): void {
-      handleSet({options: {enableSuggestions}});
     }, [handleSet]);
 
     const handleOrderModeSet = useCallback(function (orderMode: WordOrderMode): void {
@@ -133,10 +127,12 @@ export const SearchWordForm = create(
           </Button>
         </div>
         <div styleName="row">
-          <Button scheme="secondary" variant="underline">
-            <ButtonIconbag><GeneralIcon icon={faMagnifyingGlassPlus}/></ButtonIconbag>
-            {trans("button.advancedSearch")}
-          </Button>
+          <SearchWordAdvancedDialog parameter={parameter} onParameterSet={onParameterSet} trigger={(
+            <Button scheme="secondary" variant="underline">
+              <ButtonIconbag><GeneralIcon icon={faMagnifyingGlassPlus}/></ButtonIconbag>
+              {trans("button.advancedSearch")}
+            </Button>
+          )}/>
         </div>
       </form>
     );
