@@ -103,8 +103,8 @@ export const SearchWordForm = create(
           </InputAddon>
         </Input>
         <div styleName="select-group">
-          <WordModeSelect mode={actualParameter.mode} onSet={handleModeSet} kind="flexible" optionModes={FORM_WORD_MODES}/>
-          <WordTypeSelect type={actualParameter.type} onSet={handleTypeSet} kind="flexible" optionTypes={FORM_WORD_TYPES}/>
+          <WordModeSelect optionModes={FORM_WORD_MODES} kind="flexible" mode={actualParameter.mode} onSet={handleModeSet}/>
+          <WordTypeSelect optionTypes={FORM_WORD_TYPES} kind="flexible" type={actualParameter.type} onSet={handleTypeSet}/>
         </div>
         <div styleName="row">
           <CheckableContainer>
@@ -115,9 +115,9 @@ export const SearchWordForm = create(
         <div styleName="row">
           <ControlGroup>
             <OrderModeSelect
-              orderModeOptions={FORM_WORD_ORDER_MODES}
-              orderMode={actualParameter.order.mode}
+              optionOrderModes={FORM_WORD_ORDER_MODES}
               unicodeAlt="wordName"
+              orderMode={actualParameter.order.mode}
               onSet={handleOrderModeSet}
             />
             <OrderDirectionSelect

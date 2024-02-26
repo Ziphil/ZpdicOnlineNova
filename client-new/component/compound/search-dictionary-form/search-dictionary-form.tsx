@@ -50,7 +50,7 @@ export const SearchDictionaryForm = create(
         <div styleName="row">
           <ControlGroup>
             <OrderModeSelect
-              orderModeOptions={DICTIONARY_ORDER_MODES}
+              optionOrderModes={DICTIONARY_ORDER_MODES}
               orderMode={parameter.order.mode}
               unicodeAlt="dictionaryName"
               onSet={handleOrderModeSet}
