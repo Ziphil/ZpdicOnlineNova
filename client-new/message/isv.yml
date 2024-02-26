@@ -352,6 +352,7 @@ searchWordForm:
     enableSuggestions: "Прєдлагати вариације"
   button:
     shuffleResult: "Смєшати резултаты"
+    advancedSearch: "Advanced search"
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"

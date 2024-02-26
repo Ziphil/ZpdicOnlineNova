@@ -352,6 +352,7 @@ searchWordForm:
     enableSuggestions: "変化形をサジェスト"
   button:
     shuffleResult: "検索結果をシャッフル"
+    advancedSearch: "高度な検索"
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"

@@ -352,6 +352,7 @@ searchWordForm:
     enableSuggestions: "Sugesti variaĵojn"
   button:
     shuffleResult: "Miksi rezultojn"
+    advancedSearch: "Serĉi altnivele"
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"

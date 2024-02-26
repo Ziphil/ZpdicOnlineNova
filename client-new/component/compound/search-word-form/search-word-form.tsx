@@ -1,6 +1,6 @@
 //
 
-import {faSearch, faShuffle} from "@fortawesome/sharp-regular-svg-icons";
+import {faMagnifyingGlassPlus, faSearch, faShuffle} from "@fortawesome/sharp-regular-svg-icons";
 import merge from "lodash-es/merge";
 import {Dispatch, ReactElement, SetStateAction, useCallback} from "react";
 import {DeepPartial} from "ts-essentials";
@@ -130,6 +130,12 @@ export const SearchWordForm = create(
           <Button scheme="secondary" variant="underline" onClick={shuffleResult}>
             <ButtonIconbag><GeneralIcon icon={faShuffle}/></ButtonIconbag>
             {trans("button.shuffleResult")}
+          </Button>
+        </div>
+        <div styleName="row">
+          <Button scheme="secondary" variant="underline">
+            <ButtonIconbag><GeneralIcon icon={faMagnifyingGlassPlus}/></ButtonIconbag>
+            {trans("button.advancedSearch")}
           </Button>
         </div>
       </form>
