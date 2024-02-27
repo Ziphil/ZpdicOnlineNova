@@ -91,4 +91,10 @@ export type Supporter = {name: string, linkUrl?: SupporterLinkUrl, avatarUrl?: S
 export type SupporterLinkUrl = string | {type: "github", name: string} | {type: "twitter", name: string};
 export type SupporterAvatarUrl = string | {type: "github", name: string};
 
-const RESPONSE_CONFIG = {staleTime: 1 / 0, refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false};
+const RESPONSE_CONFIG = {
+  cacheTime: 1 / 0,
+  staleTime: 1 / 0,
+  refetchOnWindowFocus: false,
+  refetchOnMount: false,
+  refetchOnReconnect: false
+};

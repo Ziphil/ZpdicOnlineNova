@@ -109,4 +109,10 @@ export const DictionaryCard = create(
 );
 
 
-const RESPONSE_CONFIG = {staleTime: 1 / 0, refetchOnWindowFocus: false, refetchOnMount: false, refetchOnReconnect: false};
+const RESPONSE_CONFIG = {
+  cacheTime: 1 / 0,
+  staleTime: 1 / 0,
+  refetchOnWindowFocus: false,
+  refetchOnMount: false,
+  refetchOnReconnect: false
+};
