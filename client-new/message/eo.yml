@@ -95,6 +95,76 @@ toast:
     contact:
       Via mesaĝo senditas.
   error:
+    invalidUserName: >-
+      La salutnomo estas nevalida.
+    invalidUserEmail: >-
+      La retpoŝta adreso estas nevalida.
+    invalidUserPassword: >-
+      La pasvorto estas nevalida.
+    duplicateUserName: >-
+      Jam ekzistas la salutnomo kiun vi specifis.
+      Bonvolu specifi alian.
+    duplicateUserEmail: >-
+      Jam ekzistas la retpoŝta adreso kiun vi specifis.
+      Bonvolu specifi alian.
+    noSuchUser: >-
+      Ne ekzistas tiu uzanto.
+    noSuchUserEmail: >-
+      Ne ekzistas uzanto kun la retpoŝta adreso.
+    userAlreadyActivated: >-
+      Tiu uzanto estas jam aktivigita.
+    invalidActivateToken: >-
+      Malsukcesis aktivigi la uzanton.
+    invalidResetToken: >-
+      Malsukcesis restarigi vian pasvorton.
+    loginFailed: >-
+      Malsukcesis ensaluti.
+    noSuchDictionaryNumber: >-
+      Ne ekzistas tiu vortaro.
+    noSuchDictionaryParamName: >-
+      Ne ekzistas tiu vortaro.
+    duplicateDictionaryParamName: >-
+      Jam uzitas la identigilo kiun vi specifis.
+      Bonvolu specifi alian.
+    invalidDictionaryParamName: >-
+      La identigilo estas nevalida.
+    dictionarySaving: >-
+      La procezo de alŝuto daŭras.
+      Bonvolu atendi momenton.
+    failAddRelations: >-
+      Malsukcesis krei la reciprokaj rilatojn.
+    dictionarySizeTooLarge: >-
+      La dosiero estas tro granda.
+    noSuchWordNumber: >-
+      Ne ekzistas tiu vorto.
+    noSuchExampleNumber: >-
+      Ne ekzistas tiu ekzempla frazo.
+    resourceCountExceeded: >-
+      Ne eblas alŝuti pli da dosieroj.
+    resourceSizeTooLarge: >-
+      La dosiero estas tro granda.
+    unsupportedResourceType: >-
+      Tiu dosierspeco ne estas subtenata.
+    userCanAlreadyEdit: >-
+      La uzanto jam havas la permeson.
+    userCanAlreadyOwn: >-
+      La uzanto jam estas la posedanto.
+    editInvitationAlreadyAdded: >-
+      La uzanto jam estas invitita.
+    transferInvitationAlreadyAdded: >-
+      La uzanto jam estas invitita.
+    noSuchInvitation: >-
+      Ne ekzistas tiu invito.
+    noSuchDictionaryAuthorizedUser: >-
+      La uzanto ne havas la permeson.
+    emptyCommissionName: >-
+      La vorto por peti estas malplena.
+    noSuchCommission: >-
+      Ne ekzistas tiu peto.
+    emptyContactText: >-
+      La mesaĝo estas malplena.
+    administratorNotFound: >-
+      Neatendita eraro okazis.
     recaptchaError: >-
       Io fiaskis.
       Bonvolu reprovi.

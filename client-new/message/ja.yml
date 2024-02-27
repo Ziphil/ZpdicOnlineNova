@@ -95,6 +95,76 @@ toast:
     contact: >-
       お問い合わせを送信しました。
   error:
+    invalidUserName: >-
+      ユーザー ID の形式が正しくありません。
+    invalidUserEmail: >-
+      メールアドレスの形式が正しくありません。
+    invalidUserPassword: >-
+      パスワードの形式が正しくありません。
+    duplicateUserName: >-
+      そのユーザー ID はすでに存在しています。
+      別のユーザー ID を指定してください。
+    duplicateUserEmail: >-
+      そのメールアドレスはすでに使われています。
+      別のメールアドレスを指定してください。
+    noSuchUser: >-
+      このユーザーは存在しません。
+    noSuchUserEmail: >-
+      そのメールアドレスのユーザーは存在しません。
+    userAlreadyActivated: >-
+      このユーザーはすでにアクティベートされています。
+    invalidActivateToken: >-
+      ユーザーのアクティベートに失敗しました。
+    invalidResetToken: >-
+      パスワードのリセットに失敗しました。
+    loginFailed: >-
+      ログインに失敗しました。
+    noSuchDictionaryNumber: >-
+      この辞書は存在しません。
+    noSuchDictionaryParamName: >-
+      この辞書は存在しません。
+    duplicateDictionaryParamName: >-
+      その URL 用識別子はすでに利用されています。
+      別の識別子をしてしてください。
+    invalidDictionaryParamName: >-
+      URL 用識別子の形式が正しくありません。
+    dictionarySaving: >-
+      ファイルのアップロード処理中です。
+      少々お待ちください。
+    failAddRelations: >-
+      双方向の関連語の登録に失敗しました。
+    dictionarySizeTooLarge: >-
+      ファイルのサイズが大きすぎます。
+    noSuchWordNumber: >-
+      この単語は存在しません。
+    noSuchExampleNumber: >-
+      この例文は存在しません。
+    resourceCountExceeded: >-
+      これ以上ファイルをアップロードすることはできません。
+    resourceSizeTooLarge: >-
+      ファイルのサイズが大きすぎます。
+    unsupportedResourceType: >-
+      このファイルの形式はサポートされていません。
+    userCanAlreadyEdit: >-
+      そのユーザーはすでに編集権限を保有しています。
+    userCanAlreadyOwn: >-
+      そのユーザーはすでに管理者です。
+    editInvitationAlreadyAdded: >-
+      そのユーザーにはすでに招待を行っています。
+    transferInvitationAlreadyAdded: >-
+      そのユーザーにはすでに招待を行っています。
+    noSuchInvitation: >-
+      この招待は存在しません。
+    noSuchDictionaryAuthorizedUser: >-
+      そのユーザーは権限を保有していません。
+    emptyCommissionName: >-
+      造語依頼する単語が空です。
+    noSuchCommission: >-
+      その造語依頼は存在しません。
+    emptyContactText: >-
+      お問い合わせ内容が空です。
+    administratorNotFound: >-
+      予期しないエラーが発生しました。
     recaptchaError: >-
       エラーが発生しました。
       もう一度お試しください。

@@ -95,6 +95,76 @@ toast:
     contact:
       Your inquiry has been sent.
   error:
+    invalidUserName: >-
+      The username is invalid.
+    invalidUserEmail: >-
+      The email address is invalid.
+    invalidUserPassword: >-
+      The password is invalid.
+    duplicateUserName: >-
+      The username you specified already exists.
+      Please specify another username.
+    duplicateUserEmail: >-
+      The email address you specified is already used.
+      Please specify another email address.
+    noSuchUser: >-
+      This user does not exist.
+    noSuchUserEmail: >-
+      No user with the email address exists.
+    userAlreadyActivated: >-
+      This user has already been activated.
+    invalidActivateToken: >-
+      Failed to activate the user.
+    invalidResetToken: >-
+      Failed to reset your password.
+    loginFailed: >-
+      Failed to sign in.
+    noSuchDictionaryNumber: >-
+      This dictionary does not exist.
+    noSuchDictionaryParamName: >-
+      This dictionary does not exist.
+    duplicateDictionaryParamName: >-
+      The identifier you specified is already used.
+      Please specify another identifier.
+    invalidDictionaryParamName: >-
+      The identifier is invalid.
+    dictionarySaving: >-
+      The upload process is ongoing.
+      Please wait a moment.
+    failAddRelations: >-
+      Failed to create the mutual relations.
+    dictionarySizeTooLarge: >-
+      The file is too large.
+    noSuchWordNumber: >-
+      This word does not exist.
+    noSuchExampleNumber: >-
+      This example sentence does not exist.
+    resourceCountExceeded: >-
+      No more files can be uploaded.
+    resourceSizeTooLarge: >-
+      The file is too large.
+    unsupportedResourceType: >-
+      This file type is not supported.
+    userCanAlreadyEdit: >-
+      The user already has the permission.
+    userCanAlreadyOwn: >-
+      The user is already the owner of this dictionary.
+    editInvitationAlreadyAdded: >-
+      The user has already been invited.
+    transferInvitationAlreadyAdded: >-
+      The user has already been invited.
+    noSuchInvitation: >-
+      This invitation does not exist.
+    noSuchDictionaryAuthorizedUser: >-
+      The user does not have the permission.
+    emptyCommissionName: >-
+      The word to request is empty.
+    noSuchCommission: >-
+      This request does not exist.
+    emptyContactText: >-
+      The content is empty.
+    administratorNotFound: >-
+      An unexpected error occurred.
     recaptchaError: >-
       Нєчто не удал се.
       Πрошу попробујте опет.
