@@ -21,3 +21,7 @@
   font-size: 3.5zu;
   color: var(--glob-mute-text-color);
 }
+
+.separator {
+  border-block-start: 1px solid var(--glob-border-color);
+}

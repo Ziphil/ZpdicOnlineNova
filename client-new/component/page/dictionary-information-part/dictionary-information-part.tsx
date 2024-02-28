@@ -26,6 +26,7 @@ export const DictionaryInformationPart = create(
         <section>
           <DictionaryStatisticsView dictionary={dictionary}/>
         </section>
+        <hr styleName="separator"/>
         <section>
           <h3 styleName="heading">{trans("heading.history")}</h3>
           <MultiLineText styleName="description">

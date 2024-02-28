@@ -60,7 +60,7 @@ export const TopPage = create(
                   {trans("subbutton.notification")}
                 </Link>
               </section>
-              <hr styleName="divider"/>
+              <hr styleName="separator"/>
               <div styleName="row">
                 <section styleName="section">
                   <h2 styleName="subheading">{trans("heading.supporter")}</h2>

@@ -281,6 +281,24 @@ dictionaryList:
   button:
     see: "Vidi vortaron"
     setting: "Agordi"
+dictionaryStatisticsView:
+  heading:
+    word: "Vortoj"
+    example: "Frazoj"
+    equivalent: "Tradukaĵoj"
+    information: "Enhavoj"
+    informationText: "Longo de enhavoj"
+  value:
+    word: "<number>{value, number}</number><unit>{value, plural, one {vorto} other {vortoj}}</unit>"
+    wordTokipona: "<number>{value, number, ::.00}</number><unit>TP</unit>"
+    example: "<number>{value, number}</number><unit>{value, plural, one {frazo} other {frazoj}}</unit>"
+    exampleAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {frazo/vorto} other {frazoj/vorto}}</unit>"
+    equivalent: "<number>{value, number}</number><unit>{value, plural, one {termino} other {terminoj}}</unit>"
+    equivalentAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {termino/vorto} other {terminoj/vorto}}</unit>"
+    information: "<number>{value, number}</number><unit>{value, plural, one {ero} other {eroj}}</unit>"
+    informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {ero/vorto} other {eroj/vorto}}</unit>"
+    informationText: "<number>{value, number}</number><unit>{value, plural, one {signo} other {signoj}}</unit>"
+    informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {signo/vorto} other {signoj/vorto}}</unit>"
 editExampleDialog:
   button:
     external: "Malfermi en nova langeto"

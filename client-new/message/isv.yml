@@ -281,6 +281,24 @@ dictionaryList:
   button:
     see: "Зрєти словник"
     setting: "Настрајати"
+dictionaryStatisticsView:
+  heading:
+    word: "Words"
+    example: "Sentences"
+    equivalent: "Translations"
+    information: "Contents"
+    informationText: "Content length"
+  value:
+    word: "<number>{value, number}</number><unit>{value, plural, one {word} other {words}}</unit>"
+    wordTokipona: "<number>{value, number, ::.00}</number><unit>TP</unit>"
+    example: "<number>{value, number}</number><unit>{value, plural, one {sentence} other {sentences}}</unit>"
+    exampleAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {sentence/word} other {sentences/word}}</unit>"
+    equivalent: "<number>{value, number}</number><unit>{value, plural, one {term} other {terms}}</unit>"
+    equivalentAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {term/word} other {terms/word}}</unit>"
+    information: "<number>{value, number}</number><unit>{value, plural, one {item} other {items}}</unit>"
+    informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {item/word} other {items/word}}</unit>"
+    informationText: "<number>{value, number}</number><unit>{value, plural, one {char} other {chars}}</unit>"
+    informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {char/word} other {chars/word}}</unit>"
 editExampleDialog:
   button:
     external: "別タブで表示"
