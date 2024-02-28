@@ -9,6 +9,7 @@ export function useToast(): ToastCallbacks {
   const {trans, transNode} = useTrans();
   const dispatchToast = useRawToast();
   const dispatchErrorToast = useCallback(function (type: string, values?: Record<string, ReactNode | ((parts: Array<ReactNode>) => ReactNode)>): void {
+    const content = transNode(`toast.error.${type}`, values);
     dispatchToast(
       <Toast scheme="red">
         <ToastIconContainer>
@@ -16,7 +17,7 @@ export function useToast(): ToastCallbacks {
         </ToastIconContainer>
         <ToastBody>
           <ToastContent>
-            {transNode(`toast.error.${type}`, values)}
+            {content}
           </ToastContent>
         </ToastBody>
       </Toast>
