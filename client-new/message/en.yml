@@ -1,73 +1,73 @@
 toast:
   success:
-    addDictionary: >-
+    addDictionary: |-
       A new dictionary has been created.
-    discardDictionary: >-
+    discardDictionary: |-
       The dictionary has been deleted.
-    uploadDictionary: >-
+    uploadDictionary: |-
       Your file has been uploaded.
       Please wait a moment for your data to be reflected.
-    changeDictionaryName: >-
+    changeDictionaryName: |-
       The name has been changed.
-    changeDictionaryParamName: >-
+    changeDictionaryParamName: |-
       The identifier has been changed.
-    changeDictionaryExplanation: >-
+    changeDictionaryExplanation: |-
       The description has been changed.
-    changeDictionarySecret: >-
+    changeDictionarySecret: |-
       The setting has been changed.
     changeDictionarySettings:
-      akrantiainSource: >-
+      akrantiainSource: |-
         The setting has been changed.
-      zatlinSource: >-
+      zatlinSource: |-
         The setting has been changed.
-      exampleTitle: >-
+      exampleTitle: |-
         The setting has been changed.
-      pronunciationTitle: >-
+      pronunciationTitle: |-
         The setting has been changed.
-      enableMarkdown: >-
+      enableMarkdown: |-
         The setting has been changed.
-      enableDuplicateName: >-
+      enableDuplicateName: |-
         The setting has been changed.
-    discardDictionaryAuthorizedUser: >-
+    discardDictionaryAuthorizedUser: |-
       The permission has been revoked.
-    addWord: >-
+    addWord: |-
       A new word has been created.
-    changeWord: >-
+    changeWord: |-
       The word has been edited.
-    discardWord: >-
+    discardWord: |-
       The word has been deleted.
-    addExample: >-
+    addExample: |-
       A new example sentence has been created.
-    changeExample: >-
+    changeExample: |-
       The example sentence has been edited.
-    discardExample: >-
+    discardExample: |-
       The example sentence has been deleted.
-    addCommission: >-
+    addCommission: |-
       A new request has been sent.
-    discardCommission: >-
+    discardCommission: |-
       The request has been deleted.
-    addResource: >-
+    addResource: |-
       An image has been uploaded.
-    discardResource: >-
+    discardResource: |-
       The image has been deleted.
     addInvitation:
-      edit: >-
+      edit: |-
         The invitation has been sent.
         The editing permission will be granted once the user accepts it.
-      transfer: >-
+      transfer: |-
         The invitation has been sent.
         The dictionary will be transferred once the user accepts it.
     acceptInvitation:
-      edit: >-
+      edit: |-
         You have accepted the invitation.
         You can edit the dictionary from now on.
-      transfer: >-
+      transfer: |-
         You have accepted the invitation.
         You are now the owner of the dictionary.
     rejectInvitation:
-      edit: >-
+      edit: |-
         You have declined the invitation.
-      transfer: >-
+      transfer: |-
         You have declined the invitation.
     discardMe:
       Your account has been deleted.
@@ -88,113 +88,113 @@ toast:
     resetUserPassword:
       Your password has been reset.
       Please sign in with your new password.
-    login: >-
+    login: |-
       Successfully signed in.
-    register: >-
+    register: |-
       Your account has been created.
     contact:
       Your inquiry has been sent.
   error:
-    invalidUserName: >-
+    invalidUserName: |-
       The username is invalid.
-    invalidUserEmail: >-
+    invalidUserEmail: |-
       The email address is invalid.
-    invalidUserPassword: >-
+    invalidUserPassword: |-
       The password is invalid.
-    duplicateUserName: >-
+    duplicateUserName: |-
       The username you specified already exists.
       Please specify another.
-    duplicateUserEmail: >-
+    duplicateUserEmail: |-
       The email address you specified is already used.
       Please specify another.
-    noSuchUser: >-
+    noSuchUser: |-
       This user does not exist.
-    noSuchUserEmail: >-
+    noSuchUserEmail: |-
       No user with the email address exists.
-    userAlreadyActivated: >-
+    userAlreadyActivated: |-
       This user has already been activated.
-    invalidActivateToken: >-
+    invalidActivateToken: |-
       Failed to activate the user.
-    invalidResetToken: >-
+    invalidResetToken: |-
       Failed to reset your password.
-    loginFailed: >-
+    loginFailed: |-
       Failed to sign in.
-    noSuchDictionaryNumber: >-
+    noSuchDictionaryNumber: |-
       This dictionary does not exist.
-    noSuchDictionaryParamName: >-
+    noSuchDictionaryParamName: |-
       This dictionary does not exist.
-    duplicateDictionaryParamName: >-
+    duplicateDictionaryParamName: |-
       The identifier you specified is already used.
       Please specify another.
-    invalidDictionaryParamName: >-
+    invalidDictionaryParamName: |-
       The identifier is invalid.
-    dictionarySaving: >-
+    dictionarySaving: |-
       The upload process is ongoing.
       Please wait a moment.
-    failAddRelations: >-
+    failAddRelations: |-
       Failed to create the mutual relations.
-    dictionarySizeTooLarge: >-
+    dictionarySizeTooLarge: |-
       The file is too large.
-    noSuchWordNumber: >-
+    noSuchWordNumber: |-
       This word does not exist.
-    noSuchExampleNumber: >-
+    noSuchExampleNumber: |-
       This example sentence does not exist.
-    resourceCountExceeded: >-
+    resourceCountExceeded: |-
       No more files can be uploaded.
-    resourceSizeTooLarge: >-
+    resourceSizeTooLarge: |-
       The file is too large.
-    unsupportedResourceType: >-
+    unsupportedResourceType: |-
       This file type is not supported.
-    userCanAlreadyEdit: >-
+    userCanAlreadyEdit: |-
       The user already has the permission.
-    userCanAlreadyOwn: >-
+    userCanAlreadyOwn: |-
       The user is already the owner.
-    editInvitationAlreadyAdded: >-
+    editInvitationAlreadyAdded: |-
       The user has already been invited.
-    transferInvitationAlreadyAdded: >-
+    transferInvitationAlreadyAdded: |-
       The user has already been invited.
-    noSuchInvitation: >-
+    noSuchInvitation: |-
       This invitation does not exist.
-    noSuchDictionaryAuthorizedUser: >-
+    noSuchDictionaryAuthorizedUser: |-
       The user does not have the permission.
-    emptyCommissionName: >-
+    emptyCommissionName: |-
       The word to request is empty.
-    noSuchCommission: >-
+    noSuchCommission: |-
       This request does not exist.
-    emptyContactText: >-
+    emptyContactText: |-
       The message is empty.
-    administratorNotFound: >-
+    administratorNotFound: |-
       An unexpected error occurred.
-    recaptchaError: >-
+    recaptchaError: |-
       Something failed.
       Please try again.
-    recaptchaRejected: >-
+    recaptchaRejected: |-
       Background authentication failed.
       Please try again.
-    awsError: >-
+    awsError: |-
       Something failed.
       Please try again.
-    unauthenticated: >-
+    unauthenticated: |-
       You are not signed in.
       Please try again after signing in.
-    forbidden: >-
+    forbidden: |-
       You are not authorized to access this content.
-    serverNotFound: >-
+    serverNotFound: |-
       The server may have been updated.
       Please refresh the page.
-    serverError: >-
+    serverError: |-
       An error occurred on the server.
       Please try again after a while.
-    serverTimeout: >-
+    serverTimeout: |-
       Couldn't get a response from the server.
       Please try again after a while.
-    requestTimeout: >-
+    requestTimeout: |-
       Couldn't get a response from the server.
       Please try again after a while.
-    messageNotFound: >-
+    messageNotFound: |-
       There is no message configured for this popup.
       Please notify the administrator.
-    unexpected: >-
+    unexpected: |-
       An unexpected error occurred.
       Please notify the administrator.
 

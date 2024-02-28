@@ -1,200 +1,200 @@
 toast:
   success:
-    addDictionary: >-
+    addDictionary: |-
       辞書を新しく作成しました。
-    discardDictionary: >-
+    discardDictionary: |-
       辞書を削除しました。
-    uploadDictionary: >-
+    uploadDictionary: |-
       ファイルをアップロードしました。
       データが反映されるまで少々お待ちください。
-    changeDictionaryName: >-
+    changeDictionaryName: |-
       名前を変更しました。
-    changeDictionaryParamName: >-
+    changeDictionaryParamName: |-
       識別子を変更しました。
-    changeDictionaryExplanation: >-
+    changeDictionaryExplanation: |-
       説明を変更しました。
-    changeDictionarySecret: >-
+    changeDictionarySecret: |-
       設定を変更しました。
     changeDictionarySettings:
-      akrantiainSource: >-
+      akrantiainSource: |-
         設定を変更しました。
-      zatlinSource: >-
+      zatlinSource: |-
         設定を変更しました。
-      exampleTitle: >-
+      exampleTitle: |-
         設定を変更しました。
-      pronunciationTitle: >-
+      pronunciationTitle: |-
         設定を変更しました。
-      enableMarkdown: >-
+      enableMarkdown: |-
         設定を変更しました。
-      enableDuplicateName: >-
+      enableDuplicateName: |-
         設定を変更しました。
-    discardDictionaryAuthorizedUser: >-
+    discardDictionaryAuthorizedUser: |-
       編集権限を解除しました。
-    addWord: >-
+    addWord: |-
       単語を新しく作成しました。
-    changeWord: >-
+    changeWord: |-
       単語を編集しました。
-    discardWord: >-
+    discardWord: |-
       単語を削除しました。
-    addExample: >-
+    addExample: |-
       例文を新しく作成しました。
-    changeExample: >-
+    changeExample: |-
       例文を編集しました。
-    discardExample: >-
+    discardExample: |-
       例文を削除しました。
-    addCommission: >-
+    addCommission: |-
       造語依頼を行いました。
-    discardCommission: >-
+    discardCommission: |-
       造語依頼を削除しました。
-    addResource: >-
+    addResource: |-
       画像をアップロードしました。
-    discardResource: >-
+    discardResource: |-
       画像を削除しました。
     addInvitation:
-      edit: >-
+      edit: |-
         招待を行いました。
         相手のユーザーがこれを承認した時点で、編集権限が付与されます。
-      transfer: >-
+      transfer: |-
         招待を行いました。
         相手ユーザーがこれを承認した時点で、辞書が譲渡されます。
     acceptInvitation:
-      edit: >-
+      edit: |-
         招待を承認しました。
         以降、この辞書を編集することができます。
-      transfer: >-
+      transfer: |-
         招待を承認しました。
         以降、この辞書の管理者になります。
     rejectInvitation:
-      edit: >-
+      edit: |-
         招待を拒否しました。
-      transfer: >-
+      transfer: |-
         招待を拒否しました。
-    discardMe: >-
+    discardMe: |-
       アカウントを削除しました。
-    changeMyScreenName: >-
+    changeMyScreenName: |-
       ニックネームを変更しました。
-    changeMyEmail: >-
+    changeMyEmail: |-
       メールアドレスを変更しました。
-    changeMyPassword: >-
+    changeMyPassword: |-
       パスワードを変更しました。
-    issueMyActivateToken: >-
+    issueMyActivateToken: |-
       メールを送信しました。
       メールの指示に従って操作を進めてください。
-    activateUser: >-
+    activateUser: |-
       アカウントをアクティベートしました。
-    issueUserResetToken: >-
+    issueUserResetToken: |-
       メールを送信しました。
       メールの指示に従って操作を進めてください。
-    resetUserPassword: >-
+    resetUserPassword: |-
       パスワードをリセットしました。
       新しいパスワードを用いてログインしてください。
-    login: >-
+    login: |-
       ログインしました。
-    register: >-
+    register: |-
       アカウントを作成しました。
-    contact: >-
+    contact: |-
       お問い合わせを送信しました。
   error:
-    invalidUserName: >-
+    invalidUserName: |-
       ユーザー ID の形式が正しくありません。
-    invalidUserEmail: >-
+    invalidUserEmail: |-
       メールアドレスの形式が正しくありません。
-    invalidUserPassword: >-
+    invalidUserPassword: |-
       パスワードの形式が正しくありません。
-    duplicateUserName: >-
+    duplicateUserName: |-
       そのユーザー ID はすでに存在しています。
       別のユーザー ID を指定してください。
-    duplicateUserEmail: >-
+    duplicateUserEmail: |-
       そのメールアドレスはすでに使われています。
       別のメールアドレスを指定してください。
-    noSuchUser: >-
+    noSuchUser: |-
       このユーザーは存在しません。
-    noSuchUserEmail: >-
+    noSuchUserEmail: |-
       そのメールアドレスのユーザーは存在しません。
-    userAlreadyActivated: >-
+    userAlreadyActivated: |-
       このユーザーはすでにアクティベートされています。
-    invalidActivateToken: >-
+    invalidActivateToken: |-
       ユーザーのアクティベートに失敗しました。
-    invalidResetToken: >-
+    invalidResetToken: |-
       パスワードのリセットに失敗しました。
-    loginFailed: >-
+    loginFailed: |-
       ログインに失敗しました。
-    noSuchDictionaryNumber: >-
+    noSuchDictionaryNumber: |-
       この辞書は存在しません。
-    noSuchDictionaryParamName: >-
+    noSuchDictionaryParamName: |-
       この辞書は存在しません。
-    duplicateDictionaryParamName: >-
+    duplicateDictionaryParamName: |-
       その URL 用識別子はすでに利用されています。
       別の識別子をしてしてください。
-    invalidDictionaryParamName: >-
+    invalidDictionaryParamName: |-
       URL 用識別子の形式が正しくありません。
-    dictionarySaving: >-
+    dictionarySaving: |-
       ファイルのアップロード処理中です。
       少々お待ちください。
-    failAddRelations: >-
+    failAddRelations: |-
       双方向の関連語の登録に失敗しました。
-    dictionarySizeTooLarge: >-
+    dictionarySizeTooLarge: |-
       ファイルのサイズが大きすぎます。
-    noSuchWordNumber: >-
+    noSuchWordNumber: |-
       この単語は存在しません。
-    noSuchExampleNumber: >-
+    noSuchExampleNumber: |-
       この例文は存在しません。
-    resourceCountExceeded: >-
+    resourceCountExceeded: |-
       これ以上ファイルをアップロードすることはできません。
-    resourceSizeTooLarge: >-
+    resourceSizeTooLarge: |-
       ファイルのサイズが大きすぎます。
-    unsupportedResourceType: >-
+    unsupportedResourceType: |-
       このファイルの形式はサポートされていません。
-    userCanAlreadyEdit: >-
+    userCanAlreadyEdit: |-
       そのユーザーはすでに編集権限を保有しています。
-    userCanAlreadyOwn: >-
+    userCanAlreadyOwn: |-
       そのユーザーはすでに管理者です。
-    editInvitationAlreadyAdded: >-
+    editInvitationAlreadyAdded: |-
       そのユーザーにはすでに招待を行っています。
-    transferInvitationAlreadyAdded: >-
+    transferInvitationAlreadyAdded: |-
       そのユーザーにはすでに招待を行っています。
-    noSuchInvitation: >-
+    noSuchInvitation: |-
       この招待は存在しません。
-    noSuchDictionaryAuthorizedUser: >-
+    noSuchDictionaryAuthorizedUser: |-
       そのユーザーは権限を保有していません。
-    emptyCommissionName: >-
+    emptyCommissionName: |-
       造語依頼する単語が空です。
-    noSuchCommission: >-
+    noSuchCommission: |-
       その造語依頼は存在しません。
-    emptyContactText: >-
+    emptyContactText: |-
       お問い合わせ内容が空です。
-    administratorNotFound: >-
+    administratorNotFound: |-
       予期しないエラーが発生しました。
-    recaptchaError: >-
+    recaptchaError: |-
       エラーが発生しました。
       もう一度お試しください。
-    recaptchaRejected: >-
+    recaptchaRejected: |-
       バックグラウンドの認証に失敗しました。
       もう一度お試しください。
-    awsError: >-
+    awsError: |-
       エラーが発生しました。
       もう一度お試しください。
-    unauthenticated: >-
+    unauthenticated: |-
       ログインしていません。
       ログインした後にもう一度お試しください。
-    forbidden: >-
+    forbidden: |-
       このコンテンツにアクセスする権限がありません。
-    serverNotFound: >-
+    serverNotFound: |-
       アップデートが行われた可能性があります。
       ページを更新してください。
-    serverError: >-
+    serverError: |-
       サーバーでエラーが発生しました。
       時間を置いてもう一度お試しください。
-    serverTimeout: >-
+    serverTimeout: |-
       サーバーが時間内に応答しませんでした。
       時間を置いてもう一度お試しください。
-    requestTimeout: >-
+    requestTimeout: |-
       サーバーが時間内に応答しませんでした。
       時間を置いてもう一度お試しください。
-    messageNotFound: >-
+    messageNotFound: |-
       ポップアップ用のメッセージが設定されていません。
       設定ミスの可能性がありますので、お手数ですが管理者までご連絡ください。
-    unexpected: >-
+    unexpected: |-
       予期しないエラーが発生しました。
       お手数ですが管理者までご連絡ください。
 

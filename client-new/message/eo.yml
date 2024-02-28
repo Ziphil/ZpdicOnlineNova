@@ -1,73 +1,73 @@
 toast:
   success:
-    addDictionary: >-
+    addDictionary: |-
       Nova vortaro kreitas.
-    discardDictionary: >-
+    discardDictionary: |-
       La vortaro forigitas.
-    uploadDictionary: >-
+    uploadDictionary: |-
       La dosiero alŝutitas.
       Bonvolu atendi momenton por ke via datumo reflektiĝos.
-    changeDictionaryName: >-
+    changeDictionaryName: |-
       La nomo ŝanĝitas.
-    changeDictionaryParamName: >-
+    changeDictionaryParamName: |-
       La identigilo ŝanĝitas.
-    changeDictionaryExplanation: >-
+    changeDictionaryExplanation: |-
       La priskribo ŝanĝitas.
-    changeDictionarySecret: >-
+    changeDictionarySecret: |-
       La agordo ŝanĝitas.
     changeDictionarySettings:
-      akrantiainSource: >-
+      akrantiainSource: |-
         La agordo ŝanĝitas.
-      zatlinSource: >-
+      zatlinSource: |-
         La agordo ŝanĝitas.
-      exampleTitle: >-
+      exampleTitle: |-
         La agordo ŝanĝitas.
-      pronunciationTitle: >-
+      pronunciationTitle: |-
         La agordo ŝanĝitas.
-      enableMarkdown: >-
+      enableMarkdown: |-
         La agordo ŝanĝitas.
-      enableDuplicateName: >-
+      enableDuplicateName: |-
         La agordo ŝanĝitas.
-    discardDictionaryAuthorizedUser: >-
+    discardDictionaryAuthorizedUser: |-
       La permeso revokitas.
-    addWord: >-
+    addWord: |-
       Nova vorto kreitas.
-    changeWord: >-
+    changeWord: |-
       La vorto redaktitas.
-    discardWord: >-
+    discardWord: |-
       La vorto forigitas.
-    addExample: >-
+    addExample: |-
       Nova ekzempla frazo kreitas.
-    changeExample: >-
+    changeExample: |-
       La ekzempla frazo redaktitas.
-    discardExample: >-
+    discardExample: |-
       La ekzempla frazo forigitas.
-    addCommission: >-
+    addCommission: |-
       Nova peto kreitas.
-    discardCommission: >-
+    discardCommission: |-
       La peto forigitas.
-    addResource: >-
+    addResource: |-
       La bildo alŝutitas.
-    discardResource: >-
+    discardResource: |-
       La bildo forigitas.
     addInvitation:
-      edit: >-
+      edit: |-
         La invito senditas.
         La redakta permeso estos donita kiam la uzanto akceptos ĝin.
-      transfer: >-
+      transfer: |-
         La invito senditas.
         La vortaro estos transdonita kiam la uzanto akceptos ĝin.
     acceptInvitation:
-      edit: >-
+      edit: |-
         Vi akceptis la inviton.
         Vi povas redakti la vortaron de nun.
-      transfer: >-
+      transfer: |-
         Vi akceptis la inviton.
         Vi estas nun la posedanto de la vortaro.
     rejectInvitation:
-      edit: >-
+      edit: |-
         Vi malakceptis la inviton.
-      transfer: >-
+      transfer: |-
         Vi malakceptis la inviton.
     discardMe:
       Via konto forigitas.
@@ -88,113 +88,113 @@ toast:
     resetUserPassword:
       Via pasvorto restarigitas.
       Bonvolu ensaluti per via nova pasvorto.
-    login: >-
+    login: |-
       Sukcesis ensaluti.
-    register: >-
+    register: |-
       Via konto kreitas.
     contact:
       Via mesaĝo senditas.
   error:
-    invalidUserName: >-
+    invalidUserName: |-
       La salutnomo estas nevalida.
-    invalidUserEmail: >-
+    invalidUserEmail: |-
       La retpoŝta adreso estas nevalida.
-    invalidUserPassword: >-
+    invalidUserPassword: |-
       La pasvorto estas nevalida.
-    duplicateUserName: >-
+    duplicateUserName: |-
       Jam ekzistas la salutnomo kiun vi specifis.
       Bonvolu specifi alian.
-    duplicateUserEmail: >-
+    duplicateUserEmail: |-
       Jam ekzistas la retpoŝta adreso kiun vi specifis.
       Bonvolu specifi alian.
-    noSuchUser: >-
+    noSuchUser: |-
       Ne ekzistas tiu uzanto.
-    noSuchUserEmail: >-
+    noSuchUserEmail: |-
       Ne ekzistas uzanto kun la retpoŝta adreso.
-    userAlreadyActivated: >-
+    userAlreadyActivated: |-
       Tiu uzanto estas jam aktivigita.
-    invalidActivateToken: >-
+    invalidActivateToken: |-
       Malsukcesis aktivigi la uzanton.
-    invalidResetToken: >-
+    invalidResetToken: |-
       Malsukcesis restarigi vian pasvorton.
-    loginFailed: >-
+    loginFailed: |-
       Malsukcesis ensaluti.
-    noSuchDictionaryNumber: >-
+    noSuchDictionaryNumber: |-
       Ne ekzistas tiu vortaro.
-    noSuchDictionaryParamName: >-
+    noSuchDictionaryParamName: |-
       Ne ekzistas tiu vortaro.
-    duplicateDictionaryParamName: >-
+    duplicateDictionaryParamName: |-
       Jam uzitas la identigilo kiun vi specifis.
       Bonvolu specifi alian.
-    invalidDictionaryParamName: >-
+    invalidDictionaryParamName: |-
       La identigilo estas nevalida.
-    dictionarySaving: >-
+    dictionarySaving: |-
       La procezo de alŝuto daŭras.
       Bonvolu atendi momenton.
-    failAddRelations: >-
+    failAddRelations: |-
       Malsukcesis krei la reciprokaj rilatojn.
-    dictionarySizeTooLarge: >-
+    dictionarySizeTooLarge: |-
       La dosiero estas tro granda.
-    noSuchWordNumber: >-
+    noSuchWordNumber: |-
       Ne ekzistas tiu vorto.
-    noSuchExampleNumber: >-
+    noSuchExampleNumber: |-
       Ne ekzistas tiu ekzempla frazo.
-    resourceCountExceeded: >-
+    resourceCountExceeded: |-
       Ne eblas alŝuti pli da dosieroj.
-    resourceSizeTooLarge: >-
+    resourceSizeTooLarge: |-
       La dosiero estas tro granda.
-    unsupportedResourceType: >-
+    unsupportedResourceType: |-
       Tiu dosierspeco ne estas subtenata.
-    userCanAlreadyEdit: >-
+    userCanAlreadyEdit: |-
       La uzanto jam havas la permeson.
-    userCanAlreadyOwn: >-
+    userCanAlreadyOwn: |-
       La uzanto jam estas la posedanto.
-    editInvitationAlreadyAdded: >-
+    editInvitationAlreadyAdded: |-
       La uzanto jam estas invitita.
-    transferInvitationAlreadyAdded: >-
+    transferInvitationAlreadyAdded: |-
       La uzanto jam estas invitita.
-    noSuchInvitation: >-
+    noSuchInvitation: |-
       Ne ekzistas tiu invito.
-    noSuchDictionaryAuthorizedUser: >-
+    noSuchDictionaryAuthorizedUser: |-
       La uzanto ne havas la permeson.
-    emptyCommissionName: >-
+    emptyCommissionName: |-
       La vorto por peti estas malplena.
-    noSuchCommission: >-
+    noSuchCommission: |-
       Ne ekzistas tiu peto.
-    emptyContactText: >-
+    emptyContactText: |-
       La mesaĝo estas malplena.
-    administratorNotFound: >-
+    administratorNotFound: |-
       Neatendita eraro okazis.
-    recaptchaError: >-
+    recaptchaError: |-
       Io fiaskis.
       Bonvolu reprovi.
-    recaptchaRejected: >-
+    recaptchaRejected: |-
       Fona aŭtentikigo malsukcesis.
       Bonvolu reprovi.
-    awsError: >-
+    awsError: |-
       Io fiaskis.
       Bonvolu reprovi.
-    unauthenticated: >-
+    unauthenticated: |-
       Vi ne estas ensalutinta.
       Bonvolu denove ensaluti.
-    forbidden: >-
+    forbidden: |-
       Vi ne rajtas aliri tiun enhavon.
-    serverNotFound: >-
+    serverNotFound: |-
       La servilo eble estis ĝisdatigita.
       Bonvolu refreŝigi la paĝon.
-    serverError: >-
+    serverError: |-
       Eraro okazis en la servilo.
       Bonvolu provi denove post iom da tempo.
-    serverTimeout: >-
+    serverTimeout: |-
       Ne eblis ricevi respondon de la servilo.
       Bonvolu provi denove post iom da tempo.
-    requestTimeout: >-
+    requestTimeout: |-
       Ne eblis ricevi respondon de la servilo.
       Bonvolu provi denove post iom da tempo.
-    messageNotFound: >-
+    messageNotFound: |-
       Ne estas mesaĝo agordita por tiu ŝprucfenestro.
       Bonvolu sciigi la administranton.
-    unexpected: >-
+    unexpected: |-
       Neatendita eraro okazis.
       Bonvolu sciigi la administranton.
 
