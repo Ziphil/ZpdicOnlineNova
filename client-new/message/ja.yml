@@ -281,6 +281,24 @@ dictionaryList:
   button:
     see: "辞書ページへ"
     setting: "設定"
+dictionaryStatisticsView:
+  heading:
+    word: "単語"
+    example: "例文"
+    equivalent: "訳語"
+    information: "内容"
+    informationText: "内容長"
+  value:
+    word: "<number>{value, number}</number><unit>語</unit>"
+    wordTokipona: "<number>{value, number, ::.00}</number><unit>TP</unit>"
+    example: "<number>{value, number}</number><unit>文</unit>"
+    exampleAverage: "<number>{value, number, ::.00}</number><unit>文/語</unit>"
+    equivalent: "<number>{value, number}</number><unit>個</unit>"
+    equivalentAverage: "<number>{value, number, ::.00}</number><unit>個/語</unit>"
+    information: "<number>{value, number}</number><unit>項目</unit>"
+    informationAverage: "<number>{value, number, ::.00}</number><unit>項目/語</unit>"
+    informationText: "<number>{value, number}</number><unit>文字</unit>"
+    informationTextAverage: "<number>{value, number, ::.00}</number><unit>文字/語</unit>"
 editExampleDialog:
   button:
     external: "別タブで表示"
