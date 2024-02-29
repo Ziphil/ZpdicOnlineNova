@@ -349,6 +349,8 @@ editWordForm:
     information: "内容が登録されていません"
     variation: "変化形が登録されていません"
     relation: "関連語が登録されていません"
+  duplicateName: >-
+    同じ綴りの単語がすでに登録されています。
   button:
     add:
       equivalent: "訳語を追加"

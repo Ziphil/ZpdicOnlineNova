@@ -349,6 +349,8 @@ editWordForm:
     information: "Neniuj enhavoj"
     variation: "Neniuj variaĵaj formoj"
     relation: "Neniuj rilataj vortoj"
+  duplicateName: >-
+    Vorto kun la sama literumo jam estas registrita.
   button:
     add:
       equivalent: "Aldoni tradukaĵon"

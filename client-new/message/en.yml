@@ -349,6 +349,8 @@ editWordForm:
     information: "No contents"
     variation: "No variation forms"
     relation: "No related words"
+  duplicateName: >-
+    A word with the same spelling has already been registered.
   button:
     add:
       equivalent: "Add translation"

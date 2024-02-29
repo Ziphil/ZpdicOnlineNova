@@ -2,7 +2,7 @@
 
 import {Dispatch, SetStateAction, useCallback, useState} from "react";
 import {useSearchParams as useRawSearch} from "react-router-dom";
-import {useDebounce} from "/client-new/hook/debounce";
+import {useDebounceCallback} from "/client-new/hook/debounce";
 import {resolveStateAction} from "/client-new/util/misc";
 
 
@@ -16,7 +16,7 @@ export function useSearchState<S>({serialize, deserialize}: SearchConverter<S>, 
   const [prevSearch, setPrevSearch] = useState(search);
   const [state, setState] = useState(deserialize(search));
   const [debouncedState, setDebouncedStateShortly] = useState(deserialize(search));
-  const setDebouncedState = useDebounce(setDebouncedStateShortly, duration, [setDebouncedStateShortly]);
+  const setDebouncedState = useDebounceCallback(setDebouncedStateShortly, duration, [setDebouncedStateShortly]);
   const setSearchState = useCallback(function (state: SetStateAction<S>): void {
     setState(state);
     setDebouncedState((prevState) => {

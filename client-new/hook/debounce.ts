@@ -13,7 +13,7 @@ import {
 } from "react";
 
 
-export function useDebounce<C extends (...args: Array<never>) => unknown>(callback: C, duration: number, dependencies: DependencyList): DebouncedFunc<C> {
+export function useDebounceCallback<C extends (...args: Array<never>) => unknown>(callback: C, duration: number, dependencies: DependencyList): DebouncedFunc<C> {
   const debouncedCallback = useMemo(() => debounce(callback, duration), [duration, ...dependencies]);
   useEffect(() => {
     debouncedCallback.cancel();
@@ -24,7 +24,7 @@ export function useDebounce<C extends (...args: Array<never>) => unknown>(callba
 export function useDebouncedState<S>(initialState: S | (() => S), duration: number): [S, S, Dispatch<SetStateAction<S>>] {
   const [state, setState] = useState(initialState);
   const [debouncedState, setDebouncedStateImmediately] = useState(initialState);
-  const setDebouncedState = useDebounce(setDebouncedStateImmediately, duration, [setDebouncedStateImmediately]);
+  const setDebouncedState = useDebounceCallback(setDebouncedStateImmediately, duration, [setDebouncedStateImmediately]);
   const setBothState = useCallback(function (state: SetStateAction<S>): void {
     setState(state);
     setDebouncedState(state);
