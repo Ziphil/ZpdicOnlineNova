@@ -1,52 +1,221 @@
 toast:
   success:
-    login: >-
+    addDictionary: |-
+      Nova vortaro kreitas.
+    discardDictionary: |-
+      La vortaro forigitas.
+    uploadDictionary: |-
+      La dosiero alŝutitas.
+      Bonvolu atendi momenton por ke via datumo reflektiĝos.
+    changeDictionaryName: |-
+      La nomo ŝanĝitas.
+    changeDictionaryParamName: |-
+      La identigilo ŝanĝitas.
+    changeDictionaryExplanation: |-
+      La priskribo ŝanĝitas.
+    changeDictionarySecret: |-
+      La agordo ŝanĝitas.
+    changeDictionarySettings:
+      akrantiainSource: |-
+        La agordo ŝanĝitas.
+      zatlinSource: |-
+        La agordo ŝanĝitas.
+      exampleTitle: |-
+        La agordo ŝanĝitas.
+      pronunciationTitle: |-
+        La agordo ŝanĝitas.
+      enableMarkdown: |-
+        La agordo ŝanĝitas.
+      enableDuplicateName: |-
+        La agordo ŝanĝitas.
+    discardDictionaryAuthorizedUser: |-
+      La permeso revokitas.
+    addWord: |-
+      Nova vorto kreitas.
+    changeWord: |-
+      La vorto redaktitas.
+    discardWord: |-
+      La vorto forigitas.
+    addExample: |-
+      Nova ekzempla frazo kreitas.
+    changeExample: |-
+      La ekzempla frazo redaktitas.
+    discardExample: |-
+      La ekzempla frazo forigitas.
+    addCommission: |-
+      Nova peto kreitas.
+    discardCommission: |-
+      La peto forigitas.
+    addResource: |-
+      La bildo alŝutitas.
+    discardResource: |-
+      La bildo forigitas.
+    addInvitation:
+      edit: |-
+        La invito senditas.
+        La redakta permeso estos donita kiam la uzanto akceptos ĝin.
+      transfer: |-
+        La invito senditas.
+        La vortaro estos transdonita kiam la uzanto akceptos ĝin.
+    acceptInvitation:
+      edit: |-
+        Vi akceptis la inviton.
+        Vi povas redakti la vortaron de nun.
+      transfer: |-
+        Vi akceptis la inviton.
+        Vi estas nun la posedanto de la vortaro.
+    rejectInvitation:
+      edit: |-
+        Vi malakceptis la inviton.
+      transfer: |-
+        Vi malakceptis la inviton.
+    discardMe:
+      Via konto forigitas.
+    changeMyScreenName:
+      Via kromnomo ŝanĝitas.
+    changeMyEmail:
+      Via retpoŝta adreso ŝanĝitas.
+    changeMyPassword:
+      Via pasvorto ŝanĝitas.
+    issueMyActivateToken:
+      Ni sendis retpoŝton al vi.
+      Bonvolu sekvi la instrukciojn en la retpoŝto.
+    activateUser:
+      Via konto aktivigitas.
+    issueUserResetToken:
+      Ni sendis retpoŝton al vi.
+      Bonvolu sekvi la instrukciojn en la retpoŝto.
+    resetUserPassword:
+      Via pasvorto restarigitas.
+      Bonvolu ensaluti per via nova pasvorto.
+    login: |-
       Sukcesis ensaluti.
-    register: >-
-      Sukcesis krei vian konton.
-    addWord: >-
-      Sukcesis krei novan vorton.
-    changeWord: >-
-      Sukcesis redakti la vorton.
-    discardWord: >-
-      Sukcesis forigi la vorton.
+    register: |-
+      Via konto kreitas.
+    contact:
+      Via mesaĝo senditas.
   error:
-    recaptchaError: >-
+    invalidUserName: |-
+      La salutnomo estas nevalida.
+    invalidUserEmail: |-
+      La retpoŝta adreso estas nevalida.
+    invalidUserPassword: |-
+      La pasvorto estas nevalida.
+    duplicateUserName: |-
+      Jam ekzistas la salutnomo kiun vi specifis.
+      Bonvolu specifi alian.
+    duplicateUserEmail: |-
+      Jam ekzistas la retpoŝta adreso kiun vi specifis.
+      Bonvolu specifi alian.
+    noSuchUser: |-
+      Ne ekzistas tiu uzanto.
+    noSuchUserEmail: |-
+      Ne ekzistas uzanto kun la retpoŝta adreso.
+    userAlreadyActivated: |-
+      Tiu uzanto estas jam aktivigita.
+    invalidActivateToken: |-
+      Malsukcesis aktivigi la uzanton.
+    invalidResetToken: |-
+      Malsukcesis restarigi vian pasvorton.
+    loginFailed: |-
+      Malsukcesis ensaluti.
+    noSuchDictionaryNumber: |-
+      Ne ekzistas tiu vortaro.
+    noSuchDictionaryParamName: |-
+      Ne ekzistas tiu vortaro.
+    duplicateDictionaryParamName: |-
+      Jam uzitas la identigilo kiun vi specifis.
+      Bonvolu specifi alian.
+    invalidDictionaryParamName: |-
+      La identigilo estas nevalida.
+    dictionarySaving: |-
+      La procezo de alŝuto daŭras.
+      Bonvolu atendi momenton.
+    failAddRelations: |-
+      Malsukcesis krei la reciprokaj rilatojn.
+    dictionarySizeTooLarge: |-
+      La dosiero estas tro granda.
+    noSuchWordNumber: |-
+      Ne ekzistas tiu vorto.
+    noSuchExampleNumber: |-
+      Ne ekzistas tiu ekzempla frazo.
+    resourceCountExceeded: |-
+      Ne eblas alŝuti pli da dosieroj.
+    resourceSizeTooLarge: |-
+      La dosiero estas tro granda.
+    unsupportedResourceType: |-
+      Tiu dosierspeco ne estas subtenata.
+    userCanAlreadyEdit: |-
+      La uzanto jam havas la permeson.
+    userCanAlreadyOwn: |-
+      La uzanto jam estas la posedanto.
+    editInvitationAlreadyAdded: |-
+      La uzanto jam estas invitita.
+    transferInvitationAlreadyAdded: |-
+      La uzanto jam estas invitita.
+    noSuchInvitation: |-
+      Ne ekzistas tiu invito.
+    noSuchDictionaryAuthorizedUser: |-
+      La uzanto ne havas la permeson.
+    emptyCommissionName: |-
+      La vorto por peti estas malplena.
+    noSuchCommission: |-
+      Ne ekzistas tiu peto.
+    emptyContactText: |-
+      La mesaĝo estas malplena.
+    administratorNotFound: |-
+      Neatendita eraro okazis.
+    recaptchaError: |-
       Io fiaskis.
       Bonvolu reprovi.
-    recaptchaRejected: >-
+    recaptchaRejected: |-
       Fona aŭtentikigo malsukcesis.
       Bonvolu reprovi.
-    awsError: >-
+    awsError: |-
       Io fiaskis.
       Bonvolu reprovi.
-    unauthenticated: >-
+    unauthenticated: |-
       Vi ne estas ensalutinta.
       Bonvolu denove ensaluti.
-    forbidden: >-
+    forbidden: |-
       Vi ne rajtas aliri tiun enhavon.
-    serverNotFound: >-
+    serverNotFound: |-
       La servilo eble estis ĝisdatigita.
       Bonvolu refreŝigi la paĝon.
-    serverError: >-
+    serverError: |-
       Eraro okazis en la servilo.
       Bonvolu provi denove post iom da tempo.
-    serverTimeout: >-
+    serverTimeout: |-
       Ne eblis ricevi respondon de la servilo.
       Bonvolu provi denove post iom da tempo.
-    requestTimeout: >-
+    requestTimeout: |-
       Ne eblis ricevi respondon de la servilo.
       Bonvolu provi denove post iom da tempo.
-    messageNotFound: >-
+    messageNotFound: |-
       Ne estas mesaĝo agordita por tiu ŝprucfenestro.
       Bonvolu sciigi la administranton.
-    unexpected: >-
+    unexpected: |-
       Neatendita eraro okazis.
       Bonvolu sciigi la administranton.
 
 commonAlert:
   confirm: "Konfirmi"
   cancel: "Nuligi"
+wordModeSelect:
+  label:
+    name: "Kapvorto"
+    equivalent: "Tradukaĵo"
+    both: "Ambaŭ"
+    tag: "Etikedo"
+    information: "Enhavo"
+    content: "Tuto"
+wordTypeSelect:
+  label:
+    prefix: "Prefiksa"
+    suffix: "Sufiksa"
+    part: "Parta"
+    exact: "Ekzakta"
+    regular: "Regesp"
 
 addCommissionDialog:
   heading: "Peti kreado de vorto"
@@ -112,6 +281,24 @@ dictionaryList:
   button:
     see: "Vidi vortaron"
     setting: "Agordi"
+dictionaryStatisticsView:
+  heading:
+    word: "Vortoj"
+    example: "Frazoj"
+    equivalent: "Tradukaĵoj"
+    information: "Enhavoj"
+    informationText: "Longo de enhavoj"
+  value:
+    word: "<number>{value, number}</number><unit>{value, plural, one {vorto} other {vortoj}}</unit>"
+    wordTokipona: "<number>{value, number, ::.00}</number><unit>TP</unit>"
+    example: "<number>{value, number}</number><unit>{value, plural, one {frazo} other {frazoj}}</unit>"
+    exampleAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {frazo/vorto} other {frazoj/vorto}}</unit>"
+    equivalent: "<number>{value, number}</number><unit>{value, plural, one {termino} other {terminoj}}</unit>"
+    equivalentAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {termino/vorto} other {terminoj/vorto}}</unit>"
+    information: "<number>{value, number}</number><unit>{value, plural, one {ero} other {eroj}}</unit>"
+    informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {ero/vorto} other {eroj/vorto}}</unit>"
+    informationText: "<number>{value, number}</number><unit>{value, plural, one {signo} other {signoj}}</unit>"
+    informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {signo/vorto} other {signoj/vorto}}</unit>"
 editExampleDialog:
   button:
     external: "Malfermi en nova langeto"
@@ -162,6 +349,8 @@ editWordForm:
     information: "Neniuj enhavoj"
     variation: "Neniuj variaĵaj formoj"
     relation: "Neniuj rilataj vortoj"
+  duplicateName: >-
+    Vorto kun la sama literumo jam estas registrita.
   button:
     add:
       equivalent: "Aldoni tradukaĵon"
@@ -247,23 +436,23 @@ resourceList:
 searchExampleForm:
   information: >-
     Serĉi ekzemplajn frazojn estos disponebla en estonta ĝisdatigo.
+searchWordAdvancedDialog:
+  label:
+    mode: "Gamo"
+    type: "Metodo"
+    title: "Speco"
+    text: "Ŝlosilvorto"
+  button:
+    add:
+      element: "Aldoni kondiĉon"
+    confirm: "Konfirmi"
 searchWordForm:
-  mode:
-    name: "Kapvorto"
-    equivalent: "Tradukaĵo"
-    both: "Ambaŭ"
-    tag: "Etikedo"
-    information: "Enhavo"
-    content: "Tuto"
-  type:
-    prefix: "Prefiksa"
-    suffix: "Sufiksa"
-    part: "Parta"
-    exact: "Ekzakta"
-    regular: "Regesp"
-  ignoreCase: "Ignori usklecon"
-  enableSuggestions: "Sugesti variaĵojn"
-  shuffleResult: "Miksi rezultojn"
+  label:
+    ignoreCase: "Ignori usklecon"
+    enableSuggestions: "Sugesti variaĵojn"
+  button:
+    shuffleResult: "Miksi rezultojn"
+    advancedSearch: "Serĉi altnivele"
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"

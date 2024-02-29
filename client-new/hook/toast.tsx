@@ -1,41 +1,50 @@
 //
 
-import {faCircleInfo} from "@fortawesome/sharp-regular-svg-icons";
+import {faCircleCheck, faCircleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, ReactNode, useCallback} from "react";
-import {GeneralIcon, Toast, ToastBody, ToastContent, ToastIconContainer, useToast as useRawToast, useTrans} from "zographia";
+import {GeneralIcon, Toast, ToastBody, ToastContent, ToastIconContainer, ToastSupplement, useToast as useRawToast, useTrans} from "zographia";
 
 
 export function useToast(): ToastCallbacks {
-  const {transNode} = useTrans();
+  const {trans, transNode} = useTrans();
   const dispatchToast = useRawToast();
   const dispatchErrorToast = useCallback(function (type: string, values?: Record<string, ReactNode | ((parts: Array<ReactNode>) => ReactNode)>): void {
+    const content = transNode(`toast.error.${type}`, values);
     dispatchToast(
       <Toast scheme="red">
         <ToastIconContainer>
-          <GeneralIcon icon={faCircleInfo}/>
+          <GeneralIcon icon={faCircleExclamation}/>
         </ToastIconContainer>
         <ToastBody>
           <ToastContent>
-            {transNode(`toast.error.${type}`, values)}
+            {content}
           </ToastContent>
         </ToastBody>
       </Toast>
     );
   }, [dispatchToast, transNode]);
-  const dispatchSuccessToast = useCallback(function (type: string, values?: Record<string, ReactNode | ((parts: Array<ReactNode>) => ReactNode)>): void {
+  const dispatchSuccessToast = useCallback(function (type: string, values?: Record<string, string>): void {
+    const lines = trans(`toast.success.${type}`, values).split("\n");
+    const content = lines[0];
+    const supplement = lines.slice(1).join("\n");
     dispatchToast(
       <Toast scheme="blue">
         <ToastIconContainer>
-          <GeneralIcon icon={faCircleInfo}/>
+          <GeneralIcon icon={faCircleCheck}/>
         </ToastIconContainer>
         <ToastBody>
           <ToastContent>
-            {transNode(`toast.success.${type}`, values)}
+            {content}
           </ToastContent>
+          {(!!supplement) && (
+            <ToastSupplement>
+              {supplement}
+            </ToastSupplement>
+          )}
         </ToastBody>
       </Toast>
     );
-  }, [dispatchToast, transNode]);
+  }, [dispatchToast, trans]);
   return {dispatchToast, dispatchErrorToast, dispatchSuccessToast};
 }
 

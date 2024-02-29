@@ -1,52 +1,221 @@
 toast:
   success:
-    login: >-
-      ログインに成功しました。
-    register: >-
-      アカウントを作成しました。
-    addWord: >-
+    addDictionary: |-
+      辞書を新しく作成しました。
+    discardDictionary: |-
+      辞書を削除しました。
+    uploadDictionary: |-
+      ファイルをアップロードしました。
+      データが反映されるまで少々お待ちください。
+    changeDictionaryName: |-
+      名前を変更しました。
+    changeDictionaryParamName: |-
+      識別子を変更しました。
+    changeDictionaryExplanation: |-
+      説明を変更しました。
+    changeDictionarySecret: |-
+      設定を変更しました。
+    changeDictionarySettings:
+      akrantiainSource: |-
+        設定を変更しました。
+      zatlinSource: |-
+        設定を変更しました。
+      exampleTitle: |-
+        設定を変更しました。
+      pronunciationTitle: |-
+        設定を変更しました。
+      enableMarkdown: |-
+        設定を変更しました。
+      enableDuplicateName: |-
+        設定を変更しました。
+    discardDictionaryAuthorizedUser: |-
+      編集権限を解除しました。
+    addWord: |-
       単語を新しく作成しました。
-    changeWord: >-
+    changeWord: |-
       単語を編集しました。
-    discardWord: >-
+    discardWord: |-
       単語を削除しました。
+    addExample: |-
+      例文を新しく作成しました。
+    changeExample: |-
+      例文を編集しました。
+    discardExample: |-
+      例文を削除しました。
+    addCommission: |-
+      造語依頼を行いました。
+    discardCommission: |-
+      造語依頼を削除しました。
+    addResource: |-
+      画像をアップロードしました。
+    discardResource: |-
+      画像を削除しました。
+    addInvitation:
+      edit: |-
+        招待を行いました。
+        相手のユーザーがこれを承認した時点で、編集権限が付与されます。
+      transfer: |-
+        招待を行いました。
+        相手ユーザーがこれを承認した時点で、辞書が譲渡されます。
+    acceptInvitation:
+      edit: |-
+        招待を承認しました。
+        以降、この辞書を編集することができます。
+      transfer: |-
+        招待を承認しました。
+        以降、この辞書の管理者になります。
+    rejectInvitation:
+      edit: |-
+        招待を拒否しました。
+      transfer: |-
+        招待を拒否しました。
+    discardMe: |-
+      アカウントを削除しました。
+    changeMyScreenName: |-
+      ニックネームを変更しました。
+    changeMyEmail: |-
+      メールアドレスを変更しました。
+    changeMyPassword: |-
+      パスワードを変更しました。
+    issueMyActivateToken: |-
+      メールを送信しました。
+      メールの指示に従って操作を進めてください。
+    activateUser: |-
+      アカウントをアクティベートしました。
+    issueUserResetToken: |-
+      メールを送信しました。
+      メールの指示に従って操作を進めてください。
+    resetUserPassword: |-
+      パスワードをリセットしました。
+      新しいパスワードを用いてログインしてください。
+    login: |-
+      ログインしました。
+    register: |-
+      アカウントを作成しました。
+    contact: |-
+      お問い合わせを送信しました。
   error:
-    recaptchaError: >-
+    invalidUserName: |-
+      ユーザー ID の形式が正しくありません。
+    invalidUserEmail: |-
+      メールアドレスの形式が正しくありません。
+    invalidUserPassword: |-
+      パスワードの形式が正しくありません。
+    duplicateUserName: |-
+      そのユーザー ID はすでに存在しています。
+      別のユーザー ID を指定してください。
+    duplicateUserEmail: |-
+      そのメールアドレスはすでに使われています。
+      別のメールアドレスを指定してください。
+    noSuchUser: |-
+      このユーザーは存在しません。
+    noSuchUserEmail: |-
+      そのメールアドレスのユーザーは存在しません。
+    userAlreadyActivated: |-
+      このユーザーはすでにアクティベートされています。
+    invalidActivateToken: |-
+      ユーザーのアクティベートに失敗しました。
+    invalidResetToken: |-
+      パスワードのリセットに失敗しました。
+    loginFailed: |-
+      ログインに失敗しました。
+    noSuchDictionaryNumber: |-
+      この辞書は存在しません。
+    noSuchDictionaryParamName: |-
+      この辞書は存在しません。
+    duplicateDictionaryParamName: |-
+      その URL 用識別子はすでに利用されています。
+      別の識別子をしてしてください。
+    invalidDictionaryParamName: |-
+      URL 用識別子の形式が正しくありません。
+    dictionarySaving: |-
+      ファイルのアップロード処理中です。
+      少々お待ちください。
+    failAddRelations: |-
+      双方向の関連語の登録に失敗しました。
+    dictionarySizeTooLarge: |-
+      ファイルのサイズが大きすぎます。
+    noSuchWordNumber: |-
+      この単語は存在しません。
+    noSuchExampleNumber: |-
+      この例文は存在しません。
+    resourceCountExceeded: |-
+      これ以上ファイルをアップロードすることはできません。
+    resourceSizeTooLarge: |-
+      ファイルのサイズが大きすぎます。
+    unsupportedResourceType: |-
+      このファイルの形式はサポートされていません。
+    userCanAlreadyEdit: |-
+      そのユーザーはすでに編集権限を保有しています。
+    userCanAlreadyOwn: |-
+      そのユーザーはすでに管理者です。
+    editInvitationAlreadyAdded: |-
+      そのユーザーにはすでに招待を行っています。
+    transferInvitationAlreadyAdded: |-
+      そのユーザーにはすでに招待を行っています。
+    noSuchInvitation: |-
+      この招待は存在しません。
+    noSuchDictionaryAuthorizedUser: |-
+      そのユーザーは権限を保有していません。
+    emptyCommissionName: |-
+      造語依頼する単語が空です。
+    noSuchCommission: |-
+      その造語依頼は存在しません。
+    emptyContactText: |-
+      お問い合わせ内容が空です。
+    administratorNotFound: |-
+      予期しないエラーが発生しました。
+    recaptchaError: |-
       エラーが発生しました。
       もう一度お試しください。
-    recaptchaRejected: >-
+    recaptchaRejected: |-
       バックグラウンドの認証に失敗しました。
       もう一度お試しください。
-    awsError: >-
+    awsError: |-
       エラーが発生しました。
       もう一度お試しください。
-    unauthenticated: >-
+    unauthenticated: |-
       ログインしていません。
       ログインした後にもう一度お試しください。
-    forbidden: >-
+    forbidden: |-
       このコンテンツにアクセスする権限がありません。
-    serverNotFound: >-
+    serverNotFound: |-
       アップデートが行われた可能性があります。
       ページを更新してください。
-    serverError: >-
+    serverError: |-
       サーバーでエラーが発生しました。
       時間を置いてもう一度お試しください。
-    serverTimeout: >-
+    serverTimeout: |-
       サーバーが時間内に応答しませんでした。
       時間を置いてもう一度お試しください。
-    requestTimeout: >-
+    requestTimeout: |-
       サーバーが時間内に応答しませんでした。
       時間を置いてもう一度お試しください。
-    messageNotFound: >-
+    messageNotFound: |-
       ポップアップ用のメッセージが設定されていません。
       設定ミスの可能性がありますので、お手数ですが管理者までご連絡ください。
-    unexpected: >-
+    unexpected: |-
       予期しないエラーが発生しました。
       お手数ですが管理者までご連絡ください。
 
 commonAlert:
   confirm: "決定"
   cancel: "キャンセル"
+wordModeSelect:
+  label:
+    name: "単語"
+    equivalent: "訳語"
+    both: "単語＋訳語"
+    tag: "タグ"
+    information: "内容"
+    content: "全文"
+wordTypeSelect:
+  label:
+    prefix: "前方"
+    suffix: "後方"
+    part: "部分"
+    exact: "完全"
+    regular: "正規"
 
 addCommissionDialog:
   heading: "造語依頼"
@@ -112,6 +281,24 @@ dictionaryList:
   button:
     see: "辞書ページへ"
     setting: "設定"
+dictionaryStatisticsView:
+  heading:
+    word: "単語"
+    example: "例文"
+    equivalent: "訳語"
+    information: "内容"
+    informationText: "内容長"
+  value:
+    word: "<number>{value, number}</number><unit>語</unit>"
+    wordTokipona: "<number>{value, number, ::.00}</number><unit>TP</unit>"
+    example: "<number>{value, number}</number><unit>文</unit>"
+    exampleAverage: "<number>{value, number, ::.00}</number><unit>文/語</unit>"
+    equivalent: "<number>{value, number}</number><unit>個</unit>"
+    equivalentAverage: "<number>{value, number, ::.00}</number><unit>個/語</unit>"
+    information: "<number>{value, number}</number><unit>項目</unit>"
+    informationAverage: "<number>{value, number, ::.00}</number><unit>項目/語</unit>"
+    informationText: "<number>{value, number}</number><unit>文字</unit>"
+    informationTextAverage: "<number>{value, number, ::.00}</number><unit>文字/語</unit>"
 editExampleDialog:
   button:
     external: "別タブで表示"
@@ -162,6 +349,8 @@ editWordForm:
     information: "内容が登録されていません"
     variation: "変化形が登録されていません"
     relation: "関連語が登録されていません"
+  duplicateName: >-
+    同じ綴りの単語がすでに登録されています。
   button:
     add:
       equivalent: "訳語を追加"
@@ -247,23 +436,23 @@ resourceList:
 searchExampleForm:
   information: >-
     例文検索は今後のアップデートで利用できるようになる予定です。
+searchWordAdvancedDialog:
+  label:
+    mode: "検索範囲"
+    type: "検索方式"
+    title: "分類"
+    text: "検索内容"
+  button:
+    add:
+      element: "条件を追加"
+    confirm: "決定"
 searchWordForm:
-  mode:
-    name: "単語"
-    equivalent: "訳語"
-    both: "単語＋訳語"
-    tag: "タグ"
-    information: "内容"
-    content: "全文"
-  type:
-    prefix: "前方"
-    suffix: "後方"
-    part: "部分"
-    exact: "完全"
-    regular: "正規"
-  ignoreCase: "大小文字を区別しない"
-  enableSuggestions: "変化形をサジェスト"
-  shuffleResult: "検索結果をシャッフル"
+  label:
+    ignoreCase: "大小文字の違いを無視"
+    enableSuggestions: "変化形をサジェスト"
+  button:
+    shuffleResult: "検索結果をシャッフル"
+    advancedSearch: "高度な検索"
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"

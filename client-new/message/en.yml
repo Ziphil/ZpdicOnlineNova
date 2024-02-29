@@ -1,52 +1,221 @@
 toast:
   success:
-    login: >-
+    addDictionary: |-
+      A new dictionary has been created.
+    discardDictionary: |-
+      The dictionary has been deleted.
+    uploadDictionary: |-
+      Your file has been uploaded.
+      Please wait a moment for your data to be reflected.
+    changeDictionaryName: |-
+      The name has been changed.
+    changeDictionaryParamName: |-
+      The identifier has been changed.
+    changeDictionaryExplanation: |-
+      The description has been changed.
+    changeDictionarySecret: |-
+      The setting has been changed.
+    changeDictionarySettings:
+      akrantiainSource: |-
+        The setting has been changed.
+      zatlinSource: |-
+        The setting has been changed.
+      exampleTitle: |-
+        The setting has been changed.
+      pronunciationTitle: |-
+        The setting has been changed.
+      enableMarkdown: |-
+        The setting has been changed.
+      enableDuplicateName: |-
+        The setting has been changed.
+    discardDictionaryAuthorizedUser: |-
+      The permission has been revoked.
+    addWord: |-
+      A new word has been created.
+    changeWord: |-
+      The word has been edited.
+    discardWord: |-
+      The word has been deleted.
+    addExample: |-
+      A new example sentence has been created.
+    changeExample: |-
+      The example sentence has been edited.
+    discardExample: |-
+      The example sentence has been deleted.
+    addCommission: |-
+      A new request has been sent.
+    discardCommission: |-
+      The request has been deleted.
+    addResource: |-
+      An image has been uploaded.
+    discardResource: |-
+      The image has been deleted.
+    addInvitation:
+      edit: |-
+        The invitation has been sent.
+        The editing permission will be granted once the user accepts it.
+      transfer: |-
+        The invitation has been sent.
+        The dictionary will be transferred once the user accepts it.
+    acceptInvitation:
+      edit: |-
+        You have accepted the invitation.
+        You can edit the dictionary from now on.
+      transfer: |-
+        You have accepted the invitation.
+        You are now the owner of the dictionary.
+    rejectInvitation:
+      edit: |-
+        You have declined the invitation.
+      transfer: |-
+        You have declined the invitation.
+    discardMe:
+      Your account has been deleted.
+    changeMyScreenName:
+      Your nickname has been changed.
+    changeMyEmail:
+      Your email address has been changed.
+    changeMyPassword:
+      Your password has been changed.
+    issueMyActivateToken:
+      We sent an email to you.
+      Please follow the instructions in the email.
+    activateUser:
+      Your account has been activated.
+    issueUserResetToken:
+      We sent an email to you.
+      Please follow the instructions in the email.
+    resetUserPassword:
+      Your password has been reset.
+      Please sign in with your new password.
+    login: |-
       Successfully signed in.
-    register: >-
-      Successfully created your account.
-    addWord: >-
-      Successfully created a new word.
-    changeWord: >-
-      Successfully edited the word.
-    discardWord: >-
-      Successfully deleted the word.
+    register: |-
+      Your account has been created.
+    contact:
+      Your inquiry has been sent.
   error:
-    recaptchaError: >-
+    invalidUserName: |-
+      The username is invalid.
+    invalidUserEmail: |-
+      The email address is invalid.
+    invalidUserPassword: |-
+      The password is invalid.
+    duplicateUserName: |-
+      The username you specified already exists.
+      Please specify another.
+    duplicateUserEmail: |-
+      The email address you specified is already used.
+      Please specify another.
+    noSuchUser: |-
+      This user does not exist.
+    noSuchUserEmail: |-
+      No user with the email address exists.
+    userAlreadyActivated: |-
+      This user has already been activated.
+    invalidActivateToken: |-
+      Failed to activate the user.
+    invalidResetToken: |-
+      Failed to reset your password.
+    loginFailed: |-
+      Failed to sign in.
+    noSuchDictionaryNumber: |-
+      This dictionary does not exist.
+    noSuchDictionaryParamName: |-
+      This dictionary does not exist.
+    duplicateDictionaryParamName: |-
+      The identifier you specified is already used.
+      Please specify another.
+    invalidDictionaryParamName: |-
+      The identifier is invalid.
+    dictionarySaving: |-
+      The upload process is ongoing.
+      Please wait a moment.
+    failAddRelations: |-
+      Failed to create the mutual relations.
+    dictionarySizeTooLarge: |-
+      The file is too large.
+    noSuchWordNumber: |-
+      This word does not exist.
+    noSuchExampleNumber: |-
+      This example sentence does not exist.
+    resourceCountExceeded: |-
+      No more files can be uploaded.
+    resourceSizeTooLarge: |-
+      The file is too large.
+    unsupportedResourceType: |-
+      This file type is not supported.
+    userCanAlreadyEdit: |-
+      The user already has the permission.
+    userCanAlreadyOwn: |-
+      The user is already the owner.
+    editInvitationAlreadyAdded: |-
+      The user has already been invited.
+    transferInvitationAlreadyAdded: |-
+      The user has already been invited.
+    noSuchInvitation: |-
+      This invitation does not exist.
+    noSuchDictionaryAuthorizedUser: |-
+      The user does not have the permission.
+    emptyCommissionName: |-
+      The word to request is empty.
+    noSuchCommission: |-
+      This request does not exist.
+    emptyContactText: |-
+      The message is empty.
+    administratorNotFound: |-
+      An unexpected error occurred.
+    recaptchaError: |-
       Something failed.
       Please try again.
-    recaptchaRejected: >-
+    recaptchaRejected: |-
       Background authentication failed.
       Please try again.
-    awsError: >-
+    awsError: |-
       Something failed.
       Please try again.
-    unauthenticated: >-
+    unauthenticated: |-
       You are not signed in.
       Please try again after signing in.
-    forbidden: >-
+    forbidden: |-
       You are not authorized to access this content.
-    serverNotFound: >-
+    serverNotFound: |-
       The server may have been updated.
       Please refresh the page.
-    serverError: >-
+    serverError: |-
       An error occurred on the server.
       Please try again after a while.
-    serverTimeout: >-
+    serverTimeout: |-
       Couldn't get a response from the server.
       Please try again after a while.
-    requestTimeout: >-
+    requestTimeout: |-
       Couldn't get a response from the server.
       Please try again after a while.
-    messageNotFound: >-
+    messageNotFound: |-
       There is no message configured for this popup.
       Please notify the administrator.
-    unexpected: >-
+    unexpected: |-
       An unexpected error occurred.
       Please notify the administrator.
 
 commonAlert:
   confirm: "Confirm"
   cancel: "Cancel"
+wordModeSelect:
+  label:
+    name: "Headword"
+    equivalent: "Translation"
+    both: "Both"
+    tag: "Tag"
+    information: "Contents"
+    content: "Whole"
+wordTypeSelect:
+  label:
+    prefix: "Prefix"
+    suffix: "Suffix"
+    part: "Partial"
+    exact: "Exact"
+    regular: "Regex"
 
 addCommissionDialog:
   heading: "Request word creation"
@@ -112,6 +281,24 @@ dictionaryList:
   button:
     see: "See dictionary"
     setting: "Settings"
+dictionaryStatisticsView:
+  heading:
+    word: "Words"
+    example: "Sentences"
+    equivalent: "Translations"
+    information: "Contents"
+    informationText: "Content length"
+  value:
+    word: "<number>{value, number}</number><unit>{value, plural, one {word} other {words}}</unit>"
+    wordTokipona: "<number>{value, number, ::.00}</number><unit>TP</unit>"
+    example: "<number>{value, number}</number><unit>{value, plural, one {sentence} other {sentences}}</unit>"
+    exampleAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {sentence/word} other {sentences/word}}</unit>"
+    equivalent: "<number>{value, number}</number><unit>{value, plural, one {term} other {terms}}</unit>"
+    equivalentAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {term/word} other {terms/word}}</unit>"
+    information: "<number>{value, number}</number><unit>{value, plural, one {item} other {items}}</unit>"
+    informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {item/word} other {items/word}}</unit>"
+    informationText: "<number>{value, number}</number><unit>{value, plural, one {char} other {chars}}</unit>"
+    informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {char/word} other {chars/word}}</unit>"
 editExampleDialog:
   button:
     external: "Open in new tab"
@@ -162,6 +349,8 @@ editWordForm:
     information: "No contents"
     variation: "No variation forms"
     relation: "No related words"
+  duplicateName: >-
+    A word with the same spelling has already been registered.
   button:
     add:
       equivalent: "Add translation"
@@ -247,23 +436,23 @@ resourceList:
 searchExampleForm:
   information: >-
     Searching for example sentences will be available in a future update.
+searchWordAdvancedDialog:
+  label:
+    mode: "Scope"
+    type: "Method"
+    title: "Kind"
+    text: "Keyword"
+  button:
+    add:
+      element: "Add condition"
+    confirm: "Confirm"
 searchWordForm:
-  mode:
-    name: "Headword"
-    equivalent: "Translation"
-    both: "Both"
-    tag: "Tag"
-    information: "Contents"
-    content: "Whole"
-  type:
-    prefix: "Prefix"
-    suffix: "Suffix"
-    part: "Partial"
-    exact: "Exact"
-    regular: "Regex"
-  ignoreCase: "Ignore letter case"
-  enableSuggestions: "Suggest variations"
-  shuffleResult: "Shuffle results"
+  label:
+    ignoreCase: "Ignore letter case"
+    enableSuggestions: "Suggest variations"
+  button:
+    shuffleResult: "Shuffle results"
+    advancedSearch: "Advanced search"
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"
@@ -274,11 +463,11 @@ userHeader:
     setting: "Settings"
     logout: "Sign out"
   button:
-    issueActivateToken: "Resend mail"
+    issueActivateToken: "Resend email"
   callout:
     activate: >-
       This user has not yet been activated.
-      To activate, please follow the instructions in the mail you received when creating your account.
+      To activate, please follow the instructions in the email you received when creating your account.
       Unactivated users may have limited functionality.
 wordList:
   empty: "No matching words were found"

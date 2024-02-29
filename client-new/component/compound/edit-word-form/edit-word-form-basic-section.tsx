@@ -2,13 +2,14 @@
 //
 
 import {faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, useCallback} from "react";
+import {ChangeEvent, ReactElement, useCallback, useState} from "react";
 import {Controller} from "react-hook-form";
 import {
   AdditionalProps,
   Button,
   ButtonIconbag,
   ControlContainer,
+  ControlHelper,
   ControlLabel,
   GeneralIcon,
   Input,
@@ -17,7 +18,8 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
-import {EnhancedDictionary} from "/client-new/skeleton";
+import {useDebounceCallback} from "/client-new/hook/debounce";
+import {EditableWord, EnhancedDictionary, Word} from "/client-new/skeleton";
 import {request} from "/client-new/util/request";
 import {switchResponse} from "/client-new/util/response";
 import {EditWordSpec} from "./edit-word-form-hook";
@@ -28,15 +30,18 @@ export const EditWordFormBasicSection = create(
   function ({
     dictionary,
     form,
+    word,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     form: EditWordSpec["form"],
+    word: Word | EditableWord | null,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
+    const [duplicateName, setDuplicateName] = useState(false);
     const {register, control} = form;
 
     const generateName = useCallback(function (): void {
@@ -76,6 +81,20 @@ export const EditWordFormBasicSection = create(
       }
     }, [dictionary.number]);
 
+    const handleNameChange = useDebounceCallback(async function (event: ChangeEvent<HTMLInputElement>): Promise<void> {
+      if (dictionary.settings.enableDuplicateName) {
+        const name = event.target.value;
+        const number = dictionary.number;
+        const excludedWordNumber = word?.number;
+        if (name !== "") {
+          const response = await request("checkDuplicateWordName", {number, name, excludedWordNumber}, {ignoreError: true});
+          switchResponse(response, ({duplicate}) => {
+            setDuplicateName(duplicate);
+          });
+        }
+      }
+    }, 300, [dictionary.number, word?.number]);
+
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.basic")}</h3>
@@ -83,7 +102,7 @@ export const EditWordFormBasicSection = create(
           <ControlContainer>
             <ControlLabel>{trans("label.name")}</ControlLabel>
             <div styleName="row">
-              <Input {...register("name")}/>
+              <Input {...register("name", {onChange: handleNameChange})}/>
               {(dictionary.zatlin !== null) && (
                 <Button variant="light" onClick={generateName}>
                   <ButtonIconbag><GeneralIcon icon={faWandSparkles}/></ButtonIconbag>
@@ -91,6 +110,11 @@ export const EditWordFormBasicSection = create(
                 </Button>
               )}
             </div>
+            {(duplicateName) && (
+              <ControlHelper>
+                {trans("duplicateName")}
+              </ControlHelper>
+            )}
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.pronunciation")}</ControlLabel>

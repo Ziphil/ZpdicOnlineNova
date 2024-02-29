@@ -2,6 +2,7 @@
 
 import {ReactElement} from "react";
 import {AdditionalProps, Card, CardBody, MultiLineText, useTrans} from "zographia";
+import {DictionaryStatisticsView} from "/client-new/component/compound/dictionary-statistics-view";
 import {HistoryChart} from "/client-new/component/compound/history-chart";
 import {WordNameFrequencyChart} from "/client-new/component/compound/word-name-frequency-chart";
 import {create} from "/client-new/component/create";
@@ -22,6 +23,10 @@ export const DictionaryInformationPart = create(
 
     return (
       <div styleName="root" {...rest}>
+        <section>
+          <DictionaryStatisticsView dictionary={dictionary}/>
+        </section>
+        <hr styleName="separator"/>
         <section>
           <h3 styleName="heading">{trans("heading.history")}</h3>
           <MultiLineText styleName="description">

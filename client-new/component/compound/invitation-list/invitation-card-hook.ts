@@ -18,9 +18,9 @@ export function useAcceptInvitation(invitation: Invitation): () => void {
     const response = await request("respondInvitation", {id, accept: true});
     await switchResponse(response, async () => {
       await invalidateResponses("fetchInvitations");
-      dispatchSuccessToast("acceptInvitation");
+      dispatchSuccessToast(`acceptInvitation.${invitation.type}`);
     });
-  }, [invitation.id, request, dispatchSuccessToast]);
+  }, [invitation.id, invitation.type, request, dispatchSuccessToast]);
   return execute;
 }
 
@@ -34,9 +34,9 @@ export function useRejectInvitation(invitation: Invitation): () => void {
     const response = await request("respondInvitation", {id, accept: false});
     await switchResponse(response, async () => {
       await invalidateResponses("fetchInvitations");
-      dispatchSuccessToast("rejectInvitation");
+      dispatchSuccessToast(`rejectInvitation.${invitation.type}`);
     });
-  }, [invitation.id, request, dispatchSuccessToast]);
+  }, [invitation.id, invitation.type, request, dispatchSuccessToast]);
   const execute = useCallback(function (): void {
     openAlert({
       message: trans("dialog.reject.message"),

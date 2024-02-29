@@ -34,7 +34,7 @@ export const EditWordForm = create(
     return (
       <form styleName="root" {...rest}>
         <div styleName="main">
-          <EditWordFormBasicSection dictionary={dictionary} form={form}/>
+          <EditWordFormBasicSection dictionary={dictionary} form={form} word={word}/>
           <EditWordFormEquivalentSection dictionary={dictionary} form={form}/>
           <EditWordFormInformationSection dictionary={dictionary} form={form}/>
           <EditWordFormVariationSection dictionary={dictionary} form={form}/>
