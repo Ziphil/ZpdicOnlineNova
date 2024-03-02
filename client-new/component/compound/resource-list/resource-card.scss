@@ -3,6 +3,12 @@
 @use "zographia/source/component/function.scss" as *;
 
 
+.root {
+  @include theme("light") {
+    --code-background-color: #{leveled-color("gray", 1)};
+  }
+}
+
 .image-container {
   display: flex;
   justify-content: center;
@@ -19,6 +25,28 @@
 
 .title {
   margin-block-start: 2zu;
+}
+
+.code-container {
+  margin-block-start: 2zu;
+  column-gap: 2zu;
+  display: flex;
+}
+
+.code {
+  padding-block: calc(2zu - extrusion(var(--glob-line-height-narrow)));
+  padding-inline: 2zu;
+  font-size: 3.5zu;
+  font-family: var(--glob-font-family-monospace);
+  font-feature-settings: "palt" 0, "pkna" 0, "lnum" 0, "kern" 0 !important;
+  white-space: pre;
+  text-autospace: no-autospace;
+  line-height: var(--glob-line-height-narrow);
+  background-color: var(--code-background-color);
+  border-radius: var(--glob-border-radius);
+  box-sizing: border-box;
+  overflow: auto;
+  flex: 1 1 auto;
 }
 
 .footer {

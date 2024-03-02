@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {faImage, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {useFieldArray} from "react-hook-form";
 import {
@@ -10,6 +10,7 @@ import {
   GeneralIcon,
   useTrans
 } from "zographia";
+import {ResourceListDialog} from "/client-new/component/compound/resource-list-dialog";
 import {create} from "/client-new/component/create";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
@@ -69,6 +70,12 @@ export const EditWordFormInformationSection = create(
               <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
               {trans("button.add.information")}
             </Button>
+            <ResourceListDialog dictionary={dictionary} trigger={(
+              <Button scheme="secondary" variant="underline">
+                <ButtonIconbag><GeneralIcon icon={faImage}/></ButtonIconbag>
+                {trans("button.resource")}
+              </Button>
+            )}/>
           </div>
         </div>
       </section>

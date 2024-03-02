@@ -362,6 +362,7 @@ editWordForm:
       information: "削除"
       variation: "削除"
       relation: "削除"
+    resource: "画像"
     generate: "生成"
     confirm: "決定"
 exampleList:
@@ -425,6 +426,7 @@ orderModeSelect:
 resourceList:
   empty: "画像は登録されていません"
   button:
+    copy: "コピー"
     discard: "削除"
   dialog:
     discard:

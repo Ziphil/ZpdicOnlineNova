@@ -13,11 +13,15 @@ export const ResourceList = create(
     dictionary,
     resources,
     pageSpec,
+    showFooter = false,
+    showCode = false,
     ...rest
   }: {
     dictionary: Dictionary,
     resources: Array<string> | undefined,
     pageSpec: PageSpec,
+    showFooter?: boolean,
+    showCode?: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -26,7 +30,15 @@ export const ResourceList = create(
     return (
       <List styleName="root" items={resources} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(resource) => <ResourceCard key={resource} dictionary={dictionary} resource={resource}/>}
+          {(resource) => (
+            <ResourceCard
+              key={resource}
+              dictionary={dictionary}
+              resource={resource}
+              showFooter={showFooter}
+              showCode={showCode}
+            />
+          )}
           <ListLoadingView styleName="loading"/>
           <ListEmptyView styleName="loading">
             {trans("empty")}

@@ -362,6 +362,7 @@ editWordForm:
       information: "Forigi"
       variation: "Forigi"
       relation: "Forigi"
+    resource: "Bildoj"
     generate: "Generi"
     confirm: "Konfirmi"
 exampleList:
@@ -425,6 +426,7 @@ orderModeSelect:
 resourceList:
   empty: "Neniuj bildoj estas alŝutitaj"
   button:
+    copy: "Kopii"
     discard: "Forigi"
   dialog:
     discard:

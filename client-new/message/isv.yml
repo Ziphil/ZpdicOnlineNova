@@ -362,6 +362,7 @@ editWordForm:
       information: "Remove"
       variation: "Remove"
       relation: "Remove"
+    resource: "Images"
     generate: "Произвести"
     confirm: "Confirm"
 exampleList:
@@ -425,6 +426,7 @@ orderModeSelect:
 resourceList:
   empty: "No images are uploaded"
   button:
+    copy: "Copy"
     discard: "Delete"
   dialog:
     discard:
