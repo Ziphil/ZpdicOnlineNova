@@ -1,3 +1,17 @@
 @charset "utf-8";
 
 @use "zographia/source/component/function.scss" as *;
+
+
+.message {
+  margin-block-end: 4zu;
+}
+
+.callout {
+  margin-block-end: 4zu;
+}
+
+.callout-button {
+  margin-block-start: 2zu;
+  align-self: flex-start;
+}

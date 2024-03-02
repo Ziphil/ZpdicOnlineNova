@@ -435,6 +435,13 @@ resourceList:
         You cannot restore it afterwards.
         Are you really sure?
       confirm: "Delete"
+resourceListDialog:
+  message: >-
+    画像タイトルの下に表示されているコードを内容欄に貼り付けると、その箇所に画像が表示されます。
+  callout: >-
+    内容欄に画像を表示するには、Markdown を有効にする必要があります。
+  button:
+    enable: "Markdown を有効化"
 searchExampleForm:
   information: >-
     Searching for example sentences will be available in a future update.

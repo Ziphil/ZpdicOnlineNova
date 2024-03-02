@@ -435,6 +435,13 @@ resourceList:
         You cannot restore it afterwards.
         Are you really sure?
       confirm: "Delete"
+resourceListDialog:
+  message: >-
+    Copy the code below the title and paste it into a text box to display the image.
+  callout: >-
+    You need to enable Markdown in order to display images in the contents.
+  button:
+    enable: "Enable Markdown"
 searchExampleForm:
   information: >-
     Searching for example sentences will be available in a future update.

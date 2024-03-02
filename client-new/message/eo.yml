@@ -435,6 +435,13 @@ resourceList:
         Vi ne povas restaŭri ĝin poste.
         Ĉu vi vere certas?
       confirm: "Forigi"
+resourceListDialog:
+  message: >-
+    Kopiu la kodon sub la titolo kaj algluu ĝin en tekstujon por montri la bildon.
+  callout: >-
+    Vi devas ebligi Markdown por montri bildojn en la enhavoj.
+  button:
+    enable: "Ebligi Markdown"
 searchExampleForm:
   information: >-
     Serĉi ekzemplajn frazojn estos disponebla en estonta ĝisdatigo.
