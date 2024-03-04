@@ -28,7 +28,7 @@ export const ChangeDictionarySourceForm = create(
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
-          <Textarea styleName="textarea" {...register("source")}/>
+          <Textarea styleName="textarea" fontFamily="monospace" {...register("source")}/>
         </ControlContainer>
         <div>
           <Button variant="light" type="submit" onClick={handleSubmit}>
