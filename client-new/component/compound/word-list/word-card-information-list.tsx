@@ -5,6 +5,7 @@ import {AdditionalProps, MultiLineText} from "zographia";
 import {Markdown} from "/client-new/component/atom/markdown";
 import {create} from "/client-new/component/create";
 import {DetailedWord, EnhancedDictionary, Word} from "/client-new/skeleton";
+import {getAwsFileUrl} from "/client-new/util/aws";
 
 
 export const WordCardInformationList = create(
@@ -29,7 +30,7 @@ export const WordCardInformationList = create(
               </h4>
             )}
             {(dictionary.settings.enableMarkdown) ? (
-              <Markdown styleName="markdown" mode="normal" compact={true}>
+              <Markdown styleName="markdown" mode="normal" compact={true} homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
                 {information.text}
               </Markdown>
             ) : (
