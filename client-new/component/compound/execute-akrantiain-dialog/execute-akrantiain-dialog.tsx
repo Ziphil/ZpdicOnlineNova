@@ -1,13 +1,17 @@
 //
 
+import {faPlay} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, cloneElement, useCallback, useState} from "react";
 import {
+  Button,
+  ButtonIconbag,
   ControlContainer,
   ControlLabel,
   Dialog,
   DialogBody,
   DialogCloseButton,
   DialogPane,
+  GeneralIcon,
   Input,
   Textarea,
   useTrans
@@ -39,7 +43,7 @@ export const ExecuteAkrantiainDialog = create(
         <Dialog open={open} onOpenSet={setOpen} height="full" {...rest}>
           <DialogPane styleName="pane">
             <DialogCloseButton/>
-            <DialogBody>
+            <DialogBody styleName="body">
               <fieldset styleName="column">
                 <ControlContainer>
                   <ControlLabel>{trans("label.source")}</ControlLabel>
@@ -50,6 +54,12 @@ export const ExecuteAkrantiainDialog = create(
                   <Input/>
                 </ControlContainer>
               </fieldset>
+              <div>
+                <Button>
+                  <ButtonIconbag><GeneralIcon icon={faPlay}/></ButtonIconbag>
+                  {trans("button.execute")}
+                </Button>
+              </div>
               <fieldset styleName="column">
                 <ControlContainer>
                   <ControlLabel>{trans("label.output")}</ControlLabel>

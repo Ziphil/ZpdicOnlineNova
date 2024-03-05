@@ -3,15 +3,22 @@
 @use "zographia/source/component/function.scss" as *;
 
 
-.message {
-  margin-block-end: 4zu;
+.body {
+  row-gap: 6zu;
+  display: flex;
+  flex-direction: column;
 }
 
-.callout {
-  margin-block-end: 4zu;
+.column {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
 }
 
-.callout-button {
-  margin-block-start: 2zu;
-  align-self: flex-start;
+.textarea-source {
+  height: 64zu;
+}
+
+.textarea-error {
+  height: 32zu;
 }
