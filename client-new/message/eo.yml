@@ -625,6 +625,9 @@ changeDictionarySecretForm:
   label:
     false: "Videbla"
     true: "Nevidebla"
+changeDictionarySourceForm:
+  button:
+    try: "Provi"
 changeMyEmailForm:
   error:
     invalid: >-

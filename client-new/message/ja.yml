@@ -623,6 +623,9 @@ changeDictionarySecretForm:
   label:
     false: "表示"
     true: "非表示"
+changeDictionarySourceForm:
+  button:
+    try: "試す"
 changeMyEmailForm:
   error:
     invalid: >-
