@@ -2,8 +2,7 @@
 
 import {Akrantiain} from "akrantiain";
 import {BaseSyntheticEvent, useMemo} from "react";
-import {UseFormReturn} from "react-hook-form";
-import {useForm} from "/client-new/hook/form";
+import {UseFormReturn, useForm} from "/client-new/hook/form";
 
 
 const DEFAULT_VALUE = {

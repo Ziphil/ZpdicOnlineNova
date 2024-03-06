@@ -1,7 +1,8 @@
 //
 
 import {yupResolver} from "@hookform/resolvers/yup";
-import {UseFormProps as RawFormConfig, UseFormReturn, useForm as useRawForm} from "react-hook-form";
+import {useCallback, useMemo} from "react";
+import {UseFormProps as RawFormConfig, UseFormReturn as UseRawFormReturn, useForm as useRawForm} from "react-hook-form";
 import {ObjectSchema} from "yup";
 
 
@@ -14,7 +15,11 @@ export function useForm<V extends {}>(...args: [V, FormConfig<V>] | [ObjectSchem
     resolver: (schema !== undefined) ? yupResolver(schema) as any : undefined,
     ...config
   });
-  return form;
+  const resetAll = useCallback(function (): void {
+    form.reset(defaultValue);
+  }, [defaultValue, form]);
+  return useMemo(() => ({...form, resetAll}), [form, resetAll]);
 }
 
-type FormConfig<V extends {}> = Omit<RawFormConfig<V>, "defaultValues" | "resolver">;
+export type UseFormReturn<V extends {}> = UseRawFormReturn<V> & {resetAll: () => void};
+export type FormConfig<V extends {}> = Omit<RawFormConfig<V>, "defaultValues" | "resolver">;

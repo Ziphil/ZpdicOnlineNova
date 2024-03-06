@@ -1,9 +1,8 @@
 //
 
 import {BaseSyntheticEvent, useMemo} from "react";
-import {UseFormReturn} from "react-hook-form";
 import {RelationWord} from "/client-new/component/atom/relation-word-select";
-import {useForm} from "/client-new/hook/form";
+import {UseFormReturn, useForm} from "/client-new/hook/form";
 import {invalidateResponses, useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
 import {Dictionary, EditableExample, Example} from "/client-new/skeleton";

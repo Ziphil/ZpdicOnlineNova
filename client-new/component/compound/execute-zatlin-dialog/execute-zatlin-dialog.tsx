@@ -2,7 +2,6 @@
 
 import {faPlay} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, cloneElement, useCallback, useState} from "react";
-import {UseFormReturn} from "react-hook-form";
 import {
   Button,
   ButtonIconbag,
@@ -18,6 +17,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
+import {UseFormReturn} from "/client-new/hook/form";
 import {useExecuteZatlin} from "./execute-zatlin-dialog-hook";
 
 

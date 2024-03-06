@@ -1,9 +1,8 @@
 //
 
 import {BaseSyntheticEvent, useMemo} from "react";
-import {UseFormReturn} from "react-hook-form";
 import {Asserts, object, string} from "yup";
-import {useForm} from "/client-new/hook/form";
+import {UseFormReturn, useForm} from "/client-new/hook/form";
 import {useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
 import {DetailedUser} from "/client-new/skeleton";

@@ -34,7 +34,7 @@ export const AddDictionaryButton = create(
     const {trans} = useTrans("addDictionaryButton");
 
     const {form, handleSubmit} = useAddDictionary();
-    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen(handleSubmit);
+    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
     const {register, getFieldState, formState: {errors}} = form;
 
     return (

@@ -37,7 +37,7 @@ export const AddEditInvitationButton = create(
     const {trans} = useTrans("addEditInvitationButton");
 
     const {form, handleSubmit} = useAddEditInvitation(dictionary);
-    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen(handleSubmit);
+    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
     const {control, getFieldState, formState: {errors}} = form;
 
     return (
