@@ -2,6 +2,7 @@
 
 import {faPlay} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, cloneElement, useCallback, useState} from "react";
+import {UseFormReturn} from "react-hook-form";
 import {
   Button,
   ButtonIconbag,
@@ -24,9 +25,13 @@ export const ExecuteZatlinDialog = create(
   require("./execute-zatlin-dialog.scss"), "ExecuteZatlinDialog",
   function ({
     trigger,
+    defaultSource,
+    sourceForm,
     ...rest
   }: {
     trigger: ReactElement,
+    defaultSource?: string,
+    sourceForm?: UseFormReturn<{source?: string}>,
     className?: string
   }): ReactElement {
 
@@ -38,8 +43,10 @@ export const ExecuteZatlinDialog = create(
     const [open, setOpen] = useState(false);
 
     const openDialog = useCallback(function (): void {
+      const source = defaultSource ?? sourceForm?.getValues("source") ?? "";
+      form.setValue("source", source);
       setOpen(true);
-    }, []);
+    }, [defaultSource, sourceForm, form]);
 
     return (
       <Fragment>

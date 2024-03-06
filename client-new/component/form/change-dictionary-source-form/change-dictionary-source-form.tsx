@@ -39,7 +39,7 @@ export const ChangeDictionarySourceForm = create(
             {trans(":commonForm.button.change")}
           </Button>
           {(language === "akrantiain") && (
-            <ExecuteAkrantiainDialog trigger={(
+            <ExecuteAkrantiainDialog sourceForm={form} trigger={(
               <Button scheme="secondary" variant="underline">
                 <ButtonIconbag><GeneralIcon icon={faPlay}/></ButtonIconbag>
                 {trans("button.try")}
@@ -47,7 +47,7 @@ export const ChangeDictionarySourceForm = create(
             )}/>
           )}
           {(language === "zatlin") && (
-            <ExecuteZatlinDialog trigger={(
+            <ExecuteZatlinDialog sourceForm={form} trigger={(
               <Button scheme="secondary" variant="underline">
                 <ButtonIconbag><GeneralIcon icon={faPlay}/></ButtonIconbag>
                 {trans("button.try")}
