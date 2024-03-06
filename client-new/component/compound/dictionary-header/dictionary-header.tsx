@@ -37,7 +37,7 @@ export const DictionaryHeader = create(
 
     return (
       <header styleName="root" {...rest}>
-        <MainContainer width={width}>
+        <MainContainer styleName="container" width={width}>
           <div styleName="top">
             <SingleLineText styleName="name" is="h2">
               {dictionary.name}
