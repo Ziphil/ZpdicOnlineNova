@@ -5,6 +5,7 @@ import {faCheck, faPlay} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, ControlContainer, GeneralIcon, Textarea, useTrans} from "zographia";
 import {ExecuteAkrantiainDialog} from "/client-new/component/compound/execute-akrantiain-dialog";
+import {ExecuteZatlinDialog} from "/client-new/component/compound/execute-zatlin-dialog";
 import {create} from "/client-new/component/create";
 import {Dictionary} from "/client-new/skeleton";
 import {useChangeDictionarySource} from "./change-dictionary-source-form-hook";
@@ -39,6 +40,14 @@ export const ChangeDictionarySourceForm = create(
           </Button>
           {(language === "akrantiain") && (
             <ExecuteAkrantiainDialog trigger={(
+              <Button scheme="secondary" variant="underline">
+                <ButtonIconbag><GeneralIcon icon={faPlay}/></ButtonIconbag>
+                {trans("button.try")}
+              </Button>
+            )}/>
+          )}
+          {(language === "zatlin") && (
+            <ExecuteZatlinDialog trigger={(
               <Button scheme="secondary" variant="underline">
                 <ButtonIconbag><GeneralIcon icon={faPlay}/></ButtonIconbag>
                 {trans("button.try")}
