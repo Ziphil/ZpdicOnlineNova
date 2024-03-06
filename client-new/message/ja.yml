@@ -378,6 +378,21 @@ exampleList:
         削除した後にデータを戻すことはできません。
         本当によろしいですか?
       confirm: "削除"
+executeAkrantiainDialog:
+  label:
+    source: "ソースコード"
+    input: "変換文字列"
+    output: "結果"
+    error: "エラーメッセージ"
+  button:
+    execute: "実行"
+executeZatlinDialog:
+  label:
+    source: "ソースコード"
+    output: "結果"
+    error: "エラーメッセージ"
+  button:
+    execute: "実行"
 footer:
   link:
     notification: "お知らせ"

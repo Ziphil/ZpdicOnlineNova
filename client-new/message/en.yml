@@ -378,6 +378,21 @@ exampleList:
         You cannot restore it afterwards.
         Are you really sure?
       confirm: "Delete"
+executeAkrantiainDialog:
+  label:
+    source: "Source code"
+    input: "Input text"
+    output: "Result"
+    error: "Error message"
+  button:
+    execute: "Run"
+executeZatlinDialog:
+  label:
+    source: "Source code"
+    output: "Result"
+    error: "Error message"
+  button:
+    execute: "Run"
 footer:
   link:
     notification: "News"

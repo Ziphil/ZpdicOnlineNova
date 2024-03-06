@@ -17,6 +17,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
+import {useExecuteAkrantiain} from "./execute-akrantiain-dialog-hook";
 
 
 export const ExecuteAkrantiainDialog = create(
@@ -30,6 +31,9 @@ export const ExecuteAkrantiainDialog = create(
   }): ReactElement {
 
     const {trans} = useTrans("executeAkrantiainDialog");
+
+    const {form, handleSubmit} = useExecuteAkrantiain();
+    const {register} = form;
 
     const [open, setOpen] = useState(false);
 
@@ -47,15 +51,15 @@ export const ExecuteAkrantiainDialog = create(
               <fieldset styleName="column">
                 <ControlContainer>
                   <ControlLabel>{trans("label.source")}</ControlLabel>
-                  <Textarea styleName="textarea-source" fontFamily="monospace"/>
+                  <Textarea styleName="textarea-source" fontFamily="monospace" {...register("source")}/>
                 </ControlContainer>
                 <ControlContainer>
                   <ControlLabel>{trans("label.input")}</ControlLabel>
-                  <Input/>
+                  <Input {...register("input")}/>
                 </ControlContainer>
               </fieldset>
               <div>
-                <Button>
+                <Button onClick={handleSubmit}>
                   <ButtonIconbag><GeneralIcon icon={faPlay}/></ButtonIconbag>
                   {trans("button.execute")}
                 </Button>
@@ -63,11 +67,11 @@ export const ExecuteAkrantiainDialog = create(
               <fieldset styleName="column">
                 <ControlContainer>
                   <ControlLabel>{trans("label.output")}</ControlLabel>
-                  <Input/>
+                  <Input readonly={true} {...register("output")}/>
                 </ControlContainer>
                 <ControlContainer>
                   <ControlLabel>{trans("label.error")}</ControlLabel>
-                  <Textarea styleName="textarea-error" fontFamily="monospace"/>
+                  <Textarea styleName="textarea-error" fontFamily="monospace" readonly={true} {...register("error")}/>
                 </ControlContainer>
               </fieldset>
             </DialogBody>

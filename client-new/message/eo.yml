@@ -378,6 +378,21 @@ exampleList:
         Vi ne povas restaŭri ĝin poste.
         Ĉu vi vere certas?
       confirm: "Forigi"
+executeAkrantiainDialog:
+  label:
+    source: "Fontkodo"
+    input: "Enigo"
+    output: "Eligo"
+    error: "Erara mesaĝo"
+  button:
+    execute: "Plenumi"
+executeZatlinDialog:
+  label:
+    source: "Fontkodo"
+    output: "Eligo"
+    error: "Erara mesaĝo"
+  button:
+    execute: "Plenumi"
 footer:
   link:
     notification: "Novaĵoj"
