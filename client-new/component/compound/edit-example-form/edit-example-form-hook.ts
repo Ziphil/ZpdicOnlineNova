@@ -53,7 +53,7 @@ function getFormValue(example: Example): FormValue {
     translation: example.translation,
     words: example.words.map((word) => ({
       number: word.number,
-      name: word.name ?? "?"
+      name: word.name
     }))
   } satisfies FormValue;
   return value;

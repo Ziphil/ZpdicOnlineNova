@@ -1,7 +1,7 @@
 /* eslint-disable no-useless-computed-key */
 
 import {ReactElement, useCallback} from "react";
-import {AsyncSelect} from "zographia";
+import {AsyncSelect, LoadingIcon} from "zographia";
 import {create} from "/client-new/component/create";
 import {Dictionary, NormalWordParameter, Word} from "/client-new/skeleton";
 import {request} from "/client-new/util/request";
@@ -18,8 +18,8 @@ export const RelationWordSelect = create(
     ...rest
   }: {
     dictionary: Dictionary,
-    word: RelationWord | Word | null,
-    onSet: (word: RelationWord | Word) => unknown,
+    word: RelationWord | null,
+    onSet: (word: Word) => unknown,
     className?: string
   }): ReactElement {
 
@@ -41,7 +41,7 @@ export const RelationWordSelect = create(
         value={word}
         onSet={onSet}
         loadOptions={loadOptions}
-        renderLabel={(word) => word.name}
+        renderLabel={(word) => word.name ?? <LoadingIcon/>}
         {...rest}
       >
         {(word) => <RelationWordSelectOption key={word.number} dictionary={dictionary} word={word}/>}
@@ -54,5 +54,5 @@ export const RelationWordSelect = create(
 
 export type RelationWord = {
   number: number,
-  name: string
+  name?: string
 };

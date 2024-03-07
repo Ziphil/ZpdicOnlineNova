@@ -46,7 +46,7 @@ type FormValue = {
   }>,
   relations: Array<{
     titles: Array<string>,
-    word: RelationWord | null,
+    word: Required<RelationWord> | null,
     mutual: boolean
   }>
 };
