@@ -24,7 +24,7 @@ export const LoginPage = create(
         <MainContainer styleName="main">
           <div styleName="top">
             <Logo styleName="logo"/>
-            <h2 styleName="title">{trans("heading")}</h2>
+            <h2 styleName="heading">{trans("heading")}</h2>
           </div>
           <LoginForm/>
         </MainContainer>

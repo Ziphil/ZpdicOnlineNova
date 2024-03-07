@@ -36,7 +36,7 @@
   color: var(--logo-color);
 }
 
-.title {
+.heading {
   @include bold-font;
   font-size: 6zu;
   color: var(--glob-primary-heading-text-color);

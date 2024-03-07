@@ -29,7 +29,7 @@ export const ResetUserPasswordPage = create(
         <MainContainer styleName="main">
           <div styleName="top">
             <Logo styleName="logo"/>
-            <h2 styleName="title">{trans(`heading.${(tokenKey) ? "reset" : "issue"}`)}</h2>
+            <h2 styleName="heading">{trans(`heading.${(tokenKey) ? "reset" : "issue"}`)}</h2>
           </div>
           {(!!tokenKey) ? (
             <ResetUserPasswordForm tokenKey={tokenKey}/>
