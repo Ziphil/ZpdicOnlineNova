@@ -25,7 +25,7 @@ export const UserPage = create(
     const tabValue = getTabValue(match?.params.tabPath);
 
     return (
-      <Page {...rest} headerNode={(
+      <Page title={user?.screenName} {...rest} headerNode={(
         <Fragment>
           <Header/>
           <UserHeader user={user} tabValue={tabValue}/>

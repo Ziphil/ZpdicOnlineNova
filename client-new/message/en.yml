@@ -702,6 +702,7 @@ uploadDictionaryButton:
       You cannot upload files larger than 5 MB.
 
 contactPage:
+  title: "Contact"
   heading: "Contact"
   explanation: |-
     If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
@@ -808,12 +809,18 @@ examplePage:
   add: "Create new sentence"
 loginPage:
   title: "Sign in"
+  heading: "Sign in"
 notificationListPage:
-  notification: "News"
+  title: "News"
+  heading: "News"
 registerPage:
   title: "Sign up"
+  heading: "Sign up"
 resetUserPasswordPage:
   title:
+    issue: "Reset password"
+    reset: "Reset password"
+  heading:
     issue: "Reset password"
     reset: "Reset password"
 topPage:

@@ -25,11 +25,11 @@ export const ResetUserPasswordPage = create(
     const tokenKey = search.get("key");
 
     return (
-      <Page styleName="root" headerNode={<Header/>} {...rest}>
+      <Page styleName="root" title={trans(`title.${(tokenKey) ? "reset" : "issue"}`)} headerNode={<Header/>} {...rest}>
         <MainContainer styleName="main">
           <div styleName="top">
             <Logo styleName="logo"/>
-            <h2 styleName="title">{trans(`title.${tokenKey ? "reset" : "issue"}`)}</h2>
+            <h2 styleName="title">{trans(`heading.${(tokenKey) ? "reset" : "issue"}`)}</h2>
           </div>
           {(!!tokenKey) ? (
             <ResetUserPasswordForm tokenKey={tokenKey}/>

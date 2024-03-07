@@ -700,6 +700,7 @@ uploadDictionaryButton:
       5 MB より大きなファイルはアップロードすることができません。
 
 contactPage:
+  title: "お問い合わせ"
   heading: "お問い合わせ"
   explanation: |-
     匿名でのお問い合わせをご希望の場合は、ログアウトした状態で「名前」欄を空欄にした上で送信してください。
@@ -806,12 +807,18 @@ examplePage:
   add: "新しい単語を作成"
 loginPage:
   title: "ログイン"
+  heading: "ログイン"
 notificationListPage:
-  notification: "過去のお知らせ"
+  title: "過去のお知らせ"
+  heading: "過去のお知らせ"
 registerPage:
   title: "新規登録"
+  heading: "新規登録"
 resetUserPasswordPage:
   title:
+    issue: "パスワードリセット"
+    reset: "パスワードリセット"
+  heading:
     issue: "パスワードリセット"
     reset: "パスワードリセット"
 topPage:

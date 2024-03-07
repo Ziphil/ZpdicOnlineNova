@@ -702,6 +702,7 @@ uploadDictionaryButton:
       Vi ne povas alŝuti dosierojn pli grandajn ol 5 MB.
 
 contactPage:
+  title: "Kontakti"
   heading: "Kontakti"
   explanation: |-
     Se vi volas sendi vian demandon anonime, bonvolu elsaluti kaj poste lasi malplena la kampon “Nomo”.
@@ -808,12 +809,18 @@ examplePage:
   add: "Krei novan frazon"
 loginPage:
   title: "Ensaluti"
+  heading: "Ensaluti"
 notificationListPage:
-  notification: "Antaŭaj novaĵoj"
+  title: "Antaŭaj novaĵoj"
+  heading: "Antaŭaj novaĵoj"
 registerPage:
   title: "Enskribiĝi"
+  heading: "Enskribiĝi"
 resetUserPasswordPage:
   title:
+    issue: "Restarigi pasvorton"
+    reset: "Restarigi pasvorton"
+  heading:
     issue: "Restarigi pasvorton"
     reset: "Restarigi pasvorton"
 topPage:

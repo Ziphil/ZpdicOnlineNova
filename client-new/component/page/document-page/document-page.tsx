@@ -24,8 +24,10 @@ export const DocumentPage = create(
     const path = params["*"] || "";
     const [source] = useSuspenseResponse("fetchDocument", {path, locale});
 
+    const title = source.match(/<!--\s*title:\s*(.+?)\s*-->/)?.[1];
+
     return (
-      <Page styleName="root" headerNode={<Header/>} {...rest}>
+      <Page styleName="root" title={title} headerNode={<Header/>} {...rest}>
         <MainContainer>
           <Markdown mode="document">
             {source}

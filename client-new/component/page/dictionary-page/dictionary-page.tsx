@@ -26,7 +26,7 @@ export const DictionaryPage = create(
     const dictionary = useDictionary();
 
     return (
-      <Page {...rest} insertPadding={{top: insertTopPadding, bottom: true, horizontal: true}} headerNode={(
+      <Page title={dictionary?.name} insertPadding={{top: insertTopPadding, bottom: true, horizontal: true}} {...rest} headerNode={(
         <Fragment>
           <Header/>
           <DictionaryHeader dictionary={dictionary} width={width} tabValue={tabValue}/>

@@ -19,7 +19,7 @@ export const ContactPage = create(
     const {trans} = useTrans("contactPage");
 
     return (
-      <Page styleName="root" headerNode={<Header/>} {...rest}>
+      <Page styleName="root" title={trans("title")} headerNode={<Header/>} {...rest}>
         <MainContainer width="narrow">
           <h2 styleName="heading">{trans("heading")}</h2>
           <MultiLineText styleName="explanation" is="p">
