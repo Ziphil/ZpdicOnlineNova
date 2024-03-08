@@ -11,7 +11,8 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
-import {APPEARANCES, Appearance, THEMES, Theme, useChangeAppearance} from "/client-new/hook/appearance";
+import {APPEARANCES, Appearance, THEMES, Theme} from "/client-new/constant/appearance";
+import {useChangeAppearance} from "/client-new/hook/appearance";
 
 
 export const ChangeAppearanceForm = create(

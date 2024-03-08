@@ -1,14 +1,14 @@
 //
 
-import {useCallback} from "react";
+import {useCallback, useEffect} from "react";
 import {atom, useRecoilValue, useSetRecoilState} from "recoil";
 import {ColorDefinitions} from "zographia";
-import {COLOR_DEFINITIONS} from "/client-new/constant/appearance";
+import {Appearance, AppearanceUtil, COLOR_DEFINITIONS} from "/client-new/constant/appearance";
 
 
 const appearanceAtom = atom<Appearance>({
   key: "colorDefinitionType",
-  default: "normal"
+  default: AppearanceUtil.cast(localStorage.getItem("zp-appearance") ?? "normal")
 });
 
 export function useColorDefinitions(): ColorDefinitions {
@@ -23,14 +23,17 @@ export function useAppearance(): Appearance {
 
 export function useChangeAppearance(): (appearance: Appearance) => void {
   const setAppearance = useSetRecoilState(appearanceAtom);
-  const changeAppearance = useCallback(function (type: Appearance) {
-    setAppearance(type);
+  const changeAppearance = useCallback(function (appearance: Appearance) {
+    setAppearance(appearance);
+    localStorage.setItem("zp-appearance", appearance);
   }, [setAppearance]);
   return changeAppearance;
 }
 
-export const APPEARANCES = ["normal", "dimmed"] as const;
-export type Appearance = (typeof APPEARANCES)[number];
-
-export const THEMES = ["light"] as const;
-export type Theme = (typeof THEMES)[number];
+export function useDefaultAppearance(initialAppearance: string): void {
+  const changeAppearance = useChangeAppearance();
+  useEffect(() => {
+    const appearance = AppearanceUtil.cast(localStorage.getItem("zp-appearance") ?? "normal");
+    changeAppearance(appearance);
+  }, [initialAppearance, changeAppearance]);
+}

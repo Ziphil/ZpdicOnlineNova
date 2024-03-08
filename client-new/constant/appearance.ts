@@ -1,6 +1,7 @@
 //
 
 import {ColorDefinitions, createColor, createColorDefinition} from "zographia";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 
 export const COLOR_DEFINITIONS = {
@@ -105,3 +106,10 @@ export const COLOR_DEFINITIONS = {
     stainDark: createColor("hsla(30, 50%, 0%)")
   }
 } satisfies Record<string, ColorDefinitions>;
+
+export const APPEARANCES = ["normal", "dimmed"] as const;
+export type Appearance = LiteralType<typeof APPEARANCES>;
+export const AppearanceUtil = LiteralUtilType.create(APPEARANCES);
+
+export const THEMES = ["light"] as const;
+export type Theme = (typeof THEMES)[number];
