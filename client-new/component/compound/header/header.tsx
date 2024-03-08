@@ -7,6 +7,7 @@ import {Link} from "/client-new/component/atom/link";
 import {Logo} from "/client-new/component/atom/logo";
 import {SimpleLink} from "/client-new/component/atom/simple-link";
 import {UserAvatar} from "/client-new/component/atom/user-avatar";
+import {ChangeAppearanceForm} from "/client-new/component/compound/change-appearance-form";
 import {ChangeLocaleForm} from "/client-new/component/compound/change-locale-form";
 import {create} from "/client-new/component/create";
 import {useMe} from "/client-new/hook/auth";
@@ -39,6 +40,7 @@ export const Header = create(
         </div>
         <div styleName="right">
           <div styleName="menu">
+            <ChangeAppearanceForm/>
             <ChangeLocaleForm/>
           </div>
           {(me !== null) && (

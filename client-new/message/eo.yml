@@ -224,6 +224,16 @@ addCommissionDialog:
     comment: "Komento"
   button:
     confirm: "Konfirmi"
+changeLocaleForm:
+  label: "Lingvo"
+changeAppearanceForm:
+  label: "Šajno"
+  appearance:
+    normal: "Normala"
+    dimmed: "Malbrila"
+  theme:
+    light: "Luma"
+    dark: "Malluma"
 commissionList:
   empty: "Neniuj vortoj estas petitaj"
   button:

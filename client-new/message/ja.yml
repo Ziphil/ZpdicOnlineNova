@@ -224,6 +224,16 @@ addCommissionDialog:
     comment: "コメント"
   button:
     confirm: "決定"
+changeLocaleForm:
+  label: "言語"
+changeAppearanceForm:
+  label: "テーマ"
+  appearance:
+    normal: "通常色"
+    dimmed: "淡色"
+  theme:
+    light: "ライト"
+    dark: "ダーク"
 commissionList:
   empty: "造語依頼はされていません"
   button:

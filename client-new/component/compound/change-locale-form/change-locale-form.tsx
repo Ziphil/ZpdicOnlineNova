@@ -8,7 +8,7 @@ import {
   Menu,
   MenuItem,
   useChangeLocale,
-  useLocale
+  useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
 
@@ -21,21 +21,21 @@ export const ChangeLocaleForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const locale = useLocale();
+    const {trans} = useTrans("changeLocaleForm");
+
     const changeLocale = useChangeLocale();
 
     return (
       <Menu styleName="root" triggerType="click" placement="bottom-end" {...rest} trigger={(
         <button styleName="trigger" type="button">
           <GeneralIcon styleName="icon" icon={faGlobe}/>
-          <span styleName="locale">{LOCALE_NAMES[locale]}</span>
+          <span styleName="label">{trans("label")}</span>
           <GeneralIcon styleName="angle" icon={faAngleDown}/>
         </button>
       )}>
         {Object.keys(LOCALE_NAMES).map((locale) => (
           <MenuItem styleName="item" key={locale} onClick={() => changeLocale(locale)}>
-            <div styleName="name">{LOCALE_NAMES[locale]}</div>
-            <div styleName="code">{locale}</div>
+            {LOCALE_NAMES[locale]}
           </MenuItem>
         ))}
       </Menu>

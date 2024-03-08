@@ -224,6 +224,16 @@ addCommissionDialog:
     comment: "Comment"
   button:
     confirm: "Confirm"
+changeLocaleForm:
+  label: "Language"
+changeAppearanceForm:
+  label: "Appearance"
+  appearance:
+    normal: "Normal"
+    dimmed: "Dimmed"
+  theme:
+    light: "Light"
+    dark: "Dark"
 commissionList:
   empty: "No words are requested"
   button:
