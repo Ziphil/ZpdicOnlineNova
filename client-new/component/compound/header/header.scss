@@ -30,9 +30,14 @@
 }
 
 .left {
-  column-gap: 6zu;
   display: flex;
   align-items: center;
+  @include device("desktop") {
+    column-gap: 6zu;
+  }
+  @include device("mobile") {
+    column-gap: 4zu;
+  }
 }
 
 .logo {
