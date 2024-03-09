@@ -37,7 +37,7 @@ export const AddTransferInvitationButton = create(
     const {trans} = useTrans("addTransferInvitationButton");
 
     const {form, handleSubmit} = useAddTransferInvitation(dictionary);
-    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen(handleSubmit);
+    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
     const {control, getFieldState, formState: {errors}} = form;
 
     return (

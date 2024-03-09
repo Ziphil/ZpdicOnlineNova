@@ -19,9 +19,9 @@ export const NotificationListPage = create(
     const {trans} = useTrans("notificationListPage");
 
     return (
-      <Page headerNode={<Header/>} {...rest}>
+      <Page title={trans("title")} headerNode={<Header/>} {...rest}>
         <MainContainer>
-          <h2 styleName="heading">{trans("notification")}</h2>
+          <h2 styleName="heading">{trans("heading")}</h2>
           <NotificationList size={10}/>
         </MainContainer>
       </Page>

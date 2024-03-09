@@ -1,9 +1,8 @@
 //
 
 import {BaseSyntheticEvent, useCallback} from "react";
-import {UseFormReturn} from "react-hook-form";
 import {AsyncOrSync} from "ts-essentials";
-import {useForm} from "/client-new/hook/form";
+import {UseFormReturn, useForm} from "/client-new/hook/form";
 import {AdvancedWordMode, AdvancedWordParameter, WordType} from "/client-new/skeleton";
 
 

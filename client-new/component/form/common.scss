@@ -35,6 +35,12 @@
   height: 64zu;
 }
 
+.button {
+  column-gap: 4zu;
+  display: flex;
+  align-items: center;
+}
+
 .dialog-heading {
   @include bold-font;
   margin-block-end: 6zu;

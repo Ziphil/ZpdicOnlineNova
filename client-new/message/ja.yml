@@ -224,6 +224,16 @@ addCommissionDialog:
     comment: "コメント"
   button:
     confirm: "決定"
+changeLocaleForm:
+  label: "言語"
+changeAppearanceForm:
+  label: "テーマ"
+  appearance:
+    normal: "通常色"
+    dimmed: "淡色"
+  theme:
+    light: "ライト"
+    dark: "ダーク"
 commissionList:
   empty: "造語依頼はされていません"
   button:
@@ -362,6 +372,7 @@ editWordForm:
       information: "削除"
       variation: "削除"
       relation: "削除"
+    resource: "画像"
     generate: "生成"
     confirm: "決定"
 exampleList:
@@ -377,6 +388,21 @@ exampleList:
         削除した後にデータを戻すことはできません。
         本当によろしいですか?
       confirm: "削除"
+executeAkrantiainDialog:
+  label:
+    source: "ソースコード"
+    input: "変換文字列"
+    output: "結果"
+    error: "エラーメッセージ"
+  button:
+    execute: "実行"
+executeZatlinDialog:
+  label:
+    source: "ソースコード"
+    output: "結果"
+    error: "エラーメッセージ"
+  button:
+    execute: "実行"
 footer:
   link:
     notification: "お知らせ"
@@ -425,6 +451,7 @@ orderModeSelect:
 resourceList:
   empty: "画像は登録されていません"
   button:
+    copy: "コピー"
     discard: "削除"
   dialog:
     discard:
@@ -433,6 +460,13 @@ resourceList:
         削除した後にデータを戻すことはできません。
         本当によろしいですか?
       confirm: "削除"
+resourceListDialog:
+  message: >-
+    画像タイトルの下に表示されているコードを内容欄に貼り付けると、その箇所に画像が表示されます。
+  callout: >-
+    内容欄に画像を表示するには、Markdown を有効にする必要があります。
+  button:
+    enable: "Markdown を有効化"
 searchExampleForm:
   information: >-
     例文検索は今後のアップデートで利用できるようになる予定です。
@@ -614,6 +648,9 @@ changeDictionarySecretForm:
   label:
     false: "表示"
     true: "非表示"
+changeDictionarySourceForm:
+  button:
+    try: "試す"
 changeMyEmailForm:
   error:
     invalid: >-
@@ -673,6 +710,7 @@ uploadDictionaryButton:
       5 MB より大きなファイルはアップロードすることができません。
 
 contactPage:
+  title: "お問い合わせ"
   heading: "お問い合わせ"
   explanation: |-
     匿名でのお問い合わせをご希望の場合は、ログアウトした状態で「名前」欄を空欄にした上で送信してください。
@@ -779,12 +817,18 @@ examplePage:
   add: "新しい単語を作成"
 loginPage:
   title: "ログイン"
+  heading: "ログイン"
 notificationListPage:
-  notification: "過去のお知らせ"
+  title: "過去のお知らせ"
+  heading: "過去のお知らせ"
 registerPage:
   title: "新規登録"
+  heading: "新規登録"
 resetUserPasswordPage:
   title:
+    issue: "パスワードリセット"
+    reset: "パスワードリセット"
+  heading:
     issue: "パスワードリセット"
     reset: "パスワードリセット"
 topPage:

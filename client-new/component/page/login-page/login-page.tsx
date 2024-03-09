@@ -20,11 +20,11 @@ export const LoginPage = create(
     const {trans} = useTrans("loginPage");
 
     return (
-      <Page styleName="root" headerNode={<Header/>} {...rest}>
+      <Page styleName="root" title={trans("title")} headerNode={<Header/>} {...rest}>
         <MainContainer styleName="main">
           <div styleName="top">
             <Logo styleName="logo"/>
-            <h2 styleName="title">{trans("title")}</h2>
+            <h2 styleName="heading">{trans("heading")}</h2>
           </div>
           <LoginForm/>
         </MainContainer>

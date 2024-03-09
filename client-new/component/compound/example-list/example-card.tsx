@@ -3,10 +3,11 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faHandPointRight, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, aria, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, aria, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
 import {EditExampleDialog} from "/client-new/component/compound/edit-example-dialog";
 import {create} from "/client-new/component/create";
+import {useFilledExample} from "/client-new/hook/example";
 import {useResponse} from "/client-new/hook/request";
 import {EnhancedDictionary, Example} from "/client-new/skeleton";
 import {useDiscardExample} from "./example-card-hook";
@@ -27,9 +28,8 @@ export const ExampleCard = create(
     const {trans} = useTrans("exampleList");
 
     const number = dictionary.number;
-    const wordNumbers = example.words.map((word) => word.number);
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {number, authority: "edit"});
-    const [wordNameSpec] = useResponse("fetchWordNames", {number, wordNumbers}, {ignoreError: true});
+    const filledExample = useFilledExample(dictionary, example);
 
     const discardExample = useDiscardExample(dictionary, example);
 
@@ -38,10 +38,10 @@ export const ExampleCard = create(
         <CardBody styleName="body">
           <div styleName="parallel">
             <MultiLineText is="p">
-              {example.sentence}
+              {filledExample.sentence}
             </MultiLineText>
             <MultiLineText is="p">
-              {example.translation}
+              {filledExample.translation}
             </MultiLineText>
           </div>
           <div styleName="word">
@@ -49,11 +49,11 @@ export const ExampleCard = create(
               <FontAwesomeIcon icon={faHandPointRight}/>
             </span>
             <MultiLineText styleName="text" is="span">
-              {(example.words.length > 0) ? example.words.map((word, index) => (
+              {(filledExample.words.length > 0) ? filledExample.words.map((word, index) => (
                 <Fragment key={index}>
                   {(index > 0) && <span styleName="punctuation">, </span>}
-                  <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(word.name ?? wordNameSpec?.names[word.number] ?? "")}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
-                    {word.name ?? wordNameSpec?.names[word.number] ?? "?"}
+                  <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(word.name ?? "")}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
+                    {word.name ?? <LoadingIcon/>}
                   </Link>
                 </Fragment>
               )) : (
@@ -66,7 +66,7 @@ export const ExampleCard = create(
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">
-            <EditExampleDialog dictionary={dictionary} example={example} trigger={(
+            <EditExampleDialog dictionary={dictionary} example={filledExample} trigger={(
               <Button scheme="secondary" variant="underline">
                 <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
                 {trans("button.edit")}

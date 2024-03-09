@@ -15,7 +15,7 @@ export const RelationWordSelectOption = create(
     ...rest
   }: {
     dictionary: Dictionary,
-    word: RelationWord | Word,
+    word: Word,
     className?: string
   }): ReactElement {
 

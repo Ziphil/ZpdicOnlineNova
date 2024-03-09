@@ -7,6 +7,7 @@ import {EditWordForm} from "/client-new/component/compound/edit-word-form";
 import {Header} from "/client-new/component/compound/header";
 import {MainContainer, Page} from "/client-new/component/compound/page";
 import {create} from "/client-new/component/create";
+import {useDictionary} from "/client-new/hook/dictionary";
 import type {EditWordPageLoaderData} from "./edit-word-page-loader";
 
 
@@ -18,7 +19,8 @@ export const EditWordPage = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {dictionary, word} = useLoaderData() as EditWordPageLoaderData;
+    const dictionary = useDictionary();
+    const {word} = useLoaderData() as EditWordPageLoaderData;
 
     return (
       <Page {...rest} headerNode={<Header/>}>

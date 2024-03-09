@@ -224,6 +224,16 @@ addCommissionDialog:
     comment: "Komento"
   button:
     confirm: "Konfirmi"
+changeLocaleForm:
+  label: "Lingvo"
+changeAppearanceForm:
+  label: "Šajno"
+  appearance:
+    normal: "Normala"
+    dimmed: "Malbrila"
+  theme:
+    light: "Luma"
+    dark: "Malluma"
 commissionList:
   empty: "Neniuj vortoj estas petitaj"
   button:
@@ -362,6 +372,7 @@ editWordForm:
       information: "Forigi"
       variation: "Forigi"
       relation: "Forigi"
+    resource: "Bildoj"
     generate: "Generi"
     confirm: "Konfirmi"
 exampleList:
@@ -377,6 +388,21 @@ exampleList:
         Vi ne povas restaŭri ĝin poste.
         Ĉu vi vere certas?
       confirm: "Forigi"
+executeAkrantiainDialog:
+  label:
+    source: "Fontkodo"
+    input: "Enigo"
+    output: "Eligo"
+    error: "Erara mesaĝo"
+  button:
+    execute: "Plenumi"
+executeZatlinDialog:
+  label:
+    source: "Fontkodo"
+    output: "Eligo"
+    error: "Erara mesaĝo"
+  button:
+    execute: "Plenumi"
 footer:
   link:
     notification: "Novaĵoj"
@@ -425,6 +451,7 @@ orderModeSelect:
 resourceList:
   empty: "Neniuj bildoj estas alŝutitaj"
   button:
+    copy: "Kopii"
     discard: "Forigi"
   dialog:
     discard:
@@ -433,6 +460,13 @@ resourceList:
         Vi ne povas restaŭri ĝin poste.
         Ĉu vi vere certas?
       confirm: "Forigi"
+resourceListDialog:
+  message: >-
+    Kopiu la kodon sub la titolo kaj algluu ĝin en tekstujon por montri la bildon.
+  callout: >-
+    Vi devas ebligi Markdown por montri bildojn en la enhavoj.
+  button:
+    enable: "Ebligi Markdown"
 searchExampleForm:
   information: >-
     Serĉi ekzemplajn frazojn estos disponebla en estonta ĝisdatigo.
@@ -616,6 +650,9 @@ changeDictionarySecretForm:
   label:
     false: "Videbla"
     true: "Nevidebla"
+changeDictionarySourceForm:
+  button:
+    try: "Provi"
 changeMyEmailForm:
   error:
     invalid: >-
@@ -675,6 +712,7 @@ uploadDictionaryButton:
       Vi ne povas alŝuti dosierojn pli grandajn ol 5 MB.
 
 contactPage:
+  title: "Kontakti"
   heading: "Kontakti"
   explanation: |-
     Se vi volas sendi vian demandon anonime, bonvolu elsaluti kaj poste lasi malplena la kampon “Nomo”.
@@ -781,12 +819,18 @@ examplePage:
   add: "Krei novan frazon"
 loginPage:
   title: "Ensaluti"
+  heading: "Ensaluti"
 notificationListPage:
-  notification: "Antaŭaj novaĵoj"
+  title: "Antaŭaj novaĵoj"
+  heading: "Antaŭaj novaĵoj"
 registerPage:
   title: "Enskribiĝi"
+  heading: "Enskribiĝi"
 resetUserPasswordPage:
   title:
+    issue: "Restarigi pasvorton"
+    reset: "Restarigi pasvorton"
+  heading:
     issue: "Restarigi pasvorton"
     reset: "Restarigi pasvorton"
 topPage:

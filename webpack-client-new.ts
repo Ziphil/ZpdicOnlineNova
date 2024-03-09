@@ -109,8 +109,9 @@ const config = {
       "/worker": path.resolve(__dirname, "worker"),
       "react": path.resolve(__dirname, "node_modules/react"),
       "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
+      "react-helmet": path.resolve(__dirname, "node_modules/react-helmet"),
       "react-intl": path.resolve(__dirname, "node_modules/react-intl"),
-      "recoil": path.resolve(__dirname, "node_modules/recoil")
+      "recoil": path.resolve(__dirname, "node_modules/recoil"),
     },
     fallback: {
       stream: require.resolve("stream-browserify")

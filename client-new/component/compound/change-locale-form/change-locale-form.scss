@@ -24,7 +24,7 @@
   }
 }
 
-.locale {
+.label {
   margin-inline-start: var(--glob-blank-gap);
   @include device("mobile") {
     display: none;

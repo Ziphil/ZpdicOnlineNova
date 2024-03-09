@@ -1,7 +1,7 @@
 //
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement, SyntheticEvent, cloneElement, useCallback, useState} from "react";
+import {Fragment, ReactElement, cloneElement} from "react";
 import {
   Button,
   ButtonIconbag,
@@ -17,6 +17,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
+import {useDialogOpen} from "/client-new/hook/dialog";
 import {EnhancedDictionary} from "/client-new/skeleton";
 import {useAddCommission} from "./add-commission-dialog-hook";
 
@@ -36,18 +37,8 @@ export const AddCommissionDialog = create(
     const {trans} = useTrans("addCommissionDialog");
 
     const {form, handleSubmit} = useAddCommission(dictionary);
+    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
     const {register, formState: {errors}} = form;
-
-    const [open, setOpen] = useState(false);
-
-    const openDialog = useCallback(function (): void {
-      setOpen(true);
-    }, []);
-
-    const handleSubmitAndClose = useCallback(async function (event: SyntheticEvent): Promise<void> {
-      await handleSubmit(event);
-      setOpen(false);
-    }, [handleSubmit]);
 
     return (
       <Fragment>

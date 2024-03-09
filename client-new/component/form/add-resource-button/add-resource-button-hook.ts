@@ -1,9 +1,8 @@
 //
 
 import {BaseSyntheticEvent, useCallback} from "react";
-import {UseFormReturn} from "react-hook-form";
 import {Asserts, mixed, object} from "yup";
-import {useForm} from "/client-new/hook/form";
+import {UseFormReturn, useForm} from "/client-new/hook/form";
 import {invalidateResponses, useRequest} from "/client-new/hook/request";
 import {useToast} from "/client-new/hook/toast";
 import {Dictionary} from "/client-new/skeleton";

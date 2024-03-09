@@ -37,7 +37,7 @@ export const AddResourceButton = create(
     const {trans} = useTrans("addResourceButton");
 
     const {form, handleSubmit} = useAddResource(dictionary);
-    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen(handleSubmit);
+    const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
     const {control, getFieldState, formState: {errors}} = form;
 
     return (

@@ -4,6 +4,7 @@ import {ReactElement, ReactNode} from "react";
 import {ScrollRestoration} from "react-router-dom";
 import {AdditionalProps} from "zographia";
 import {data} from "/client/util/data";
+import {Title} from "/client-new/component/atom/title";
 import {Footer} from "/client-new/component/compound/footer";
 import {create} from "/client-new/component/create";
 
@@ -11,11 +12,13 @@ import {create} from "/client-new/component/create";
 export const Page = create(
   require("./page.scss"), "Page",
   function ({
+    title,
     insertPadding = true,
     headerNode,
     children,
     ...rest
   }: {
+    title?: string,
     insertPadding?: boolean | {top: boolean, bottom: boolean, horizontal: boolean},
     headerNode?: ReactNode,
     children?: ReactNode,
@@ -28,6 +31,7 @@ export const Page = create(
 
     return (
       <div styleName="root" {...rest}>
+        <Title title={title}/>
         <ScrollRestoration/>
         {headerNode}
         <main styleName="main" {...data({insertTopPadding, insertBottomPadding, insertHorizontalPadding})}>

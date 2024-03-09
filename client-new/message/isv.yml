@@ -218,23 +218,33 @@ wordTypeSelect:
     regular: "Регекс"
 
 addCommissionDialog:
-  heading: "造語依頼"
+  heading: "Request word creation"
   label:
-    name: "単語"
-    comment: "コメント"
+    name: "Word"
+    comment: "Comment"
   button:
-    confirm: "決定"
+    confirm: "Confirm"
+changeLocaleForm:
+  label: "Language"
+changeAppearanceForm:
+  label: "Appearance"
+  appearance:
+    normal: "Normal"
+    dimmed: "Dimmed"
+  theme:
+    light: "Light"
+    dark: "Dark"
 commissionList:
   empty: "No words are requested"
   button:
-    add: "造語"
-    discard: "削除"
+    add: "Create"
+    discard: "Delete"
   dialog:
     discard:
       message: >-
-        この造語依頼を削除します。
-        本当によろしいですか?
-      confirm: "削除"
+        This request will be deleted permanently.
+        Are you really sure?
+      confirm: "Delete"
 contactForm:
   label:
     name: "Name"
@@ -301,25 +311,25 @@ dictionaryStatisticsView:
     informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {char/word} other {chars/word}}</unit>"
 editExampleDialog:
   button:
-    external: "別タブで表示"
+    external: "Open in new tab"
 editExampleForm:
   heading:
-    basic: "対訳"
-    words: "使用単語"
+    basic: "Parallel translation"
+    words: "Included words"
   label:
-    sentence: "この言語での例文"
-    translation: "自然言語訳"
+    sentence: "Sentence in this conlang"
+    translation: "Translation into natural language"
   absent:
-    word: "使用単語が登録されていません"
+    word: "No included words specified"
   button:
     add:
-      word: "使用単語を追加"
+      word: "Add included words"
     discard:
       word: "Remove"
-    confirm: "決定"
+    confirm: "Confirm"
 editWordDialog:
   button:
-    external: "別タブで表示"
+    external: "Open in new tab"
 editWordForm:
   heading:
     basic: "Основне информације"
@@ -362,6 +372,7 @@ editWordForm:
       information: "Remove"
       variation: "Remove"
       relation: "Remove"
+    resource: "Images"
     generate: "Произвести"
     confirm: "Confirm"
 exampleList:
@@ -377,6 +388,21 @@ exampleList:
         You cannot restore it afterwards.
         Are you really sure?
       confirm: "Одстранити"
+executeAkrantiainDialog:
+  label:
+    source: "Source code"
+    input: "Input text"
+    output: "Result"
+    error: "Error message"
+  button:
+    execute: "Run"
+executeZatlinDialog:
+  label:
+    source: "Source code"
+    output: "Result"
+    error: "Error message"
+  button:
+    execute: "Run"
 footer:
   link:
     notification: "News"
@@ -425,6 +451,7 @@ orderModeSelect:
 resourceList:
   empty: "No images are uploaded"
   button:
+    copy: "Copy"
     discard: "Delete"
   dialog:
     discard:
@@ -433,6 +460,13 @@ resourceList:
         You cannot restore it afterwards.
         Are you really sure?
       confirm: "Delete"
+resourceListDialog:
+  message: >-
+    Copy the code below the title and paste it into a text box to display the image.
+  callout: >-
+    You need to enable Markdown in order to display images in the contents.
+  button:
+    enable: "Enable Markdown"
 searchExampleForm:
   information: >-
     Searching for example sentences will be available in a future update.
@@ -551,32 +585,32 @@ commonForm:
   button:
     change: "Измєнити"
 addEditInvitationButton:
-  heading: "編集権限を付与"
+  heading: "Grant editing permission"
   label:
-    user: "権限を付与するユーザー"
+    user: "Grant permission to"
   button:
-    open: "編集権限をユーザーに付与"
-    confirm: "決定"
+    open: "Grant editing permission"
+    confirm: "Confirm"
   error:
     required: >-
       Select a user.
 addTransferInvitationButton:
-  heading: "譲渡"
+  heading: "Transfer"
   label:
-    user: "譲渡先のユーザー"
+    user: "Transfer to"
   button:
-    open: "譲渡"
-    confirm: "決定"
+    open: "Transfer"
+    confirm: "Confirm"
   error:
     required: >-
       Select a user.
 addDictionaryButton:
-  heading: "新しい辞書を作成"
+  heading: "Create new dictionary"
   label:
-    name: "名前"
+    name: "Name"
   button:
-    open: "新しい辞書を作成"
-    confirm: "決定"
+    open: "Create new dictionary"
+    confirm: "Confirm"
   error:
     required: >-
       Enter a name.
@@ -616,6 +650,9 @@ changeDictionarySecretForm:
   label:
     false: "Show"
     true: "Hide"
+changeDictionarySourceForm:
+  button:
+    try: "Try"
 changeMyEmailForm:
   error:
     invalid: >-
@@ -624,8 +661,8 @@ changeMyEmailForm:
       Enter an email address.
 changeMyPasswordForm:
   label:
-    currentPassword: "現在のパスワード"
-    newPassword: "新しいパスワード"
+    currentPassword: "Current password"
+    newPassword: "New password"
   error:
     tooShort: >-
       The password must contain at least 6 characters.
@@ -675,6 +712,7 @@ uploadDictionaryButton:
       You cannot upload files larger than 5 MB.
 
 contactPage:
+  title: "Contact"
   heading: "Contact"
   explanation: |-
     If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
@@ -781,12 +819,18 @@ examplePage:
   add: "Создати ново рєченје"
 loginPage:
   title: "Пријавити се"
+  heading: "Пријавити се"
 notificationListPage:
-  notification: "Новости"
+  title: "Новости"
+  heading: "Новости"
 registerPage:
   title: "Записати се"
+  heading: "Записати се"
 resetUserPasswordPage:
   title:
+    issue: "Reset password"
+    reset: "Reset password"
+  heading:
     issue: "Reset password"
     reset: "Reset password"
 topPage:
@@ -822,9 +866,9 @@ topPage:
     github: "View on GitHub"
 userSettingPart:
   heading:
-    screenName: "ニックネーム"
-    email: "メールアドレス"
-    password: "パスワード"
+    screenName: "Nickname"
+    email: "Email address"
+    password: "Password"
     discard: "Delete account"
   callout:
     discard: >-
