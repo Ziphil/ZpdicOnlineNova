@@ -1,37 +1,13 @@
 //
 
-import {
-  CustomError
-} from "/client/skeleton/error";
-import {
-  before,
-  controller,
-  post
-} from "/server/controller/decorator";
-import {
-  Controller,
-  Request,
-  Response
-} from "/server/controller/internal/controller";
-import {
-  verifyDictionary,
-  verifyRecaptcha,
-  verifyUser
-} from "/server/controller/internal/middle";
-import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
-import {
-  CommissionCreator,
-  CommissionModel
-} from "/server/model/commission";
-import {
-  DictionaryModel
-} from "/server/model/dictionary";
-import {
-  QueryRange
-} from "/server/util/query";
+import {CustomError} from "/client-new/skeleton";
+import {before, controller, post} from "/server/controller/decorator";
+import {Controller, Request, Response} from "/server/controller/internal/controller";
+import {verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
+import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/controller/internal/type";
+import {CommissionCreator, CommissionModel} from "/server/model/commission";
+import {DictionaryModel} from "/server/model/dictionary";
+import {QueryRange} from "/server/util/query";
 
 
 @controller(SERVER_PATH_PREFIX)

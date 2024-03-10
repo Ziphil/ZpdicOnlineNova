@@ -4,13 +4,11 @@ import {
   Jsonify
 } from "jsonify-type";
 import {
-  Aggregation
-} from "/client/skeleton/aggregation";
-import {
-  Commission
-} from "/client/skeleton/commission";
-import {
+  Aggregation,
+  Commission,
+  CustomError,
   DetailedDictionary,
+  DetailedUser,
   DetailedWord,
   Dictionary,
   DictionaryParameter,
@@ -19,30 +17,18 @@ import {
   EditableExample,
   EditableWord,
   Example,
+  History,
+  Invitation,
+  InvitationType,
+  Notification,
   Relation,
   Suggestion,
+  User,
   UserDictionary,
   Word,
   WordNameFrequencies,
   WordParameter
-} from "/client/skeleton/dictionary";
-import {
-  CustomError
-} from "/client/skeleton/error";
-import {
-  History
-} from "/client/skeleton/history";
-import {
-  Invitation,
-  InvitationType
-} from "/client/skeleton/invitation";
-import {
-  Notification
-} from "/client/skeleton/notification";
-import {
-  DetailedUser,
-  User
-} from "/client/skeleton/user";
+} from "/client-new/skeleton";
 import {
   DictionaryAuthority,
   DictionaryFullAuthority

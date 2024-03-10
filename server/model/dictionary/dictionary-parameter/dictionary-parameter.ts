@@ -6,7 +6,7 @@ import {
 import {
   DictionaryParameter as DictionaryParameterSkeleton,
   NormalDictionaryParameter as NormalDictionaryParameterSkeleton
-} from "/client/skeleton/dictionary";
+} from "/client-new/skeleton";
 import {
   Dictionary,
   NormalDictionaryParameter

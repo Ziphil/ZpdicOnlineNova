@@ -56,6 +56,7 @@ const config = {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".yml"],
     alias: {
       "/client": path.resolve(__dirname, "client"),
+      "/client-new": path.resolve(__dirname, "client-new"),
       "/server": path.resolve(__dirname, "server"),
       "/worker": path.resolve(__dirname, "worker"),
     }
@@ -68,8 +69,8 @@ const config = {
 
 const staticConfig = {
   entry: [
-    ...glob.sync("./client/public/static/*"),
-    ...glob.sync("./client/document/**/*.md")
+    ...glob.sync("./client-new/public/static/*"),
+    ...glob.sync("./client-new/document/**/*.md")
   ],
   output: {
     path: path.join(__dirname, "dist"),
@@ -121,6 +122,7 @@ const staticConfig = {
     extensions: [".scss", ".html", ".md"],
     alias: {
       "/client": path.resolve(__dirname, "client"),
+      "/client-new": path.resolve(__dirname, "client-new"),
       "/server": path.resolve(__dirname, "server"),
       "/worker": path.resolve(__dirname, "worker")
     }

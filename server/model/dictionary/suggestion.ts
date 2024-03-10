@@ -2,7 +2,7 @@
 
 import {
   Suggestion as SuggestionSkeleton
-} from "/client/skeleton/dictionary";
+} from "/client-new/skeleton";
 import {
   Word,
   WordCreator

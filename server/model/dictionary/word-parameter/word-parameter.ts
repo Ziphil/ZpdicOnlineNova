@@ -10,7 +10,7 @@ import {
   AdvancedWordParameter as AdvancedWordParameterSkeleton,
   NormalWordParameter as NormalWordParameterSkeleton,
   WordParameter as WordParameterSkeleton
-} from "/client/skeleton/dictionary";
+} from "/client-new/skeleton";
 import {
   AdvancedWordParameter,
   AdvancedWordParameterElement,

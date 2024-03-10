@@ -11,7 +11,7 @@ import {
   DetailedWord as DetailedWordSkeleton,
   EditableWord as EditableWordSkeleton,
   Word as WordSkeleton
-} from "/client/skeleton/dictionary";
+} from "/client-new/skeleton";
 import {
   DiscardableSchema
 } from "/server/model/base";

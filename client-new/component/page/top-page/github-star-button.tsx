@@ -5,8 +5,7 @@ import {faStar} from "@fortawesome/sharp-regular-svg-icons";
 import axios from "axios";
 import {ReactElement} from "react";
 import {useQuery} from "react-query";
-import {AdditionalProps, GeneralIcon, useTrans} from "zographia";
-import {aria} from "/client/util/data";
+import {AdditionalProps, GeneralIcon, aria, useTrans} from "zographia";
 import {create} from "/client-new/component/create";
 
 

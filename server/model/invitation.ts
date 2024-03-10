@@ -11,7 +11,7 @@ import {
 } from "@typegoose/typegoose";
 import {
   Invitation as InvitationSkeleton
-} from "/client/skeleton/invitation";
+} from "/client-new/skeleton";
 import {
   Dictionary,
   DictionaryCreator,

@@ -8,7 +8,7 @@ import {
 } from "@typegoose/typegoose";
 import {
   Notification as NotificationSkeleton
-} from "/client/skeleton/notification";
+} from "/client-new/skeleton";
 import {
   WithSize
 } from "/server/controller/internal/type";

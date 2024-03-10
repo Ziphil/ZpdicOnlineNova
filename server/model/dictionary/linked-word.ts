@@ -6,7 +6,7 @@ import {
 } from "@typegoose/typegoose";
 import {
   LinkedWord as LinkedWordSkeleton
-} from "/client/skeleton/dictionary";
+} from "/client-new/skeleton";
 
 
 export class LinkedWordSchema {

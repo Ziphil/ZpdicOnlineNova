@@ -2,7 +2,7 @@
 
 import {
   CustomError
-} from "/client/skeleton/error";
+} from "/client-new/skeleton";
 import {
   before,
   controller,

@@ -18,13 +18,11 @@ import {
   EditableWord as EditableWordSkeleton,
   StringLengths,
   UserDictionary as UserDictionarySkeleton,
+  User as UserSkeleton,
   WholeAverage,
   WordNameFrequencies,
   WordNameFrequency
-} from "/client/skeleton/dictionary";
-import {
-  User as UserSkeleton
-} from "/client/skeleton/user";
+} from "/client-new/skeleton";
 import {
   WithSize
 } from "/server/controller/internal/type";

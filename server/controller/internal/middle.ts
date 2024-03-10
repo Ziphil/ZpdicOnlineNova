@@ -9,7 +9,7 @@ import {
 import * as jwt from "jsonwebtoken";
 import {
   CustomError
-} from "/client/skeleton/error";
+} from "/client-new/skeleton";
 import {
   DictionaryAuthority,
   DictionaryModel

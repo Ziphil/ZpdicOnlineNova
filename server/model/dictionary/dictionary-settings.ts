@@ -6,7 +6,7 @@ import {
 } from "@typegoose/typegoose";
 import {
   DictionarySettings as DictionarySettingsSkeleton
-} from "/client/skeleton/dictionary";
+} from "/client-new/skeleton";
 
 
 export class DictionarySettingsSchema {

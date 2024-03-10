@@ -10,7 +10,7 @@ import {
 import {
   EditableExample as EditableExampleSkeleton,
   Example as ExampleSkeleton
-} from "/client/skeleton/dictionary";
+} from "/client-new/skeleton";
 import {
   WithSize
 } from "/server/controller/internal/type";

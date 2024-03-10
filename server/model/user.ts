@@ -14,7 +14,7 @@ import Fuse from "fuse.js";
 import {
   DetailedUser as DetailedUserSkeleton,
   User as UserSkeleton
-} from "/client/skeleton/user";
+} from "/client-new/skeleton";
 import {
   DictionaryModel
 } from "/server/model/dictionary";

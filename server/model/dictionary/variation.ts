@@ -6,7 +6,7 @@ import {
 } from "@typegoose/typegoose";
 import {
   Variation as VariationSkeleton
-} from "/client/skeleton/dictionary";
+} from "/client-new/skeleton";
 
 
 export class VariationSchema {

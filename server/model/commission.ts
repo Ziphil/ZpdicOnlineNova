@@ -9,7 +9,7 @@ import {
 } from "@typegoose/typegoose";
 import {
   Commission as CommissionSkeleton
-} from "/client/skeleton/commission";
+} from "/client-new/skeleton";
 import {
   WithSize
 } from "/server/controller/internal/type";

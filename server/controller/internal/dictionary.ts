@@ -1,12 +1,10 @@
 //
 
 import {
+  CustomError,
   DetailedDictionary,
   UserDictionary
-} from "/client/skeleton/dictionary";
-import {
-  CustomError
-} from "/client/skeleton/error";
+} from "/client-new/skeleton";
 import {
   before,
   controller,

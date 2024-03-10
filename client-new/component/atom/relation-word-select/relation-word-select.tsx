@@ -25,7 +25,7 @@ export const RelationWordSelect = create(
 
     const loadOptions = useCallback(async function (pattern: string): Promise<Array<Word>> {
       const number = dictionary.number;
-      const parameter = {...NormalWordParameter.EMPTY, text: pattern, mode: "name"};
+      const parameter = {...NormalWordParameter.EMPTY, text: pattern, mode: "name" as const};
       const response = await request("searchWord", {number, parameter, offset: 0, size: 20}, {ignoreError: true});
       return switchResponse(response, (data) => {
         const {words: [hitWords]} = data;

@@ -6,7 +6,7 @@ import {
 } from "@typegoose/typegoose";
 import {
   Information as InformationSkeleton
-} from "/client/skeleton/dictionary";
+} from "/client-new/skeleton";
 
 
 export class InformationSchema {

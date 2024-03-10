@@ -193,21 +193,8 @@ export class Main {
         next();
       }
     };
-    const otherHandler = function (request: Request, response: Response, next: NextFunction): void {
-      const method = request.method;
-      if ((method === "GET" || method === "HEAD") && request.accepts("html")) {
-        response.sendFile(process.cwd() + "/dist/client/index.html", (error) => {
-          if (error) {
-            next(error);
-          }
-        });
-      } else {
-        next();
-      }
-    };
     this.application.use("/internal*", internalHandler);
     this.application.use("/next*", nextOtherHandler);
-    this.application.use("*", otherHandler);
   }
 
   private setupErrorHandler(): void {

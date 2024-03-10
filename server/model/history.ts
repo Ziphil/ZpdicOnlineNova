@@ -9,7 +9,7 @@ import {
 } from "@typegoose/typegoose";
 import {
   History as HistorySkeleton
-} from "/client/skeleton/history";
+} from "/client-new/skeleton";
 import {
   Dictionary,
   DictionaryModel,
