@@ -15,10 +15,10 @@ import {
   Input,
   SuggestionSpec,
   TagInput,
+  useDebouncedCallback,
   useTrans
 } from "zographia";
 import {create} from "/client-new/component/create";
-import {useDebounceCallback} from "/client-new/hook/debounce";
 import {EditableWord, EnhancedDictionary, Word} from "/client-new/skeleton";
 import {request} from "/client-new/util/request";
 import {switchResponse} from "/client-new/util/response";
@@ -81,7 +81,7 @@ export const EditWordFormBasicSection = create(
       }
     }, [dictionary.number]);
 
-    const handleNameChange = useDebounceCallback(async function (event: ChangeEvent<HTMLInputElement>): Promise<void> {
+    const handleNameChange = useDebouncedCallback(async function (event: ChangeEvent<HTMLInputElement>): Promise<void> {
       if (dictionary.settings.enableDuplicateName) {
         const name = event.target.value;
         const number = dictionary.number;

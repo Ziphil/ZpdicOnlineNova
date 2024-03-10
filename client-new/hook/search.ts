@@ -1,8 +1,8 @@
 //
 
-import {Dispatch, SetStateAction, useCallback, useState} from "react";
+import {Dispatch, SetStateAction, useCallback, useEffect, useRef, useState} from "react";
 import {useSearchParams as useRawSearch} from "react-router-dom";
-import {useDebounceCallback} from "/client-new/hook/debounce";
+import {useDebouncedCallback} from "zographia";
 import {resolveStateAction} from "/client-new/util/misc";
 
 
@@ -13,26 +13,28 @@ export function useSearch(): [Search, Dispatch<SetStateAction<Search>>] {
 
 export function useSearchState<S>({serialize, deserialize}: SearchConverter<S>, duration: number): [S, S, Dispatch<SetStateAction<S>>] {
   const [search, setSearch] = useSearch();
-  const [prevSearch, setPrevSearch] = useState(search);
   const [state, setState] = useState(deserialize(search));
   const [debouncedState, setDebouncedStateShortly] = useState(deserialize(search));
-  const setDebouncedState = useDebounceCallback(setDebouncedStateShortly, duration, [setDebouncedStateShortly]);
+  const setDebouncedState = useDebouncedCallback(setDebouncedStateShortly, duration, [setDebouncedStateShortly]);
+  const updatedRef = useRef(false);
   const setSearchState = useCallback(function (state: SetStateAction<S>): void {
     setState(state);
     setDebouncedState((prevState) => {
       const nextState = resolveStateAction(state, prevState);
       const nextSearch = serialize(nextState);
-      setPrevSearch(nextSearch);
+      updatedRef.current = true;
       setSearch(nextSearch);
       return nextState;
     });
   }, [serialize, setDebouncedState, setSearch]);
-  if (prevSearch !== search) {
-    const state = deserialize(search);
-    setPrevSearch(search);
-    setState(state);
-    setDebouncedStateShortly(state);
-  }
+  useEffect(() => {
+    if (!updatedRef.current) {
+      const state = deserialize(search);
+      setState(state);
+      setDebouncedStateShortly(state);
+    }
+    updatedRef.current = false;
+  }, [search, setState, deserialize]);
   return [state, debouncedState, setSearchState];
 }
 
