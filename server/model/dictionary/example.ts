@@ -7,10 +7,10 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {
+import type {
   EditableExample as EditableExampleSkeleton,
   Example as ExampleSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   WithSize
 } from "/server/controller/internal/type";

@@ -3,10 +3,10 @@
 import {
   Jsonify
 } from "jsonify-type";
-import {
+import type {
   DictionaryParameter as DictionaryParameterSkeleton,
   NormalDictionaryParameter as NormalDictionaryParameterSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   Dictionary,
   NormalDictionaryParameter

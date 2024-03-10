@@ -9,9 +9,9 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {
+import type {
   Invitation as InvitationSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   Dictionary,
   DictionaryCreator,

@@ -4,9 +4,9 @@ import {
   getModelForClass,
   prop
 } from "@typegoose/typegoose";
-import {
+import type {
   Variation as VariationSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 
 
 export class VariationSchema {

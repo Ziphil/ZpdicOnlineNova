@@ -4,9 +4,9 @@ import {
   getModelForClass,
   prop
 } from "@typegoose/typegoose";
-import {
+import type {
   Information as InformationSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 
 
 export class InformationSchema {

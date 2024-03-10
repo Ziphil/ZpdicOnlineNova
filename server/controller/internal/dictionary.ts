@@ -4,7 +4,7 @@ import {
   CustomError,
   DetailedDictionary,
   UserDictionary
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   before,
   controller,

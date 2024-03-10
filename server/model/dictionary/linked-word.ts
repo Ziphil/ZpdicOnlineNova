@@ -4,9 +4,9 @@ import {
   getModelForClass,
   prop
 } from "@typegoose/typegoose";
-import {
+import type {
   LinkedWord as LinkedWordSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 
 
 export class LinkedWordSchema {

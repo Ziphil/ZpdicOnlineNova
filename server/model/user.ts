@@ -11,10 +11,10 @@ import {
   hashSync
 } from "bcrypt";
 import Fuse from "fuse.js";
-import {
+import type {
   DetailedUser as DetailedUserSkeleton,
   User as UserSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   DictionaryModel
 } from "/server/model/dictionary";

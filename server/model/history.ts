@@ -7,9 +7,9 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {
+import type {
   History as HistorySkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   Dictionary,
   DictionaryModel,

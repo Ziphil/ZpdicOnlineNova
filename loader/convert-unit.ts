@@ -1,34 +1,33 @@
 //
 
 import * as cssTree from "css-tree";
-import {Dimension} from "css-tree";
-import {getOptions} from "loader-utils";
+import type {Dimension} from "css-tree";
 
 
-function convert(this: any, source: string) {
-  let options = getOptions(this);
-  let tree = cssTree.parse(source);
+function convert(this: any, source: string): string {
+  const options = this.getOptions();
+  const tree = cssTree.parse(source, {parseCustomProperty: true});
   cssTree.walk(tree, (node) => {
     if (node.type === "Dimension") {
-      let convertResult = convertUnit(node);
+      const convertResult = convertUnit(node);
       if (convertResult !== null) {
         node.value = convertResult.value.toString();
         node.unit = convertResult.unit;
       }
     }
   });
-  let result = cssTree.generate(tree);
+  const result = cssTree.generate(tree);
   return result;
 }
 
 function convertUnit(dimension: Dimension): {value: number, unit: string} | null {
-  if (dimension.unit === "u") {
-    let value = parseFloat(dimension.value) / 51.2;
-    let unit = "rem";
+  if (dimension.unit === "zu") {
+    const value = parseFloat(dimension.value) * 4 / 16;
+    const unit = "rem";
     return {value, unit};
-  } else if (dimension.unit === "rpx") {
-    let value = parseFloat(dimension.value) / 16;
-    let unit = "rem";
+  } else if (dimension.unit === "zx") {
+    const value = parseFloat(dimension.value) * 1 / 16;
+    const unit = "rem";
     return {value, unit};
   } else {
     return null;

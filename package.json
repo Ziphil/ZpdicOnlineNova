@@ -6,12 +6,12 @@
   "main": "dist/index.js",
   "scripts": {
     "develop": "run-p develop:client develop:server:webpack develop:server:nodemon",
-    "develop:client": "webpack-dev-server --mode development --devtool inline-source-map --config webpack-client-new.ts --hot",
+    "develop:client": "webpack-dev-server --mode development --devtool inline-source-map --config webpack-client.ts --hot",
     "develop:server:webpack": "webpack --mode development --config webpack-server.ts --watch",
     "develop:server:nodemon": "nodemon --inspect dist/index.js",
     "develop:worker:nodemon": "nodemon --inspect dist/worker.js",
-    "build": "run-s build:client:new build:server",
-    "build:client:new": "webpack --mode production --config webpack-client-new.ts",
+    "build": "run-s build:client build:server",
+    "build:client": "webpack --mode production --config webpack-client.ts",
     "build:server": "webpack --mode production --config webpack-server.ts",
     "start": "node dist/index.js",
     "start:worker": "node dist/worker.js",
@@ -60,10 +60,6 @@
           "pathGroups": [
             {
               "pattern": "/client/**",
-              "group": "internal"
-            },
-            {
-              "pattern": "/client-new/**",
               "group": "internal"
             },
             {
@@ -128,6 +124,7 @@
     "jsonify-type": "^1.0.0",
     "jsonwebtoken": "^9.0.2",
     "lodash-es": "^4.17.21",
+    "lodash.merge": "^4.6.2",
     "mongoose": "^6.1.6",
     "morgan": "^1.10.0",
     "mousetrap": "^1.6.5",
@@ -192,6 +189,7 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/loader-utils": "^2.0.3",
     "@types/lodash-es": "^4.17.5",
+    "@types/lodash.merge": "^4.6.9",
     "@types/mini-css-extract-plugin": "^2.5.0",
     "@types/morgan": "^1.9.3",
     "@types/mousetrap": "^1.6.9",

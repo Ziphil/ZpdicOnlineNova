@@ -7,9 +7,9 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {
+import type {
   Commission as CommissionSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   WithSize
 } from "/server/controller/internal/type";

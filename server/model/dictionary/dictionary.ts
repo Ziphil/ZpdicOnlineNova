@@ -10,7 +10,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import Fuse from "fuse.js";
-import {
+import type {
   DetailedDictionary as DetailedDictionarySkeleton,
   Dictionary as DictionarySkeleton,
   DictionaryStatistics,
@@ -22,7 +22,7 @@ import {
   WholeAverage,
   WordNameFrequencies,
   WordNameFrequency
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   WithSize
 } from "/server/controller/internal/type";

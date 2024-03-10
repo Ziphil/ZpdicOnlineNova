@@ -1,8 +1,8 @@
 //
 
-import {
+import type {
   Suggestion as SuggestionSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   Word,
   WordCreator

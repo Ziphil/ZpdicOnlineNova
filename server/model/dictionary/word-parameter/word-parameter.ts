@@ -6,11 +6,11 @@ import {
 import {
   Aggregate
 } from "mongoose";
-import {
+import type {
   AdvancedWordParameter as AdvancedWordParameterSkeleton,
   NormalWordParameter as NormalWordParameterSkeleton,
   WordParameter as WordParameterSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   AdvancedWordParameter,
   AdvancedWordParameterElement,

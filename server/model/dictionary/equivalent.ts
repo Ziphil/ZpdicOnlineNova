@@ -4,9 +4,9 @@ import {
   getModelForClass,
   prop
 } from "@typegoose/typegoose";
-import {
+import type {
   Equivalent as EquivalentSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 
 
 export class EquivalentSchema {

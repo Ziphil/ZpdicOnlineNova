@@ -7,11 +7,11 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {
+import type {
   DetailedWord as DetailedWordSkeleton,
   EditableWord as EditableWordSkeleton,
   Word as WordSkeleton
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   DiscardableSchema
 } from "/server/model/base";

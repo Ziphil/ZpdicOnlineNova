@@ -28,7 +28,7 @@ import {
   Word,
   WordNameFrequencies,
   WordParameter
-} from "/client-new/skeleton";
+} from "/client/skeleton";
 import {
   DictionaryAuthority,
   DictionaryFullAuthority

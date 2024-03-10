@@ -169,7 +169,6 @@ export class Main {
 
   private setupStatic(): void {
     this.application.use("/client", express.static(process.cwd() + "/dist/client"));
-    this.application.use("/client-new", express.static(process.cwd() + "/dist/client-new"));
     this.application.use("/static", express.static(process.cwd() + "/dist/static"));
   }
 
@@ -181,10 +180,10 @@ export class Main {
       const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
       response.status(404).end();
     };
-    const nextOtherHandler = function (request: Request, response: Response, next: NextFunction): void {
+    const otherHandler = function (request: Request, response: Response, next: NextFunction): void {
       const method = request.method;
       if ((method === "GET" || method === "HEAD") && request.accepts("html")) {
-        response.sendFile(process.cwd() + "/dist/client-new/index.html", (error) => {
+        response.sendFile(process.cwd() + "/dist/client/index.html", (error) => {
           if (error) {
             next(error);
           }
@@ -194,7 +193,7 @@ export class Main {
       }
     };
     this.application.use("/internal*", internalHandler);
-    this.application.use("/next*", nextOtherHandler);
+    this.application.use("/*", otherHandler);
   }
 
   private setupErrorHandler(): void {
