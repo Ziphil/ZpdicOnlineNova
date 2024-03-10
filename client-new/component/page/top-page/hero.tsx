@@ -2,12 +2,11 @@
 
 import {faBook, faSignInAlt, faUser} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, GeneralIcon, LinkIconbag, MultiLineText, aria, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, LinkIconbag, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client-new/component/atom/link";
 import {Logo} from "/client-new/component/atom/logo";
 import {create} from "/client-new/component/create";
 import {useMe} from "/client-new/hook/auth";
-import {DECORATION_TEXT} from "./hero-constant";
 
 
 export const Hero = create(
@@ -47,9 +46,6 @@ export const Hero = create(
             <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
             {trans("button.dictionary")}
           </Link>
-        </div>
-        <div styleName="decoration" {...aria({hidden: true})}>
-          {DECORATION_TEXT}
         </div>
       </div>
     );
