@@ -21,6 +21,8 @@
   row-gap: 3zu;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 0;
 }
 
 .absent {

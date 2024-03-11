@@ -14,6 +14,7 @@ import {
   IconButton,
   SuggestionSpec,
   TagInput,
+  data,
   useTrans
 } from "zographia";
 import {RelationWordSelect} from "/client/component/atom/relation-word-select";
@@ -46,7 +47,7 @@ export const EditWordFormRelationItem = create(
     const {trans} = useTrans("editWordForm");
 
     const {register} = form;
-    const {paneProps, gripProps} = useEditWordFormDndItem(dndId);
+    const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
 
     const suggestRelationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -65,7 +66,7 @@ export const EditWordFormRelationItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...rest} {...paneProps}>
+      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
         <div styleName="grip" {...gripProps}>
           <GeneralIcon icon={faGripVertical}/>
         </div>

@@ -8,6 +8,7 @@ import {
   ControlContainer,
   GeneralIcon,
   IconButton,
+  data,
   useTrans
 } from "zographia";
 import {RelationWordSelect} from "/client/component/atom/relation-word-select";
@@ -37,10 +38,10 @@ export const EditExampleFormWordItem = create(
 
     const {trans} = useTrans("editExampleForm");
 
-    const {paneProps, gripProps} = useEditExampleFormDndItem(dndId);
+    const {paneProps, gripProps, dragging} = useEditExampleFormDndItem(dndId);
 
     return (
-      <div styleName="root" {...rest} {...paneProps}>
+      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
         <div styleName="grip" {...gripProps}>
           <GeneralIcon icon={faGripVertical}/>
         </div>

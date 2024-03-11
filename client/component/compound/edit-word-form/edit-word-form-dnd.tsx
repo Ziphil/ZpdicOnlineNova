@@ -4,17 +4,18 @@ import {DndContext, DragEndEvent, MouseSensor, TouchSensor, closestCenter, useSe
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";
 import {ReactElement, ReactNode, useCallback, useMemo} from "react";
 import {create} from "/client/component/create";
+import {moveArrayItem} from "/client/util/misc";
 
 
 export const EditWordFormDndContext = create(
   null, "EditWordFormDndContext",
   function <T extends {id: string}>({
     values,
-    valueOperations,
+    setValues,
     children
   }: {
     values: Array<T>,
-    valueOperations: {swap: (firstIndex: number, secondIndex: number) => void},
+    setValues: (update: (values: Array<T>) => Array<T>) => void,
     children: ReactNode
   }): ReactElement {
 
@@ -27,9 +28,9 @@ export const EditWordFormDndContext = create(
       if (over && active.id !== over.id) {
         const activeIndex = values.findIndex((value) => value.id === active.id);
         const overIndex = values.findIndex((value) => value.id === over.id);
-        valueOperations.swap(activeIndex, overIndex);
+        setValues((values) => moveArrayItem(values, activeIndex, overIndex));
       }
-    }, [values, valueOperations]);
+    }, [values, setValues]);
 
     return (
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
@@ -43,13 +44,13 @@ export const EditWordFormDndContext = create(
 );
 
 
-export function useEditWordFormDndItem(id: string): {paneProps: any, gripProps: any} {
-  const {attributes, listeners, setNodeRef, transform, transition} = useSortable({id});
+export function useEditWordFormDndItem(id: string): {paneProps: any, gripProps: any, dragging: boolean} {
+  const {attributes, listeners, isDragging, setNodeRef, transform, transition} = useSortable({id});
   const style = {
     transform: (transform !== null) ? `translate(${transform.x}px, ${transform.y}px) scaleX(${transform.scaleX}) scaleY(${transform.scaleY})` : undefined,
     transition
   };
   const paneProps = {ref: setNodeRef, style};
   const gripProps = {...attributes, ...listeners};
-  return {paneProps, gripProps};
+  return {paneProps, gripProps, dragging: isDragging};
 }

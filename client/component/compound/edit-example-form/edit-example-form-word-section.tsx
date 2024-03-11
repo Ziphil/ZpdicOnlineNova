@@ -31,19 +31,23 @@ export const EditExampleFormWordSection = create(
 
     const {trans} = useTrans("editExampleForm");
 
-    const {control} = form;
+    const {control, getValues, setValue} = form;
     const {fields: words, ...wordOperations} = useFieldArray({control, name: "words"});
 
     const addWord = useCallback(function (): void {
       wordOperations.append(null);
     }, [wordOperations]);
 
+    const setWords = useCallback(function (update: (words: Array<any>) => Array<any>): void {
+      setValue("words", update(getValues("words")));
+    }, [getValues, setValue]);
+
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.words")}</h3>
         <div styleName="list">
           {(words.length > 0) ? (
-            <EditExampleFormDndContext values={words} valueOperations={wordOperations}>
+            <EditExampleFormDndContext values={words} setValues={setWords}>
               {words.map((word, index) => (
                 <EditExampleFormWordItem
                   styleName="item"

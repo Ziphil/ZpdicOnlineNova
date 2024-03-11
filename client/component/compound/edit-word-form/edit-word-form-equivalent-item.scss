@@ -10,6 +10,9 @@
   border: solid 1zx var(--border-color);
   background-color: var(--background-color);
   display: flex;
+  &[data-dragging] {
+    z-index: 1;
+  }
 }
 
 .grip {

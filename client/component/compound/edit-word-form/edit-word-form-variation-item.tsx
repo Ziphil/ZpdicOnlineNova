@@ -11,6 +11,7 @@ import {
   IconButton,
   Input,
   SuggestionSpec,
+  data,
   useTrans
 } from "zographia";
 import {useEditWordFormDndItem} from "/client/component/compound/edit-word-form/edit-word-form-dnd";
@@ -42,7 +43,7 @@ export const EditWordFormVariationItem = create(
     const {trans} = useTrans("editWordForm");
 
     const {register} = form;
-    const {paneProps, gripProps} = useEditWordFormDndItem(dndId);
+    const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
 
     const suggestVariationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -61,7 +62,7 @@ export const EditWordFormVariationItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...rest} {...paneProps}>
+      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
         <div styleName="grip" {...gripProps}>
           <GeneralIcon icon={faGripVertical}/>
         </div>

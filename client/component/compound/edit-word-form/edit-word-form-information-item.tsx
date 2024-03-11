@@ -12,6 +12,7 @@ import {
   Input,
   SuggestionSpec,
   Textarea,
+  data,
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
@@ -43,7 +44,7 @@ export const EditWordFormInformationItem = create(
     const {trans} = useTrans("editWordForm");
 
     const {register} = form;
-    const {paneProps, gripProps} = useEditWordFormDndItem(dndId);
+    const {paneProps, gripProps, dragging} = useEditWordFormDndItem(dndId);
 
     const suggestInformationTitle = useCallback(async function (pattern: string): Promise<Array<SuggestionSpec>> {
       const number = dictionary.number;
@@ -62,7 +63,7 @@ export const EditWordFormInformationItem = create(
     }, [dictionary.number]);
 
     return (
-      <div styleName="root" {...rest} {...paneProps}>
+      <div styleName="root" {...data({dragging})} {...rest} {...paneProps}>
         <div styleName="grip" {...gripProps}>
           <GeneralIcon icon={faGripVertical}/>
         </div>

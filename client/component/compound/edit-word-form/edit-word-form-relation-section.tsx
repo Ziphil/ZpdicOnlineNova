@@ -31,7 +31,7 @@ export const EditWordFormRelationSection = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {control} = form;
+    const {control, getValues, setValue} = form;
     const {fields: relations, ...relationOperations} = useFieldArray({control, name: "relations"});
 
     const addRelation = useCallback(function (): void {
@@ -42,12 +42,16 @@ export const EditWordFormRelationSection = create(
       });
     }, [relationOperations]);
 
+    const setRelations = useCallback(function (update: (relations: Array<any>) => Array<any>): void {
+      setValue("relations", update(getValues("relations")));
+    }, [getValues, setValue]);
+
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.relations")}</h3>
         <div styleName="list">
           {(relations.length > 0) ? (
-            <EditWordFormDndContext values={relations} valueOperations={relationOperations}>
+            <EditWordFormDndContext values={relations} setValues={setRelations}>
               {relations.map((relation, index) => (
                 <EditWordFormRelationItem
                   styleName="item"

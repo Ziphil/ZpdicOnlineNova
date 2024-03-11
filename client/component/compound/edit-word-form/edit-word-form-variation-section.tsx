@@ -31,7 +31,7 @@ export const EditWordFormVariationSection = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {control} = form;
+    const {control, getValues, setValue} = form;
     const {fields: variations, ...variationOperations} = useFieldArray({control, name: "variations"});
 
     const addVariation = useCallback(function (): void {
@@ -41,12 +41,16 @@ export const EditWordFormVariationSection = create(
       });
     }, [variationOperations]);
 
+    const setVariations = useCallback(function (update: (variations: Array<any>) => Array<any>): void {
+      setValue("variations", update(getValues("variations")));
+    }, [getValues, setValue]);
+
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.variations")}</h3>
         <div styleName="list">
           {(variations.length > 0) ? (
-            <EditWordFormDndContext values={variations} valueOperations={variationOperations}>
+            <EditWordFormDndContext values={variations} setValues={setVariations}>
               {variations.map((variation, index) => (
                 <EditWordFormVariationItem
                   className="item"

@@ -32,7 +32,7 @@ export const EditWordFormInformationSection = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {control} = form;
+    const {control, getValues, setValue} = form;
     const {fields: informations, ...informationOperations} = useFieldArray({control, name: "informations"});
 
     const addInformation = useCallback(function (): void {
@@ -42,12 +42,16 @@ export const EditWordFormInformationSection = create(
       });
     }, [informationOperations]);
 
+    const setInformations = useCallback(function (update: (informations: Array<any>) => Array<any>): void {
+      setValue("informations", update(getValues("informations")));
+    }, [getValues, setValue]);
+
     return (
       <section styleName="root" {...rest}>
         <h3 styleName="heading">{trans("heading.informations")}</h3>
         <div styleName="list">
           {(informations.length > 0) ? (
-            <EditWordFormDndContext values={informations} valueOperations={informationOperations}>
+            <EditWordFormDndContext values={informations} setValues={setInformations}>
               {informations.map((information, index) => (
                 <EditWordFormInformationItem
                   styleName="item"
