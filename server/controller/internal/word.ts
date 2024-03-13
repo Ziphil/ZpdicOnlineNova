@@ -24,7 +24,7 @@ import {
 import {
   DictionaryModel,
   WordCreator
-} from "/server/model/dictionary";
+} from "../../model";
 
 
 @controller(SERVER_PATH_PREFIX)

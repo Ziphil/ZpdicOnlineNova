@@ -1,27 +1,11 @@
 //
 
-import {
-  Aggregate
-} from "mongoose";
-import {
-  Dictionary,
-  RawSuggestion,
-  Word,
-  WordMode,
-  WordModel,
-  WordOrder,
-  WordType
-} from "/server/model/dictionary";
-import {
-  WordIgnoreOptions,
-  WordParameter
-} from "/server/model/dictionary/word-parameter/word-parameter";
-import {
-  QueryLike
-} from "/server/util/query";
-import {
-  Random
-} from "/server/util/random";
+import {Aggregate} from "mongoose";
+import {Dictionary} from "/server/model/dictionary/dictionary";
+import {Word, WordModel} from "/server/model/word/word";
+import {RawSuggestion, WordIgnoreOptions, WordMode, WordOrder, WordParameter, WordType} from "/server/model/word-parameter/word-parameter";
+import {QueryLike} from "/server/util/query";
+import {Random} from "/server/util/random";
 
 
 export class NormalWordParameter extends WordParameter {

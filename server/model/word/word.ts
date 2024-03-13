@@ -12,30 +12,15 @@ import type {
   EditableWord as EditableWordSkeleton,
   Word as WordSkeleton
 } from "/client/skeleton";
-import {
-  DiscardableSchema
-} from "/server/model/base";
-import {
-  Dictionary,
-  DictionarySchema,
-  EquivalentCreator,
-  EquivalentSchema,
-  ExampleCreator,
-  ExampleModel,
-  InformationCreator,
-  InformationSchema,
-  Relation,
-  RelationCreator,
-  RelationSchema,
-  VariationCreator,
-  VariationSchema
-} from "/server/model/dictionary";
-import {
-  CustomError
-} from "/server/model/error";
-import {
-  LogUtil
-} from "/server/util/log";
+import {DiscardableSchema} from "/server/model/base";
+import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {CustomError} from "/server/model/error";
+import {EquivalentCreator, EquivalentSchema} from "/server/model/word/equivalent";
+import {ExampleCreator, ExampleModel} from "/server/model/word/example";
+import {InformationCreator, InformationSchema} from "/server/model/word/information";
+import {Relation, RelationCreator, RelationSchema} from "/server/model/word/relation";
+import {VariationCreator, VariationSchema} from "/server/model/word/variation";
+import {LogUtil} from "/server/util/log";
 
 
 @modelOptions({schemaOptions: {collection: "words"}})

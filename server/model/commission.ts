@@ -10,16 +10,9 @@ import {
 import type {
   Commission as CommissionSkeleton
 } from "/client/skeleton";
-import {
-  WithSize
-} from "/server/controller/internal/type";
-import {
-  Dictionary,
-  DictionarySchema
-} from "/server/model/dictionary";
-import {
-  QueryRange
-} from "/server/util/query";
+import {WithSize} from "/server/controller/internal/type";
+import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {QueryRange} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "commissions"}})

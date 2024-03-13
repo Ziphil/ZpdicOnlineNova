@@ -32,7 +32,7 @@ import {
 import {
   DictionaryAuthority,
   DictionaryFullAuthority
-} from "/server/model/dictionary";
+} from "../../model";
 
 
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];

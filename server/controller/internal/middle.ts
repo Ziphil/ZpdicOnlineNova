@@ -13,10 +13,10 @@ import {
 import {
   DictionaryAuthority,
   DictionaryModel
-} from "/server/model/dictionary";
+} from "../../model";
 import {
   UserModel
-} from "/server/model/user";
+} from "../../model/user/user";
 import {
   LogUtil
 } from "/server/util/log";

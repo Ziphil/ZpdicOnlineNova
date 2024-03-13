@@ -6,7 +6,7 @@ import {Controller, Request, Response} from "/server/controller/internal/control
 import {verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
 import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/controller/internal/type";
 import {CommissionCreator, CommissionModel} from "/server/model/commission";
-import {DictionaryModel} from "/server/model/dictionary";
+import {DictionaryModel} from "../../model";
 import {QueryRange} from "/server/util/query";
 
 

@@ -25,7 +25,7 @@ import {
   DictionaryModel,
   ExampleCreator,
   ExampleModel
-} from "/server/model/dictionary";
+} from "../../model";
 import {
   QueryRange
 } from "/server/util/query";

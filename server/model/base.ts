@@ -1,18 +1,8 @@
 //
 
-import {
-  DocumentType,
-  prop
-} from "@typegoose/typegoose";
-import {
-  DeleteResult
-} from "mongodb";
-import {
-  CallbackError,
-  HydratedDocument,
-  Model,
-  QueryWithHelpers
-} from "mongoose";
+import {DocumentType, prop} from "@typegoose/typegoose";
+import {DeleteResult} from "mongodb";
+import {CallbackError, HydratedDocument, Model, QueryWithHelpers} from "mongoose";
 
 
 export class DiscardableSchema {

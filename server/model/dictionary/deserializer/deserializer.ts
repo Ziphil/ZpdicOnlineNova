@@ -1,15 +1,11 @@
 //
 
-import {
-  EventEmitter
-} from "events";
-import {
-  BinaryDeserializer,
-  Dictionary,
-  DictionarySettings,
-  SlimeDeserializer,
-  Word
-} from "/server/model/dictionary";
+import {EventEmitter} from "events";
+import {BinaryDeserializer} from "/server/model/dictionary/deserializer/binary-deserializer";
+import {SlimeDeserializer} from "/server/model/dictionary/deserializer/slime-deserializer";
+import {Dictionary} from "/server/model/dictionary/dictionary";
+import {DictionarySettings} from "/server/model/dictionary/dictionary-settings";
+import {Word} from "/server/model/word/word";
 
 
 export abstract class Deserializer extends EventEmitter {

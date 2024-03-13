@@ -3,10 +3,7 @@
 import type {
   Suggestion as SuggestionSkeleton
 } from "/client/skeleton";
-import {
-  Word,
-  WordCreator
-} from "/server/model/dictionary";
+import {Word, WordCreator} from "/server/model/word/word";
 
 
 export class Suggestion {

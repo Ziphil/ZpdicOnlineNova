@@ -1,23 +1,14 @@
 //
 
-import {
-  Jsonify
-} from "jsonify-type";
+import {Jsonify} from "jsonify-type";
 import type {
   DictionaryParameter as DictionaryParameterSkeleton,
   NormalDictionaryParameter as NormalDictionaryParameterSkeleton
 } from "/client/skeleton";
-import {
-  Dictionary,
-  NormalDictionaryParameter
-} from "/server/model/dictionary";
-import {
-  LiteralType,
-  LiteralUtilType
-} from "/server/util/literal-type";
-import {
-  QueryLike
-} from "/server/util/query";
+import {Dictionary} from "/server/model/dictionary/dictionary";
+import {NormalDictionaryParameter} from "/server/model/dictionary-parameter/normal-dictionary-parameter";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
+import {QueryLike} from "/server/util/query";
 
 
 export abstract class DictionaryParameter {

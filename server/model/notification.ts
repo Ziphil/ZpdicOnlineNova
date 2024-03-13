@@ -9,12 +9,8 @@ import {
 import type {
   Notification as NotificationSkeleton
 } from "/client/skeleton";
-import {
-  WithSize
-} from "/server/controller/internal/type";
-import {
-  QueryRange
-} from "/server/util/query";
+import {WithSize} from "/server/controller/internal/type";
+import {QueryRange} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "notifications"}})

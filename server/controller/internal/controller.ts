@@ -16,10 +16,10 @@ import {
 } from "/server/controller/internal/type";
 import {
   Dictionary
-} from "/server/model/dictionary";
+} from "../../model";
 import {
   User
-} from "/server/model/user";
+} from "../../model/user/user";
 
 
 export class Controller extends BaseController {

@@ -23,58 +23,25 @@ import type {
   WordNameFrequencies,
   WordNameFrequency
 } from "/client/skeleton";
-import {
-  WithSize
-} from "/server/controller/internal/type";
-import {
-  DiscardableSchema
-} from "/server/model/base";
-import {
-  DICTIONARY_AUTHORITIES,
-  Deserializer,
-  DictionaryAuthority,
-  DictionaryAuthorityUtil,
-  DictionaryFullAuthority,
-  DictionaryParameter,
-  DictionarySettings,
-  DictionarySettingsCreator,
-  DictionarySettingsModel,
-  Example,
-  ExampleModel,
-  Relation,
-  Serializer,
-  Suggestion,
-  Word,
-  WordModel,
-  WordParameter
-} from "/server/model/dictionary";
-import {
-  DictionarySettingsSchema
-} from "/server/model/dictionary/dictionary-settings";
-import {
-  CustomError
-} from "/server/model/error";
-import {
-  InvitationModel
-} from "/server/model/invitation";
-import {
-  User,
-  UserCreator,
-  UserSchema
-} from "/server/model/user";
-import {
-  IDENTIFIER_REGEXP
-} from "/server/model/validation";
-import {
-  LiteralType,
-  LiteralUtilType
-} from "/server/util/literal-type";
-import {
-  LogUtil
-} from "/server/util/log";
-import {
-  QueryRange
-} from "/server/util/query";
+import {WithSize} from "/server/controller/internal/type";
+import {DiscardableSchema} from "/server/model/base";
+import {Deserializer} from "/server/model/dictionary/deserializer/deserializer";
+import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil, DictionaryFullAuthority} from "/server/model/dictionary/dictionary-authority";
+import {DictionarySettings, DictionarySettingsCreator, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
+import {Serializer} from "/server/model/dictionary/serializer/serializer";
+import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
+import {CustomError} from "/server/model/error";
+import {InvitationModel} from "/server/model/invitation";
+import {User, UserCreator, UserSchema} from "/server/model/user/user";
+import {Example, ExampleModel} from "/server/model/word/example";
+import {Relation} from "/server/model/word/relation";
+import {Suggestion} from "/server/model/word/suggestion";
+import {Word, WordModel} from "/server/model/word/word";
+import {WordParameter} from "/server/model/word-parameter/word-parameter";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
+import {LogUtil} from "/server/util/log";
+import {QueryRange} from "/server/util/query";
+import {IDENTIFIER_REGEXP} from "/server/util/validation";
 
 
 export const DICTIONARY_STATUSES = ["ready", "saving", "error"] as const;

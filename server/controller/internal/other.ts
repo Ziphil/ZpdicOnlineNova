@@ -23,7 +23,7 @@ import {
 } from "/server/controller/internal/type";
 import {
   UserModel
-} from "/server/model/user";
+} from "../../model/user/user";
 import {
   MailUtil
 } from "/server/util/mail";

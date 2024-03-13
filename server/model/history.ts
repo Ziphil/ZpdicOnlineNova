@@ -10,17 +10,9 @@ import {
 import type {
   History as HistorySkeleton
 } from "/client/skeleton";
-import {
-  Dictionary,
-  DictionaryModel,
-  DictionarySchema
-} from "/server/model/dictionary";
-import {
-  LogUtil
-} from "/server/util/log";
-import {
-  QueryRange
-} from "/server/util/query";
+import {Dictionary, DictionaryModel, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {LogUtil} from "/server/util/log";
+import {QueryRange} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "histories"}})

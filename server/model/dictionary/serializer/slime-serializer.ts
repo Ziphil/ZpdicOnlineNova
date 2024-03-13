@@ -1,17 +1,10 @@
 //
 
-import {
-  createWriteStream
-} from "fs";
-import {
-  Dictionary,
-  Serializer,
-  Word,
-  WordModel
-} from "/server/model/dictionary";
-import {
-  removeMarkdown
-} from "/server/util/misc";
+import {createWriteStream} from "fs";
+import {Dictionary} from "/server/model/dictionary/dictionary";
+import {Serializer} from "/server/model/dictionary/serializer/serializer";
+import {Word, WordModel} from "/server/model/word/word";
+import {removeMarkdown} from "/server/util/misc";
 
 
 export class SlimeSerializer extends Serializer {

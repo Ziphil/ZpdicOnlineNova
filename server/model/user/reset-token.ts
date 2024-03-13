@@ -1,16 +1,8 @@
 //
 
-import {
-  getModelForClass,
-  prop
-} from "@typegoose/typegoose";
-import {
-  compareSync,
-  hashSync
-} from "bcrypt";
-import {
-  createRandomString
-} from "/server/util/misc";
+import {getModelForClass, prop} from "@typegoose/typegoose";
+import {compareSync, hashSync} from "bcrypt";
+import {createRandomString} from "/server/util/misc";
 
 
 export class ResetTokenSchema {

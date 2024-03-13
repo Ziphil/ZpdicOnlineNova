@@ -11,31 +11,14 @@ import type {
   EditableExample as EditableExampleSkeleton,
   Example as ExampleSkeleton
 } from "/client/skeleton";
-import {
-  WithSize
-} from "/server/controller/internal/type";
-import {
-  DiscardableSchema
-} from "/server/model/base";
-import {
-  Dictionary,
-  DictionarySchema,
-  LinkedWordCreator,
-  Word,
-  WordModel
-} from "/server/model/dictionary";
-import {
-  LinkedWordSchema
-} from "/server/model/dictionary/linked-word";
-import {
-  CustomError
-} from "/server/model/error";
-import {
-  LogUtil
-} from "/server/util/log";
-import {
-  QueryRange
-} from "/server/util/query";
+import {WithSize} from "/server/controller/internal/type";
+import {DiscardableSchema} from "/server/model/base";
+import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {CustomError} from "/server/model/error";
+import {LinkedWordCreator, LinkedWordSchema} from "/server/model/word/linked-word";
+import {Word, WordModel} from "/server/model/word/word";
+import {LogUtil} from "/server/util/log";
+import {QueryRange} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "examples"}})

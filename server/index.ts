@@ -23,7 +23,7 @@ import {
   UserController,
   WordController
 } from "/server/controller/internal";
-import {DictionaryModel, WordModel} from "/server/model/dictionary";
+import {DictionaryModel, WordModel} from "./model";
 import {LogUtil} from "/server/util/log";
 import {MongoUtil} from "/server/util/mongo";
 import {

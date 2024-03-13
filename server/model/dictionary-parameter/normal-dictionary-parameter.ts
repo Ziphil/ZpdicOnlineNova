@@ -1,22 +1,10 @@
 //
 
-import {
-  Dictionary,
-  DictionaryModel
-} from "/server/model/dictionary";
-import {
-  DictionaryOrder,
-  DictionaryParameter
-} from "/server/model/dictionary/dictionary-parameter/dictionary-parameter";
-import {
-  UserModel
-} from "/server/model/user";
-import {
-  escapeRegexp
-} from "/server/util/misc";
-import {
-  QueryLike
-} from "/server/util/query";
+import {Dictionary, DictionaryModel} from "/server/model/dictionary/dictionary";
+import {DictionaryOrder, DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
+import {UserModel} from "/server/model/user/user";
+import {escapeRegexp} from "/server/util/misc";
+import {QueryLike} from "/server/util/query";
 
 
 export class NormalDictionaryParameter extends DictionaryParameter {

@@ -11,7 +11,7 @@ import {
   VariationModel,
   Word,
   WordModel
-} from "/server/model/dictionary";
+} from "../..";
 import {
   Deserializer
 } from "/server/model/dictionary/deserializer/deserializer";

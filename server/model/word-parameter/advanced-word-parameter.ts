@@ -1,19 +1,9 @@
 //
 
-import {
-  Query
-} from "mongoose";
-import {
-  Dictionary,
-  Word,
-  WordMode,
-  WordModel,
-  WordType
-} from "/server/model/dictionary";
-import {
-  WORD_MODES,
-  WordParameter
-} from "/server/model/dictionary/word-parameter/word-parameter";
+import {Query} from "mongoose";
+import {Dictionary} from "/server/model/dictionary/dictionary";
+import {Word, WordModel} from "/server/model/word/word";
+import {WORD_MODES, WordMode, WordParameter, WordType} from "/server/model/word-parameter/word-parameter";
 
 
 export class AdvancedWordParameter extends WordParameter {

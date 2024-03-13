@@ -1,9 +1,6 @@
 //
 
-import {
-  getModelForClass,
-  prop
-} from "@typegoose/typegoose";
+import {getModelForClass, prop} from "@typegoose/typegoose";
 import type {
   Variation as VariationSkeleton
 } from "/client/skeleton";

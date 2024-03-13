@@ -18,7 +18,7 @@ import {
 } from "/server/controller/internal/type";
 import {
   DictionaryModel
-} from "/server/model/dictionary";
+} from "../../model";
 import {
   HistoryCreator,
   HistoryModel

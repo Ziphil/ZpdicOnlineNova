@@ -1,12 +1,8 @@
 //
 
-import {
-  EventEmitter
-} from "events";
-import {
-  Dictionary,
-  SlimeSerializer
-} from "/server/model/dictionary";
+import {EventEmitter} from "events";
+import {Dictionary} from "/server/model/dictionary/dictionary";
+import {SlimeSerializer} from "/server/model/dictionary/serializer/slime-serializer";
 
 
 export abstract class Serializer extends EventEmitter {

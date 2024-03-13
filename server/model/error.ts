@@ -1,4 +1,4 @@
-//
+/* eslint-disable @typescript-eslint/prefer-as-const */
 
 
 export class CustomError<E extends string> extends Error {

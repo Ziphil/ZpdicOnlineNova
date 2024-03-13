@@ -27,7 +27,7 @@ import {
 } from "/server/model/invitation";
 import {
   UserModel
-} from "/server/model/user";
+} from "../../model/user/user";
 
 
 @controller(SERVER_PATH_PREFIX)

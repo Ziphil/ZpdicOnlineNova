@@ -1,9 +1,6 @@
 //
 
-import {
-  getModelForClass,
-  prop
-} from "@typegoose/typegoose";
+import {getModelForClass, prop} from "@typegoose/typegoose";
 import type {
   Relation as RelationSkeleton
 } from "/client/skeleton";

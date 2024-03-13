@@ -1,33 +1,19 @@
 //
 
-import {
-  Jsonify
-} from "jsonify-type";
-import {
-  Aggregate
-} from "mongoose";
+import {Jsonify} from "jsonify-type";
+import {Aggregate} from "mongoose";
 import type {
   AdvancedWordParameter as AdvancedWordParameterSkeleton,
   NormalWordParameter as NormalWordParameterSkeleton,
   WordParameter as WordParameterSkeleton
 } from "/client/skeleton";
-import {
-  AdvancedWordParameter,
-  AdvancedWordParameterElement,
-  Dictionary,
-  NormalWordParameter,
-  Word
-} from "/server/model/dictionary";
-import {
-  LiteralType,
-  LiteralUtilType
-} from "/server/util/literal-type";
-import {
-  escapeRegexp
-} from "/server/util/misc";
-import {
-  QueryLike
-} from "/server/util/query";
+import {Dictionary} from "/server/model/dictionary/dictionary";
+import {Word} from "/server/model/word/word";
+import {AdvancedWordParameter, AdvancedWordParameterElement} from "/server/model/word-parameter/advanced-word-parameter";
+import {NormalWordParameter} from "/server/model/word-parameter/normal-word-parameter";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
+import {escapeRegexp} from "/server/util/misc";
+import {QueryLike} from "/server/util/query";
 
 
 export abstract class WordParameter {

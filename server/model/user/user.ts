@@ -6,30 +6,16 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {
-  compareSync,
-  hashSync
-} from "bcrypt";
+import {compareSync, hashSync} from "bcrypt";
 import Fuse from "fuse.js";
 import type {
   DetailedUser as DetailedUserSkeleton,
   User as UserSkeleton
 } from "/client/skeleton";
-import {
-  DictionaryModel
-} from "/server/model/dictionary";
-import {
-  CustomError
-} from "/server/model/error";
-import {
-  ResetTokenModel,
-  ResetTokenSchema
-} from "/server/model/reset-token";
-import {
-  EMAIL_REGEXP,
-  IDENTIFIER_REGEXP,
-  validatePassword
-} from "/server/model/validation";
+import {DictionaryModel} from "/server/model/dictionary/dictionary";
+import {CustomError} from "/server/model/error";
+import {ResetTokenModel, ResetTokenSchema} from "/server/model/user/reset-token";
+import {EMAIL_REGEXP, IDENTIFIER_REGEXP, validatePassword} from "/server/util/validation";
 
 
 @modelOptions({schemaOptions: {collection: "users"}})

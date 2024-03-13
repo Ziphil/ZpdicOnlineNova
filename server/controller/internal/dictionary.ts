@@ -34,11 +34,11 @@ import {
   WordCreator,
   WordModel,
   WordParameterCreator
-} from "/server/model/dictionary";
+} from "../../model";
 import {
   UserCreator,
   UserModel
-} from "/server/model/user";
+} from "../../model/user/user";
 import {
   sanitizeFileName
 } from "/server/util/misc";

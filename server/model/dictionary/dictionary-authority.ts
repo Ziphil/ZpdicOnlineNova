@@ -1,9 +1,6 @@
 //
 
-import {
-  LiteralType,
-  LiteralUtilType
-} from "/server/util/literal-type";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 
 export const DICTIONARY_AUTHORITIES = ["own", "edit"] as const;

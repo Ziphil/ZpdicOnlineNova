@@ -12,22 +12,10 @@ import {
 import type {
   Invitation as InvitationSkeleton
 } from "/client/skeleton";
-import {
-  Dictionary,
-  DictionaryCreator,
-  DictionarySchema
-} from "/server/model/dictionary";
-import {
-  CustomError
-} from "/server/model/error";
-import {
-  User,
-  UserSchema
-} from "/server/model/user";
-import {
-  LiteralType,
-  LiteralUtilType
-} from "/server/util/literal-type";
+import {Dictionary, DictionaryCreator, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {CustomError} from "/server/model/error";
+import {User, UserSchema} from "/server/model/user/user";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 
 export const INVITATION_TYPES = ["edit", "transfer"] as const;

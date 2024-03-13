@@ -1,29 +1,15 @@
 /* eslint-disable no-bitwise */
 
-import {
-  Dictionary,
-  Equivalent,
-  Information,
-  InformationModel,
-  Relation,
-  Variation,
-  Word,
-  WordModel
-} from "/server/model/dictionary";
-import {
-  Deserializer
-} from "/server/model/dictionary/deserializer/deserializer";
-import {
-  LogUtil
-} from "/server/util/log";
-import {
-  BocuPullStream
-} from "/server/util/stream/bocu-pull-stream";
-import {
-  BufferPullStream,
-  FilePullStream,
-  PullStream
-} from "/server/util/stream/pull-stream";
+import {Deserializer} from "/server/model/dictionary/deserializer/deserializer";
+import {Dictionary} from "/server/model/dictionary/dictionary";
+import {Equivalent} from "/server/model/word/equivalent";
+import {Information, InformationModel} from "/server/model/word/information";
+import {Relation} from "/server/model/word/relation";
+import {Variation} from "/server/model/word/variation";
+import {Word, WordModel} from "/server/model/word/word";
+import {LogUtil} from "/server/util/log";
+import {BocuPullStream} from "/server/util/stream/bocu-pull-stream";
+import {BufferPullStream, FilePullStream, PullStream} from "/server/util/stream/pull-stream";
 
 
 export class BinaryDeserializer extends Deserializer {
