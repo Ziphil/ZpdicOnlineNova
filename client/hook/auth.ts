@@ -6,8 +6,8 @@ import {atom, useRecoilValue, useSetRecoilState} from "recoil";
 import {invalidateAllResponses, useRequest} from "/client/hook/request";
 import {DetailedUser} from "/client/skeleton";
 import {setAnalyticsProperties} from "/client/util/gtag";
-import {AxiosResponseSpec, RequestConfig} from "/client/util/request";
-import {RequestData, ResponseData, SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
+import {AxiosResponseSpec, RequestConfig, SERVER_PATH_PREFIX} from "/client/util/request";
+import type {RequestData, ResponseData} from "/server/type/internal";
 
 
 export const meAtom = atom<DetailedUser | null>({key: "me", default: fetchMe()});
@@ -55,7 +55,7 @@ export function useLogoutRequest(): (config?: RequestConfig) => Promise<AxiosRes
 }
 
 async function fetchMe(): Promise<DetailedUser | null> {
-  const url = SERVER_PATH_PREFIX + SERVER_PATHS["fetchUser"];
+  const url = SERVER_PATH_PREFIX + "/fetchUser";
   const response = await axios.post<ResponseData<"fetchUser">>(url, {}, {validateStatus: () => true});
   if (response.status === 200 && !("error" in response.data)) {
     const me = response.data;

@@ -5,7 +5,7 @@ import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {checkUser, verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
-import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {
   DictionaryCreator,
   DictionaryModel,
@@ -26,7 +26,7 @@ import {agenda} from "/worker/agenda";
 @controller(SERVER_PATH_PREFIX)
 export class DictionaryController extends Controller {
 
-  @post(SERVER_PATHS["createDictionary"])
+  @post("/createDictionary")
   @before(verifyUser())
   public async [Symbol()](request: Request<"createDictionary">, response: Response<"createDictionary">): Promise<void> {
     const user = request.user!;
@@ -36,7 +36,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATHS["uploadDictionary"])
+  @post("/uploadDictionary")
   @before(verifyRecaptcha(), verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"uploadDictionary">, response: Response<"uploadDictionary">): Promise<void> {
     const dictionary = request.dictionary;
@@ -58,7 +58,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["discardDictionary"])
+  @post("/discardDictionary")
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"discardDictionary">, response: Response<"discardDictionary">): Promise<void> {
     const dictionary = request.dictionary;
@@ -71,7 +71,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["changeDictionaryName"])
+  @post("/changeDictionaryName")
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryName">, response: Response<"changeDictionaryName">): Promise<void> {
     const dictionary = request.dictionary;
@@ -86,7 +86,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["changeDictionaryParamName"])
+  @post("/changeDictionaryParamName")
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryParamName">, response: Response<"changeDictionaryParamName">): Promise<void> {
     const dictionary = request.dictionary;
@@ -116,7 +116,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["discardDictionaryAuthorizedUser"])
+  @post("/discardDictionaryAuthorizedUser")
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"discardDictionaryAuthorizedUser">, response: Response<"discardDictionaryAuthorizedUser">): Promise<void> {
     const dictionary = request.dictionary;
@@ -145,7 +145,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["changeDictionarySecret"])
+  @post("/changeDictionarySecret")
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionarySecret">, response: Response<"changeDictionarySecret">): Promise<void> {
     const dictionary = request.dictionary;
@@ -160,7 +160,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["changeDictionaryExplanation"])
+  @post("/changeDictionaryExplanation")
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryExplanation">, response: Response<"changeDictionaryExplanation">): Promise<void> {
     const dictionary = request.dictionary;
@@ -175,7 +175,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["changeDictionarySettings"])
+  @post("/changeDictionarySettings")
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionarySettings">, response: Response<"changeDictionarySettings">): Promise<void> {
     const dictionary = request.dictionary;
@@ -190,7 +190,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["searchDictionary"])
+  @post("/searchDictionary")
   public async [Symbol()](request: Request<"searchDictionary">, response: Response<"searchDictionary">): Promise<void> {
     const parameter = DictionaryParameterCreator.recreate(request.body.parameter);
     const offset = request.body.offset;
@@ -203,7 +203,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATHS["searchWord"])
+  @post("/searchWord")
   public async [Symbol()](request: Request<"searchWord">, response: Response<"searchWord">): Promise<void> {
     const number = request.body.number;
     const parameter = WordParameterCreator.recreate(request.body.parameter);
@@ -224,7 +224,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["downloadDictionary"])
+  @post("/downloadDictionary")
   public async [Symbol()](request: Request<"downloadDictionary">, response: Response<"downloadDictionary">): Promise<void> {
     const number = request.body.number;
     const fileName = request.body.fileName;
@@ -242,7 +242,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchDictionary"])
+  @post("/fetchDictionary")
   public async [Symbol()](request: Request<"fetchDictionary">, response: Response<"fetchDictionary">): Promise<void> {
     const number = request.body.number;
     const paramName = request.body.paramName;
@@ -268,7 +268,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchWordSize"])
+  @post("/fetchWordSize")
   public async [Symbol()](request: Request<"fetchWordSize">, response: Response<"fetchWordSize">): Promise<void> {
     const number = request.body.number;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
@@ -281,7 +281,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchWordNameFrequencies"])
+  @post("/fetchWordNameFrequencies")
   public async [Symbol()](request: Request<"fetchWordNameFrequencies">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
     const number = request.body.number;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
@@ -294,7 +294,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchDictionaryStatistics"])
+  @post("/fetchDictionaryStatistics")
   public async [Symbol()](request: Request<"fetchDictionaryStatistics">, response: Response<"fetchDictionaryStatistics">): Promise<void> {
     const number = request.body.number;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
@@ -307,7 +307,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["suggestDictionaryTitles"])
+  @post("/suggestDictionaryTitles")
   public async [Symbol()](request: Request<"suggestDictionaryTitles">, response: Response<"suggestDictionaryTitles">): Promise<void> {
     const number = request.body.number;
     const propertyName = request.body.propertyName;
@@ -323,7 +323,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchDictionaryAuthorizedUsers"])
+  @post("/fetchDictionaryAuthorizedUsers")
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchDictionaryAuthorizedUsers">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     const dictionary = request.dictionary;
@@ -338,7 +338,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchDictionaries"])
+  @post("/fetchDictionaries")
   @before(verifyUser())
   public async [Symbol()](request: Request<"fetchDictionaries">, response: Response<"fetchDictionaries">): Promise<void> {
     const user = request.user!;
@@ -358,7 +358,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATHS["fetchUserDictionaries"])
+  @post("/fetchUserDictionaries")
   @before(checkUser())
   public async [Symbol()](request: Request<"fetchUserDictionaries">, response: Response<"fetchUserDictionaries">): Promise<void> {
     const me = request.user;
@@ -386,7 +386,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchAllDictionaries"])
+  @post("/fetchAllDictionaries")
   public async [Symbol()](request: Request<"fetchAllDictionaries">, response: Response<"fetchAllDictionaries">): Promise<void> {
     const order = request.body.order;
     const offset = request.body.offset;
@@ -410,7 +410,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATHS["fetchOverallAggregation"])
+  @post("/fetchOverallAggregation")
   public async [Symbol()](request: Request<"fetchOverallAggregation">, response: Response<"fetchOverallAggregation">): Promise<void> {
     const models = [DictionaryModel, WordModel, ExampleModel, UserModel] as Array<any>;
     const promises = models.map((model) => {
@@ -434,7 +434,7 @@ export class DictionaryController extends Controller {
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATHS["fetchDictionaryAuthorization"])
+  @post("/fetchDictionaryAuthorization")
   @before(checkUser())
   public async [Symbol()](request: Request<"fetchDictionaryAuthorization">, response: Response<"fetchDictionaryAuthorization">): Promise<void> {
     const user = request.user;
@@ -458,7 +458,7 @@ export class DictionaryController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["checkDictionaryAuthorization"])
+  @post("/checkDictionaryAuthorization")
   @before(verifyUser())
   public async [Symbol()](request: Request<"checkDictionaryAuthorization">, response: Response<"checkDictionaryAuthorization">): Promise<void> {
     const user = request.user!;

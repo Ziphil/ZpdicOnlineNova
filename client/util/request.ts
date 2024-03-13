@@ -3,11 +3,13 @@
 import axios from "axios";
 import {AxiosRequestConfig, AxiosResponse} from "axios";
 import {appendValueToFormData, toFormData} from "/client/util/form-data";
-import {RECAPTCHA_KEY} from "/client/variable";
-import {ProcessName, RequestData, ResponseData, SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
+import {RECAPTCHA_KEY, VERSION} from "/client/variable";
+import type {ProcessName, RequestData, ResponseData} from "/server/type/internal";
 
 
 const client = axios.create({timeout: 10000, validateStatus: () => true});
+
+export const SERVER_PATH_PREFIX = "/internal/" + VERSION;
 
 /** サーバーにリクエストを送信します。
  * サーバーのレスポンスの種類にかかわらず、必ず `AxiosResponseSpec` オブジェクトを返します。
@@ -15,7 +17,7 @@ const client = axios.create({timeout: 10000, validateStatus: () => true});
 export async function request<N extends ProcessName>(name: N, data: Omit<RequestData<N>, "recaptchaToken">, config: RequestConfigWithRecaptcha): Promise<AxiosResponseSpec<N>>;
 export async function request<N extends ProcessName>(name: N, data: RequestData<N>, config?: RequestConfig): Promise<AxiosResponseSpec<N>>;
 export async function request<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
-  const url = SERVER_PATH_PREFIX + SERVER_PATHS[name];
+  const url = SERVER_PATH_PREFIX + "/" + name;
   if (config.useRecaptcha) {
     const action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : name;
     const recaptchaToken = await grecaptcha.execute(RECAPTCHA_KEY, {action});

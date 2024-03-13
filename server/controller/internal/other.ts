@@ -5,14 +5,14 @@ import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {checkUser, verifyRecaptcha} from "/server/controller/internal/middle";
 import {UserModel} from "/server/model";
-import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {MailUtil} from "/server/util/mail";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class OtherController extends Controller {
 
-  @post(SERVER_PATHS["fetchDocument"])
+  @post("/fetchDocument")
   public async [Symbol()](request: Request<"fetchDocument">, response: Response<"fetchDocument">): Promise<void> {
     const locale = request.body.locale;
     const path = request.body.path;
@@ -25,7 +25,7 @@ export class OtherController extends Controller {
     });
   }
 
-  @post(SERVER_PATHS["contact"])
+  @post("/contact")
   @before(checkUser(), verifyRecaptcha())
   public async [Symbol()](request: Request<"contact">, response: Response<"contact">): Promise<void> {
     const user = request.user;

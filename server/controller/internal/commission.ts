@@ -6,14 +6,14 @@ import {Controller, Request, Response} from "/server/controller/internal/control
 import {verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
 import {DictionaryModel} from "/server/model";
 import {CommissionCreator, CommissionModel} from "/server/model/commission";
-import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {QueryRange} from "/server/util/query";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class CommissionController extends Controller {
 
-  @post(SERVER_PATHS["addCommission"])
+  @post("/addCommission")
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"addCommission">, response: Response<"addCommission">): Promise<void> {
     const number = request.body.number;
@@ -35,7 +35,7 @@ export class CommissionController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["discardCommission"])
+  @post("/discardCommission")
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"discardCommission">, response: Response<"discardCommission">): Promise<void> {
     const dictionary = request.dictionary!;
@@ -56,7 +56,7 @@ export class CommissionController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchCommissions"])
+  @post("/fetchCommissions")
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchCommissions">, response: Response<"fetchCommissions">): Promise<void> {
     const dictionary = request.dictionary;

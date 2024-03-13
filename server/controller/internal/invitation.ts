@@ -4,18 +4,14 @@ import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {verifyDictionary, verifyUser} from "/server/controller/internal/middle";
-import {
-  InvitationCreator,
-  InvitationModel,
-  UserModel
-} from "/server/model";
-import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
+import {InvitationCreator, InvitationModel, UserModel} from "/server/model";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class InvitationController extends Controller {
 
-  @post(SERVER_PATHS["addInvitation"])
+  @post("/addInvitation")
   @before(verifyUser(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"addInvitation">, response: Response<"addInvitation">): Promise<void> {
     const dictionary = request.dictionary;
@@ -55,7 +51,7 @@ export class InvitationController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["respondInvitation"])
+  @post("/respondInvitation")
   @before(verifyUser())
   public async [Symbol()](request: Request<"respondInvitation">, response: Response<"respondInvitation">): Promise<void> {
     const user = request.user!;
@@ -80,7 +76,7 @@ export class InvitationController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchInvitations"])
+  @post("/fetchInvitations")
   @before(verifyUser())
   public async [Symbol()](request: Request<"fetchInvitations">, response: Response<"fetchInvitations">): Promise<void> {
     const user = request.user!;

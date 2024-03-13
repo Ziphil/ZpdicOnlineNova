@@ -7,7 +7,7 @@ import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {Dictionary, DictionarySettings} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
-import {RequestData} from "/server/type/internal";
+import type {RequestData} from "/server/type/internal";
 
 
 const SCHEMA = object({

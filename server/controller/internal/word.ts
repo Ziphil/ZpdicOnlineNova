@@ -4,17 +4,14 @@ import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {verifyDictionary, verifyUser} from "/server/controller/internal/middle";
-import {
-  DictionaryModel,
-  WordCreator
-} from "/server/model";
-import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
+import {DictionaryModel, WordCreator} from "/server/model";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class WordController extends Controller {
 
-  @post(SERVER_PATHS["editWord"])
+  @post("/editWord")
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"editWord">, response: Response<"editWord">): Promise<void> {
     const dictionary = request.dictionary;
@@ -38,7 +35,7 @@ export class WordController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["discardWord"])
+  @post("/discardWord")
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"discardWord">, response: Response<"discardWord">): Promise<void> {
     const dictionary = request.dictionary;
@@ -66,7 +63,7 @@ export class WordController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["addRelations"])
+  @post("/addRelations")
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"addRelations">, response: Response<"addRelations">): Promise<void> {
     const dictionary = request.dictionary;
@@ -96,7 +93,7 @@ export class WordController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchWord"])
+  @post("/fetchWord")
   public async [Symbol()](request: Request<"fetchWord">, response: Response<"fetchWord">): Promise<void> {
     const number = request.body.number;
     const wordNumber = request.body.wordNumber;
@@ -116,7 +113,7 @@ export class WordController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchWordNames"])
+  @post("/fetchWordNames")
   public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
     const number = request.body.number;
     const wordNumbers = request.body.wordNumbers;
@@ -131,7 +128,7 @@ export class WordController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["checkDuplicateWordName"])
+  @post("/checkDuplicateWordName")
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"checkDuplicateWordName">, response: Response<"checkDuplicateWordName">): Promise<void> {
     const dictionary = request.dictionary;

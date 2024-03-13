@@ -4,18 +4,15 @@ import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {login, logout, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
-import {
-  UserCreator,
-  UserModel
-} from "/server/model";
-import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
+import {UserCreator, UserModel} from "/server/model";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {MailUtil} from "/server/util/mail";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class UserController extends Controller {
 
-  @post(SERVER_PATHS["login"])
+  @post("/login")
   @before(login(30 * 24 * 60 * 60))
   public async [Symbol()](request: Request<"login">, response: Response<"login">): Promise<void> {
     const token = request.token!;
@@ -25,13 +22,13 @@ export class UserController extends Controller {
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATHS["logout"])
+  @post("/logout")
   @before(logout())
   public async [Symbol()](request: Request<"logout">, response: Response<"logout">): Promise<void> {
     Controller.respond(response, null);
   }
 
-  @post(SERVER_PATHS["registerUser"])
+  @post("/registerUser")
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"registerUser">, response: Response<"registerUser">): Promise<void> {
     const name = request.body.name;
@@ -67,7 +64,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["changeUserScreenName"])
+  @post("/changeUserScreenName")
   @before(verifyUser())
   public async [Symbol()](request: Request<"changeUserScreenName">, response: Response<"changeUserScreenName">): Promise<void> {
     const user = request.user!;
@@ -81,7 +78,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["changeUserEmail"])
+  @post("/changeUserEmail")
   @before(verifyUser())
   public async [Symbol()](request: Request<"changeUserEmail">, response: Response<"changeUserEmail">): Promise<void> {
     const user = request.user!;
@@ -102,7 +99,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["changeUserPassword"])
+  @post("/changeUserPassword")
   @before(verifyUser())
   public async [Symbol()](request: Request<"changeUserPassword">, response: Response<"changeUserPassword">): Promise<void> {
     const user = request.user!;
@@ -121,7 +118,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["issueUserActivateToken"])
+  @post("/issueUserActivateToken")
   @before(verifyRecaptcha(), verifyUser())
   public async [Symbol()](request: Request<"issueUserActivateToken">, response: Response<"issueUserActivateToken">): Promise<void> {
     const user = request.user!;
@@ -146,7 +143,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["issueUserResetToken"])
+  @post("/issueUserResetToken")
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"issueUserResetToken">, response: Response<"issueUserResetToken">): Promise<void> {
     const name = request.body.name;
@@ -170,7 +167,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["activateUser"])
+  @post("/activateUser")
   public async [Symbol()](request: Request<"activateUser">, response: Response<"activateUser">): Promise<void> {
     const key = request.body.key;
     try {
@@ -189,7 +186,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["resetUserPassword"])
+  @post("/resetUserPassword")
   public async [Symbol()](request: Request<"resetUserPassword">, response: Response<"resetUserPassword">): Promise<void> {
     const key = request.body.key;
     const password = request.body.password;
@@ -211,7 +208,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["discardUser"])
+  @post("/discardUser")
   @before(verifyUser())
   public async [Symbol()](request: Request<"discardUser">, response: Response<"discardUser">): Promise<void> {
     const user = request.user!;
@@ -223,7 +220,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchUser"])
+  @post("/fetchUser")
   @before(verifyUser())
   public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
     const user = request.user!;
@@ -231,7 +228,7 @@ export class UserController extends Controller {
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATHS["fetchOtherUser"])
+  @post("/fetchOtherUser")
   public async [Symbol()](request: Request<"fetchOtherUser">, response: Response<"fetchOtherUser">): Promise<void> {
     const name = request.body.name;
     const user = await UserModel.fetchOneByName(name);
@@ -244,7 +241,7 @@ export class UserController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["suggestUsers"])
+  @post("/suggestUsers")
   public async [Symbol()](request: Request<"suggestUsers">, response: Response<"suggestUsers">): Promise<void> {
     const pattern = request.body.pattern;
     const users = await UserModel.suggest(pattern);

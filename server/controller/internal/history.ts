@@ -3,18 +3,14 @@
 import {CustomError} from "/client/skeleton";
 import {controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {
-  DictionaryModel,
-  HistoryCreator,
-  HistoryModel
-} from "/server/model";
-import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
+import {DictionaryModel, HistoryCreator, HistoryModel} from "/server/model";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class HistoryController extends Controller {
 
-  @post(SERVER_PATHS["fetchHistories"])
+  @post("/fetchHistories")
   public async [Symbol()](request: Request<"fetchHistories">, response: Response<"fetchHistories">): Promise<void> {
     const number = request.body.number;
     const from = new Date(request.body.from);

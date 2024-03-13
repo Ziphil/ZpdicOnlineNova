@@ -4,19 +4,15 @@ import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {verifyDictionary, verifyUser} from "/server/controller/internal/middle";
-import {
-  DictionaryModel,
-  ExampleCreator,
-  ExampleModel
-} from "/server/model";
-import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
+import {DictionaryModel, ExampleCreator, ExampleModel} from "/server/model";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {QueryRange} from "/server/util/query";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class ExampleController extends Controller {
 
-  @post(SERVER_PATHS["editExample"])
+  @post("/editExample")
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"editExample">, response: Response<"editExample">): Promise<void> {
     const dictionary = request.dictionary;
@@ -40,7 +36,7 @@ export class ExampleController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["discardExample"])
+  @post("/discardExample")
   @before(verifyUser(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"discardExample">, response: Response<"discardExample">): Promise<void> {
     const dictionary = request.dictionary;
@@ -68,7 +64,7 @@ export class ExampleController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchExample"])
+  @post("/fetchExample")
   @before()
   public async [Symbol()](request: Request<"fetchExample">, response: Response<"fetchExample">): Promise<void> {
     const number = request.body.number;
@@ -89,7 +85,7 @@ export class ExampleController extends Controller {
     }
   }
 
-  @post(SERVER_PATHS["fetchExamples"])
+  @post("/fetchExamples")
   @before()
   public async [Symbol()](request: Request<"fetchExamples">, response: Response<"fetchExamples">): Promise<void> {
     const number = request.body.number;
