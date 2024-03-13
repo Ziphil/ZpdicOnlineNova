@@ -4,7 +4,7 @@ import axios from "axios";
 import {AxiosRequestConfig, AxiosResponse} from "axios";
 import {appendValueToFormData, toFormData} from "/client/util/form-data";
 import {RECAPTCHA_KEY} from "/client/variable";
-import {ProcessName, RequestData, ResponseData, SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/controller/internal/type";
+import {ProcessName, RequestData, ResponseData, SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
 
 
 const client = axios.create({timeout: 10000, validateStatus: () => true});

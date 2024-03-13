@@ -1,33 +1,12 @@
 //
 
-import {
-  CustomError
-} from "/client/skeleton";
-import {
-  before,
-  controller,
-  post
-} from "/server/controller/decorator";
-import {
-  Controller,
-  Request,
-  Response
-} from "/server/controller/internal/controller";
-import {
-  verifyDictionary,
-  verifyRecaptcha,
-  verifyUser
-} from "/server/controller/internal/middle";
-import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
-import {
-  AwsUtil
-} from "/server/util/aws";
-import {
-  QueryRange
-} from "/server/util/query";
+import {CustomError} from "/client/skeleton";
+import {before, controller, post} from "/server/controller/decorator";
+import {Controller, Request, Response} from "/server/controller/internal/controller";
+import {verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
+import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
+import {AwsUtil} from "/server/util/aws";
+import {QueryRange} from "/server/util/query";
 
 
 @controller(SERVER_PATH_PREFIX)

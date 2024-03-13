@@ -1,28 +1,14 @@
 //
 
+import {CustomError} from "/client/skeleton";
+import {controller, post} from "/server/controller/decorator";
+import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {
-  CustomError
-} from "/client/skeleton";
-import {
-  controller,
-  post
-} from "/server/controller/decorator";
-import {
-  Controller,
-  Request,
-  Response
-} from "/server/controller/internal/controller";
-import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
-import {
-  DictionaryModel
-} from "../../model";
-import {
+  DictionaryModel,
   HistoryCreator,
   HistoryModel
-} from "/server/model/history";
+} from "/server/model";
+import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
 
 
 @controller(SERVER_PATH_PREFIX)

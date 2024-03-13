@@ -1,31 +1,16 @@
 //
 
-import {
-  NextFunction,
-  Request,
-  RequestHandler,
-  Response
-} from "express";
+import {NextFunction, Request, RequestHandler, Response} from "express";
 import * as jwt from "jsonwebtoken";
-import {
-  CustomError
-} from "/client/skeleton";
+import {CustomError} from "/client/skeleton";
 import {
   DictionaryAuthority,
-  DictionaryModel
-} from "../../model";
-import {
+  DictionaryModel,
   UserModel
-} from "../../model/user/user";
-import {
-  LogUtil
-} from "/server/util/log";
-import {
-  RecaptchaUtil
-} from "/server/util/recaptcha";
-import {
-  JWT_SECRET
-} from "/server/variable";
+} from "/server/model";
+import {LogUtil} from "/server/util/log";
+import {RecaptchaUtil} from "/server/util/recaptcha";
+import {JWT_SECRET} from "/server/variable";
 
 
 /** リクエストのヘッダーに書き込まれたトークンを利用して認証を行います。

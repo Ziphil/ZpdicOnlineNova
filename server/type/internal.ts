@@ -1,9 +1,7 @@
 //
 
-import {
-  Jsonify
-} from "jsonify-type";
-import {
+import {Jsonify} from "jsonify-type";
+import type {
   Aggregation,
   Commission,
   CustomError,
@@ -29,10 +27,8 @@ import {
   WordNameFrequencies,
   WordParameter
 } from "/client/skeleton";
-import {
-  DictionaryAuthority,
-  DictionaryFullAuthority
-} from "../../model";
+import type {DictionaryAuthority, DictionaryFullAuthority} from "/server/model";
+import type {WithRecaptcha, WithSize} from "/server/type/common";
 
 
 export const SERVER_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
@@ -537,9 +533,6 @@ type ServerSpecs = {
     }
   }
 };
-
-export type WithRecaptcha<T> = T & {recaptchaToken: string};
-export type WithSize<T> = [Array<T>, number];
 
 export type Status = "success" | "error";
 export type ProcessName = keyof ServerSpecs;

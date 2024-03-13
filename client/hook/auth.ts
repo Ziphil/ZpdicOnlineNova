@@ -7,7 +7,7 @@ import {invalidateAllResponses, useRequest} from "/client/hook/request";
 import {DetailedUser} from "/client/skeleton";
 import {setAnalyticsProperties} from "/client/util/gtag";
 import {AxiosResponseSpec, RequestConfig} from "/client/util/request";
-import {RequestData, ResponseData, SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/controller/internal/type";
+import {RequestData, ResponseData, SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
 
 
 export const meAtom = atom<DetailedUser | null>({key: "me", default: fetchMe()});

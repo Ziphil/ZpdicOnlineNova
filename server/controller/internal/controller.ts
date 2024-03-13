@@ -5,21 +5,14 @@ import {
   Request as ExpressRequest,
   Response as ExpressResponse
 } from "express-serve-static-core";
-import {
-  Controller as BaseController
-} from "/server/controller/controller";
+import {Controller as BaseController} from "/server/controller/controller";
+import {Dictionary, User} from "/server/model";
 import {
   ProcessName,
   RequestData,
   ResponseData,
   ResponseEachData
-} from "/server/controller/internal/type";
-import {
-  Dictionary
-} from "../../model";
-import {
-  User
-} from "../../model/user/user";
+} from "/server/type/internal";
 
 
 export class Controller extends BaseController {

@@ -10,8 +10,8 @@ import {
 import type {
   Commission as CommissionSkeleton
 } from "/client/skeleton";
-import {WithSize} from "/server/controller/internal/type";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {WithSize} from "/server/type/common";
 import {QueryRange} from "/server/util/query";
 
 

@@ -9,7 +9,7 @@ import {
 import type {
   Notification as NotificationSkeleton
 } from "/client/skeleton";
-import {WithSize} from "/server/controller/internal/type";
+import {WithSize} from "/server/type/common";
 import {QueryRange} from "/server/util/query";
 
 

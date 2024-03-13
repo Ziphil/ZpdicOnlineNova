@@ -7,7 +7,7 @@ import {useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {DetailedUser} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
-import {RequestData} from "/server/controller/internal/type";
+import type {RequestData} from "/server/type/internal";
 
 
 const SCHEMA = object({

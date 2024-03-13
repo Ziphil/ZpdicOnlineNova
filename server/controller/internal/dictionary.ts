@@ -1,53 +1,26 @@
 //
 
-import {
-  CustomError,
-  DetailedDictionary,
-  UserDictionary
-} from "/client/skeleton";
-import {
-  before,
-  controller,
-  post
-} from "/server/controller/decorator";
-import {
-  Controller,
-  Request,
-  Response
-} from "/server/controller/internal/controller";
-import {
-  checkUser,
-  verifyDictionary,
-  verifyRecaptcha,
-  verifyUser
-} from "/server/controller/internal/middle";
-import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
+import type {DetailedDictionary, UserDictionary} from "/client/skeleton";
+import {CustomError} from "/client/skeleton";
+import {before, controller, post} from "/server/controller/decorator";
+import {Controller, Request, Response} from "/server/controller/internal/controller";
+import {checkUser, verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
+import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
 import {
   DictionaryCreator,
   DictionaryModel,
   DictionaryParameterCreator,
   ExampleModel,
   SuggestionCreator,
+  UserCreator,
+  UserModel,
   WordCreator,
   WordModel,
   WordParameterCreator
-} from "../../model";
-import {
-  UserCreator,
-  UserModel
-} from "../../model/user/user";
-import {
-  sanitizeFileName
-} from "/server/util/misc";
-import {
-  QueryRange
-} from "/server/util/query";
-import {
-  agenda
-} from "/worker/agenda";
+} from "/server/model";
+import {sanitizeFileName} from "/server/util/misc";
+import {QueryRange} from "/server/util/query";
+import {agenda} from "/worker/agenda";
 
 
 @controller(SERVER_PATH_PREFIX)

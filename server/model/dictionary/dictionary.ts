@@ -23,7 +23,6 @@ import type {
   WordNameFrequencies,
   WordNameFrequency
 } from "/client/skeleton";
-import {WithSize} from "/server/controller/internal/type";
 import {DiscardableSchema} from "/server/model/base";
 import {Deserializer} from "/server/model/dictionary/deserializer/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil, DictionaryFullAuthority} from "/server/model/dictionary/dictionary-authority";
@@ -38,6 +37,7 @@ import {Relation} from "/server/model/word/relation";
 import {Suggestion} from "/server/model/word/suggestion";
 import {Word, WordModel} from "/server/model/word/word";
 import {WordParameter} from "/server/model/word-parameter/word-parameter";
+import {WithSize} from "/server/type/common";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 import {LogUtil} from "/server/util/log";
 import {QueryRange} from "/server/util/query";

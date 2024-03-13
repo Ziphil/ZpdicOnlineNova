@@ -1,9 +1,6 @@
 //
 
-import {
-  Express,
-  Router
-} from "express";
+import {Express, Router} from "express";
 
 
 export class Controller {

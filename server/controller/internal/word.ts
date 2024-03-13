@@ -1,30 +1,14 @@
 //
 
-import {
-  CustomError
-} from "/client/skeleton";
-import {
-  before,
-  controller,
-  post
-} from "/server/controller/decorator";
-import {
-  Controller,
-  Request,
-  Response
-} from "/server/controller/internal/controller";
-import {
-  verifyDictionary,
-  verifyUser
-} from "/server/controller/internal/middle";
-import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
+import {CustomError} from "/client/skeleton";
+import {before, controller, post} from "/server/controller/decorator";
+import {Controller, Request, Response} from "/server/controller/internal/controller";
+import {verifyDictionary, verifyUser} from "/server/controller/internal/middle";
 import {
   DictionaryModel,
   WordCreator
-} from "../../model";
+} from "/server/model";
+import {SERVER_PATHS, SERVER_PATH_PREFIX} from "/server/type/internal";
 
 
 @controller(SERVER_PATH_PREFIX)

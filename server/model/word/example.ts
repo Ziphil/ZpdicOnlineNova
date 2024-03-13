@@ -11,12 +11,12 @@ import type {
   EditableExample as EditableExampleSkeleton,
   Example as ExampleSkeleton
 } from "/client/skeleton";
-import {WithSize} from "/server/controller/internal/type";
 import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {LinkedWordCreator, LinkedWordSchema} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";
+import {WithSize} from "/server/type/common";
 import {LogUtil} from "/server/util/log";
 import {QueryRange} from "/server/util/query";
 
