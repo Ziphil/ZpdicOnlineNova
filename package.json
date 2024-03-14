@@ -29,12 +29,6 @@
     ],
     "ignorePatterns": "webpack-*.ts",
     "rules": {
-      "prefer-const": [
-        "warn",
-        {
-          "destructuring": "all"
-        }
-      ],
       "react/no-unknown-property": [
         "warn",
         {
@@ -43,37 +37,7 @@
           ]
         }
       ],
-      "import/order": [
-        "warn",
-        {
-          "groups": [
-            [
-              "builtin",
-              "external"
-            ],
-            "internal",
-            "parent",
-            "sibling",
-            "index",
-            "object"
-          ],
-          "pathGroups": [
-            {
-              "pattern": "/client/**",
-              "group": "internal"
-            },
-            {
-              "pattern": "/server/**",
-              "group": "internal"
-            }
-          ],
-          "alphabetize": {
-            "order": "asc",
-            "caseInsensitive": false
-          },
-          "newlines-between": "never"
-        }
-      ]
+      "@typescript-eslint/no-namespace": "off"
     }
   },
   "nodemonConfig": {

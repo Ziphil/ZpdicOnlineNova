@@ -6,9 +6,6 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import type {
-  Notification as NotificationSkeleton
-} from "/client/skeleton";
 import {WithSize} from "/server/type/common";
 import {QueryRange} from "/server/util/query";
 
@@ -39,21 +36,6 @@ export class NotificationSchema {
     const query = NotificationModel.find().sort("-date");
     const result = await QueryRange.restrictWithSize(query, range);
     return result;
-  }
-
-}
-
-
-export class NotificationCreator {
-
-  public static create(raw: Notification): NotificationSkeleton {
-    const id = raw.id;
-    const type = raw.type;
-    const date = raw.date.toISOString();
-    const title = raw.title;
-    const text = raw.text;
-    const skeleton = {id, type, date, title, text};
-    return skeleton;
   }
 
 }

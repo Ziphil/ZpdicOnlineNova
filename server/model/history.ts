@@ -7,9 +7,6 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import type {
-  History as HistorySkeleton
-} from "/client/skeleton";
 import {Dictionary, DictionaryModel, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {LogUtil} from "/server/util/log";
 import {QueryRange} from "/server/util/query";
@@ -53,19 +50,6 @@ export class HistorySchema {
     const wordSize = await dictionary.countWords();
     const history = new HistoryModel({dictionary, date, wordSize});
     return history;
-  }
-
-}
-
-
-export class HistoryCreator {
-
-  public static create(raw: History): HistorySkeleton {
-    const id = raw.id;
-    const date = raw.date.toISOString();
-    const wordSize = raw.wordSize;
-    const skeleton = {id, date, wordSize};
-    return skeleton;
   }
 
 }

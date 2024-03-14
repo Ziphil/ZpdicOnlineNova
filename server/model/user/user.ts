@@ -8,10 +8,6 @@ import {
 } from "@typegoose/typegoose";
 import {compareSync, hashSync} from "bcrypt";
 import Fuse from "fuse.js";
-import type {
-  DetailedUser as DetailedUserSkeleton,
-  User as UserSkeleton
-} from "/client/skeleton";
 import {DictionaryModel} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {ResetTokenModel, ResetTokenSchema} from "/server/model/user/reset-token";
@@ -214,27 +210,6 @@ export class UserSchema {
 
   private comparePassword(password: string): boolean {
     return compareSync(password, this.hash);
-  }
-
-}
-
-
-export class UserCreator {
-
-  public static create(raw: User): UserSkeleton {
-    const id = raw.id;
-    const name = raw.name;
-    const screenName = raw.screenName;
-    const skeleton = {id, name, screenName};
-    return skeleton;
-  }
-
-  public static createDetailed(raw: User): DetailedUserSkeleton {
-    const base = UserCreator.create(raw);
-    const email = raw.email;
-    const activated = raw.activated;
-    const skeleton = {...base, email, activated};
-    return skeleton;
   }
 
 }

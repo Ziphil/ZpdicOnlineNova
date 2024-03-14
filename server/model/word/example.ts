@@ -7,14 +7,11 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import type {
-  EditableExample as EditableExampleSkeleton,
-  Example as ExampleSkeleton
-} from "/client/skeleton";
+import type {EditableExample} from "/client/skeleton";
 import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
-import {LinkedWordCreator, LinkedWordSchema} from "/server/model/word/linked-word";
+import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";
 import {WithSize} from "/server/type/common";
 import {LogUtil} from "/server/util/log";
@@ -57,7 +54,7 @@ export class ExampleSchema extends DiscardableSchema {
     return result;
   }
 
-  public static async edit(dictionary: Dictionary, example: EditableExampleSkeleton): Promise<Example> {
+  public static async edit(dictionary: Dictionary, example: EditableExample): Promise<Example> {
     const currentExample = await ExampleModel.findOneExist().where("dictionary", dictionary).where("number", example.number);
     let resultExample;
     if (currentExample) {
@@ -107,21 +104,6 @@ export class ExampleSchema extends DiscardableSchema {
     } else {
       return 1;
     }
-  }
-
-}
-
-
-export class ExampleCreator {
-
-  public static create(raw: Example): ExampleSkeleton {
-    const id = raw.id;
-    const number = raw.number;
-    const words = raw.words.map(LinkedWordCreator.create);
-    const sentence = raw.sentence;
-    const translation = raw.translation;
-    const skeleton = {id, number, words, sentence, translation};
-    return skeleton;
   }
 
 }

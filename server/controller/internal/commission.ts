@@ -4,8 +4,8 @@ import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
-import {DictionaryModel} from "/server/model";
-import {CommissionCreator, CommissionModel} from "/server/model/commission";
+import {CommissionCreator} from "/server/creator";
+import {CommissionModel, DictionaryModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {QueryRange} from "/server/util/query";
 

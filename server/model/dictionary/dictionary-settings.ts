@@ -1,9 +1,6 @@
 //
 
 import {getModelForClass, prop} from "@typegoose/typegoose";
-import type {
-  DictionarySettings as DictionarySettingsSkeleton
-} from "/client/skeleton";
 
 
 export class DictionarySettingsSchema {
@@ -37,23 +34,6 @@ export class DictionarySettingsSchema {
     const enableDuplicateName = true;
     const settings = new DictionarySettingsModel({punctuations, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName});
     return settings;
-  }
-
-}
-
-
-export class DictionarySettingsCreator {
-
-  public static create(raw: DictionarySettings): DictionarySettingsSkeleton {
-    const akrantiainSource = raw.akrantiainSource;
-    const zatlinSource = raw.zatlinSource;
-    const punctuations = raw.punctuations;
-    const pronunciationTitle = raw.pronunciationTitle;
-    const exampleTitle = raw.exampleTitle;
-    const enableMarkdown = raw.enableMarkdown;
-    const enableDuplicateName = raw.enableDuplicateName;
-    const skeleton = {akrantiainSource, zatlinSource, punctuations, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName};
-    return skeleton;
   }
 
 }

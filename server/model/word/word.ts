@@ -7,19 +7,14 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import type {
-  DetailedWord as DetailedWordSkeleton,
-  EditableWord as EditableWordSkeleton,
-  Word as WordSkeleton
-} from "/client/skeleton";
+import type {EditableWord} from "/client/skeleton";
 import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
-import {EquivalentCreator, EquivalentSchema} from "/server/model/word/equivalent";
-import {ExampleCreator, ExampleModel} from "/server/model/word/example";
-import {InformationCreator, InformationSchema} from "/server/model/word/information";
-import {Relation, RelationCreator, RelationSchema} from "/server/model/word/relation";
-import {VariationCreator, VariationSchema} from "/server/model/word/variation";
+import {EquivalentSchema} from "/server/model/word/equivalent";
+import {InformationSchema} from "/server/model/word/information";
+import {Relation, RelationSchema} from "/server/model/word/relation";
+import {VariationSchema} from "/server/model/word/variation";
 import {LogUtil} from "/server/util/log";
 
 
@@ -63,7 +58,7 @@ export class WordSchema extends DiscardableSchema {
    * 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
    * そうでない場合は、渡された単語データを新しいデータとして追加します。
    * 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。*/
-  public static async edit(dictionary: Dictionary, word: EditableWordSkeleton): Promise<Word> {
+  public static async edit(dictionary: Dictionary, word: EditableWord): Promise<Word> {
     const currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", word.number);
     let resultWord;
     if (currentWord) {
@@ -198,34 +193,6 @@ export class WordSchema extends DiscardableSchema {
     } else {
       return 1;
     }
-  }
-
-}
-
-
-export class WordCreator {
-
-  public static create(raw: Word): WordSkeleton {
-    const id = raw.id;
-    const number = raw.number;
-    const name = raw.name;
-    const pronunciation = raw.pronunciation;
-    const equivalents = raw.equivalents.map(EquivalentCreator.create);
-    const tags = raw.tags;
-    const informations = raw.informations.map(InformationCreator.create);
-    const variations = raw.variations.map(VariationCreator.create);
-    const relations = raw.relations.map(RelationCreator.create);
-    const createdDate = raw.createdDate?.toISOString() ?? undefined;
-    const updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    const skeleton = {id, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate, updatedDate};
-    return skeleton;
-  }
-
-  public static async createDetailed(raw: Word): Promise<DetailedWordSkeleton> {
-    const base = WordCreator.create(raw);
-    const examples = await ExampleModel.fetchByWord(raw).then((rawExamples) => rawExamples.map(ExampleCreator.create));
-    const skeleton = {...base, examples};
-    return skeleton;
   }
 
 }

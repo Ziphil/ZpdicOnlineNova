@@ -5,19 +5,9 @@ import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {checkUser, verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
+import {DictionaryCreator, DictionaryParameterCreator, SuggestionCreator, UserCreator, WordCreator, WordParameterCreator} from "/server/creator";
+import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
-import {
-  DictionaryCreator,
-  DictionaryModel,
-  DictionaryParameterCreator,
-  ExampleModel,
-  SuggestionCreator,
-  UserCreator,
-  UserModel,
-  WordCreator,
-  WordModel,
-  WordParameterCreator
-} from "/server/model";
 import {sanitizeFileName} from "/server/util/misc";
 import {QueryRange} from "/server/util/query";
 import {agenda} from "/worker/agenda";

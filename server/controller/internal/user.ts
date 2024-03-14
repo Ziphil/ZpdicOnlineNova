@@ -4,7 +4,8 @@ import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {login, logout, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
-import {UserCreator, UserModel} from "/server/model";
+import {UserCreator} from "/server/creator";
+import {UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {MailUtil} from "/server/util/mail";
 

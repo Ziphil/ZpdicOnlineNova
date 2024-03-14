@@ -1,16 +1,8 @@
 //
 
-import {Jsonify} from "jsonify-type";
 import {Aggregate} from "mongoose";
-import type {
-  AdvancedWordParameter as AdvancedWordParameterSkeleton,
-  NormalWordParameter as NormalWordParameterSkeleton,
-  WordParameter as WordParameterSkeleton
-} from "/client/skeleton";
 import {Dictionary} from "/server/model/dictionary/dictionary";
 import {Word} from "/server/model/word/word";
-import {AdvancedWordParameter, AdvancedWordParameterElement} from "/server/model/word-parameter/advanced-word-parameter";
-import {NormalWordParameter} from "/server/model/word-parameter/normal-word-parameter";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 import {escapeRegexp} from "/server/util/misc";
 import {QueryLike} from "/server/util/query";
@@ -80,24 +72,6 @@ export abstract class WordParameter {
       return directionChar + "createdDate _id";
     } else {
       throw new Error("cannot happen");
-    }
-  }
-
-}
-
-
-export class WordParameterCreator {
-
-  public static recreate(skeleton: Jsonify<WordParameterSkeleton>): WordParameter {
-    if ("elements" in skeleton) {
-      const castSkeleton = skeleton as AdvancedWordParameterSkeleton;
-      const elements = castSkeleton.elements.map((element) => new AdvancedWordParameterElement(element.text, element.title, element.mode, element.type));
-      const raw = new AdvancedWordParameter(elements);
-      return raw;
-    } else {
-      const castSkeleton = skeleton as NormalWordParameterSkeleton;
-      const raw = new NormalWordParameter(castSkeleton.text, castSkeleton.mode, castSkeleton.type, castSkeleton.order, castSkeleton.options);
-      return raw;
     }
   }
 
