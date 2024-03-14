@@ -1,10 +1,7 @@
 //
 
-export * from "./dictionary/deserializer/binary-deserializer";
-export * from "./dictionary/deserializer/deserializer";
-export * from "./dictionary/deserializer/slime-deserializer";
-export * from "./dictionary/serializer/serializer";
-export * from "./dictionary/serializer/slime-serializer";
+export * from "./dictionary/deserializer";
+export * from "./dictionary/serializer";
 export * from "./dictionary/dictionary-authority";
 export * from "./dictionary/dictionary-settings";
 export * from "./dictionary/dictionary";

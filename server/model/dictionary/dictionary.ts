@@ -24,10 +24,10 @@ import type {
   WordNameFrequency
 } from "/client/skeleton";
 import {DiscardableSchema} from "/server/model/base";
-import {Deserializer} from "/server/model/dictionary/deserializer/deserializer";
+import {createDeserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil, DictionaryFullAuthority} from "/server/model/dictionary/dictionary-authority";
 import {DictionarySettings, DictionarySettingsCreator, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
-import {Serializer} from "/server/model/dictionary/serializer/serializer";
+import {createSerializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
 import {CustomError} from "/server/model/error";
 import {InvitationModel} from "/server/model/invitation";
@@ -156,7 +156,7 @@ export class DictionarySchema extends DiscardableSchema {
     const settings = this.settings as any;
     let externalData = {};
     const promise = new Promise<Dictionary>((resolve, reject) => {
-      const stream = Deserializer.create(path, originalPath, this);
+      const stream = createDeserializer(path, originalPath, this);
       if (stream !== null) {
         let count = 0;
         stream.on("words", (words) => {
@@ -211,7 +211,7 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async download(this: Dictionary, path: string): Promise<void> {
     const promise = new Promise<void>((resolve, reject) => {
-      const stream = Serializer.create(path, this);
+      const stream = createSerializer(path, this);
       if (stream !== null) {
         stream.on("end", () => {
           resolve();
