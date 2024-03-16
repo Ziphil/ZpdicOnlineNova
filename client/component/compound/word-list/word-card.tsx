@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faEdit, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faClone, faEdit, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, useTrans} from "zographia";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
@@ -48,6 +48,12 @@ export const WordCard = create(
               <Button scheme="secondary" variant="underline">
                 <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
                 {trans("button.edit")}
+              </Button>
+            )}/>
+            <EditWordDialog dictionary={dictionary} word={word} forceAdd={true} trigger={(
+              <Button scheme="secondary" variant="underline">
+                <ButtonIconbag><GeneralIcon icon={faClone}/></ButtonIconbag>
+                {trans("button.duplicate")}
               </Button>
             )}/>
             <Button scheme="red" variant="underline" onClick={discardWord}>

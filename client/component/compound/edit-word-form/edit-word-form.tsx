@@ -18,18 +18,20 @@ export const EditWordForm = create(
   function ({
     dictionary,
     word,
+    forceAdd = false,
     onSubmit,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     word: Word | EditableWord | null,
+    forceAdd?: boolean,
     onSubmit?: (word: EditableWord) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editWordForm");
 
-    const {form, handleSubmit} = useEditWord(dictionary, word, onSubmit);
+    const {form, handleSubmit} = useEditWord(dictionary, word, forceAdd, onSubmit);
 
     return (
       <form styleName="root" {...rest}>

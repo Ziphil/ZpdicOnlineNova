@@ -24,11 +24,13 @@ export const EditWordDialog = create(
   function ({
     dictionary,
     word,
+    forceAdd = false,
     trigger,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     word: Word | EditableWord | null,
+    forceAdd?: boolean,
     trigger: ReactElement,
     className?: string
   }): ReactElement {
@@ -36,7 +38,7 @@ export const EditWordDialog = create(
     const {trans} = useTrans("editWordDialog");
 
     const [open, setOpen] = useState(false);
-    const addWordPageUrl = useHref(`/dictionary/${dictionary.number}/word/${(word !== null) ? word.number : "new"}`);
+    const addWordPageUrl = useHref(`/dictionary/${dictionary.number}/word/${(word !== null && !forceAdd) ? word.number : "new"}`);
 
     const openDialog = useCallback(function (): void {
       setOpen(true);
@@ -63,7 +65,7 @@ export const EditWordDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditWordForm dictionary={dictionary} word={word} onSubmit={closeDialog}/>
+              <EditWordForm dictionary={dictionary} word={word} forceAdd={forceAdd} onSubmit={closeDialog}/>
             </DialogBody>
           </DialogPane>
         </Dialog>

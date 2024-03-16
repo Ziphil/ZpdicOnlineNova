@@ -505,6 +505,7 @@ wordList:
   empty: "No matching words were found"
   button:
     edit: "Edit"
+    duplicate: "Duplicate"
     discard: "Delete"
     create: "Create"
     commission: "Request creation"

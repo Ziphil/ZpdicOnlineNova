@@ -505,6 +505,7 @@ wordList:
   empty: "Neniuj kongruaj vortoj estis trovitaj"
   button:
     edit: "Redakti"
+    duplicate: "Duobligi"
     discard: "Forigi"
     create: "Krei"
     commission: "Peti kreado"

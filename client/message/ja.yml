@@ -271,8 +271,8 @@ dictionaryHeader:
     commission: "造語依頼"
     setting: "設定"
   button:
-    addWord: "単語を追加"
-    addExample: "例文を追加"
+    addWord: "単語を作成"
+    addExample: "例文を作成"
     addCommission: "造語依頼"
     download: "ダウンロード"
 dictionaryList:
@@ -505,6 +505,7 @@ wordList:
   empty: "該当する単語は見つかりませんでした"
   button:
     edit: "編集"
+    duplicate: "複製編集"
     discard: "削除"
     create: "作成"
     commission: "造語依頼"

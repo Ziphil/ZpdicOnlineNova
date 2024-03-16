@@ -56,8 +56,8 @@ export type EditWordSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useEditWord(dictionary: Dictionary, word: Word | EditableWord | null, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
-  const form = useForm<FormValue>((word !== null) ? getFormValue(word) : DEFAULT_VALUE, {});
+export function useEditWord(dictionary: Dictionary, word: Word | EditableWord | null, forceAdd: boolean, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
+  const form = useForm<FormValue>((word !== null) ? getFormValue(word, forceAdd) : DEFAULT_VALUE, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -75,9 +75,9 @@ export function useEditWord(dictionary: Dictionary, word: Word | EditableWord | 
   return {form, handleSubmit};
 }
 
-function getFormValue(word: Word | EditableWord): FormValue {
+function getFormValue(word: Word | EditableWord, forceAdd: boolean): FormValue {
   const value = {
-    number: word.number ?? null,
+    number: (forceAdd) ? null : word.number ?? null,
     name: word.name,
     pronunciation: word.pronunciation || "",
     tags: word.tags,

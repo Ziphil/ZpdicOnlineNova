@@ -505,6 +505,7 @@ wordList:
   empty: "No matching words were found"
   button:
     edit: "Измєнити"
+    duplicate: "Duplicate"
     discard: "Одстранити"
     create: "Create"
     commission: "Request creation"
