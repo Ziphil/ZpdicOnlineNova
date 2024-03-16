@@ -385,7 +385,7 @@ type ServerSpecs = {
     }
   },
   issueUserResetToken: {
-    request: WithRecaptcha<{name: string, email: string}>,
+    request: WithRecaptcha<{email: string}>,
     response: {
       success: null,
       error: CustomError<"noSuchUser">

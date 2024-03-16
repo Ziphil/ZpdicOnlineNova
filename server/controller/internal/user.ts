@@ -120,9 +120,9 @@ export class UserController extends Controller {
   @post("/issueUserResetToken")
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"issueUserResetToken">, response: Response<"issueUserResetToken">): Promise<void> {
-    const {name, email} = request.body;
+    const {email} = request.body;
     try {
-      const {user, key} = await UserModel.issueResetToken(name, email);
+      const {user, key} = await UserModel.issueResetToken(email);
       const url = `${request.protocol}://${request.get("host")}/reset?key=${key}`;
       const subject = MailUtil.getSubject("issueUserResetToken");
       const text = MailUtil.getText("issueUserResetToken", {url});

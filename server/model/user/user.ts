@@ -91,8 +91,8 @@ export class UserSchema {
     return hitUsers;
   }
 
-  public static async issueResetToken(name: string, email: string): Promise<{user: User, key: string}> {
-    const user = await UserModel.findOne().where("name", name).where("email", email);
+  public static async issueResetToken(email: string): Promise<{user: User, key: string}> {
+    const user = await UserModel.findOne().where("email", email);
     if (user) {
       const key = await user.issueResetToken();
       return {user, key};
