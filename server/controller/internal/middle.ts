@@ -79,11 +79,11 @@ export function checkMe(authority?: string): RequestHandler {
 export function verifyDictionary(authority: DictionaryAuthority): RequestHandler {
   const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     try {
-      const user = request.user!;
+      const me = request.me!;
       const number = parseInt(request.query.number || request.body.number, 10);
       const dictionary = await DictionaryModel.fetchOneByNumber(number);
       if (dictionary) {
-        const hasAuthority = await dictionary.hasAuthority(user, authority);
+        const hasAuthority = await dictionary.hasAuthority(me, authority);
         if (hasAuthority) {
           request.dictionary = dictionary;
           next();
@@ -136,12 +136,12 @@ export function login(expiresIn: number): RequestHandler {
   const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     const name = request.body.name;
     const password = request.body.password;
-    const user = await UserModel.authenticate(name, password);
-    if (user) {
-      jwt.sign({id: user.id}, JWT_SECRET, {expiresIn}, (error, token) => {
+    const me = await UserModel.authenticate(name, password);
+    if (me) {
+      jwt.sign({id: me.id}, JWT_SECRET, {expiresIn}, (error, token) => {
         if (!error) {
           request.token = token;
-          request.user = user;
+          request.me = me;
           const options = {maxAge: expiresIn * 1000, httpOnly: true, signed: true, sameSite: true};
           response.cookie("authorization", token, options);
           next();
