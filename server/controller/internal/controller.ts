@@ -6,36 +6,48 @@ import {
   Response as ExpressResponse
 } from "express-serve-static-core";
 import {Controller as BaseController} from "/server/controller/controller";
-import {Dictionary, User} from "/server/model";
+import {CustomErrorCreator} from "/server/creator/error";
+import {CustomError, Dictionary, User} from "/server/model";
 import {
+  ErrorResponseType,
   ProcessName,
   RequestData,
   ResponseData,
-  ResponseEachData
+  SuccessResponseData
 } from "/server/type/internal";
 
 
 export class Controller extends BaseController {
 
-  protected static respond<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, "success">): void {
+  protected static respond<N extends ProcessName>(response: Response<N>, body: SuccessResponseData<N>): void {
     response.json(body).end();
   }
 
-  /** ステータスコード 400 でレスポンスボディを送ります。
-   * 第 3 引数の `error` が指定された場合のみ、`body` として `undefined` を渡すのが許されます。
-   * この場合は、`body` が `undefined` ならば `error` を例外として投げ、そうでないならば通常通り `body` をレスポンスとして送ります。*/
-  protected static respondError<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, "error">): void;
-  protected static respondError<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, "error"> | undefined, error: any): void;
-  protected static respondError<N extends ProcessName>(response: Response<N>, body: ResponseEachData<N, "error"> | undefined, error?: any): void {
-    if (body !== undefined) {
-      response.status(400).json(body).end();
-    } else if (error !== undefined) {
-      throw error;
-    }
+  /** 指定されたタイプの `CustomError` オブジェクトをレスポンスとして送ります。
+   * ステータスコードは常に 400 です。 */
+  protected static respondError<N extends ProcessName>(response: Response<N>, type: ErrorResponseType<N>): void {
+    const body = CustomErrorCreator.ofType(type);
+    response.status(400).json(body).end();
   }
 
-  protected static respondForbidden<N extends ProcessName>(response: Response<N>): void {
+  protected static respondForbiddenError<N extends ProcessName>(response: Response<N>): void {
     response.status(403).end();
+  }
+
+  /** `error` に指定された値が `CustomError` オブジェクトであり、そのタイプが `acceptedType` に含まれていた場合に限り、その `CustomError` オブジェクトをレスポンスとして送ります。
+   * それ以外の場合は、`error` を例外として投げます。*/
+  protected static respondByCustomError<N extends ProcessName, T extends ErrorResponseType<N>>(response: Response<N>, acceptedType: Array<T>, error: unknown): void {
+    if (CustomError.isCustomError(error)) {
+      const type = error.type as T;
+      if (acceptedType.includes(type)) {
+        const body = CustomErrorCreator.ofType(type);
+        response.status(400).json(body).end();
+      } else {
+        throw error;
+      }
+    } else {
+      throw error;
+    }
   }
 
 }

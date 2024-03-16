@@ -1,7 +1,5 @@
 //
 
-import type {DetailedDictionary, UserDictionary} from "/client/skeleton";
-import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {checkUser, verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
@@ -39,12 +37,10 @@ export class DictionaryController extends Controller {
         const body = DictionaryCreator.create(dictionary);
         Controller.respond(response, body);
       } else {
-        const body = CustomError.ofType("dictionarySizeTooLarge");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "dictionarySizeTooLarge");
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -56,8 +52,7 @@ export class DictionaryController extends Controller {
       await dictionary.discard();
       Controller.respond(response, null);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -71,8 +66,7 @@ export class DictionaryController extends Controller {
       const body = DictionaryCreator.create(dictionary);
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -87,22 +81,18 @@ export class DictionaryController extends Controller {
         const body = DictionaryCreator.create(dictionary);
         Controller.respond(response, body);
       } catch (error) {
-        const body = (() => {
-          if (error.name === "CustomError") {
-            if (error.type === "duplicateDictionaryParamName") {
-              return CustomError.ofType("duplicateDictionaryParamName");
-            }
-          } else if (error.name === "ValidationError") {
-            if (error.errors.paramName) {
-              return CustomError.ofType("invalidDictionaryParamName");
-            }
+        if (error.name === "ValidationError") {
+          if (error.errors.paramName) {
+            Controller.respondError(response, "invalidDictionaryParamName");
+          } else {
+            throw error;
           }
-        })();
-        Controller.respondError(response, body, error);
+        } else {
+          Controller.respondByCustomError(response, ["duplicateDictionaryParamName"], error);
+        }
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -118,20 +108,13 @@ export class DictionaryController extends Controller {
           await dictionary.discardAuthorizedUser(user);
           Controller.respond(response, null);
         } catch (error) {
-          const body = (() => {
-            if (error.name === "CustomError" && error.type === "noSuchDictionaryAuthorizedUser") {
-              return CustomError.ofType("noSuchDictionaryAuthorizedUser");
-            }
-          })();
-          Controller.respondError(response, body, error);
+          Controller.respondByCustomError(response, ["noSuchDictionaryAuthorizedUser"], error);
         }
       } else {
-        const body = CustomError.ofType("noSuchDictionaryAuthorizedUser");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "noSuchDictionaryAuthorizedUser");
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -145,8 +128,7 @@ export class DictionaryController extends Controller {
       const body = DictionaryCreator.create(dictionary);
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -160,8 +142,7 @@ export class DictionaryController extends Controller {
       const body = DictionaryCreator.create(dictionary);
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -175,8 +156,7 @@ export class DictionaryController extends Controller {
       const body = DictionaryCreator.create(dictionary);
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -209,8 +189,7 @@ export class DictionaryController extends Controller {
       const body = {words: [hitWords, hitSize], suggestions: hitSuggestions} as any;
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -227,8 +206,7 @@ export class DictionaryController extends Controller {
       await dictionary.download(path);
       response.download(path, fullFileName);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -243,18 +221,10 @@ export class DictionaryController extends Controller {
         const body = await DictionaryCreator.createDetailed(dictionary);
         Controller.respond(response, body);
       } else {
-        const body = (() => {
-          if (number !== undefined) {
-            return CustomError.ofType("noSuchDictionaryNumber");
-          } else {
-            return CustomError.ofType("noSuchDictionaryParamName");
-          }
-        })();
-        Controller.respondError(response, body);
+        Controller.respondError(response, "noSuchDictionaryNumber");
       }
     } else {
-      const body = CustomError.ofType("invalidArgument");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "invalidArgument");
     }
   }
 
@@ -266,8 +236,7 @@ export class DictionaryController extends Controller {
       const body = await dictionary.countWords();
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -279,8 +248,7 @@ export class DictionaryController extends Controller {
       const body = await dictionary.calcWordNameFrequencies();
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -292,8 +260,7 @@ export class DictionaryController extends Controller {
       const body = await dictionary.calcStatistics();
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -308,8 +275,7 @@ export class DictionaryController extends Controller {
       const body = titles;
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -323,8 +289,7 @@ export class DictionaryController extends Controller {
       const body = users.map(UserCreator.create);
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -333,18 +298,10 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: Request<"fetchDictionaries">, response: Response<"fetchDictionaries">): Promise<void> {
     const user = request.user!;
     const dictionaries = await DictionaryModel.fetchByUser(user, "edit");
-    const promises = dictionaries.map((dictionary) => {
-      const promise = new Promise<UserDictionary>(async (resolve, reject) => {
-        try {
-          const skeleton = await DictionaryCreator.createUser(dictionary, user);
-          resolve(skeleton);
-        } catch (error) {
-          reject(error);
-        }
-      });
-      return promise;
-    });
-    const body = await Promise.all(promises);
+    const body = await Promise.all(dictionaries.map(async (dictionary) => {
+      const skeleton = await DictionaryCreator.createUser(dictionary, user);
+      return skeleton;
+    }));
     Controller.respond(response, body);
   }
 
@@ -358,21 +315,13 @@ export class DictionaryController extends Controller {
       const authority = (me?.id === user.id) ? "edit" : "own";
       const includeSecret = me?.id === user.id;
       const dictionaries = await DictionaryModel.fetchByUser(user, authority, includeSecret);
-      const body = await Promise.all(dictionaries.map((dictionary) => {
-        const promise = new Promise<UserDictionary>(async (resolve, reject) => {
-          try {
-            const skeleton = await DictionaryCreator.createUser(dictionary, user);
-            resolve(skeleton);
-          } catch (error) {
-            reject(error);
-          }
-        });
-        return promise;
+      const body = await Promise.all(dictionaries.map(async (dictionary) => {
+        const skeleton = await DictionaryCreator.createUser(dictionary, user);
+        return skeleton;
       }));
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchUser");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchUser");
     }
   }
 
@@ -383,18 +332,10 @@ export class DictionaryController extends Controller {
     const size = request.body.size;
     const range = new QueryRange(offset, size);
     const hitResult = await DictionaryModel.fetch(order, range);
-    const hitPromises = hitResult[0].map((hitDictionary) => {
-      const promise = new Promise<DetailedDictionary>(async (resolve, reject) => {
-        try {
-          const skeleton = await DictionaryCreator.createDetailed(hitDictionary);
-          resolve(skeleton);
-        } catch (error) {
-          reject(error);
-        }
-      });
-      return promise;
-    });
-    const hitDictionaries = await Promise.all(hitPromises);
+    const hitDictionaries = await Promise.all(hitResult[0].map(async (hitDictionary) => {
+      const skeleton = await DictionaryCreator.createDetailed(hitDictionary);
+      return skeleton;
+    }));
     const hitSize = hitResult[1];
     const body = [hitDictionaries, hitSize] as any;
     Controller.respond(response, body);
@@ -403,7 +344,7 @@ export class DictionaryController extends Controller {
   @post("/fetchOverallAggregation")
   public async [Symbol()](request: Request<"fetchOverallAggregation">, response: Response<"fetchOverallAggregation">): Promise<void> {
     const models = [DictionaryModel, WordModel, ExampleModel, UserModel] as Array<any>;
-    const promises = models.map((model) => {
+    const [dictionary, word, example, user] = await Promise.all(models.map((model) => {
       if (model === UserModel) {
         const promise = Promise.all([model.estimatedDocumentCount(), model.collection.stats()]).then(([count, stats]) => {
           const wholeCount = count;
@@ -418,8 +359,7 @@ export class DictionaryController extends Controller {
         });
         return promise;
       }
-    });
-    const [dictionary, word, example, user] = await Promise.all(promises);
+    }));
     const body = {dictionary, word, example, user};
     Controller.respond(response, body);
   }
@@ -443,8 +383,7 @@ export class DictionaryController extends Controller {
         Controller.respond(response, false);
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -460,11 +399,10 @@ export class DictionaryController extends Controller {
       if (hasAuthority) {
         Controller.respond(response, null);
       } else {
-        Controller.respondForbidden(response);
+        Controller.respondForbiddenError(response);
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 

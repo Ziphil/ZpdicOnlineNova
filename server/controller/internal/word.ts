@@ -1,6 +1,5 @@
 //
 
-import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {verifyDictionary, verifyUser} from "/server/controller/internal/middle";
@@ -23,16 +22,10 @@ export class WordController extends Controller {
         const body = WordCreator.create(resultWord);
         Controller.respond(response, body);
       } catch (error) {
-        const body = (() => {
-          if (error.name === "CustomError" && error.type === "dictionarySaving") {
-            return CustomError.ofType("dictionarySaving");
-          }
-        })();
-        Controller.respondError(response, body, error);
+        Controller.respondByCustomError(response, ["dictionarySaving"], error);
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -47,20 +40,10 @@ export class WordController extends Controller {
         const body = WordCreator.create(resultWord);
         Controller.respond(response, body);
       } catch (error) {
-        const body = (() => {
-          if (error.name === "CustomError") {
-            if (error.type === "noSuchWordNumber") {
-              return CustomError.ofType("noSuchWordNumber");
-            } else if (error.type === "dictionarySaving") {
-              return CustomError.ofType("dictionarySaving");
-            }
-          }
-        })();
-        Controller.respondError(response, body, error);
+        Controller.respondByCustomError(response, ["noSuchWordNumber", "dictionarySaving"], error);
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -81,16 +64,10 @@ export class WordController extends Controller {
         }
         Controller.respond(response, null);
       } catch (error) {
-        const body = (() => {
-          if (error.name === "CustomError") {
-            return CustomError.ofType("failAddRelations");
-          }
-        })();
-        Controller.respondError(response, body, error);
+        Controller.respondByCustomError(response, ["failAddRelations"], error);
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -105,12 +82,10 @@ export class WordController extends Controller {
         const body = await WordCreator.createDetailed(word);
         Controller.respond(response, body);
       } else {
-        const body = CustomError.ofType("noSuchWordNumber");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "noSuchWordNumber");
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -124,8 +99,7 @@ export class WordController extends Controller {
       const body = {names};
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -140,8 +114,7 @@ export class WordController extends Controller {
       const body = {duplicate};
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 

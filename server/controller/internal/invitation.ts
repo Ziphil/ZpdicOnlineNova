@@ -1,11 +1,10 @@
 //
 
-import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {verifyDictionary, verifyUser} from "/server/controller/internal/middle";
 import {InvitationCreator} from "/server/creator";
-import {InvitationModel, UserModel} from "/server/model";
+import {CustomError, InvitationModel, UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 
 
@@ -25,30 +24,14 @@ export class InvitationController extends Controller {
         const body = await InvitationCreator.create(invitation);
         Controller.respond(response, body);
       } catch (error) {
-        const body = (() => {
-          if (error.name === "CustomError") {
-            if (error.type === "userCanAlreadyEdit") {
-              return CustomError.ofType("userCanAlreadyEdit");
-            } else if (error.type === "userCanAlreadyOwn") {
-              return CustomError.ofType("userCanAlreadyOwn");
-            } else if (error.type === "editInvitationAlreadyAdded") {
-              return CustomError.ofType("editInvitationAlreadyAdded");
-            } else if (error.type === "transferInvitationAlreadyAdded") {
-              return CustomError.ofType("transferInvitationAlreadyAdded");
-            }
-          }
-        })();
-        Controller.respondError(response, body, error);
+        Controller.respondByCustomError(response, ["userCanAlreadyEdit", "userCanAlreadyOwn", "editInvitationAlreadyAdded", "transferInvitationAlreadyAdded"], error);
       }
     } else {
-      const body = (() => {
-        if (dictionary === undefined) {
-          return CustomError.ofType("noSuchDictionaryNumber");
-        } else {
-          return CustomError.ofType("noSuchUser");
-        }
-      })();
-      Controller.respondError(response, body);
+      if (dictionary === undefined) {
+        Controller.respondError(response, "noSuchDictionaryNumber");
+      } else {
+        Controller.respondError(response, "noSuchUser");
+      }
     }
   }
 
@@ -65,15 +48,14 @@ export class InvitationController extends Controller {
         const body = await InvitationCreator.create(invitation);
         Controller.respond(response, body);
       } catch (error) {
-        if (error.name === "CustomError" && error.type === "forbidden") {
-          Controller.respondForbidden(response);
+        if (CustomError.isCustomError(error) && error.type === "forbidden") {
+          Controller.respondForbiddenError(response);
         } else {
           throw error;
         }
       }
     } else {
-      const body = CustomError.ofType("noSuchInvitation");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchInvitation");
     }
   }
 

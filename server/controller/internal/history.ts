@@ -1,6 +1,5 @@
 //
 
-import {CustomError} from "/client/skeleton";
 import {controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {HistoryCreator} from "/server/creator";
@@ -21,8 +20,7 @@ export class HistoryController extends Controller {
       const body = histories.map(HistoryCreator.create);
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 

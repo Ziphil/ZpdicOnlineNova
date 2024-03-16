@@ -1,6 +1,5 @@
 //
 
-import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {verifyDictionary, verifyUser} from "/server/controller/internal/middle";
@@ -24,16 +23,10 @@ export class ExampleController extends Controller {
         const body = ExampleCreator.create(resultExample);
         Controller.respond(response, body);
       } catch (error) {
-        const body = (() => {
-          if (error.name === "CustomError" && error.type === "dictionarySaving") {
-            return CustomError.ofType("dictionarySaving");
-          }
-        })();
-        Controller.respondError(response, body, error);
+        Controller.respondByCustomError(response, ["dictionarySaving"], error);
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -48,20 +41,10 @@ export class ExampleController extends Controller {
         const body = ExampleCreator.create(resultExample);
         Controller.respond(response, body);
       } catch (error) {
-        const body = (() => {
-          if (error.name === "CustomError") {
-            if (error.type === "noSuchExampleNumber") {
-              return CustomError.ofType("noSuchExampleNumber");
-            } else if (error.type === "dictionarySaving") {
-              return CustomError.ofType("dictionarySaving");
-            }
-          }
-        })();
-        Controller.respondError(response, body, error);
+        Controller.respondByCustomError(response, ["noSuchExampleNumber", "dictionarySaving"], error);
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -77,12 +60,10 @@ export class ExampleController extends Controller {
         const body = ExampleCreator.create(example);
         Controller.respond(response, body);
       } else {
-        const body = CustomError.ofType("noSuchExampleNumber");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "noSuchExampleNumber");
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -101,8 +82,7 @@ export class ExampleController extends Controller {
       const body = [hitExamples, hitSize] as any;
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 

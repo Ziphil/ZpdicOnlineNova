@@ -10,12 +10,4 @@ export interface CustomError<E extends string = string> {
 }
 
 
-export namespace CustomError {
-
-  export function ofType<E extends string>(type: E, code?: number): CustomError<E> {
-    const error = "CustomError" as const;
-    const skeleton = {error, type, code};
-    return skeleton;
-  }
-
-}
+export type CustomErrorType<T> = T extends CustomError<infer E> ? E : never;

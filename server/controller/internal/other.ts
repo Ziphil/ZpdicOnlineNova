@@ -1,6 +1,5 @@
 //
 
-import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {checkUser, verifyRecaptcha} from "/server/controller/internal/middle";
@@ -19,8 +18,7 @@ export class OtherController extends Controller {
     const localPath = `/dist/document/${locale}/${path || "index"}.md`;
     response.sendFile(process.cwd() + localPath, (error) => {
       if (error) {
-        const body = CustomError.ofType("noSuchDocument");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "noSuchDocument");
       }
     });
   }
@@ -43,12 +41,10 @@ export class OtherController extends Controller {
         MailUtil.send(administrator.email, nextSubject, nextText);
         Controller.respond(response, null);
       } else {
-        const body = CustomError.ofType("administratorNotFound");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "administratorNotFound");
       }
     } else {
-      const body = CustomError.ofType("emptyContactText");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "emptyContactText");
     }
   }
 

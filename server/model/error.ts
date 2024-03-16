@@ -11,4 +11,8 @@ export class CustomError<E extends string> extends Error {
     this.type = type;
   }
 
+  public static isCustomError(error: unknown): error is CustomError<string> {
+    return error instanceof Error && error.name === "CustomError";
+  }
+
 }

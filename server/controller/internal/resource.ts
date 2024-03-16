@@ -1,6 +1,5 @@
 //
 
-import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
@@ -28,16 +27,13 @@ export class ResourceController extends Controller {
           const body = post;
           Controller.respond(response, body);
         } else {
-          const body = CustomError.ofType("resourceCountExceeded");
-          Controller.respondError(response, body);
+          Controller.respondError(response, "resourceCountExceeded");
         }
       } catch (error) {
-        const body = CustomError.ofType("awsError");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "awsError");
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -52,12 +48,10 @@ export class ResourceController extends Controller {
         await AwsUtil.deleteFile(path);
         Controller.respond(response, null);
       } catch (error) {
-        const body = CustomError.ofType("awsError");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "awsError");
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -76,12 +70,10 @@ export class ResourceController extends Controller {
         const body = result;
         Controller.respond(response, body);
       } catch (error) {
-        const body = CustomError.ofType("awsError");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "awsError");
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 

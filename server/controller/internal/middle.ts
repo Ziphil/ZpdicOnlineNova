@@ -2,7 +2,7 @@
 
 import {NextFunction, Request, RequestHandler, Response} from "express";
 import * as jwt from "jsonwebtoken";
-import {CustomError} from "/client/skeleton";
+import {CustomErrorCreator} from "/server/creator/error";
 import {
   DictionaryAuthority,
   DictionaryModel,
@@ -29,7 +29,7 @@ export function verifyUser(authority?: string): RequestHandler {
             request.user = user;
             next();
           } else {
-            const body = CustomError.ofType("notEnoughUserAuthority");
+            const body = CustomErrorCreator.ofType("notEnoughUserAuthority");
             response.status(403).send(body).end();
           }
         } else {
@@ -88,7 +88,7 @@ export function verifyDictionary(authority: DictionaryAuthority): RequestHandler
           request.dictionary = dictionary;
           next();
         } else {
-          const body = CustomError.ofType("notEnoughDictionaryAuthority");
+          const body = CustomErrorCreator.ofType("notEnoughDictionaryAuthority");
           response.status(403).send(body).end();
         }
       } else {
@@ -113,12 +113,12 @@ export function verifyRecaptcha(): RequestHandler {
         request.recaptchaScore = result.score;
         next();
       } else {
-        const body = CustomError.ofType("recaptchaRejected");
+        const body = CustomErrorCreator.ofType("recaptchaRejected");
         response.status(403).send(body).end();
       }
     } catch (error) {
       if (error.name === "CustomError" && error.type === "recaptchaError") {
-        const body = CustomError.ofType("recaptchaError");
+        const body = CustomErrorCreator.ofType("recaptchaError");
         response.status(403).send(body).end();
       } else {
         next(error);

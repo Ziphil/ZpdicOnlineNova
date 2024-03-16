@@ -1,6 +1,5 @@
 //
 
-import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {login, logout, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
@@ -44,24 +43,17 @@ export class UserController extends Controller {
       MailUtil.send(user.email, subject, text);
       Controller.respond(response, body);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError") {
-          if (error.type === "duplicateUserName") {
-            return CustomError.ofType("duplicateUserName");
-          } else if (error.type === "duplicateUserEmail") {
-            return CustomError.ofType("duplicateUserEmail");
-          } else if (error.type === "invalidUserPassword") {
-            return CustomError.ofType("invalidUserPassword");
-          }
-        } else if (error.name === "ValidationError") {
-          if (error.errors.name) {
-            return CustomError.ofType("invalidUserName");
-          } else if (error.errors.email) {
-            return CustomError.ofType("invalidUserEmail");
-          }
+      if (error.name === "ValidationError") {
+        if (error.errors.name) {
+          Controller.respondError(response, "invalidUserName");
+        } else if (error.errors.email) {
+          Controller.respondError(response, "invalidUserEmail");
+        } else {
+          throw error;
         }
-      })();
-      Controller.respondError(response, body, error);
+      } else {
+        Controller.respondByCustomError(response, ["duplicateUserName", "duplicateUserEmail", "invalidUserPassword"], error);
+      }
     }
   }
 
@@ -75,7 +67,7 @@ export class UserController extends Controller {
       const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      Controller.respondError(response, undefined, error);
+      throw error;
     }
   }
 
@@ -89,14 +81,11 @@ export class UserController extends Controller {
       const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError" && error.type === "duplicateUserEmail") {
-          return CustomError.ofType("duplicateUserEmail");
-        } else if (error.name === "ValidationError" && error.errors.email) {
-          return CustomError.ofType("invalidUserEmail");
-        }
-      })();
-      Controller.respondError(response, body, error);
+      if (error.name === "ValidationError" && error.errors.email) {
+        Controller.respondError(response, "invalidUserEmail");
+      } else {
+        Controller.respondByCustomError(response, ["duplicateUserEmail"], error);
+      }
     }
   }
 
@@ -110,12 +99,7 @@ export class UserController extends Controller {
       const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError" && error.type === "invalidUserPassword") {
-          return CustomError.ofType("invalidUserPassword");
-        }
-      })();
-      Controller.respondError(response, body, error);
+      Controller.respondByCustomError(response, ["invalidUserPassword"], error);
     }
   }
 
@@ -131,16 +115,7 @@ export class UserController extends Controller {
       MailUtil.send(user.email, subject, text);
       Controller.respond(response, null);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError") {
-          if (error.type === "noSuchUser") {
-            return CustomError.ofType("noSuchUser");
-          } else if (error.type === "userAlreadyActivated") {
-            return CustomError.ofType("userAlreadyActivated");
-          }
-        }
-      })();
-      Controller.respondError(response, body, error);
+      Controller.respondByCustomError(response, ["noSuchUser", "userAlreadyActivated"], error);
     }
   }
 
@@ -157,14 +132,7 @@ export class UserController extends Controller {
       MailUtil.send(user.email, subject, text);
       Controller.respond(response, null);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError") {
-          if (error.type === "noSuchUser") {
-            return CustomError.ofType("noSuchUser");
-          }
-        }
-      })();
-      Controller.respondError(response, body, error);
+      Controller.respondByCustomError(response, ["noSuchUser"], error);
     }
   }
 
@@ -176,14 +144,7 @@ export class UserController extends Controller {
       const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError") {
-          if (error.type === "invalidActivateToken") {
-            return CustomError.ofType("invalidActivateToken");
-          }
-        }
-      })();
-      Controller.respondError(response, body, error);
+      Controller.respondByCustomError(response, ["invalidActivateToken"], error);
     }
   }
 
@@ -196,16 +157,7 @@ export class UserController extends Controller {
       const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError") {
-          if (error.type === "invalidResetToken") {
-            return CustomError.ofType("invalidResetToken");
-          } else if (error.type === "invalidUserPassword") {
-            return CustomError.ofType("invalidUserPassword");
-          }
-        }
-      })();
-      Controller.respondError(response, body, error);
+      Controller.respondByCustomError(response, ["invalidResetToken", "invalidUserPassword"], error);
     }
   }
 
@@ -217,7 +169,7 @@ export class UserController extends Controller {
       await user.discard();
       Controller.respond(response, null);
     } catch (error) {
-      Controller.respondError(response, undefined, error);
+      throw error;
     }
   }
 
@@ -237,8 +189,7 @@ export class UserController extends Controller {
       const body = UserCreator.create(user);
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchUser");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchUser");
     }
   }
 

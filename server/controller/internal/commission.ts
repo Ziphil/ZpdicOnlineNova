@@ -1,6 +1,5 @@
 //
 
-import {CustomError} from "/client/skeleton";
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
 import {verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
@@ -26,12 +25,10 @@ export class CommissionController extends Controller {
         const body = CommissionCreator.create(commission);
         Controller.respond(response, body);
       } else {
-        const body = CustomError.ofType("noSuchDictionaryNumber");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "noSuchDictionaryNumber");
       }
     } else {
-      const body = CustomError.ofType("emptyCommissionName");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "emptyCommissionName");
     }
   }
 
@@ -47,12 +44,10 @@ export class CommissionController extends Controller {
         const body = CommissionCreator.create(commission);
         Controller.respond(response, body);
       } else {
-        const body = CustomError.ofType("noSuchCommission");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "noSuchCommission");
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
@@ -70,8 +65,7 @@ export class CommissionController extends Controller {
       const body = [hitCommissions, hitSize] as any;
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionaryNumber");
     }
   }
 
