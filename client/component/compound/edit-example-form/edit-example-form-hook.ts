@@ -42,7 +42,6 @@ export function useEditExample(dictionary: Dictionary, example: Example | null, 
         invalidateResponses("fetchExamples", (query) => query.number === dictionary.number),
         invalidateResponses("searchWord", (query) => query.number === dictionary.number)
       ]);
-      console.log("invalidate");
       await onSubmit?.(query.example);
       dispatchSuccessToast((adding) ? "addExample" : "changeExample");
     });
