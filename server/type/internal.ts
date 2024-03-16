@@ -355,28 +355,28 @@ type ServerSpecs = {
       error: CustomError<"duplicateUserName" | "duplicateUserEmail" | "invalidUserName" | "invalidUserEmail" | "invalidUserPassword">
     }
   },
-  changeUserScreenName: {
+  changeMyScreenName: {
     request: {screenName: string},
     response: {
       success: User,
       error: never
     }
   },
-  changeUserEmail: {
+  changeMyEmail: {
     request: {email: string},
     response: {
       success: User,
       error: CustomError<"duplicateUserEmail" | "invalidUserEmail">
     }
   },
-  changeUserPassword: {
+  changeMyPassword: {
     request: {password: string},
     response: {
       success: User,
       error: CustomError<"invalidUserPassword">
     }
   },
-  issueUserActivateToken: {
+  issueMyActivateToken: {
     request: WithRecaptcha<{}>,
     response: {
       success: null,
@@ -397,28 +397,28 @@ type ServerSpecs = {
       error: CustomError<"invalidResetToken" | "invalidUserPassword">
     }
   },
-  activateUser: {
+  activateMe: {
     request: {key: string},
     response: {
       success: User,
       error: CustomError<"invalidActivateToken">
     }
   },
-  discardUser: {
+  discardMe: {
     request: {},
     response: {
       success: null,
       error: never
     }
   },
-  fetchUser: {
+  fetchMe: {
     request: {},
     response: {
       success: DetailedUser,
       error: never
     }
   },
-  fetchOtherUser: {
+  fetchUser: {
     request: {name: string},
     response: {
       success: User,

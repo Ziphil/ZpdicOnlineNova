@@ -19,7 +19,7 @@ export function useDiscardMe(): () => void {
   const {dispatchSuccessToast} = useToast();
   const navigate = useNavigate();
   const doRequest = useCallback(async function (): Promise<void> {
-    const response = await request("discardUser", {});
+    const response = await request("discardMe", {});
     await switchResponse(response, async () => {
       await logout();
       navigate("/");

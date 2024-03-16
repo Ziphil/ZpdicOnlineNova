@@ -8,7 +8,7 @@ import {ResponseError} from "/client/util/error";
 export async function loadUserPage({params}: LoaderFunctionArgs): Promise<null> {
   const {name} = params;;
   try {
-    const user = await fetchResponse("fetchOtherUser", {name: name!});
+    const user = await fetchResponse("fetchUser", {name: name!});
     return null;
   } catch (error) {
     throw convertError(error);

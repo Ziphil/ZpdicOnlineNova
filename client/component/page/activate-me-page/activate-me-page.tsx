@@ -20,10 +20,10 @@ export const ActivateMePage = create(
     const [search] = useSearch();
     const tokenKey = search.get("key") ?? "";
 
-    const activateUser = useActivateUser(tokenKey);
+    const activateMe = useActivateUser(tokenKey);
 
     useMount(async () => {
-      await activateUser();
+      await activateMe();
     });
 
     return (

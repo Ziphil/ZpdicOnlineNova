@@ -21,7 +21,7 @@ export const UserAvatar = createWithRef(
     ref?: Ref<HTMLSpanElement>
   } & AdditionalProps): ReactElement {
 
-    const [innerUser] = useResponse("fetchOtherUser", (typeof user === "string") && {name: user});
+    const [innerUser] = useResponse("fetchUser", (typeof user === "string") && {name: user});
     const actualUser = (typeof user === "string") ? innerUser : user;
 
     const hue = (actualUser !== undefined) ? getIdHue(actualUser.id) : 0;

@@ -25,7 +25,7 @@ export function useChangeMyPassword(me: DetailedUser): ChangeMyPasswordSpec {
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = await request("changeUserPassword", {password: value.newPassword});
+    const response = await request("changeMyPassword", {password: value.newPassword});
     await switchResponse(response, async () => {
       dispatchSuccessToast("changeMyPassword");
     });

@@ -9,8 +9,8 @@ export async function loadUserNotificationPart({params}: LoaderFunctionArgs): Pr
   const {name} = params;;
   try {
     const [me, user] = await Promise.all([
-      fetchResponse("fetchUser", {}),
-      fetchResponse("fetchOtherUser", {name: name!})
+      fetchResponse("fetchMe", {}),
+      fetchResponse("fetchUser", {name: name!})
     ]);
     if (me.name === user.name) {
       return null;

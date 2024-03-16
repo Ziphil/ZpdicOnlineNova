@@ -80,7 +80,7 @@ toast:
     issueMyActivateToken:
       We sent an email to you.
       Please follow the instructions in the email.
-    activateUser:
+    activateMe:
       Your account has been activated.
     issueUserResetToken:
       We sent an email to you.

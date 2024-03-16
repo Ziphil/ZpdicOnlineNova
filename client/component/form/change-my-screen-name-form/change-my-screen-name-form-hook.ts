@@ -24,7 +24,7 @@ export function useChangeMyScreenName(me: DetailedUser): ChangeMyScreenNameSpec 
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = await request("changeUserScreenName", {screenName: value.screenName});
+    const response = await request("changeMyScreenName", {screenName: value.screenName});
     await switchResponse(response, async () => {
       dispatchSuccessToast("changeMyScreenName");
     });

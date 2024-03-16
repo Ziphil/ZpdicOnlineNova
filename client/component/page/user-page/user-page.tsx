@@ -19,7 +19,7 @@ export const UserPage = create(
   } & AdditionalProps): ReactElement {
 
     const {name} = useParams();
-    const [user] = useSuspenseResponse("fetchOtherUser", {name: name!});
+    const [user] = useSuspenseResponse("fetchUser", {name: name!});
 
     const match = useMatch("/user/:name/:tabPath");
     const tabValue = getTabValue(match?.params.tabPath);

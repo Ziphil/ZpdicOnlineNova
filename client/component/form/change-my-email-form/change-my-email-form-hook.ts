@@ -24,7 +24,7 @@ export function useChangeMyEmail(me: DetailedUser): ChangeMyEmailSpec {
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = await request("changeUserEmail", {email: value.email});
+    const response = await request("changeMyEmail", {email: value.email});
     await switchResponse(response, async () => {
       dispatchSuccessToast("changeMyEmail");
     });

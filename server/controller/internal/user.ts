@@ -65,9 +65,9 @@ export class UserController extends Controller {
     }
   }
 
-  @post("/changeUserScreenName")
+  @post("/changeMyScreenName")
   @before(verifyUser())
-  public async [Symbol()](request: Request<"changeUserScreenName">, response: Response<"changeUserScreenName">): Promise<void> {
+  public async [Symbol()](request: Request<"changeMyScreenName">, response: Response<"changeMyScreenName">): Promise<void> {
     const user = request.user!;
     const screenName = request.body.screenName;
     try {
@@ -79,9 +79,9 @@ export class UserController extends Controller {
     }
   }
 
-  @post("/changeUserEmail")
+  @post("/changeMyEmail")
   @before(verifyUser())
-  public async [Symbol()](request: Request<"changeUserEmail">, response: Response<"changeUserEmail">): Promise<void> {
+  public async [Symbol()](request: Request<"changeMyEmail">, response: Response<"changeMyEmail">): Promise<void> {
     const user = request.user!;
     const email = request.body.email;
     try {
@@ -100,9 +100,9 @@ export class UserController extends Controller {
     }
   }
 
-  @post("/changeUserPassword")
+  @post("/changeMyPassword")
   @before(verifyUser())
-  public async [Symbol()](request: Request<"changeUserPassword">, response: Response<"changeUserPassword">): Promise<void> {
+  public async [Symbol()](request: Request<"changeMyPassword">, response: Response<"changeMyPassword">): Promise<void> {
     const user = request.user!;
     const password = request.body.password;
     try {
@@ -119,15 +119,15 @@ export class UserController extends Controller {
     }
   }
 
-  @post("/issueUserActivateToken")
+  @post("/issueMyActivateToken")
   @before(verifyRecaptcha(), verifyUser())
-  public async [Symbol()](request: Request<"issueUserActivateToken">, response: Response<"issueUserActivateToken">): Promise<void> {
+  public async [Symbol()](request: Request<"issueMyActivateToken">, response: Response<"issueMyActivateToken">): Promise<void> {
     const user = request.user!;
     try {
       const key = await user.issueActivateToken();
       const url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
-      const subject = MailUtil.getSubject("issueUserActivateToken");
-      const text = MailUtil.getText("issueUserActivateToken", {url});
+      const subject = MailUtil.getSubject("issueMyActivateToken");
+      const text = MailUtil.getText("issueMyActivateToken", {url});
       MailUtil.send(user.email, subject, text);
       Controller.respond(response, null);
     } catch (error) {
@@ -168,8 +168,8 @@ export class UserController extends Controller {
     }
   }
 
-  @post("/activateUser")
-  public async [Symbol()](request: Request<"activateUser">, response: Response<"activateUser">): Promise<void> {
+  @post("/activateMe")
+  public async [Symbol()](request: Request<"activateMe">, response: Response<"activateMe">): Promise<void> {
     const key = request.body.key;
     try {
       const user = await UserModel.activate(key, 60);
@@ -209,9 +209,9 @@ export class UserController extends Controller {
     }
   }
 
-  @post("/discardUser")
+  @post("/discardMe")
   @before(verifyUser())
-  public async [Symbol()](request: Request<"discardUser">, response: Response<"discardUser">): Promise<void> {
+  public async [Symbol()](request: Request<"discardMe">, response: Response<"discardMe">): Promise<void> {
     const user = request.user!;
     try {
       await user.discard();
@@ -221,16 +221,16 @@ export class UserController extends Controller {
     }
   }
 
-  @post("/fetchUser")
+  @post("/fetchMe")
   @before(verifyUser())
-  public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
+  public async [Symbol()](request: Request<"fetchMe">, response: Response<"fetchMe">): Promise<void> {
     const user = request.user!;
     const body = UserCreator.createDetailed(user);
     Controller.respond(response, body);
   }
 
-  @post("/fetchOtherUser")
-  public async [Symbol()](request: Request<"fetchOtherUser">, response: Response<"fetchOtherUser">): Promise<void> {
+  @post("/fetchUser")
+  public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
     const name = request.body.name;
     const user = await UserModel.fetchOneByName(name);
     if (user !== null) {

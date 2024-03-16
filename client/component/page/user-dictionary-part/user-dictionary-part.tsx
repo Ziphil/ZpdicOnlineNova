@@ -21,7 +21,7 @@ export const UserDictionaryPart = create(
     const me = useMe();
 
     const {name} = useParams();
-    const [user] = useSuspenseResponse("fetchOtherUser", {name: name!});
+    const [user] = useSuspenseResponse("fetchUser", {name: name!});
     const [dictionaries] = useSuspenseResponse("fetchUserDictionaries", {name: name!});
 
     return (

@@ -56,7 +56,7 @@ export function useLogoutRequest(): (config?: RequestConfig) => Promise<AxiosRes
 
 async function fetchMe(): Promise<DetailedUser | null> {
   const url = SERVER_PATH_PREFIX + "/fetchUser";
-  const response = await axios.post<ResponseData<"fetchUser">>(url, {}, {validateStatus: () => true});
+  const response = await axios.post<ResponseData<"fetchMe">>(url, {}, {validateStatus: () => true});
   if (response.status === 200 && !("error" in response.data)) {
     const me = response.data;
     setAnalyticsProperties("user_properties", [["id", me.id], ["name", me.name], ["screen_name", me.screenName]]);

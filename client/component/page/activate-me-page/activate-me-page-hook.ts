@@ -12,11 +12,11 @@ export function useActivateUser(tokenKey: string): () => Promise<void> {
   const {dispatchSuccessToast} = useToast();
   const navigate = useNavigate();
   const execute = useCallback(async function (): Promise<void> {
-    const response = await request("activateUser", {key: tokenKey});
+    const response = await request("activateMe", {key: tokenKey});
     await switchResponse(response, async (body) => {
       const user = body;
       navigate(`/user/${user.name}`, {replace: true});
-      dispatchSuccessToast("activateUser");
+      dispatchSuccessToast("activateMe");
     }, async () => {
       navigate("/", {replace: true});
     });

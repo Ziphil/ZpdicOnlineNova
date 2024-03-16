@@ -80,7 +80,7 @@ toast:
     issueMyActivateToken: |-
       メールを送信しました。
       メールの指示に従って操作を進めてください。
-    activateUser: |-
+    activateMe: |-
       アカウントをアクティベートしました。
     issueUserResetToken: |-
       メールを送信しました。

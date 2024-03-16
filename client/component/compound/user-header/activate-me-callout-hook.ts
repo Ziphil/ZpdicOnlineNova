@@ -10,7 +10,7 @@ export function useIssueMyActivateToken(): () => Promise<void> {
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const execute = useCallback(async function (): Promise<void> {
-    const response = await request("issueUserActivateToken", {}, {useRecaptcha: true});
+    const response = await request("issueMyActivateToken", {}, {useRecaptcha: true});
     await switchResponse(response, async (body) => {
       dispatchSuccessToast("issueMyActivateToken");
     });
