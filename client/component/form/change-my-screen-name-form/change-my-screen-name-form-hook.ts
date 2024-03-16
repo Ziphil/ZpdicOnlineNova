@@ -2,8 +2,9 @@
 
 import {BaseSyntheticEvent, useMemo} from "react";
 import {Asserts, object, string} from "yup";
+import {useRefetchMe} from "/client/hook/auth";
 import {UseFormReturn, useForm} from "/client/hook/form";
-import {useRequest} from "/client/hook/request";
+import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {DetailedUser} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
@@ -22,12 +23,17 @@ export type ChangeMyScreenNameSpec = {
 export function useChangeMyScreenName(me: DetailedUser): ChangeMyScreenNameSpec {
   const form = useForm<FormValue>(SCHEMA, {screenName: me.screenName}, {});
   const request = useRequest();
+  const refetchMe = useRefetchMe();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("changeMyScreenName", {screenName: value.screenName});
     await switchResponse(response, async () => {
+      await Promise.all([
+        refetchMe(),
+        invalidateResponses("fetchUser", (data) => data.name === me.name)
+      ]);
       dispatchSuccessToast("changeMyScreenName");
     });
-  }), [request, form, dispatchSuccessToast]);
+  }), [me.name, request, refetchMe, form, dispatchSuccessToast]);
   return {form, handleSubmit};
 }
