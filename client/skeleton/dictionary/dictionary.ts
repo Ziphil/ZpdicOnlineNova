@@ -4,7 +4,7 @@ import {Akrantiain} from "akrantiain";
 import {Zatlin} from "zatlin";
 import {DictionarySettings} from "/client/skeleton/dictionary/dictionary-settings";
 import {User} from "/client/skeleton/user";
-import type {DictionaryAuthority} from "../../../server/model";
+import type {DictionaryAuthority} from "/server/model";
 
 
 export interface Dictionary {

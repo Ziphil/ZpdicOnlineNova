@@ -1,20 +1,13 @@
 //
 
-import {
-  createReadStream
-} from "fs";
+import {createReadStream} from "fs";
 import oboe from "oboe";
-import {
-  EquivalentModel,
-  InformationModel,
-  RelationModel,
-  VariationModel,
-  Word,
-  WordModel
-} from "../..";
-import {
-  Deserializer
-} from "/server/model/dictionary/deserializer/deserializer";
+import {Deserializer} from "/server/model/dictionary/deserializer/deserializer";
+import {EquivalentModel} from "/server/model/word/equivalent";
+import {InformationModel} from "/server/model/word/information";
+import {RelationModel} from "/server/model/word/relation";
+import {VariationModel} from "/server/model/word/variation";
+import {Word, WordModel} from "/server/model/word/word";
 
 
 export class SlimeDeserializer extends Deserializer {
