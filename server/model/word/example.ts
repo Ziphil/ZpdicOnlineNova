@@ -85,7 +85,7 @@ export class ExampleSchema extends DiscardableSchema {
     if (example) {
       await example.flagDiscarded();
     } else {
-      throw new CustomError("noSuchExampleNumber");
+      throw new CustomError("noSuchExample");
     }
     LogUtil.log("model/example/discard", {number: dictionary.number, currentId: example.id});
     return example;

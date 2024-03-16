@@ -40,7 +40,7 @@ export class DictionaryController extends Controller {
         Controller.respondError(response, "dictionarySizeTooLarge");
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -52,7 +52,7 @@ export class DictionaryController extends Controller {
       await dictionary.discard();
       Controller.respond(response, null);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -66,7 +66,7 @@ export class DictionaryController extends Controller {
       const body = DictionaryCreator.create(dictionary);
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -92,7 +92,7 @@ export class DictionaryController extends Controller {
         }
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -114,7 +114,7 @@ export class DictionaryController extends Controller {
         Controller.respondError(response, "noSuchDictionaryAuthorizedUser");
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -128,7 +128,7 @@ export class DictionaryController extends Controller {
       const body = DictionaryCreator.create(dictionary);
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -142,7 +142,7 @@ export class DictionaryController extends Controller {
       const body = DictionaryCreator.create(dictionary);
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -156,7 +156,7 @@ export class DictionaryController extends Controller {
       const body = DictionaryCreator.create(dictionary);
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -189,7 +189,7 @@ export class DictionaryController extends Controller {
       const body = {words: [hitWords, hitSize], suggestions: hitSuggestions} as any;
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -206,7 +206,7 @@ export class DictionaryController extends Controller {
       await dictionary.download(path);
       response.download(path, fullFileName);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -221,7 +221,7 @@ export class DictionaryController extends Controller {
         const body = await DictionaryCreator.createDetailed(dictionary);
         Controller.respond(response, body);
       } else {
-        Controller.respondError(response, "noSuchDictionaryNumber");
+        Controller.respondError(response, "noSuchDictionary");
       }
     } else {
       Controller.respondError(response, "invalidArgument");
@@ -236,7 +236,7 @@ export class DictionaryController extends Controller {
       const body = await dictionary.countWords();
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -248,7 +248,7 @@ export class DictionaryController extends Controller {
       const body = await dictionary.calcWordNameFrequencies();
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -260,7 +260,7 @@ export class DictionaryController extends Controller {
       const body = await dictionary.calcStatistics();
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -275,7 +275,7 @@ export class DictionaryController extends Controller {
       const body = titles;
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -289,7 +289,7 @@ export class DictionaryController extends Controller {
       const body = users.map(UserCreator.create);
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -383,7 +383,7 @@ export class DictionaryController extends Controller {
         Controller.respond(response, false);
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -402,7 +402,7 @@ export class DictionaryController extends Controller {
         Controller.respondForbiddenError(response);
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 

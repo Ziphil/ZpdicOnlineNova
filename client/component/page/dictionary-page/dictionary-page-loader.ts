@@ -22,7 +22,7 @@ export function shouldRevalidateDictionaryPage({currentUrl, nextUrl}: ShouldReva
 
 function convertError(error: unknown): unknown {
   if (ResponseError.isResponseError(error)) {
-    if (error.type === "noSuchDictionaryNumber" || error.type === "noSuchDictionaryParamName") {
+    if (error.type === "noSuchDictionary") {
       return new Response(JSON.stringify(error), {status: 404});
     } else {
       return error;

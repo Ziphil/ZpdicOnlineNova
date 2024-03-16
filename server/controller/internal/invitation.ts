@@ -28,7 +28,7 @@ export class InvitationController extends Controller {
       }
     } else {
       if (dictionary === undefined) {
-        Controller.respondError(response, "noSuchDictionaryNumber");
+        Controller.respondError(response, "noSuchDictionary");
       } else {
         Controller.respondError(response, "noSuchUser");
       }

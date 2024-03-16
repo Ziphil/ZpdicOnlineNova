@@ -33,7 +33,7 @@ export class ResourceController extends Controller {
         Controller.respondError(response, "awsError");
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -51,7 +51,7 @@ export class ResourceController extends Controller {
         Controller.respondError(response, "awsError");
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -73,7 +73,7 @@ export class ResourceController extends Controller {
         Controller.respondError(response, "awsError");
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 

@@ -23,7 +23,7 @@ export async function loadDictionarySettingPart({params}: LoaderFunctionArgs): P
 
 function convertError(error: unknown): unknown {
   if (ResponseError.isResponseError(error)) {
-    if (error.type === "noSuchDictionaryNumber" || error.type === "noSuchDictionaryParamName") {
+    if (error.type === "noSuchDictionary") {
       return new Response(JSON.stringify(error), {status: 404});
     } else {
       return error;

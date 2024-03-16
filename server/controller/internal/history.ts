@@ -20,7 +20,7 @@ export class HistoryController extends Controller {
       const body = histories.map(HistoryCreator.create);
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 

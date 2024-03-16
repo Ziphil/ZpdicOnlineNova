@@ -119,9 +119,7 @@ toast:
       Failed to reset your password.
     loginFailed: |-
       Failed to sign in.
-    noSuchDictionaryNumber: |-
-      This dictionary does not exist.
-    noSuchDictionaryParamName: |-
+    noSuchDictionary: |-
       This dictionary does not exist.
     duplicateDictionaryParamName: |-
       The identifier you specified is already used.
@@ -135,9 +133,9 @@ toast:
       Failed to create the mutual relations.
     dictionarySizeTooLarge: |-
       The file is too large.
-    noSuchWordNumber: |-
+    noSuchWord: |-
       This word does not exist.
-    noSuchExampleNumber: |-
+    noSuchExample: |-
       This example sentence does not exist.
     resourceCountExceeded: |-
       No more files can be uploaded.

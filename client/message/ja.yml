@@ -119,9 +119,7 @@ toast:
       パスワードのリセットに失敗しました。
     loginFailed: |-
       ログインに失敗しました。
-    noSuchDictionaryNumber: |-
-      この辞書は存在しません。
-    noSuchDictionaryParamName: |-
+    noSuchDictionary: |-
       この辞書は存在しません。
     duplicateDictionaryParamName: |-
       その URL 用識別子はすでに利用されています。
@@ -135,9 +133,9 @@ toast:
       双方向の関連語の登録に失敗しました。
     dictionarySizeTooLarge: |-
       ファイルのサイズが大きすぎます。
-    noSuchWordNumber: |-
+    noSuchWord: |-
       この単語は存在しません。
-    noSuchExampleNumber: |-
+    noSuchExample: |-
       この例文は存在しません。
     resourceCountExceeded: |-
       これ以上ファイルをアップロードすることはできません。

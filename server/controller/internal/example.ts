@@ -26,7 +26,7 @@ export class ExampleController extends Controller {
         Controller.respondByCustomError(response, ["dictionarySaving"], error);
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -41,10 +41,10 @@ export class ExampleController extends Controller {
         const body = ExampleCreator.create(resultExample);
         Controller.respond(response, body);
       } catch (error) {
-        Controller.respondByCustomError(response, ["noSuchExampleNumber", "dictionarySaving"], error);
+        Controller.respondByCustomError(response, ["noSuchExample", "dictionarySaving"], error);
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -60,10 +60,10 @@ export class ExampleController extends Controller {
         const body = ExampleCreator.create(example);
         Controller.respond(response, body);
       } else {
-        Controller.respondError(response, "noSuchExampleNumber");
+        Controller.respondError(response, "noSuchExample");
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -82,7 +82,7 @@ export class ExampleController extends Controller {
       const body = [hitExamples, hitSize] as any;
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 

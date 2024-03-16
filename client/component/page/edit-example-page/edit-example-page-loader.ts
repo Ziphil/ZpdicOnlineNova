@@ -30,7 +30,7 @@ export async function loadEditWordPage({params}: LoaderFunctionArgs): Promise<Ed
 
 function convertError(error: unknown): unknown {
   if (ResponseError.isResponseError(error)) {
-    if (error.type === "noSuchDictionaryNumber" || error.type === "noSuchDictionaryParamName" || error.type === "noSuchExampleNumber") {
+    if (error.type === "noSuchDictionary" || error.type === "noSuchExample") {
       return new Response(JSON.stringify(error), {status: 404});
     } else {
       return error;

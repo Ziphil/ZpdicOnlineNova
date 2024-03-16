@@ -25,7 +25,7 @@ export class WordController extends Controller {
         Controller.respondByCustomError(response, ["dictionarySaving"], error);
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -40,10 +40,10 @@ export class WordController extends Controller {
         const body = WordCreator.create(resultWord);
         Controller.respond(response, body);
       } catch (error) {
-        Controller.respondByCustomError(response, ["noSuchWordNumber", "dictionarySaving"], error);
+        Controller.respondByCustomError(response, ["noSuchWord", "dictionarySaving"], error);
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -67,7 +67,7 @@ export class WordController extends Controller {
         Controller.respondByCustomError(response, ["failAddRelations"], error);
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -82,10 +82,10 @@ export class WordController extends Controller {
         const body = await WordCreator.createDetailed(word);
         Controller.respond(response, body);
       } else {
-        Controller.respondError(response, "noSuchWordNumber");
+        Controller.respondError(response, "noSuchWord");
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -99,7 +99,7 @@ export class WordController extends Controller {
       const body = {names};
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -114,7 +114,7 @@ export class WordController extends Controller {
       const body = {duplicate};
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 

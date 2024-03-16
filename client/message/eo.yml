@@ -119,9 +119,7 @@ toast:
       Malsukcesis restarigi vian pasvorton.
     loginFailed: |-
       Malsukcesis ensaluti.
-    noSuchDictionaryNumber: |-
-      Ne ekzistas tiu vortaro.
-    noSuchDictionaryParamName: |-
+    noSuchDictionary: |-
       Ne ekzistas tiu vortaro.
     duplicateDictionaryParamName: |-
       Jam uzitas la identigilo kiun vi specifis.
@@ -135,9 +133,9 @@ toast:
       Malsukcesis krei la reciprokaj rilatojn.
     dictionarySizeTooLarge: |-
       La dosiero estas tro granda.
-    noSuchWordNumber: |-
+    noSuchWord: |-
       Ne ekzistas tiu vorto.
-    noSuchExampleNumber: |-
+    noSuchExample: |-
       Ne ekzistas tiu ekzempla frazo.
     resourceCountExceeded: |-
       Ne eblas alŝuti pli da dosieroj.

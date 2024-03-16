@@ -25,7 +25,7 @@ export class CommissionController extends Controller {
         const body = CommissionCreator.create(commission);
         Controller.respond(response, body);
       } else {
-        Controller.respondError(response, "noSuchDictionaryNumber");
+        Controller.respondError(response, "noSuchDictionary");
       }
     } else {
       Controller.respondError(response, "emptyCommissionName");
@@ -47,7 +47,7 @@ export class CommissionController extends Controller {
         Controller.respondError(response, "noSuchCommission");
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -65,7 +65,7 @@ export class CommissionController extends Controller {
       const body = [hitCommissions, hitSize] as any;
       Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionaryNumber");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 

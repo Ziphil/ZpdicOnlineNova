@@ -45,63 +45,63 @@ type ServerSpecs = {
     request: WithRecaptcha<{number: string}>,
     response: {
       success: Dictionary,
-      error: CustomError<"noSuchDictionaryNumber" | "dictionarySizeTooLarge">
+      error: CustomError<"noSuchDictionary" | "dictionarySizeTooLarge">
     }
   },
   discardDictionary: {
     request: {number: number},
     response: {
       success: null,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   changeDictionaryName: {
     request: {number: number, name: string},
     response: {
       success: Dictionary,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   changeDictionaryParamName: {
     request: {number: number, paramName: string},
     response: {
       success: Dictionary,
-      error: CustomError<"noSuchDictionaryNumber" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
+      error: CustomError<"noSuchDictionary" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
     }
   },
   changeDictionarySecret: {
     request: {number: number, secret: boolean},
     response: {
       success: Dictionary,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   changeDictionaryExplanation: {
     request: {number: number, explanation: string},
     response: {
       success: Dictionary,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   changeDictionarySettings: {
     request: {number: number, settings: Partial<DictionarySettings>},
     response: {
       success: Dictionary,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   discardDictionaryAuthorizedUser: {
     request: {number: number, id: string},
     response: {
       success: null,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryAuthorizedUser">
+      error: CustomError<"noSuchDictionary" | "noSuchDictionaryAuthorizedUser">
     }
   },
   addInvitation: {
     request: {number: number, type: InvitationType, userName: string},
     response: {
       success: Invitation,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchUser" | "userCanAlreadyEdit" | "userCanAlreadyOwn" | "editInvitationAlreadyAdded" | "transferInvitationAlreadyAdded">
+      error: CustomError<"noSuchDictionary" | "noSuchUser" | "userCanAlreadyEdit" | "userCanAlreadyOwn" | "editInvitationAlreadyAdded" | "transferInvitationAlreadyAdded">
     }
   },
   respondInvitation: {
@@ -115,56 +115,56 @@ type ServerSpecs = {
     request: {number: number, word: EditableWord},
     response: {
       success: Word,
-      error: CustomError<"noSuchDictionaryNumber" | "dictionarySaving">
+      error: CustomError<"noSuchDictionary" | "dictionarySaving">
     }
   },
   discardWord: {
     request: {number: number, wordNumber: number},
     response: {
       success: Word,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber" | "dictionarySaving">
+      error: CustomError<"noSuchDictionary" | "noSuchWord" | "dictionarySaving">
     }
   },
   addRelations: {
     request: {number: number, specs: Array<{wordNumber: number, relation: Relation}>},
     response: {
       success: null,
-      error: CustomError<"noSuchDictionaryNumber" | "failAddRelations">
+      error: CustomError<"noSuchDictionary" | "failAddRelations">
     }
   },
   editExample: {
     request: {number: number, example: EditableExample},
     response: {
       success: Example,
-      error: CustomError<"noSuchDictionaryNumber" | "dictionarySaving">
+      error: CustomError<"noSuchDictionary" | "dictionarySaving">
     }
   },
   discardExample: {
     request: {number: number, exampleNumber: number},
     response: {
       success: Example,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchExampleNumber" | "dictionarySaving">
+      error: CustomError<"noSuchDictionary" | "noSuchExample" | "dictionarySaving">
     }
   },
   addCommission: {
     request: WithRecaptcha<{number: number, name: string, comment?: string}>,
     response: {
       success: Commission,
-      error: CustomError<"noSuchDictionaryNumber" | "emptyCommissionName">
+      error: CustomError<"noSuchDictionary" | "emptyCommissionName">
     }
   },
   discardCommission: {
     request: {number: number, id: string},
     response: {
       success: Commission,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchCommission">
+      error: CustomError<"noSuchDictionary" | "noSuchCommission">
     }
   },
   fetchCommissions: {
     request: {number: number, offset?: number, size?: number},
     response: {
       success: WithSize<Commission>,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   searchDictionary: {
@@ -178,70 +178,70 @@ type ServerSpecs = {
     request: {number: number, parameter: WordParameter, offset?: number, size?: number},
     response: {
       success: {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>},
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   downloadDictionary: {
     request: {number: number, fileName?: string},
     response: {
       success: any,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   suggestDictionaryTitles: {
     request: {number: number, propertyName: string, pattern: string},
     response: {
       success: Array<string>,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   fetchDictionaryAuthorizedUsers: {
     request: {number: number, authority: DictionaryFullAuthority},
     response: {
       success: Array<User>,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   fetchDictionaryAuthorization: {
     request: {number: number, authority: DictionaryAuthority},
     response: {
       success: boolean,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   checkDictionaryAuthorization: {
     request: {number: number, authority: DictionaryAuthority},
     response: {
       success: null,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   fetchDictionary: {
     request: {number?: number, paramName?: string},
     response: {
       success: DetailedDictionary,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchDictionaryParamName" | "invalidArgument">
+      error: CustomError<"noSuchDictionary" | "invalidArgument">
     }
   },
   fetchWordSize: {
     request: {number: number},
     response: {
       success: number,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   fetchWordNameFrequencies: {
     request: {number: number},
     response: {
       success: WordNameFrequencies,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   fetchDictionaryStatistics: {
     request: {number: number},
     response: {
       success: DictionaryStatistics,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   fetchDictionaries: {
@@ -276,35 +276,35 @@ type ServerSpecs = {
     request: {number: number, wordNumber: number},
     response: {
       success: DetailedWord,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchWordNumber">
+      error: CustomError<"noSuchDictionary" | "noSuchWord">
     }
   },
   fetchWordNames: {
     request: {number: number, wordNumbers: Array<number>},
     response: {
       success: {names: Record<number, string | null>},
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   checkDuplicateWordName: {
     request: {number: number, name: string, excludedWordNumber?: number},
     response: {
       success: {duplicate: boolean},
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   fetchExample: {
     request: {number: number, exampleNumber: number},
     response: {
       success: Example,
-      error: CustomError<"noSuchDictionaryNumber" | "noSuchExampleNumber">
+      error: CustomError<"noSuchDictionary" | "noSuchExample">
     }
   },
   fetchExamples: {
     request: {number: number, offset?: number, size?: number},
     response: {
       success: WithSize<Example>,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   fetchInvitations: {
@@ -318,21 +318,21 @@ type ServerSpecs = {
     request: WithRecaptcha<{number: number, name: string, type: string}>,
     response: {
       success: {url: string, fields: Record<string, string>},
-      error: CustomError<"noSuchDictionaryNumber" | "resourceCountExceeded" | "awsError">
+      error: CustomError<"noSuchDictionary" | "resourceCountExceeded" | "awsError">
     }
   },
   discardResource: {
     request: {number: number, name: string},
     response: {
       success: null,
-      error: CustomError<"noSuchDictionaryNumber" | "awsError">
+      error: CustomError<"noSuchDictionary" | "awsError">
     }
   },
   fetchResources: {
     request: {number: number, offset?: number, size?: number},
     response: {
       success: WithSize<string>,
-      error: CustomError<"noSuchDictionaryNumber" | "awsError">
+      error: CustomError<"noSuchDictionary" | "awsError">
     }
   },
   login: {
@@ -451,7 +451,7 @@ type ServerSpecs = {
     request: {number: number, from: string},
     response: {
       success: Array<History>,
-      error: CustomError<"noSuchDictionaryNumber">
+      error: CustomError<"noSuchDictionary">
     }
   },
   fetchDocument: {

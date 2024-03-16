@@ -93,7 +93,7 @@ export class WordSchema extends DiscardableSchema {
       await word.flagDiscarded();
       await this.correctRelationsByDiscard(dictionary, word);
     } else {
-      throw new CustomError("noSuchWordNumber");
+      throw new CustomError("noSuchWord");
     }
     LogUtil.log("model/word/discard", {number: dictionary.number, currentId: word.id});
     return word;
@@ -116,7 +116,7 @@ export class WordSchema extends DiscardableSchema {
         return null;
       }
     } else {
-      throw new CustomError("noSuchWordNumber");
+      throw new CustomError("noSuchWord");
     }
   }
 
