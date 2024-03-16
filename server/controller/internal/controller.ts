@@ -69,7 +69,7 @@ export interface Request<N extends ProcessName> extends ExpressRequest<ExpressPa
 
   /** 認証に成功した場合にユーザーデータが格納されます。
    * このプロパティは、`authenticate` ミドルウェアおよび `verifyUser` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
-  user?: User;
+  me?: User;
 
   /** ユーザ－に辞書の編集権限があった場合に辞書データが格納されます。
    * このプロパティは、`verifyDictionary` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/

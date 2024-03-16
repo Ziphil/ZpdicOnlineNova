@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {verifyDictionary, verifyUser} from "/server/controller/internal/middle";
+import {verifyDictionary, verifyMe} from "/server/controller/internal/middle";
 import {InvitationCreator} from "/server/creator";
 import {CustomError, InvitationModel, UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -12,7 +12,7 @@ import {SERVER_PATH_PREFIX} from "/server/type/internal";
 export class InvitationController extends Controller {
 
   @post("/addInvitation")
-  @before(verifyUser(), verifyDictionary("own"))
+  @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"addInvitation">, response: Response<"addInvitation">): Promise<void> {
     const dictionary = request.dictionary;
     const type = request.body.type;
@@ -36,15 +36,15 @@ export class InvitationController extends Controller {
   }
 
   @post("/respondInvitation")
-  @before(verifyUser())
+  @before(verifyMe())
   public async [Symbol()](request: Request<"respondInvitation">, response: Response<"respondInvitation">): Promise<void> {
-    const user = request.user!;
+    const me = request.me!;
     const id = request.body.id;
     const accept = request.body.accept;
     const invitation = await InvitationModel.findById(id);
     if (invitation) {
       try {
-        invitation.respond(user, accept);
+        invitation.respond(me, accept);
         const body = await InvitationCreator.create(invitation);
         Controller.respond(response, body);
       } catch (error) {
@@ -60,11 +60,11 @@ export class InvitationController extends Controller {
   }
 
   @post("/fetchInvitations")
-  @before(verifyUser())
+  @before(verifyMe())
   public async [Symbol()](request: Request<"fetchInvitations">, response: Response<"fetchInvitations">): Promise<void> {
-    const user = request.user!;
+    const me = request.me!;
     const type = request.body.type;
-    const invitations = await InvitationModel.fetchByUser(type, user);
+    const invitations = await InvitationModel.fetchByUser(type, me);
     const body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
     Controller.respond(response, body);
   }

@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
+import {verifyDictionary, verifyMe, verifyRecaptcha} from "/server/controller/internal/middle";
 import {CommissionCreator} from "/server/creator";
 import {CommissionModel, DictionaryModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -33,7 +33,7 @@ export class CommissionController extends Controller {
   }
 
   @post("/discardCommission")
-  @before(verifyUser(), verifyDictionary("own"))
+  @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"discardCommission">, response: Response<"discardCommission">): Promise<void> {
     const dictionary = request.dictionary!;
     const id = request.body.id;
@@ -52,7 +52,7 @@ export class CommissionController extends Controller {
   }
 
   @post("/fetchCommissions")
-  @before(verifyUser(), verifyDictionary("own"))
+  @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchCommissions">, response: Response<"fetchCommissions">): Promise<void> {
     const dictionary = request.dictionary;
     const offset = request.body.offset;

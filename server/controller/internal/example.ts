@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {verifyDictionary, verifyUser} from "/server/controller/internal/middle";
+import {verifyDictionary, verifyMe} from "/server/controller/internal/middle";
 import {ExampleCreator} from "/server/creator";
 import {DictionaryModel, ExampleModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -13,7 +13,7 @@ import {QueryRange} from "/server/util/query";
 export class ExampleController extends Controller {
 
   @post("/editExample")
-  @before(verifyUser(), verifyDictionary("edit"))
+  @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"editExample">, response: Response<"editExample">): Promise<void> {
     const dictionary = request.dictionary;
     const example = request.body.example;
@@ -31,7 +31,7 @@ export class ExampleController extends Controller {
   }
 
   @post("/discardExample")
-  @before(verifyUser(), verifyDictionary("edit"))
+  @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"discardExample">, response: Response<"discardExample">): Promise<void> {
     const dictionary = request.dictionary;
     const exampleNumber = request.body.exampleNumber;

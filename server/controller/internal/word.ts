@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {verifyDictionary, verifyUser} from "/server/controller/internal/middle";
+import {verifyDictionary, verifyMe} from "/server/controller/internal/middle";
 import {WordCreator} from "/server/creator";
 import {DictionaryModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -12,7 +12,7 @@ import {SERVER_PATH_PREFIX} from "/server/type/internal";
 export class WordController extends Controller {
 
   @post("/editWord")
-  @before(verifyUser(), verifyDictionary("edit"))
+  @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"editWord">, response: Response<"editWord">): Promise<void> {
     const dictionary = request.dictionary;
     const word = request.body.word;
@@ -30,7 +30,7 @@ export class WordController extends Controller {
   }
 
   @post("/discardWord")
-  @before(verifyUser(), verifyDictionary("edit"))
+  @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"discardWord">, response: Response<"discardWord">): Promise<void> {
     const dictionary = request.dictionary;
     const wordNumber = request.body.wordNumber;
@@ -48,7 +48,7 @@ export class WordController extends Controller {
   }
 
   @post("/addRelations")
-  @before(verifyUser(), verifyDictionary("edit"))
+  @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"addRelations">, response: Response<"addRelations">): Promise<void> {
     const dictionary = request.dictionary;
     const specs = request.body.specs;
@@ -104,7 +104,7 @@ export class WordController extends Controller {
   }
 
   @post("/checkDuplicateWordName")
-  @before(verifyUser(), verifyDictionary("edit"))
+  @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"checkDuplicateWordName">, response: Response<"checkDuplicateWordName">): Promise<void> {
     const dictionary = request.dictionary;
     const name = request.body.name;

@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {login, logout, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
+import {login, logout, verifyMe, verifyRecaptcha} from "/server/controller/internal/middle";
 import {UserCreator} from "/server/creator";
 import {UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -16,8 +16,8 @@ export class UserController extends Controller {
   @before(login(30 * 24 * 60 * 60))
   public async [Symbol()](request: Request<"login">, response: Response<"login">): Promise<void> {
     const token = request.token!;
-    const user = request.user!;
-    const userBody = UserCreator.createDetailed(user);
+    const me = request.me!;
+    const userBody = UserCreator.createDetailed(me);
     const body = {token, user: userBody};
     Controller.respond(response, body);
   }
@@ -58,13 +58,13 @@ export class UserController extends Controller {
   }
 
   @post("/changeMyScreenName")
-  @before(verifyUser())
+  @before(verifyMe())
   public async [Symbol()](request: Request<"changeMyScreenName">, response: Response<"changeMyScreenName">): Promise<void> {
-    const user = request.user!;
+    const me = request.me!;
     const screenName = request.body.screenName;
     try {
-      await user.changeScreenName(screenName);
-      const body = UserCreator.create(user);
+      await me.changeScreenName(screenName);
+      const body = UserCreator.create(me);
       Controller.respond(response, body);
     } catch (error) {
       throw error;
@@ -72,13 +72,13 @@ export class UserController extends Controller {
   }
 
   @post("/changeMyEmail")
-  @before(verifyUser())
+  @before(verifyMe())
   public async [Symbol()](request: Request<"changeMyEmail">, response: Response<"changeMyEmail">): Promise<void> {
-    const user = request.user!;
+    const me = request.me!;
     const email = request.body.email;
     try {
-      await user.changeEmail(email);
-      const body = UserCreator.create(user);
+      await me.changeEmail(email);
+      const body = UserCreator.create(me);
       Controller.respond(response, body);
     } catch (error) {
       if (error.name === "ValidationError" && error.errors.email) {
@@ -90,13 +90,13 @@ export class UserController extends Controller {
   }
 
   @post("/changeMyPassword")
-  @before(verifyUser())
+  @before(verifyMe())
   public async [Symbol()](request: Request<"changeMyPassword">, response: Response<"changeMyPassword">): Promise<void> {
-    const user = request.user!;
+    const me = request.me!;
     const password = request.body.password;
     try {
-      await user.changePassword(password);
-      const body = UserCreator.create(user);
+      await me.changePassword(password);
+      const body = UserCreator.create(me);
       Controller.respond(response, body);
     } catch (error) {
       Controller.respondByCustomError(response, ["invalidUserPassword"], error);
@@ -104,15 +104,15 @@ export class UserController extends Controller {
   }
 
   @post("/issueMyActivateToken")
-  @before(verifyRecaptcha(), verifyUser())
+  @before(verifyRecaptcha(), verifyMe())
   public async [Symbol()](request: Request<"issueMyActivateToken">, response: Response<"issueMyActivateToken">): Promise<void> {
-    const user = request.user!;
+    const me = request.me!;
     try {
-      const key = await user.issueActivateToken();
+      const key = await me.issueActivateToken();
       const url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
       const subject = MailUtil.getSubject("issueMyActivateToken");
       const text = MailUtil.getText("issueMyActivateToken", {url});
-      MailUtil.send(user.email, subject, text);
+      MailUtil.send(me.email, subject, text);
       Controller.respond(response, null);
     } catch (error) {
       Controller.respondByCustomError(response, ["noSuchUser", "userAlreadyActivated"], error);
@@ -162,11 +162,11 @@ export class UserController extends Controller {
   }
 
   @post("/discardMe")
-  @before(verifyUser())
+  @before(verifyMe())
   public async [Symbol()](request: Request<"discardMe">, response: Response<"discardMe">): Promise<void> {
-    const user = request.user!;
+    const me = request.me!;
     try {
-      await user.discard();
+      await me.discard();
       Controller.respond(response, null);
     } catch (error) {
       throw error;
@@ -174,10 +174,10 @@ export class UserController extends Controller {
   }
 
   @post("/fetchMe")
-  @before(verifyUser())
+  @before(verifyMe())
   public async [Symbol()](request: Request<"fetchMe">, response: Response<"fetchMe">): Promise<void> {
-    const user = request.user!;
-    const body = UserCreator.createDetailed(user);
+    const me = request.me!;
+    const body = UserCreator.createDetailed(me);
     Controller.respond(response, body);
   }
 

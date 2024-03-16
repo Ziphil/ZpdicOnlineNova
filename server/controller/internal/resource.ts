@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {verifyDictionary, verifyRecaptcha, verifyUser} from "/server/controller/internal/middle";
+import {verifyDictionary, verifyMe, verifyRecaptcha} from "/server/controller/internal/middle";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {AwsUtil} from "/server/util/aws";
 import {QueryRange} from "/server/util/query";
@@ -12,7 +12,7 @@ import {QueryRange} from "/server/util/query";
 export class ResourceController extends Controller {
 
   @post("/fetchUploadResourcePost")
-  @before(verifyRecaptcha(), verifyUser(), verifyDictionary("edit"))
+  @before(verifyRecaptcha(), verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"fetchUploadResourcePost">, response: Response<"fetchUploadResourcePost">): Promise<void> {
     const dictionary = request.dictionary!;
     const name = request.body.name;
@@ -38,7 +38,7 @@ export class ResourceController extends Controller {
   }
 
   @post("/discardResource")
-  @before(verifyUser(), verifyDictionary("edit"))
+  @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"discardResource">, response: Response<"discardResource">): Promise<void> {
     const dictionary = request.dictionary!;
     const name = request.body.name;
@@ -56,7 +56,7 @@ export class ResourceController extends Controller {
   }
 
   @post("/fetchResources")
-  @before(verifyUser(), verifyDictionary("edit"))
+  @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"fetchResources">, response: Response<"fetchResources">): Promise<void> {
     const dictionary = request.dictionary!;
     const offset = request.body.offset;

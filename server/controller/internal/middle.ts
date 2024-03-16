@@ -14,19 +14,19 @@ import {JWT_SECRET} from "/server/variable";
 
 
 /** リクエストのヘッダーに書き込まれたトークンを利用して認証を行います。
- * 認証に成功した場合、`request` オブジェクトの `user` プロパティにユーザーオブジェクトを書き込み、次の処理を行います。
+ * 認証に成功した場合、`request` オブジェクトの `me` プロパティにユーザーオブジェクトを書き込み、次の処理を行います。
  * 認証に失敗した場合、ステータスコード 401 を返して終了します。
  * なお、引数に権限を表す文字列が指定された場合、追加でユーザーが指定の権限を保持しているかチェックし、権限がなかった場合、ステータスコード 403 を返して終了します。*/
-export function verifyUser(authority?: string): RequestHandler {
+export function verifyMe(authority?: string): RequestHandler {
   const handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     const token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
       if (!error && typeof data === "object" && "id" in data) {
         const anyData = data as any;
-        const user = await UserModel.findById(anyData.id).exec();
-        if (user) {
-          if (!authority || user.authority === authority) {
-            request.user = user;
+        const me = await UserModel.findById(anyData.id).exec();
+        if (me) {
+          if (!authority || me.authority === authority) {
+            request.me = me;
             next();
           } else {
             const body = CustomErrorCreator.ofType("notEnoughUserAuthority");
@@ -45,16 +45,16 @@ export function verifyUser(authority?: string): RequestHandler {
 
 /** リクエストのヘッダーに書き込まれたトークンを利用してユーザーのチェックを行います。
  * 基本的に `verifyUser` 関数とほぼ同じ動作をしますが、認証に失敗した場合にエラーステータスを返すのではなく次の動作に移行します。*/
-export function checkUser(authority?: string): RequestHandler {
+export function checkMe(authority?: string): RequestHandler {
   const handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
     const token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
       if (!error && typeof data === "object" && "id" in data) {
         const anyData = data as any;
-        const user = await UserModel.findById(anyData.id).exec();
-        if (user) {
-          if (!authority || user.authority === authority) {
-            request.user = user;
+        const me = await UserModel.findById(anyData.id).exec();
+        if (me) {
+          if (!authority || me.authority === authority) {
+            request.me = me;
             next();
           } else {
             next();

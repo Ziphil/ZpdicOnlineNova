@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {verifyUser} from "/server/controller/internal/middle";
+import {verifyMe} from "/server/controller/internal/middle";
 import {NotificationCreator} from "/server/creator";
 import {NotificationModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -13,7 +13,7 @@ import {QueryRange} from "/server/util/query";
 export class NotificationController extends Controller {
 
   @post("/addNotification")
-  @before(verifyUser("admin"))
+  @before(verifyMe("admin"))
   public async [Symbol()](request: Request<"addNotification">, response: Response<"addNotification">): Promise<void> {
     const type = request.body.type;
     const title = request.body.title;
