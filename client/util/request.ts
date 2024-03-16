@@ -18,6 +18,7 @@ export async function request<N extends ProcessName>(name: N, data: Omit<Request
 export async function request<N extends ProcessName>(name: N, data: RequestData<N>, config?: RequestConfig): Promise<AxiosResponseSpec<N>>;
 export async function request<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
   const url = SERVER_PATH_PREFIX + "/" + name;
+  console.log("request", name, data, config);
   if (config.useRecaptcha) {
     const action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : name;
     const recaptchaToken = await grecaptcha.execute(RECAPTCHA_KEY, {action});

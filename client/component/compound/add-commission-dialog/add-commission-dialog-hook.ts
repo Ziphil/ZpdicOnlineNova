@@ -1,6 +1,6 @@
 //
 
-import {BaseSyntheticEvent, useMemo} from "react";
+import {BaseSyntheticEvent, useCallback} from "react";
 import {Asserts, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
@@ -21,21 +21,23 @@ type FormValue = Asserts<typeof SCHEMA>;
 
 export type AddCommissionSpec = {
   form: UseFormReturn<FormValue>,
-  handleSubmit: (event: BaseSyntheticEvent) => Promise<void>
+  handleSubmit: (event: BaseSyntheticEvent, onSubmit?: () => unknown) => Promise<void>
 };
 
-export function useAddCommission(dictionary: Dictionary, onSubmit?: () => unknown): AddCommissionSpec {
+export function useAddCommission(dictionary: Dictionary): AddCommissionSpec {
   const form = useForm<FormValue>(SCHEMA, DEFAULT_VALUE, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
-  const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = await request("addCommission", getQuery(dictionary, value), {useRecaptcha: true});
-    await switchResponse(response, async (body) => {
-      await invalidateResponses("fetchCommissions", (query) => query.number === dictionary.number);
-      await onSubmit?.();
-      dispatchSuccessToast("addCommission");
-    });
-  }), [dictionary, onSubmit, request, form, dispatchSuccessToast]);
+  const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: () => unknown): Promise<void> {
+    form.handleSubmit(async (value) => {
+      const response = await request("addCommission", getQuery(dictionary, value), {useRecaptcha: true});
+      await switchResponse(response, async (body) => {
+        await invalidateResponses("fetchCommissions", (query) => query.number === dictionary.number);
+        await onSubmit?.();
+        dispatchSuccessToast("addCommission");
+      });
+    })(event);
+  }, [dictionary, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
 }
 

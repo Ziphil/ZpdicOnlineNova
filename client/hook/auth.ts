@@ -55,7 +55,7 @@ export function useLogoutRequest(): (config?: RequestConfig) => Promise<AxiosRes
 }
 
 async function fetchMe(): Promise<DetailedUser | null> {
-  const url = SERVER_PATH_PREFIX + "/fetchUser";
+  const url = SERVER_PATH_PREFIX + "/fetchMe";
   const response = await axios.post<ResponseData<"fetchMe">>(url, {}, {validateStatus: () => true});
   if (response.status === 200 && !("error" in response.data)) {
     const me = response.data;
