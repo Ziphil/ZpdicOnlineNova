@@ -38,7 +38,11 @@ export function useEditExample(dictionary: Dictionary, example: Example | null, 
     const response = await request("editExample", query);
     await switchResponse(response, async (body) => {
       form.setValue("number", body.number);
-      await invalidateResponses("fetchExamples", (query) => query.number === dictionary.number);
+      await Promise.all([
+        invalidateResponses("fetchExamples", (query) => query.number === dictionary.number),
+        invalidateResponses("searchWord", (query) => query.number === dictionary.number)
+      ]);
+      console.log("invalidate");
       await onSubmit?.(query.example);
       dispatchSuccessToast((adding) ? "addExample" : "changeExample");
     });
