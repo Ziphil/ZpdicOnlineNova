@@ -1,15 +1,9 @@
 //
 
-import {
-  ClientResponse
-} from "@sendgrid/client/src/response";
-import {
-  EmailData
-} from "@sendgrid/helpers/classes/email-address";
+import {ClientResponse} from "@sendgrid/client/src/response";
+import {EmailData} from "@sendgrid/helpers/classes/email-address";
 import sendgrid from "@sendgrid/mail";
-import {
-  INTLS
-} from "/server/language";
+import {INTLS} from "/server/language";
 
 
 export class MailUtil {

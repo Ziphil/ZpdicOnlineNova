@@ -1,10 +1,6 @@
 //
 
-import {
-  closeSync,
-  openSync,
-  readSync
-} from "fs";
+import {closeSync, openSync, readSync} from "fs";
 
 
 export abstract class PullStream {
