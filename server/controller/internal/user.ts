@@ -31,9 +31,7 @@ export class UserController extends Controller {
   @post("/registerUser")
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"registerUser">, response: Response<"registerUser">): Promise<void> {
-    const name = request.body.name;
-    const email = request.body.email;
-    const password = request.body.password;
+    const {name, email, password} = request.body;
     try {
       const {user, key} = await UserModel.register(name, email, password);
       const url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
@@ -61,7 +59,7 @@ export class UserController extends Controller {
   @before(verifyMe())
   public async [Symbol()](request: Request<"changeMyScreenName">, response: Response<"changeMyScreenName">): Promise<void> {
     const me = request.me!;
-    const screenName = request.body.screenName;
+    const {screenName} = request.body;
     try {
       await me.changeScreenName(screenName);
       const body = UserCreator.create(me);
@@ -75,7 +73,7 @@ export class UserController extends Controller {
   @before(verifyMe())
   public async [Symbol()](request: Request<"changeMyEmail">, response: Response<"changeMyEmail">): Promise<void> {
     const me = request.me!;
-    const email = request.body.email;
+    const {email} = request.body;
     try {
       await me.changeEmail(email);
       const body = UserCreator.create(me);
@@ -93,7 +91,7 @@ export class UserController extends Controller {
   @before(verifyMe())
   public async [Symbol()](request: Request<"changeMyPassword">, response: Response<"changeMyPassword">): Promise<void> {
     const me = request.me!;
-    const password = request.body.password;
+    const {password} = request.body;
     try {
       await me.changePassword(password);
       const body = UserCreator.create(me);
@@ -122,8 +120,7 @@ export class UserController extends Controller {
   @post("/issueUserResetToken")
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"issueUserResetToken">, response: Response<"issueUserResetToken">): Promise<void> {
-    const name = request.body.name;
-    const email = request.body.email;
+    const {name, email} = request.body;
     try {
       const {user, key} = await UserModel.issueResetToken(name, email);
       const url = `${request.protocol}://${request.get("host")}/reset?key=${key}`;
@@ -138,7 +135,7 @@ export class UserController extends Controller {
 
   @post("/activateMe")
   public async [Symbol()](request: Request<"activateMe">, response: Response<"activateMe">): Promise<void> {
-    const key = request.body.key;
+    const {key} = request.body;
     try {
       const user = await UserModel.activate(key, 60);
       const body = UserCreator.create(user);
@@ -150,8 +147,7 @@ export class UserController extends Controller {
 
   @post("/resetUserPassword")
   public async [Symbol()](request: Request<"resetUserPassword">, response: Response<"resetUserPassword">): Promise<void> {
-    const key = request.body.key;
-    const password = request.body.password;
+    const {key, password} = request.body;
     try {
       const user = await UserModel.resetPassword(key, password, 60);
       const body = UserCreator.create(user);
@@ -183,7 +179,7 @@ export class UserController extends Controller {
 
   @post("/fetchUser")
   public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
-    const name = request.body.name;
+    const {name} = request.body;
     const user = await UserModel.fetchOneByName(name);
     if (user !== null) {
       const body = UserCreator.create(user);
@@ -195,7 +191,7 @@ export class UserController extends Controller {
 
   @post("/suggestUsers")
   public async [Symbol()](request: Request<"suggestUsers">, response: Response<"suggestUsers">): Promise<void> {
-    const pattern = request.body.pattern;
+    const {pattern} = request.body;
     const users = await UserModel.suggest(pattern);
     const body = users.map(UserCreator.create);
     Controller.respond(response, body);

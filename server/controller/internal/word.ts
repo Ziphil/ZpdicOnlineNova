@@ -15,7 +15,7 @@ export class WordController extends Controller {
   @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"editWord">, response: Response<"editWord">): Promise<void> {
     const dictionary = request.dictionary;
-    const word = request.body.word;
+    const {word} = request.body;
     if (dictionary) {
       try {
         const resultWord = await dictionary.editWord(word);
@@ -33,7 +33,7 @@ export class WordController extends Controller {
   @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"discardWord">, response: Response<"discardWord">): Promise<void> {
     const dictionary = request.dictionary;
-    const wordNumber = request.body.wordNumber;
+    const {wordNumber} = request.body;
     if (dictionary) {
       try {
         const resultWord = await dictionary.discardWord(wordNumber);
@@ -51,18 +51,18 @@ export class WordController extends Controller {
   @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"addRelations">, response: Response<"addRelations">): Promise<void> {
     const dictionary = request.dictionary;
-    const specs = request.body.specs;
+    const {specs} = request.body;
     if (dictionary) {
       try {
-        const promises = specs.map(async ({wordNumber, relation}) => {
+        const results = await Promise.allSettled(specs.map(async ({wordNumber, relation}) => {
           await dictionary.addRelation(wordNumber, relation);
-        });
-        const results = await Promise.allSettled(promises);
+        }));
         const rejectedResult = results.find((result) => result.status === "rejected") as PromiseRejectedResult | undefined;
-        if (rejectedResult !== undefined) {
+        if (rejectedResult === undefined) {
+          Controller.respond(response, null);
+        } else {
           throw rejectedResult.reason;
         }
-        Controller.respond(response, null);
       } catch (error) {
         Controller.respondByCustomError(response, ["failAddRelations"], error);
       }
@@ -73,8 +73,7 @@ export class WordController extends Controller {
 
   @post("/fetchWord")
   public async [Symbol()](request: Request<"fetchWord">, response: Response<"fetchWord">): Promise<void> {
-    const number = request.body.number;
-    const wordNumber = request.body.wordNumber;
+    const {number, wordNumber} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const word = await dictionary.fetchOneWordByNumber(wordNumber);
@@ -91,8 +90,7 @@ export class WordController extends Controller {
 
   @post("/fetchWordNames")
   public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
-    const number = request.body.number;
-    const wordNumbers = request.body.wordNumbers;
+    const {number, wordNumbers} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const names = await dictionary.fetchWordNames(wordNumbers);
@@ -107,10 +105,9 @@ export class WordController extends Controller {
   @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"checkDuplicateWordName">, response: Response<"checkDuplicateWordName">): Promise<void> {
     const dictionary = request.dictionary;
-    const name = request.body.name;
-    const excludedWordName = request.body.excludedWordNumber;
+    const {name, excludedWordNumber} = request.body;
     if (dictionary) {
-      const duplicate = await dictionary.checkDuplicateWordName(name, excludedWordName);
+      const duplicate = await dictionary.checkDuplicateWordName(name, excludedWordNumber);
       const body = {duplicate};
       Controller.respond(response, body);
     } else {

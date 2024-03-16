@@ -18,7 +18,7 @@ export class DictionaryController extends Controller {
   @before(verifyMe())
   public async [Symbol()](request: Request<"createDictionary">, response: Response<"createDictionary">): Promise<void> {
     const user = request.me!;
-    const name = request.body.name;
+    const {name} = request.body;
     const dictionary = await DictionaryModel.addEmpty(name, user);
     const body = DictionaryCreator.create(dictionary);
     Controller.respond(response, body);
@@ -60,7 +60,7 @@ export class DictionaryController extends Controller {
   @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryName">, response: Response<"changeDictionaryName">): Promise<void> {
     const dictionary = request.dictionary;
-    const name = request.body.name;
+    const {name} = request.body;
     if (dictionary) {
       await dictionary.changeName(name);
       const body = DictionaryCreator.create(dictionary);
@@ -74,7 +74,7 @@ export class DictionaryController extends Controller {
   @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryParamName">, response: Response<"changeDictionaryParamName">): Promise<void> {
     const dictionary = request.dictionary;
-    const paramName = request.body.paramName;
+    const {paramName} = request.body;
     if (dictionary) {
       try {
         await dictionary.changeParamName(paramName);
@@ -100,7 +100,7 @@ export class DictionaryController extends Controller {
   @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"discardDictionaryAuthorizedUser">, response: Response<"discardDictionaryAuthorizedUser">): Promise<void> {
     const dictionary = request.dictionary;
-    const id = request.body.id;
+    const {id} = request.body;
     const user = await UserModel.findById(id);
     if (dictionary) {
       if (user) {
@@ -122,7 +122,7 @@ export class DictionaryController extends Controller {
   @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionarySecret">, response: Response<"changeDictionarySecret">): Promise<void> {
     const dictionary = request.dictionary;
-    const secret = request.body.secret;
+    const {secret} = request.body;
     if (dictionary) {
       await dictionary.changeSecret(secret);
       const body = DictionaryCreator.create(dictionary);
@@ -136,7 +136,7 @@ export class DictionaryController extends Controller {
   @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryExplanation">, response: Response<"changeDictionaryExplanation">): Promise<void> {
     const dictionary = request.dictionary;
-    const explanation = request.body.explanation;
+    const {explanation} = request.body;
     if (dictionary) {
       await dictionary.changeExplanation(explanation);
       const body = DictionaryCreator.create(dictionary);
@@ -150,7 +150,7 @@ export class DictionaryController extends Controller {
   @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionarySettings">, response: Response<"changeDictionarySettings">): Promise<void> {
     const dictionary = request.dictionary;
-    const settings = request.body.settings;
+    const {settings} = request.body;
     if (dictionary) {
       await dictionary.changeSettings(settings);
       const body = DictionaryCreator.create(dictionary);
@@ -163,8 +163,7 @@ export class DictionaryController extends Controller {
   @post("/searchDictionary")
   public async [Symbol()](request: Request<"searchDictionary">, response: Response<"searchDictionary">): Promise<void> {
     const parameter = DictionaryParameterCreator.recreate(request.body.parameter);
-    const offset = request.body.offset;
-    const size = request.body.size;
+    const {offset, size} = request.body;
     const range = new QueryRange(offset, size);
     const hitResult = await DictionaryModel.search(parameter, range);
     const hitDictionaries = await Promise.all(hitResult[0].map((hitDictionary) => DictionaryCreator.createDetailed(hitDictionary)));
@@ -175,10 +174,8 @@ export class DictionaryController extends Controller {
 
   @post("/searchWord")
   public async [Symbol()](request: Request<"searchWord">, response: Response<"searchWord">): Promise<void> {
-    const number = request.body.number;
     const parameter = WordParameterCreator.recreate(request.body.parameter);
-    const offset = request.body.offset;
-    const size = request.body.size;
+    const {number, offset, size} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const range = new QueryRange(offset, size);
@@ -195,8 +192,7 @@ export class DictionaryController extends Controller {
 
   @post("/downloadDictionary")
   public async [Symbol()](request: Request<"downloadDictionary">, response: Response<"downloadDictionary">): Promise<void> {
-    const number = request.body.number;
-    const fileName = request.body.fileName;
+    const {number, fileName} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const date = new Date();
@@ -212,8 +208,7 @@ export class DictionaryController extends Controller {
 
   @post("/fetchDictionary")
   public async [Symbol()](request: Request<"fetchDictionary">, response: Response<"fetchDictionary">): Promise<void> {
-    const number = request.body.number;
-    const paramName = request.body.paramName;
+    const {number, paramName} = request.body;
     const value = number ?? paramName;
     if (value !== undefined) {
       const dictionary = await DictionaryModel.fetchOneByValue(value);
@@ -230,7 +225,7 @@ export class DictionaryController extends Controller {
 
   @post("/fetchWordSize")
   public async [Symbol()](request: Request<"fetchWordSize">, response: Response<"fetchWordSize">): Promise<void> {
-    const number = request.body.number;
+    const {number} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const body = await dictionary.countWords();
@@ -242,7 +237,7 @@ export class DictionaryController extends Controller {
 
   @post("/fetchWordNameFrequencies")
   public async [Symbol()](request: Request<"fetchWordNameFrequencies">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
-    const number = request.body.number;
+    const {number} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const body = await dictionary.calcWordNameFrequencies();
@@ -254,7 +249,7 @@ export class DictionaryController extends Controller {
 
   @post("/fetchDictionaryStatistics")
   public async [Symbol()](request: Request<"fetchDictionaryStatistics">, response: Response<"fetchDictionaryStatistics">): Promise<void> {
-    const number = request.body.number;
+    const {number} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const body = await dictionary.calcStatistics();
@@ -266,9 +261,7 @@ export class DictionaryController extends Controller {
 
   @post("/suggestDictionaryTitles")
   public async [Symbol()](request: Request<"suggestDictionaryTitles">, response: Response<"suggestDictionaryTitles">): Promise<void> {
-    const number = request.body.number;
-    const propertyName = request.body.propertyName;
-    const pattern = request.body.pattern;
+    const {number, propertyName, pattern} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const titles = await dictionary.suggestTitles(propertyName, pattern);
@@ -283,7 +276,7 @@ export class DictionaryController extends Controller {
   @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchDictionaryAuthorizedUsers">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     const dictionary = request.dictionary;
-    const authority = request.body.authority;
+    const {authority} = request.body;
     if (dictionary) {
       const users = await dictionary.fetchAuthorizedUsers(authority);
       const body = users.map(UserCreator.create);
@@ -309,7 +302,7 @@ export class DictionaryController extends Controller {
   @before(checkMe())
   public async [Symbol()](request: Request<"fetchUserDictionaries">, response: Response<"fetchUserDictionaries">): Promise<void> {
     const me = request.me;
-    const name = request.body.name;
+    const {name} = request.body;
     const user = await UserModel.fetchOneByName(name);
     if (user) {
       const authority = (me?.id === user.id) ? "edit" : "own";
@@ -327,9 +320,7 @@ export class DictionaryController extends Controller {
 
   @post("/fetchAllDictionaries")
   public async [Symbol()](request: Request<"fetchAllDictionaries">, response: Response<"fetchAllDictionaries">): Promise<void> {
-    const order = request.body.order;
-    const offset = request.body.offset;
-    const size = request.body.size;
+    const {order, offset, size} = request.body;
     const range = new QueryRange(offset, size);
     const hitResult = await DictionaryModel.fetch(order, range);
     const hitDictionaries = await Promise.all(hitResult[0].map(async (hitDictionary) => {
@@ -368,8 +359,7 @@ export class DictionaryController extends Controller {
   @before(checkMe())
   public async [Symbol()](request: Request<"fetchDictionaryAuthorization">, response: Response<"fetchDictionaryAuthorization">): Promise<void> {
     const me = request.me;
-    const number = request.body.number;
-    const authority = request.body.authority;
+    const {number, authority} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       if (me) {
@@ -391,8 +381,7 @@ export class DictionaryController extends Controller {
   @before(verifyMe())
   public async [Symbol()](request: Request<"checkDictionaryAuthorization">, response: Response<"checkDictionaryAuthorization">): Promise<void> {
     const me = request.me!;
-    const number = request.body.number;
-    const authority = request.body.authority;
+    const {number, authority} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const hasAuthority = await dictionary.hasAuthority(me, authority);

@@ -12,7 +12,7 @@ export class HistoryController extends Controller {
 
   @post("/fetchHistories")
   public async [Symbol()](request: Request<"fetchHistories">, response: Response<"fetchHistories">): Promise<void> {
-    const number = request.body.number;
+    const {number} = request.body;
     const from = new Date(request.body.from);
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {

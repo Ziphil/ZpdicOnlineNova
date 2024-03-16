@@ -15,9 +15,7 @@ export class NotificationController extends Controller {
   @post("/addNotification")
   @before(verifyMe("admin"))
   public async [Symbol()](request: Request<"addNotification">, response: Response<"addNotification">): Promise<void> {
-    const type = request.body.type;
-    const title = request.body.title;
-    const text = request.body.text;
+    const {type, title, text} = request.body;
     const notification = await NotificationModel.add(type, title, text);
     const body = NotificationCreator.create(notification);
     Controller.respond(response, body);
@@ -25,8 +23,7 @@ export class NotificationController extends Controller {
 
   @post("/fetchNotifications")
   public async [Symbol()](request: Request<"fetchNotifications">, response: Response<"fetchNotifications">): Promise<void> {
-    const offset = request.body.offset;
-    const size = request.body.size;
+    const {offset, size} = request.body;
     const range = new QueryRange(offset, size);
     const hitResult = await NotificationModel.fetch(range);
     const hitNotifications = hitResult[0].map(NotificationCreator.create);

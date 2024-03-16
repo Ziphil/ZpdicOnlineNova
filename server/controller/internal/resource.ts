@@ -15,7 +15,7 @@ export class ResourceController extends Controller {
   @before(verifyRecaptcha(), verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"fetchUploadResourcePost">, response: Response<"fetchUploadResourcePost">): Promise<void> {
     const dictionary = request.dictionary!;
-    const name = request.body.name;
+    const {name} = request.body;
     if (dictionary) {
       try {
         const directoryPath = `resource/${dictionary.number}`;
@@ -41,7 +41,7 @@ export class ResourceController extends Controller {
   @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"discardResource">, response: Response<"discardResource">): Promise<void> {
     const dictionary = request.dictionary!;
-    const name = request.body.name;
+    const {name} = request.body;
     if (dictionary) {
       try {
         const path = `resource/${dictionary.number}/${name}`;
@@ -59,8 +59,7 @@ export class ResourceController extends Controller {
   @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"fetchResources">, response: Response<"fetchResources">): Promise<void> {
     const dictionary = request.dictionary!;
-    const offset = request.body.offset;
-    const size = request.body.size;
+    const {offset, size} = request.body;
     if (dictionary) {
       try {
         const path = `resource/${dictionary.number}`;

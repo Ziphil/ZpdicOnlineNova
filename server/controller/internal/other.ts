@@ -13,8 +13,7 @@ export class OtherController extends Controller {
 
   @post("/fetchDocument")
   public async [Symbol()](request: Request<"fetchDocument">, response: Response<"fetchDocument">): Promise<void> {
-    const locale = request.body.locale;
-    const path = request.body.path;
+    const {locale, path} = request.body;
     const localPath = `/dist/document/${locale}/${path || "index"}.md`;
     response.sendFile(process.cwd() + localPath, (error) => {
       if (error) {
@@ -27,10 +26,7 @@ export class OtherController extends Controller {
   @before(checkMe(), verifyRecaptcha())
   public async [Symbol()](request: Request<"contact">, response: Response<"contact">): Promise<void> {
     const me = request.me;
-    const name = request.body.name;
-    const email = request.body.email;
-    const subject = request.body.subject;
-    const text = request.body.text;
+    const {name, email, subject, text} = request.body;
     const signedIn = (me !== undefined).toString();
     const userName = me?.name ?? "";
     if (text !== "") {

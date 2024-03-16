@@ -15,8 +15,7 @@ export class InvitationController extends Controller {
   @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"addInvitation">, response: Response<"addInvitation">): Promise<void> {
     const dictionary = request.dictionary;
-    const type = request.body.type;
-    const userName = request.body.userName;
+    const {type, userName} = request.body;
     const user = await UserModel.fetchOneByName(userName);
     if (dictionary && user) {
       try {
@@ -39,8 +38,7 @@ export class InvitationController extends Controller {
   @before(verifyMe())
   public async [Symbol()](request: Request<"respondInvitation">, response: Response<"respondInvitation">): Promise<void> {
     const me = request.me!;
-    const id = request.body.id;
-    const accept = request.body.accept;
+    const {id, accept} = request.body;
     const invitation = await InvitationModel.findById(id);
     if (invitation) {
       try {
@@ -63,7 +61,7 @@ export class InvitationController extends Controller {
   @before(verifyMe())
   public async [Symbol()](request: Request<"fetchInvitations">, response: Response<"fetchInvitations">): Promise<void> {
     const me = request.me!;
-    const type = request.body.type;
+    const {type} = request.body;
     const invitations = await InvitationModel.fetchByUser(type, me);
     const body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
     Controller.respond(response, body);

@@ -16,7 +16,7 @@ export class ExampleController extends Controller {
   @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"editExample">, response: Response<"editExample">): Promise<void> {
     const dictionary = request.dictionary;
-    const example = request.body.example;
+    const {example} = request.body;
     if (dictionary) {
       try {
         const resultExample = await dictionary.editExample(example);
@@ -34,7 +34,7 @@ export class ExampleController extends Controller {
   @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"discardExample">, response: Response<"discardExample">): Promise<void> {
     const dictionary = request.dictionary;
-    const exampleNumber = request.body.exampleNumber;
+    const {exampleNumber} = request.body;
     if (dictionary) {
       try {
         const resultExample = await dictionary.discardExample(exampleNumber);
@@ -52,7 +52,7 @@ export class ExampleController extends Controller {
   @before()
   public async [Symbol()](request: Request<"fetchExample">, response: Response<"fetchExample">): Promise<void> {
     const number = request.body.number;
-    const exampleNumber = request.body.exampleNumber;
+    const {exampleNumber} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const example = await dictionary.fetchOneExampleByNumber(exampleNumber);
@@ -70,9 +70,7 @@ export class ExampleController extends Controller {
   @post("/fetchExamples")
   @before()
   public async [Symbol()](request: Request<"fetchExamples">, response: Response<"fetchExamples">): Promise<void> {
-    const number = request.body.number;
-    const offset = request.body.offset;
-    const size = request.body.size;
+    const {number, offset, size} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const range = new QueryRange(offset, size);

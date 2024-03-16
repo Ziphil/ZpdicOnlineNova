@@ -15,9 +15,7 @@ export class CommissionController extends Controller {
   @post("/addCommission")
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"addCommission">, response: Response<"addCommission">): Promise<void> {
-    const number = request.body.number;
-    const name = request.body.name;
-    const comment = request.body.comment;
+    const {number, name, comment} = request.body;
     if (name !== "") {
       const dictionary = await DictionaryModel.fetchOneByNumber(number);
       if (dictionary) {
@@ -36,7 +34,7 @@ export class CommissionController extends Controller {
   @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"discardCommission">, response: Response<"discardCommission">): Promise<void> {
     const dictionary = request.dictionary!;
-    const id = request.body.id;
+    const {id} = request.body;
     if (dictionary) {
       const commission = await CommissionModel.fetchOneByDictionaryAndId(dictionary, id);
       if (commission) {
@@ -55,8 +53,7 @@ export class CommissionController extends Controller {
   @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchCommissions">, response: Response<"fetchCommissions">): Promise<void> {
     const dictionary = request.dictionary;
-    const offset = request.body.offset;
-    const size = request.body.size;
+    const {offset, size} = request.body;
     if (dictionary) {
       const range = new QueryRange(offset, size);
       const hitResult = await CommissionModel.fetchByDictionary(dictionary, range);
