@@ -1,14 +1,15 @@
 //
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement} from "react";
+import {ReactElement, Ref, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client/component/create";
 import {EditableWord, EnhancedDictionary, Word} from "/client/skeleton";
+import {assignRef} from "/client/util/ref";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
 import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
-import {useEditWord} from "./edit-word-form-hook";
+import {EditWordFormValue, useEditWord} from "./edit-word-form-hook";
 import {EditWordFormInformationSection} from "./edit-word-form-information-section";
 import {EditWordFormVariationSection} from "./edit-word-form-variation-section";
 
@@ -19,12 +20,14 @@ export const EditWordForm = create(
     dictionary,
     word,
     forceAdd = false,
+    formRef,
     onSubmit,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     word: Word | EditableWord | null,
     forceAdd?: boolean,
+    formRef?: Ref<() => EditWordFormValue>,
     onSubmit?: (word: EditableWord) => void,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -32,6 +35,12 @@ export const EditWordForm = create(
     const {trans} = useTrans("editWordForm");
 
     const {form, handleSubmit} = useEditWord(dictionary, word, forceAdd, onSubmit);
+
+    const getFormValue = useCallback(function (): EditWordFormValue {
+      return form.getValues();
+    }, [form]);
+
+    assignRef(formRef, getFormValue);
 
     return (
       <form styleName="root" {...rest}>

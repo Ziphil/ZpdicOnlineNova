@@ -55,6 +55,7 @@ export type EditWordSpec = {
   form: UseFormReturn<FormValue>,
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
+export type EditWordFormValue = FormValue;
 
 export function useEditWord(dictionary: Dictionary, word: Word | EditableWord | null, forceAdd: boolean, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
   const form = useForm<FormValue>((word !== null) ? getFormValue(word, forceAdd) : DEFAULT_VALUE, {});

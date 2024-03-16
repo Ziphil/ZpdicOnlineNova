@@ -27,6 +27,7 @@ export type EditExampleSpec = {
   form: UseFormReturn<FormValue>,
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
+export type EditExampleFormValue = FormValue;
 
 export function useEditExample(dictionary: Dictionary, example: Example | null, onSubmit?: (example: EditableExample) => unknown): EditExampleSpec {
   const form = useForm<FormValue>((example !== null) ? getFormValue(example) : DEFAULT_VALUE, {});
