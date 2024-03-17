@@ -84,7 +84,7 @@ export class ResourceController extends Controller {
     if (dictionary) {
       try {
         const path = `font/${dictionary.number}/font.${extension}`;
-        const configs = {contentType: "font/", sizeLimit: 1024 * 1024};
+        const configs = {contentType: "", sizeLimit: 1024 * 1024};
         const post = await AwsUtil.getUploadFilePost(path, configs);
         const body = post;
         Controller.respond(response, body);

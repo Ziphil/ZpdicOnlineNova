@@ -39,22 +39,27 @@ export function useAddResource(dictionary: Dictionary): AddResourceSpec {
           await onSubmit?.();
           dispatchSuccessToast("addResource");
         } catch (error) {
-          if (error.name === "AwsError") {
-            const code = error.data["Code"]["_text"];
-            const message = error.data["Message"]["_text"];
-            if (code === "EntityTooLarge") {
-              dispatchErrorToast("resourceSizeTooLarge");
-            } else if (code === "AccessDenied" && message.includes("Policy Condition failed") && message.includes("$Content-Type")) {
-              dispatchErrorToast("unsupportedResourceType");
-            } else {
-              dispatchErrorToast("awsError");
-            }
-          } else {
-            dispatchErrorToast("awsError");
-          }
+          const type = deternimeErrorToastType(error);
+          dispatchErrorToast(type);
         }
       });
     })(event);
   }, [dictionary.number, request, form, dispatchSuccessToast, dispatchErrorToast]);
   return {form, handleSubmit};
+}
+
+function deternimeErrorToastType(error: any): string {
+  if (error.name === "AwsError") {
+    const code = error.data["Code"]["_text"];
+    const message = error.data["Message"]["_text"];
+    if (code === "EntityTooLarge") {
+      return "resourceSizeTooLarge";
+    } else if (code === "AccessDenied" && message.includes("Policy Condition failed") && message.includes("$Content-Type")) {
+      return "unsupportedResourceType";
+    } else {
+      return "awsError";
+    }
+  } else {
+    return "unexpected";
+  }
 }

@@ -1,13 +1,13 @@
 //
 
-import {DictionaryFontCustomSettings} from "/client/skeleton/dictionary/dictionary-font-settings";
+import {DictionaryFontSpec} from "/client/skeleton/dictionary/dictionary-font-spec";
 
 
 export interface DictionarySettings {
 
   akrantiainSource?: string;
   zatlinSource?: string;
-  fontSettings?: DictionaryFontCustomSettings;
+  fontSpec?: DictionaryFontSpec;
   punctuations: Array<string>;
   pronunciationTitle: string;
   exampleTitle: string;
