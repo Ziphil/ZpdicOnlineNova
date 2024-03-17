@@ -5,7 +5,7 @@ import {
   Params,
   ParamsDictionary,
   Request,
-  RequestHandler,
+  RequestHandlerParams,
   Response
 } from "express-serve-static-core";
 import "reflect-metadata";
@@ -20,8 +20,8 @@ type RequestHandlerSpec = {
   name: string | symbol,
   path: string,
   method: MethodType,
-  befores: Array<RequestHandler<any>>,
-  afters: Array<RequestHandler<any>>
+  befores: Array<RequestHandlerParams<any>>,
+  afters: Array<RequestHandlerParams<any>>
 };
 
 export function controller(path: string): ClassDecorator {
@@ -59,14 +59,14 @@ export function post(path: string): MethodDecorator {
   return decorator;
 }
 
-export function before<P extends Params = ParamsDictionary>(...middlewares: Array<RequestHandler<P>>): MethodDecorator {
+export function before<P extends Params = ParamsDictionary>(...middlewares: Array<RequestHandlerParams<P>>): MethodDecorator {
   const decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
     pushMiddlewares(target, name, "before", ...middlewares);
   };
   return decorator;
 }
 
-export function after<P extends Params = ParamsDictionary>(...middlewares: Array<RequestHandler<P>>): MethodDecorator {
+export function after<P extends Params = ParamsDictionary>(...middlewares: Array<RequestHandlerParams<P>>): MethodDecorator {
   const decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
     pushMiddlewares(target, name, "after", ...middlewares);
   };
@@ -93,7 +93,7 @@ function setPath(target: object, name: string | symbol, method: MethodType, path
   spec.path = path;
 }
 
-function pushMiddlewares<P extends Params = ParamsDictionary>(target: object, name: string | symbol, timing: string, ...middlewares: Array<RequestHandler<P>>): void {
+function pushMiddlewares<P extends Params = ParamsDictionary>(target: object, name: string | symbol, timing: string, ...middlewares: Array<RequestHandlerParams<P>>): void {
   const spec = findHandlerSpec(target, name);
   if (timing === "before") {
     spec.befores.push(...middlewares);

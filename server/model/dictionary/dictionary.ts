@@ -116,6 +116,13 @@ export class DictionarySchema extends DiscardableSchema {
     return dictionary;
   }
 
+  public static async fetchOneByIdentifier(identifier: string): Promise<Dictionary | null> {
+    const value = (identifier.match(/^\d+$/)) ? +identifier : identifier;
+    const key = (identifier.match(/^\d+$/)) ? "number" : "paramName";
+    const dictionary = await DictionaryModel.findOneExist().where(key, value);
+    return dictionary;
+  }
+
   public static async fetchByUser(user: User, authority: DictionaryAuthority, includeSecret: boolean = true): Promise<Array<Dictionary>> {
     const ownQuery = DictionaryModel.findExist().where("user", user);
     const editQuery = DictionaryModel.findExist().where("editUsers", user);
@@ -472,22 +479,26 @@ export class DictionarySchema extends DiscardableSchema {
     return {wordCount, wordNameLengths, equivalentNameCount, informationCount, informationTextLengths, exampleCount};
   }
 
-  public async hasAuthority(this: Dictionary, user: User, authority: DictionaryAuthority): Promise<boolean> {
-    await this.populate(["user", "editUsers"]);
-    if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
-      if (user.authority !== "admin") {
-        if (authority === "own") {
-          return this.user.id === user.id;
-        } else if (authority === "edit") {
-          return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+  public async hasAuthority(this: Dictionary, user: User, authority: DictionaryAuthority | "none"): Promise<boolean> {
+    if (authority === "none") {
+      return true;
+    } else {
+      await this.populate(["user", "editUsers"]);
+      if (isDocument(this.user) && isDocumentArray(this.editUsers)) {
+        if (user.authority !== "admin") {
+          if (authority === "own") {
+            return this.user.id === user.id;
+          } else if (authority === "edit") {
+            return this.user.id === user.id || this.editUsers.find((editUser) => editUser.id === user.id) !== undefined;
+          } else {
+            throw new Error("cannot happen");
+          }
         } else {
-          throw new Error("cannot happen");
+          return true;
         }
       } else {
-        return true;
+        throw new Error("cannot happen");
       }
-    } else {
-      throw new Error("cannot happen");
     }
   }
 

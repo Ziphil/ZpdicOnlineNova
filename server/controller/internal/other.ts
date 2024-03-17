@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {checkMe, verifyRecaptcha} from "/server/controller/internal/middle";
+import {checkMe, verifyRecaptcha} from "/server/controller/internal/middle-old";
 import {UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {MailUtil} from "/server/util/mail";

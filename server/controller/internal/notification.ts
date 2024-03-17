@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {verifyMe} from "/server/controller/internal/middle";
+import {verifyMe} from "/server/controller/internal/middle-old";
 import {NotificationCreator} from "/server/creator";
 import {NotificationModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";

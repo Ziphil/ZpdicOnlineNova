@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {checkMe, verifyDictionary, verifyMe, verifyRecaptcha} from "/server/controller/internal/middle";
+import {checkMe, verifyDictionary, verifyMe, verifyRecaptcha} from "/server/controller/internal/middle-old";
 import {DictionaryCreator, DictionaryParameterCreator, SuggestionCreator, UserCreator, WordCreator, WordParameterCreator} from "/server/creator";
 import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -17,9 +17,9 @@ export class DictionaryController extends Controller {
   @post("/createDictionary")
   @before(verifyMe())
   public async [Symbol()](request: Request<"createDictionary">, response: Response<"createDictionary">): Promise<void> {
-    const user = request.me!;
+    const me = request.me!;
     const {name} = request.body;
-    const dictionary = await DictionaryModel.addEmpty(name, user);
+    const dictionary = await DictionaryModel.addEmpty(name, me);
     const body = DictionaryCreator.create(dictionary);
     Controller.respond(response, body);
   }

@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {verifyDictionary, verifyMe, verifyRecaptcha} from "/server/controller/internal/middle";
+import {verifyDictionary, verifyMe, verifyRecaptcha} from "/server/controller/internal/middle-old";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {AwsUtil} from "/server/util/aws";
 import {QueryRange} from "/server/util/query";

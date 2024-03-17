@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {verifyDictionary, verifyMe} from "/server/controller/internal/middle";
+import {verifyDictionary, verifyMe} from "/server/controller/internal/middle-old";
 import {ExampleCreator} from "/server/creator";
 import {DictionaryModel, ExampleModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
