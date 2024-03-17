@@ -798,6 +798,7 @@ dictionarySettingGeneralPart:
     name: "名前"
     paramName: "URL 用識別子"
     explanation: "説明"
+    fontSpec: "見出し語のフォント"
     secret: "辞書一覧での表示/非表示"
     discard: "削除"
   description:
@@ -806,6 +807,10 @@ dictionarySettingGeneralPart:
     explanation: >-
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
       一部の Markdown 形式に対応しています。
+    fontSpec: >-
+      見出し語のフォントを変更することができます。
+      「ローカルフォントを参照」を選択すると、閲覧者各自の環境にインストールされているフォントを参照して使用します。
+      「フォントをアップロード」を選択すると、アップロードされた独自のフォントを使用します。
     secret: >-
       これを「非表示」に設定すると、この辞書が辞書一覧に表示されなくなります。
       ただし、辞書ページの URL を知っている人は直接アクセスすることができます。

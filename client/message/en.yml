@@ -800,6 +800,7 @@ dictionarySettingGeneralPart:
     name: "Name"
     paramName: "Identifier for URL"
     explanation: "Description"
+    fontSpec: "Font for headwords"
     secret: "Visibility in dictionary lists"
     discard: "Delete"
   description:
@@ -808,6 +809,9 @@ dictionarySettingGeneralPart:
     explanation: >-
       This is displayed on the dictionary page before searching.
       You can use some Markdown syntax here.
+    fontSpec: >-
+      You can change the font for headwords.
+      Select “Use local font” to use a font installed in the visiter's environment, or “Upload custom font” to use your own uploaded font.
     secret: >-
       If you set this to “Hide”, this dictionary will not appear in dictionary lists.
       However, anyone who knows the URL of the dictionary page can still access it directly.

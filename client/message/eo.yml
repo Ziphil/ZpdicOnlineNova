@@ -800,6 +800,7 @@ dictionarySettingGeneralPart:
     name: "Nomo"
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
+    fontSpec: "Tiparo por kapvortoj"
     secret: "Videbleco en listoj de vortaroj"
     discard: "Forigi"
   description:
@@ -808,6 +809,9 @@ dictionarySettingGeneralPart:
     explanation: >-
       Tio estas montrata sur la paĝo de la vortaro antaŭ serĉado.
       Vi povas uzi iun sintakson de Markdown.
+    fontSpec: >-
+      Vi povas ŝanĝi la tiparon por kapvortoj.
+      Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ "Alŝuti propran tiparon" por uzi vian propran alŝutitan tiparon.
     secret: >-
       Se vi agordos tiun al “Nevidebla”, la vortaro ne aperos en listoj de vortaroj.
       Tamen ĉiu, kiu konas la retadreso de la paĝo de la vortaro, povas ankoraŭ rekte aliri ĝin.

@@ -21,6 +21,7 @@ export const WordCardHeading = create(
     const {transNumber} = useTrans("wordCard");
 
     const debug = location.hostname === "localhost";
+    const hasCustomFont = dictionary.settings.fontSpec !== undefined && dictionary.settings.fontSpec.type !== "none";
     const pronunciation = useMemo(() => getPronunciation(dictionary, word), [dictionary, word]);
     const nameFontFamily = useMemo(() => getNameFontFamily(dictionary), [dictionary]);
 
@@ -40,6 +41,11 @@ export const WordCardHeading = create(
           <MultiLineText styleName="name" is="h3" lineHeight="narrowest" {...{style: {fontFamily: nameFontFamily}}}>
             {word.name}
           </MultiLineText>
+          {(hasCustomFont) && (
+            <MultiLineText styleName="small-name" is="span" lineHeight="narrowest">
+              {word.name}
+            </MultiLineText>
+          )}
           {(!!pronunciation) && (
             <div styleName="pronunciation">
               {pronunciation}
