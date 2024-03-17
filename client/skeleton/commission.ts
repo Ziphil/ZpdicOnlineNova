@@ -1,11 +1,11 @@
 //
 
 
-export class Commission {
+export interface Commission {
 
-  public id!: string;
-  public name!: string;
-  public comment?: string;
-  public createdDate!: string;
+  id: string;
+  name: string;
+  comment?: string;
+  createdDate: string;
 
 }

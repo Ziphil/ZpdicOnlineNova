@@ -1,12 +1,12 @@
 //
 
 
-export class Notification {
+export interface Notification {
 
-  public id!: string;
-  public type!: string;
-  public date!: string;
-  public title!: string;
-  public text!: string;
+  id: string;
+  type: string;
+  date: string;
+  title: string;
+  text: string;
 
 }

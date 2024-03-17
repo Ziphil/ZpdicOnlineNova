@@ -7,19 +7,9 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {
-  Commission as CommissionSkeleton
-} from "/client/skeleton/commission";
-import {
-  WithSize
-} from "/server/controller/internal/type";
-import {
-  Dictionary,
-  DictionarySchema
-} from "/server/model/dictionary";
-import {
-  QueryRange
-} from "/server/util/query";
+import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {WithSize} from "/server/type/common";
+import {QueryRange} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "commissions"}})
@@ -57,21 +47,6 @@ export class CommissionSchema {
 
   public async discard(this: Commission): Promise<void> {
     await this.deleteOne();
-  }
-
-}
-
-
-export class CommissionCreator {
-
-  public static create(raw: Commission): CommissionSkeleton {
-    const id = raw.id;
-    const name = raw.name;
-    const comment = raw.comment;
-    const createdDate = raw.createdDate.toISOString();
-    const skeleton = {id, name, comment, createdDate};
-    return skeleton;
-
   }
 
 }

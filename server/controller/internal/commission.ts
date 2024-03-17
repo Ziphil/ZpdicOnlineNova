@@ -1,48 +1,21 @@
 //
 
-import {
-  CustomError
-} from "/client/skeleton/error";
-import {
-  before,
-  controller,
-  post
-} from "/server/controller/decorator";
-import {
-  Controller,
-  Request,
-  Response
-} from "/server/controller/internal/controller";
-import {
-  verifyDictionary,
-  verifyRecaptcha,
-  verifyUser
-} from "/server/controller/internal/middle";
-import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
-import {
-  CommissionCreator,
-  CommissionModel
-} from "/server/model/commission";
-import {
-  DictionaryModel
-} from "/server/model/dictionary";
-import {
-  QueryRange
-} from "/server/util/query";
+import {before, controller, post} from "/server/controller/decorator";
+import {Controller, Request, Response} from "/server/controller/internal/controller";
+import {verifyDictionary, verifyMe, verifyRecaptcha} from "/server/controller/internal/middle";
+import {CommissionCreator} from "/server/creator";
+import {CommissionModel, DictionaryModel} from "/server/model";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {QueryRange} from "/server/util/query";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class CommissionController extends Controller {
 
-  @post(SERVER_PATHS["addCommission"])
+  @post("/addCommission")
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"addCommission">, response: Response<"addCommission">): Promise<void> {
-    const number = request.body.number;
-    const name = request.body.name;
-    const comment = request.body.comment;
+    const {number, name, comment} = request.body;
     if (name !== "") {
       const dictionary = await DictionaryModel.fetchOneByNumber(number);
       if (dictionary) {
@@ -50,20 +23,18 @@ export class CommissionController extends Controller {
         const body = CommissionCreator.create(commission);
         Controller.respond(response, body);
       } else {
-        const body = CustomError.ofType("noSuchDictionaryNumber");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "noSuchDictionary");
       }
     } else {
-      const body = CustomError.ofType("emptyCommissionName");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "emptyCommissionName");
     }
   }
 
-  @post(SERVER_PATHS["discardCommission"])
-  @before(verifyUser(), verifyDictionary("own"))
+  @post("/discardCommission")
+  @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"discardCommission">, response: Response<"discardCommission">): Promise<void> {
     const dictionary = request.dictionary!;
-    const id = request.body.id;
+    const {id} = request.body;
     if (dictionary) {
       const commission = await CommissionModel.fetchOneByDictionaryAndId(dictionary, id);
       if (commission) {
@@ -71,21 +42,18 @@ export class CommissionController extends Controller {
         const body = CommissionCreator.create(commission);
         Controller.respond(response, body);
       } else {
-        const body = CustomError.ofType("noSuchCommission");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "noSuchCommission");
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
-  @post(SERVER_PATHS["fetchCommissions"])
-  @before(verifyUser(), verifyDictionary("own"))
+  @post("/fetchCommissions")
+  @before(verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchCommissions">, response: Response<"fetchCommissions">): Promise<void> {
     const dictionary = request.dictionary;
-    const offset = request.body.offset;
-    const size = request.body.size;
+    const {offset, size} = request.body;
     if (dictionary) {
       const range = new QueryRange(offset, size);
       const hitResult = await CommissionModel.fetchByDictionary(dictionary, range);
@@ -94,8 +62,7 @@ export class CommissionController extends Controller {
       const body = [hitCommissions, hitSize] as any;
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 

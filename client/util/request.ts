@@ -1,68 +1,52 @@
 //
 
 import axios from "axios";
-import {
-  AxiosRequestConfig,
-  AxiosResponse
-} from "axios";
-import {
-  RECAPTCHA_KEY
-} from "/client/variable";
-import {
-  ProcessName,
-  RequestData,
-  ResponseData,
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
+import {AxiosRequestConfig, AxiosResponse} from "axios";
+import {appendValueToFormData, toFormData} from "/client/util/form-data";
+import {RECAPTCHA_KEY, VERSION} from "/client/variable";
+import type {ProcessName, RequestData, ResponseData} from "/server/type/internal";
 
 
 const client = axios.create({timeout: 10000, validateStatus: () => true});
 
+export const SERVER_PATH_PREFIX = "/internal/" + VERSION;
+
+/** サーバーにリクエストを送信します。
+ * サーバーのレスポンスの種類にかかわらず、必ず `AxiosResponseSpec` オブジェクトを返します。
+ * したがって、サーバーがエラーレスポンス (400 番台か 500 番台のステータスコード) を返した場合でも、エラーは発生しません。*/
 export async function request<N extends ProcessName>(name: N, data: Omit<RequestData<N>, "recaptchaToken">, config: RequestConfigWithRecaptcha): Promise<AxiosResponseSpec<N>>;
 export async function request<N extends ProcessName>(name: N, data: RequestData<N>, config?: RequestConfig): Promise<AxiosResponseSpec<N>>;
 export async function request<N extends ProcessName>(name: N, data: RequestData<N>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
-  const url = SERVER_PATH_PREFIX + SERVER_PATHS[name];
-  const method = "post" as const;
+  const url = SERVER_PATH_PREFIX + "/" + name;
   if (config.useRecaptcha) {
     const action = (typeof config.useRecaptcha === "string") ? config.useRecaptcha : name;
     const recaptchaToken = await grecaptcha.execute(RECAPTCHA_KEY, {action});
-    if (data !== undefined) {
-      if (data instanceof FormData) {
-        data.append("recaptchaToken", recaptchaToken);
-      } else {
-        data = {...data, recaptchaToken};
-      }
+    appendValueToFormData(data, "recaptchaToken", recaptchaToken);
+  }
+  try {
+    const response = await client.request({method: "post", url, ...config, data});
+    return response;
+  } catch (error) {
+    if (error.code === "ECONNABORTED") {
+      return {status: 408, statusText: "Request Timeout", headers: {}, data: undefined, config} as any;
+    } else {
+      throw error;
     }
   }
-  const response = await (async () => {
-    try {
-      return await client.request({url, method, ...config, data});
-    } catch (error) {
-      if (error.code === "ECONNABORTED") {
-        const data = undefined as any;
-        return {status: 408, statusText: "Request Timeout", headers: {}, data, config} as any;
-      } else {
-        throw error;
-      }
-    }
-  })();
-  return response;
 }
 
+/** サーバーにファイル付きでリクエストを送信します。
+ * サーバーのレスポンスの種類にかかわらず、必ず `AxiosResponseSpec` オブジェクトを返します。
+ * したがって、サーバーがエラーレスポンス (400 番台か 500 番台のステータスコード) を返した場合でも、エラーは発生しません。*/
 export async function requestFile<N extends ProcessName>(name: N, data: WithFile<Omit<RequestData<N>, "recaptchaToken">>, config: RequestConfigWithRecaptcha): Promise<AxiosResponseSpec<N>>;
 export async function requestFile<N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config?: RequestConfig): Promise<AxiosResponseSpec<N>>;
 export async function requestFile<N extends ProcessName>(name: N, data: WithFile<RequestData<N>>, config: RequestConfig = {}): Promise<AxiosResponseSpec<N>> {
-  const formData = new FormData() as any;
-  for (const [key, value] of Object.entries(data)) {
-    formData.append(key, value);
-  }
-  const nextConfig = {...config, timeout: 0};
-  const response = await request(name, formData, nextConfig);
+  const formData = toFormData(data) as any;
+  const response = await request(name, formData, {...config, timeout: 0});
   return response;
 }
 
-export function determineErrorPopupType(response: AxiosResponse<any>): string {
+export function determineErrorToastType(response: AxiosResponse<any>): string {
   const status = response.status;
   const body = response.data;
   if (status === 400) {

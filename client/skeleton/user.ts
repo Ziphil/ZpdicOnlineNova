@@ -1,18 +1,18 @@
 //
 
 
-export class User {
+export interface User {
 
-  public id!: string;
-  public name!: string;
-  public screenName!: string;
+  id: string;
+  name: string;
+  screenName: string;
 
 }
 
 
-export class DetailedUser extends User {
+export interface DetailedUser extends User {
 
-  public email!: string;
-  public activated!: boolean;
+  email: string;
+  activated: boolean;
 
 }

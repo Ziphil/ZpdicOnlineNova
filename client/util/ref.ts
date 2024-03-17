@@ -1,30 +1,15 @@
 //
 
-import {
-  Ref,
-  RefCallback
-} from "react";
+import {MutableRefObject, Ref} from "react";
 
 
-export function mergeRefs<T>(refs: ReadonlyArray<Ref<T>>): RefCallback<T> {
-  const mergedRef = function (value: T | null): void {
-    for (const ref of refs) {
-      if (typeof ref === "function") {
-        ref(value);
-      } else if (ref !== null) {
-        const castRef = ref as {current: T | null};
-        castRef.current = value;
-      }
+export function assignRef<T>(ref: Ref<T> | undefined, value: T | null): void {
+  if (ref !== null && ref !== undefined) {
+    if (typeof ref === "function") {
+      ref(value);
+    } else {
+      const mutableRef = ref as MutableRefObject<T | null>;
+      mutableRef.current = value;
     }
-  };
-  return mergedRef;
-}
-
-export function fillRef<T>(ref: Ref<T>, value: T): void {
-  if (typeof ref === "function") {
-    ref(value);
-  } else if (ref !== null) {
-    const castRef = ref as {current: T};
-    castRef.current = value;
   }
 }

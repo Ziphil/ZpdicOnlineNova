@@ -1,60 +1,34 @@
 //
 
-import {
-  CustomError
-} from "/client/skeleton/error";
-import {
-  before,
-  controller,
-  post
-} from "/server/controller/decorator";
-import {
-  Controller,
-  Request,
-  Response
-} from "/server/controller/internal/controller";
-import {
-  checkUser,
-  verifyRecaptcha
-} from "/server/controller/internal/middle";
-import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
-import {
-  UserModel
-} from "/server/model/user";
-import {
-  MailUtil
-} from "/server/util/mail";
+import {before, controller, post} from "/server/controller/decorator";
+import {Controller, Request, Response} from "/server/controller/internal/controller";
+import {checkMe, verifyRecaptcha} from "/server/controller/internal/middle";
+import {UserModel} from "/server/model";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {MailUtil} from "/server/util/mail";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class OtherController extends Controller {
 
-  @post(SERVER_PATHS["fetchDocument"])
+  @post("/fetchDocument")
   public async [Symbol()](request: Request<"fetchDocument">, response: Response<"fetchDocument">): Promise<void> {
-    const locale = request.body.locale;
-    const path = request.body.path;
+    const {locale, path} = request.body;
     const localPath = `/dist/document/${locale}/${path || "index"}.md`;
     response.sendFile(process.cwd() + localPath, (error) => {
       if (error) {
-        const body = CustomError.ofType("noSuchDocument");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "noSuchDocument");
       }
     });
   }
 
-  @post(SERVER_PATHS["contact"])
-  @before(checkUser(), verifyRecaptcha())
+  @post("/contact")
+  @before(checkMe(), verifyRecaptcha())
   public async [Symbol()](request: Request<"contact">, response: Response<"contact">): Promise<void> {
-    const user = request.user;
-    const name = request.body.name;
-    const email = request.body.email;
-    const subject = request.body.subject;
-    const text = request.body.text;
-    const signedIn = (user !== undefined).toString();
-    const userName = user?.name ?? "";
+    const me = request.me;
+    const {name, email, subject, text} = request.body;
+    const signedIn = (me !== undefined).toString();
+    const userName = me?.name ?? "";
     if (text !== "") {
       const administrator = await UserModel.fetchOneAdministrator();
       if (administrator !== null) {
@@ -63,12 +37,10 @@ export class OtherController extends Controller {
         MailUtil.send(administrator.email, nextSubject, nextText);
         Controller.respond(response, null);
       } else {
-        const body = CustomError.ofType("administratorNotFound");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "administratorNotFound");
       }
     } else {
-      const body = CustomError.ofType("emptyContactText");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "emptyContactText");
     }
   }
 

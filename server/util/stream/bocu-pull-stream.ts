@@ -1,8 +1,6 @@
 /* eslint-disable no-bitwise */
 
-import {
-  PullStream
-} from "/server/util/stream/pull-stream";
+import {PullStream} from "/server/util/stream/pull-stream";
 
 
 const ASCII_PREVIOUS = 0x40;

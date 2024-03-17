@@ -1,8 +1,6 @@
 //
 
-import {
-  SchemaTypes
-} from "mongoose";
+import {SchemaTypes} from "mongoose";
 
 
 export class MongoUtil {

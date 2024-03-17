@@ -10,73 +10,34 @@ import {
   prop
 } from "@typegoose/typegoose";
 import Fuse from "fuse.js";
-import {
-  DetailedDictionary as DetailedDictionarySkeleton,
-  Dictionary as DictionarySkeleton,
+import type {
   DictionaryStatistics,
-  EditableExample as EditableExampleSkeleton,
-  EditableWord as EditableWordSkeleton,
+  EditableExample,
+  EditableWord,
   StringLengths,
-  UserDictionary as UserDictionarySkeleton,
   WholeAverage,
   WordNameFrequencies,
   WordNameFrequency
-} from "/client/skeleton/dictionary";
-import {
-  User as UserSkeleton
-} from "/client/skeleton/user";
-import {
-  WithSize
-} from "/server/controller/internal/type";
-import {
-  DiscardableSchema
-} from "/server/model/base";
-import {
-  DICTIONARY_AUTHORITIES,
-  Deserializer,
-  DictionaryAuthority,
-  DictionaryAuthorityUtil,
-  DictionaryFullAuthority,
-  DictionaryParameter,
-  DictionarySettings,
-  DictionarySettingsCreator,
-  DictionarySettingsModel,
-  Example,
-  ExampleModel,
-  Relation,
-  Serializer,
-  Suggestion,
-  Word,
-  WordModel,
-  WordParameter
-} from "/server/model/dictionary";
-import {
-  DictionarySettingsSchema
-} from "/server/model/dictionary/dictionary-settings";
-import {
-  CustomError
-} from "/server/model/error";
-import {
-  InvitationModel
-} from "/server/model/invitation";
-import {
-  User,
-  UserCreator,
-  UserSchema
-} from "/server/model/user";
-import {
-  IDENTIFIER_REGEXP
-} from "/server/model/validation";
-import {
-  LiteralType,
-  LiteralUtilType
-} from "/server/util/literal-type";
-import {
-  LogUtil
-} from "/server/util/log";
-import {
-  QueryRange
-} from "/server/util/query";
+} from "/client/skeleton";
+import {DiscardableSchema} from "/server/model/base";
+import {createDeserializer} from "/server/model/dictionary/deserializer";
+import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil, DictionaryFullAuthority} from "/server/model/dictionary/dictionary-authority";
+import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
+import {createSerializer} from "/server/model/dictionary/serializer";
+import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
+import {CustomError} from "/server/model/error";
+import {InvitationModel} from "/server/model/invitation";
+import {User, UserSchema} from "/server/model/user/user";
+import {Example, ExampleModel} from "/server/model/word/example";
+import {Relation} from "/server/model/word/relation";
+import {Suggestion} from "/server/model/word/suggestion";
+import {Word, WordModel} from "/server/model/word/word";
+import {WordParameter} from "/server/model/word-parameter/word-parameter";
+import {WithSize} from "/server/type/common";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
+import {LogUtil} from "/server/util/log";
+import {QueryRange} from "/server/util/query";
+import {IDENTIFIER_REGEXP} from "/server/util/validation";
 
 
 export const DICTIONARY_STATUSES = ["ready", "saving", "error"] as const;
@@ -191,7 +152,7 @@ export class DictionarySchema extends DiscardableSchema {
     const settings = this.settings as any;
     let externalData = {};
     const promise = new Promise<Dictionary>((resolve, reject) => {
-      const stream = Deserializer.create(path, originalPath, this);
+      const stream = createDeserializer(path, originalPath, this);
       if (stream !== null) {
         let count = 0;
         stream.on("words", (words) => {
@@ -246,7 +207,7 @@ export class DictionarySchema extends DiscardableSchema {
 
   public async download(this: Dictionary, path: string): Promise<void> {
     const promise = new Promise<void>((resolve, reject) => {
-      const stream = Serializer.create(path, this);
+      const stream = createSerializer(path, this);
       if (stream !== null) {
         stream.on("end", () => {
           resolve();
@@ -338,7 +299,7 @@ export class DictionarySchema extends DiscardableSchema {
     return this;
   }
 
-  public async editWord(this: Dictionary, word: EditableWordSkeleton): Promise<Word> {
+  public async editWord(this: Dictionary, word: EditableWord): Promise<Word> {
     if (this.status !== "saving") {
       const resultWord = await WordModel.edit(this, word);
       this.status = "ready";
@@ -374,7 +335,7 @@ export class DictionarySchema extends DiscardableSchema {
     return example;
   }
 
-  public async editExample(this: Dictionary, example: EditableExampleSkeleton): Promise<Example> {
+  public async editExample(this: Dictionary, example: EditableExample): Promise<Example> {
     if (this.status !== "saving") {
       const resultExample = await ExampleModel.edit(this, example);
       this.status = "ready";
@@ -580,54 +541,6 @@ export class DictionarySchema extends DiscardableSchema {
     } else {
       return 1;
     }
-  }
-
-}
-
-
-export class DictionaryCreator {
-
-  public static create(raw: Dictionary): DictionarySkeleton {
-    const id = raw.id;
-    const number = raw.number;
-    const paramName = raw.paramName;
-    const name = raw.name;
-    const status = raw.status;
-    const secret = raw.secret;
-    const explanation = raw.explanation;
-    const settings = DictionarySettingsCreator.create(raw.settings);
-    const createdDate = raw.createdDate?.toISOString() ?? undefined;
-    const updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    const skeleton = {id, number, paramName, name, status, secret, explanation, settings, createdDate, updatedDate};
-    return skeleton;
-  }
-
-  public static async createDetailed(raw: Dictionary): Promise<DetailedDictionarySkeleton> {
-    const base = DictionaryCreator.create(raw);
-    const userPromise = new Promise<UserSkeleton>(async (resolve, reject) => {
-      try {
-        await raw.populate("user");
-        if (isDocument(raw.user)) {
-          const user = UserCreator.create(raw.user);
-          resolve(user);
-        } else {
-          reject();
-        }
-      } catch (error) {
-        reject(error);
-      }
-    });
-    const [user] = await Promise.all([userPromise]);
-    const skeleton = {...base, user};
-    return skeleton;
-  }
-
-  public static async createUser(raw: Dictionary, rawUser: User): Promise<UserDictionarySkeleton> {
-    const basePromise = DictionaryCreator.createDetailed(raw);
-    const authoritiesPromise = raw.fetchAuthorities(rawUser);
-    const [base, authorities] = await Promise.all([basePromise, authoritiesPromise]);
-    const skeleton = {...base, authorities};
-    return skeleton;
   }
 
 }

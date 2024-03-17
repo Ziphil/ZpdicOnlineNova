@@ -1,13 +1,7 @@
 //
 
-import {
-  Aggregate,
-  Model,
-  Query
-} from "mongoose";
-import {
-  WithSize
-} from "/server/controller/internal/type";
+import {Aggregate, Model, Query} from "mongoose";
+import {WithSize} from "/server/type/common";
 
 
 export class QueryRange {

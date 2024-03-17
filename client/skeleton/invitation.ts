@@ -1,20 +1,15 @@
 //
 
-import {
-  DetailedDictionary
-} from "/client/skeleton/dictionary";
-import {
-  LiteralType,
-  LiteralUtilType
-} from "/server/util/literal-type";
+import {DetailedDictionary} from "/client/skeleton/dictionary/dictionary";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 
-export class Invitation {
+export interface Invitation {
 
-  public id!: string;
-  public type!: InvitationType;
-  public dictionary!: DetailedDictionary;
-  public createdDate!: string;
+  id: string;
+  type: InvitationType;
+  dictionary: DetailedDictionary;
+  createdDate: string;
 
 }
 

@@ -1,50 +1,35 @@
 //
 
-import {
-  NextFunction,
-  Request,
-  RequestHandler,
-  Response
-} from "express";
+import {NextFunction, Request, RequestHandler, Response} from "express";
 import * as jwt from "jsonwebtoken";
-import {
-  CustomError
-} from "/client/skeleton/error";
+import {CustomErrorCreator} from "/server/creator/error";
 import {
   DictionaryAuthority,
-  DictionaryModel
-} from "/server/model/dictionary";
-import {
+  DictionaryModel,
   UserModel
-} from "/server/model/user";
-import {
-  LogUtil
-} from "/server/util/log";
-import {
-  RecaptchaUtil
-} from "/server/util/recaptcha";
-import {
-  JWT_SECRET
-} from "/server/variable";
+} from "/server/model";
+import {LogUtil} from "/server/util/log";
+import {RecaptchaUtil} from "/server/util/recaptcha";
+import {JWT_SECRET} from "/server/variable";
 
 
 /** リクエストのヘッダーに書き込まれたトークンを利用して認証を行います。
- * 認証に成功した場合、`request` オブジェクトの `user` プロパティにユーザーオブジェクトを書き込み、次の処理を行います。
+ * 認証に成功した場合、`request` オブジェクトの `me` プロパティにユーザーオブジェクトを書き込み、次の処理を行います。
  * 認証に失敗した場合、ステータスコード 401 を返して終了します。
  * なお、引数に権限を表す文字列が指定された場合、追加でユーザーが指定の権限を保持しているかチェックし、権限がなかった場合、ステータスコード 403 を返して終了します。*/
-export function verifyUser(authority?: string): RequestHandler {
-  const handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
+export function verifyMe(authority?: string): RequestHandler {
+  const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     const token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
       if (!error && typeof data === "object" && "id" in data) {
         const anyData = data as any;
-        const user = await UserModel.findById(anyData.id).exec();
-        if (user) {
-          if (!authority || user.authority === authority) {
-            request.user = user;
+        const me = await UserModel.findById(anyData.id).exec();
+        if (me) {
+          if (!authority || me.authority === authority) {
+            request.me = me;
             next();
           } else {
-            const body = CustomError.ofType("notEnoughUserAuthority");
+            const body = CustomErrorCreator.ofType("notEnoughUserAuthority");
             response.status(403).send(body).end();
           }
         } else {
@@ -60,16 +45,16 @@ export function verifyUser(authority?: string): RequestHandler {
 
 /** リクエストのヘッダーに書き込まれたトークンを利用してユーザーのチェックを行います。
  * 基本的に `verifyUser` 関数とほぼ同じ動作をしますが、認証に失敗した場合にエラーステータスを返すのではなく次の動作に移行します。*/
-export function checkUser(authority?: string): RequestHandler {
-  const handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
+export function checkMe(authority?: string): RequestHandler {
+  const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     const token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
       if (!error && typeof data === "object" && "id" in data) {
         const anyData = data as any;
-        const user = await UserModel.findById(anyData.id).exec();
-        if (user) {
-          if (!authority || user.authority === authority) {
-            request.user = user;
+        const me = await UserModel.findById(anyData.id).exec();
+        if (me) {
+          if (!authority || me.authority === authority) {
+            request.me = me;
             next();
           } else {
             next();
@@ -94,16 +79,16 @@ export function checkUser(authority?: string): RequestHandler {
 export function verifyDictionary(authority: DictionaryAuthority): RequestHandler {
   const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     try {
-      const user = request.user!;
+      const me = request.me!;
       const number = parseInt(request.query.number || request.body.number, 10);
       const dictionary = await DictionaryModel.fetchOneByNumber(number);
       if (dictionary) {
-        const hasAuthority = await dictionary.hasAuthority(user, authority);
+        const hasAuthority = await dictionary.hasAuthority(me, authority);
         if (hasAuthority) {
           request.dictionary = dictionary;
           next();
         } else {
-          const body = CustomError.ofType("notEnoughDictionaryAuthority");
+          const body = CustomErrorCreator.ofType("notEnoughDictionaryAuthority");
           response.status(403).send(body).end();
         }
       } else {
@@ -128,12 +113,12 @@ export function verifyRecaptcha(): RequestHandler {
         request.recaptchaScore = result.score;
         next();
       } else {
-        const body = CustomError.ofType("recaptchaRejected");
+        const body = CustomErrorCreator.ofType("recaptchaRejected");
         response.status(403).send(body).end();
       }
     } catch (error) {
       if (error.name === "CustomError" && error.type === "recaptchaError") {
-        const body = CustomError.ofType("recaptchaError");
+        const body = CustomErrorCreator.ofType("recaptchaError");
         response.status(403).send(body).end();
       } else {
         next(error);
@@ -151,12 +136,12 @@ export function login(expiresIn: number): RequestHandler {
   const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     const name = request.body.name;
     const password = request.body.password;
-    const user = await UserModel.authenticate(name, password);
-    if (user) {
-      jwt.sign({id: user.id}, JWT_SECRET, {expiresIn}, (error, token) => {
+    const me = await UserModel.authenticate(name, password);
+    if (me) {
+      jwt.sign({id: me.id}, JWT_SECRET, {expiresIn}, (error, token) => {
         if (!error) {
           request.token = token;
-          request.user = user;
+          request.me = me;
           const options = {maxAge: expiresIn * 1000, httpOnly: true, signed: true, sameSite: true};
           response.cookie("authorization", token, options);
           next();

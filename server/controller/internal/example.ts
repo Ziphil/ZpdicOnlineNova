@@ -1,96 +1,58 @@
 //
 
-import {
-  CustomError
-} from "/client/skeleton/error";
-import {
-  before,
-  controller,
-  post
-} from "/server/controller/decorator";
-import {
-  Controller,
-  Request,
-  Response
-} from "/server/controller/internal/controller";
-import {
-  verifyDictionary,
-  verifyUser
-} from "/server/controller/internal/middle";
-import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
-import {
-  DictionaryModel,
-  ExampleCreator,
-  ExampleModel
-} from "/server/model/dictionary";
-import {
-  QueryRange
-} from "/server/util/query";
+import {before, controller, post} from "/server/controller/decorator";
+import {Controller, Request, Response} from "/server/controller/internal/controller";
+import {verifyDictionary, verifyMe} from "/server/controller/internal/middle";
+import {ExampleCreator} from "/server/creator";
+import {DictionaryModel, ExampleModel} from "/server/model";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {QueryRange} from "/server/util/query";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class ExampleController extends Controller {
 
-  @post(SERVER_PATHS["editExample"])
-  @before(verifyUser(), verifyDictionary("edit"))
+  @post("/editExample")
+  @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"editExample">, response: Response<"editExample">): Promise<void> {
     const dictionary = request.dictionary;
-    const example = request.body.example;
+    const {example} = request.body;
     if (dictionary) {
       try {
         const resultExample = await dictionary.editExample(example);
         const body = ExampleCreator.create(resultExample);
         Controller.respond(response, body);
       } catch (error) {
-        const body = (() => {
-          if (error.name === "CustomError" && error.type === "dictionarySaving") {
-            return CustomError.ofType("dictionarySaving");
-          }
-        })();
-        Controller.respondError(response, body, error);
+        Controller.respondByCustomError(response, ["dictionarySaving"], error);
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
-  @post(SERVER_PATHS["discardExample"])
-  @before(verifyUser(), verifyDictionary("edit"))
+  @post("/discardExample")
+  @before(verifyMe(), verifyDictionary("edit"))
   public async [Symbol()](request: Request<"discardExample">, response: Response<"discardExample">): Promise<void> {
     const dictionary = request.dictionary;
-    const exampleNumber = request.body.exampleNumber;
+    const {exampleNumber} = request.body;
     if (dictionary) {
       try {
         const resultExample = await dictionary.discardExample(exampleNumber);
         const body = ExampleCreator.create(resultExample);
         Controller.respond(response, body);
       } catch (error) {
-        const body = (() => {
-          if (error.name === "CustomError") {
-            if (error.type === "noSuchExampleNumber") {
-              return CustomError.ofType("noSuchExampleNumber");
-            } else if (error.type === "dictionarySaving") {
-              return CustomError.ofType("dictionarySaving");
-            }
-          }
-        })();
-        Controller.respondError(response, body, error);
+        Controller.respondByCustomError(response, ["noSuchExample", "dictionarySaving"], error);
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
-  @post(SERVER_PATHS["fetchExample"])
+  @post("/fetchExample")
   @before()
   public async [Symbol()](request: Request<"fetchExample">, response: Response<"fetchExample">): Promise<void> {
     const number = request.body.number;
-    const exampleNumber = request.body.exampleNumber;
+    const {exampleNumber} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const example = await dictionary.fetchOneExampleByNumber(exampleNumber);
@@ -98,21 +60,17 @@ export class ExampleController extends Controller {
         const body = ExampleCreator.create(example);
         Controller.respond(response, body);
       } else {
-        const body = CustomError.ofType("noSuchExampleNumber");
-        Controller.respondError(response, body);
+        Controller.respondError(response, "noSuchExample");
       }
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
-  @post(SERVER_PATHS["fetchExamples"])
+  @post("/fetchExamples")
   @before()
   public async [Symbol()](request: Request<"fetchExamples">, response: Response<"fetchExamples">): Promise<void> {
-    const number = request.body.number;
-    const offset = request.body.offset;
-    const size = request.body.size;
+    const {number, offset, size} = request.body;
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary) {
       const range = new QueryRange(offset, size);
@@ -122,8 +80,7 @@ export class ExampleController extends Controller {
       const body = [hitExamples, hitSize] as any;
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchDictionaryNumber");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 

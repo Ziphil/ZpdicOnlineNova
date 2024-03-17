@@ -1,10 +1,10 @@
 //
 
 
-export class Aggregation {
+export interface Aggregation {
 
-  public count!: number;
-  public wholeCount!: number;
-  public size!: number;
+  count: number;
+  wholeCount: number;
+  size: number;
 
 }

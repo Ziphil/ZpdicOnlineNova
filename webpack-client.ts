@@ -4,7 +4,6 @@ import dotenv from "dotenv";
 import HtmlWebpackPlugin from "html-webpack-plugin";
 import path from "path";
 import {EnvironmentPlugin} from "webpack";
-import {BundleAnalyzerPlugin} from "webpack-bundle-analyzer";
 
 
 dotenv.config({path: "./variable.env"});
@@ -18,6 +17,7 @@ const config = {
     chunkFilename: "./chunk-[name].js"
   },
   devtool: "source-map",
+  stats: "errors-only",
   module: {
     rules: [
       {
@@ -106,20 +106,33 @@ const config = {
     alias: {
       "/client": path.resolve(__dirname, "client"),
       "/server": path.resolve(__dirname, "server"),
-      "/worker": path.resolve(__dirname, "worker")
+      "/worker": path.resolve(__dirname, "worker"),
+      "react": path.resolve(__dirname, "node_modules/react"),
+      "react-dom": path.resolve(__dirname, "node_modules/react-dom"),
+      "react-helmet": path.resolve(__dirname, "node_modules/react-helmet"),
+      "react-intl": path.resolve(__dirname, "node_modules/react-intl"),
+      "recoil": path.resolve(__dirname, "node_modules/recoil"),
     },
     fallback: {
       stream: require.resolve("stream-browserify")
+    }
+  },
+  devServer: {
+    port: 3000,
+    historyApiFallback: true,
+    static: {
+      directory: path.join(__dirname, "dist", "client")
+    },
+    proxy: {
+      "/internal": "http://localhost:8050",
+      "/external": "http://localhost:8050",
+      "/static": "http://localhost:8050"
     }
   },
   plugins: [
     new HtmlWebpackPlugin({
       template: "./client/public/index.html",
       title: "ZpDIC Online"
-    }),
-    new BundleAnalyzerPlugin({
-      analyzerMode: (!!process.env["ANALYZE"]) ? "static" : "disabled",
-      reportFilename: path.join(__dirname, "dist", "client", "stats.html")
     }),
     new EnvironmentPlugin({
       "npm_package_version": "",

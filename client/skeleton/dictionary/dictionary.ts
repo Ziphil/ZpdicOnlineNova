@@ -1,93 +1,81 @@
-//
+/* eslint-disable @typescript-eslint/no-namespace */
 
-import {
-  Akrantiain
-} from "akrantiain";
-import {
-  Zatlin
-} from "zatlin";
-import {
-  DictionarySettings
-} from "/client/skeleton/dictionary";
-import {
-  User
-} from "/client/skeleton/user";
-import {
-  DictionaryAuthority
-} from "/server/model/dictionary";
+import {Akrantiain} from "akrantiain";
+import {Zatlin} from "zatlin";
+import {DictionarySettings} from "/client/skeleton/dictionary/dictionary-settings";
+import {User} from "/client/skeleton/user";
+import type {DictionaryAuthority} from "/server/model";
 
 
-export class Dictionary {
+export interface Dictionary {
 
-  public id!: string;
-  public number!: number;
-  public paramName?: string;
-  public name!: string;
-  public status!: string;
-  public secret!: boolean;
-  public explanation?: string;
-  public settings!: DictionarySettings;
-  public createdDate?: string;
-  public updatedDate?: string;
+  id: string;
+  number: number;
+  paramName?: string;
+  name: string;
+  status: string;
+  secret: boolean;
+  explanation?: string;
+  settings: DictionarySettings;
+  createdDate?: string;
+  updatedDate?: string;
 
 }
 
 
-export class DetailedDictionary extends Dictionary {
+export interface DetailedDictionary extends Dictionary {
 
-  public user!: User;
-
-}
-
-
-export class UserDictionary extends DetailedDictionary {
-
-  public authorities!: Array<DictionaryAuthority>;
+  user: User;
 
 }
 
 
-export class EnhancedDictionary extends DetailedDictionary {
+export interface UserDictionary extends DetailedDictionary {
 
-  private akrantiain?: Akrantiain | null;
-  private zatlin?: Zatlin | null;
+  authorities: Array<DictionaryAuthority>;
 
-  public static enhance(object: DetailedDictionary): EnhancedDictionary {
-    return Object.assign(Object.create(EnhancedDictionary.prototype), object);
-  }
+}
 
-  public getAkrantiain(): Akrantiain | null {
-    if (this.akrantiain === undefined) {
-      if (this.settings.akrantiainSource !== undefined && this.settings.akrantiainSource !== "") {
+
+export interface EnhancedDictionary extends DetailedDictionary {
+
+  akrantiain: Akrantiain | null;
+  zatlin: Zatlin | null;
+
+}
+
+
+export namespace EnhancedDictionary {
+
+  export function enhance(dictionary: DetailedDictionary): EnhancedDictionary {
+    const akrantiain = (() => {
+      if (dictionary.settings.akrantiainSource !== undefined && dictionary.settings.akrantiainSource !== "") {
         try {
-          const akrantiain = Akrantiain.load(this.settings.akrantiainSource);
-          this.akrantiain = akrantiain;
+          const akrantiain = Akrantiain.load(dictionary.settings.akrantiainSource);
+          return akrantiain;
         } catch (error) {
-          this.akrantiain = null;
           console.error(error);
+          return null;
         }
       } else {
-        this.akrantiain = null;
+        return null;
       }
-    }
-    return this.akrantiain;
-  }
-
-  public getZatlin(): Zatlin | null {
-    if (this.zatlin === undefined) {
-      if (this.settings.zatlinSource !== undefined && this.settings.zatlinSource !== "") {
+    })();
+    const zatlin = (() => {
+      if (dictionary.settings.zatlinSource !== undefined && dictionary.settings.zatlinSource !== "") {
         try {
-          const zatlin = Zatlin.load(this.settings.zatlinSource);
-          this.zatlin = zatlin;
+          const zatlin = Zatlin.load(dictionary.settings.zatlinSource);
+          return zatlin;
         } catch (error) {
-          this.zatlin = null;
           console.error(error);
+          return null;
         }
       } else {
-        this.zatlin = null;
+        return null;
       }
-    }
-    return this.zatlin;
+    })();
+    const enhancedDictionary = {...dictionary, akrantiain, zatlin};
+    return enhancedDictionary;
   }
 
 }

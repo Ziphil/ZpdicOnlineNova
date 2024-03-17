@@ -1,141 +1,28 @@
 //
 
-import {
-  IntlError
-} from "@formatjs/intl";
-import {
-  Outlet,
-  ReactLocation,
-  Route,
-  Router
-} from "@tanstack/react-location";
-import * as queryParser from "query-string";
-import {
-  ReactElement,
-  Suspense,
-  useCallback
-} from "react";
-import {
-  DndProvider
-} from "react-dnd";
-import {
-  HTML5Backend as DndBackend
-} from "react-dnd-html5-backend";
-import {
-  ErrorBoundary
-} from "react-error-boundary";
-import {
-  IntlProvider
-} from "react-intl";
-import {
-  QueryClientProvider
-} from "react-query";
-import {
-  RecoilRoot
-} from "recoil";
-import {
-  create
-} from "/client/component/create";
-import {
-  queryClient,
-  useDefaultLocale,
-  useDefaultTheme
-} from "/client/component/hook";
-import InnerRoot from "/client/component/inner-root";
-import {
-  loadDashboardPage,
-  loadDictionaryListPage,
-  loadDictionarySettingPage,
-  loadDocumentPage,
-  loadExamplePage,
-  loadNotificationPage,
-  loadTopPage
-} from "/client/component/page/loader";
-import {
-  createRoute
-} from "/client/component/util/route";
+import {ReactElement} from "react";
+import {AppearanceRoot} from "/client/component/core/appearance-root";
+import {ProviderRoot} from "/client/component/core/provider-root";
+import {Routing} from "/client/component/core/routing";
+import {create} from "/client/component/create";
 
 
-require("../../node_modules/codemirror/lib/codemirror.css");
-require("../../node_modules/c3/c3.css");
-
-const location = new ReactLocation({
-  parseSearch: (searchString) => queryParser.parse(searchString),
-  stringifySearch: (search) => queryParser.stringify(search)
-});
-const routes = [
-  ...createRoute("/login", () => import("/client/component/page/login-page"), {type: "guest", redirect: "/dashboard"}),
-  ...createRoute("/register", () => import("/client/component/page/register-page"), {type: "guest", redirect: "/dashboard"}),
-  ...createRoute("/reset", () => import("/client/component/page/reset-user-password-page"), {type: "guest", redirect: "/dashboard"}),
-  ...createRoute("/activate", () => import("/client/component/page/activate-user-page"), {type: "none"}),
-  ...createRoute("/dashboard/dictionary/:number", () => import("/client/component/page/dictionary-setting-page"), {type: "private", redirect: "/login", loader: loadDictionarySettingPage}),
-  ...createRoute("/dashboard", () => import("/client/component/page/dashboard-page"), {type: "private", redirect: "/login", loader: loadDashboardPage}),
-  ...createRoute("/dictionary/:value", () => import("/client/component/page/dictionary-page"), {type: "none"}),
-  ...createRoute("/example/:number", () => import("/client/component/page/example-page"), {type: "none", loader: loadExamplePage}),
-  ...createRoute("/list", () => import("/client/component/page/dictionary-list-page"), {type: "none", loader: loadDictionaryListPage}),
-  ...createRoute("/appearance", () => import("/client/component/page/appearance-page"), {type: "none"}),
-  ...createRoute("/notification", () => import("/client/component/page/notification-page"), {type: "none", loader: loadNotificationPage}),
-  ...createRoute("/contact", () => import("/client/component/page/contact-page"), {type: "none"}),
-  ...createRoute("/document/:firstPath/:secondPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
-  ...createRoute("/document/:firstPath", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
-  ...createRoute("/document", () => import("/client/component/page/document-page"), {type: "none", loader: loadDocumentPage}),
-  ...createRoute("/", () => import("/client/component/page/top-page"), {type: "none", loader: loadTopPage})
-] as Array<Route>;
+require("./root.scss");
 
 
-const Root = create(
-  require("./root.scss"), "Root",
+export const Root = create(
+  null, "Root",
   function ({
   }: {
-  }): ReactElement | null {
+  }): ReactElement {
 
-    const node = (
-      <ErrorBoundary fallbackRender={() => <div>Please Reload</div>}>
-        <Suspense fallback={<div/>}>
-          <RecoilRoot>
-            <ProviderRoot/>
-          </RecoilRoot>
-        </Suspense>
-      </ErrorBoundary>
+    return (
+      <ProviderRoot>
+        <AppearanceRoot>
+          <Routing/>
+        </AppearanceRoot>
+      </ProviderRoot>
     );
-    return node;
 
   }
 );
-
-
-const ProviderRoot = create(
-  require("./root.scss"), "ProviderRoot",
-  function ({
-  }: {
-  }): ReactElement | null {
-
-    const {locale, messages} = useDefaultLocale("ja");
-    useDefaultTheme("light");
-
-    const handleIntlError = useCallback(function (error: IntlError<any>): void {
-      if (error.code !== "MISSING_DATA" && error.code !== "MISSING_TRANSLATION") {
-        console.error(error);
-      }
-    }, []);
-
-    const node = (
-      <DndProvider backend={DndBackend}>
-        <QueryClientProvider client={queryClient}>
-          <IntlProvider defaultLocale="ja" locale={locale} messages={messages} onError={handleIntlError} fallbackOnEmptyString={false}>
-            <Router location={location} routes={routes} caseSensitive={true}>
-              <InnerRoot>
-                <Outlet/>
-              </InnerRoot>
-            </Router>
-          </IntlProvider>
-        </QueryClientProvider>
-      </DndProvider>
-    );
-    return node;
-
-  }
-);
-
-
-export default Root;

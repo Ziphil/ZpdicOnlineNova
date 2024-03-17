@@ -1,12 +1,7 @@
 //
 
-import {
-  EventEmitter
-} from "events";
-import {
-  Dictionary,
-  SlimeSerializer
-} from "/server/model/dictionary";
+import {EventEmitter} from "events";
+import {Dictionary} from "/server/model/dictionary/dictionary";
 
 
 export abstract class Serializer extends EventEmitter {
@@ -41,21 +36,6 @@ export abstract class Serializer extends EventEmitter {
   }
 
   public abstract start(): void;
-
-  /** 与えられたパスの拡張子を調べ、対応するシリアライザを返します。
-   * 拡張子が対応していないものだった場合は null を返します。*/
-  public static create(path: string, dictionary: Dictionary): Serializer | null {
-    try {
-      const extension = path.split(/\.(?=[^.]+$)/)[1];
-      if (extension === "json") {
-        return new SlimeSerializer(path, dictionary);
-      } else {
-        return null;
-      }
-    } catch (error) {
-      return null;
-    }
-  }
 
 }
 

@@ -1,62 +1,37 @@
 //
 
-import {
-  CustomError
-} from "/client/skeleton/error";
-import {
-  before,
-  controller,
-  post
-} from "/server/controller/decorator";
-import {
-  Controller,
-  Request,
-  Response
-} from "/server/controller/internal/controller";
-import {
-  login,
-  logout,
-  verifyRecaptcha,
-  verifyUser
-} from "/server/controller/internal/middle";
-import {
-  SERVER_PATHS,
-  SERVER_PATH_PREFIX
-} from "/server/controller/internal/type";
-import {
-  UserCreator,
-  UserModel
-} from "/server/model/user";
-import {
-  MailUtil
-} from "/server/util/mail";
+import {before, controller, post} from "/server/controller/decorator";
+import {Controller, Request, Response} from "/server/controller/internal/controller";
+import {login, logout, verifyMe, verifyRecaptcha} from "/server/controller/internal/middle";
+import {UserCreator} from "/server/creator";
+import {UserModel} from "/server/model";
+import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {MailUtil} from "/server/util/mail";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class UserController extends Controller {
 
-  @post(SERVER_PATHS["login"])
+  @post("/login")
   @before(login(30 * 24 * 60 * 60))
   public async [Symbol()](request: Request<"login">, response: Response<"login">): Promise<void> {
     const token = request.token!;
-    const user = request.user!;
-    const userBody = UserCreator.createDetailed(user);
+    const me = request.me!;
+    const userBody = UserCreator.createDetailed(me);
     const body = {token, user: userBody};
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATHS["logout"])
+  @post("/logout")
   @before(logout())
   public async [Symbol()](request: Request<"logout">, response: Response<"logout">): Promise<void> {
     Controller.respond(response, null);
   }
 
-  @post(SERVER_PATHS["registerUser"])
+  @post("/registerUser")
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"registerUser">, response: Response<"registerUser">): Promise<void> {
-    const name = request.body.name;
-    const email = request.body.email;
-    const password = request.body.password;
+    const {name, email, password} = request.body;
     try {
       const {user, key} = await UserModel.register(name, email, password);
       const url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
@@ -66,207 +41,157 @@ export class UserController extends Controller {
       MailUtil.send(user.email, subject, text);
       Controller.respond(response, body);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError") {
-          if (error.type === "duplicateUserName") {
-            return CustomError.ofType("duplicateUserName");
-          } else if (error.type === "duplicateUserEmail") {
-            return CustomError.ofType("duplicateUserEmail");
-          } else if (error.type === "invalidUserPassword") {
-            return CustomError.ofType("invalidUserPassword");
-          }
-        } else if (error.name === "ValidationError") {
-          if (error.errors.name) {
-            return CustomError.ofType("invalidUserName");
-          } else if (error.errors.email) {
-            return CustomError.ofType("invalidUserEmail");
-          }
+      if (error.name === "ValidationError") {
+        if (error.errors.name) {
+          Controller.respondError(response, "invalidUserName");
+        } else if (error.errors.email) {
+          Controller.respondError(response, "invalidUserEmail");
+        } else {
+          throw error;
         }
-      })();
-      Controller.respondError(response, body, error);
+      } else {
+        Controller.respondByCustomError(response, ["duplicateUserName", "duplicateUserEmail", "invalidUserPassword"], error);
+      }
     }
   }
 
-  @post(SERVER_PATHS["changeUserScreenName"])
-  @before(verifyUser())
-  public async [Symbol()](request: Request<"changeUserScreenName">, response: Response<"changeUserScreenName">): Promise<void> {
-    const user = request.user!;
-    const screenName = request.body.screenName;
+  @post("/changeMyScreenName")
+  @before(verifyMe())
+  public async [Symbol()](request: Request<"changeMyScreenName">, response: Response<"changeMyScreenName">): Promise<void> {
+    const me = request.me!;
+    const {screenName} = request.body;
     try {
-      await user.changeScreenName(screenName);
-      const body = UserCreator.create(user);
+      await me.changeScreenName(screenName);
+      const body = UserCreator.create(me);
       Controller.respond(response, body);
     } catch (error) {
-      Controller.respondError(response, undefined, error);
+      throw error;
     }
   }
 
-  @post(SERVER_PATHS["changeUserEmail"])
-  @before(verifyUser())
-  public async [Symbol()](request: Request<"changeUserEmail">, response: Response<"changeUserEmail">): Promise<void> {
-    const user = request.user!;
-    const email = request.body.email;
+  @post("/changeMyEmail")
+  @before(verifyMe())
+  public async [Symbol()](request: Request<"changeMyEmail">, response: Response<"changeMyEmail">): Promise<void> {
+    const me = request.me!;
+    const {email} = request.body;
     try {
-      await user.changeEmail(email);
-      const body = UserCreator.create(user);
+      await me.changeEmail(email);
+      const body = UserCreator.create(me);
       Controller.respond(response, body);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError" && error.type === "duplicateUserEmail") {
-          return CustomError.ofType("duplicateUserEmail");
-        } else if (error.name === "ValidationError" && error.errors.email) {
-          return CustomError.ofType("invalidUserEmail");
-        }
-      })();
-      Controller.respondError(response, body, error);
+      if (error.name === "ValidationError" && error.errors.email) {
+        Controller.respondError(response, "invalidUserEmail");
+      } else {
+        Controller.respondByCustomError(response, ["duplicateUserEmail"], error);
+      }
     }
   }
 
-  @post(SERVER_PATHS["changeUserPassword"])
-  @before(verifyUser())
-  public async [Symbol()](request: Request<"changeUserPassword">, response: Response<"changeUserPassword">): Promise<void> {
-    const user = request.user!;
-    const password = request.body.password;
+  @post("/changeMyPassword")
+  @before(verifyMe())
+  public async [Symbol()](request: Request<"changeMyPassword">, response: Response<"changeMyPassword">): Promise<void> {
+    const me = request.me!;
+    const {password} = request.body;
     try {
-      await user.changePassword(password);
-      const body = UserCreator.create(user);
+      await me.changePassword(password);
+      const body = UserCreator.create(me);
       Controller.respond(response, body);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError" && error.type === "invalidUserPassword") {
-          return CustomError.ofType("invalidUserPassword");
-        }
-      })();
-      Controller.respondError(response, body, error);
+      Controller.respondByCustomError(response, ["invalidUserPassword"], error);
     }
   }
 
-  @post(SERVER_PATHS["issueUserActivateToken"])
-  @before(verifyRecaptcha(), verifyUser())
-  public async [Symbol()](request: Request<"issueUserActivateToken">, response: Response<"issueUserActivateToken">): Promise<void> {
-    const user = request.user!;
+  @post("/issueMyActivateToken")
+  @before(verifyRecaptcha(), verifyMe())
+  public async [Symbol()](request: Request<"issueMyActivateToken">, response: Response<"issueMyActivateToken">): Promise<void> {
+    const me = request.me!;
     try {
-      const key = await user.issueActivateToken();
+      const key = await me.issueActivateToken();
       const url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
-      const subject = MailUtil.getSubject("issueUserActivateToken");
-      const text = MailUtil.getText("issueUserActivateToken", {url});
-      MailUtil.send(user.email, subject, text);
+      const subject = MailUtil.getSubject("issueMyActivateToken");
+      const text = MailUtil.getText("issueMyActivateToken", {url});
+      MailUtil.send(me.email, subject, text);
       Controller.respond(response, null);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError") {
-          if (error.type === "noSuchUser") {
-            return CustomError.ofType("noSuchUser");
-          } else if (error.type === "userAlreadyActivated") {
-            return CustomError.ofType("userAlreadyActivated");
-          }
-        }
-      })();
-      Controller.respondError(response, body, error);
+      Controller.respondByCustomError(response, ["noSuchUser", "userAlreadyActivated"], error);
     }
   }
 
-  @post(SERVER_PATHS["issueUserResetToken"])
+  @post("/issueUserResetToken")
   @before(verifyRecaptcha())
   public async [Symbol()](request: Request<"issueUserResetToken">, response: Response<"issueUserResetToken">): Promise<void> {
-    const name = request.body.name;
-    const email = request.body.email;
+    const {email} = request.body;
     try {
-      const {user, key} = await UserModel.issueResetToken(name, email);
+      const {user, key} = await UserModel.issueResetToken(email);
       const url = `${request.protocol}://${request.get("host")}/reset?key=${key}`;
       const subject = MailUtil.getSubject("issueUserResetToken");
       const text = MailUtil.getText("issueUserResetToken", {url});
       MailUtil.send(user.email, subject, text);
       Controller.respond(response, null);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError") {
-          if (error.type === "noSuchUser") {
-            return CustomError.ofType("noSuchUser");
-          }
-        }
-      })();
-      Controller.respondError(response, body, error);
+      Controller.respondByCustomError(response, ["noSuchUser"], error);
     }
   }
 
-  @post(SERVER_PATHS["activateUser"])
-  public async [Symbol()](request: Request<"activateUser">, response: Response<"activateUser">): Promise<void> {
-    const key = request.body.key;
+  @post("/activateMe")
+  public async [Symbol()](request: Request<"activateMe">, response: Response<"activateMe">): Promise<void> {
+    const {key} = request.body;
     try {
       const user = await UserModel.activate(key, 60);
       const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError") {
-          if (error.type === "invalidActivateToken") {
-            return CustomError.ofType("invalidActivateToken");
-          }
-        }
-      })();
-      Controller.respondError(response, body, error);
+      Controller.respondByCustomError(response, ["invalidActivateToken"], error);
     }
   }
 
-  @post(SERVER_PATHS["resetUserPassword"])
+  @post("/resetUserPassword")
   public async [Symbol()](request: Request<"resetUserPassword">, response: Response<"resetUserPassword">): Promise<void> {
-    const key = request.body.key;
-    const password = request.body.password;
+    const {key, password} = request.body;
     try {
       const user = await UserModel.resetPassword(key, password, 60);
       const body = UserCreator.create(user);
       Controller.respond(response, body);
     } catch (error) {
-      const body = (() => {
-        if (error.name === "CustomError") {
-          if (error.type === "invalidResetToken") {
-            return CustomError.ofType("invalidResetToken");
-          } else if (error.type === "invalidUserPassword") {
-            return CustomError.ofType("invalidUserPassword");
-          }
-        }
-      })();
-      Controller.respondError(response, body, error);
+      Controller.respondByCustomError(response, ["invalidResetToken", "invalidUserPassword"], error);
     }
   }
 
-  @post(SERVER_PATHS["discardUser"])
-  @before(verifyUser())
-  public async [Symbol()](request: Request<"discardUser">, response: Response<"discardUser">): Promise<void> {
-    const user = request.user!;
+  @post("/discardMe")
+  @before(verifyMe())
+  public async [Symbol()](request: Request<"discardMe">, response: Response<"discardMe">): Promise<void> {
+    const me = request.me!;
     try {
-      await user.discard();
+      await me.discard();
       Controller.respond(response, null);
     } catch (error) {
-      Controller.respondError(response, undefined, error);
+      throw error;
     }
   }
 
-  @post(SERVER_PATHS["fetchUser"])
-  @before(verifyUser())
-  public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
-    const user = request.user!;
-    const body = UserCreator.createDetailed(user);
+  @post("/fetchMe")
+  @before(verifyMe())
+  public async [Symbol()](request: Request<"fetchMe">, response: Response<"fetchMe">): Promise<void> {
+    const me = request.me!;
+    const body = UserCreator.createDetailed(me);
     Controller.respond(response, body);
   }
 
-  @post(SERVER_PATHS["fetchOtherUser"])
-  public async [Symbol()](request: Request<"fetchOtherUser">, response: Response<"fetchOtherUser">): Promise<void> {
-    const name = request.body.name;
+  @post("/fetchUser")
+  public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
+    const {name} = request.body;
     const user = await UserModel.fetchOneByName(name);
     if (user !== null) {
       const body = UserCreator.create(user);
       Controller.respond(response, body);
     } else {
-      const body = CustomError.ofType("noSuchUser");
-      Controller.respondError(response, body);
+      Controller.respondError(response, "noSuchUser");
     }
   }
 
-  @post(SERVER_PATHS["suggestUsers"])
+  @post("/suggestUsers")
   public async [Symbol()](request: Request<"suggestUsers">, response: Response<"suggestUsers">): Promise<void> {
-    const pattern = request.body.pattern;
+    const {pattern} = request.body;
     const users = await UserModel.suggest(pattern);
     const body = users.map(UserCreator.create);
     Controller.respond(response, body);

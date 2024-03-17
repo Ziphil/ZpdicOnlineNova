@@ -6,7 +6,7 @@ mail:
       Please access the following URL to activate the user.
       This URL will expire in one hour.
       ・ {url}
-  issueUserActivateToken:
+  issueMyActivateToken:
     subject: "Notice on the URL for user activation"
     text: |
       Please access the following URL to activate the user.

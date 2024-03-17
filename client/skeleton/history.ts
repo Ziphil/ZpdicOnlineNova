@@ -1,10 +1,10 @@
 //
 
 
-export class History {
+export interface History {
 
-  public id!: string;
-  public date!: string;
-  public wordSize!: number;
+  id: string;
+  date: string;
+  wordSize: number;
 
 }

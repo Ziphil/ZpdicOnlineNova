@@ -1,0 +1,875 @@
+toast:
+  success:
+    addDictionary: |-
+      A new dictionary has been created.
+    discardDictionary: |-
+      The dictionary has been deleted.
+    uploadDictionary: |-
+      Your file has been uploaded.
+      Please wait a moment for your data to be reflected.
+    changeDictionaryName: |-
+      The name has been changed.
+    changeDictionaryParamName: |-
+      The identifier has been changed.
+    changeDictionaryExplanation: |-
+      The description has been changed.
+    changeDictionarySecret: |-
+      The setting has been changed.
+    changeDictionarySettings:
+      akrantiainSource: |-
+        The setting has been changed.
+      zatlinSource: |-
+        The setting has been changed.
+      exampleTitle: |-
+        The setting has been changed.
+      pronunciationTitle: |-
+        The setting has been changed.
+      enableMarkdown: |-
+        The setting has been changed.
+      enableDuplicateName: |-
+        The setting has been changed.
+    discardDictionaryAuthorizedUser: |-
+      The permission has been revoked.
+    addWord: |-
+      A new word has been created.
+    changeWord: |-
+      The word has been edited.
+    discardWord: |-
+      The word has been deleted.
+    addExample: |-
+      A new example sentence has been created.
+    changeExample: |-
+      The example sentence has been edited.
+    discardExample: |-
+      The example sentence has been deleted.
+    addCommission: |-
+      A new request has been sent.
+    discardCommission: |-
+      The request has been deleted.
+    addResource: |-
+      An image has been uploaded.
+    discardResource: |-
+      The image has been deleted.
+    addInvitation:
+      edit: |-
+        The invitation has been sent.
+        The editing permission will be granted once the user accepts it.
+      transfer: |-
+        The invitation has been sent.
+        The dictionary will be transferred once the user accepts it.
+    acceptInvitation:
+      edit: |-
+        You have accepted the invitation.
+        You can edit the dictionary from now on.
+      transfer: |-
+        You have accepted the invitation.
+        You are now the owner of the dictionary.
+    rejectInvitation:
+      edit: |-
+        You have declined the invitation.
+      transfer: |-
+        You have declined the invitation.
+    discardMe:
+      Your account has been deleted.
+    changeMyScreenName:
+      Your nickname has been changed.
+    changeMyEmail:
+      Your email address has been changed.
+    changeMyPassword:
+      Your password has been changed.
+    issueMyActivateToken:
+      We sent an email to you.
+      Please follow the instructions in the email.
+    activateMe:
+      Your account has been activated.
+    issueUserResetToken:
+      We sent an email to you.
+      Please follow the instructions in the email.
+    resetUserPassword:
+      Your password has been reset.
+      Please sign in with your new password.
+    login: |-
+      Successfully signed in.
+    register: |-
+      Your account has been created.
+    contact:
+      Your inquiry has been sent.
+  error:
+    invalidUserName: |-
+      The username is invalid.
+    invalidUserEmail: |-
+      The email address is invalid.
+    invalidUserPassword: |-
+      The password is invalid.
+    duplicateUserName: |-
+      The username you specified already exists.
+      Please specify another.
+    duplicateUserEmail: |-
+      The email address you specified is already used.
+      Please specify another.
+    noSuchUser: |-
+      This user does not exist.
+    noSuchUserEmail: |-
+      No user with the email address exists.
+    userAlreadyActivated: |-
+      This user has already been activated.
+    invalidActivateToken: |-
+      Failed to activate the user.
+    invalidResetToken: |-
+      Failed to reset your password.
+    loginFailed: |-
+      Failed to sign in.
+    noSuchDictionary: |-
+      This dictionary does not exist.
+    duplicateDictionaryParamName: |-
+      The identifier you specified is already used.
+      Please specify another.
+    invalidDictionaryParamName: |-
+      The identifier is invalid.
+    dictionarySaving: |-
+      The upload process is ongoing.
+      Please wait a moment.
+    failAddRelations: |-
+      Failed to create the mutual relations.
+    dictionarySizeTooLarge: |-
+      The file is too large.
+    noSuchWord: |-
+      This word does not exist.
+    noSuchExample: |-
+      This example sentence does not exist.
+    resourceCountExceeded: |-
+      No more files can be uploaded.
+    resourceSizeTooLarge: |-
+      The file is too large.
+    unsupportedResourceType: |-
+      This file type is not supported.
+    userCanAlreadyEdit: |-
+      The user already has the permission.
+    userCanAlreadyOwn: |-
+      The user is already the owner.
+    editInvitationAlreadyAdded: |-
+      The user has already been invited.
+    transferInvitationAlreadyAdded: |-
+      The user has already been invited.
+    noSuchInvitation: |-
+      This invitation does not exist.
+    noSuchDictionaryAuthorizedUser: |-
+      The user does not have the permission.
+    emptyCommissionName: |-
+      The word to request is empty.
+    noSuchCommission: |-
+      This request does not exist.
+    emptyContactText: |-
+      The message is empty.
+    administratorNotFound: |-
+      An unexpected error occurred.
+    recaptchaError: |-
+      Something failed.
+      Please try again.
+    recaptchaRejected: |-
+      Background authentication failed.
+      Please try again.
+    awsError: |-
+      Something failed.
+      Please try again.
+    unauthenticated: |-
+      You are not signed in.
+      Please try again after signing in.
+    forbidden: |-
+      You are not authorized to access this content.
+    serverNotFound: |-
+      The server may have been updated.
+      Please refresh the page.
+    serverError: |-
+      An error occurred on the server.
+      Please try again after a while.
+    serverTimeout: |-
+      Couldn't get a response from the server.
+      Please try again after a while.
+    requestTimeout: |-
+      Couldn't get a response from the server.
+      Please try again after a while.
+    messageNotFound: |-
+      There is no message configured for this popup.
+      Please notify the administrator.
+    unexpected: |-
+      An unexpected error occurred.
+      Please notify the administrator.
+
+commonAlert:
+  confirm: "Confirm"
+  cancel: "Cancel"
+wordModeSelect:
+  label:
+    name: "Headword"
+    equivalent: "Translation"
+    both: "Both"
+    tag: "Tag"
+    information: "Contents"
+    content: "Whole"
+wordTypeSelect:
+  label:
+    prefix: "Prefix"
+    suffix: "Suffix"
+    part: "Partial"
+    exact: "Exact"
+    regular: "Regex"
+
+addCommissionDialog:
+  heading: "Request word creation"
+  label:
+    name: "Word"
+    comment: "Comment"
+  button:
+    confirm: "Confirm"
+changeLocaleForm:
+  label: "Language"
+changeAppearanceForm:
+  label: "Appearance"
+  appearance:
+    normal: "Normal"
+    dimmed: "Dimmed"
+  theme:
+    light: "Light"
+    dark: "Dark"
+commissionList:
+  empty: "No words are requested"
+  button:
+    add: "Create"
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This request will be deleted permanently.
+        Are you really sure?
+      confirm: "Delete"
+contactForm:
+  label:
+    name: "Name"
+    email: "Email address"
+    subject: "Subject"
+    text: "Message"
+    agree: "Agree to the <link>privacy policy</link>"
+  button:
+    confirm: "Send"
+dictionaryAuthorizedUserList:
+  empty: "No users have editing permission"
+  button:
+    discard: "Revoke"
+  dialog:
+    discard:
+      message: >-
+        The permission of this user will be revoked.
+        Are you really sure?
+      confirm: "Revoke"
+dictionaryHeader:
+  tab:
+    dictionary: "Dictionary"
+    example: "Sentences"
+    resource: "Images"
+    information: "Details"
+    commission: "Requests"
+    setting: "Settings"
+  button:
+    addWord: "Create word"
+    addExample: "Create sentence"
+    addCommission: "Request"
+    download: "Download"
+dictionaryList:
+  empty: 
+    user: "No dictionaries are created"
+    all: "No matching dictionaries were found"
+  updatedDate: "Updated at"
+  createdDate: "Created at"
+  tag:
+    own: "Owner"
+    edit: "Edit only"
+    view: "View only"
+    secret: "Hidden"
+  button:
+    see: "See dictionary"
+    setting: "Settings"
+dictionaryStatisticsView:
+  heading:
+    word: "Words"
+    example: "Sentences"
+    equivalent: "Translations"
+    information: "Contents"
+    informationText: "Content length"
+  value:
+    word: "<number>{value, number}</number><unit>{value, plural, one {word} other {words}}</unit>"
+    wordTokipona: "<number>{value, number, ::.00}</number><unit>TP</unit>"
+    example: "<number>{value, number}</number><unit>{value, plural, one {sentence} other {sentences}}</unit>"
+    exampleAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {sentence/word} other {sentences/word}}</unit>"
+    equivalent: "<number>{value, number}</number><unit>{value, plural, one {term} other {terms}}</unit>"
+    equivalentAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {term/word} other {terms/word}}</unit>"
+    information: "<number>{value, number}</number><unit>{value, plural, one {item} other {items}}</unit>"
+    informationAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {item/word} other {items/word}}</unit>"
+    informationText: "<number>{value, number}</number><unit>{value, plural, one {char} other {chars}}</unit>"
+    informationTextAverage: "<number>{value, number, ::.00}</number><unit>{value, plural, one {char/word} other {chars/word}}</unit>"
+editExampleDialog:
+  button:
+    external: "Open in new tab"
+editExampleForm:
+  heading:
+    basic: "Parallel translation"
+    words: "Included words"
+  label:
+    sentence: "Sentence in this conlang"
+    translation: "Translation into natural language"
+  absent:
+    word: "No included words specified"
+  button:
+    add:
+      word: "Add included words"
+    discard:
+      word: "Remove"
+    confirm: "Confirm"
+editWordDialog:
+  button:
+    external: "Open in new tab"
+editWordForm:
+  heading:
+    basic: "Basic information"
+    equivalents: "Translations"
+    informations: "Contents"
+    variations: "Variation forms"
+    relations: "Related words"
+  label:
+    name: "Spelling"
+    pronunciation: "Pronunciation"
+    tags: "Tags"
+    equivalent:
+      titles: "Parts of speech"
+      names: "Translations <note>(comma-separated)</note>"
+    information:
+      title: "Heading"
+      text: "Content"
+    variation:
+      title: "Kind"
+      name: "Form"
+    relation:
+      titles: "Kinds"
+      name: "Word"
+      mutual: "Make this relation mutual"
+  absent:
+    equivalent: "No translations"
+    information: "No contents"
+    variation: "No variation forms"
+    relation: "No related words"
+  duplicateName: >-
+    A word with the same spelling has already been registered.
+  button:
+    add:
+      equivalent: "Add translation"
+      information: "Add content"
+      variation: "Add variation form"
+      relation: "Add related word"
+    discard:
+      equivalent: "Remove"
+      information: "Remove"
+      variation: "Remove"
+      relation: "Remove"
+    resource: "Images"
+    generate: "Generate"
+    confirm: "Confirm"
+exampleList:
+  empty: "No example sentences are created"
+  noWord: "No words specified"
+  button:
+    edit: "Edit"
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This example sentence will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
+executeAkrantiainDialog:
+  label:
+    source: "Source code"
+    input: "Input text"
+    output: "Result"
+    error: "Error message"
+  button:
+    execute: "Run"
+executeZatlinDialog:
+  label:
+    source: "Source code"
+    output: "Result"
+    error: "Error message"
+  button:
+    execute: "Run"
+footer:
+  link:
+    notification: "News"
+    contact: "Contact"
+    document: "Documentation"
+header:
+  dictionaryList: "Dictionaries"
+  userPage: "User page"
+invitationList:
+  empty: "No notifications"
+  tag:
+    edit: "Editing permission"
+    transfer: "Transfer"
+  explanation:
+    edit: >-
+      {userNode} has invited you to edit this dictionary.
+      Once you accept, you will be able to edit the dictionary.
+    transfer: >-
+      {userNode} is going to transfer this dictionary to you.
+      Once you accept, you will replace them as the owner of the dictionary.
+  dialog:
+    reject:
+      message: >-
+        You are going to decline this invitation.
+        Are you really sure?
+      confirm: "Decline"
+  button:
+    accept: "Accept"
+    reject: "Decline"
+notificationList:
+  tag:
+    update: "Update"
+    bug: "Bug"
+    info: "Other info"
+    fixed: "Fixed"
+orderDirectionSelect:
+  ascending: "Ascending"
+  descending: "Descending"
+orderModeSelect:
+  unicode: "Unicode"
+  dictionaryName: "Name"
+  wordName: "Headword"
+  custom: "Custom"
+  updatedDate: "Update time"
+  createdDate: "Creation time"
+resourceList:
+  empty: "No images are uploaded"
+  button:
+    copy: "Copy"
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This image will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
+resourceListDialog:
+  message: >-
+    Copy the code below the title and paste it into a text box to display the image.
+  callout: >-
+    You need to enable Markdown in order to display images in the contents.
+  button:
+    enable: "Enable Markdown"
+searchExampleForm:
+  information: >-
+    Searching for example sentences will be available in a future update.
+searchWordAdvancedDialog:
+  label:
+    mode: "Scope"
+    type: "Method"
+    title: "Kind"
+    text: "Keyword"
+  button:
+    add:
+      element: "Add condition"
+    confirm: "Confirm"
+searchWordForm:
+  label:
+    ignoreCase: "Ignore letter case"
+    enableSuggestions: "Suggest variations"
+  button:
+    shuffleResult: "Shuffle results"
+    advancedSearch: "Advanced search"
+suggestionCard:
+  maybe: "Do you mean…"
+  message: "{title} <mute>of</mute> {nameNode}"
+userHeader:
+  tab:
+    dictionary: "Dictionaries"
+    notification: "Notifications"
+    setting: "Settings"
+    logout: "Sign out"
+  button:
+    issueActivateToken: "Resend email"
+  callout:
+    activate: >-
+      This user has not yet been activated.
+      To activate, please follow the instructions in the email you received when creating your account.
+      Unactivated users may have limited functionality.
+wordList:
+  empty: "No matching words were found"
+  button:
+    edit: "Edit"
+    duplicate: "Duplicate"
+    discard: "Delete"
+    create: "Create"
+    commission: "Request creation"
+  dialog:
+    discard:
+      message: >-
+        This word will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
+wordNameFrequencyChart:
+  other: "Others"
+loginForm:
+  label:
+    name: "Username"
+    password: "Password"
+  button:
+    confirm: "Sign in"
+    register: "Create account"
+    resetPassword: "Reset password"
+  or: "or"
+  error:
+    nameRequired: >-
+      Enter your username.
+    passwordRequired: >-
+      Enter your password.
+registerForm:
+  label:
+    name: &label.name "Username"
+    email: &label.email "Email address"
+    password: "Password"
+    agree: "Agree to the <link>privacy policy</link>"
+  button:
+    confirm: "Create account"
+  error:
+    nameInvalid: >-
+      The username must be composed of alphanumeric characters, underscores and hyphens.
+      It must also contain at least one non-digit.
+    nameTooLong: >-
+      The username must contain no more than 30 characters.
+    nameRequired: &error.nameRequired >-
+      Enter a username.
+    emailInvalid: &error.emailInvalid >-
+      Enter a valid email address.
+    emailRequired: &error.emailRequired >-
+      Enter an email address.
+    passwordTooShort: &error.passwordTooShort >-
+      The password must contain at least 6 characters.
+    passwordTooLong: &error.passwordTooLong >-
+      The password must contain no more than 50 characters.
+    passwordRequired: &error.passwordRequired >-
+      Enter a password.
+    agreeRequired: >-
+      In order to use this application, you must read and agree to the privacy policy.
+issueUserResetTokenForm:
+  label:
+    name: *label.name
+    email: *label.email
+  error:
+    nameRequired: *error.nameRequired
+    emailInvalid: *error.emailInvalid
+    emailRequired: *error.emailRequired
+  button:
+    confirm: "Send"
+resetUserPasswordForm:
+  label:
+    password: "New password"
+  error:
+    tooShort: *error.passwordTooShort
+    tooLong: *error.passwordTooLong
+    required: *error.passwordRequired
+  button:
+    confirm: "Reset"
+
+commonForm:
+  button:
+    change: "Change"
+addEditInvitationButton:
+  heading: "Grant editing permission"
+  label:
+    user: "Grant permission to"
+  button:
+    open: "Grant editing permission"
+    confirm: "Confirm"
+  error:
+    required: >-
+      Select a user.
+addTransferInvitationButton:
+  heading: "Transfer"
+  label:
+    user: "Transfer to"
+  button:
+    open: "Transfer"
+    confirm: "Confirm"
+  error:
+    required: >-
+      Select a user.
+addDictionaryButton:
+  heading: "Create new dictionary"
+  label:
+    name: "Name"
+  button:
+    open: "Create new dictionary"
+    confirm: "Confirm"
+  error:
+    required: >-
+      Enter a name.
+addResourceButton:
+  heading: "Upload image"
+  label:
+    file: "Image file"
+  button:
+    open: "Upload image"
+    confirm: "Confirm"
+  error:
+    required: >-
+      Select an image file.
+    tooLarge: >-
+      The file is too large.
+      You cannot upload files larger than 1 MB.
+changeDictionaryNameForm:
+  error:
+    required: >-
+      Enter a name.
+changeDictionaryParamNameForm:
+  error:
+    invalid: >-
+      The identifier must be composed of alphanumeric characters, underscores and hyphens.
+      It must also contain at least one non-digit.
+    tooLong: >-
+      The identifier must contain no more than 30 characters.
+changeDictionarySettingsForm:
+  label:
+    enableMarkdown:
+      true: "Enable"
+      false: "Disable"
+    enableDuplicateName:
+      true: "Enable"
+      false: "Disable"
+changeDictionarySecretForm:
+  label:
+    false: "Show"
+    true: "Hide"
+changeDictionarySourceForm:
+  button:
+    try: "Try"
+changeMyEmailForm:
+  error:
+    invalid: >-
+      Enter a valid email address.
+    required:
+      Enter an email address.
+changeMyPasswordForm:
+  label:
+    currentPassword: "Current password"
+    newPassword: "New password"
+  error:
+    tooShort: >-
+      The password must contain at least 6 characters.
+    tooLong: >-
+      The password must contain no more than 50 characters.
+    currentRequired: >-
+      Enter your current password.
+    newRequired: >-
+      Enter a new password.
+changeMyScreenNameForm:
+  error:
+    required: >-
+      Enter a nickname.
+discardDictionaryButton:
+  button:
+    submit: "Delete"
+  dialog:
+    message: >-
+      This dictionary will be deleted permanently.
+      You cannot restore it afterwards.
+      Are you really sure?
+    confirm: "Delete"
+discardMeButton:
+  button:
+    submit: "Delete"
+  dialog:
+    message: >-
+      Your account will be deleted permanently.
+      You cannot restore it afterwards.
+      Are you really sure?
+    confirm: "Delete"
+downloadDictionaryButton:
+  button:
+    start: "Export"
+uploadDictionaryButton:
+  heading: "Import"
+  label:
+    file: "File"
+  button:
+    open: "Import"
+    confirm: "Confirm"
+  error:
+    required: >-
+      Select a file.
+    tooLarge: >-
+      The file is too large.
+      You cannot upload files larger than 5 MB.
+
+contactPage:
+  title: "Contact"
+  heading: "Contact"
+  explanation: |-
+    If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
+    Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
+dictionaryInformationPart:
+  heading:
+    history: "Word count history"
+    wordNameFrequency: "Character frequency"
+  description: 
+    history: >-
+      The chart below shows the number of words in this dictionary over the last 100 days.
+      The word count is recorded every day at around 14:30 (UTC).
+    wordNameFrequency: >-
+      The chart below shows how frequent each character appears in the headwords in this dictionary.
+dictionarySettingPart:
+  tab:
+    general: "General"
+    editing: "Editing"
+    authority: "Permissions"
+    file: "File"
+dictionarySettingAuthorityPart:
+  heading:
+    editInvitation: "Editing permission"
+    transferInvitation: "Transfer"
+  description:
+    editInvitation: >-
+      The following users have permission to edit this dictionary.
+      They can edit and delete words, but they cannot change the dictionary settings or delete the dictionary itself.
+dictionarySettingEditingPart:
+  heading:
+    akrantiainSource: "Source code for Akrantiain"
+    zatlinSource: "Source code for Zatlin"
+    enableMarkdown: "Markdown"
+    enableDuplicateName: "Duplicate spelling check"
+    exampleTitle: "Heading for sentences"
+    pronunciationTitle: "Heading for pronunciations"
+  description:
+    akrantiainSource: >-
+      Akrantiain is a system that automatically generates phonetic symbols based on the spelling of words.
+      If you set the source code here, Akrantiain will automatically generate a phonetic symbol from a spelling and display it next to the spelling.
+      If a word has a specified pronunciation, it will be displayed instead.
+      For more information on Akrantiain's syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+    zatlinSource: >-
+      Zatlin is a system that generates random spellings of words.
+      If you set the source code here, a “Generate” button will appear in the word editor, allowing you to generate a spelling by Zatlin.
+      For more information on Zatlin's syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+    enableMarkdown: >-
+      Enabling this feature will allow you to write the contents of words in Markdown format.
+    enableDuplicateName: >-
+      If you enable this feature, when you enter a spelling in the word editor, it will tell you whether the dictionary already has a word with the same spelling.
+      Note that it only checks for spelling duplication and does not prevent you from registering a word with the same spelling.
+    exampleTitle: >-
+      The heading of example sentence sections, which is displayed in word cards.
+    pronunciationTitle: >-
+      The heading of pronunciation sections, which will be used when the dictionary is output in OTM-JSON format.
+dictionarySettingFilePart:
+  heading:
+    upload: "Import"
+    download: "Export"
+  description:
+    upload: >-
+      Import the contents of a file and overwrite the current data.
+      The supported formats are: OneToMany-JSON format (with extension .json) and PDIC format (with extension .dic).
+    download: >-
+      Export the dictionary data in the extended OneToMany-JSON format.
+      See also the <link>documentation</link> for detailed specification.
+dictionarySettingGeneralPart:
+  heading:
+    name: "Name"
+    paramName: "Identifier for URL"
+    explanation: "Description"
+    secret: "Visibility in dictionary lists"
+    discard: "Delete"
+  description:
+    paramName: >-
+      This setting will replace the number in the dictionary URL with the specified identifier.
+    explanation: >-
+      This is displayed on the dictionary page before searching.
+      You can use some Markdown syntax here.
+    secret: >-
+      If you set this to “Hide”, this dictionary will not appear in dictionary lists.
+      However, anyone who knows the URL of the dictionary page can still access it directly.
+  callout:
+    discard: >-
+      Deleting this dictionary will also delete all the relevant data, including words and example sentences.
+      Please be certain, as there is no going back.
+errorPage:
+  heading:
+    notFound: "Not\nFound"
+    forbidden: "Access\nDenied"
+  message:
+    notFound: >-
+      The page you are looking for could not be found.
+      It may have been deleted or moved to another location, so please try looking again from the top page.
+    forbidden: >-
+      You don't have permission to view this page.
+      Please return to the top page for other contents.
+    error: >-
+      An unexpected error has occurred.
+      Please contact the administrator with the following error message.
+  button:
+    back: "Back to top page"
+examplePage:
+  add: "Create new sentence"
+loginPage:
+  title: "Sign in"
+  heading: "Sign in"
+notificationListPage:
+  title: "News"
+  heading: "News"
+registerPage:
+  title: "Sign up"
+  heading: "Sign up"
+resetUserPasswordPage:
+  title:
+    issue: "Reset password"
+    reset: "Reset password"
+  heading:
+    issue: "Reset password"
+    reset: "Reset password"
+topPage:
+  button:
+    login: "Sign in · Sign up"
+    dictionary: "List of dictionaries"
+    userPage: "User page"
+  aggregation:
+    dictionary: "{count, plural, one {Dictionary} other {Dictionaries}}"
+    word: "{count, plural, one {Word} other {Words}}"
+    example: "{count, plural, one {Sentence} other {Sentences}}"
+  catch: "Draw{wbr} your own universe{wbr} with conlang"
+  heading:
+    gift: "I need your support"
+    notification: "Latest news"
+    github: "GitHub"
+    supporter: "Supporters"
+  message:
+    gift: >-
+      ZpDIC Online is being developed and maintained by a single programmer, but it costs several hundred dollars per year to keep the service running.
+      To maintain and improve the service, your support is needed!
+      If you like this application, please send a gift to the developer via the button below.
+  description:
+    github: >-
+      The source code of this application is available on GitHub.
+      I hope you find it useful.
+    supporter: >-
+      Here are the people who have supported this application in some way.
+      I would like to take this opportunity to thank them.
+  subbutton:
+    gift: "Send gift"
+    notification: "Read more news"
+    github: "View on GitHub"
+userSettingPart:
+  heading:
+    screenName: "Nickname"
+    email: "Email address"
+    password: "Password"
+    discard: "Delete account"
+  callout:
+    discard: >-
+      Deleting your account will also delete all the dictionaries you own.
+      Please be certain, as there is no going back.

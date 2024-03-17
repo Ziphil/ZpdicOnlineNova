@@ -9,25 +9,10 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import {
-  Invitation as InvitationSkeleton
-} from "/client/skeleton/invitation";
-import {
-  Dictionary,
-  DictionaryCreator,
-  DictionarySchema
-} from "/server/model/dictionary";
-import {
-  CustomError
-} from "/server/model/error";
-import {
-  User,
-  UserSchema
-} from "/server/model/user";
-import {
-  LiteralType,
-  LiteralUtilType
-} from "/server/util/literal-type";
+import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
+import {CustomError} from "/server/model/error";
+import {User, UserSchema} from "/server/model/user/user";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 
 export const INVITATION_TYPES = ["edit", "transfer"] as const;
@@ -125,25 +110,6 @@ export class InvitationSchema {
         this.dictionary.editUsers = [...nextEditUsers, previousUser];
         await this.dictionary.save();
       }
-    }
-  }
-
-}
-
-
-export class InvitationCreator {
-
-  public static async create(raw: Invitation): Promise<InvitationSkeleton> {
-    await raw.populate("dictionary");
-    if (isDocument(raw.dictionary)) {
-      const id = raw.id;
-      const type = raw.type;
-      const dictionary = await DictionaryCreator.createDetailed(raw.dictionary);
-      const createdDate = raw.createdDate.toISOString();
-      const skeleton = {id, type, dictionary, createdDate};
-      return skeleton;
-    } else {
-      throw new Error("cannot happen");
     }
   }
 

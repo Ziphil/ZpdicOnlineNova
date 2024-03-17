@@ -1,17 +1,8 @@
 //
 
-import {
-  Request,
-  Response
-} from "express";
-import {
-  Controller
-} from "/server/controller/controller";
-import {
-  controller,
-  get,
-  post
-} from "/server/controller/decorator";
+import {Request, Response} from "express";
+import {Controller} from "/server/controller/controller";
+import {controller, get, post} from "/server/controller/decorator";
 
 
 @controller("/external")

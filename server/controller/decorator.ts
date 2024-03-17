@@ -9,9 +9,7 @@ import {
   Response
 } from "express-serve-static-core";
 import "reflect-metadata";
-import {
-  Controller
-} from "/server/controller/controller";
+import {Controller} from "/server/controller/controller";
 
 
 const KEY = Symbol("controller");

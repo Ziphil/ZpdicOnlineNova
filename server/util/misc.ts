@@ -1,8 +1,6 @@
 //
 
-import {
-  randomBytes
-} from "crypto";
+import {randomBytes} from "crypto";
 import removeMarkdownOriginal from "remove-markdown";
 
 

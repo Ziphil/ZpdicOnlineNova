@@ -1,11 +1,7 @@
 //
 
-import {
-  S3 as StorageClient
-} from "aws-sdk";
-import {
-  AWS_STORAGE_BUCKET
-} from "/server/variable";
+import {S3 as StorageClient} from "aws-sdk";
+import {AWS_STORAGE_BUCKET} from "/server/variable";
 
 
 export class AwsUtil {

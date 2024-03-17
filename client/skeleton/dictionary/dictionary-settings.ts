@@ -1,14 +1,14 @@
 //
 
 
-export class DictionarySettings {
+export interface DictionarySettings {
 
-  public akrantiainSource?: string;
-  public zatlinSource?: string;
-  public punctuations!: Array<string>;
-  public pronunciationTitle!: string;
-  public exampleTitle!: string;
-  public enableMarkdown!: boolean;
-  public enableDuplicateName!: boolean;
+  akrantiainSource?: string;
+  zatlinSource?: string;
+  punctuations: Array<string>;
+  pronunciationTitle: string;
+  exampleTitle: string;
+  enableMarkdown: boolean;
+  enableDuplicateName: boolean;
 
 }
