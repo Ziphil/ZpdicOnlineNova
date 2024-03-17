@@ -76,4 +76,24 @@ export class ResourceController extends Controller {
     }
   }
 
+  @post("/fetchUploadFontPost")
+  @before(verifyRecaptcha(), verifyMe(), verifyDictionary("own"))
+  public async [Symbol()](request: Request<"fetchUploadFontPost">, response: Response<"fetchUploadFontPost">): Promise<void> {
+    const dictionary = request.dictionary!;
+    const {extension} = request.body;
+    if (dictionary) {
+      try {
+        const path = `font/${dictionary.number}/font.${extension}`;
+        const configs = {contentType: "font/", sizeLimit: 1024 * 1024};
+        const post = await AwsUtil.getUploadFilePost(path, configs);
+        const body = post;
+        Controller.respond(response, body);
+      } catch (error) {
+        Controller.respondError(response, "awsError");
+      }
+    } else {
+      Controller.respondError(response, "noSuchDictionary");
+    }
+  }
+
 }

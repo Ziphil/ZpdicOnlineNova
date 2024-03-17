@@ -1,6 +1,7 @@
 //
 
 import {getModelForClass, prop} from "@typegoose/typegoose";
+import {DictionaryFontSettingsSchema} from "/server/model/dictionary/dictionary-font-settings";
 
 
 export class DictionarySettingsSchema {
@@ -10,6 +11,9 @@ export class DictionarySettingsSchema {
 
   @prop()
   public zatlinSource?: string;
+
+  @prop()
+  public fontSettings?: DictionaryFontSettingsSchema;
 
   @prop({required: true, type: String})
   public punctuations!: Array<string>;
@@ -27,12 +31,13 @@ export class DictionarySettingsSchema {
   public enableDuplicateName!: boolean;
 
   public static createDefault(): DictionarySettings {
+    const fontUrl = null;
     const punctuations = [",", "、"];
     const pronunciationTitle = "Pronunciation";
     const exampleTitle = "Examples";
     const enableMarkdown = false;
     const enableDuplicateName = true;
-    const settings = new DictionarySettingsModel({punctuations, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName});
+    const settings = new DictionarySettingsModel({fontUrl, punctuations, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName});
     return settings;
   }
 

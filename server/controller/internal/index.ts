@@ -1,7 +1,6 @@
 //
 
 export * from "./commission";
-export * from "./debug";
 export * from "./dictionary";
 export * from "./example";
 export * from "./invitation";

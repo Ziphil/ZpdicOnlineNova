@@ -12,7 +12,6 @@ import morgan from "morgan";
 import multer from "multer";
 import {
   CommissionController,
-  DebugController,
   DictionaryController,
   ExampleController,
   HistoryController,
@@ -133,7 +132,6 @@ export class Main {
    * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
   private addApiRouters(): void {
     CommissionController.use(this.application);
-    DebugController.use(this.application);
     DictionaryController.use(this.application);
     ExampleController.use(this.application);
     HistoryController.use(this.application);
