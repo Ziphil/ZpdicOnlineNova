@@ -27,16 +27,19 @@ export const DictionaryCustomFontStyle = create(
 );
 
 
-function getCustomFontCss(dictionary: Dictionary): string {
-  if (dictionary.settings.fontSpec?.type === "custom") {
-    const url = getAwsFileUrl(`font/${dictionary.number}/font.ttf`);
-    return `
+function getCustomFontCss(dictionary: Dictionary): string | undefined {
+  const fontSpec = dictionary.settings.fontSpec;
+  if (fontSpec?.type === "custom") {
+    const url = getAwsFileUrl(`font/${dictionary.number}/font`);
+    const css = `
       @font-face {
-        font-family: "zpdic-custom";
-        src: url("${url}");
+        font-family: "zpdic-custom-${dictionary.number}";
+        font-weight: bold;
+        src: url("${url}") format("${fontSpec.format}");
       }
     `;
+    return css;
   } else {
-    return "";
+    return undefined;
   }
 }

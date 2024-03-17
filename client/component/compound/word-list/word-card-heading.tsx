@@ -22,6 +22,7 @@ export const WordCardHeading = create(
 
     const debug = location.hostname === "localhost";
     const pronunciation = useMemo(() => getPronunciation(dictionary, word), [dictionary, word]);
+    const nameFontFamily = useMemo(() => getNameFontFamily(dictionary), [dictionary]);
 
     return (
       <div styleName="root" {...rest}>
@@ -36,7 +37,7 @@ export const WordCardHeading = create(
           </div>
         )}
         <div styleName="name-container">
-          <MultiLineText styleName="name" is="h3" lineHeight="narrowest" {...{style: {fontFamily: getNameFontFamily(dictionary)}}}>
+          <MultiLineText styleName="name" is="h3" lineHeight="narrowest" {...{style: {fontFamily: nameFontFamily}}}>
             {word.name}
           </MultiLineText>
           {(!!pronunciation) && (
@@ -77,9 +78,9 @@ function getPronunciation(dictionary: EnhancedDictionary, word: Word | DetailedW
 function getNameFontFamily(dictionary: EnhancedDictionary): string | undefined {
   const fontSpec = dictionary.settings.fontSpec;
   if (fontSpec?.type === "custom") {
-    return "zpdic-custom";
+    return `'zpdic-custom-${dictionary.number}'`;
   } else if (fontSpec?.type === "local") {
-    return fontSpec.name;
+    return `'${fontSpec.name}'`;
   } else {
     return undefined;
   }

@@ -20,6 +20,8 @@ toast:
         The setting has been changed.
       zatlinSource: |-
         The setting has been changed.
+      fontSpec: |-
+        The setting has been changed.
       exampleTitle: |-
         The setting has been changed.
       pronunciationTitle: |-
@@ -637,6 +639,21 @@ changeDictionaryParamNameForm:
       It must also contain at least one non-digit.
     tooLong: >-
       The identifier must contain no more than 30 characters.
+changeDictionaryFontSpecForm:
+  label:
+    type:
+      none: "Do not set"
+      local: "Use local font"
+      custom: "Upload custom font"
+    input:
+      name: "Font family"
+      file: "Font file"
+  error:
+    nameRequired: >-
+      Enter a font family.
+    filetooLarge: >-
+      The file is too large.
+      You cannot upload files larger than 1 MB.
 changeDictionarySettingsForm:
   label:
     enableMarkdown:

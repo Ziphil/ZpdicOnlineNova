@@ -1,6 +1,13 @@
 //
 
 
+export interface DictionaryFontNoneSpec {
+
+  type: "none";
+
+}
+
+
 export interface DictionaryFontLocalSpec {
 
   type: "local";
@@ -12,8 +19,9 @@ export interface DictionaryFontLocalSpec {
 export interface DictionaryFontCustomSpec {
 
   type: "custom";
+  format: string;
 
 }
 
 
-export type DictionaryFontSpec = DictionaryFontLocalSpec | DictionaryFontCustomSpec;
+export type DictionaryFontSpec = DictionaryFontNoneSpec | DictionaryFontLocalSpec | DictionaryFontCustomSpec;

@@ -80,10 +80,9 @@ export class ResourceController extends Controller {
   @before(verifyRecaptcha(), verifyMe(), verifyDictionary("own"))
   public async [Symbol()](request: Request<"fetchUploadFontPost">, response: Response<"fetchUploadFontPost">): Promise<void> {
     const dictionary = request.dictionary!;
-    const {extension} = request.body;
     if (dictionary) {
       try {
-        const path = `font/${dictionary.number}/font.${extension}`;
+        const path = `font/${dictionary.number}/font`;
         const configs = {contentType: "", sizeLimit: 1024 * 1024};
         const post = await AwsUtil.getUploadFilePost(path, configs);
         const body = post;

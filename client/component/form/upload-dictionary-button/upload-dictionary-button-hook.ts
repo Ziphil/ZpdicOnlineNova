@@ -14,7 +14,7 @@ const SCHEMA = object({
   file: mixed<File>().required("required").test("fileSize", "tooLarge", validateFileSize(5))
 });
 const DEFAULT_VALUE = {
-  file: null as any
+  file: undefined as any
 } satisfies FormValue;
 type FormValue = Asserts<typeof SCHEMA>;
 

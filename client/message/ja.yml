@@ -20,6 +20,8 @@ toast:
         設定を変更しました。
       zatlinSource: |-
         設定を変更しました。
+      fontSpec: |-
+        設定を変更しました。
       exampleTitle: |-
         設定を変更しました。
       pronunciationTitle: |-
@@ -635,6 +637,21 @@ changeDictionaryParamNameForm:
       識別子は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
     tooLong: >-
       識別子は 30 文字以下である必要があります。
+changeDictionaryFontSpecForm:
+  label:
+    type:
+      none: "設定しない"
+      local: "ローカルフォントを参照"
+      custom: "フォントをアップロード"
+    input:
+      name: "フォントファミリー名"
+      file: "フォントファイル"
+  error:
+    nameRequired: >-
+      フォントファミリー名を入力してください。
+    filetooLarge: >-
+      ファイルのサイズが大きすぎます。
+      1 MB より大きなファイルはアップロードすることができません。
 changeDictionarySettingsForm:
   label:
     enableMarkdown:

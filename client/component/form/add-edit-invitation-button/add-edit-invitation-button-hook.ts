@@ -13,7 +13,7 @@ const SCHEMA = object({
   user: mixed<User>().required("required")
 });
 const DEFAULT_VALUE = {
-  user: null as any
+  user: undefined as any
 } satisfies FormValue;
 type FormValue = Asserts<typeof SCHEMA>;
 

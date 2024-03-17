@@ -20,7 +20,7 @@ export const ChangeDictionaryFontSpecForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("changeDictionarySecretForm");
+    const {trans} = useTrans("changeDictionaryFontSpecForm");
 
     const {form, handleSubmit} = useChangeDictionaryFontSpec(dictionary);
     const {control, register, watch, getFieldState, formState: {errors}} = form;
@@ -33,22 +33,22 @@ export const ChangeDictionaryFontSpecForm = create(
           <div styleName="radio-group">
             <CheckableContainer>
               <Radio value="none" {...register("type")}/>
-              <CheckableLabel>{trans("label.none")}</CheckableLabel>
+              <CheckableLabel>{trans("label.type.none")}</CheckableLabel>
             </CheckableContainer>
             <CheckableContainer>
               <Radio value="local" {...register("type")}/>
-              <CheckableLabel>{trans("label.local")}</CheckableLabel>
+              <CheckableLabel>{trans("label.type.local")}</CheckableLabel>
             </CheckableContainer>
             <CheckableContainer>
               <Radio value="custom" {...register("type")}/>
-              <CheckableLabel>{trans("label.custom")}</CheckableLabel>
+              <CheckableLabel>{trans("label.type.custom")}</CheckableLabel>
             </CheckableContainer>
           </div>
         </ControlContainer>
         {(type === "local") && (
           <ControlContainer>
             <ControlLabel>
-              {trans("label.name")}
+              {trans("label.input.name")}
             </ControlLabel>
             <Input error={!!getFieldState("name").error} {...register("name")}/>
             <ControlErrorMessage name="name" form={form} trans={trans}/>
@@ -57,7 +57,7 @@ export const ChangeDictionaryFontSpecForm = create(
         {(type === "custom") && (
           <ControlContainer>
             <ControlLabel>
-              {trans("label.file")}
+              {trans("label.input.file")}
             </ControlLabel>
             <Controller name="file" control={control} render={({field}) => (
               <FileInput

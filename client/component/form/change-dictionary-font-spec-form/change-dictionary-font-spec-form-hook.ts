@@ -15,9 +15,9 @@ const SCHEMA = object({
   type: string().oneOf(["none", "local", "custom"]).required(),
   name: string().when("type", {
     is: "local",
-    then: (schema) => schema.required()
+    then: (schema) => schema.required("nameRequired")
   }),
-  file: mixed<File>().test("fileSize", "tooLarge", validateFileSize(1))
+  file: mixed<File>().test("fileSize", "fileTooLarge", validateFileSize(1))
 });
 type FormValue = Asserts<typeof SCHEMA>;
 
@@ -31,8 +31,7 @@ export function useChangeDictionaryFontSpec(dictionary: Dictionary): ChangeDicti
   const request = useRequest();
   const {dispatchSuccessToast, dispatchErrorToast} = useToast();
   const uploadFont = useCallback(async function (value: FormValue): Promise<boolean | void> {
-    const extension = value.file!.name.split(".").pop() ?? "";
-    const response = await request("fetchUploadFontPost", {number: dictionary.number, extension}, {useRecaptcha: true});
+    const response = await request("fetchUploadFontPost", {number: dictionary.number}, {useRecaptcha: true});
     return await switchResponse(response, async (post) => {
       try {
         await uploadFileToAws(post, value.file!);
@@ -52,15 +51,15 @@ export function useChangeDictionaryFontSpec(dictionary: Dictionary): ChangeDicti
     });
   }, [dictionary, request]);
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    if (value.type === "custom" && value.file !== null) {
+    if (value.type === "custom" && value.file !== undefined) {
       const results = await Promise.all([changeSettings(value), uploadFont(value)]);
       if (results.every((result) => result)) {
-        dispatchSuccessToast("changeDictionaryFontSpec");
+        dispatchSuccessToast("changeDictionarySettings.fontSpec");
       }
     } else {
       const result = await changeSettings(value);
       if (result) {
-        dispatchSuccessToast("changeDictionaryFontSpec");
+        dispatchSuccessToast("changeDictionarySettings.fontSpec");
       }
     }
   }), [form, changeSettings, uploadFont, dispatchSuccessToast]);
@@ -71,23 +70,48 @@ function getFormValue(dictionary: Dictionary): FormValue {
   const value = {
     type: dictionary.settings.fontSpec?.type ?? "none",
     name: (dictionary.settings.fontSpec?.type === "local") ? dictionary.settings.fontSpec.name : undefined,
-    file: null as any
+    file: undefined as any
   } satisfies FormValue;
   return value;
 }
 
 function getQueryFontSpec(dictionary: Dictionary, formValue: FormValue): DictionaryFontSpec {
-  if (formValue.type === "local") {
+  if (formValue.type === "none") {
+    const fontSpec = {
+      type: "none" as const
+    };
+    return fontSpec;
+  } else if (formValue.type === "local") {
     const fontSpec = {
       type: "local" as const,
       name: formValue.name ?? ""
     };
     return fontSpec;
-  } else {
+  } else if (formValue.type === "custom") {
+    const currentFontSpec = dictionary.settings.fontSpec;
+    const currentFormat = (currentFontSpec?.type === "custom") ? currentFontSpec.format : "";
     const fontSpec = {
-      type: "custom" as const
+      type: "custom" as const,
+      format: (formValue.file !== undefined) ? getFontFormat(formValue.file) : currentFormat
     };
     return fontSpec;
+  } else {
+    throw new Error("cannot happen");
+  }
+}
+
+function getFontFormat(file: File): string {
+  const extension = file.name.split(".").pop();
+  if (extension === "ttf") {
+    return "truetype";
+  } else if (extension === "otf") {
+    return "opentype";
+  } else if (extension === "woff") {
+    return "woff";
+  } else if (extension === "woff2") {
+    return "woff2";
+  } else {
+    return "";
   }
 }
 

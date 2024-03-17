@@ -20,6 +20,8 @@ toast:
         La agordo ŝanĝitas.
       zatlinSource: |-
         La agordo ŝanĝitas.
+      fontSpec: |-
+        La agordo ŝanĝitas.
       exampleTitle: |-
         La agordo ŝanĝitas.
       pronunciationTitle: |-
@@ -637,6 +639,21 @@ changeDictionaryParamNameForm:
       Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon.
     tooLong: >-
       La identigilo devas havi apenaŭ 30 signojn.
+changeDictionaryFontSpecForm:
+  label:
+    type:
+      none: "Ne agordi"
+      local: "Uzi lokan tiparon"
+      custom: "Alŝuti propran tiparon"
+    input:
+      name: "Tipara familio"
+      file: "Tipara dosiero"
+  error:
+    nameRequired: >-
+      Enigu tipara familio.
+    filetooLarge: >-
+      La dosiero estas tro granda.
+      Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
 changeDictionarySettingsForm:
   label:
     enableMarkdown:
