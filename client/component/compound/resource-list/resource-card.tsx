@@ -1,7 +1,6 @@
 //
 
-import {faTrashAlt} from "@fortawesome/free-solid-svg-icons";
-import {faCopy} from "@fortawesome/sharp-regular-svg-icons";
+import {faCopy, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {
   AdditionalProps,

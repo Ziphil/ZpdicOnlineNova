@@ -18,7 +18,7 @@ import {JWT_SECRET} from "/server/variable";
  * 認証に失敗した場合、ステータスコード 401 を返して終了します。
  * なお、引数に権限を表す文字列が指定された場合、追加でユーザーが指定の権限を保持しているかチェックし、権限がなかった場合、ステータスコード 403 を返して終了します。*/
 export function verifyMe(authority?: string): RequestHandler {
-  const handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
+  const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     const token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
       if (!error && typeof data === "object" && "id" in data) {
@@ -46,7 +46,7 @@ export function verifyMe(authority?: string): RequestHandler {
 /** リクエストのヘッダーに書き込まれたトークンを利用してユーザーのチェックを行います。
  * 基本的に `verifyUser` 関数とほぼ同じ動作をしますが、認証に失敗した場合にエラーステータスを返すのではなく次の動作に移行します。*/
 export function checkMe(authority?: string): RequestHandler {
-  const handler = async function (request: Request, response: Response, next: NextFunction): Promise<void> {
+  const handler = async function (request: any, response: Response, next: NextFunction): Promise<void> {
     const token = (request.signedCookies.authorization || request.headers.authorization) + "";
     jwt.verify(token, JWT_SECRET, async (error, data) => {
       if (!error && typeof data === "object" && "id" in data) {

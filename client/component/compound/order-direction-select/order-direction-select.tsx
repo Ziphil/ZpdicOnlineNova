@@ -1,7 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location, react/jsx-closing-tag-location */
 
-import {faArrowDownZA} from "@fortawesome/free-solid-svg-icons";
-import {faArrowDownAZ} from "@fortawesome/sharp-regular-svg-icons";
+import {faArrowDownAZ, faArrowDownZA} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, Select, SelectOption, useTrans} from "zographia";
 import {create} from "/client/component/create";

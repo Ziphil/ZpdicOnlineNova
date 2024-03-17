@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faPlus} from "@fortawesome/free-solid-svg-icons";
+import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {useFieldArray} from "react-hook-form";
 import {
