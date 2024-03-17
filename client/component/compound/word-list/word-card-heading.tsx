@@ -36,7 +36,7 @@ export const WordCardHeading = create(
           </div>
         )}
         <div styleName="name-container">
-          <MultiLineText styleName="name" is="h3">
+          <MultiLineText styleName="name" is="h3" lineHeight="narrowest" {...{style: {fontFamily: getNameFontFamily(dictionary)}}}>
             {word.name}
           </MultiLineText>
           {(!!pronunciation) && (
@@ -71,5 +71,16 @@ function getPronunciation(dictionary: EnhancedDictionary, word: Word | DetailedW
     } else {
       return undefined;
     }
+  }
+}
+
+function getNameFontFamily(dictionary: EnhancedDictionary): string | undefined {
+  const fontSpec = dictionary.settings.fontSpec;
+  if (fontSpec?.type === "custom") {
+    return "zpdic-custom";
+  } else if (fontSpec?.type === "local") {
+    return fontSpec.name;
+  } else {
+    return undefined;
   }
 }
