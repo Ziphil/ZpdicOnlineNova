@@ -21,8 +21,12 @@ export async function loadEditWordPage({params, request}: LoaderFunctionArgs): P
     const dictionary = await fetchResponse("fetchDictionary", {number, paramName});
     const enhancedDictionary = EnhancedDictionary.enhance(dictionary);
     if (encodedValue !== null) {
-      const value = rison.decode<any>(encodedValue);
-      return {dictionary: enhancedDictionary, initialData: {type: "form", value}};
+      try {
+        const value = rison.decode<any>(encodedValue);
+        return {dictionary: enhancedDictionary, initialData: {type: "form", value}};
+      } catch (error) {
+        return {dictionary: enhancedDictionary, initialData: null};
+      }
     } else {
       if (wordNumber !== undefined) {
         const word = await fetchResponse("fetchWord", {number: dictionary.number, wordNumber: +wordNumber});
