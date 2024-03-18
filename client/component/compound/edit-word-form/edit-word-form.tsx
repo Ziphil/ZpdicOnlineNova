@@ -5,11 +5,11 @@ import {ReactElement, Ref, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client/component/create";
-import {EditableWord, EnhancedDictionary, Word} from "/client/skeleton";
+import {EditableWord, EnhancedDictionary} from "/client/skeleton";
 import {assignRef} from "/client/util/ref";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
 import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
-import {EditWordFormValue, useEditWord} from "./edit-word-form-hook";
+import {EditWordFormValue, EditWordInitialData, useEditWord} from "./edit-word-form-hook";
 import {EditWordFormInformationSection} from "./edit-word-form-information-section";
 import {EditWordFormVariationSection} from "./edit-word-form-variation-section";
 
@@ -18,14 +18,14 @@ export const EditWordForm = create(
   require("./edit-word-form.scss"), "EditWordForm",
   function ({
     dictionary,
-    word,
+    initialData,
     forceAdd = false,
     formRef,
     onSubmit,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
-    word: Word | EditableWord | null,
+    initialData: EditWordInitialData | null,
     forceAdd?: boolean,
     formRef?: Ref<() => EditWordFormValue>,
     onSubmit?: (word: EditableWord) => void,
@@ -34,7 +34,7 @@ export const EditWordForm = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {form, handleSubmit} = useEditWord(dictionary, word, forceAdd, onSubmit);
+    const {form, handleSubmit} = useEditWord(dictionary, initialData, forceAdd, onSubmit);
 
     const getFormValue = useCallback(function (): EditWordFormValue {
       return form.getValues();
@@ -45,7 +45,7 @@ export const EditWordForm = create(
     return (
       <form styleName="root" {...rest}>
         <div styleName="main">
-          <EditWordFormBasicSection dictionary={dictionary} form={form} word={word}/>
+          <EditWordFormBasicSection dictionary={dictionary} form={form}/>
           <EditWordFormEquivalentSection dictionary={dictionary} form={form}/>
           <EditWordFormInformationSection dictionary={dictionary} form={form}/>
           <EditWordFormVariationSection dictionary={dictionary} form={form}/>

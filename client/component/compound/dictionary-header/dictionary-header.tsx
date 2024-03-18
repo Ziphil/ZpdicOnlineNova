@@ -54,7 +54,7 @@ export const DictionaryHeader = create(
           <div styleName="operation">
             {(canEdit) && (
               <div styleName="operation-row">
-                <EditWordDialog dictionary={dictionary} word={null} trigger={(
+                <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
                   <Button variant="light" {...rest}>
                     <ButtonIconbag><GeneralIcon icon={fakNoteCirclePlus}/></ButtonIconbag>
                     {trans("button.addWord")}

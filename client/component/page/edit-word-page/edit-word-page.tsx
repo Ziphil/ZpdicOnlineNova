@@ -20,12 +20,12 @@ export const EditWordPage = create(
   } & AdditionalProps): ReactElement {
 
     const dictionary = useDictionary();
-    const {word} = useLoaderData() as EditWordPageLoaderData;
+    const {initialData} = useLoaderData() as EditWordPageLoaderData;
 
     return (
       <Page {...rest} headerNode={<Header/>}>
         <MainContainer styleName="main">
-          <EditWordForm dictionary={dictionary} word={word}/>
+          <EditWordForm dictionary={dictionary} initialData={initialData}/>
         </MainContainer>
       </Page>
     );

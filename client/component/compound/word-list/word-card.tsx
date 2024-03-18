@@ -44,13 +44,13 @@ export const WordCard = create(
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">
-            <EditWordDialog dictionary={dictionary} word={word} trigger={(
+            <EditWordDialog dictionary={dictionary} initialData={{type: "word", word}} trigger={(
               <Button scheme="secondary" variant="underline">
                 <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
                 {trans("button.edit")}
               </Button>
             )}/>
-            <EditWordDialog dictionary={dictionary} word={word} forceAdd={true} trigger={(
+            <EditWordDialog dictionary={dictionary} initialData={{type: "word", word}} forceAdd={true} trigger={(
               <Button scheme="secondary" variant="underline">
                 <ButtonIconbag><GeneralIcon icon={faClone}/></ButtonIconbag>
                 {trans("button.duplicate")}

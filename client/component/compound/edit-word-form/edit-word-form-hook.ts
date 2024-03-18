@@ -56,9 +56,10 @@ export type EditWordSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 export type EditWordFormValue = FormValue;
+export type EditWordInitialData = {type: "word", word: Word | EditableWord} | {type: "form", value: EditWordFormValue};
 
-export function useEditWord(dictionary: Dictionary, word: Word | EditableWord | null, forceAdd: boolean, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
-  const form = useForm<FormValue>((word !== null) ? getFormValue(word, forceAdd) : DEFAULT_VALUE, {});
+export function useEditWord(dictionary: Dictionary, initialData: EditWordInitialData | null, forceAdd: boolean, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
+  const form = useForm<FormValue>((initialData !== null) ? getFormValue(initialData, forceAdd) : DEFAULT_VALUE, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -76,34 +77,43 @@ export function useEditWord(dictionary: Dictionary, word: Word | EditableWord | 
   return {form, handleSubmit};
 }
 
-function getFormValue(word: Word | EditableWord, forceAdd: boolean): FormValue {
-  const value = {
-    number: (forceAdd) ? null : word.number ?? null,
-    name: word.name,
-    pronunciation: word.pronunciation || "",
-    tags: word.tags,
-    equivalents: word.equivalents.map((equivalent) => ({
-      titles: equivalent.titles,
-      nameString: equivalent.names.join(", ")
-    })),
-    informations: word.informations.map((information) => ({
-      title: information.title,
-      text: information.text
-    })),
-    variations: word.variations.map((variation) => ({
-      title: variation.title,
-      name: variation.name
-    })),
-    relations: word.relations.map((relation) => ({
-      titles: relation.titles,
-      word: {
-        number: relation.number,
-        name: relation.name
-      },
-      mutual: false
-    }))
-  } satisfies FormValue;
-  return value;
+function getFormValue(initialData: EditWordInitialData, forceAdd: boolean): FormValue {
+  if (initialData.type === "word") {
+    const word = initialData.word;
+    const value = {
+      number: (forceAdd) ? null : word.number ?? null,
+      name: word.name,
+      pronunciation: word.pronunciation || "",
+      tags: word.tags,
+      equivalents: word.equivalents.map((equivalent) => ({
+        titles: equivalent.titles,
+        nameString: equivalent.names.join(", ")
+      })),
+      informations: word.informations.map((information) => ({
+        title: information.title,
+        text: information.text
+      })),
+      variations: word.variations.map((variation) => ({
+        title: variation.title,
+        name: variation.name
+      })),
+      relations: word.relations.map((relation) => ({
+        titles: relation.titles,
+        word: {
+          number: relation.number,
+          name: relation.name
+        },
+        mutual: false
+      }))
+    } satisfies FormValue;
+    return value;
+  } else {
+    const value = {
+      ...initialData.value,
+      number: (forceAdd) ? null : initialData.value.number
+    } satisfies FormValue;
+    return value;
+  }
 }
 
 function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWord"> {

@@ -19,7 +19,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {EditableWord, EnhancedDictionary, Word} from "/client/skeleton";
+import {EnhancedDictionary} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {EditWordSpec} from "./edit-word-form-hook";
@@ -30,12 +30,10 @@ export const EditWordFormBasicSection = create(
   function ({
     dictionary,
     form,
-    word,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
     form: EditWordSpec["form"],
-    word: Word | EditableWord | null,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -85,7 +83,7 @@ export const EditWordFormBasicSection = create(
       if (dictionary.settings.enableDuplicateName) {
         const name = event.target.value;
         const number = dictionary.number;
-        const excludedWordNumber = word?.number;
+        const excludedWordNumber = form.getValues("number") ?? undefined;
         if (name !== "") {
           const response = await request("checkDuplicateWordName", {number, name, excludedWordNumber}, {ignoreError: true});
           switchResponse(response, ({duplicate}) => {
@@ -93,7 +91,7 @@ export const EditWordFormBasicSection = create(
           });
         }
       }
-    }, 300, [dictionary.number, word?.number]);
+    }, 300, [dictionary.number, form.getValues]);
 
     return (
       <section styleName="root" {...rest}>

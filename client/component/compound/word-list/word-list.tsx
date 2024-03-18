@@ -39,7 +39,7 @@ export const WordList = create(
             <ListEmptyView styleName="empty">
               <span>{trans("empty")}</span>
               {(canEdit) ? (
-                <EditWordDialog dictionary={dictionary} word={null} trigger={(
+                <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
                   <Button scheme="gray" variant="light">
                     <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
                     {trans("button.create")}

@@ -16,22 +16,22 @@ import {
   useTrans
 } from "zographia";
 import {EditWordForm} from "/client/component/compound/edit-word-form";
-import {EditWordFormValue} from "/client/component/compound/edit-word-form/edit-word-form-hook";
+import {EditWordFormValue, EditWordInitialData} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
-import {EditableWord, EnhancedDictionary, Word} from "/client/skeleton";
+import {EnhancedDictionary} from "/client/skeleton";
 
 
 export const EditWordDialog = create(
   require("./edit-word-dialog.scss"), "EditWordDialog",
   function ({
     dictionary,
-    word,
+    initialData,
     forceAdd = false,
     trigger,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
-    word: Word | EditableWord | null,
+    initialData: EditWordInitialData | null,
     forceAdd?: boolean,
     trigger: ReactElement,
     className?: string
@@ -40,7 +40,7 @@ export const EditWordDialog = create(
     const {trans} = useTrans("editWordDialog");
 
     const [open, setOpen] = useState(false);
-    const addWordPageUrl = useHref(`/dictionary/${dictionary.number}/word/${(word !== null && !forceAdd) ? word.number : "new"}`);
+    const addWordPageUrlBase = useHref(`/dictionary/${dictionary.number}/word`);
 
     const formRef = useRef<() => EditWordFormValue>(null);
 
@@ -53,10 +53,12 @@ export const EditWordDialog = create(
     }, []);
 
     const openExternal = useCallback(function (): void {
-      const getFormValue = formRef.current;
-      const encodedFormValue = (getFormValue !== null) ? rison.encode(getFormValue()) : null;
-      window.open(addWordPageUrl);
-    }, [addWordPageUrl]);
+      const value = formRef.current?.();
+      if (value !== undefined) {
+        const addWordPageUrl = addWordPageUrlBase + `/${(forceAdd || value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
+        window.open(addWordPageUrl);
+      }
+    }, [addWordPageUrlBase, forceAdd]);
 
     return (
       <Fragment>
@@ -71,7 +73,7 @@ export const EditWordDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditWordForm dictionary={dictionary} word={word} forceAdd={forceAdd} formRef={formRef} onSubmit={closeDialog}/>
+              <EditWordForm dictionary={dictionary} initialData={initialData} forceAdd={forceAdd} formRef={formRef} onSubmit={closeDialog}/>
             </DialogBody>
           </DialogPane>
         </Dialog>
