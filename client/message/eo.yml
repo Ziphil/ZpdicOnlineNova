@@ -218,7 +218,7 @@ wordTypeSelect:
     regular: "Regesp"
 
 addCommissionDialog:
-  heading: "Peti kreado de vorto"
+  heading: "Peti kreadon de vorto"
   label:
     name: "Vorto"
     comment: "Komento"
@@ -510,7 +510,7 @@ wordList:
     duplicate: "Duobligi"
     discard: "Forigi"
     create: "Krei"
-    commission: "Peti kreado"
+    commission: "Peti kreadon"
   dialog:
     discard:
       message: >-
