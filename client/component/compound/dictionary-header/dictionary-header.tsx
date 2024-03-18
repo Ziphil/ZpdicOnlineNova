@@ -60,7 +60,7 @@ export const DictionaryHeader = create(
                     {trans("button.addWord")}
                   </Button>
                 )}/>
-                <EditExampleDialog dictionary={dictionary} example={null} trigger={(
+                <EditExampleDialog dictionary={dictionary} initialData={null} trigger={(
                   <Button variant="light" {...rest}>
                     <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
                     {trans("button.addExample")}

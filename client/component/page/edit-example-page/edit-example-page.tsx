@@ -18,12 +18,12 @@ export const EditExamplePage = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {dictionary, example} = useLoaderData() as EditExamplePageLoaderData;
+    const {dictionary, initialData} = useLoaderData() as EditExamplePageLoaderData;
 
     return (
       <Page {...rest} headerNode={<Header/>}>
         <MainContainer styleName="main">
-          <EditExampleForm dictionary={dictionary} example={example}/>
+          <EditExampleForm dictionary={dictionary} initialData={initialData}/>
         </MainContainer>
       </Page>
     );
