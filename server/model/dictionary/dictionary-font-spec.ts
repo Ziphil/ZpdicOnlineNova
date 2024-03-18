@@ -9,25 +9,13 @@ export class DictionaryFontSpecSchema {
   @prop({required: true})
   public type!: string;
 
-}
+  @prop()
+  public name?: string;
 
-
-export class DictionaryFontNoneSpecSchema extends DictionaryFontSpecSchema {
-
-}
-
-
-export class DictionaryFontLocalSpecSchema extends DictionaryFontSpecSchema {
-
-  @prop({required: true})
-  public name!: string;
+  @prop()
+  public format?: string;
 
 }
 
 
-export class DictionaryFontCustomSpecSchema extends DictionaryFontSpecSchema {
-
-  @prop({required: true})
-  public format!: string;
-
-}
+export type DictionaryFontSpec = DictionaryFontSpecSchema;

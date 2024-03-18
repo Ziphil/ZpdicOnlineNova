@@ -1,7 +1,7 @@
 //
 
 import {getModelForClass, prop} from "@typegoose/typegoose";
-import {DictionaryFontCustomSpecSchema, DictionaryFontLocalSpecSchema, DictionaryFontNoneSpecSchema} from "/server/model/dictionary/dictionary-font-spec";
+import {DictionaryFontSpecSchema} from "/server/model/dictionary/dictionary-font-spec";
 
 
 export class DictionarySettingsSchema {
@@ -13,7 +13,7 @@ export class DictionarySettingsSchema {
   public zatlinSource?: string;
 
   @prop()
-  public fontSpec?: DictionaryFontNoneSpecSchema | DictionaryFontLocalSpecSchema | DictionaryFontCustomSpecSchema;
+  public fontSpec?: DictionaryFontSpecSchema;
 
   @prop({required: true, type: String})
   public punctuations!: Array<string>;
