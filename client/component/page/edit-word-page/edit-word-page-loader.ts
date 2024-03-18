@@ -4,12 +4,12 @@ import {LoaderFunctionArgs} from "react-router-dom";
 import rison from "rison";
 import {EditWordInitialData} from "/client/component/compound/edit-word-form";
 import {fetchResponse} from "/client/hook/request";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DetailedDictionary} from "/client/skeleton";
 import {ResponseError} from "/client/util/error";
 
 
 export type EditWordPageLoaderData = {
-  dictionary: EnhancedDictionary,
+  dictionary: DetailedDictionary,
   initialData: EditWordInitialData | null
 };
 
@@ -19,20 +19,19 @@ export async function loadEditWordPage({params, request}: LoaderFunctionArgs): P
   const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
   try {
     const dictionary = await fetchResponse("fetchDictionary", {number, paramName});
-    const enhancedDictionary = EnhancedDictionary.enhance(dictionary);
     if (encodedValue !== null) {
       try {
         const value = rison.decode<any>(encodedValue);
-        return {dictionary: enhancedDictionary, initialData: {type: "form", value}};
+        return {dictionary, initialData: {type: "form", value}};
       } catch (error) {
-        return {dictionary: enhancedDictionary, initialData: null};
+        return {dictionary, initialData: null};
       }
     } else {
       if (wordNumber !== undefined) {
         const word = await fetchResponse("fetchWord", {number: dictionary.number, wordNumber: +wordNumber});
-        return {dictionary: enhancedDictionary, initialData: {type: "word", word}};
+        return {dictionary, initialData: {type: "word", word}};
       } else {
-        return {dictionary: enhancedDictionary, initialData: null};
+        return {dictionary, initialData: null};
       }
     }
   } catch (error) {

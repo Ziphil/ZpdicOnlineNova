@@ -7,6 +7,7 @@ import {EditExampleForm} from "/client/component/compound/edit-example-form";
 import {Header} from "/client/component/compound/header";
 import {MainContainer, Page} from "/client/component/compound/page";
 import {create} from "/client/component/create";
+import {useDictionary} from "/client/hook/dictionary";
 import type {EditExamplePageLoaderData} from "./edit-example-page-loader";
 
 
@@ -18,7 +19,8 @@ export const EditExamplePage = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {dictionary, initialData} = useLoaderData() as EditExamplePageLoaderData;
+    const dictionary = useDictionary();
+    const {initialData} = useLoaderData() as EditExamplePageLoaderData;
 
     return (
       <Page {...rest} headerNode={<Header/>}>
