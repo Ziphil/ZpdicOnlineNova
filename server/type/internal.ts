@@ -335,6 +335,13 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "awsError">
     }
   },
+  fetchUploadFontPost: {
+    request: WithRecaptcha<{number: number}>,
+    response: {
+      success: {url: string, fields: Record<string, string>},
+      error: CustomError<"noSuchDictionary" | "awsError">
+    }
+  },
   login: {
     request: {name: string, password: string},
     response: {

@@ -66,7 +66,7 @@ export const ExampleCard = create(
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">
-            <EditExampleDialog dictionary={dictionary} example={filledExample} trigger={(
+            <EditExampleDialog dictionary={dictionary} initialData={{type: "example", example: filledExample}} trigger={(
               <Button scheme="secondary" variant="underline">
                 <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
                 {trans("button.edit")}

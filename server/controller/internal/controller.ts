@@ -53,7 +53,7 @@ export class Controller extends BaseController {
 }
 
 
-export interface Request<N extends ProcessName> extends ExpressRequest<ExpressParams, ResponseData<N>, RequestData<N>, any> {
+export interface Request<N extends ProcessName> extends ExpressRequest<ExpressParams, ResponseData<N>, RequestData<N>, never> {
 
   /** GET リクエストの際のクエリ文字列をパースした結果です。
    * 内部処理に使う API は全て POST リクエストのみ受け付けるようになっているので、`never` 型を指定してあります。*/
@@ -64,7 +64,7 @@ export interface Request<N extends ProcessName> extends ExpressRequest<ExpressPa
   body: RequestData<N>;
 
   /** ユーザーの検証の結果として得られた JSON トークンが格納されます。
-   * このプロパティは、`authenticate` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
+   * このプロパティは、`login` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
   token?: string;
 
   /** 認証に成功した場合にユーザーデータが格納されます。
@@ -79,9 +79,32 @@ export interface Request<N extends ProcessName> extends ExpressRequest<ExpressPa
    * このプロパティは、`verifyRecaptcha` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
   recaptchaScore?: number;
 
+  middlewareBody: MiddlewareBody;
+
 }
 
 
-export interface Response<N extends ProcessName> extends ExpressResponse<ResponseData<N>> {
+export interface Response<N extends ProcessName> extends ExpressResponse<ResponseData<N>, never> {
+
+}
+
+
+export interface MiddlewareBody {
+
+  /** ログイン中のユーザーデータです。
+    * ログインに成功している場合は、ユーザーデータが格納されます。
+    * ログインに失敗している場合は、`null` が格納されます。*/
+  me?: User | null;
+
+  /** リクエストに関連する辞書データです。
+    * このプロパティは、`verifyDictionary` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
+  dictionary?: Dictionary | null;
+
+  /** ログイン処理の結果として得られた JSON トークンです。*/
+  token?: string;
+
+  /** reCAPTCHA が返したスコアが格納されます。
+    * このプロパティは、`verifyRecaptcha` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
+  recaptchaScore?: number | null;
 
 }

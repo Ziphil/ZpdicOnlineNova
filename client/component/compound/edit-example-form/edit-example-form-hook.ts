@@ -28,9 +28,10 @@ export type EditExampleSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 export type EditExampleFormValue = FormValue;
+export type EditExampleInitialData = {type: "example", example: Example} | {type: "form", value: EditExampleFormValue};
 
-export function useEditExample(dictionary: Dictionary, example: Example | null, onSubmit?: (example: EditableExample) => unknown): EditExampleSpec {
-  const form = useForm<FormValue>((example !== null) ? getFormValue(example) : DEFAULT_VALUE, {});
+export function useEditExample(dictionary: Dictionary, initialData: EditExampleInitialData | null, onSubmit?: (example: EditableExample) => unknown): EditExampleSpec {
+  const form = useForm<FormValue>((initialData !== null) ? getFormValue(initialData) : DEFAULT_VALUE, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -50,17 +51,22 @@ export function useEditExample(dictionary: Dictionary, example: Example | null, 
   return {form, handleSubmit};
 }
 
-function getFormValue(example: Example): FormValue {
-  const value = {
-    number: example.number,
-    sentence: example.sentence,
-    translation: example.translation,
-    words: example.words.map((word) => ({
-      number: word.number,
-      name: word.name
-    }))
-  } satisfies FormValue;
-  return value;
+function getFormValue(initialData: EditExampleInitialData): FormValue {
+  if (initialData.type === "example") {
+    const example = initialData.example;
+    const value = {
+      number: example.number,
+      sentence: example.sentence,
+      translation: example.translation,
+      words: example.words.map((word) => ({
+        number: word.number,
+        name: word.name
+      }))
+    } satisfies FormValue;
+    return value;
+  } else {
+    return initialData.value;
+  }
 }
 
 function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editExample"> {

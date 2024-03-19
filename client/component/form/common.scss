@@ -23,8 +23,15 @@
 
 .radio-group {
   column-gap: 4zu;
+  row-gap: 2zu;
   display: flex;
   align-items: center;
+  &[data-mobile-vertical] {
+    @include device("mobile") {
+      flex-direction: column;
+      align-items: flex-start;    
+    }
+  }
 }
 
 .input {

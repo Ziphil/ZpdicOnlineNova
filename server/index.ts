@@ -12,7 +12,6 @@ import morgan from "morgan";
 import multer from "multer";
 import {
   CommissionController,
-  DebugController,
   DictionaryController,
   ExampleController,
   HistoryController,
@@ -44,45 +43,44 @@ export class Main {
 
   public main(): void {
     this.application = express();
-    this.setupBodyParsers();
-    this.setupCookie();
-    this.setupMulter();
-    this.setupMorgan();
+    this.addBodyParserMiddlewares();
+    this.addCookieMiddleware();
+    this.addFileMiddleware();
+    this.addLogMiddleware();
+    this.addCustomMiddlewares();
     this.setupMongo();
     this.setupSendgrid();
     this.setupAws();
     this.setupDirectories();
-    this.setupRouters();
+    this.addApiRouters();
+    this.addStaticRouters();
     this.setupWorkers();
     this.setupSchedules();
-    this.setupStatic();
-    this.setupFallbackHandlers();
-    this.setupErrorHandler();
+    this.addFallbackHandlers();
+    this.addErrorHandler();
     this.listen();
   }
 
-  /** リクエストボディをパースするミドルウェアの設定をします。*/
-  private setupBodyParsers(): void {
+  private addBodyParserMiddlewares(): void {
     const urlencodedParser = express.urlencoded({extended: false});
     const jsonParser = express.json();
     this.application.use(urlencodedParser);
     this.application.use(jsonParser);
   }
 
-  private setupCookie(): void {
+  private addCookieMiddleware(): void {
     const middleware = cookieParser(COOKIE_SECRET);
     this.application.use(middleware);
   }
 
   /** ファイルをアップロードする処理を行う Multer の設定をします。
    * アップロードされたファイルは upload フォルダ内に保存するようにしています。*/
-  private setupMulter(): void {
+  private addFileMiddleware(): void {
     const middleware = multer({dest: "./dist/upload/"}).single("file");
     this.application.use("/internal*", middleware);
   }
 
-  /** アクセスログを出力する morgan の設定をします。*/
-  private setupMorgan(): void {
+  private addLogMiddleware(): void {
     const middleware = morgan<Request>((tokens, request, response) => {
       const method = tokens["method"](request, response);
       const status = +tokens["status"](request, response)!;
@@ -95,6 +93,16 @@ export class Main {
       return `!<request> ${logString}`;
     });
     this.application.use(middleware);
+  }
+
+  /** 独自ミドルウェア用に、リクエストオブジェクトに `middlewareBody` プロパティを追加します。
+   * 独自ミドルウェアは、このプロパティ内に情報を格納します。*/
+  private addCustomMiddlewares(): void {
+    const middleware = function (request: any, response: Response, next: NextFunction): void {
+      request.middlewareBody = {};
+      next();
+    };
+    this.application.use("/internal*", middleware);
   }
 
   /** MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
@@ -122,9 +130,8 @@ export class Main {
 
   /** ルーターの設定を行います。
    * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
-  private setupRouters(): void {
+  private addApiRouters(): void {
     CommissionController.use(this.application);
-    DebugController.use(this.application);
     DictionaryController.use(this.application);
     ExampleController.use(this.application);
     HistoryController.use(this.application);
@@ -134,6 +141,11 @@ export class Main {
     ResourceController.use(this.application);
     UserController.use(this.application);
     WordController.use(this.application);
+  }
+
+  private addStaticRouters(): void {
+    this.application.use("/client", express.static(process.cwd() + "/dist/client"));
+    this.application.use("/static", express.static(process.cwd() + "/dist/static"));
   }
 
   private setupWorkers(): void {
@@ -167,15 +179,10 @@ export class Main {
     });
   }
 
-  private setupStatic(): void {
-    this.application.use("/client", express.static(process.cwd() + "/dist/client"));
-    this.application.use("/static", express.static(process.cwd() + "/dist/static"));
-  }
-
   /** ルーターで設定されていない URL にアクセスされたときのフォールバックの設定をします。
    * フロントエンドから呼び出すためのエンドポイント用 URL で処理が存在しないものにアクセスされた場合は、404 エラーを返します。
    * そうでない場合は、フロントエンドのトップページを返します。*/
-  private setupFallbackHandlers(): void {
+  private addFallbackHandlers(): void {
     const internalHandler = function (request: Request, response: Response, next: NextFunction): void {
       const fullUrl = request.protocol + "://" + request.get("host") + request.originalUrl;
       response.status(404).end();
@@ -196,7 +203,7 @@ export class Main {
     this.application.use("/*", otherHandler);
   }
 
-  private setupErrorHandler(): void {
+  private addErrorHandler(): void {
     const handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
       LogUtil.error("server", null, error);
       response.status(500).end();

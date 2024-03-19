@@ -35,6 +35,12 @@
   color: var(--glob-primary-heading-text-color);
 }
 
+.small-name {
+  @include bold-font;
+  font-size: 4zu;
+  color: var(--glob-primary-heading-text-color);
+}
+
 .pronunciation {
   font-size: 3.5zu;
   color: var(--glob-mute-text-color);

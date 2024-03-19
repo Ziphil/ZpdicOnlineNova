@@ -20,6 +20,8 @@ toast:
         La agordo ŝanĝitas.
       zatlinSource: |-
         La agordo ŝanĝitas.
+      font: |-
+        La agordo ŝanĝitas.
       exampleTitle: |-
         La agordo ŝanĝitas.
       pronunciationTitle: |-
@@ -216,7 +218,7 @@ wordTypeSelect:
     regular: "Regesp"
 
 addCommissionDialog:
-  heading: "Peti kreado de vorto"
+  heading: "Peti kreadon de vorto"
   label:
     name: "Vorto"
     comment: "Komento"
@@ -508,7 +510,7 @@ wordList:
     duplicate: "Duobligi"
     discard: "Forigi"
     create: "Krei"
-    commission: "Peti kreado"
+    commission: "Peti kreadon"
   dialog:
     discard:
       message: >-
@@ -637,6 +639,21 @@ changeDictionaryParamNameForm:
       Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon.
     tooLong: >-
       La identigilo devas havi apenaŭ 30 signojn.
+changeDictionaryFontForm:
+  label:
+    type:
+      none: "Ne agordi"
+      local: "Uzi lokan tiparon"
+      custom: "Alŝuti propran tiparon"
+    input:
+      name: "Tipara familio"
+      file: "Tipara dosiero"
+  error:
+    nameRequired: >-
+      Enigu tipara familio.
+    filetooLarge: >-
+      La dosiero estas tro granda.
+      Vi ne povas alŝuti dosierojn pli grandajn ol 1 MB.
 changeDictionarySettingsForm:
   label:
     enableMarkdown:
@@ -783,6 +800,7 @@ dictionarySettingGeneralPart:
     name: "Nomo"
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
+    font: "Tiparo por kapvortoj"
     secret: "Videbleco en listoj de vortaroj"
     discard: "Forigi"
   description:
@@ -791,6 +809,9 @@ dictionarySettingGeneralPart:
     explanation: >-
       Tio estas montrata sur la paĝo de la vortaro antaŭ serĉado.
       Vi povas uzi iun sintakson de Markdown.
+    font: >-
+      Vi povas ŝanĝi la tiparon por kapvortoj.
+      Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ "Alŝuti propran tiparon" por uzi vian propran alŝutitan tiparon.
     secret: >-
       Se vi agordos tiun al “Nevidebla”, la vortaro ne aperos en listoj de vortaroj.
       Tamen ĉiu, kiu konas la retadreso de la paĝo de la vortaro, povas ankoraŭ rekte aliri ĝin.

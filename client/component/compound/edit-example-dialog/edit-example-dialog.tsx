@@ -1,8 +1,9 @@
 //
 
 import {faArrowUpRightFromSquare} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement, cloneElement, useCallback, useState} from "react";
+import {Fragment, ReactElement, cloneElement, useCallback, useRef, useState} from "react";
 import {useHref} from "react-router-dom";
+import rison from "rison";
 import {
   Dialog,
   DialogBody,
@@ -14,21 +15,21 @@ import {
   GeneralIcon,
   useTrans
 } from "zographia";
-import {EditExampleForm} from "/client/component/compound/edit-example-form";
+import {EditExampleForm, EditExampleFormValue, EditExampleInitialData} from "/client/component/compound/edit-example-form";
 import {create} from "/client/component/create";
-import {EnhancedDictionary, Example} from "/client/skeleton";
+import {EnhancedDictionary} from "/client/skeleton";
 
 
 export const EditExampleDialog = create(
   require("./edit-example-dialog.scss"), "EditExampleDialog",
   function ({
     dictionary,
-    example,
+    initialData,
     trigger,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
-    example: Example | null,
+    initialData: EditExampleInitialData | null,
     trigger: ReactElement,
     className?: string
   }): ReactElement {
@@ -36,7 +37,9 @@ export const EditExampleDialog = create(
     const {trans} = useTrans("editExampleDialog");
 
     const [open, setOpen] = useState(false);
-    const addExamplePageUrl = useHref(`/dictionary/${dictionary.number}/example/${(example !== null) ? example.number : "new"}`);
+    const addExamplePageUrlBase = useHref(`/dictionary/${dictionary.number}/example`);
+
+    const formRef = useRef<() => EditExampleFormValue>(null);
 
     const openDialog = useCallback(function (): void {
       setOpen(true);
@@ -47,8 +50,12 @@ export const EditExampleDialog = create(
     }, []);
 
     const openExternal = useCallback(function (): void {
-      window.open(addExamplePageUrl);
-    }, [addExamplePageUrl]);
+      const value = formRef.current?.();
+      if (value !== undefined) {
+        const addExamplePageUrl = addExamplePageUrlBase + `/${(value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
+        window.open(addExamplePageUrl);
+      }
+    }, [addExamplePageUrlBase]);
 
     return (
       <Fragment>
@@ -63,7 +70,7 @@ export const EditExampleDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditExampleForm dictionary={dictionary} example={example} onSubmit={closeDialog}/>
+              <EditExampleForm dictionary={dictionary} initialData={initialData} formRef={formRef} onSubmit={closeDialog}/>
             </DialogBody>
           </DialogPane>
         </Dialog>

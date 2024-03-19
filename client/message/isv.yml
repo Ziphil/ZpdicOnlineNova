@@ -20,6 +20,8 @@ toast:
         The setting has been changed.
       zatlinSource: |-
         The setting has been changed.
+      font: |-
+        The setting has been changed.
       exampleTitle: |-
         The setting has been changed.
       pronunciationTitle: |-
@@ -637,6 +639,21 @@ changeDictionaryParamNameForm:
       It must also contain at least one non-digit.
     tooLong: >-
       The identifier must contain no more than 30 characters.
+changeDictionaryFontForm:
+  label:
+    type:
+      none: "Do not set"
+      local: "Use local font"
+      custom: "Upload custom font"
+    input:
+      name: "Font family"
+      file: "Font file"
+  error:
+    nameRequired: >-
+      Enter a font family.
+    filetooLarge: >-
+      The file is too large.
+      You cannot upload files larger than 1 MB.
 changeDictionarySettingsForm:
   label:
     enableMarkdown:
@@ -783,6 +800,7 @@ dictionarySettingGeneralPart:
     name: "Име"
     paramName: "Идентификатор дља URL-адресы"
     explanation: "Опис"
+    font: "Font for headwords"
     secret: "Видимост в списках словников"
     discard: "Delete"
   description:
@@ -791,6 +809,9 @@ dictionarySettingGeneralPart:
     explanation: >-
       This is displayed on the dictionary page before searching.
       You can use some Markdown syntax here.
+    font: >-
+      You can change the font for headwords.
+      Select “Use local font” to use a font installed in the visiter's environment, or “Upload custom font” to use your own uploaded font.
     secret: >-
       If you set this to “Hide”, this dictionary will not appear in dictionary lists.
       However, anyone who knows the URL of the dictionary page can still access it directly.

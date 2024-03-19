@@ -40,7 +40,7 @@ export const CommissionCard = create(
           )}
         </CardBody>
         <CardFooter styleName="footer">
-          <EditWordDialog dictionary={dictionary} word={word} trigger={(
+          <EditWordDialog dictionary={dictionary} initialData={{type: "word", word}} trigger={(
             <Button scheme="secondary" variant="underline">
               <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
               {trans("button.add")}

@@ -47,35 +47,32 @@ export interface EnhancedDictionary extends DetailedDictionary {
 
 export namespace EnhancedDictionary {
 
-  export function enhance(dictionary: DetailedDictionary): EnhancedDictionary {
-    const akrantiain = (() => {
-      if (dictionary.settings.akrantiainSource !== undefined && dictionary.settings.akrantiainSource !== "") {
-        try {
-          const akrantiain = Akrantiain.load(dictionary.settings.akrantiainSource);
-          return akrantiain;
-        } catch (error) {
-          console.error(error);
-          return null;
-        }
-      } else {
+  export function getAkrantiain(dictionary: DetailedDictionary): Akrantiain | null {
+    if (dictionary.settings.akrantiainSource !== undefined && dictionary.settings.akrantiainSource !== "") {
+      try {
+        const akrantiain = Akrantiain.load(dictionary.settings.akrantiainSource);
+        return akrantiain;
+      } catch (error) {
+        console.error(error);
         return null;
       }
-    })();
-    const zatlin = (() => {
-      if (dictionary.settings.zatlinSource !== undefined && dictionary.settings.zatlinSource !== "") {
-        try {
-          const zatlin = Zatlin.load(dictionary.settings.zatlinSource);
-          return zatlin;
-        } catch (error) {
-          console.error(error);
-          return null;
-        }
-      } else {
+    } else {
+      return null;
+    }
+  }
+
+  export function getZatlin(dictionary: DetailedDictionary): Zatlin | null {
+    if (dictionary.settings.zatlinSource !== undefined && dictionary.settings.zatlinSource !== "") {
+      try {
+        const zatlin = Zatlin.load(dictionary.settings.zatlinSource);
+        return zatlin;
+      } catch (error) {
+        console.error(error);
         return null;
       }
-    })();
-    const enhancedDictionary = {...dictionary, akrantiain, zatlin};
-    return enhancedDictionary;
+    } else {
+      return null;
+    }
   }
 
 }

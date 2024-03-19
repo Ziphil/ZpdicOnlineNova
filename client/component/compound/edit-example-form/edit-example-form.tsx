@@ -1,12 +1,13 @@
 //
 
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement} from "react";
+import {ReactElement, Ref, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {EditableExample, EnhancedDictionary, Example} from "/client/skeleton";
+import {EditableExample, EnhancedDictionary} from "/client/skeleton";
+import {assignRef} from "/client/util/ref";
 import {EditExampleFormBasicSection} from "./edit-example-form-basic-section";
-import {useEditExample} from "./edit-example-form-hook";
+import {EditExampleFormValue, EditExampleInitialData, useEditExample} from "./edit-example-form-hook";
 import {EditExampleFormWordSection} from "./edit-example-form-word-section";
 
 
@@ -14,19 +15,27 @@ export const EditExampleForm = create(
   require("./edit-example-form.scss"), "EditExampleForm",
   function ({
     dictionary,
-    example,
+    initialData,
+    formRef,
     onSubmit,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
-    example: Example | null,
+    initialData: EditExampleInitialData | null,
+    formRef?: Ref<() => EditExampleFormValue>,
     onSubmit?: (example: EditableExample) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("editExampleForm");
 
-    const {form, handleSubmit} = useEditExample(dictionary, example, onSubmit);
+    const {form, handleSubmit} = useEditExample(dictionary, initialData, onSubmit);
+
+    const getFormValue = useCallback(function (): EditExampleFormValue {
+      return form.getValues();
+    }, [form]);
+
+    assignRef(formRef, getFormValue);
 
     return (
       <form styleName="root" {...rest}>
