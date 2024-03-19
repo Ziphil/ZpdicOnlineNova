@@ -4,7 +4,7 @@ import {modelOptions, prop} from "@typegoose/typegoose";
 
 
 @modelOptions({schemaOptions: {discriminatorKey: "type"}})
-export class DictionaryFontSpecSchema {
+export class DictionaryFontSchema {
 
   @prop({required: true})
   public type!: string;
@@ -18,4 +18,4 @@ export class DictionaryFontSpecSchema {
 }
 
 
-export type DictionaryFontSpec = DictionaryFontSpecSchema;
+export type DictionaryFont = DictionaryFontSchema;

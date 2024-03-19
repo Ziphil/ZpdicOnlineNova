@@ -7,15 +7,15 @@ import {Dictionary} from "/client/skeleton";
 import {getAwsFileUrl} from "/client/util/aws";
 
 
-export const DictionaryCustomFontStyle = create(
-  null, "DictionaryCustomFontStyle",
+export const DictionaryFontStyle = create(
+  null, "DictionaryFontStyle",
   function ({
     dictionary
   }: {
     dictionary: Dictionary
   }): ReactElement {
 
-    const css = getCustomFontCss(dictionary);
+    const css = getFontCss(dictionary);
 
     return (
       <Helmet>
@@ -27,15 +27,15 @@ export const DictionaryCustomFontStyle = create(
 );
 
 
-function getCustomFontCss(dictionary: Dictionary): string | undefined {
-  const fontSpec = dictionary.settings.fontSpec;
-  if (fontSpec?.type === "custom") {
+function getFontCss(dictionary: Dictionary): string | undefined {
+  const font = dictionary.settings.font;
+  if (font?.type === "custom") {
     const url = getAwsFileUrl(`font/${dictionary.number}/font`);
     const css = `
       @font-face {
         font-family: "zpdic-custom-${dictionary.number}";
         font-weight: bold;
-        src: url("${url}") format("${fontSpec.format}");
+        src: url("${url}") format("${font.format}");
       }
     `;
     return css;

@@ -20,7 +20,7 @@ toast:
         La agordo ŝanĝitas.
       zatlinSource: |-
         La agordo ŝanĝitas.
-      fontSpec: |-
+      font: |-
         La agordo ŝanĝitas.
       exampleTitle: |-
         La agordo ŝanĝitas.
@@ -639,7 +639,7 @@ changeDictionaryParamNameForm:
       Ĝi ankaŭ devas enhavi almenaŭ unu neciferan signon.
     tooLong: >-
       La identigilo devas havi apenaŭ 30 signojn.
-changeDictionaryFontSpecForm:
+changeDictionaryFontForm:
   label:
     type:
       none: "Ne agordi"
@@ -800,7 +800,7 @@ dictionarySettingGeneralPart:
     name: "Nomo"
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
-    fontSpec: "Tiparo por kapvortoj"
+    font: "Tiparo por kapvortoj"
     secret: "Videbleco en listoj de vortaroj"
     discard: "Forigi"
   description:
@@ -809,7 +809,7 @@ dictionarySettingGeneralPart:
     explanation: >-
       Tio estas montrata sur la paĝo de la vortaro antaŭ serĉado.
       Vi povas uzi iun sintakson de Markdown.
-    fontSpec: >-
+    font: >-
       Vi povas ŝanĝi la tiparon por kapvortoj.
       Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ "Alŝuti propran tiparon" por uzi vian propran alŝutitan tiparon.
     secret: >-

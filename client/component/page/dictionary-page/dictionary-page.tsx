@@ -8,7 +8,7 @@ import {Header} from "/client/component/compound/header";
 import {MainContainer, Page} from "/client/component/compound/page";
 import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
-import {DictionaryCustomFontStyle} from "./dictionary-custom-font-style";
+import {DictionaryFontStyle} from "./dictionary-font-style";
 
 
 export const DictionaryPage = create(
@@ -33,7 +33,7 @@ export const DictionaryPage = create(
           <DictionaryHeader dictionary={dictionary} width={width} tabValue={tabValue}/>
         </Fragment>
       )}>
-        <DictionaryCustomFontStyle dictionary={dictionary}/>
+        <DictionaryFontStyle dictionary={dictionary}/>
         <MainContainer styleName="main" width={width}>
           <Suspense fallback={(
             <div styleName="loading">

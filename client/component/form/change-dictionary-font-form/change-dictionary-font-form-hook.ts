@@ -5,7 +5,7 @@ import {Asserts, mixed, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, DictionaryFontSpec} from "/client/skeleton";
+import {Dictionary, DictionaryFont} from "/client/skeleton";
 import {uploadFileToAws} from "/client/util/aws";
 import {switchResponse} from "/client/util/response";
 import {validateFileSize} from "/client/util/validation";
@@ -21,12 +21,12 @@ const SCHEMA = object({
 });
 type FormValue = Asserts<typeof SCHEMA>;
 
-export type ChangeDictionaryFontSpecSpec = {
+export type ChangeDictionaryFontSpec = {
   form: UseFormReturn<FormValue>,
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useChangeDictionaryFontSpec(dictionary: Dictionary): ChangeDictionaryFontSpecSpec {
+export function useChangeDictionaryFont(dictionary: Dictionary): ChangeDictionaryFontSpec {
   const form = useForm<FormValue>(SCHEMA, getFormValue(dictionary), {});
   const request = useRequest();
   const {dispatchSuccessToast, dispatchErrorToast} = useToast();
@@ -44,7 +44,7 @@ export function useChangeDictionaryFontSpec(dictionary: Dictionary): ChangeDicti
     });
   }, [dictionary.number, request, dispatchErrorToast]);
   const changeSettings = useCallback(async function (value: FormValue): Promise<boolean | void> {
-    const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {fontSpec: getQueryFontSpec(dictionary, value)}});
+    const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {font: getQueryFont(dictionary, value)}});
     return await switchResponse(response, async () => {
       await invalidateResponses("fetchDictionary", (data) => data.number === dictionary.number);
       return true;
@@ -54,12 +54,12 @@ export function useChangeDictionaryFontSpec(dictionary: Dictionary): ChangeDicti
     if (value.type === "custom" && value.file !== undefined) {
       const results = await Promise.all([changeSettings(value), uploadFont(value)]);
       if (results.every((result) => result)) {
-        dispatchSuccessToast("changeDictionarySettings.fontSpec");
+        dispatchSuccessToast("changeDictionarySettings.font");
       }
     } else {
       const result = await changeSettings(value);
       if (result) {
-        dispatchSuccessToast("changeDictionarySettings.fontSpec");
+        dispatchSuccessToast("changeDictionarySettings.font");
       }
     }
   }), [form, changeSettings, uploadFont, dispatchSuccessToast]);
@@ -68,33 +68,33 @@ export function useChangeDictionaryFontSpec(dictionary: Dictionary): ChangeDicti
 
 function getFormValue(dictionary: Dictionary): FormValue {
   const value = {
-    type: dictionary.settings.fontSpec?.type ?? "none",
-    name: (dictionary.settings.fontSpec?.type === "local") ? dictionary.settings.fontSpec.name : undefined,
+    type: dictionary.settings.font?.type ?? "none",
+    name: (dictionary.settings.font?.type === "local") ? dictionary.settings.font.name : undefined,
     file: undefined as any
   } satisfies FormValue;
   return value;
 }
 
-function getQueryFontSpec(dictionary: Dictionary, formValue: FormValue): DictionaryFontSpec {
+function getQueryFont(dictionary: Dictionary, formValue: FormValue): DictionaryFont {
   if (formValue.type === "none") {
-    const fontSpec = {
+    const font = {
       type: "none" as const
     };
-    return fontSpec;
+    return font;
   } else if (formValue.type === "local") {
-    const fontSpec = {
+    const font = {
       type: "local" as const,
       name: formValue.name ?? ""
     };
-    return fontSpec;
+    return font;
   } else if (formValue.type === "custom") {
-    const currentFontSpec = dictionary.settings.fontSpec;
-    const currentFormat = (currentFontSpec?.type === "custom") ? currentFontSpec.format : "";
-    const fontSpec = {
+    const currentFont = dictionary.settings.font;
+    const currentFormat = (currentFont?.type === "custom") ? currentFont.format : "";
+    const font = {
       type: "custom" as const,
       format: (formValue.file !== undefined) ? getFontFormat(formValue.file) : currentFormat
     };
-    return fontSpec;
+    return font;
   } else {
     throw new Error("cannot happen");
   }

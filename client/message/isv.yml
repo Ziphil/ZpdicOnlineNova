@@ -20,7 +20,7 @@ toast:
         The setting has been changed.
       zatlinSource: |-
         The setting has been changed.
-      fontSpec: |-
+      font: |-
         The setting has been changed.
       exampleTitle: |-
         The setting has been changed.
@@ -639,7 +639,7 @@ changeDictionaryParamNameForm:
       It must also contain at least one non-digit.
     tooLong: >-
       The identifier must contain no more than 30 characters.
-changeDictionaryFontSpecForm:
+changeDictionaryFontForm:
   label:
     type:
       none: "Do not set"
@@ -800,7 +800,7 @@ dictionarySettingGeneralPart:
     name: "Име"
     paramName: "Идентификатор дља URL-адресы"
     explanation: "Опис"
-    fontSpec: "Font for headwords"
+    font: "Font for headwords"
     secret: "Видимост в списках словников"
     discard: "Delete"
   description:
@@ -809,7 +809,7 @@ dictionarySettingGeneralPart:
     explanation: >-
       This is displayed on the dictionary page before searching.
       You can use some Markdown syntax here.
-    fontSpec: >-
+    font: >-
       You can change the font for headwords.
       Select “Use local font” to use a font installed in the visiter's environment, or “Upload custom font” to use your own uploaded font.
     secret: >-

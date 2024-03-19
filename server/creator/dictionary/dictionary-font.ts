@@ -1,16 +1,16 @@
 //
 
 import type {
-  DictionaryFontSpec as DictionaryFontSpecSkeleton
+  DictionaryFont as DictionaryFontSkeleton
 } from "/client/skeleton";
 import {
-  DictionaryFontSpec
+  DictionaryFont
 } from "/server/model";
 
 
-export namespace DictionaryFontSpecCreator {
+export namespace DictionaryFontCreator {
 
-  export function create(raw: DictionaryFontSpec): DictionaryFontSpecSkeleton {
+  export function create(raw: DictionaryFont): DictionaryFontSkeleton {
     if (raw.type === "none") {
       const type = "none" as const;
       const skeleton = {type};

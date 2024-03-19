@@ -3,15 +3,28 @@
 import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {Controller} from "react-hook-form";
-import {AdditionalProps, Button, ButtonIconbag, CheckableContainer, CheckableLabel, ControlContainer, ControlLabel, FileInput, GeneralIcon, Input, Radio, useTrans} from "zographia";
+import {
+  AdditionalProps,
+  Button,
+  ButtonIconbag,
+  CheckableContainer,
+  CheckableLabel,
+  ControlContainer,
+  ControlLabel,
+  FileInput,
+  GeneralIcon,
+  Input,
+  Radio,
+  useTrans
+} from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {Dictionary} from "/client/skeleton";
-import {useChangeDictionaryFontSpec} from "./change-dictionary-font-spec-form-hook";
+import {useChangeDictionaryFont} from "./change-dictionary-font-form-hook";
 
 
-export const ChangeDictionaryFontSpecForm = create(
-  require("../common.scss"), "ChangeDictionaryFontSpecForm",
+export const ChangeDictionaryFontForm = create(
+  require("../common.scss"), "ChangeDictionaryFontForm",
   function ({
     dictionary,
     ...rest
@@ -20,9 +33,9 @@ export const ChangeDictionaryFontSpecForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("changeDictionaryFontSpecForm");
+    const {trans} = useTrans("changeDictionaryFontForm");
 
-    const {form, handleSubmit} = useChangeDictionaryFontSpec(dictionary);
+    const {form, handleSubmit} = useChangeDictionaryFont(dictionary);
     const {control, register, watch, getFieldState, formState: {errors}} = form;
 
     const type = watch("type");

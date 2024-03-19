@@ -1,7 +1,7 @@
 //
 
 export * from "./dictionary/dictionary";
-export * from "./dictionary/dictionary-font-spec";
+export * from "./dictionary/dictionary-font";
 export * from "./dictionary/dictionary-misc";
 export * from "./dictionary/dictionary-settings";
 export * from "./dictionary-parameter/dictionary-parameter";

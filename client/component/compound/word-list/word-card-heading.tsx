@@ -21,7 +21,7 @@ export const WordCardHeading = create(
     const {transNumber} = useTrans("wordCard");
 
     const debug = location.hostname === "localhost";
-    const hasCustomFont = dictionary.settings.fontSpec !== undefined && dictionary.settings.fontSpec.type !== "none";
+    const hasFont = dictionary.settings.font !== undefined && dictionary.settings.font.type !== "none";
     const pronunciation = useMemo(() => getPronunciation(dictionary, word), [dictionary, word]);
     const nameFontFamily = useMemo(() => getNameFontFamily(dictionary), [dictionary]);
 
@@ -41,7 +41,7 @@ export const WordCardHeading = create(
           <MultiLineText styleName="name" is="h3" lineHeight="narrowest" {...{style: {fontFamily: nameFontFamily}}}>
             {word.name}
           </MultiLineText>
-          {(hasCustomFont) && (
+          {(hasFont) && (
             <MultiLineText styleName="small-name" is="span" lineHeight="narrowest">
               {word.name}
             </MultiLineText>
@@ -82,11 +82,11 @@ function getPronunciation(dictionary: EnhancedDictionary, word: Word | DetailedW
 }
 
 function getNameFontFamily(dictionary: EnhancedDictionary): string | undefined {
-  const fontSpec = dictionary.settings.fontSpec;
-  if (fontSpec?.type === "custom") {
+  const font = dictionary.settings.font;
+  if (font?.type === "custom") {
     return `'zpdic-custom-${dictionary.number}'`;
-  } else if (fontSpec?.type === "local") {
-    return `'${fontSpec.name}'`;
+  } else if (font?.type === "local") {
+    return `'${font.name}'`;
   } else {
     return undefined;
   }

@@ -20,7 +20,7 @@ toast:
         設定を変更しました。
       zatlinSource: |-
         設定を変更しました。
-      fontSpec: |-
+      font: |-
         設定を変更しました。
       exampleTitle: |-
         設定を変更しました。
@@ -637,7 +637,7 @@ changeDictionaryParamNameForm:
       識別子は、半角英数字とアンダーバーとハイフンのみで構成され、数字以外の文字が 1 文字以上含まれている必要があります。
     tooLong: >-
       識別子は 30 文字以下である必要があります。
-changeDictionaryFontSpecForm:
+changeDictionaryFontForm:
   label:
     type:
       none: "設定しない"
@@ -798,7 +798,7 @@ dictionarySettingGeneralPart:
     name: "名前"
     paramName: "URL 用識別子"
     explanation: "説明"
-    fontSpec: "見出し語のフォント"
+    font: "見出し語のフォント"
     secret: "辞書一覧での表示/非表示"
     discard: "削除"
   description:
@@ -807,7 +807,7 @@ dictionarySettingGeneralPart:
     explanation: >-
       この内容は、最初に辞書ページを開いたときに検索結果の代わりに表示されます。
       一部の Markdown 形式に対応しています。
-    fontSpec: >-
+    font: >-
       見出し語のフォントを変更することができます。
       「ローカルフォントを参照」を選択すると、閲覧者各自の環境にインストールされているフォントを参照して使用します。
       「フォントをアップロード」を選択すると、アップロードされた独自のフォントを使用します。
