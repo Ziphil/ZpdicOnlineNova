@@ -15,6 +15,7 @@ import {
   GeneralIcon,
   Input,
   Radio,
+  data,
   useTrans
 } from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
@@ -43,7 +44,7 @@ export const ChangeDictionaryFontForm = create(
     return (
       <form styleName="root" {...rest}>
         <ControlContainer>
-          <div styleName="radio-group">
+          <div styleName="radio-group" {...data({mobileVertical: true})}>
             <CheckableContainer>
               <Radio value="none" {...register("type")}/>
               <CheckableLabel>{trans("label.type.none")}</CheckableLabel>
