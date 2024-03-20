@@ -29,7 +29,7 @@ export const WordCard = create(
 
     const {trans} = useTrans("wordList");
 
-    const [canEdit] = useResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
+    const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
     const discardWord = useDiscardWord(dictionary, word);
 

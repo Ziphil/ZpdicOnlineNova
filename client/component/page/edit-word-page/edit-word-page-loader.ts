@@ -16,26 +16,29 @@ export type EditWordPageLoaderData = {
 export async function loadEditWordPage({params, request}: LoaderFunctionArgs): Promise<EditWordPageLoaderData> {
   const {identifier, wordNumber} = params;
   const encodedValue = new URL(request.url).searchParams.get("value");
-  const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
-  try {
-    const dictionary = await fetchResponse("fetchDictionary", {number, paramName});
-    if (encodedValue !== null) {
-      try {
-        const value = rison.decode<any>(encodedValue);
-        return {dictionary, initialData: {type: "form", value}};
-      } catch (error) {
-        return {dictionary, initialData: null};
-      }
-    } else {
-      if (wordNumber !== undefined) {
-        const word = await fetchResponse("fetchWord", {number: dictionary.number, wordNumber: +wordNumber});
-        return {dictionary, initialData: {type: "word", word}};
+  if (identifier !== undefined) {
+    try {
+      const dictionary = await fetchResponse("fetchDictionary", {identifier});
+      if (encodedValue !== null) {
+        try {
+          const value = rison.decode<any>(encodedValue);
+          return {dictionary, initialData: {type: "form", value}};
+        } catch (error) {
+          return {dictionary, initialData: null};
+        }
       } else {
-        return {dictionary, initialData: null};
+        if (wordNumber !== undefined) {
+          const word = await fetchResponse("fetchWord", {number: dictionary.number, wordNumber: +wordNumber});
+          return {dictionary, initialData: {type: "word", word}};
+        } else {
+          return {dictionary, initialData: null};
+        }
       }
+    } catch (error) {
+      throw convertError(error);
     }
-  } catch (error) {
-    throw convertError(error);
+  } else {
+    throw new Response(null, {status: 404});
   }
 }
 

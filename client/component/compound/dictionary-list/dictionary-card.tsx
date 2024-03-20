@@ -35,7 +35,7 @@ export const DictionaryCard = create(
     const number = dictionary.number;
     const from = useMemo(() => dayjs().subtract(16, "day").toISOString(), []);
     const [histories] = useResponse("fetchHistories", (showChart) && {number, from}, RESPONSE_CONFIG);
-    const [canOwn] = useResponse("fetchDictionaryAuthorization", (showSettingLink) && {number, authority: "own"});
+    const [canOwn] = useResponse("fetchDictionaryAuthorization", (showSettingLink) && {identifier: number, authority: "own"});
 
     return (
       <Card styleName="root" {...rest}>

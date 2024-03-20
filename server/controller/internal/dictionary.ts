@@ -173,8 +173,8 @@ export class DictionaryController extends Controller {
 
   @post("/fetchDictionary")
   public async [Symbol()](request: Request<"fetchDictionary">, response: Response<"fetchDictionary">): Promise<void> {
-    const {number, paramName} = request.body;
-    const dictionary = await DictionaryModel.fetchOneByIdentifier(number ?? paramName ?? "");
+    const {identifier} = request.body;
+    const dictionary = await DictionaryModel.fetchOneByIdentifier(identifier);
     if (dictionary) {
       const body = await DictionaryCreator.createDetailed(dictionary);
       Controller.respond(response, body);

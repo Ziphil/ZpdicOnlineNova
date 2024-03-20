@@ -7,17 +7,22 @@ import {ResponseError} from "/client/util/error";
 
 export async function loadDictionarySettingPart({params}: LoaderFunctionArgs): Promise<null> {
   const {identifier} = params;;
-  const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
-  try {
-    const dictionary = await fetchResponse("fetchDictionary", {number, paramName});
-    const canOwn = await fetchResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "own"});
-    if (canOwn) {
-      return null;
-    } else {
-      throw new Response(null, {status: 403});
+  if (identifier !== undefined) {
+    try {
+      const [dictionary, canOwn] = await Promise.all([
+        fetchResponse("fetchDictionary", {identifier}),
+        fetchResponse("fetchDictionaryAuthorization", {identifier, authority: "own"})
+      ]);
+      if (canOwn) {
+        return null;
+      } else {
+        throw new Response(null, {status: 403});
+      }
+    } catch (error) {
+      throw convertError(error);
     }
-  } catch (error) {
-    throw convertError(error);
+  } else {
+    throw new Response(null, {status: 404});
   }
 }
 

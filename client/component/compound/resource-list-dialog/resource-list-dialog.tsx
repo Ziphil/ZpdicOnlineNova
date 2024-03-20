@@ -52,7 +52,7 @@ export const ResourceListDialog = create(
       const number = dictionary.number;
       const response = await request("changeDictionarySettings", {number, settings: {enableMarkdown: true}});
       await switchResponse(response, async () => {
-        await invalidateResponses("fetchDictionary", (data) => data.number === dictionary.number || data.paramName === dictionary.paramName);
+        await invalidateResponses("fetchDictionary", (data) => +data.identifier === dictionary.number || data.identifier === dictionary.paramName);
       });
     }, [dictionary.number, dictionary.paramName, request]);
 

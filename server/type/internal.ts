@@ -203,21 +203,21 @@ type ServerSpecs = {
     }
   },
   fetchDictionaryAuthorization: {
-    request: {number: number, authority: DictionaryAuthority},
+    request: {identifier: number | string, authority: DictionaryAuthority},
     response: {
       success: boolean,
       error: CustomError<"noSuchDictionary">
     }
   },
   checkDictionaryAuthorization: {
-    request: {number: number, authority: DictionaryAuthority},
+    request: {identifier: number | string, authority: DictionaryAuthority},
     response: {
       success: null,
       error: CustomError<"noSuchDictionary">
     }
   },
   fetchDictionary: {
-    request: {number?: number, paramName?: string},
+    request: {identifier: number | string},
     response: {
       success: DetailedDictionary,
       error: CustomError<"noSuchDictionary" | "invalidArgument">
