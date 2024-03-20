@@ -1,9 +1,10 @@
 //
 
-import {controller, post} from "/server/controller/decorator";
-import {Controller, Request, Response} from "/server/controller/internal/controller";
+import {before, controller, post} from "/server/controller/decorator";
+import {Controller, FilledMiddlewareBody, Request, Response} from "/server/controller/internal/controller";
+import {checkDictionary} from "/server/controller/internal/middleware";
 import {HistoryCreator} from "/server/creator";
-import {DictionaryModel, HistoryModel} from "/server/model";
+import {HistoryModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 
 
@@ -11,17 +12,13 @@ import {SERVER_PATH_PREFIX} from "/server/type/internal";
 export class HistoryController extends Controller {
 
   @post("/fetchHistories")
+  @before(checkDictionary())
   public async [Symbol()](request: Request<"fetchHistories">, response: Response<"fetchHistories">): Promise<void> {
-    const {number} = request.body;
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const from = new Date(request.body.from);
-    const dictionary = await DictionaryModel.fetchOneByNumber(number);
-    if (dictionary) {
-      const histories = await HistoryModel.fetch(dictionary, from);
-      const body = histories.map(HistoryCreator.create);
-      Controller.respond(response, body);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    const histories = await HistoryModel.fetch(dictionary, from);
+    const body = histories.map(HistoryCreator.create);
+    Controller.respond(response, body);
   }
 
   public static async addHistories(): Promise<void> {

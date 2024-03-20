@@ -1,8 +1,8 @@
 //
 
 import {before, controller, post} from "/server/controller/decorator";
-import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {verifyDictionary, verifyMe} from "/server/controller/internal/middle-old";
+import {Controller, FilledMiddlewareBody, Request, Response} from "/server/controller/internal/controller";
+import {checkDictionary, checkMe} from "/server/controller/internal/middleware";
 import {InvitationCreator} from "/server/creator";
 import {CustomError, InvitationModel, UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -12,12 +12,12 @@ import {SERVER_PATH_PREFIX} from "/server/type/internal";
 export class InvitationController extends Controller {
 
   @post("/addInvitation")
-  @before(verifyMe(), verifyDictionary("own"))
+  @before(checkMe(), checkDictionary("own"))
   public async [Symbol()](request: Request<"addInvitation">, response: Response<"addInvitation">): Promise<void> {
-    const dictionary = request.dictionary;
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {type, userName} = request.body;
     const user = await UserModel.fetchOneByName(userName);
-    if (dictionary && user) {
+    if (user) {
       try {
         const invitation = await InvitationModel.add(type, dictionary, user);
         const body = await InvitationCreator.create(invitation);
@@ -26,23 +26,19 @@ export class InvitationController extends Controller {
         Controller.respondByCustomError(response, ["userCanAlreadyEdit", "userCanAlreadyOwn", "editInvitationAlreadyAdded", "transferInvitationAlreadyAdded"], error);
       }
     } else {
-      if (dictionary === undefined) {
-        Controller.respondError(response, "noSuchDictionary");
-      } else {
-        Controller.respondError(response, "noSuchUser");
-      }
+      Controller.respondError(response, "noSuchUser");
     }
   }
 
   @post("/respondInvitation")
-  @before(verifyMe())
+  @before(checkMe())
   public async [Symbol()](request: Request<"respondInvitation">, response: Response<"respondInvitation">): Promise<void> {
-    const me = request.me!;
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     const {id, accept} = request.body;
     const invitation = await InvitationModel.findById(id);
     if (invitation) {
       try {
-        invitation.respond(me, accept);
+        await invitation.respond(me, accept);
         const body = await InvitationCreator.create(invitation);
         Controller.respond(response, body);
       } catch (error) {
@@ -58,12 +54,12 @@ export class InvitationController extends Controller {
   }
 
   @post("/fetchInvitations")
-  @before(verifyMe())
+  @before(checkMe())
   public async [Symbol()](request: Request<"fetchInvitations">, response: Response<"fetchInvitations">): Promise<void> {
-    const me = request.me!;
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     const {type} = request.body;
     const invitations = await InvitationModel.fetchByUser(type, me);
-    const body = await Promise.all(invitations.map((invitation) => InvitationCreator.create(invitation)));
+    const body = await Promise.all(invitations.map(InvitationCreator.create));
     Controller.respond(response, body);
   }
 

@@ -64,7 +64,7 @@ export function useResponse<N extends ProcessName>(name: N, data: RequestData<N>
         throw new ResponseError(name, data, response);
       });
     } else {
-      throw new Error("[BUG] cannot happen");
+      throw new Error("cannot happen");
     }
   }, {...config, enabled: !!data});
   const responseData = responseResult.data;
@@ -85,7 +85,7 @@ export function useSuspenseResponse<N extends ProcessName>(name: N, data: Reques
   if (responseData !== undefined) {
     return [responseData, responseResult];
   } else {
-    throw new Error("[BUG] suspensed query returns undefined");
+    throw new Error("suspensed query returns undefined");
   }
 }
 

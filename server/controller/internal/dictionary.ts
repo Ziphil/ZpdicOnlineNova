@@ -1,13 +1,14 @@
 //
 
 import {before, controller, post} from "/server/controller/decorator";
-import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {checkMe, verifyDictionary, verifyMe, verifyRecaptcha} from "/server/controller/internal/middle-old";
+import {Controller, FilledMiddlewareBody, Request, Response} from "/server/controller/internal/controller";
+import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/controller/internal/middleware";
 import {DictionaryCreator, DictionaryParameterCreator, SuggestionCreator, UserCreator, WordCreator, WordParameterCreator} from "/server/creator";
 import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {sanitizeFileName} from "/server/util/misc";
 import {QueryRange} from "/server/util/query";
+import {mapWithSizeAsync} from "/server/util/with-size";
 import {agenda} from "/worker/agenda";
 
 
@@ -15,9 +16,9 @@ import {agenda} from "/worker/agenda";
 export class DictionaryController extends Controller {
 
   @post("/createDictionary")
-  @before(verifyMe())
+  @before(checkMe())
   public async [Symbol()](request: Request<"createDictionary">, response: Response<"createDictionary">): Promise<void> {
-    const me = request.me!;
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     const {name} = request.body;
     const dictionary = await DictionaryModel.addEmpty(name, me);
     const body = DictionaryCreator.create(dictionary);
@@ -25,330 +26,234 @@ export class DictionaryController extends Controller {
   }
 
   @post("/uploadDictionary")
-  @before(verifyRecaptcha(), verifyMe(), verifyDictionary("own"))
+  @before(checkRecaptcha(), checkMe(), checkDictionary("own"))
   public async [Symbol()](request: Request<"uploadDictionary">, response: Response<"uploadDictionary">): Promise<void> {
-    const dictionary = request.dictionary;
-    const path = request.file!.path;
-    const originalPath = request.file!.originalname;
-    if (dictionary) {
-      if (request.file!.size <= 5 * 1024 * 1024) {
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+    const file = request.file;
+    if (file !== undefined) {
+      const path = file.path;
+      const originalPath = file.originalname;
+      if (file.size <= 5 * 1024 * 1024) {
         const number = dictionary.number;
-        agenda.now("uploadDictionary", {number, path, originalPath});
+        await agenda.now("uploadDictionary", {number, path, originalPath});
         const body = DictionaryCreator.create(dictionary);
         Controller.respond(response, body);
       } else {
         Controller.respondError(response, "dictionarySizeTooLarge");
       }
     } else {
-      Controller.respondError(response, "noSuchDictionary");
+      Controller.respondError(response, "invalidArgument");
     }
   }
 
   @post("/discardDictionary")
-  @before(verifyMe(), verifyDictionary("own"))
+  @before(checkMe(), checkDictionary("own"))
   public async [Symbol()](request: Request<"discardDictionary">, response: Response<"discardDictionary">): Promise<void> {
-    const dictionary = request.dictionary;
-    if (dictionary) {
-      await dictionary.discard();
-      Controller.respond(response, null);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+    await dictionary.discard();
+    Controller.respond(response, null);
   }
 
   @post("/changeDictionaryName")
-  @before(verifyMe(), verifyDictionary("own"))
+  @before(checkMe(), checkDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryName">, response: Response<"changeDictionaryName">): Promise<void> {
-    const dictionary = request.dictionary;
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {name} = request.body;
-    if (dictionary) {
-      await dictionary.changeName(name);
-      const body = DictionaryCreator.create(dictionary);
-      Controller.respond(response, body);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    await dictionary.changeName(name);
+    const body = DictionaryCreator.create(dictionary);
+    Controller.respond(response, body);
   }
 
   @post("/changeDictionaryParamName")
-  @before(verifyMe(), verifyDictionary("own"))
+  @before(checkMe(), checkDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryParamName">, response: Response<"changeDictionaryParamName">): Promise<void> {
-    const dictionary = request.dictionary;
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {paramName} = request.body;
-    if (dictionary) {
-      try {
-        await dictionary.changeParamName(paramName);
-        const body = DictionaryCreator.create(dictionary);
-        Controller.respond(response, body);
-      } catch (error) {
-        if (error.name === "ValidationError") {
-          if (error.errors.paramName) {
-            Controller.respondError(response, "invalidDictionaryParamName");
-          } else {
-            throw error;
-          }
+    try {
+      await dictionary.changeParamName(paramName);
+      const body = DictionaryCreator.create(dictionary);
+      Controller.respond(response, body);
+    } catch (error) {
+      if (error.name === "ValidationError") {
+        if (error.errors.paramName) {
+          Controller.respondError(response, "invalidDictionaryParamName");
         } else {
-          Controller.respondByCustomError(response, ["duplicateDictionaryParamName"], error);
+          throw error;
         }
+      } else {
+        Controller.respondByCustomError(response, ["duplicateDictionaryParamName"], error);
       }
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
   @post("/discardDictionaryAuthorizedUser")
-  @before(verifyMe(), verifyDictionary("own"))
+  @before(checkMe(), checkDictionary("own"))
   public async [Symbol()](request: Request<"discardDictionaryAuthorizedUser">, response: Response<"discardDictionaryAuthorizedUser">): Promise<void> {
-    const dictionary = request.dictionary;
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {id} = request.body;
     const user = await UserModel.findById(id);
-    if (dictionary) {
-      if (user) {
-        try {
-          await dictionary.discardAuthorizedUser(user);
-          Controller.respond(response, null);
-        } catch (error) {
-          Controller.respondByCustomError(response, ["noSuchDictionaryAuthorizedUser"], error);
-        }
-      } else {
-        Controller.respondError(response, "noSuchDictionaryAuthorizedUser");
+    if (user) {
+      try {
+        await dictionary.discardAuthorizedUser(user);
+        Controller.respond(response, null);
+      } catch (error) {
+        Controller.respondByCustomError(response, ["noSuchDictionaryAuthorizedUser"], error);
       }
     } else {
-      Controller.respondError(response, "noSuchDictionary");
+      Controller.respondError(response, "noSuchDictionaryAuthorizedUser");
     }
   }
 
   @post("/changeDictionarySecret")
-  @before(verifyMe(), verifyDictionary("own"))
+  @before(checkMe(), checkDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionarySecret">, response: Response<"changeDictionarySecret">): Promise<void> {
-    const dictionary = request.dictionary;
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {secret} = request.body;
-    if (dictionary) {
-      await dictionary.changeSecret(secret);
-      const body = DictionaryCreator.create(dictionary);
-      Controller.respond(response, body);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    await dictionary.changeSecret(secret);
+    const body = DictionaryCreator.create(dictionary);
+    Controller.respond(response, body);
   }
 
   @post("/changeDictionaryExplanation")
-  @before(verifyMe(), verifyDictionary("own"))
+  @before(checkMe(), checkDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionaryExplanation">, response: Response<"changeDictionaryExplanation">): Promise<void> {
-    const dictionary = request.dictionary;
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {explanation} = request.body;
-    if (dictionary) {
-      await dictionary.changeExplanation(explanation);
-      const body = DictionaryCreator.create(dictionary);
-      Controller.respond(response, body);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    await dictionary.changeExplanation(explanation);
+    const body = DictionaryCreator.create(dictionary);
+    Controller.respond(response, body);
   }
 
   @post("/changeDictionarySettings")
-  @before(verifyMe(), verifyDictionary("own"))
+  @before(checkMe(), checkDictionary("own"))
   public async [Symbol()](request: Request<"changeDictionarySettings">, response: Response<"changeDictionarySettings">): Promise<void> {
-    const dictionary = request.dictionary;
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {settings} = request.body;
-    if (dictionary) {
-      await dictionary.changeSettings(settings);
-      const body = DictionaryCreator.create(dictionary);
-      Controller.respond(response, body);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    await dictionary.changeSettings(settings);
+    const body = DictionaryCreator.create(dictionary);
+    Controller.respond(response, body);
   }
 
   @post("/searchDictionary")
   public async [Symbol()](request: Request<"searchDictionary">, response: Response<"searchDictionary">): Promise<void> {
-    const parameter = DictionaryParameterCreator.recreate(request.body.parameter);
     const {offset, size} = request.body;
+    const parameter = DictionaryParameterCreator.recreate(request.body.parameter);
     const range = new QueryRange(offset, size);
     const hitResult = await DictionaryModel.search(parameter, range);
-    const hitDictionaries = await Promise.all(hitResult[0].map((hitDictionary) => DictionaryCreator.createDetailed(hitDictionary)));
-    const hitSize = hitResult[1];
-    const body = [hitDictionaries, hitSize] as any;
+    const body = await mapWithSizeAsync(hitResult, DictionaryCreator.createDetailed);
     Controller.respond(response, body);
   }
 
   @post("/searchWord")
+  @before(checkDictionary())
   public async [Symbol()](request: Request<"searchWord">, response: Response<"searchWord">): Promise<void> {
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+    const {offset, size} = request.body;
     const parameter = WordParameterCreator.recreate(request.body.parameter);
-    const {number, offset, size} = request.body;
-    const dictionary = await DictionaryModel.fetchOneByNumber(number);
-    if (dictionary) {
-      const range = new QueryRange(offset, size);
-      const hitResult = await dictionary.searchWord(parameter, range);
-      const hitWords = await Promise.all(hitResult.words[0].map(WordCreator.createDetailed));
-      const hitSize = hitResult.words[1];
-      const hitSuggestions = hitResult.suggestions.map(SuggestionCreator.create);
-      const body = {words: [hitWords, hitSize], suggestions: hitSuggestions} as any;
-      Controller.respond(response, body);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    const range = new QueryRange(offset, size);
+    const hitResult = await dictionary.searchWord(parameter, range);
+    const body = {
+      words: await mapWithSizeAsync(hitResult.words, WordCreator.createDetailed),
+      suggestions: hitResult.suggestions.map(SuggestionCreator.create)
+    };
+    Controller.respond(response, body);
   }
 
   @post("/downloadDictionary")
+  @before(checkDictionary())
   public async [Symbol()](request: Request<"downloadDictionary">, response: Response<"downloadDictionary">): Promise<void> {
-    const {number, fileName} = request.body;
-    const dictionary = await DictionaryModel.fetchOneByNumber(number);
-    if (dictionary) {
-      const date = new Date();
-      const id = date.getTime();
-      const path = "./dist/download/" + id + ".json";
-      const fullFileName = sanitizeFileName(fileName || dictionary.name) + ".json";
-      await dictionary.download(path);
-      response.download(path, fullFileName);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+    const {fileName} = request.body;
+    const date = new Date();
+    const path = "./dist/download/" + date.getTime() + ".json";
+    const fullFileName = sanitizeFileName(fileName || dictionary.name) + ".json";
+    await dictionary.download(path);
+    response.download(path, fullFileName);
   }
 
   @post("/fetchDictionary")
   public async [Symbol()](request: Request<"fetchDictionary">, response: Response<"fetchDictionary">): Promise<void> {
     const {number, paramName} = request.body;
-    const value = number ?? paramName;
-    if (value !== undefined) {
-      const dictionary = await DictionaryModel.fetchOneByValue(value);
-      if (dictionary) {
-        const body = await DictionaryCreator.createDetailed(dictionary);
-        Controller.respond(response, body);
-      } else {
-        Controller.respondError(response, "noSuchDictionary");
-      }
+    const dictionary = await DictionaryModel.fetchOneByIdentifier(number ?? paramName ?? "");
+    if (dictionary) {
+      const body = await DictionaryCreator.createDetailed(dictionary);
+      Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "invalidArgument");
+      Controller.respondError(response, "noSuchDictionary");
     }
   }
 
   @post("/fetchWordSize")
+  @before(checkDictionary())
   public async [Symbol()](request: Request<"fetchWordSize">, response: Response<"fetchWordSize">): Promise<void> {
-    const {number} = request.body;
-    const dictionary = await DictionaryModel.fetchOneByNumber(number);
-    if (dictionary) {
-      const body = await dictionary.countWords();
-      Controller.respond(response, body);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+    const body = await dictionary.countWords();
+    Controller.respond(response, body);
   }
 
   @post("/fetchWordNameFrequencies")
+  @before(checkDictionary())
   public async [Symbol()](request: Request<"fetchWordNameFrequencies">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
-    const {number} = request.body;
-    const dictionary = await DictionaryModel.fetchOneByNumber(number);
-    if (dictionary) {
-      const body = await dictionary.calcWordNameFrequencies();
-      Controller.respond(response, body);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+    const body = await dictionary.calcWordNameFrequencies();
+    Controller.respond(response, body);
   }
 
   @post("/fetchDictionaryStatistics")
+  @before(checkDictionary())
   public async [Symbol()](request: Request<"fetchDictionaryStatistics">, response: Response<"fetchDictionaryStatistics">): Promise<void> {
-    const {number} = request.body;
-    const dictionary = await DictionaryModel.fetchOneByNumber(number);
-    if (dictionary) {
-      const body = await dictionary.calcStatistics();
-      Controller.respond(response, body);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+    const body = await dictionary.calcStatistics();
+    Controller.respond(response, body);
   }
 
   @post("/suggestDictionaryTitles")
+  @before(checkDictionary())
   public async [Symbol()](request: Request<"suggestDictionaryTitles">, response: Response<"suggestDictionaryTitles">): Promise<void> {
-    const {number, propertyName, pattern} = request.body;
-    const dictionary = await DictionaryModel.fetchOneByNumber(number);
-    if (dictionary) {
-      const titles = await dictionary.suggestTitles(propertyName, pattern);
-      const body = titles;
-      Controller.respond(response, body);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+    const {propertyName, pattern} = request.body;
+    const titles = await dictionary.suggestTitles(propertyName, pattern);
+    const body = titles;
+    Controller.respond(response, body);
   }
 
   @post("/fetchDictionaryAuthorizedUsers")
-  @before(verifyMe(), verifyDictionary("own"))
+  @before(checkMe(), checkDictionary("own"))
   public async [Symbol()](request: Request<"fetchDictionaryAuthorizedUsers">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
-    const dictionary = request.dictionary;
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {authority} = request.body;
-    if (dictionary) {
-      const users = await dictionary.fetchAuthorizedUsers(authority);
-      const body = users.map(UserCreator.create);
-      Controller.respond(response, body);
-    } else {
-      Controller.respondError(response, "noSuchDictionary");
-    }
-  }
-
-  @post("/fetchDictionaries")
-  @before(verifyMe())
-  public async [Symbol()](request: Request<"fetchDictionaries">, response: Response<"fetchDictionaries">): Promise<void> {
-    const me = request.me!;
-    const dictionaries = await DictionaryModel.fetchByUser(me, "edit");
-    const body = await Promise.all(dictionaries.map(async (dictionary) => {
-      const skeleton = await DictionaryCreator.createUser(dictionary, me);
-      return skeleton;
-    }));
+    const users = await dictionary.fetchAuthorizedUsers(authority);
+    const body = users.map(UserCreator.create);
     Controller.respond(response, body);
   }
 
   @post("/fetchUserDictionaries")
-  @before(checkMe())
+  @before(parseMe())
   public async [Symbol()](request: Request<"fetchUserDictionaries">, response: Response<"fetchUserDictionaries">): Promise<void> {
-    const me = request.me;
+    const {me} = request.middlewareBody;
     const {name} = request.body;
     const user = await UserModel.fetchOneByName(name);
     if (user) {
       const authority = (me?.id === user.id) ? "edit" : "own";
       const includeSecret = me?.id === user.id;
       const dictionaries = await DictionaryModel.fetchByUser(user, authority, includeSecret);
-      const body = await Promise.all(dictionaries.map(async (dictionary) => {
-        const skeleton = await DictionaryCreator.createUser(dictionary, user);
-        return skeleton;
-      }));
+      const body = await Promise.all(dictionaries.map((dictionary) => DictionaryCreator.createUser(dictionary, user)));
       Controller.respond(response, body);
     } else {
       Controller.respondError(response, "noSuchUser");
     }
   }
 
-  @post("/fetchAllDictionaries")
-  public async [Symbol()](request: Request<"fetchAllDictionaries">, response: Response<"fetchAllDictionaries">): Promise<void> {
-    const {order, offset, size} = request.body;
-    const range = new QueryRange(offset, size);
-    const hitResult = await DictionaryModel.fetch(order, range);
-    const hitDictionaries = await Promise.all(hitResult[0].map(async (hitDictionary) => {
-      const skeleton = await DictionaryCreator.createDetailed(hitDictionary);
-      return skeleton;
-    }));
-    const hitSize = hitResult[1];
-    const body = [hitDictionaries, hitSize] as any;
-    Controller.respond(response, body);
-  }
-
   @post("/fetchOverallAggregation")
   public async [Symbol()](request: Request<"fetchOverallAggregation">, response: Response<"fetchOverallAggregation">): Promise<void> {
     const models = [DictionaryModel, WordModel, ExampleModel, UserModel] as Array<any>;
-    const [dictionary, word, example, user] = await Promise.all(models.map((model) => {
+    const [dictionary, word, example, user] = await Promise.all(models.map(async (model) => {
       if (model === UserModel) {
-        const promise = Promise.all([model.estimatedDocumentCount(), model.collection.stats()]).then(([count, stats]) => {
-          const wholeCount = count;
-          const size = stats.size;
-          return {count, wholeCount, size};
-        });
-        return promise;
+        const [count, {size}] = await Promise.all([model.estimatedDocumentCount(), model.collection.stats()]);
+        return {count, wholeCount: count, size};
       } else {
-        const promise = Promise.all([model.findExist().countDocuments(), model.estimatedDocumentCount(), model.collection.stats()]).then(([count, wholeCount, stats]) => {
-          const size = stats.size;
-          return {count, wholeCount, size};
-        });
-        return promise;
+        const [count, wholeCount, {size}] = await Promise.all([model.findExist().countDocuments(), model.estimatedDocumentCount(), model.collection.stats()]);
+        return {count, wholeCount, size};
       }
     }));
     const body = {dictionary, word, example, user};
@@ -356,42 +261,29 @@ export class DictionaryController extends Controller {
   }
 
   @post("/fetchDictionaryAuthorization")
-  @before(checkMe())
+  @before(parseMe(), checkDictionary())
   public async [Symbol()](request: Request<"fetchDictionaryAuthorization">, response: Response<"fetchDictionaryAuthorization">): Promise<void> {
-    const me = request.me;
-    const {number, authority} = request.body;
-    const dictionary = await DictionaryModel.fetchOneByNumber(number);
-    if (dictionary) {
-      if (me) {
-        const hasAuthority = await dictionary.hasAuthority(me, authority);
-        if (hasAuthority) {
-          Controller.respond(response, true);
-        } else {
-          Controller.respond(response, false);
-        }
-      } else {
-        Controller.respond(response, false);
-      }
+    const {me, dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+    const {authority} = request.body;
+    if (me) {
+      const hasAuthority = await dictionary.hasAuthority(me, authority);
+      const body = hasAuthority;
+      Controller.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionary");
+      Controller.respond(response, false);
     }
   }
 
   @post("/checkDictionaryAuthorization")
-  @before(verifyMe())
+  @before(checkMe(), checkDictionary())
   public async [Symbol()](request: Request<"checkDictionaryAuthorization">, response: Response<"checkDictionaryAuthorization">): Promise<void> {
-    const me = request.me!;
-    const {number, authority} = request.body;
-    const dictionary = await DictionaryModel.fetchOneByNumber(number);
-    if (dictionary) {
-      const hasAuthority = await dictionary.hasAuthority(me, authority);
-      if (hasAuthority) {
-        Controller.respond(response, null);
-      } else {
-        Controller.respondForbiddenError(response);
-      }
+    const {me, dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+    const {authority} = request.body;
+    const hasAuthority = await dictionary.hasAuthority(me, authority);
+    if (hasAuthority) {
+      Controller.respond(response, null);
     } else {
-      Controller.respondError(response, "noSuchDictionary");
+      Controller.respondForbiddenError(response);
     }
   }
 

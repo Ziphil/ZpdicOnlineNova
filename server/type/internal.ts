@@ -45,7 +45,7 @@ type ServerSpecs = {
     request: WithRecaptcha<{number: string}>,
     response: {
       success: Dictionary,
-      error: CustomError<"noSuchDictionary" | "dictionarySizeTooLarge">
+      error: CustomError<"noSuchDictionary" | "dictionarySizeTooLarge" | "invalidArgument">
     }
   },
   discardDictionary: {
@@ -244,25 +244,11 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
-  fetchDictionaries: {
-    request: {},
-    response: {
-      success: Array<UserDictionary>,
-      error: never
-    }
-  },
   fetchUserDictionaries: {
     request: {name: string},
     response: {
       success: Array<UserDictionary>,
       error: CustomError<"noSuchUser">
-    }
-  },
-  fetchAllDictionaries: {
-    request: {order: string, offset?: number, size?: number},
-    response: {
-      success: WithSize<DetailedDictionary>,
-      error: never
     }
   },
   fetchOverallAggregation: {

@@ -2,18 +2,19 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {verifyMe} from "/server/controller/internal/middle-old";
+import {checkMe} from "/server/controller/internal/middleware";
 import {NotificationCreator} from "/server/creator";
 import {NotificationModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {QueryRange} from "/server/util/query";
+import {mapWithSize} from "/server/util/with-size";
 
 
 @controller(SERVER_PATH_PREFIX)
 export class NotificationController extends Controller {
 
   @post("/addNotification")
-  @before(verifyMe("admin"))
+  @before(checkMe("admin"))
   public async [Symbol()](request: Request<"addNotification">, response: Response<"addNotification">): Promise<void> {
     const {type, title, text} = request.body;
     const notification = await NotificationModel.add(type, title, text);
@@ -26,9 +27,7 @@ export class NotificationController extends Controller {
     const {offset, size} = request.body;
     const range = new QueryRange(offset, size);
     const hitResult = await NotificationModel.fetch(range);
-    const hitNotifications = hitResult[0].map(NotificationCreator.create);
-    const hitSize = hitResult[1];
-    const body = [hitNotifications, hitSize] as any;
+    const body = mapWithSize(hitResult, NotificationCreator.create);
     Controller.respond(response, body);
   }
 

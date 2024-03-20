@@ -79,7 +79,7 @@ export interface Request<N extends ProcessName> extends ExpressRequest<ExpressPa
    * このプロパティは、`verifyRecaptcha` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
   recaptchaScore?: number;
 
-  middlewareBody: MiddlewareBody;
+  middlewareBody: Required<MiddlewareBody>;
 
 }
 
@@ -108,3 +108,7 @@ export interface MiddlewareBody {
   recaptchaScore?: number | null;
 
 }
+
+
+export type PartlyNonNullable<T, K extends keyof T> = T & {[P in K]-?: NonNullable<T[P]>};
+export type FilledMiddlewareBody<K extends keyof MiddlewareBody> = Required<MiddlewareBody> & {[P in K]-?: NonNullable<MiddlewareBody[P]>};

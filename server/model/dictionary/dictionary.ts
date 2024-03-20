@@ -116,9 +116,9 @@ export class DictionarySchema extends DiscardableSchema {
     return dictionary;
   }
 
-  public static async fetchOneByIdentifier(identifier: string): Promise<Dictionary | null> {
-    const value = (identifier.match(/^\d+$/)) ? +identifier : identifier;
-    const key = (identifier.match(/^\d+$/)) ? "number" : "paramName";
+  public static async fetchOneByIdentifier(identifier: number | string): Promise<Dictionary | null> {
+    const value = (typeof identifier === "number") ? identifier : (identifier.match(/^\d+$/)) ? +identifier : identifier;
+    const key = (typeof value === "number") ? "number" : "paramName";
     const dictionary = await DictionaryModel.findOneExist().where(key, value);
     return dictionary;
   }

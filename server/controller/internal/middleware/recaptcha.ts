@@ -29,6 +29,9 @@ export function parseRecaptcha(): RequestHandler {
   return handler;
 }
 
+/** reCAPTCHA の実行結果を利用して、人間による操作だと判断された場合にのみ、次の処理を行うようにします。
+  * 人間による操作だと判断されなかった場合は、`recaptchaRejected` 403 エラーを返して終了します。
+  * reCAPTCHA の実行に失敗した場合は、`recaptchaError` 403 エラーを返して終了します。*/
 export function checkRecaptcha(): Array<RequestHandler> {
   const beforeHandler = parseRecaptcha();
   const handler = async function (request: Request & {middlewareBody: MiddlewareBody}, response: Response, next: NextFunction): Promise<void> {
@@ -46,7 +49,7 @@ export function checkRecaptcha(): Array<RequestHandler> {
         response.status(403).send(body).end();
       }
     } else {
-      next("cannot happen");
+      next(new Error("cannot happen"));
     }
   } as any;
   return [beforeHandler, handler];

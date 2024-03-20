@@ -1,8 +1,8 @@
 //
 
 import {before, controller, post} from "/server/controller/decorator";
-import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {login, logout, verifyMe, verifyRecaptcha} from "/server/controller/internal/middle-old";
+import {Controller, FilledMiddlewareBody, Request, Response} from "/server/controller/internal/controller";
+import {checkMe, checkRecaptcha, login, logout} from "/server/controller/internal/middleware";
 import {UserCreator} from "/server/creator";
 import {UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -15,8 +15,7 @@ export class UserController extends Controller {
   @post("/login")
   @before(login(30 * 24 * 60 * 60))
   public async [Symbol()](request: Request<"login">, response: Response<"login">): Promise<void> {
-    const token = request.token!;
-    const me = request.me!;
+    const {me, token} = request.middlewareBody as FilledMiddlewareBody<"me" | "token">;
     const userBody = UserCreator.createDetailed(me);
     const body = {token, user: userBody};
     Controller.respond(response, body);
@@ -29,7 +28,7 @@ export class UserController extends Controller {
   }
 
   @post("/registerUser")
-  @before(verifyRecaptcha())
+  @before(checkRecaptcha())
   public async [Symbol()](request: Request<"registerUser">, response: Response<"registerUser">): Promise<void> {
     const {name, email, password} = request.body;
     try {
@@ -56,9 +55,9 @@ export class UserController extends Controller {
   }
 
   @post("/changeMyScreenName")
-  @before(verifyMe())
+  @before(checkMe())
   public async [Symbol()](request: Request<"changeMyScreenName">, response: Response<"changeMyScreenName">): Promise<void> {
-    const me = request.me!;
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     const {screenName} = request.body;
     try {
       await me.changeScreenName(screenName);
@@ -70,9 +69,9 @@ export class UserController extends Controller {
   }
 
   @post("/changeMyEmail")
-  @before(verifyMe())
+  @before(checkMe())
   public async [Symbol()](request: Request<"changeMyEmail">, response: Response<"changeMyEmail">): Promise<void> {
-    const me = request.me!;
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     const {email} = request.body;
     try {
       await me.changeEmail(email);
@@ -88,9 +87,9 @@ export class UserController extends Controller {
   }
 
   @post("/changeMyPassword")
-  @before(verifyMe())
+  @before(checkMe())
   public async [Symbol()](request: Request<"changeMyPassword">, response: Response<"changeMyPassword">): Promise<void> {
-    const me = request.me!;
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     const {password} = request.body;
     try {
       await me.changePassword(password);
@@ -102,9 +101,9 @@ export class UserController extends Controller {
   }
 
   @post("/issueMyActivateToken")
-  @before(verifyRecaptcha(), verifyMe())
+  @before(checkRecaptcha(), checkMe())
   public async [Symbol()](request: Request<"issueMyActivateToken">, response: Response<"issueMyActivateToken">): Promise<void> {
-    const me = request.me!;
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     try {
       const key = await me.issueActivateToken();
       const url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
@@ -118,7 +117,7 @@ export class UserController extends Controller {
   }
 
   @post("/issueUserResetToken")
-  @before(verifyRecaptcha())
+  @before(checkRecaptcha())
   public async [Symbol()](request: Request<"issueUserResetToken">, response: Response<"issueUserResetToken">): Promise<void> {
     const {email} = request.body;
     try {
@@ -158,9 +157,9 @@ export class UserController extends Controller {
   }
 
   @post("/discardMe")
-  @before(verifyMe())
+  @before(checkMe())
   public async [Symbol()](request: Request<"discardMe">, response: Response<"discardMe">): Promise<void> {
-    const me = request.me!;
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     try {
       await me.discard();
       Controller.respond(response, null);
@@ -170,9 +169,9 @@ export class UserController extends Controller {
   }
 
   @post("/fetchMe")
-  @before(verifyMe())
+  @before(checkMe())
   public async [Symbol()](request: Request<"fetchMe">, response: Response<"fetchMe">): Promise<void> {
-    const me = request.me!;
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     const body = UserCreator.createDetailed(me);
     Controller.respond(response, body);
   }
@@ -181,7 +180,7 @@ export class UserController extends Controller {
   public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
     const {name} = request.body;
     const user = await UserModel.fetchOneByName(name);
-    if (user !== null) {
+    if (user) {
       const body = UserCreator.create(user);
       Controller.respond(response, body);
     } else {

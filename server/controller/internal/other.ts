@@ -2,7 +2,7 @@
 
 import {before, controller, post} from "/server/controller/decorator";
 import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {checkMe, verifyRecaptcha} from "/server/controller/internal/middle-old";
+import {checkRecaptcha, parseMe} from "/server/controller/internal/middleware";
 import {UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {MailUtil} from "/server/util/mail";
@@ -23,11 +23,11 @@ export class OtherController extends Controller {
   }
 
   @post("/contact")
-  @before(checkMe(), verifyRecaptcha())
+  @before(checkRecaptcha(), parseMe())
   public async [Symbol()](request: Request<"contact">, response: Response<"contact">): Promise<void> {
-    const me = request.me;
+    const {me} = request.middlewareBody;
     const {name, email, subject, text} = request.body;
-    const signedIn = (me !== undefined).toString();
+    const signedIn = (me !== null).toString();
     const userName = me?.name ?? "";
     if (text !== "") {
       const administrator = await UserModel.fetchOneAdministrator();
