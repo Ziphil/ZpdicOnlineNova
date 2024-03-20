@@ -4,14 +4,14 @@ import {NextFunction, Request, RequestHandler, Response} from "express";
 import {MiddlewareBody} from "/server/controller/internal/controller";
 import {CustomErrorCreator} from "/server/creator/error";
 import {LogUtil} from "/server/util/log";
-import {RecaptchaUtil} from "/server/util/recaptcha";
+import {verifyRecaptcha} from "/server/util/recaptcha";
 
 
 export function parseRecaptcha(): RequestHandler {
   const handler = async function (request: Request & {middlewareBody: MiddlewareBody}, response: Response, next: NextFunction): Promise<void> {
     const recaptchaToken = request.query.recaptchaToken || request.body.recaptchaToken;
     try {
-      const result = await RecaptchaUtil.verify(recaptchaToken);
+      const result = await verifyRecaptcha(recaptchaToken);
       const score = result.score;
       const action = result.action;
       LogUtil.log("middle/verifyRecaptcha", {action, score});
