@@ -33,11 +33,10 @@ export class NormalWordParameter extends WordParameter {
     const query = WordModel.findExist().where("dictionary", dictionary).or(disjunctFilters).sort(sortKey);
     if (this.options.shuffleSeed !== null) {
       const random = new Random(this.options.shuffleSeed);
-      const promise = (async () => {
-        const words = await query;
+      const promise = query.then((words) => {
         random.shuffle(words);
         return words;
-      })();
+      });
       return promise;
     } else {
       return query;
