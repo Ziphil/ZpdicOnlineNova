@@ -19,6 +19,7 @@ export interface DictionaryFontLocal {
 export interface DictionaryFontCustom {
 
   type: "custom";
+  name?: string;
   format: string;
 
 }

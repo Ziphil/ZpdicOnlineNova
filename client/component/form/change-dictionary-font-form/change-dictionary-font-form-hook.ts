@@ -89,9 +89,11 @@ function getQueryFont(dictionary: Dictionary, formValue: FormValue): DictionaryF
     return font;
   } else if (formValue.type === "custom") {
     const currentFont = dictionary.settings.font;
+    const currentName = (currentFont?.type === "custom") ? currentFont.name : undefined;
     const currentFormat = (currentFont?.type === "custom") ? currentFont.format : "";
     const font = {
       type: "custom" as const,
+      name: (formValue.file !== undefined) ? formValue.file.name : currentName,
       format: (formValue.file !== undefined) ? getFontFormat(formValue.file) : currentFormat
     };
     return font;
