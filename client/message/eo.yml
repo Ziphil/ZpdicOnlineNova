@@ -208,6 +208,8 @@ wordModeSelect:
     both: "Ambaŭ"
     tag: "Etikedo"
     information: "Enhavo"
+    variation: "Variaĵo"
+    relation: "Rilato"
     content: "Tuto"
 wordTypeSelect:
   label:

@@ -208,6 +208,8 @@ wordModeSelect:
     both: "Both"
     tag: "Tag"
     information: "Contents"
+    variation: "Variation"
+    relation: "Related"
     content: "Whole"
 wordTypeSelect:
   label:

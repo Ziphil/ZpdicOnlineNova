@@ -61,5 +61,5 @@ export namespace AdvancedWordParameter {
 }
 
 
-export const ADVANCED_WORD_MODES = ["name", "equivalent", "tag", "information", "content"] as const;
+export const ADVANCED_WORD_MODES = ["name", "equivalent", "tag", "information", "variation", "relation", "content"] as const;
 export type AdvancedWordMode = LiteralType<typeof ADVANCED_WORD_MODES>;

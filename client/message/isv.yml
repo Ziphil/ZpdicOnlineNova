@@ -208,6 +208,8 @@ wordModeSelect:
     both: "Оба"
     tag: "Значка"
     information: "Содржанје"
+    variation: "Вариација"
+    relation: "Related"
     content: "Цєлы"
 wordTypeSelect:
   label:

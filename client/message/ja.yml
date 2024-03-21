@@ -208,6 +208,8 @@ wordModeSelect:
     both: "単語＋訳語"
     tag: "タグ"
     information: "内容"
+    variation: "変化形"
+    relation: "関連語"
     content: "全文"
 wordTypeSelect:
   label:
