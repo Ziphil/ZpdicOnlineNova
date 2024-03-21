@@ -209,7 +209,7 @@ wordModeSelect:
     tag: "Значка"
     information: "Содржанје"
     variation: "Вариација"
-    relation: "Related"
+    relation: "Свезане слова"
     content: "Цєлы"
 wordTypeSelect:
   label:
