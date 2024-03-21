@@ -53,16 +53,15 @@ export const DictionaryMainPart = create(
         </div>
         <div styleName="right">
           <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
-          {(debouncedQuery.showExplanation && !!dictionary.explanation) ? (
-            <Markdown mode="normal">
+          {(debouncedQuery.showExplanation && !!dictionary.explanation) && (
+            <Markdown styleName="explanation" mode="normal">
               {dictionary.explanation}
             </Markdown>
-          ) : (
-            <div styleName="main">
-              <SuggestionCard dictionary={dictionary} suggestions={hitSuggestions}/>
-              <WordList dictionary={dictionary} words={hitWords} canEdit={canEdit} showEmpty={hitSuggestions.length <= 0} pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}}/>
-            </div>
           )}
+          <div styleName="main">
+            <SuggestionCard dictionary={dictionary} suggestions={hitSuggestions}/>
+            <WordList dictionary={dictionary} words={hitWords} canEdit={canEdit} showEmpty={hitSuggestions.length <= 0} pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+          </div>
         </div>
       </div>
     );
