@@ -13,6 +13,7 @@ import {WordCardHeading} from "./word-card-heading";
 import {useDiscardWord} from "./word-card-hook";
 import {WordCardInformationList} from "./word-card-information-list";
 import {WordCardRelationList} from "./word-card-relation-list";
+import {WordCardVariationList} from "./word-card-variation-list";
 
 
 export const WordCard = create(
@@ -40,6 +41,7 @@ export const WordCard = create(
           <WordCardEquivalentList dictionary={dictionary} word={word}/>
           <WordCardInformationList dictionary={dictionary} word={word}/>
           <WordCardExampleList dictionary={dictionary} word={word}/>
+          <WordCardVariationList dictionary={dictionary} word={word}/>
           <WordCardRelationList dictionary={dictionary} word={word}/>
         </CardBody>
         {(canEdit) && (
