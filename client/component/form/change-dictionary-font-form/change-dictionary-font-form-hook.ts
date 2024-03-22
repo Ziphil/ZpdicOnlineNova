@@ -7,6 +7,7 @@ import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {Dictionary, DictionaryFont} from "/client/skeleton";
 import {uploadFileToAws} from "/client/util/aws";
+import {determineAwsErrorToastType} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {validateFileSize} from "/client/util/validation";
 
@@ -37,8 +38,7 @@ export function useChangeDictionaryFont(dictionary: Dictionary): ChangeDictionar
         await uploadFileToAws(post, value.file!);
         return true;
       } catch (error) {
-        const type = deternimeErrorToastType(error);
-        dispatchErrorToast(type);
+        dispatchErrorToast(determineAwsErrorToastType(error));
         return undefined;
       }
     });
@@ -114,21 +114,5 @@ function getFontFormat(file: File): string {
     return "woff2";
   } else {
     return "";
-  }
-}
-
-function deternimeErrorToastType(error: any): string {
-  if (error.name === "AwsError") {
-    const code = error.data["Code"]["_text"];
-    const message = error.data["Message"]["_text"];
-    if (code === "EntityTooLarge") {
-      return "resourceSizeTooLarge";
-    } else if (code === "AccessDenied" && message.includes("Policy Condition failed") && message.includes("$Content-Type")) {
-      return "unsupportedResourceType";
-    } else {
-      return "awsError";
-    }
-  } else {
-    return "unexpected";
   }
 }

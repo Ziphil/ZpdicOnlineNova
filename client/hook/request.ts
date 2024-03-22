@@ -3,7 +3,6 @@
 import {useCallback} from "react";
 import {QueryClient, UseQueryOptions, UseQueryResult, useQuery as useRawQuery} from "react-query";
 import {useToast} from "/client/hook/toast";
-import {ResponseError} from "/client/util/error";
 import {
   AxiosResponseSpec,
   RequestConfig,
@@ -13,6 +12,7 @@ import {
   requestFile as rawRequestFile
 } from "/client/util/request";
 import {switchResponse} from "/client/util/response";
+import {ResponseError} from "/client/util/response-error";
 import type {ProcessName, RequestData, ResponseData, SuccessResponseData} from "/server/type/internal";
 
 

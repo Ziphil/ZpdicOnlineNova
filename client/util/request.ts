@@ -76,6 +76,22 @@ export function determineErrorToastType(response: AxiosResponse<any>): string {
   }
 }
 
+export function determineAwsErrorToastType(error: any): string {
+  if (error.name === "AwsError") {
+    const code = error.data["Code"]["_text"];
+    const message = error.data["Message"]["_text"];
+    if (code === "EntityTooLarge") {
+      return "resourceSizeTooLarge";
+    } else if (code === "AccessDenied" && message.includes("Policy Condition failed") && message.includes("$Content-Type")) {
+      return "unsupportedResourceType";
+    } else {
+      return "awsError";
+    }
+  } else {
+    return "unexpected";
+  }
+}
+
 type AdditionalRequestConfig = {
   ignoreError?: boolean,
   useRecaptcha?: boolean | string
