@@ -6,6 +6,7 @@ import {checkMe, checkRecaptcha, login, logout} from "/server/controller/interna
 import {UserCreator} from "/server/creator";
 import {UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {AwsUtil} from "/server/util/aws";
 import {MailUtil} from "/server/util/mail";
 
 
@@ -185,6 +186,21 @@ export class UserController extends Controller {
       Controller.respond(response, body);
     } else {
       Controller.respondError(response, "noSuchUser");
+    }
+  }
+
+  @post("/fetchUploadMyAvatarPost")
+  @before(checkRecaptcha(), checkMe())
+  public async [Symbol()](request: Request<"fetchUploadMyAvatarPost">, response: Response<"fetchUploadMyAvatarPost">): Promise<void> {
+    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
+    try {
+      const path = `avatar/${me.name}/avatar`;
+      const configs = {contentType: "image/", sizeLimit: 1024 * 1024};
+      const post = await AwsUtil.getUploadFilePost(path, configs);
+      const body = post;
+      Controller.respond(response, body);
+    } catch (error) {
+      Controller.respondError(response, "awsError");
     }
   }
 

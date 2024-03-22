@@ -64,9 +64,9 @@ export class ResourceController extends Controller {
     }
   }
 
-  @post("/fetchUploadFontPost")
+  @post("/fetchUploadDictionaryFontPost")
   @before(checkRecaptcha(), checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: Request<"fetchUploadFontPost">, response: Response<"fetchUploadFontPost">): Promise<void> {
+  public async [Symbol()](request: Request<"fetchUploadDictionaryFontPost">, response: Response<"fetchUploadDictionaryFontPost">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     try {
       const path = `font/${dictionary.number}/font`;

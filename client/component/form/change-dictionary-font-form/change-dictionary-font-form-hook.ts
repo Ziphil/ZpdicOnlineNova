@@ -31,7 +31,7 @@ export function useChangeDictionaryFont(dictionary: Dictionary): ChangeDictionar
   const request = useRequest();
   const {dispatchSuccessToast, dispatchErrorToast} = useToast();
   const uploadFont = useCallback(async function (value: FormValue): Promise<boolean | void> {
-    const response = await request("fetchUploadFontPost", {number: dictionary.number}, {useRecaptcha: true});
+    const response = await request("fetchUploadDictionaryFontPost", {number: dictionary.number}, {useRecaptcha: true});
     return await switchResponse(response, async (post) => {
       try {
         await uploadFileToAws(post, value.file!);

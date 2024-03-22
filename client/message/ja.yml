@@ -75,6 +75,8 @@ toast:
       アカウントを削除しました。
     changeMyScreenName: |-
       ニックネームを変更しました。
+    changeMyAvatar: |-
+      アイコンを変更しました。
     changeMyEmail: |-
       メールアドレスを変更しました。
     changeMyPassword: |-
@@ -888,6 +890,7 @@ topPage:
 userSettingPart:
   heading:
     screenName: "ニックネーム"
+    avatar: "アイコン"
     email: "メールアドレス"
     password: "パスワード"
     discard: "アカウント削除"

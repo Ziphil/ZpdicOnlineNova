@@ -75,6 +75,8 @@ toast:
       Your account has been deleted.
     changeMyScreenName:
       Your nickname has been changed.
+    changeMyAvatar: |-
+      Your avatar icon has been changed.
     changeMyEmail:
       Your email address has been changed.
     changeMyPassword:
@@ -889,6 +891,7 @@ topPage:
 userSettingPart:
   heading:
     screenName: "Nickname"
+    avatar: "Avatar icon"
     email: "Email address"
     password: "Password"
     discard: "Delete account"

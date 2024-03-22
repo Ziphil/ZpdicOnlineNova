@@ -321,7 +321,7 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "awsError">
     }
   },
-  fetchUploadFontPost: {
+  fetchUploadDictionaryFontPost: {
     request: WithRecaptcha<{number: number}>,
     response: {
       success: {url: string, fields: Record<string, string>},
@@ -417,6 +417,13 @@ type ServerSpecs = {
     response: {
       success: User,
       error: CustomError<"noSuchUser">
+    }
+  },
+  fetchUploadMyAvatarPost: {
+    request: WithRecaptcha<{}>,
+    response: {
+      success: {url: string, fields: Record<string, string>},
+      error: CustomError<"awsError">
     }
   },
   suggestUsers: {

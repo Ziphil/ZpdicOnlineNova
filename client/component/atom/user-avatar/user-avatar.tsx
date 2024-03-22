@@ -6,6 +6,7 @@ import {AdditionalProps, Avatar, AvatarFallbackIconContainer, GeneralIcon} from 
 import {createWithRef} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {User} from "/client/skeleton";
+import {getAwsFileUrl} from "/client/util/aws";
 
 
 export const UserAvatar = createWithRef(
@@ -24,10 +25,11 @@ export const UserAvatar = createWithRef(
     const [innerUser] = useResponse("fetchUser", (typeof user === "string") && {name: user});
     const actualUser = (typeof user === "string") ? innerUser : user;
 
+    const url = (actualUser !== undefined) ? getAwsFileUrl(`avatar/${actualUser.name}/avatar`) : null;
     const hue = (actualUser !== undefined) ? getIdHue(actualUser.id) : 0;
 
     return (
-      <Avatar url={null} inline={inline} {...rest}>
+      <Avatar url={url} inline={inline} {...rest}>
         <AvatarFallbackIconContainer hue={hue}>
           <GeneralIcon icon={faPenSwirl}/>
         </AvatarFallbackIconContainer>

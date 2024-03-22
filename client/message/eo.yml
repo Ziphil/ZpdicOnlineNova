@@ -75,6 +75,8 @@ toast:
       Via konto forigitas.
     changeMyScreenName:
       Via kromnomo ŝanĝitas.
+    changeMyAvatar: |-
+      Via bildeto ŝanĝitas.
     changeMyEmail:
       Via retpoŝta adreso ŝanĝitas.
     changeMyPassword:
@@ -889,6 +891,7 @@ topPage:
 userSettingPart:
   heading:
     screenName: "Kromnomo"
+    avatar: "Bildeto"
     email: "Retpoŝta adreso"
     password: "Pasvorto"
     discard: "Forigi konton"
