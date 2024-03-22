@@ -27,7 +27,7 @@ export function useIssueUserResetToken(): RegisterSpec {
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("issueUserResetToken", value, {useRecaptcha: true});
-    await switchResponse(response, async (body) => {
+    await switchResponse(response, async () => {
       dispatchSuccessToast("issueUserResetToken");
     });
   }), [request, form, dispatchSuccessToast]);

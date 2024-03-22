@@ -49,8 +49,7 @@ export const EditWordFormVariationItem = create(
       const number = dictionary.number;
       try {
         const response = await request("suggestDictionaryTitles", {number, pattern, propertyName: "variation"}, {ignoreError: true});
-        return switchResponse(response, (data) => {
-          const titles = data;
+        return switchResponse(response, (titles) => {
           const suggestions = titles.map((title) => ({replacement: title, node: title}));
           return suggestions;
         }, () => {

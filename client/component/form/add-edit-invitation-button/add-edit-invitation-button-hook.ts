@@ -29,7 +29,7 @@ export function useAddEditInvitation(dictionary: Dictionary): AddEditInvitationS
   const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: () => unknown): Promise<void> {
     await form.handleSubmit(async (value) => {
       const response = await request("addInvitation", {number: dictionary.number, type: "edit", userName: value.user.name});
-      await switchResponse(response, async (body) => {
+      await switchResponse(response, async () => {
         await onSubmit?.();
         dispatchSuccessToast("addInvitation.edit");
       });

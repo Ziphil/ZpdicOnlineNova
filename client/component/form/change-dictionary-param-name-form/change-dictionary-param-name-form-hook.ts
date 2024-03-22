@@ -27,7 +27,7 @@ export function useChangeDictionaryParamName(dictionary: Dictionary): ChangeDict
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("changeDictionaryParamName", {number: dictionary.number, paramName: value.paramName ?? ""});
     await switchResponse(response, async () => {
-      await invalidateResponses("fetchDictionary", (data) => +data.identifier === dictionary.number || data.identifier === dictionary.paramName);
+      await invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName);
       dispatchSuccessToast("changeDictionaryParamName");
     });
   }), [dictionary.number, dictionary.paramName, request, form, dispatchSuccessToast]);

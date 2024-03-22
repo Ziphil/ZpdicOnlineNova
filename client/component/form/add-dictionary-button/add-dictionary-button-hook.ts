@@ -32,10 +32,10 @@ export function useAddDictionary(): AddDictionarySpec {
   const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: () => unknown): Promise<void> {
     await form.handleSubmit(async (value) => {
       const response = await request("createDictionary", {name: value.name});
-      await switchResponse(response, async (body) => {
-        await invalidateResponses("fetchUserDictionaries", (request) => request.name === me?.name);
+      await switchResponse(response, async (dictionary) => {
+        await invalidateResponses("fetchUserDictionaries", (query) => query.name === me?.name);
         await onSubmit?.();
-        navigate(`/dictionary/${body.number}`);
+        navigate(`/dictionary/${dictionary.number}`);
         dispatchSuccessToast("addDictionary");
       });
     })(event);

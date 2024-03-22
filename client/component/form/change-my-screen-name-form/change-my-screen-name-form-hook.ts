@@ -30,7 +30,7 @@ export function useChangeMyScreenName(me: DetailedUser): ChangeMyScreenNameSpec 
     await switchResponse(response, async () => {
       await Promise.all([
         refetchMe(),
-        invalidateResponses("fetchUser", (data) => data.name === me.name)
+        invalidateResponses("fetchUser", (query) => query.name === me.name)
       ]);
       dispatchSuccessToast("changeMyScreenName");
     });

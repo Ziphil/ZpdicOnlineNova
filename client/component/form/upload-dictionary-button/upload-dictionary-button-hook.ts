@@ -30,7 +30,7 @@ export function useUploadDictionary(dictionary: Dictionary): AddResourceSpec {
   const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: () => unknown): Promise<void> {
     await form.handleSubmit(async (value) => {
       const response = await requestFile("uploadDictionary", {number: dictionary.number.toString(), file: value.file}, {useRecaptcha: true});
-      await switchResponse(response, async (data) => {
+      await switchResponse(response, async () => {
         await onSubmit?.();
         dispatchSuccessToast("uploadDictionary");
       });

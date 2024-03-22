@@ -33,13 +33,12 @@ export function useChangeMyAvatar(me: DetailedUser): ChangeMyAvatarSpec {
   const {dispatchSuccessToast, dispatchErrorToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("fetchUploadMyAvatarPost", {}, {useRecaptcha: true});
-    await switchResponse(response, async (data) => {
-      const post = data;
+    await switchResponse(response, async (post) => {
       try {
         await uploadFileToAws(post, value.file);
         await Promise.all([
           refetchMe(),
-          invalidateResponses("fetchUser", (data) => data.name === me.name)
+          invalidateResponses("fetchUser", (query) => query.name === me.name)
         ]);
         dispatchSuccessToast("changeMyAvatar");
       } catch (error) {

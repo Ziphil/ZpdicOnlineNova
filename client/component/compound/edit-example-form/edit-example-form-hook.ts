@@ -38,8 +38,8 @@ export function useEditExample(dictionary: Dictionary, initialData: EditExampleI
     const adding = value.number === null;
     const query = getQuery(dictionary, value);
     const response = await request("editExample", query);
-    await switchResponse(response, async (body) => {
-      form.setValue("number", body.number);
+    await switchResponse(response, async (example) => {
+      form.setValue("number", example.number);
       await Promise.all([
         invalidateResponses("fetchExamples", (query) => query.number === dictionary.number),
         invalidateResponses("searchWord", (query) => query.number === dictionary.number)

@@ -28,7 +28,7 @@ export function useResetUserPassword(tokenKey: string): ResetUserPasswordSpec {
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("resetUserPassword", getQuery(tokenKey, value), {useRecaptcha: true});
-    await switchResponse(response, async (body) => {
+    await switchResponse(response, async () => {
       dispatchSuccessToast("resetUserPassword");
     });
   }), [tokenKey, request, form, dispatchSuccessToast]);

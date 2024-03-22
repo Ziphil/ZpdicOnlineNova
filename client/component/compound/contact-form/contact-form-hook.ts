@@ -37,7 +37,7 @@ export function useContact(me: DetailedUser | null): ContactSpec {
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("contact", getQuery(value), {useRecaptcha: true});
-    await switchResponse(response, async (body) => {
+    await switchResponse(response, async () => {
       form.reset({
         subject: "",
         text: "",

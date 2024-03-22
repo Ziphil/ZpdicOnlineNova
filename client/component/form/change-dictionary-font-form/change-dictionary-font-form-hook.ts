@@ -46,7 +46,7 @@ export function useChangeDictionaryFont(dictionary: Dictionary): ChangeDictionar
   const changeSettings = useCallback(async function (value: FormValue): Promise<boolean | void> {
     const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {font: getQueryFont(dictionary, value)}});
     return await switchResponse(response, async () => {
-      await invalidateResponses("fetchDictionary", (data) => +data.identifier === dictionary.number || data.identifier === dictionary.paramName);
+      await invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName);
       return true;
     });
   }, [dictionary, request]);

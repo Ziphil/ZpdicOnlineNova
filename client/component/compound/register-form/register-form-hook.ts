@@ -39,10 +39,10 @@ export function useRegisterUser(): RegisterSpec {
   const navigate = useNavigate();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("registerUser", getQuery(value), {useRecaptcha: true});
-    await switchResponse(response, async (body) => {
-      const loginResponse = await login({name: body.name, password: value.password});
+    await switchResponse(response, async (user) => {
+      const loginResponse = await login({name: user.name, password: value.password});
       await switchResponse(loginResponse, async () => {
-        navigate(`/user/${body.name}`);
+        navigate(`/user/${user.name}`);
         dispatchSuccessToast("register");
       });
     });
