@@ -281,6 +281,7 @@ dictionaryHeader:
     addExample: "Create sentence"
     addCommission: "Request"
     download: "Download"
+  userCount: "<plus>+</plus>{count, number}"
 dictionaryList:
   empty: 
     user: "No dictionaries are created"

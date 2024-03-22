@@ -12,7 +12,7 @@ import {EditExampleDialog} from "/client/component/compound/edit-example-dialog"
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {MainContainer} from "/client/component/compound/page";
 import {create} from "/client/component/create";
-import {useSuspenseResponse} from "/client/hook/request";
+import {useResponse, useSuspenseResponse} from "/client/hook/request";
 import {EnhancedDictionary} from "/client/skeleton";
 
 
@@ -30,10 +30,11 @@ export const DictionaryHeader = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionaryHeader");
+    const {trans, transNode} = useTrans("dictionaryHeader");
 
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
     const [canOwn] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "own"});
+    const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number: dictionary.number, authority: "editOnly"});
 
     return (
       <header styleName="root" {...rest}>
@@ -42,13 +43,23 @@ export const DictionaryHeader = create(
             <SingleLineText styleName="name" is="h2">
               {dictionary.name}
             </SingleLineText>
-            <div styleName="user">
-              <UserAvatar styleName="avatar" user={dictionary.user}/>
-              <SingleLineText is="span">
-                <Link href={`/user/${dictionary.user.name}`} variant="unstyledSimple">
-                  {dictionary.user.screenName}
-                </Link>
-              </SingleLineText>
+            <div styleName="user-container">
+              <span styleName="user">
+                <UserAvatar styleName="avatar" user={dictionary.user}/>
+                <SingleLineText is="span">
+                  <Link href={`/user/${dictionary.user.name}`} variant="unstyledSimple">
+                    {dictionary.user.screenName}
+                  </Link>
+                </SingleLineText>
+              </span>
+              {(authorizedUsers !== undefined && authorizedUsers.length > 0) && (
+                <span styleName="user-count">
+                  {transNode("userCount", {
+                    count: authorizedUsers.length,
+                    plus: (parts) => <span styleName="plus">{parts}</span>
+                  })}
+                </span>
+              )}
             </div>
           </div>
           <div styleName="operation">

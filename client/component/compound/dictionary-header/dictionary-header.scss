@@ -27,11 +27,26 @@
   color: var(--glob-secondary-heading-text-color);
 }
 
-.user {
+.user-container {
   margin-block-start: 2zu;
+  display: flex;
+  align-items: baseline;
+}
+
+.user {
   font-size: 5zu;
   display: flex;
   align-items: center;
+}
+
+.user-count {
+  margin-inline-start: 1zu;
+  font-size: 4zu;
+  color: var(--glob-mute-text-color);
+}
+
+.plus {
+  margin-inline-end: calc(var(--glob-blank-gap) / 2);
 }
 
 .avatar {

@@ -218,7 +218,7 @@ export class DictionaryController extends Controller {
   }
 
   @post("/fetchDictionaryAuthorizedUsers")
-  @before(checkMe(), checkDictionary("own"))
+  @before(checkMe(), checkDictionary())
   public async [Symbol()](request: Request<"fetchDictionaryAuthorizedUsers">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {authority} = request.body;

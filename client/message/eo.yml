@@ -281,6 +281,7 @@ dictionaryHeader:
     addExample: "Krei frazon"
     addCommission: "Peti"
     download: "Elŝuti"
+  userCount: "<plus>+</plus>{count, number}"
 dictionaryList:
   empty: 
     user: "Neniuj vortaroj estas kreitaj"
