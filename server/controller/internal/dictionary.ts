@@ -9,7 +9,6 @@ import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {sanitizeFileName} from "/server/util/misc";
 import {QueryRange} from "/server/util/query";
 import {mapWithSizeAsync} from "/server/util/with-size";
-import {agenda} from "/worker/agenda";
 
 
 @controller(SERVER_PATH_PREFIX)
@@ -35,7 +34,7 @@ export class DictionaryController extends Controller {
       const originalPath = file.originalname;
       if (file.size <= 5 * 1024 * 1024) {
         const number = dictionary.number;
-        await agenda.now("uploadDictionary", {number, path, originalPath});
+        await this.agenda.now("uploadDictionary", {number, path, originalPath});
         const body = DictionaryCreator.create(dictionary);
         Controller.respond(response, body);
       } else {

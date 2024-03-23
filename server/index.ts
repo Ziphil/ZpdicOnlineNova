@@ -141,16 +141,16 @@ export class Main {
   /** ルーターの設定を行います。
    * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
   private addApiRouters(): void {
-    CommissionController.use(this.application);
-    DictionaryController.use(this.application);
-    ExampleController.use(this.application);
-    HistoryController.use(this.application);
-    InvitationController.use(this.application);
-    NotificationController.use(this.application);
-    OtherController.use(this.application);
-    ResourceController.use(this.application);
-    UserController.use(this.application);
-    WordController.use(this.application);
+    CommissionController.use(this.application, this.agenda);
+    DictionaryController.use(this.application, this.agenda);
+    ExampleController.use(this.application, this.agenda);
+    HistoryController.use(this.application, this.agenda);
+    InvitationController.use(this.application, this.agenda);
+    NotificationController.use(this.application, this.agenda);
+    OtherController.use(this.application, this.agenda);
+    ResourceController.use(this.application, this.agenda);
+    UserController.use(this.application, this.agenda);
+    WordController.use(this.application, this.agenda);
   }
 
   private addStaticRouters(): void {
