@@ -2,15 +2,9 @@
 
 import * as typegoose from "@typegoose/typegoose";
 import mongoose from "mongoose";
-import {
-  LogUtil
-} from "/server/util/log";
-import {
-  MongoUtil
-} from "/server/util/mongo";
-import {
-  MONGO_URI
-} from "/server/variable";
+import {LogUtil} from "/server/util/log";
+import {setMongoCheckRequired} from "/server/util/mongo";
+import {MONGO_URI} from "/server/variable";
 
 
 export class Main {
@@ -23,7 +17,7 @@ export class Main {
   }
 
   private setupMongo(): void {
-    MongoUtil.setCheckRequired("String");
+    setMongoCheckRequired("String");
     mongoose.connect(MONGO_URI);
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }

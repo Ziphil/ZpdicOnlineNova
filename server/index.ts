@@ -2,6 +2,7 @@
 
 import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
+import Agenda from "agenda";
 import aws from "aws-sdk";
 import cookieParser from "cookie-parser";
 import express from "express";
@@ -22,9 +23,9 @@ import {
   UserController,
   WordController
 } from "/server/controller/internal";
-import {DictionaryModel, WordModel} from "./model";
+import {DictionaryModel, WordModel} from "/server/model";
 import {LogUtil} from "/server/util/log";
-import {MongoUtil} from "/server/util/mongo";
+import {setMongoCheckRequired} from "/server/util/mongo";
 import {
   AWS_KEY,
   AWS_REGION,
@@ -34,15 +35,19 @@ import {
   PORT,
   SENDGRID_KEY
 } from "/server/variable";
-import {agenda} from "/worker/agenda";
 
 
 export class Main {
 
-  private application!: Express;
+  private application: Express;
+  private agenda: Agenda;
+
+  public constructor() {
+    this.application = express();
+    this.agenda = this.createAgenda();
+  }
 
   public main(): void {
-    this.application = express();
     this.addBodyParserMiddlewares();
     this.addCookieMiddleware();
     this.addFileMiddleware();
@@ -59,6 +64,11 @@ export class Main {
     this.addFallbackHandlers();
     this.addErrorHandler();
     this.listen();
+  }
+
+  private createAgenda(): Agenda {
+    const agenda = new Agenda({db: {address: MONGO_URI, collection: "agenda"}});
+    return agenda;
   }
 
   private addBodyParserMiddlewares(): void {
@@ -108,7 +118,7 @@ export class Main {
   /** MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
    * typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。*/
   private setupMongo(): void {
-    MongoUtil.setCheckRequired("String");
+    setMongoCheckRequired("String");
     mongoose.connect(MONGO_URI);
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }
@@ -149,7 +159,7 @@ export class Main {
   }
 
   private setupWorkers(): void {
-    agenda.define<any>("uploadDictionary", async (job, done) => {
+    this.agenda.define<any>("uploadDictionary", async (job, done) => {
       const {number, path, originalPath} = job.attrs.data ?? {};
       LogUtil.log("worker/uploadDictionary", {number});
       const dictionary = await DictionaryModel.fetchOneByNumber(number);
@@ -159,12 +169,12 @@ export class Main {
       }
       done();
     });
-    agenda.define<any>("discardOldHistoryWords", async (job, done) => {
+    this.agenda.define<any>("discardOldHistoryWords", async (job, done) => {
       LogUtil.log("worker/discardOldHistoryWords", {});
       await WordModel.discardOldHistory(90);
       done();
     });
-    agenda.define<any>("addHistories", async (job, done) => {
+    this.agenda.define<any>("addHistories", async (job, done) => {
       LogUtil.log("worker/addHistories", {});
       await HistoryController.addHistories();
       done();
@@ -172,10 +182,10 @@ export class Main {
   }
 
   private setupSchedules(): void {
-    agenda.on("ready", () => {
-      agenda.every("0 3 * * *", "discardOldHistoryWords", {}, {timezone: "Asia/Tokyo"});
-      agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
-      agenda.start();
+    this.agenda.on("ready", () => {
+      this.agenda.every("0 3 * * *", "discardOldHistoryWords", {}, {timezone: "Asia/Tokyo"});
+      this.agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
+      this.agenda.start();
     });
   }
 

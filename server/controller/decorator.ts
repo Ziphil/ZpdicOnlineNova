@@ -28,11 +28,11 @@ export function controller(path: string): ClassDecorator {
   const decorator = function (clazz: Function): void {
     const originalSetup = clazz.prototype.setup;
     clazz.prototype.setup = function (this: Controller): void {
-      const anyThis = this as any;
+      const outerThis = this as any;
       const metadata = Reflect.getMetadata(KEY, clazz.prototype) as Metadata;
       for (const spec of metadata) {
         const handler = function (request: Request, response: Response, next: NextFunction): void {
-          Promise.resolve(anyThis[spec.name](request, response, next)).catch((error) => {
+          Promise.resolve(outerThis[spec.name](request, response, next)).catch((error) => {
             next(error);
           });
         };
@@ -59,32 +59,18 @@ export function post(path: string): MethodDecorator {
   return decorator;
 }
 
-export function before<P extends Params = ParamsDictionary>(...middlewares: Array<RequestHandlerParams<P>>): MethodDecorator {
+export function before(...middlewares: Array<RequestHandlerParams>): MethodDecorator {
   const decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
     pushMiddlewares(target, name, "before", ...middlewares);
   };
   return decorator;
 }
 
-export function after<P extends Params = ParamsDictionary>(...middlewares: Array<RequestHandlerParams<P>>): MethodDecorator {
+export function after(...middlewares: Array<RequestHandlerParams>): MethodDecorator {
   const decorator = function (target: object, name: string | symbol, descriptor: PropertyDescriptor): void {
     pushMiddlewares(target, name, "after", ...middlewares);
   };
   return decorator;
-}
-
-function findHandlerSpec(target: object, name: string | symbol): RequestHandlerSpec {
-  let metadata = Reflect.getMetadata(KEY, target) as Metadata;
-  if (!metadata) {
-    metadata = [];
-    Reflect.defineMetadata(KEY, metadata, target);
-  }
-  let spec = metadata.find((spec) => spec.name === name);
-  if (spec === undefined) {
-    spec = {name, path: "/", method: "get", befores: [], afters: []};
-    metadata.push(spec);
-  }
-  return spec;
 }
 
 function setPath(target: object, name: string | symbol, method: MethodType, path: string): void {
@@ -100,4 +86,18 @@ function pushMiddlewares<P extends Params = ParamsDictionary>(target: object, na
   } else if (timing === "after") {
     spec.afters.push(...middlewares);
   }
+}
+
+function findHandlerSpec(target: object, name: string | symbol): RequestHandlerSpec {
+  let metadata = Reflect.getMetadata(KEY, target) as Metadata;
+  if (!metadata) {
+    metadata = [];
+    Reflect.defineMetadata(KEY, metadata, target);
+  }
+  let spec = metadata.find((spec) => spec.name === name);
+  if (spec === undefined) {
+    spec = {name, path: "/", method: "get", befores: [], afters: []};
+    metadata.push(spec);
+  }
+  return spec;
 }
