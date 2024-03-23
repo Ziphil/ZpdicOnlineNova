@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import {Express, NextFunction, Request, Response} from "express";
 import fs from "fs";
-import http from "http";
+import http, {Server as HttpServer} from "http";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import multer from "multer";
@@ -29,6 +29,9 @@ import {
   UserRestController,
   WordRestController
 } from "/server/controller/rest/internal";
+import {
+  DebugSocketController
+} from "/server/controller/socket/internal";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
 import {
@@ -45,11 +48,13 @@ import {
 export class Main {
 
   private application: Express;
+  private httpServer: HttpServer;
   private server: Server;
   private agenda: Agenda;
 
   public constructor() {
     this.application = express();
+    this.httpServer = this.createHttpServer();
     this.server = this.createSocketServer();
     this.agenda = this.createAgenda();
   }
@@ -65,6 +70,7 @@ export class Main {
     this.setupAws();
     this.setupDirectories();
     this.useRestControllers();
+    this.useSocketControllers();
     this.useJobControllers();
     this.setupSchedules();
     this.addStaticHandlers();
@@ -73,9 +79,15 @@ export class Main {
     this.listen();
   }
 
-  private createSocketServer(): Server {
+  private createHttpServer(): HttpServer {
     const application = this.application;
-    const server = new Server(http.createServer(application), {cors: {origin: "*"}});
+    const httpServer = http.createServer(application);
+    return httpServer;
+  }
+
+  private createSocketServer(): Server {
+    const httpServer = this.httpServer;
+    const server = new Server(httpServer, {cors: {origin: "*"}});
     return server;
   }
 
@@ -166,6 +178,10 @@ export class Main {
     WordRestController.use(this.application, this.agenda);
   }
 
+  private useSocketControllers(): void {
+    DebugSocketController.use(this.application, this.server);
+  }
+
   private useJobControllers(): void {
     DictionaryJobController.use(this.agenda);
     RegularJobController.use(this.agenda);
@@ -205,7 +221,7 @@ export class Main {
       }
     };
     this.application.use("/internal*", internalHandler);
-    this.application.use("/*", otherHandler);
+    this.application.use(/\/((?!socket.io).)*/, otherHandler);
   }
 
   private addErrorHandler(): void {
@@ -217,7 +233,7 @@ export class Main {
   }
 
   private listen(): void {
-    this.application.listen(+PORT, () => {
+    this.httpServer.listen(+PORT, () => {
       LogUtil.log("server", {port: +PORT});
     });
   }

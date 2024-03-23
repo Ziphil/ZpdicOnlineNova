@@ -5,7 +5,7 @@ import {FilledMiddlewareBody, Request, Response, RestController} from "/server/c
 import {checkDictionary, checkMe} from "/server/controller/rest/internal/middleware";
 import {ExampleCreator} from "/server/creator";
 import {ExampleModel} from "/server/model";
-import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 import {QueryRange} from "/server/util/query";
 import {mapWithSize} from "/server/util/with-size";
 

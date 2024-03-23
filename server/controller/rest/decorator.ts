@@ -2,7 +2,7 @@
 
 import {NextFunction, Request, RequestHandlerParams, Response} from "express-serve-static-core";
 import "reflect-metadata";
-import {RestController} from "./controller";
+import {RestController} from "/server/controller/rest/controller";
 
 
 const REST_METADATA_KEY = Symbol("rest");
@@ -20,8 +20,9 @@ export function controller(path: string): ClassDecorator {
   const decorator = function (clazz: Function): void {
     const originalSetup = clazz.prototype.setup;
     clazz.prototype.setup = function (this: RestController): void {
-      const outerThis = this as any;
       const metadata = Reflect.getMetadata(REST_METADATA_KEY, clazz.prototype) as RestMetadata;
+      const outerThis = this as any;
+      this.path = path;
       for (const spec of metadata) {
         const handler = function (request: Request, response: Response, next: NextFunction): void {
           Promise.resolve(outerThis[spec.key](request, response, next)).catch((error) => {
@@ -30,7 +31,6 @@ export function controller(path: string): ClassDecorator {
         };
         this.router[spec.method](spec.path, ...spec.befores, handler, ...spec.afters);
       }
-      this.path = path;
       originalSetup.call(this);
     };
   };

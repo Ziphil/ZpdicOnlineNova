@@ -14,10 +14,9 @@ export class JobController {
   protected setup(): void {
   }
 
-  public static use<C extends JobController>(this: new(agenda: Agenda) => C, agenda: Agenda): C {
+  public static use<C extends JobController>(this: new(agenda: Agenda) => C, agenda: Agenda): void {
     const controller = new this(agenda);
     controller.setup();
-    return controller;
   }
 
 }

@@ -1,7 +1,7 @@
 //
 
 import {AxiosResponseSpec} from "/client/util/request";
-import type {ErrorResponseData, ProcessName, SuccessResponseData} from "/server/type/internal";
+import type {ErrorResponseData, ProcessName, SuccessResponseData} from "/server/type/rest/internal";
 
 
 export function switchResponse<N extends ProcessName, R>(response: AxiosResponseSpec<N>, whenSuccess: (body: SuccessResponseData<N>) => R): R | void;

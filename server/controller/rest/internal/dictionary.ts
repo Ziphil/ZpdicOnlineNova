@@ -5,7 +5,7 @@ import {FilledMiddlewareBody, Request, Response, RestController} from "/server/c
 import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/controller/rest/internal/middleware";
 import {DictionaryCreator, DictionaryParameterCreator, SuggestionCreator, UserCreator, WordCreator, WordParameterCreator} from "/server/creator";
 import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
-import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 import {sanitizeFileName} from "/server/util/misc";
 import {QueryRange} from "/server/util/query";
 import {mapWithSizeAsync} from "/server/util/with-size";

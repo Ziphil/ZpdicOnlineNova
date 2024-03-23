@@ -5,7 +5,7 @@ import {FilledMiddlewareBody, Request, Response, RestController} from "/server/c
 import {checkMe, checkRecaptcha, login, logout} from "/server/controller/rest/internal/middleware";
 import {UserCreator} from "/server/creator";
 import {UserModel} from "/server/model";
-import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 import {AwsUtil} from "/server/util/aws";
 import {MailUtil} from "/server/util/mail";
 

@@ -4,7 +4,7 @@ import {before, controller, post} from "/server/controller/rest/decorator";
 import {Request, Response, RestController} from "/server/controller/rest/internal/controller";
 import {checkRecaptcha, parseMe} from "/server/controller/rest/internal/middleware";
 import {UserModel} from "/server/model";
-import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 import {MailUtil} from "/server/util/mail";
 
 

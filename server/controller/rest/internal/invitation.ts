@@ -5,7 +5,7 @@ import {FilledMiddlewareBody, Request, Response, RestController} from "/server/c
 import {checkDictionary, checkMe} from "/server/controller/rest/internal/middleware";
 import {InvitationCreator} from "/server/creator";
 import {CustomError, InvitationModel, UserModel} from "/server/model";
-import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 
 
 @controller(SERVER_PATH_PREFIX)

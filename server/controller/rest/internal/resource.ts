@@ -3,7 +3,7 @@
 import {before, controller, post} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, Request, Response, RestController} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe, checkRecaptcha} from "/server/controller/rest/internal/middleware";
-import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 import {AwsUtil} from "/server/util/aws";
 import {QueryRange} from "/server/util/query";
 

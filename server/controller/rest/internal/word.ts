@@ -4,7 +4,7 @@ import {before, controller, post} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, Request, Response, RestController} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe} from "/server/controller/rest/internal/middleware";
 import {WordCreator} from "/server/creator";
-import {SERVER_PATH_PREFIX} from "/server/type/internal";
+import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 
 
 @controller(SERVER_PATH_PREFIX)

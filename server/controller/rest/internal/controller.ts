@@ -14,7 +14,7 @@ import {
   RequestData,
   ResponseData,
   SuccessResponseData
-} from "/server/type/internal";
+} from "/server/type/rest/internal";
 
 
 export class RestController extends BaseRestController {

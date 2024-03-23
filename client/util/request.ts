@@ -4,12 +4,12 @@ import axios from "axios";
 import {AxiosRequestConfig, AxiosResponse} from "axios";
 import {appendValueToFormData, toFormData} from "/client/util/form-data";
 import {RECAPTCHA_KEY, VERSION} from "/client/variable";
-import type {ProcessName, RequestData, ResponseData} from "/server/type/internal";
+import type {ProcessName, RequestData, ResponseData} from "/server/type/rest/internal";
 
-
-const client = axios.create({timeout: 10000, validateStatus: () => true});
 
 export const SERVER_PATH_PREFIX = "/internal/" + VERSION;
+
+const client = axios.create({timeout: 10000, validateStatus: () => true});
 
 /** サーバーにリクエストを送信します。
  * サーバーのレスポンスの種類にかかわらず、必ず `AxiosResponseSpec` オブジェクトを返します。
