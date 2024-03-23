@@ -53,62 +53,28 @@ export class Controller extends BaseController {
 }
 
 
-export interface Request<N extends ProcessName> extends ExpressRequest<ExpressParams, ResponseData<N>, RequestData<N>, never> {
-
-  /** GET リクエストの際のクエリ文字列をパースした結果です。
-   * 内部処理に使う API は全て POST リクエストのみ受け付けるようになっているので、`never` 型を指定してあります。*/
-  query: never;
-
-  /** POST リクエストの際のリクエストボディをパースした結果です。
-   * 型安全性のため、別ファイルの型定義に従って Express が定まる型より狭い型を指定してあります。*/
-  body: RequestData<N>;
-
-  /** ユーザーの検証の結果として得られた JSON トークンが格納されます。
-   * このプロパティは、`login` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
-  token?: string;
-
-  /** 認証に成功した場合にユーザーデータが格納されます。
-   * このプロパティは、`authenticate` ミドルウェアおよび `verifyUser` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
-  me?: User;
-
-  /** ユーザ－に辞書の編集権限があった場合に辞書データが格納されます。
-   * このプロパティは、`verifyDictionary` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
-  dictionary?: Dictionary;
-
-  /** reCAPTCHA が返したスコアが格納されます。
-   * このプロパティは、`verifyRecaptcha` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
-  recaptchaScore?: number;
-
-  middlewareBody: Required<MiddlewareBody>;
-
-}
-
-
-export interface Response<N extends ProcessName> extends ExpressResponse<ResponseData<N>, never> {
-
-}
-
-
 export interface MiddlewareBody {
 
   /** ログイン中のユーザーデータです。
-    * ログインに成功している場合は、ユーザーデータが格納されます。
-    * ログインに失敗している場合は、`null` が格納されます。*/
+   * このプロパティは、`parseMe`, `login` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
   me?: User | null;
 
   /** リクエストに関連する辞書データです。
-    * このプロパティは、`verifyDictionary` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
+   * このプロパティは、`parseDictionary` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
   dictionary?: Dictionary | null;
 
-  /** ログイン処理の結果として得られた JSON トークンです。*/
+  /** ログイン処理の結果として得られた JSON トークンです。
+   * このプロパティは、`login` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
   token?: string;
 
   /** reCAPTCHA が返したスコアが格納されます。
-    * このプロパティは、`verifyRecaptcha` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
+   * このプロパティは、`parseRecaptcha` ミドルウェアが呼び出された場合にのみ、値が格納されます。*/
   recaptchaScore?: number | null;
 
 }
 
 
-export type PartlyNonNullable<T, K extends keyof T> = T & {[P in K]-?: NonNullable<T[P]>};
 export type FilledMiddlewareBody<K extends keyof MiddlewareBody> = Required<MiddlewareBody> & {[P in K]-?: NonNullable<MiddlewareBody[P]>};
+
+export type Request<N extends ProcessName> = ExpressRequest<ExpressParams, ResponseData<N>, RequestData<N>, never> & {middlewareBody: Required<MiddlewareBody>};
+export type Response<N extends ProcessName> = ExpressResponse<ResponseData<N>, never>;
