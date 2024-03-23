@@ -69,6 +69,7 @@
     "aws-sdk": "^2.1067.0",
     "axios": "^1.6.2",
     "bcrypt": "^5.0.1",
+    "bocu-stream": "^1.0.0",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
