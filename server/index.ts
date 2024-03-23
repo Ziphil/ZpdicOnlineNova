@@ -23,7 +23,6 @@ import {
   UserController,
   WordController
 } from "/server/controller/internal";
-import {DictionaryModel, WordModel} from "/server/model";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
 import {
@@ -35,6 +34,7 @@ import {
   PORT,
   SENDGRID_KEY
 } from "/server/variable";
+import {DictionaryWorker, RegularWorker} from "/server/worker/internal";
 
 
 export class Main {
@@ -59,7 +59,7 @@ export class Main {
     this.setupDirectories();
     this.addApiRouters();
     this.addStaticRouters();
-    this.setupWorkers();
+    this.addWorkers();
     this.setupSchedules();
     this.addFallbackHandlers();
     this.addErrorHandler();
@@ -158,27 +158,9 @@ export class Main {
     this.application.use("/static", express.static(process.cwd() + "/dist/static"));
   }
 
-  private setupWorkers(): void {
-    this.agenda.define<any>("uploadDictionary", async (job, done) => {
-      const {number, path, originalPath} = job.attrs.data ?? {};
-      LogUtil.log("worker/uploadDictionary", {number});
-      const dictionary = await DictionaryModel.fetchOneByNumber(number);
-      if (dictionary !== null) {
-        await dictionary.upload(path, originalPath);
-        await fs.promises.unlink(path);
-      }
-      done();
-    });
-    this.agenda.define<any>("discardOldHistoryWords", async (job, done) => {
-      LogUtil.log("worker/discardOldHistoryWords", {});
-      await WordModel.discardOldHistory(90);
-      done();
-    });
-    this.agenda.define<any>("addHistories", async (job, done) => {
-      LogUtil.log("worker/addHistories", {});
-      await HistoryController.addHistories();
-      done();
-    });
+  private addWorkers(): void {
+    DictionaryWorker.use(this.agenda);
+    RegularWorker.use(this.agenda);
   }
 
   private setupSchedules(): void {

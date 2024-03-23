@@ -21,8 +21,4 @@ export class HistoryController extends Controller {
     Controller.respond(response, body);
   }
 
-  public static async addHistories(): Promise<void> {
-    await HistoryModel.addAll();
-  }
-
 }
