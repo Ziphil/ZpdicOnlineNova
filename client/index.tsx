@@ -3,6 +3,7 @@
 import {createRoot} from "react-dom/client";
 import {Root} from "/client/component/root";
 import {RECAPTCHA_KEY} from "/client/variable";
+import "/client/util/socket";
 
 
 export class Main {

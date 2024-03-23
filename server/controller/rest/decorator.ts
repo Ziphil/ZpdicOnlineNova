@@ -22,7 +22,6 @@ export function controller(path: string): ClassDecorator {
     clazz.prototype.setup = function (this: RestController): void {
       const metadata = Reflect.getMetadata(REST_METADATA_KEY, clazz.prototype) as RestMetadata;
       const outerThis = this as any;
-      this.path = path;
       for (const spec of metadata) {
         const handler = function (request: Request, response: Response, next: NextFunction): void {
           Promise.resolve(outerThis[spec.key](request, response, next)).catch((error) => {
@@ -31,6 +30,7 @@ export function controller(path: string): ClassDecorator {
         };
         this.router[spec.method](spec.path, ...spec.befores, handler, ...spec.afters);
       }
+      this.path = path;
       originalSetup.call(this);
     };
   };

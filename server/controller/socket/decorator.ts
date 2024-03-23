@@ -33,6 +33,7 @@ export function controller(namespace: string): ClassDecorator {
       for (const spec of metadata) {
         socket.on(spec.name, (this as any)[spec.key].bind(this));
       }
+      this.socket = socket;
       originalSetupConnection.call(this);
     };
   };
