@@ -64,7 +64,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@sendgrid/mail": "^8.1.0",
     "@typegoose/typegoose": "^9.5.0",
-    "agenda": "^4.3.0",
+    "agenda": "^5.0.0",
     "akrantiain": "^1.2.1",
     "aws-sdk": "^2.1067.0",
     "axios": "^1.6.2",

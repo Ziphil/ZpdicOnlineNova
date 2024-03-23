@@ -149,7 +149,7 @@ export class Main {
   }
 
   private setupWorkers(): void {
-    agenda.define("uploadDictionary", async (job, done) => {
+    agenda.define<any>("uploadDictionary", async (job, done) => {
       const {number, path, originalPath} = job.attrs.data ?? {};
       LogUtil.log("worker/uploadDictionary", {number});
       const dictionary = await DictionaryModel.fetchOneByNumber(number);
@@ -159,12 +159,12 @@ export class Main {
       }
       done();
     });
-    agenda.define("discardOldHistoryWords", async (job, done) => {
+    agenda.define<any>("discardOldHistoryWords", async (job, done) => {
       LogUtil.log("worker/discardOldHistoryWords", {});
       await WordModel.discardOldHistory(90);
       done();
     });
-    agenda.define("addHistories", async (job, done) => {
+    agenda.define<any>("addHistories", async (job, done) => {
       LogUtil.log("worker/addHistories", {});
       await HistoryController.addHistories();
       done();
