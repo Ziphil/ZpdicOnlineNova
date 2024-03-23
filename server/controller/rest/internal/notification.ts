@@ -1,8 +1,8 @@
 //
 
-import {before, controller, post} from "/server/controller/decorator";
-import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {checkMe} from "/server/controller/internal/middleware";
+import {before, controller, post} from "/server/controller/rest/decorator";
+import {Request, Response, RestController} from "/server/controller/rest/internal/controller";
+import {checkMe} from "/server/controller/rest/internal/middleware";
 import {NotificationCreator} from "/server/creator";
 import {NotificationModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -11,7 +11,7 @@ import {mapWithSize} from "/server/util/with-size";
 
 
 @controller(SERVER_PATH_PREFIX)
-export class NotificationController extends Controller {
+export class NotificationRestController extends RestController {
 
   @post("/addNotification")
   @before(checkMe("admin"))
@@ -19,7 +19,7 @@ export class NotificationController extends Controller {
     const {type, title, text} = request.body;
     const notification = await NotificationModel.add(type, title, text);
     const body = NotificationCreator.create(notification);
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/fetchNotifications")
@@ -28,7 +28,7 @@ export class NotificationController extends Controller {
     const range = new QueryRange(offset, size);
     const hitResult = await NotificationModel.fetch(range);
     const body = mapWithSize(hitResult, NotificationCreator.create);
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
 }

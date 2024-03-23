@@ -1,15 +1,15 @@
 //
 
-import {before, controller, post} from "/server/controller/decorator";
-import {Controller, Request, Response} from "/server/controller/internal/controller";
-import {checkRecaptcha, parseMe} from "/server/controller/internal/middleware";
+import {before, controller, post} from "/server/controller/rest/decorator";
+import {Request, Response, RestController} from "/server/controller/rest/internal/controller";
+import {checkRecaptcha, parseMe} from "/server/controller/rest/internal/middleware";
 import {UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 import {MailUtil} from "/server/util/mail";
 
 
 @controller(SERVER_PATH_PREFIX)
-export class OtherController extends Controller {
+export class OtherRestController extends RestController {
 
   @post("/fetchDocument")
   public async [Symbol()](request: Request<"fetchDocument">, response: Response<"fetchDocument">): Promise<void> {
@@ -17,7 +17,7 @@ export class OtherController extends Controller {
     const localPath = `/dist/document/${locale}/${path || "index"}.md`;
     response.sendFile(process.cwd() + localPath, (error) => {
       if (error) {
-        Controller.respondError(response, "noSuchDocument");
+        RestController.respondError(response, "noSuchDocument");
       }
     });
   }
@@ -35,12 +35,12 @@ export class OtherController extends Controller {
         const nextSubject = MailUtil.getSubject("contact", {subject});
         const nextText = MailUtil.getText("contact", {userName, email, subject, text, signedIn, name});
         MailUtil.send(administrator.email, nextSubject, nextText);
-        Controller.respond(response, null);
+        RestController.respond(response, null);
       } else {
-        Controller.respondError(response, "administratorNotFound");
+        RestController.respondError(response, "administratorNotFound");
       }
     } else {
-      Controller.respondError(response, "emptyContactText");
+      RestController.respondError(response, "emptyContactText");
     }
   }
 

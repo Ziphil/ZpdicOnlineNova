@@ -1,15 +1,15 @@
 //
 
-import {before, controller, post} from "/server/controller/decorator";
-import {Controller, FilledMiddlewareBody, Request, Response} from "/server/controller/internal/controller";
-import {checkDictionary, checkMe} from "/server/controller/internal/middleware";
+import {before, controller, post} from "/server/controller/rest/decorator";
+import {FilledMiddlewareBody, Request, Response, RestController} from "/server/controller/rest/internal/controller";
+import {checkDictionary, checkMe} from "/server/controller/rest/internal/middleware";
 import {InvitationCreator} from "/server/creator";
 import {CustomError, InvitationModel, UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
 
 
 @controller(SERVER_PATH_PREFIX)
-export class InvitationController extends Controller {
+export class InvitationRestController extends RestController {
 
   @post("/addInvitation")
   @before(checkMe(), checkDictionary("own"))
@@ -21,12 +21,12 @@ export class InvitationController extends Controller {
       try {
         const invitation = await InvitationModel.add(type, dictionary, user);
         const body = await InvitationCreator.create(invitation);
-        Controller.respond(response, body);
+        RestController.respond(response, body);
       } catch (error) {
-        Controller.respondByCustomError(response, ["userCanAlreadyEdit", "userCanAlreadyOwn", "editInvitationAlreadyAdded", "transferInvitationAlreadyAdded"], error);
+        RestController.respondByCustomError(response, ["userCanAlreadyEdit", "userCanAlreadyOwn", "editInvitationAlreadyAdded", "transferInvitationAlreadyAdded"], error);
       }
     } else {
-      Controller.respondError(response, "noSuchUser");
+      RestController.respondError(response, "noSuchUser");
     }
   }
 
@@ -40,16 +40,16 @@ export class InvitationController extends Controller {
       try {
         await invitation.respond(me, accept);
         const body = await InvitationCreator.create(invitation);
-        Controller.respond(response, body);
+        RestController.respond(response, body);
       } catch (error) {
         if (CustomError.isCustomError(error) && error.type === "forbidden") {
-          Controller.respondForbiddenError(response);
+          RestController.respondForbiddenError(response);
         } else {
           throw error;
         }
       }
     } else {
-      Controller.respondError(response, "noSuchInvitation");
+      RestController.respondError(response, "noSuchInvitation");
     }
   }
 
@@ -60,7 +60,7 @@ export class InvitationController extends Controller {
     const {type} = request.body;
     const invitations = await InvitationModel.fetchByUser(type, me);
     const body = await Promise.all(invitations.map(InvitationCreator.create));
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
 }

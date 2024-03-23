@@ -1,23 +1,23 @@
 //
 
 import "reflect-metadata";
-import {Worker} from "./worker";
+import {JobController} from "./controller";
 
 
-const KEY = Symbol("worker");
+const JOB_KEY = Symbol("worker");
 
-type Metadata = Array<JobHandlerSpec>;
+type JobMetadata = Array<JobHandlerSpec>;
 type JobHandlerSpec = {
   key: string | symbol,
   name: string
 };
 
-export function worker(): ClassDecorator {
+export function controller(): ClassDecorator {
   const decorator = function (clazz: Function): void {
     const originalSetup = clazz.prototype.setup;
-    clazz.prototype.setup = function (this: Worker): void {
+    clazz.prototype.setup = function (this: JobController): void {
       const outerThis = this as any;
-      const metadata = Reflect.getMetadata(KEY, clazz.prototype) as Metadata;
+      const metadata = Reflect.getMetadata(JOB_KEY, clazz.prototype) as JobMetadata;
       for (const spec of metadata) {
         this.agenda.define(spec.name, async (job, done) => {
           await outerThis[spec.key](job);
@@ -38,11 +38,11 @@ export function job(name: string): MethodDecorator {
   return decorator;
 }
 
-function getMetadata(target: object): Metadata {
-  let metadata = Reflect.getMetadata(KEY, target) as Metadata;
+function getMetadata(target: object): JobMetadata {
+  let metadata = Reflect.getMetadata(JOB_KEY, target) as JobMetadata;
   if (!metadata) {
     metadata = [];
-    Reflect.defineMetadata(KEY, metadata, target);
+    Reflect.defineMetadata(JOB_KEY, metadata, target);
   }
   return metadata;
 }

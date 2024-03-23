@@ -8,21 +8,27 @@ import cookieParser from "cookie-parser";
 import express from "express";
 import {Express, NextFunction, Request, Response} from "express";
 import fs from "fs";
+import http from "http";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import multer from "multer";
+import {Server} from "socket.io";
 import {
-  CommissionController,
-  DictionaryController,
-  ExampleController,
-  HistoryController,
-  InvitationController,
-  NotificationController,
-  OtherController,
-  ResourceController,
-  UserController,
-  WordController
-} from "/server/controller/internal";
+  DictionaryJobController,
+  RegularJobController
+} from "/server/controller/job/internal";
+import {
+  CommissionRestController,
+  DictionaryRestController,
+  ExampleRestController,
+  HistoryRestController,
+  InvitationRestController,
+  NotificationRestController,
+  OtherRestController,
+  ResourceRestController,
+  UserRestController,
+  WordRestController
+} from "/server/controller/rest/internal";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
 import {
@@ -34,16 +40,17 @@ import {
   PORT,
   SENDGRID_KEY
 } from "/server/variable";
-import {DictionaryWorker, RegularWorker} from "/server/worker/internal";
 
 
 export class Main {
 
   private application: Express;
+  private server: Server;
   private agenda: Agenda;
 
   public constructor() {
     this.application = express();
+    this.server = this.createSocketServer();
     this.agenda = this.createAgenda();
   }
 
@@ -57,13 +64,19 @@ export class Main {
     this.setupSendgrid();
     this.setupAws();
     this.setupDirectories();
-    this.addApiRouters();
-    this.addStaticRouters();
-    this.addWorkers();
+    this.useRestControllers();
+    this.useJobControllers();
     this.setupSchedules();
+    this.addStaticHandlers();
     this.addFallbackHandlers();
     this.addErrorHandler();
     this.listen();
+  }
+
+  private createSocketServer(): Server {
+    const application = this.application;
+    const server = new Server(http.createServer(application), {cors: {origin: "*"}});
+    return server;
   }
 
   private createAgenda(): Agenda {
@@ -140,27 +153,22 @@ export class Main {
 
   /** ルーターの設定を行います。
    * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
-  private addApiRouters(): void {
-    CommissionController.use(this.application, this.agenda);
-    DictionaryController.use(this.application, this.agenda);
-    ExampleController.use(this.application, this.agenda);
-    HistoryController.use(this.application, this.agenda);
-    InvitationController.use(this.application, this.agenda);
-    NotificationController.use(this.application, this.agenda);
-    OtherController.use(this.application, this.agenda);
-    ResourceController.use(this.application, this.agenda);
-    UserController.use(this.application, this.agenda);
-    WordController.use(this.application, this.agenda);
+  private useRestControllers(): void {
+    CommissionRestController.use(this.application, this.agenda);
+    DictionaryRestController.use(this.application, this.agenda);
+    ExampleRestController.use(this.application, this.agenda);
+    HistoryRestController.use(this.application, this.agenda);
+    InvitationRestController.use(this.application, this.agenda);
+    NotificationRestController.use(this.application, this.agenda);
+    OtherRestController.use(this.application, this.agenda);
+    ResourceRestController.use(this.application, this.agenda);
+    UserRestController.use(this.application, this.agenda);
+    WordRestController.use(this.application, this.agenda);
   }
 
-  private addStaticRouters(): void {
-    this.application.use("/client", express.static(process.cwd() + "/dist/client"));
-    this.application.use("/static", express.static(process.cwd() + "/dist/static"));
-  }
-
-  private addWorkers(): void {
-    DictionaryWorker.use(this.agenda);
-    RegularWorker.use(this.agenda);
+  private useJobControllers(): void {
+    DictionaryJobController.use(this.agenda);
+    RegularJobController.use(this.agenda);
   }
 
   private setupSchedules(): void {
@@ -169,6 +177,11 @@ export class Main {
       this.agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
       this.agenda.start();
     });
+  }
+
+  private addStaticHandlers(): void {
+    this.application.use("/client", express.static(process.cwd() + "/dist/client"));
+    this.application.use("/static", express.static(process.cwd() + "/dist/static"));
   }
 
   /** ルーターで設定されていない URL にアクセスされたときのフォールバックの設定をします。

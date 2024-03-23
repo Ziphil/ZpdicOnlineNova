@@ -158,7 +158,7 @@ export class DictionarySchema extends DiscardableSchema {
     await this.startUpload();
     const settings = this.settings as any;
     let externalData = {};
-    const promise = new Promise<Dictionary>((resolve, reject) => {
+    await new Promise<Dictionary>((resolve, reject) => {
       const stream = createDeserializer(path, originalPath, this);
       if (stream !== null) {
         let count = 0;
@@ -198,7 +198,6 @@ export class DictionarySchema extends DiscardableSchema {
         resolve(this);
       }
     });
-    await promise;
     await this.save();
     return this;
   }

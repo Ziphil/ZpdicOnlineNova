@@ -4,7 +4,7 @@ import Agenda from "agenda";
 import {Express, Router} from "express";
 
 
-export class Controller {
+export class RestController {
 
   protected application: Express;
   protected agenda: Agenda;
@@ -23,7 +23,7 @@ export class Controller {
 
   /** このクラスを継承したクラスのインスタンスを生成し、引数として渡されたアプリケーションオブジェクトに対してルーターの設定を行います。
    * このときに生成したインスタンスを返します。*/
-  public static use<C extends Controller>(this: new(application: Express, agenda: Agenda) => C, application: Express, agenda: Agenda): C {
+  public static use<C extends RestController>(this: new(application: Express, agenda: Agenda) => C, application: Express, agenda: Agenda): C {
     const controller = new this(application, agenda);
     controller.setup();
     application.use(controller.path, controller.router);

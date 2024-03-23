@@ -1,23 +1,17 @@
 //
 
-import {
-  NextFunction,
-  Request,
-  RequestHandlerParams,
-  Response
-} from "express-serve-static-core";
+import {NextFunction, Request, RequestHandlerParams, Response} from "express-serve-static-core";
 import "reflect-metadata";
-import {Controller} from "/server/controller/controller";
+import {RestController} from "./controller";
 
 
-const KEY = Symbol("controller");
+const REST_METADATA_KEY = Symbol("rest");
 
-type Metadata = Array<RequestHandlerSpec>;
-type MethodType = "get" | "post";
+type RestMetadata = Array<RequestHandlerSpec>;
 type RequestHandlerSpec = {
   key: string | symbol,
   path: string,
-  method: MethodType,
+  method: "get" | "post",
   befores: Array<RequestHandlerParams<any>>,
   afters: Array<RequestHandlerParams<any>>
 };
@@ -25,9 +19,9 @@ type RequestHandlerSpec = {
 export function controller(path: string): ClassDecorator {
   const decorator = function (clazz: Function): void {
     const originalSetup = clazz.prototype.setup;
-    clazz.prototype.setup = function (this: Controller): void {
+    clazz.prototype.setup = function (this: RestController): void {
       const outerThis = this as any;
-      const metadata = Reflect.getMetadata(KEY, clazz.prototype) as Metadata;
+      const metadata = Reflect.getMetadata(REST_METADATA_KEY, clazz.prototype) as RestMetadata;
       for (const spec of metadata) {
         const handler = function (request: Request, response: Response, next: NextFunction): void {
           Promise.resolve(outerThis[spec.key](request, response, next)).catch((error) => {
@@ -71,7 +65,7 @@ export function after(...middlewares: Array<RequestHandlerParams>): MethodDecora
   return decorator;
 }
 
-function setPath(target: object, key: string | symbol, method: MethodType, path: string): void {
+function setPath(target: object, key: string | symbol, method: "get" | "post", path: string): void {
   const spec = findHandlerSpec(target, key);
   spec.method = method;
   spec.path = path;
@@ -87,10 +81,10 @@ function pushMiddlewares(target: object, key: string | symbol, timing: string, .
 }
 
 function findHandlerSpec(target: object, key: string | symbol): RequestHandlerSpec {
-  let metadata = Reflect.getMetadata(KEY, target) as Metadata;
+  let metadata = Reflect.getMetadata(REST_METADATA_KEY, target) as RestMetadata;
   if (!metadata) {
     metadata = [];
-    Reflect.defineMetadata(KEY, metadata, target);
+    Reflect.defineMetadata(REST_METADATA_KEY, metadata, target);
   }
   let spec = metadata.find((spec) => spec.key === key);
   if (spec === undefined) {

@@ -5,7 +5,7 @@ import {
   Request as ExpressRequest,
   Response as ExpressResponse
 } from "express-serve-static-core";
-import {Controller as BaseController} from "/server/controller/controller";
+import {RestController as BaseRestController} from "/server/controller/rest/controller";
 import {CustomErrorCreator} from "/server/creator/error";
 import {CustomError, Dictionary, User} from "/server/model";
 import {
@@ -17,7 +17,7 @@ import {
 } from "/server/type/internal";
 
 
-export class Controller extends BaseController {
+export class RestController extends BaseRestController {
 
   protected static respond<N extends ProcessName>(response: Response<N>, body: SuccessResponseData<N>): void {
     response.json(body).end();

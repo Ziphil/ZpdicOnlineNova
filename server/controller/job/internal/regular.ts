@@ -1,14 +1,14 @@
 //
 
 import {Job} from "agenda";
+import {JobController} from "/server/controller/job/controller";
+import {controller, job} from "/server/controller/job/decorator";
 import {HistoryModel, WordModel} from "/server/model";
 import {LogUtil} from "/server/util/log";
-import {job, worker} from "/server/worker/decorator";
-import {Worker} from "/server/worker/worker";
 
 
-@worker()
-export class RegularWorker extends Worker {
+@controller()
+export class RegularJobController extends JobController {
 
   @job("discardOldHistoryWords")
   public async [Symbol()](job: Job<any>): Promise<void> {

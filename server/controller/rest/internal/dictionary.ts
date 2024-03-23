@@ -1,8 +1,8 @@
 //
 
-import {before, controller, post} from "/server/controller/decorator";
-import {Controller, FilledMiddlewareBody, Request, Response} from "/server/controller/internal/controller";
-import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/controller/internal/middleware";
+import {before, controller, post} from "/server/controller/rest/decorator";
+import {FilledMiddlewareBody, Request, Response, RestController} from "/server/controller/rest/internal/controller";
+import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/controller/rest/internal/middleware";
 import {DictionaryCreator, DictionaryParameterCreator, SuggestionCreator, UserCreator, WordCreator, WordParameterCreator} from "/server/creator";
 import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -12,7 +12,7 @@ import {mapWithSizeAsync} from "/server/util/with-size";
 
 
 @controller(SERVER_PATH_PREFIX)
-export class DictionaryController extends Controller {
+export class DictionaryRestController extends RestController {
 
   @post("/createDictionary")
   @before(checkMe())
@@ -21,7 +21,7 @@ export class DictionaryController extends Controller {
     const {name} = request.body;
     const dictionary = await DictionaryModel.addEmpty(name, me);
     const body = DictionaryCreator.create(dictionary);
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/uploadDictionary")
@@ -36,12 +36,12 @@ export class DictionaryController extends Controller {
         const number = dictionary.number;
         await this.agenda.now("uploadDictionary", {number, path, originalPath});
         const body = DictionaryCreator.create(dictionary);
-        Controller.respond(response, body);
+        RestController.respond(response, body);
       } else {
-        Controller.respondError(response, "dictionarySizeTooLarge");
+        RestController.respondError(response, "dictionarySizeTooLarge");
       }
     } else {
-      Controller.respondError(response, "invalidArgument");
+      RestController.respondError(response, "invalidArgument");
     }
   }
 
@@ -50,7 +50,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: Request<"discardDictionary">, response: Response<"discardDictionary">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     await dictionary.discard();
-    Controller.respond(response, null);
+    RestController.respond(response, null);
   }
 
   @post("/changeDictionaryName")
@@ -60,7 +60,7 @@ export class DictionaryController extends Controller {
     const {name} = request.body;
     await dictionary.changeName(name);
     const body = DictionaryCreator.create(dictionary);
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/changeDictionaryParamName")
@@ -71,16 +71,16 @@ export class DictionaryController extends Controller {
     try {
       await dictionary.changeParamName(paramName);
       const body = DictionaryCreator.create(dictionary);
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } catch (error) {
       if (error.name === "ValidationError") {
         if (error.errors.paramName) {
-          Controller.respondError(response, "invalidDictionaryParamName");
+          RestController.respondError(response, "invalidDictionaryParamName");
         } else {
           throw error;
         }
       } else {
-        Controller.respondByCustomError(response, ["duplicateDictionaryParamName"], error);
+        RestController.respondByCustomError(response, ["duplicateDictionaryParamName"], error);
       }
     }
   }
@@ -94,12 +94,12 @@ export class DictionaryController extends Controller {
     if (user) {
       try {
         await dictionary.discardAuthorizedUser(user);
-        Controller.respond(response, null);
+        RestController.respond(response, null);
       } catch (error) {
-        Controller.respondByCustomError(response, ["noSuchDictionaryAuthorizedUser"], error);
+        RestController.respondByCustomError(response, ["noSuchDictionaryAuthorizedUser"], error);
       }
     } else {
-      Controller.respondError(response, "noSuchDictionaryAuthorizedUser");
+      RestController.respondError(response, "noSuchDictionaryAuthorizedUser");
     }
   }
 
@@ -110,7 +110,7 @@ export class DictionaryController extends Controller {
     const {secret} = request.body;
     await dictionary.changeSecret(secret);
     const body = DictionaryCreator.create(dictionary);
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/changeDictionaryExplanation")
@@ -120,7 +120,7 @@ export class DictionaryController extends Controller {
     const {explanation} = request.body;
     await dictionary.changeExplanation(explanation);
     const body = DictionaryCreator.create(dictionary);
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/changeDictionarySettings")
@@ -130,7 +130,7 @@ export class DictionaryController extends Controller {
     const {settings} = request.body;
     await dictionary.changeSettings(settings);
     const body = DictionaryCreator.create(dictionary);
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/searchDictionary")
@@ -140,7 +140,7 @@ export class DictionaryController extends Controller {
     const range = new QueryRange(offset, size);
     const hitResult = await DictionaryModel.search(parameter, range);
     const body = await mapWithSizeAsync(hitResult, DictionaryCreator.createDetailed);
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/searchWord")
@@ -155,7 +155,7 @@ export class DictionaryController extends Controller {
       words: await mapWithSizeAsync(hitResult.words, WordCreator.createDetailed),
       suggestions: hitResult.suggestions.map(SuggestionCreator.create)
     };
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/downloadDictionary")
@@ -176,9 +176,9 @@ export class DictionaryController extends Controller {
     const dictionary = await DictionaryModel.fetchOneByIdentifier(identifier);
     if (dictionary) {
       const body = await DictionaryCreator.createDetailed(dictionary);
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchDictionary");
+      RestController.respondError(response, "noSuchDictionary");
     }
   }
 
@@ -187,7 +187,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: Request<"fetchWordSize">, response: Response<"fetchWordSize">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const body = await dictionary.countWords();
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/fetchWordNameFrequencies")
@@ -195,7 +195,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: Request<"fetchWordNameFrequencies">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const body = await dictionary.calcWordNameFrequencies();
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/fetchDictionaryStatistics")
@@ -203,7 +203,7 @@ export class DictionaryController extends Controller {
   public async [Symbol()](request: Request<"fetchDictionaryStatistics">, response: Response<"fetchDictionaryStatistics">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const body = await dictionary.calcStatistics();
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/suggestDictionaryTitles")
@@ -213,7 +213,7 @@ export class DictionaryController extends Controller {
     const {propertyName, pattern} = request.body;
     const titles = await dictionary.suggestTitles(propertyName, pattern);
     const body = titles;
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/fetchDictionaryAuthorizedUsers")
@@ -223,7 +223,7 @@ export class DictionaryController extends Controller {
     const {authority} = request.body;
     const users = await dictionary.fetchAuthorizedUsers(authority);
     const body = users.map(UserCreator.create);
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/fetchUserDictionaries")
@@ -237,9 +237,9 @@ export class DictionaryController extends Controller {
       const includeSecret = me?.id === user.id;
       const dictionaries = await DictionaryModel.fetchByUser(user, authority, includeSecret);
       const body = await Promise.all(dictionaries.map((dictionary) => DictionaryCreator.createUser(dictionary, user)));
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchUser");
+      RestController.respondError(response, "noSuchUser");
     }
   }
 
@@ -256,7 +256,7 @@ export class DictionaryController extends Controller {
       }
     }));
     const body = {dictionary, word, example, user};
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/fetchDictionaryAuthorization")
@@ -267,9 +267,9 @@ export class DictionaryController extends Controller {
     if (me) {
       const hasAuthority = await dictionary.hasAuthority(me, authority);
       const body = hasAuthority;
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } else {
-      Controller.respond(response, false);
+      RestController.respond(response, false);
     }
   }
 
@@ -280,9 +280,9 @@ export class DictionaryController extends Controller {
     const {authority} = request.body;
     const hasAuthority = await dictionary.hasAuthority(me, authority);
     if (hasAuthority) {
-      Controller.respond(response, null);
+      RestController.respond(response, null);
     } else {
-      Controller.respondForbiddenError(response);
+      RestController.respondForbiddenError(response);
     }
   }
 

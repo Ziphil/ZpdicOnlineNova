@@ -1,8 +1,8 @@
 //
 
-import {before, controller, post} from "/server/controller/decorator";
-import {Controller, FilledMiddlewareBody, Request, Response} from "/server/controller/internal/controller";
-import {checkMe, checkRecaptcha, login, logout} from "/server/controller/internal/middleware";
+import {before, controller, post} from "/server/controller/rest/decorator";
+import {FilledMiddlewareBody, Request, Response, RestController} from "/server/controller/rest/internal/controller";
+import {checkMe, checkRecaptcha, login, logout} from "/server/controller/rest/internal/middleware";
 import {UserCreator} from "/server/creator";
 import {UserModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/internal";
@@ -11,7 +11,7 @@ import {MailUtil} from "/server/util/mail";
 
 
 @controller(SERVER_PATH_PREFIX)
-export class UserController extends Controller {
+export class UserRestController extends RestController {
 
   @post("/login")
   @before(login(30 * 24 * 60 * 60))
@@ -19,13 +19,13 @@ export class UserController extends Controller {
     const {me, token} = request.middlewareBody as FilledMiddlewareBody<"me" | "token">;
     const userBody = UserCreator.createDetailed(me);
     const body = {token, user: userBody};
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/logout")
   @before(logout())
   public async [Symbol()](request: Request<"logout">, response: Response<"logout">): Promise<void> {
-    Controller.respond(response, null);
+    RestController.respond(response, null);
   }
 
   @post("/registerUser")
@@ -39,18 +39,18 @@ export class UserController extends Controller {
       const subject = MailUtil.getSubject("registerUser");
       const text = MailUtil.getText("registerUser", {name, url});
       MailUtil.send(user.email, subject, text);
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } catch (error) {
       if (error.name === "ValidationError") {
         if (error.errors.name) {
-          Controller.respondError(response, "invalidUserName");
+          RestController.respondError(response, "invalidUserName");
         } else if (error.errors.email) {
-          Controller.respondError(response, "invalidUserEmail");
+          RestController.respondError(response, "invalidUserEmail");
         } else {
           throw error;
         }
       } else {
-        Controller.respondByCustomError(response, ["duplicateUserName", "duplicateUserEmail", "invalidUserPassword"], error);
+        RestController.respondByCustomError(response, ["duplicateUserName", "duplicateUserEmail", "invalidUserPassword"], error);
       }
     }
   }
@@ -63,7 +63,7 @@ export class UserController extends Controller {
     try {
       await me.changeScreenName(screenName);
       const body = UserCreator.create(me);
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } catch (error) {
       throw error;
     }
@@ -77,12 +77,12 @@ export class UserController extends Controller {
     try {
       await me.changeEmail(email);
       const body = UserCreator.create(me);
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } catch (error) {
       if (error.name === "ValidationError" && error.errors.email) {
-        Controller.respondError(response, "invalidUserEmail");
+        RestController.respondError(response, "invalidUserEmail");
       } else {
-        Controller.respondByCustomError(response, ["duplicateUserEmail"], error);
+        RestController.respondByCustomError(response, ["duplicateUserEmail"], error);
       }
     }
   }
@@ -95,9 +95,9 @@ export class UserController extends Controller {
     try {
       await me.changePassword(password);
       const body = UserCreator.create(me);
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } catch (error) {
-      Controller.respondByCustomError(response, ["invalidUserPassword"], error);
+      RestController.respondByCustomError(response, ["invalidUserPassword"], error);
     }
   }
 
@@ -111,9 +111,9 @@ export class UserController extends Controller {
       const subject = MailUtil.getSubject("issueMyActivateToken");
       const text = MailUtil.getText("issueMyActivateToken", {url});
       MailUtil.send(me.email, subject, text);
-      Controller.respond(response, null);
+      RestController.respond(response, null);
     } catch (error) {
-      Controller.respondByCustomError(response, ["noSuchUser", "userAlreadyActivated"], error);
+      RestController.respondByCustomError(response, ["noSuchUser", "userAlreadyActivated"], error);
     }
   }
 
@@ -127,9 +127,9 @@ export class UserController extends Controller {
       const subject = MailUtil.getSubject("issueUserResetToken");
       const text = MailUtil.getText("issueUserResetToken", {url});
       MailUtil.send(user.email, subject, text);
-      Controller.respond(response, null);
+      RestController.respond(response, null);
     } catch (error) {
-      Controller.respondByCustomError(response, ["noSuchUser"], error);
+      RestController.respondByCustomError(response, ["noSuchUser"], error);
     }
   }
 
@@ -139,9 +139,9 @@ export class UserController extends Controller {
     try {
       const user = await UserModel.activate(key, 60);
       const body = UserCreator.create(user);
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } catch (error) {
-      Controller.respondByCustomError(response, ["invalidActivateToken"], error);
+      RestController.respondByCustomError(response, ["invalidActivateToken"], error);
     }
   }
 
@@ -151,9 +151,9 @@ export class UserController extends Controller {
     try {
       const user = await UserModel.resetPassword(key, password, 60);
       const body = UserCreator.create(user);
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } catch (error) {
-      Controller.respondByCustomError(response, ["invalidResetToken", "invalidUserPassword"], error);
+      RestController.respondByCustomError(response, ["invalidResetToken", "invalidUserPassword"], error);
     }
   }
 
@@ -163,7 +163,7 @@ export class UserController extends Controller {
     const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     try {
       await me.discard();
-      Controller.respond(response, null);
+      RestController.respond(response, null);
     } catch (error) {
       throw error;
     }
@@ -174,7 +174,7 @@ export class UserController extends Controller {
   public async [Symbol()](request: Request<"fetchMe">, response: Response<"fetchMe">): Promise<void> {
     const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     const body = UserCreator.createDetailed(me);
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
   @post("/fetchUser")
@@ -183,9 +183,9 @@ export class UserController extends Controller {
     const user = await UserModel.fetchOneByName(name);
     if (user) {
       const body = UserCreator.create(user);
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } else {
-      Controller.respondError(response, "noSuchUser");
+      RestController.respondError(response, "noSuchUser");
     }
   }
 
@@ -198,9 +198,9 @@ export class UserController extends Controller {
       const configs = {contentType: "image/", sizeLimit: 1024 * 1024};
       const post = await AwsUtil.getUploadFilePost(path, configs);
       const body = post;
-      Controller.respond(response, body);
+      RestController.respond(response, body);
     } catch (error) {
-      Controller.respondError(response, "awsError");
+      RestController.respondError(response, "awsError");
     }
   }
 
@@ -209,7 +209,7 @@ export class UserController extends Controller {
     const {pattern} = request.body;
     const users = await UserModel.suggest(pattern);
     const body = users.map(UserCreator.create);
-    Controller.respond(response, body);
+    RestController.respond(response, body);
   }
 
 }
