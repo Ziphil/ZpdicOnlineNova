@@ -30,7 +30,7 @@
 .user-container {
   margin-block-start: 2zu;
   display: flex;
-  align-items: baseline;
+  align-items: center;
 }
 
 .user {
@@ -41,6 +41,7 @@
 
 .user-count {
   margin-inline-start: 1zu;
+  margin-block-end: -1zu;
   font-size: 4zu;
   color: var(--glob-mute-text-color);
 }
