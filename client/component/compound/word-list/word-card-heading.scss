@@ -33,12 +33,14 @@
   @include bold-font;
   font-size: 6zu;
   color: var(--glob-primary-heading-text-color);
+  overflow-wrap: break-word;
 }
 
 .small-name {
   @include bold-font;
   font-size: 4zu;
   color: var(--glob-primary-heading-text-color);
+  overflow-wrap: break-word;
 }
 
 .pronunciation {
