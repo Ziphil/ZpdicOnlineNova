@@ -243,7 +243,7 @@ export class DictionaryRestController extends InternalRestController {
   }
 
   @post("/fetchDictionaryAuthorizedUsers")
-  @before(checkMe(), checkDictionary())
+  @before(checkDictionary())
   public async [Symbol()](request: Request<"fetchDictionaryAuthorizedUsers">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {authority} = request.body;

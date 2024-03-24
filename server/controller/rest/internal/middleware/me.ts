@@ -12,11 +12,15 @@ import {verifyJwt} from "/server/util/jwt";
   * 認証に失敗した場合は、リクエストオブジェクトの `me` プロパティに `null` を書き込みます。*/
 export function parseMe(): RequestHandler {
   const handler = async function (request: Request & {middlewareBody: MiddlewareBody}, response: Response, next: NextFunction): Promise<void> {
-    const token = (request.signedCookies.authorization || request.headers.authorization) + "";
+    const token = request.signedCookies.authorization || request.headers.authorization;
     try {
-      const data = await verifyJwt(token);
-      const me = await UserModel.findById(data.id).exec();
-      request.middlewareBody.me = me;
+      if (token) {
+        const data = await verifyJwt(token);
+        const me = await UserModel.findById(data.id).exec();
+        request.middlewareBody.me = me;
+      } else {
+        request.middlewareBody.me = null;
+      }
       next();
     } catch (error) {
       next(error);
