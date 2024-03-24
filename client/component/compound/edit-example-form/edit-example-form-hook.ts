@@ -7,7 +7,7 @@ import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {Dictionary, EditableExample, Example} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
-import type {RequestData} from "/server/type/internal";
+import type {RequestData} from "/server/type/rest/internal";
 
 
 const DEFAULT_VALUE = {
@@ -38,11 +38,12 @@ export function useEditExample(dictionary: Dictionary, initialData: EditExampleI
     const adding = value.number === null;
     const query = getQuery(dictionary, value);
     const response = await request("editExample", query);
-    await switchResponse(response, async (body) => {
-      form.setValue("number", body.number);
+    await switchResponse(response, async (example) => {
+      form.setValue("number", example.number);
       await Promise.all([
         invalidateResponses("fetchExamples", (query) => query.number === dictionary.number),
-        invalidateResponses("searchWord", (query) => query.number === dictionary.number)
+        invalidateResponses("searchWord", (query) => query.number === dictionary.number),
+        invalidateResponses("fetchDictionarySizes", (query) => query.number === dictionary.number)
       ]);
       await onSubmit?.(query.example);
       dispatchSuccessToast((adding) ? "addExample" : "changeExample");

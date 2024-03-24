@@ -2,7 +2,7 @@
 
 import {LoaderFunctionArgs} from "react-router-dom";
 import {fetchResponse} from "/client/hook/request";
-import {ResponseError} from "/client/util/error";
+import {ResponseError} from "/client/util/response-error";
 
 
 export async function loadUserNotificationPart({params}: LoaderFunctionArgs): Promise<null> {

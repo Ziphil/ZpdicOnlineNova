@@ -4,12 +4,12 @@ import axios from "axios";
 import {AxiosRequestConfig, AxiosResponse} from "axios";
 import {appendValueToFormData, toFormData} from "/client/util/form-data";
 import {RECAPTCHA_KEY, VERSION} from "/client/variable";
-import type {ProcessName, RequestData, ResponseData} from "/server/type/internal";
+import type {ProcessName, RequestData, ResponseData} from "/server/type/rest/internal";
 
-
-const client = axios.create({timeout: 10000, validateStatus: () => true});
 
 export const SERVER_PATH_PREFIX = "/internal/" + VERSION;
+
+const client = axios.create({timeout: 10000, validateStatus: () => true});
 
 /** サーバーにリクエストを送信します。
  * サーバーのレスポンスの種類にかかわらず、必ず `AxiosResponseSpec` オブジェクトを返します。
@@ -71,6 +71,22 @@ export function determineErrorToastType(response: AxiosResponse<any>): string {
     return "serverError";
   } else if (status === 504) {
     return "serverTimeout";
+  } else {
+    return "unexpected";
+  }
+}
+
+export function determineAwsErrorToastType(error: any): string {
+  if (error.name === "AwsError") {
+    const code = error.data["Code"]["_text"];
+    const message = error.data["Message"]["_text"];
+    if (code === "EntityTooLarge") {
+      return "resourceSizeTooLarge";
+    } else if (code === "AccessDenied" && message.includes("Policy Condition failed") && message.includes("$Content-Type")) {
+      return "unsupportedResourceType";
+    } else {
+      return "awsError";
+    }
   } else {
     return "unexpected";
   }

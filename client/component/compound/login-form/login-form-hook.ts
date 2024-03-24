@@ -7,7 +7,7 @@ import {useLoginRequest} from "/client/hook/auth";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {useToast} from "/client/hook/toast";
 import {switchResponse} from "/client/util/response";
-import type {RequestData} from "/server/type/internal";
+import type {RequestData} from "/server/type/rest/internal";
 
 
 const SCHEMA = object({
@@ -31,9 +31,9 @@ export function useLogin(): LoginSpec {
   const {dispatchSuccessToast, dispatchErrorToast} = useToast();
   const navigate = useNavigate();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = await login(getQuery(value));
-    await switchResponse(response, async (body) => {
-      navigate(`/user/${body.user.name}`);
+    const response = await login(getQuery(value), {ignoreError: true});
+    await switchResponse(response, async ({user}) => {
+      navigate(`/user/${user.name}`);
       dispatchSuccessToast("login");
     }, async () => {
       dispatchErrorToast("loginFailed");

@@ -8,7 +8,7 @@ import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {Dictionary, EditableWord, Relation, Word} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
-import type {RequestData} from "/server/type/internal";
+import type {RequestData} from "/server/type/rest/internal";
 
 
 const DEFAULT_VALUE = {
@@ -65,11 +65,13 @@ export function useEditWord(dictionary: Dictionary, initialData: EditWordInitial
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const adding = value.number === null;
     const response = await request("editWord", getQuery(dictionary, value));
-    await switchResponse(response, async (body) => {
-      const word = body;
-      form.setValue("number", body.number);
+    await switchResponse(response, async (word) => {
+      form.setValue("number", word.number);
       await request("addRelations", getQueryForRelations(dictionary, word, value)).catch(noop);
-      await invalidateResponses("searchWord", (query) => query.number === dictionary.number);
+      await Promise.all([
+        invalidateResponses("searchWord", (query) => query.number === dictionary.number),
+        invalidateResponses("fetchDictionarySizes", (query) => query.number === dictionary.number)
+      ]);
       await onSubmit?.(word);
       dispatchSuccessToast((adding) ? "addWord" : "changeWord");
     });

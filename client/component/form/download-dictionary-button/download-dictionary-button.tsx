@@ -1,17 +1,16 @@
 //
 
-import {faFileExport} from "@fortawesome/sharp-regular-svg-icons";
-import downloadFile from "js-file-download";
-import {ReactElement, useCallback} from "react";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {faDownload, faExclamation, faFileExport} from "@fortawesome/sharp-regular-svg-icons";
+import {ReactElement} from "react";
+import {AdditionalProps, Badge, BadgeIconbag, Button, ButtonIconbag, GeneralIcon, LoadingIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {useRequest} from "/client/hook/request";
 import {DetailedDictionary} from "/client/skeleton";
-import {switchResponse} from "/client/util/response";
+import {useDownloadDictionary, useDownloadDictionaryFile} from "./download-dictionary-button-hook";
 
 
 export const DownloadDictionaryButton = create(
-  null, "DownloadDictionaryButton",
+  require("../common.scss")
+  , "DownloadDictionaryButton",
   function ({
     dictionary,
     ...rest
@@ -22,26 +21,31 @@ export const DownloadDictionaryButton = create(
 
     const {trans} = useTrans("downloadDictionaryButton");
 
-    const request = useRequest();
-
-    const downloadDictionary = useCallback(async function (): Promise<void> {
-      if (dictionary) {
-        const number = dictionary.number;
-        const response = await request("downloadDictionary", {number}, {responseType: "blob"});
-        switchResponse(response, (data) => {
-          const disposition = response.headers["content-disposition"];
-          const fileName = getFileName(disposition);
-          downloadFile(data, fileName);
-        });
-      }
-    }, [dictionary, request]);
+    const {status, keyRef, handleSubmit} = useDownloadDictionary(dictionary);
+    const {handleSubmit: handleFileSubmit} = useDownloadDictionaryFile(keyRef);
 
     return (
-      <div>
-        <Button variant="light" onClick={downloadDictionary} {...rest}>
+      <div styleName="button">
+        <Button variant="light" onClick={handleSubmit} {...rest}>
           <ButtonIconbag><GeneralIcon icon={faFileExport}/></ButtonIconbag>
           {trans("button.start")}
         </Button>
+        {(status === "loading") ? (
+          <Badge scheme="gray">
+            <BadgeIconbag><LoadingIcon/></BadgeIconbag>
+            {trans("status.loading")}
+          </Badge>
+        ) : (status === "success") ? (
+          <Button onClick={handleFileSubmit}>
+            <ButtonIconbag><GeneralIcon icon={faDownload}/></ButtonIconbag>
+            {trans("button.download")}
+          </Button>
+        ) : (status === "error") ? (
+          <Badge scheme="red">
+            <BadgeIconbag><GeneralIcon icon={faExclamation}/></BadgeIconbag>
+            {trans("status.error")}
+          </Badge>
+        ) : null}
       </div>
     );
 

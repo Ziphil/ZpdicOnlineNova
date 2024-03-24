@@ -2,17 +2,20 @@
 
 import {LoaderFunctionArgs, ShouldRevalidateFunctionArgs} from "react-router-dom";
 import {fetchResponse} from "/client/hook/request";
-import {ResponseError} from "/client/util/error";
+import {ResponseError} from "/client/util/response-error";
 
 
 export async function loadDictionaryPage({params}: LoaderFunctionArgs): Promise<null> {
   const {identifier} = params;;
-  const [number, paramName] = (identifier!.match(/^\d+$/)) ? [+identifier!, undefined] : [undefined, identifier!];
-  try {
-    const dictionary = await fetchResponse("fetchDictionary", {number, paramName});
-    return null;
-  } catch (error) {
-    throw convertError(error);
+  if (identifier !== undefined) {
+    try {
+      const dictionary = await fetchResponse("fetchDictionary", {identifier});
+      return null;
+    } catch (error) {
+      throw convertError(error);
+    }
+  } else {
+    throw new Response(null, {status: 404});
   }
 }
 

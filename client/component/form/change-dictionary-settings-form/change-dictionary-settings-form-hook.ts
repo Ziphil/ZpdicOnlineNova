@@ -7,7 +7,7 @@ import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {Dictionary, DictionarySettings} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
-import type {RequestData} from "/server/type/internal";
+import type {RequestData} from "/server/type/rest/internal";
 
 
 const SCHEMA = object({
@@ -27,7 +27,7 @@ export function useChangeDictionarySettings<N extends keyof DictionarySettings>(
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const response = await request("changeDictionarySettings", getQuery(dictionary, propertyName, value));
     await switchResponse(response, async () => {
-      await invalidateResponses("fetchDictionary", (data) => data.number === dictionary.number);
+      await invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName);
       dispatchSuccessToast(`changeDictionarySettings.${propertyName}`);
     });
   }), [dictionary, propertyName, request, form, dispatchSuccessToast]);

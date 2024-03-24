@@ -3,7 +3,6 @@
 import {useCallback} from "react";
 import {QueryClient, UseQueryOptions, UseQueryResult, useQuery as useRawQuery} from "react-query";
 import {useToast} from "/client/hook/toast";
-import {ResponseError} from "/client/util/error";
 import {
   AxiosResponseSpec,
   RequestConfig,
@@ -13,7 +12,8 @@ import {
   requestFile as rawRequestFile
 } from "/client/util/request";
 import {switchResponse} from "/client/util/response";
-import type {ProcessName, RequestData, ResponseData, SuccessResponseData} from "/server/type/internal";
+import {ResponseError} from "/client/util/response-error";
+import type {ProcessName, RequestData, ResponseData, SuccessResponseData} from "/server/type/rest/internal";
 
 
 export const queryClient = new QueryClient({
@@ -64,7 +64,7 @@ export function useResponse<N extends ProcessName>(name: N, data: RequestData<N>
         throw new ResponseError(name, data, response);
       });
     } else {
-      throw new Error("[BUG] cannot happen");
+      throw new Error("cannot happen");
     }
   }, {...config, enabled: !!data});
   const responseData = responseResult.data;
@@ -85,7 +85,7 @@ export function useSuspenseResponse<N extends ProcessName>(name: N, data: Reques
   if (responseData !== undefined) {
     return [responseData, responseResult];
   } else {
-    throw new Error("[BUG] suspensed query returns undefined");
+    throw new Error("suspensed query returns undefined");
   }
 }
 

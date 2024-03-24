@@ -22,8 +22,9 @@ export namespace DictionaryFontCreator {
       return skeleton;
     } else if (raw.type === "custom") {
       const type = "custom" as const;
+      const name = raw.name;
       const format = raw.format ?? "";
-      const skeleton = {type, format};
+      const skeleton = {type, name, format};
       return skeleton;
     } else {
       throw new Error("cannot happen");

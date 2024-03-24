@@ -78,7 +78,6 @@ export const ChangeDictionaryFontForm = create(
                 value={field.value}
                 onSet={field.onChange}
                 error={getFieldState("file").error !== undefined}
-                accepts={["font/*"]}
                 multiple={false}
               />
             )}/>

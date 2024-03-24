@@ -126,7 +126,8 @@ const config = {
     proxy: {
       "/internal": "http://localhost:8050",
       "/external": "http://localhost:8050",
-      "/static": "http://localhost:8050"
+      "/static": "http://localhost:8050",
+      "/socket.io": {target: "http://localhost:8050", ws: true}
     }
   },
   plugins: [

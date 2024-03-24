@@ -7,7 +7,7 @@ import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {Dictionary} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
-import type {RequestData} from "/server/type/internal";
+import type {RequestData} from "/server/type/rest/internal";
 
 
 const SCHEMA = object({
@@ -31,7 +31,7 @@ export function useAddCommission(dictionary: Dictionary): AddCommissionSpec {
   const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: () => unknown): Promise<void> {
     form.handleSubmit(async (value) => {
       const response = await request("addCommission", getQuery(dictionary, value), {useRecaptcha: true});
-      await switchResponse(response, async (body) => {
+      await switchResponse(response, async () => {
         await invalidateResponses("fetchCommissions", (query) => query.number === dictionary.number);
         await onSubmit?.();
         dispatchSuccessToast("addCommission");

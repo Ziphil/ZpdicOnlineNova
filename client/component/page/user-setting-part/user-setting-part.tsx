@@ -5,6 +5,7 @@ import {ReactElement} from "react";
 import {useParams} from "react-router-dom";
 import {AdditionalProps, Callout, CalloutBody, CalloutIconContainer, GeneralIcon, MultiLineText, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
+import {ChangeMyAvatarForm} from "/client/component/form/change-my-avatar-form";
 import {ChangeMyEmailForm} from "/client/component/form/change-my-email-form";
 import {ChangeMyPasswordForm} from "/client/component/form/change-my-password-form";
 import {ChangeMyScreenNameForm} from "/client/component/form/change-my-screen-name-form";
@@ -30,6 +31,10 @@ export const UserSettingPart = create(
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.screenName")}</h3>
           <ChangeMyScreenNameForm me={me}/>
+        </section>
+        <section styleName="section">
+          <h3 styleName="heading">{trans("heading.avatar")}</h3>
+          <ChangeMyAvatarForm me={me}/>
         </section>
         <section styleName="section">
           <h3 styleName="heading">{trans("heading.email")}</h3>

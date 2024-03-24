@@ -53,6 +53,10 @@ export class AdvancedWordParameterElement extends WordParameter {
           eachQuery = eachQuery.where("equivalents.titles", this.title);
         } else if (this.mode === "information") {
           eachQuery = eachQuery.where("informations.title", this.title);
+        } else if (this.mode === "variation") {
+          eachQuery = eachQuery.where("variations.title", this.title);
+        } else if (this.mode === "relation") {
+          eachQuery = eachQuery.where("relations.titles", this.title);
         }
       }
       const eachFilter = eachQuery.getFilter();

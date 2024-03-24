@@ -2,7 +2,17 @@
 
 import {faBook, faCircleInfo, faCog, faCommentQuestion, faImage, faListCheck, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
+import {
+  AdditionalProps,
+  Button,
+  ButtonIconbag,
+  GeneralIcon,
+  MultiLineText,
+  SingleLineText,
+  TabIconbag,
+  TabList,
+  useTrans
+} from "zographia";
 import {fakNoteCirclePlus, fakQuotesCirclePlus} from "/client/component/atom/icon";
 import {Link} from "/client/component/atom/link";
 import {LinkTab} from "/client/component/atom/tab";
@@ -12,8 +22,9 @@ import {EditExampleDialog} from "/client/component/compound/edit-example-dialog"
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {MainContainer} from "/client/component/compound/page";
 import {create} from "/client/component/create";
-import {useSuspenseResponse} from "/client/hook/request";
+import {useResponse, useSuspenseResponse} from "/client/hook/request";
 import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryHeaderStatusView} from "./dictionary-header-status-view";
 
 
 export const DictionaryHeader = create(
@@ -30,51 +41,70 @@ export const DictionaryHeader = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("dictionaryHeader");
+    const {trans, transNode} = useTrans("dictionaryHeader");
 
-    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
-    const [canOwn] = useSuspenseResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "own"});
+    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [canOwn] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "own"});
+    const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number: dictionary.number, authority: "editOnly"});
+    const [sizes] = useResponse("fetchDictionarySizes", {number: dictionary.number});
 
     return (
       <header styleName="root" {...rest}>
         <MainContainer styleName="container" width={width}>
           <div styleName="top">
-            <SingleLineText styleName="name" is="h2">
-              {dictionary.name}
-            </SingleLineText>
-            <div styleName="user">
-              <UserAvatar styleName="avatar" user={dictionary.user}/>
-              <SingleLineText is="span">
-                <Link href={`/user/${dictionary.user.name}`} variant="unstyledSimple">
-                  {dictionary.user.screenName}
-                </Link>
-              </SingleLineText>
-            </div>
-          </div>
-          <div styleName="operation">
-            {(canEdit) && (
-              <div styleName="operation-row">
-                <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
-                  <Button variant="light" {...rest}>
-                    <ButtonIconbag><GeneralIcon icon={fakNoteCirclePlus}/></ButtonIconbag>
-                    {trans("button.addWord")}
-                  </Button>
-                )}/>
-                <EditExampleDialog dictionary={dictionary} initialData={null} trigger={(
-                  <Button variant="light" {...rest}>
-                    <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
-                    {trans("button.addExample")}
-                  </Button>
-                )}/>
+            <div styleName="top-left">
+              <div>
+                <MultiLineText styleName="name" is="h2" maxLineCount={2} lineHeight="narrowest">
+                  {dictionary.name}
+                </MultiLineText>
+                <div styleName="user-container">
+                  <span styleName="user">
+                    <UserAvatar styleName="avatar" user={dictionary.user}/>
+                    <SingleLineText is="span">
+                      <Link href={`/user/${dictionary.user.name}`} variant="unstyledSimple">
+                        {dictionary.user.screenName}
+                      </Link>
+                    </SingleLineText>
+                  </span>
+                  {(authorizedUsers !== undefined && authorizedUsers.length > 0) && (
+                    <span styleName="user-count">
+                      {transNode("userCount", {
+                        count: authorizedUsers.length,
+                        plus: (parts) => <span styleName="plus">{parts}</span>
+                      })}
+                    </span>
+                  )}
+                </div>
               </div>
-            )}
-            <div styleName="operation-row">
-              <AddCommissionDialog dictionary={dictionary} trigger={(
-                <Button scheme="secondary" variant="underline" {...rest}>
-                  <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
-                  {trans("button.addCommission")}
-                </Button>
-              )}/>
+              <div styleName="operation">
+                {(canEdit) && (
+                  <div styleName="operation-row">
+                    <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
+                      <Button variant="light" {...rest}>
+                        <ButtonIconbag><GeneralIcon icon={fakNoteCirclePlus}/></ButtonIconbag>
+                        {trans("button.addWord")}
+                      </Button>
+                    )}/>
+                    <EditExampleDialog dictionary={dictionary} initialData={null} trigger={(
+                      <Button variant="light" {...rest}>
+                        <ButtonIconbag><GeneralIcon icon={fakQuotesCirclePlus}/></ButtonIconbag>
+                        {trans("button.addExample")}
+                      </Button>
+                    )}/>
+                  </div>
+                )}
+                <div styleName="operation-row">
+                  <AddCommissionDialog dictionary={dictionary} trigger={(
+                    <Button scheme="secondary" variant="underline" {...rest}>
+                      <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
+                      {trans("button.addCommission")}
+                    </Button>
+                  )}/>
+                </div>
+              </div>
+            </div>
+            <div styleName="top-right">
+              <DictionaryHeaderStatusView dictionary={dictionary} sizes={sizes}/>
             </div>
           </div>
           <TabList styleName="tab-list" value={tabValue ?? ""}>

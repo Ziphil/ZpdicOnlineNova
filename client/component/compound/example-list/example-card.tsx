@@ -27,8 +27,7 @@ export const ExampleCard = create(
 
     const {trans} = useTrans("exampleList");
 
-    const number = dictionary.number;
-    const [canEdit] = useResponse("fetchDictionaryAuthorization", {number, authority: "edit"});
+    const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
     const filledExample = useFilledExample(dictionary, example);
 
     const discardExample = useDiscardExample(dictionary, example);

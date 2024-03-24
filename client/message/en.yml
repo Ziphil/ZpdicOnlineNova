@@ -75,6 +75,9 @@ toast:
       Your account has been deleted.
     changeMyScreenName:
       Your nickname has been changed.
+    changeMyAvatar: |-
+      Your avatar icon has been changed.
+      The change may take some time to be reflected.
     changeMyEmail:
       Your email address has been changed.
     changeMyPassword:
@@ -208,6 +211,8 @@ wordModeSelect:
     both: "Both"
     tag: "Tag"
     information: "Contents"
+    variation: "Variation form"
+    relation: "Related word"
     content: "Whole"
 wordTypeSelect:
   label:
@@ -272,17 +277,22 @@ dictionaryHeader:
     information: "Details"
     commission: "Requests"
     setting: "Settings"
+  table:
+    updatedDate: "Updated at"
+    createdDate: "Created at"
   button:
     addWord: "Create word"
     addExample: "Create sentence"
     addCommission: "Request"
     download: "Download"
+  userCount: "<plus>+</plus>{count, number}"
 dictionaryList:
   empty: 
     user: "No dictionaries are created"
     all: "No matching dictionaries were found"
-  updatedDate: "Updated at"
-  createdDate: "Created at"
+  table:
+    updatedDate: "Updated at"
+    createdDate: "Created at"
   tag:
     own: "Owner"
     edit: "Edit only"
@@ -713,10 +723,18 @@ discardMeButton:
 downloadDictionaryButton:
   button:
     start: "Export"
+    download: "Download"
+  status:
+    loading: "Processing"
+    error: "Failed"
 uploadDictionaryButton:
   heading: "Import"
   label:
     file: "File"
+  status:
+    loading: "Processing"
+    success: "Done"
+    error: "Failed"
   button:
     open: "Import"
     confirm: "Confirm"
@@ -887,6 +905,7 @@ topPage:
 userSettingPart:
   heading:
     screenName: "Nickname"
+    avatar: "Avatar icon"
     email: "Email address"
     password: "Password"
     discard: "Delete account"

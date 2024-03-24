@@ -1,5 +1,6 @@
 /* eslint-disable no-bitwise */
 
+import {BocuPullStream, BufferPullStream, FilePullStream, PullStream} from "bocu-stream";
 import {Deserializer} from "/server/model/dictionary/deserializer/deserializer";
 import {Dictionary} from "/server/model/dictionary/dictionary";
 import {Equivalent} from "/server/model/word/equivalent";
@@ -8,8 +9,6 @@ import {Relation} from "/server/model/word/relation";
 import {Variation} from "/server/model/word/variation";
 import {Word, WordModel} from "/server/model/word/word";
 import {LogUtil} from "/server/util/log";
-import {BocuPullStream} from "/server/util/stream/bocu-pull-stream";
-import {BufferPullStream, FilePullStream, PullStream} from "/server/util/stream/pull-stream";
 
 
 export class BinaryDeserializer extends Deserializer {

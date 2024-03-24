@@ -75,6 +75,9 @@ toast:
       Via konto forigitas.
     changeMyScreenName:
       Via kromnomo ŝanĝitas.
+    changeMyAvatar: |-
+      Via bildeto ŝanĝitas.
+      La ŝanĝo povas daŭri iom da tempo por esti reflektita.
     changeMyEmail:
       Via retpoŝta adreso ŝanĝitas.
     changeMyPassword:
@@ -208,6 +211,8 @@ wordModeSelect:
     both: "Ambaŭ"
     tag: "Etikedo"
     information: "Enhavo"
+    variation: "Variaĵa formo"
+    relation: "Rilata vorto"
     content: "Tuto"
 wordTypeSelect:
   label:
@@ -272,17 +277,22 @@ dictionaryHeader:
     information: "Detaloj"
     commission: "Petoj"
     setting: "Agordoj"
+  table:
+    updatedDate: "Ĝisdatigita je"
+    createdDate: "Kreita je"
   button:
     addWord: "Krei vorton"
     addExample: "Krei frazon"
     addCommission: "Peti"
     download: "Elŝuti"
+  userCount: "<plus>+</plus>{count, number}"
 dictionaryList:
   empty: 
     user: "Neniuj vortaroj estas kreitaj"
     all: "Neniuj kongruaj vortaroj estis trovitaj"
-  updatedDate: "Ĝisdatigita je"
-  createdDate: "Kreita je"
+  table:
+    updatedDate: "Ĝisdatigita je"
+    createdDate: "Kreita je"
   tag:
     own: "Posedanto"
     edit: "Redakto nur"
@@ -713,10 +723,18 @@ discardMeButton:
 downloadDictionaryButton:
   button:
     start: "Eksporti"
+    download: "Elŝuti"
+  status:
+    loading: "Traktanta"
+    error: "Malsukcesinta"
 uploadDictionaryButton:
   heading: "Importi"
   label:
     file: "Dosiero"
+  status:
+    loading: "Traktanta"
+    success: "Finita"
+    error: "Malsukcesinta"
   button:
     open: "Importi"
     confirm: "Konfirmi"
@@ -887,6 +905,7 @@ topPage:
 userSettingPart:
   heading:
     screenName: "Kromnomo"
+    avatar: "Bildeto"
     email: "Retpoŝta adreso"
     password: "Pasvorto"
     discard: "Forigi konton"

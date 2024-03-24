@@ -7,6 +7,7 @@ import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {Dictionary, DictionaryFont} from "/client/skeleton";
 import {uploadFileToAws} from "/client/util/aws";
+import {determineAwsErrorToastType} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {validateFileSize} from "/client/util/validation";
 
@@ -31,14 +32,13 @@ export function useChangeDictionaryFont(dictionary: Dictionary): ChangeDictionar
   const request = useRequest();
   const {dispatchSuccessToast, dispatchErrorToast} = useToast();
   const uploadFont = useCallback(async function (value: FormValue): Promise<boolean | void> {
-    const response = await request("fetchUploadFontPost", {number: dictionary.number}, {useRecaptcha: true});
+    const response = await request("fetchUploadDictionaryFontPost", {number: dictionary.number}, {useRecaptcha: true});
     return await switchResponse(response, async (post) => {
       try {
         await uploadFileToAws(post, value.file!);
         return true;
       } catch (error) {
-        const type = deternimeErrorToastType(error);
-        dispatchErrorToast(type);
+        dispatchErrorToast(determineAwsErrorToastType(error));
         return undefined;
       }
     });
@@ -46,7 +46,7 @@ export function useChangeDictionaryFont(dictionary: Dictionary): ChangeDictionar
   const changeSettings = useCallback(async function (value: FormValue): Promise<boolean | void> {
     const response = await request("changeDictionarySettings", {number: dictionary.number, settings: {font: getQueryFont(dictionary, value)}});
     return await switchResponse(response, async () => {
-      await invalidateResponses("fetchDictionary", (data) => data.number === dictionary.number);
+      await invalidateResponses("fetchDictionary", (query) => +query.identifier === dictionary.number || query.identifier === dictionary.paramName);
       return true;
     });
   }, [dictionary, request]);
@@ -89,9 +89,11 @@ function getQueryFont(dictionary: Dictionary, formValue: FormValue): DictionaryF
     return font;
   } else if (formValue.type === "custom") {
     const currentFont = dictionary.settings.font;
+    const currentName = (currentFont?.type === "custom") ? currentFont.name : undefined;
     const currentFormat = (currentFont?.type === "custom") ? currentFont.format : "";
     const font = {
       type: "custom" as const,
+      name: (formValue.file !== undefined) ? formValue.file.name : currentName,
       format: (formValue.file !== undefined) ? getFontFormat(formValue.file) : currentFormat
     };
     return font;
@@ -112,21 +114,5 @@ function getFontFormat(file: File): string {
     return "woff2";
   } else {
     return "";
-  }
-}
-
-function deternimeErrorToastType(error: any): string {
-  if (error.name === "AwsError") {
-    const code = error.data["Code"]["_text"];
-    const message = error.data["Message"]["_text"];
-    if (code === "EntityTooLarge") {
-      return "resourceSizeTooLarge";
-    } else if (code === "AccessDenied" && message.includes("Policy Condition failed") && message.includes("$Content-Type")) {
-      return "unsupportedResourceType";
-    } else {
-      return "awsError";
-    }
-  } else {
-    return "unexpected";
   }
 }

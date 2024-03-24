@@ -1,6 +1,6 @@
 {
   "name": "zpdic",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "author": "Ziphil",
   "description": "",
   "main": "dist/index.js",
@@ -64,11 +64,12 @@
     "@hookform/resolvers": "^3.3.4",
     "@sendgrid/mail": "^8.1.0",
     "@typegoose/typegoose": "^9.5.0",
-    "agenda": "^4.3.0",
+    "agenda": "^5.0.0",
     "akrantiain": "^1.2.1",
     "aws-sdk": "^2.1067.0",
     "axios": "^1.6.2",
     "bcrypt": "^5.0.1",
+    "bocu-stream": "^1.0.0",
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "crypto": "^1.0.1",
@@ -105,6 +106,8 @@
     "remove-markdown": "^0.3.0",
     "rison": "^0.1.1",
     "seedrandom": "^3.0.5",
+    "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "stream-browserify": "^3.0.0",
     "stream-json": "^1.7.3",
     "ts-essentials": "^9.1.2",
@@ -113,7 +116,7 @@
     "xml-js": "^1.6.11",
     "yup": "^1.3.3",
     "zatlin": "^1.2.2",
-    "zographia": "^0.8.0"
+    "zographia": "^0.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.18.5",

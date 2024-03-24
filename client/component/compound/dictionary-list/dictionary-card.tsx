@@ -35,7 +35,7 @@ export const DictionaryCard = create(
     const number = dictionary.number;
     const from = useMemo(() => dayjs().subtract(16, "day").toISOString(), []);
     const [histories] = useResponse("fetchHistories", (showChart) && {number, from}, RESPONSE_CONFIG);
-    const [canOwn] = useResponse("fetchDictionaryAuthorization", (showSettingLink) && {number, authority: "own"});
+    const [canOwn] = useResponse("fetchDictionaryAuthorization", (showSettingLink) && {identifier: number, authority: "own"});
 
     return (
       <Card styleName="root" {...rest}>
@@ -74,16 +74,16 @@ export const DictionaryCard = create(
               </div>
             )}
             <dl styleName="table">
-              <dt styleName="table-label">{trans("updatedDate")}</dt>
+              <dt styleName="table-label">{trans("table.updatedDate")}</dt>
               <dd styleName="table-value"><time dateTime={dayjs(dictionary.updatedDate).toISOString()}>{transDate(dictionary.updatedDate)}</time></dd>
-              <dt styleName="table-label">{trans("createdDate")}</dt>
+              <dt styleName="table-label">{trans("table.createdDate")}</dt>
               <dd styleName="table-value"><time dateTime={dayjs(dictionary.createdDate).toISOString()}>{transDate(dictionary.createdDate)}</time></dd>
             </dl>
           </div>
           {(showChart && histories !== undefined && histories.length > 0) && (
             <div styleName="right">
               <DictionaryCardHistoryChart dictionary={dictionary} histories={histories}/>
-              <div styleName="word-count">
+              <div styleName="count">
                 <GeneralIcon styleName="icon" icon={faNote}/>
                 {transNumber(histories[0].wordSize)}
               </div>

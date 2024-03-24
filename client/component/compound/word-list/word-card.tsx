@@ -13,6 +13,7 @@ import {WordCardHeading} from "./word-card-heading";
 import {useDiscardWord} from "./word-card-hook";
 import {WordCardInformationList} from "./word-card-information-list";
 import {WordCardRelationList} from "./word-card-relation-list";
+import {WordCardVariationList} from "./word-card-variation-list";
 
 
 export const WordCard = create(
@@ -29,7 +30,7 @@ export const WordCard = create(
 
     const {trans} = useTrans("wordList");
 
-    const [canEdit] = useResponse("fetchDictionaryAuthorization", {number: dictionary.number, authority: "edit"});
+    const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
     const discardWord = useDiscardWord(dictionary, word);
 
@@ -40,7 +41,12 @@ export const WordCard = create(
           <WordCardEquivalentList dictionary={dictionary} word={word}/>
           <WordCardInformationList dictionary={dictionary} word={word}/>
           <WordCardExampleList dictionary={dictionary} word={word}/>
-          <WordCardRelationList dictionary={dictionary} word={word}/>
+          {(word.variations.length > 0 || word.relations.length > 0) && (
+            <div styleName="group">
+              <WordCardVariationList dictionary={dictionary} word={word}/>
+              <WordCardRelationList dictionary={dictionary} word={word}/>
+            </div>
+          )}
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">

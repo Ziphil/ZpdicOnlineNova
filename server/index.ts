@@ -2,29 +2,38 @@
 
 import sendgrid from "@sendgrid/mail";
 import * as typegoose from "@typegoose/typegoose";
+import Agenda from "agenda";
 import aws from "aws-sdk";
 import cookieParser from "cookie-parser";
 import express from "express";
 import {Express, NextFunction, Request, Response} from "express";
 import fs from "fs";
+import http, {Server as HttpServer} from "http";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import multer from "multer";
+import {Server} from "socket.io";
 import {
-  CommissionController,
-  DictionaryController,
-  ExampleController,
-  HistoryController,
-  InvitationController,
-  NotificationController,
-  OtherController,
-  ResourceController,
-  UserController,
-  WordController
-} from "/server/controller/internal";
-import {DictionaryModel, WordModel} from "./model";
+  DictionaryJobController,
+  RegularJobController
+} from "/server/controller/job/internal";
+import {
+  CommissionRestController,
+  DictionaryRestController,
+  ExampleRestController,
+  HistoryRestController,
+  InvitationRestController,
+  NotificationRestController,
+  OtherRestController,
+  ResourceRestController,
+  UserRestController,
+  WordRestController
+} from "/server/controller/rest/internal";
+import {
+  DictionarySocketController
+} from "/server/controller/socket/internal";
 import {LogUtil} from "/server/util/log";
-import {MongoUtil} from "/server/util/mongo";
+import {setMongoCheckRequired} from "/server/util/mongo";
 import {
   AWS_KEY,
   AWS_REGION,
@@ -34,15 +43,23 @@ import {
   PORT,
   SENDGRID_KEY
 } from "/server/variable";
-import {agenda} from "/worker/agenda";
 
 
 export class Main {
 
-  private application!: Express;
+  private application: Express;
+  private httpServer: HttpServer;
+  private server: Server;
+  private agenda: Agenda;
+
+  public constructor() {
+    this.application = express();
+    this.httpServer = this.createHttpServer();
+    this.server = this.createSocketServer();
+    this.agenda = this.createAgenda();
+  }
 
   public main(): void {
-    this.application = express();
     this.addBodyParserMiddlewares();
     this.addCookieMiddleware();
     this.addFileMiddleware();
@@ -52,13 +69,31 @@ export class Main {
     this.setupSendgrid();
     this.setupAws();
     this.setupDirectories();
-    this.addApiRouters();
-    this.addStaticRouters();
-    this.setupWorkers();
+    this.useRestControllers();
+    this.useSocketControllers();
+    this.useJobControllers();
     this.setupSchedules();
+    this.addStaticHandlers();
     this.addFallbackHandlers();
     this.addErrorHandler();
     this.listen();
+  }
+
+  private createHttpServer(): HttpServer {
+    const application = this.application;
+    const httpServer = http.createServer(application);
+    return httpServer;
+  }
+
+  private createSocketServer(): Server {
+    const httpServer = this.httpServer;
+    const server = new Server(httpServer, {cors: {origin: "*"}});
+    return server;
+  }
+
+  private createAgenda(): Agenda {
+    const agenda = new Agenda({db: {address: MONGO_URI, collection: "agenda"}});
+    return agenda;
   }
 
   private addBodyParserMiddlewares(): void {
@@ -108,7 +143,7 @@ export class Main {
   /** MongoDB との接続を扱う mongoose とそのモデルを自動で生成する typegoose の設定を行います。
    * typegoose のデフォルトでは、空文字列を入れると値が存在しないと解釈されてしまうので、空文字列も受け入れるようにしています。*/
   private setupMongo(): void {
-    MongoUtil.setCheckRequired("String");
+    setMongoCheckRequired("String");
     mongoose.connect(MONGO_URI);
     typegoose.setGlobalOptions({options: {allowMixed: 0}});
   }
@@ -130,53 +165,39 @@ export class Main {
 
   /** ルーターの設定を行います。
    * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
-  private addApiRouters(): void {
-    CommissionController.use(this.application);
-    DictionaryController.use(this.application);
-    ExampleController.use(this.application);
-    HistoryController.use(this.application);
-    InvitationController.use(this.application);
-    NotificationController.use(this.application);
-    OtherController.use(this.application);
-    ResourceController.use(this.application);
-    UserController.use(this.application);
-    WordController.use(this.application);
+  private useRestControllers(): void {
+    CommissionRestController.use(this.application, this.server, this.agenda);
+    DictionaryRestController.use(this.application, this.server, this.agenda);
+    ExampleRestController.use(this.application, this.server, this.agenda);
+    HistoryRestController.use(this.application, this.server, this.agenda);
+    InvitationRestController.use(this.application, this.server, this.agenda);
+    NotificationRestController.use(this.application, this.server, this.agenda);
+    OtherRestController.use(this.application, this.server, this.agenda);
+    ResourceRestController.use(this.application, this.server, this.agenda);
+    UserRestController.use(this.application, this.server, this.agenda);
+    WordRestController.use(this.application, this.server, this.agenda);
   }
 
-  private addStaticRouters(): void {
-    this.application.use("/client", express.static(process.cwd() + "/dist/client"));
-    this.application.use("/static", express.static(process.cwd() + "/dist/static"));
+  private useSocketControllers(): void {
+    DictionarySocketController.use(this.application, this.server, this.agenda);
   }
 
-  private setupWorkers(): void {
-    agenda.define("uploadDictionary", async (job, done) => {
-      const {number, path, originalPath} = job.attrs.data ?? {};
-      LogUtil.log("worker/uploadDictionary", {number});
-      const dictionary = await DictionaryModel.fetchOneByNumber(number);
-      if (dictionary !== null) {
-        await dictionary.upload(path, originalPath);
-        await fs.promises.unlink(path);
-      }
-      done();
-    });
-    agenda.define("discardOldHistoryWords", async (job, done) => {
-      LogUtil.log("worker/discardOldHistoryWords", {});
-      await WordModel.discardOldHistory(90);
-      done();
-    });
-    agenda.define("addHistories", async (job, done) => {
-      LogUtil.log("worker/addHistories", {});
-      await HistoryController.addHistories();
-      done();
-    });
+  private useJobControllers(): void {
+    DictionaryJobController.use(this.agenda);
+    RegularJobController.use(this.agenda);
   }
 
   private setupSchedules(): void {
-    agenda.on("ready", () => {
-      agenda.every("0 3 * * *", "discardOldHistoryWords", {}, {timezone: "Asia/Tokyo"});
-      agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
-      agenda.start();
+    this.agenda.on("ready", () => {
+      this.agenda.every("0 3 * * *", "discardOldHistoryWords", {}, {timezone: "Asia/Tokyo"});
+      this.agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
+      this.agenda.start();
     });
+  }
+
+  private addStaticHandlers(): void {
+    this.application.use("/client", express.static(process.cwd() + "/dist/client"));
+    this.application.use("/static", express.static(process.cwd() + "/dist/static"));
   }
 
   /** ルーターで設定されていない URL にアクセスされたときのフォールバックの設定をします。
@@ -200,7 +221,7 @@ export class Main {
       }
     };
     this.application.use("/internal*", internalHandler);
-    this.application.use("/*", otherHandler);
+    this.application.use(/\/((?!socket.io).)*/, otherHandler);
   }
 
   private addErrorHandler(): void {
@@ -212,7 +233,7 @@ export class Main {
   }
 
   private listen(): void {
-    this.application.listen(+PORT, () => {
+    this.httpServer.listen(+PORT, () => {
       LogUtil.log("server", {port: +PORT});
     });
   }

@@ -75,6 +75,9 @@ toast:
       アカウントを削除しました。
     changeMyScreenName: |-
       ニックネームを変更しました。
+    changeMyAvatar: |-
+      アイコンを変更しました。
+      反映されるまで少し時間がかかります。
     changeMyEmail: |-
       メールアドレスを変更しました。
     changeMyPassword: |-
@@ -208,6 +211,8 @@ wordModeSelect:
     both: "単語＋訳語"
     tag: "タグ"
     information: "内容"
+    variation: "変化形"
+    relation: "関連語"
     content: "全文"
 wordTypeSelect:
   label:
@@ -272,17 +277,22 @@ dictionaryHeader:
     information: "詳細情報"
     commission: "造語依頼"
     setting: "設定"
+  table:
+    updatedDate: "更新日時"
+    createdDate: "作成日時"
   button:
     addWord: "単語を作成"
     addExample: "例文を作成"
     addCommission: "造語依頼"
     download: "ダウンロード"
+  userCount: "<plus>+</plus>{count, number}"
 dictionaryList:
   empty: 
     user: "辞書は作成されていません"
     all: "該当する辞書は見つかりませんでした"
-  updatedDate: "更新日時"
-  createdDate: "作成日時"
+  table:
+    updatedDate: "更新日時"
+    createdDate: "作成日時"
   tag:
     own: "管理者"
     edit: "編集のみ"
@@ -711,10 +721,18 @@ discardMeButton:
 downloadDictionaryButton:
   button:
     start: "エクスポート"
+    download: "ダウンロード"
+  status:
+    loading: "処理中"
+    error: "失敗"
 uploadDictionaryButton:
   heading: "インポート"
   label:
     file: "ファイル"
+  status:
+    loading: "処理中"
+    success: "完了"
+    error: "失敗"
   button:
     open: "インポート"
     confirm: "決定"
@@ -886,6 +904,7 @@ topPage:
 userSettingPart:
   heading:
     screenName: "ニックネーム"
+    avatar: "アイコン"
     email: "メールアドレス"
     password: "パスワード"
     discard: "アカウント削除"

@@ -27,8 +27,15 @@ export abstract class WordParameter {
       return ["tags"];
     } else if (mode === "information") {
       return ["informations.text"];
+    } else if (mode === "variation") {
+      return ["variations.name"];
+    } else if (mode === "relation") {
+      return ["relations.name"];
+    } else if (mode === "content") {
+      return ["name", "equivalents.names", "informations.text", "variations.name", "relations.name"];
     } else {
-      return ["name", "equivalents.names", "informations.text"];
+      const dummy = mode satisfies never;
+      throw new Error("cannot happen");
     }
   }
 
@@ -49,13 +56,16 @@ export abstract class WordParameter {
     } else if (type === "part") {
       const flags = (ignoreOptions.case) ? "i" : undefined;
       return new RegExp(escapedText, flags);
-    } else {
+    } else if (type === "regular") {
       try {
         const flags = (ignoreOptions.case) ? "i" : undefined;
         return new RegExp(text, flags);
       } catch (error) {
         return "";
       }
+    } else {
+      const dummy = type satisfies never;
+      throw new Error("cannot happen");
     }
   }
 
@@ -71,6 +81,7 @@ export abstract class WordParameter {
     } else if (mode === "createdDate") {
       return directionChar + "createdDate _id";
     } else {
+      const dummy = mode satisfies never;
       throw new Error("cannot happen");
     }
   }
@@ -78,7 +89,7 @@ export abstract class WordParameter {
 }
 
 
-export const WORD_MODES = ["name", "equivalent", "both", "tag", "information", "content"] as const;
+export const WORD_MODES = ["name", "equivalent", "both", "tag", "information", "variation", "relation", "content"] as const;
 export type WordMode = LiteralType<typeof WORD_MODES>;
 export const WordModeUtil = LiteralUtilType.create(WORD_MODES);
 

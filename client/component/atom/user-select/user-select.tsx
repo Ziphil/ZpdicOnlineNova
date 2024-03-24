@@ -25,8 +25,8 @@ export const UserSelect = create(
 
     const loadOptions = useCallback(async function (pattern: string): Promise<Array<User>> {
       const response = await request("suggestUsers", {pattern}, {ignoreError: true});
-      return switchResponse(response, (data) => {
-        return data;
+      return switchResponse(response, (users) => {
+        return users;
       }, (error) => {
         return [];
       });

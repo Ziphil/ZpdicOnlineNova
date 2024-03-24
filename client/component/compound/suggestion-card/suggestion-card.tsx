@@ -34,7 +34,7 @@ export const SuggestionCard = create(
                   <FontAwesomeIcon icon={faCaretRight}/>
                 </span>
                 <MultiLineText styleName="text" is="span">
-                  {transNode("message", {
+                  {(!!suggestion.title) ? transNode("message", {
                     title: suggestion.title,
                     mute: (parts) => <span styleName="mute">{parts}</span>,
                     nameNode: (
@@ -42,7 +42,11 @@ export const SuggestionCard = create(
                         {suggestion.word.name}
                       </Link>
                     )
-                  })}
+                  }) : (
+                    <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(suggestion.word.name)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
+                      {suggestion.word.name}
+                    </Link>
+                  )}
                 </MultiLineText>
               </li>
             ))}
