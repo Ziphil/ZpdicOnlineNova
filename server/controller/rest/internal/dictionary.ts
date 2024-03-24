@@ -16,10 +16,6 @@ import {mapWithSizeAsync} from "/server/util/with-size";
 @restController(SERVER_PATH_PREFIX, SOCKET_PATH_PREFIX)
 export class DictionaryRestController extends InternalRestController {
 
-  public constructor() {
-    super();
-  }
-
   @post("/createDictionary")
   @before(checkMe())
   public async [Symbol()](request: Request<"createDictionary">, response: Response<"createDictionary">): Promise<void> {
