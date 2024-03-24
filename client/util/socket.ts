@@ -14,9 +14,10 @@ socket.on("connect", () => {
   requestSocket("greet", {name: "world"}).then((response) => {
     console.log(response.message);
   });
-  listenSocket("greet", (data) => {
-    console.log(data.message);
-  });
+});
+
+socket.onAny((event, ...args) => {
+  console.log(event, args);
 });
 
 export function requestSocket<N extends SocketProcessName>(name: N, data: SocketRequestData<N>): Promise<SocketResponseData<N>> {

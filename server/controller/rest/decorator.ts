@@ -3,7 +3,7 @@
 import {Router} from "express";
 import {NextFunction, Request, RequestHandlerParams, Response} from "express-serve-static-core";
 import "reflect-metadata";
-import {Controller} from "/server/controller/controller";
+import {RestController} from "./controller";
 
 
 const REST_METADATA_KEY = Symbol("rest");
@@ -17,28 +17,32 @@ type RequestHandlerSpec = {
   afters: Array<RequestHandlerParams<any>>
 };
 
-export function restController(path: string): ClassDecorator {
-  const decorator = function (clazz: Function): void {
-    const metadata = Reflect.getMetadata(REST_METADATA_KEY, clazz.prototype) as RestMetadata;
+export function restController(restPath: string, socketPath?: string): ClassDecorator {
+  const decorator = function (clazz: typeof RestController): void {
+    const metadata = (Reflect.getMetadata(REST_METADATA_KEY, clazz.prototype) ?? []) as RestMetadata;
+    const originalPrepare = clazz.prepare;
     const originalSetup = clazz.prototype.setup;
-    clazz.prototype.setup = function (this: Controller): void {
-      const router = Router();
+    clazz.prepare = function (this: typeof RestController, application: any, server: any, agenda: any): void {
+      originalPrepare.call(this, application, server, agenda);
+      this.router = Router();
+      this.namespace = (socketPath !== undefined) ? server.of(socketPath) : undefined;
+    };
+    clazz.prototype.setup = function (this: RestController): void {
+      originalSetup.call(this);
+      const constructor = this.constructor as typeof RestController;
       for (const spec of metadata) {
-        const outerThis = this as any;
+        const method = (this as any)[spec.key].bind(this);
         const handler = function (request: Request, response: Response, next: NextFunction): void {
-          Promise.resolve(outerThis[spec.key](request, response, next)).catch((error) => {
+          Promise.resolve(method(request, response, next)).catch((error) => {
             next(error);
           });
         };
-        router[spec.method](spec.path, ...spec.befores, handler, ...spec.afters);
+        constructor.router[spec.method](spec.path, ...spec.befores, handler, ...spec.afters);
       }
-      this.application.use(path, router);
-      this.router = router;
-      this.restConfig = {path};
-      originalSetup.call(this);
+      constructor.application.use(restPath, constructor.router);
     };
   };
-  return decorator;
+  return decorator as any;
 }
 
 export function get(path: string): MethodDecorator {

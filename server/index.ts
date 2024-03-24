@@ -183,8 +183,8 @@ export class Main {
   }
 
   private useJobControllers(): void {
-    DictionaryJobController.use(this.application, this.server, this.agenda);
-    RegularJobController.use(this.application, this.server, this.agenda);
+    DictionaryJobController.use(this.agenda);
+    RegularJobController.use(this.agenda);
   }
 
   private setupSchedules(): void {

@@ -1,12 +1,12 @@
 //
 
-import {Controller} from "/server/controller/controller";
+import {SocketController} from "/server/controller/socket/controller";
 import {handler, socketController} from "/server/controller/socket/decorator";
 import {SOCKET_PATH_PREFIX, SocketRequestData, SocketResponseDataCallback} from "/server/type/socket/internal";
 
 
 @socketController(SOCKET_PATH_PREFIX)
-export class DebugSocketController extends Controller {
+export class DebugSocketController extends SocketController {
 
   @handler("greet")
   public async [Symbol()](query: SocketRequestData<"greet">, callback: SocketResponseDataCallback<"greet">): Promise<void> {

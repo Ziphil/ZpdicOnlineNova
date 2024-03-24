@@ -1,12 +1,12 @@
 //
 
 import {Request, Response} from "express";
-import {Controller} from "/server/controller/controller";
+import {RestController} from "../controller";
 import {get, post, restController} from "/server/controller/rest/decorator";
 
 
 @restController("/external")
-export class DebugController extends Controller {
+export class DebugController extends RestController {
 
   @get("/debug")
   public async [Symbol()](request: Request, response: Response): Promise<void> {

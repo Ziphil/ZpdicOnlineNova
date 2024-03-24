@@ -1,7 +1,7 @@
 //
 
 import "reflect-metadata";
-import {Controller} from "/server/controller/controller";
+import {JobController} from "/server/controller/job/controller";
 
 
 const JOB_METADATA_KEY = Symbol("worker");
@@ -13,17 +13,19 @@ type JobHandlerSpec = {
 };
 
 export function jobController(): ClassDecorator {
-  const decorator = function (clazz: Function): void {
+  const decorator = function (clazz: typeof JobController): void {
+    const metadata = (Reflect.getMetadata(JOB_METADATA_KEY, clazz.prototype) ?? []) as JobMetadata;
+    const originalPrepare = clazz.prepare;
     const originalSetup = clazz.prototype.setup;
-    clazz.prototype.setup = function (this: Controller): void {
-      const metadata = Reflect.getMetadata(JOB_METADATA_KEY, clazz.prototype) as JobMetadata;
-      for (const spec of metadata) {
-        this.agenda.define(spec.name, (job, done) => (this as any)[spec.key](job).then(done));
-      }
+    clazz.prototype.setup = function (this: JobController): void {
       originalSetup.call(this);
+      const constructor = this.constructor as typeof JobController;
+      for (const spec of metadata) {
+        constructor.agenda.define(spec.name, (job, done) => (this as any)[spec.key](job).then(done));
+      }
     };
   };
-  return decorator;
+  return decorator as any;
 }
 
 export function job(name: string): MethodDecorator {

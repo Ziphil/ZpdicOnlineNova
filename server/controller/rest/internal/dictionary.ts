@@ -6,13 +6,18 @@ import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/control
 import {DictionaryCreator, DictionaryParameterCreator, SuggestionCreator, UserCreator, WordCreator, WordParameterCreator} from "/server/creator";
 import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
+import {SOCKET_PATH_PREFIX} from "/server/type/socket/internal";
 import {sanitizeFileName} from "/server/util/misc";
 import {QueryRange} from "/server/util/query";
 import {mapWithSizeAsync} from "/server/util/with-size";
 
 
-@restController(SERVER_PATH_PREFIX)
+@restController(SERVER_PATH_PREFIX, SOCKET_PATH_PREFIX)
 export class DictionaryRestController extends InternalRestController {
+
+  public constructor() {
+    super();
+  }
 
   @post("/createDictionary")
   @before(checkMe())
@@ -35,6 +40,12 @@ export class DictionaryRestController extends InternalRestController {
       if (file.size <= 5 * 1024 * 1024) {
         const number = dictionary.number;
         await this.agenda.now("uploadDictionary", {number, path, originalPath});
+        this.agenda.on("success:uploadDictionary", (job) => {
+          this.namespace?.to(`uploadDictionary.${number}`).emit("succeedUploadDictionary");
+        });
+        this.agenda.on("fail:uploadDictionary", (job) => {
+          this.namespace?.to(`uploadDictionary.${number}`).emit("failUploadDictionary");
+        });
         const body = DictionaryCreator.create(dictionary);
         InternalRestController.respond(response, body);
       } else {

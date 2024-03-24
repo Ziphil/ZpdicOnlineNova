@@ -2,14 +2,14 @@
 
 import {Job} from "agenda";
 import fs from "fs/promises";
-import {Controller} from "/server/controller/controller";
+import {JobController} from "/server/controller/job/controller";
 import {job, jobController} from "/server/controller/job/decorator";
 import {DictionaryModel} from "/server/model";
 import {LogUtil} from "/server/util/log";
 
 
 @jobController()
-export class DictionaryJobController extends Controller {
+export class DictionaryJobController extends JobController {
 
   @job("uploadDictionary")
   public async [Symbol()](job: Job<any>): Promise<void> {
