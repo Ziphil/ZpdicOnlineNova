@@ -1,0 +1,20 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+@forward "../common.scss";
+
+
+.root-row {
+  column-gap: 4zu;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  font-size: 14zu;
+  flex: 0 0 auto;
+}
+
+.root {
+  flex: 1 1 auto;
+}

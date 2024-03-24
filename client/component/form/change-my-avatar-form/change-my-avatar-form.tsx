@@ -13,13 +13,14 @@ import {
   useTrans
 } from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
+import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
 import {DetailedUser} from "/client/skeleton";
 import {useChangeMyAvatar} from "./change-my-avatar-form-hook";
 
 
 export const ChangeMyAvatarForm = create(
-  require("../common.scss"), "ChangeMyAvatarForm",
+  require("./change-my-avatar-form.scss"), "ChangeMyAvatarForm",
   function ({
     me,
     ...rest
@@ -34,25 +35,28 @@ export const ChangeMyAvatarForm = create(
     const {control, getFieldState, formState: {errors}} = form;
 
     return (
-      <form styleName="root" {...rest}>
-        <ControlContainer>
-          <Controller name="file" control={control} render={({field}) => (
-            <FileInput
-              value={field.value}
-              onSet={field.onChange}
-              error={getFieldState("file").error !== undefined}
-              multiple={false}
-            />
-          )}/>
-          <ControlErrorMessage name="file" form={form} trans={trans}/>
-        </ControlContainer>
-        <div>
-          <Button variant="light" type="submit" onClick={handleSubmit}>
-            <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans(":commonForm.button.change")}
-          </Button>
-        </div>
-      </form>
+      <div styleName="root-row">
+        <UserAvatar styleName="avatar" user={me}/>
+        <form styleName="root" {...rest}>
+          <ControlContainer>
+            <Controller name="file" control={control} render={({field}) => (
+              <FileInput
+                value={field.value}
+                onSet={field.onChange}
+                error={getFieldState("file").error !== undefined}
+                multiple={false}
+              />
+            )}/>
+            <ControlErrorMessage name="file" form={form} trans={trans}/>
+          </ControlContainer>
+          <div>
+            <Button variant="light" type="submit" onClick={handleSubmit}>
+              <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
+              {trans(":commonForm.button.change")}
+            </Button>
+          </div>
+        </form>
+      </div>
     );
 
   }

@@ -77,6 +77,7 @@ toast:
       Your nickname has been changed.
     changeMyAvatar: |-
       Your avatar icon has been changed.
+      The change may take some time to be reflected.
     changeMyEmail:
       Your email address has been changed.
     changeMyPassword:
