@@ -46,7 +46,7 @@
 }
 
 .plus {
-  margin-inline-end: calc(var(--glob-blank-gap) / 2);
+  margin-inline-end: calc(var(--glob-blank-gap) * 0.5);
 }
 
 .avatar {

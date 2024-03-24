@@ -30,7 +30,7 @@ import {
   WordRestController
 } from "/server/controller/rest/internal";
 import {
-  DebugSocketController
+  DictionarySocketController
 } from "/server/controller/socket/internal";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
@@ -179,7 +179,7 @@ export class Main {
   }
 
   private useSocketControllers(): void {
-    DebugSocketController.use(this.application, this.server, this.agenda);
+    DictionarySocketController.use(this.application, this.server, this.agenda);
   }
 
   private useJobControllers(): void {

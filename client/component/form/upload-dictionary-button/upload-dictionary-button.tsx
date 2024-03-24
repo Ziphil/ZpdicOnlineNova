@@ -1,10 +1,12 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faCheck, faFileImport} from "@fortawesome/sharp-regular-svg-icons";
+import {faCheck, faExclamation, faFileImport} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {Controller} from "react-hook-form";
 import {
   AdditionalProps,
+  Badge,
+  BadgeIconbag,
   Button,
   ButtonIconbag,
   ControlContainer,
@@ -15,6 +17,7 @@ import {
   DialogPane,
   FileInput,
   GeneralIcon,
+  LoadingIcon,
   useTrans
 } from "zographia";
 import {ControlErrorMessage} from "/client/component/atom/control-container";
@@ -25,7 +28,7 @@ import {useUploadDictionary} from "./upload-dictionary-button-hook";
 
 
 export const UploadDictionaryButton = create(
-  require("../common.scss"), "UploadDictionaryButton",
+  require("./upload-dictionary-button.scss"), "UploadDictionaryButton",
   function ({
     dictionary,
     ...rest
@@ -36,17 +39,33 @@ export const UploadDictionaryButton = create(
 
     const {trans} = useTrans("uploadDictionaryButton");
 
-    const {form, handleSubmit} = useUploadDictionary(dictionary);
+    const {form, status, handleSubmit} = useUploadDictionary(dictionary);
     const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
     const {control, getFieldState, formState: {errors}} = form;
 
     return (
       <Fragment>
-        <div>
+        <div styleName="button">
           <Button variant="light" onClick={openDialog} {...rest}>
             <ButtonIconbag><GeneralIcon icon={faFileImport}/></ButtonIconbag>
             {trans("button.open")}
           </Button>
+          {(status === "loading") ? (
+            <Badge scheme="gray">
+              <BadgeIconbag><LoadingIcon/></BadgeIconbag>
+              {trans("status.loading")}
+            </Badge>
+          ) : (status === "success") ? (
+            <Badge scheme="blue">
+              <BadgeIconbag><GeneralIcon icon={faCheck}/></BadgeIconbag>
+              {trans("status.success")}
+            </Badge>
+          ) : (status === "error") ? (
+            <Badge scheme="red">
+              <BadgeIconbag><GeneralIcon icon={faExclamation}/></BadgeIconbag>
+              {trans("status.error")}
+            </Badge>
+          ) : null}
         </div>
         <Dialog open={open} onOpenSet={setOpen}>
           <DialogPane>

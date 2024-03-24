@@ -720,6 +720,10 @@ uploadDictionaryButton:
   heading: "インポート"
   label:
     file: "ファイル"
+  status:
+    loading: "処理中"
+    success: "完了"
+    error: "失敗"
   button:
     open: "インポート"
     confirm: "決定"

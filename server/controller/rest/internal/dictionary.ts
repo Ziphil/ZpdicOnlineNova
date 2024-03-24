@@ -41,10 +41,12 @@ export class DictionaryRestController extends InternalRestController {
         const number = dictionary.number;
         await this.agenda.now("uploadDictionary", {number, path, originalPath});
         this.agenda.on("success:uploadDictionary", (job) => {
-          this.namespace?.to(`uploadDictionary.${number}`).emit("succeedUploadDictionary");
+          this.namespace?.to(`uploadDictionary.${number}`).emit("succeedUploadDictionary", {number});
+          this.namespace?.socketsLeave(`uploadDictionary.${number}`);
         });
         this.agenda.on("fail:uploadDictionary", (job) => {
-          this.namespace?.to(`uploadDictionary.${number}`).emit("failUploadDictionary");
+          this.namespace?.to(`uploadDictionary.${number}`).emit("failUploadDictionary", {number});
+          this.namespace?.socketsLeave(`uploadDictionary.${number}`);
         });
         const body = DictionaryCreator.create(dictionary);
         InternalRestController.respond(response, body);
