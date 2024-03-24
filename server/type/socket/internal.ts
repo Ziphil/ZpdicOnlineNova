@@ -1,29 +1,29 @@
 //
 
 
-export const SOCKET_NAMESPACE = "/internal/" + process.env["npm_package_version"];
+export const SOCKET_PATH_PREFIX = "/internal/" + process.env["npm_package_version"];
 
-export type SocketSpecsFromServer = {
+type SocketSpecsFromServer = {
   greet: {
-    response: {message: string}
+    message: {message: string}
   }
 };
 
-export type SocketSpecsFromClient = {
+type SocketSpecsFromClient = {
   greet: {
     request: {name: string},
     response: {message: string}
   }
 };
 
-export type EventName = keyof SocketSpecsFromClient;
-export type MessageName = keyof SocketSpecsFromServer;
+export type SocketProcessName = keyof SocketSpecsFromClient;
+export type SocketMessageName = keyof SocketSpecsFromServer;
 
-export type RequestData<N extends EventName> = SocketSpecsFromClient[N]["request"];
-export type ResponseData<N extends EventName> = SocketSpecsFromClient[N]["response"];
-export type ResponseDataCallback<N extends EventName> = (body: ResponseData<N>) => void;
+export type SocketRequestData<N extends SocketProcessName> = SocketSpecsFromClient[N]["request"];
+export type SocketResponseData<N extends SocketProcessName> = SocketSpecsFromClient[N]["response"];
+export type SocketResponseDataCallback<N extends SocketProcessName> = (body: SocketResponseData<N>) => void;
 
-export type MessageData<N extends MessageName> = SocketSpecsFromServer[N]["response"];
+export type SocketMessageData<N extends SocketMessageName> = SocketSpecsFromServer[N]["message"];
 
-export type SocketEventsFromServer = {[N in MessageName]: (body: MessageData<N>) => void};
-export type SocketEventsFromClient = {[N in EventName]: (query: RequestData<N>, callback: ResponseDataCallback<N>) => Promise<void>};
+export type SocketEventsFromServer = {[N in SocketMessageName]: (body: SocketMessageData<N>) => void};
+export type SocketEventsFromClient = {[N in SocketProcessName]: (query: SocketRequestData<N>, callback: SocketResponseDataCallback<N>) => Promise<void>};

@@ -1,8 +1,9 @@
 //
 
+import {Router} from "express";
 import {NextFunction, Request, RequestHandlerParams, Response} from "express-serve-static-core";
 import "reflect-metadata";
-import {RestController} from "/server/controller/rest/controller";
+import {Controller} from "/server/controller/controller";
 
 
 const REST_METADATA_KEY = Symbol("rest");
@@ -16,21 +17,24 @@ type RequestHandlerSpec = {
   afters: Array<RequestHandlerParams<any>>
 };
 
-export function controller(path: string): ClassDecorator {
+export function restController(path: string): ClassDecorator {
   const decorator = function (clazz: Function): void {
+    const metadata = Reflect.getMetadata(REST_METADATA_KEY, clazz.prototype) as RestMetadata;
     const originalSetup = clazz.prototype.setup;
-    clazz.prototype.setup = function (this: RestController): void {
-      const metadata = Reflect.getMetadata(REST_METADATA_KEY, clazz.prototype) as RestMetadata;
-      const outerThis = this as any;
+    clazz.prototype.setup = function (this: Controller): void {
+      const router = Router();
       for (const spec of metadata) {
+        const outerThis = this as any;
         const handler = function (request: Request, response: Response, next: NextFunction): void {
           Promise.resolve(outerThis[spec.key](request, response, next)).catch((error) => {
             next(error);
           });
         };
-        this.router[spec.method](spec.path, ...spec.befores, handler, ...spec.afters);
+        router[spec.method](spec.path, ...spec.befores, handler, ...spec.afters);
       }
-      this.path = path;
+      this.application.use(path, router);
+      this.router = router;
+      this.restConfig = {path};
       originalSetup.call(this);
     };
   };

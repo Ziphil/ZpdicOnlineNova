@@ -5,11 +5,12 @@ import {
   Request as ExpressRequest,
   Response as ExpressResponse
 } from "express-serve-static-core";
-import {RestController as BaseRestController} from "/server/controller/rest/controller";
+import type {CustomErrorType} from "/client/skeleton";
+import {Controller} from "/server/controller/controller";
 import {CustomErrorCreator} from "/server/creator/error";
 import {CustomError, Dictionary, User} from "/server/model";
 import {
-  ErrorResponseType,
+  ErrorResponseData,
   ProcessName,
   RequestData,
   ResponseData,
@@ -17,7 +18,7 @@ import {
 } from "/server/type/rest/internal";
 
 
-export class RestController extends BaseRestController {
+export class InternalRestController extends Controller {
 
   protected static respond<N extends ProcessName>(response: Response<N>, body: SuccessResponseData<N>): void {
     response.json(body).end();
@@ -25,7 +26,7 @@ export class RestController extends BaseRestController {
 
   /** 指定されたタイプの `CustomError` オブジェクトをレスポンスとして送ります。
    * ステータスコードは常に 400 です。 */
-  protected static respondError<N extends ProcessName>(response: Response<N>, type: ErrorResponseType<N>): void {
+  protected static respondError<N extends ProcessName>(response: Response<N>, type: CustomErrorType<ErrorResponseData<N>>): void {
     const body = CustomErrorCreator.ofType(type);
     response.status(400).json(body).end();
   }
@@ -36,7 +37,7 @@ export class RestController extends BaseRestController {
 
   /** `error` に指定された値が `CustomError` オブジェクトであり、そのタイプが `acceptedType` に含まれていた場合に限り、その `CustomError` オブジェクトをレスポンスとして送ります。
    * それ以外の場合は、`error` を例外として投げます。*/
-  protected static respondByCustomError<N extends ProcessName, T extends ErrorResponseType<N>>(response: Response<N>, acceptedType: Array<T>, error: unknown): void {
+  protected static respondByCustomError<N extends ProcessName, T extends CustomErrorType<ErrorResponseData<N>>>(response: Response<N>, acceptedType: Array<T>, error: unknown): void {
     if (CustomError.isCustomError(error)) {
       const type = error.type as T;
       if (acceptedType.includes(type)) {

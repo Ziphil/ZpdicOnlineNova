@@ -4,7 +4,6 @@ import type {
   Aggregation,
   Commission,
   CustomError,
-  CustomErrorType,
   DetailedDictionary,
   DetailedUser,
   DetailedWord,
@@ -474,8 +473,6 @@ export type Status = "success" | "error";
 export type ProcessName = keyof ServerSpecs;
 
 export type RequestData<N extends ProcessName> = ServerSpecs[N]["request"];
-
 export type ResponseData<N extends ProcessName> = SuccessResponseData<N> | ErrorResponseData<N>;
 export type SuccessResponseData<N extends ProcessName> = ServerSpecs[N]["response"]["success"];
 export type ErrorResponseData<N extends ProcessName> = ServerSpecs[N]["response"]["error"];
-export type ErrorResponseType<N extends ProcessName> = CustomErrorType<ErrorResponseData<N>>;

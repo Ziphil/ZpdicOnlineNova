@@ -1,7 +1,7 @@
 //
 
-import {before, controller, post} from "/server/controller/rest/decorator";
-import {FilledMiddlewareBody, Request, Response, RestController} from "/server/controller/rest/internal/controller";
+import {before, post, restController} from "/server/controller/rest/decorator";
+import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe, checkRecaptcha, parseDictionary} from "/server/controller/rest/internal/middleware";
 import {CommissionCreator} from "/server/creator";
 import {CommissionModel} from "/server/model";
@@ -10,8 +10,8 @@ import {QueryRange} from "/server/util/query";
 import {mapWithSize} from "/server/util/with-size";
 
 
-@controller(SERVER_PATH_PREFIX)
-export class CommissionRestController extends RestController {
+@restController(SERVER_PATH_PREFIX)
+export class CommissionRestController extends InternalRestController {
 
   @post("/addCommission")
   @before(checkRecaptcha(), parseDictionary())
@@ -21,9 +21,9 @@ export class CommissionRestController extends RestController {
     if (name !== "") {
       const commission = await CommissionModel.add(dictionary, name, comment);
       const body = CommissionCreator.create(commission);
-      RestController.respond(response, body);
+      InternalRestController.respond(response, body);
     } else {
-      RestController.respondError(response, "emptyCommissionName");
+      InternalRestController.respondError(response, "emptyCommissionName");
     }
   }
 
@@ -36,9 +36,9 @@ export class CommissionRestController extends RestController {
     if (commission) {
       await commission.discard();
       const body = CommissionCreator.create(commission);
-      RestController.respond(response, body);
+      InternalRestController.respond(response, body);
     } else {
-      RestController.respondError(response, "noSuchCommission");
+      InternalRestController.respondError(response, "noSuchCommission");
     }
   }
 
@@ -50,7 +50,7 @@ export class CommissionRestController extends RestController {
     const range = new QueryRange(offset, size);
     const hitResult = await CommissionModel.fetchByDictionary(dictionary, range);
     const body = mapWithSize(hitResult, CommissionCreator.create);
-    return RestController.respond(response, body);
+    return InternalRestController.respond(response, body);
   }
 
 }

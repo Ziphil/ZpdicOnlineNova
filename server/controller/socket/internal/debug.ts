@@ -1,15 +1,15 @@
 //
 
-import {SocketController} from "/server/controller/socket/controller";
-import {controller, handler} from "/server/controller/socket/decorator";
-import {RequestData, ResponseDataCallback, SOCKET_NAMESPACE} from "/server/type/socket/internal";
+import {Controller} from "/server/controller/controller";
+import {handler, socketController} from "/server/controller/socket/decorator";
+import {SOCKET_PATH_PREFIX, SocketRequestData, SocketResponseDataCallback} from "/server/type/socket/internal";
 
 
-@controller(SOCKET_NAMESPACE)
-export class DebugSocketController extends SocketController {
+@socketController(SOCKET_PATH_PREFIX)
+export class DebugSocketController extends Controller {
 
   @handler("greet")
-  public async [Symbol()](query: RequestData<"greet">, callback: ResponseDataCallback<"greet">): Promise<void> {
+  public async [Symbol()](query: SocketRequestData<"greet">, callback: SocketResponseDataCallback<"greet">): Promise<void> {
     const {name} = query;
     callback({message: `Hello, ${name}!`});
     this.namespace.emit("greet", {message: `Hello again, ${name}!`});

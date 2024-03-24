@@ -1,15 +1,15 @@
 //
 
-import {before, controller, post} from "/server/controller/rest/decorator";
-import {FilledMiddlewareBody, Request, Response, RestController} from "/server/controller/rest/internal/controller";
+import {before, post, restController} from "/server/controller/rest/decorator";
+import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe, checkRecaptcha} from "/server/controller/rest/internal/middleware";
 import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 import {AwsUtil} from "/server/util/aws";
 import {QueryRange} from "/server/util/query";
 
 
-@controller(SERVER_PATH_PREFIX)
-export class ResourceRestController extends RestController {
+@restController(SERVER_PATH_PREFIX)
+export class ResourceRestController extends InternalRestController {
 
   @post("/fetchUploadResourcePost")
   @before(checkRecaptcha(), checkMe(), checkDictionary("edit"))
@@ -24,12 +24,12 @@ export class ResourceRestController extends RestController {
         const configs = {contentType: "image/", sizeLimit: 1024 * 1024};
         const post = await AwsUtil.getUploadFilePost(path, configs);
         const body = post;
-        RestController.respond(response, body);
+        InternalRestController.respond(response, body);
       } else {
-        RestController.respondError(response, "resourceCountExceeded");
+        InternalRestController.respondError(response, "resourceCountExceeded");
       }
     } catch (error) {
-      RestController.respondError(response, "awsError");
+      InternalRestController.respondError(response, "awsError");
     }
   }
 
@@ -41,9 +41,9 @@ export class ResourceRestController extends RestController {
     try {
       const path = `resource/${dictionary.number}/${name}`;
       await AwsUtil.deleteFile(path);
-      RestController.respond(response, null);
+      InternalRestController.respond(response, null);
     } catch (error) {
-      RestController.respondError(response, "awsError");
+      InternalRestController.respondError(response, "awsError");
     }
   }
 
@@ -58,9 +58,9 @@ export class ResourceRestController extends RestController {
       const range = new QueryRange(offset, size);
       const result = QueryRange.restrictArrayWithSize(names, range);
       const body = result;
-      RestController.respond(response, body);
+      InternalRestController.respond(response, body);
     } catch (error) {
-      RestController.respondError(response, "awsError");
+      InternalRestController.respondError(response, "awsError");
     }
   }
 
@@ -73,9 +73,9 @@ export class ResourceRestController extends RestController {
       const configs = {contentType: "", sizeLimit: 1024 * 1024};
       const post = await AwsUtil.getUploadFilePost(path, configs);
       const body = post;
-      RestController.respond(response, body);
+      InternalRestController.respond(response, body);
     } catch (error) {
-      RestController.respondError(response, "awsError");
+      InternalRestController.respondError(response, "awsError");
     }
   }
 

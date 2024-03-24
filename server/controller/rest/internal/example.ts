@@ -1,7 +1,7 @@
 //
 
-import {before, controller, post} from "/server/controller/rest/decorator";
-import {FilledMiddlewareBody, Request, Response, RestController} from "/server/controller/rest/internal/controller";
+import {before, post, restController} from "/server/controller/rest/decorator";
+import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe} from "/server/controller/rest/internal/middleware";
 import {ExampleCreator} from "/server/creator";
 import {ExampleModel} from "/server/model";
@@ -10,8 +10,8 @@ import {QueryRange} from "/server/util/query";
 import {mapWithSize} from "/server/util/with-size";
 
 
-@controller(SERVER_PATH_PREFIX)
-export class ExampleRestController extends RestController {
+@restController(SERVER_PATH_PREFIX)
+export class ExampleRestController extends InternalRestController {
 
   @post("/editExample")
   @before(checkMe(), checkDictionary("edit"))
@@ -21,9 +21,9 @@ export class ExampleRestController extends RestController {
     try {
       const resultExample = await dictionary.editExample(example);
       const body = ExampleCreator.create(resultExample);
-      RestController.respond(response, body);
+      InternalRestController.respond(response, body);
     } catch (error) {
-      RestController.respondByCustomError(response, ["dictionarySaving"], error);
+      InternalRestController.respondByCustomError(response, ["dictionarySaving"], error);
     }
   }
 
@@ -35,9 +35,9 @@ export class ExampleRestController extends RestController {
     try {
       const resultExample = await dictionary.discardExample(exampleNumber);
       const body = ExampleCreator.create(resultExample);
-      RestController.respond(response, body);
+      InternalRestController.respond(response, body);
     } catch (error) {
-      RestController.respondByCustomError(response, ["noSuchExample", "dictionarySaving"], error);
+      InternalRestController.respondByCustomError(response, ["noSuchExample", "dictionarySaving"], error);
     }
   }
 
@@ -49,9 +49,9 @@ export class ExampleRestController extends RestController {
     const example = await dictionary.fetchOneExampleByNumber(exampleNumber);
     if (example) {
       const body = ExampleCreator.create(example);
-      RestController.respond(response, body);
+      InternalRestController.respond(response, body);
     } else {
-      RestController.respondError(response, "noSuchExample");
+      InternalRestController.respondError(response, "noSuchExample");
     }
   }
 
@@ -63,7 +63,7 @@ export class ExampleRestController extends RestController {
     const range = new QueryRange(offset, size);
     const hitResult = await ExampleModel.fetchByDictionary(dictionary, range);
     const body = mapWithSize(hitResult, ExampleCreator.create);
-    RestController.respond(response, body);
+    InternalRestController.respond(response, body);
   }
 
 }

@@ -1,14 +1,14 @@
 //
 
-import {before, controller, post} from "/server/controller/rest/decorator";
-import {FilledMiddlewareBody, Request, Response, RestController} from "/server/controller/rest/internal/controller";
+import {before, post, restController} from "/server/controller/rest/decorator";
+import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe} from "/server/controller/rest/internal/middleware";
 import {WordCreator} from "/server/creator";
 import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 
 
-@controller(SERVER_PATH_PREFIX)
-export class WordRestController extends RestController {
+@restController(SERVER_PATH_PREFIX)
+export class WordRestController extends InternalRestController {
 
   @post("/editWord")
   @before(checkMe(), checkDictionary("edit"))
@@ -18,9 +18,9 @@ export class WordRestController extends RestController {
     try {
       const resultWord = await dictionary.editWord(word);
       const body = WordCreator.create(resultWord);
-      RestController.respond(response, body);
+      InternalRestController.respond(response, body);
     } catch (error) {
-      RestController.respondByCustomError(response, ["dictionarySaving"], error);
+      InternalRestController.respondByCustomError(response, ["dictionarySaving"], error);
     }
   }
 
@@ -32,9 +32,9 @@ export class WordRestController extends RestController {
     try {
       const resultWord = await dictionary.discardWord(wordNumber);
       const body = WordCreator.create(resultWord);
-      RestController.respond(response, body);
+      InternalRestController.respond(response, body);
     } catch (error) {
-      RestController.respondByCustomError(response, ["noSuchWord", "dictionarySaving"], error);
+      InternalRestController.respondByCustomError(response, ["noSuchWord", "dictionarySaving"], error);
     }
   }
 
@@ -49,12 +49,12 @@ export class WordRestController extends RestController {
       }));
       const rejectedResult = results.find((result) => result.status === "rejected") as PromiseRejectedResult | undefined;
       if (rejectedResult === undefined) {
-        RestController.respond(response, null);
+        InternalRestController.respond(response, null);
       } else {
         throw rejectedResult.reason;
       }
     } catch (error) {
-      RestController.respondByCustomError(response, ["failAddRelations"], error);
+      InternalRestController.respondByCustomError(response, ["failAddRelations"], error);
     }
   }
 
@@ -66,9 +66,9 @@ export class WordRestController extends RestController {
     const word = await dictionary.fetchOneWordByNumber(wordNumber);
     if (word) {
       const body = await WordCreator.createDetailed(word);
-      RestController.respond(response, body);
+      InternalRestController.respond(response, body);
     } else {
-      RestController.respondError(response, "noSuchWord");
+      InternalRestController.respondError(response, "noSuchWord");
     }
   }
 
@@ -79,7 +79,7 @@ export class WordRestController extends RestController {
     const {wordNumbers} = request.body;
     const names = await dictionary.fetchWordNames(wordNumbers);
     const body = {names};
-    RestController.respond(response, body);
+    InternalRestController.respond(response, body);
   }
 
   @post("/checkDuplicateWordName")
@@ -89,7 +89,7 @@ export class WordRestController extends RestController {
     const {name, excludedWordNumber} = request.body;
     const duplicate = await dictionary.checkDuplicateWordName(name, excludedWordNumber);
     const body = {duplicate};
-    RestController.respond(response, body);
+    InternalRestController.respond(response, body);
   }
 
 }

@@ -25,8 +25,8 @@ export const UserAvatar = createWithRef(
     const [innerUser] = useResponse("fetchUser", (typeof user === "string") && {name: user});
     const actualUser = (typeof user === "string") ? innerUser : user;
 
-    const url = (actualUser !== undefined) ? getAwsFileUrl(`avatar/${actualUser.name}/avatar`) : null;
-    const hue = (actualUser !== undefined) ? getIdHue(actualUser.id) : 0;
+    const url = (actualUser) ? getAwsFileUrl(`avatar/${actualUser.name}/avatar`) : null;
+    const hue = (actualUser) ? getIdHue(actualUser.id) : 0;
 
     return (
       <Avatar url={url} inline={inline} {...rest}>

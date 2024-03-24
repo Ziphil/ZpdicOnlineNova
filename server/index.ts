@@ -166,25 +166,25 @@ export class Main {
   /** ルーターの設定を行います。
    * このメソッドは、各種ミドルウェアの設定メソッドを全て呼んだ後に実行してください。*/
   private useRestControllers(): void {
-    CommissionRestController.use(this.application, this.agenda);
-    DictionaryRestController.use(this.application, this.agenda);
-    ExampleRestController.use(this.application, this.agenda);
-    HistoryRestController.use(this.application, this.agenda);
-    InvitationRestController.use(this.application, this.agenda);
-    NotificationRestController.use(this.application, this.agenda);
-    OtherRestController.use(this.application, this.agenda);
-    ResourceRestController.use(this.application, this.agenda);
-    UserRestController.use(this.application, this.agenda);
-    WordRestController.use(this.application, this.agenda);
+    CommissionRestController.use(this.application, this.server, this.agenda);
+    DictionaryRestController.use(this.application, this.server, this.agenda);
+    ExampleRestController.use(this.application, this.server, this.agenda);
+    HistoryRestController.use(this.application, this.server, this.agenda);
+    InvitationRestController.use(this.application, this.server, this.agenda);
+    NotificationRestController.use(this.application, this.server, this.agenda);
+    OtherRestController.use(this.application, this.server, this.agenda);
+    ResourceRestController.use(this.application, this.server, this.agenda);
+    UserRestController.use(this.application, this.server, this.agenda);
+    WordRestController.use(this.application, this.server, this.agenda);
   }
 
   private useSocketControllers(): void {
-    DebugSocketController.use(this.application, this.server);
+    DebugSocketController.use(this.application, this.server, this.agenda);
   }
 
   private useJobControllers(): void {
-    DictionaryJobController.use(this.agenda);
-    RegularJobController.use(this.agenda);
+    DictionaryJobController.use(this.application, this.server, this.agenda);
+    RegularJobController.use(this.application, this.server, this.agenda);
   }
 
   private setupSchedules(): void {

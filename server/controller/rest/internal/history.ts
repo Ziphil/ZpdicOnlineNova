@@ -1,15 +1,15 @@
 //
 
-import {before, controller, post} from "/server/controller/rest/decorator";
-import {FilledMiddlewareBody, Request, Response, RestController} from "/server/controller/rest/internal/controller";
+import {before, post, restController} from "/server/controller/rest/decorator";
+import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
 import {checkDictionary} from "/server/controller/rest/internal/middleware";
 import {HistoryCreator} from "/server/creator";
 import {HistoryModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 
 
-@controller(SERVER_PATH_PREFIX)
-export class HistoryRestController extends RestController {
+@restController(SERVER_PATH_PREFIX)
+export class HistoryRestController extends InternalRestController {
 
   @post("/fetchHistories")
   @before(checkDictionary())
@@ -18,7 +18,7 @@ export class HistoryRestController extends RestController {
     const from = new Date(request.body.from);
     const histories = await HistoryModel.fetch(dictionary, from);
     const body = histories.map(HistoryCreator.create);
-    RestController.respond(response, body);
+    InternalRestController.respond(response, body);
   }
 
 }
