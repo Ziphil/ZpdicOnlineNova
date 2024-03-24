@@ -2,7 +2,17 @@
 
 import {faBook, faCircleInfo, faCog, faCommentQuestion, faImage, faListCheck, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, SingleLineText, TabIconbag, TabList, useTrans} from "zographia";
+import {
+  AdditionalProps,
+  Button,
+  ButtonIconbag,
+  GeneralIcon,
+  MultiLineText,
+  SingleLineText,
+  TabIconbag,
+  TabList,
+  useTrans
+} from "zographia";
 import {fakNoteCirclePlus, fakQuotesCirclePlus} from "/client/component/atom/icon";
 import {Link} from "/client/component/atom/link";
 import {LinkTab} from "/client/component/atom/tab";
@@ -44,9 +54,9 @@ export const DictionaryHeader = create(
           <div styleName="top">
             <div styleName="top-left">
               <div>
-                <SingleLineText styleName="name" is="h2">
+                <MultiLineText styleName="name" is="h2" maxLineCount={2} lineHeight="narrowest">
                   {dictionary.name}
-                </SingleLineText>
+                </MultiLineText>
                 <div styleName="user-container">
                   <span styleName="user">
                     <UserAvatar styleName="avatar" user={dictionary.user}/>
