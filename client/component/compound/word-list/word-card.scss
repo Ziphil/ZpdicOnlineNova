@@ -10,6 +10,13 @@
 }
 
 .body {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.group {
+  row-gap: 2zu;
   display: flex;
   flex-direction: column;
 }
