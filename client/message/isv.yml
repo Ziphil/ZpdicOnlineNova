@@ -277,6 +277,9 @@ dictionaryHeader:
     information: "Подробности"
     commission: "Просбы"
     setting: "Настројкы"
+  table:
+    updatedDate: "Актуализованы"
+    createdDate: "Созданы"
   button:
     addWord: "Create word"
     addExample: "Create sentence"
@@ -287,8 +290,9 @@ dictionaryList:
   empty: 
     user: "No dictionaries are created"
     all: "No matching dictionaries were found"
-  updatedDate: "Актуализованы"
-  createdDate: "Созданы"
+  table:
+    updatedDate: "Актуализованы"
+    createdDate: "Созданы"
   tag:
     own: "Властник"
     edit: "Edit only"

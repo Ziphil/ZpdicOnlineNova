@@ -277,6 +277,9 @@ dictionaryHeader:
     information: "詳細情報"
     commission: "造語依頼"
     setting: "設定"
+  table:
+    updatedDate: "更新日時"
+    createdDate: "作成日時"
   button:
     addWord: "単語を作成"
     addExample: "例文を作成"
@@ -287,8 +290,9 @@ dictionaryList:
   empty: 
     user: "辞書は作成されていません"
     all: "該当する辞書は見つかりませんでした"
-  updatedDate: "更新日時"
-  createdDate: "作成日時"
+  table:
+    updatedDate: "更新日時"
+    createdDate: "作成日時"
   tag:
     own: "管理者"
     edit: "編集のみ"

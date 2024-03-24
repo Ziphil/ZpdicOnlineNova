@@ -229,10 +229,10 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "invalidArgument">
     }
   },
-  fetchWordSize: {
+  fetchDictionarySizes: {
     request: {number: number},
     response: {
-      success: number,
+      success: {word: number, example: number},
       error: CustomError<"noSuchDictionary">
     }
   },

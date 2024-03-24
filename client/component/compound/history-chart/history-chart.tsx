@@ -25,10 +25,10 @@ export const HistoryChart = create(
 
     const number = dictionary.number;
     const from = useMemo(() => dayjs().subtract(100, "day").startOf("hour").toISOString(), []);
-    const [wordSize] = useSuspenseResponse("fetchWordSize", {number});
+    const [sizes] = useSuspenseResponse("fetchDictionarySizes", {number});
     const [histories] = useSuspenseResponse("fetchHistories", {number, from});
 
-    const dataSpec = useMemo(() => calcChartDataSpec(histories, wordSize), [histories, wordSize]);
+    const dataSpec = useMemo(() => calcChartDataSpec(histories, sizes.word), [histories, sizes.word]);
 
     return (
       <div styleName="root" {...rest}>

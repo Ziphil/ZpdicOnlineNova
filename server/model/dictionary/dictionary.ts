@@ -405,6 +405,11 @@ export class DictionarySchema extends DiscardableSchema {
     return count;
   }
 
+  public async countExamples(): Promise<number> {
+    const count = await ExampleModel.findExist().where("dictionary", this).countDocuments();
+    return count;
+  }
+
   public async calcWordNameFrequencies(): Promise<WordNameFrequencies> {
     const query = WordModel.findExist().where("dictionary", this).select("name").lean().cursor();
     const wholeFrequency = {all: 0, word: 0};

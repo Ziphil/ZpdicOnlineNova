@@ -277,6 +277,9 @@ dictionaryHeader:
     information: "Detaloj"
     commission: "Petoj"
     setting: "Agordoj"
+  table:
+    updatedDate: "Ĝisdatigita je"
+    createdDate: "Kreita je"
   button:
     addWord: "Krei vorton"
     addExample: "Krei frazon"
@@ -287,8 +290,9 @@ dictionaryList:
   empty: 
     user: "Neniuj vortaroj estas kreitaj"
     all: "Neniuj kongruaj vortaroj estis trovitaj"
-  updatedDate: "Ĝisdatigita je"
-  createdDate: "Kreita je"
+  table:
+    updatedDate: "Ĝisdatigita je"
+    createdDate: "Kreita je"
   tag:
     own: "Posedanto"
     edit: "Redakto nur"

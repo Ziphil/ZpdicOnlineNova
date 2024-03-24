@@ -277,6 +277,9 @@ dictionaryHeader:
     information: "Details"
     commission: "Requests"
     setting: "Settings"
+  table:
+    updatedDate: "Updated at"
+    createdDate: "Created at"
   button:
     addWord: "Create word"
     addExample: "Create sentence"
@@ -287,8 +290,9 @@ dictionaryList:
   empty: 
     user: "No dictionaries are created"
     all: "No matching dictionaries were found"
-  updatedDate: "Updated at"
-  createdDate: "Created at"
+  table:
+    updatedDate: "Updated at"
+    createdDate: "Created at"
   tag:
     own: "Owner"
     edit: "Edit only"
