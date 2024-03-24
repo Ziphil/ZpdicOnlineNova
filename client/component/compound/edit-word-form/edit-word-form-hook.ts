@@ -68,7 +68,10 @@ export function useEditWord(dictionary: Dictionary, initialData: EditWordInitial
     await switchResponse(response, async (word) => {
       form.setValue("number", word.number);
       await request("addRelations", getQueryForRelations(dictionary, word, value)).catch(noop);
-      await invalidateResponses("searchWord", (query) => query.number === dictionary.number);
+      await Promise.all([
+        invalidateResponses("searchWord", (query) => query.number === dictionary.number),
+        invalidateResponses("fetchDictionarySizes", (query) => query.number === dictionary.number)
+      ]);
       await onSubmit?.(word);
       dispatchSuccessToast((adding) ? "addWord" : "changeWord");
     });

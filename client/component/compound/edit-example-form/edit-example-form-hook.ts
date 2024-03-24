@@ -42,7 +42,8 @@ export function useEditExample(dictionary: Dictionary, initialData: EditExampleI
       form.setValue("number", example.number);
       await Promise.all([
         invalidateResponses("fetchExamples", (query) => query.number === dictionary.number),
-        invalidateResponses("searchWord", (query) => query.number === dictionary.number)
+        invalidateResponses("searchWord", (query) => query.number === dictionary.number),
+        invalidateResponses("fetchDictionarySizes", (query) => query.number === dictionary.number)
       ]);
       await onSubmit?.(query.example);
       dispatchSuccessToast((adding) ? "addExample" : "changeExample");
