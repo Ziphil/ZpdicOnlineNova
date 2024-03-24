@@ -9,11 +9,21 @@ type SocketSpecsFromServer = {
   },
   failUploadDictionary: {
     message: {number: number}
+  },
+  succeedDownloadDictionary: {
+    message: {number: number, key: string}
+  },
+  failDownloadDictionary: {
+    message: {number: number}
   }
 };
 
 type SocketSpecsFromClient = {
   listenUploadDictionary: {
+    request: {number: number},
+    response: {}
+  },
+  listenDownloadDictionary: {
     request: {number: number},
     response: {}
   }

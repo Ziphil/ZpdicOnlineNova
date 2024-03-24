@@ -1,5 +1,6 @@
 //
 
+import dayjs from "dayjs";
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/controller/rest/internal/middleware";
@@ -175,11 +176,27 @@ export class DictionaryRestController extends InternalRestController {
   @before(checkDictionary())
   public async [Symbol()](request: Request<"downloadDictionary">, response: Response<"downloadDictionary">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
-    const {fileName} = request.body;
-    const date = new Date();
-    const path = "./dist/download/" + date.getTime() + ".json";
-    const fullFileName = sanitizeFileName(fileName || dictionary.name) + ".json";
-    await dictionary.download(path);
+    const number = dictionary.number;
+    const key = dayjs().valueOf().toString();
+    const path = `./dist/download/${key}.json`;
+    await this.agenda.now("downloadDictionary", {number, key, path});
+    this.agenda.on("success:downloadDictionary", (job) => {
+      this.namespace?.to(`downloadDictionary.${number}`).emit("succeedDownloadDictionary", {number, key});
+      this.namespace?.socketsLeave(`downloadDictionary.${number}`);
+    });
+    this.agenda.on("fail:downloadDictionary", (job) => {
+      this.namespace?.to(`downloadDictionary.${number}`).emit("failDownloadDictionary", {number});
+      this.namespace?.socketsLeave(`downloadDictionary.${number}`);
+    });
+    const body = {key};
+    InternalRestController.respond(response, body);
+  }
+
+  @post("/downloadDictionaryFile")
+  public async [Symbol()](request: Request<"downloadDictionaryFile">, response: Response<"downloadDictionaryFile">): Promise<void> {
+    const {key, fileName} = request.body;
+    const path = `./dist/download/${key}.json`;
+    const fullFileName = sanitizeFileName(fileName || key) + ".json";
     response.download(path, fullFileName);
   }
 

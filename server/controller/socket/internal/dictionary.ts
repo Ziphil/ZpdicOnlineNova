@@ -15,4 +15,11 @@ export class DictionarySocketController extends SocketController {
     callback({});
   }
 
+  @handler("listenDownloadDictionary")
+  public async [Symbol()](query: SocketRequestData<"listenDownloadDictionary">, callback: SocketResponseDataCallback<"listenDownloadDictionary">): Promise<void> {
+    const {number} = query;
+    this.socket.join(`downloadDictionary.${number}`);
+    callback({});
+  }
+
 }

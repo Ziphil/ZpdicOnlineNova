@@ -718,10 +718,18 @@ discardMeButton:
 downloadDictionaryButton:
   button:
     start: "Eksporti"
+    download: "Elŝuti"
+  status:
+    loading: "Traktanta"
+    error: "Malsukcesinta"
 uploadDictionaryButton:
   heading: "Importi"
   label:
     file: "Dosiero"
+  status:
+    loading: "Traktanta"
+    success: "Finita"
+    error: "Malsukcesinta"
   button:
     open: "Importi"
     confirm: "Konfirmi"

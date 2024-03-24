@@ -28,7 +28,7 @@ import {useUploadDictionary} from "./upload-dictionary-button-hook";
 
 
 export const UploadDictionaryButton = create(
-  require("./upload-dictionary-button.scss"), "UploadDictionaryButton",
+  require("../common.scss"), "UploadDictionaryButton",
   function ({
     dictionary,
     ...rest

@@ -716,6 +716,10 @@ discardMeButton:
 downloadDictionaryButton:
   button:
     start: "エクスポート"
+    download: "ダウンロード"
+  status:
+    loading: "処理中"
+    error: "失敗"
 uploadDictionaryButton:
   heading: "インポート"
   label:

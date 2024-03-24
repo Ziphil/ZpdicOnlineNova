@@ -22,4 +22,14 @@ export class DictionaryJobController extends JobController {
     }
   }
 
+  @job("downloadDictionary")
+  public async [Symbol()](job: Job<any>): Promise<void> {
+    const {number, path} = job.attrs.data ?? {};
+    LogUtil.log("worker/downloadDictionary", {number});
+    const dictionary = await DictionaryModel.fetchOneByNumber(number);
+    if (dictionary !== null) {
+      await dictionary.download(path);
+    }
+  }
+
 }

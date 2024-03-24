@@ -718,10 +718,18 @@ discardMeButton:
 downloadDictionaryButton:
   button:
     start: "Export"
+    download: "Download"
+  status:
+    loading: "Processing"
+    error: "Failed"
 uploadDictionaryButton:
   heading: "Import"
   label:
     file: "File"
+  status:
+    loading: "Processing"
+    success: "Done"
+    error: "Failed"
   button:
     open: "Import"
     confirm: "Confirm"

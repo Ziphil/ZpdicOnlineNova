@@ -181,10 +181,17 @@ type ServerSpecs = {
     }
   },
   downloadDictionary: {
-    request: {number: number, fileName?: string},
+    request: {number: number},
+    response: {
+      success: {key: string},
+      error: CustomError<"noSuchDictionary">
+    }
+  },
+  downloadDictionaryFile: {
+    request: {key: string, fileName?: string},
     response: {
       success: any,
-      error: CustomError<"noSuchDictionary">
+      error: never
     }
   },
   suggestDictionaryTitles: {
