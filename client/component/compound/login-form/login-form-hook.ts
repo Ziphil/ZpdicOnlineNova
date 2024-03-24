@@ -31,7 +31,7 @@ export function useLogin(): LoginSpec {
   const {dispatchSuccessToast, dispatchErrorToast} = useToast();
   const navigate = useNavigate();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
-    const response = await login(getQuery(value));
+    const response = await login(getQuery(value), {ignoreError: true});
     await switchResponse(response, async ({user}) => {
       navigate(`/user/${user.name}`);
       dispatchSuccessToast("login");
