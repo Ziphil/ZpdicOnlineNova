@@ -42,7 +42,7 @@ export function useDownloadDictionaryFile(keyRef: MutableRefObject<string>): Dow
   const request = useRequest();
   const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: () => unknown): Promise<void> {
     const key = keyRef.current;
-    const response = await request("downloadDictionaryFile", {key});
+    const response = await request("downloadDictionaryFile", {key}, {responseType: "blob"});
     await switchResponse(response, async (data) => {
       const disposition = response.headers["content-disposition"];
       const fileName = getFileName(disposition);
