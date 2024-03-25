@@ -38,18 +38,19 @@ export function useDownloadDictionary(dictionary: Dictionary): DownloadDictionar
   return {status, keyRef, handleSubmit};
 }
 
-export function useDownloadDictionaryFile(keyRef: MutableRefObject<string>): DownloadDictionaryFileSpec {
+export function useDownloadDictionaryFile(dictionary: Dictionary, keyRef: MutableRefObject<string>): DownloadDictionaryFileSpec {
   const request = useRequest();
   const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: () => unknown): Promise<void> {
     const key = keyRef.current;
-    const response = await request("downloadDictionaryFile", {key}, {responseType: "blob"});
+    const fileName = dictionary.name;
+    const response = await request("downloadDictionaryFile", {key, fileName}, {responseType: "blob"});
     await switchResponse(response, async (data) => {
       const disposition = response.headers["content-disposition"];
       const fileName = getFileName(disposition);
       await onSubmit?.();
       downloadFile(data, fileName);
     });
-  }, [request, keyRef]);
+  }, [dictionary.name, keyRef, request]);
   return {handleSubmit};
 }
 

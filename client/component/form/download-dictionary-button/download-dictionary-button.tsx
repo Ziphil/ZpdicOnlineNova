@@ -21,12 +21,12 @@ export const DownloadDictionaryButton = create(
 
     const {trans} = useTrans("downloadDictionaryButton");
 
-    const {status, keyRef, handleSubmit} = useDownloadDictionary(dictionary);
-    const {handleSubmit: handleFileSubmit} = useDownloadDictionaryFile(keyRef);
+    const {status, keyRef, handleSubmit: handleStartSubmit} = useDownloadDictionary(dictionary);
+    const {handleSubmit: handleFileSubmit} = useDownloadDictionaryFile(dictionary, keyRef);
 
     return (
       <div styleName="button">
-        <Button variant="light" onClick={handleSubmit} {...rest}>
+        <Button variant="light" onClick={handleStartSubmit} {...rest}>
           <ButtonIconbag><GeneralIcon icon={faFileExport}/></ButtonIconbag>
           {trans("button.start")}
         </Button>
