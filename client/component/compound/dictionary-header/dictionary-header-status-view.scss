@@ -36,10 +36,11 @@
   color: var(--glob-mute-text-color);
   display: grid;
   grid-template-columns: repeat(2, max-content);
+  justify-items: flex-end;
 }
 
-.table-value {
-  &::before {
+.table-label {
+  &::after {
     margin-inline: var(--glob-blank-gap);
     content: "—";
   }
