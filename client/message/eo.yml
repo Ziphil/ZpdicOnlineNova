@@ -387,7 +387,7 @@ editWordForm:
     confirm: "Konfirmi"
 exampleList:
   empty: "Neniuj ekzemplaj frazoj estas kreitaj"
-  word: "Neniuj vortoj specifitaj"
+  noWord: "Neniuj vortoj specifitaj"
   button:
     edit: "Redakti"
     discard: "Forigi"

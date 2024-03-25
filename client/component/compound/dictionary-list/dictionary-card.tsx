@@ -34,8 +34,9 @@ export const DictionaryCard = create(
 
     const number = dictionary.number;
     const from = useMemo(() => dayjs().subtract(16, "day").toISOString(), []);
-    const [histories] = useResponse("fetchHistories", (showChart) && {number, from}, RESPONSE_CONFIG);
+    const [histories] = useResponse("fetchHistories", (showChart) && {number, from});
     const [canOwn] = useResponse("fetchDictionaryAuthorization", (showSettingLink) && {identifier: number, authority: "own"});
+    const [sizes] = useResponse("fetchDictionarySizes", (showChart) && {number});
 
     return (
       <Card styleName="root" {...rest}>
@@ -80,12 +81,12 @@ export const DictionaryCard = create(
               <dd styleName="table-value"><time dateTime={dayjs(dictionary.createdDate).toISOString()}>{transDate(dictionary.createdDate)}</time></dd>
             </dl>
           </div>
-          {(showChart && histories !== undefined && histories.length > 0) && (
+          {(showChart && histories !== undefined && histories.length > 0 && sizes !== undefined) && (
             <div styleName="right">
               <DictionaryCardHistoryChart dictionary={dictionary} histories={histories}/>
               <div styleName="count">
                 <GeneralIcon styleName="icon" icon={faNote}/>
-                {transNumber(histories[0].wordSize)}
+                {transNumber(sizes.word)}
               </div>
             </div>
           )}
@@ -107,12 +108,3 @@ export const DictionaryCard = create(
 
   }
 );
-
-
-const RESPONSE_CONFIG = {
-  cacheTime: 1 / 0,
-  staleTime: 1 / 0,
-  refetchOnWindowFocus: false,
-  refetchOnMount: false,
-  refetchOnReconnect: false
-};
