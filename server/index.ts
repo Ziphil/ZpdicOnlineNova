@@ -34,6 +34,7 @@ import {
 } from "/server/controller/socket/internal";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
+import {jsonifyRequest} from "/server/util/request";
 import {
   AWS_KEY,
   AWS_REGION,
@@ -116,16 +117,11 @@ export class Main {
   }
 
   private addLogMiddleware(): void {
-    const middleware = morgan<Request>((tokens, request, response) => {
-      const method = tokens["method"](request, response);
-      const status = +tokens["status"](request, response)!;
-      const url = tokens["url"](request, response);
-      const baseUrl = request.baseUrl;
-      const time = +tokens["total-time"](request, response, 0)!;
-      const query = request.query;
-      const body = ("password" in request.body) ? {...request.body, password: "***"} : request.body;
-      const logString = JSON.stringify({baseUrl, url, method, status, time, query, body});
-      return `!<request> ${logString}`;
+    const middleware = morgan<Request, Response>((tokens, request, response) => {
+      const time = +tokens["response-time"](request, response, 0)!;
+      const object = {...jsonifyRequest(request, response), time};
+      const string = JSON.stringify(object);
+      return `!<request> ${string}`;
     });
     this.application.use(middleware);
   }
@@ -224,7 +220,7 @@ export class Main {
 
   private addErrorHandler(): void {
     const handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
-      LogUtil.error("server", null, error);
+      LogUtil.error("server", jsonifyRequest(request, response), error);
       response.status(500).end();
     };
     this.application.use(handler);
