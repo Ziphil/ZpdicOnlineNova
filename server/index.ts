@@ -72,7 +72,7 @@ export class Main {
     this.useRestControllers();
     this.useSocketControllers();
     this.useJobControllers();
-    this.setupSchedules();
+    this.setupAgenda();
     this.addStaticHandlers();
     this.addFallbackHandlers();
     this.addErrorHandler();
@@ -187,10 +187,8 @@ export class Main {
     RegularJobController.use(this.agenda);
   }
 
-  private setupSchedules(): void {
+  private setupAgenda(): void {
     this.agenda.on("ready", () => {
-      this.agenda.every("0 3 * * *", "discardOldHistoryWords", {}, {timezone: "Asia/Tokyo"});
-      this.agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
       this.agenda.start();
     });
   }
