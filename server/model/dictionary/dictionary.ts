@@ -26,9 +26,9 @@ import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} f
 import {createSerializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
 import {CustomError} from "/server/model/error";
+import {Example, ExampleModel} from "/server/model/example/example";
 import {InvitationModel} from "/server/model/invitation";
 import {User, UserSchema} from "/server/model/user/user";
-import {Example, ExampleModel} from "/server/model/word/example";
 import {Relation} from "/server/model/word/relation";
 import {Suggestion} from "/server/model/word/suggestion";
 import {Word, WordModel} from "/server/model/word/word";

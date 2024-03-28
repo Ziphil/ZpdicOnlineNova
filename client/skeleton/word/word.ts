@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
+import {Example} from "/client/skeleton/example/example";
 import {Equivalent} from "/client/skeleton/word/equivalent";
-import {Example} from "/client/skeleton/word/example";
 import {Information} from "/client/skeleton/word/information";
 import {Relation} from "/client/skeleton/word/relation";
 import {Variation} from "/client/skeleton/word/variation";
