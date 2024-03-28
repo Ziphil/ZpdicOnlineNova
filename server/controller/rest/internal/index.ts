@@ -2,6 +2,7 @@
 
 export * from "./commission";
 export * from "./dictionary";
+export * from "./debug";
 export * from "./example";
 export * from "./invitation";
 export * from "./history";

@@ -19,6 +19,7 @@ import {
 } from "/server/controller/job/internal";
 import {
   CommissionRestController,
+  DebugRestController,
   DictionaryRestController,
   ExampleRestController,
   HistoryRestController,
@@ -172,6 +173,7 @@ export class Main {
     ResourceRestController.use(this.application, this.server, this.agenda);
     UserRestController.use(this.application, this.server, this.agenda);
     WordRestController.use(this.application, this.server, this.agenda);
+    DebugRestController.use(this.application, this.server, this.agenda);
   }
 
   private useSocketControllers(): void {
