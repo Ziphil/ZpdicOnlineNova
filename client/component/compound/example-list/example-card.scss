@@ -10,8 +10,14 @@
 
 .parallel {
   column-gap: 3zu;
+  row-gap: 3zu;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  @include device("desktop") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include device("movile") {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .word {
