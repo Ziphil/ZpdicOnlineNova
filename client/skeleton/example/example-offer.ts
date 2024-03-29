@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
 
-export interface OfferedExample {
+export interface ExampleOffer {
 
   id: string;
   path: string;

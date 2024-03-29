@@ -1,16 +1,16 @@
 //
 
 import type {
-  OfferedExample as OfferedExampleSkeleton
+  ExampleOffer as ExampleOfferSkeleton
 } from "/client/skeleton";
 import {
-  OfferedExample
+  ExampleOffer
 } from "/server/model";
 
 
-export namespace OfferedExampleCreator {
+export namespace ExampleOfferCreator {
 
-  export function create(raw: OfferedExample): OfferedExampleSkeleton {
+  export function create(raw: ExampleOffer): ExampleOfferSkeleton {
     const id = raw.id;
     const path = raw.path;
     const translation = raw.translation;

@@ -9,7 +9,7 @@ export * from "./dictionary/dictionary";
 export * from "./dictionary-parameter/dictionary-parameter";
 export * from "./dictionary-parameter/normal-dictionary-parameter";
 export * from "./example/example";
-export * from "./example/offered-example";
+export * from "./example/example-offer";
 export * from "./user/reset-token";
 export * from "./user/user";
 export * from "./word/equivalent";
