@@ -20,4 +20,11 @@ export class DebugRestController extends InternalRestController {
     response.json(body).end();
   }
 
+  @post("/debug/purgeAllJobs")
+  @before(parseMe(), checkMe("admin"))
+  public async [Symbol()](request: Request, response: Response): Promise<void> {
+    await this.agenda.purge();
+    response.json({}).end();
+  }
+
 }
