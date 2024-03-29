@@ -22,7 +22,7 @@ export const DictionaryListPage = create(
   } & AdditionalProps): ReactElement {
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [[hitDictionaries, hitSize]] = useSuspenseResponse("searchDictionary", {parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 20)}, {keepPreviousData: true});
+    const [[hitDictionaries, hitSize]] = useSuspenseResponse("searchDictionary", {parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 40)}, {keepPreviousData: true});
 
     const handleParameterSet = useCallback(function (parameter: SetStateAction<DictionaryParameter>): void {
       setQuery((prevQuery) => {
