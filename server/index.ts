@@ -5,6 +5,9 @@ import * as typegoose from "@typegoose/typegoose";
 import Agenda from "agenda";
 import aws from "aws-sdk";
 import cookieParser from "cookie-parser";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import express from "express";
 import {Express, NextFunction, Request, Response} from "express";
 import fs from "fs";
@@ -45,6 +48,10 @@ import {
   PORT,
   SENDGRID_KEY
 } from "/server/variable";
+
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 
 export class Main {

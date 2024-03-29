@@ -6,6 +6,7 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
+import dayjs from "dayjs";
 
 
 @modelOptions({schemaOptions: {collection: "offeredExamples"}})
@@ -23,7 +24,7 @@ export class OfferedExampleSchema {
   public static async addDaily(): Promise<OfferedExample> {
     const translation = "これはテストの例文です。";
     const createdDate = new Date();
-    const path = `daily/${createdDate.toISOString().slice(0, 10)}`;
+    const path = `daily/${dayjs().tz("Asia/Tokyo").format("YYYYMMDD")}`;
     const example = new OfferedExampleModel({path, translation, createdDate});
     await example.save();
     return example;

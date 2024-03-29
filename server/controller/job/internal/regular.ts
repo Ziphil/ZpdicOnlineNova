@@ -3,7 +3,7 @@
 import {Job} from "agenda";
 import {JobController} from "/server/controller/job/controller";
 import {job, jobController, schedule} from "/server/controller/job/decorator";
-import {HistoryModel, WordModel} from "/server/model";
+import {HistoryModel, OfferedExampleModel, WordModel} from "/server/model";
 import {LogUtil} from "/server/util/log";
 
 
@@ -22,6 +22,13 @@ export class RegularJobController extends JobController {
   public async [Symbol()](job: Job<any>): Promise<void> {
     LogUtil.log("worker/addHistories", {});
     await HistoryModel.addAll();
+  }
+
+  @job("addDailyOfferedExample")
+  @schedule("0 6 * * *")
+  public async [Symbol()](job: Job<any>): Promise<void> {
+    LogUtil.log("worker/addHistories", {});
+    await OfferedExampleModel.addDaily();
   }
 
 }
