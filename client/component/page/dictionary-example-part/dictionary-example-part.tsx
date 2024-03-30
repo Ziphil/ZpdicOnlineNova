@@ -28,6 +28,7 @@ export const DictionaryExamplePart = create(
     const [[hitExamples, hitSize]] = useSuspenseResponse("fetchExamples", {number: dictionary.number, ...calcOffsetSpec(page, 40)}, {keepPreviousData: true});
 
     const [[offers] = []] = useResponse("fetchExampleOffers", {size: 1, offset: 0});
+    const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
 
     const handlePageSet = useCallback(function (page: number): void {
       setPage(page);
@@ -39,7 +40,7 @@ export const DictionaryExamplePart = create(
         <div styleName="left">
           <div styleName="sticky">
             <SearchExampleForm styleName="form"/>
-            {(offers !== undefined) && (
+            {(offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0) && (
               <section>
                 <SingleLineText styleName="heading" is="h3">
                   {trans("heading.offer")}

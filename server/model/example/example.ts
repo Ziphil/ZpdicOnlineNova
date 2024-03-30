@@ -58,6 +58,18 @@ export class ExampleSchema extends DiscardableSchema {
     return result;
   }
 
+  public static async fetchByOffer(dictionary: Dictionary | null, offerId: string, range?: QueryRange): Promise<WithSize<Example>> {
+    if (dictionary !== null) {
+      const query = ExampleModel.findExist().where("dictionary", dictionary).where("offer", offerId).sort("-createdDate");
+      const result = await QueryRange.restrictWithSize(query, range);
+      return result;
+    } else {
+      const query = ExampleModel.findExist().where("offer", offerId).sort("-createdDate");
+      const result = await QueryRange.restrictWithSize(query, range);
+      return result;
+    }
+  }
+
   public static async edit(dictionary: Dictionary, example: EditableExample): Promise<Example> {
     const currentExample = await ExampleModel.findOneExist().where("dictionary", dictionary).where("number", example.number);
     let resultExample;

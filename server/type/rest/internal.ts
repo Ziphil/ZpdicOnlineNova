@@ -301,6 +301,13 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
+  fetchExamplesByOffer: {
+    request: {number?: number, offerId: ObjectId, offset?: number, size?: number},
+    response: {
+      success: WithSize<Example>,
+      error: never
+    }
+  },
   fetchExampleOffers: {
     request: {offset?: number, size?: number},
     response: {
