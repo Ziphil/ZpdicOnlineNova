@@ -3,8 +3,8 @@
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe} from "/server/controller/rest/internal/middleware";
-import {ExampleCreator} from "/server/creator";
-import {ExampleModel} from "/server/model";
+import {ExampleCreator, ExampleOfferCreator} from "/server/creator";
+import {ExampleModel, ExampleOfferModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 import {QueryRange} from "/server/util/query";
 import {mapWithSize} from "/server/util/with-size";
@@ -63,6 +63,15 @@ export class ExampleRestController extends InternalRestController {
     const range = new QueryRange(offset, size);
     const hitResult = await ExampleModel.fetchByDictionary(dictionary, range);
     const body = mapWithSize(hitResult, ExampleCreator.create);
+    InternalRestController.respond(response, body);
+  }
+
+  @post("/fetchExampleOffers")
+  public async [Symbol()](request: Request<"fetchExampleOffers">, response: Response<"fetchExampleOffers">): Promise<void> {
+    const {offset, size} = request.body;
+    const range = new QueryRange(offset, size);
+    const hitResult = await ExampleOfferModel.fetch(range);
+    const body = mapWithSize(hitResult, ExampleOfferCreator.create);
     InternalRestController.respond(response, body);
   }
 

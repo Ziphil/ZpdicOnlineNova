@@ -7,6 +7,8 @@ import {
   prop
 } from "@typegoose/typegoose";
 import dayjs from "dayjs";
+import {WithSize} from "/server/type/common";
+import {QueryRange} from "/server/util/query";
 
 
 @modelOptions({schemaOptions: {collection: "exampleOffer"}})
@@ -28,6 +30,12 @@ export class ExampleOfferSchema {
     const offer = new ExampleOfferModel({path, translation, createdDate});
     await offer.save();
     return offer;
+  }
+
+  public static async fetch(range?: QueryRange): Promise<WithSize<ExampleOffer>> {
+    const query = ExampleOfferModel.find().sort("-createdDate");
+    const result = await QueryRange.restrictWithSize(query, range);
+    return result;
   }
 
 }

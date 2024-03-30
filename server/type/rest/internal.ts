@@ -14,6 +14,7 @@ import type {
   EditableExample,
   EditableWord,
   Example,
+  ExampleOffer,
   History,
   Invitation,
   InvitationType,
@@ -297,6 +298,13 @@ type ServerSpecs = {
     response: {
       success: WithSize<Example>,
       error: CustomError<"noSuchDictionary">
+    }
+  },
+  fetchExampleOffers: {
+    request: {offset?: number, size?: number},
+    response: {
+      success: WithSize<ExampleOffer>,
+      error: never
     }
   },
   fetchInvitations: {

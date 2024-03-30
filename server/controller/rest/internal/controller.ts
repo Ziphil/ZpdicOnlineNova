@@ -75,9 +75,8 @@ export interface MiddlewareBody {
 }
 
 
-export type FilledMiddlewareBody<K extends keyof MiddlewareBody> = Required<MiddlewareBody> & {[P in K]-?: NonNullable<MiddlewareBody[P]>};
-
 export type Request<N extends ProcessName> = ExpressRequest<ExpressParams, ResponseData<N>, RequestData<N>, never> & {middlewareBody: Required<MiddlewareBody>};
 export type Response<N extends ProcessName> = ExpressResponse<ResponseData<N>, never>;
 
+export type FilledMiddlewareBody<K extends keyof MiddlewareBody> = Required<MiddlewareBody> & {[P in K]-?: NonNullable<MiddlewareBody[P]>};
 export type FilledRequest<N extends ProcessName, K extends keyof MiddlewareBody> = Request<N> & {middlewareBody: {[P in K]-?: NonNullable<MiddlewareBody[P]>}};
