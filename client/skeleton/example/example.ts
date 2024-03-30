@@ -28,7 +28,7 @@ export namespace EditableExample {
 
 export interface Example extends EditableExample {
 
-  id: string;
+  id: ObjectId;
   number: number;
 
 }

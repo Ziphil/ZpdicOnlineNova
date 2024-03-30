@@ -2,6 +2,7 @@
 
 import {Akrantiain} from "akrantiain";
 import {Zatlin} from "zatlin";
+import {ObjectId} from "/client/skeleton/common";
 import {DictionarySettings} from "/client/skeleton/dictionary/dictionary-settings";
 import {User} from "/client/skeleton/user";
 import type {DictionaryAuthority} from "/server/model";
@@ -9,7 +10,7 @@ import type {DictionaryAuthority} from "/server/model";
 
 export interface Dictionary {
 
-  id: string;
+  id: ObjectId;
   number: number;
   paramName?: string;
   name: string;

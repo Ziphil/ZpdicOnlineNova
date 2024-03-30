@@ -5,7 +5,7 @@ import {RelationWord} from "/client/component/atom/relation-word-select";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, EditableExample, Example, ExampleOffer} from "/client/skeleton";
+import {Dictionary, EditableExample, Example, ExampleOffer, ObjectId} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 import type {RequestData} from "/server/type/rest/internal";
 
@@ -20,7 +20,8 @@ type FormValue = {
   number: number | null,
   sentence: string,
   translation: string,
-  words: Array<RelationWord | null>
+  words: Array<RelationWord | null>,
+  offer?: ObjectId
 };
 
 export type EditExampleSpec = {
@@ -63,7 +64,8 @@ function getFormValue(initialData: EditExampleInitialData): FormValue {
       words: example.words.map((word) => ({
         number: word.number,
         name: word.name
-      }))
+      })),
+      offer: example.offer
     } satisfies FormValue;
     return value;
   } else if (type === "offer") {
@@ -72,7 +74,8 @@ function getFormValue(initialData: EditExampleInitialData): FormValue {
       number: null,
       sentence: "",
       translation: offer.translation,
-      words: []
+      words: [],
+      offer: offer.id
     } satisfies FormValue;
     return value;
   } else {
@@ -89,7 +92,8 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editEx
       translation: value.translation,
       words: value.words.filter((rawWord) => rawWord !== null).map((rawWord) => ({
         number: rawWord!.number
-      }))
+      })),
+      offer: value.offer
     }
   } satisfies RequestData<"editExample">;
   return query;

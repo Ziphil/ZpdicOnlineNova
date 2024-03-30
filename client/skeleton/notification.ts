@@ -1,9 +1,11 @@
 //
 
+import {ObjectId} from "/client/skeleton/common";
+
 
 export interface Notification {
 
-  id: string;
+  id: ObjectId;
   type: string;
   date: string;
   title: string;

@@ -19,6 +19,7 @@ import type {
   Invitation,
   InvitationType,
   Notification,
+  ObjectId,
   Relation,
   Suggestion,
   User,
@@ -91,7 +92,7 @@ type ServerSpecs = {
     }
   },
   discardDictionaryAuthorizedUser: {
-    request: {number: number, id: string},
+    request: {number: number, id: ObjectId},
     response: {
       success: null,
       error: CustomError<"noSuchDictionary" | "noSuchDictionaryAuthorizedUser">
@@ -105,7 +106,7 @@ type ServerSpecs = {
     }
   },
   respondInvitation: {
-    request: {id: string, accept: boolean},
+    request: {id: ObjectId, accept: boolean},
     response: {
       success: Invitation,
       error: CustomError<"noSuchInvitation">
@@ -154,7 +155,7 @@ type ServerSpecs = {
     }
   },
   discardCommission: {
-    request: {number: number, id: string},
+    request: {number: number, id: ObjectId},
     response: {
       success: Commission,
       error: CustomError<"noSuchDictionary" | "noSuchCommission">

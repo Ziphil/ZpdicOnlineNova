@@ -1,12 +1,13 @@
 //
 
+import {ObjectId} from "/client/skeleton/common";
 import {DetailedDictionary} from "/client/skeleton/dictionary/dictionary";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 
 export interface Invitation {
 
-  id: string;
+  id: ObjectId;
   type: InvitationType;
   dictionary: DetailedDictionary;
   createdDate: string;

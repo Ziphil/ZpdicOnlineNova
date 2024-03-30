@@ -29,6 +29,7 @@ export const EditExampleFormBasicSection = create(
     const {trans} = useTrans("editExampleForm");
 
     const {register} = form;
+    const translationEditable = !form.watch("offer");
 
     return (
       <section styleName="root" {...rest}>
@@ -40,7 +41,7 @@ export const EditExampleFormBasicSection = create(
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.translation")}</ControlLabel>
-            <Textarea styleName="textarea" {...register("translation")}/>
+            <Textarea styleName="textarea" disabled={!translationEditable} {...register("translation")}/>
           </ControlContainer>
         </div>
       </section>
