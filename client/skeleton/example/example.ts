@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
+import {ObjectId} from "/client/skeleton/common";
 import {LinkedWord} from "/client/skeleton/word/linked-word";
 
 
@@ -9,6 +10,7 @@ export interface EditableExample {
   sentence: string;
   translation: string;
   words: Array<LinkedWord>;
+  offer?: ObjectId;
 
 }
 

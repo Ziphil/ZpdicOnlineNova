@@ -4,10 +4,11 @@ import {ReactElement, useCallback, useState} from "react";
 import {AdditionalProps} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {ExampleList} from "/client/component/compound/example-list";
+import {ExampleOfferList} from "/client/component/compound/example-offer-list";
 import {SearchExampleForm} from "/client/component/compound/search-example-form";
 import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
-import {useSuspenseResponse} from "/client/hook/request";
+import {useResponse, useSuspenseResponse} from "/client/hook/request";
 import {calcOffsetSpec} from "/client/util/misc";
 
 
@@ -24,6 +25,8 @@ export const DictionaryExamplePart = create(
     const [page, setPage] = useState(0);
     const [[hitExamples, hitSize]] = useSuspenseResponse("fetchExamples", {number: dictionary.number, ...calcOffsetSpec(page, 40)}, {keepPreviousData: true});
 
+    const [[offers] = []] = useResponse("fetchExampleOffers", {size: 1, offset: 0});
+
     const handlePageSet = useCallback(function (page: number): void {
       setPage(page);
       window.scrollTo(0, 0);
@@ -34,6 +37,11 @@ export const DictionaryExamplePart = create(
         <div styleName="left">
           <div styleName="sticky">
             <SearchExampleForm styleName="form"/>
+            {(offers !== undefined) && (
+              <div>
+                <ExampleOfferList dictionary={dictionary} offers={offers} showPagination={false} pageSpec={{size: 1}}/>
+              </div>
+            )}
           </div>
         </div>
         <div styleName="right">
