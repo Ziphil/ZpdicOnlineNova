@@ -308,6 +308,13 @@ type ServerSpecs = {
       error: never
     }
   },
+  fetchExampleOffer: {
+    request: {id: ObjectId},
+    response: {
+      success: ExampleOffer,
+      error: CustomError<"noSuchExampleOffer">
+    }
+  },
   fetchExampleOffers: {
     request: {offset?: number, size?: number},
     response: {

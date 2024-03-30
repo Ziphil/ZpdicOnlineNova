@@ -6,7 +6,7 @@ import {ObjectId} from "/client/skeleton/common";
 export interface ExampleOffer {
 
   id: ObjectId;
-  path: string;
+  position: {name: string, index: number};
   translation: string;
   createdDate: string;
 

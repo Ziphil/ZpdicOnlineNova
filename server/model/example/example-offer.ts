@@ -6,16 +6,16 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
-import dayjs from "dayjs";
+import {ExampleOfferPositionSchema} from "/server/model/example/example-offer-position";
 import {WithSize} from "/server/type/common";
 import {QueryRange} from "/server/util/query";
 
 
-@modelOptions({schemaOptions: {collection: "exampleOffer"}})
+@modelOptions({schemaOptions: {collection: "exampleOffers"}})
 export class ExampleOfferSchema {
 
   @prop({required: true})
-  public path!: string;
+  public position!: ExampleOfferPositionSchema;
 
   @prop({required: true})
   public translation!: string;
@@ -24,10 +24,10 @@ export class ExampleOfferSchema {
   public createdDate!: Date;
 
   public static async addDaily(): Promise<ExampleOffer> {
-    const translation = "これはテストの例文です。";
+    const position = {name: "zpdicDaily", index: await this.fetchDailyNextIndex()};
+    const translation = "彼女はこのアパートの 5 階に住んでいる。";
     const createdDate = new Date();
-    const path = `daily/${dayjs().tz("Asia/Tokyo").format("YYYYMMDD")}`;
-    const offer = new ExampleOfferModel({path, translation, createdDate});
+    const offer = new ExampleOfferModel({position, translation, createdDate});
     await offer.save();
     return offer;
   }
@@ -36,6 +36,15 @@ export class ExampleOfferSchema {
     const query = ExampleOfferModel.find().sort("-createdDate");
     const result = await QueryRange.restrictWithSize(query, range);
     return result;
+  }
+
+  private static async fetchDailyNextIndex(): Promise<number> {
+    const words = await ExampleOfferModel.find().where("position.name", "zpdicDaily").select("position.index").sort("-position.index").limit(1);
+    if (words.length > 0) {
+      return words[0].position.index + 1;
+    } else {
+      return 0;
+    }
   }
 
 }

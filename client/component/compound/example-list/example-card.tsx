@@ -2,8 +2,9 @@
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faHandPointRight, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import dayjs from "dayjs";
 import {Fragment, ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, aria, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, Tag, aria, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
 import {create} from "/client/component/create";
@@ -25,9 +26,11 @@ export const ExampleCard = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("exampleList");
+    const {trans, transDate} = useTrans("exampleList");
 
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [offer] = useResponse("fetchExampleOffer", (example.offer !== undefined) && {id: example.offer});
+
     const filledExample = useFilledExample(dictionary, example);
 
     const discardExample = useDiscardExample(dictionary, example);
@@ -35,6 +38,16 @@ export const ExampleCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
+          {(offer !== undefined) && (
+            <div styleName="tag">
+              <Tag variant="solid">
+                {trans(`tag.${offer.position.name}`, {
+                  number: offer.position.index + 1,
+                  dateString: transDate(dayjs(offer.createdDate).tz("Asia/Tokyo"), "date")
+                })}
+              </Tag>
+            </div>
+          )}
           <div styleName="parallel">
             <MultiLineText is="p">
               {filledExample.sentence}

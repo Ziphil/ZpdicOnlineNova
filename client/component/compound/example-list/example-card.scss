@@ -4,8 +4,17 @@
 
 
 .body {
+  row-gap: 3zu;
   display: flex;
   flex-direction: column;
+}
+
+.tag {
+  row-gap: 1.5zu;
+  column-gap: 2zu;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .parallel {
@@ -21,7 +30,6 @@
 }
 
 .word {
-  margin-block-start: 3zu;
   column-gap: var(--glob-blank-gap);
   display: flex;
   align-items: baseline;

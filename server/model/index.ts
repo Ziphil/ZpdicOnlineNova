@@ -10,6 +10,7 @@ export * from "./dictionary-parameter/dictionary-parameter";
 export * from "./dictionary-parameter/normal-dictionary-parameter";
 export * from "./example/example";
 export * from "./example/example-offer";
+export * from "./example/example-offer-position";
 export * from "./user/reset-token";
 export * from "./user/user";
 export * from "./word/equivalent";

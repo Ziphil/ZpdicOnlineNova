@@ -388,6 +388,8 @@ editWordForm:
 exampleList:
   empty: "No example sentences are created"
   noWord: "No words specified"
+  tag:
+    zpdicDaily: "Today's sentence · {dateString}"
   button:
     edit: "Edit"
     discard: "Delete"

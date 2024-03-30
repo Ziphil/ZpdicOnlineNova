@@ -23,11 +23,13 @@ export const ExampleOfferCard = create(
 
     const {trans, transDate} = useTrans("exampleOfferList");
 
+    const zonedCreatedDate = dayjs(offer.createdDate).tz("Asia/Tokyo");
+
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
           <div styleName="date">
-            <time dateTime={dayjs(offer.createdDate).toISOString()}>{transDate(offer.createdDate, "date")}</time>
+            <time dateTime={zonedCreatedDate.format("YYYY-MM-DD")}>{transDate(zonedCreatedDate, "date")}</time>
           </div>
           <MultiLineText styleName="translation" is="p">
             {offer.translation}

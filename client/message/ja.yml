@@ -388,6 +388,8 @@ editWordForm:
 exampleList:
   empty: "例文は作成されていません"
   noWord: "使用単語が登録されていません"
+  tag:
+    zpdicDaily: "今日の例文 · {dateString}"
   button:
     edit: "編集"
     discard: "削除"

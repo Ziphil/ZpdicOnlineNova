@@ -388,6 +388,8 @@ editWordForm:
 exampleList:
   empty: "Neniuj ekzemplaj frazoj estas kreitaj"
   noWord: "Neniuj vortoj specifitaj"
+  tag:
+    zpdicDaily: "Hodiaŭa frazo · {dateString}"
   button:
     edit: "Redakti"
     discard: "Forigi"
