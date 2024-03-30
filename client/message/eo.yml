@@ -389,7 +389,7 @@ exampleList:
   empty: "Neniuj ekzemplaj frazoj estas kreitaj"
   noWord: "Neniuj vortoj specifitaj"
   tag:
-    zpdicDaily: "Hodiaŭa frazo · {dateString}"
+    zpdicDaily: "Ĉiutaga frazo · {dateString}"
   button:
     edit: "Redakti"
     discard: "Forigi"
@@ -891,6 +891,7 @@ topPage:
   catch: "Desegnu{wbr} vian propran universon{wbr} per conlingvo"
   heading:
     gift: "Mi bezonas vian subtenon"
+    offer: "Hodiaŭa frazo"
     notification: "Lastatempa novaĵo"
     github: "GitHub"
     supporter: "Subtenantoj"

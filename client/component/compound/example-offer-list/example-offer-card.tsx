@@ -5,7 +5,9 @@ import dayjs from "dayjs";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
+import {ExampleOfferCardExampleItem} from "/client/component/compound/example-offer-list/example-offer-card-example-item";
 import {create} from "/client/component/create";
+import {useResponse} from "/client/hook/request";
 import {EnhancedDictionary, ExampleOffer} from "/client/skeleton";
 
 
@@ -14,26 +16,39 @@ export const ExampleOfferCard = create(
   function ({
     dictionary,
     offer,
+    showExamples,
     ...rest
   }: {
     dictionary?: EnhancedDictionary,
     offer: ExampleOffer,
+    showExamples: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans, transDate} = useTrans("exampleOfferList");
+
+    const [[examples] = []] = useResponse("fetchExamplesByOffer", (showExamples) && {offerId: offer.id});
 
     const zonedCreatedDate = dayjs(offer.createdDate).tz("Asia/Tokyo");
 
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
-          <div styleName="date">
-            <time dateTime={zonedCreatedDate.format("YYYY-MM-DD")}>{transDate(zonedCreatedDate, "date")}</time>
+          <div styleName="top">
+            <div styleName="date">
+              <time dateTime={zonedCreatedDate.format("YYYY-MM-DD")}>{transDate(zonedCreatedDate, "date")}</time>
+            </div>
+            <MultiLineText styleName="translation" is="p">
+              {offer.translation}
+            </MultiLineText>
           </div>
-          <MultiLineText styleName="translation" is="p">
-            {offer.translation}
-          </MultiLineText>
+          {(examples !== undefined) && (
+            <ul styleName="list">
+              {examples.map((example) => (
+                <ExampleOfferCardExampleItem key={example.id} example={example}/>
+              ))}
+            </ul>
+          )}
         </CardBody>
         {(dictionary !== undefined) && (
           <CardFooter styleName="footer">

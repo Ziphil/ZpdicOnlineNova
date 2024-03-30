@@ -15,6 +15,7 @@ import type {
   EditableWord,
   Example,
   ExampleOffer,
+  ExampleWithDictionary,
   History,
   Invitation,
   InvitationType,
@@ -304,7 +305,7 @@ type ServerSpecs = {
   fetchExamplesByOffer: {
     request: {number?: number, offerId: ObjectId, offset?: number, size?: number},
     response: {
-      success: WithSize<Example>,
+      success: WithSize<ExampleWithDictionary>,
       error: never
     }
   },

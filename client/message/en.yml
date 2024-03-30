@@ -389,7 +389,7 @@ exampleList:
   empty: "No example sentences are created"
   noWord: "No words specified"
   tag:
-    zpdicDaily: "Today's sentence · {dateString}"
+    zpdicDaily: "Daily sentence · {dateString}"
   button:
     edit: "Edit"
     discard: "Delete"
@@ -891,6 +891,7 @@ topPage:
   catch: "Draw{wbr} your own universe{wbr} with conlang"
   heading:
     gift: "I need your support"
+    offer: "Today's sentence"
     notification: "Latest news"
     github: "GitHub"
     supporter: "Supporters"

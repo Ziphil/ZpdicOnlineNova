@@ -4,6 +4,12 @@
 
 
 .body {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
   display: flex;
   flex-direction: column;
 }
@@ -16,6 +22,12 @@
 
 .translation {
   font-size: 5zu;
+}
+
+.list {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
 }
 
 .footer {

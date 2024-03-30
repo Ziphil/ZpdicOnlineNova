@@ -4,8 +4,7 @@ import {isDocument} from "@typegoose/typegoose";
 import type {
   DetailedDictionary as DetailedDictionarySkeleton,
   Dictionary as DictionarySkeleton,
-  UserDictionary as UserDictionarySkeleton,
-  User as UserSkeleton
+  UserDictionary as UserDictionarySkeleton
 } from "/client/skeleton";
 import {DictionarySettingsCreator} from "/server/creator/dictionary/dictionary-settings";
 import {UserCreator} from "/server/creator/user/user";
@@ -34,28 +33,20 @@ export namespace DictionaryCreator {
 
   export async function createDetailed(raw: Dictionary): Promise<DetailedDictionarySkeleton> {
     const base = create(raw);
-    const userPromise = new Promise<UserSkeleton>(async (resolve, reject) => {
-      try {
-        await raw.populate("user");
-        if (isDocument(raw.user)) {
-          const user = UserCreator.create(raw.user);
-          resolve(user);
-        } else {
-          reject();
-        }
-      } catch (error) {
-        reject(error);
+    const [user] = await Promise.all([(async () => {
+      await raw.populate("user");
+      if (isDocument(raw.user)) {
+        return UserCreator.create(raw.user);
+      } else {
+        throw new Error("cannot happen");
       }
-    });
-    const [user] = await Promise.all([userPromise]);
+    })()]);
     const skeleton = {...base, user};
     return skeleton;
   }
 
   export async function createUser(raw: Dictionary, rawUser: User): Promise<UserDictionarySkeleton> {
-    const basePromise = createDetailed(raw);
-    const authoritiesPromise = raw.fetchAuthorities(rawUser);
-    const [base, authorities] = await Promise.all([basePromise, authoritiesPromise]);
+    const [base, authorities] = await Promise.all([createDetailed(raw), raw.fetchAuthorities(rawUser)]);
     const skeleton = {...base, authorities};
     return skeleton;
   }

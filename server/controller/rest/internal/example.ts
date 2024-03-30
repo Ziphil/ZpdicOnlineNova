@@ -7,7 +7,7 @@ import {ExampleCreator, ExampleOfferCreator} from "/server/creator";
 import {ExampleModel, ExampleOfferModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 import {QueryRange} from "/server/util/query";
-import {mapWithSize} from "/server/util/with-size";
+import {mapWithSize, mapWithSizeAsync} from "/server/util/with-size";
 
 
 @restController(SERVER_PATH_PREFIX)
@@ -73,7 +73,7 @@ export class ExampleRestController extends InternalRestController {
     const {offerId, offset, size} = request.body;
     const range = new QueryRange(offset, size);
     const hitResult = await ExampleModel.fetchByOffer(dictionary, offerId, range);
-    const body = mapWithSize(hitResult, ExampleCreator.create);
+    const body = await mapWithSizeAsync(hitResult, ExampleCreator.createWithDictionary);
     InternalRestController.respond(response, body);
   }
 

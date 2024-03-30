@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
+import {Dictionary} from "/client/skeleton";
 import {ObjectId} from "/client/skeleton/common";
 import {LinkedWord} from "/client/skeleton/word/linked-word";
 
@@ -30,5 +31,12 @@ export interface Example extends EditableExample {
 
   id: ObjectId;
   number: number;
+
+}
+
+
+export interface ExampleWithDictionary extends Example {
+
+  dictionary: Dictionary;
 
 }

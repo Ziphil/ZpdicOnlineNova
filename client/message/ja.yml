@@ -890,6 +890,7 @@ topPage:
   catch: "Draw{wbr} your own universe{wbr} with conlang"
   heading:
     gift: "支援のお願い"
+    offer: "今日の例文"
     notification: "最新のお知らせ"
     github: "GitHub"
     supporter: "スペシャルサンクス"

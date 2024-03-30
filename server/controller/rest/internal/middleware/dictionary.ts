@@ -10,8 +10,12 @@ export function parseDictionary(): RequestHandler {
   const handler = async function (request: Request & {middlewareBody: MiddlewareBody}, response: Response, next: NextFunction): Promise<void> {
     try {
       const identifier = request.body.identifier ?? request.body.number ?? request.body.paramName;
-      const dictionary = await DictionaryModel.fetchOneByIdentifier(identifier);
-      request.middlewareBody.dictionary = dictionary;
+      if (identifier !== undefined) {
+        const dictionary = await DictionaryModel.fetchOneByIdentifier(identifier);
+        request.middlewareBody.dictionary = dictionary;
+      } else {
+        request.middlewareBody.dictionary = null;
+      }
       next();
     } catch (error) {
       next(error);

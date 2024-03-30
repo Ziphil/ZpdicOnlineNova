@@ -389,7 +389,7 @@ exampleList:
   empty: "No example sentences are created"
   noWord: "No words specified"
   tag:
-    zpdicDaily: "Today's sentence · {dateString}"
+    zpdicDaily: "Daily sentence · {dateString}"
   button:
     edit: "Измєнити"
     discard: "Одстранити"
@@ -891,6 +891,7 @@ topPage:
   catch: "Рысујте{wbr} свој всесвєт{wbr} со сконструованым језыком"
   heading:
     gift: "I need your support"
+    offer: "Today's sentence"
     notification: "Послєдне новости"
     github: "GitHub"
     supporter: "Supporters"
