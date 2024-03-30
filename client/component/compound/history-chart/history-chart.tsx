@@ -21,7 +21,7 @@ export const HistoryChart = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {transNumber, transShortDate} = useTrans("historyChart");
+    const {transNumber, transDate} = useTrans("historyChart");
 
     const number = dictionary.number;
     const from = useMemo(() => dayjs().subtract(100, "day").startOf("hour").toISOString(), []);
@@ -50,7 +50,7 @@ export const HistoryChart = create(
               domain={dataSpec.dateDomain}
               height={20}
               tickCount={12}
-              tickFormatter={transShortDate}
+              tickFormatter={(date) => transDate(date, "shortDate")}
             />
             <YAxis
               styleName="axis"

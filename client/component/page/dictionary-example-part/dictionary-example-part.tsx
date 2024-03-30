@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {ReactElement, useCallback, useState} from "react";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, SingleLineText, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {ExampleList} from "/client/component/compound/example-list";
 import {ExampleOfferList} from "/client/component/compound/example-offer-list";
@@ -19,6 +19,8 @@ export const DictionaryExamplePart = create(
   }: {
     className?: string
   } & AdditionalProps): ReactElement {
+
+    const {trans} = useTrans("dictionaryExamplePart");
 
     const dictionary = useDictionary();
 
@@ -38,9 +40,12 @@ export const DictionaryExamplePart = create(
           <div styleName="sticky">
             <SearchExampleForm styleName="form"/>
             {(offers !== undefined) && (
-              <div>
+              <section>
+                <SingleLineText styleName="heading" is="h3">
+                  {trans("heading.offer")}
+                </SingleLineText>
                 <ExampleOfferList dictionary={dictionary} offers={offers} showPagination={false} pageSpec={{size: 1}}/>
-              </div>
+              </section>
             )}
           </div>
         </div>

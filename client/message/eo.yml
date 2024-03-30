@@ -398,6 +398,9 @@ exampleList:
         Vi ne povas restaŭri ĝin poste.
         Ĉu vi vere certas?
       confirm: "Forigi"
+exampleOfferList:
+  button:
+    add: "Traduki"
 executeAkrantiainDialog:
   label:
     source: "Fontkodo"
@@ -751,6 +754,9 @@ contactPage:
   explanation: |-
     Se vi volas sendi vian demandon anonime, bonvolu elsaluti kaj poste lasi malplena la kampon “Nomo”.
     Bonvolu noti, ke ni eble ne povos respondi al via anonima peto se ĝi koncernas ion kiu bezonas la aŭtoritaton de uzanto, kiel agordado aŭ redaktado de vortaro.
+dictionaryExamplePart:
+  heading:
+    offer: "Hodiaŭa frazo"
 dictionaryInformationPart:
   heading:
     history: "Historio de nombro da vortoj"

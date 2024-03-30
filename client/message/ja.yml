@@ -398,6 +398,9 @@ exampleList:
         削除した後にデータを戻すことはできません。
         本当によろしいですか?
       confirm: "削除"
+exampleOfferList:
+  button:
+    add: "翻訳"
 executeAkrantiainDialog:
   label:
     source: "ソースコード"
@@ -749,6 +752,9 @@ contactPage:
   explanation: |-
     匿名でのお問い合わせをご希望の場合は、ログアウトした状態で「名前」欄を空欄にした上で送信してください。
     なお、辞書の設定や編集などに関わるような、ユーザーの権限が必要になる内容に関するお問い合わせの場合、匿名では対応できない場合がありますのでご了承ください。
+dictionaryExamplePart:
+  heading:
+    offer: "今日の例文"
 dictionaryInformationPart:
   heading:
     history: "単語数推移"
