@@ -3,12 +3,6 @@
 @use "zographia/source/component/function.scss" as *;
 
 
-.root {
-  @include theme("light") {
-    --information-heading-text-color: #{leveled-color("gray", 7)};
-  }
-}
-
 .body {
   row-gap: 3zu;
   display: flex;
