@@ -8,6 +8,7 @@ import {
 } from "@typegoose/typegoose";
 import {ExampleOfferPositionSchema} from "/server/model/example/example-offer-position";
 import {WithSize} from "/server/type/common";
+import {askClaude} from "/server/util/claude";
 import {QueryRange} from "/server/util/query";
 
 
@@ -25,8 +26,18 @@ export class ExampleOfferSchema {
 
   public static async addDaily(): Promise<ExampleOffer> {
     const position = {name: "zpdicDaily", index: await this.fetchDailyNextIndex()};
-    const translation = "彼女はこのアパートの 5 階に住んでいる。";
     const createdDate = new Date();
+    const translation = await askClaude(`
+      まず、日本語の単語をランダムに1つ決めてください。これが、これから生成する例文のテーマになります。
+      その後、今決めた単語を用いて例文を日本語で1つ生成してください。 このとき、以下の条件を満たすようにしてください。
+      - 1つの文である
+      - 文の含まれる単語数は10以上15以下である
+      - 含まれる単語はできるだけ日常生活で使われる頻度が高いものにする
+      最後に生成した文のみを返答してください。最初に決めた単語は返答しないでください。
+    `, `
+      あなたは、外国語の学習者のために例文を生成するAIです。
+      利用者はあなたが生成した例文を外国語に翻訳することで外国語の勉強をするので、外国語への翻訳がしやすい文を生成してください。
+    `);
     const offer = new ExampleOfferModel({position, translation, createdDate});
     await offer.save();
     return offer;
