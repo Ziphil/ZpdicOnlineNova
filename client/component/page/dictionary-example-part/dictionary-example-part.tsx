@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {ReactElement, useCallback, useState} from "react";
-import {AdditionalProps, SingleLineText, useTrans} from "zographia";
+import {AdditionalProps, Indicator, SingleLineText, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {ExampleList} from "/client/component/compound/example-list";
 import {ExampleOfferList} from "/client/component/compound/example-offer-list";
@@ -29,6 +29,7 @@ export const DictionaryExamplePart = create(
 
     const [[offers] = []] = useResponse("fetchExampleOffers", {size: 1, offset: 0});
     const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
+    const showOffer = offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 
     const handlePageSet = useCallback(function (page: number): void {
       setPage(page);
@@ -40,12 +41,14 @@ export const DictionaryExamplePart = create(
         <div styleName="left">
           <div styleName="sticky">
             <SearchExampleForm styleName="form"/>
-            {(offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0) && (
-              <section>
+            {(showOffer) && (
+              <section styleName="section">
                 <SingleLineText styleName="heading" is="h3">
                   {trans("heading.offer")}
                 </SingleLineText>
-                <ExampleOfferList dictionary={dictionary} offers={offers} showPagination={false} pageSpec={{size: 1}}/>
+                <Indicator styleName="indicator" scheme="secondary" animate={true}>
+                  <ExampleOfferList dictionary={dictionary} offers={offers} showPagination={false} pageSpec={{size: 1}}/>
+                </Indicator>
               </section>
             )}
           </div>
