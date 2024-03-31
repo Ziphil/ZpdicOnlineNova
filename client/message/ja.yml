@@ -334,6 +334,8 @@ editExampleForm:
     translation: "自然言語訳"
   absent:
     word: "使用単語が登録されていません"
+  tag:
+    zpdicDaily: "今日の例文 · {dateString}"
   button:
     add:
       word: "使用単語を追加"

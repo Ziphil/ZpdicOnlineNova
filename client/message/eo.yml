@@ -334,6 +334,8 @@ editExampleForm:
     translation: "Tradukaĵo en naturan lingvon"
   absent:
     word: "Neniuj enhavitaj vortoj specifitaj"
+  tag:
+    zpdicDaily: "Ĉiutaga frazo · {dateString}"
   button:
     add:
       word: "Aldoni enhavitan vorton"

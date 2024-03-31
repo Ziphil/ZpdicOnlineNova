@@ -21,7 +21,7 @@ type FormValue = {
   sentence: string,
   translation: string,
   words: Array<RelationWord | null>,
-  offer?: ObjectId
+  offer?: ExampleOffer | ObjectId
 };
 
 export type EditExampleSpec = {
@@ -94,7 +94,7 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editEx
       words: value.words.filter((rawWord) => rawWord !== null).map((rawWord) => ({
         number: rawWord!.number
       })),
-      offer: value.offer
+      offer: (typeof value.offer === "string") ? value.offer : value.offer?.id
     }
   } satisfies RequestData<"editExample">;
   return query;

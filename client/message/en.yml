@@ -334,6 +334,8 @@ editExampleForm:
     translation: "Translation into natural language"
   absent:
     word: "No included words specified"
+  tag:
+    zpdicDaily: "Daily sentence · {dateString}"
   button:
     add:
       word: "Add included words"

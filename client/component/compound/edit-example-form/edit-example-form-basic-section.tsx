@@ -1,15 +1,19 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 //
 
+import dayjs from "dayjs";
 import {ReactElement} from "react";
 import {
   AdditionalProps,
   ControlContainer,
   ControlLabel,
+  Tag,
   Textarea,
+  TextareaAddon,
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
+import {useResponse} from "/client/hook/request";
 import {EnhancedDictionary} from "/client/skeleton";
 import {EditExampleSpec} from "./edit-example-form-hook";
 
@@ -26,10 +30,13 @@ export const EditExampleFormBasicSection = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("editExampleForm");
+    const {trans, transDate} = useTrans("editExampleForm");
 
     const {register} = form;
-    const translationEditable = !form.watch("offer");
+
+    const offer = form.watch("offer");
+    const [innerOffer] = useResponse("fetchExampleOffer", (typeof offer === "string") && {id: offer});
+    const actualOffer = (typeof offer === "string") ? innerOffer : offer;
 
     return (
       <section styleName="root" {...rest}>
@@ -41,7 +48,18 @@ export const EditExampleFormBasicSection = create(
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.translation")}</ControlLabel>
-            <Textarea styleName="textarea" disabled={!translationEditable} {...register("translation")}/>
+            <Textarea styleName="textarea" disabled={!!offer} {...register("translation")}>
+              {(actualOffer) && (
+                <TextareaAddon position="top">
+                  <Tag variant="solid">
+                    {trans(`tag.${actualOffer.position.name}`, {
+                      number: actualOffer.position.index + 1,
+                      dateString: transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")
+                    })}
+                  </Tag>
+                </TextareaAddon>
+              )}
+            </Textarea>
           </ControlContainer>
         </div>
       </section>
