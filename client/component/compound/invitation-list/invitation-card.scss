@@ -4,12 +4,18 @@
 
 
 .body {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.top {
+  row-gap: 2zu;
   display: flex;
   flex-direction: column;
 }
 
 .tag {
-  margin-block-end: 2zu;
   column-gap: 2zu;
   display: flex;
   align-items: center;
@@ -26,13 +32,11 @@
 }
 
 .date {
-  margin-block-start: 2zu;
   font-size: 3zu;
   color: var(--glob-mute-text-color);
 }
 
 .explanation {
-  margin-block-start: 2zu;
 }
 
 .user-link {

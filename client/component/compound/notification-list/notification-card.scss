@@ -3,7 +3,19 @@
 @use "zographia/source/component/function.scss" as *;
 
 
+.body {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+}
+
 .top {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
   column-gap: 3zu;
   display: flex;
   align-items: center;
@@ -15,7 +27,7 @@
   flex: 0 0 auto;
 }
 
-.heading-container {
+.heading-right {
   row-gap: 1.5zu;
   display: flex;
   flex-direction: column;
@@ -34,11 +46,9 @@
 }
 
 .tag {
-  margin-block-end: 2zu;
   column-gap: 2zu;
   display: flex;
 }
 
 .text {
-  margin-block-start: 3zu;
 }

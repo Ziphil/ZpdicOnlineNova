@@ -41,16 +41,18 @@ export const InvitationCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
-          <div styleName="tag">
-            <Tag variant="solid">{trans(`tag.${invitation.type}`)}</Tag>
-          </div>
-          <Link styleName="name" href={`/dictionary/${invitation.dictionary.paramName || invitation.dictionary.number}`} variant="unstyledSimple">
-            <SingleLineText is="h3">
-              {invitation.dictionary.name}
-            </SingleLineText>
-          </Link>
-          <div styleName="date">
-            <time dateTime={dayjs(invitation.createdDate).toISOString()}>{transDate(invitation.createdDate)}</time>
+          <div styleName="top">
+            <div styleName="tag">
+              <Tag variant="solid">{trans(`tag.${invitation.type}`)}</Tag>
+            </div>
+            <Link styleName="name" href={`/dictionary/${invitation.dictionary.paramName || invitation.dictionary.number}`} variant="unstyledSimple">
+              <SingleLineText is="h3">
+                {invitation.dictionary.name}
+              </SingleLineText>
+            </Link>
+            <div styleName="date">
+              <time dateTime={dayjs(invitation.createdDate).toISOString()}>{transDate(invitation.createdDate)}</time>
+            </div>
           </div>
           <MultiLineText styleName="explanation" is="p">
             {transNode(`explanation.${invitation.type}`, {
