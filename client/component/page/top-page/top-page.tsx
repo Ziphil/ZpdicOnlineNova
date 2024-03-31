@@ -59,6 +59,10 @@ export const TopPage = create(
               <section styleName="section">
                 <h2 styleName="heading">{trans("heading.offer")}</h2>
                 <ExampleOfferList offers={offers} pageSpec={{size: 1}} showExamples={true} showPagination={false}/>
+                <Link styleName="link" href="/sentence" scheme="secondary" variant="underline">
+                  <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
+                  {trans("subbutton.offer")}
+                </Link>
               </section>
               <section styleName="section">
                 <h2 styleName="heading">{trans("heading.notification")}</h2>

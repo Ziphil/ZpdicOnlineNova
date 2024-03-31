@@ -760,6 +760,9 @@ contactPage:
   explanation: |-
     Se vi volas sendi vian demandon anonime, bonvolu elsaluti kaj poste lasi malplena la kampon “Nomo”.
     Bonvolu noti, ke ni eble ne povos respondi al via anonima peto se ĝi koncernas ion kiu bezonas la aŭtoritaton de uzanto, kiel agordado aŭ redaktado de vortaro.
+exampleOfferListPage:
+  title: "Ĉiutagaj frazoj"
+  heading: "Ĉiutagaj frazoj"
 dictionaryExamplePart:
   heading:
     offer: "Hodiaŭa frazo"
@@ -871,8 +874,8 @@ loginPage:
   title: "Ensaluti"
   heading: "Ensaluti"
 notificationListPage:
-  title: "Antaŭaj novaĵoj"
-  heading: "Antaŭaj novaĵoj"
+  title: "Novaĵoj"
+  heading: "Novaĵoj"
 registerPage:
   title: "Enskribiĝi"
   heading: "Enskribiĝi"
@@ -913,8 +916,9 @@ topPage:
       Mi ŝatus profiti tiun okazon por danki ilin.
   subbutton:
     gift: "Sendi donacon"
+    offer: "Vidi antaŭaj ĉiutagaj frazoj"
     notification: "Legi pli da novaĵoj"
-    github: "Vidi sur GitHub"
+    github: "Vidi ĉe GitHub"
 userSettingPart:
   heading:
     screenName: "Kromnomo"

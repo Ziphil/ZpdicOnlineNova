@@ -760,6 +760,9 @@ contactPage:
   explanation: |-
     If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
     Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
+exampleOfferListPage:
+  title: "Daily sentences"
+  heading: "Daily sentences"
 dictionaryExamplePart:
   heading:
     offer: "Today's sentence"
@@ -913,6 +916,7 @@ topPage:
       I would like to take this opportunity to thank them.
   subbutton:
     gift: "Send gift"
+    offer: "See past daily sentences"
     notification: "Читати новости вече"
     github: "View on GitHub"
 userSettingPart:
