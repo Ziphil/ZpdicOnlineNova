@@ -323,6 +323,9 @@ editExampleDialog:
   button:
     external: "Malfermi en nova langeto"
 editExampleForm:
+  tab:
+    edit: "Redakti"
+    offer: "Antaŭdifinoj"
   heading:
     basic: "Paralela traduko"
     words: "Enhavitaj vortoj"
@@ -403,6 +406,7 @@ exampleList:
 exampleOfferList:
   button:
     add: "Traduki"
+    select: "Elekti"
 executeAkrantiainDialog:
   label:
     source: "Fontkodo"

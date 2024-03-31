@@ -1,6 +1,6 @@
 //
 
-import {faPen, faRectangleHistory} from "@fortawesome/sharp-regular-svg-icons";
+import {faBooks, faPen} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, Ref, useCallback, useState} from "react";
 import {AdditionalProps, GeneralIcon, Tab, TabIconbag, TabList, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
@@ -48,7 +48,7 @@ export const EditExampleForm = create(
             {trans("tab.edit")}
           </Tab>
           <Tab value="offer" onClick={() => setTabValue("offer")}>
-            <TabIconbag><GeneralIcon icon={faRectangleHistory}/></TabIconbag>
+            <TabIconbag><GeneralIcon icon={faBooks}/></TabIconbag>
             {trans("tab.offer")}
           </Tab>
         </TabList>

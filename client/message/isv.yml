@@ -323,6 +323,9 @@ editExampleDialog:
   button:
     external: "Open in new tab"
 editExampleForm:
+  tab:
+    edit: "Edit"
+    offer: "Presets"
   heading:
     basic: "Parallel translation"
     words: "Included words"
@@ -403,6 +406,7 @@ exampleList:
 exampleOfferList:
   button:
     add: "Translate"
+    select: "Select"
 executeAkrantiainDialog:
   label:
     source: "Source code"
