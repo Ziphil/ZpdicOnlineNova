@@ -15,6 +15,8 @@ export const ExampleOfferList = create(
     pageSpec,
     showPagination = true,
     showExamples = false,
+    showSelectButton = false,
+    onSelect,
     ...rest
   }: {
     dictionary?: EnhancedDictionary,
@@ -22,6 +24,8 @@ export const ExampleOfferList = create(
     pageSpec: PageSpec,
     showPagination?: boolean,
     showExamples?: boolean,
+    showSelectButton?: boolean,
+    onSelect?: (offer: ExampleOffer) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -36,6 +40,8 @@ export const ExampleOfferList = create(
               dictionary={dictionary}
               offer={example}
               showExamples={showExamples}
+              showSelectButton={showSelectButton}
+              onSelect={onSelect}
             />
           )}
           <ListLoadingView/>

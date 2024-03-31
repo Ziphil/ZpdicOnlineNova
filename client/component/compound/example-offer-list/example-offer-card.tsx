@@ -1,8 +1,8 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {faCheck, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
-import {ReactElement} from "react";
+import {ReactElement, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
 import {ExampleOfferCardExampleItem} from "/client/component/compound/example-offer-list/example-offer-card-example-item";
@@ -17,19 +17,26 @@ export const ExampleOfferCard = create(
     dictionary,
     offer,
     showExamples,
+    showSelectButton,
+    onSelect,
     ...rest
   }: {
     dictionary?: EnhancedDictionary,
     offer: ExampleOffer,
     showExamples: boolean,
+    showSelectButton: boolean,
+    onSelect?: (offer: ExampleOffer) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans, transDate} = useTrans("exampleOfferList");
 
     const [[examples] = []] = useResponse("fetchExamplesByOffer", (showExamples) && {offerId: offer.id});
-
     const zonedCreatedDate = dayjs(offer.createdDate).tz("Asia/Tokyo");
+
+    const handleSelect = useCallback(function (): void {
+      onSelect?.(offer);
+    }, [onSelect, offer]);
 
     return (
       <Card styleName="root" {...rest}>
@@ -50,14 +57,22 @@ export const ExampleOfferCard = create(
             </ul>
           )}
         </CardBody>
-        {(dictionary !== undefined) && (
+        {(dictionary !== undefined || showSelectButton) && (
           <CardFooter styleName="footer">
-            <EditExampleDialog dictionary={dictionary} initialData={{type: "offer", offer}} trigger={(
-              <Button scheme="secondary" variant="underline">
-                <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
-                {trans("button.add")}
+            {(dictionary !== undefined) && (
+              <EditExampleDialog dictionary={dictionary} initialData={{type: "offer", offer}} trigger={(
+                <Button scheme="secondary" variant="underline">
+                  <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
+                  {trans("button.add")}
+                </Button>
+              )}/>
+            )}
+            {(showSelectButton) && (
+              <Button scheme="secondary" variant="underline" onClick={handleSelect}>
+                <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
+                {trans("button.select")}
               </Button>
-            )}/>
+            )}
           </CardFooter>
         )}
       </Card>

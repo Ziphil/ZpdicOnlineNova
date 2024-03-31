@@ -1,14 +1,14 @@
 //
 
-import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, Ref, useCallback} from "react";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
+import {faPen, faRectangleHistory} from "@fortawesome/sharp-regular-svg-icons";
+import {ReactElement, Ref, useCallback, useState} from "react";
+import {AdditionalProps, GeneralIcon, Tab, TabIconbag, TabList, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {EditableExample, EnhancedDictionary} from "/client/skeleton";
 import {assignRef} from "/client/util/ref";
-import {EditExampleFormBasicSection} from "./edit-example-form-basic-section";
+import {EditExampleFormEditPart} from "./edit-example-form-edit-part";
 import {EditExampleFormValue, EditExampleInitialData, useEditExample} from "./edit-example-form-hook";
-import {EditExampleFormWordSection} from "./edit-example-form-word-section";
+import {EditExampleFormOfferPart} from "./edit-example-form-offer-part";
 
 
 export const EditExampleForm = create(
@@ -29,7 +29,10 @@ export const EditExampleForm = create(
 
     const {trans} = useTrans("editExampleForm");
 
-    const {form, handleSubmit} = useEditExample(dictionary, initialData, onSubmit);
+    const formSpec = useEditExample(dictionary, initialData, onSubmit);
+    const {form} = formSpec;
+
+    const [tabValue, setTabValue] = useState<"edit" | "offer">("edit");
 
     const getFormValue = useCallback(function (): EditExampleFormValue {
       return form.getValues();
@@ -38,18 +41,24 @@ export const EditExampleForm = create(
     assignRef(formRef, getFormValue);
 
     return (
-      <form styleName="root" {...rest}>
-        <div styleName="main">
-          <EditExampleFormBasicSection dictionary={dictionary} form={form}/>
-          <EditExampleFormWordSection dictionary={dictionary} form={form}/>
+      <div styleName="root" {...rest}>
+        <TabList styleName="tab-list" value={tabValue} scheme="primary">
+          <Tab value="edit" onClick={() => setTabValue("edit")}>
+            <TabIconbag><GeneralIcon icon={faPen}/></TabIconbag>
+            {trans("tab.edit")}
+          </Tab>
+          <Tab value="offer" onClick={() => setTabValue("offer")}>
+            <TabIconbag><GeneralIcon icon={faRectangleHistory}/></TabIconbag>
+            {trans("tab.offer")}
+          </Tab>
+        </TabList>
+        <div styleName="part" {...data({shown: tabValue === "edit"})}>
+          <EditExampleFormEditPart dictionary={dictionary} formSpec={formSpec}/>
         </div>
-        <div styleName="button">
-          <Button type="submit" onClick={handleSubmit}>
-            <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.confirm")}
-          </Button>
+        <div styleName="part" {...data({shown: tabValue === "offer"})}>
+          <EditExampleFormOfferPart dictionary={dictionary} formSpec={formSpec} setTabValue={setTabValue}/>
         </div>
-      </form>
+      </div>
     );
 
   }
