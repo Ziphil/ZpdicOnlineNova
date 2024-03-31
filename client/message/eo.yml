@@ -428,7 +428,9 @@ footer:
     contact: "Kontakti"
     document: "Dokumentaro"
 header:
-  dictionaryList: "Vortaroj"
+  link:
+    dictionary: "Vortaroj"
+    exampleOffer: "Ĉiutagaj frazoj"
   userPage: "Uzanta paĝo"
 invitationList:
   empty: "Neniuj sciigoj"

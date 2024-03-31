@@ -428,7 +428,9 @@ footer:
     contact: "Contact"
     document: "Documentation"
 header:
-  dictionaryList: "Dictionaries"
+  link:
+    dictionary: "Dictionaries"
+    exampleOffer: "Daily sentences"
   userPage: "User page"
 invitationList:
   empty: "No notifications"

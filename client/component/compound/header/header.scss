@@ -32,6 +32,7 @@
 .left {
   display: flex;
   align-items: center;
+  flex: 0 1 auto;
   @include device("desktop") {
     column-gap: 6zu;
   }
@@ -63,6 +64,7 @@
   column-gap: 4zu;
   display: flex;
   align-items: center;
+  flex: 0 0 auto;
 }
 
 .menu {

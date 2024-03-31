@@ -10,22 +10,24 @@ import SymbolSvg from "/client/public/symbol.svg";
 export const Logo = createWithRef(
   require("./logo.scss"), "Logo",
   function ({
-    showSymbol = true,
+    type = "full",
     ...rest
   }: {
-    showSymbol?: boolean,
+    type?: "full" | "symbol" | "logotype",
     className?: string,
     ref?: Ref<HTMLDivElement>
-  } & AdditionalProps): ReactElement {
+  } & AdditionalProps): ReactElement | null {
 
-    return (showSymbol) ? (
+    return (type === "full") ? (
       <div styleName="root" role="img" {...aria({label: "ZpDIC Online"})} {...rest}>
         <SymbolSvg styleName="symbol"/>
         <LogotypeSvg styleName="logo"/>
       </div>
-    ) : (
-      <LogotypeSvg styleName="logo-single" role="img" {...aria({label: "ZpDIC Online"})} {...rest}/>
-    );
+    ) : (type === "logotype") ? (
+      <LogotypeSvg styleName="root-logotype" role="img" {...aria({label: "ZpDIC Online"})} {...rest}/>
+    ) : (type === "symbol") ? (
+      <SymbolSvg styleName="root-symbol" role="img" {...aria({label: "ZpDIC Online"})} {...rest}/>
+    ) : null;
 
   }
 );

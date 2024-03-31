@@ -428,7 +428,9 @@ footer:
     contact: "Contact"
     document: "Documentation"
 header:
-  dictionaryList: "Словникы"
+  link:
+    dictionary: "Словникы"
+    exampleOffer: "Daily sentences"
   userPage: "Користничска страница"
 invitationList:
   empty: "No notifications"
