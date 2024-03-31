@@ -907,6 +907,9 @@ topPage:
       ZpDIC Online is being developed and maintained by a single programmer, but it costs several hundred dollars per year to keep the service running.
       To maintain and improve the service, your support is needed!
       If you like this application, please send a gift to the developer via the button below.
+    offer: >-
+      You can add your translation from each dictionary page.
+      The sentence is updated daily.
   description:
     github: >-
       The source code of this application is available on GitHub.

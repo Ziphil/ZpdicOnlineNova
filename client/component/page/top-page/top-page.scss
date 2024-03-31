@@ -60,6 +60,10 @@
   color: var(--glob-mute-text-color);
 }
 
+.message {
+  margin-block-end: 3zu;
+}
+
 .link {
   margin-block-start: 3zu;
   align-self: flex-start;
