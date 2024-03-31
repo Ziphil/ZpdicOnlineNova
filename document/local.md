@@ -44,6 +44,14 @@ Web API 用のアクセスキーを新たに作成し、メモしておきます
 [reCAPTCHA v3](https://www.google.com/recaptcha) にサイトを登録します。
 サイトキーとシークレットキーを確認し、メモしておきます。
 
+### Anthropic への登録
+[Anthropic Console](https://console.anthropic.com/) のアカウントを作成します。
+支払い方法などの設定をした後で、API キーを作成し、メモしておきます。
+
+### Font Awesome への登録
+[Font Awesome](https://fontawesome.com/) のアカウントを作成します。
+Pro 以上のプランに加入した後で、パッケージトークンを作成し、メモしておきます。
+
 ### Amazon Web Service への登録
 [Amazon Web Service](https://aws.amazon.com/jp) に登録し、ZpDIC Online で利用する IAM ユーザーを作成します。
 このユーザーで API を利用するためのアクセスキーを新たに作成し、作成されたキー ID とシークレットキーを確認し、メモしておきます。
