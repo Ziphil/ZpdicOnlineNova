@@ -5,7 +5,7 @@ import {ReactElement, Ref} from "react";
 import {AdditionalProps, Avatar, AvatarFallbackIconContainer, GeneralIcon} from "zographia";
 import {createWithRef} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {User} from "/client/skeleton";
+import {ObjectId, User} from "/client/skeleton";
 import {getAwsFileUrl} from "/client/util/aws";
 
 
@@ -16,7 +16,7 @@ export const UserAvatar = createWithRef(
     inline,
     ...rest
   }: {
-    user: User | string,
+    user: User | ObjectId,
     inline?: boolean,
     className?: string,
     ref?: Ref<HTMLSpanElement>

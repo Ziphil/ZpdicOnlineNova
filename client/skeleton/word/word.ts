@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-namespace */
 
+import {ObjectId} from "/client/skeleton/common";
+import {Example} from "/client/skeleton/example/example";
 import {Equivalent} from "/client/skeleton/word/equivalent";
-import {Example} from "/client/skeleton/word/example";
 import {Information} from "/client/skeleton/word/information";
 import {Relation} from "/client/skeleton/word/relation";
 import {Variation} from "/client/skeleton/word/variation";
@@ -37,7 +38,7 @@ export namespace EditableWord {
 
 export interface Word extends EditableWord {
 
-  id: string;
+  id: ObjectId;
   number: number;
   createdDate?: string;
   updatedDate?: string;

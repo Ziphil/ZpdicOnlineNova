@@ -4,18 +4,32 @@
 
 
 .body {
+  row-gap: 3zu;
   display: flex;
   flex-direction: column;
 }
 
+.tag {
+  row-gap: 1.5zu;
+  column-gap: 2zu;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .parallel {
   column-gap: 3zu;
+  row-gap: 3zu;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  @include device("desktop") {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include device("movile") {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .word {
-  margin-block-start: 3zu;
   column-gap: var(--glob-blank-gap);
   display: flex;
   align-items: baseline;

@@ -5,6 +5,9 @@ import * as typegoose from "@typegoose/typegoose";
 import Agenda from "agenda";
 import aws from "aws-sdk";
 import cookieParser from "cookie-parser";
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import express from "express";
 import {Express, NextFunction, Request, Response} from "express";
 import fs from "fs";
@@ -19,6 +22,7 @@ import {
 } from "/server/controller/job/internal";
 import {
   CommissionRestController,
+  DebugRestController,
   DictionaryRestController,
   ExampleRestController,
   HistoryRestController,
@@ -34,6 +38,7 @@ import {
 } from "/server/controller/socket/internal";
 import {LogUtil} from "/server/util/log";
 import {setMongoCheckRequired} from "/server/util/mongo";
+import {jsonifyRequest} from "/server/util/request";
 import {
   AWS_KEY,
   AWS_REGION,
@@ -43,6 +48,10 @@ import {
   PORT,
   SENDGRID_KEY
 } from "/server/variable";
+
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 
 export class Main {
@@ -72,7 +81,7 @@ export class Main {
     this.useRestControllers();
     this.useSocketControllers();
     this.useJobControllers();
-    this.setupSchedules();
+    this.setupAgenda();
     this.addStaticHandlers();
     this.addFallbackHandlers();
     this.addErrorHandler();
@@ -116,16 +125,11 @@ export class Main {
   }
 
   private addLogMiddleware(): void {
-    const middleware = morgan<Request>((tokens, request, response) => {
-      const method = tokens["method"](request, response);
-      const status = +tokens["status"](request, response)!;
-      const url = tokens["url"](request, response);
-      const baseUrl = request.baseUrl;
-      const time = +tokens["total-time"](request, response, 0)!;
-      const query = request.query;
-      const body = ("password" in request.body) ? {...request.body, password: "***"} : request.body;
-      const logString = JSON.stringify({baseUrl, url, method, status, time, query, body});
-      return `!<request> ${logString}`;
+    const middleware = morgan<Request, Response>((tokens, request, response) => {
+      const time = +tokens["response-time"](request, response, 0)!;
+      const object = {...jsonifyRequest(request, response), time};
+      const string = JSON.stringify(object);
+      return `!<request> ${string}`;
     });
     this.application.use(middleware);
   }
@@ -176,6 +180,7 @@ export class Main {
     ResourceRestController.use(this.application, this.server, this.agenda);
     UserRestController.use(this.application, this.server, this.agenda);
     WordRestController.use(this.application, this.server, this.agenda);
+    DebugRestController.use(this.application, this.server, this.agenda);
   }
 
   private useSocketControllers(): void {
@@ -187,10 +192,8 @@ export class Main {
     RegularJobController.use(this.agenda);
   }
 
-  private setupSchedules(): void {
+  private setupAgenda(): void {
     this.agenda.on("ready", () => {
-      this.agenda.every("0 3 * * *", "discardOldHistoryWords", {}, {timezone: "Asia/Tokyo"});
-      this.agenda.every("30 23 * * *", "addHistories", {}, {timezone: "Asia/Tokyo"});
       this.agenda.start();
     });
   }
@@ -226,7 +229,7 @@ export class Main {
 
   private addErrorHandler(): void {
     const handler = function (error: any, request: Request, response: Response, next: NextFunction): void {
-      LogUtil.error("server", null, error);
+      LogUtil.error("server", jsonifyRequest(request, response), error);
       response.status(500).end();
     };
     this.application.use(handler);

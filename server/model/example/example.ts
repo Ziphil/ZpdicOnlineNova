@@ -11,6 +11,7 @@ import type {EditableExample} from "/client/skeleton";
 import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
+import {ExampleOffer} from "/server/model/example/example-offer";
 import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";
 import {WithSize} from "/server/type/common";
@@ -36,6 +37,9 @@ export class ExampleSchema extends DiscardableSchema {
   @prop({required: true})
   public translation!: string;
 
+  @prop({ref: "ExampleOfferSchema"})
+  public offer?: Ref<ExampleOffer>;
+
   @prop()
   public createdDate?: Date;
 
@@ -52,6 +56,18 @@ export class ExampleSchema extends DiscardableSchema {
     const query = ExampleModel.findExist().where("dictionary", word.dictionary).where("words.number", word.number).sort("-createdDate");
     const result = await query.exec();
     return result;
+  }
+
+  public static async fetchByOffer(dictionary: Dictionary | null, offerId: string, range?: QueryRange): Promise<WithSize<Example>> {
+    if (dictionary !== null) {
+      const query = ExampleModel.findExist().where("dictionary", dictionary).where("offer", offerId).sort("-createdDate");
+      const result = await QueryRange.restrictWithSize(query, range);
+      return result;
+    } else {
+      const query = ExampleModel.findExist().where("offer", offerId).sort("-createdDate");
+      const result = await QueryRange.restrictWithSize(query, range);
+      return result;
+    }
   }
 
   public static async edit(dictionary: Dictionary, example: EditableExample): Promise<Example> {

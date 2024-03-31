@@ -323,6 +323,9 @@ editExampleDialog:
   button:
     external: "別タブで表示"
 editExampleForm:
+  tab:
+    edit: "編集"
+    offer: "例文集"
   heading:
     basic: "対訳"
     words: "使用単語"
@@ -331,6 +334,8 @@ editExampleForm:
     translation: "自然言語訳"
   absent:
     word: "使用単語が登録されていません"
+  tag:
+    zpdicDaily: "今日の例文 · {dateString}"
   button:
     add:
       word: "使用単語を追加"
@@ -388,6 +393,8 @@ editWordForm:
 exampleList:
   empty: "例文は作成されていません"
   noWord: "使用単語が登録されていません"
+  tag:
+    zpdicDaily: "今日の例文 · {dateString}"
   button:
     edit: "編集"
     discard: "削除"
@@ -398,6 +405,10 @@ exampleList:
         削除した後にデータを戻すことはできません。
         本当によろしいですか?
       confirm: "削除"
+exampleOfferList:
+  button:
+    add: "翻訳"
+    select: "選択"
 executeAkrantiainDialog:
   label:
     source: "ソースコード"
@@ -419,7 +430,9 @@ footer:
     contact: "お問い合わせ"
     document: "ドキュメント"
 header:
-  dictionaryList: "辞書一覧"
+  link:
+    dictionary: "辞書一覧"
+    exampleOffer: "過去の例文"
   userPage: "ユーザーページ"
 invitationList:
   empty: "通知はありません"
@@ -749,6 +762,12 @@ contactPage:
   explanation: |-
     匿名でのお問い合わせをご希望の場合は、ログアウトした状態で「名前」欄を空欄にした上で送信してください。
     なお、辞書の設定や編集などに関わるような、ユーザーの権限が必要になる内容に関するお問い合わせの場合、匿名では対応できない場合がありますのでご了承ください。
+exampleOfferListPage:
+  title: "過去の例文"
+  heading: "過去の例文"
+dictionaryExamplePart:
+  heading:
+    offer: "今日の例文"
 dictionaryInformationPart:
   heading:
     history: "単語数推移"
@@ -756,7 +775,7 @@ dictionaryInformationPart:
   description: 
     history: >-
       この辞書の直近 100 日間の単語数の推移です。
-      単語数は毎日 23 時 30 分頃 (JST, UTC+9) に記録されます。
+      単語数は毎日 23 時 30 分頃に記録されます。
     wordNameFrequency: >-
       見出し語に使われている各文字の出現頻度です。
 dictionarySettingPart:
@@ -858,8 +877,8 @@ loginPage:
   title: "ログイン"
   heading: "ログイン"
 notificationListPage:
-  title: "過去のお知らせ"
-  heading: "過去のお知らせ"
+  title: "お知らせ"
+  heading: "お知らせ"
 registerPage:
   title: "新規登録"
   heading: "新規登録"
@@ -882,6 +901,7 @@ topPage:
   catch: "Draw{wbr} your own universe{wbr} with conlang"
   heading:
     gift: "支援のお願い"
+    offer: "今日の例文"
     notification: "最新のお知らせ"
     github: "GitHub"
     supporter: "スペシャルサンクス"
@@ -890,6 +910,9 @@ topPage:
       ZpDIC Online は個人によって開発および保守されていますが、サービスの維持だけで年間数万円ほどかかってしまいます。
       サービスの持続および向上には、皆様の支援が必要です。
       もしこのアプリが気に入りましたら、ぜひ下記のボタンから開発者にギフトをお送りください。
+    offer: >-
+      辞書ページから翻訳を追加することができます。
+      例文は毎朝 6 時に更新されます。
   description:
     github: >-
       このアプリケーションのソースコードは GitHub 上で公開されています。
@@ -899,7 +922,8 @@ topPage:
       この場を借りてお礼申し上げます。
   subbutton:
     gift: "ギフトを送る"
-    notification: "他のお知らせも見る"
+    offer: "過去の例文を見る"
+    notification: "過去のお知らせを見る"
     github: "GitHub で見る"
 userSettingPart:
   heading:

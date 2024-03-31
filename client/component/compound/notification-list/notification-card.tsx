@@ -23,21 +23,23 @@ export const NotificationCard = create(
 
     return (
       <Card styleName="root" {...rest}>
-        <CardBody>
-          <div styleName="tag">
-            <Tag is="span" variant="solid">{trans(`tag.${(notification.type === "bugFixed") ? "bug" : notification.type}`)}</Tag>
-            {(notification.type === "bugFixed") && <Tag is="span" variant="light">{trans("tag.fixed")}</Tag>}
-          </div>
+        <CardBody styleName="body">
           <div styleName="top">
-            <div styleName="icon">
-              <GeneralIcon icon={getIcon(notification.type)}/>
+            <div styleName="tag">
+              <Tag is="span" variant="solid">{trans(`tag.${(notification.type === "bugFixed") ? "bug" : notification.type}`)}</Tag>
+              {(notification.type === "bugFixed") && <Tag is="span" variant="light">{trans("tag.fixed")}</Tag>}
             </div>
-            <div styleName="heading-container">
-              <MultiLineText styleName="title" is="h3" lineHeight="narrowest">
-                {notification.title}
-              </MultiLineText>
-              <div styleName="date">
-                <time dateTime={dayjs(notification.date).toISOString()}>{transDate(notification.date)}</time>
+            <div styleName="heading">
+              <div styleName="icon">
+                <GeneralIcon icon={getIcon(notification.type)}/>
+              </div>
+              <div styleName="heading-right">
+                <MultiLineText styleName="title" is="h3" lineHeight="narrowest">
+                  {notification.title}
+                </MultiLineText>
+                <div styleName="date">
+                  <time dateTime={dayjs(notification.date).toISOString()}>{transDate(notification.date)}</time>
+                </div>
               </div>
             </div>
           </div>

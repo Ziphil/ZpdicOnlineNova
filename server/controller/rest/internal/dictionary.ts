@@ -2,7 +2,7 @@
 
 import dayjs from "dayjs";
 import {before, post, restController} from "/server/controller/rest/decorator";
-import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
+import {FilledRequest, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe, checkRecaptcha, parseMe} from "/server/controller/rest/internal/middleware";
 import {DictionaryCreator, DictionaryParameterCreator, SuggestionCreator, UserCreator, WordCreator, WordParameterCreator} from "/server/creator";
 import {DictionaryModel, ExampleModel, UserModel, WordModel} from "/server/model";
@@ -18,8 +18,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/createDictionary")
   @before(checkMe())
-  public async [Symbol()](request: Request<"createDictionary">, response: Response<"createDictionary">): Promise<void> {
-    const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
+  public async [Symbol()](request: FilledRequest<"createDictionary", "me">, response: Response<"createDictionary">): Promise<void> {
+    const {me} = request.middlewareBody ;
     const {name} = request.body;
     const dictionary = await DictionaryModel.addEmpty(name, me);
     const body = DictionaryCreator.create(dictionary);
@@ -28,8 +28,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/uploadDictionary")
   @before(checkRecaptcha(), checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: Request<"uploadDictionary">, response: Response<"uploadDictionary">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+  public async [Symbol()](request: FilledRequest<"uploadDictionary", "me" | "dictionary">, response: Response<"uploadDictionary">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const file = request.file;
     if (file !== undefined) {
       const path = file.path;
@@ -57,16 +57,16 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/discardDictionary")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: Request<"discardDictionary">, response: Response<"discardDictionary">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+  public async [Symbol()](request: FilledRequest<"discardDictionary", "me" | "dictionary">, response: Response<"discardDictionary">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     await dictionary.discard();
     InternalRestController.respond(response, null);
   }
 
   @post("/changeDictionaryName")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: Request<"changeDictionaryName">, response: Response<"changeDictionaryName">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+  public async [Symbol()](request: FilledRequest<"changeDictionaryName", "me" | "dictionary">, response: Response<"changeDictionaryName">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const {name} = request.body;
     await dictionary.changeName(name);
     const body = DictionaryCreator.create(dictionary);
@@ -75,8 +75,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/changeDictionaryParamName")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: Request<"changeDictionaryParamName">, response: Response<"changeDictionaryParamName">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+  public async [Symbol()](request: FilledRequest<"changeDictionaryParamName", "me" | "dictionary">, response: Response<"changeDictionaryParamName">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const {paramName} = request.body;
     try {
       await dictionary.changeParamName(paramName);
@@ -97,8 +97,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/discardDictionaryAuthorizedUser")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: Request<"discardDictionaryAuthorizedUser">, response: Response<"discardDictionaryAuthorizedUser">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+  public async [Symbol()](request: FilledRequest<"discardDictionaryAuthorizedUser", "me" | "dictionary">, response: Response<"discardDictionaryAuthorizedUser">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const {id} = request.body;
     const user = await UserModel.findById(id);
     if (user) {
@@ -115,8 +115,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/changeDictionarySecret")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: Request<"changeDictionarySecret">, response: Response<"changeDictionarySecret">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+  public async [Symbol()](request: FilledRequest<"changeDictionarySecret", "me" | "dictionary">, response: Response<"changeDictionarySecret">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const {secret} = request.body;
     await dictionary.changeSecret(secret);
     const body = DictionaryCreator.create(dictionary);
@@ -125,8 +125,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/changeDictionaryExplanation")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: Request<"changeDictionaryExplanation">, response: Response<"changeDictionaryExplanation">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+  public async [Symbol()](request: FilledRequest<"changeDictionaryExplanation", "me" | "dictionary">, response: Response<"changeDictionaryExplanation">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const {explanation} = request.body;
     await dictionary.changeExplanation(explanation);
     const body = DictionaryCreator.create(dictionary);
@@ -135,8 +135,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/changeDictionarySettings")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: Request<"changeDictionarySettings">, response: Response<"changeDictionarySettings">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+  public async [Symbol()](request: FilledRequest<"changeDictionarySettings", "me" | "dictionary">, response: Response<"changeDictionarySettings">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const {settings} = request.body;
     await dictionary.changeSettings(settings);
     const body = DictionaryCreator.create(dictionary);
@@ -155,8 +155,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/searchWord")
   @before(checkDictionary())
-  public async [Symbol()](request: Request<"searchWord">, response: Response<"searchWord">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+  public async [Symbol()](request: FilledRequest<"searchWord", "dictionary">, response: Response<"searchWord">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const {offset, size} = request.body;
     const parameter = WordParameterCreator.recreate(request.body.parameter);
     const range = new QueryRange(offset, size);
@@ -170,8 +170,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/downloadDictionary")
   @before(checkDictionary())
-  public async [Symbol()](request: Request<"downloadDictionary">, response: Response<"downloadDictionary">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+  public async [Symbol()](request: FilledRequest<"downloadDictionary", "dictionary">, response: Response<"downloadDictionary">): Promise<void> {
+    const {dictionary} = request.middlewareBody ;
     const number = dictionary.number;
     const key = dayjs().valueOf().toString();
     const path = `./dist/download/${key}.json`;
@@ -210,8 +210,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/fetchDictionarySizes")
   @before(checkDictionary())
-  public async [Symbol()](request: Request<"fetchDictionarySizes">, response: Response<"fetchDictionarySizes">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+  public async [Symbol()](request: FilledRequest<"fetchDictionarySizes", "dictionary">, response: Response<"fetchDictionarySizes">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const [wordCount, exampleCount] = await Promise.all([dictionary.countWords(), dictionary.countExamples()]);
     const body = {word: wordCount, example: exampleCount};
     InternalRestController.respond(response, body);
@@ -219,24 +219,24 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/fetchWordNameFrequencies")
   @before(checkDictionary())
-  public async [Symbol()](request: Request<"fetchWordNameFrequencies">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+  public async [Symbol()](request: FilledRequest<"fetchWordNameFrequencies", "dictionary">, response: Response<"fetchWordNameFrequencies">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const body = await dictionary.calcWordNameFrequencies();
     InternalRestController.respond(response, body);
   }
 
   @post("/fetchDictionaryStatistics")
   @before(checkDictionary())
-  public async [Symbol()](request: Request<"fetchDictionaryStatistics">, response: Response<"fetchDictionaryStatistics">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+  public async [Symbol()](request: FilledRequest<"fetchDictionaryStatistics", "dictionary">, response: Response<"fetchDictionaryStatistics">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const body = await dictionary.calcStatistics();
     InternalRestController.respond(response, body);
   }
 
   @post("/suggestDictionaryTitles")
   @before(checkDictionary())
-  public async [Symbol()](request: Request<"suggestDictionaryTitles">, response: Response<"suggestDictionaryTitles">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+  public async [Symbol()](request: FilledRequest<"suggestDictionaryTitles", "dictionary">, response: Response<"suggestDictionaryTitles">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const {propertyName, pattern} = request.body;
     const titles = await dictionary.suggestTitles(propertyName, pattern);
     const body = titles;
@@ -245,8 +245,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/fetchDictionaryAuthorizedUsers")
   @before(checkDictionary())
-  public async [Symbol()](request: Request<"fetchDictionaryAuthorizedUsers">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+  public async [Symbol()](request: FilledRequest<"fetchDictionaryAuthorizedUsers", "dictionary">, response: Response<"fetchDictionaryAuthorizedUsers">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
     const {authority} = request.body;
     const users = await dictionary.fetchAuthorizedUsers(authority);
     const body = users.map(UserCreator.create);
@@ -288,8 +288,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/fetchDictionaryAuthorization")
   @before(parseMe(), checkDictionary())
-  public async [Symbol()](request: Request<"fetchDictionaryAuthorization">, response: Response<"fetchDictionaryAuthorization">): Promise<void> {
-    const {me, dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+  public async [Symbol()](request: FilledRequest<"fetchDictionaryAuthorization", "dictionary">, response: Response<"fetchDictionaryAuthorization">): Promise<void> {
+    const {me, dictionary} = request.middlewareBody ;
     const {authority} = request.body;
     if (me) {
       const hasAuthority = await dictionary.hasAuthority(me, authority);
@@ -302,8 +302,8 @@ export class DictionaryRestController extends InternalRestController {
 
   @post("/checkDictionaryAuthorization")
   @before(checkMe(), checkDictionary())
-  public async [Symbol()](request: Request<"checkDictionaryAuthorization">, response: Response<"checkDictionaryAuthorization">): Promise<void> {
-    const {me, dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+  public async [Symbol()](request: FilledRequest<"checkDictionaryAuthorization", "me" | "dictionary">, response: Response<"checkDictionaryAuthorization">): Promise<void> {
+    const {me, dictionary} = request.middlewareBody;
     const {authority} = request.body;
     const hasAuthority = await dictionary.hasAuthority(me, authority);
     if (hasAuthority) {

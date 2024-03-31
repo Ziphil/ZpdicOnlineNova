@@ -14,10 +14,13 @@ import type {
   EditableExample,
   EditableWord,
   Example,
+  ExampleOffer,
+  ExampleWithDictionary,
   History,
   Invitation,
   InvitationType,
   Notification,
+  ObjectId,
   Relation,
   Suggestion,
   User,
@@ -90,7 +93,7 @@ type ServerSpecs = {
     }
   },
   discardDictionaryAuthorizedUser: {
-    request: {number: number, id: string},
+    request: {number: number, id: ObjectId},
     response: {
       success: null,
       error: CustomError<"noSuchDictionary" | "noSuchDictionaryAuthorizedUser">
@@ -104,7 +107,7 @@ type ServerSpecs = {
     }
   },
   respondInvitation: {
-    request: {id: string, accept: boolean},
+    request: {id: ObjectId, accept: boolean},
     response: {
       success: Invitation,
       error: CustomError<"noSuchInvitation">
@@ -153,7 +156,7 @@ type ServerSpecs = {
     }
   },
   discardCommission: {
-    request: {number: number, id: string},
+    request: {number: number, id: ObjectId},
     response: {
       success: Commission,
       error: CustomError<"noSuchDictionary" | "noSuchCommission">
@@ -297,6 +300,27 @@ type ServerSpecs = {
     response: {
       success: WithSize<Example>,
       error: CustomError<"noSuchDictionary">
+    }
+  },
+  fetchExamplesByOffer: {
+    request: {number?: number, offerId: ObjectId, offset?: number, size?: number},
+    response: {
+      success: WithSize<ExampleWithDictionary>,
+      error: never
+    }
+  },
+  fetchExampleOffer: {
+    request: {id: ObjectId},
+    response: {
+      success: ExampleOffer,
+      error: CustomError<"noSuchExampleOffer">
+    }
+  },
+  fetchExampleOffers: {
+    request: {offset?: number, size?: number},
+    response: {
+      success: WithSize<ExampleOffer>,
+      error: never
     }
   },
   fetchInvitations: {

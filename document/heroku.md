@@ -23,18 +23,6 @@
 「Setting」タブの「Config Vars」欄で環境変数の設定を行います。
 [このドキュメント](variable.md)を参考にして、必要な環境変数の設定をしてください。
 
-### スケジューラの設定
-ZpDIC Online では、造語数履歴などを保存するため、定期的に特定の処理を実行する必要があります。
-該当処理は npm scripts として実行できるようになっているので、スケジューラなどを利用してこれを定期的に実行してください。
-以下は Heroku Scheduler を用いて定期実行する場合の設定方法です。
-
-「Resources」タブの「Add-ons」欄から、アドオンとして Heroku Scheduler を追加します。
-管理画面に移動したら以下の操作を行います。
-
-- 「Add Jobs」ボタンをクリックしてジョブ作成フォームを開く
-- 「Schedule」欄のプルダウンメニューから「Every day at」を選択し、時刻として「2:30 PM UTC」に設定
-- 「Run Command」欄に `npm run start:service -- history` と入力
-
 ## デプロイ
 GitHub の master ブランチにプッシュすると自動的にデプロイされます。
 

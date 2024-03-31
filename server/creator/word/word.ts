@@ -4,8 +4,8 @@ import type {
   DetailedWord as DetailedWordSkeleton,
   Word as WordSkeleton
 } from "/client/skeleton";
+import {ExampleCreator} from "/server/creator/example/example";
 import {EquivalentCreator} from "/server/creator/word/equivalent";
-import {ExampleCreator} from "/server/creator/word/example";
 import {InformationCreator} from "/server/creator/word/information";
 import {RelationCreator} from "/server/creator/word/relation";
 import {VariationCreator} from "/server/creator/word/variation";

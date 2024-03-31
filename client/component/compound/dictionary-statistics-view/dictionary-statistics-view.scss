@@ -4,12 +4,6 @@
 
 
 .root {
-  @include theme("light") {
-    --information-heading-text-color: #{leveled-color("gray", 7)};
-  }
-}
-
-.root {
   row-gap: 4zu;
   display: flex;
   flex-direction: column;
@@ -29,7 +23,7 @@
   @include bold-font;
   margin-block-end: 2zu;
   font-size: 3.5zu;
-  color: var(--information-heading-text-color);
+  color: var(--glob-small-heading-text-color);
 }
 
 .value-container {

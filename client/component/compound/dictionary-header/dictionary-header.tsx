@@ -7,6 +7,7 @@ import {
   Button,
   ButtonIconbag,
   GeneralIcon,
+  Indicator,
   MultiLineText,
   SingleLineText,
   TabIconbag,
@@ -46,7 +47,12 @@ export const DictionaryHeader = create(
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
     const [canOwn] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "own"});
     const [authorizedUsers] = useResponse("fetchDictionaryAuthorizedUsers", {number: dictionary.number, authority: "editOnly"});
+
     const [sizes] = useResponse("fetchDictionarySizes", {number: dictionary.number});
+
+    const [[offers] = []] = useResponse("fetchExampleOffers", {size: 1, offset: 0});
+    const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
+    const showOffer = offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 
     return (
       <header styleName="root" {...rest}>
@@ -112,10 +118,12 @@ export const DictionaryHeader = create(
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>
               {trans("tab.dictionary")}
             </LinkTab>
-            <LinkTab value="example" href={`/dictionary/${dictionary.number}/sentences`}>
-              <TabIconbag><GeneralIcon icon={faQuotes}/></TabIconbag>
-              {trans("tab.example")}
-            </LinkTab>
+            <Indicator scheme="secondary" disabled={!showOffer || tabValue === "example"} animate={true}>
+              <LinkTab value="example" href={`/dictionary/${dictionary.number}/sentences`}>
+                <TabIconbag><GeneralIcon icon={faQuotes}/></TabIconbag>
+                {trans("tab.example")}
+              </LinkTab>
+            </Indicator>
             {(canOwn) && (
               <LinkTab value="commission" href={`/dictionary/${dictionary.number}/requests`}>
                 <TabIconbag><GeneralIcon icon={faListCheck}/></TabIconbag>

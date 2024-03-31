@@ -17,7 +17,7 @@ export const DictionaryStatisticsView = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNode, transNumber, transShortDate} = useTrans("dictionaryStatisticsView");
+    const {trans, transNode, transNumber, transDate} = useTrans("dictionaryStatisticsView");
 
     const number = dictionary.number;
     const [statistics] = useSuspenseResponse("fetchDictionaryStatistics", {number});

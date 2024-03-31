@@ -17,6 +17,9 @@ export class JobController {
   public setup(): void {
   }
 
+  public setupAfter(): void {
+  }
+
   public static prepare(agenda: Agenda): void {
     this.agenda = agenda;
   }
@@ -25,9 +28,12 @@ export class JobController {
     this.prepare(agenda);
     const controller = new this();
     controller.setup();
+    this.agenda.on("ready", () => {
+      controller.setupAfter();
+    });
   }
 
 }
 
 
-type JobControllerConstructor = (new() => JobController) & {prepare: (agenda: Agenda) => void};
+type JobControllerConstructor = (new() => JobController) & {prepare: (agenda: Agenda) => void, agenda: Agenda};

@@ -36,6 +36,14 @@ reCAPTCHA v3 のサイトキーです。
 ### `RECAPTCHA_SECRET`
 reCAPTCHA v3 のシークレットキーです。
 
+### `ANTHROPIC_KEY`
+Anthropic の API キーです。
+Claude 3 の API を呼ぶのに使われます。
+
+### `FONTAWESOME_KEY`
+Font Awesome のパッケージトークンです。
+Pro 以上のプランに加入する必要があります。
+
 ### `AWS_KEY`
 Amazon Web Service のアクセスキー ID です。
 

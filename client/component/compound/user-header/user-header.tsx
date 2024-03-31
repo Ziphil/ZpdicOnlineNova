@@ -69,7 +69,7 @@ export const UserHeader = create(
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>
               {trans("tab.dictionary")}
               {(dictionaries !== undefined) && (
-                <Badge styleName="badge" scheme={(tabValue === "dictionary") ? "secondary" : "gray"} variant="solid">
+                <Badge styleName="badge" scheme={(tabValue === "dictionary") ? "secondary" : "gray"} variant="solid" size="small">
                   {transNumber(dictionaries.length)}
                 </Badge>
               )}
@@ -79,7 +79,7 @@ export const UserHeader = create(
                 <TabIconbag><GeneralIcon icon={faBell}/></TabIconbag>
                 {trans("tab.notification")}
                 {(invitations !== undefined && invitations.length > 0) && (
-                  <Badge styleName="badge" scheme={(tabValue === "notification") ? "secondary" : "gray"} variant="solid">
+                  <Badge styleName="badge" scheme={(tabValue === "notification") ? "secondary" : "gray"} variant="solid" size="small" animate={true}>
                     {transNumber(invitations.length)}
                   </Badge>
                 )}

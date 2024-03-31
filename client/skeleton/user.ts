@@ -1,9 +1,11 @@
 //
 
+import {ObjectId} from "/client/skeleton/common";
+
 
 export interface User {
 
-  id: string;
+  id: ObjectId;
   name: string;
   screenName: string;
 

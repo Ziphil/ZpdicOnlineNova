@@ -323,6 +323,9 @@ editExampleDialog:
   button:
     external: "Open in new tab"
 editExampleForm:
+  tab:
+    edit: "Edit"
+    offer: "Presets"
   heading:
     basic: "Parallel translation"
     words: "Included words"
@@ -331,6 +334,8 @@ editExampleForm:
     translation: "Translation into natural language"
   absent:
     word: "No included words specified"
+  tag:
+    zpdicDaily: "Daily sentence · {dateString}"
   button:
     add:
       word: "Add included words"
@@ -388,6 +393,8 @@ editWordForm:
 exampleList:
   empty: "No example sentences are created"
   noWord: "No words specified"
+  tag:
+    zpdicDaily: "Daily sentence · {dateString}"
   button:
     edit: "Edit"
     discard: "Delete"
@@ -398,6 +405,10 @@ exampleList:
         You cannot restore it afterwards.
         Are you really sure?
       confirm: "Delete"
+exampleOfferList:
+  button:
+    add: "Translate"
+    select: "Select"
 executeAkrantiainDialog:
   label:
     source: "Source code"
@@ -419,7 +430,9 @@ footer:
     contact: "Contact"
     document: "Documentation"
 header:
-  dictionaryList: "Dictionaries"
+  link:
+    dictionary: "Dictionaries"
+    exampleOffer: "Daily sentences"
   userPage: "User page"
 invitationList:
   empty: "No notifications"
@@ -751,6 +764,12 @@ contactPage:
   explanation: |-
     If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
     Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
+exampleOfferListPage:
+  title: "Daily sentences"
+  heading: "Daily sentences"
+dictionaryExamplePart:
+  heading:
+    offer: "Today's sentence"
 dictionaryInformationPart:
   heading:
     history: "Word count history"
@@ -883,6 +902,7 @@ topPage:
   catch: "Draw{wbr} your own universe{wbr} with conlang"
   heading:
     gift: "I need your support"
+    offer: "Today's sentence"
     notification: "Latest news"
     github: "GitHub"
     supporter: "Supporters"
@@ -891,6 +911,9 @@ topPage:
       ZpDIC Online is being developed and maintained by a single programmer, but it costs several hundred dollars per year to keep the service running.
       To maintain and improve the service, your support is needed!
       If you like this application, please send a gift to the developer via the button below.
+    offer: >-
+      You can add your translation from each dictionary page.
+      The sentence is updated every day at 21:00 (UTC).
   description:
     github: >-
       The source code of this application is available on GitHub.
@@ -900,6 +923,7 @@ topPage:
       I would like to take this opportunity to thank them.
   subbutton:
     gift: "Send gift"
+    offer: "See past daily sentences"
     notification: "Read more news"
     github: "View on GitHub"
 userSettingPart:

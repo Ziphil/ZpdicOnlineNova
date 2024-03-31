@@ -34,6 +34,7 @@ const router = createBrowserRouter(createRoutesFromElements(
       <Route path="notifications" lazy={() => import("/client/component/page/user-notification-part")}/>
       <Route path="settings" lazy={() => import("/client/component/page/user-setting-part")}/>
     </Route>
+    <Route path="/sentence" lazy={() => import("/client/component/page/example-offer-list-page")}/>
     <Route path="/notification" lazy={() => import("/client/component/page/notification-list-page")}/>
     <Route path="/contact" lazy={() => import("/client/component/page/contact-page")}/>
     <Route path="/document/*" lazy={() => import("/client/component/page/document-page")}/>

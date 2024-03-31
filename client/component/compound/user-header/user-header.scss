@@ -54,8 +54,9 @@
 }
 
 .badge {
-  margin-block: -0.25zu;
+  margin-block-start: -0.25zu;
   margin-inline-start: var(--glob-blank-gap);
+  translate: 0zu -0.25zu;
 }
 
 .activate {

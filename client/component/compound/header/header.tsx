@@ -1,8 +1,8 @@
 //
 
-import {faBook} from "@fortawesome/sharp-regular-svg-icons";
+import {faBook, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, GeneralIcon, LinkIconbag, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, LinkIconbag, useResponsiveDevice, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {Logo} from "/client/component/atom/logo";
 import {SimpleLink} from "/client/component/atom/simple-link";
@@ -24,17 +24,22 @@ export const Header = create(
     const {trans} = useTrans("header");
 
     const me = useMe();
+    const device = useResponsiveDevice();
 
     return (
       <header styleName="root" {...rest}>
         <div styleName="left">
           <SimpleLink styleName="logo" href="/">
-            <Logo/>
+            <Logo type={(device === "desktop") ? "full" : "symbol"}/>
           </SimpleLink>
           <nav styleName="navigation">
             <Link styleName="link" href="/dictionary" variant="unstyledUnderline">
               <LinkIconbag><GeneralIcon icon={faBook}/></LinkIconbag>
-              {trans("dictionaryList")}
+              {trans("link.dictionary")}
+            </Link>
+            <Link styleName="link" href="/sentence" variant="unstyledUnderline">
+              <LinkIconbag><GeneralIcon icon={faQuotes}/></LinkIconbag>
+              {trans("link.exampleOffer")}
             </Link>
           </nav>
         </div>

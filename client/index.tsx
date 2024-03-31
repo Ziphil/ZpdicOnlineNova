@@ -1,9 +1,16 @@
 //
 
+import dayjs from "dayjs";
+import timezone from "dayjs/plugin/timezone";
+import utc from "dayjs/plugin/utc";
 import {createRoot} from "react-dom/client";
 import {Root} from "/client/component/root";
 import {RECAPTCHA_KEY} from "/client/variable";
 import "/client/util/socket";
+
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 
 export class Main {
