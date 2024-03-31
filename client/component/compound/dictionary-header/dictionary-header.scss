@@ -59,9 +59,9 @@
 
 .user-count {
   margin-inline-start: 1zu;
-  margin-block-end: -1zu;
   font-size: 4zu;
   color: var(--glob-mute-text-color);
+  translate: 0zu 0.25zu;
 }
 
 .plus {
