@@ -34,9 +34,8 @@ export const EditExampleFormBasicSection = create(
 
     const {register} = form;
 
-    const offer = form.watch("offer");
-    const [innerOffer] = useResponse("fetchExampleOffer", (typeof offer === "string") && {id: offer});
-    const actualOffer = (typeof offer === "string") ? innerOffer : offer;
+    const offerId = form.watch("offer");
+    const [offer] = useResponse("fetchExampleOffer", (offerId !== undefined) && {id: offerId});
 
     return (
       <section styleName="root" {...rest}>
@@ -48,13 +47,13 @@ export const EditExampleFormBasicSection = create(
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.translation")}</ControlLabel>
-            <Textarea styleName="textarea" disabled={!!offer} {...register("translation")}>
-              {(actualOffer) && (
+            <Textarea styleName="textarea" disabled={!!offerId} {...register("translation")}>
+              {(offer !== undefined) && (
                 <TextareaAddon position="top">
                   <Tag variant="solid">
-                    {trans(`tag.${actualOffer.position.name}`, {
-                      number: actualOffer.position.index + 1,
-                      dateString: transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")
+                    {trans(`tag.${offer.position.name}`, {
+                      number: offer.position.index + 1,
+                      dateString: transDate(dayjs(offer.createdDate).tz("Asia/Tokyo"), "date")
                     })}
                   </Tag>
                 </TextareaAddon>
