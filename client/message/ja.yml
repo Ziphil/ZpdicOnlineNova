@@ -775,7 +775,7 @@ dictionaryInformationPart:
   description: 
     history: >-
       この辞書の直近 100 日間の単語数の推移です。
-      単語数は毎日 23 時 30 分頃 (JST, UTC+9) に記録されます。
+      単語数は毎日 23 時 30 分頃に記録されます。
     wordNameFrequency: >-
       見出し語に使われている各文字の出現頻度です。
 dictionarySettingPart:
@@ -912,7 +912,7 @@ topPage:
       もしこのアプリが気に入りましたら、ぜひ下記のボタンから開発者にギフトをお送りください。
     offer: >-
       辞書ページから翻訳を追加することができます。
-      例文は毎日更新されます。
+      例文は毎朝 6 時に更新されます。
   description:
     github: >-
       このアプリケーションのソースコードは GitHub 上で公開されています。

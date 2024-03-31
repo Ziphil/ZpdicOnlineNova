@@ -913,7 +913,7 @@ topPage:
       If you like this application, please send a gift to the developer via the button below.
     offer: >-
       You can add your translation from each dictionary page.
-      The sentence is updated daily.
+      The sentence is updated every day at 21:00 (UTC).
   description:
     github: >-
       The source code of this application is available on GitHub.
