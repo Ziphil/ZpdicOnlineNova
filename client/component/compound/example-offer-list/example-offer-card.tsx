@@ -42,7 +42,7 @@ export const ExampleOfferCard = create(
               {offer.translation}
             </MultiLineText>
           </div>
-          {(examples !== undefined) && (
+          {(examples !== undefined && examples.length > 0) && (
             <ul styleName="list">
               {examples.map((example) => (
                 <ExampleOfferCardExampleItem key={example.id} example={example}/>
