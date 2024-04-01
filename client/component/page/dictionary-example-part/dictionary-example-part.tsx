@@ -24,12 +24,14 @@ export const DictionaryExamplePart = create(
 
     const dictionary = useDictionary();
 
+    const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+
     const [page, setPage] = useState(0);
     const [[hitExamples, hitSize]] = useSuspenseResponse("fetchExamples", {number: dictionary.number, ...calcOffsetSpec(page, 40)}, {keepPreviousData: true});
 
-    const [[offers] = []] = useResponse("fetchExampleOffers", {size: 1, offset: 0});
-    const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
-    const showOffer = offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
+    const [[offers] = []] = useResponse("fetchExampleOffers", (canEdit) && {size: 1, offset: 0});
+    const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
+    const showOffer = canEdit && offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 
     const handlePageSet = useCallback(function (page: number): void {
       setPage(page);
