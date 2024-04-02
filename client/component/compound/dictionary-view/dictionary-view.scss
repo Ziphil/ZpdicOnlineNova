@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  @include theme("light") {
+    --background-color: #{leveled-color("primary", 1)};
+    --icon-color: #{leveled-color("primary", 5)};
+  }
+}
+
+.root {
+  padding-block: 0.5zu;
+  padding-inline: 1.5zu;
+  font-size: 3.5zu;
+  line-height: 1;
+  border-radius: 1000px;
+  background-color: var(--background-color);
+  display: inline-flex;
+  align-items: center;
+}
+
+.avatar {
+  margin-inline-end: var(--glob-blank-gap);
+  color: var(--icon-color);
+}
+
+.dummy {
+  &::before {
+    content: "\200B";
+  }
+}

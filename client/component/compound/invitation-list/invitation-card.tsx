@@ -17,7 +17,7 @@ import {
   useTrans
 } from "zographia";
 import {Link} from "/client/component/atom/link";
-import {UserAvatar} from "/client/component/atom/user-avatar";
+import {UserView} from "/client/component/compound/user-view";
 import {create} from "/client/component/create";
 import {Invitation} from "/client/skeleton";
 import {useAcceptInvitation, useRejectInvitation} from "./invitation-card-hook";
@@ -56,12 +56,7 @@ export const InvitationCard = create(
           </div>
           <MultiLineText styleName="explanation" is="p">
             {transNode(`explanation.${invitation.type}`, {
-              userNode: (
-                <Link styleName="user-link" href={`/user/${invitation.dictionary.user.name}`} variant="unstyledUnderline">
-                  <UserAvatar styleName="avatar" user={invitation.dictionary.user} inline={true}/>
-                  {invitation.dictionary.user.screenName}
-                </Link>
-              )
+              userNode: <UserView user={invitation.dictionary.user}/>
             })}
           </MultiLineText>
         </CardBody>
