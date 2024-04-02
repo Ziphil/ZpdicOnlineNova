@@ -118,7 +118,7 @@ export const DictionaryHeader = create(
               <TabIconbag><GeneralIcon icon={faBook}/></TabIconbag>
               {trans("tab.dictionary")}
             </LinkTab>
-            <Indicator scheme="secondary" disabled={!showOffer || tabValue === "example"} animate={true}>
+            <Indicator styleName="indicator" scheme="secondary" disabled={!showOffer || tabValue === "example"} animate={true}>
               <LinkTab value="example" href={`/dictionary/${dictionary.number}/sentences`}>
                 <TabIconbag><GeneralIcon icon={faQuotes}/></TabIconbag>
                 {trans("tab.example")}
