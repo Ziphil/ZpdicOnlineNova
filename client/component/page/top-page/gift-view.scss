@@ -3,6 +3,12 @@
 @use "zographia/source/component/function.scss" as *;
 
 
+.sub {
+  margin-block-start: 3zu;
+  font-size: 3.5zu;
+  color: var(--glob-mute-text-color);
+}
+
 .button {
   margin-block-start: 3zu;
 }
