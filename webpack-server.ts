@@ -93,7 +93,7 @@ const staticConfig = {
         ]
       },
       {
-        test: /\.(html|svg|png|ico)$/,
+        test: /\.(html|svg|png|ico|txt)$/,
         exclude: /node_modules/,
         use: {
           loader: "file-loader",
