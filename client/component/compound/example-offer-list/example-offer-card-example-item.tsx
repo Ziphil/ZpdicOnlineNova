@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretRight} from "@fortawesome/sharp-solid-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText, aria} from "zographia";
-import {DictionaryView} from "/client/component/compound/dictionary-view";
+import {DictionaryBadge} from "/client/component/compound/dictionary-badge";
 import {create} from "/client/component/create";
 import {ExampleWithDictionary} from "/client/skeleton";
 
@@ -25,7 +25,7 @@ export const ExampleOfferCardExampleItem = create(
           <FontAwesomeIcon icon={faCaretRight}/>
         </span>
         <div styleName="main">
-          <DictionaryView styleName="dictionary" dictionary={example.dictionary}/>
+          <DictionaryBadge styleName="dictionary" dictionary={example.dictionary}/>
           <MultiLineText styleName="sentence" is="p">
             {example.sentence}
           </MultiLineText>

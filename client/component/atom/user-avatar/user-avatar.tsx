@@ -5,7 +5,7 @@ import {ReactElement, Ref} from "react";
 import {AdditionalProps, Avatar, AvatarFallbackIconContainer, GeneralIcon} from "zographia";
 import {createWithRef} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {ObjectId, User} from "/client/skeleton";
+import {User} from "/client/skeleton";
 import {getAwsFileUrl} from "/client/util/aws";
 
 
@@ -16,14 +16,14 @@ export const UserAvatar = createWithRef(
     inline,
     ...rest
   }: {
-    user: User | ObjectId,
+    user: User | {name: string},
     inline?: boolean,
     className?: string,
     ref?: Ref<HTMLSpanElement>
   } & AdditionalProps): ReactElement {
 
-    const [innerUser] = useResponse("fetchUser", (typeof user === "string") && {name: user});
-    const actualUser = (typeof user === "string") ? innerUser : user;
+    const [innerUser] = useResponse("fetchUser", (!isFull(user)) && {name: user.name});
+    const actualUser = (!isFull(user)) ? innerUser : user;
 
     const url = (actualUser) ? getAwsFileUrl(`avatar/${actualUser.name}/avatar`) : null;
     const hue = (actualUser) ? getIdHue(actualUser.id) : 0;
@@ -39,6 +39,10 @@ export const UserAvatar = createWithRef(
   }
 );
 
+
+function isFull(user: User | {name: string}): user is User {
+  return "id" in user;
+}
 
 function getIdHue(id: string): number {
   return parseInt(id.slice(0, 8), 16) % 360;

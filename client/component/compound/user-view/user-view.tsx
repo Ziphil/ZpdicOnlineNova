@@ -15,13 +15,13 @@ export const UserView = createWithRef(
     user,
     ...rest
   }: {
-    user: User | string,
+    user: User | {name: string},
     className?: string,
     ref?: Ref<HTMLAnchorElement>
   } & AdditionalProps): ReactElement | null {
 
-    const [innerUser] = useResponse("fetchUser", (typeof user === "string") && {name: user});
-    const actualUser = (typeof user === "string") ? innerUser : user;
+    const [innerUser] = useResponse("fetchUser", (!isFull(user)) && {name: user.name});
+    const actualUser = (!isFull(user)) ? innerUser : user;
 
     return (actualUser !== undefined) ? (
       <Link styleName="root" href={`/user/${actualUser.name}`} variant="unstyledSimple" {...rest}>
@@ -33,3 +33,8 @@ export const UserView = createWithRef(
 
   }
 );
+
+
+function isFull(user: User | {name: string}): user is User {
+  return "id" in user;
+}

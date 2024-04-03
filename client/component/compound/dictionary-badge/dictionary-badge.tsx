@@ -9,19 +9,19 @@ import {useResponse} from "/client/hook/request";
 import {Dictionary} from "/client/skeleton";
 
 
-export const DictionaryView = createWithRef(
-  require("./dictionary-view.scss"), "DictionaryView",
+export const DictionaryBadge = createWithRef(
+  require("./dictionary-badge.scss"), "DictionaryBadgr",
   function ({
     dictionary,
     ...rest
   }: {
-    dictionary: Dictionary | number,
+    dictionary: Dictionary | {number: number},
     className?: string,
     ref?: Ref<HTMLAnchorElement>
   } & AdditionalProps): ReactElement | null {
 
-    const [innerDictionary] = useResponse("fetchDictionary", (typeof dictionary === "number") && {identifier: dictionary});
-    const actualDictionary = (typeof dictionary === "number") ? innerDictionary : dictionary;
+    const [innerDictionary] = useResponse("fetchDictionary", (!isFull(dictionary)) && {identifier: dictionary.number});
+    const actualDictionary = (!isFull(dictionary)) ? innerDictionary : dictionary;
 
     return (actualDictionary !== undefined) ? (
       <Link styleName="root" href={`/dictionary/${actualDictionary.paramName || actualDictionary.number}`} variant="unstyledSimple" {...rest}>
@@ -33,3 +33,8 @@ export const DictionaryView = createWithRef(
 
   }
 );
+
+
+function isFull(dictionary: Dictionary | {number: number}): dictionary is Dictionary {
+  return "id" in dictionary;
+}
