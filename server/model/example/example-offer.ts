@@ -6,6 +6,7 @@ import {
   modelOptions,
   prop
 } from "@typegoose/typegoose";
+import fs from "fs/promises";
 import {ExampleOfferPositionSchema} from "/server/model/example/example-offer-position";
 import {WithSize} from "/server/type/common";
 import {askClaude} from "/server/util/claude";
@@ -24,22 +25,21 @@ export class ExampleOfferSchema {
   @prop({required: true})
   public createdDate!: Date;
 
-  public static async addDaily(): Promise<ExampleOffer> {
+  public static async addDaily(): Promise<[string, ExampleOffer]> {
     const position = {name: "zpdicDaily", index: await this.fetchDailyNextIndex()};
     const createdDate = new Date();
+    const keywords = await fs.readFile("./dist/static/keyword.txt", "utf-8").then((content) => content.split(/\s*\n\s*/));
+    const keyword = keywords[Math.floor(Math.random() * keywords.length)];
     const answer = await askClaude(`
-      まず、日本語の単語をランダムに1つ決めてください。
-      これが、これから生成する例文のテーマになります。
-      
-      その後、今決めた単語を用いて例文を日本語で1つ生成してください。
+      「${keyword}」という単語をテーマにして、例文を日本語で1つ生成してください。
       このとき、以下の条件を満たすようにしてください。
       <conditions>
       - 1つの文である
       - 文の含まれる単語数は10以上15以下である
+      - 文に「${keyword}」という単語が含まれる (変化形も可)
       - 含まれる単語はできるだけ日常生活で使われる頻度が高いものにする
       </conditions>
-      
-      回答は、最初に決めた単語を<word></word>タグに入れ、最後に生成した文を<sentence></sentence>タグに入れてください。
+      回答では、最後に生成した文を<sentence></sentence>タグに入れてください。
     `, `
       あなたは、外国語の学習者のために例文を生成するAIです。
       利用者はあなたが生成した例文を外国語に翻訳することで外国語の勉強をするので、外国語への翻訳がしやすい文を生成してください。
@@ -47,7 +47,7 @@ export class ExampleOfferSchema {
     const translation = answer.match(/<sentence>(.*?)<\/sentence>/)?.[1] ?? "";
     const offer = new ExampleOfferModel({position, translation, createdDate});
     await offer.save();
-    return offer;
+    return [keyword, offer];
   }
 
   public static async fetch(range?: QueryRange): Promise<WithSize<ExampleOffer>> {

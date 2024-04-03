@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  padding-block: 0.5zu;
+  padding-inline-start: 0.5zu;
+  padding-inline-end: 1.5zu;
+  line-height: 1;
+  border-radius: 1000px;
+  border: 1zx solid var(--glob-border-color);
+  display: inline-flex;
+  align-items: center;
+}
+
+.avatar {
+  margin-inline-end: var(--glob-blank-gap);
+}
+
+.dummy {
+  &::before {
+    content: "\200B";
+  }
+}

@@ -15,8 +15,8 @@ export class DebugRestController extends InternalRestController {
   @post("/debug/addDailyExampleOffer")
   @before(parseMe(), checkMe("admin"))
   public async [Symbol()](request: Request, response: Response): Promise<void> {
-    const example = await ExampleOfferModel.addDaily();
-    const body = ExampleOfferCreator.create(example);
+    const [keyword, example] = await ExampleOfferModel.addDaily();
+    const body = [keyword, ExampleOfferCreator.create(example)];
     response.json(body).end();
   }
 

@@ -15,12 +15,15 @@ export const GiftView = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transNumber} = useTrans("topPage");
+    const {trans} = useTrans("topPage");
 
     return (
       <div styleName="root" {...rest}>
         <MultiLineText is="p">
           {trans("message.gift")}
+        </MultiLineText>
+        <MultiLineText styleName="sub" is="p">
+          {trans("message.giftSub")}
         </MultiLineText>
         <div styleName="button">
           <Link href="https://www.amazon.jp/hz/wishlist/ls/2WIWDYWRY374L?ref_=wl_share" target="_blank" variant="solid">

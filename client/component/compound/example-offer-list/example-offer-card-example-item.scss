@@ -4,16 +4,21 @@
 
 
 .root {
+  column-gap: var(--glob-blank-gap);
   display: flex;
-  flex-direction: column;
+  align-items: baseline;
+}
+
+.icon {
+  color: var(--glob-mute-text-color);
+  flex: 0 0 auto;
+}
+
+.main {
+  flex: 1 1 auto;
 }
 
 .dictionary {
-  @include bold-font;
   margin-block-end: 2zu;
-  color: var(--glob-primary-heading-text-color);
   align-self: flex-start;
-  &:hover {
-    color: var(--glob-primary-heading-hover-text-color);
-  }
 }

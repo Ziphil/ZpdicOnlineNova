@@ -5,6 +5,7 @@ import dayjs from "dayjs";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
+import {useResponse} from "/client/hook/request";
 import {EnhancedDictionary} from "/client/skeleton";
 
 
@@ -12,15 +13,15 @@ export const DictionaryHeaderStatusView = create(
   require("./dictionary-header-status-view.scss"), "DictionaryHeaderStatusView",
   function ({
     dictionary,
-    sizes,
     ...rest
   }: {
     dictionary: EnhancedDictionary,
-    sizes: {word: number, example: number} | undefined,
     className?: string
   } & AdditionalProps): ReactElement {
 
     const {trans, transNumber, transDate} = useTrans("dictionaryHeader");
+
+    const [sizes] = useResponse("fetchDictionarySizes", {number: dictionary.number});
 
     return (
       <div styleName="root" {...rest}>
