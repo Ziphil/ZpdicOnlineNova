@@ -1,19 +1,9 @@
-/* eslint-disable react/jsx-closing-bracket-location */
 //
 
-import dayjs from "dayjs";
 import {ReactElement} from "react";
-import {
-  AdditionalProps,
-  ControlContainer,
-  ControlLabel,
-  Tag,
-  Textarea,
-  TextareaAddon,
-  useTrans
-} from "zographia";
+import {AdditionalProps, ControlContainer, ControlLabel, Textarea, TextareaAddon, useTrans} from "zographia";
+import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {create} from "/client/component/create";
-import {useResponse} from "/client/hook/request";
 import {EnhancedDictionary} from "/client/skeleton";
 import {EditExampleSpec} from "./edit-example-form-hook";
 
@@ -30,12 +20,10 @@ export const EditExampleFormBasicSection = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans, transDate} = useTrans("editExampleForm");
+    const {trans} = useTrans("editExampleForm");
 
     const {register} = form;
-
     const offerId = form.watch("offer");
-    const [offer] = useResponse("fetchExampleOffer", (offerId !== undefined) && {id: offerId});
 
     return (
       <section styleName="root" {...rest}>
@@ -48,14 +36,9 @@ export const EditExampleFormBasicSection = create(
           <ControlContainer>
             <ControlLabel>{trans("label.translation")}</ControlLabel>
             <Textarea styleName="textarea" disabled={!!offerId} {...register("translation")}>
-              {(offer !== undefined) && (
+              {(offerId !== undefined) && (
                 <TextareaAddon position="top">
-                  <Tag variant="solid">
-                    {trans(`tag.${offer.position.name}`, {
-                      number: offer.position.index + 1,
-                      dateString: transDate(dayjs(offer.createdDate).tz("Asia/Tokyo"), "date")
-                    })}
-                  </Tag>
+                  <ExampleOfferTag variant="solid" offer={{id: offerId}}/>
                 </TextareaAddon>
               )}
             </Textarea>

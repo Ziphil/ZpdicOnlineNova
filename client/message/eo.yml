@@ -204,6 +204,9 @@ toast:
 commonAlert:
   confirm: "Konfirmi"
   cancel: "Nuligi"
+exampleOfferTag:
+  tag:
+    zpdicDaily: "Ĉiutaga frazo · {dateString}"
 wordModeSelect:
   label:
     name: "Kapvorto"
@@ -334,8 +337,6 @@ editExampleForm:
     translation: "Tradukaĵo en naturan lingvon"
   absent:
     word: "Neniuj enhavitaj vortoj specifitaj"
-  tag:
-    zpdicDaily: "Ĉiutaga frazo · {dateString}"
   button:
     add:
       word: "Aldoni enhavitan vorton"
@@ -393,8 +394,6 @@ editWordForm:
 exampleList:
   empty: "Neniuj ekzemplaj frazoj estas kreitaj"
   noWord: "Neniuj vortoj specifitaj"
-  tag:
-    zpdicDaily: "Ĉiutaga frazo · {dateString}"
   button:
     edit: "Redakti"
     discard: "Forigi"

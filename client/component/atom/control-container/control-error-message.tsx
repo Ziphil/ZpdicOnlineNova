@@ -8,7 +8,7 @@ import {create} from "/client/component/create";
 
 
 export const ControlErrorMessage = create(
-  require("./control-error-message.scss"), "ControllErrorMessage",
+  require("./control-error-message.scss"), "ControlErrorMessage",
   function <T extends {}>({
     name,
     form,

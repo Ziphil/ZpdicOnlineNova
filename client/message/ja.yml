@@ -204,6 +204,9 @@ toast:
 commonAlert:
   confirm: "決定"
   cancel: "キャンセル"
+exampleOfferTag:
+  tag:
+    zpdicDaily: "今日の例文 · {dateString}"
 wordModeSelect:
   label:
     name: "単語"
@@ -334,8 +337,6 @@ editExampleForm:
     translation: "自然言語訳"
   absent:
     word: "使用単語が登録されていません"
-  tag:
-    zpdicDaily: "今日の例文 · {dateString}"
   button:
     add:
       word: "使用単語を追加"
@@ -393,8 +394,6 @@ editWordForm:
 exampleList:
   empty: "例文は作成されていません"
   noWord: "使用単語が登録されていません"
-  tag:
-    zpdicDaily: "今日の例文 · {dateString}"
   button:
     edit: "編集"
     discard: "削除"

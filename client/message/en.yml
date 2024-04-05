@@ -204,6 +204,9 @@ toast:
 commonAlert:
   confirm: "Confirm"
   cancel: "Cancel"
+exampleOfferTag:
+  tag:
+    zpdicDaily: "Daily sentence · {dateString}"
 wordModeSelect:
   label:
     name: "Headword"
@@ -334,8 +337,6 @@ editExampleForm:
     translation: "Translation into natural language"
   absent:
     word: "No included words specified"
-  tag:
-    zpdicDaily: "Daily sentence · {dateString}"
   button:
     add:
       word: "Add included words"
@@ -393,8 +394,6 @@ editWordForm:
 exampleList:
   empty: "No example sentences are created"
   noWord: "No words specified"
-  tag:
-    zpdicDaily: "Daily sentence · {dateString}"
   button:
     edit: "Edit"
     discard: "Delete"
