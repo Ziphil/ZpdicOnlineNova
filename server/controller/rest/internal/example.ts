@@ -99,4 +99,12 @@ export class ExampleRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
+  @post("/fetchExampleOfferPositionNames")
+  public async [Symbol()](request: Request<"fetchExampleOfferPositionNames">, response: Response<"fetchExampleOfferPositionNames">): Promise<void> {
+    const names = await ExampleOfferModel.fetchPositionNames();
+    const body = names;
+    InternalRestController.respond(response, body);
+  }
+
+
 }

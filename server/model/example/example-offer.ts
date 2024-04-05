@@ -64,6 +64,11 @@ export class ExampleOfferSchema {
     return offers;
   }
 
+  public static async fetchPositionNames(): Promise<Array<string>> {
+    const names = await ExampleOfferModel.distinct("position.name");
+    return names;
+  }
+
   private static async fetchDailyNextIndex(): Promise<number> {
     const words = await ExampleOfferModel.find().where("position.name", "zpdicDaily").select("position.index").sort("-position.index").limit(1);
     if (words.length > 0) {

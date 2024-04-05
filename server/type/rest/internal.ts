@@ -325,6 +325,13 @@ type ServerSpecs = {
       error: never
     }
   },
+  fetchExampleOfferPositionNames: {
+    request: {},
+    response: {
+      success: Array<string>,
+      error: never
+    }
+  },
   fetchInvitations: {
     request: {type: InvitationType},
     response: {
