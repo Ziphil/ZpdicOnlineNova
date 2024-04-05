@@ -22,6 +22,9 @@ export class ExampleOfferSchema {
   @prop({required: true})
   public translation!: string;
 
+  @prop()
+  public supplement?: string;
+
   @prop({required: true})
   public author!: string;
 

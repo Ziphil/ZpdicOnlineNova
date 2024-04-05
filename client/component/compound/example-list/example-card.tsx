@@ -29,7 +29,6 @@ export const ExampleCard = create(
     const {trans} = useTrans("exampleList");
 
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
-    const [offer] = useResponse("fetchExampleOffer", (example.offer !== undefined) && {id: example.offer});
 
     const filledExample = useFilledExample(dictionary, example);
 
@@ -38,9 +37,9 @@ export const ExampleCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
-          {(offer !== undefined) && (
+          {(example.offer !== undefined) && (
             <div styleName="tag">
-              <ExampleOfferTag variant="solid" offer={offer}/>
+              <ExampleOfferTag variant="solid" offer={{id: example.offer}}/>
             </div>
           )}
           <div styleName="parallel">
