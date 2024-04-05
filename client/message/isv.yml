@@ -297,10 +297,13 @@ dictionaryList:
     updatedDate: "Актуализованы"
     createdDate: "Созданы"
   tag:
-    own: "Властник"
-    edit: "Edit only"
-    view: "View only"
-    secret: "Hidden"
+    authority:
+      own: "Властник"
+      edit: "Edit only"
+      view: "View only"
+    visibility:
+      unlisted: "Unlisted"
+      private: "Private"
   button:
     see: "Зрєти словник"
     setting: "Настрајати"

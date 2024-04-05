@@ -45,16 +45,16 @@ export const DictionaryCard = create(
             {(showAuthority && "authorities" in dictionary) && (
               <div styleName="tag">
                 {(dictionary.authorities.includes("own")) ? (
-                  <Tag variant="solid">{trans("tag.own")}</Tag>
+                  <Tag variant="solid">{trans("tag.authority.own")}</Tag>
                 ) : (dictionary.authorities.includes("edit")) ? (
-                  <Tag variant="light">{trans("tag.edit")}</Tag>
+                  <Tag variant="light">{trans("tag.authority.edit")}</Tag>
                 ) : (
-                  <Tag variant="light">{trans("tag.view")}</Tag>
+                  <Tag variant="light">{trans("tag.authority.view")}</Tag>
                 )}
                 {(dictionary.visibility !== "public") && (
                   <span styleName="secret">
                     <GeneralIcon styleName="secret-icon" icon={faLockKeyhole}/>
-                    {trans("tag.secret")}
+                    {trans(`tag.visibility.${dictionary.visibility}`)}
                   </span>
                 )}
               </div>

@@ -297,10 +297,13 @@ dictionaryList:
     updatedDate: "Updated at"
     createdDate: "Created at"
   tag:
-    own: "Owner"
-    edit: "Edit only"
-    view: "View only"
-    secret: "Hidden"
+    authority:
+      own: "Owner"
+      edit: "Edit only"
+      view: "View only"
+    visibility:
+      unlisted: "Unlisted"
+      private: "Private"
   button:
     see: "See dictionary"
     setting: "Settings"

@@ -297,10 +297,13 @@ dictionaryList:
     updatedDate: "Ĝisdatigita je"
     createdDate: "Kreita je"
   tag:
-    own: "Posedanto"
-    edit: "Redakto nur"
-    view: "Vido nur"
-    secret: "Nevidebla"
+    authority:
+      own: "Posedanto"
+      edit: "Redakto nur"
+      view: "Vido nur"
+    visibility:
+      unlisted: "Nelistigita"
+      private: "Nepublika"
   button:
     see: "Vidi vortaron"
     setting: "Agordi"
