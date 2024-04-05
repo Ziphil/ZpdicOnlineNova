@@ -205,9 +205,10 @@ commonAlert:
   confirm: "Konfirmi"
   cancel: "Nuligi"
 exampleOfferTag:
-  tag:
+  name:
     zpdicDaily: "Ĉiutagaj frazoj"
     apple: "Frazoj por manĝi pomojn"
+  number: "#{number, number}"
 wordModeSelect:
   label:
     name: "Kapvorto"

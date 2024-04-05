@@ -40,6 +40,12 @@
   font-size: 5zu;
 }
 
+.supplement {
+  margin-block-start: 2zu;
+  font-size: 3.5zu;
+  color: var(--glob-mute-text-color);
+}
+
 .list {
   row-gap: 2zu;
   display: flex;

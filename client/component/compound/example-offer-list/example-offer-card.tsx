@@ -18,6 +18,7 @@ export const ExampleOfferCard = create(
     dictionary,
     offer,
     headerType,
+    showSupplement,
     showExamples,
     showSelectButton,
     onSelect,
@@ -26,6 +27,7 @@ export const ExampleOfferCard = create(
     dictionary?: DictionaryWithExecutors,
     offer: ExampleOffer,
     headerType: "tag" | "date",
+    showSupplement: boolean,
     showExamples: boolean,
     showSelectButton: boolean,
     onSelect?: (offer: ExampleOffer) => void,
@@ -61,6 +63,11 @@ export const ExampleOfferCard = create(
             <MultiLineText styleName="translation" is="p">
               {offer.translation}
             </MultiLineText>
+            {(offer.supplement && showSupplement) && (
+              <MultiLineText styleName="supplement" is="p">
+                {offer.supplement}
+              </MultiLineText>
+            )}
           </div>
           {(examples !== undefined && examples.length > 0) && (
             <ul styleName="list">

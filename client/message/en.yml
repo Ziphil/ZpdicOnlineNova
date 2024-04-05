@@ -205,9 +205,10 @@ commonAlert:
   confirm: "Confirm"
   cancel: "Cancel"
 exampleOfferTag:
-  tag:
+  name:
     zpdicDaily: "Daily sentences"
     apple: "Sentences to eat apples"
+  number: "#{number, number}"
 wordModeSelect:
   label:
     name: "Headword"

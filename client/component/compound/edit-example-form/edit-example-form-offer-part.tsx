@@ -39,7 +39,7 @@ export const EditExampleFormOfferPart = create(
 
     return (
       <div styleName="root" {...rest}>
-        <ExampleOfferList offers={offers} pageSpec={{size: 40, hitSize, page, onPageSet: setPage}} showSelectButton={true} onSelect={handleSelect}/>
+        <ExampleOfferList offers={offers} pageSpec={{size: 40, hitSize, page, onPageSet: setPage}} showSupplement={true} showSelectButton={true} onSelect={handleSelect}/>
       </div>
     );
 
