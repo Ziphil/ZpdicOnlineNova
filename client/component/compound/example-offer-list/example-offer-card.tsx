@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faCheck, faPlus} from "@fortawesome/sharp-regular-svg-icons";
+import {faCheck, faPlus, faUserPen} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, useTrans} from "zographia";
@@ -46,8 +46,12 @@ export const ExampleOfferCard = create(
         <CardBody styleName="body">
           <div styleName="top">
             {(headerType === "tag") ? (
-              <div styleName="tag">
+              <div styleName="header">
                 <ExampleOfferTag variant="solid" offer={offer}/>
+                <span styleName="author">
+                  <GeneralIcon styleName="author-icon" icon={faUserPen}/>
+                  {offer.author}
+                </span>
               </div>
             ) : (
               <div styleName="date">

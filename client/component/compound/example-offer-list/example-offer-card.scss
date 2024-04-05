@@ -14,8 +14,20 @@
   flex-direction: column;
 }
 
-.tag {
+.header {
   margin-block-end: 2zu;
+  column-gap: 3zu;
+  display: flex;
+  align-items: center;
+}
+
+.author {
+  font-size: 3zu;
+  color: var(--glob-mute-text-color);
+}
+
+.author-icon {
+  margin-inline-end: var(--glob-blank-gap);
 }
 
 .date {
