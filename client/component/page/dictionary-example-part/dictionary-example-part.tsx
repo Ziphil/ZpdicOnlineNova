@@ -9,6 +9,7 @@ import {SearchExampleForm} from "/client/component/compound/search-example-form"
 import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
+import {NormalExampleOfferParameter} from "/client/skeleton";
 import {calcOffsetSpec} from "/client/util/misc";
 
 
@@ -29,7 +30,7 @@ export const DictionaryExamplePart = create(
     const [page, setPage] = useState(0);
     const [[hitExamples, hitSize]] = useSuspenseResponse("fetchExamples", {number: dictionary.number, ...calcOffsetSpec(page, 40)}, {keepPreviousData: true});
 
-    const [[offers] = []] = useResponse("fetchExampleOffers", (canEdit) && {size: 1, offset: 0});
+    const [[offers] = []] = useResponse("searchExampleOffers", (canEdit) && {parameter: NormalExampleOfferParameter.DAILY, size: 1, offset: 0});
     const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
     const showOffer = canEdit && offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 

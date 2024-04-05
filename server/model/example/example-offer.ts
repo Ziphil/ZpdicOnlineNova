@@ -8,6 +8,7 @@ import {
 } from "@typegoose/typegoose";
 import fs from "fs/promises";
 import {ExampleOfferPositionSchema} from "/server/model/example/example-offer-position";
+import {ExampleOfferParameter} from "/server/model/example-offer-parameter/example-offer-parameter";
 import {WithSize} from "/server/type/common";
 import {askClaude} from "/server/util/claude";
 import {QueryRange} from "/server/util/query";
@@ -57,10 +58,10 @@ export class ExampleOfferSchema {
     return [keyword, offer];
   }
 
-  public static async fetch(range?: QueryRange): Promise<WithSize<ExampleOffer>> {
-    const query = ExampleOfferModel.find().sort("-createdDate");
-    const result = await QueryRange.restrictWithSize(query, range);
-    return result;
+  public static async search(parameter: ExampleOfferParameter, range?: QueryRange): Promise<WithSize<ExampleOffer>> {
+    const query = parameter.createQuery();
+    const offers = await QueryRange.restrictWithSize(query, range);
+    return offers;
   }
 
   private static async fetchDailyNextIndex(): Promise<number> {

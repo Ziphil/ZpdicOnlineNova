@@ -207,6 +207,7 @@ commonAlert:
 exampleOfferTag:
   tag:
     zpdicDaily: "Daily sentence · {dateString}"
+    apple: "Sentences to eat apples · #{number, number}"
 wordModeSelect:
   label:
     name: "Слово"

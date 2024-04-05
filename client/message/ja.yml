@@ -207,6 +207,7 @@ commonAlert:
 exampleOfferTag:
   tag:
     zpdicDaily: "今日の例文 · {dateString}"
+    apple: "りんごを食べたい 58 文 · #{number, number}"
 wordModeSelect:
   label:
     name: "単語"

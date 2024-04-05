@@ -10,6 +10,7 @@ import {NotificationList} from "/client/component/compound/notification-list";
 import {MainContainer, Page} from "/client/component/compound/page";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
+import {NormalExampleOfferParameter} from "/client/skeleton";
 import {GiftView} from "./gift-view";
 import {GithubStarButton} from "./github-star-button";
 import {Hero} from "./hero";
@@ -38,7 +39,7 @@ export const TopPage = create(
 
     const {trans} = useTrans("topPage");
 
-    const [[offers] = []] = useResponse("fetchExampleOffers", {size: 1, offset: 0});
+    const [[offers] = []] = useResponse("searchExampleOffers", {parameter: NormalExampleOfferParameter.DAILY, size: 1, offset: 0});
 
     return (
       <Page styleName="root" insertPadding={false} {...rest}>

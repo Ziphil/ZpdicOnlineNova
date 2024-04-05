@@ -5,7 +5,7 @@ import {AdditionalProps, useTrans} from "zographia";
 import {ExampleOfferList} from "/client/component/compound/example-offer-list";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, ExampleOffer} from "/client/skeleton";
+import {DictionaryWithExecutors, ExampleOffer, NormalExampleOfferParameter} from "/client/skeleton";
 import {calcOffsetSpec} from "/client/util/misc";
 import {EditExampleSpec} from "./edit-example-form-hook";
 
@@ -29,7 +29,7 @@ export const EditExampleFormOfferPart = create(
     const {form} = formSpec;
 
     const [page, setPage] = useState(0);
-    const [[offers, hitSize] = []] = useResponse("fetchExampleOffers", {...calcOffsetSpec(page, 20)}, {keepPreviousData: true});
+    const [[offers, hitSize] = []] = useResponse("searchExampleOffers", {parameter: NormalExampleOfferParameter.EMPTY, ...calcOffsetSpec(page, 20)}, {keepPreviousData: true});
 
     const handleSelect = useCallback(function (offer: ExampleOffer): void {
       form.setValue("offer", offer.id);

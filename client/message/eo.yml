@@ -206,7 +206,8 @@ commonAlert:
   cancel: "Nuligi"
 exampleOfferTag:
   tag:
-    zpdicDaily: "Ĉiutaga frazo · {dateString}"
+    zpdicDaily: "Ĉiutagaj frazoj · {dateString}"
+    apple: "Frazoj por manĝi pomojn · #{number, number}"
 wordModeSelect:
   label:
     name: "Kapvorto"

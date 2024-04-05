@@ -8,6 +8,7 @@ import {MainContainer, Page} from "/client/component/compound/page";
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
 import {Search, useSearchState} from "/client/hook/search";
+import {NormalExampleOfferParameter} from "/client/skeleton";
 import {calcOffsetSpec} from "/client/util/misc";
 
 
@@ -22,7 +23,7 @@ export const ExampleOfferListPage = create(
     const {trans} = useTrans("exampleOfferListPage");
 
     const [query, , setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [[hitOffers, hitSize]] = useSuspenseResponse("fetchExampleOffers", {...calcOffsetSpec(query.page, 20)}, {keepPreviousData: true});
+    const [[hitOffers, hitSize]] = useSuspenseResponse("searchExampleOffers", {parameter: NormalExampleOfferParameter.DAILY, ...calcOffsetSpec(query.page, 20)}, {keepPreviousData: true});
 
     const handlePageSet = useCallback(function (page: number): void {
       setQuery({...query, page});

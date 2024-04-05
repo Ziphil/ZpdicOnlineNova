@@ -11,11 +11,11 @@ export abstract class DictionaryParameter {
 
   protected static createSortKey(order: DictionaryOrder): string {
     const mode = order.mode;
-    const directionChar = (order.direction === "ascending") ? "" : "-";
+    const directionSign = (order.direction === "ascending") ? "" : "-";
     if (mode === "updatedDate") {
-      return directionChar + "updatedDate _id";
+      return `${directionSign}updatedDate _id`;
     } else if (mode === "createdDate") {
-      return directionChar + "createdDate _id";
+      return `${directionSign}createdDate _id`;
     } else {
       throw new Error("cannot happen");
     }

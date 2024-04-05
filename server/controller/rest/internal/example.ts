@@ -3,7 +3,7 @@
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe, parseDictionary} from "/server/controller/rest/internal/middleware";
-import {ExampleCreator, ExampleOfferCreator} from "/server/creator";
+import {ExampleCreator, ExampleOfferCreator, ExampleOfferParameterCreator} from "/server/creator";
 import {ExampleModel, ExampleOfferModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 import {QueryRange} from "/server/util/query";
@@ -89,11 +89,12 @@ export class ExampleRestController extends InternalRestController {
     }
   }
 
-  @post("/fetchExampleOffers")
-  public async [Symbol()](request: Request<"fetchExampleOffers">, response: Response<"fetchExampleOffers">): Promise<void> {
+  @post("/searchExampleOffers")
+  public async [Symbol()](request: Request<"searchExampleOffers">, response: Response<"searchExampleOffers">): Promise<void> {
     const {offset, size} = request.body;
+    const parameter = ExampleOfferParameterCreator.recreate(request.body.parameter);
     const range = new QueryRange(offset, size);
-    const hitResult = await ExampleOfferModel.fetch(range);
+    const hitResult = await ExampleOfferModel.search(parameter, range);
     const body = mapWithSize(hitResult, ExampleOfferCreator.create);
     InternalRestController.respond(response, body);
   }

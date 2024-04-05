@@ -206,7 +206,8 @@ commonAlert:
   cancel: "Cancel"
 exampleOfferTag:
   tag:
-    zpdicDaily: "Daily sentence · {dateString}"
+    zpdicDaily: "Daily sentences · {dateString}"
+    apple: "Sentences to eat apples · #{number, number}"
 wordModeSelect:
   label:
     name: "Headword"

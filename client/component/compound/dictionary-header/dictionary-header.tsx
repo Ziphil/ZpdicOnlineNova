@@ -7,7 +7,7 @@ import {LinkTab} from "/client/component/atom/tab";
 import {MainContainer} from "/client/component/compound/page";
 import {create} from "/client/component/create";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
-import {DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors, NormalExampleOfferParameter} from "/client/skeleton";
 import {DictionaryHeaderTop} from "./dictionary-header-top";
 
 
@@ -30,7 +30,7 @@ export const DictionaryHeader = create(
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
     const [canOwn] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "own"});
 
-    const [[offers] = []] = useResponse("fetchExampleOffers", (canEdit) && {size: 1, offset: 0});
+    const [[offers] = []] = useResponse("searchExampleOffers", (canEdit) && {parameter: NormalExampleOfferParameter.DAILY, size: 1, offset: 0});
     const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
     const showOffer = canEdit && offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 

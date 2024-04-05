@@ -16,6 +16,7 @@ import type {
   EditableWord,
   Example,
   ExampleOffer,
+  ExampleOfferParameter,
   ExampleWithDictionary,
   History,
   Invitation,
@@ -317,8 +318,8 @@ type ServerSpecs = {
       error: CustomError<"noSuchExampleOffer">
     }
   },
-  fetchExampleOffers: {
-    request: {offset?: number, size?: number},
+  searchExampleOffers: {
+    request: {parameter: ExampleOfferParameter, offset?: number, size?: number},
     response: {
       success: WithSize<ExampleOffer>,
       error: never
