@@ -47,9 +47,9 @@ export const DictionaryCard = create(
                 {(dictionary.authorities.includes("own")) ? (
                   <Tag variant="solid">{trans("tag.authority.own")}</Tag>
                 ) : (dictionary.authorities.includes("edit")) ? (
-                  <Tag variant="light">{trans("tag.authority.edit")}</Tag>
+                  <Tag variant="solid">{trans("tag.authority.edit")}</Tag>
                 ) : (
-                  <Tag variant="light">{trans("tag.authority.view")}</Tag>
+                  <Tag variant="solid">{trans("tag.authority.view")}</Tag>
                 )}
                 {(dictionary.visibility !== "public") && (
                   <span styleName="secret">
