@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretRight} from "@fortawesome/sharp-solid-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText, aria} from "zographia";
-import {DictionaryBadge} from "/client/component/compound/dictionary-badge";
+import {DictionaryBadge} from "/client/component/atom/dictionary-badge";
 import {create} from "/client/component/create";
 import {ExampleWithDictionary} from "/client/skeleton";
 
