@@ -23,10 +23,14 @@ export class ExampleOfferSchema {
   public translation!: string;
 
   @prop({required: true})
+  public author!: string;
+
+  @prop({required: true})
   public createdDate!: Date;
 
   public static async addDaily(): Promise<[string, ExampleOffer]> {
     const position = {name: "zpdicDaily", index: await this.fetchDailyNextIndex()};
+    const author = "ZpDIC Online";
     const createdDate = new Date();
     const keywords = await fs.readFile("./dist/static/keyword.txt", "utf-8").then((content) => content.split(/\s*\n\s*/));
     const keyword = keywords[Math.floor(Math.random() * keywords.length)];
@@ -45,7 +49,7 @@ export class ExampleOfferSchema {
       利用者はあなたが生成した例文を外国語に翻訳することで外国語の勉強をするので、外国語への翻訳がしやすい文を生成してください。
     `);
     const translation = answer.match(/<sentence>(.*?)<\/sentence>/)?.[1] ?? "";
-    const offer = new ExampleOfferModel({position, translation, createdDate});
+    const offer = new ExampleOfferModel({position, translation, author, createdDate});
     await offer.save();
     return [keyword, offer];
   }

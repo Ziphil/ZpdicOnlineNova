@@ -8,6 +8,7 @@ export interface ExampleOffer {
   id: ObjectId;
   position: {name: string, index: number};
   translation: string;
+  author: string;
   createdDate: string;
 
 }

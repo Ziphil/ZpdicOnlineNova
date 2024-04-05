@@ -14,8 +14,9 @@ export namespace ExampleOfferCreator {
     const id = raw.id;
     const position = raw.position;
     const translation = raw.translation;
+    const author = raw.author;
     const createdDate = raw.createdDate.toISOString();
-    const skeleton = {id, position, translation, createdDate};
+    const skeleton = {id, position, translation, author, createdDate};
     return skeleton;
   }
 
