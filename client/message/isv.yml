@@ -206,8 +206,8 @@ commonAlert:
   cancel: "Одрєкти"
 exampleOfferTag:
   tag:
-    zpdicDaily: "Daily sentence · {dateString}"
-    apple: "Sentences to eat apples · #{number, number}"
+    zpdicDaily: "Daily sentences"
+    apple: "Sentences to eat apples"
 wordModeSelect:
   label:
     name: "Слово"

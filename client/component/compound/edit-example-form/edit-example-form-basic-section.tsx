@@ -38,7 +38,7 @@ export const EditExampleFormBasicSection = create(
             <Textarea styleName="textarea" disabled={!!offerId} {...register("translation")}>
               {(offerId !== undefined) && (
                 <TextareaAddon position="top">
-                  <ExampleOfferTag variant="solid" offer={{id: offerId}}/>
+                  <ExampleOfferTag offer={{id: offerId}}/>
                 </TextareaAddon>
               )}
             </Textarea>

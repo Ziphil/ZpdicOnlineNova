@@ -206,8 +206,8 @@ commonAlert:
   cancel: "キャンセル"
 exampleOfferTag:
   tag:
-    zpdicDaily: "今日の例文 · {dateString}"
-    apple: "りんごを食べたい 58 文 · #{number, number}"
+    zpdicDaily: "今日の例文"
+    apple: "りんごを食べたい 58 文"
 wordModeSelect:
   label:
     name: "単語"

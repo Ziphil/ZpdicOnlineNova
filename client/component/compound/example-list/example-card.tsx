@@ -39,7 +39,7 @@ export const ExampleCard = create(
         <CardBody styleName="body">
           {(example.offer !== undefined) && (
             <div styleName="tag">
-              <ExampleOfferTag variant="solid" offer={{id: example.offer}}/>
+              <ExampleOfferTag offer={{id: example.offer}}/>
             </div>
           )}
           <div styleName="parallel">

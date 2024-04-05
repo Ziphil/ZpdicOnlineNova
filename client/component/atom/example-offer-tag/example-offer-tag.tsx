@@ -9,33 +9,41 @@ import {ExampleOffer, ObjectId} from "/client/skeleton";
 
 
 export const ExampleOfferTag = create(
-  null, "ExampleOfferTag",
+  require("./example-offer-tag.scss"), "ExampleOfferTag",
   function ({
     offer,
-    variant,
     ...rest
   }: {
     offer: ExampleOffer | {id: ObjectId},
-    variant?: "solid" | "light",
     className?: string
   }): ReactElement | null {
 
-    const {trans, transDate} = useTrans("exampleOfferTag");
+    const {trans, transNumber, transDate} = useTrans("exampleOfferTag");
 
     const [innerOffer] = useResponse("fetchExampleOffer", (!isFull(offer)) && {id: offer.id});
     const actualOffer = (!isFull(offer)) ? innerOffer : offer;
 
     return (
-      <Tag variant={variant} {...rest}>
+      <span styleName="root" {...rest}>
         {(actualOffer !== undefined) ? (
-          trans(`tag.${actualOffer.position.name}`, {
-            number: actualOffer.position.index + 1,
-            dateString: transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")
-          })
+          <>
+            <Tag variant="solid">
+              {trans(`tag.${actualOffer.position.name}`)}
+            </Tag>
+            <Tag variant="light">
+              {(actualOffer.position.name === "zpdicDaily") ? (
+                transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")
+              ) : (
+                "#" + transNumber(actualOffer.position.index + 1)
+              )}
+            </Tag>
+          </>
         ) : (
-          <LoadingIcon/>
+          <Tag variant="solid">
+            <LoadingIcon/>
+          </Tag>
         )}
-      </Tag>
+      </span>
     );
 
   }

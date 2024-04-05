@@ -47,7 +47,7 @@ export const ExampleOfferCard = create(
           <div styleName="top">
             {(headerType === "tag") ? (
               <div styleName="header">
-                <ExampleOfferTag variant="solid" offer={offer}/>
+                <ExampleOfferTag offer={offer}/>
                 <span styleName="author">
                   <GeneralIcon styleName="author-icon" icon={faUserPen}/>
                   {offer.author}
