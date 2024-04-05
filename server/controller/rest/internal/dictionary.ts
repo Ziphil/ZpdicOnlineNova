@@ -113,12 +113,12 @@ export class DictionaryRestController extends InternalRestController {
     }
   }
 
-  @post("/changeDictionarySecret")
+  @post("/changeDictionaryVisibility")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: FilledRequest<"changeDictionarySecret", "me" | "dictionary">, response: Response<"changeDictionarySecret">): Promise<void> {
+  public async [Symbol()](request: FilledRequest<"changeDictionaryVisibility", "me" | "dictionary">, response: Response<"changeDictionaryVisibility">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const {secret} = request.body;
-    await dictionary.changeSecret(secret);
+    const {visibility} = request.body;
+    await dictionary.changeVisibility(visibility);
     const body = DictionaryCreator.create(dictionary);
     InternalRestController.respond(response, body);
   }

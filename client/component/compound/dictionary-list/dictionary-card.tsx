@@ -8,7 +8,7 @@ import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithUser, DictionaryWithAuthorities} from "/client/skeleton";
+import {DictionaryWithAuthorities, DictionaryWithUser} from "/client/skeleton";
 import {DictionaryCardHistoryChart} from "./dictionary-card-history-chart";
 
 
@@ -51,7 +51,7 @@ export const DictionaryCard = create(
                 ) : (
                   <Tag variant="light">{trans("tag.view")}</Tag>
                 )}
-                {(dictionary.secret) && (
+                {(dictionary.visibility !== "public") && (
                   <span styleName="secret">
                     <GeneralIcon styleName="secret-icon" icon={faLockKeyhole}/>
                     {trans("tag.secret")}

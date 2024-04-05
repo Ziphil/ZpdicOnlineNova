@@ -13,7 +13,7 @@ toast:
       La identigilo ŝanĝitas.
     changeDictionaryExplanation: |-
       La priskribo ŝanĝitas.
-    changeDictionarySecret: |-
+    changeDictionaryVisibility: |-
       La agordo ŝanĝitas.
     changeDictionarySettings:
       akrantiainSource: |-
@@ -684,10 +684,11 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Ebligita"
       false: "Malebligita"
-changeDictionarySecretForm:
+changeDictionaryVisibilityForm:
   label:
-    false: "Videbla"
-    true: "Nevidebla"
+    public: "Publika"
+    unlisted: "Nelistigita"
+    private: "Nepublika"
 changeDictionarySourceForm:
   button:
     try: "Provi"
@@ -837,7 +838,7 @@ dictionarySettingGeneralPart:
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
     font: "Tiparo por kapvortoj"
-    secret: "Videbleco en listoj de vortaroj"
+    visibility: "Videbleco"
     discard: "Forigi"
   description:
     paramName: >-
@@ -848,7 +849,7 @@ dictionarySettingGeneralPart:
     font: >-
       Vi povas ŝanĝi la tiparon por kapvortoj.
       Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ "Alŝuti propran tiparon" por uzi vian propran alŝutitan tiparon.
-    secret: >-
+    visibility: >-
       Se vi agordos tiun al “Nevidebla”, la vortaro ne aperos en listoj de vortaroj.
       Tamen ĉiu, kiu konas la retadreso de la paĝo de la vortaro, povas ankoraŭ rekte aliri ĝin.
   callout:

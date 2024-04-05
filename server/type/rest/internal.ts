@@ -4,13 +4,14 @@ import type {
   Aggregation,
   Commission,
   CustomError,
-  DictionaryWithUser,
   DetailedUser,
-  WordWithExamples,
   Dictionary,
   DictionaryParameter,
   DictionarySettings,
   DictionaryStatistics,
+  DictionaryVisibility,
+  DictionaryWithAuthorities,
+  DictionaryWithUser,
   EditableExample,
   EditableWord,
   Example,
@@ -24,10 +25,10 @@ import type {
   Relation,
   Suggestion,
   User,
-  DictionaryWithAuthorities,
   Word,
   WordNameFrequencies,
-  WordParameter
+  WordParameter,
+  WordWithExamples
 } from "/client/skeleton";
 import type {DictionaryAuthority, DictionaryFullAuthority} from "/server/model";
 import type {WithRecaptcha, WithSize} from "/server/type/common";
@@ -71,8 +72,8 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
     }
   },
-  changeDictionarySecret: {
-    request: {number: number, secret: boolean},
+  changeDictionaryVisibility: {
+    request: {number: number, visibility: DictionaryVisibility},
     response: {
       success: Dictionary,
       error: CustomError<"noSuchDictionary">

@@ -6,6 +6,7 @@ import {ObjectId} from "/client/skeleton/common";
 import {DictionarySettings} from "/client/skeleton/dictionary/dictionary-settings";
 import {User} from "/client/skeleton/user";
 import type {DictionaryAuthority} from "/server/model";
+import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 
 export interface Dictionary {
@@ -15,7 +16,7 @@ export interface Dictionary {
   paramName?: string;
   name: string;
   status: string;
-  secret: boolean;
+  visibility: DictionaryVisibility;
   explanation?: string;
   settings: DictionarySettings;
   createdDate?: string;
@@ -79,3 +80,8 @@ export namespace Dictionary {
   }
 
 }
+
+
+export const DICTIONARY_VISIBILITIES = ["public", "unlisted", "private"] as const;
+export type DictionaryVisibility = LiteralType<typeof DICTIONARY_VISIBILITIES>;
+export const DictionaryVisibilityUtil = LiteralUtilType.create(DICTIONARY_VISIBILITIES);

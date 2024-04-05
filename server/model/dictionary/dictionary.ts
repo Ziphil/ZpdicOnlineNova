@@ -44,6 +44,10 @@ export const DICTIONARY_STATUSES = ["ready", "saving", "error"] as const;
 export type DictionaryStatus = LiteralType<typeof DICTIONARY_STATUSES>;
 export const DictionaryStatusUtil = LiteralUtilType.create(DICTIONARY_STATUSES);
 
+export const DICTIONARY_VISIBILITIES = ["public", "unlisted", "private"] as const;
+export type DictionaryVisibility = LiteralType<typeof DICTIONARY_VISIBILITIES>;
+export const DictionaryVisibilityUtil = LiteralUtilType.create(DICTIONARY_VISIBILITIES);
+
 
 @modelOptions({schemaOptions: {collection: "dictionaries", minimize: false}})
 export class DictionarySchema extends DiscardableSchema {
@@ -66,8 +70,8 @@ export class DictionarySchema extends DiscardableSchema {
   @prop({required: true, enum: DICTIONARY_STATUSES})
   public status!: DictionaryStatus;
 
-  @prop({required: true})
-  public secret!: boolean;
+  @prop({required: true, enum: DICTIONARY_VISIBILITIES})
+  public visibility!: DictionaryVisibility;
 
   @prop()
   public explanation?: string;
@@ -88,19 +92,19 @@ export class DictionarySchema extends DiscardableSchema {
     const editUsers = new Array<User>();
     const number = await DictionaryModel.fetchNextNumber();
     const status = "ready";
-    const secret = false;
+    const visibility = "public";
     const settings = DictionarySettingsModel.createDefault();
     const externalData = {};
     const createdDate = new Date();
     const updatedDate = new Date();
-    const dictionary = new DictionaryModel({user, editUsers, number, name, status, secret, settings, externalData, createdDate, updatedDate});
+    const dictionary = new DictionaryModel({user, editUsers, number, name, status, visibility, settings, externalData, createdDate, updatedDate});
     await dictionary.save();
     return dictionary;
   }
 
   public static async fetch(order: string, range?: QueryRange): Promise<WithSize<Dictionary>> {
     const sortArg = (order === "createdDate") ? "-createdDate -updatedDate -number" : "-updatedDate -number";
-    const query = DictionaryModel.findExist().ne("secret", true).sort(sortArg);
+    const query = DictionaryModel.findExist().where("visibility", "public").sort(sortArg);
     const result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
@@ -131,13 +135,13 @@ export class DictionarySchema extends DiscardableSchema {
         if (includeSecret) {
           return ownQuery;
         } else {
-          return ownQuery.ne("secret", true);
+          return ownQuery.where("visibility", "public");
         }
       } else {
         if (includeSecret) {
           return DictionaryModel.findExist().or([ownQuery.getFilter(), editQuery.getFilter()]);
         } else {
-          return DictionaryModel.findExist().or([ownQuery.getFilter(), editQuery.getFilter()]).ne("secret", true);
+          return DictionaryModel.findExist().or([ownQuery.getFilter(), editQuery.getFilter()]).where("visibility", "public");
         }
       }
     })();
@@ -282,8 +286,8 @@ export class DictionarySchema extends DiscardableSchema {
     return this;
   }
 
-  public async changeSecret(this: Dictionary, secret: boolean): Promise<Dictionary> {
-    this.secret = secret;
+  public async changeVisibility(this: Dictionary, visibility: DictionaryVisibility): Promise<Dictionary> {
+    this.visibility = visibility;
     await this.save();
     return this;
   }

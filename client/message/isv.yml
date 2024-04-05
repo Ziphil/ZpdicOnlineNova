@@ -13,7 +13,7 @@ toast:
       The identifier has been changed.
     changeDictionaryExplanation: |-
       The description has been changed.
-    changeDictionarySecret: |-
+    changeDictionaryVisibility: |-
       The setting has been changed.
     changeDictionarySettings:
       akrantiainSource: |-
@@ -679,15 +679,16 @@ changeDictionaryFontForm:
 changeDictionarySettingsForm:
   label:
     enableMarkdown:
-      true: "Enable"
-      false: "Disable"
+      true: "Enabled"
+      false: "Disabled"
     enableDuplicateName:
-      true: "Enable"
-      false: "Disable"
-changeDictionarySecretForm:
+      true: "Enabled"
+      false: "Disabled"
+changeDictionaryVisibilityForm:
   label:
-    false: "Show"
-    true: "Hide"
+    public: "Public"
+    unlisted: "Unlisted"
+    private: "Private"
 changeDictionarySourceForm:
   button:
     try: "Try"
@@ -837,7 +838,7 @@ dictionarySettingGeneralPart:
     paramName: "Идентификатор дља URL-адресы"
     explanation: "Опис"
     font: "Font for headwords"
-    secret: "Видимост в списках словников"
+    visibility: "Видимост"
     discard: "Delete"
   description:
     paramName: >-
@@ -848,7 +849,7 @@ dictionarySettingGeneralPart:
     font: >-
       You can change the font for headwords.
       Select “Use local font” to use a font installed in the visiter's environment, or “Upload custom font” to use your own uploaded font.
-    secret: >-
+    visibility: >-
       If you set this to “Hide”, this dictionary will not appear in dictionary lists.
       However, anyone who knows the URL of the dictionary page can still access it directly.
   callout:

@@ -22,12 +22,12 @@ export namespace DictionaryCreator {
     const paramName = raw.paramName;
     const name = raw.name;
     const status = raw.status;
-    const secret = raw.secret;
+    const visibility = raw.visibility;
     const explanation = raw.explanation;
     const settings = DictionarySettingsCreator.create(raw.settings);
     const createdDate = raw.createdDate?.toISOString() ?? undefined;
     const updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    const skeleton = {id, number, paramName, name, status, secret, explanation, settings, createdDate, updatedDate};
+    const skeleton = {id, number, paramName, name, status, visibility, explanation, settings, createdDate, updatedDate};
     return skeleton;
   }
 
