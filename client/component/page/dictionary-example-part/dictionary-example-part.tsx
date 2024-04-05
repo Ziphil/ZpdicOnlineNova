@@ -49,7 +49,7 @@ export const DictionaryExamplePart = create(
                   {trans("heading.offer")}
                 </SingleLineText>
                 <Indicator styleName="indicator" scheme="secondary" animate={true}>
-                  <ExampleOfferList dictionary={dictionary} offers={offers} showPagination={false} pageSpec={{size: 1}}/>
+                  <ExampleOfferList dictionary={dictionary} offers={offers} headerType="date" showPagination={false} pageSpec={{size: 1}}/>
                 </Indicator>
               </section>
             )}
