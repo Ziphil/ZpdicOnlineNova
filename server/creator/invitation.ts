@@ -17,7 +17,7 @@ export namespace InvitationCreator {
     if (isDocument(raw.dictionary)) {
       const id = raw.id;
       const type = raw.type;
-      const dictionary = await DictionaryCreator.createDetailed(raw.dictionary);
+      const dictionary = await DictionaryCreator.createWithUser(raw.dictionary);
       const createdDate = raw.createdDate.toISOString();
       const skeleton = {id, type, dictionary, createdDate};
       return skeleton;

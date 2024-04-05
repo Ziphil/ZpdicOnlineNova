@@ -1,8 +1,8 @@
 //
 
 import type {
-  DetailedWord as DetailedWordSkeleton,
-  Word as WordSkeleton
+  Word as WordSkeleton,
+  WordWithExamples as WordSkeletonWithExamples
 } from "/client/skeleton";
 import {ExampleCreator} from "/server/creator/example/example";
 import {EquivalentCreator} from "/server/creator/word/equivalent";
@@ -33,7 +33,7 @@ export namespace WordCreator {
     return skeleton;
   }
 
-  export async function createDetailed(raw: Word): Promise<DetailedWordSkeleton> {
+  export async function createWithExamples(raw: Word): Promise<WordSkeletonWithExamples> {
     const base = create(raw);
     const examples = await ExampleModel.fetchByWord(raw).then((rawExamples) => rawExamples.map(ExampleCreator.create));
     const skeleton = {...base, examples};

@@ -5,7 +5,7 @@ import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
-import {Commission, EditableWord, EnhancedDictionary} from "/client/skeleton";
+import {Commission, EditableWord, DictionaryWithExecutors} from "/client/skeleton";
 import {useDiscardCommission} from "./commission-card-hook";
 
 
@@ -16,7 +16,7 @@ export const CommissionCard = create(
     commission,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     commission: Commission,
     className?: string
   } & AdditionalProps): ReactElement {

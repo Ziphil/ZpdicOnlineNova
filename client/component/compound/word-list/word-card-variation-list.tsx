@@ -5,7 +5,7 @@ import {faAngleRight} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
-import {DetailedWord, EnhancedDictionary, Variation, Word} from "/client/skeleton";
+import {WordWithExamples, DictionaryWithExecutors, Variation, Word} from "/client/skeleton";
 
 
 export const WordCardVariationList = create(
@@ -15,8 +15,8 @@ export const WordCardVariationList = create(
     word,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
-    word: Word | DetailedWord,
+    dictionary: DictionaryWithExecutors,
+    word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -49,7 +49,7 @@ export const WordCardVariationList = create(
 );
 
 
-function getGroupedVariations(word: Word | DetailedWord): Array<[string, [string, Array<Variation>]]> {
+function getGroupedVariations(word: Word | WordWithExamples): Array<[string, [string, Array<Variation>]]> {
   const groupedVariations = new Map<string, [string, Array<Variation>]>();
   for (const variation of word.variations) {
     const title = variation.title;

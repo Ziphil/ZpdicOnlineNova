@@ -4,7 +4,7 @@ import {faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DetailedDictionary} from "/client/skeleton";
+import {DictionaryWithUser} from "/client/skeleton";
 import {useDiscardDictionary} from "./discard-dictionary-button-hook";
 
 
@@ -14,7 +14,7 @@ export const DiscardDictionaryButton = create(
     dictionary,
     ...rest
   }: {
-    dictionary: DetailedDictionary,
+    dictionary: DictionaryWithUser,
     className?: string
   } & AdditionalProps): ReactElement {
 

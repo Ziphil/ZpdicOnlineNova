@@ -149,7 +149,7 @@ export class DictionaryRestController extends InternalRestController {
     const parameter = DictionaryParameterCreator.recreate(request.body.parameter);
     const range = new QueryRange(offset, size);
     const hitResult = await DictionaryModel.search(parameter, range);
-    const body = await mapWithSizeAsync(hitResult, DictionaryCreator.createDetailed);
+    const body = await mapWithSizeAsync(hitResult, DictionaryCreator.createWithUser);
     InternalRestController.respond(response, body);
   }
 
@@ -162,7 +162,7 @@ export class DictionaryRestController extends InternalRestController {
     const range = new QueryRange(offset, size);
     const hitResult = await dictionary.searchWord(parameter, range);
     const body = {
-      words: await mapWithSizeAsync(hitResult.words, WordCreator.createDetailed),
+      words: await mapWithSizeAsync(hitResult.words, WordCreator.createWithExamples),
       suggestions: hitResult.suggestions.map(SuggestionCreator.create)
     };
     InternalRestController.respond(response, body);
@@ -201,7 +201,7 @@ export class DictionaryRestController extends InternalRestController {
     const {identifier} = request.body;
     const dictionary = await DictionaryModel.fetchOneByIdentifier(identifier);
     if (dictionary) {
-      const body = await DictionaryCreator.createDetailed(dictionary);
+      const body = await DictionaryCreator.createWithUser(dictionary);
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "noSuchDictionary");
@@ -263,7 +263,7 @@ export class DictionaryRestController extends InternalRestController {
       const authority = (me?.id === user.id) ? "edit" : "own";
       const includeSecret = me?.id === user.id;
       const dictionaries = await DictionaryModel.fetchByUser(user, authority, includeSecret);
-      const body = await Promise.all(dictionaries.map((dictionary) => DictionaryCreator.createUser(dictionary, user)));
+      const body = await Promise.all(dictionaries.map((dictionary) => DictionaryCreator.createWithAuthorities(dictionary, user)));
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "noSuchUser");

@@ -4,7 +4,7 @@ import {ReactElement} from "react";
 import {AdditionalProps, ControlContainer, ControlLabel, Textarea, TextareaAddon, useTrans} from "zographia";
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {EditExampleSpec} from "./edit-example-form-hook";
 
 
@@ -15,7 +15,7 @@ export const EditExampleFormBasicSection = create(
     form,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     form: EditExampleSpec["form"],
     className?: string
   } & AdditionalProps): ReactElement {

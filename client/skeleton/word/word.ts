@@ -36,17 +36,24 @@ export namespace EditableWord {
 }
 
 
-export interface Word extends EditableWord {
+export interface Word {
 
   id: ObjectId;
   number: number;
+  name: string;
+  pronunciation?: string;
+  equivalents: Array<Equivalent>;
+  tags: Array<string>;
+  informations: Array<Information>;
+  variations: Array<Variation>;
+  relations: Array<Relation>;
   createdDate?: string;
   updatedDate?: string;
 
 }
 
 
-export interface DetailedWord extends Word {
+export interface WordWithExamples extends Word {
 
   examples: Array<Example>;
 

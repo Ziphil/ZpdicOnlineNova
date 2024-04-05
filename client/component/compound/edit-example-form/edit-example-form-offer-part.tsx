@@ -5,7 +5,7 @@ import {AdditionalProps, useTrans} from "zographia";
 import {ExampleOfferList} from "/client/component/compound/example-offer-list";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {EnhancedDictionary, ExampleOffer} from "/client/skeleton";
+import {DictionaryWithExecutors, ExampleOffer} from "/client/skeleton";
 import {calcOffsetSpec} from "/client/util/misc";
 import {EditExampleSpec} from "./edit-example-form-hook";
 
@@ -18,7 +18,7 @@ export const EditExampleFormOfferPart = create(
     setTabValue,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     formSpec: EditExampleSpec,
     setTabValue: (value: "edit" | "offer") => void,
     className?: string

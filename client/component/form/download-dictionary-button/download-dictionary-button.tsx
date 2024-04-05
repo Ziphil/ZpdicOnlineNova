@@ -4,7 +4,7 @@ import {faDownload, faExclamation, faFileExport} from "@fortawesome/sharp-regula
 import {ReactElement} from "react";
 import {AdditionalProps, Badge, BadgeIconbag, Button, ButtonIconbag, GeneralIcon, LoadingIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DetailedDictionary} from "/client/skeleton";
+import {DictionaryWithUser} from "/client/skeleton";
 import {useDownloadDictionary, useDownloadDictionaryFile} from "./download-dictionary-button-hook";
 
 
@@ -15,7 +15,7 @@ export const DownloadDictionaryButton = create(
     dictionary,
     ...rest
   }: {
-    dictionary: DetailedDictionary,
+    dictionary: DictionaryWithUser,
     className?: string
   } & AdditionalProps): ReactElement {
 

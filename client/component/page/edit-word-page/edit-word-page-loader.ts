@@ -4,12 +4,12 @@ import {LoaderFunctionArgs} from "react-router-dom";
 import rison from "rison";
 import {EditWordInitialData} from "/client/component/compound/edit-word-form";
 import {fetchResponse} from "/client/hook/request";
-import {DetailedDictionary} from "/client/skeleton";
+import {DictionaryWithUser} from "/client/skeleton";
 import {ResponseError} from "/client/util/response-error";
 
 
 export type EditWordPageLoaderData = {
-  dictionary: DetailedDictionary,
+  dictionary: DictionaryWithUser,
   initialData: EditWordInitialData | null
 };
 

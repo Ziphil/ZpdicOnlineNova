@@ -8,7 +8,7 @@ import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DetailedDictionary, UserDictionary} from "/client/skeleton";
+import {DictionaryWithUser, DictionaryWithAuthorities} from "/client/skeleton";
 import {DictionaryCardHistoryChart} from "./dictionary-card-history-chart";
 
 
@@ -22,7 +22,7 @@ export const DictionaryCard = create(
     showSettingLink,
     ...rest
   }: {
-    dictionary: DetailedDictionary | UserDictionary,
+    dictionary: DictionaryWithUser | DictionaryWithAuthorities,
     showUser: boolean,
     showChart: boolean,
     showAuthority: boolean,

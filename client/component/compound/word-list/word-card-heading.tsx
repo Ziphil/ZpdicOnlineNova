@@ -3,7 +3,7 @@
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DetailedWord, EnhancedDictionary, Word} from "/client/skeleton";
+import {WordWithExamples, DictionaryWithExecutors, Word} from "/client/skeleton";
 
 
 export const WordCardHeading = create(
@@ -13,8 +13,8 @@ export const WordCardHeading = create(
     word,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
-    word: Word | DetailedWord,
+    dictionary: DictionaryWithExecutors,
+    word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -59,7 +59,7 @@ export const WordCardHeading = create(
 );
 
 
-function getPronunciation(dictionary: EnhancedDictionary, word: Word | DetailedWord): string | undefined {
+function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | WordWithExamples): string | undefined {
   if (!!word.pronunciation) {
     if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
       return word.pronunciation.trim();
@@ -81,7 +81,7 @@ function getPronunciation(dictionary: EnhancedDictionary, word: Word | DetailedW
   }
 }
 
-function getNameFontFamily(dictionary: EnhancedDictionary): string | undefined {
+function getNameFontFamily(dictionary: DictionaryWithExecutors): string | undefined {
   const font = dictionary.settings.font;
   if (font?.type === "custom") {
     return `'zpdic-custom-${dictionary.number}'`;

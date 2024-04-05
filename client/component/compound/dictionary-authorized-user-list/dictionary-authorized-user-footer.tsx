@@ -5,7 +5,7 @@ import {faBan} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {EnhancedDictionary, User} from "/client/skeleton";
+import {DictionaryWithExecutors, User} from "/client/skeleton";
 import {useDiscardDictionaryAuthorizedUser} from "./dictionary-authorized-user-list-hook";
 
 
@@ -15,7 +15,7 @@ export const DictionaryAuthorizedUserFooter = create(
     dictionary,
     user
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     user: User
   }): ReactElement {
 

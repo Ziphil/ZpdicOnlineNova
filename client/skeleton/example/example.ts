@@ -27,11 +27,14 @@ export namespace EditableExample {
 }
 
 
-export interface Example extends EditableExample {
+export interface Example {
 
   id: ObjectId;
   number: number;
-
+  sentence: string;
+  translation: string;
+  words: Array<LinkedWord>;
+  offer?: ObjectId;
 }
 
 

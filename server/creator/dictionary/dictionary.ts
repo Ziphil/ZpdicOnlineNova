@@ -2,9 +2,9 @@
 
 import {isDocument} from "@typegoose/typegoose";
 import type {
-  DetailedDictionary as DetailedDictionarySkeleton,
   Dictionary as DictionarySkeleton,
-  UserDictionary as UserDictionarySkeleton
+  DictionaryWithAuthorities as DictionarySkeletonWithAuthorities,
+  DictionaryWithUser as DictionarySkeletonWithUser
 } from "/client/skeleton";
 import {DictionarySettingsCreator} from "/server/creator/dictionary/dictionary-settings";
 import {UserCreator} from "/server/creator/user/user";
@@ -31,7 +31,7 @@ export namespace DictionaryCreator {
     return skeleton;
   }
 
-  export async function createDetailed(raw: Dictionary): Promise<DetailedDictionarySkeleton> {
+  export async function createWithUser(raw: Dictionary): Promise<DictionarySkeletonWithUser> {
     const base = create(raw);
     const [user] = await Promise.all([(async () => {
       await raw.populate("user");
@@ -45,8 +45,8 @@ export namespace DictionaryCreator {
     return skeleton;
   }
 
-  export async function createUser(raw: Dictionary, rawUser: User): Promise<UserDictionarySkeleton> {
-    const [base, authorities] = await Promise.all([createDetailed(raw), raw.fetchAuthorities(rawUser)]);
+  export async function createWithAuthorities(raw: Dictionary, rawUser: User): Promise<DictionarySkeletonWithAuthorities> {
+    const [base, authorities] = await Promise.all([createWithUser(raw), raw.fetchAuthorities(rawUser)]);
     const skeleton = {...base, authorities};
     return skeleton;
   }

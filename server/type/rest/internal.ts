@@ -4,9 +4,9 @@ import type {
   Aggregation,
   Commission,
   CustomError,
-  DetailedDictionary,
+  DictionaryWithUser,
   DetailedUser,
-  DetailedWord,
+  WordWithExamples,
   Dictionary,
   DictionaryParameter,
   DictionarySettings,
@@ -24,7 +24,7 @@ import type {
   Relation,
   Suggestion,
   User,
-  UserDictionary,
+  DictionaryWithAuthorities,
   Word,
   WordNameFrequencies,
   WordParameter
@@ -172,14 +172,14 @@ type ServerSpecs = {
   searchDictionary: {
     request: {parameter: DictionaryParameter, offset?: number, size?: number},
     response: {
-      success: WithSize<DetailedDictionary>,
+      success: WithSize<DictionaryWithUser>,
       error: never
     }
   },
   searchWord: {
     request: {number: number, parameter: WordParameter, offset?: number, size?: number},
     response: {
-      success: {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>},
+      success: {words: WithSize<WordWithExamples>, suggestions: Array<Suggestion>},
       error: CustomError<"noSuchDictionary">
     }
   },
@@ -228,7 +228,7 @@ type ServerSpecs = {
   fetchDictionary: {
     request: {identifier: number | string},
     response: {
-      success: DetailedDictionary,
+      success: DictionaryWithUser,
       error: CustomError<"noSuchDictionary" | "invalidArgument">
     }
   },
@@ -256,7 +256,7 @@ type ServerSpecs = {
   fetchUserDictionaries: {
     request: {name: string},
     response: {
-      success: Array<UserDictionary>,
+      success: Array<DictionaryWithAuthorities>,
       error: CustomError<"noSuchUser">
     }
   },
@@ -270,7 +270,7 @@ type ServerSpecs = {
   fetchWord: {
     request: {number: number, wordNumber: number},
     response: {
-      success: DetailedWord,
+      success: WordWithExamples,
       error: CustomError<"noSuchDictionary" | "noSuchWord">
     }
   },

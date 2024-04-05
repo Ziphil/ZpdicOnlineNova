@@ -19,7 +19,7 @@ import {
 } from "zographia";
 import {RelationWordSelect} from "/client/component/atom/relation-word-select";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
@@ -36,7 +36,7 @@ export const EditWordFormRelationItem = create(
     index,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     form: EditWordSpec["form"],
     relationOperations: Omit<UseFieldArrayReturn<any, "relations">, "fields">,
     dndId: string,

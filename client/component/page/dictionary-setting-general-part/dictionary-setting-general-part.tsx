@@ -11,7 +11,7 @@ import {ChangeDictionaryNameForm} from "/client/component/form/change-dictionary
 import {ChangeDictionaryParamNameForm} from "/client/component/form/change-dictionary-param-name-form";
 import {ChangeDictionarySecretForm} from "/client/component/form/change-dictionary-secret-form";
 import {DiscardDictionaryButton} from "/client/component/form/discard-dictionary-button";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 
 
 export const DictionarySettingGeneralPart = create(
@@ -24,7 +24,7 @@ export const DictionarySettingGeneralPart = create(
 
     const {trans} = useTrans("dictionarySettingGeneralPart");
 
-    const {dictionary} = useOutletContext<{dictionary: EnhancedDictionary}>();
+    const {dictionary} = useOutletContext<{dictionary: DictionaryWithExecutors}>();
 
     return (
       <div styleName="root" {...rest}>

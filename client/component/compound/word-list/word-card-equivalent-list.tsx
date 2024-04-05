@@ -3,7 +3,7 @@
 import {Fragment, ReactElement} from "react";
 import {AdditionalProps, MultiLineText, Tag} from "zographia";
 import {create} from "/client/component/create";
-import {DetailedWord, EnhancedDictionary, Word} from "/client/skeleton";
+import {WordWithExamples, DictionaryWithExecutors, Word} from "/client/skeleton";
 
 
 export const WordCardEquivalentList = create(
@@ -13,8 +13,8 @@ export const WordCardEquivalentList = create(
     word,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
-    word: Word | DetailedWord,
+    dictionary: DictionaryWithExecutors,
+    word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -42,7 +42,7 @@ export const WordCardEquivalentList = create(
 );
 
 
-function getPunctuation(dictionary: EnhancedDictionary): string {
+function getPunctuation(dictionary: DictionaryWithExecutors): string {
   const punctuation = dictionary.settings.punctuations[0] ?? ",";
   if (punctuation.match(/^[\x20-\x7E]*$/)) {
     return punctuation + " ";

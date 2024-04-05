@@ -23,7 +23,7 @@ import {
 import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {useDialogOpen} from "/client/hook/dialog";
-import {DetailedDictionary} from "/client/skeleton";
+import {DictionaryWithUser} from "/client/skeleton";
 import {useUploadDictionary} from "./upload-dictionary-button-hook";
 
 
@@ -33,7 +33,7 @@ export const UploadDictionaryButton = create(
     dictionary,
     ...rest
   }: {
-    dictionary: DetailedDictionary,
+    dictionary: DictionaryWithUser,
     className?: string
   } & AdditionalProps): ReactElement {
 

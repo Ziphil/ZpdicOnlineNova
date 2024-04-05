@@ -7,7 +7,7 @@ import {LinkTab} from "/client/component/atom/tab";
 import {MainContainer} from "/client/component/compound/page";
 import {create} from "/client/component/create";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {DictionaryHeaderTop} from "./dictionary-header-top";
 
 
@@ -19,7 +19,7 @@ export const DictionaryHeader = create(
     tabValue,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     width?: "normal" | "wide",
     tabValue: DictionaryHeaderTabValue,
     className?: string

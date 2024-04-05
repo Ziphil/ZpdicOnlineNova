@@ -10,7 +10,7 @@ import {EditExampleDialog} from "/client/component/compound/edit-example-dialog"
 import {create} from "/client/component/create";
 import {useFilledExample} from "/client/hook/example";
 import {useResponse} from "/client/hook/request";
-import {EnhancedDictionary, Example} from "/client/skeleton";
+import {DictionaryWithExecutors, Example} from "/client/skeleton";
 import {useDiscardExample} from "./example-card-hook";
 
 
@@ -21,7 +21,7 @@ export const ExampleCard = create(
     example,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     example: Example,
     className?: string
   } & AdditionalProps): ReactElement {

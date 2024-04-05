@@ -3,7 +3,7 @@
 import {ReactElement} from "react";
 import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {EnhancedDictionary, Example} from "/client/skeleton";
+import {DictionaryWithExecutors, Example} from "/client/skeleton";
 import {ExampleCard} from "./example-card";
 
 
@@ -15,7 +15,7 @@ export const ExampleList = create(
     pageSpec,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     examples: Array<Example>,
     pageSpec: PageSpec,
     className?: string

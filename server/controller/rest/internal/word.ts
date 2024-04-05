@@ -65,7 +65,7 @@ export class WordRestController extends InternalRestController {
     const {wordNumber} = request.body;
     const word = await dictionary.fetchOneWordByNumber(wordNumber);
     if (word) {
-      const body = await WordCreator.createDetailed(word);
+      const body = await WordCreator.createWithExamples(word);
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "noSuchWord");

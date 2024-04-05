@@ -6,7 +6,7 @@ import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, Gene
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DetailedWord, EnhancedDictionary, Word} from "/client/skeleton";
+import {WordWithExamples, DictionaryWithExecutors, Word} from "/client/skeleton";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
 import {WordCardHeading} from "./word-card-heading";
@@ -23,8 +23,8 @@ export const WordCard = create(
     word,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
-    word: Word | DetailedWord,
+    dictionary: DictionaryWithExecutors,
+    word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement {
 

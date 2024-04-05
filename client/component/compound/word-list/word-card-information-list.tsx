@@ -4,7 +4,7 @@ import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText} from "zographia";
 import {Markdown} from "/client/component/atom/markdown";
 import {create} from "/client/component/create";
-import {DetailedWord, EnhancedDictionary, Word} from "/client/skeleton";
+import {WordWithExamples, DictionaryWithExecutors, Word} from "/client/skeleton";
 import {getAwsFileUrl} from "/client/util/aws";
 
 
@@ -15,8 +15,8 @@ export const WordCardInformationList = create(
     word,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
-    word: Word | DetailedWord,
+    dictionary: DictionaryWithExecutors,
+    word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -47,7 +47,7 @@ export const WordCardInformationList = create(
 );
 
 
-function getPronunciation(dictionary: EnhancedDictionary, word: Word | DetailedWord): string | undefined {
+function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | WordWithExamples): string | undefined {
   if (word.pronunciation !== undefined) {
     if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
       return word.pronunciation;

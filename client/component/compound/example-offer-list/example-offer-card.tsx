@@ -8,7 +8,7 @@ import {EditExampleDialog} from "/client/component/compound/edit-example-dialog"
 import {ExampleOfferCardExampleItem} from "/client/component/compound/example-offer-list/example-offer-card-example-item";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {EnhancedDictionary, ExampleOffer} from "/client/skeleton";
+import {DictionaryWithExecutors, ExampleOffer} from "/client/skeleton";
 
 
 export const ExampleOfferCard = create(
@@ -21,7 +21,7 @@ export const ExampleOfferCard = create(
     onSelect,
     ...rest
   }: {
-    dictionary?: EnhancedDictionary,
+    dictionary?: DictionaryWithExecutors,
     offer: ExampleOffer,
     showExamples: boolean,
     showSelectButton: boolean,
