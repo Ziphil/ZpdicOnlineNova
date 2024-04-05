@@ -13,6 +13,7 @@ export const ExampleOfferList = create(
     dictionary,
     offers,
     pageSpec,
+    headerType = "tag",
     showPagination = true,
     showExamples = false,
     showSelectButton = false,
@@ -22,6 +23,7 @@ export const ExampleOfferList = create(
     dictionary?: DictionaryWithExecutors,
     offers?: Array<ExampleOffer>,
     pageSpec: PageSpec,
+    headerType?: "tag" | "date",
     showPagination?: boolean,
     showExamples?: boolean,
     showSelectButton?: boolean,
@@ -39,6 +41,7 @@ export const ExampleOfferList = create(
               key={example.id}
               dictionary={dictionary}
               offer={example}
+              headerType={headerType}
               showExamples={showExamples}
               showSelectButton={showSelectButton}
               onSelect={onSelect}

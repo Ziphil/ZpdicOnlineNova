@@ -4,6 +4,7 @@ import {faCheck, faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, useTrans} from "zographia";
+import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
 import {ExampleOfferCardExampleItem} from "/client/component/compound/example-offer-list/example-offer-card-example-item";
 import {create} from "/client/component/create";
@@ -16,6 +17,7 @@ export const ExampleOfferCard = create(
   function ({
     dictionary,
     offer,
+    headerType,
     showExamples,
     showSelectButton,
     onSelect,
@@ -23,6 +25,7 @@ export const ExampleOfferCard = create(
   }: {
     dictionary?: DictionaryWithExecutors,
     offer: ExampleOffer,
+    headerType: "tag" | "date",
     showExamples: boolean,
     showSelectButton: boolean,
     onSelect?: (offer: ExampleOffer) => void,
@@ -42,9 +45,15 @@ export const ExampleOfferCard = create(
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
           <div styleName="top">
-            <div styleName="date">
-              <time dateTime={zonedCreatedDate.format("YYYY-MM-DD")}>{transDate(zonedCreatedDate, "date")}</time>
-            </div>
+            {(headerType === "tag") ? (
+              <div styleName="tag">
+                <ExampleOfferTag variant="solid" offer={offer}/>
+              </div>
+            ) : (
+              <div styleName="date">
+                <time dateTime={zonedCreatedDate.format("YYYY-MM-DD")}>{transDate(zonedCreatedDate, "date")}</time>
+              </div>
+            )}
             <MultiLineText styleName="translation" is="p">
               {offer.translation}
             </MultiLineText>

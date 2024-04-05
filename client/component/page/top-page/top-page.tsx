@@ -61,7 +61,7 @@ export const TopPage = create(
                 <MultiLineText styleName="message" is="p">
                   {trans("message.offer")}
                 </MultiLineText>
-                <ExampleOfferList offers={offers} pageSpec={{size: 1}} showExamples={true} showPagination={false}/>
+                <ExampleOfferList offers={offers} pageSpec={{size: 1}} headerType="date" showExamples={true} showPagination={false}/>
                 <Link styleName="link" href="/sentence" scheme="secondary" variant="underline">
                   <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
                   {trans("subbutton.offer")}

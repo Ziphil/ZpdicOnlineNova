@@ -33,7 +33,7 @@ export const ExampleOfferListPage = create(
       <Page title={trans("title")} headerNode={<Header/>} {...rest}>
         <MainContainer>
           <h2 styleName="heading">{trans("heading")}</h2>
-          <ExampleOfferList offers={hitOffers} pageSpec={{size: 20, hitSize, page: query.page, onPageSet: handlePageSet}} showExamples={true}/>
+          <ExampleOfferList offers={hitOffers} pageSpec={{size: 20, hitSize, page: query.page, onPageSet: handlePageSet}} headerType="date" showExamples={true}/>
         </MainContainer>
       </Page>
     );
