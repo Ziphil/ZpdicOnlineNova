@@ -44,20 +44,15 @@ export namespace AdvancedWordParameter {
   } satisfies AdvancedWordParameter;
 
   export function deserialize(search: Search): AdvancedWordParameter {
-    if (search.get("kind") === "advanced") {
-      const data = rison.decode<any>(search.get("advanced")!);
-      const parameter = {kind: "advanced", elements: data.elements} satisfies AdvancedWordParameter;
-      return parameter;
-    } else {
-      const parameter = {kind: "advanced", elements: []} satisfies AdvancedWordParameter;
-      return parameter;
-    }
+    const elements = rison.decode<any>(search.get("elements") ?? "");
+    const parameter = {kind: "advanced", elements} satisfies AdvancedWordParameter;
+    return parameter;
   }
 
   export function serialize(parameter: AdvancedWordParameter): Search {
     const search = new URLSearchParams();
     search.set("kind", "advanced");
-    search.set("advanced", rison.encode(parameter));
+    search.set("elements", rison.encode(parameter.elements));
     return search;
   }
 
