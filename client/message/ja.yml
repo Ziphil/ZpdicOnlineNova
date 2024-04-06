@@ -205,9 +205,10 @@ commonAlert:
   confirm: "決定"
   cancel: "キャンセル"
 exampleOfferTag:
-  name:
+  catalog:
     zpdicDaily: "今日の例文"
-    apple: "りんごを食べたい 58 文"
+    appleAlpha: "リンゴを食べたい 58 文"
+    appleBeta: "リンゴを食べ足りない 57 文"
   number: "#{number, number}"
 wordModeSelect:
   label:

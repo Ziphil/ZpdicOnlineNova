@@ -325,7 +325,7 @@ type ServerSpecs = {
       error: never
     }
   },
-  fetchExampleOfferPositionNames: {
+  fetchExampleOfferCatalogs: {
     request: {},
     response: {
       success: Array<string>,

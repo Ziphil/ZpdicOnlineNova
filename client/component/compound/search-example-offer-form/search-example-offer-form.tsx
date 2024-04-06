@@ -23,22 +23,24 @@ export const SearchExampleOfferForm = create(
 
     const handlePositionNameSet = useCallback(function (positionName: string | null): void {
       onParameterSet?.((prevParameter) => {
-        return {...prevParameter, positionName};
+        return {...prevParameter, catalog: positionName};
       });
     }, [onParameterSet]);
 
     return (
       <form styleName="root" onSubmit={preventDefault} {...rest}>
-        <Select value={parameter.positionName} onSet={handlePositionNameSet}>
-          <SelectOption value="zpdicDaily" label={trans(":exampleOfferTag.name.zpdicDaily")}>
-            {trans(":exampleOfferTag.name.zpdicDaily")}
-          </SelectOption>
-          <SelectOption value="apple" label={trans(":exampleOfferTag.name.apple")}>
-            {trans(":exampleOfferTag.name.apple")}
-          </SelectOption>
+        <Select value={parameter.catalog} onSet={handlePositionNameSet}>
+          {CATALOGS.map((catalog) => (
+            <SelectOption key={catalog} value={catalog} label={trans(`:exampleOfferTag.catalog.${catalog}`)}>
+              {trans(`:exampleOfferTag.catalog.${catalog}`)}
+            </SelectOption>
+          ))}
         </Select>
       </form>
     );
 
   }
 );
+
+
+const CATALOGS = ["zpdicDaily", "appleAlpha", "appleBeta"];

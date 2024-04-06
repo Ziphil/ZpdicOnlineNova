@@ -4,7 +4,7 @@
 export interface NormalExampleOfferParameter {
 
   kind: "normal";
-  positionName: string | null;
+  catalog: string | null;
 
 }
 
@@ -13,11 +13,11 @@ export namespace NormalExampleOfferParameter {
 
   export const EMPTY = {
     kind: "normal",
-    positionName: null
+    catalog: null
   } satisfies NormalExampleOfferParameter;
   export const DAILY = {
     kind: "normal",
-    positionName: "zpdicDaily"
+    catalog: "zpdicDaily"
   }satisfies NormalExampleOfferParameter;
 
 }

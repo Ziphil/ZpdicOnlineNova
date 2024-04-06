@@ -205,9 +205,10 @@ commonAlert:
   confirm: "Confirm"
   cancel: "Одрєкти"
 exampleOfferTag:
-  name:
+  catalog:
     zpdicDaily: "Daily sentences"
-    apple: "Sentences to eat apples"
+    appleAlpha: "Sentences to eat apples"
+    appleBeta: "Sentences to eat more apples"
   number: "#{number, number}"
 wordModeSelect:
   label:

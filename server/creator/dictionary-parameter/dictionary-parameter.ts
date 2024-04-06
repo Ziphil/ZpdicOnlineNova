@@ -12,8 +12,7 @@ import {
 export class DictionaryParameterCreator {
 
   public static recreate(skeleton: DictionaryParameterSkeleton): DictionaryParameter {
-    const castSkeleton = skeleton;
-    const raw = new NormalDictionaryParameter(castSkeleton.text, castSkeleton.userName, castSkeleton.order);
+    const raw = new NormalDictionaryParameter(skeleton.text, skeleton.userName, skeleton.order);
     return raw;
   }
 

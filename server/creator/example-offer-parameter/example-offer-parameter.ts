@@ -12,8 +12,7 @@ import {
 export class ExampleOfferParameterCreator {
 
   public static recreate(skeleton: ExampleOfferParameterSkeleton): ExampleOfferParameter {
-    const castSkeleton = skeleton;
-    const raw = new NormalExampleOfferParameter(castSkeleton.positionName);
+    const raw = new NormalExampleOfferParameter(skeleton.catalog);
     return raw;
   }
 

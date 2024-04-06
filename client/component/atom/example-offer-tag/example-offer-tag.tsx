@@ -28,13 +28,13 @@ export const ExampleOfferTag = create(
         {(actualOffer !== undefined) ? (
           <>
             <Tag variant="solid">
-              {trans(`name.${actualOffer.position.name}`)}
+              {trans(`catalog.${actualOffer.catalog}`)}
             </Tag>
             <Tag variant="light">
-              {(actualOffer.position.name === "zpdicDaily") ? (
+              {(actualOffer.catalog === "zpdicDaily") ? (
                 transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")
               ) : (
-                trans("number", {number: actualOffer.position.index + 1})
+                trans("number", {number: actualOffer.number})
               )}
             </Tag>
           </>
