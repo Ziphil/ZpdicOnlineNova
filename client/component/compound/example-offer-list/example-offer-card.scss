@@ -15,10 +15,10 @@
 }
 
 .header {
-  margin-block-end: 2zu;
-  column-gap: 3zu;
+  margin-block-end: 3zu;
+  row-gap: 1.5zu;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 }
 
 .author {
