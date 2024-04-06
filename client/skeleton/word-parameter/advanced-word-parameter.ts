@@ -30,6 +30,7 @@ export namespace AdvancedWordParameterElement {
 
 export interface AdvancedWordParameter {
 
+  kind: "advanced";
   elements: Array<AdvancedWordParameterElement>;
 
 }
@@ -38,22 +39,24 @@ export interface AdvancedWordParameter {
 export namespace AdvancedWordParameter {
 
   export const EMPTY = {
+    kind: "advanced",
     elements: [AdvancedWordParameterElement.EMPTY]
   } satisfies AdvancedWordParameter;
 
   export function deserialize(search: Search): AdvancedWordParameter {
-    if (search.has("advanced")) {
+    if (search.get("kind") === "advanced") {
       const data = rison.decode<any>(search.get("advanced")!);
-      const parameter = {elements: data.elements};
+      const parameter = {kind: "advanced", elements: data.elements} satisfies AdvancedWordParameter;
       return parameter;
     } else {
-      const parameter = {elements: []};
+      const parameter = {kind: "advanced", elements: []} satisfies AdvancedWordParameter;
       return parameter;
     }
   }
 
   export function serialize(parameter: AdvancedWordParameter): Search {
     const search = new URLSearchParams();
+    search.set("kind", "advanced");
     search.set("advanced", rison.encode(parameter));
     return search;
   }

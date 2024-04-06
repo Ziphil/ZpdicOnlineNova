@@ -16,6 +16,7 @@ import {
 
 export interface NormalWordParameter {
 
+  kind: "normal";
   text: string;
   mode: WordMode;
   type: WordType;
@@ -28,6 +29,7 @@ export interface NormalWordParameter {
 export namespace NormalWordParameter {
 
   export const EMPTY = {
+    kind: "normal",
     text: "",
     mode: "both",
     type: "prefix",

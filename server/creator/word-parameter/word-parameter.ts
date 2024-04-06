@@ -14,7 +14,7 @@ import {
 export namespace WordParameterCreator {
 
   export function recreate(skeleton: WordParameterSkeleton): WordParameter {
-    if ("elements" in skeleton) {
+    if (skeleton.kind === "advanced") {
       const elements = skeleton.elements.map((element) => new AdvancedWordParameterElement(element.text, element.title, element.mode, element.type));
       const raw = new AdvancedWordParameter(elements);
       return raw;

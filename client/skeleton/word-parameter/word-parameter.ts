@@ -31,7 +31,7 @@ export type WordIgnoreOptions = {case: boolean};
 export namespace WordParameter {
 
   export function deserialize(search: Search): WordParameter {
-    if (search.has("advanced")) {
+    if (search.get("kind") === "advanced") {
       return AdvancedWordParameter.deserialize(search);
     } else {
       return NormalWordParameter.deserialize(search);
@@ -39,7 +39,7 @@ export namespace WordParameter {
   }
 
   export function serialize(parameter: WordParameter): Search {
-    if ("elements" in parameter) {
+    if (parameter.kind === "advanced") {
       return AdvancedWordParameter.serialize(parameter);
     } else {
       return NormalWordParameter.serialize(parameter);
@@ -47,7 +47,7 @@ export namespace WordParameter {
   }
 
   export function toNormal(parameter: WordParameter): NormalWordParameter {
-    if ("elements" in parameter) {
+    if (parameter.kind === "advanced") {
       return NormalWordParameter.EMPTY;
     } else {
       return parameter;

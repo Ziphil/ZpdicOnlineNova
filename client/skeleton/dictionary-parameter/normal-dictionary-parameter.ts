@@ -7,6 +7,7 @@ import {DictionaryOrder, DictionaryOrderDirectionUtil, DictionaryOrderModeUtil} 
 
 export interface NormalDictionaryParameter {
 
+  kind: "normal";
   text: string;
   userName: string | null;
   order: DictionaryOrder;
@@ -17,6 +18,7 @@ export interface NormalDictionaryParameter {
 export namespace NormalDictionaryParameter {
 
   export const EMPTY = {
+    kind: "normal",
     text: "",
     userName: null,
     order: {mode: "updatedDate", direction: "descending"}

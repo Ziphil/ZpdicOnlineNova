@@ -7,10 +7,12 @@ import {QueryLike} from "/server/util/query";
 
 export class NormalExampleOfferParameter extends ExampleOfferParameter {
 
+  public readonly kind: "normal";
   public positionName: string | null;
 
   public constructor(positionName: string | null) {
     super();
+    this.kind = "normal";
     this.positionName = positionName;
   }
 

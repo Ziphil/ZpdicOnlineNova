@@ -9,12 +9,14 @@ import {QueryLike} from "/server/util/query";
 
 export class NormalDictionaryParameter extends DictionaryParameter {
 
+  public readonly kind: "normal";
   public text: string;
   public userName: string | null;
   public order: DictionaryOrder;
 
   public constructor(text: string, userName: string | null, order: DictionaryOrder) {
     super();
+    this.kind = "normal";
     this.text = text;
     this.userName = userName;
     this.order = order;
