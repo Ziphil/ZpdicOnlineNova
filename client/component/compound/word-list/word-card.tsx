@@ -1,12 +1,14 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faClone, faEdit, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
+import {useHref} from "react-router";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, useTrans} from "zographia";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
+import {ShareMenu} from "/client/component/compound/share-menu";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {WordWithExamples, DictionaryWithExecutors, Word} from "/client/skeleton";
+import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
 import {WordCardHeading} from "./word-card-heading";
@@ -32,6 +34,9 @@ export const WordCard = create(
 
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
+    const shareText = word.name;
+    const shareUrl = location.origin + useHref(`/dictionary/${dictionary.number}?kind=exact&number=${word.number}`);
+
     const discardWord = useDiscardWord(dictionary, word);
 
     return (
@@ -50,22 +55,32 @@ export const WordCard = create(
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">
-            <EditWordDialog dictionary={dictionary} initialData={{type: "word", word}} trigger={(
-              <Button scheme="secondary" variant="underline">
-                <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
-                {trans("button.edit")}
+            <div styleName="footer-left">
+              <EditWordDialog dictionary={dictionary} initialData={{type: "word", word}} trigger={(
+                <Button scheme="secondary" variant="underline">
+                  <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
+                  {trans("button.edit")}
+                </Button>
+              )}/>
+              <EditWordDialog dictionary={dictionary} initialData={{type: "word", word}} forceAdd={true} trigger={(
+                <Button scheme="secondary" variant="underline">
+                  <ButtonIconbag><GeneralIcon icon={faClone}/></ButtonIconbag>
+                  {trans("button.duplicate")}
+                </Button>
+              )}/>
+              <Button scheme="red" variant="underline" onClick={discardWord}>
+                <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
+                {trans("button.discard")}
               </Button>
-            )}/>
-            <EditWordDialog dictionary={dictionary} initialData={{type: "word", word}} forceAdd={true} trigger={(
-              <Button scheme="secondary" variant="underline">
-                <ButtonIconbag><GeneralIcon icon={faClone}/></ButtonIconbag>
-                {trans("button.duplicate")}
-              </Button>
-            )}/>
-            <Button scheme="red" variant="underline" onClick={discardWord}>
-              <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
-              {trans("button.discard")}
-            </Button>
+            </div>
+            <div styleName="footer-right">
+              <ShareMenu text={shareText} url={shareUrl} trigger={(
+                <Button scheme="secondary" variant="underline">
+                  <ButtonIconbag><GeneralIcon icon={faShare}/></ButtonIconbag>
+                  {trans("button.share")}
+                </Button>
+              )}/>
+            </div>
           </CardFooter>
         )}
       </Card>

@@ -514,6 +514,12 @@ searchWordForm:
   button:
     shuffleResult: "Miksi rezultojn"
     advancedSearch: "Serĉi altnivele"
+shareMenu:
+  label:
+    twitter: "X (Twitter)"
+    misskey: "Misskey.io"
+    copy: "Kopii ligilon"
+    other: "Aliaj"
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"
@@ -536,6 +542,7 @@ wordList:
     edit: "Redakti"
     duplicate: "Duobligi"
     discard: "Forigi"
+    share: "Kunhavigi"
     create: "Krei"
     commission: "Peti kreadon"
   dialog:

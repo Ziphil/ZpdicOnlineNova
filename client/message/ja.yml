@@ -514,6 +514,12 @@ searchWordForm:
   button:
     shuffleResult: "検索結果をシャッフル"
     advancedSearch: "高度な検索"
+shareMenu:
+  label:
+    twitter: "X (旧 Twitter)"
+    misskey: "Misskey.io"
+    copy: "リンクをコピー"
+    other: "その他"
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"
@@ -536,6 +542,7 @@ wordList:
     edit: "編集"
     duplicate: "複製編集"
     discard: "削除"
+    share: "共有"
     create: "作成"
     commission: "造語依頼"
   dialog:

@@ -514,6 +514,12 @@ searchWordForm:
   button:
     shuffleResult: "Shuffle results"
     advancedSearch: "Advanced search"
+shareMenu:
+  label:
+    twitter: "X (Twitter)"
+    misskey: "Misskey.io"
+    copy: "Copy link"
+    other: "Others"
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"
@@ -536,6 +542,7 @@ wordList:
     edit: "Edit"
     duplicate: "Duplicate"
     discard: "Delete"
+    share: "Share"
     create: "Create"
     commission: "Request creation"
   dialog:
