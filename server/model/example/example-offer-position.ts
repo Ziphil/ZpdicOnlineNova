@@ -1,10 +1,9 @@
 //
 
-import {
-  prop
-} from "@typegoose/typegoose";
+import {modelOptions, prop} from "@typegoose/typegoose";
 
 
+@modelOptions({schemaOptions: {autoCreate: false, collection: "exampleOfferPositions"}})
 export class ExampleOfferPositionSchema {
 
   @prop({required: true})

@@ -3,7 +3,7 @@
 import {modelOptions, prop} from "@typegoose/typegoose";
 
 
-@modelOptions({schemaOptions: {discriminatorKey: "type"}})
+@modelOptions({schemaOptions: {autoCreate: false, collection: "dictionaryFonts"}})
 export class DictionaryFontSchema {
 
   @prop({required: true})

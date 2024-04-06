@@ -1,9 +1,10 @@
 //
 
-import {getModelForClass, prop} from "@typegoose/typegoose";
+import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 import {DictionaryFontSchema} from "/server/model/dictionary/dictionary-font";
 
 
+@modelOptions({schemaOptions: {autoCreate: false, collection: "dictionarySettings"}})
 export class DictionarySettingsSchema {
 
   @prop()

@@ -1,8 +1,9 @@
 //
 
-import {getModelForClass, prop} from "@typegoose/typegoose";
+import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 
 
+@modelOptions({schemaOptions: {autoCreate: false, collection: "informations"}})
 export class InformationSchema {
 
   @prop({required: true})
