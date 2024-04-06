@@ -6,7 +6,7 @@ import {Fragment, ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
-import {WordWithExamples, DictionaryWithExecutors, Relation, Word} from "/client/skeleton";
+import {DictionaryWithExecutors, Relation, Word, WordWithExamples} from "/client/skeleton";
 
 
 export const WordCardRelationList = create(
@@ -37,7 +37,7 @@ export const WordCardRelationList = create(
               {relations.map((relation, index) => (
                 <Fragment key={index}>
                   {(index > 0) && <span styleName="punctuation">, </span>}
-                  <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(relation.name)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
+                  <Link href={`/dictionary/${dictionary.number}?kind=exact&number=${relation.number}`} scheme="secondary" variant="underline">
                     {relation.name}
                   </Link>
                 </Fragment>
