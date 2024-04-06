@@ -1,12 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {Dispatch, ReactElement, SetStateAction, useCallback} from "react";
-import {
-  AdditionalProps,
-  Select,
-  SelectOption,
-  useTrans
-} from "zographia";
+import {AdditionalProps, Select, SelectOption, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {ExampleOfferParameter} from "/client/skeleton";
 import {preventDefault} from "/client/util/form";
