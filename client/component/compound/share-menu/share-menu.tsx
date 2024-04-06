@@ -1,7 +1,8 @@
 //
 
+import {faCopy, faEllipsis} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {Menu, MenuItem, useTrans} from "zographia";
+import {GeneralIcon, Menu, MenuItem, MenuItemIconbag, MenuSeparator, useTrans} from "zographia";
 import {create} from "/client/component/create";
 
 
@@ -52,13 +53,16 @@ export const ShareMenu = create(
             {trans(`label.${platform}`)}
           </MenuItem>
         ))}
+        <MenuSeparator/>
         {(canCopy) && (
           <MenuItem onClick={copyText}>
+            <MenuItemIconbag><GeneralIcon icon={faCopy}/></MenuItemIconbag>
             {trans("label.copy")}
           </MenuItem>
         )}
         {(canShare) && (
           <MenuItem onClick={shareText}>
+            <MenuItemIconbag><GeneralIcon icon={faEllipsis}/></MenuItemIconbag>
             {trans("label.other")}
           </MenuItem>
         )}

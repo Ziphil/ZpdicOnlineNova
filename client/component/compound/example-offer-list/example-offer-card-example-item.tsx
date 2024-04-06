@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCaretRight} from "@fortawesome/sharp-solid-svg-icons";
+import {faCaretRight} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText, aria} from "zographia";
 import {DictionaryBadge} from "/client/component/atom/dictionary-badge";
