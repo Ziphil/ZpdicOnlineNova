@@ -51,5 +51,5 @@ export const ExampleOfferTag = create(
 
 
 function isFull(offer: ExampleOffer | {id: ObjectId}): offer is ExampleOffer {
-  return "position" in offer;
+  return "catalog" in offer;
 }
