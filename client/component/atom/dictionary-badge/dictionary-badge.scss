@@ -17,13 +17,17 @@
   line-height: 1;
   border-radius: 1000px;
   background-color: var(--background-color);
-  display: inline-flex;
+  display: flex;
   align-items: center;
 }
 
 .avatar {
   margin-inline-end: var(--glob-blank-gap);
   color: var(--icon-color);
+}
+
+.name {
+  @include line-cramp(1);
 }
 
 .dummy {

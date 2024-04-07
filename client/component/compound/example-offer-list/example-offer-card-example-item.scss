@@ -15,10 +15,12 @@
 }
 
 .main {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   flex: 1 1 auto;
 }
 
 .dictionary {
   margin-block-end: 2zu;
-  align-self: flex-start;
 }

@@ -27,7 +27,7 @@ export const DictionaryBadge = createWithRef(
       <Link styleName="root" href={`/dictionary/${actualDictionary.paramName || actualDictionary.number}`} variant="unstyledSimple" {...rest}>
         <span styleName="dummy" {...aria({hidden: true})}/>
         <GeneralIcon styleName="avatar" icon={faBook}/>
-        {actualDictionary.name}
+        <span styleName="name">{actualDictionary.name}</span>
       </Link>
     ) : null;
 
