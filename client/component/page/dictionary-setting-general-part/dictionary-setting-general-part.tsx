@@ -9,9 +9,9 @@ import {ChangeDictionaryExplanationForm} from "/client/component/form/change-dic
 import {ChangeDictionaryFontForm} from "/client/component/form/change-dictionary-font-form";
 import {ChangeDictionaryNameForm} from "/client/component/form/change-dictionary-name-form";
 import {ChangeDictionaryParamNameForm} from "/client/component/form/change-dictionary-param-name-form";
-import {ChangeDictionarySecretForm} from "/client/component/form/change-dictionary-secret-form";
+import {ChangeDictionaryVisibilityForm} from "/client/component/form/change-dictionary-visibility-form";
 import {DiscardDictionaryButton} from "/client/component/form/discard-dictionary-button";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 
 
 export const DictionarySettingGeneralPart = create(
@@ -24,7 +24,7 @@ export const DictionarySettingGeneralPart = create(
 
     const {trans} = useTrans("dictionarySettingGeneralPart");
 
-    const {dictionary} = useOutletContext<{dictionary: EnhancedDictionary}>();
+    const {dictionary} = useOutletContext<{dictionary: DictionaryWithExecutors}>();
 
     return (
       <div styleName="root" {...rest}>
@@ -54,11 +54,11 @@ export const DictionarySettingGeneralPart = create(
           <ChangeDictionaryFontForm dictionary={dictionary}/>
         </section>
         <section styleName="section">
-          <h3 styleName="heading">{trans("heading.secret")}</h3>
+          <h3 styleName="heading">{trans("heading.visibility")}</h3>
           <MultiLineText styleName="description">
-            {trans("description.secret")}
+            {trans("description.visibility")}
           </MultiLineText>
-          <ChangeDictionarySecretForm dictionary={dictionary}/>
+          <ChangeDictionaryVisibilityForm dictionary={dictionary}/>
         </section>
         <section styleName="section">
           <h3 styleName="heading" {...data({danger: true})}>{trans("heading.discard")}</h3>

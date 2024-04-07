@@ -10,12 +10,15 @@ import {
 
 export namespace ExampleOfferCreator {
 
-  export function create(raw: ExampleOffer): ExampleOfferSkeleton {
+  export function skeletonize(raw: ExampleOffer): ExampleOfferSkeleton {
     const id = raw.id;
-    const position = raw.position;
+    const catalog = raw.catalog;
+    const number = raw.number;
     const translation = raw.translation;
+    const supplement = raw.supplement;
+    const author = raw.author;
     const createdDate = raw.createdDate.toISOString();
-    const skeleton = {id, position, translation, createdDate};
+    const skeleton = {id, catalog, number, translation, supplement, author, createdDate};
     return skeleton;
   }
 

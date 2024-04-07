@@ -18,7 +18,7 @@ import {
 import {EditWordForm} from "/client/component/compound/edit-word-form";
 import {EditWordFormValue, EditWordInitialData} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 
 
 export const EditWordDialog = create(
@@ -30,7 +30,7 @@ export const EditWordDialog = create(
     trigger,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     initialData: EditWordInitialData | null,
     forceAdd?: boolean,
     trigger: ReactElement,

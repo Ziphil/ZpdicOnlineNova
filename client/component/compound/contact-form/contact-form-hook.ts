@@ -5,7 +5,7 @@ import {Asserts, boolean, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {DetailedUser} from "/client/skeleton";
+import {UserWithDetail} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 import type {RequestData} from "/server/type/rest/internal";
 
@@ -31,7 +31,7 @@ export type ContactSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useContact(me: DetailedUser | null): ContactSpec {
+export function useContact(me: UserWithDetail | null): ContactSpec {
   const form = useForm<FormValue>(SCHEMA, getDefaultFormValue(me), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
@@ -49,7 +49,7 @@ export function useContact(me: DetailedUser | null): ContactSpec {
   return {form, handleSubmit};
 }
 
-function getDefaultFormValue(me: DetailedUser | null): FormValue {
+function getDefaultFormValue(me: UserWithDetail | null): FormValue {
   if (me !== null) {
     return {...DEFAULT_VALUE, name: me.screenName, email: me.email};
   } else {

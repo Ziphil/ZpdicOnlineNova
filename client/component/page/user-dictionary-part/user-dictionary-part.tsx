@@ -34,7 +34,7 @@ export const UserDictionaryPart = create(
             <DictionaryList
               dictionaries={dictionaries}
               type="user"
-              pageSpec={{size: 40}}
+              pageSpec={{size: 50}}
               showChart={true}
               showAuthority={me?.id === user.id}
               showSettingLink={me?.id === user.id}

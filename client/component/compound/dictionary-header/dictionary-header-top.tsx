@@ -11,7 +11,7 @@ import {EditExampleDialog} from "/client/component/compound/edit-example-dialog"
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {DictionaryHeaderStatusView} from "./dictionary-header-status-view";
 
 
@@ -21,7 +21,7 @@ export const DictionaryHeaderTop = create(
     dictionary,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -34,7 +34,7 @@ export const DictionaryHeaderTop = create(
       <div styleName="root">
         <div styleName="left">
           <div>
-            <MultiLineText styleName="name" is="h2" maxLineCount={2} lineHeight="narrowest">
+            <MultiLineText styleName="name" is="h2" maxLineCount={2} lineHeight="narrowFixed">
               {dictionary.name}
             </MultiLineText>
             <div styleName="user-container">

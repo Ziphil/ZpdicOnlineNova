@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-closing-bracket-location */
+//
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
@@ -11,7 +11,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {EditExampleFormDndContext} from "./edit-example-form-dnd";
 import {EditExampleSpec} from "./edit-example-form-hook";
 import {EditExampleFormWordItem} from "./edit-example-form-word-item";
@@ -24,7 +24,7 @@ export const EditExampleFormWordSection = create(
     form,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     form: EditExampleSpec["form"],
     className?: string
   } & AdditionalProps): ReactElement {

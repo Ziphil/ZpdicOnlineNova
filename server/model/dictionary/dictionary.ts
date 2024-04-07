@@ -44,6 +44,10 @@ export const DICTIONARY_STATUSES = ["ready", "saving", "error"] as const;
 export type DictionaryStatus = LiteralType<typeof DICTIONARY_STATUSES>;
 export const DictionaryStatusUtil = LiteralUtilType.create(DICTIONARY_STATUSES);
 
+export const DICTIONARY_VISIBILITIES = ["public", "unlisted", "private"] as const;
+export type DictionaryVisibility = LiteralType<typeof DICTIONARY_VISIBILITIES>;
+export const DictionaryVisibilityUtil = LiteralUtilType.create(DICTIONARY_VISIBILITIES);
+
 
 @modelOptions({schemaOptions: {collection: "dictionaries", minimize: false}})
 export class DictionarySchema extends DiscardableSchema {
@@ -66,8 +70,8 @@ export class DictionarySchema extends DiscardableSchema {
   @prop({required: true, enum: DICTIONARY_STATUSES})
   public status!: DictionaryStatus;
 
-  @prop({required: true})
-  public secret!: boolean;
+  @prop({required: true, enum: DICTIONARY_VISIBILITIES})
+  public visibility!: DictionaryVisibility;
 
   @prop()
   public explanation?: string;
@@ -88,31 +92,25 @@ export class DictionarySchema extends DiscardableSchema {
     const editUsers = new Array<User>();
     const number = await DictionaryModel.fetchNextNumber();
     const status = "ready";
-    const secret = false;
+    const visibility = "public";
     const settings = DictionarySettingsModel.createDefault();
     const externalData = {};
     const createdDate = new Date();
     const updatedDate = new Date();
-    const dictionary = new DictionaryModel({user, editUsers, number, name, status, secret, settings, externalData, createdDate, updatedDate});
+    const dictionary = new DictionaryModel({user, editUsers, number, name, status, visibility, settings, externalData, createdDate, updatedDate});
     await dictionary.save();
     return dictionary;
   }
 
   public static async fetch(order: string, range?: QueryRange): Promise<WithSize<Dictionary>> {
     const sortArg = (order === "createdDate") ? "-createdDate -updatedDate -number" : "-updatedDate -number";
-    const query = DictionaryModel.findExist().ne("secret", true).sort(sortArg);
+    const query = DictionaryModel.findExist().where("visibility", "public").sort(sortArg);
     const result = await QueryRange.restrictWithSize(query, range);
     return result;
   }
 
   public static async fetchOneByNumber(number: number): Promise<Dictionary | null> {
     const dictionary = await DictionaryModel.findOneExist().where("number", number);
-    return dictionary;
-  }
-
-  public static async fetchOneByValue(value: number | string): Promise<Dictionary | null> {
-    const key = (typeof value === "number") ? "number" : "paramName";
-    const dictionary = await DictionaryModel.findOneExist().where(key, value);
     return dictionary;
   }
 
@@ -123,21 +121,33 @@ export class DictionarySchema extends DiscardableSchema {
     return dictionary;
   }
 
-  public static async fetchByUser(user: User, authority: DictionaryAuthority, includeSecret: boolean = true): Promise<Array<Dictionary>> {
-    const ownQuery = DictionaryModel.findExist().where("user", user);
-    const editQuery = DictionaryModel.findExist().where("editUsers", user);
+  /** 指定されたユーザーが指定された権限をもっている辞書を全て返します。
+   * `me` にユーザーを指定すると、`me` が見ることのできる辞書のみを返します。
+   * `me` に `null` を指定すると、ユーザーに関わらず全員が見ることのできる辞書のみを返します (公開範囲が限定公開以下のものは除外される)。
+   * `me` に `undefined` を指定するか省略すると、公開範囲に関係なく全ての辞書を返します。*/
+  public static async fetchByUser(user: User, authority: DictionaryAuthority, me: Pick<User, "id"> | "all" | null): Promise<Array<Dictionary>> {
     const rawQuery = (() => {
       if (authority === "own") {
-        if (includeSecret) {
-          return ownQuery;
+        if (me === "all") {
+          const query = DictionaryModel.findExist().where({"user": user});
+          return query;
         } else {
-          return ownQuery.ne("secret", true);
+          const query = DictionaryModel.findExist().where({"user": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]);
+          return query;
         }
       } else {
-        if (includeSecret) {
-          return DictionaryModel.findExist().or([ownQuery.getFilter(), editQuery.getFilter()]);
+        if (me === "all") {
+          const query = DictionaryModel.findExist().or([
+            DictionaryModel.find({"user": user}).getFilter(),
+            DictionaryModel.find({"editUsers": user}).getFilter()
+          ]);
+          return query;
         } else {
-          return DictionaryModel.findExist().or([ownQuery.getFilter(), editQuery.getFilter()]).ne("secret", true);
+          const query = DictionaryModel.findExist().or([
+            DictionaryModel.find({"user": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).getFilter(),
+            DictionaryModel.find({"editUsers": user}).or([{"visibility": "public"}, {"user": me}, {"editUsers": me}]).getFilter()
+          ]);
+          return query;
         }
       }
     })();
@@ -282,8 +292,8 @@ export class DictionarySchema extends DiscardableSchema {
     return this;
   }
 
-  public async changeSecret(this: Dictionary, secret: boolean): Promise<Dictionary> {
-    this.secret = secret;
+  public async changeVisibility(this: Dictionary, visibility: DictionaryVisibility): Promise<Dictionary> {
+    this.visibility = visibility;
     await this.save();
     return this;
   }
@@ -507,11 +517,10 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   public async fetchAuthorities(this: Dictionary, user: User): Promise<Array<DictionaryAuthority>> {
-    const promises = DICTIONARY_AUTHORITIES.map((authority) => {
-      const promise = this.hasAuthority(user, authority).then((predicate) => (predicate) ? authority : null);
-      return promise;
-    });
-    const authorities = await Promise.all(promises);
+    const authorities = await Promise.all(DICTIONARY_AUTHORITIES.map(async (authority) => {
+      const predicate = await this.hasAuthority(user, authority);
+      return (predicate) ? authority : null;
+    }));
     const filteredAuthorities = authorities.filter(DictionaryAuthorityUtil.is, DictionaryAuthorityUtil);
     return filteredAuthorities;
   }

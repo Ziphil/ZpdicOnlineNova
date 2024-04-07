@@ -5,8 +5,8 @@
 
 .root {
   @include theme("light") {
-    --background-color: #{leveled-color("primary", 1)};
-    --icon-color: #{leveled-color("primary", 5)};
+    --background-color: #{leveled-color("gray", 1)};
+    --icon-color: #{leveled-color("gray", 5)};
   }
 }
 
@@ -17,13 +17,17 @@
   line-height: 1;
   border-radius: 1000px;
   background-color: var(--background-color);
-  display: inline-flex;
+  display: flex;
   align-items: center;
 }
 
 .avatar {
   margin-inline-end: var(--glob-blank-gap);
   color: var(--icon-color);
+}
+
+.name {
+  @include line-cramp(1);
 }
 
 .dummy {

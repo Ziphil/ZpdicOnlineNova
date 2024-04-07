@@ -9,6 +9,7 @@ import {SearchExampleForm} from "/client/component/compound/search-example-form"
 import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
+import {NormalExampleOfferParameter} from "/client/skeleton";
 import {calcOffsetSpec} from "/client/util/misc";
 
 
@@ -27,9 +28,9 @@ export const DictionaryExamplePart = create(
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
     const [page, setPage] = useState(0);
-    const [[hitExamples, hitSize]] = useSuspenseResponse("fetchExamples", {number: dictionary.number, ...calcOffsetSpec(page, 40)}, {keepPreviousData: true});
+    const [[hitExamples, hitSize]] = useSuspenseResponse("fetchExamples", {number: dictionary.number, ...calcOffsetSpec(page, 50)}, {keepPreviousData: true});
 
-    const [[offers] = []] = useResponse("fetchExampleOffers", (canEdit) && {size: 1, offset: 0});
+    const [[offers] = []] = useResponse("searchExampleOffers", (canEdit) && {parameter: NormalExampleOfferParameter.DAILY, size: 1, offset: 0});
     const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
     const showOffer = canEdit && offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 
@@ -49,7 +50,7 @@ export const DictionaryExamplePart = create(
                   {trans("heading.offer")}
                 </SingleLineText>
                 <Indicator styleName="indicator" scheme="secondary" animate={true}>
-                  <ExampleOfferList dictionary={dictionary} offers={offers} showPagination={false} pageSpec={{size: 1}}/>
+                  <ExampleOfferList dictionary={dictionary} offers={offers} headerType="date" showPagination={false} pageSpec={{size: 1}}/>
                 </Indicator>
               </section>
             )}
@@ -57,7 +58,7 @@ export const DictionaryExamplePart = create(
         </div>
         <div styleName="right">
           <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
-          <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 40, hitSize, page, onPageSet: handlePageSet}}/>
+          <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 50, hitSize, page, onPageSet: handlePageSet}}/>
         </div>
       </div>
     );

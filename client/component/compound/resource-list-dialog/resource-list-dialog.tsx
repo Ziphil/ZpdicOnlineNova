@@ -19,7 +19,7 @@ import {
 import {ResourceList} from "/client/component/compound/resource-list/resource-list";
 import {create} from "/client/component/create";
 import {invalidateResponses, useRequest, useResponse} from "/client/hook/request";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 
 
@@ -30,7 +30,7 @@ export const ResourceListDialog = create(
     trigger,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     trigger: ReactElement,
     className?: string
   }): ReactElement {
@@ -81,7 +81,7 @@ export const ResourceListDialog = create(
                   </CalloutBody>
                 </Callout>
               )}
-              <ResourceList dictionary={dictionary} resources={resources} pageSpec={{size: 40}} showCode={true}/>
+              <ResourceList dictionary={dictionary} resources={resources} pageSpec={{size: 50}} showCode={true}/>
             </DialogBody>
           </DialogPane>
         </Dialog>

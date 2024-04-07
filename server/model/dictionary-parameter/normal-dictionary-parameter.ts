@@ -9,12 +9,14 @@ import {QueryLike} from "/server/util/query";
 
 export class NormalDictionaryParameter extends DictionaryParameter {
 
+  public readonly kind: "normal";
   public text: string;
   public userName: string | null;
   public order: DictionaryOrder;
 
   public constructor(text: string, userName: string | null, order: DictionaryOrder) {
     super();
+    this.kind = "normal";
     this.text = text;
     this.userName = userName;
     this.order = order;
@@ -27,7 +29,7 @@ export class NormalDictionaryParameter extends DictionaryParameter {
       const promise = (async () => {
         const user = await UserModel.findOne().where("name", this.userName);
         if (user !== null) {
-          const dictionaries = await DictionaryModel.findExist().ne("secret", true).where("name", needle).where("user", user).sort(sortKey);
+          const dictionaries = await DictionaryModel.findExist().where("visibility", "public").where("name", needle).where("user", user).sort(sortKey);
           return dictionaries;
         } else {
           return [];
@@ -35,7 +37,7 @@ export class NormalDictionaryParameter extends DictionaryParameter {
       })();
       return promise;
     } else {
-      const query = DictionaryModel.findExist().ne("secret", true).where("name", needle).sort(sortKey);
+      const query = DictionaryModel.findExist().where("visibility", "public").where("name", needle).sort(sortKey);
       return query;
     }
   }

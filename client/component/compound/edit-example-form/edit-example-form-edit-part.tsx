@@ -4,7 +4,7 @@ import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {EditExampleFormBasicSection} from "./edit-example-form-basic-section";
 import {EditExampleSpec} from "./edit-example-form-hook";
 import {EditExampleFormWordSection} from "./edit-example-form-word-section";
@@ -17,7 +17,7 @@ export const EditExampleFormEditPart = create(
     formSpec,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     formSpec: EditExampleSpec,
     className?: string
   } & AdditionalProps): ReactElement {

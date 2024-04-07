@@ -10,7 +10,7 @@ import {
 
 export namespace DictionaryFontCreator {
 
-  export function create(raw: DictionaryFont): DictionaryFontSkeleton {
+  export function skeletonize(raw: DictionaryFont): DictionaryFontSkeleton {
     if (raw.type === "none") {
       const type = "none" as const;
       const skeleton = {type};

@@ -18,7 +18,7 @@ import {
 } from "zographia";
 import {create} from "/client/component/create";
 import {useDialogOpen} from "/client/hook/dialog";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {useAddCommission} from "./add-commission-dialog-hook";
 
 
@@ -29,7 +29,7 @@ export const AddCommissionDialog = create(
     trigger,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     trigger: ReactElement,
     className?: string
   }): ReactElement {

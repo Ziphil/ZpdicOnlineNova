@@ -13,10 +13,10 @@ import {
 
 export namespace ExampleCreator {
 
-  export function create(raw: Example): ExampleSkeleton {
+  export function skeletonize(raw: Example): ExampleSkeleton {
     const id = raw.id;
     const number = raw.number;
-    const words = raw.words.map(LinkedWordCreator.create);
+    const words = raw.words.map(LinkedWordCreator.skeletonize);
     const sentence = raw.sentence;
     const translation = raw.translation;
     const offer = raw.offer?.toString();
@@ -24,12 +24,12 @@ export namespace ExampleCreator {
     return skeleton;
   }
 
-  export async function createWithDictionary(raw: Example): Promise<ExampleWithDictionary> {
-    const base = create(raw);
+  export async function skeletonizeWithDictionary(raw: Example): Promise<ExampleWithDictionary> {
+    const base = skeletonize(raw);
     const [dictionary] = await Promise.all([(async () => {
       await raw.populate("dictionary");
       if (isDocument(raw.dictionary)) {
-        return DictionaryCreator.create(raw.dictionary);
+        return DictionaryCreator.skeletonize(raw.dictionary);
       } else {
         throw new Error("cannot happen");
       }

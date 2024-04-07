@@ -1,12 +1,11 @@
 /* eslint-disable react/jsx-closing-bracket-location */
-//
 
 import {ReactElement} from "react";
 import {AdditionalProps, PageSpec, useTrans} from "zographia";
 import {UserList} from "/client/component/compound/user-list";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {DictionaryAuthorizedUserFooter} from "./dictionary-authorized-user-footer";
 
 
@@ -17,7 +16,7 @@ export const DictionaryAuthorizedUserList = create(
     pageSpec,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     pageSpec: PageSpec,
     className?: string
   } & AdditionalProps): ReactElement {

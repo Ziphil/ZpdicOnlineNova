@@ -14,14 +14,41 @@
   flex-direction: column;
 }
 
+.header {
+  margin-block-end: 3zu;
+  row-gap: 1.5zu;
+  display: flex;
+  flex-direction: column;
+}
+
+.author {
+  font-size: 3zu;
+  color: var(--glob-mute-text-color);
+}
+
+.author-icon {
+  margin-inline-end: var(--glob-blank-gap);
+}
+
 .date {
   margin-block-end: 2zu;
-  font-size: 3.5zu;
+  font-size: 3zu;
   color: var(--glob-mute-text-color);
 }
 
 .translation {
-  font-size: 5zu;
+  &:not([data-large]) {
+    font-size: 4zu;
+  }
+  &[data-large] {
+    font-size: 5zu;
+  }
+}
+
+.supplement {
+  margin-block-start: 2zu;
+  font-size: 3.5zu;
+  color: var(--glob-mute-text-color);
 }
 
 .list {

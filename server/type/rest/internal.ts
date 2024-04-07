@@ -4,17 +4,19 @@ import type {
   Aggregation,
   Commission,
   CustomError,
-  DetailedDictionary,
-  DetailedUser,
-  DetailedWord,
+  UserWithDetail,
   Dictionary,
   DictionaryParameter,
   DictionarySettings,
   DictionaryStatistics,
+  DictionaryVisibility,
+  DictionaryWithAuthorities,
+  DictionaryWithUser,
   EditableExample,
   EditableWord,
   Example,
   ExampleOffer,
+  ExampleOfferParameter,
   ExampleWithDictionary,
   History,
   Invitation,
@@ -24,10 +26,10 @@ import type {
   Relation,
   Suggestion,
   User,
-  UserDictionary,
   Word,
   WordNameFrequencies,
-  WordParameter
+  WordParameter,
+  WordWithExamples
 } from "/client/skeleton";
 import type {DictionaryAuthority, DictionaryFullAuthority} from "/server/model";
 import type {WithRecaptcha, WithSize} from "/server/type/common";
@@ -71,8 +73,8 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "duplicateDictionaryParamName" | "invalidDictionaryParamName">
     }
   },
-  changeDictionarySecret: {
-    request: {number: number, secret: boolean},
+  changeDictionaryVisibility: {
+    request: {number: number, visibility: DictionaryVisibility},
     response: {
       success: Dictionary,
       error: CustomError<"noSuchDictionary">
@@ -172,14 +174,14 @@ type ServerSpecs = {
   searchDictionary: {
     request: {parameter: DictionaryParameter, offset?: number, size?: number},
     response: {
-      success: WithSize<DetailedDictionary>,
+      success: WithSize<DictionaryWithUser>,
       error: never
     }
   },
   searchWord: {
     request: {number: number, parameter: WordParameter, offset?: number, size?: number},
     response: {
-      success: {words: WithSize<DetailedWord>, suggestions: Array<Suggestion>},
+      success: {words: WithSize<WordWithExamples>, suggestions: Array<Suggestion>},
       error: CustomError<"noSuchDictionary">
     }
   },
@@ -228,7 +230,7 @@ type ServerSpecs = {
   fetchDictionary: {
     request: {identifier: number | string},
     response: {
-      success: DetailedDictionary,
+      success: DictionaryWithUser,
       error: CustomError<"noSuchDictionary" | "invalidArgument">
     }
   },
@@ -256,7 +258,7 @@ type ServerSpecs = {
   fetchUserDictionaries: {
     request: {name: string},
     response: {
-      success: Array<UserDictionary>,
+      success: Array<DictionaryWithAuthorities>,
       error: CustomError<"noSuchUser">
     }
   },
@@ -270,7 +272,7 @@ type ServerSpecs = {
   fetchWord: {
     request: {number: number, wordNumber: number},
     response: {
-      success: DetailedWord,
+      success: WordWithExamples,
       error: CustomError<"noSuchDictionary" | "noSuchWord">
     }
   },
@@ -316,10 +318,17 @@ type ServerSpecs = {
       error: CustomError<"noSuchExampleOffer">
     }
   },
-  fetchExampleOffers: {
-    request: {offset?: number, size?: number},
+  searchExampleOffers: {
+    request: {parameter: ExampleOfferParameter, offset?: number, size?: number},
     response: {
       success: WithSize<ExampleOffer>,
+      error: never
+    }
+  },
+  fetchExampleOfferCatalogs: {
+    request: {},
+    response: {
+      success: Array<string>,
       error: never
     }
   },
@@ -361,7 +370,7 @@ type ServerSpecs = {
   login: {
     request: {name: string, password: string},
     response: {
-      success: {token: string, user: DetailedUser},
+      success: {token: string, user: UserWithDetail},
       error: never
     }
   },
@@ -438,7 +447,7 @@ type ServerSpecs = {
   fetchMe: {
     request: {},
     response: {
-      success: DetailedUser,
+      success: UserWithDetail,
       error: never
     }
   },

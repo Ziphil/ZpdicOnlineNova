@@ -13,7 +13,7 @@ toast:
       La identigilo ŝanĝitas.
     changeDictionaryExplanation: |-
       La priskribo ŝanĝitas.
-    changeDictionarySecret: |-
+    changeDictionaryVisibility: |-
       La agordo ŝanĝitas.
     changeDictionarySettings:
       akrantiainSource: |-
@@ -204,6 +204,12 @@ toast:
 commonAlert:
   confirm: "Konfirmi"
   cancel: "Nuligi"
+exampleOfferTag:
+  catalog:
+    zpdicDaily: "Ĉiutagaj frazoj"
+    appleAlpha: "Frazoj por manĝi pomojn"
+    appleBeta: "Frazoj por manĝi pli da pomoj"
+  number: "#{number, number}"
 wordModeSelect:
   label:
     name: "Kapvorto"
@@ -294,10 +300,13 @@ dictionaryList:
     updatedDate: "Ĝisdatigita je"
     createdDate: "Kreita je"
   tag:
-    own: "Posedanto"
-    edit: "Redakto nur"
-    view: "Vido nur"
-    secret: "Nevidebla"
+    authority:
+      own: "Posedanto"
+      edit: "Redakto nur"
+      view: "Vido nur"
+    visibility:
+      unlisted: "Nelistigita"
+      private: "Nepublika"
   button:
     see: "Vidi vortaron"
     setting: "Agordi"
@@ -334,8 +343,6 @@ editExampleForm:
     translation: "Tradukaĵo en naturan lingvon"
   absent:
     word: "Neniuj enhavitaj vortoj specifitaj"
-  tag:
-    zpdicDaily: "Ĉiutaga frazo · {dateString}"
   button:
     add:
       word: "Aldoni enhavitan vorton"
@@ -393,8 +400,6 @@ editWordForm:
 exampleList:
   empty: "Neniuj ekzemplaj frazoj estas kreitaj"
   noWord: "Neniuj vortoj specifitaj"
-  tag:
-    zpdicDaily: "Ĉiutaga frazo · {dateString}"
   button:
     edit: "Redakti"
     discard: "Forigi"
@@ -432,7 +437,7 @@ footer:
 header:
   link:
     dictionary: "Vortaroj"
-    exampleOffer: "Ĉiutagaj frazoj"
+    exampleOffer: "Frazoj"
   userPage: "Uzanta paĝo"
 invitationList:
   empty: "Neniuj sciigoj"
@@ -510,6 +515,12 @@ searchWordForm:
   button:
     shuffleResult: "Miksi rezultojn"
     advancedSearch: "Serĉi altnivele"
+shareMenu:
+  label:
+    twitter: "X (Twitter)"
+    misskey: "Misskey.io"
+    copy: "Kopii ligilon"
+    other: "Aliaj"
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"
@@ -532,6 +543,7 @@ wordList:
     edit: "Redakti"
     duplicate: "Duobligi"
     discard: "Forigi"
+    share: "Kunhavigi"
     create: "Krei"
     commission: "Peti kreadon"
   dialog:
@@ -685,10 +697,11 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Ebligita"
       false: "Malebligita"
-changeDictionarySecretForm:
+changeDictionaryVisibilityForm:
   label:
-    false: "Videbla"
-    true: "Nevidebla"
+    public: "Publika"
+    unlisted: "Nelistigita"
+    private: "Nepublika"
 changeDictionarySourceForm:
   button:
     try: "Provi"
@@ -765,8 +778,8 @@ contactPage:
     Se vi volas sendi vian demandon anonime, bonvolu elsaluti kaj poste lasi malplena la kampon “Nomo”.
     Bonvolu noti, ke ni eble ne povos respondi al via anonima peto se ĝi koncernas ion kiu bezonas la aŭtoritaton de uzanto, kiel agordado aŭ redaktado de vortaro.
 exampleOfferListPage:
-  title: "Ĉiutagaj frazoj"
-  heading: "Ĉiutagaj frazoj"
+  title: "Frazoj"
+  heading: "Frazoj"
 dictionaryExamplePart:
   heading:
     offer: "Hodiaŭa frazo"
@@ -838,7 +851,7 @@ dictionarySettingGeneralPart:
     paramName: "Identigilo por retadreso"
     explanation: "Priskribo"
     font: "Tiparo por kapvortoj"
-    secret: "Videbleco en listoj de vortaroj"
+    visibility: "Videbleco"
     discard: "Forigi"
   description:
     paramName: >-
@@ -849,8 +862,8 @@ dictionarySettingGeneralPart:
     font: >-
       Vi povas ŝanĝi la tiparon por kapvortoj.
       Elektu “Uzi lokan tiparon” por uzi tiparon instalitan en la medio de la vizitanto, aŭ "Alŝuti propran tiparon" por uzi vian propran alŝutitan tiparon.
-    secret: >-
-      Se vi agordos tiun al “Nevidebla”, la vortaro ne aperos en listoj de vortaroj.
+    visibility: >-
+      Se vi agordos tiun al “Nelistigita”, la vortaro ne aperos en listoj de vortaroj.
       Tamen ĉiu, kiu konas la retadreso de la paĝo de la vortaro, povas ankoraŭ rekte aliri ĝin.
   callout:
     discard: >-
@@ -899,7 +912,7 @@ topPage:
     dictionary: "{count, plural, one {Vortaro} other {Vortaroj}}"
     word: "{count, plural, one {Vorto} other {Vortoj}}"
     example: "{count, plural, one {Frazo} other {Frazoj}}"
-  catch: "Desegnu{wbr} vian propran universon{wbr} per conlingvo"
+  catch: "Desegnu{wbr} Vian Propran Universon{wbr} Per Conlingvo"
   heading:
     gift: "Mi bezonas vian subtenon"
     offer: "Hodiaŭa frazo"

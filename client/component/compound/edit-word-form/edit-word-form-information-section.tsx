@@ -12,7 +12,7 @@ import {
 } from "zographia";
 import {ResourceListDialog} from "/client/component/compound/resource-list-dialog";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordSpec} from "./edit-word-form-hook";
 import {EditWordFormInformationItem} from "./edit-word-form-information-item";
@@ -25,7 +25,7 @@ export const EditWordFormInformationSection = create(
     form,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     form: EditWordSpec["form"],
     className?: string
   } & AdditionalProps): ReactElement {

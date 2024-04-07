@@ -32,13 +32,17 @@ export function useSearchWordAdvanced(): SearchWordAdvancedSpec {
   const form = useForm<FormValue>(DEFAULT_VALUE, {});
   const handleSubmit = useCallback(async function (event: BaseSyntheticEvent, onSubmit?: (parameter: AdvancedWordParameter) => AsyncOrSync<void>): Promise<void> {
     await form.handleSubmit(async (value) => {
-      const parameter = getQuery(value);
+      const parameter = getParameter(value);
       await onSubmit?.(parameter);
     })(event);
   }, [form]);
   return {form, handleSubmit};
 }
 
-function getQuery(value: FormValue): AdvancedWordParameter {
-  return value;
+function getParameter(value: FormValue): AdvancedWordParameter {
+  const query = {
+    kind: "advanced",
+    ...value
+  } satisfies AdvancedWordParameter;
+  return query;
 }

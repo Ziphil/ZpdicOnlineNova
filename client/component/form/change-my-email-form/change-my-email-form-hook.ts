@@ -5,7 +5,7 @@ import {Asserts, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {DetailedUser} from "/client/skeleton";
+import {UserWithDetail} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 
 
@@ -19,7 +19,7 @@ export type ChangeMyEmailSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useChangeMyEmail(me: DetailedUser): ChangeMyEmailSpec {
+export function useChangeMyEmail(me: UserWithDetail): ChangeMyEmailSpec {
   const form = useForm<FormValue>(SCHEMA, {email: me.email}, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();

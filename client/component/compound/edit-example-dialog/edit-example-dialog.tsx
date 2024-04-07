@@ -17,7 +17,7 @@ import {
 } from "zographia";
 import {EditExampleForm, EditExampleFormValue, EditExampleInitialData} from "/client/component/compound/edit-example-form";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 
 
 export const EditExampleDialog = create(
@@ -28,7 +28,7 @@ export const EditExampleDialog = create(
     trigger,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     initialData: EditExampleInitialData | null,
     trigger: ReactElement,
     className?: string

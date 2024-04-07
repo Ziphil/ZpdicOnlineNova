@@ -3,7 +3,7 @@
 import {ReactElement} from "react";
 import {AdditionalProps, List, ListBody, ListLoadingView, ListPagination, PageSpec, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {EnhancedDictionary, ExampleOffer} from "/client/skeleton";
+import {DictionaryWithExecutors, ExampleOffer} from "/client/skeleton";
 import {ExampleOfferCard} from "./example-offer-card";
 
 
@@ -13,16 +13,20 @@ export const ExampleOfferList = create(
     dictionary,
     offers,
     pageSpec,
+    headerType = "tag",
     showPagination = true,
+    showSupplement = false,
     showExamples = false,
     showSelectButton = false,
     onSelect,
     ...rest
   }: {
-    dictionary?: EnhancedDictionary,
+    dictionary?: DictionaryWithExecutors,
     offers?: Array<ExampleOffer>,
     pageSpec: PageSpec,
+    headerType?: "tag" | "date",
     showPagination?: boolean,
+    showSupplement?: boolean,
     showExamples?: boolean,
     showSelectButton?: boolean,
     onSelect?: (offer: ExampleOffer) => void,
@@ -39,6 +43,8 @@ export const ExampleOfferList = create(
               key={example.id}
               dictionary={dictionary}
               offer={example}
+              headerType={headerType}
+              showSupplement={showSupplement}
               showExamples={showExamples}
               showSelectButton={showSelectButton}
               onSelect={onSelect}

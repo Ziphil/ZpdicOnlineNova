@@ -4,15 +4,15 @@ import axios from "axios";
 import {useCallback} from "react";
 import {atom, useRecoilValue, useSetRecoilState} from "recoil";
 import {invalidateAllResponses, useRequest} from "/client/hook/request";
-import {DetailedUser} from "/client/skeleton";
+import {UserWithDetail} from "/client/skeleton";
 import {setAnalyticsProperties} from "/client/util/gtag";
 import {AxiosResponseSpec, RequestConfig, SERVER_PATH_PREFIX} from "/client/util/request";
 import type {RequestData, ResponseData} from "/server/type/rest/internal";
 
 
-export const meAtom = atom<DetailedUser | null>({key: "me", default: fetchMe()});
+export const meAtom = atom<UserWithDetail | null>({key: "me", default: fetchMe()});
 
-export function useMe(): DetailedUser | null {
+export function useMe(): UserWithDetail | null {
   const me = useRecoilValue(meAtom);
   return me;
 }
@@ -54,7 +54,7 @@ export function useLogoutRequest(): (config?: RequestConfig) => Promise<AxiosRes
   return logout;
 }
 
-async function fetchMe(): Promise<DetailedUser | null> {
+async function fetchMe(): Promise<UserWithDetail | null> {
   const url = SERVER_PATH_PREFIX + "/fetchMe";
   const response = await axios.post<ResponseData<"fetchMe">>(url, {}, {validateStatus: () => true});
   if (response.status === 200 && !("error" in response.data)) {

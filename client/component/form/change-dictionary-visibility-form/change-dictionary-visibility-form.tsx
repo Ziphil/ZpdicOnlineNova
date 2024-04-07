@@ -5,11 +5,11 @@ import {ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, CheckableContainer, CheckableLabel, ControlContainer, GeneralIcon, Radio, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {Dictionary} from "/client/skeleton";
-import {useChangeDictionarySecret} from "./change-dictionary-secret-form-hook";
+import {useChangeDictionaryVisibility} from "./change-dictionary-visibility-form-hook";
 
 
-export const ChangeDictionarySecretForm = create(
-  require("../common.scss"), "ChangeDictionarySecretForm",
+export const ChangeDictionaryVisibilityForm = create(
+  require("../common.scss"), "ChangeDictionaryVisibilityForm",
   function ({
     dictionary,
     ...rest
@@ -18,9 +18,9 @@ export const ChangeDictionarySecretForm = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("changeDictionarySecretForm");
+    const {trans} = useTrans("changeDictionaryVisibilityForm");
 
-    const {form, handleSubmit} = useChangeDictionarySecret(dictionary);
+    const {form, handleSubmit} = useChangeDictionaryVisibility(dictionary);
     const {register} = form;
 
     return (
@@ -28,12 +28,12 @@ export const ChangeDictionarySecretForm = create(
         <ControlContainer>
           <div styleName="radio-group">
             <CheckableContainer>
-              <Radio value="false" {...register("secret")}/>
-              <CheckableLabel>{trans("label.false")}</CheckableLabel>
+              <Radio value="public" {...register("visibility")}/>
+              <CheckableLabel>{trans("label.public")}</CheckableLabel>
             </CheckableContainer>
             <CheckableContainer>
-              <Radio value="true" {...register("secret")}/>
-              <CheckableLabel>{trans("label.true")}</CheckableLabel>
+              <Radio value="unlisted" {...register("visibility")}/>
+              <CheckableLabel>{trans("label.unlisted")}</CheckableLabel>
             </CheckableContainer>
           </div>
         </ControlContainer>

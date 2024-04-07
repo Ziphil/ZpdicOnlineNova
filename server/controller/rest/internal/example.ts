@@ -3,7 +3,7 @@
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe, parseDictionary} from "/server/controller/rest/internal/middleware";
-import {ExampleCreator, ExampleOfferCreator} from "/server/creator";
+import {ExampleCreator, ExampleOfferCreator, ExampleOfferParameterCreator} from "/server/creator";
 import {ExampleModel, ExampleOfferModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 import {QueryRange} from "/server/util/query";
@@ -20,7 +20,7 @@ export class ExampleRestController extends InternalRestController {
     const {example} = request.body;
     try {
       const resultExample = await dictionary.editExample(example);
-      const body = ExampleCreator.create(resultExample);
+      const body = ExampleCreator.skeletonize(resultExample);
       InternalRestController.respond(response, body);
     } catch (error) {
       InternalRestController.respondByCustomError(response, ["dictionarySaving"], error);
@@ -34,7 +34,7 @@ export class ExampleRestController extends InternalRestController {
     const {exampleNumber} = request.body;
     try {
       const resultExample = await dictionary.discardExample(exampleNumber);
-      const body = ExampleCreator.create(resultExample);
+      const body = ExampleCreator.skeletonize(resultExample);
       InternalRestController.respond(response, body);
     } catch (error) {
       InternalRestController.respondByCustomError(response, ["noSuchExample", "dictionarySaving"], error);
@@ -48,7 +48,7 @@ export class ExampleRestController extends InternalRestController {
     const {exampleNumber} = request.body;
     const example = await dictionary.fetchOneExampleByNumber(exampleNumber);
     if (example) {
-      const body = ExampleCreator.create(example);
+      const body = ExampleCreator.skeletonize(example);
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "noSuchExample");
@@ -62,7 +62,7 @@ export class ExampleRestController extends InternalRestController {
     const {offset, size} = request.body;
     const range = new QueryRange(offset, size);
     const hitResult = await ExampleModel.fetchByDictionary(dictionary, range);
-    const body = mapWithSize(hitResult, ExampleCreator.create);
+    const body = mapWithSize(hitResult, ExampleCreator.skeletonize);
     InternalRestController.respond(response, body);
   }
 
@@ -73,7 +73,7 @@ export class ExampleRestController extends InternalRestController {
     const {offerId, offset, size} = request.body;
     const range = new QueryRange(offset, size);
     const hitResult = await ExampleModel.fetchByOffer(dictionary, offerId, range);
-    const body = await mapWithSizeAsync(hitResult, ExampleCreator.createWithDictionary);
+    const body = await mapWithSizeAsync(hitResult, ExampleCreator.skeletonizeWithDictionary);
     InternalRestController.respond(response, body);
   }
 
@@ -82,20 +82,29 @@ export class ExampleRestController extends InternalRestController {
     const {id} = request.body;
     const offer = await ExampleOfferModel.findById(id);
     if (offer) {
-      const body = ExampleOfferCreator.create(offer);
+      const body = ExampleOfferCreator.skeletonize(offer);
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "noSuchExampleOffer");
     }
   }
 
-  @post("/fetchExampleOffers")
-  public async [Symbol()](request: Request<"fetchExampleOffers">, response: Response<"fetchExampleOffers">): Promise<void> {
+  @post("/searchExampleOffers")
+  public async [Symbol()](request: Request<"searchExampleOffers">, response: Response<"searchExampleOffers">): Promise<void> {
     const {offset, size} = request.body;
+    const parameter = ExampleOfferParameterCreator.enflesh(request.body.parameter);
     const range = new QueryRange(offset, size);
-    const hitResult = await ExampleOfferModel.fetch(range);
-    const body = mapWithSize(hitResult, ExampleOfferCreator.create);
+    const hitResult = await ExampleOfferModel.search(parameter, range);
+    const body = mapWithSize(hitResult, ExampleOfferCreator.skeletonize);
     InternalRestController.respond(response, body);
   }
+
+  @post("/fetchExampleOfferCatalogs")
+  public async [Symbol()](request: Request<"fetchExampleOfferCatalogs">, response: Response<"fetchExampleOfferCatalogs">): Promise<void> {
+    const catalogs = await ExampleOfferModel.fetchCatalogs();
+    const body = catalogs;
+    InternalRestController.respond(response, body);
+  }
+
 
 }

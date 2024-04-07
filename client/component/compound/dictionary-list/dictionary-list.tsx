@@ -3,7 +3,7 @@
 import {ReactElement} from "react";
 import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {DetailedDictionary, UserDictionary} from "/client/skeleton";
+import {DictionaryWithUser, DictionaryWithAuthorities} from "/client/skeleton";
 import {DictionaryCard} from "./dictionary-card";
 
 
@@ -19,7 +19,7 @@ export const DictionaryList = create(
     showSettingLink = false,
     ...rest
   }: {
-    dictionaries: Array<DetailedDictionary | UserDictionary>,
+    dictionaries: Array<DictionaryWithUser | DictionaryWithAuthorities>,
     type: "user" | "all",
     pageSpec: PageSpec,
     showUser?: boolean,

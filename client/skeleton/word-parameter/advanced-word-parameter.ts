@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+//
 
 import rison from "rison";
 import {Search} from "/client/hook/search";
@@ -30,6 +30,7 @@ export namespace AdvancedWordParameterElement {
 
 export interface AdvancedWordParameter {
 
+  kind: "advanced";
   elements: Array<AdvancedWordParameterElement>;
 
 }
@@ -38,23 +39,20 @@ export interface AdvancedWordParameter {
 export namespace AdvancedWordParameter {
 
   export const EMPTY = {
+    kind: "advanced",
     elements: [AdvancedWordParameterElement.EMPTY]
   } satisfies AdvancedWordParameter;
 
   export function deserialize(search: Search): AdvancedWordParameter {
-    if (search.has("advanced")) {
-      const data = rison.decode<any>(search.get("advanced")!);
-      const parameter = {elements: data.elements};
-      return parameter;
-    } else {
-      const parameter = {elements: []};
-      return parameter;
-    }
+    const elements = rison.decode<any>(search.get("elements") ?? "");
+    const parameter = {kind: "advanced", elements} satisfies AdvancedWordParameter;
+    return parameter;
   }
 
   export function serialize(parameter: AdvancedWordParameter): Search {
     const search = new URLSearchParams();
-    search.set("advanced", rison.encode(parameter));
+    search.set("kind", "advanced");
+    search.set("elements", rison.encode(parameter.elements));
     return search;
   }
 

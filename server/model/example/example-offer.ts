@@ -7,7 +7,7 @@ import {
   prop
 } from "@typegoose/typegoose";
 import fs from "fs/promises";
-import {ExampleOfferPositionSchema} from "/server/model/example/example-offer-position";
+import {ExampleOfferParameter} from "/server/model/example-offer-parameter/example-offer-parameter";
 import {WithSize} from "/server/type/common";
 import {askClaude} from "/server/util/claude";
 import {QueryRange} from "/server/util/query";
@@ -17,16 +17,27 @@ import {QueryRange} from "/server/util/query";
 export class ExampleOfferSchema {
 
   @prop({required: true})
-  public position!: ExampleOfferPositionSchema;
+  public catalog!: string;
+
+  @prop({required: true})
+  public number!: number;
 
   @prop({required: true})
   public translation!: string;
+
+  @prop()
+  public supplement?: string;
+
+  @prop({required: true})
+  public author!: string;
 
   @prop({required: true})
   public createdDate!: Date;
 
   public static async addDaily(): Promise<[string, ExampleOffer]> {
-    const position = {name: "zpdicDaily", index: await this.fetchDailyNextIndex()};
+    const catalog = "zpdicDaily";
+    const number = await this.fetchDailyNextNumber();
+    const author = "ZpDIC Online";
     const createdDate = new Date();
     const keywords = await fs.readFile("./dist/static/keyword.txt", "utf-8").then((content) => content.split(/\s*\n\s*/));
     const keyword = keywords[Math.floor(Math.random() * keywords.length)];
@@ -45,23 +56,28 @@ export class ExampleOfferSchema {
       利用者はあなたが生成した例文を外国語に翻訳することで外国語の勉強をするので、外国語への翻訳がしやすい文を生成してください。
     `);
     const translation = answer.match(/<sentence>(.*?)<\/sentence>/)?.[1] ?? "";
-    const offer = new ExampleOfferModel({position, translation, createdDate});
+    const offer = new ExampleOfferModel({catalog, number, translation, author, createdDate});
     await offer.save();
     return [keyword, offer];
   }
 
-  public static async fetch(range?: QueryRange): Promise<WithSize<ExampleOffer>> {
-    const query = ExampleOfferModel.find().sort("-createdDate");
-    const result = await QueryRange.restrictWithSize(query, range);
-    return result;
+  public static async search(parameter: ExampleOfferParameter, range?: QueryRange): Promise<WithSize<ExampleOffer>> {
+    const query = parameter.createQuery();
+    const offers = await QueryRange.restrictWithSize(query, range);
+    return offers;
   }
 
-  private static async fetchDailyNextIndex(): Promise<number> {
-    const words = await ExampleOfferModel.find().where("position.name", "zpdicDaily").select("position.index").sort("-position.index").limit(1);
+  public static async fetchCatalogs(): Promise<Array<string>> {
+    const names = await ExampleOfferModel.distinct("catalog");
+    return names;
+  }
+
+  private static async fetchDailyNextNumber(): Promise<number> {
+    const words = await ExampleOfferModel.find().where("catalog", "zpdicDaily").select("number").sort("-number").limit(1);
     if (words.length > 0) {
-      return words[0].position.index + 1;
+      return words[0].number + 1;
     } else {
-      return 0;
+      return 1;
     }
   }
 

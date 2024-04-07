@@ -10,6 +10,7 @@ import {Random} from "/server/util/random";
 
 export class NormalWordParameter extends WordParameter {
 
+  public readonly kind: "normal";
   public text: string;
   public mode: WordMode;
   public type: WordType;
@@ -18,6 +19,7 @@ export class NormalWordParameter extends WordParameter {
 
   public constructor(text: string, mode: WordMode, type: WordType, order: WordOrder, options: NormalWordParameterOptions) {
     super();
+    this.kind = "normal";
     this.text = text;
     this.mode = mode;
     this.type = type;

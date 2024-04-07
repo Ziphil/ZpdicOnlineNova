@@ -6,7 +6,7 @@ import {ReactElement} from "react";
 import {AdditionalProps, Card, CardBody, MultiLineText, aria, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
-import {EnhancedDictionary, Suggestion} from "/client/skeleton";
+import {DictionaryWithExecutors, Suggestion} from "/client/skeleton";
 
 
 export const SuggestionCard = create(
@@ -16,7 +16,7 @@ export const SuggestionCard = create(
     suggestions,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     suggestions: Array<Suggestion>,
     className?: string
   } & AdditionalProps): ReactElement | null {

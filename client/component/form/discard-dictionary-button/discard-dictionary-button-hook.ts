@@ -7,11 +7,11 @@ import {useTrans} from "zographia";
 import {useCommonAlert} from "/client/component/atom/common-alert";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {DetailedDictionary} from "/client/skeleton";
+import {DictionaryWithUser} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 
 
-export function useDiscardDictionary(dictionary: DetailedDictionary): () => void {
+export function useDiscardDictionary(dictionary: DictionaryWithUser): () => void {
   const {trans} = useTrans("discardDictionaryButton");
   const request = useRequest();
   const openAlert = useCommonAlert();

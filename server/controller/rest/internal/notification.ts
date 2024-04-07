@@ -18,7 +18,7 @@ export class NotificationRestController extends InternalRestController {
   public async [Symbol()](request: Request<"addNotification">, response: Response<"addNotification">): Promise<void> {
     const {type, title, text} = request.body;
     const notification = await NotificationModel.add(type, title, text);
-    const body = NotificationCreator.create(notification);
+    const body = NotificationCreator.skeletonize(notification);
     InternalRestController.respond(response, body);
   }
 
@@ -27,7 +27,7 @@ export class NotificationRestController extends InternalRestController {
     const {offset, size} = request.body;
     const range = new QueryRange(offset, size);
     const hitResult = await NotificationModel.fetch(range);
-    const body = mapWithSize(hitResult, NotificationCreator.create);
+    const body = mapWithSize(hitResult, NotificationCreator.skeletonize);
     InternalRestController.respond(response, body);
   }
 

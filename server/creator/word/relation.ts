@@ -10,7 +10,7 @@ import {
 
 export namespace RelationCreator {
 
-  export function create(raw: Relation): RelationSkeleton {
+  export function skeletonize(raw: Relation): RelationSkeleton {
     const titles = raw.titles;
     const number = raw.number;
     const name = raw.name;

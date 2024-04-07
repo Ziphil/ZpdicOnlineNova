@@ -7,7 +7,7 @@ import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 import {DownloadDictionaryButton} from "/client/component/form/download-dictionary-button";
 import {UploadDictionaryButton} from "/client/component/form/upload-dictionary-button";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 
 
 export const DictionarySettingFilePart = create(
@@ -20,7 +20,7 @@ export const DictionarySettingFilePart = create(
 
     const {trans, transNode} = useTrans("dictionarySettingFilePart");
 
-    const {dictionary} = useOutletContext<{dictionary: EnhancedDictionary}>();
+    const {dictionary} = useOutletContext<{dictionary: DictionaryWithExecutors}>();
 
     return (
       <div styleName="root" {...rest}>

@@ -8,10 +8,12 @@ import {WORD_MODES, WordMode, WordParameter, WordType} from "/server/model/word-
 
 export class AdvancedWordParameter extends WordParameter {
 
+  public readonly kind: "advanced";
   public elements: Array<AdvancedWordParameterElement>;
 
   public constructor(elements: Array<AdvancedWordParameterElement>) {
     super();
+    this.kind = "advanced";
     this.elements = elements;
   }
 

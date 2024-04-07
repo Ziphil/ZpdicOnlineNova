@@ -10,7 +10,7 @@ import {
 
 export namespace CommissionCreator {
 
-  export function create(raw: Commission): CommissionSkeleton {
+  export function skeletonize(raw: Commission): CommissionSkeleton {
     const id = raw.id;
     const name = raw.name;
     const comment = raw.comment;

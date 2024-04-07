@@ -3,7 +3,7 @@
 import {ReactElement} from "react";
 import {AdditionalProps, List, ListBody, ListEmptyView, ListLoadingView, ListPagination, PageSpec, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {Commission, EnhancedDictionary} from "/client/skeleton";
+import {Commission, DictionaryWithExecutors} from "/client/skeleton";
 import {CommissionCard} from "./commission-card";
 
 
@@ -15,7 +15,7 @@ export const CommissionList = create(
     pageSpec,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     commissions: Array<Commission>,
     pageSpec: PageSpec,
     className?: string

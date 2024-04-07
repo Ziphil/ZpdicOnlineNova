@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-closing-bracket-location */
-//
 
 import {faCheck, faPlay} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";

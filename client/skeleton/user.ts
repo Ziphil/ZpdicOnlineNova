@@ -12,7 +12,7 @@ export interface User {
 }
 
 
-export interface DetailedUser extends User {
+export interface UserWithDetail extends User {
 
   email: string;
   activated: boolean;

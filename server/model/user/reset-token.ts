@@ -1,10 +1,11 @@
 //
 
-import {getModelForClass, prop} from "@typegoose/typegoose";
+import {getModelForClass, modelOptions, prop} from "@typegoose/typegoose";
 import {compareSync, hashSync} from "bcrypt";
 import {createRandomString} from "/server/util/misc";
 
 
+@modelOptions({schemaOptions: {autoCreate: false, collection: "resetTokens"}})
 export class ResetTokenSchema {
 
   @prop({required: true})

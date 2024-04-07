@@ -6,7 +6,7 @@ import {Fragment, ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
-import {DetailedWord, EnhancedDictionary, Relation, Word} from "/client/skeleton";
+import {DictionaryWithExecutors, Relation, Word, WordWithExamples} from "/client/skeleton";
 
 
 export const WordCardRelationList = create(
@@ -16,8 +16,8 @@ export const WordCardRelationList = create(
     word,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
-    word: Word | DetailedWord,
+    dictionary: DictionaryWithExecutors,
+    word: Word | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement | null {
 
@@ -37,7 +37,7 @@ export const WordCardRelationList = create(
               {relations.map((relation, index) => (
                 <Fragment key={index}>
                   {(index > 0) && <span styleName="punctuation">, </span>}
-                  <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(relation.name)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
+                  <Link href={`/dictionary/${dictionary.number}?kind=exact&number=${relation.number}`} scheme="secondary" variant="underline">
                     {relation.name}
                   </Link>
                 </Fragment>
@@ -52,7 +52,7 @@ export const WordCardRelationList = create(
 );
 
 
-function getGroupedRelations(word: Word | DetailedWord): Array<[string, [Array<string>, Array<Relation>]]> {
+function getGroupedRelations(word: Word | WordWithExamples): Array<[string, [Array<string>, Array<Relation>]]> {
   const groupedRelations = new Map<string, [Array<string>, Array<Relation>]>();
   for (const relation of word.relations) {
     const titles = relation.titles;

@@ -13,7 +13,7 @@ toast:
       The identifier has been changed.
     changeDictionaryExplanation: |-
       The description has been changed.
-    changeDictionarySecret: |-
+    changeDictionaryVisibility: |-
       The setting has been changed.
     changeDictionarySettings:
       akrantiainSource: |-
@@ -204,6 +204,12 @@ toast:
 commonAlert:
   confirm: "Confirm"
   cancel: "Одрєкти"
+exampleOfferTag:
+  catalog:
+    zpdicDaily: "Daily sentences"
+    appleAlpha: "Sentences to eat apples"
+    appleBeta: "Sentences to eat more apples"
+  number: "#{number, number}"
 wordModeSelect:
   label:
     name: "Слово"
@@ -294,10 +300,13 @@ dictionaryList:
     updatedDate: "Актуализованы"
     createdDate: "Созданы"
   tag:
-    own: "Властник"
-    edit: "Edit only"
-    view: "View only"
-    secret: "Hidden"
+    authority:
+      own: "Властник"
+      edit: "Edit only"
+      view: "View only"
+    visibility:
+      unlisted: "Unlisted"
+      private: "Private"
   button:
     see: "Зрєти словник"
     setting: "Настрајати"
@@ -334,8 +343,6 @@ editExampleForm:
     translation: "Translation into natural language"
   absent:
     word: "No included words specified"
-  tag:
-    zpdicDaily: "Daily sentence · {dateString}"
   button:
     add:
       word: "Add included words"
@@ -393,8 +400,6 @@ editWordForm:
 exampleList:
   empty: "No example sentences are created"
   noWord: "No words specified"
-  tag:
-    zpdicDaily: "Daily sentence · {dateString}"
   button:
     edit: "Измєнити"
     discard: "Одстранити"
@@ -432,7 +437,7 @@ footer:
 header:
   link:
     dictionary: "Словникы"
-    exampleOffer: "Daily sentences"
+    exampleOffer: "Sentences"
   userPage: "Користничска страница"
 invitationList:
   empty: "No notifications"
@@ -510,6 +515,12 @@ searchWordForm:
   button:
     shuffleResult: "Смєшати резултаты"
     advancedSearch: "Advanced search"
+shareMenu:
+  label:
+    twitter: "X (Twitter)"
+    misskey: "Misskey.io"
+    copy: "Copy link"
+    other: "Others"
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"
@@ -532,6 +543,7 @@ wordList:
     edit: "Измєнити"
     duplicate: "Duplicate"
     discard: "Одстранити"
+    share: "Share"
     create: "Create"
     commission: "Request creation"
   dialog:
@@ -680,15 +692,16 @@ changeDictionaryFontForm:
 changeDictionarySettingsForm:
   label:
     enableMarkdown:
-      true: "Enable"
-      false: "Disable"
+      true: "Enabled"
+      false: "Disabled"
     enableDuplicateName:
-      true: "Enable"
-      false: "Disable"
-changeDictionarySecretForm:
+      true: "Enabled"
+      false: "Disabled"
+changeDictionaryVisibilityForm:
   label:
-    false: "Show"
-    true: "Hide"
+    public: "Public"
+    unlisted: "Unlisted"
+    private: "Private"
 changeDictionarySourceForm:
   button:
     try: "Try"
@@ -765,8 +778,8 @@ contactPage:
     If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
     Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
 exampleOfferListPage:
-  title: "Daily sentences"
-  heading: "Daily sentences"
+  title: "Sentences"
+  heading: "Sentences"
 dictionaryExamplePart:
   heading:
     offer: "Today's sentence"
@@ -838,7 +851,7 @@ dictionarySettingGeneralPart:
     paramName: "Идентификатор дља URL-адресы"
     explanation: "Опис"
     font: "Font for headwords"
-    secret: "Видимост в списках словников"
+    visibility: "Видимост"
     discard: "Delete"
   description:
     paramName: >-
@@ -849,8 +862,8 @@ dictionarySettingGeneralPart:
     font: >-
       You can change the font for headwords.
       Select “Use local font” to use a font installed in the visiter's environment, or “Upload custom font” to use your own uploaded font.
-    secret: >-
-      If you set this to “Hide”, this dictionary will not appear in dictionary lists.
+    visibility: >-
+      If you set this to “Unlisted”, this dictionary will not appear in dictionary lists.
       However, anyone who knows the URL of the dictionary page can still access it directly.
   callout:
     discard: >-
@@ -899,7 +912,7 @@ topPage:
     dictionary: "{count, plural, one {Словник} few {Словникы} other {Словников}}"
     word: "{count, plural, one {Слово} few {Слова} other {Слов}}"
     example: "{count, plural, one {Рєченје} few {Рєченја} other {Рєчениј}}"
-  catch: "Рысујте{wbr} свој всесвєт{wbr} со сконструованым језыком"
+  catch: "Рысујте{wbr} Свој Всесвєт{wbr} Со Сконструованым Језыком"
   heading:
     gift: "I need your support"
     offer: "Today's sentence"

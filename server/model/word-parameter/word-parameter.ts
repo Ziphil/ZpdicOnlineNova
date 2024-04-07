@@ -71,15 +71,15 @@ export abstract class WordParameter {
 
   protected static createSortKey(order: WordOrder): string {
     const mode = order.mode;
-    const directionChar = (order.direction === "ascending") ? "" : "-";
+    const directionSign = (order.direction === "ascending") ? "" : "-";
     if (mode === "unicode") {
-      return directionChar + "name _id";
+      return `${directionSign}name _id`;
     } else if (mode === "custom") {
-      return directionChar + "sortString _id";
+      return `${directionSign}sortString _id`;
     } else if (mode === "updatedDate") {
-      return directionChar + "updatedDate _id";
+      return `${directionSign}updatedDate _id`;
     } else if (mode === "createdDate") {
-      return directionChar + "createdDate _id";
+      return `${directionSign}createdDate _id`;
     } else {
       const dummy = mode satisfies never;
       throw new Error("cannot happen");

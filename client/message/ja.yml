@@ -13,7 +13,7 @@ toast:
       識別子を変更しました。
     changeDictionaryExplanation: |-
       説明を変更しました。
-    changeDictionarySecret: |-
+    changeDictionaryVisibility: |-
       設定を変更しました。
     changeDictionarySettings:
       akrantiainSource: |-
@@ -204,6 +204,12 @@ toast:
 commonAlert:
   confirm: "決定"
   cancel: "キャンセル"
+exampleOfferTag:
+  catalog:
+    zpdicDaily: "今日の例文"
+    appleAlpha: "リンゴを食べたい 58 文"
+    appleBeta: "リンゴを食べ足りない 57 文"
+  number: "#{number, number}"
 wordModeSelect:
   label:
     name: "単語"
@@ -294,10 +300,13 @@ dictionaryList:
     updatedDate: "更新日時"
     createdDate: "作成日時"
   tag:
-    own: "管理者"
-    edit: "編集のみ"
-    view: "閲覧のみ"
-    secret: "非表示"
+    authority:
+      own: "管理者"
+      edit: "編集のみ"
+      view: "閲覧のみ"
+    visibility:
+      unlisted: "限定公開"
+      private: "非公開"
   button:
     see: "辞書ページへ"
     setting: "設定"
@@ -334,8 +343,6 @@ editExampleForm:
     translation: "自然言語訳"
   absent:
     word: "使用単語が登録されていません"
-  tag:
-    zpdicDaily: "今日の例文 · {dateString}"
   button:
     add:
       word: "使用単語を追加"
@@ -393,8 +400,6 @@ editWordForm:
 exampleList:
   empty: "例文は作成されていません"
   noWord: "使用単語が登録されていません"
-  tag:
-    zpdicDaily: "今日の例文 · {dateString}"
   button:
     edit: "編集"
     discard: "削除"
@@ -432,7 +437,7 @@ footer:
 header:
   link:
     dictionary: "辞書一覧"
-    exampleOffer: "過去の例文"
+    exampleOffer: "例文集"
   userPage: "ユーザーページ"
 invitationList:
   empty: "通知はありません"
@@ -510,6 +515,12 @@ searchWordForm:
   button:
     shuffleResult: "検索結果をシャッフル"
     advancedSearch: "高度な検索"
+shareMenu:
+  label:
+    twitter: "X (旧 Twitter)"
+    misskey: "Misskey.io"
+    copy: "リンクをコピー"
+    other: "その他"
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"
@@ -532,6 +543,7 @@ wordList:
     edit: "編集"
     duplicate: "複製編集"
     discard: "削除"
+    share: "共有"
     create: "作成"
     commission: "造語依頼"
   dialog:
@@ -683,10 +695,11 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "有効"
       false: "無効"
-changeDictionarySecretForm:
+changeDictionaryVisibilityForm:
   label:
-    false: "表示"
-    true: "非表示"
+    public: "公開"
+    unlisted: "限定公開"
+    private: "非公開"
 changeDictionarySourceForm:
   button:
     try: "試す"
@@ -763,8 +776,8 @@ contactPage:
     匿名でのお問い合わせをご希望の場合は、ログアウトした状態で「名前」欄を空欄にした上で送信してください。
     なお、辞書の設定や編集などに関わるような、ユーザーの権限が必要になる内容に関するお問い合わせの場合、匿名では対応できない場合がありますのでご了承ください。
 exampleOfferListPage:
-  title: "過去の例文"
-  heading: "過去の例文"
+  title: "例文集"
+  heading: "例文集"
 dictionaryExamplePart:
   heading:
     offer: "今日の例文"
@@ -836,7 +849,7 @@ dictionarySettingGeneralPart:
     paramName: "URL 用識別子"
     explanation: "説明"
     font: "見出し語のフォント"
-    secret: "辞書一覧での表示/非表示"
+    visibility: "公開範囲"
     discard: "削除"
   description:
     paramName: >-
@@ -848,8 +861,8 @@ dictionarySettingGeneralPart:
       見出し語のフォントを変更することができます。
       「ローカルフォントを参照」を選択すると、閲覧者各自の環境にインストールされているフォントを参照して使用します。
       「フォントをアップロード」を選択すると、アップロードされた独自のフォントを使用します。
-    secret: >-
-      これを「非表示」に設定すると、この辞書が辞書一覧に表示されなくなります。
+    visibility: >-
+      これを「限定公開」に設定すると、この辞書が辞書一覧に表示されなくなります。
       ただし、辞書ページの URL を知っている人は直接アクセスすることができます。
   callout:
     discard: >-
@@ -898,7 +911,7 @@ topPage:
     dictionary: "辞書"
     word: "単語"
     example: "例文"
-  catch: "Draw{wbr} your own universe{wbr} with conlang"
+  catch: "Draw{wbr} Your Own Universe{wbr} With Conlang"
   heading:
     gift: "支援のお願い"
     offer: "今日の例文"

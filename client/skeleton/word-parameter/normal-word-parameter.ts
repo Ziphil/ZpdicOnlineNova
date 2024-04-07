@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+//
 
 import merge from "lodash.merge";
 import {Search} from "/client/hook/search";
@@ -16,6 +16,7 @@ import {
 
 export interface NormalWordParameter {
 
+  kind: "normal";
   text: string;
   mode: WordMode;
   type: WordType;
@@ -28,6 +29,7 @@ export interface NormalWordParameter {
 export namespace NormalWordParameter {
 
   export const EMPTY = {
+    kind: "normal",
     text: "",
     mode: "both",
     type: "prefix",

@@ -17,7 +17,7 @@ import {
   useTrans
 } from "zographia";
 import {Link} from "/client/component/atom/link";
-import {UserView} from "/client/component/compound/user-view";
+import {UserView} from "/client/component/atom/user-view";
 import {create} from "/client/component/create";
 import {Invitation} from "/client/skeleton";
 import {useAcceptInvitation, useRejectInvitation} from "./invitation-card-hook";

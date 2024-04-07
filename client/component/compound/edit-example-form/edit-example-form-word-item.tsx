@@ -13,7 +13,7 @@ import {
 } from "zographia";
 import {RelationWordSelect} from "/client/component/atom/relation-word-select";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {useEditExampleFormDndItem} from "./edit-example-form-dnd";
 import {EditExampleSpec} from "./edit-example-form-hook";
 
@@ -28,7 +28,7 @@ export const EditExampleFormWordItem = create(
     index,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     form: EditExampleSpec["form"],
     wordOperations: Omit<UseFieldArrayReturn<any, "words">, "fields">,
     dndId: string,

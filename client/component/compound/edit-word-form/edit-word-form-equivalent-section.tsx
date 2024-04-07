@@ -11,7 +11,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {EditWordFormDndContext} from "./edit-word-form-dnd";
 import {EditWordFormEquivalentItem} from "./edit-word-form-equivalent-item";
 import {EditWordSpec} from "./edit-word-form-hook";
@@ -24,7 +24,7 @@ export const EditWordFormEquivalentSection = create(
     form,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     form: EditWordSpec["form"],
     className?: string
   } & AdditionalProps): ReactElement {

@@ -5,7 +5,7 @@ import {ReactElement, Ref, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client/component/create";
-import {EditableWord, EnhancedDictionary} from "/client/skeleton";
+import {EditableWord, DictionaryWithExecutors} from "/client/skeleton";
 import {assignRef} from "/client/util/ref";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
 import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
@@ -24,7 +24,7 @@ export const EditWordForm = create(
     onSubmit,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     initialData: EditWordInitialData | null,
     forceAdd?: boolean,
     formRef?: Ref<() => EditWordFormValue>,

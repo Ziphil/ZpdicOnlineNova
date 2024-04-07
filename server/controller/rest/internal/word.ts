@@ -17,7 +17,7 @@ export class WordRestController extends InternalRestController {
     const {word} = request.body;
     try {
       const resultWord = await dictionary.editWord(word);
-      const body = WordCreator.create(resultWord);
+      const body = WordCreator.skeletonize(resultWord);
       InternalRestController.respond(response, body);
     } catch (error) {
       InternalRestController.respondByCustomError(response, ["dictionarySaving"], error);
@@ -31,7 +31,7 @@ export class WordRestController extends InternalRestController {
     const {wordNumber} = request.body;
     try {
       const resultWord = await dictionary.discardWord(wordNumber);
-      const body = WordCreator.create(resultWord);
+      const body = WordCreator.skeletonize(resultWord);
       InternalRestController.respond(response, body);
     } catch (error) {
       InternalRestController.respondByCustomError(response, ["noSuchWord", "dictionarySaving"], error);
@@ -65,7 +65,7 @@ export class WordRestController extends InternalRestController {
     const {wordNumber} = request.body;
     const word = await dictionary.fetchOneWordByNumber(wordNumber);
     if (word) {
-      const body = await WordCreator.createDetailed(word);
+      const body = await WordCreator.skeletonizeWithExamples(word);
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "noSuchWord");

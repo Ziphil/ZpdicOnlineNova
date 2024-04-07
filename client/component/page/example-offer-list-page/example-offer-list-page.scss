@@ -3,9 +3,17 @@
 @use "zographia/source/component/function.scss" as *;
 
 
-.heading {
-  @include bold-font;
-  margin-block-end: 4zu; 
-  font-size: 6zu;
-  color: var(--glob-secondary-heading-text-color);
+.main {
+  column-gap: 10zu;
+  display: grid;
+  grid-template-columns: 112zu 1fr;
+  @media (max-width: 320zu) {
+    row-gap: 6zu;
+    grid-template-columns: 1fr;
+  }
+}
+
+.sticky {
+  inset-block-start: calc(22zu + 1zx);
+  position: sticky;
 }

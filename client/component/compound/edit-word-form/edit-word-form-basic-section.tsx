@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-closing-bracket-location */
-//
 
 import {faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
 import {ChangeEvent, ReactElement, useCallback, useState} from "react";
@@ -19,7 +18,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {EditWordSpec} from "./edit-word-form-hook";
@@ -32,7 +31,7 @@ export const EditWordFormBasicSection = create(
     form,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     form: EditWordSpec["form"],
     className?: string
   } & AdditionalProps): ReactElement {

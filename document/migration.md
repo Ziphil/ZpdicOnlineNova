@@ -48,3 +48,17 @@ db.words.updateMany({}, [{$set: {
   }}
 }}]);
 ```
+
+### → ver 3.4.0
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```
+db.exampleOffers.updateMany({}, {$rename: {
+  "position.name": "catalog",
+  "position.index": "number"
+}});
+db.exampleOffers.updateMany({}, {$inc: {"number": 1}});
+db.exampleOffers.updateMany({}, {$set: {"author": "ZpDIC Online"}});
+
+db.dictionaries.updateMany({"secret": false}, {$set: {"visibility": "public"}});
+db.dictionaries.updateMany({"secret": true}, {$set: {"visibility": "unlisted"}});
+```

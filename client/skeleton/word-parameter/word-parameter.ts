@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+//
 
 import {Search} from "/client/hook/search";
 import {AdvancedWordParameter} from "/client/skeleton/word-parameter/advanced-word-parameter";
+import {ExactWordParameter} from "/client/skeleton/word-parameter/exact-word-parameter";
 import {NormalWordParameter} from "/client/skeleton/word-parameter/normal-word-parameter";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 
-export type WordParameter = NormalWordParameter | AdvancedWordParameter;
+export type WordParameter = NormalWordParameter | AdvancedWordParameter | ExactWordParameter;
 
 export const WORD_MODES = ["name", "equivalent", "both", "tag", "information", "variation", "relation", "content"] as const;
 export type WordMode = LiteralType<typeof WORD_MODES>;
@@ -31,23 +32,27 @@ export type WordIgnoreOptions = {case: boolean};
 export namespace WordParameter {
 
   export function deserialize(search: Search): WordParameter {
-    if (search.has("advanced")) {
+    if (search.get("kind") === "advanced") {
       return AdvancedWordParameter.deserialize(search);
+    } else if (search.get("kind") === "exact") {
+      return ExactWordParameter.deserialize(search);
     } else {
       return NormalWordParameter.deserialize(search);
     }
   }
 
   export function serialize(parameter: WordParameter): Search {
-    if ("elements" in parameter) {
+    if (parameter.kind === "advanced") {
       return AdvancedWordParameter.serialize(parameter);
+    } else if (parameter.kind === "exact") {
+      return ExactWordParameter.serialize(parameter);
     } else {
       return NormalWordParameter.serialize(parameter);
     }
   }
 
   export function toNormal(parameter: WordParameter): NormalWordParameter {
-    if ("elements" in parameter) {
+    if (parameter.kind === "advanced" || parameter.kind === "exact") {
       return NormalWordParameter.EMPTY;
     } else {
       return parameter;

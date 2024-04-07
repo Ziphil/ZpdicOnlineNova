@@ -20,7 +20,7 @@ export class InvitationRestController extends InternalRestController {
     if (user) {
       try {
         const invitation = await InvitationModel.add(type, dictionary, user);
-        const body = await InvitationCreator.create(invitation);
+        const body = await InvitationCreator.skeletonize(invitation);
         InternalRestController.respond(response, body);
       } catch (error) {
         InternalRestController.respondByCustomError(response, ["userCanAlreadyEdit", "userCanAlreadyOwn", "editInvitationAlreadyAdded", "transferInvitationAlreadyAdded"], error);
@@ -39,7 +39,7 @@ export class InvitationRestController extends InternalRestController {
     if (invitation) {
       try {
         await invitation.respond(me, accept);
-        const body = await InvitationCreator.create(invitation);
+        const body = await InvitationCreator.skeletonize(invitation);
         InternalRestController.respond(response, body);
       } catch (error) {
         if (CustomError.isCustomError(error) && error.type === "forbidden") {
@@ -59,7 +59,7 @@ export class InvitationRestController extends InternalRestController {
     const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
     const {type} = request.body;
     const invitations = await InvitationModel.fetchByUser(type, me);
-    const body = await Promise.all(invitations.map(InvitationCreator.create));
+    const body = await Promise.all(invitations.map(InvitationCreator.skeletonize));
     InternalRestController.respond(response, body);
   }
 

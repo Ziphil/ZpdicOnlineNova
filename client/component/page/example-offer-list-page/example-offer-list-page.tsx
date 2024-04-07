@@ -1,14 +1,16 @@
 //
 
-import {ReactElement, useCallback} from "react";
+import {ReactElement, SetStateAction, useCallback} from "react";
 import {AdditionalProps, useTrans} from "zographia";
 import {ExampleOfferList} from "/client/component/compound/example-offer-list";
 import {Header} from "/client/component/compound/header";
 import {MainContainer, Page} from "/client/component/compound/page";
+import {SearchExampleOfferForm} from "/client/component/compound/search-example-offer-form";
 import {create} from "/client/component/create";
 import {useSuspenseResponse} from "/client/hook/request";
 import {Search, useSearchState} from "/client/hook/search";
-import {calcOffsetSpec} from "/client/util/misc";
+import {ExampleOfferParameter} from "/client/skeleton";
+import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
 
 
 export const ExampleOfferListPage = create(
@@ -22,7 +24,14 @@ export const ExampleOfferListPage = create(
     const {trans} = useTrans("exampleOfferListPage");
 
     const [query, , setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [[hitOffers, hitSize]] = useSuspenseResponse("fetchExampleOffers", {...calcOffsetSpec(query.page, 20)}, {keepPreviousData: true});
+    const [[hitOffers, hitSize]] = useSuspenseResponse("searchExampleOffers", {parameter: query.parameter, ...calcOffsetSpec(query.page, 25)}, {keepPreviousData: true});
+
+    const handleParameterSet = useCallback(function (parameter: SetStateAction<ExampleOfferParameter>): void {
+      setQuery((prevQuery) => {
+        const nextParameter = resolveStateAction(parameter, prevQuery.parameter);
+        return {parameter: nextParameter, page: 0};
+      });
+    }, [setQuery]);
 
     const handlePageSet = useCallback(function (page: number): void {
       setQuery({...query, page});
@@ -31,9 +40,15 @@ export const ExampleOfferListPage = create(
 
     return (
       <Page title={trans("title")} headerNode={<Header/>} {...rest}>
-        <MainContainer>
-          <h2 styleName="heading">{trans("heading")}</h2>
-          <ExampleOfferList offers={hitOffers} pageSpec={{size: 20, hitSize, page: query.page, onPageSet: handlePageSet}} showExamples={true}/>
+        <MainContainer styleName="main" width="wide">
+          <div styleName="left">
+            <div styleName="sticky">
+              <SearchExampleOfferForm styleName="form" parameter={query.parameter} onParameterSet={handleParameterSet}/>
+            </div>
+          </div>
+          <div styleName="right">
+            <ExampleOfferList offers={hitOffers} pageSpec={{size: 25, hitSize, page: query.page, onPageSet: handlePageSet}} showExamples={true}/>
+          </div>
         </MainContainer>
       </Page>
     );
@@ -43,14 +58,15 @@ export const ExampleOfferListPage = create(
 
 
 function serializeQuery(query: ExampleOfferQuery): Search {
-  const search = new URLSearchParams();
+  const search = ExampleOfferParameter.serialize(query.parameter);
   search.set("page", query.page.toString());
   return search;
 }
 
 function deserializeQuery(search: Search): ExampleOfferQuery {
+  const parameter = ExampleOfferParameter.deserialize(search);
   const page = (search.get("page") !== null) ? +search.get("page")! : 0;
-  return {page};
+  return {parameter, page};
 }
 
-type ExampleOfferQuery = {page: number};
+type ExampleOfferQuery = {parameter: ExampleOfferParameter, page: number};

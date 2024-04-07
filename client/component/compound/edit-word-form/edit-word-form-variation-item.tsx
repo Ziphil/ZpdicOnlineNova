@@ -16,7 +16,7 @@ import {
 } from "zographia";
 import {useEditWordFormDndItem} from "/client/component/compound/edit-word-form/edit-word-form-dnd";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {EditWordSpec} from "./edit-word-form-hook";
@@ -32,7 +32,7 @@ export const EditWordFormVariationItem = create(
     index,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     form: EditWordSpec["form"],
     variationOperations: Omit<UseFieldArrayReturn<any, "variations">, "fields">,
     dndId: string,

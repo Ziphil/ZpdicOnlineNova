@@ -27,7 +27,7 @@ export const UserNotificationPart = create(
     return (me !== null && me.name === name) ? (
       <div styleName="root" {...rest}>
         <section>
-          <InvitationList invitations={invitations} pageSpec={{size: 40}}/>
+          <InvitationList invitations={invitations} pageSpec={{size: 50}}/>
         </section>
       </div>
     ) : null;

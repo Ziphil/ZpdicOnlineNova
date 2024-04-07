@@ -24,7 +24,7 @@ export const ForbiddenView = create(
           <div styleName="icon">
             <GeneralIcon icon={faShieldCat}/>
           </div>
-          <MultiLineText styleName="heading" is="div" lineHeight="narrowest">
+          <MultiLineText styleName="heading" is="div" lineHeight="narrowFixed">
             {trans("heading.forbidden")}
           </MultiLineText>
         </div>

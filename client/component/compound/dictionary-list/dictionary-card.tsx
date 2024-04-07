@@ -8,7 +8,7 @@ import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DetailedDictionary, UserDictionary} from "/client/skeleton";
+import {DictionaryWithAuthorities, DictionaryWithUser} from "/client/skeleton";
 import {DictionaryCardHistoryChart} from "./dictionary-card-history-chart";
 
 
@@ -22,7 +22,7 @@ export const DictionaryCard = create(
     showSettingLink,
     ...rest
   }: {
-    dictionary: DetailedDictionary | UserDictionary,
+    dictionary: DictionaryWithUser | DictionaryWithAuthorities,
     showUser: boolean,
     showChart: boolean,
     showAuthority: boolean,
@@ -45,16 +45,16 @@ export const DictionaryCard = create(
             {(showAuthority && "authorities" in dictionary) && (
               <div styleName="tag">
                 {(dictionary.authorities.includes("own")) ? (
-                  <Tag variant="solid">{trans("tag.own")}</Tag>
+                  <Tag variant="solid">{trans("tag.authority.own")}</Tag>
                 ) : (dictionary.authorities.includes("edit")) ? (
-                  <Tag variant="light">{trans("tag.edit")}</Tag>
+                  <Tag variant="solid">{trans("tag.authority.edit")}</Tag>
                 ) : (
-                  <Tag variant="light">{trans("tag.view")}</Tag>
+                  <Tag variant="solid">{trans("tag.authority.view")}</Tag>
                 )}
-                {(dictionary.secret) && (
+                {(dictionary.visibility !== "public") && (
                   <span styleName="secret">
                     <GeneralIcon styleName="secret-icon" icon={faLockKeyhole}/>
-                    {trans("tag.secret")}
+                    {trans(`tag.visibility.${dictionary.visibility}`)}
                   </span>
                 )}
               </div>

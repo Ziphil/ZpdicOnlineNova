@@ -22,7 +22,7 @@ export class DictionaryRestController extends InternalRestController {
     const {me} = request.middlewareBody ;
     const {name} = request.body;
     const dictionary = await DictionaryModel.addEmpty(name, me);
-    const body = DictionaryCreator.create(dictionary);
+    const body = DictionaryCreator.skeletonize(dictionary);
     InternalRestController.respond(response, body);
   }
 
@@ -45,7 +45,7 @@ export class DictionaryRestController extends InternalRestController {
           this.namespace?.to(`uploadDictionary.${number}`).emit("failUploadDictionary", {number});
           this.namespace?.socketsLeave(`uploadDictionary.${number}`);
         });
-        const body = DictionaryCreator.create(dictionary);
+        const body = DictionaryCreator.skeletonize(dictionary);
         InternalRestController.respond(response, body);
       } else {
         InternalRestController.respondError(response, "dictionarySizeTooLarge");
@@ -69,7 +69,7 @@ export class DictionaryRestController extends InternalRestController {
     const {dictionary} = request.middlewareBody;
     const {name} = request.body;
     await dictionary.changeName(name);
-    const body = DictionaryCreator.create(dictionary);
+    const body = DictionaryCreator.skeletonize(dictionary);
     InternalRestController.respond(response, body);
   }
 
@@ -80,7 +80,7 @@ export class DictionaryRestController extends InternalRestController {
     const {paramName} = request.body;
     try {
       await dictionary.changeParamName(paramName);
-      const body = DictionaryCreator.create(dictionary);
+      const body = DictionaryCreator.skeletonize(dictionary);
       InternalRestController.respond(response, body);
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -113,13 +113,13 @@ export class DictionaryRestController extends InternalRestController {
     }
   }
 
-  @post("/changeDictionarySecret")
+  @post("/changeDictionaryVisibility")
   @before(checkMe(), checkDictionary("own"))
-  public async [Symbol()](request: FilledRequest<"changeDictionarySecret", "me" | "dictionary">, response: Response<"changeDictionarySecret">): Promise<void> {
+  public async [Symbol()](request: FilledRequest<"changeDictionaryVisibility", "me" | "dictionary">, response: Response<"changeDictionaryVisibility">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const {secret} = request.body;
-    await dictionary.changeSecret(secret);
-    const body = DictionaryCreator.create(dictionary);
+    const {visibility} = request.body;
+    await dictionary.changeVisibility(visibility);
+    const body = DictionaryCreator.skeletonize(dictionary);
     InternalRestController.respond(response, body);
   }
 
@@ -129,7 +129,7 @@ export class DictionaryRestController extends InternalRestController {
     const {dictionary} = request.middlewareBody;
     const {explanation} = request.body;
     await dictionary.changeExplanation(explanation);
-    const body = DictionaryCreator.create(dictionary);
+    const body = DictionaryCreator.skeletonize(dictionary);
     InternalRestController.respond(response, body);
   }
 
@@ -139,17 +139,17 @@ export class DictionaryRestController extends InternalRestController {
     const {dictionary} = request.middlewareBody;
     const {settings} = request.body;
     await dictionary.changeSettings(settings);
-    const body = DictionaryCreator.create(dictionary);
+    const body = DictionaryCreator.skeletonize(dictionary);
     InternalRestController.respond(response, body);
   }
 
   @post("/searchDictionary")
   public async [Symbol()](request: Request<"searchDictionary">, response: Response<"searchDictionary">): Promise<void> {
     const {offset, size} = request.body;
-    const parameter = DictionaryParameterCreator.recreate(request.body.parameter);
+    const parameter = DictionaryParameterCreator.enflesh(request.body.parameter);
     const range = new QueryRange(offset, size);
     const hitResult = await DictionaryModel.search(parameter, range);
-    const body = await mapWithSizeAsync(hitResult, DictionaryCreator.createDetailed);
+    const body = await mapWithSizeAsync(hitResult, DictionaryCreator.skeletonizeWithUser);
     InternalRestController.respond(response, body);
   }
 
@@ -158,12 +158,12 @@ export class DictionaryRestController extends InternalRestController {
   public async [Symbol()](request: FilledRequest<"searchWord", "dictionary">, response: Response<"searchWord">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {offset, size} = request.body;
-    const parameter = WordParameterCreator.recreate(request.body.parameter);
+    const parameter = WordParameterCreator.enflesh(request.body.parameter);
     const range = new QueryRange(offset, size);
     const hitResult = await dictionary.searchWord(parameter, range);
     const body = {
-      words: await mapWithSizeAsync(hitResult.words, WordCreator.createDetailed),
-      suggestions: hitResult.suggestions.map(SuggestionCreator.create)
+      words: await mapWithSizeAsync(hitResult.words, WordCreator.skeletonizeWithExamples),
+      suggestions: hitResult.suggestions.map(SuggestionCreator.skeletonize)
     };
     InternalRestController.respond(response, body);
   }
@@ -201,7 +201,7 @@ export class DictionaryRestController extends InternalRestController {
     const {identifier} = request.body;
     const dictionary = await DictionaryModel.fetchOneByIdentifier(identifier);
     if (dictionary) {
-      const body = await DictionaryCreator.createDetailed(dictionary);
+      const body = await DictionaryCreator.skeletonizeWithUser(dictionary);
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "noSuchDictionary");
@@ -249,7 +249,7 @@ export class DictionaryRestController extends InternalRestController {
     const {dictionary} = request.middlewareBody;
     const {authority} = request.body;
     const users = await dictionary.fetchAuthorizedUsers(authority);
-    const body = users.map(UserCreator.create);
+    const body = users.map(UserCreator.skeletonize);
     InternalRestController.respond(response, body);
   }
 
@@ -261,9 +261,8 @@ export class DictionaryRestController extends InternalRestController {
     const user = await UserModel.fetchOneByName(name);
     if (user) {
       const authority = (me?.id === user.id) ? "edit" : "own";
-      const includeSecret = me?.id === user.id;
-      const dictionaries = await DictionaryModel.fetchByUser(user, authority, includeSecret);
-      const body = await Promise.all(dictionaries.map((dictionary) => DictionaryCreator.createUser(dictionary, user)));
+      const dictionaries = await DictionaryModel.fetchByUser(user, authority, me);
+      const body = await Promise.all(dictionaries.map((dictionary) => DictionaryCreator.skeletonizeWithAuthorities(dictionary, user)));
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "noSuchUser");

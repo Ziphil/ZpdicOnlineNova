@@ -16,7 +16,7 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
-import {EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {useEditWordFormDndItem} from "./edit-word-form-dnd";
@@ -33,7 +33,7 @@ export const EditWordFormInformationItem = create(
     index,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     form: EditWordSpec["form"],
     informationOperations: Omit<UseFieldArrayReturn<any, "informations">, "fields">,
     dndId: string,

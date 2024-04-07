@@ -4,7 +4,7 @@ import {faBooks, faPen} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, Ref, useCallback, useState} from "react";
 import {AdditionalProps, GeneralIcon, Tab, TabIconbag, TabList, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {EditableExample, EnhancedDictionary} from "/client/skeleton";
+import {DictionaryWithExecutors, EditableExample} from "/client/skeleton";
 import {assignRef} from "/client/util/ref";
 import {EditExampleFormEditPart} from "./edit-example-form-edit-part";
 import {EditExampleFormValue, EditExampleInitialData, useEditExample} from "./edit-example-form-hook";
@@ -20,7 +20,7 @@ export const EditExampleForm = create(
     onSubmit,
     ...rest
   }: {
-    dictionary: EnhancedDictionary,
+    dictionary: DictionaryWithExecutors,
     initialData: EditExampleInitialData | null,
     formRef?: Ref<() => EditExampleFormValue>,
     onSubmit?: (example: EditableExample) => void,
