@@ -27,7 +27,7 @@ export const DictionaryResourcePart = create(
         <section>
           <div styleName="list-container">
             <AddResourceButton dictionary={dictionary}/>
-            <ResourceList dictionary={dictionary} resources={resources} pageSpec={{size: 40}} showFooter={true}/>
+            <ResourceList dictionary={dictionary} resources={resources} pageSpec={{size: 50}} showFooter={true}/>
           </div>
         </section>
       </div>

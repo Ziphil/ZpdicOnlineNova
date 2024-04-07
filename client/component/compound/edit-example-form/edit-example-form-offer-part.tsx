@@ -28,7 +28,7 @@ export const EditExampleFormOfferPart = create(
     const {form} = formSpec;
 
     const [query, setQuery] = useState<ExampleOfferQuery>({parameter: NormalExampleOfferParameter.DAILY, page: 0});
-    const [[offers, hitSize] = []] = useResponse("searchExampleOffers", {parameter: query.parameter, ...calcOffsetSpec(query.page, 20)}, {keepPreviousData: true});
+    const [[offers, hitSize] = []] = useResponse("searchExampleOffers", {parameter: query.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
 
     const handleParameterSet = useCallback(function (parameter: SetStateAction<ExampleOfferParameter>): void {
       setQuery((prevQuery) => {
@@ -50,7 +50,7 @@ export const EditExampleFormOfferPart = create(
     return (
       <div styleName="root" {...rest}>
         <SearchExampleOfferForm parameter={query.parameter} onParameterSet={handleParameterSet}/>
-        <ExampleOfferList offers={offers} pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}} showSupplement={true} showSelectButton={true} onSelect={handleSelect}/>
+        <ExampleOfferList offers={offers} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}} showSupplement={true} showSelectButton={true} onSelect={handleSelect}/>
       </div>
     );
 

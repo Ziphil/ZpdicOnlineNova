@@ -81,7 +81,7 @@ export const ResourceListDialog = create(
                   </CalloutBody>
                 </Callout>
               )}
-              <ResourceList dictionary={dictionary} resources={resources} pageSpec={{size: 40}} showCode={true}/>
+              <ResourceList dictionary={dictionary} resources={resources} pageSpec={{size: 50}} showCode={true}/>
             </DialogBody>
           </DialogPane>
         </Dialog>

@@ -20,11 +20,11 @@ export const DictionaryCommissionPart = create(
     const dictionary = useDictionary();
 
     const [page, setPage] = useState(0);
-    const [[hitCommissions, hitSize]] = useSuspenseResponse("fetchCommissions", {number: dictionary.number, ...calcOffsetSpec(page, 40)}, {keepPreviousData: true});
+    const [[hitCommissions, hitSize]] = useSuspenseResponse("fetchCommissions", {number: dictionary.number, ...calcOffsetSpec(page, 50)}, {keepPreviousData: true});
 
     return (
       <div styleName="root" {...rest}>
-        <CommissionList dictionary={dictionary} commissions={hitCommissions} pageSpec={{size: 40, hitSize, page, onPageSet: setPage}}/>
+        <CommissionList dictionary={dictionary} commissions={hitCommissions} pageSpec={{size: 50, hitSize, page, onPageSet: setPage}}/>
       </div>
     );
 

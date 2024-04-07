@@ -28,7 +28,7 @@ export const DictionaryMainPart = create(
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [hitResult] = useSuspenseResponse("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 40)}, {keepPreviousData: true});
+    const [hitResult] = useSuspenseResponse("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
 
@@ -60,7 +60,7 @@ export const DictionaryMainPart = create(
           )}
           <div styleName="main">
             <SuggestionCard dictionary={dictionary} suggestions={hitSuggestions}/>
-            <WordList dictionary={dictionary} words={hitWords} canEdit={canEdit} showEmpty={hitSuggestions.length <= 0} pageSpec={{size: 40, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+            <WordList dictionary={dictionary} words={hitWords} canEdit={canEdit} showEmpty={hitSuggestions.length <= 0} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}/>
           </div>
         </div>
       </div>

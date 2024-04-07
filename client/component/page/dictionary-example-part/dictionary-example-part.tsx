@@ -28,7 +28,7 @@ export const DictionaryExamplePart = create(
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
     const [page, setPage] = useState(0);
-    const [[hitExamples, hitSize]] = useSuspenseResponse("fetchExamples", {number: dictionary.number, ...calcOffsetSpec(page, 40)}, {keepPreviousData: true});
+    const [[hitExamples, hitSize]] = useSuspenseResponse("fetchExamples", {number: dictionary.number, ...calcOffsetSpec(page, 50)}, {keepPreviousData: true});
 
     const [[offers] = []] = useResponse("searchExampleOffers", (canEdit) && {parameter: NormalExampleOfferParameter.DAILY, size: 1, offset: 0});
     const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
@@ -58,7 +58,7 @@ export const DictionaryExamplePart = create(
         </div>
         <div styleName="right">
           <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
-          <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 40, hitSize, page, onPageSet: handlePageSet}}/>
+          <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 50, hitSize, page, onPageSet: handlePageSet}}/>
         </div>
       </div>
     );
