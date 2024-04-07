@@ -912,7 +912,7 @@ topPage:
     dictionary: "{count, plural, one {Vortaro} other {Vortaroj}}"
     word: "{count, plural, one {Vorto} other {Vortoj}}"
     example: "{count, plural, one {Frazo} other {Frazoj}}"
-  catch: "Desegnu{wbr} vian propran universon{wbr} per conlingvo"
+  catch: "Desegnu{wbr} Vian Propran Universon{wbr} Per Conlingvo"
   heading:
     gift: "Mi bezonas vian subtenon"
     offer: "Hodiaŭa frazo"

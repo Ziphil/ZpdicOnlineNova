@@ -912,7 +912,7 @@ topPage:
     dictionary: "{count, plural, one {Dictionary} other {Dictionaries}}"
     word: "{count, plural, one {Word} other {Words}}"
     example: "{count, plural, one {Sentence} other {Sentences}}"
-  catch: "Draw{wbr} your own universe{wbr} with conlang"
+  catch: "Draw{wbr} Your Own Universe{wbr} With Conlang"
   heading:
     gift: "I need your support"
     offer: "Today's sentence"

@@ -912,7 +912,7 @@ topPage:
     dictionary: "{count, plural, one {Словник} few {Словникы} other {Словников}}"
     word: "{count, plural, one {Слово} few {Слова} other {Слов}}"
     example: "{count, plural, one {Рєченје} few {Рєченја} other {Рєчениј}}"
-  catch: "Рысујте{wbr} свој всесвєт{wbr} со сконструованым језыком"
+  catch: "Рысујте{wbr} Свој Всесвєт{wbr} Со Сконструованым Језыком"
   heading:
     gift: "I need your support"
     offer: "Today's sentence"
