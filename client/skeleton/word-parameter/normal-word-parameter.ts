@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+//
 
 import merge from "lodash.merge";
 import {Search} from "/client/hook/search";

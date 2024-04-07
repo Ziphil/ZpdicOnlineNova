@@ -140,10 +140,11 @@ export class UserSchema {
     }
   }
 
+  /** このユーザーを削除します。
+   * 同時に、このユーザーが所有する辞書も全て削除します。*/
   public async discard(this: User): Promise<User> {
-    const dictionaries = await DictionaryModel.fetchByUser(this, "own");
-    const promises = dictionaries.map((dictionary) => dictionary.discard());
-    await Promise.all(promises);
+    const dictionaries = await DictionaryModel.fetchByUser(this, "own", "all");
+    await Promise.all(dictionaries.map((dictionary) => dictionary.discard()));
     await this.deleteOne();
     return this;
   }
