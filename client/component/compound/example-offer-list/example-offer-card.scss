@@ -32,12 +32,17 @@
 
 .date {
   margin-block-end: 2zu;
-  font-size: 3.5zu;
+  font-size: 3zu;
   color: var(--glob-mute-text-color);
 }
 
 .translation {
-  font-size: 5zu;
+  &:not([data-large]) {
+    font-size: 4zu;
+  }
+  &[data-large] {
+    font-size: 5zu;
+  }
 }
 
 .supplement {

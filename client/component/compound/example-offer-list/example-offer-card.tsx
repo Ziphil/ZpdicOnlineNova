@@ -3,7 +3,7 @@
 import {faCheck, faPlus, faUserPen} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useCallback} from "react";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, data, useTrans} from "zographia";
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
 import {ExampleOfferCardExampleItem} from "/client/component/compound/example-offer-list/example-offer-card-example-item";
@@ -60,7 +60,7 @@ export const ExampleOfferCard = create(
                 <time dateTime={zonedCreatedDate.format("YYYY-MM-DD")}>{transDate(zonedCreatedDate, "date")}</time>
               </div>
             )}
-            <MultiLineText styleName="translation" is="p">
+            <MultiLineText styleName="translation" is="p" {...data({large: showExamples})}>
               {offer.translation}
             </MultiLineText>
             {(offer.supplement && showSupplement) && (
