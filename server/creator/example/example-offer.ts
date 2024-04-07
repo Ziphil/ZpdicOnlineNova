@@ -10,7 +10,7 @@ import {
 
 export namespace ExampleOfferCreator {
 
-  export function create(raw: ExampleOffer): ExampleOfferSkeleton {
+  export function skeletonize(raw: ExampleOffer): ExampleOfferSkeleton {
     const id = raw.id;
     const catalog = raw.catalog;
     const number = raw.number;

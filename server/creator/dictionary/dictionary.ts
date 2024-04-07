@@ -16,7 +16,7 @@ import {
 
 export namespace DictionaryCreator {
 
-  export function create(raw: Dictionary): DictionarySkeleton {
+  export function skeletonize(raw: Dictionary): DictionarySkeleton {
     const id = raw.id;
     const number = raw.number;
     const paramName = raw.paramName;
@@ -24,19 +24,19 @@ export namespace DictionaryCreator {
     const status = raw.status;
     const visibility = raw.visibility;
     const explanation = raw.explanation;
-    const settings = DictionarySettingsCreator.create(raw.settings);
+    const settings = DictionarySettingsCreator.skeletonize(raw.settings);
     const createdDate = raw.createdDate?.toISOString() ?? undefined;
     const updatedDate = raw.updatedDate?.toISOString() ?? undefined;
     const skeleton = {id, number, paramName, name, status, visibility, explanation, settings, createdDate, updatedDate};
     return skeleton;
   }
 
-  export async function createWithUser(raw: Dictionary): Promise<DictionarySkeletonWithUser> {
-    const base = create(raw);
+  export async function skeletonizeWithUser(raw: Dictionary): Promise<DictionarySkeletonWithUser> {
+    const base = skeletonize(raw);
     const [user] = await Promise.all([(async () => {
       await raw.populate("user");
       if (isDocument(raw.user)) {
-        return UserCreator.create(raw.user);
+        return UserCreator.skeletonize(raw.user);
       } else {
         throw new Error("cannot happen");
       }
@@ -45,8 +45,8 @@ export namespace DictionaryCreator {
     return skeleton;
   }
 
-  export async function createWithAuthorities(raw: Dictionary, rawUser: User): Promise<DictionarySkeletonWithAuthorities> {
-    const [base, authorities] = await Promise.all([createWithUser(raw), raw.fetchAuthorities(rawUser)]);
+  export async function skeletonizeWithAuthorities(raw: Dictionary, rawUser: User): Promise<DictionarySkeletonWithAuthorities> {
+    const [base, authorities] = await Promise.all([skeletonizeWithUser(raw), raw.fetchAuthorities(rawUser)]);
     const skeleton = {...base, authorities};
     return skeleton;
   }

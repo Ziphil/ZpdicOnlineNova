@@ -10,7 +10,7 @@ import {
 
 export namespace EquivalentCreator {
 
-  export function create(raw: Equivalent): EquivalentSkeleton {
+  export function skeletonize(raw: Equivalent): EquivalentSkeleton {
     const titles = raw.titles;
     const names = raw.names;
     const skeleton = {titles, names};

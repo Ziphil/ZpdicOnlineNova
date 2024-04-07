@@ -11,7 +11,7 @@ import {
 
 export class DictionaryParameterCreator {
 
-  public static recreate(skeleton: DictionaryParameterSkeleton): DictionaryParameter {
+  public static enflesh(skeleton: DictionaryParameterSkeleton): DictionaryParameter {
     const raw = new NormalDictionaryParameter(skeleton.text, skeleton.userName, skeleton.order);
     return raw;
   }

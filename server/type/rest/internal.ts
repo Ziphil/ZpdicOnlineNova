@@ -4,7 +4,7 @@ import type {
   Aggregation,
   Commission,
   CustomError,
-  DetailedUser,
+  UserWithDetail,
   Dictionary,
   DictionaryParameter,
   DictionarySettings,
@@ -370,7 +370,7 @@ type ServerSpecs = {
   login: {
     request: {name: string, password: string},
     response: {
-      success: {token: string, user: DetailedUser},
+      success: {token: string, user: UserWithDetail},
       error: never
     }
   },
@@ -447,7 +447,7 @@ type ServerSpecs = {
   fetchMe: {
     request: {},
     response: {
-      success: DetailedUser,
+      success: UserWithDetail,
       error: never
     }
   },

@@ -17,7 +17,7 @@ export class HistoryRestController extends InternalRestController {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const from = new Date(request.body.from);
     const histories = await HistoryModel.fetch(dictionary, from);
-    const body = histories.map(HistoryCreator.create);
+    const body = histories.map(HistoryCreator.skeletonize);
     InternalRestController.respond(response, body);
   }
 

@@ -6,7 +6,7 @@ import {useRefetchMe} from "/client/hook/auth";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {DetailedUser} from "/client/skeleton";
+import {UserWithDetail} from "/client/skeleton";
 import {uploadFileToAws} from "/client/util/aws";
 import {determineAwsErrorToastType} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
@@ -26,7 +26,7 @@ export type ChangeMyAvatarSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useChangeMyAvatar(me: DetailedUser): ChangeMyAvatarSpec {
+export function useChangeMyAvatar(me: UserWithDetail): ChangeMyAvatarSpec {
   const form = useForm<FormValue>(SCHEMA, DEFAULT_VALUE, {});
   const request = useRequest();
   const refetchMe = useRefetchMe();

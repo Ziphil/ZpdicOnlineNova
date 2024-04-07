@@ -10,7 +10,7 @@ import {
 
 export namespace LinkedWordCreator {
 
-  export function create(raw: LinkedWord): LinkedWordSkeleton {
+  export function skeletonize(raw: LinkedWord): LinkedWordSkeleton {
     const number = raw.number;
     const skeleton = {number};
     return skeleton;

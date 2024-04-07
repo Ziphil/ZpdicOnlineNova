@@ -5,7 +5,7 @@ import {Asserts, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {DetailedUser} from "/client/skeleton";
+import {UserWithDetail} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 
 
@@ -20,7 +20,7 @@ export type ChangeMyPasswordSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useChangeMyPassword(me: DetailedUser): ChangeMyPasswordSpec {
+export function useChangeMyPassword(me: UserWithDetail): ChangeMyPasswordSpec {
   const form = useForm<FormValue>(SCHEMA, {currentPassword: "", newPassword: ""}, {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();

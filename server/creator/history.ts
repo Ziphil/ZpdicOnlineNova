@@ -10,7 +10,7 @@ import {
 
 export namespace HistoryCreator {
 
-  export function create(raw: History): HistorySkeleton {
+  export function skeletonize(raw: History): HistorySkeleton {
     const id = raw.id;
     const date = raw.date.toISOString();
     const wordSize = raw.wordSize;

@@ -11,10 +11,10 @@ import {
 
 export namespace DictionarySettingsCreator {
 
-  export function create(raw: DictionarySettings): DictionarySettingsSkeleton {
+  export function skeletonize(raw: DictionarySettings): DictionarySettingsSkeleton {
     const akrantiainSource = raw.akrantiainSource;
     const zatlinSource = raw.zatlinSource;
-    const font = (raw.font !== undefined) ? DictionaryFontCreator.create(raw.font) : undefined;
+    const font = (raw.font !== undefined) ? DictionaryFontCreator.skeletonize(raw.font) : undefined;
     const punctuations = raw.punctuations;
     const pronunciationTitle = raw.pronunciationTitle;
     const exampleTitle = raw.exampleTitle;

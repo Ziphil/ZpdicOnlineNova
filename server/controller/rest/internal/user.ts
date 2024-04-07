@@ -17,7 +17,7 @@ export class UserRestController extends InternalRestController {
   @before(login(30 * 24 * 60 * 60))
   public async [Symbol()](request: Request<"login">, response: Response<"login">): Promise<void> {
     const {me, token} = request.middlewareBody as FilledMiddlewareBody<"me" | "token">;
-    const userBody = UserCreator.createDetailed(me);
+    const userBody = UserCreator.skeletonizeWithDetail(me);
     const body = {token, user: userBody};
     InternalRestController.respond(response, body);
   }
@@ -35,7 +35,7 @@ export class UserRestController extends InternalRestController {
     try {
       const {user, key} = await UserModel.register(name, email, password);
       const url = `${request.protocol}://${request.get("host")}/activate?key=${key}`;
-      const body = UserCreator.create(user);
+      const body = UserCreator.skeletonize(user);
       const subject = MailUtil.getSubject("registerUser");
       const text = MailUtil.getText("registerUser", {name, url});
       MailUtil.send(user.email, subject, text);
@@ -62,7 +62,7 @@ export class UserRestController extends InternalRestController {
     const {screenName} = request.body;
     try {
       await me.changeScreenName(screenName);
-      const body = UserCreator.create(me);
+      const body = UserCreator.skeletonize(me);
       InternalRestController.respond(response, body);
     } catch (error) {
       throw error;
@@ -76,7 +76,7 @@ export class UserRestController extends InternalRestController {
     const {email} = request.body;
     try {
       await me.changeEmail(email);
-      const body = UserCreator.create(me);
+      const body = UserCreator.skeletonize(me);
       InternalRestController.respond(response, body);
     } catch (error) {
       if (error.name === "ValidationError" && error.errors.email) {
@@ -94,7 +94,7 @@ export class UserRestController extends InternalRestController {
     const {password} = request.body;
     try {
       await me.changePassword(password);
-      const body = UserCreator.create(me);
+      const body = UserCreator.skeletonize(me);
       InternalRestController.respond(response, body);
     } catch (error) {
       InternalRestController.respondByCustomError(response, ["invalidUserPassword"], error);
@@ -138,7 +138,7 @@ export class UserRestController extends InternalRestController {
     const {key} = request.body;
     try {
       const user = await UserModel.activate(key, 60);
-      const body = UserCreator.create(user);
+      const body = UserCreator.skeletonize(user);
       InternalRestController.respond(response, body);
     } catch (error) {
       InternalRestController.respondByCustomError(response, ["invalidActivateToken"], error);
@@ -150,7 +150,7 @@ export class UserRestController extends InternalRestController {
     const {key, password} = request.body;
     try {
       const user = await UserModel.resetPassword(key, password, 60);
-      const body = UserCreator.create(user);
+      const body = UserCreator.skeletonize(user);
       InternalRestController.respond(response, body);
     } catch (error) {
       InternalRestController.respondByCustomError(response, ["invalidResetToken", "invalidUserPassword"], error);
@@ -173,7 +173,7 @@ export class UserRestController extends InternalRestController {
   @before(checkMe())
   public async [Symbol()](request: Request<"fetchMe">, response: Response<"fetchMe">): Promise<void> {
     const {me} = request.middlewareBody as FilledMiddlewareBody<"me">;
-    const body = UserCreator.createDetailed(me);
+    const body = UserCreator.skeletonizeWithDetail(me);
     InternalRestController.respond(response, body);
   }
 
@@ -182,7 +182,7 @@ export class UserRestController extends InternalRestController {
     const {name} = request.body;
     const user = await UserModel.fetchOneByName(name);
     if (user) {
-      const body = UserCreator.create(user);
+      const body = UserCreator.skeletonize(user);
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "noSuchUser");
@@ -208,7 +208,7 @@ export class UserRestController extends InternalRestController {
   public async [Symbol()](request: Request<"suggestUsers">, response: Response<"suggestUsers">): Promise<void> {
     const {pattern} = request.body;
     const users = await UserModel.suggest(pattern);
-    const body = users.map(UserCreator.create);
+    const body = users.map(UserCreator.skeletonize);
     InternalRestController.respond(response, body);
   }
 

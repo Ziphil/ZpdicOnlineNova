@@ -11,7 +11,7 @@ import {
 
 export class ExampleOfferParameterCreator {
 
-  public static recreate(skeleton: ExampleOfferParameterSkeleton): ExampleOfferParameter {
+  public static enflesh(skeleton: ExampleOfferParameterSkeleton): ExampleOfferParameter {
     const raw = new NormalExampleOfferParameter(skeleton.catalog);
     return raw;
   }

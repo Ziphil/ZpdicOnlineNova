@@ -6,7 +6,7 @@ import {useRefetchMe} from "/client/hook/auth";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {DetailedUser} from "/client/skeleton";
+import {UserWithDetail} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 
 
@@ -20,7 +20,7 @@ export type ChangeMyScreenNameSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 
-export function useChangeMyScreenName(me: DetailedUser): ChangeMyScreenNameSpec {
+export function useChangeMyScreenName(me: UserWithDetail): ChangeMyScreenNameSpec {
   const form = useForm<FormValue>(SCHEMA, {screenName: me.screenName}, {});
   const request = useRequest();
   const refetchMe = useRefetchMe();

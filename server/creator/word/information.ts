@@ -10,7 +10,7 @@ import {
 
 export namespace InformationCreator {
 
-  export function create(raw: Information): InformationSkeleton {
+  export function skeletonize(raw: Information): InformationSkeleton {
     const title = raw.title;
     const text = raw.text;
     const skeleton = {title, text};

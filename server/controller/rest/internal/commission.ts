@@ -20,7 +20,7 @@ export class CommissionRestController extends InternalRestController {
     const {name, comment} = request.body;
     if (name !== "") {
       const commission = await CommissionModel.add(dictionary, name, comment);
-      const body = CommissionCreator.create(commission);
+      const body = CommissionCreator.skeletonize(commission);
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "emptyCommissionName");
@@ -35,7 +35,7 @@ export class CommissionRestController extends InternalRestController {
     const commission = await CommissionModel.fetchOneByDictionaryAndId(dictionary, id);
     if (commission) {
       await commission.discard();
-      const body = CommissionCreator.create(commission);
+      const body = CommissionCreator.skeletonize(commission);
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "noSuchCommission");
@@ -49,7 +49,7 @@ export class CommissionRestController extends InternalRestController {
     const {offset, size} = request.body;
     const range = new QueryRange(offset, size);
     const hitResult = await CommissionModel.fetchByDictionary(dictionary, range);
-    const body = mapWithSize(hitResult, CommissionCreator.create);
+    const body = mapWithSize(hitResult, CommissionCreator.skeletonize);
     return InternalRestController.respond(response, body);
   }
 

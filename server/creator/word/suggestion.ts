@@ -11,9 +11,9 @@ import {
 
 export namespace SuggestionCreator {
 
-  export function create(raw: Suggestion): SuggestionSkeleton {
+  export function skeletonize(raw: Suggestion): SuggestionSkeleton {
     const title = raw.title;
-    const word = WordCreator.create(raw.word);
+    const word = WordCreator.skeletonize(raw.word);
     const skeleton = {title, word};
     return skeleton;
   }

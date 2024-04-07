@@ -10,7 +10,7 @@ import {
 
 export namespace NotificationCreator {
 
-  export function create(raw: Notification): NotificationSkeleton {
+  export function skeletonize(raw: Notification): NotificationSkeleton {
     const id = raw.id;
     const type = raw.type;
     const date = raw.date.toISOString();
