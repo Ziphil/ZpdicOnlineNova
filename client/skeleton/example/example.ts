@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+//
 
 import {Dictionary} from "/client/skeleton";
 import {ObjectId} from "/client/skeleton/common";

@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-closing-bracket-location */
+//
 
 import {faPlus} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";

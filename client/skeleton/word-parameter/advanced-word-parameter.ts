@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+//
 
 import rison from "rison";
 import {Search} from "/client/hook/search";

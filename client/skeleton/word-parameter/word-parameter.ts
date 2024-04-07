@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+//
 
 import {Search} from "/client/hook/search";
 import {AdvancedWordParameter} from "/client/skeleton/word-parameter/advanced-word-parameter";

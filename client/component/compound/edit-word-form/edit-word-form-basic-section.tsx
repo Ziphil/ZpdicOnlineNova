@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-closing-bracket-location */
-//
 
 import {faWandSparkles} from "@fortawesome/sharp-regular-svg-icons";
 import {ChangeEvent, ReactElement, useCallback, useState} from "react";

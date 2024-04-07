@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+//
 
 import {NormalExampleOfferParameter} from "/client/skeleton/example-offer-parameter/normal-example-offer-parameter";
 

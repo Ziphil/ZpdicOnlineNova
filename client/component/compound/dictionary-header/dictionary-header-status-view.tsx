@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-closing-bracket-location */
+//
 
 import {faNote, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";

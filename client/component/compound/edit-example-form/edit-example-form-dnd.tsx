@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-closing-bracket-location */
+//
 
 import {DndContext, DragEndEvent, MouseSensor, TouchSensor, closestCenter, useSensor, useSensors} from "@dnd-kit/core";
 import {SortableContext, useSortable, verticalListSortingStrategy} from "@dnd-kit/sortable";

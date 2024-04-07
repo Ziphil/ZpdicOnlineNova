@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+//
 
 import type {Search} from "/client/hook/search";
 import {NormalDictionaryParameter} from "/client/skeleton/dictionary-parameter/normal-dictionary-parameter";

@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-closing-bracket-location */
 //
 
 import {faBan} from "@fortawesome/sharp-regular-svg-icons";

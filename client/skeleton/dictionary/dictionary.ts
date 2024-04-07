@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
+//
 
 import {Akrantiain} from "akrantiain";
 import {Zatlin} from "zatlin";
