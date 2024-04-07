@@ -437,7 +437,7 @@ footer:
 header:
   link:
     dictionary: "Vortaroj"
-    exampleOffer: "Ĉiutagaj frazoj"
+    exampleOffer: "Frazoj"
   userPage: "Uzanta paĝo"
 invitationList:
   empty: "Neniuj sciigoj"
@@ -778,8 +778,8 @@ contactPage:
     Se vi volas sendi vian demandon anonime, bonvolu elsaluti kaj poste lasi malplena la kampon “Nomo”.
     Bonvolu noti, ke ni eble ne povos respondi al via anonima peto se ĝi koncernas ion kiu bezonas la aŭtoritaton de uzanto, kiel agordado aŭ redaktado de vortaro.
 exampleOfferListPage:
-  title: "Ĉiutagaj frazoj"
-  heading: "Ĉiutagaj frazoj"
+  title: "Frazoj"
+  heading: "Frazoj"
 dictionaryExamplePart:
   heading:
     offer: "Hodiaŭa frazo"

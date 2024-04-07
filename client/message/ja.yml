@@ -437,7 +437,7 @@ footer:
 header:
   link:
     dictionary: "辞書一覧"
-    exampleOffer: "過去の例文"
+    exampleOffer: "例文集"
   userPage: "ユーザーページ"
 invitationList:
   empty: "通知はありません"
@@ -776,8 +776,8 @@ contactPage:
     匿名でのお問い合わせをご希望の場合は、ログアウトした状態で「名前」欄を空欄にした上で送信してください。
     なお、辞書の設定や編集などに関わるような、ユーザーの権限が必要になる内容に関するお問い合わせの場合、匿名では対応できない場合がありますのでご了承ください。
 exampleOfferListPage:
-  title: "過去の例文"
-  heading: "過去の例文"
+  title: "例文集"
+  heading: "例文集"
 dictionaryExamplePart:
   heading:
     offer: "今日の例文"
