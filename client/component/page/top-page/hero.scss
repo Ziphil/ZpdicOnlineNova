@@ -49,6 +49,7 @@
   letter-spacing: 0.15em;
   text-indent: 0.15em;
   color: var(--catch-text-color);
+  font-variant-caps: small-caps;
   text-align: center;
   white-space: nowrap;
   z-index: 1;
@@ -80,20 +81,4 @@
     color: var(--link-hover-text-color) !important;
     text-decoration-color: var(--link-hover-text-color) !important;
   }
-}
-
-.decoration {
-  inset-block-start: 50%;
-  inset-inline-start: 50%;
-  width: 120%;
-  height: 300%;
-  font-size: 6zu;
-  line-height: 1.3;
-  color: var(--decoration-text-color);
-  transform: translate(-50%, -50%) rotate(-20deg);
-  z-index: 0;
-  position: absolute;
-  pointer-events: none;
-  user-select: none;
-  overflow: hidden;
 }

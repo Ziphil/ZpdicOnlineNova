@@ -34,7 +34,7 @@ export const NotificationCard = create(
                 <GeneralIcon icon={getIcon(notification.type)}/>
               </div>
               <div styleName="heading-right">
-                <MultiLineText styleName="title" is="h3" lineHeight="narrowest">
+                <MultiLineText styleName="title" is="h3" lineHeight="narrowFixed">
                   {notification.title}
                 </MultiLineText>
                 <div styleName="date">

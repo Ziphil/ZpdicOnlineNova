@@ -3,7 +3,7 @@
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
-import {WordWithExamples, DictionaryWithExecutors, Word} from "/client/skeleton";
+import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
 
 
 export const WordCardHeading = create(
@@ -38,11 +38,11 @@ export const WordCardHeading = create(
           </div>
         )}
         <div styleName="name-container">
-          <MultiLineText styleName="name" is="h3" lineHeight="narrowest" {...{style: {fontFamily: nameFontFamily}}}>
+          <MultiLineText styleName="name" is="h3" lineHeight="narrowFixed" {...{style: {fontFamily: nameFontFamily}}}>
             {word.name}
           </MultiLineText>
           {(hasFont) && (
-            <MultiLineText styleName="small-name" is="span" lineHeight="narrowest">
+            <MultiLineText styleName="small-name" is="span" lineHeight="narrowFixed">
               {word.name}
             </MultiLineText>
           )}

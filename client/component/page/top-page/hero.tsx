@@ -24,7 +24,7 @@ export const Hero = create(
     return (
       <div styleName="root" {...rest}>
         <Logo styleName="logo"/>
-        <MultiLineText styleName="catch" is="p" lineHeight="narrow">
+        <MultiLineText styleName="catch" is="p" lineHeight="narrowFixed">
           {transNode("catch", {
             line: (parts) => <span styleName="catch-line">{parts}</span>,
             wbr: <wbr/>

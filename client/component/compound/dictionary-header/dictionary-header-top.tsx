@@ -34,7 +34,7 @@ export const DictionaryHeaderTop = create(
       <div styleName="root">
         <div styleName="left">
           <div>
-            <MultiLineText styleName="name" is="h2" maxLineCount={2} lineHeight="narrowest">
+            <MultiLineText styleName="name" is="h2" maxLineCount={2} lineHeight="narrowFixed">
               {dictionary.name}
             </MultiLineText>
             <div styleName="user-container">
