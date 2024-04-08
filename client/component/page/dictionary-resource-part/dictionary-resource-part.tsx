@@ -1,7 +1,7 @@
 //
 
 import {ReactElement} from "react";
-import {AdditionalProps} from "zographia";
+import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {ResourceList} from "/client/component/compound/resource-list";
 import {create} from "/client/component/create";
 import {AddResourceButton} from "/client/component/form/add-resource-button";
@@ -17,6 +17,8 @@ export const DictionaryResourcePart = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
+    const {trans} = useTrans("dictionaryResourcePart");
+
     const dictionary = useDictionary();
 
     const number = dictionary.number;
@@ -25,9 +27,12 @@ export const DictionaryResourcePart = create(
     return (
       <div styleName="root" {...rest}>
         <section>
+          <MultiLineText styleName="explanation" is="p">
+            {trans("explanation")}
+          </MultiLineText>
           <div styleName="list-container">
             <AddResourceButton dictionary={dictionary}/>
-            <ResourceList dictionary={dictionary} resources={resources} pageSpec={{size: 50}} showFooter={true}/>
+            <ResourceList dictionary={dictionary} resources={resources} pageSpec={{size: 50}} showCode={true} showFooter={true}/>
           </div>
         </section>
       </div>

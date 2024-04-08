@@ -489,7 +489,7 @@ resourceList:
         本当によろしいですか?
       confirm: "削除"
 resourceListDialog:
-  message: >-
+  explanation: >-
     画像タイトルの下に表示されているコードを内容欄に貼り付けると、その箇所に画像が表示されます。
   callout: >-
     内容欄に画像を表示するには、Markdown を有効にする必要があります。
@@ -791,6 +791,10 @@ dictionaryInformationPart:
       単語数は毎日 23 時 30 分頃に記録されます。
     wordNameFrequency: >-
       見出し語に使われている各文字の出現頻度です。
+dictionaryResourcePart:
+  explanation: >-
+    アップロードした画像は、辞書の説明欄や単語の内容欄で使用することができます。
+    画像タイトルの下に表示されているコードを貼り付けてください。
 dictionarySettingPart:
   tab:
     general: "一般"

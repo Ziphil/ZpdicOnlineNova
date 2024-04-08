@@ -489,7 +489,7 @@ resourceList:
         Ĉu vi vere certas?
       confirm: "Forigi"
 resourceListDialog:
-  message: >-
+  explanation: >-
     Kopiu la kodon sub la titolo kaj algluu ĝin en tekstujon por montri la bildon.
   callout: >-
     Vi devas ebligi Markdown por montri bildojn en la enhavoj.
@@ -793,6 +793,10 @@ dictionaryInformationPart:
       La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
     wordNameFrequency: >-
       La jena diagramo montras kiom ofta ĉiu signo aperas en la kapvortoj en tiu vortaro.
+dictionaryResourcePart:
+  explanation: >-
+    Vi povas uzi la alŝutitajn bildojn en la priskribo de la vortaro kaj la enhavoj de vortoj.
+    Kopiu la kodon sub la titolo kaj algluu ĝin en tekstujon.
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"

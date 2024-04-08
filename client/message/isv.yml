@@ -489,7 +489,7 @@ resourceList:
         Are you really sure?
       confirm: "Delete"
 resourceListDialog:
-  message: >-
+  explanation: >-
     Copy the code below the title and paste it into a text box to display the image.
   callout: >-
     You need to enable Markdown in order to display images in the contents.
@@ -793,6 +793,10 @@ dictionaryInformationPart:
       Коликост слов јест записывана кажды дењ приблизно в 14:30 (UTC).
     wordNameFrequency: >-
       На слєдујучем диаграму показываје се како често кажды знак појавјаје се в словах того словника.
+dictionaryResourcePart:
+  explanation: >-
+    Vi povas uzi la alŝutitajn bildojn en la priskribo de la vortaro kaj la enhavoj de vortoj.
+    Kopiu la kodon sub la titolo kaj algluu ĝin en tekstujon.
 dictionarySettingPart:
   tab:
     general: "Обчи"
