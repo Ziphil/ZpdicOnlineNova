@@ -490,7 +490,7 @@ resourceList:
       confirm: "Delete"
 resourceListDialog:
   explanation: >-
-    Copy the code below the title and paste it into a text box to display the image.
+    Copy the code below the image and paste it into a text box to display the image.
   callout: >-
     You need to enable Markdown in order to display images in the contents.
   button:
@@ -795,8 +795,8 @@ dictionaryInformationPart:
       На слєдујучем диаграму показываје се како често кажды знак појавјаје се в словах того словника.
 dictionaryResourcePart:
   explanation: >-
-    Vi povas uzi la alŝutitajn bildojn en la priskribo de la vortaro kaj la enhavoj de vortoj.
-    Kopiu la kodon sub la titolo kaj algluu ĝin en tekstujon.
+    You can use the uploaded images in the description of the dictionary and the content of words.
+    Copy the code below the image and paste it into a text box.
 dictionarySettingPart:
   tab:
     general: "Обчи"

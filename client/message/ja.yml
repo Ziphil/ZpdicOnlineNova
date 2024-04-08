@@ -490,7 +490,7 @@ resourceList:
       confirm: "削除"
 resourceListDialog:
   explanation: >-
-    画像タイトルの下に表示されているコードを内容欄に貼り付けると、その箇所に画像が表示されます。
+    画像の下に表示されているコードを内容欄に貼り付けると、その箇所に画像が表示されます。
   callout: >-
     内容欄に画像を表示するには、Markdown を有効にする必要があります。
   button:
@@ -794,7 +794,7 @@ dictionaryInformationPart:
 dictionaryResourcePart:
   explanation: >-
     アップロードした画像は、辞書の説明欄や単語の内容欄で使用することができます。
-    画像タイトルの下に表示されているコードを貼り付けてください。
+    画像の下に表示されているコードを貼り付けてください。
 dictionarySettingPart:
   tab:
     general: "一般"

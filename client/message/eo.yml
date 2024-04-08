@@ -490,7 +490,7 @@ resourceList:
       confirm: "Forigi"
 resourceListDialog:
   explanation: >-
-    Kopiu la kodon sub la titolo kaj algluu ĝin en tekstujon por montri la bildon.
+    Kopiu la kodon sub la bildo kaj algluu ĝin en tekstujon por montri la bildon.
   callout: >-
     Vi devas ebligi Markdown por montri bildojn en la enhavoj.
   button:
@@ -796,7 +796,7 @@ dictionaryInformationPart:
 dictionaryResourcePart:
   explanation: >-
     Vi povas uzi la alŝutitajn bildojn en la priskribo de la vortaro kaj la enhavoj de vortoj.
-    Kopiu la kodon sub la titolo kaj algluu ĝin en tekstujon.
+    Kopiu la kodon sub la bildo kaj algluu ĝin en tekstujon.
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"

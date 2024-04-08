@@ -490,7 +490,7 @@ resourceList:
       confirm: "Delete"
 resourceListDialog:
   explanation: >-
-    Copy the code below the title and paste it into a text box to display the image.
+    Copy the code below the image and paste it into a text box to display the image.
   callout: >-
     You need to enable Markdown in order to display images in the contents.
   button:
@@ -796,7 +796,7 @@ dictionaryInformationPart:
 dictionaryResourcePart:
   explanation: >-
     You can use the uploaded images in the description of the dictionary and the content of words.
-    Copy the code below the title and paste it into a text box.
+    Copy the code below the image and paste it into a text box.
 dictionarySettingPart:
   tab:
     general: "General"
