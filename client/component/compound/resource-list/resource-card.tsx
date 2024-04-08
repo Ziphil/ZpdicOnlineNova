@@ -52,9 +52,11 @@ export const ResourceCard = create(
           <div styleName="image-container">
             <img styleName="image" src={getAwsFileUrl(`resource/${dictionary.number}/${resource}`)}/>
           </div>
-          <SingleLineText styleName="title">
-            {resource}
-          </SingleLineText>
+          {(!showCode) && (
+            <SingleLineText styleName="title">
+              {resource}
+            </SingleLineText>
+          )}
           {(showCode) && (
             <div styleName="code-container">
               <pre styleName="code">

@@ -489,8 +489,8 @@ resourceList:
         Are you really sure?
       confirm: "Delete"
 resourceListDialog:
-  message: >-
-    Copy the code below the title and paste it into a text box to display the image.
+  explanation: >-
+    Copy the code below the image and paste it into a text box to display the image.
   callout: >-
     You need to enable Markdown in order to display images in the contents.
   button:
@@ -793,6 +793,10 @@ dictionaryInformationPart:
       Коликост слов јест записывана кажды дењ приблизно в 14:30 (UTC).
     wordNameFrequency: >-
       На слєдујучем диаграму показываје се како често кажды знак појавјаје се в словах того словника.
+dictionaryResourcePart:
+  explanation: >-
+    You can use the uploaded images in the description of the dictionary and the content of words.
+    Copy the code below the image and paste it into a text box.
 dictionarySettingPart:
   tab:
     general: "Обчи"
@@ -937,7 +941,7 @@ topPage:
       I hope you find it useful.
     supporter: >-
       Here are the people who have supported this application in some way.
-      I would like to take this opportunity to thank them.
+      I would like to thank them for their support.
   subbutton:
     gift: "Send gift"
     offer: "See past daily sentences"

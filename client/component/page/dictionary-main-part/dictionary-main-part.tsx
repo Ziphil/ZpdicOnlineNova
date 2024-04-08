@@ -12,6 +12,7 @@ import {useDictionary} from "/client/hook/dictionary";
 import {useSuspenseResponse} from "/client/hook/request";
 import {Search, useSearchState} from "/client/hook/search";
 import {WordParameter} from "/client/skeleton";
+import {getAwsFileUrl} from "/client/util/aws";
 import {calcOffsetSpec, resolveStateAction} from "/client/util/misc";
 
 
@@ -54,7 +55,7 @@ export const DictionaryMainPart = create(
         <div styleName="right">
           <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
           {(debouncedQuery.showExplanation && !!dictionary.explanation) && (
-            <Markdown styleName="explanation" mode="normal">
+            <Markdown styleName="explanation" mode="normal" homePath={getAwsFileUrl(`resource/${dictionary.number}/`)}>
               {dictionary.explanation}
             </Markdown>
           )}

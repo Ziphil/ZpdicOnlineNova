@@ -5,7 +5,7 @@ import {faAngleRight} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {create} from "/client/component/create";
-import {WordWithExamples, DictionaryWithExecutors, Variation, Word} from "/client/skeleton";
+import {DictionaryWithExecutors, Variation, Word, WordWithExamples} from "/client/skeleton";
 
 
 export const WordCardVariationList = create(

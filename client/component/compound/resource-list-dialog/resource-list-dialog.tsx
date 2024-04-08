@@ -64,8 +64,8 @@ export const ResourceListDialog = create(
             <DialogCloseButton/>
             <DialogBody>
               {(dictionary.settings.enableMarkdown) ? (
-                <MultiLineText styleName="message" is="p">
-                  {trans("message")}
+                <MultiLineText styleName="explanation" is="p">
+                  {trans("explanation")}
                 </MultiLineText>
               ) : (
                 <Callout styleName="callout">

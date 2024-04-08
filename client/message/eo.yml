@@ -489,8 +489,8 @@ resourceList:
         Ĉu vi vere certas?
       confirm: "Forigi"
 resourceListDialog:
-  message: >-
-    Kopiu la kodon sub la titolo kaj algluu ĝin en tekstujon por montri la bildon.
+  explanation: >-
+    Kopiu la kodon sub la bildo kaj algluu ĝin en tekstujon por montri la bildon.
   callout: >-
     Vi devas ebligi Markdown por montri bildojn en la enhavoj.
   button:
@@ -793,6 +793,10 @@ dictionaryInformationPart:
       La nombro estas registrita ĉiutage je ĉirkaŭ 14:30 (UTC).
     wordNameFrequency: >-
       La jena diagramo montras kiom ofta ĉiu signo aperas en la kapvortoj en tiu vortaro.
+dictionaryResourcePart:
+  explanation: >-
+    Vi povas uzi la alŝutitajn bildojn en la priskribo de la vortaro kaj la enhavoj de vortoj.
+    Kopiu la kodon sub la bildo kaj algluu ĝin en tekstujon.
 dictionarySettingPart:
   tab:
     general: "Ĝenerala"
@@ -937,7 +941,7 @@ topPage:
       Mi esperas ke vi trovos ĝin utila.
     supporter: >-
       Jen la homoj kiuj iel subtenis tiun aplikaĵon.
-      Mi ŝatus profiti tiun okazon por danki ilin.
+      Mi ŝatus danki ilin pro ilia subteno.
   subbutton:
     gift: "Sendi donacon"
     offer: "Vidi antaŭaj ĉiutagaj frazoj"
