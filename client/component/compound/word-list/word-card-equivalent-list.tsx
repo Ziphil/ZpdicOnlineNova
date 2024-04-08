@@ -3,7 +3,7 @@
 import {Fragment, ReactElement} from "react";
 import {AdditionalProps, MultiLineText, Tag} from "zographia";
 import {create} from "/client/component/create";
-import {WordWithExamples, DictionaryWithExecutors, Word} from "/client/skeleton";
+import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
 
 
 export const WordCardEquivalentList = create(

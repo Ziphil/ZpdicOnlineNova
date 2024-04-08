@@ -5,7 +5,7 @@ import {faCaretRight} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {AdditionalProps, MultiLineText, aria} from "zographia";
 import {create} from "/client/component/create";
-import {WordWithExamples, DictionaryWithExecutors, Word} from "/client/skeleton";
+import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
 
 
 export const WordCardExampleList = create(
@@ -46,26 +46,3 @@ export const WordCardExampleList = create(
 
   }
 );
-
-
-function getPronunciation(dictionary: DictionaryWithExecutors, word: Word | WordWithExamples): string | undefined {
-  if (word.pronunciation !== undefined) {
-    if (word.pronunciation.match(/^(\/.+\/|\[.+\])$/)) {
-      return word.pronunciation;
-    } else {
-      return "/" + word.pronunciation + "/";
-    }
-  } else {
-    if (dictionary.akrantiain !== null) {
-      try {
-        const pronunciation = dictionary.akrantiain.convert(word.name);
-        return "/" + pronunciation + "/";
-      } catch (error) {
-        console.error(error);
-        return undefined;
-      }
-    } else {
-      return undefined;
-    }
-  }
-}
