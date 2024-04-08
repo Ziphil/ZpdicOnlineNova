@@ -25,7 +25,9 @@ const SUPPORTERS = [
   {name: "nymwa", linkUrl: {type: "github", name: "nymwa"}, avatarUrl: {type: "github", name: "nymwa"}},
   {name: "川音リオ", linkUrl: "https://misskey.io/@KawaneRio", avatarUrl: "https://s3.arkjp.net/misskey/thumbnail-5bed03e1-1c67-4504-bc7a-b5d916e36ef3.webp"},
   {name: "Qunoxts", linkUrl: {type: "twitter", name: "Qunoxts"}, avatarUrl: "https://pbs.twimg.com/profile_images/1321519766830415872/8HbvaYFT_400x400.jpg"},
-  {name: "炭酸ソーダ", linkUrl: {type: "twitter", name: "na2co3_ftw"}, avatarUrl: {type: "github", name: "na2co3-ftw"}}
+  {name: "炭酸ソーダ", linkUrl: {type: "twitter", name: "na2co3_ftw"}, avatarUrl: {type: "github", name: "na2co3-ftw"}},
+  {name: "ネットの片隅の有志"},
+  {name: "SenСэнандзуXneg"}
 ] as Array<Supporter>;
 
 
