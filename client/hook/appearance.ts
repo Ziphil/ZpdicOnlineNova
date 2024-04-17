@@ -23,14 +23,14 @@ export function useAppearance(): Appearance {
 
 export function useChangeAppearance(): (appearance: Appearance) => void {
   const setAppearance = useSetRecoilState(appearanceAtom);
-  const changeAppearance = useCallback(function (appearance: Appearance) {
+  const changeAppearance = useCallback(function (appearance: Appearance): void {
     setAppearance(appearance);
     localStorage.setItem("zp-appearance", appearance);
   }, [setAppearance]);
   return changeAppearance;
 }
 
-export function useDefaultAppearance(initialAppearance: string): void {
+export function useInitializeAppearance(initialAppearance: string): void {
   const changeAppearance = useChangeAppearance();
   useEffect(() => {
     const appearance = AppearanceUtil.cast(localStorage.getItem("zp-appearance") ?? "normal");
