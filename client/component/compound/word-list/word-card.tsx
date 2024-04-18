@@ -3,7 +3,7 @@
 import {faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {useHref} from "react-router";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, useResponsiveDevice, useTrans} from "zographia";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {ShareMenu} from "/client/component/compound/share-menu";
 import {create} from "/client/component/create";
@@ -34,7 +34,9 @@ export const WordCard = create(
 
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
-    const shareText = word.name;
+    const device = useResponsiveDevice();
+
+    const shareText = `${word.name}\n#ZpDIC`;
     const shareUrl = location.origin + useHref(`/dictionary/${dictionary.number}?kind=exact&number=${word.number}`);
 
     const discardWord = useDiscardWord(dictionary, word);
@@ -74,10 +76,14 @@ export const WordCard = create(
               </Button>
             </div>
             <div styleName="footer-right">
-              <ShareMenu text={shareText} url={shareUrl} trigger={(
+              <ShareMenu text={shareText} url={shareUrl} trigger={(device === "desktop") ? (
                 <Button scheme="secondary" variant="underline">
                   <ButtonIconbag><GeneralIcon icon={faShare}/></ButtonIconbag>
                   {trans("button.share")}
+                </Button>
+              ) : (
+                <Button scheme="secondary" variant="underline">
+                  <GeneralIcon icon={faShare}/>
                 </Button>
               )}/>
             </div>
