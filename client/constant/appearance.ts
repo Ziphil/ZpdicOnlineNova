@@ -6,104 +6,44 @@ import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
 
 export const COLOR_DEFINITIONS = {
   normal: {
-    primary: createColorDefinition("hsl(30, 80%, 50%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.91, saturation: 0.3}
-    }),
-    secondary: createColorDefinition("hsl(15, 75%, 55%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.93, saturation: 0.3}
-    }),
-    blue: createColorDefinition("hsl(220, 75%, 50%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.93, saturation: 0.3}
-    }),
-    red: createColorDefinition("hsl(0, 65%, 55%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.94, saturation: 0.3}
-    }),
-    green: createColorDefinition("hsl(140, 55%, 45%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.93, saturation: 0.3}
-    }),
-    yellow: createColorDefinition("hsl(60, 70%, 50%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.9, saturation: 0.3}
-    }),
-    purple: createColorDefinition("hsl(280, 55%, 55%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.94, saturation: 0.3}
-    }),
-    cyan: createColorDefinition("hsl(190, 70%, 50%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.93, saturation: 0.3}
-    }),
-    orange: createColorDefinition("hsl(30, 80%, 50%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.91, saturation: 0.3}
-    }),
-    gray: createColorDefinition("hsl(30, 5%, 55%)", {
-      dark: {mix: 0.55, saturation: -0.1},
-      light: {mix: 0.92, saturation: 0.2}
-    }),
-    white: createColor("hsl(30, 100%, 100%)"),
-    backgroundLight: createColor("hsl(30, 30%, 99%)"),
-    textLight: createColor("hsl(30, 30%, 10%)"),
-    stainLight: createColor("hsla(30, 30%, 50%)"),
-    black: createColor("hsl(30, 0%, 0%)"),
-    backgroundDark: createColor("hsl(30, 50%, 15%)"),
-    textDark: createColor("hsl(30, 100%, 98%)"),
-    stainDark: createColor("hsla(30, 50%, 0%)")
+    primary: createColorDefinition("oklch(70% 40% 58)", "oklch(35% 20% 58)"),
+    secondary: createColorDefinition("oklch(65% 45% 38)", "oklch(35% 20% 38)"),
+    blue: createColorDefinition("oklch(55% 50% 260)", "oklch(35% 20% 260)"),
+    red: createColorDefinition("oklch(55% 50% 15)", "oklch(35% 20% 15)"),
+    green: createColorDefinition("oklch(60% 35% 150)", "oklch(35% 20% 150)"),
+    yellow: createColorDefinition("oklch(75% 40% 110)", "oklch(35% 20% 110)"),
+    purple: createColorDefinition("oklch(55% 50% 310)", "oklch(35% 20% 310)"),
+    cyan: createColorDefinition("oklch(70% 30% 215)", "oklch(35% 20% 215)"),
+    orange: createColorDefinition("oklch(70% 40% 55)", "oklch(35% 20% 55)"),
+    gray: createColorDefinition("oklch(65% 2% 58)", "oklch(35% 2% 58)"),
+    white: createColor("oklch(100% 0% 58)"),
+    black: createColor("black"),
+    textLight: createColor("oklch(22% 5% 58)"),
+    textDark: createColor("oklch(99% 2% 58)"),
+    backgroundLight: createColor("oklch(99% 0% 58)"),
+    stainLight: createColor("oklch(63% 18% 58)"),
+    backgroundDark: createColor("oklch(30% 10% 58)"),
+    stainDark: createColor("black")
   },
   dimmed: {
-    primary: createColorDefinition("hsl(30, 60%, 45%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.91, saturation: 0.3}
-    }),
-    secondary: createColorDefinition("hsl(15, 55%, 50%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.93, saturation: 0.3}
-    }),
-    blue: createColorDefinition("hsl(220, 55%, 45%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.93, saturation: 0.3}
-    }),
-    red: createColorDefinition("hsl(0, 45%, 50%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.94, saturation: 0.3}
-    }),
-    green: createColorDefinition("hsl(140, 35%, 40%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.93, saturation: 0.3}
-    }),
-    yellow: createColorDefinition("hsl(60, 50%, 45%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.9, saturation: 0.3}
-    }),
-    purple: createColorDefinition("hsl(280, 35%, 50%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.94, saturation: 0.3}
-    }),
-    cyan: createColorDefinition("hsl(190, 50%, 45%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.93, saturation: 0.3}
-    }),
-    orange: createColorDefinition("hsl(30, 60%, 45%)", {
-      dark: {mix: 0.5, saturation: -0.1},
-      light: {mix: 0.91, saturation: 0.3}
-    }),
-    gray: createColorDefinition("hsl(30, 3%, 50%)", {
-      dark: {mix: 0.55, saturation: -0.1},
-      light: {mix: 0.92, saturation: 0.2}
-    }),
-    white: createColor("hsl(30, 30%, 98%)"),
-    backgroundLight: createColor("hsl(30, 20%, 96%)"),
-    textLight: createColor("hsl(30, 30%, 20%)"),
-    stainLight: createColor("hsla(30, 30%, 50%)"),
-    black: createColor("hsl(30, 0%, 0%)"),
-    backgroundDark: createColor("hsl(30, 50%, 15%)"),
-    textDark: createColor("hsl(30, 100%, 98%)"),
-    stainDark: createColor("hsla(30, 50%, 0%)")
+    primary: createColorDefinition("oklch(60% 35% 58)", "oklch(30% 15% 58)"),
+    secondary: createColorDefinition("oklch(55% 40% 38)", "oklch(30% 15% 38)"),
+    blue: createColorDefinition("oklch(45% 45% 260)", "oklch(30% 15% 260)"),
+    red: createColorDefinition("oklch(45% 45% 15)", "oklch(30% 15% 15)"),
+    green: createColorDefinition("oklch(50% 30% 150)", "oklch(30% 15% 150)"),
+    yellow: createColorDefinition("oklch(65% 35% 110)", "oklch(30% 15% 110)"),
+    purple: createColorDefinition("oklch(45% 45% 310)", "oklch(30% 15% 310)"),
+    cyan: createColorDefinition("oklch(60% 25% 215)", "oklch(30% 15% 215)"),
+    orange: createColorDefinition("oklch(60% 35% 55)", "oklch(30% 15% 55)"),
+    gray: createColorDefinition("oklch(55% 2% 58)", "oklch(30% 2% 58)"),
+    white: createColor("oklch(98% 0% 58)"),
+    black: createColor("black"),
+    textLight: createColor("oklch(22% 5% 58)"),
+    textDark: createColor("oklch(99% 2% 58)"),
+    backgroundLight: createColor("oklch(97% 0% 58)"),
+    stainLight: createColor("oklch(63% 18% 58)"),
+    backgroundDark: createColor("oklch(30% 10% 58)"),
+    stainDark: createColor("black")
   }
 } satisfies Record<string, ColorDefinitions>;
 
