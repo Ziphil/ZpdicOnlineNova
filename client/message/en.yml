@@ -481,6 +481,9 @@ resourceList:
   button:
     copy: "Copy"
     discard: "Delete"
+  toast:
+    copy: |-
+      Copied the code.
   dialog:
     discard:
       message: >-
@@ -521,6 +524,9 @@ shareMenu:
     misskey: "Misskey.io"
     copy: "Copy link"
     other: "Others"
+  toast:
+    copy: |-
+      Copied the link.
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"

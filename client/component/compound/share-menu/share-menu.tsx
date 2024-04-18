@@ -4,6 +4,8 @@ import {faCopy, faEllipsis} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {GeneralIcon, Menu, MenuItem, MenuItemIconbag, MenuSeparator, useTrans} from "zographia";
 import {create} from "/client/component/create";
+import {useToast} from "/client/hook/toast";
+import {copyToClipboard} from "/client/util/clipboard";
 
 
 export const ShareMenu = create(
@@ -21,8 +23,8 @@ export const ShareMenu = create(
   }): ReactElement {
 
     const {trans} = useTrans("shareMenu");
+    const {dispatchInfoToast} = useToast();
 
-    const canCopy = typeof navigator !== "undefined" && typeof navigator.clipboard !== "undefined" && typeof navigator.clipboard.writeText === "function";
     const canShare = typeof navigator !== "undefined" && typeof navigator.share === "function" && navigator.canShare({text, url});
 
     const openShareWindow = useCallback(function (platform: SharePlatform): void {
@@ -30,15 +32,16 @@ export const ShareMenu = create(
       window.open(windowUrl, "share", "width=550,height=450,personalbar=0,toolbar=0,scrollbars=1,resizable=1");
     }, [text, url]);
 
-    const copyText = useCallback(async () => {
+    const copyUrl = useCallback(async function (): Promise<void> {
       try {
-        await navigator.clipboard.writeText(url ?? "");
+        await copyToClipboard(url ?? "");
+        dispatchInfoToast(trans("toast.copy"));
       } catch (error) {
         console.error(error);
       }
-    }, [url]);
+    }, [url, trans, dispatchInfoToast]);
 
-    const shareText = useCallback(async () => {
+    const shareText = useCallback(async function (): Promise<void> {
       try {
         await navigator.share({text, url});
       } catch (error) {
@@ -54,12 +57,10 @@ export const ShareMenu = create(
           </MenuItem>
         ))}
         <MenuSeparator/>
-        {(canCopy) && (
-          <MenuItem onClick={copyText}>
-            <MenuItemIconbag><GeneralIcon icon={faCopy}/></MenuItemIconbag>
-            {trans("label.copy")}
-          </MenuItem>
-        )}
+        <MenuItem onClick={copyUrl}>
+          <MenuItemIconbag><GeneralIcon icon={faCopy}/></MenuItemIconbag>
+          {trans("label.copy")}
+        </MenuItem>
         {(canShare) && (
           <MenuItem onClick={shareText}>
             <MenuItemIconbag><GeneralIcon icon={faEllipsis}/></MenuItemIconbag>

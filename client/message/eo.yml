@@ -481,6 +481,9 @@ resourceList:
   button:
     copy: "Kopii"
     discard: "Forigi"
+  toast:
+    copy: |-
+      La kodo estas kopiita.
   dialog:
     discard:
       message: >-
@@ -521,6 +524,9 @@ shareMenu:
     misskey: "Misskey.io"
     copy: "Kopii ligilon"
     other: "Aliaj"
+  toast:
+    copy: |-
+      La ligilo estas kopiita.
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"

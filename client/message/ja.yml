@@ -481,6 +481,9 @@ resourceList:
   button:
     copy: "コピー"
     discard: "削除"
+  toast:
+    copy: |-
+      コードをコピーしました。
   dialog:
     discard:
       message: >-
@@ -521,6 +524,9 @@ shareMenu:
     misskey: "Misskey.io"
     copy: "リンクをコピー"
     other: "その他"
+  toast:
+    copy: |-
+      リンクをコピーしました。
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"
