@@ -2,7 +2,7 @@
 
 import {DocumentType, prop} from "@typegoose/typegoose";
 import {DeleteResult} from "mongodb";
-import {CallbackError, HydratedDocument, Model, QueryWithHelpers} from "mongoose";
+import {Aggregate, CallbackError, HydratedDocument, Model, QueryWithHelpers} from "mongoose";
 
 
 export class DiscardableSchema {
@@ -16,6 +16,10 @@ export class DiscardableSchema {
 
   public static findOneExist<T, H>(this: Model<T, H>, callback?: (error: CallbackError, result: T | null) => void): QueryWithHelpers<HydratedDocument<T> | null, HydratedDocument<T>, H, T> {
     return this.findOne({}, callback).where({"removedDate": undefined});
+  }
+
+  public static aggregateExist<T, H>(this: Model<T, H>): Aggregate<Array<T>> {
+    return this.aggregate().match({"removedDate": undefined});
   }
 
   public static deleteManyExist<T, H>(this: Model<T, H>, callback?: (error: CallbackError) => void): QueryWithHelpers<DeleteResult, HydratedDocument<T>, H, T> {

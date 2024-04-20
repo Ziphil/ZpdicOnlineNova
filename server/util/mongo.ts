@@ -1,7 +1,6 @@
 //
 
-import {ObjectId} from "bson";
-import {SchemaTypes} from "mongoose";
+import {SchemaTypes, mongo} from "mongoose";
 
 
 export function setMongoCheckRequired(name: keyof typeof SchemaTypes): void {
@@ -9,10 +8,9 @@ export function setMongoCheckRequired(name: keyof typeof SchemaTypes): void {
   SchemaType.checkRequired((value) => value !== null);
 }
 
-export function toObjectid(value: string): ObjectId {
+export function toObjectId(value: string): any {
+  const ObjectId = mongo["ObjectId"];
   return new ObjectId(value);
 }
 
-type SchemaTypeStatic = {
-  checkRequired: (check: (value: any) => boolean) => void
-};
+type SchemaTypeStatic = {checkRequired: (check: (value: any) => boolean) => void};

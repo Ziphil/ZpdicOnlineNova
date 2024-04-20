@@ -1,4 +1,4 @@
-//
+/* eslint-disable @typescript-eslint/naming-convention */
 
 import {
   DocumentType,
@@ -16,6 +16,7 @@ import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";
 import {WithSize} from "/server/type/common";
 import {LogUtil} from "/server/util/log";
+import {toObjectId} from "/server/util/mongo";
 import {QueryRange} from "/server/util/query";
 
 
@@ -67,8 +68,13 @@ export class ExampleSchema extends DiscardableSchema {
       const result = await QueryRange.restrictWithSize(query, range);
       return result;
     } else {
-      const query = ExampleModel.findExist().where("offer", offerId).sort("-createdDate");
-      const result = await QueryRange.restrictWithSize(query, range);
+      const aggregate = ExampleModel.aggregateExist().match({"offer": toObjectId(offerId)}).lookup({
+        from: "dictionaries",
+        localField: "dictionary",
+        foreignField: "_id",
+        as: "popluatedDictionary"
+      }).unwind("$popluatedDictionary").match({"popluatedDictionary.visibility": "public"}).sort("-createdDate");
+      const result = await QueryRange.restrictWithSize(aggregate, range);
       return result;
     }
   }
