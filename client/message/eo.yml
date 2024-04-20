@@ -341,6 +341,7 @@ editExampleForm:
   label:
     sentence: "Frazo en tiu conlingvo"
     translation: "Tradukaĵo en naturan lingvon"
+    supplement: "Aldona klarigo"
   absent:
     word: "Neniuj enhavitaj vortoj specifitaj"
   button:

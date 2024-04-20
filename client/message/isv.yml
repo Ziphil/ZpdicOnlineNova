@@ -341,6 +341,7 @@ editExampleForm:
   label:
     sentence: "Sentence in this conlang"
     translation: "Translation into natural language"
+    supplement: "Supplementary explanation"
   absent:
     word: "No included words specified"
   button:

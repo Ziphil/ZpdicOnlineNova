@@ -14,12 +14,14 @@ const DEFAULT_VALUE = {
   number: null,
   sentence: "",
   translation: "",
+  supplement: "",
   words: []
 } satisfies FormValue;
 type FormValue = {
   number: number | null,
   sentence: string,
   translation: string,
+  supplement: string,
   words: Array<RelationWord | null>,
   offer?: ObjectId
 };
@@ -63,6 +65,7 @@ function getFormValue(initialData: EditExampleInitialData): FormValue {
       number: example.number,
       sentence: example.sentence,
       translation: example.translation,
+      supplement: example.supplement ?? "",
       words: example.words.map((word) => ({
         number: word.number,
         name: word.name
@@ -76,6 +79,7 @@ function getFormValue(initialData: EditExampleInitialData): FormValue {
       number: null,
       sentence: "",
       translation: offer.translation,
+      supplement: "",
       words: [],
       offer: offer.id
     } satisfies FormValue;
@@ -92,6 +96,7 @@ function getQuery(dictionary: Dictionary, offer: ExampleOffer | null, value: For
       number: value.number ?? undefined,
       sentence: value.sentence,
       translation: (offer !== null) ? offer.translation : value.translation,
+      supplement: value.supplement,
       words: value.words.filter((rawWord) => rawWord !== null).map((rawWord) => ({
         number: rawWord!.number
       })),
