@@ -10,6 +10,7 @@ export interface EditableExample {
   number?: number;
   sentence: string;
   translation: string;
+  supplement?: string;
   words: Array<LinkedWord>;
   offer?: ObjectId;
 
@@ -21,7 +22,8 @@ export namespace EditableExample {
   export const EMPTY = {
     words: [],
     sentence: "",
-    translation: ""
+    translation: "",
+    supplement: ""
   } as EditableExample;
 
 }
@@ -33,8 +35,10 @@ export interface Example {
   number: number;
   sentence: string;
   translation: string;
+  supplement?: string;
   words: Array<LinkedWord>;
   offer?: ObjectId;
+
 }
 
 

@@ -37,6 +37,9 @@ export class ExampleSchema extends DiscardableSchema {
   @prop({required: true})
   public translation!: string;
 
+  @prop()
+  public supplement?: string;
+
   @prop({ref: "ExampleOfferSchema"})
   public offer?: Ref<ExampleOffer>;
 

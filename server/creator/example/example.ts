@@ -19,8 +19,9 @@ export namespace ExampleCreator {
     const words = raw.words.map(LinkedWordCreator.skeletonize);
     const sentence = raw.sentence;
     const translation = raw.translation;
+    const supplement = raw.supplement;
     const offer = raw.offer?.toString();
-    const skeleton = {id, number, words, sentence, translation, offer};
+    const skeleton = {id, number, words, sentence, translation, supplement, offer};
     return skeleton;
   }
 
