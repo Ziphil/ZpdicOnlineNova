@@ -2,7 +2,7 @@
 
 import {faCheck, faPlus, faUserPen} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
-import {ReactElement, useCallback} from "react";
+import {ReactElement, useCallback, useMemo} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, MultiLineText, data, useTrans} from "zographia";
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
@@ -37,6 +37,8 @@ export const ExampleOfferCard = create(
     const {trans, transDate} = useTrans("exampleOfferList");
 
     const [[examples] = []] = useResponse("fetchExamplesByOffer", (showExamples) && {offerId: offer.id});
+    const displayedExamples = useMemo(() => examples?.filter((example) => !!example.sentence), [examples]);
+
     const zonedCreatedDate = dayjs(offer.createdDate).tz("Asia/Tokyo");
 
     const handleSelect = useCallback(function (): void {
@@ -69,9 +71,9 @@ export const ExampleOfferCard = create(
               </MultiLineText>
             )}
           </div>
-          {(examples !== undefined && examples.length > 0) && (
+          {(displayedExamples !== undefined && displayedExamples.length > 0) && (
             <ul styleName="list">
-              {examples.map((example) => (
+              {displayedExamples.map((example) => (
                 <ExampleOfferCardExampleItem key={example.id} example={example}/>
               ))}
             </ul>
