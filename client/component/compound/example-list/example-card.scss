@@ -29,6 +29,11 @@
   }
 }
 
+.supplement {
+  font-size: 3.5zu;
+  color: var(--glob-mute-text-color);
+}
+
 .word {
   column-gap: var(--glob-blank-gap);
   display: flex;
