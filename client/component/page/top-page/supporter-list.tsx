@@ -37,7 +37,7 @@ export const SupporterList = create(
               <AvatarFallbackIconContainer hue={30}><GeneralIcon icon={faUser}/></AvatarFallbackIconContainer>
             </Avatar>
             {(resolvedSupporter.linkUrl !== undefined) ? (
-              <Link href={resolvedSupporter.linkUrl} scheme="secondary" target="_blank">{resolvedSupporter.name}</Link>
+              <Link href={resolvedSupporter.linkUrl} variant="unstyledSimple" target="_blank">{resolvedSupporter.name}</Link>
             ) : (
               <span>{resolvedSupporter.name}</span>
             )}

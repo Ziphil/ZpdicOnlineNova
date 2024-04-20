@@ -2,7 +2,8 @@
 
 import {isDocument} from "@typegoose/typegoose";
 import type {
-  Example as ExampleSkeleton, ExampleWithDictionary
+  Example as ExampleSkeleton,
+  ExampleWithDictionary as ExampleSkeletonWithDictionary
 } from "/client/skeleton";
 import {DictionaryCreator} from "/server/creator/dictionary/dictionary";
 import {LinkedWordCreator} from "/server/creator/word/linked-word";
@@ -19,19 +20,24 @@ export namespace ExampleCreator {
     const words = raw.words.map(LinkedWordCreator.skeletonize);
     const sentence = raw.sentence;
     const translation = raw.translation;
+    const supplement = raw.supplement;
     const offer = raw.offer?.toString();
-    const skeleton = {id, number, words, sentence, translation, offer};
+    const skeleton = {id, number, words, sentence, translation, supplement, offer};
     return skeleton;
   }
 
-  export async function skeletonizeWithDictionary(raw: Example): Promise<ExampleWithDictionary> {
+  export async function skeletonizeWithDictionary(raw: Example): Promise<ExampleSkeletonWithDictionary> {
     const base = skeletonize(raw);
     const [dictionary] = await Promise.all([(async () => {
-      await raw.populate("dictionary");
-      if (isDocument(raw.dictionary)) {
-        return DictionaryCreator.skeletonize(raw.dictionary);
+      if ("popluatedDictionary" in raw) {
+        return DictionaryCreator.skeletonize(raw.popluatedDictionary as any);
       } else {
-        throw new Error("cannot happen");
+        await raw.populate("dictionary");
+        if (isDocument(raw.dictionary)) {
+          return DictionaryCreator.skeletonize(raw.dictionary);
+        } else {
+          throw new Error("cannot happen");
+        }
       }
     })()]);
     const skeleton = {...base, dictionary};

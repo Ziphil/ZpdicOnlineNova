@@ -50,25 +50,28 @@ export const ExampleCard = create(
               {filledExample.translation}
             </MultiLineText>
           </div>
-          <div styleName="word">
-            <span styleName="icon" {...aria({hidden: true})}>
-              <FontAwesomeIcon icon={faHandPointRight}/>
-            </span>
-            <MultiLineText styleName="text" is="span">
-              {(filledExample.words.length > 0) ? filledExample.words.map((word, index) => (
-                <Fragment key={index}>
-                  {(index > 0) && <span styleName="punctuation">, </span>}
-                  <Link href={`/dictionary/${dictionary.number}?kind=exact&number=${word.number}`} scheme="secondary" variant="underline">
-                    {word.name ?? <LoadingIcon/>}
-                  </Link>
-                </Fragment>
-              )) : (
-                <p styleName="absent">
-                  {trans("noWord")}
-                </p>
-              )}
+          {(!!filledExample.supplement) && (
+            <MultiLineText styleName="supplement" is="p">
+              {filledExample.supplement}
             </MultiLineText>
-          </div>
+          )}
+          {(filledExample.words.length > 0) && (
+            <div styleName="word">
+              <span styleName="icon" {...aria({hidden: true})}>
+                <FontAwesomeIcon icon={faHandPointRight}/>
+              </span>
+              <MultiLineText styleName="text" is="span">
+                {filledExample.words.map((word, index) => (
+                  <Fragment key={index}>
+                    {(index > 0) && <span styleName="punctuation">, </span>}
+                    <Link href={`/dictionary/${dictionary.number}?kind=exact&number=${word.number}`} scheme="secondary" variant="underline">
+                      {word.name ?? <LoadingIcon/>}
+                    </Link>
+                  </Fragment>
+                ))}
+              </MultiLineText>
+            </div>
+          )}
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">

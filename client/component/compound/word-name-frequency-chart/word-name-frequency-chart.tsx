@@ -1,5 +1,6 @@
 //
 
+import Color from "colorjs.io";
 import {ReactElement, useMemo} from "react";
 import {Cell, Pie, PieChart, ResponsiveContainer} from "recharts";
 import {AdditionalProps, useLeveledColor} from "zographia";
@@ -24,8 +25,8 @@ export const WordNameFrequencyChart = create(
 
     const dataSpec = useMemo(() => calcChartDataSpec(frequencies), [frequencies]);
 
-    const colors = PIE_SCHEMES.map((scheme) => useLeveledColor(scheme, 3));
-    const otherColor = useLeveledColor("gray", 3);
+    const colors = PIE_SCHEMES.map((scheme) => toColorString(useLeveledColor(scheme, 3)));
+    const otherColor = toColorString(useLeveledColor("gray", 3));
 
     return (
       <div styleName="root" {...rest}>
@@ -58,6 +59,10 @@ export const WordNameFrequencyChart = create(
 
 
 const PIE_SCHEMES = ["blue", "red", "green", "yellow", "purple"] as const;
+
+function toColorString(color: Color): string {
+  return color.to("srgb").toString({format: "hex"});
+}
 
 function calcChartDataSpec(frequencies: WordNameFrequencies): {data: Array<{char: string, count: number}>} {
   const rawData = frequencies.char.map(([char, frequency]) => ({char, count: frequency.all}));

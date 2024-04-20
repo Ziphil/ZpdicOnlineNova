@@ -1,6 +1,6 @@
 //
 
-import {faCircleCheck, faCircleExclamation} from "@fortawesome/sharp-regular-svg-icons";
+import {faCircleCheck, faCircleExclamation, faCircleInfo} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, ReactNode, useCallback} from "react";
 import {GeneralIcon, Toast, ToastBody, ToastContent, ToastIconContainer, ToastSupplement, useToast as useRawToast, useTrans} from "zographia";
 
@@ -45,11 +45,26 @@ export function useToast(): ToastCallbacks {
       </Toast>
     );
   }, [dispatchToast, trans]);
-  return {dispatchToast, dispatchErrorToast, dispatchSuccessToast};
+  const dispatchInfoToast = useCallback(function (content: string): void {
+    dispatchToast(
+      <Toast scheme="primary">
+        <ToastIconContainer>
+          <GeneralIcon icon={faCircleInfo}/>
+        </ToastIconContainer>
+        <ToastBody>
+          <ToastContent>
+            {content}
+          </ToastContent>
+        </ToastBody>
+      </Toast>
+    );
+  }, [dispatchToast]);
+  return {dispatchToast, dispatchErrorToast, dispatchSuccessToast, dispatchInfoToast};
 }
 
 type ToastCallbacks = {
   dispatchToast: (element: ReactElement) => void,
   dispatchErrorToast: (type: string) => void,
-  dispatchSuccessToast: (type: string) => void
+  dispatchSuccessToast: (type: string) => void,
+  dispatchInfoToast: (content: string) => void
 };

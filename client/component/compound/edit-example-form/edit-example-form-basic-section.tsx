@@ -43,6 +43,10 @@ export const EditExampleFormBasicSection = create(
               )}
             </Textarea>
           </ControlContainer>
+          <ControlContainer>
+            <ControlLabel>{trans("label.supplement")}</ControlLabel>
+            <Textarea styleName="textarea" {...register("supplement")}/>
+          </ControlContainer>
         </div>
       </section>
     );

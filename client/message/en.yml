@@ -208,7 +208,9 @@ exampleOfferTag:
   catalog:
     zpdicDaily: "Daily sentences"
     appleAlpha: "Sentences to eat apples"
-    appleBeta: "Sentences to eat more apples"
+    appleBeta: "Sentences to eat enough apples"
+    appleGamma: "Sentences to eat more apples"
+    survival: "Practical sentences to survive today"
   number: "#{number, number}"
 wordModeSelect:
   label:
@@ -341,6 +343,7 @@ editExampleForm:
   label:
     sentence: "Sentence in this conlang"
     translation: "Translation into natural language"
+    supplement: "Supplementary explanation"
   absent:
     word: "No included words specified"
   button:
@@ -481,6 +484,9 @@ resourceList:
   button:
     copy: "Copy"
     discard: "Delete"
+  toast:
+    copy: |-
+      Copied the code.
   dialog:
     discard:
       message: >-
@@ -521,6 +527,9 @@ shareMenu:
     misskey: "Misskey.io"
     copy: "Copy link"
     other: "Others"
+  toast:
+    copy: |-
+      Copied the link.
 suggestionCard:
   maybe: "Do you mean…"
   message: "{title} <mute>of</mute> {nameNode}"

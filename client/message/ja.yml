@@ -209,6 +209,8 @@ exampleOfferTag:
     zpdicDaily: "今日の例文"
     appleAlpha: "リンゴを食べたい 58 文"
     appleBeta: "リンゴを食べ足りない 57 文"
+    appleGamma: "リンゴをもっと食べたい 55 文"
+    survival: "今日を生き抜く実用例文"
   number: "#{number, number}"
 wordModeSelect:
   label:
@@ -341,6 +343,7 @@ editExampleForm:
   label:
     sentence: "この言語での例文"
     translation: "自然言語訳"
+    supplement: "補足説明"
   absent:
     word: "使用単語が登録されていません"
   button:
@@ -481,6 +484,9 @@ resourceList:
   button:
     copy: "コピー"
     discard: "削除"
+  toast:
+    copy: |-
+      コードをコピーしました。
   dialog:
     discard:
       message: >-
@@ -521,6 +527,9 @@ shareMenu:
     misskey: "Misskey.io"
     copy: "リンクをコピー"
     other: "その他"
+  toast:
+    copy: |-
+      リンクをコピーしました。
 suggestionCard:
   maybe: "もしかして…"
   message: "{nameNode} <mute>の</mute> {title}"

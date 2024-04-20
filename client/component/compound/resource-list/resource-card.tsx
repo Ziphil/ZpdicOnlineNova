@@ -15,8 +15,10 @@ import {
   useTrans
 } from "zographia";
 import {create} from "/client/component/create";
+import {useToast} from "/client/hook/toast";
 import {Dictionary} from "/client/skeleton";
 import {getAwsFileUrl} from "/client/util/aws";
+import {copyToClipboard} from "/client/util/clipboard";
 import {useDiscardResource} from "./resource-card-hook";
 
 
@@ -37,6 +39,7 @@ export const ResourceCard = create(
   } & AdditionalProps): ReactElement {
 
     const {trans} = useTrans("resourceList");
+    const {dispatchInfoToast} = useToast();
 
     const discardResource = useDiscardResource(dictionary, resource);
 
@@ -44,7 +47,8 @@ export const ResourceCard = create(
 
     const copyCode = useCallback(async function (): Promise<void> {
       await copyToClipboard(code);
-    }, [code]);
+      dispatchInfoToast(trans("toast.copy"));
+    }, [code, trans, dispatchInfoToast]);
 
     return (
       <Card styleName="root" {...rest}>
@@ -81,17 +85,3 @@ export const ResourceCard = create(
 
   }
 );
-
-
-async function copyToClipboard(text: string): Promise<void> {
-  if (navigator.clipboard) {
-    await navigator.clipboard.writeText(text);
-  } else {
-    const element = document.createElement("input");
-    element.value = text;
-    document.body.appendChild(element);
-    element.select();
-    document.execCommand("copy");
-    document.body.removeChild(element);
-  }
-}

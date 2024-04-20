@@ -208,7 +208,9 @@ exampleOfferTag:
   catalog:
     zpdicDaily: "Ĉiutagaj frazoj"
     appleAlpha: "Frazoj por manĝi pomojn"
-    appleBeta: "Frazoj por manĝi pli da pomoj"
+    appleBeta: "Frazoj por manĝi sufiĉaj pomoj"
+    appleGamma: "Frazoj por manĝi pli da pomoj"
+    survival: "Praktikaj frazoj por pluvivi hodiaŭ"
   number: "#{number, number}"
 wordModeSelect:
   label:
@@ -341,6 +343,7 @@ editExampleForm:
   label:
     sentence: "Frazo en tiu conlingvo"
     translation: "Tradukaĵo en naturan lingvon"
+    supplement: "Aldona klarigo"
   absent:
     word: "Neniuj enhavitaj vortoj specifitaj"
   button:
@@ -481,6 +484,9 @@ resourceList:
   button:
     copy: "Kopii"
     discard: "Forigi"
+  toast:
+    copy: |-
+      La kodo estas kopiita.
   dialog:
     discard:
       message: >-
@@ -521,6 +527,9 @@ shareMenu:
     misskey: "Misskey.io"
     copy: "Kopii ligilon"
     other: "Aliaj"
+  toast:
+    copy: |-
+      La ligilo estas kopiita.
 suggestionCard:
   maybe: "Ĉu vi celas…"
   message: "{title} <mute>de</mute> {nameNode}"
