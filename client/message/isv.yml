@@ -208,7 +208,9 @@ exampleOfferTag:
   catalog:
     zpdicDaily: "Daily sentences"
     appleAlpha: "Sentences to eat apples"
-    appleBeta: "Sentences to eat more apples"
+    appleBeta: "Sentences to eat enough apples"
+    appleGamma: "Sentences to eat more apples"
+    survival: "Practical sentences to survive today"
   number: "#{number, number}"
 wordModeSelect:
   label:

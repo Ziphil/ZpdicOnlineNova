@@ -208,7 +208,9 @@ exampleOfferTag:
   catalog:
     zpdicDaily: "Ĉiutagaj frazoj"
     appleAlpha: "Frazoj por manĝi pomojn"
-    appleBeta: "Frazoj por manĝi pli da pomoj"
+    appleBeta: "Frazoj por manĝi sufiĉaj pomoj"
+    appleGamma: "Frazoj por manĝi pli da pomoj"
+    survival: "Praktikaj frazoj por pluvivi hodiaŭ"
   number: "#{number, number}"
 wordModeSelect:
   label:
