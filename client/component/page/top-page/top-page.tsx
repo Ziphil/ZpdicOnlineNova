@@ -19,7 +19,7 @@ import {Supporter, SupporterList} from "./supporter-list";
 
 
 const SUPPORTERS = [
-  {name: "ゆりです。", linkUrl: {type: "twitter", name: "udl_design"}, avatarUrl: "https://pbs.twimg.com/profile_images/1567141188788191232/8itkryuL_400x400.jpg"},
+  {name: "ふせ みゆり", linkUrl: {type: "twitter", name: "fracqxs"}, avatarUrl: "https://pbs.twimg.com/profile_images/1670288413252268040/cMrmTG42_400x400.jpg"},
   {name: "bluebear94", linkUrl: {type: "github", name: "bluebear94"}, avatarUrl: {type: "github", name: "bluebear94"}},
   {name: "lynn", linkUrl: {type: "github", name: "lynn"}, avatarUrl: {type: "github", name: "lynn"}},
   {name: "nymwa", linkUrl: {type: "github", name: "nymwa"}, avatarUrl: {type: "github", name: "nymwa"}},
