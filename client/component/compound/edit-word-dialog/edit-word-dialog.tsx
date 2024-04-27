@@ -1,7 +1,7 @@
 //
 
 import {faArrowUpRightFromSquare} from "@fortawesome/sharp-regular-svg-icons";
-import {Fragment, ReactElement, cloneElement, useCallback, useRef, useState} from "react";
+import {Fragment, MouseEvent, ReactElement, cloneElement, useCallback, useRef, useState} from "react";
 import {useHref} from "react-router-dom";
 import rison from "rison";
 import {
@@ -19,6 +19,7 @@ import {EditWordForm} from "/client/component/compound/edit-word-form";
 import {EditWordFormValue, EditWordInitialData} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
+import {checkOpeningExternal} from "/client/util/form";
 
 
 export const EditWordDialog = create(
@@ -44,9 +45,15 @@ export const EditWordDialog = create(
 
     const formRef = useRef<() => EditWordFormValue>(null);
 
-    const openDialog = useCallback(function (): void {
-      setOpen(true);
-    }, []);
+    const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
+      const value = formRef.current?.();
+      if (checkOpeningExternal(event) && value !== undefined) {
+        const addWordPageUrl = addWordPageUrlBase + `/${(forceAdd || value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
+        window.open(addWordPageUrl);
+      } else {
+        setOpen(true);
+      }
+    }, [addWordPageUrlBase, forceAdd]);
 
     const closeDialog = useCallback(function (): void {
       setOpen(false);
