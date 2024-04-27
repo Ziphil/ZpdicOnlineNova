@@ -17,9 +17,27 @@
 }
 
 .textarea {
-  height: 24zu;
+  @supports (field-sizing: content) {
+    min-height: 24zu;
+    max-height: 100zu;
+    >textarea {
+      field-sizing: content;
+    }
+  }
+  @supports not (field-sizing: content) {
+    height: 24zu;
+  }
 }
 
 .textarea-supplement {
-  height: 32zu;
+  @supports (field-sizing: content) {
+    min-height: 32zu;
+    max-height: 100zu;
+    >textarea {
+      field-sizing: content;
+    }
+  }
+  @supports not (field-sizing: content) {
+    height: 32zu;
+  }
 }
