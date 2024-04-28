@@ -1,9 +1,8 @@
 /* eslint-disable no-useless-computed-key */
 
-import {faHashtag} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement} from "react";
-import {GeneralIcon, LoadingIcon, Tag, TagIconbag, useTrans} from "zographia";
+import {LoadingIcon, Tag, TagIconbag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {ExampleOffer, ObjectId} from "/client/skeleton";
@@ -36,7 +35,7 @@ export const ExampleOfferTag = create(
                 transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")
               ) : (
                 <>
-                  <TagIconbag><GeneralIcon icon={faHashtag}/></TagIconbag>
+                  <TagIconbag><span>№</span></TagIconbag>
                   {transNumber(actualOffer.number)}
                 </>
               )}
