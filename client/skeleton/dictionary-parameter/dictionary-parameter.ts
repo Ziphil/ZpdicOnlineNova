@@ -21,13 +21,11 @@ export type DictionaryOrder = {mode: DictionaryOrderMode, direction: DictionaryO
 export namespace DictionaryParameter {
 
   export function deserialize(search: Search): DictionaryParameter {
-    const parameter = NormalDictionaryParameter.deserialize(search);
-    return parameter;
+    return NormalDictionaryParameter.deserialize(search);
   }
 
   export function serialize(parameter: DictionaryParameter): Search {
-    const params = NormalDictionaryParameter.serialize(parameter);
-    return params;
+    return NormalDictionaryParameter.serialize(parameter);
   }
 
 }

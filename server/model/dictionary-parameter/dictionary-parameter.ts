@@ -17,6 +17,7 @@ export abstract class DictionaryParameter {
     } else if (mode === "createdDate") {
       return `${directionSign}createdDate _id`;
     } else {
+      const dummy = mode satisfies never;
       throw new Error("cannot happen");
     }
   }
