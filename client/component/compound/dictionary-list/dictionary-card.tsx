@@ -3,7 +3,7 @@
 import {faCog, faLockKeyhole, faNote, faRight} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
-import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, Tag, useTrans} from "zographia";
+import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, Tag, useResponsiveDevice, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
@@ -37,6 +37,8 @@ export const DictionaryCard = create(
     const [histories] = useResponse("fetchHistories", (showChart) && {number, from});
     const [canOwn] = useResponse("fetchDictionaryAuthorization", (showSettingLink) && {identifier: number, authority: "own"});
     const [sizes] = useResponse("fetchDictionarySizes", (showChart) && {number});
+
+    const device = useResponsiveDevice();
 
     return (
       <Card styleName="root" {...rest}>
@@ -81,13 +83,17 @@ export const DictionaryCard = create(
               <dd styleName="table-value"><time dateTime={dayjs(dictionary.createdDate).toISOString()}>{transDate(dictionary.createdDate)}</time></dd>
             </dl>
           </div>
-          {(showChart && histories !== undefined && histories.length > 0 && sizes !== undefined) && (
+          {(showChart && device === "desktop") && (
             <div styleName="right">
-              <DictionaryCardHistoryChart dictionary={dictionary} histories={histories}/>
-              <div styleName="count">
-                <GeneralIcon styleName="icon" icon={faNote}/>
-                {transNumber(sizes.word)}
-              </div>
+              {(histories !== undefined && histories.length > 0) && (
+                <DictionaryCardHistoryChart dictionary={dictionary} histories={histories}/>
+              )}
+              {(sizes !== undefined) && (
+                <div styleName="count">
+                  <GeneralIcon styleName="icon" icon={faNote}/>
+                  {transNumber(sizes.word)}
+                </div>
+              )}
             </div>
           )}
         </CardBody>
