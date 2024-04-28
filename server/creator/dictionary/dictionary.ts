@@ -17,7 +17,7 @@ import {
 export namespace DictionaryCreator {
 
   export function skeletonize(raw: Dictionary): DictionarySkeleton {
-    const id = raw.id;
+    const id = raw.id || raw["_id"];
     const number = raw.number;
     const paramName = raw.paramName;
     const name = raw.name;

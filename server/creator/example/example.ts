@@ -15,7 +15,7 @@ import {
 export namespace ExampleCreator {
 
   export function skeletonize(raw: Example): ExampleSkeleton {
-    const id = raw.id;
+    const id = raw.id || raw["_id"];
     const number = raw.number;
     const words = raw.words.map(LinkedWordCreator.skeletonize);
     const sentence = raw.sentence;
