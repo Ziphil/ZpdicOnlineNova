@@ -4,7 +4,6 @@ import type {
   Aggregation,
   Commission,
   CustomError,
-  UserWithDetail,
   Dictionary,
   DictionaryParameter,
   DictionarySettings,
@@ -17,6 +16,7 @@ import type {
   Example,
   ExampleOffer,
   ExampleOfferParameter,
+  ExampleParameter,
   ExampleWithDictionary,
   History,
   Invitation,
@@ -26,6 +26,7 @@ import type {
   Relation,
   Suggestion,
   User,
+  UserWithDetail,
   Word,
   WordNameFrequencies,
   WordParameter,
@@ -299,6 +300,13 @@ type ServerSpecs = {
   },
   fetchExamples: {
     request: {number: number, offset?: number, size?: number},
+    response: {
+      success: WithSize<Example>,
+      error: CustomError<"noSuchDictionary">
+    }
+  },
+  searchExamples: {
+    request: {number: number, parameter: ExampleParameter, offset?: number, size?: number},
     response: {
       success: WithSize<Example>,
       error: CustomError<"noSuchDictionary">

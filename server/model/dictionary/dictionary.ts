@@ -27,6 +27,7 @@ import {createSerializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
 import {CustomError} from "/server/model/error";
 import {Example, ExampleModel} from "/server/model/example/example";
+import {ExampleParameter} from "/server/model/example-parameter/example-parameter";
 import {InvitationModel} from "/server/model/invitation";
 import {User, UserSchema} from "/server/model/user/user";
 import {Relation} from "/server/model/word/relation";
@@ -373,13 +374,19 @@ export class DictionarySchema extends DiscardableSchema {
   }
 
   /** 与えられた検索パラメータを用いて辞書を検索し、ヒットした単語のリストとサジェストのリストを返します。*/
-  public async searchWord(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
+  public async searchWords(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     const query = parameter.createQuery(this);
     const suggestionQuery = parameter.createSuggestionQuery(this);
     const wordPromise = QueryRange.restrictWithSize(query, range);
     const suggestionPromise = suggestionQuery?.then((suggestions) => suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word))) ?? Promise.resolve([]);
     const [words, suggestions] = await Promise.all([wordPromise, suggestionPromise]);
     return {words, suggestions};
+  }
+
+  public async searchExamples(this: Dictionary, parameter: ExampleParameter, range?: QueryRange): Promise<WithSize<Example>> {
+    const query = parameter.createQuery(this);
+    const examples = await QueryRange.restrictWithSize(query, range);
+    return examples;
   }
 
   public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {

@@ -160,7 +160,7 @@ export class DictionaryRestController extends InternalRestController {
     const {offset, size} = request.body;
     const parameter = WordParameterCreator.enflesh(request.body.parameter);
     const range = new QueryRange(offset, size);
-    const hitResult = await dictionary.searchWord(parameter, range);
+    const hitResult = await dictionary.searchWords(parameter, range);
     const body = {
       words: await mapWithSizeAsync(hitResult.words, WordCreator.skeletonizeWithExamples),
       suggestions: hitResult.suggestions.map(SuggestionCreator.skeletonize)
