@@ -17,6 +17,17 @@
   flex-wrap: wrap;
 }
 
+.number {
+  font-size: 3zu;
+  color: var(--glob-mute-text-color);
+  display: flex;
+  align-items: center;
+}
+
+.number-icon {
+  margin-inline-end: var(--glob-blank-gap);
+}
+
 .parallel {
   column-gap: 3zu;
   row-gap: 3zu;

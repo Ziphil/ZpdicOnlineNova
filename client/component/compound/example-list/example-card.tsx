@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faHandPointRight, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faEdit, faHandPointRight, faHashtag, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, aria, useTrans} from "zographia";
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
@@ -26,10 +26,11 @@ export const ExampleCard = create(
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {trans} = useTrans("exampleList");
+    const {trans, transNumber} = useTrans("exampleList");
 
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
+    const debug = location.hostname === "localhost";
     const filledExample = useFilledExample(dictionary, example);
 
     const discardExample = useDiscardExample(dictionary, example);
@@ -37,9 +38,17 @@ export const ExampleCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
-          {(example.offer !== undefined) && (
+          {(debug || example.offer !== undefined) && (
             <div styleName="tag">
-              <ExampleOfferTag offer={{id: example.offer}}/>
+              {(debug) && (
+                <span styleName="number">
+                  <GeneralIcon styleName="number-icon" icon={faHashtag}/>
+                  {transNumber(example.number)}
+                </span>
+              )}
+              {(example.offer !== undefined) && (
+                <ExampleOfferTag offer={{id: example.offer}}/>
+              )}
             </div>
           )}
           <div styleName="parallel">

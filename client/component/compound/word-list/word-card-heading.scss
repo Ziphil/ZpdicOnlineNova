@@ -9,21 +9,23 @@
   flex-direction: column;
 }
 
-.number {
-  font-size: 3zu;
-  color: var(--glob-mute-text-color);
-}
-
-.number-icon {
-  margin-inline-end: var(--glob-blank-gap);
-}
-
 .tag {
   row-gap: 1.5zu;
   column-gap: 2zu;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.number {
+  font-size: 3zu;
+  color: var(--glob-mute-text-color);
+  display: flex;
+  align-items: center;
+}
+
+.number-icon {
+  margin-inline-end: var(--glob-blank-gap);
 }
 
 .name-container {
