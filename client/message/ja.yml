@@ -406,6 +406,7 @@ exampleList:
   button:
     edit: "編集"
     discard: "削除"
+    share: "共有"
   dialog:
     discard:
       message: >-

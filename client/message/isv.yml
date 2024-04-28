@@ -406,6 +406,7 @@ exampleList:
   button:
     edit: "Измєнити"
     discard: "Одстранити"
+    share: "Share"
   dialog:
     discard:
       message: >-

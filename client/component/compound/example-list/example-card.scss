@@ -71,4 +71,11 @@
 .footer {
   column-gap: 3zu;
   display: flex;
+  justify-content: space-between;
+}
+
+.footer-left,
+.footer-right {
+  column-gap: 3zu;
+  display: flex;
 }

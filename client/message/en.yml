@@ -406,6 +406,7 @@ exampleList:
   button:
     edit: "Edit"
     discard: "Delete"
+    share: "Share"
   dialog:
     discard:
       message: >-

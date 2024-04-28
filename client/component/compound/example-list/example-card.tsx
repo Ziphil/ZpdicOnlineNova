@@ -1,12 +1,14 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faHandPointRight, faHashtag, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faEdit, faHandPointRight, faHashtag, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, aria, useTrans} from "zographia";
+import {useHref} from "react-router-dom";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, aria, useResponsiveDevice, useTrans} from "zographia";
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {Link} from "/client/component/atom/link";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
+import {ShareMenu} from "/client/component/compound/share-menu";
 import {create} from "/client/component/create";
 import {useFilledExample} from "/client/hook/example";
 import {useResponse} from "/client/hook/request";
@@ -30,7 +32,12 @@ export const ExampleCard = create(
 
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
+    const device = useResponsiveDevice();
+
     const debug = location.hostname === "localhost";
+    const shareText = `${example.sentence} — ${example.translation}\n#ZpDIC`;
+    const shareUrl = location.origin + useHref(`/dictionary/${dictionary.number}?kind=exact&number=${example.number}`);
+
     const filledExample = useFilledExample(dictionary, example);
 
     const discardExample = useDiscardExample(dictionary, example);
@@ -84,16 +91,30 @@ export const ExampleCard = create(
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">
-            <EditExampleDialog dictionary={dictionary} initialData={{type: "example", example: filledExample}} trigger={(
-              <Button scheme="secondary" variant="underline">
-                <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
-                {trans("button.edit")}
+            <div styleName="footer-left">
+              <EditExampleDialog dictionary={dictionary} initialData={{type: "example", example: filledExample}} trigger={(
+                <Button scheme="secondary" variant="underline">
+                  <ButtonIconbag><GeneralIcon icon={faEdit}/></ButtonIconbag>
+                  {trans("button.edit")}
+                </Button>
+              )}/>
+              <Button scheme="red" variant="underline" onClick={discardExample}>
+                <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
+                {trans("button.discard")}
               </Button>
-            )}/>
-            <Button scheme="red" variant="underline" onClick={discardExample}>
-              <ButtonIconbag><GeneralIcon icon={faTrashAlt}/></ButtonIconbag>
-              {trans("button.discard")}
-            </Button>
+            </div>
+            <div styleName="footer-right">
+              <ShareMenu text={shareText} url={shareUrl} trigger={(device === "desktop") ? (
+                <Button scheme="secondary" variant="underline">
+                  <ButtonIconbag><GeneralIcon icon={faShare}/></ButtonIconbag>
+                  {trans("button.share")}
+                </Button>
+              ) : (
+                <Button scheme="secondary" variant="underline">
+                  <GeneralIcon icon={faShare}/>
+                </Button>
+              )}/>
+            </div>
           </CardFooter>
         )}
       </Card>
