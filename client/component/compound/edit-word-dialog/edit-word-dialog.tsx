@@ -19,6 +19,7 @@ import {EditWordForm} from "/client/component/compound/edit-word-form";
 import {EditWordFormValue, EditWordInitialData} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
+import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {checkOpeningExternal} from "/client/util/form";
 
 
@@ -41,7 +42,7 @@ export const EditWordDialog = create(
     const {trans} = useTrans("editWordDialog");
 
     const [open, setOpen] = useState(false);
-    const addWordPageUrlBase = useHref(`/dictionary/${dictionary.number}/word`);
+    const addWordPageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/word`);
 
     const formRef = useRef<() => EditWordFormValue>(null);
 

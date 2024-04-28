@@ -7,6 +7,7 @@ import {AdditionalProps, Card, CardBody, MultiLineText, aria, useTrans} from "zo
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Suggestion} from "/client/skeleton";
+import {getDictionaryIdentifier} from "/client/util/dictionary";
 
 
 export const SuggestionCard = create(
@@ -38,12 +39,12 @@ export const SuggestionCard = create(
                     title: suggestion.title,
                     mute: (parts) => <span styleName="mute">{parts}</span>,
                     nameNode: (
-                      <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(suggestion.word.name)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
+                      <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?text=${encodeURIComponent(suggestion.word.name)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
                         {suggestion.word.name}
                       </Link>
                     )
                   }) : (
-                    <Link href={`/dictionary/${dictionary.number}?text=${encodeURIComponent(suggestion.word.name)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
+                    <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?text=${encodeURIComponent(suggestion.word.name)}&mode=name&type=exact&page=0`} scheme="secondary" variant="underline">
                       {suggestion.word.name}
                     </Link>
                   )}

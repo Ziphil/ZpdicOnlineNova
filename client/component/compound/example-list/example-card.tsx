@@ -13,6 +13,7 @@ import {create} from "/client/component/create";
 import {useFilledExample} from "/client/hook/example";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors, Example} from "/client/skeleton";
+import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {useDiscardExample} from "./example-card-hook";
 
 
@@ -36,7 +37,7 @@ export const ExampleCard = create(
 
     const debug = location.hostname === "localhost";
     const shareText = `${example.sentence} — ${example.translation}\n#ZpDIC`;
-    const shareUrl = location.origin + useHref(`/dictionary/${dictionary.number}?kind=exact&number=${example.number}`);
+    const shareUrl = location.origin + useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${example.number}`);
 
     const filledExample = useFilledExample(dictionary, example);
 
@@ -80,7 +81,7 @@ export const ExampleCard = create(
                 {filledExample.words.map((word, index) => (
                   <Fragment key={index}>
                     {(index > 0) && <span styleName="punctuation">, </span>}
-                    <Link href={`/dictionary/${dictionary.number}?kind=exact&number=${word.number}`} scheme="secondary" variant="underline">
+                    <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`} scheme="secondary" variant="underline">
                       {word.name ?? <LoadingIcon/>}
                     </Link>
                   </Fragment>

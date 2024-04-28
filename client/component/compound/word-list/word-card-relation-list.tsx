@@ -7,6 +7,7 @@ import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Relation, Word, WordWithExamples} from "/client/skeleton";
+import {getDictionaryIdentifier} from "/client/util/dictionary";
 
 
 export const WordCardRelationList = create(
@@ -37,7 +38,7 @@ export const WordCardRelationList = create(
               {relations.map((relation, index) => (
                 <Fragment key={index}>
                   {(index > 0) && <span styleName="punctuation">, </span>}
-                  <Link href={`/dictionary/${dictionary.number}?kind=exact&number=${relation.number}`} scheme="secondary" variant="underline">
+                  <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${relation.number}`} scheme="secondary" variant="underline">
                     {relation.name}
                   </Link>
                 </Fragment>

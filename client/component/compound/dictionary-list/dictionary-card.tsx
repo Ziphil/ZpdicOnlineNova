@@ -9,6 +9,7 @@ import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithAuthorities, DictionaryWithUser} from "/client/skeleton";
+import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {DictionaryCardHistoryChart} from "./dictionary-card-history-chart";
 
 
@@ -61,7 +62,7 @@ export const DictionaryCard = create(
                 )}
               </div>
             )}
-            <Link styleName="name" href={`/dictionary/${dictionary.paramName || dictionary.number}`} variant="unstyledSimple">
+            <Link styleName="name" href={`/dictionary/${getDictionaryIdentifier(dictionary)}`} variant="unstyledSimple">
               <SingleLineText is="h3">
                 {dictionary.name}
               </SingleLineText>
@@ -98,12 +99,12 @@ export const DictionaryCard = create(
           )}
         </CardBody>
         <CardFooter styleName="footer">
-          <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${dictionary.paramName || dictionary.number}`}>
+          <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${getDictionaryIdentifier(dictionary)}`}>
             <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
             {trans("button.see")}
           </Link>
           {(showSettingLink && canOwn) && (
-            <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${dictionary.paramName || dictionary.number}/settings`}>
+            <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${getDictionaryIdentifier(dictionary)}/settings`}>
               <LinkIconbag><GeneralIcon icon={faCog}/></LinkIconbag>
               {trans("button.setting")}
             </Link>
