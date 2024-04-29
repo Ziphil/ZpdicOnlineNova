@@ -143,8 +143,8 @@ export class DictionaryRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
-  @post("/searchDictionary")
-  public async [Symbol()](request: Request<"searchDictionary">, response: Response<"searchDictionary">): Promise<void> {
+  @post("/searchDictionaries")
+  public async [Symbol()](request: Request<"searchDictionaries">, response: Response<"searchDictionaries">): Promise<void> {
     const {offset, size} = request.body;
     const parameter = DictionaryParameterCreator.enflesh(request.body.parameter);
     const range = new QueryRange(offset, size);
@@ -153,9 +153,9 @@ export class DictionaryRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
-  @post("/searchWord")
+  @post("/searchWords")
   @before(checkDictionary())
-  public async [Symbol()](request: FilledRequest<"searchWord", "dictionary">, response: Response<"searchWord">): Promise<void> {
+  public async [Symbol()](request: FilledRequest<"searchWords", "dictionary">, response: Response<"searchWords">): Promise<void> {
     const {dictionary} = request.middlewareBody;
     const {offset, size} = request.body;
     const parameter = WordParameterCreator.enflesh(request.body.parameter);

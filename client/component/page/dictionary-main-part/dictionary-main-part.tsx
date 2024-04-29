@@ -29,7 +29,7 @@ export const DictionaryMainPart = create(
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
     const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [hitResult] = useSuspenseResponse("searchWord", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
+    const [hitResult] = useSuspenseResponse("searchWords", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
     const [hitWords, hitSize] = hitResult.words;
     const hitSuggestions = hitResult.suggestions;
 

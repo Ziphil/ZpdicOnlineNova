@@ -45,7 +45,7 @@ export function useEditExample(dictionary: Dictionary, initialData: EditExampleI
     await switchResponse(response, async (example) => {
       form.setValue("number", example.number);
       await Promise.all([
-        invalidateResponses("searchWord", (query) => query.number === dictionary.number),
+        invalidateResponses("searchWords", (query) => query.number === dictionary.number),
         invalidateResponses("searchExamples", (query) => query.number === dictionary.number),
         invalidateResponses("fetchExamplesByOffer", (query) => query.number === dictionary.number),
         invalidateResponses("fetchDictionarySizes", (query) => query.number === dictionary.number)

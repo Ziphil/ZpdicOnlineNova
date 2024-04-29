@@ -172,14 +172,14 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
-  searchDictionary: {
+  searchDictionaries: {
     request: {parameter: DictionaryParameter, offset?: number, size?: number},
     response: {
       success: WithSize<DictionaryWithUser>,
       error: never
     }
   },
-  searchWord: {
+  searchWords: {
     request: {number: number, parameter: WordParameter, offset?: number, size?: number},
     response: {
       success: {words: WithSize<WordWithExamples>, suggestions: Array<Suggestion>},

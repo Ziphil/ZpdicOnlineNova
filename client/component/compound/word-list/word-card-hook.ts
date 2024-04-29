@@ -21,7 +21,7 @@ export function useDiscardWord(dictionary: Dictionary, word: Word): () => void {
     const response = await request("discardWord", {number, wordNumber});
     await switchResponse(response, async () => {
       await Promise.all([
-        invalidateResponses("searchWord", (query) => query.number === dictionary.number),
+        invalidateResponses("searchWords", (query) => query.number === dictionary.number),
         invalidateResponses("fetchDictionarySizes", (query) => query.number === dictionary.number)
       ]);
       dispatchSuccessToast("discardWord");
