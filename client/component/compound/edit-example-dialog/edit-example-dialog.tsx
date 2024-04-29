@@ -15,7 +15,7 @@ import {
   GeneralIcon,
   useTrans
 } from "zographia";
-import {EditExampleForm, EditExampleFormValue, EditExampleInitialData} from "/client/component/compound/edit-example-form";
+import {EditExampleForm, EditExampleFormValue, EditExampleInitialData, getEditExampleFormValue} from "/client/component/compound/edit-example-form";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
@@ -44,14 +44,14 @@ export const EditExampleDialog = create(
     const formRef = useRef<() => EditExampleFormValue>(null);
 
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
-      const value = formRef.current?.();
-      if (checkOpeningExternal(event) && value !== undefined) {
+      if (checkOpeningExternal(event)) {
+        const value = getEditExampleFormValue(initialData);
         const addExamplePageUrl = addExamplePageUrlBase + `/${(value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
         window.open(addExamplePageUrl);
       } else {
         setOpen(true);
       }
-    }, [addExamplePageUrlBase]);
+    }, [addExamplePageUrlBase, initialData]);
 
     const closeDialog = useCallback(function (): void {
       setOpen(false);

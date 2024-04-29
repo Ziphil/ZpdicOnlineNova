@@ -15,8 +15,7 @@ import {
   GeneralIcon,
   useTrans
 } from "zographia";
-import {EditWordForm} from "/client/component/compound/edit-word-form";
-import {EditWordFormValue, EditWordInitialData} from "/client/component/compound/edit-word-form";
+import {EditWordForm, EditWordFormValue, EditWordInitialData, getEditWordFormValue} from "/client/component/compound/edit-word-form";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
@@ -47,14 +46,14 @@ export const EditWordDialog = create(
     const formRef = useRef<() => EditWordFormValue>(null);
 
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
-      const value = formRef.current?.();
-      if (checkOpeningExternal(event) && value !== undefined) {
+      if (checkOpeningExternal(event)) {
+        const value = getEditWordFormValue(initialData, forceAdd);
         const addWordPageUrl = addWordPageUrlBase + `/${(forceAdd || value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
         window.open(addWordPageUrl);
       } else {
         setOpen(true);
       }
-    }, [addWordPageUrlBase, forceAdd]);
+    }, [addWordPageUrlBase, initialData, forceAdd]);
 
     const closeDialog = useCallback(function (): void {
       setOpen(false);

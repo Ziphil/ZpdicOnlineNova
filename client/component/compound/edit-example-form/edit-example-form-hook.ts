@@ -32,9 +32,10 @@ export type EditExampleSpec = {
 };
 export type EditExampleFormValue = FormValue;
 export type EditExampleInitialData = {type: "example", example: Example} | {type: "offer", offer: ExampleOffer} | {type: "form", value: EditExampleFormValue};
+export const getEditExampleFormValue = getFormValue;
 
 export function useEditExample(dictionary: Dictionary, initialData: EditExampleInitialData | null, onSubmit?: (example: EditableExample) => unknown): EditExampleSpec {
-  const form = useForm<FormValue>((initialData !== null) ? getFormValue(initialData) : DEFAULT_VALUE, {});
+  const form = useForm<FormValue>(getFormValue(initialData), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -57,35 +58,52 @@ export function useEditExample(dictionary: Dictionary, initialData: EditExampleI
   return {form, handleSubmit};
 }
 
-function getFormValue(initialData: EditExampleInitialData): FormValue {
-  const type = initialData.type;
-  if (type === "example") {
-    const example = initialData.example;
-    const value = {
-      number: example.number,
-      sentence: example.sentence,
-      translation: example.translation,
-      supplement: example.supplement ?? "",
-      words: example.words.map((word) => ({
-        number: word.number,
-        name: word.name
-      })),
-      offer: example.offer
-    } satisfies FormValue;
-    return value;
-  } else if (type === "offer") {
-    const offer = initialData.offer;
-    const value = {
-      number: null,
-      sentence: "",
-      translation: offer.translation,
-      supplement: "",
-      words: [],
-      offer: offer.id
-    } satisfies FormValue;
-    return value;
+function getFormValue(initialData: EditExampleInitialData | null): FormValue {
+  if (initialData !== null) {
+    if (initialData.type === "example") {
+      const example = initialData.example;
+      if (example.offer !== undefined) {
+        const value = {
+          number: example.number,
+          sentence: example.sentence,
+          translation: example.translation,
+          supplement: example.supplement ?? "",
+          words: example.words.map((word) => ({
+            number: word.number,
+            name: word.name
+          })),
+          offer: example.offer
+        } satisfies FormValue;
+        return value;
+      } else {
+        const value = {
+          number: example.number,
+          sentence: example.sentence,
+          translation: example.translation,
+          supplement: example.supplement ?? "",
+          words: example.words.map((word) => ({
+            number: word.number,
+            name: word.name
+          }))
+        } satisfies FormValue;
+        return value;
+      }
+    } else if (initialData.type === "offer") {
+      const offer = initialData.offer;
+      const value = {
+        number: null,
+        sentence: "",
+        translation: offer.translation,
+        supplement: "",
+        words: [],
+        offer: offer.id
+      } satisfies FormValue;
+      return value;
+    } else {
+      return initialData.value;
+    }
   } else {
-    return initialData.value;
+    return DEFAULT_VALUE;
   }
 }
 
