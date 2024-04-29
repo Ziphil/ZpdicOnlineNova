@@ -55,17 +55,6 @@ export class ExampleRestController extends InternalRestController {
     }
   }
 
-  @post("/fetchExamples")
-  @before(checkDictionary())
-  public async [Symbol()](request: Request<"fetchExamples">, response: Response<"fetchExamples">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
-    const {offset, size} = request.body;
-    const range = new QueryRange(offset, size);
-    const hitResult = await ExampleModel.fetchByDictionary(dictionary, range);
-    const body = mapWithSize(hitResult, ExampleCreator.skeletonize);
-    InternalRestController.respond(response, body);
-  }
-
   @post("/searchExamples")
   @before(checkDictionary())
   public async [Symbol()](request: Request<"searchExamples">, response: Response<"searchExamples">): Promise<void> {

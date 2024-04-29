@@ -298,13 +298,6 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "noSuchExample">
     }
   },
-  fetchExamples: {
-    request: {number: number, offset?: number, size?: number},
-    response: {
-      success: WithSize<Example>,
-      error: CustomError<"noSuchDictionary">
-    }
-  },
   searchExamples: {
     request: {number: number, parameter: ExampleParameter, offset?: number, size?: number},
     response: {

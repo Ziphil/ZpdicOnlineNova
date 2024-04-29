@@ -21,7 +21,7 @@ export function useDiscardExample(dictionary: Dictionary, example: Example): () 
     const response = await request("discardExample", {number, exampleNumber});
     await switchResponse(response, async () => {
       await Promise.all([
-        invalidateResponses("fetchExamples", (query) => query.number === dictionary.number),
+        invalidateResponses("searchExamples", (query) => query.number === dictionary.number),
         invalidateResponses("fetchDictionarySizes", (query) => query.number === dictionary.number)
       ]);
       dispatchSuccessToast("discardExample");
