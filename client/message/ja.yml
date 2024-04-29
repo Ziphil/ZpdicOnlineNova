@@ -707,7 +707,7 @@ changeDictionarySettingsForm:
       false: "無効"
 changeDictionaryVisibilityForm:
   label:
-    public: "公開"
+    public: "全体公開"
     unlisted: "限定公開"
     private: "非公開"
 changeDictionarySourceForm:
