@@ -9,6 +9,7 @@ import {ShareMenu} from "/client/component/compound/share-menu";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
+import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
 import {WordCardHeading} from "./word-card-heading";
@@ -37,7 +38,7 @@ export const WordCard = create(
     const device = useResponsiveDevice();
 
     const shareText = `${word.name}\n#ZpDIC`;
-    const shareUrl = location.origin + useHref(`/dictionary/${dictionary.number}?kind=exact&number=${word.number}`);
+    const shareUrl = location.origin + useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`);
 
     const discardWord = useDiscardWord(dictionary, word);
 

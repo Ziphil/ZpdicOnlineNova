@@ -3,7 +3,7 @@
 import {before, post, restController} from "/server/controller/rest/decorator";
 import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/server/controller/rest/internal/controller";
 import {checkDictionary, checkMe, parseDictionary} from "/server/controller/rest/internal/middleware";
-import {ExampleCreator, ExampleOfferCreator, ExampleOfferParameterCreator} from "/server/creator";
+import {ExampleCreator, ExampleOfferCreator, ExampleOfferParameterCreator, ExampleParameterCreator} from "/server/creator";
 import {ExampleModel, ExampleOfferModel} from "/server/model";
 import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
 import {QueryRange} from "/server/util/query";
@@ -55,13 +55,14 @@ export class ExampleRestController extends InternalRestController {
     }
   }
 
-  @post("/fetchExamples")
+  @post("/searchExamples")
   @before(checkDictionary())
-  public async [Symbol()](request: Request<"fetchExamples">, response: Response<"fetchExamples">): Promise<void> {
+  public async [Symbol()](request: Request<"searchExamples">, response: Response<"searchExamples">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {offset, size} = request.body;
+    const parameter = ExampleParameterCreator.enflesh(request.body.parameter);
     const range = new QueryRange(offset, size);
-    const hitResult = await ExampleModel.fetchByDictionary(dictionary, range);
+    const hitResult = await dictionary.searchExamples(parameter, range);
     const body = mapWithSize(hitResult, ExampleCreator.skeletonize);
     InternalRestController.respond(response, body);
   }

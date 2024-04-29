@@ -19,9 +19,12 @@ export const GoogleAdsense = create(
   }): ReactElement {
 
     useMount(() => {
-      const anyWindow = window as any;
-      if (anyWindow) {
-        (anyWindow.adsbygoogle = anyWindow.adsbygoogle || []).push({});
+      const debug = location.hostname === "localhost";
+      if (!debug) {
+        const anyWindow = window as any;
+        if (anyWindow) {
+          (anyWindow.adsbygoogle = anyWindow.adsbygoogle || []).push({});
+        }
       }
     });
 

@@ -20,6 +20,7 @@ import {Link} from "/client/component/atom/link";
 import {UserView} from "/client/component/atom/user-view";
 import {create} from "/client/component/create";
 import {Invitation} from "/client/skeleton";
+import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {useAcceptInvitation, useRejectInvitation} from "./invitation-card-hook";
 
 
@@ -45,7 +46,7 @@ export const InvitationCard = create(
             <div styleName="tag">
               <Tag variant="solid">{trans(`tag.${invitation.type}`)}</Tag>
             </div>
-            <Link styleName="name" href={`/dictionary/${invitation.dictionary.paramName || invitation.dictionary.number}`} variant="unstyledSimple">
+            <Link styleName="name" href={`/dictionary/${getDictionaryIdentifier(invitation.dictionary)}`} variant="unstyledSimple">
               <SingleLineText is="h3">
                 {invitation.dictionary.name}
               </SingleLineText>

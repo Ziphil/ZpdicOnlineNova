@@ -1,7 +1,8 @@
 //
 
+import {faHashtag} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useMemo} from "react";
-import {AdditionalProps, MultiLineText, Tag, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, MultiLineText, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
 
@@ -30,7 +31,10 @@ export const WordCardHeading = create(
         {(debug || word.tags.length > 0) && (
           <div styleName="tag">
             {(debug) && (
-              <span styleName="number">#{transNumber(word.number)}</span>
+              <span styleName="number">
+                <GeneralIcon styleName="number-icon" icon={faHashtag}/>
+                {transNumber(word.number)}
+              </span>
             )}
             {word.tags.map((tag, index) => (
               <Tag key={index} variant="solid">{tag}</Tag>

@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {ReactElement, useCallback, useState} from "react";
+import {ReactElement, useCallback} from "react";
 import {AdditionalProps, Indicator, SingleLineText, useTrans} from "zographia";
 import {GoogleAdsense} from "/client/component/atom/google-adsense";
 import {ExampleList} from "/client/component/compound/example-list";
@@ -9,7 +9,8 @@ import {SearchExampleForm} from "/client/component/compound/search-example-form"
 import {create} from "/client/component/create";
 import {useDictionary} from "/client/hook/dictionary";
 import {useResponse, useSuspenseResponse} from "/client/hook/request";
-import {NormalExampleOfferParameter} from "/client/skeleton";
+import {Search, useSearchState} from "/client/hook/search";
+import {ExampleParameter, NormalExampleOfferParameter} from "/client/skeleton";
 import {calcOffsetSpec} from "/client/util/misc";
 
 
@@ -27,17 +28,17 @@ export const DictionaryExamplePart = create(
 
     const [canEdit] = useSuspenseResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
 
-    const [page, setPage] = useState(0);
-    const [[hitExamples, hitSize]] = useSuspenseResponse("fetchExamples", {number: dictionary.number, ...calcOffsetSpec(page, 50)}, {keepPreviousData: true});
+    const [query, debouncedQuery, setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
+    const [[hitExamples, hitSize]] = useSuspenseResponse("searchExamples", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
 
     const [[offers] = []] = useResponse("searchExampleOffers", (canEdit) && {parameter: NormalExampleOfferParameter.DAILY, size: 1, offset: 0});
     const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
     const showOffer = canEdit && offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 
     const handlePageSet = useCallback(function (page: number): void {
-      setPage(page);
+      setQuery({...query, page});
       window.scrollTo(0, 0);
-    }, []);
+    }, [query, setQuery]);
 
     return (
       <div styleName="root" {...rest}>
@@ -58,10 +59,25 @@ export const DictionaryExamplePart = create(
         </div>
         <div styleName="right">
           <GoogleAdsense styleName="adsense" clientId="9429549748934508" slotId="2898231395"/>
-          <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 50, hitSize, page, onPageSet: handlePageSet}}/>
+          <ExampleList dictionary={dictionary} examples={hitExamples} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}/>
         </div>
       </div>
     );
 
   }
 );
+
+
+function serializeQuery(query: ExampleQuery): Search {
+  const search = ExampleParameter.serialize(query.parameter);
+  search.set("page", query.page.toString());
+  return search;
+}
+
+function deserializeQuery(search: Search): ExampleQuery {
+  const parameter = ExampleParameter.deserialize(search);
+  const page = (search.get("page") !== null) ? +search.get("page")! : 0;
+  return {parameter, page};
+}
+
+export type ExampleQuery = {parameter: ExampleParameter, page: number};

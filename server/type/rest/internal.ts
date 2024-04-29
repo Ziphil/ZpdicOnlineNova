@@ -4,7 +4,6 @@ import type {
   Aggregation,
   Commission,
   CustomError,
-  UserWithDetail,
   Dictionary,
   DictionaryParameter,
   DictionarySettings,
@@ -17,6 +16,7 @@ import type {
   Example,
   ExampleOffer,
   ExampleOfferParameter,
+  ExampleParameter,
   ExampleWithDictionary,
   History,
   Invitation,
@@ -26,6 +26,7 @@ import type {
   Relation,
   Suggestion,
   User,
+  UserWithDetail,
   Word,
   WordNameFrequencies,
   WordParameter,
@@ -171,14 +172,14 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
-  searchDictionary: {
+  searchDictionaries: {
     request: {parameter: DictionaryParameter, offset?: number, size?: number},
     response: {
       success: WithSize<DictionaryWithUser>,
       error: never
     }
   },
-  searchWord: {
+  searchWords: {
     request: {number: number, parameter: WordParameter, offset?: number, size?: number},
     response: {
       success: {words: WithSize<WordWithExamples>, suggestions: Array<Suggestion>},
@@ -297,15 +298,15 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary" | "noSuchExample">
     }
   },
-  fetchExamples: {
-    request: {number: number, offset?: number, size?: number},
+  searchExamples: {
+    request: {number: number, parameter: ExampleParameter, offset?: number, size?: number},
     response: {
       success: WithSize<Example>,
       error: CustomError<"noSuchDictionary">
     }
   },
   fetchExamplesByOffer: {
-    request: {number?: number, offerId: ObjectId, offset?: number, size?: number},
+    request: {number: number | null, offerId: ObjectId, offset?: number, size?: number},
     response: {
       success: WithSize<ExampleWithDictionary>,
       error: never

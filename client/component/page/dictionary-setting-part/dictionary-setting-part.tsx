@@ -19,7 +19,7 @@ export const DictionarySettingPart = create(
 
     const {trans} = useTrans("dictionarySettingPart");
 
-    const match = useMatch("/dictionary/:dictionaryNumber/settings/:tabPath");
+    const match = useMatch("/dictionary/:identifier/settings/:tabPath?");
     const tabValue = getTabValue(match?.params.tabPath);
 
     const dictionary = useDictionary();
@@ -27,19 +27,19 @@ export const DictionarySettingPart = create(
     return (
       <div styleName="root" {...rest}>
         <TabList styleName="tab-list" value={tabValue ?? ""} scheme="primary">
-          <LinkTab value="general" href={`/dictionary/${dictionary.number}/settings`}>
+          <LinkTab value="general" href={`/dictionary/${match?.params.identifier}/settings`}>
             <TabIconbag><GeneralIcon icon={faSliders}/></TabIconbag>
             {trans("tab.general")}
           </LinkTab>
-          <LinkTab value="editing" href={`/dictionary/${dictionary.number}/settings/editing`}>
+          <LinkTab value="editing" href={`/dictionary/${match?.params.identifier}/settings/editing`}>
             <TabIconbag><GeneralIcon icon={faPen}/></TabIconbag>
             {trans("tab.editing")}
           </LinkTab>
-          <LinkTab value="file" href={`/dictionary/${dictionary.number}/settings/file`}>
+          <LinkTab value="file" href={`/dictionary/${match?.params.identifier}/settings/file`}>
             <TabIconbag><GeneralIcon icon={faFile}/></TabIconbag>
             {trans("tab.file")}
           </LinkTab>
-          <LinkTab value="authority" href={`/dictionary/${dictionary.number}/settings/permissions`}>
+          <LinkTab value="authority" href={`/dictionary/${match?.params.identifier}/settings/permissions`}>
             <TabIconbag><GeneralIcon icon={faUsers}/></TabIconbag>
             {trans("tab.authority")}
           </LinkTab>

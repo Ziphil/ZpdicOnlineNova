@@ -406,6 +406,7 @@ exampleList:
   button:
     edit: "Redakti"
     discard: "Forigi"
+    share: "Kunhavigi"
   dialog:
     discard:
       message: >-

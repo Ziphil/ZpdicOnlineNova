@@ -3,12 +3,13 @@
 import {faCog, faLockKeyhole, faNote, faRight} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
-import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, Tag, useTrans} from "zographia";
+import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, Tag, useResponsiveDevice, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {UserAvatar} from "/client/component/atom/user-avatar";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithAuthorities, DictionaryWithUser} from "/client/skeleton";
+import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {DictionaryCardHistoryChart} from "./dictionary-card-history-chart";
 
 
@@ -38,6 +39,8 @@ export const DictionaryCard = create(
     const [canOwn] = useResponse("fetchDictionaryAuthorization", (showSettingLink) && {identifier: number, authority: "own"});
     const [sizes] = useResponse("fetchDictionarySizes", (showChart) && {number});
 
+    const device = useResponsiveDevice();
+
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
@@ -59,7 +62,7 @@ export const DictionaryCard = create(
                 )}
               </div>
             )}
-            <Link styleName="name" href={`/dictionary/${dictionary.paramName || dictionary.number}`} variant="unstyledSimple">
+            <Link styleName="name" href={`/dictionary/${getDictionaryIdentifier(dictionary)}`} variant="unstyledSimple">
               <SingleLineText is="h3">
                 {dictionary.name}
               </SingleLineText>
@@ -81,23 +84,27 @@ export const DictionaryCard = create(
               <dd styleName="table-value"><time dateTime={dayjs(dictionary.createdDate).toISOString()}>{transDate(dictionary.createdDate)}</time></dd>
             </dl>
           </div>
-          {(showChart && histories !== undefined && histories.length > 0 && sizes !== undefined) && (
+          {(showChart && device === "desktop") && (
             <div styleName="right">
-              <DictionaryCardHistoryChart dictionary={dictionary} histories={histories}/>
-              <div styleName="count">
-                <GeneralIcon styleName="icon" icon={faNote}/>
-                {transNumber(sizes.word)}
-              </div>
+              {(histories !== undefined && histories.length > 0) && (
+                <DictionaryCardHistoryChart dictionary={dictionary} histories={histories}/>
+              )}
+              {(sizes !== undefined) && (
+                <div styleName="count">
+                  <GeneralIcon styleName="icon" icon={faNote}/>
+                  {transNumber(sizes.word)}
+                </div>
+              )}
             </div>
           )}
         </CardBody>
         <CardFooter styleName="footer">
-          <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${dictionary.paramName || dictionary.number}`}>
+          <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${getDictionaryIdentifier(dictionary)}`}>
             <LinkIconbag><GeneralIcon icon={faRight}/></LinkIconbag>
             {trans("button.see")}
           </Link>
           {(showSettingLink && canOwn) && (
-            <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${dictionary.paramName || dictionary.number}/settings`}>
+            <Link styleName="link" scheme="secondary" variant="underline" href={`/dictionary/${getDictionaryIdentifier(dictionary)}/settings`}>
               <LinkIconbag><GeneralIcon icon={faCog}/></LinkIconbag>
               {trans("button.setting")}
             </Link>

@@ -10,13 +10,11 @@ export type ExampleOfferParameter = NormalExampleOfferParameter;
 export namespace ExampleOfferParameter {
 
   export function deserialize(search: Search): ExampleOfferParameter {
-    const parameter = NormalExampleOfferParameter.deserialize(search);
-    return parameter;
+    return NormalExampleOfferParameter.deserialize(search);
   }
 
   export function serialize(parameter: ExampleOfferParameter): Search {
-    const params = NormalExampleOfferParameter.serialize(parameter);
-    return params;
+    return NormalExampleOfferParameter.serialize(parameter);
   }
 
 }

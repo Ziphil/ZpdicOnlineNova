@@ -23,7 +23,7 @@ export function useDiscardDictionary(dictionary: DictionaryWithUser): () => void
     await switchResponse(response, async () => {
       await Promise.all([
         invalidateResponses("fetchUserDictionaries", (query) => query.name === dictionary.user.name),
-        invalidateResponses("searchDictionary")
+        invalidateResponses("searchDictionaries")
       ]);
       navigate(`/user/${dictionary.user.name}`);
       dispatchSuccessToast("discardDictionary");

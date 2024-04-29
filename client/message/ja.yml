@@ -406,6 +406,7 @@ exampleList:
   button:
     edit: "編集"
     discard: "削除"
+    share: "共有"
   dialog:
     discard:
       message: >-
@@ -706,7 +707,7 @@ changeDictionarySettingsForm:
       false: "無効"
 changeDictionaryVisibilityForm:
   label:
-    public: "公開"
+    public: "全体公開"
     unlisted: "限定公開"
     private: "非公開"
 changeDictionarySourceForm:

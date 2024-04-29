@@ -57,9 +57,10 @@ export type EditWordSpec = {
 };
 export type EditWordFormValue = FormValue;
 export type EditWordInitialData = {type: "word", word: Word | EditableWord} | {type: "form", value: EditWordFormValue};
+export const getEditWordFormValue = getFormValue;
 
 export function useEditWord(dictionary: Dictionary, initialData: EditWordInitialData | null, forceAdd: boolean, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
-  const form = useForm<FormValue>((initialData !== null) ? getFormValue(initialData, forceAdd) : DEFAULT_VALUE, {});
+  const form = useForm<FormValue>(getFormValue(initialData, forceAdd), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -69,7 +70,7 @@ export function useEditWord(dictionary: Dictionary, initialData: EditWordInitial
       form.setValue("number", word.number);
       await request("addRelations", getQueryForRelations(dictionary, word, value)).catch(noop);
       await Promise.all([
-        invalidateResponses("searchWord", (query) => query.number === dictionary.number),
+        invalidateResponses("searchWords", (query) => query.number === dictionary.number),
         invalidateResponses("fetchDictionarySizes", (query) => query.number === dictionary.number)
       ]);
       await onSubmit?.(word);
@@ -79,42 +80,46 @@ export function useEditWord(dictionary: Dictionary, initialData: EditWordInitial
   return {form, handleSubmit};
 }
 
-function getFormValue(initialData: EditWordInitialData, forceAdd: boolean): FormValue {
-  if (initialData.type === "word") {
-    const word = initialData.word;
-    const value = {
-      number: (forceAdd) ? null : word.number ?? null,
-      name: word.name,
-      pronunciation: word.pronunciation || "",
-      tags: word.tags,
-      equivalents: word.equivalents.map((equivalent) => ({
-        titles: equivalent.titles,
-        nameString: equivalent.names.join(", ")
-      })),
-      informations: word.informations.map((information) => ({
-        title: information.title,
-        text: information.text
-      })),
-      variations: word.variations.map((variation) => ({
-        title: variation.title,
-        name: variation.name
-      })),
-      relations: word.relations.map((relation) => ({
-        titles: relation.titles,
-        word: {
-          number: relation.number,
-          name: relation.name
-        },
-        mutual: false
-      }))
-    } satisfies FormValue;
-    return value;
+function getFormValue(initialData: EditWordInitialData | null, forceAdd: boolean): FormValue {
+  if (initialData !== null) {
+    if (initialData.type === "word") {
+      const word = initialData.word;
+      const value = {
+        number: (forceAdd) ? null : word.number ?? null,
+        name: word.name,
+        pronunciation: word.pronunciation || "",
+        tags: word.tags,
+        equivalents: word.equivalents.map((equivalent) => ({
+          titles: equivalent.titles,
+          nameString: equivalent.names.join(", ")
+        })),
+        informations: word.informations.map((information) => ({
+          title: information.title,
+          text: information.text
+        })),
+        variations: word.variations.map((variation) => ({
+          title: variation.title,
+          name: variation.name
+        })),
+        relations: word.relations.map((relation) => ({
+          titles: relation.titles,
+          word: {
+            number: relation.number,
+            name: relation.name
+          },
+          mutual: false
+        }))
+      } satisfies FormValue;
+      return value;
+    } else {
+      const value = {
+        ...initialData.value,
+        number: (forceAdd) ? null : initialData.value.number
+      } satisfies FormValue;
+      return value;
+    }
   } else {
-    const value = {
-      ...initialData.value,
-      number: (forceAdd) ? null : initialData.value.number
-    } satisfies FormValue;
-    return value;
+    return DEFAULT_VALUE;
   }
 }
 

@@ -37,6 +37,7 @@ export const Markdown = create(
     return (
       <ZographiaMarkdown
         compact={compact}
+        skipHtml={false}
         disallowedElements={(mode === "normal") ? ["h1", "h2", "h3", "h4", "h5", "h6", "hr"] : ["hr"]}
         components={{a: MarkdownAnchor}}
         transformUrl={transformUrl}

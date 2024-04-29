@@ -5,7 +5,8 @@ import {ReactElement, Ref, useCallback} from "react";
 import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
 import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
 import {create} from "/client/component/create";
-import {EditableWord, DictionaryWithExecutors} from "/client/skeleton";
+import {DictionaryWithExecutors, EditableWord} from "/client/skeleton";
+import {preventDefault} from "/client/util/form";
 import {assignRef} from "/client/util/ref";
 import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
 import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
@@ -43,7 +44,7 @@ export const EditWordForm = create(
     assignRef(formRef, getFormValue);
 
     return (
-      <form styleName="root" {...rest}>
+      <form styleName="root" onSubmit={preventDefault} {...rest}>
         <div styleName="main">
           <EditWordFormBasicSection dictionary={dictionary} form={form}/>
           <EditWordFormEquivalentSection dictionary={dictionary} form={form}/>
@@ -52,7 +53,7 @@ export const EditWordForm = create(
           <EditWordFormRelationSection dictionary={dictionary} form={form}/>
         </div>
         <div styleName="button">
-          <Button type="submit" onClick={handleSubmit}>
+          <Button onClick={handleSubmit}>
             <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
             {trans("button.confirm")}
           </Button>

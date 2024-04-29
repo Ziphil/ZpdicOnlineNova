@@ -48,5 +48,14 @@
 }
 
 .textarea {
-  height: 32zu;
+  @supports (field-sizing: content) {
+    min-height: 40zu;
+    max-height: 100zu;
+    >textarea {
+      field-sizing: content;
+    }
+  }
+  @supports not (field-sizing: content) {
+    height: 40zu;
+  }
 }
