@@ -306,7 +306,7 @@ type ServerSpecs = {
     }
   },
   fetchExamplesByOffer: {
-    request: {number?: number, offerId: ObjectId, offset?: number, size?: number},
+    request: {number: number | null, offerId: ObjectId, offset?: number, size?: number},
     response: {
       success: WithSize<ExampleWithDictionary>,
       error: never

@@ -36,7 +36,7 @@ export const ExampleOfferCard = create(
 
     const {trans, transDate} = useTrans("exampleOfferList");
 
-    const [[examples] = []] = useResponse("fetchExamplesByOffer", (showExamples) && {offerId: offer.id});
+    const [[examples] = []] = useResponse("fetchExamplesByOffer", (showExamples) && {number: null, offerId: offer.id});
     const displayedExamples = useMemo(() => examples?.filter((example) => !!example.sentence), [examples]);
 
     const zonedCreatedDate = dayjs(offer.createdDate).tz("Asia/Tokyo");
