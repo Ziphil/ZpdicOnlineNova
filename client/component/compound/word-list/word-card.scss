@@ -9,10 +9,26 @@
   flex-direction: column;
 }
 
+.truncate {
+  flex: 0 0 auto;
+}
+
+.truncate-body {
+  row-gap: 3zu;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+}
+
+.truncate-button {
+  margin-block-start: 3zu;
+}
+
 .group {
   row-gap: 2zu;
   display: flex;
   flex-direction: column;
+  flex: 0 0 auto;
 }
 
 .footer {
