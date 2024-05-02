@@ -3,7 +3,20 @@
 import {faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {useHref} from "react-router";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, Truncate, TruncateBody, TruncateButton, useResponsiveDevice, useTrans} from "zographia";
+import {
+  AdditionalProps,
+  Button,
+  ButtonIconbag,
+  Card,
+  CardBody,
+  CardFooter,
+  Collapsible,
+  CollapsibleBody,
+  CollapsibleButton,
+  GeneralIcon,
+  useResponsiveDevice,
+  useTrans
+} from "zographia";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {ShareMenu} from "/client/component/compound/share-menu";
 import {create} from "/client/component/create";
@@ -46,8 +59,8 @@ export const WordCard = create(
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
           <WordCardHeading dictionary={dictionary} word={word}/>
-          <Truncate styleName="truncate">
-            <TruncateBody styleName="truncate-body" height="20rem">
+          <Collapsible styleName="collapsible">
+            <CollapsibleBody styleName="collapsible-body" height="20rem">
               <WordCardEquivalentList dictionary={dictionary} word={word}/>
               <WordCardInformationList dictionary={dictionary} word={word}/>
               <WordCardExampleList dictionary={dictionary} word={word}/>
@@ -57,9 +70,9 @@ export const WordCard = create(
                   <WordCardRelationList dictionary={dictionary} word={word}/>
                 </div>
               )}
-            </TruncateBody>
-            <TruncateButton styleName="truncate-button"/>
-          </Truncate>
+            </CollapsibleBody>
+            <CollapsibleButton styleName="collapsible-button"/>
+          </Collapsible>
         </CardBody>
         {(canEdit) && (
           <CardFooter styleName="footer">

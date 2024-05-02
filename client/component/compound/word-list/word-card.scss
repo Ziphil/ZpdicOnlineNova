@@ -9,18 +9,18 @@
   flex-direction: column;
 }
 
-.truncate {
+.collapsible {
   flex: 0 0 auto;
 }
 
-.truncate-body {
+.collapsible-body {
   row-gap: 3zu;
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
 }
 
-.truncate-button {
+.collapsible-button {
   margin-block-start: 3zu;
 }
 
