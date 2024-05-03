@@ -26,6 +26,12 @@
   border-block-end: none;
 }
 
+.badge {
+  margin-block-start: -0.25zu;
+  margin-inline-start: var(--glob-blank-gap);
+  translate: 0zu -0.25zu;
+}
+
 .indicator {
   flex: 0 0 auto;
 }
