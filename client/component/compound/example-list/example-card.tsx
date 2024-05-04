@@ -37,7 +37,7 @@ export const ExampleCard = create(
 
     const debug = location.hostname === "localhost";
     const shareText = `${example.sentence} — ${example.translation}\n#ZpDIC`;
-    const shareUrl = location.origin + useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${example.number}`);
+    const shareUrl = location.origin + useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/sentences?kind=exact&number=${example.number}`);
 
     const filledExample = useFilledExample(dictionary, example);
 

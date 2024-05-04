@@ -27,8 +27,8 @@ const router = createBrowserRouter(createRoutesFromElements(
     </Route>
     <Route path="/dictionary/:identifier/word/new" lazy={() => import("/client/component/page/edit-word-page")}/>
     <Route path="/dictionary/:identifier/word/:wordNumber" lazy={() => import("/client/component/page/edit-word-page")}/>
-    <Route path="/dictionary/:identifier/example/new" lazy={() => import("/client/component/page/edit-example-page")}/>
-    <Route path="/dictionary/:identifier/example/:exampleNumber" lazy={() => import("/client/component/page/edit-example-page")}/>
+    <Route path="/dictionary/:identifier/sentence/new" lazy={() => import("/client/component/page/edit-example-page")}/>
+    <Route path="/dictionary/:identifier/sentence/:exampleNumber" lazy={() => import("/client/component/page/edit-example-page")}/>
     <Route path="/user/:name" lazy={() => import("/client/component/page/user-page")}>
       <Route index={true} lazy={() => import("/client/component/page/user-dictionary-part")}/>
       <Route path="notifications" lazy={() => import("/client/component/page/user-notification-part")}/>

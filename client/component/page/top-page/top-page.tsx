@@ -26,6 +26,7 @@ const SUPPORTERS = [
   {name: "川音リオ", linkUrl: "https://misskey.io/@KawaneRio", avatarUrl: "https://s3.arkjp.net/misskey/thumbnail-5bed03e1-1c67-4504-bc7a-b5d916e36ef3.webp"},
   {name: "Qunoxts", linkUrl: {type: "twitter", name: "Qunoxts"}, avatarUrl: "https://pbs.twimg.com/profile_images/1321519766830415872/8HbvaYFT_400x400.jpg"},
   {name: "炭酸ソーダ", linkUrl: {type: "twitter", name: "na2co3_ftw"}, avatarUrl: {type: "github", name: "na2co3-ftw"}},
+  {name: "ざすろん", linkUrl: {type: "twitter", name: "Zaslon"}, avatarUrl: "https://pbs.twimg.com/profile_images/2971368786/809d9780e86e5d3c616f7136017f7d32_400x400.png"},
   {name: "ネットの片隅の有志"},
   {name: "SenСэнандзуXneg"},
   {name: "ふぃるきしゃ", linkUrl: {type: "twitter", name: "fruksha_bidima"}, avatarUrl: "https://pbs.twimg.com/profile_images/1752072727777939456/bLHftTWv_400x400.jpg"}

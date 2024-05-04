@@ -35,6 +35,8 @@ export const DictionaryHeader = create(
     const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
     const showOffer = canEdit && offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 
+    const [[, commissionSize] = []] = useResponse("fetchCommissions", {number: dictionary.number, size: 1, offset: 0});
+
     const match = useMatch("/dictionary/:identifier/:tabPath?/:subTabPath?");
 
     return (
@@ -53,10 +55,12 @@ export const DictionaryHeader = create(
               </LinkTab>
             </Indicator>
             {(canOwn) && (
-              <LinkTab value="commission" href={`/dictionary/${match?.params.identifier}/requests`}>
-                <TabIconbag><GeneralIcon icon={faListCheck}/></TabIconbag>
-                {trans("tab.commission")}
-              </LinkTab>
+              <Indicator styleName="indicator" scheme="secondary" disabled={(commissionSize === undefined || commissionSize <= 0) || tabValue === "commission"} animate={true}>
+                <LinkTab value="commission" href={`/dictionary/${match?.params.identifier}/requests`}>
+                  <TabIconbag><GeneralIcon icon={faListCheck}/></TabIconbag>
+                  {trans("tab.commission")}
+                </LinkTab>
+              </Indicator>
             )}
             {(canEdit) && (
               <LinkTab value="resource" href={`/dictionary/${match?.params.identifier}/resources`}>

@@ -79,7 +79,7 @@ export const UserHeader = create(
                 <TabIconbag><GeneralIcon icon={faBell}/></TabIconbag>
                 {trans("tab.notification")}
                 {(invitations !== undefined && invitations.length > 0) && (
-                  <Badge styleName="badge" scheme={(tabValue === "notification") ? "secondary" : "gray"} variant="solid" size="small" animate={true}>
+                  <Badge styleName="badge" scheme={(tabValue === "notification") ? "secondary" : "gray"} variant="solid" size="small" animate={tabValue !== "notification"}>
                     {transNumber(invitations.length)}
                   </Badge>
                 )}
