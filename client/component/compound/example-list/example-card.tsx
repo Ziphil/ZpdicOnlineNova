@@ -9,6 +9,7 @@ import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {Link} from "/client/component/atom/link";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
 import {ShareMenu} from "/client/component/compound/share-menu";
+import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
 import {useFilledExample} from "/client/hook/example";
 import {useResponse} from "/client/hook/request";
@@ -81,9 +82,13 @@ export const ExampleCard = create(
                 {filledExample.words.map((word, index) => (
                   <Fragment key={index}>
                     {(index > 0) && <span styleName="punctuation">, </span>}
-                    <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`} scheme="secondary" variant="underline">
-                      {word.name ?? <LoadingIcon/>}
-                    </Link>
+                    <WordPopover dictionary={dictionary} word={word} trigger={(
+                      <span>
+                        <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`} scheme="secondary" variant="underline">
+                          {word.name ?? <LoadingIcon/>}
+                        </Link>
+                      </span>
+                    )}/>
                   </Fragment>
                 ))}
               </MultiLineText>

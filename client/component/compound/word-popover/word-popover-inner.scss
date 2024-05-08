@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+}
+
+.name {
+  @include bold-font;
+  font-size: 5zu;
+  color: var(--glob-primary-heading-text-color);
+}
+
+.equivalent-list {
+  row-gap: 2zu;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+}
+
+.punctuation {
+  color: var(--glob-mute-text-color);
+}
+
+.tag {
+  margin-inline-end: 2zu;
+  inset-block-end: 0.1em;
+  line-height: 1;
+  display: inline-block;
+  position: relative;
+}
