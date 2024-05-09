@@ -1,7 +1,7 @@
 //
 
 import {Fragment, ReactElement} from "react";
-import {MultiLineText, Tag} from "zographia";
+import {LoadingIcon, MultiLineText, Tag} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {Dictionary, Word} from "/client/skeleton";
@@ -42,7 +42,9 @@ export const WordPopoverInner = create(
         </div>
       </div>
     ) : (
-      <div/>
+      <div styleName="root-loading">
+        <LoadingIcon/>
+      </div>
     );
 
   }

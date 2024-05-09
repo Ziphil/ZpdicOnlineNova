@@ -56,11 +56,11 @@ export type EditWordSpec = {
   handleSubmit: (event: BaseSyntheticEvent) => void
 };
 export type EditWordFormValue = FormValue;
-export type EditWordInitialData = {type: "word", word: Word | EditableWord} | {type: "form", value: EditWordFormValue};
+export type EditWordInitialData = {type: "word", word: Word | EditableWord, forceAdd?: boolean} | {type: "form", value: EditWordFormValue, forceAdd?: boolean};
 export const getEditWordFormValue = getFormValue;
 
-export function useEditWord(dictionary: Dictionary, initialData: EditWordInitialData | null, forceAdd: boolean, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
-  const form = useForm<FormValue>(getFormValue(initialData, forceAdd), {});
+export function useEditWord(dictionary: Dictionary, initialData: EditWordInitialData | null, onSubmit?: (word: EditableWord) => unknown): EditWordSpec {
+  const form = useForm<FormValue>(getFormValue(initialData), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -80,12 +80,12 @@ export function useEditWord(dictionary: Dictionary, initialData: EditWordInitial
   return {form, handleSubmit};
 }
 
-function getFormValue(initialData: EditWordInitialData | null, forceAdd: boolean): FormValue {
+function getFormValue(initialData: EditWordInitialData | null): FormValue {
   if (initialData !== null) {
     if (initialData.type === "word") {
       const word = initialData.word;
       const value = {
-        number: (forceAdd) ? null : word.number ?? null,
+        number: (initialData.forceAdd) ? null : word.number ?? null,
         name: word.name,
         pronunciation: word.pronunciation || "",
         tags: word.tags,
@@ -114,7 +114,7 @@ function getFormValue(initialData: EditWordInitialData | null, forceAdd: boolean
     } else {
       const value = {
         ...initialData.value,
-        number: (forceAdd) ? null : initialData.value.number
+        number: (initialData.forceAdd) ? null : initialData.value.number
       } satisfies FormValue;
       return value;
     }

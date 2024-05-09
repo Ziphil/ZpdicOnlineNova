@@ -20,14 +20,12 @@ export const EditWordForm = create(
   function ({
     dictionary,
     initialData,
-    forceAdd = false,
     formRef,
     onSubmit,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditWordInitialData | null,
-    forceAdd?: boolean,
     formRef?: Ref<() => EditWordFormValue>,
     onSubmit?: (word: EditableWord) => void,
     className?: string
@@ -35,7 +33,7 @@ export const EditWordForm = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {form, handleSubmit} = useEditWord(dictionary, initialData, forceAdd, onSubmit);
+    const {form, handleSubmit} = useEditWord(dictionary, initialData, onSubmit);
 
     const getFormValue = useCallback(function (): EditWordFormValue {
       return form.getValues();
