@@ -51,7 +51,7 @@ export const Header = create(
           {(me !== null) && (
             <div styleName="rightmost">
               <SimpleLink href={`/user/${me.name}`}>
-                <UserAvatar styleName="avatar" user={me}/>
+                <UserAvatar styleName="avatar" user={me} insertAlt={true}/>
               </SimpleLink>
             </div>
           )}

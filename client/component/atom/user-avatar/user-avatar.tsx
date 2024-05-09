@@ -13,11 +13,13 @@ export const UserAvatar = createWithRef(
   null, "UserAvatar",
   function ({
     user,
-    inline,
+    inline = false,
+    insertAlt = false,
     ...rest
   }: {
     user: User | {name: string},
     inline?: boolean,
+    insertAlt?: boolean,
     className?: string,
     ref?: Ref<HTMLSpanElement>
   } & AdditionalProps): ReactElement {
@@ -27,9 +29,10 @@ export const UserAvatar = createWithRef(
 
     const url = (actualUser) ? getAwsFileUrl(`avatar/${actualUser.name}/avatar`) : null;
     const hue = (actualUser) ? getIdHue(actualUser.id) : 0;
+    const alt = (insertAlt) ? actualUser?.screenName : "";
 
     return (
-      <Avatar url={url} inline={inline} {...rest}>
+      <Avatar url={url} alt={alt} inline={inline} {...rest}>
         <AvatarFallbackIconContainer hue={hue}>
           <GeneralIcon icon={faPenSwirl}/>
         </AvatarFallbackIconContainer>
