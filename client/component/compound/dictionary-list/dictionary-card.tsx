@@ -1,6 +1,6 @@
 //
 
-import {faCog, faLockKeyhole, faNote, faRight} from "@fortawesome/sharp-regular-svg-icons";
+import {faCog, faLockKeyhole, faNote, faQuotes, faRight} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement, useMemo} from "react";
 import {AdditionalProps, Card, CardBody, CardFooter, GeneralIcon, LinkIconbag, SingleLineText, Tag, useResponsiveDevice, useTrans} from "zographia";
@@ -84,15 +84,21 @@ export const DictionaryCard = create(
               <dd styleName="table-value"><time dateTime={dayjs(dictionary.createdDate).toISOString()}>{transDate(dictionary.createdDate)}</time></dd>
             </dl>
           </div>
-          {(showChart && device === "desktop") && (
+          {(showChart) && (
             <div styleName="right">
-              {(histories !== undefined && histories.length > 0) && (
+              {(device === "desktop" && histories !== undefined && histories.length > 0) && (
                 <DictionaryCardHistoryChart dictionary={dictionary} histories={histories}/>
               )}
               {(sizes !== undefined) && (
-                <div styleName="count">
-                  <GeneralIcon styleName="icon" icon={faNote}/>
-                  {transNumber(sizes.word)}
+                <div styleName="count-list">
+                  <div styleName="count">
+                    <GeneralIcon styleName="icon" icon={faNote}/>
+                    {transNumber(sizes.word)}
+                  </div>
+                  <div styleName="count">
+                    <GeneralIcon styleName="icon" icon={faQuotes}/>
+                    {transNumber(sizes.example)}
+                  </div>
                 </div>
               )}
             </div>
