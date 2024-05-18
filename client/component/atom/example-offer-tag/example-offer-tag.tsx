@@ -2,7 +2,7 @@
 
 import dayjs from "dayjs";
 import {ReactElement} from "react";
-import {LoadingIcon, Tag, TagIconbag, useTrans} from "zographia";
+import {LoadingIcon, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {ExampleOffer, ObjectId} from "/client/skeleton";
@@ -27,15 +27,14 @@ export const ExampleOfferTag = create(
       <span styleName="root" {...rest}>
         {(actualOffer !== undefined) ? (
           <>
-            <Tag variant="solid">
+            <Tag scheme="gray" variant="solid">
               {trans(`catalog.${actualOffer.catalog}`)}
-            </Tag>
-            <Tag variant="light">
+              {" · "}
               {(actualOffer.catalog === "zpdicDaily") ? (
                 transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")
               ) : (
                 <>
-                  <TagIconbag><span>№</span></TagIconbag>
+                  <span styleName="number">№</span>
                   {transNumber(actualOffer.number)}
                 </>
               )}
