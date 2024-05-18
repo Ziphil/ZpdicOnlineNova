@@ -341,6 +341,7 @@ editExampleForm:
     basic: "対訳"
     words: "使用単語"
   label:
+    tags: "タグ"
     sentence: "この言語での例文"
     translation: "自然言語訳"
     supplement: "補足説明"

@@ -27,13 +27,11 @@ export const EditWordDialog = create(
   function ({
     dictionary,
     initialData,
-    forceAdd = false,
     trigger,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     initialData: EditWordInitialData | null,
-    forceAdd?: boolean,
     trigger: ReactElement,
     className?: string
   }): ReactElement {
@@ -47,13 +45,13 @@ export const EditWordDialog = create(
 
     const openDialog = useCallback(function (event: MouseEvent<HTMLButtonElement>): void {
       if (checkOpeningExternal(event)) {
-        const value = getEditWordFormValue(initialData, forceAdd);
-        const addWordPageUrl = addWordPageUrlBase + `/${(forceAdd || value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
+        const value = getEditWordFormValue(initialData);
+        const addWordPageUrl = addWordPageUrlBase + `/${(initialData?.forceAdd || value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
         window.open(addWordPageUrl);
       } else {
         setOpen(true);
       }
-    }, [addWordPageUrlBase, initialData, forceAdd]);
+    }, [addWordPageUrlBase, initialData]);
 
     const closeDialog = useCallback(function (): void {
       setOpen(false);
@@ -62,10 +60,10 @@ export const EditWordDialog = create(
     const openExternal = useCallback(function (): void {
       const value = formRef.current?.();
       if (value !== undefined) {
-        const addWordPageUrl = addWordPageUrlBase + `/${(forceAdd || value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
+        const addWordPageUrl = addWordPageUrlBase + `/${(initialData?.forceAdd || value.number === null) ? "new" : value.number}?value=${rison.encode(value)}`;
         window.open(addWordPageUrl);
       }
-    }, [addWordPageUrlBase, forceAdd]);
+    }, [addWordPageUrlBase, initialData]);
 
     return (
       <Fragment>
@@ -80,7 +78,7 @@ export const EditWordDialog = create(
             </DialogOutsideButtonContainer>
             <DialogCloseButton/>
             <DialogBody>
-              <EditWordForm dictionary={dictionary} initialData={initialData} forceAdd={forceAdd} formRef={formRef} onSubmit={closeDialog}/>
+              <EditWordForm dictionary={dictionary} initialData={initialData} formRef={formRef} onSubmit={closeDialog}/>
             </DialogBody>
           </DialogPane>
         </Dialog>

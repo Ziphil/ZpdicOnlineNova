@@ -1,10 +1,11 @@
-//
+/* eslint-disable react/jsx-closing-bracket-location */
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHandPointRight} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement, useMemo} from "react";
 import {AdditionalProps, MultiLineText, Tag, aria} from "zographia";
 import {Link} from "/client/component/atom/link";
+import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Relation, Word, WordWithExamples} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
@@ -38,9 +39,13 @@ export const WordCardRelationList = create(
               {relations.map((relation, index) => (
                 <Fragment key={index}>
                   {(index > 0) && <span styleName="punctuation">, </span>}
-                  <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${relation.number}`} scheme="secondary" variant="underline">
-                    {relation.name}
-                  </Link>
+                  <WordPopover dictionary={dictionary} word={relation} trigger={(
+                    <span>
+                      <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${relation.number}`} scheme="secondary" variant="underline">
+                        {relation.name}
+                      </Link>
+                    </span>
+                  )}/>
                 </Fragment>
               ))}
             </MultiLineText>

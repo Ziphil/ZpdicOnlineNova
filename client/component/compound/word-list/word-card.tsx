@@ -83,7 +83,7 @@ export const WordCard = create(
                   {trans("button.edit")}
                 </Button>
               )}/>
-              <EditWordDialog dictionary={dictionary} initialData={{type: "word", word}} forceAdd={true} trigger={(
+              <EditWordDialog dictionary={dictionary} initialData={{type: "word", word, forceAdd: true}} trigger={(
                 <Button scheme="secondary" variant="underline">
                   <ButtonIconbag><GeneralIcon icon={faClone}/></ButtonIconbag>
                   {trans("button.duplicate")}

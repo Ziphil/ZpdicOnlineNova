@@ -4,11 +4,12 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faHandPointRight, faHashtag, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {useHref} from "react-router-dom";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, aria, useResponsiveDevice, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, Tag, aria, useResponsiveDevice, useTrans} from "zographia";
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {Link} from "/client/component/atom/link";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
 import {ShareMenu} from "/client/component/compound/share-menu";
+import {WordPopover} from "/client/component/compound/word-popover";
 import {create} from "/client/component/create";
 import {useFilledExample} from "/client/hook/example";
 import {useResponse} from "/client/hook/request";
@@ -46,7 +47,7 @@ export const ExampleCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
-          {(debug || example.offer !== undefined) && (
+          {(debug || example.offer !== null || example.tags.length > 0) && (
             <div styleName="tag">
               {(debug) && (
                 <span styleName="number">
@@ -54,9 +55,12 @@ export const ExampleCard = create(
                   {transNumber(example.number)}
                 </span>
               )}
-              {(example.offer !== undefined) && (
+              {(example.offer !== null) && (
                 <ExampleOfferTag offer={{id: example.offer}}/>
               )}
+              {example.tags.map((tag, index) => (
+                <Tag key={index} variant="solid">{tag}</Tag>
+              ))}
             </div>
           )}
           <div styleName="parallel">
@@ -81,9 +85,13 @@ export const ExampleCard = create(
                 {filledExample.words.map((word, index) => (
                   <Fragment key={index}>
                     {(index > 0) && <span styleName="punctuation">, </span>}
-                    <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`} scheme="secondary" variant="underline">
-                      {word.name ?? <LoadingIcon/>}
-                    </Link>
+                    <WordPopover dictionary={dictionary} word={word} trigger={(
+                      <span>
+                        <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`} scheme="secondary" variant="underline">
+                          {word.name ?? <LoadingIcon/>}
+                        </Link>
+                      </span>
+                    )}/>
                   </Fragment>
                 ))}
               </MultiLineText>

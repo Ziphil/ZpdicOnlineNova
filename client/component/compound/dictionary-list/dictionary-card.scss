@@ -4,6 +4,7 @@
 
 
 .body {
+  column-gap: 3zu;
   display: flex;
   align-items: center;
 }
@@ -15,7 +16,7 @@
 }
 
 .right {
-  row-gap: 2zu;
+  row-gap: 3zu;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -78,8 +79,23 @@
   }
 }
 
-.count {
+.count-list {
+  font-size: 3.5zu;
   color: var(--glob-mute-text-color);
+  display: flex;
+  @include device("desktop") {
+    row-gap: 1zu;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  @include device("mobile") {
+    row-gap: 2zu;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+}
+
+.count {
 }
 
 .footer {

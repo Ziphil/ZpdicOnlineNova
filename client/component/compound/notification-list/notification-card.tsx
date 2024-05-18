@@ -27,7 +27,7 @@ export const NotificationCard = create(
           <div styleName="top">
             <div styleName="tag">
               <Tag is="span" variant="solid">{trans(`tag.${(notification.type === "bugFixed") ? "bug" : notification.type}`)}</Tag>
-              {(notification.type === "bugFixed") && <Tag is="span" variant="light">{trans("tag.fixed")}</Tag>}
+              {(notification.type === "bugFixed") && <Tag is="span" scheme="gray" variant="solid">{trans("tag.fixed")}</Tag>}
             </div>
             <div styleName="heading">
               <div styleName="icon">

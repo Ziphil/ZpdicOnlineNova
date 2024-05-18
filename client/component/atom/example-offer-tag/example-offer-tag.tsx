@@ -2,7 +2,7 @@
 
 import dayjs from "dayjs";
 import {ReactElement} from "react";
-import {LoadingIcon, Tag, TagIconbag, useTrans} from "zographia";
+import {LeveledColorScheme, LoadingIcon, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {ExampleOffer, ObjectId} from "/client/skeleton";
@@ -11,9 +11,13 @@ import {ExampleOffer, ObjectId} from "/client/skeleton";
 export const ExampleOfferTag = create(
   require("./example-offer-tag.scss"), "ExampleOfferTag",
   function ({
+    scheme = "gray",
+    variant = "solid",
     offer,
     ...rest
   }: {
+    scheme?: LeveledColorScheme,
+    variant?: "solid" | "light",
     offer: ExampleOffer | {id: ObjectId},
     className?: string
   }): ReactElement | null {
@@ -25,27 +29,24 @@ export const ExampleOfferTag = create(
 
     return (
       <span styleName="root" {...rest}>
-        {(actualOffer !== undefined) ? (
-          <>
-            <Tag variant="solid">
+        <Tag scheme={scheme} variant={variant}>
+          {(actualOffer !== undefined) ? (
+            <span>
               {trans(`catalog.${actualOffer.catalog}`)}
-            </Tag>
-            <Tag variant="light">
+              {" · "}
               {(actualOffer.catalog === "zpdicDaily") ? (
                 transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")
               ) : (
                 <>
-                  <TagIconbag><span>№</span></TagIconbag>
+                  <span styleName="number">№</span>
                   {transNumber(actualOffer.number)}
                 </>
               )}
-            </Tag>
-          </>
-        ) : (
-          <Tag variant="solid">
+            </span>
+          ) : (
             <LoadingIcon/>
-          </Tag>
-        )}
+          )}
+        </Tag>
       </span>
     );
 

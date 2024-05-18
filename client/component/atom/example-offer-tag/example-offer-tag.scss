@@ -6,3 +6,7 @@
   display: inline-flex;
   align-items: center;
 }
+
+.number {
+  margin-inline-end: var(--glob-blank-gap);
+}
