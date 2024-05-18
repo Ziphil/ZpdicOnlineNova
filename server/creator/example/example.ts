@@ -17,12 +17,13 @@ export namespace ExampleCreator {
   export function skeletonize(raw: Example): ExampleSkeleton {
     const id = raw.id || raw["_id"];
     const number = raw.number;
+    const tags = raw.tags ?? [];
     const words = raw.words.map(LinkedWordCreator.skeletonize);
     const sentence = raw.sentence;
     const translation = raw.translation;
     const supplement = raw.supplement;
-    const offer = raw.offer?.toString();
-    const skeleton = {id, number, words, sentence, translation, supplement, offer};
+    const offer = raw.offer?.toString() ?? null;
+    const skeleton = {id, number, tags, words, sentence, translation, supplement, offer};
     return skeleton;
   }
 

@@ -4,7 +4,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEdit, faHandPointRight, faHashtag, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {useHref} from "react-router-dom";
-import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, aria, useResponsiveDevice, useTrans} from "zographia";
+import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, Tag, aria, useResponsiveDevice, useTrans} from "zographia";
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {Link} from "/client/component/atom/link";
 import {EditExampleDialog} from "/client/component/compound/edit-example-dialog";
@@ -47,7 +47,7 @@ export const ExampleCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
-          {(debug || example.offer !== undefined) && (
+          {(debug || example.offer !== null || example.tags.length > 0) && (
             <div styleName="tag">
               {(debug) && (
                 <span styleName="number">
@@ -55,9 +55,12 @@ export const ExampleCard = create(
                   {transNumber(example.number)}
                 </span>
               )}
-              {(example.offer !== undefined) && (
+              {(example.offer !== null) && (
                 <ExampleOfferTag offer={{id: example.offer}}/>
               )}
+              {example.tags.map((tag, index) => (
+                <Tag key={index} variant="solid">{tag}</Tag>
+              ))}
             </div>
           )}
           <div styleName="parallel">

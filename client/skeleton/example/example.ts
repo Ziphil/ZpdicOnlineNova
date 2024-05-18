@@ -11,8 +11,9 @@ export interface EditableExample {
   sentence: string;
   translation: string;
   supplement?: string;
+  tags: Array<string>;
   words: Array<LinkedWord>;
-  offer?: ObjectId;
+  offer: ObjectId | null;
 
 }
 
@@ -23,7 +24,9 @@ export namespace EditableExample {
     words: [],
     sentence: "",
     translation: "",
-    supplement: ""
+    supplement: "",
+    tags: [],
+    offer: null
   } as EditableExample;
 
 }
@@ -36,8 +39,9 @@ export interface Example {
   sentence: string;
   translation: string;
   supplement?: string;
+  tags: Array<string>;
   words: Array<LinkedWord>;
-  offer?: ObjectId;
+  offer: ObjectId | null;
 
 }
 

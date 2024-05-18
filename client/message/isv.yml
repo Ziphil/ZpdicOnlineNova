@@ -341,6 +341,7 @@ editExampleForm:
     basic: "Parallel translation"
     words: "Included words"
   label:
+    tags: "Значкы"
     sentence: "Sentence in this conlang"
     translation: "Translation into natural language"
     supplement: "Supplementary explanation"

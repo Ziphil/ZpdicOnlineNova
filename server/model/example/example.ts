@@ -29,6 +29,9 @@ export class ExampleSchema extends DiscardableSchema {
   @prop({required: true})
   public number!: number;
 
+  @prop({type: String})
+  public tags?: Array<string>;
+
   @prop({required: true, type: LinkedWordSchema})
   public words!: Array<LinkedWordSchema>;
 
