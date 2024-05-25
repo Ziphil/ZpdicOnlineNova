@@ -167,11 +167,11 @@ export class DictionarySchema extends DiscardableSchema {
    * 辞書の内部データも、ファイルから読み込んだものに更新されます。*/
   public async upload(this: Dictionary, path: string, originalPath: string): Promise<Dictionary> {
     await this.startUpload();
-    const settings = this.settings as any;
-    let externalData = {};
-    await new Promise<Dictionary>((resolve, reject) => {
-      const stream = createDeserializer(path, originalPath, this);
-      if (stream !== null) {
+    const stream = createDeserializer(path, originalPath, this);
+    if (stream !== null) {
+      const settings = this.settings as any;
+      let externalData = {};
+      await new Promise<Dictionary>((resolve, reject) => {
         let count = 0;
         stream.on("words", (words) => {
           WordModel.insertMany(words);
@@ -204,11 +204,8 @@ export class DictionarySchema extends DiscardableSchema {
           resolve(this);
         });
         stream.start();
-      } else {
-        this.status = "error";
-        resolve(this);
-      }
-    });
+      });
+    }
     await this.save();
     return this;
   }
