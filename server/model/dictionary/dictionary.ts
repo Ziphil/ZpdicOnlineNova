@@ -170,7 +170,6 @@ export class DictionarySchema extends DiscardableSchema {
     const stream = createDeserializer(path, originalPath, this);
     if (stream !== null) {
       const settings = this.settings as any;
-      let externalData = {};
       await new Promise<Dictionary>((resolve, reject) => {
         let count = 0;
         stream.on("words", (words) => {
@@ -189,13 +188,9 @@ export class DictionarySchema extends DiscardableSchema {
             settings[key] = value;
           }
         });
-        stream.on("external", (key, data) => {
-          externalData = Object.assign(externalData, {[key]: data});
-        });
         stream.on("end", () => {
           this.status = "ready";
           this.settings = settings;
-          this.externalData = externalData;
           resolve(this);
         });
         stream.on("error", (error) => {
