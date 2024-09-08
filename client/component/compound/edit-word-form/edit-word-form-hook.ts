@@ -146,7 +146,6 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
       }))
     }
   } satisfies RequestData<"editWord">;
-  console.log(query);
   return query;
 }
 
