@@ -12,6 +12,9 @@ export class EquivalentSchema {
   @prop({required: true, type: String})
   public names!: Array<string>;
 
+  @prop()
+  public nameString?: string;
+
 }
 
 

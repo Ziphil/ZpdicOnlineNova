@@ -91,7 +91,7 @@ function getFormValue(initialData: EditWordInitialData | null): FormValue {
         tags: word.tags,
         equivalents: word.equivalents.map((equivalent) => ({
           titles: equivalent.titles,
-          nameString: equivalent.names.join(", ")
+          nameString: equivalent.nameString
         })),
         informations: word.informations.map((information) => ({
           title: information.title,
@@ -133,7 +133,8 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
       tags: value.tags,
       equivalents: value.equivalents.map((rawEquivalent) => ({
         titles: rawEquivalent.titles,
-        names: rawEquivalent.nameString.split(/\s*(?:,|、|。|・)\s*/)
+        names: rawEquivalent.nameString.split(/\s*(?:,|、|。)\s*/),
+        nameString: rawEquivalent.nameString
       })),
       informations: value.informations,
       variations: value.variations,

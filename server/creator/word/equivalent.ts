@@ -13,7 +13,8 @@ export namespace EquivalentCreator {
   export function skeletonize(raw: Equivalent): EquivalentSkeleton {
     const titles = raw.titles;
     const names = raw.names;
-    const skeleton = {titles, names};
+    const nameString = raw.nameString ?? names.join(", ");
+    const skeleton = {titles, names, nameString};
     return skeleton;
   }
 
