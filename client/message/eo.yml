@@ -30,6 +30,10 @@ toast:
         La agordo ŝanĝitas.
       enableDuplicateName: |-
         La agordo ŝanĝitas.
+      punctuations: |-
+        La agordo ŝanĝitas.
+      ignoredEquivalentPattern: |-
+        La agordo ŝanĝitas.
     discardDictionaryAuthorizedUser: |-
       La permeso revokitas.
     addWord: |-

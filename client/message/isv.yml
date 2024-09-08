@@ -30,6 +30,10 @@ toast:
         The setting has been changed.
       enableDuplicateName: |-
         The setting has been changed.
+      punctuations: |-
+        The setting has been changed.
+      ignoredEquivalentPattern: |-
+        The setting has been changed.
     discardDictionaryAuthorizedUser: |-
       The permission has been revoked.
     addWord: |-

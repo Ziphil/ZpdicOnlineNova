@@ -30,6 +30,10 @@ toast:
         設定を変更しました。
       enableDuplicateName: |-
         設定を変更しました。
+      punctuations: |-
+        設定を変更しました。
+      ignoredEquivalentPattern: |-
+        設定を変更しました。
     discardDictionaryAuthorizedUser: |-
       編集権限を解除しました。
     addWord: |-
