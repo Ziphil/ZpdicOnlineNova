@@ -17,6 +17,7 @@
 body {
   overflow-x: hidden;
   overflow-y: scroll;
+  font-feature-settings: "palt" 1, "pkna" 1, "lnum" 1, "kern" 1, "ss04" 1 !important;
 }
 
 :global(#root) {
