@@ -17,6 +17,7 @@ import {
 import {create} from "/client/component/create";
 import {Dictionary, DictionarySettings} from "/client/skeleton";
 import {useChangeDictionarySettings} from "./change-dictionary-settings-form-hook";
+import {IgnoredPatternInput} from "./ignored-pattern-input";
 
 
 export const ChangeDictionarySettingsForm = create(
@@ -70,7 +71,7 @@ export const ChangeDictionarySettingsForm = create(
           </ControlContainer>
         ) : (propertyName === "ignoredEquivalentPattern") ? (
           <ControlContainer>
-            <Input {...register("value")}/>
+            <IgnoredPatternInput {...register("value")}/>
           </ControlContainer>
         ) : (propertyName === "exampleTitle") ? (
           <ControlContainer>

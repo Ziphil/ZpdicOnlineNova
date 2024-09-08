@@ -710,6 +710,9 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "有効"
       false: "無効"
+  pattern:
+    none: "設定なし"
+    paren: "カッコ内を無視"
 changeDictionaryVisibilityForm:
   label:
     public: "全体公開"
