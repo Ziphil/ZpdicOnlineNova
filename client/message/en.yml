@@ -369,7 +369,7 @@ editWordForm:
     tags: "Tags"
     equivalent:
       titles: "Parts of speech"
-      names: "Translations <note>(comma-separated)</note>"
+      names: "Translations"
     information:
       title: "Heading"
       text: "Content"

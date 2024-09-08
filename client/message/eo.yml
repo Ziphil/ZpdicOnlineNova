@@ -369,7 +369,7 @@ editWordForm:
     tags: "Etikedoj"
     equivalent:
       titles: "Vortospecoj"
-      names: "Tradukaĵoj <note>(apartigitaj per komoj)</note>"
+      names: "Tradukaĵoj"
     information:
       title: "Titlo"
       text: "Enhavo"

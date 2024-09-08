@@ -369,7 +369,7 @@ editWordForm:
     tags: "タグ"
     equivalent:
       titles: "品詞"
-      names: "訳語 <note>(コンマ区切り)</note>"
+      names: "訳語"
     information:
       title: "見出し"
       text: "内容"
