@@ -1,9 +1,9 @@
 //
 
-import {ReactElement} from "react";
+import {ReactElement, ReactNode} from "react";
 import {AdditionalProps, MultiLineText, Tag} from "zographia";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
+import {Dictionary, DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
 
 
 export const WordCardEquivalentList = create(
@@ -26,7 +26,7 @@ export const WordCardEquivalentList = create(
               <Tag key={index} styleName="tag" variant="light">{title}</Tag>
             ))}
             <span>
-              {equivalent.nameString}
+              {createNameNode(dictionary, equivalent.nameString)}
             </span>
           </MultiLineText>
         ))}
@@ -35,3 +35,22 @@ export const WordCardEquivalentList = create(
 
   }
 );
+
+
+function createNameNode(dictionary: Dictionary, nameString: string): ReactNode {
+  if (dictionary.settings.enableMarkdown) {
+    const regexp = new RegExp(dictionary.settings.ignoredEquivalentPattern || "", "g");
+    const nodes = [];
+    let lastIndex = 0;
+    let match;
+    while ((match = regexp.exec(nameString)) !== null) {
+      nodes.push(<span key={nodes.length}>{nameString.substring(lastIndex, match.index)}</span>);
+      nodes.push(<span styleName="ignored" key={nodes.length}>{match[0]}</span>);
+      lastIndex = match.index + match[0].length;
+    }
+    nodes.push(<span key={nodes.length}>{nameString.substring(lastIndex)}</span>);
+    return nodes;
+  } else {
+    return nameString;
+  }
+}
