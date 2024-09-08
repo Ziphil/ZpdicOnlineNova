@@ -881,6 +881,9 @@ dictionarySettingGeneralPart:
       Se vi agordos tiun al “Nelistigita”, la vortaro ne aperos en listoj de vortaroj.
       Tamen ĉiu, kiu konas la retadreso de la paĝo de la vortaro, povas ankoraŭ rekte aliri ĝin.
   callout:
+    font: >-
+      Eble necesas tempo por ke la alŝutita tiparo estus reflektita.
+      Se ĝi ne reflektas eĉ post iom da tempo, provu forigi la kaŝmemoron de via retumilo.
     discard: >-
       Forigi tiun vortaron ankaŭ forigos ĉiujn rilatajn datumojn, inkluzive de vortoj kaj ekzemplaj frazoj.
       Bonvolu esti certa, ĉar ne estas reiro.

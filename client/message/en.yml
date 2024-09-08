@@ -881,6 +881,9 @@ dictionarySettingGeneralPart:
       If you set this to “Unlisted”, this dictionary will not appear in dictionary lists.
       However, anyone who knows the URL of the dictionary page can still access it directly.
   callout:
+    font: >-
+      It may take some time for the uploaded font to be reflected.
+      If it is not reflected even after a while, try clearing your browser cache.
     discard: >-
       Deleting this dictionary will also delete all the relevant data, including words and example sentences.
       Please be certain, as there is no going back.

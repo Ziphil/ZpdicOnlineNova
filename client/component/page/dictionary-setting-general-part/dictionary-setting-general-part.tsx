@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
+import {faInfoCircle, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
 import {AdditionalProps, Callout, CalloutBody, CalloutIconContainer, GeneralIcon, MultiLineText, data, useTrans} from "zographia";
@@ -51,6 +51,14 @@ export const DictionarySettingGeneralPart = create(
           <MultiLineText styleName="description">
             {trans("description.font")}
           </MultiLineText>
+          <Callout styleName="callout">
+            <CalloutIconContainer><GeneralIcon icon={faInfoCircle}/></CalloutIconContainer>
+            <CalloutBody>
+              <MultiLineText is="p">
+                {trans("callout.font")}
+              </MultiLineText>
+            </CalloutBody>
+          </Callout>
           <ChangeDictionaryFontForm dictionary={dictionary}/>
         </section>
         <section styleName="section">
