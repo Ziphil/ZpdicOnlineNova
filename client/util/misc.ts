@@ -3,6 +3,11 @@
 import {SetStateAction} from "react";
 
 
+export function escapeRegexp(string: string): string {
+  const escapedString = string.replace(/[\\^$.*+?()[\]{}|]/g, "\\$&");
+  return escapedString;
+}
+
 export function calcOffsetSpec(page: number, size: number): {offset: number, size: number} {
   const offset = size * page;
   return {offset, size};

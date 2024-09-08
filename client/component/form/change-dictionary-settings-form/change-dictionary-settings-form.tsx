@@ -64,6 +64,14 @@ export const ChangeDictionarySettingsForm = create(
               </CheckableContainer>
             </div>
           </ControlContainer>
+        ) : (propertyName === "punctuations") ? (
+          <ControlContainer>
+            <Input {...register("value")}/>
+          </ControlContainer>
+        ) : (propertyName === "ignoredEquivalentPattern") ? (
+          <ControlContainer>
+            <Input {...register("value")}/>
+          </ControlContainer>
         ) : (propertyName === "exampleTitle") ? (
           <ControlContainer>
             <Input {...register("value")}/>

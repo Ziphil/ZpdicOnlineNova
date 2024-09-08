@@ -37,6 +37,8 @@ export function useChangeDictionarySettings<N extends keyof DictionarySettings>(
 function getDefaultFormValue<N extends keyof DictionarySettings>(dictionary: Dictionary, propertyName: N): FormValue {
   if (propertyName === "enableMarkdown" || propertyName === "enableDuplicateName") {
     return {value: dictionary.settings[propertyName]!.toString()};
+  } else if (propertyName === "punctuations") {
+    return {value: dictionary.settings.punctuations.join("")};
   } else {
     return {value: dictionary.settings[propertyName] as string};
   }
@@ -46,6 +48,8 @@ function getQuery<N extends keyof DictionarySettings>(dictionary: Dictionary, pr
   const number = dictionary.number;
   if (propertyName === "enableMarkdown" || propertyName === "enableDuplicateName") {
     return {number, settings: {[propertyName]: value.value === "true"}};
+  } else if (propertyName === "punctuations") {
+    return {number, settings: {punctuations: (value.value || "").split("")}};
   } else {
     return {number, settings: {[propertyName]: value.value}};
   }

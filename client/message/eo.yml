@@ -828,6 +828,8 @@ dictionarySettingEditingPart:
     zatlinSource: "Fontkodo por Zatlin"
     enableMarkdown: "Markdown"
     enableDuplicateName: "Kontrolon de duoblan literumon"
+    punctuations: "Disigiloj"
+    ignoredEquivalentPattern: "Regulesprimo ignorota en tradukaĵoj"
     exampleTitle: "Titolo por frazoj"
     pronunciationTitle: "Titolo por elparoloj"
   description:
@@ -845,6 +847,13 @@ dictionarySettingEditingPart:
     enableDuplicateName: >-
       Se vi ebligos tiun funkcion, kiam vi tajpos literumon en la redaktilo de vorto, ĝi diros al vi ĉu la vortaro jam havas vorto kun la sama literumo.
       Notu, ke ĝi nur kontrolas duobligon de literumoj kaj ne malhelpas vin registri vorton kun la sama literumo.
+    punctuations: >-
+      Tiuj signoj estas uzataj kiel disigiloj por tradukaĵoj.
+      La teksto enigita en la tradukaĵa kampo estas disigita per la signoj tie fiksitaj, ĉiu el kiuj estas registrita kiel tradukaĵo kaj estos la celo de la tradukaĵa serĉo.
+    ignoredEquivalentPattern: >-
+      Kiam oni ĉerpas tradukaĵojn el la teksto enigita en la tradukaĵa kampo, la partoj kongruaj kun tiu regulesprimo estas ignorataj.
+      La kongruoj do ne estos inkluzivitaj en la tradukaĵa serĉo.
+      Tio ekzemple povas esti uzata, se oni volas montri la kazan strukturon de verbo en la tradukaĵa kampo, sed ne volas ke ĝi estus inkluzivita en la tradukaĵa serĉo.
     exampleTitle: >-
       Jen la titolo de sekcioj de ekzemplaj frazoj, kiu estas montrata en kartoj de vorto.
     pronunciationTitle: >-

@@ -828,6 +828,8 @@ dictionarySettingEditingPart:
     zatlinSource: "Source code for Zatlin"
     enableMarkdown: "Markdown"
     enableDuplicateName: "Duplicate spelling check"
+    punctuations: "Delimiters"
+    ignoredEquivalentPattern: "Pattern to be ignored in translations"
     exampleTitle: "Heading for sentences"
     pronunciationTitle: "Heading for pronunciations"
   description:
@@ -845,6 +847,13 @@ dictionarySettingEditingPart:
     enableDuplicateName: >-
       If you enable this feature, when you enter a spelling in the word editor, it will tell you whether the dictionary already has a word with the same spelling.
       Note that it only checks for spelling duplication and does not prevent you from registering a word with the same spelling.
+    punctuations: >-
+      These characters are used as delimiters for translation terms.
+      The text entered in the translation field is delimited by the characters set here, each of which is registered as a translation term and will be the target of the translation search.
+    ignoredEquivalentPattern: >-
+      When extracting translation terms from the text entered in the translation field, the parts matching this regexp pattern are ignored.
+      The matches therefore will not be included in the translation search.
+      This can be used, for example, if you want to show the case structure of a verb in the translation field, but do not want it to be included in the translation search.
     exampleTitle: >-
       The heading of example sentence sections, which is displayed in word cards.
     pronunciationTitle: >-

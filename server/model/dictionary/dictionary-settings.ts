@@ -19,6 +19,9 @@ export class DictionarySettingsSchema {
   @prop({required: true, type: String})
   public punctuations!: Array<string>;
 
+  @prop()
+  public ignoredEquivalentPattern?: string;
+
   @prop({required: true})
   public pronunciationTitle!: string;
 

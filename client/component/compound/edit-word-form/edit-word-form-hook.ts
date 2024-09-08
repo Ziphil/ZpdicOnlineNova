@@ -7,6 +7,7 @@ import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {Dictionary, EditableWord, Relation, Word} from "/client/skeleton";
+import {escapeRegexp} from "/client/util/misc";
 import {switchResponse} from "/client/util/response";
 import type {RequestData} from "/server/type/rest/internal";
 
@@ -133,7 +134,7 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
       tags: value.tags,
       equivalents: value.equivalents.map((rawEquivalent) => ({
         titles: rawEquivalent.titles,
-        names: rawEquivalent.nameString.split(/\s*(?:,|、|。)\s*/),
+        names: createEquivalentNames(dictionary, rawEquivalent),
         nameString: rawEquivalent.nameString
       })),
       informations: value.informations,
@@ -145,6 +146,7 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
       }))
     }
   } satisfies RequestData<"editWord">;
+  console.log(query);
   return query;
 }
 
@@ -161,4 +163,12 @@ function getQueryForRelations(dictionary: Dictionary, editedWord: Word, value: F
   });
   const query = {number, specs};
   return query;
+}
+
+function createEquivalentNames(dictionary: Dictionary, rawEquivalent: FormValue["equivalents"][0]): Array<string> {
+  const punctuationRegexp = new RegExp(`[${escapeRegexp(dictionary.settings.punctuations.join(""))}]`);
+  const ignoreRegexp = new RegExp(dictionary.settings.ignoredEquivalentPattern || "", "g");
+  const ignoredNameString = (ignoreRegexp) ? rawEquivalent.nameString.replace(ignoreRegexp, "") : rawEquivalent.nameString;
+  const names = ignoredNameString.split(punctuationRegexp).map((name) => name.trim()).filter((name) => name);
+  return names;
 }
