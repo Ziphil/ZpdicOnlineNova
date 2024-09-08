@@ -38,7 +38,7 @@ export const WordCardEquivalentList = create(
 
 
 function createNameNode(dictionary: Dictionary, nameString: string): ReactNode {
-  if (dictionary.settings.enableMarkdown) {
+  if (dictionary.settings.ignoredEquivalentPattern) {
     const regexp = new RegExp(dictionary.settings.ignoredEquivalentPattern || "", "g");
     const nodes = [];
     let lastIndex = 0;

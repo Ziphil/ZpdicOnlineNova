@@ -167,7 +167,7 @@ function getQueryForRelations(dictionary: Dictionary, editedWord: Word, value: F
 function createEquivalentNames(dictionary: Dictionary, rawEquivalent: FormValue["equivalents"][0]): Array<string> {
   const punctuationRegexp = new RegExp(`[${escapeRegexp(dictionary.settings.punctuations.join(""))}]`);
   const ignoreRegexp = new RegExp(dictionary.settings.ignoredEquivalentPattern || "", "g");
-  const ignoredNameString = (ignoreRegexp) ? rawEquivalent.nameString.replace(ignoreRegexp, "") : rawEquivalent.nameString;
+  const ignoredNameString = (dictionary.settings.ignoredEquivalentPattern) ? rawEquivalent.nameString.replace(ignoreRegexp, "") : rawEquivalent.nameString;
   const names = ignoredNameString.split(punctuationRegexp).map((name) => name.trim()).filter((name) => name);
   return names;
 }
