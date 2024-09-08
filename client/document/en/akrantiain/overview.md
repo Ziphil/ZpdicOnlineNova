@@ -12,7 +12,7 @@ For more information about the format of Akrantiain code, please see [here](/doc
 
 ## Try
 The following is an example of a Akrantiain source code.
-Click the “Try” button at the right bottom to open the Akrantiain execution window, where you can edit and run a code.
+Click the ‘Try’ button at the right bottom to open the Akrantiain execution window, where you can edit and run a code.
 ```akrantiain-try
 @FALL_THROUGH
 sz = "s" | "z"
