@@ -15,6 +15,9 @@ export class EquivalentSchema {
   @prop()
   public nameString?: string;
 
+  @prop()
+  public ignoredPattern?: string;
+
 }
 
 

@@ -135,7 +135,8 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
       equivalents: value.equivalents.map((rawEquivalent) => ({
         titles: rawEquivalent.titles,
         names: createEquivalentNames(dictionary, rawEquivalent),
-        nameString: rawEquivalent.nameString
+        nameString: rawEquivalent.nameString,
+        ignoredPattern: dictionary.settings.ignoredEquivalentPattern
       })),
       informations: value.informations,
       variations: value.variations,

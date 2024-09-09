@@ -6,6 +6,7 @@ export interface Equivalent {
   titles: Array<string>;
   names: Array<string>;
   nameString: string;
+  ignoredPattern?: string;
 
 }
 

@@ -14,7 +14,8 @@ export namespace EquivalentCreator {
     const titles = raw.titles;
     const names = raw.names;
     const nameString = raw.nameString ?? names.join(", ");
-    const skeleton = {titles, names, nameString};
+    const ignoredPattern = raw.ignoredPattern;
+    const skeleton = {titles, names, nameString, ignoredPattern};
     return skeleton;
   }
 
