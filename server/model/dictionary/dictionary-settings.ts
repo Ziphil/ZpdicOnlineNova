@@ -19,6 +19,9 @@ export class DictionarySettingsSchema {
   @prop({required: true, type: String})
   public punctuations!: Array<string>;
 
+  @prop()
+  public ignoredEquivalentPattern?: string;
+
   @prop({required: true})
   public pronunciationTitle!: string;
 
@@ -33,12 +36,13 @@ export class DictionarySettingsSchema {
 
   public static createDefault(): DictionarySettings {
     const font = {type: "none"};
-    const punctuations = [",", "、"];
+    const punctuations = [",", "、", "。"];
+    const ignoredEquivalentPattern = "[\\(（].*?[\\)）]";
     const pronunciationTitle = "Pronunciation";
     const exampleTitle = "Examples";
     const enableMarkdown = false;
     const enableDuplicateName = true;
-    const settings = new DictionarySettingsModel({font, punctuations, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName});
+    const settings = new DictionarySettingsModel({font, punctuations, ignoredEquivalentPattern, pronunciationTitle, exampleTitle, enableMarkdown, enableDuplicateName});
     return settings;
   }
 

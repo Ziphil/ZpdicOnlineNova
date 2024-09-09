@@ -2,7 +2,7 @@
 
 
 ## Overview
-This privacy policy explains the policies to which ZpDIC Online (hereinafter referred to as “this application”) adheres when handling personal information of the users of this application (hereinafter referred to as “the users”) in its various services.
+This privacy policy explains the policies to which ZpDIC Online (hereinafter referred to as ‘this application’) adheres when handling personal information of the users of this application (hereinafter referred to as ‘the users’) in its various services.
 
 We recognise the importance of personal information and consider the protection of personal information to be a social responsibility.
 We thus comply with laws and regulations regarding personal information, and appropriately acquire, use and manage personal information.
@@ -48,7 +48,7 @@ The information stored is as follows:
 - Status code of the response
 - Time taken to respond
 
-The abovementioned “request body” does not include the unhashed password which is sent to sign in, and thus passwords will not be stored unencrypted.
+The abovementioned ‘request body’ does not include the unhashed password which is sent to sign in, and thus passwords will not be stored unencrypted.
 
 This log information will be used to analyze access trends to improve the services and to determine the cause of errors when they occur.
 Log information will be stored on Papertrail for up to 7 days, and thery will be deleted after 7 days.
@@ -57,20 +57,20 @@ Log information will be stored on Papertrail for up to 7 days, and thery will be
 This application uses cookies.
 Each cookie stores only hash values to identify the logged-in user, and does not contain any information that can identify the individual, such as email address or password.
 
-The cookies are used to retain the user's login information and to prevent the user from having to enter the login information each time they perform some operation on this application.
+The cookies are used to retain the user’s login information and to prevent the user from having to enter the login information each time they perform some operation on this application.
 Each cookie is valid for 30 days.
 
 ### reCAPTCHA
 This application uses reCAPTCHA v3 provided by Google in order to enhance security.
 It allows Google to collect information about the user, such as the IP address.
-This data collection is subject to the Google's [Privacy Policy](https://policies.google.com/privacy) and [Terms of Services](https://policies.google.com/terms).
+This data collection is subject to the Google’s [Privacy Policy](https://policies.google.com/privacy) and [Terms of Services](https://policies.google.com/terms).
 
 It is used to determine whether the visitor of this application is a human or a robot and to protect this application and its users from malicious spams.
 This application does not use any information collected by reCAPTCHA and Google.
 
 ### Google Analytics
 This application uses Google Analytics, and also uses cookies to collect data.
-This data collection is subject to the Google's [Privacy Policy](https://policies.google.com/privacy) and [Terms of Services](https://marketingplatform.google.com/about/analytics/terms/en/).
+This data collection is subject to the Google’s [Privacy Policy](https://policies.google.com/privacy) and [Terms of Services](https://marketingplatform.google.com/about/analytics/terms/en/).
 
 The collected data will be used to understand how this application is used and to improve the services.
 This data is collected anonymously and does not identify the user.

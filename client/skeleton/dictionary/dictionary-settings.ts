@@ -9,6 +9,7 @@ export interface DictionarySettings {
   zatlinSource?: string;
   font?: DictionaryFont;
   punctuations: Array<string>;
+  ignoredEquivalentPattern?: string;
   pronunciationTitle: string;
   exampleTitle: string;
   enableMarkdown: boolean;

@@ -17,6 +17,7 @@ import {
 import {create} from "/client/component/create";
 import {Dictionary, DictionarySettings} from "/client/skeleton";
 import {useChangeDictionarySettings} from "./change-dictionary-settings-form-hook";
+import {IgnoredPatternInput} from "./ignored-pattern-input";
 
 
 export const ChangeDictionarySettingsForm = create(
@@ -63,6 +64,14 @@ export const ChangeDictionarySettingsForm = create(
                 <CheckableLabel>{trans("label.enableDuplicateName.false")}</CheckableLabel>
               </CheckableContainer>
             </div>
+          </ControlContainer>
+        ) : (propertyName === "punctuations") ? (
+          <ControlContainer>
+            <Input {...register("value")}/>
+          </ControlContainer>
+        ) : (propertyName === "ignoredEquivalentPattern") ? (
+          <ControlContainer>
+            <IgnoredPatternInput {...register("value")}/>
           </ControlContainer>
         ) : (propertyName === "exampleTitle") ? (
           <ControlContainer>

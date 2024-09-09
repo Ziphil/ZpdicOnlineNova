@@ -30,6 +30,10 @@ toast:
         設定を変更しました。
       enableDuplicateName: |-
         設定を変更しました。
+      punctuations: |-
+        設定を変更しました。
+      ignoredEquivalentPattern: |-
+        設定を変更しました。
     discardDictionaryAuthorizedUser: |-
       編集権限を解除しました。
     addWord: |-
@@ -369,7 +373,7 @@ editWordForm:
     tags: "タグ"
     equivalent:
       titles: "品詞"
-      names: "訳語 <note>(コンマ区切り)</note>"
+      names: "訳語"
     information:
       title: "見出し"
       text: "内容"
@@ -706,6 +710,10 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "有効"
       false: "無効"
+  pattern:
+    none: "設定なし"
+    paren: "丸カッコ内を無視"
+    bracket: "角カッコ内を無視"
 changeDictionaryVisibilityForm:
   label:
     public: "全体公開"
@@ -826,6 +834,8 @@ dictionarySettingEditingPart:
     zatlinSource: "Zatlin ソースコード"
     enableMarkdown: "Markdown"
     enableDuplicateName: "重複綴りチェック"
+    punctuations: "区切り文字"
+    ignoredEquivalentPattern: "訳語で無視するパターン"
     exampleTitle: "例文データの見出し"
     pronunciationTitle: "発音データの見出し"
   description:
@@ -843,6 +853,13 @@ dictionarySettingEditingPart:
     enableDuplicateName: >-
       これを有効にしておくと、単語編集画面で綴りを入力した際に、同じ綴りの単語がすでに存在しているかが表示されるようになります。
       なお、あくまでこの機能は綴りの重複をチェックするのみで、同じ綴りの単語を登録できるなくなるわけではありません。
+    punctuations: >-
+      訳語の区切りとして使う文字です。
+      訳語欄に入力されたテキストはここで設定されている区切り文字で区切られ、訳語として登録されて訳語検索の対象となります。
+    ignoredEquivalentPattern: >-
+      訳語欄に入力されたテキストから訳語を抽出する際に、ここで設定された正規表現パターンにマッチした部分は無視されます。
+      そのため、マッチした部分は訳語検索の対象外となります。
+      例えば、訳語欄に動詞の格の取り方を明示したいが訳語検索の対象にはしたくない場合などに利用できます。
     exampleTitle: >-
       単語カードに例文を表示する際の見出しです。
     pronunciationTitle: >-
@@ -880,6 +897,9 @@ dictionarySettingGeneralPart:
       これを「限定公開」に設定すると、この辞書が辞書一覧に表示されなくなります。
       ただし、辞書ページの URL を知っている人は直接アクセスすることができます。
   callout:
+    font: >-
+      アップロードしたフォントが反映されるまで時間がかかることがあります。
+      しばらくしても反映されない場合は、ブラウザのキャッシュを消去してみてください。
     discard: >-
       この辞書を削除すると、単語や例文などの関連するデータも全て削除されます。
       後からデータを復元することはできないので、慎重に行ってください。

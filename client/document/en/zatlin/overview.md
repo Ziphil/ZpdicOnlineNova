@@ -13,7 +13,7 @@ For more information about the format of Zatlin code, please see [here](/documen
 
 ## Try
 The following is an example of a Zatlin source code.
-Click the “Try” button at the right bottom to open the Zatlin execution window, where you can edit and run a code.
+Click the ‘Try’ button at the right bottom to open the Zatlin execution window, where you can edit and run a code.
 ```zatlin-try
 short_vowel = "a" 5 | "e" 3 | "i" 2 | "o" 3 | "u" 2
 long_vowel = short_vowel &1

@@ -30,6 +30,10 @@ toast:
         The setting has been changed.
       enableDuplicateName: |-
         The setting has been changed.
+      punctuations: |-
+        The setting has been changed.
+      ignoredEquivalentPattern: |-
+        The setting has been changed.
     discardDictionaryAuthorizedUser: |-
       The permission has been revoked.
     addWord: |-
@@ -369,7 +373,7 @@ editWordForm:
     tags: "Значкы"
     equivalent:
       titles: "Чести молвы"
-      names: "Прєводы <note>(раздєљене запетыми)</note>"
+      names: "Прєводы"
     information:
       title: "Заглавје"
       text: "Содржанје"
@@ -708,6 +712,10 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Enabled"
       false: "Disabled"
+  pattern:
+    none: "No setting"
+    paren: "Ignore inside round brackets (parens)"
+    bracket: "Ignore inside square brackets"
 changeDictionaryVisibilityForm:
   label:
     public: "Public"
@@ -786,14 +794,14 @@ contactPage:
   title: "Contact"
   heading: "Contact"
   explanation: |-
-    If you wish to send your inquiry anonymously, please sign out and then leave the “Name” field blank.
-    Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user's authority, such as dictionary settings or editing.
+    If you wish to send your inquiry anonymously, please sign out and then leave the ‘Name’ field blank.
+    Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user’s authority, such as dictionary settings or editing.
 exampleOfferListPage:
   title: "Sentences"
   heading: "Sentences"
 dictionaryExamplePart:
   heading:
-    offer: "Today's sentence"
+    offer: "Today’s sentence"
 dictionaryInformationPart:
   heading:
     history: "Хисторија коликости слов"
@@ -835,11 +843,11 @@ dictionarySettingEditingPart:
       Akrantiain is a system that automatically generates phonetic symbols based on the spelling of words.
       If you set the source code, Akrantiain will automatically generate a phonetic symbol from a spelling and display it next to the spelling.
       If a word has a specified pronunciation, it will be displayed instead.
-      For more information on Akrantiain's syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+      For more information on Akrantiain’s syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
     zatlinSource: >-
       Zatlin is a system that generates random spellings of words.
-      If you set the source code, a “Generate” button will appear in the word editor, allowing you to generate a spelling by Zatlin.
-      For more information on Zatlin's syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
+      If you set the source code, a ‘Generate’ button will appear in the word editor, allowing you to generate a spelling by Zatlin.
+      For more information on Zatlin’s syntax, please refer to the <link>documentation</link> (currently only available in Japanese).
     enableMarkdown: >-
       Enabling this feature will allow you to write the contents of words in Markdown format.
     enableDuplicateName: >-
@@ -876,11 +884,14 @@ dictionarySettingGeneralPart:
       You can use some Markdown syntax here.
     font: >-
       You can change the font for headwords.
-      Select “Use local font” to use a font installed in the visiter's environment, or “Upload custom font” to use your own uploaded font.
+      Select ‘Use local font’ to use a font installed in the visiter’s environment, or ‘Upload custom font’ to use your own uploaded font.
     visibility: >-
-      If you set this to “Unlisted”, this dictionary will not appear in dictionary lists.
+      If you set this to ‘Unlisted’, this dictionary will not appear in dictionary lists.
       However, anyone who knows the URL of the dictionary page can still access it directly.
   callout:
+    font: >-
+      It may take some time for the uploaded font to be reflected.
+      If it is not reflected even after a while, try clearing your browser cache.
     discard: >-
       Deleting this dictionary will also delete all the relevant data, including words and example sentences.
       Please be certain, as there is no going back.
@@ -893,7 +904,7 @@ errorPage:
       Страница ктору вы ишчете не была најдена.
       Она можно была одстрањена или прємєшчена в ино мєсто, затом прошу попробујте поискати ју опет из главној странице.
     forbidden: >-
-      You don't have permission to view this page.
+      You don’t have permission to view this page.
       Please return to the top page for other contents.
     error: >-
       An unexpected error has occurred.
@@ -930,7 +941,7 @@ topPage:
   catch: "Рысујте{wbr} Свој Всесвєт{wbr} Со Сконструованым Језыком"
   heading:
     gift: "I need your support"
-    offer: "Today's sentence"
+    offer: "Today’s sentence"
     notification: "Послєдне новости"
     github: "GitHub"
     supporter: "Supporters"
@@ -940,7 +951,7 @@ topPage:
       To maintain and improve the service, your support is needed!
       If you like this application, please send a gift to the developer via the button below.
     giftSub: >-
-      In the “Supporters” section below, I will list the names of those who have sent me a gift.
+      In the ‘Supporters’ section below, I will list the names of those who have sent me a gift.
       If you would like to be listed, please provide your nickname and link in the message when you send your gift.
       If you have previously sent a gift and would like to be listed, please contact me through the contact page.
     offer: >-

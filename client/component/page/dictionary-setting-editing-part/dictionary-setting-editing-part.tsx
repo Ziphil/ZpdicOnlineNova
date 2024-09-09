@@ -57,6 +57,20 @@ export const DictionarySettingEditingPart = create(
           <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="enableDuplicateName"/>
         </section>
         <section styleName="section">
+          <h3 styleName="heading">{trans("heading.punctuations")}</h3>
+          <MultiLineText styleName="description">
+            {trans("description.punctuations")}
+          </MultiLineText>
+          <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="punctuations"/>
+        </section>
+        <section styleName="section">
+          <h3 styleName="heading">{trans("heading.ignoredEquivalentPattern")}</h3>
+          <MultiLineText styleName="description">
+            {trans("description.ignoredEquivalentPattern")}
+          </MultiLineText>
+          <ChangeDictionarySettingsForm dictionary={dictionary} propertyName="ignoredEquivalentPattern"/>
+        </section>
+        <section styleName="section">
           <h3 styleName="heading">{trans("heading.exampleTitle")}</h3>
           <MultiLineText styleName="description">
             {trans("description.exampleTitle")}
