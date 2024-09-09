@@ -712,7 +712,8 @@ changeDictionarySettingsForm:
       false: "無効"
   pattern:
     none: "設定なし"
-    paren: "カッコ内を無視"
+    paren: "丸カッコ内を無視"
+    bracket: "角カッコ内を無視"
 changeDictionaryVisibilityForm:
   label:
     public: "全体公開"

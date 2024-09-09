@@ -21,6 +21,9 @@ export const IgnoredPatternInput = createWithRef(
       }, {
         replacement: "[\\(（].*?[\\)）]",
         node: <IgnoredPatternMenuItem name="paren" pattern={"[\\(（].*?[\\)）]"}/>
+      }, {
+        replacement: "[\\[［].*?[\\]］]",
+        node: <IgnoredPatternMenuItem name="bracket" pattern={"[\\[［].*?[\\]］]"}/>
       }]}/>
     );
 

@@ -712,6 +712,10 @@ changeDictionarySettingsForm:
     enableDuplicateName:
       true: "Enabled"
       false: "Disabled"
+  pattern:
+    none: "No setting"
+    paren: "Ignore inside round brackets (parens)"
+    bracket: "Ignore inside square brackets"
 changeDictionaryVisibilityForm:
   label:
     public: "Public"
