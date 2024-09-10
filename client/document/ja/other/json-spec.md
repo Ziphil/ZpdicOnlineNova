@@ -53,7 +53,7 @@ relation = {
   }
 }
 
-;  例文関連
+; 例文関連
 
 example = {
   "id": int
@@ -61,10 +61,10 @@ example = {
   "translation": text
   ? "supplement": text
   "tags": [* tag] 
-  "words": [* linked_word]
+  "words": [* linkedWord]
 }
 
-linked_word = {
+linkedWord = {
   "id": int
 }
 
