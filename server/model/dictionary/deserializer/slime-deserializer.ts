@@ -93,6 +93,7 @@ export class SlimeDeserializer extends Deserializer {
     const dictionary = this.dictionary;
     const number = parseInt(raw["entry"]["id"], 10);
     const name = raw["entry"]["form"];
+    let pronunciation;
     const equivalents = [];
     for (const rawEquivalent of raw["translations"] ?? []) {
       const titles = (rawEquivalent["title"]) ? rawEquivalent["title"] : [];
@@ -102,7 +103,6 @@ export class SlimeDeserializer extends Deserializer {
       equivalents.push(equivalent);
     }
     const tags = raw["tags"] ?? [];
-    let pronunciation;
     const informations = [];
     for (const rawInformation of raw["contents"] ?? []) {
       if (rawInformation["title"] === this.pronunciationTitle) {
