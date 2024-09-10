@@ -74,6 +74,13 @@ export class SlimeDeserializer extends Deserializer {
       if (typeof data["explanation"] === "string") {
         this.emit("property", "explanation", data["explanation"]);
       }
+      if (Array.isArray(data["punctuations"]) && data["punctuations"].every((punctuation) => typeof punctuation === "string")) {
+        this.emit("settings", "punctuations", data["punctuations"]);
+      }
+      if (typeof data["pronunciationTitle"] === "string") {
+        this.pronunciationTitle = data["pronunciationTitle"];
+        this.emit("settings", "pronunciationTitle", data["pronunciationTitle"]);
+      }
       if (typeof data["enableMarkdown"] === "boolean") {
         this.enableMarkdown = data["enableMarkdown"];
         this.emit("settings", "enableMarkdown", data["enableMarkdown"]);
@@ -109,13 +116,7 @@ export class SlimeDeserializer extends Deserializer {
         pronunciation = rawInformation["text"] ?? undefined;
       } else {
         const title = rawInformation["title"] ?? "";
-        const text = (() => {
-          if (this.enableMarkdown) {
-            return rawInformation["markdown"] ?? rawInformation["text"] ?? "";
-          } else {
-            return rawInformation["text"] ?? "";
-          }
-        })();
+        const text = rawInformation["markdown"] ?? rawInformation["text"] ?? "";
         const information = new InformationModel({title, text});
         informations.push(information);
       }

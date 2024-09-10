@@ -4,7 +4,6 @@ import {createWriteStream} from "fs";
 import {Dictionary} from "/server/model/dictionary/dictionary";
 import {Serializer} from "/server/model/dictionary/serializer/serializer";
 import {Word, WordModel} from "/server/model/word/word";
-import {removeMarkdown} from "/server/util/misc";
 
 
 export class SlimeSerializer extends Serializer {
@@ -65,12 +64,7 @@ export class SlimeSerializer extends Serializer {
     for (const information of word.informations ?? []) {
       const rawInformation = {} as any;
       rawInformation["title"] = information.title;
-      if (this.dictionary.settings.enableMarkdown) {
-        rawInformation["text"] = removeMarkdown(information.text);
-        rawInformation["markdown"] = information.text;
-      } else {
-        rawInformation["text"] = information.text;
-      }
+      rawInformation["text"] = information.text;
       raw["contents"].push(rawInformation);
     }
     if (word.pronunciation !== undefined) {
@@ -102,21 +96,14 @@ export class SlimeSerializer extends Serializer {
 
   private createExternalString(): string {
     let externalData = {} as any;
-    externalData["zpdic"] = {};
     externalData["zpdicOnline"] = {};
     externalData = Object.assign({}, externalData, this.dictionary.externalData);
-    if (this.dictionary.explanation !== undefined) {
-      externalData["zpdicOnline"]["explanation"] = this.dictionary.explanation;
-    }
-    if (this.dictionary.settings.akrantiainSource !== undefined) {
-      externalData["snoj"] = this.dictionary.settings.akrantiainSource;
-    }
-    if (this.dictionary.settings.zatlinSource !== undefined) {
-      externalData["zatlin"] = this.dictionary.settings.zatlinSource;
-    }
-    externalData["zpdic"]["punctuations"] = this.dictionary.settings.punctuations;
-    externalData["zpdic"]["pronunciationTitle"] = this.dictionary.settings.pronunciationTitle;
+    externalData["zpdicOnline"]["explanation"] = this.dictionary.explanation;
+    externalData["zpdicOnline"]["punctuations"] = this.dictionary.settings.punctuations;
+    externalData["zpdicOnline"]["pronunciationTitle"] = this.dictionary.settings.pronunciationTitle;
     externalData["zpdicOnline"]["enableMarkdown"] = this.dictionary.settings.enableMarkdown;
+    externalData["snoj"] = this.dictionary.settings.akrantiainSource;
+    externalData["zatlin"] = this.dictionary.settings.zatlinSource;
     const string = JSON.stringify(externalData).slice(1, -1);
     return string;
   }
