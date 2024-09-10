@@ -9,9 +9,12 @@
 ```cddl
 json = {
   "version": 2
-  "words": [* word]  ; 単語データ
-  settings           ; 設定データ
+  "words": [* word]        ; 単語
+  "examples": [* example]  ; 例文
+  settings                 ; 設定
 }
+
+; 単語関連
 
 word = {
   "entry": {
@@ -49,6 +52,23 @@ relation = {
     "form": text  ; 関連語の綴り
   }
 }
+
+;  例文関連
+
+example = {
+  "id": int
+  "sentence": text
+  "translation": text
+  ? "supplement": text
+  "tags": [* tag] 
+  "words": [* linked_word]
+}
+
+linked_word = {
+  "id": int
+}
+
+; 設定関連
 
 settings = (
   "zpdicOnline": {

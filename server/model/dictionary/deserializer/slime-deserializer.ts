@@ -13,49 +13,59 @@ import {Word, WordModel} from "/server/model/word/word";
 export class SlimeDeserializer extends Deserializer {
 
   private pronunciationTitle?: string;
-  private enableMarkdown?: boolean;
 
   public start(): void {
-    this.readSettings();
-  }
-
-  private readSettings(): void {
-    const stream = oboe(createReadStream(this.path));
-    stream.on("node:!.*", (data, jsonPath) => {
-      this.emitSettings(data, jsonPath[0]);
-      return oboe.drop;
-    });
-    stream.on("done", () => {
+    this.readSettings().then(() => {
       this.readMain();
     });
-    stream.on("fail", (reason) => {
-      this.emit("error", reason.thrown);
-    });
   }
 
-  private readMain(): void {
-    const stream = oboe(createReadStream(this.path));
-    stream.on("node:!.words.*", (data, jsonPath) => {
-      try {
-        const word = this.createWord(data);
-        this.emit("word", word);
-      } catch (error) {
-        this.emit("error", error);
-      }
-      return oboe.drop;
+  private readSettings(): Promise<void> {
+    const promise = new Promise<void>((resolve, reject) => {
+      const stream = oboe(createReadStream(this.path));
+      stream.on("node:!.*", (data, jsonPath) => {
+        this.emitSettings(data, jsonPath[0]);
+        return oboe.drop;
+      });
+      stream.on("done", () => {
+        resolve();
+      });
+      stream.on("fail", (reason) => {
+        this.emit("error", reason.thrown);
+        reject(reason.thrown);
+      });
     });
-    stream.on("node:!.*", (data, jsonPath) => {
-      if (jsonPath[0] !== "words" && jsonPath[0] !== "version") {
-        this.emit("external", jsonPath[0], data);
-      }
-      return oboe.drop;
+    return promise;
+  }
+
+  private readMain(): Promise<void> {
+    const promise = new Promise<void>((resolve, reject) => {
+      const stream = oboe(createReadStream(this.path));
+      stream.on("node:!.words.*", (data, jsonPath) => {
+        try {
+          const word = this.createWord(data);
+          this.emit("word", word);
+        } catch (error) {
+          this.emit("error", error);
+        }
+        return oboe.drop;
+      });
+      stream.on("node:!.*", (data, jsonPath) => {
+        if (jsonPath[0] !== "words" && jsonPath[0] !== "version") {
+          this.emit("external", jsonPath[0], data);
+        }
+        return oboe.drop;
+      });
+      stream.on("done", () => {
+        this.emit("end");
+        resolve();
+      });
+      stream.on("fail", (reason) => {
+        this.emit("error", reason.thrown);
+        reject(reason.thrown);
+      });
     });
-    stream.on("done", () => {
-      this.emit("end");
-    });
-    stream.on("fail", (reason) => {
-      this.emit("error", reason.thrown);
-    });
+    return promise;
   }
 
   private emitSettings(data: any, path: string): void {
@@ -82,7 +92,6 @@ export class SlimeDeserializer extends Deserializer {
         this.emit("settings", "pronunciationTitle", data["pronunciationTitle"]);
       }
       if (typeof data["enableMarkdown"] === "boolean") {
-        this.enableMarkdown = data["enableMarkdown"];
         this.emit("settings", "enableMarkdown", data["enableMarkdown"]);
       }
     } else if (path === "snoj") {

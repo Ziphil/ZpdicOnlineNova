@@ -171,11 +171,17 @@ export class DictionarySchema extends DiscardableSchema {
     if (stream !== null) {
       const settings = this.settings as any;
       await new Promise<Dictionary>((resolve, reject) => {
-        let count = 0;
+        const counts = {word: 0, example: 0};
         stream.on("words", (words) => {
           WordModel.insertMany(words);
-          count += words.length;
-          LogUtil.log("model/dictionary/upload", {number: this.number, uploadingCount: count});
+          counts.word += words.length;
+          LogUtil.log("model/dictionary/upload", {number: this.number, counts});
+          LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
+        });
+        stream.on("examples", (examples) => {
+          ExampleModel.insertMany(examples);
+          counts.example += examples.length;
+          LogUtil.log("model/dictionary/upload", {number: this.number, counts});
           LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
         });
         stream.on("property", (key, value) => {
@@ -210,7 +216,10 @@ export class DictionarySchema extends DiscardableSchema {
     this.updatedDate = new Date();
     this.externalData = {};
     await this.save();
-    await WordModel.deleteManyExist().where("dictionary", this);
+    await Promise.all([
+      WordModel.deleteManyExist().where("dictionary", this),
+      ExampleModel.deleteManyExist().where("dictionary", this).ne("exampleOffer", undefined)
+    ]);
     LogUtil.log("model/dictionary/startUpload", {number: this.number});
   }
 
