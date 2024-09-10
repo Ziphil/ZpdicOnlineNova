@@ -97,7 +97,8 @@ export class SlimeDeserializer extends Deserializer {
     for (const rawEquivalent of raw["translations"] ?? []) {
       const titles = (rawEquivalent["title"]) ? rawEquivalent["title"] : [];
       const names = rawEquivalent["forms"] ?? [];
-      const equivalent = new EquivalentModel({titles, names});
+      const nameString = names.join(", ");
+      const equivalent = new EquivalentModel({titles, names, nameString});
       equivalents.push(equivalent);
     }
     const tags = raw["tags"] ?? [];
