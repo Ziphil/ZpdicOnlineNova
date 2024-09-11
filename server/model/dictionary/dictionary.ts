@@ -218,7 +218,7 @@ export class DictionarySchema extends DiscardableSchema {
     await this.save();
     await Promise.all([
       WordModel.deleteManyExist().where("dictionary", this),
-      ExampleModel.deleteManyExist().where("dictionary", this).ne("exampleOffer", undefined)
+      ExampleModel.deleteManyExist().where("dictionary", this).where("offer", null)
     ]);
     LogUtil.log("model/dictionary/startUpload", {number: this.number});
   }

@@ -28,12 +28,12 @@ export class SlimeSerializer extends Serializer {
   private async write(writer: WriteStream): Promise<void> {
     writer.write("{");
     writer.write("\"version\":2,");
-    writer.write("\"words\":[");
+    writer.write("\"words\":");
     await this.writeWords(writer);
-    writer.write("],");
-    writer.write("\"examples\":[");
+    writer.write(",");
+    writer.write("\"examples\":");
     await this.writeExamples(writer);
-    writer.write("],");
+    writer.write(",");
     writer.write(this.createExternalString());
     writer.write("}");
   }
@@ -66,7 +66,7 @@ export class SlimeSerializer extends Serializer {
 
   private writeExamples(writer: WriteStream): Promise<void> {
     const promise = new Promise<void>((resolve, reject) => {
-      const stream = ExampleModel.findExist().where("dictionary", this.dictionary).where("exampleOffer", undefined).lean().cursor();
+      const stream = ExampleModel.findExist().where("dictionary", this.dictionary).where("offer", null).lean().cursor();
       let first = true;
       writer.write("[");
       stream.on("data", (example) => {
