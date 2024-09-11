@@ -173,13 +173,13 @@ export class DictionarySchema extends DiscardableSchema {
       await new Promise<Dictionary>((resolve, reject) => {
         const counts = {word: 0, example: 0};
         stream.on("words", (words) => {
-          WordModel.insertMany(words);
+          WordModel.insertMany(words).catch(reject);
           counts.word += words.length;
           LogUtil.log("model/dictionary/upload", {number: this.number, counts});
           LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
         });
         stream.on("examples", (examples) => {
-          ExampleModel.insertMany(examples);
+          ExampleModel.insertMany(examples).catch(reject);;
           counts.example += examples.length;
           LogUtil.log("model/dictionary/upload", {number: this.number, counts});
           LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
