@@ -3,8 +3,10 @@
 import {createReadStream} from "fs";
 import oboe from "oboe";
 import {Deserializer} from "/server/model/dictionary/deserializer/deserializer";
+import {Example, ExampleModel} from "/server/model/example/example";
 import {EquivalentModel} from "/server/model/word/equivalent";
 import {InformationModel} from "/server/model/word/information";
+import {LinkedWordModel} from "/server/model/word/linked-word";
 import {RelationModel} from "/server/model/word/relation";
 import {VariationModel} from "/server/model/word/variation";
 import {Word, WordModel} from "/server/model/word/word";
@@ -45,6 +47,15 @@ export class SlimeDeserializer extends Deserializer {
         try {
           const word = this.createWord(data);
           this.emit("word", word);
+        } catch (error) {
+          this.emit("error", error);
+        }
+        return oboe.drop;
+      });
+      stream.on("node:!.examples.*", (data, jsonPath) => {
+        try {
+          const example = this.createExample(data);
+          this.emit("example", example);
         } catch (error) {
           this.emit("error", error);
         }
@@ -148,6 +159,24 @@ export class SlimeDeserializer extends Deserializer {
     const updatedDate = new Date();
     const word = new WordModel({dictionary, number, name, pronunciation, equivalents, tags, informations, variations, relations, updatedDate});
     return word;
+  }
+
+  private createExample(raw: any): Example {
+    const dictionary = this.dictionary;
+    const number = parseInt(raw["id"], 10);
+    const sentence = raw["sentence"] ?? "";
+    const translation = raw["translation"] ?? "";
+    const supplement = raw["supplement"];
+    const tags = raw["tags"] ?? [];
+    const words = [];
+    for (const rawWord of raw["words"] ?? []) {
+      const number = parseInt(rawWord["id"], 10);
+      const word = new LinkedWordModel({number});
+      words.push(word);
+    }
+    const updatedDate = new Date();
+    const example = new ExampleModel({dictionary, number, sentence, translation, supplement, tags, words, updatedDate});
+    return example;
   }
 
 }
