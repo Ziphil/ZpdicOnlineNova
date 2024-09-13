@@ -16,7 +16,6 @@ import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";
 import {WithSize} from "/server/type/common";
 import {LogUtil} from "/server/util/log";
-import {toObjectId} from "/server/util/mongo";
 import {QueryRange} from "/server/util/query";
 
 
@@ -65,13 +64,13 @@ export class ExampleSchema extends DiscardableSchema {
     return result;
   }
 
-  public static async fetchByOffer(dictionary: Dictionary | null, offerId: string, range?: QueryRange): Promise<WithSize<Example>> {
+  public static async fetchByOffer(dictionary: Dictionary | null, offer: {catalog: string, number: number}, range?: QueryRange): Promise<WithSize<Example>> {
     if (dictionary !== null) {
-      const query = ExampleModel.findExist().where("dictionary", dictionary).where("offer", offerId).sort("-createdDate");
+      const query = ExampleModel.findExist().where("dictionary", dictionary).where("offer.catalog", offer.catalog).where("offer.number", offer.number).sort("-createdDate");
       const result = await QueryRange.restrictWithSize(query, range);
       return result;
     } else {
-      const aggregate = ExampleModel.aggregateExist().match({"offer": toObjectId(offerId)}).lookup({
+      const aggregate = ExampleModel.aggregateExist().match({"offer.catalog": offer.catalog, "offer.number": offer.number}).lookup({
         from: "dictionaries",
         localField: "dictionary",
         foreignField: "_id",

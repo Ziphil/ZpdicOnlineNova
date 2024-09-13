@@ -71,9 +71,9 @@ export class ExampleRestController extends InternalRestController {
   @before(parseDictionary())
   public async [Symbol()](request: Request<"fetchExamplesByOffer">, response: Response<"fetchExamplesByOffer">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const {offerId, offset, size} = request.body;
+    const {offer, offset, size} = request.body;
     const range = new QueryRange(offset, size);
-    const hitResult = await ExampleModel.fetchByOffer(dictionary, offerId, range);
+    const hitResult = await ExampleModel.fetchByOffer(dictionary, offer, range);
     const body = await mapWithSizeAsync(hitResult, ExampleCreator.skeletonizeWithDictionary);
     InternalRestController.respond(response, body);
   }
