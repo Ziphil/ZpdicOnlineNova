@@ -313,7 +313,7 @@ type ServerSpecs = {
     }
   },
   fetchExampleOffer: {
-    request: {id: ObjectId},
+    request: {catalog: string, number: number},
     response: {
       success: ExampleOffer,
       error: CustomError<"noSuchExampleOffer">

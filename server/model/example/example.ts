@@ -11,7 +11,7 @@ import type {EditableExample} from "/client/skeleton";
 import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
-import {ExampleOffer} from "/server/model/example/example-offer";
+import {LinkedExampleOfferSchema} from "/server/model/example/linked-example-offer";
 import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";
 import {WithSize} from "/server/type/common";
@@ -44,8 +44,8 @@ export class ExampleSchema extends DiscardableSchema {
   @prop()
   public supplement?: string;
 
-  @prop({ref: "ExampleOfferSchema"})
-  public offer?: Ref<ExampleOffer>;
+  @prop()
+  public offer?: LinkedExampleOfferSchema;
 
   @prop()
   public createdDate?: Date;

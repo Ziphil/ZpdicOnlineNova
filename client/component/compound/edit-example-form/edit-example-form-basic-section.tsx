@@ -25,7 +25,7 @@ export const EditExampleFormBasicSection = create(
     const {trans} = useTrans("editExampleForm");
 
     const {register, control} = form;
-    const offerId = form.watch("offer");
+    const offer = form.watch("offer");
 
     return (
       <section styleName="root" {...rest}>
@@ -43,10 +43,10 @@ export const EditExampleFormBasicSection = create(
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.translation")}</ControlLabel>
-            <Textarea styleName="textarea" disabled={!!offerId} {...register("translation")}>
-              {(offerId !== null) && (
+            <Textarea styleName="textarea" disabled={!!offer} {...register("translation")}>
+              {(offer !== null) && (
                 <TextareaAddon position="top">
-                  <ExampleOfferTag offer={{id: offerId}}/>
+                  <ExampleOfferTag offer={offer}/>
                 </TextareaAddon>
               )}
             </Textarea>

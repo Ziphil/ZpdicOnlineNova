@@ -5,7 +5,7 @@ import {RelationWord} from "/client/component/atom/relation-word-select";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {fetchResponse, invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, EditableExample, Example, ExampleOffer, ObjectId} from "/client/skeleton";
+import {Dictionary, EditableExample, Example, ExampleOffer, LinkedExampleOffer} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 import type {RequestData} from "/server/type/rest/internal";
 
@@ -26,7 +26,7 @@ type FormValue = {
   supplement: string,
   tags: Array<string>,
   words: Array<RelationWord | null>,
-  offer: ObjectId | null
+  offer: LinkedExampleOffer | null
 };
 
 export type EditExampleSpec = {
@@ -43,7 +43,7 @@ export function useEditExample(dictionary: Dictionary, initialData: EditExampleI
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const adding = value.number === null;
-    const offer = (value.offer !== null) ? await fetchResponse("fetchExampleOffer", {id: value.offer}) : null;
+    const offer = (value.offer !== null) ? await fetchResponse("fetchExampleOffer", value.offer) : null;
     const query = getQuery(dictionary, offer, value);
     const response = await request("editExample", query);
     await switchResponse(response, async (example) => {
@@ -87,7 +87,7 @@ function getFormValue(initialData: EditExampleInitialData | null): FormValue {
         supplement: "",
         tags: [],
         words: [],
-        offer: offer.id
+        offer: {catalog: offer.catalog, number: offer.number}
       } satisfies FormValue;
       return value;
     } else {
@@ -110,7 +110,7 @@ function getQuery(dictionary: Dictionary, offer: ExampleOffer | null, value: For
       words: value.words.filter((rawWord) => rawWord !== null).map((rawWord) => ({
         number: rawWord!.number
       })),
-      offer: (offer !== null) ? offer.id : null
+      offer: (offer !== null) ? {catalog: offer.catalog, number: offer.number} : null
     }
   } satisfies RequestData<"editExample">;
   return query;

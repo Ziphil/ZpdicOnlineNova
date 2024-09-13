@@ -80,8 +80,8 @@ export class ExampleRestController extends InternalRestController {
 
   @post("/fetchExampleOffer")
   public async [Symbol()](request: Request<"fetchExampleOffer">, response: Response<"fetchExampleOffer">): Promise<void> {
-    const {id} = request.body;
-    const offer = await ExampleOfferModel.findById(id);
+    const {catalog, number} = request.body;
+    const offer = await ExampleOfferModel.fetchOneByNumber(catalog, number);
     if (offer) {
       const body = ExampleOfferCreator.skeletonize(offer);
       InternalRestController.respond(response, body);

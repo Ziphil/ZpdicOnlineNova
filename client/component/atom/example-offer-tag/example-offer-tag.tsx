@@ -5,7 +5,7 @@ import {ReactElement} from "react";
 import {LeveledColorScheme, LoadingIcon, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {ExampleOffer, ObjectId} from "/client/skeleton";
+import {ExampleOffer, LinkedExampleOffer} from "/client/skeleton";
 
 
 export const ExampleOfferTag = create(
@@ -18,13 +18,13 @@ export const ExampleOfferTag = create(
   }: {
     scheme?: LeveledColorScheme,
     variant?: "solid" | "light",
-    offer: ExampleOffer | {id: ObjectId},
+    offer: ExampleOffer | LinkedExampleOffer,
     className?: string
   }): ReactElement | null {
 
     const {trans, transNumber, transDate} = useTrans("exampleOfferTag");
 
-    const [innerOffer] = useResponse("fetchExampleOffer", (!isFull(offer)) && {id: offer.id});
+    const [innerOffer] = useResponse("fetchExampleOffer", (!isFull(offer)) && offer);
     const actualOffer = (!isFull(offer)) ? innerOffer : offer;
 
     return (
@@ -54,6 +54,6 @@ export const ExampleOfferTag = create(
 );
 
 
-function isFull(offer: ExampleOffer | {id: ObjectId}): offer is ExampleOffer {
-  return "catalog" in offer;
+function isFull(offer: ExampleOffer | LinkedExampleOffer): offer is ExampleOffer {
+  return "id" in offer && "translation" in offer;
 }

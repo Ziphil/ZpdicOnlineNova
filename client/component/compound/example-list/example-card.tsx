@@ -56,7 +56,7 @@ export const ExampleCard = create(
                 </span>
               )}
               {(example.offer !== null) && (
-                <ExampleOfferTag offer={{id: example.offer}}/>
+                <ExampleOfferTag offer={example.offer}/>
               )}
               {example.tags.map((tag, index) => (
                 <Tag key={index} variant="solid">{tag}</Tag>

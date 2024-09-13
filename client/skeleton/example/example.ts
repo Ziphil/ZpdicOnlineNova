@@ -2,6 +2,7 @@
 
 import {Dictionary} from "/client/skeleton";
 import {ObjectId} from "/client/skeleton/common";
+import {LinkedExampleOffer} from "/client/skeleton/example/linked-example-offer";
 import {LinkedWord} from "/client/skeleton/word/linked-word";
 
 
@@ -13,7 +14,7 @@ export interface EditableExample {
   supplement?: string;
   tags: Array<string>;
   words: Array<LinkedWord>;
-  offer: ObjectId | null;
+  offer: LinkedExampleOffer | null;
 
 }
 
@@ -41,7 +42,7 @@ export interface Example {
   supplement?: string;
   tags: Array<string>;
   words: Array<LinkedWord>;
-  offer: ObjectId | null;
+  offer: LinkedExampleOffer | null;
 
 }
 

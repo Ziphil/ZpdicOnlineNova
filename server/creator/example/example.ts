@@ -22,7 +22,7 @@ export namespace ExampleCreator {
     const sentence = raw.sentence;
     const translation = raw.translation;
     const supplement = raw.supplement;
-    const offer = raw.offer?.toString() ?? null;
+    const offer = raw.offer ?? null;
     const skeleton = {id, number, tags, words, sentence, translation, supplement, offer};
     return skeleton;
   }

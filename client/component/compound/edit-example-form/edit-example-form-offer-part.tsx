@@ -42,7 +42,7 @@ export const EditExampleFormOfferPart = create(
     }, [query, setQuery]);
 
     const handleSelect = useCallback(function (offer: ExampleOffer): void {
-      form.setValue("offer", offer.id);
+      form.setValue("offer", {catalog: offer.catalog, number: offer.number});
       form.setValue("translation", offer.translation);
       setTabValue("edit");
     }, [form, setTabValue]);
