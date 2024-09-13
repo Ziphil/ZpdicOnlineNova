@@ -102,7 +102,7 @@ function getQuery(dictionary: Dictionary, offer: ExampleOffer | null, value: For
   const query = {
     number: dictionary.number,
     example: {
-      number: value.number ?? undefined,
+      number: value.number ?? null,
       sentence: value.sentence,
       translation: (offer !== null) ? offer.translation : value.translation,
       supplement: value.supplement,

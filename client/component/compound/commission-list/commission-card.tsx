@@ -60,6 +60,7 @@ export const CommissionCard = create(
 
 function getWord(commission: Commission): EditableWord {
   const word = {
+    number: null,
     name: "",
     equivalents: [{titles: [], names: [commission.name], nameString: commission.name}],
     tags: [],

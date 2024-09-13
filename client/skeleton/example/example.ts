@@ -8,7 +8,7 @@ import {LinkedWord} from "/client/skeleton/word/linked-word";
 
 export interface EditableExample {
 
-  number?: number;
+  number: number | null;
   sentence: string;
   translation: string;
   supplement?: string;
@@ -22,6 +22,7 @@ export interface EditableExample {
 export namespace EditableExample {
 
   export const EMPTY = {
+    number: null,
     words: [],
     sentence: "",
     translation: "",
