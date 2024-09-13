@@ -57,15 +57,21 @@ relation = {
 
 example = {
   "id": int
-  "sentence": text
-  "translation": text
-  ? "supplement": text
-  "tags": [* tag] 
-  "words": [* linkedWord]
+  "sentence": text         ; 例文
+  "translation": text      ; 翻訳文
+  ? "supplement": text     ; 解説
+  "tags": [* tag]          ; タグ
+  "words": [* linkedWord]  ; 関連付け単語
+  ? "offer": exampleOffer  ; 関連付け例文
 }
 
 linkedWord = {
   "id": int
+}
+
+exampleOffer = {
+  "catalog": text  ; 例文集タイトル
+  "number": int    ; 例文集内の番号 (1 から)
 }
 
 ; 設定関連

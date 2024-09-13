@@ -165,7 +165,7 @@ export class SlimeDeserializer extends Deserializer {
     const dictionary = this.dictionary;
     const number = parseInt(raw["id"], 10);
     const sentence = raw["sentence"] ?? "";
-    const translation = raw["translation"] ?? "";
+    const translation = (raw["offer"]) ? "" : (raw["translation"] ?? "");
     const supplement = raw["supplement"];
     const tags = raw["tags"] ?? [];
     const words = [];
@@ -174,8 +174,9 @@ export class SlimeDeserializer extends Deserializer {
       const word = new LinkedWordModel({number});
       words.push(word);
     }
+    const offer = (raw["offer"]) ? {catalog: raw["offer"]["catalog"] ?? "", number: parseInt(raw["offer"]["number"], 10)} : undefined;
     const updatedDate = new Date();
-    const example = new ExampleModel({dictionary, number, sentence, translation, supplement, tags, words, updatedDate});
+    const example = new ExampleModel({dictionary, number, sentence, translation, supplement, tags, words, offer, updatedDate});
     return example;
   }
 

@@ -66,7 +66,7 @@ export class SlimeSerializer extends Serializer {
 
   private writeExamples(writer: WriteStream): Promise<void> {
     const promise = new Promise<void>((resolve, reject) => {
-      const stream = ExampleModel.findExist().where("dictionary", this.dictionary).where("offer", null).lean().cursor();
+      const stream = ExampleModel.findExist().where("dictionary", this.dictionary).lean().cursor();
       let first = true;
       writer.write("[");
       stream.on("data", (example) => {
@@ -141,7 +141,7 @@ export class SlimeSerializer extends Serializer {
     const raw = {} as any;
     raw["id"] = example.number;
     raw["sentence"] = example.sentence;
-    raw["translation"] = example.translation;
+    raw["translation"] = (example.offer) ? "" : example.translation;
     raw["supplement"] = example.supplement;
     raw["tags"] = example.tags;
     raw["words"] = [];
@@ -149,6 +149,11 @@ export class SlimeSerializer extends Serializer {
       const rawWord = {} as any;
       rawWord["id"] = word.number;
       raw["words"].push(rawWord);
+    }
+    if (example.offer) {
+      raw["offer"] = {};
+      raw["offer"]["catalog"] = example.offer.catalog;
+      raw["offer"]["number"] = example.offer.number;
     }
     const string = JSON.stringify(raw);
     return string;
