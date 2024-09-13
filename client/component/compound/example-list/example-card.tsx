@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faHandPointRight, faHashtag, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faEdit, faHandPointRight, faHashtag, faShare, faTrashAlt, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {useHref} from "react-router-dom";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, Tag, aria, useResponsiveDevice, useTrans} from "zographia";
@@ -88,7 +88,7 @@ export const ExampleCard = create(
                     <WordPopover dictionary={dictionary} word={word} trigger={(
                       <span>
                         <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`} scheme="secondary" variant="underline">
-                          {word.name ?? <LoadingIcon/>}
+                          {(word.name === undefined) ? <LoadingIcon/> : (word.name === null) ? <GeneralIcon icon={faTriangleExclamation}/> : word.name}
                         </Link>
                       </span>
                     )}/>

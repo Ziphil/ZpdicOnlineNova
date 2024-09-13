@@ -11,8 +11,11 @@ export function useFilledExample(dictionary: Dictionary, example: Example): Exam
   const wordNumbers = example.words.map((word) => word.number);
   const [wordNameSpec] = useResponse("fetchWordNames", {number, wordNumbers}, {ignoreError: true});
   const filledExample = useMemo(() => {
-    const words = example.words.map((word) => ({...word, name: wordNameSpec?.names[word.number] ?? undefined}));
+    const words = example.words.map((word) => ({
+      ...word,
+      name: (wordNameSpec === undefined) ? undefined : wordNameSpec.names[word.number] ?? null
+    }));
     return {...example, words};
-  }, [example, wordNameSpec?.names]);
+  }, [example, wordNameSpec]);
   return filledExample;
 }
