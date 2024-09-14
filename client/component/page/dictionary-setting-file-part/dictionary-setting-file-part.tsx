@@ -1,9 +1,8 @@
 //
 
-import {faInfoCircle} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
-import {AdditionalProps, Callout, CalloutBody, CalloutIconContainer, GeneralIcon, MultiLineText, useTrans} from "zographia";
+import {AdditionalProps, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 import {DownloadDictionaryButton} from "/client/component/form/download-dictionary-button";
@@ -39,14 +38,6 @@ export const DictionarySettingFilePart = create(
               link: (parts) => <Link href="/document/other/json-spec" variant="unstyledUnderline">{parts}</Link>
             })}
           </MultiLineText>
-          <Callout styleName="callout">
-            <CalloutIconContainer><GeneralIcon icon={faInfoCircle}/></CalloutIconContainer>
-            <CalloutBody>
-              <MultiLineText is="p">
-                {trans("callout.download")}
-              </MultiLineText>
-            </CalloutBody>
-          </Callout>
           <DownloadDictionaryButton dictionary={dictionary}/>
         </section>
       </div>
