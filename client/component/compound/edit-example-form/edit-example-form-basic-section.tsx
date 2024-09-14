@@ -6,6 +6,7 @@ import {Controller} from "react-hook-form";
 import {AdditionalProps, ControlContainer, ControlLabel, TagInput, Textarea, TextareaAddon, useTrans} from "zographia";
 import {ExampleOfferTag} from "/client/component/atom/example-offer-tag";
 import {create} from "/client/component/create";
+import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors} from "/client/skeleton";
 import {EditExampleSpec} from "./edit-example-form-hook";
 
@@ -25,7 +26,9 @@ export const EditExampleFormBasicSection = create(
     const {trans} = useTrans("editExampleForm");
 
     const {register, control} = form;
-    const offer = form.watch("offer");
+
+    const linkedOffer = form.watch("offer");
+    const [offer] = useResponse("fetchExampleOffer", (linkedOffer) && linkedOffer);
 
     return (
       <section styleName="root" {...rest}>
@@ -43,13 +46,15 @@ export const EditExampleFormBasicSection = create(
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.translation")}</ControlLabel>
-            <Textarea styleName="textarea" disabled={!!offer} {...register("translation")}>
-              {(offer !== null) && (
+            {(linkedOffer !== null) ? (
+              <Textarea styleName="textarea" disabled={true} value={offer?.translation ?? ""}>
                 <TextareaAddon position="top">
                   <ExampleOfferTag offer={offer}/>
                 </TextareaAddon>
-              )}
-            </Textarea>
+              </Textarea>
+            ) : (
+              <Textarea styleName="textarea" {...register("translation")}/>
+            )}
           </ControlContainer>
           <ControlContainer>
             <ControlLabel>{trans("label.supplement")}</ControlLabel>

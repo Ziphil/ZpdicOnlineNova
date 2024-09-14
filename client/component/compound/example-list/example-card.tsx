@@ -33,6 +33,7 @@ export const ExampleCard = create(
     const {trans, transNumber} = useTrans("exampleList");
 
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [offer] = useResponse("fetchExampleOffer", (example.offer) && example.offer);
 
     const device = useResponsiveDevice();
 
@@ -56,7 +57,7 @@ export const ExampleCard = create(
                 </span>
               )}
               {(example.offer !== null) && (
-                <ExampleOfferTag offer={example.offer}/>
+                <ExampleOfferTag offer={offer}/>
               )}
               {example.tags.map((tag, index) => (
                 <Tag key={index} variant="solid">{tag}</Tag>
@@ -68,7 +69,7 @@ export const ExampleCard = create(
               {filledExample.sentence}
             </MultiLineText>
             <MultiLineText is="p">
-              {filledExample.translation}
+              {(example.offer !== null) ? offer?.translation : filledExample.translation}
             </MultiLineText>
           </div>
           {(!!filledExample.supplement) && (

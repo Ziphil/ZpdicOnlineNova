@@ -18,7 +18,7 @@ export const ExampleOfferTag = create(
   }: {
     scheme?: LeveledColorScheme,
     variant?: "solid" | "light",
-    offer: ExampleOffer | LinkedExampleOffer,
+    offer: ExampleOffer | LinkedExampleOffer | undefined,
     className?: string
   }): ReactElement | null {
 
@@ -54,6 +54,6 @@ export const ExampleOfferTag = create(
 );
 
 
-function isFull(offer: ExampleOffer | LinkedExampleOffer): offer is ExampleOffer {
-  return "id" in offer && "translation" in offer;
+function isFull(offer: ExampleOffer | LinkedExampleOffer | undefined): offer is ExampleOffer {
+  return offer !== undefined && "id" in offer && "translation" in offer;
 }
