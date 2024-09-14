@@ -271,6 +271,13 @@ contactForm:
     agree: "Agree to the <link>privacy policy</link>"
   button:
     confirm: "Send"
+  error:
+    emailInvalid: >-
+      Enter a valid email address.
+    textRequired: >-
+      Enter your message.
+    agreeRequired: >-
+      Read the privacy policy and agree to it.
 dictionaryAuthorizedUserList:
   empty: "No users have editing permission"
   button:
@@ -796,6 +803,8 @@ contactPage:
   explanation: |-
     If you wish to send your inquiry anonymously, please sign out and then leave the ‘Name’ field blank.
     Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user’s authority, such as dictionary settings or editing.
+  disclaimer: |-
+    Please also note that we may not be able to answer all enquiries directly.
 exampleOfferListPage:
   title: "Sentences"
   heading: "Sentences"

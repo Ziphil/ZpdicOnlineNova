@@ -271,6 +271,13 @@ contactForm:
     agree: "<link>プライバシーポリシー</link>に同意する"
   button:
     confirm: "送信"
+  error:
+    emailInvalid: >-
+      正しい形式のメールアドレスを入力してください。
+    textRequired: >-
+      お問い合わせ内容を入力してください。
+    agreeRequired: >-
+      プライバシーポリシーを読んで同意してください。
 dictionaryAuthorizedUserList:
   empty: "編集権限のあるユーザーはいません"
   button:
@@ -794,6 +801,9 @@ contactPage:
   explanation: |-
     匿名でのお問い合わせをご希望の場合は、ログアウトした状態で「名前」欄を空欄にした上で送信してください。
     なお、辞書の設定や編集などに関わるような、ユーザーの権限が必要になる内容に関するお問い合わせの場合、匿名では対応できない場合がありますのでご了承ください。
+  disclaimer: |-
+    また、全てのお問い合わせに直接お答えできるとは限りません。
+    あらかじめご了承ください。
 exampleOfferListPage:
   title: "例文集"
   heading: "例文集"
