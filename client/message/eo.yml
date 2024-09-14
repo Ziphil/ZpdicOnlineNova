@@ -886,6 +886,10 @@ dictionarySettingFilePart:
     download: >-
       Eksporti la datumon de la vortaro en la etendita OneToMany-JSON.
       Vidu ankaŭ la <link>dokumentaron</link> por detala specifo.
+  callout:
+    upload: >-
+      Dosieroj eksportitaj de ZpDIC antaŭ la 14a de septembro 2024 ne enhavas ekzemplajn frazojn, do importi tiajn dosierojn rezultos en la perdo de ĉiuj ekzemplaj frazoj.
+      Zorgu dum importado de malnovaj dosieroj.
 dictionarySettingGeneralPart:
   heading:
     name: "Nomo"

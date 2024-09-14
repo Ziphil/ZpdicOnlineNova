@@ -886,9 +886,9 @@ dictionarySettingFilePart:
       この辞書のデータを拡張 OneToMany-JSON 形式でエクスポートします。
       詳細な仕様については<link>ドキュメント</link>をご覧ください。
   callout:
-    download: >-
-      例文集に紐づけられた例文は、エクスポートされたファイルには含まれません。
-      これらの例文は、ZpDIC Online 上でのみ編集できます。
+    upload: >-
+      2024 年 9 月 14 日より前に ZpDIC でエクスポートしたファイルには例文データが含まれていないので、そのようなファイルをインポートすると例文データが全て消えてしまいます。
+      古いファイルをインポートする際には十分注意してください。
 dictionarySettingGeneralPart:
   heading:
     name: "名前"
