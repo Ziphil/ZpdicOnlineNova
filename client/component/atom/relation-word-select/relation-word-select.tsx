@@ -1,7 +1,8 @@
-/* eslint-disable no-useless-computed-key */
+//
 
+import {faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
-import {AsyncSelect, LoadingIcon} from "zographia";
+import {AsyncSelect, GeneralIcon, LoadingIcon} from "zographia";
 import {create} from "/client/component/create";
 import {Dictionary, NormalWordParameter, Word} from "/client/skeleton";
 import {request} from "/client/util/request";
@@ -40,7 +41,7 @@ export const RelationWordSelect = create(
         value={word}
         onSet={onSet}
         loadOptions={loadOptions}
-        renderLabel={(word) => word.name ?? <LoadingIcon/>}
+        renderLabel={(word) => (word.name === undefined) ? <LoadingIcon/> : (word.name === null) ? <GeneralIcon icon={faTriangleExclamation}/> : word.name}
         {...rest}
       >
         {(word) => <RelationWordSelectOption key={word.number} dictionary={dictionary} word={word}/>}
@@ -53,5 +54,5 @@ export const RelationWordSelect = create(
 
 export type RelationWord = {
   number: number,
-  name?: string
+  name?: string | null
 };

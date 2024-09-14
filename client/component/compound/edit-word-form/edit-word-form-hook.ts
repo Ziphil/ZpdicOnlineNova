@@ -47,7 +47,7 @@ type FormValue = {
   }>,
   relations: Array<{
     titles: Array<string>,
-    word: Required<RelationWord> | null,
+    word: (RelationWord & {name: string}) | null,
     mutual: boolean
   }>
 };
@@ -128,7 +128,7 @@ function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editWo
   const query = {
     number: dictionary.number,
     word: {
-      number: value.number ?? undefined,
+      number: value.number ?? null,
       name: value.name,
       pronunciation: value.pronunciation,
       tags: value.tags,

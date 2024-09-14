@@ -1,11 +1,12 @@
 /* eslint-disable no-useless-computed-key */
 
+import {faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement} from "react";
-import {LeveledColorScheme, LoadingIcon, Tag, useTrans} from "zographia";
+import {GeneralIcon, LeveledColorScheme, LoadingIcon, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {ExampleOffer, ObjectId} from "/client/skeleton";
+import {ExampleOffer, LinkedExampleOffer} from "/client/skeleton";
 
 
 export const ExampleOfferTag = create(
@@ -18,33 +19,36 @@ export const ExampleOfferTag = create(
   }: {
     scheme?: LeveledColorScheme,
     variant?: "solid" | "light",
-    offer: ExampleOffer | {id: ObjectId},
+    offer: ExampleOffer | LinkedExampleOffer | null | undefined,
     className?: string
   }): ReactElement | null {
 
     const {trans, transNumber, transDate} = useTrans("exampleOfferTag");
 
-    const [innerOffer] = useResponse("fetchExampleOffer", (!isFull(offer)) && {id: offer.id});
-    const actualOffer = (!isFull(offer)) ? innerOffer : offer;
+    const [innerOffer] = useResponse("fetchExampleOfferOrNull", (needResponse(offer)) && offer);
+    const actualOffer = (needResponse(offer)) ? innerOffer : offer;
 
     return (
       <span styleName="root" {...rest}>
         <Tag scheme={scheme} variant={variant}>
-          {(actualOffer !== undefined) ? (
+          {(actualOffer !== undefined && actualOffer !== null) ? (
             <span>
               {trans(`catalog.${actualOffer.catalog}`)}
               {" · "}
-              {(actualOffer.catalog === "zpdicDaily") ? (
-                transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")
-              ) : (
-                <>
-                  <span styleName="number">№</span>
-                  {transNumber(actualOffer.number)}
-                </>
+              <span>
+                <span styleName="number">№</span>
+                {transNumber(actualOffer.number)}
+              </span>
+              {(actualOffer.catalog === "zpdicDaily") && (
+                <span>
+                  {" ("}
+                  {transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")}
+                  {")"}
+                </span>
               )}
             </span>
           ) : (
-            <LoadingIcon/>
+            (actualOffer === undefined) ? <LoadingIcon/> : <GeneralIcon icon={faTriangleExclamation}/>
           )}
         </Tag>
       </span>
@@ -54,6 +58,6 @@ export const ExampleOfferTag = create(
 );
 
 
-function isFull(offer: ExampleOffer | {id: ObjectId}): offer is ExampleOffer {
-  return "catalog" in offer;
+function needResponse(offer: ExampleOffer | LinkedExampleOffer | undefined | null): offer is LinkedExampleOffer {
+  return !!offer && !("id" in offer);
 }

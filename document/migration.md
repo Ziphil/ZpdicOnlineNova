@@ -62,3 +62,36 @@ db.exampleOffers.updateMany({}, {$set: {"author": "ZpDIC Online"}});
 db.dictionaries.updateMany({"secret": false}, {$set: {"visibility": "public"}});
 db.dictionaries.updateMany({"secret": true}, {$set: {"visibility": "unlisted"}});
 ```
+
+### → ver 3.10.0
+Mongo Shell で該当のデータベースを選択した後、以下を実行してください。
+```
+db.examples.aggregate([
+  {$match: {
+    "offer": {$ne: null}
+  }},
+  {$addFields: {
+    "offerOld": "$offer"
+  }},
+  {$lookup: {
+    from: "exampleOffers",
+    localField: "offer",
+    foreignField: "_id",
+    as: "offer"
+  }},
+  {$addFields: {
+    "offer": {$first: "$offer"}
+  }},
+  {$addFields: {
+    "offer": {$cond: [
+      {$ifNull: ["$offer", false]},
+      {
+        "catalog": "$offer.catalog",
+        "number": "$offer.number",
+      },
+      null
+    ]}
+  }},
+  {$merge: {into: "examples"}}
+])
+```

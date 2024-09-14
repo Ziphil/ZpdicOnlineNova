@@ -71,22 +71,34 @@ export class ExampleRestController extends InternalRestController {
   @before(parseDictionary())
   public async [Symbol()](request: Request<"fetchExamplesByOffer">, response: Response<"fetchExamplesByOffer">): Promise<void> {
     const {dictionary} = request.middlewareBody;
-    const {offerId, offset, size} = request.body;
+    const {offer, offset, size} = request.body;
     const range = new QueryRange(offset, size);
-    const hitResult = await ExampleModel.fetchByOffer(dictionary, offerId, range);
+    const hitResult = await ExampleModel.fetchByOffer(dictionary, offer, range);
     const body = await mapWithSizeAsync(hitResult, ExampleCreator.skeletonizeWithDictionary);
     InternalRestController.respond(response, body);
   }
 
   @post("/fetchExampleOffer")
   public async [Symbol()](request: Request<"fetchExampleOffer">, response: Response<"fetchExampleOffer">): Promise<void> {
-    const {id} = request.body;
-    const offer = await ExampleOfferModel.findById(id);
+    const {catalog, number} = request.body;
+    const offer = await ExampleOfferModel.fetchOneByNumber(catalog, number);
     if (offer) {
       const body = ExampleOfferCreator.skeletonize(offer);
       InternalRestController.respond(response, body);
     } else {
       InternalRestController.respondError(response, "noSuchExampleOffer");
+    }
+  }
+
+  @post("/fetchExampleOfferOrNull")
+  public async [Symbol()](request: Request<"fetchExampleOfferOrNull">, response: Response<"fetchExampleOfferOrNull">): Promise<void> {
+    const {catalog, number} = request.body;
+    const offer = await ExampleOfferModel.fetchOneByNumber(catalog, number);
+    if (offer) {
+      const body = ExampleOfferCreator.skeletonize(offer);
+      InternalRestController.respond(response, body);
+    } else {
+      InternalRestController.respond(response, null);
     }
   }
 

@@ -25,6 +25,9 @@ export const ContactPage = create(
           <MultiLineText styleName="explanation" is="p">
             {trans("explanation")}
           </MultiLineText>
+          <MultiLineText styleName="disclaimer" is="p">
+            {trans("disclaimer")}
+          </MultiLineText>
           <ContactForm/>
         </MainContainer>
       </Page>

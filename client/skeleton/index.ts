@@ -8,6 +8,7 @@ export * from "./dictionary-parameter/dictionary-parameter";
 export * from "./dictionary-parameter/normal-dictionary-parameter";
 export * from "./example/example";
 export * from "./example/example-offer";
+export * from "./example/linked-example-offer";
 export * from "./example-parameter/example-parameter";
 export * from "./example-parameter/exact-example-parameter";
 export * from "./example-parameter/normal-example-parameter";

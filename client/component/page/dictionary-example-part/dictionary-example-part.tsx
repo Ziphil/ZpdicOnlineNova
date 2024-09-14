@@ -32,7 +32,7 @@ export const DictionaryExamplePart = create(
     const [[hitExamples, hitSize]] = useSuspenseResponse("searchExamples", {number: dictionary.number, parameter: debouncedQuery.parameter, ...calcOffsetSpec(query.page, 50)}, {keepPreviousData: true});
 
     const [[offers] = []] = useResponse("searchExampleOffers", (canEdit) && {parameter: NormalExampleOfferParameter.DAILY, size: 1, offset: 0});
-    const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offerId: offers[0].id, size: 1, offset: 0});
+    const [[offerExamples] = []] = useResponse("fetchExamplesByOffer", (canEdit && offers !== undefined && offers.length > 0) && {number: dictionary.number, offer: offers[0], size: 1, offset: 0});
     const showOffer = canEdit && offers !== undefined && offerExamples !== undefined && offerExamples.length <= 0;
 
     const handlePageSet = useCallback(function (page: number): void {

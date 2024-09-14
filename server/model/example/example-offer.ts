@@ -61,6 +61,11 @@ export class ExampleOfferSchema {
     return [keyword, offer];
   }
 
+  public static async fetchOneByNumber(catalog: string, number: number): Promise<ExampleOffer | null> {
+    const offer = await ExampleOfferModel.findOne().where("catalog", catalog).where("number", number);
+    return offer;
+  }
+
   public static async search(parameter: ExampleOfferParameter, range?: QueryRange): Promise<WithSize<ExampleOffer>> {
     const query = parameter.createQuery();
     const offers = await QueryRange.restrictWithSize(query, range);

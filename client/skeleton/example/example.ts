@@ -2,18 +2,19 @@
 
 import {Dictionary} from "/client/skeleton";
 import {ObjectId} from "/client/skeleton/common";
+import {LinkedExampleOffer} from "/client/skeleton/example/linked-example-offer";
 import {LinkedWord} from "/client/skeleton/word/linked-word";
 
 
 export interface EditableExample {
 
-  number?: number;
+  number: number | null;
   sentence: string;
   translation: string;
   supplement?: string;
   tags: Array<string>;
   words: Array<LinkedWord>;
-  offer: ObjectId | null;
+  offer: LinkedExampleOffer | null;
 
 }
 
@@ -21,6 +22,7 @@ export interface EditableExample {
 export namespace EditableExample {
 
   export const EMPTY = {
+    number: null,
     words: [],
     sentence: "",
     translation: "",
@@ -41,7 +43,7 @@ export interface Example {
   supplement?: string;
   tags: Array<string>;
   words: Array<LinkedWord>;
-  offer: ObjectId | null;
+  offer: LinkedExampleOffer | null;
 
 }
 

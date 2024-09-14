@@ -73,7 +73,7 @@ export class WordSchema extends DiscardableSchema {
         await this.correctRelationsByEdit(dictionary, resultWord);
       }
     } else {
-      if (word.number === undefined) {
+      if (word.number === null) {
         word.number = await this.fetchNextNumber(dictionary);
       }
       resultWord = new WordModel(word);

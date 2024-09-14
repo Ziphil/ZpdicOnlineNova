@@ -10,7 +10,7 @@ import {Variation} from "/client/skeleton/word/variation";
 
 export interface EditableWord {
 
-  number?: number;
+  number: number | null;
   name: string;
   pronunciation?: string;
   equivalents: Array<Equivalent>;
@@ -25,6 +25,7 @@ export interface EditableWord {
 export namespace EditableWord {
 
   export const EMPTY = {
+    number: null,
     name: "",
     equivalents: [],
     tags: [],

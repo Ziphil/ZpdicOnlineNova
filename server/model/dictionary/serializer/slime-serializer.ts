@@ -1,10 +1,10 @@
 //
 
-import {createWriteStream} from "fs";
+import {WriteStream, createWriteStream} from "fs";
 import {Dictionary} from "/server/model/dictionary/dictionary";
 import {Serializer} from "/server/model/dictionary/serializer/serializer";
+import {Example, ExampleModel} from "/server/model/example/example";
 import {Word, WordModel} from "/server/model/word/word";
-import {removeMarkdown} from "/server/util/misc";
 
 
 export class SlimeSerializer extends Serializer {
@@ -14,41 +14,83 @@ export class SlimeSerializer extends Serializer {
   }
 
   public start(): void {
-    const stream = WordModel.findExist().where("dictionary", this.dictionary).lean().cursor();
     const writer = createWriteStream(this.path);
-    let first = true;
-    writer.write("{\"words\":[");
-    stream.on("data", (word) => {
-      const string = this.createString(word);
-      if (first) {
-        first = false;
-      } else {
-        writer.write(",");
-      }
-      writer.write(string);
+    writer.on("error", (error) => {
+      this.emit("error", error);
     });
-    stream.on("end", () => {
-      writer.write("]");
-      const externalString = this.createExternalString();
-      if (externalString) {
-        writer.write(",");
-        writer.write(externalString);
-      }
-      writer.write(",\"version\":2");
-      writer.write("}");
+    this.write(writer).then(() => {
       writer.end(() => {
         this.emit("end");
       });
     });
-    stream.on("error", (error) => {
-      this.emit("error", error);
-    });
-    writer.on("error", (error) => {
-      this.emit("error", error);
-    });
   }
 
-  private createString(word: Word): string {
+  private async write(writer: WriteStream): Promise<void> {
+    writer.write("{");
+    writer.write("\"version\":2,");
+    writer.write("\"words\":");
+    await this.writeWords(writer);
+    writer.write(",");
+    writer.write("\"examples\":");
+    await this.writeExamples(writer);
+    writer.write(",");
+    writer.write(this.createExternalString());
+    writer.write("}");
+  }
+
+  private writeWords(writer: WriteStream): Promise<void> {
+    const promise = new Promise<void>((resolve, reject) => {
+      const stream = WordModel.findExist().where("dictionary", this.dictionary).lean().cursor();
+      let first = true;
+      writer.write("[");
+      stream.on("data", (word) => {
+        if (first) {
+          first = false;
+        } else {
+          writer.write(",");
+        }
+        const string = this.createWordString(word);
+        writer.write(string);
+      });
+      stream.on("end", () => {
+        writer.write("]");
+        resolve();
+      });
+      stream.on("error", (error) => {
+        this.emit("error", error);
+        reject(error);
+      });
+    });
+    return promise;
+  }
+
+  private writeExamples(writer: WriteStream): Promise<void> {
+    const promise = new Promise<void>((resolve, reject) => {
+      const stream = ExampleModel.findExist().where("dictionary", this.dictionary).lean().cursor();
+      let first = true;
+      writer.write("[");
+      stream.on("data", (example) => {
+        if (first) {
+          first = false;
+        } else {
+          writer.write(",");
+        }
+        const string = this.createExampleString(example);
+        writer.write(string);
+      });
+      stream.on("end", () => {
+        writer.write("]");
+        resolve();
+      });
+      stream.on("error", (error) => {
+        this.emit("error", error);
+        reject(error);
+      });
+    });
+    return promise;
+  }
+
+  private createWordString(word: Word): string {
     const raw = {} as any;
     raw["entry"] = {};
     raw["entry"]["id"] = word.number;
@@ -65,12 +107,7 @@ export class SlimeSerializer extends Serializer {
     for (const information of word.informations ?? []) {
       const rawInformation = {} as any;
       rawInformation["title"] = information.title;
-      if (this.dictionary.settings.enableMarkdown) {
-        rawInformation["text"] = removeMarkdown(information.text);
-        rawInformation["markdown"] = information.text;
-      } else {
-        rawInformation["text"] = information.text;
-      }
+      rawInformation["text"] = information.text;
       raw["contents"].push(rawInformation);
     }
     if (word.pronunciation !== undefined) {
@@ -100,23 +137,38 @@ export class SlimeSerializer extends Serializer {
     return string;
   }
 
+  private createExampleString(example: Example): string {
+    const raw = {} as any;
+    raw["id"] = example.number;
+    raw["sentence"] = example.sentence;
+    raw["translation"] = (example.offer) ? "" : example.translation;
+    raw["supplement"] = example.supplement;
+    raw["tags"] = example.tags;
+    raw["words"] = [];
+    for (const word of example.words ?? []) {
+      const rawWord = {} as any;
+      rawWord["id"] = word.number;
+      raw["words"].push(rawWord);
+    }
+    if (example.offer) {
+      raw["offer"] = {};
+      raw["offer"]["catalog"] = example.offer.catalog;
+      raw["offer"]["number"] = example.offer.number;
+    }
+    const string = JSON.stringify(raw);
+    return string;
+  }
+
   private createExternalString(): string {
     let externalData = {} as any;
-    externalData["zpdic"] = {};
     externalData["zpdicOnline"] = {};
     externalData = Object.assign({}, externalData, this.dictionary.externalData);
-    if (this.dictionary.explanation !== undefined) {
-      externalData["zpdicOnline"]["explanation"] = this.dictionary.explanation;
-    }
-    if (this.dictionary.settings.akrantiainSource !== undefined) {
-      externalData["snoj"] = this.dictionary.settings.akrantiainSource;
-    }
-    if (this.dictionary.settings.zatlinSource !== undefined) {
-      externalData["zatlin"] = this.dictionary.settings.zatlinSource;
-    }
-    externalData["zpdic"]["punctuations"] = this.dictionary.settings.punctuations;
-    externalData["zpdic"]["pronunciationTitle"] = this.dictionary.settings.pronunciationTitle;
+    externalData["zpdicOnline"]["explanation"] = this.dictionary.explanation;
+    externalData["zpdicOnline"]["punctuations"] = this.dictionary.settings.punctuations;
+    externalData["zpdicOnline"]["pronunciationTitle"] = this.dictionary.settings.pronunciationTitle;
     externalData["zpdicOnline"]["enableMarkdown"] = this.dictionary.settings.enableMarkdown;
+    externalData["snoj"] = this.dictionary.settings.akrantiainSource;
+    externalData["zatlin"] = this.dictionary.settings.zatlinSource;
     const string = JSON.stringify(externalData).slice(1, -1);
     return string;
   }

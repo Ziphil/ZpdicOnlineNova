@@ -306,17 +306,24 @@ type ServerSpecs = {
     }
   },
   fetchExamplesByOffer: {
-    request: {number: number | null, offerId: ObjectId, offset?: number, size?: number},
+    request: {number: number | null, offer: ExampleOffer, offset?: number, size?: number},
     response: {
       success: WithSize<ExampleWithDictionary>,
       error: never
     }
   },
   fetchExampleOffer: {
-    request: {id: ObjectId},
+    request: {catalog: string, number: number},
     response: {
       success: ExampleOffer,
       error: CustomError<"noSuchExampleOffer">
+    }
+  },
+  fetchExampleOfferOrNull: {
+    request: {catalog: string, number: number},
+    response: {
+      success: ExampleOffer | null,
+      error: never
     }
   },
   searchExampleOffers: {

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faEdit, faHandPointRight, faHashtag, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {faEdit, faHandPointRight, faHashtag, faShare, faTrashAlt, faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {Fragment, ReactElement} from "react";
 import {useHref} from "react-router-dom";
 import {AdditionalProps, Button, ButtonIconbag, Card, CardBody, CardFooter, GeneralIcon, LoadingIcon, MultiLineText, Tag, aria, useResponsiveDevice, useTrans} from "zographia";
@@ -33,6 +33,7 @@ export const ExampleCard = create(
     const {trans, transNumber} = useTrans("exampleList");
 
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
+    const [offer] = useResponse("fetchExampleOfferOrNull", (example.offer) && example.offer);
 
     const device = useResponsiveDevice();
 
@@ -56,7 +57,7 @@ export const ExampleCard = create(
                 </span>
               )}
               {(example.offer !== null) && (
-                <ExampleOfferTag offer={{id: example.offer}}/>
+                <ExampleOfferTag offer={offer}/>
               )}
               {example.tags.map((tag, index) => (
                 <Tag key={index} variant="solid">{tag}</Tag>
@@ -68,7 +69,7 @@ export const ExampleCard = create(
               {filledExample.sentence}
             </MultiLineText>
             <MultiLineText is="p">
-              {filledExample.translation}
+              {(example.offer !== null) ? offer?.translation : filledExample.translation}
             </MultiLineText>
           </div>
           {(!!filledExample.supplement) && (
@@ -88,7 +89,7 @@ export const ExampleCard = create(
                     <WordPopover dictionary={dictionary} word={word} trigger={(
                       <span>
                         <Link href={`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`} scheme="secondary" variant="underline">
-                          {word.name ?? <LoadingIcon/>}
+                          {(word.name === undefined) ? <LoadingIcon/> : (word.name === null) ? <GeneralIcon icon={faTriangleExclamation}/> : word.name}
                         </Link>
                       </span>
                     )}/>

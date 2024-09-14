@@ -11,6 +11,12 @@
 }
 
 .explanation {
+  margin-block-end: 3zu; 
+  display: flex;
+  flex-direction: column;
+}
+
+.disclaimer {
   margin-block-end: 4zu; 
   display: flex;
   flex-direction: column;

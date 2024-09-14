@@ -3,9 +3,9 @@
 import {BaseSyntheticEvent, useMemo} from "react";
 import {RelationWord} from "/client/component/atom/relation-word-select";
 import {UseFormReturn, useForm} from "/client/hook/form";
-import {fetchResponse, invalidateResponses, useRequest} from "/client/hook/request";
+import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
-import {Dictionary, EditableExample, Example, ExampleOffer, ObjectId} from "/client/skeleton";
+import {Dictionary, EditableExample, Example, ExampleOffer, LinkedExampleOffer} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
 import type {RequestData} from "/server/type/rest/internal";
 
@@ -26,7 +26,7 @@ type FormValue = {
   supplement: string,
   tags: Array<string>,
   words: Array<RelationWord | null>,
-  offer: ObjectId | null
+  offer: LinkedExampleOffer | null
 };
 
 export type EditExampleSpec = {
@@ -43,8 +43,7 @@ export function useEditExample(dictionary: Dictionary, initialData: EditExampleI
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
     const adding = value.number === null;
-    const offer = (value.offer !== null) ? await fetchResponse("fetchExampleOffer", {id: value.offer}) : null;
-    const query = getQuery(dictionary, offer, value);
+    const query = getQuery(dictionary, value);
     const response = await request("editExample", query);
     await switchResponse(response, async (example) => {
       form.setValue("number", example.number);
@@ -87,7 +86,7 @@ function getFormValue(initialData: EditExampleInitialData | null): FormValue {
         supplement: "",
         tags: [],
         words: [],
-        offer: offer.id
+        offer: {catalog: offer.catalog, number: offer.number}
       } satisfies FormValue;
       return value;
     } else {
@@ -98,19 +97,19 @@ function getFormValue(initialData: EditExampleInitialData | null): FormValue {
   }
 }
 
-function getQuery(dictionary: Dictionary, offer: ExampleOffer | null, value: FormValue): RequestData<"editExample"> {
+function getQuery(dictionary: Dictionary, value: FormValue): RequestData<"editExample"> {
   const query = {
     number: dictionary.number,
     example: {
-      number: value.number ?? undefined,
+      number: value.number ?? null,
       sentence: value.sentence,
-      translation: (offer !== null) ? offer.translation : value.translation,
+      translation: (value.offer !== null) ? "" : value.translation,
       supplement: value.supplement,
       tags: value.tags,
       words: value.words.filter((rawWord) => rawWord !== null).map((rawWord) => ({
         number: rawWord!.number
       })),
-      offer: (offer !== null) ? offer.id : null
+      offer: (value.offer !== null) ? value.offer : null
     }
   } satisfies RequestData<"editExample">;
   return query;

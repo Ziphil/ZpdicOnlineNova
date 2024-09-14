@@ -35,7 +35,7 @@ export const DictionarySettingFilePart = create(
           <h3 styleName="heading">{trans("heading.download")}</h3>
           <MultiLineText styleName="description">
             {transNode("description.download", {
-              link: (parts) => <Link href="/document" variant="unstyledUnderline">{parts}</Link>
+              link: (parts) => <Link href="/document/other/json-spec" variant="unstyledUnderline">{parts}</Link>
             })}
           </MultiLineText>
           <DownloadDictionaryButton dictionary={dictionary}/>

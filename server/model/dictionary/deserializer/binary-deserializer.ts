@@ -16,7 +16,7 @@ export class BinaryDeserializer extends Deserializer {
   private stream: PullStream;
   private count: number = 0;
 
-  public constructor(path: string, dictionary: Dictionary, cacheSize?: number) {
+  public constructor(path: string, dictionary: Dictionary, cacheSize?: {word: number, example: number}) {
     super(path, dictionary, cacheSize);
     this.stream = new FilePullStream(path);
   }
