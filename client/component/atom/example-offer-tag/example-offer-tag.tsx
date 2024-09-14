@@ -34,13 +34,16 @@ export const ExampleOfferTag = create(
             <span>
               {trans(`catalog.${actualOffer.catalog}`)}
               {" · "}
-              {(actualOffer.catalog === "zpdicDaily") ? (
-                transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")
-              ) : (
-                <>
-                  <span styleName="number">№</span>
-                  {transNumber(actualOffer.number)}
-                </>
+              <span>
+                <span styleName="number">№</span>
+                {transNumber(actualOffer.number)}
+              </span>
+              {(actualOffer.catalog === "zpdicDaily") && (
+                <span>
+                  {" ("}
+                  {transDate(dayjs(actualOffer.createdDate).tz("Asia/Tokyo"), "date")}
+                  {")"}
+                </span>
               )}
             </span>
           ) : (
