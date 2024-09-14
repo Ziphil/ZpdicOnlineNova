@@ -886,6 +886,10 @@ dictionarySettingFilePart:
     download: >-
       Export the dictionary data in the extended OneToMany-JSON format.
       See also the <link>documentation</link> for detailed specification.
+  callout:
+    upload: >-
+      Files exported by ZpDIC before 14 September 2024 do not contain example sentence data, so importing such files will result in the loss of all example sentence data.
+      Take care when importing old files.
 dictionarySettingGeneralPart:
   heading:
     name: "Name"

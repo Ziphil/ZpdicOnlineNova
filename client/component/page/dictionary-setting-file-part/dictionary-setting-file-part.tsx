@@ -1,8 +1,9 @@
 //
 
+import {faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {useOutletContext} from "react-router-dom";
-import {AdditionalProps, MultiLineText, useTrans} from "zographia";
+import {AdditionalProps, Callout, CalloutBody, CalloutIconContainer, GeneralIcon, MultiLineText, useTrans} from "zographia";
 import {Link} from "/client/component/atom/link";
 import {create} from "/client/component/create";
 import {DownloadDictionaryButton} from "/client/component/form/download-dictionary-button";
@@ -29,6 +30,14 @@ export const DictionarySettingFilePart = create(
           <MultiLineText styleName="description">
             {trans("description.upload")}
           </MultiLineText>
+          <Callout styleName="callout" scheme="red">
+            <CalloutIconContainer><GeneralIcon icon={faTriangleExclamation}/></CalloutIconContainer>
+            <CalloutBody>
+              <MultiLineText is="p">
+                {trans("callout.upload")}
+              </MultiLineText>
+            </CalloutBody>
+          </Callout>
           <UploadDictionaryButton dictionary={dictionary}/>
         </section>
         <section styleName="section">
