@@ -93,7 +93,7 @@ export class ExampleSchema extends DiscardableSchema {
       await currentExample.flagDiscarded();
       await resultExample.save();
     } else {
-      if (example.number === undefined) {
+      if (example.number === null) {
         example.number = await this.fetchNextNumber(dictionary);
       }
       resultExample = new ExampleModel(example);
