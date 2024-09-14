@@ -90,6 +90,18 @@ export class ExampleRestController extends InternalRestController {
     }
   }
 
+  @post("/fetchExampleOfferOrNull")
+  public async [Symbol()](request: Request<"fetchExampleOfferOrNull">, response: Response<"fetchExampleOfferOrNull">): Promise<void> {
+    const {catalog, number} = request.body;
+    const offer = await ExampleOfferModel.fetchOneByNumber(catalog, number);
+    if (offer) {
+      const body = ExampleOfferCreator.skeletonize(offer);
+      InternalRestController.respond(response, body);
+    } else {
+      InternalRestController.respond(response, null);
+    }
+  }
+
   @post("/searchExampleOffers")
   public async [Symbol()](request: Request<"searchExampleOffers">, response: Response<"searchExampleOffers">): Promise<void> {
     const {offset, size} = request.body;

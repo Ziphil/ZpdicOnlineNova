@@ -1,8 +1,9 @@
 /* eslint-disable no-useless-computed-key */
 
+import {faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import dayjs from "dayjs";
 import {ReactElement} from "react";
-import {LeveledColorScheme, LoadingIcon, Tag, useTrans} from "zographia";
+import {GeneralIcon, LeveledColorScheme, LoadingIcon, Tag, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {ExampleOffer, LinkedExampleOffer} from "/client/skeleton";
@@ -18,19 +19,19 @@ export const ExampleOfferTag = create(
   }: {
     scheme?: LeveledColorScheme,
     variant?: "solid" | "light",
-    offer: ExampleOffer | LinkedExampleOffer | undefined,
+    offer: ExampleOffer | LinkedExampleOffer | null | undefined,
     className?: string
   }): ReactElement | null {
 
     const {trans, transNumber, transDate} = useTrans("exampleOfferTag");
 
-    const [innerOffer] = useResponse("fetchExampleOffer", (!isFull(offer)) && offer);
-    const actualOffer = (!isFull(offer)) ? innerOffer : offer;
+    const [innerOffer] = useResponse("fetchExampleOfferOrNull", (needResponse(offer)) && offer);
+    const actualOffer = (needResponse(offer)) ? innerOffer : offer;
 
     return (
       <span styleName="root" {...rest}>
         <Tag scheme={scheme} variant={variant}>
-          {(actualOffer !== undefined) ? (
+          {(actualOffer !== undefined && actualOffer !== null) ? (
             <span>
               {trans(`catalog.${actualOffer.catalog}`)}
               {" · "}
@@ -47,7 +48,7 @@ export const ExampleOfferTag = create(
               )}
             </span>
           ) : (
-            <LoadingIcon/>
+            (actualOffer === undefined) ? <LoadingIcon/> : <GeneralIcon icon={faTriangleExclamation}/>
           )}
         </Tag>
       </span>
@@ -57,6 +58,6 @@ export const ExampleOfferTag = create(
 );
 
 
-function isFull(offer: ExampleOffer | LinkedExampleOffer | undefined): offer is ExampleOffer {
-  return offer !== undefined && "id" in offer && "translation" in offer;
+function needResponse(offer: ExampleOffer | LinkedExampleOffer | undefined | null): offer is LinkedExampleOffer {
+  return !!offer && !("id" in offer);
 }

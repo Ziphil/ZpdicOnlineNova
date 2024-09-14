@@ -33,7 +33,7 @@ export const ExampleCard = create(
     const {trans, transNumber} = useTrans("exampleList");
 
     const [canEdit] = useResponse("fetchDictionaryAuthorization", {identifier: dictionary.number, authority: "edit"});
-    const [offer] = useResponse("fetchExampleOffer", (example.offer) && example.offer);
+    const [offer] = useResponse("fetchExampleOfferOrNull", (example.offer) && example.offer);
 
     const device = useResponsiveDevice();
 

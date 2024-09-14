@@ -28,7 +28,7 @@ export const EditExampleFormBasicSection = create(
     const {register, control} = form;
 
     const linkedOffer = form.watch("offer");
-    const [offer] = useResponse("fetchExampleOffer", (linkedOffer) && linkedOffer);
+    const [offer] = useResponse("fetchExampleOfferOrNull", (linkedOffer) && linkedOffer);
 
     return (
       <section styleName="root" {...rest}>

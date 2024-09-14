@@ -319,6 +319,13 @@ type ServerSpecs = {
       error: CustomError<"noSuchExampleOffer">
     }
   },
+  fetchExampleOfferOrNull: {
+    request: {catalog: string, number: number},
+    response: {
+      success: ExampleOffer | null,
+      error: never
+    }
+  },
   searchExampleOffers: {
     request: {parameter: ExampleOfferParameter, offset?: number, size?: number},
     response: {
