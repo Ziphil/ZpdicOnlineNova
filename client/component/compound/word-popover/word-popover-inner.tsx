@@ -1,10 +1,11 @@
 //
 
-import {Fragment, ReactElement} from "react";
+import {ReactElement} from "react";
 import {LoadingIcon, MultiLineText, Tag} from "zographia";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {Dictionary, Word} from "/client/skeleton";
+import {createEquivalentNameNode} from "/client/util/dictionary";
 
 
 export const WordPopoverInner = create(
@@ -31,12 +32,9 @@ export const WordPopoverInner = create(
               {equivalent.titles.map((title, index) => (!!title) && (
                 <Tag key={index} styleName="tag" variant="light">{title}</Tag>
               ))}
-              {equivalent.names.map((name, index) => (
-                <Fragment key={index}>
-                  {(index > 0) && <span styleName="punctuation">, </span>}
-                  <span>{name}</span>
-                </Fragment>
-              ))}
+              <span>
+                {createEquivalentNameNode(equivalent.nameString, equivalent.ignoredPattern)}
+              </span>
             </MultiLineText>
           ))}
         </div>
