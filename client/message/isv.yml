@@ -723,6 +723,9 @@ changeDictionarySettingsForm:
     none: "No setting"
     paren: "Ignore inside round brackets (parens)"
     bracket: "Ignore inside square brackets"
+  error:
+    invalidPattern: >-
+      Enter a valid regular expression.
 changeDictionaryVisibilityForm:
   label:
     public: "Public"

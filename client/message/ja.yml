@@ -721,6 +721,9 @@ changeDictionarySettingsForm:
     none: "設定なし"
     paren: "丸カッコ内を無視"
     bracket: "角カッコ内を無視"
+  error:
+    invalidPattern: >-
+      正規表現として有効なパターンを入力してください。
 changeDictionaryVisibilityForm:
   label:
     public: "全体公開"

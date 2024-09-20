@@ -723,6 +723,9 @@ changeDictionarySettingsForm:
     none: "Ne agordi"
     paren: "Ignori internoj de rondaj krampoj"
     bracket: "Ignori internoj de ortaj krampoj"
+  error:
+    invalidPattern: >-
+      Enigu validan regulan esprimon.
 changeDictionaryVisibilityForm:
   label:
     public: "Publika"
