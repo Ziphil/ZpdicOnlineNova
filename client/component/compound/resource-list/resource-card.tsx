@@ -66,7 +66,7 @@ export const ResourceCard = create(
               <pre styleName="code">
                 {code}
               </pre>
-              <IconButton scheme="gray" variant="light" label={trans("button.copy")} onClick={copyCode}>
+              <IconButton styleName="code-button" scheme="gray" variant="light" label={trans("button.copy")} onClick={copyCode}>
                 <GeneralIcon icon={faCopy}/>
               </IconButton>
             </div>
