@@ -968,6 +968,7 @@ topPage:
     gift: "支援のお願い"
     offer: "今日の例文"
     notification: "最新のお知らせ"
+    discord: "Discord コミュニティ"
     github: "GitHub"
     supporter: "スペシャルサンクス"
   message:
@@ -983,6 +984,9 @@ topPage:
       辞書ページから翻訳を追加することができます。
       例文は毎朝 6 時に更新されます。
   description:
+    discord: >-
+      Discord サーバー「Lang Lounge」内に、ZpDIC の公式フォーラムがあります。
+      ZpDIC に関する質問がある場合は、ここで解決できるかもしれません。
     github: >-
       このアプリケーションのソースコードは GitHub 上で公開されています。
       何かの参考になりましたら幸いです。

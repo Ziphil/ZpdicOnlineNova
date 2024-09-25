@@ -9,6 +9,7 @@ import {ExampleOfferList} from "/client/component/compound/example-offer-list";
 import {NotificationList} from "/client/component/compound/notification-list";
 import {MainContainer, Page} from "/client/component/compound/page";
 import {create} from "/client/component/create";
+import {DiscordButton} from "/client/component/page/top-page/discord-button";
 import {useResponse} from "/client/hook/request";
 import {NormalExampleOfferParameter} from "/client/skeleton";
 import {GiftView} from "./gift-view";
@@ -81,21 +82,32 @@ export const TopPage = create(
                 </Link>
               </section>
               <hr styleName="separator"/>
-              <div styleName="row">
-                <section styleName="section">
-                  <h2 styleName="subheading">{trans("heading.supporter")}</h2>
-                  <MultiLineText styleName="description">
-                    {trans("description.supporter")}
-                  </MultiLineText>
-                  <SupporterList supporters={SUPPORTERS}/>
-                </section>
-                <section styleName="section">
-                  <h2 styleName="subheading">{trans("heading.github")}</h2>
-                  <MultiLineText styleName="description">
-                    {trans("description.github")}
-                  </MultiLineText>
-                  <GithubStarButton/>
-                </section>
+              <div styleName="bottom">
+                <div styleName="bottom-row">
+                  <section styleName="section">
+                    <h2 styleName="subheading">{trans("heading.supporter")}</h2>
+                    <MultiLineText styleName="description">
+                      {trans("description.supporter")}
+                    </MultiLineText>
+                    <SupporterList supporters={SUPPORTERS}/>
+                  </section>
+                </div>
+                <div styleName="bottom-row">
+                  <section styleName="section">
+                    <h2 styleName="subheading">{trans("heading.discord")}</h2>
+                    <MultiLineText styleName="description">
+                      {trans("description.discord")}
+                    </MultiLineText>
+                    <DiscordButton/>
+                  </section>
+                  <section styleName="section">
+                    <h2 styleName="subheading">{trans("heading.github")}</h2>
+                    <MultiLineText styleName="description">
+                      {trans("description.github")}
+                    </MultiLineText>
+                    <GithubStarButton/>
+                  </section>
+                </div>
               </div>
             </Suspense>
           </MainContainer>

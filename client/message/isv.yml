@@ -959,6 +959,7 @@ topPage:
     gift: "I need your support"
     offer: "Today’s sentence"
     notification: "Послєдне новости"
+    discord: "Discord community"
     github: "GitHub"
     supporter: "Supporters"
   message:
@@ -974,6 +975,9 @@ topPage:
       You can add your translation from each dictionary page.
       The sentence is updated every day at 21:00 (UTC).
   description:
+    discord: >-
+      There is an official forum for ZpDIC within the Discord server ‘Lang Lounge’.
+      If you have any questions about ZpDIC, you may be able to find the answer here.
     github: >-
       The source code of this application is available on GitHub.
       I hope you find it useful.

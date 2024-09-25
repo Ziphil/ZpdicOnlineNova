@@ -22,7 +22,7 @@
   flex-direction: column;
 }
 
-.row {
+.bottom {
   @include device("desktop") {
     column-gap: 8zu;
     display: grid;
@@ -33,6 +33,12 @@
     display: flex;
     flex-direction: column;
   }
+}
+
+.bottom-row {
+  row-gap: 8zu;
+  display: flex;
+  flex-direction: column;
 }
 
 .section {

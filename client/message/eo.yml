@@ -968,6 +968,7 @@ topPage:
     gift: "Mi bezonas vian subtenon"
     offer: "Hodiaŭa frazo"
     notification: "Lastatempa novaĵo"
+    discord: "Komunumo sur Discord"
     github: "GitHub"
     supporter: "Subtenantoj"
   message:
@@ -983,6 +984,9 @@ topPage:
       Vi povas aldoni vian tradukaĵon de ĉiu paĝo de vortaro.
       La frazo estas ĝisdatigita ĉiutage je 21:00 (UTC).
   description:
+    discord: >-
+      Estas oficiala forumo por ZpDIC ene de la Discord-servilo “Lang Lounge”.
+      Se vi havas demandojn pri ZpDIC, vi eble povos trovi la respondon tie.
     github: >-
       La fontkodo de tiu aplikaĵo estas havebla ĉe GitHub.
       Mi esperas ke vi trovos ĝin utila.
