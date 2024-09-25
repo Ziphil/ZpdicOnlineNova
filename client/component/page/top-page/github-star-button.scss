@@ -5,10 +5,10 @@
 
 .root {
   @include theme("light") {
-    --text-color: #{leveled-color("primary", 5)};
+    --text-color: #{leveled-color("gray", 7)};
     --link-text-color: #{leveled-color("secondary", 5)};
     --link-hover-text-color: #{leveled-color("secondary", 6)};
-    --border-color: #{leveled-color("primary", 1)};
+    --border-color: var(--glob-border-color);
     --background-color: #{single-color("background-light")};
   }
 }
@@ -23,14 +23,15 @@
 }
 
 .star {
-  column-gap: 3zu;
+  column-gap: 4zu;
   display: flex;
   align-items: center;
   color: var(--text-color);
 }
 
 .github-icon {
-  font-size: 8zu;
+  font-size: 10zu;
+  color: #1B1F24;
 }
 
 .balloon {

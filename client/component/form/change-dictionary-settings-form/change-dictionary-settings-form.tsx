@@ -14,6 +14,7 @@ import {
   Radio,
   useTrans
 } from "zographia";
+import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {Dictionary, DictionarySettings} from "/client/skeleton";
 import {useChangeDictionarySettings} from "./change-dictionary-settings-form-hook";
@@ -35,7 +36,7 @@ export const ChangeDictionarySettingsForm = create(
     const {trans} = useTrans("changeDictionarySettingsForm");
 
     const {form, handleSubmit} = useChangeDictionarySettings(dictionary, propertyName);
-    const {register} = form;
+    const {register, getFieldState, formState: {errors}} = form;
 
     return (
       <form styleName="root" {...rest}>
@@ -71,7 +72,11 @@ export const ChangeDictionarySettingsForm = create(
           </ControlContainer>
         ) : (propertyName === "ignoredEquivalentPattern") ? (
           <ControlContainer>
-            <IgnoredPatternInput {...register("value")}/>
+            <IgnoredPatternInput
+              error={getFieldState("value").error !== undefined}
+              {...register("value")}
+            />
+            <ControlErrorMessage name="value" form={form} trans={trans}/>
           </ControlContainer>
         ) : (propertyName === "exampleTitle") ? (
           <ControlContainer>

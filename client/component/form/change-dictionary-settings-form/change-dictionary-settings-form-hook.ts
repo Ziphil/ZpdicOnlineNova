@@ -1,19 +1,17 @@
 //
 
 import {BaseSyntheticEvent, useMemo} from "react";
-import {Asserts, object, string} from "yup";
+import {StringSchema, object, string} from "yup";
 import {UseFormReturn, useForm} from "/client/hook/form";
 import {invalidateResponses, useRequest} from "/client/hook/request";
 import {useToast} from "/client/hook/toast";
 import {Dictionary, DictionarySettings} from "/client/skeleton";
 import {switchResponse} from "/client/util/response";
+import {validateRegexpPattern} from "/client/util/validation";
 import type {RequestData} from "/server/type/rest/internal";
 
 
-const SCHEMA = object({
-  value: string()
-});
-type FormValue = Asserts<typeof SCHEMA>;
+type FormValue = {value?: string};
 
 export type ChangeDictionarySourceSpec = {
   form: UseFormReturn<FormValue>,
@@ -21,7 +19,8 @@ export type ChangeDictionarySourceSpec = {
 };
 
 export function useChangeDictionarySettings<N extends keyof DictionarySettings>(dictionary: Dictionary, propertyName: N): ChangeDictionarySourceSpec {
-  const form = useForm<FormValue>(SCHEMA, getDefaultFormValue(dictionary, propertyName), {});
+  const schema = object({value: getSchema(propertyName)});
+  const form = useForm<FormValue>(schema, getDefaultFormValue(dictionary, propertyName), {});
   const request = useRequest();
   const {dispatchSuccessToast} = useToast();
   const handleSubmit = useMemo(() => form.handleSubmit(async (value) => {
@@ -32,6 +31,14 @@ export function useChangeDictionarySettings<N extends keyof DictionarySettings>(
     });
   }), [dictionary, propertyName, request, form, dispatchSuccessToast]);
   return {form, handleSubmit};
+}
+
+function getSchema<N extends keyof DictionarySettings>(propertyName: N): StringSchema {
+  if (propertyName === "ignoredEquivalentPattern") {
+    return string().test("regexpPattern", "invalidPattern", validateRegexpPattern());
+  } else {
+    return string();
+  }
 }
 
 function getDefaultFormValue<N extends keyof DictionarySettings>(dictionary: Dictionary, propertyName: N): FormValue {

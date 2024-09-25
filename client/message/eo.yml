@@ -723,6 +723,9 @@ changeDictionarySettingsForm:
     none: "Ne agordi"
     paren: "Ignori internoj de rondaj krampoj"
     bracket: "Ignori internoj de ortaj krampoj"
+  error:
+    invalidPattern: >-
+      Enigu validan regulan esprimon.
 changeDictionaryVisibilityForm:
   label:
     public: "Publika"
@@ -803,8 +806,11 @@ contactPage:
   explanation: |-
     Se vi volas sendi vian demandon anonime, bonvolu elsaluti kaj poste lasi malplena la kampon “Nomo”.
     Bonvolu noti, ke ni eble ne povos respondi al via anonima peto se ĝi koncernas ion kiu bezonas la aŭtoritaton de uzanto, kiel agordado aŭ redaktado de vortaro.
+  discord: |-
+    Ni ankaŭ havas <link>oficialan forumon sur Discord</link>.
+    Vi ankaŭ povas uzi tion.
   disclaimer: |-
-    Bonvolu ankaŭ noti, ke ni eble ne povos respondi ĉiujn demandojn rekte.
+    Bonvolu noti, ke ni eble ne povos respondi ĉiujn demandojn rekte.
 exampleOfferListPage:
   title: "Frazoj"
   heading: "Frazoj"
@@ -965,6 +971,7 @@ topPage:
     gift: "Mi bezonas vian subtenon"
     offer: "Hodiaŭa frazo"
     notification: "Lastatempa novaĵo"
+    discord: "Komunumo sur Discord"
     github: "GitHub"
     supporter: "Subtenantoj"
   message:
@@ -980,6 +987,9 @@ topPage:
       Vi povas aldoni vian tradukaĵon de ĉiu paĝo de vortaro.
       La frazo estas ĝisdatigita ĉiutage je 21:00 (UTC).
   description:
+    discord: >-
+      Estas oficiala forumo por ZpDIC ene de la Discord-servilo “Lang Lounge”.
+      Se vi havas demandojn pri ZpDIC, vi eble povos trovi la respondon tie.
     github: >-
       La fontkodo de tiu aplikaĵo estas havebla ĉe GitHub.
       Mi esperas ke vi trovos ĝin utila.

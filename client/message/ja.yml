@@ -721,6 +721,9 @@ changeDictionarySettingsForm:
     none: "設定なし"
     paren: "丸カッコ内を無視"
     bracket: "角カッコ内を無視"
+  error:
+    invalidPattern: >-
+      正規表現として有効なパターンを入力してください。
 changeDictionaryVisibilityForm:
   label:
     public: "全体公開"
@@ -801,8 +804,11 @@ contactPage:
   explanation: |-
     匿名でのお問い合わせをご希望の場合は、ログアウトした状態で「名前」欄を空欄にした上で送信してください。
     なお、辞書の設定や編集などに関わるような、ユーザーの権限が必要になる内容に関するお問い合わせの場合、匿名では対応できない場合がありますのでご了承ください。
+  discord: |-
+    また、<link>Discord の公式フォーラム</link>を設けてあります。
+    お問い合わせ内容が本サービスに関する質問の場合は、こちらもご利用いただけます。
   disclaimer: |-
-    また、全てのお問い合わせに直接お答えできるとは限りません。
+    なお、全てのお問い合わせに直接お答えできるとは限りません。
     あらかじめご了承ください。
 exampleOfferListPage:
   title: "例文集"
@@ -965,6 +971,7 @@ topPage:
     gift: "支援のお願い"
     offer: "今日の例文"
     notification: "最新のお知らせ"
+    discord: "Discord コミュニティ"
     github: "GitHub"
     supporter: "スペシャルサンクス"
   message:
@@ -980,6 +987,9 @@ topPage:
       辞書ページから翻訳を追加することができます。
       例文は毎朝 6 時に更新されます。
   description:
+    discord: >-
+      Discord サーバー「Lang Lounge」内に、ZpDIC の公式フォーラムがあります。
+      ZpDIC に関する質問がある場合は、ここで解決できるかもしれません。
     github: >-
       このアプリケーションのソースコードは GitHub 上で公開されています。
       何かの参考になりましたら幸いです。

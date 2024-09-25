@@ -25,3 +25,19 @@ export function validateFileType(accepts: Array<string>): (file: File | undefine
   };
   return validator;
 }
+
+export function validateRegexpPattern(): (string: string | undefined) => boolean {
+  const validator = function (string: string | undefined): boolean {
+    if (string !== undefined) {
+      try {
+        const regexp = new RegExp(string);
+        return true;
+      } catch (error) {
+        return false;
+      }
+    } else {
+      return true;
+    }
+  };
+  return validator;
+}

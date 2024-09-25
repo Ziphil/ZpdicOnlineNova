@@ -33,6 +33,7 @@ import {User, UserSchema} from "/server/model/user/user";
 import {Relation} from "/server/model/word/relation";
 import {Suggestion} from "/server/model/word/suggestion";
 import {Word, WordModel} from "/server/model/word/word";
+import {NormalWordParameter} from "/server/model/word-parameter/normal-word-parameter";
 import {WordParameter} from "/server/model/word-parameter/word-parameter";
 import {WithSize} from "/server/type/common";
 import {LiteralType, LiteralUtilType} from "/server/util/literal-type";
@@ -378,10 +379,26 @@ export class DictionarySchema extends DiscardableSchema {
   public async searchWords(this: Dictionary, parameter: WordParameter, range?: QueryRange): Promise<{words: WithSize<Word>, suggestions: Array<Suggestion>}> {
     const query = parameter.createQuery(this);
     const suggestionQuery = parameter.createSuggestionQuery(this);
-    const wordPromise = QueryRange.restrictWithSize(query, range);
-    const suggestionPromise = suggestionQuery?.then((suggestions) => suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word))) ?? Promise.resolve([]);
-    const [words, suggestions] = await Promise.all([wordPromise, suggestionPromise]);
+    const [words, suggestions] = await Promise.all([
+      QueryRange.restrictWithSize(query, range),
+      suggestionQuery?.then((suggestions) => suggestions.map((suggestion) => new Suggestion(suggestion.title, suggestion.word))) ?? Promise.resolve([])
+    ]);
     return {words, suggestions};
+  }
+
+  public async searchRelationWords(this: Dictionary, pattern: string): Promise<Array<Word>> {
+    const range = new QueryRange(0, 50);
+    const exactParameter = new NormalWordParameter(pattern, "both", "exact", {mode: "unicode", direction: "ascending"}, {ignore: {case: true}, shuffleSeed: null, enableSuggestions: false});
+    const partParameter = new NormalWordParameter(pattern, "both", "part", {mode: "unicode", direction: "ascending"}, {ignore: {case: true}, shuffleSeed: null, enableSuggestions: false});
+    const exactQuery = exactParameter.createQuery(this);
+    const partQuery = partParameter.createQuery(this);
+    const [exactWords, partWords] = await Promise.all([
+      QueryRange.restrict(exactQuery, range),
+      QueryRange.restrict(partQuery, range)
+    ]);
+    const exactWordIds = new Set<number>(exactWords.map((word) => word.id));
+    const words = [...exactWords, ...partWords.filter((word) => !exactWordIds.has(word.id))].slice(0, 50);
+    return words;
   }
 
   public async searchExamples(this: Dictionary, parameter: ExampleParameter, range?: QueryRange): Promise<WithSize<Example>> {

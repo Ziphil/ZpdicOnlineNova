@@ -168,6 +168,16 @@ export class DictionaryRestController extends InternalRestController {
     InternalRestController.respond(response, body);
   }
 
+  @post("/searchRelationWords")
+  @before(checkDictionary())
+  public async [Symbol()](request: FilledRequest<"searchRelationWords", "dictionary">, response: Response<"searchRelationWords">): Promise<void> {
+    const {dictionary} = request.middlewareBody;
+    const {pattern} = request.body;
+    const hitWords = await dictionary.searchRelationWords(pattern);
+    const body = hitWords.map(WordCreator.skeletonize);
+    InternalRestController.respond(response, body);
+  }
+
   @post("/downloadDictionary")
   @before(checkDictionary())
   public async [Symbol()](request: FilledRequest<"downloadDictionary", "dictionary">, response: Response<"downloadDictionary">): Promise<void> {

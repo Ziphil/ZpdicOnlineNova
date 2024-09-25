@@ -4,7 +4,7 @@ import {faTriangleExclamation} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement, useCallback} from "react";
 import {AsyncSelect, GeneralIcon, LoadingIcon} from "zographia";
 import {create} from "/client/component/create";
-import {Dictionary, NormalWordParameter, Word} from "/client/skeleton";
+import {Dictionary, Word} from "/client/skeleton";
 import {request} from "/client/util/request";
 import {switchResponse} from "/client/util/response";
 import {RelationWordSelectOption} from "./relation-word-select-option";
@@ -26,9 +26,8 @@ export const RelationWordSelect = create(
 
     const loadOptions = useCallback(async function (pattern: string): Promise<Array<Word>> {
       const number = dictionary.number;
-      const parameter = {...NormalWordParameter.EMPTY, text: pattern, mode: "both", type: "part"} as NormalWordParameter;
-      const response = await request("searchWords", {number, parameter, offset: 0, size: 20}, {ignoreError: true});
-      return switchResponse(response, ({words: [hitWords]}) => {
+      const response = await request("searchRelationWords", {number, pattern}, {ignoreError: true});
+      return switchResponse(response, (hitWords) => {
         return hitWords;
       }, (error) => {
         return [];

@@ -31,6 +31,7 @@
   margin-block-start: 3zu;
   column-gap: 2zu;
   display: flex;
+  align-items: center;
 }
 
 .code {
@@ -47,6 +48,10 @@
   box-sizing: border-box;
   overflow: auto;
   flex: 1 1 auto;
+}
+
+.code-button {
+  flex: 0 0 auto;
 }
 
 .footer {

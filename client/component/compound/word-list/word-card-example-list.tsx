@@ -1,9 +1,8 @@
 //
 
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faCaretRight} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, MultiLineText, aria} from "zographia";
+import {AdditionalProps} from "zographia";
+import {WordCardExampleItem} from "/client/component/compound/word-list/word-card-example-item";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
 
@@ -28,16 +27,7 @@ export const WordCardExampleList = create(
           </h4>
           <ul styleName="list">
             {word.examples.map((example, index) => (
-              <li styleName="item" key={index}>
-                <span styleName="icon" {...aria({hidden: true})}>
-                  <FontAwesomeIcon icon={faCaretRight}/>
-                </span>
-                <MultiLineText styleName="text" is="span">
-                  <span>{example.sentence}</span>
-                  <span styleName="separator"> — </span>
-                  <span>{example.translation}</span>
-                </MultiLineText>
-              </li>
+              <WordCardExampleItem key={index} example={example}/>
             ))}
           </ul>
         </section>

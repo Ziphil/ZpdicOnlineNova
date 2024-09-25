@@ -723,6 +723,9 @@ changeDictionarySettingsForm:
     none: "No setting"
     paren: "Ignore inside round brackets (parens)"
     bracket: "Ignore inside square brackets"
+  error:
+    invalidPattern: >-
+      Enter a valid regular expression.
 changeDictionaryVisibilityForm:
   label:
     public: "Public"
@@ -803,8 +806,11 @@ contactPage:
   explanation: |-
     If you wish to send your inquiry anonymously, please sign out and then leave the ‘Name’ field blank.
     Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user’s authority, such as dictionary settings or editing.
+  discord: |-
+    We also have an <link>official Discord forum</link>.
+    If your enquiry is a question about the service, you can use this as well.
   disclaimer: |-
-    Please also note that we may not be able to answer all enquiries directly.
+    Please note that we may not be able to answer all enquiries directly.
 exampleOfferListPage:
   title: "Sentences"
   heading: "Sentences"
@@ -956,6 +962,7 @@ topPage:
     gift: "I need your support"
     offer: "Today’s sentence"
     notification: "Послєдне новости"
+    discord: "Discord community"
     github: "GitHub"
     supporter: "Supporters"
   message:
@@ -971,6 +978,9 @@ topPage:
       You can add your translation from each dictionary page.
       The sentence is updated every day at 21:00 (UTC).
   description:
+    discord: >-
+      There is an official forum for ZpDIC within the Discord server ‘Lang Lounge’.
+      If you have any questions about ZpDIC, you may be able to find the answer here.
     github: >-
       The source code of this application is available on GitHub.
       I hope you find it useful.

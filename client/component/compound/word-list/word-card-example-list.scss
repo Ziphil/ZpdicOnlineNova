@@ -22,22 +22,3 @@
   display: flex;
   flex-direction: column;
 }
-
-.item {
-  column-gap: var(--glob-blank-gap);
-  display: flex;
-  align-items: baseline;
-}
-
-.icon {
-  color: var(--glob-mute-text-color);
-  flex: 0 0 auto;
-}
-
-.text {
-  flex: 1 1 auto;
-}
-
-.separator {
-  color: var(--glob-mute-text-color);
-}
