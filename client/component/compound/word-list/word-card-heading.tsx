@@ -51,9 +51,9 @@ export const WordCardHeading = create(
             </MultiLineText>
           )}
           {(!!pronunciation) && (
-            <div styleName="pronunciation">
+            <MultiLineText styleName="pronunciation" lineHeight="narrow">
               {pronunciation}
-            </div>
+            </MultiLineText>
           )}
         </div>
       </div>
