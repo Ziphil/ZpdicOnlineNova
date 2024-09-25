@@ -186,6 +186,13 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
+  searchRelationWords: {
+    request: {number: number, pattern: string},
+    response: {
+      success: Array<Word>,
+      error: CustomError<"noSuchDictionary">
+    }
+  },
   downloadDictionary: {
     request: {number: number},
     response: {
