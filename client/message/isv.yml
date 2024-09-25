@@ -806,8 +806,11 @@ contactPage:
   explanation: |-
     If you wish to send your inquiry anonymously, please sign out and then leave the ‘Name’ field blank.
     Please note that we may not be able to respond to your anonymous request if it concerns something which requires the user’s authority, such as dictionary settings or editing.
+  discord: |-
+    We also have an <link>official Discord forum</link>.
+    If your enquiry is a question about the service, you can use this as well.
   disclaimer: |-
-    Please also note that we may not be able to answer all enquiries directly.
+    Please note that we may not be able to answer all enquiries directly.
 exampleOfferListPage:
   title: "Sentences"
   heading: "Sentences"
