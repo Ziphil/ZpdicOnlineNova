@@ -13,10 +13,10 @@ export class WordRestController extends InternalRestController {
   @post("/editWord")
   @before(checkMe(), checkDictionary("edit"))
   public async [Symbol()](request: Request<"editWord">, response: Response<"editWord">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+    const {me, dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {word} = request.body;
     try {
-      const resultWord = await dictionary.editWord(word);
+      const resultWord = await dictionary.editWord(word, me);
       const body = WordCreator.skeletonize(resultWord);
       InternalRestController.respond(response, body);
     } catch (error) {

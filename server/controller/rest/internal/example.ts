@@ -16,10 +16,10 @@ export class ExampleRestController extends InternalRestController {
   @post("/editExample")
   @before(checkMe(), checkDictionary("edit"))
   public async [Symbol()](request: Request<"editExample">, response: Response<"editExample">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
+    const {me, dictionary} = request.middlewareBody as FilledMiddlewareBody<"me" | "dictionary">;
     const {example} = request.body;
     try {
-      const resultExample = await dictionary.editExample(example);
+      const resultExample = await dictionary.editExample(example, me);
       const body = ExampleCreator.skeletonize(resultExample);
       InternalRestController.respond(response, body);
     } catch (error) {
