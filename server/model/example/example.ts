@@ -12,6 +12,7 @@ import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {LinkedExampleOfferSchema} from "/server/model/example/linked-example-offer";
+import {User} from "/server/model/user/user";
 import {LinkedWordSchema} from "/server/model/word/linked-word";
 import {Word, WordModel} from "/server/model/word/word";
 import {WithSize} from "/server/type/common";
@@ -45,6 +46,9 @@ export class ExampleSchema extends DiscardableSchema {
 
   @prop()
   public offer?: LinkedExampleOfferSchema;
+
+  @prop({ref: "UserSchema"})
+  public updatedUser?: Ref<User>;
 
   @prop()
   public createdDate?: Date;
@@ -81,12 +85,13 @@ export class ExampleSchema extends DiscardableSchema {
     }
   }
 
-  public static async edit(dictionary: Dictionary, example: EditableExample): Promise<Example> {
+  public static async edit(dictionary: Dictionary, example: EditableExample, user: User): Promise<Example> {
     const currentExample = await ExampleModel.findOneExist().where("dictionary", dictionary).where("number", example.number);
     let resultExample;
     if (currentExample) {
       resultExample = new ExampleModel(example);
       resultExample.dictionary = dictionary;
+      resultExample.updatedUser = user;
       resultExample.createdDate = currentExample.createdDate;
       resultExample.updatedDate = new Date();
       await this.filterWords(dictionary, resultExample);
@@ -98,6 +103,7 @@ export class ExampleSchema extends DiscardableSchema {
       }
       resultExample = new ExampleModel(example);
       resultExample.dictionary = dictionary;
+      resultExample.updatedUser = user;
       resultExample.createdDate = new Date();
       resultExample.updatedDate = new Date();
       await this.filterWords(dictionary, resultExample);
