@@ -54,7 +54,7 @@ export const DictionaryHeader = create(
                 {trans("tab.example")}
               </LinkTab>
             </Indicator>
-            {(canOwn) && (
+            {(canEdit) && (
               <Indicator styleName="indicator" scheme="secondary" disabled={(commissionSize === undefined || commissionSize <= 0) || tabValue === "commission"} animate={true}>
                 <LinkTab value="commission" href={`/dictionary/${match?.params.identifier}/requests`}>
                   <TabIconbag><GeneralIcon icon={faListCheck}/></TabIconbag>

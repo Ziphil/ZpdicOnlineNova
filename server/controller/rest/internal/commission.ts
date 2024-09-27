@@ -28,7 +28,7 @@ export class CommissionRestController extends InternalRestController {
   }
 
   @post("/discardCommission")
-  @before(checkMe(), checkDictionary("own"))
+  @before(checkMe(), checkDictionary("edit"))
   public async [Symbol()](request: Request<"discardCommission">, response: Response<"discardCommission">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {id} = request.body;
@@ -43,7 +43,7 @@ export class CommissionRestController extends InternalRestController {
   }
 
   @post("/fetchCommissions")
-  @before(checkMe(), checkDictionary("own"))
+  @before(checkMe(), checkDictionary("edit"))
   public async [Symbol()](request: Request<"fetchCommissions">, response: Response<"fetchCommissions">): Promise<void> {
     const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {offset, size} = request.body;
