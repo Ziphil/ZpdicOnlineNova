@@ -11,6 +11,7 @@ import type {EditableWord} from "/client/skeleton";
 import {DiscardableSchema} from "/server/model/base";
 import {Dictionary, DictionarySchema} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
+import {User} from "/server/model/user/user";
 import {EquivalentSchema} from "/server/model/word/equivalent";
 import {InformationSchema} from "/server/model/word/information";
 import {Relation, RelationSchema} from "/server/model/word/relation";
@@ -48,6 +49,9 @@ export class WordSchema extends DiscardableSchema {
   @prop({required: true, type: RelationSchema})
   public relations!: Array<RelationSchema>;
 
+  @prop({ref: "UserSchema"})
+  public updatedUser?: Ref<User>;
+
   @prop()
   public createdDate?: Date;
 
@@ -58,12 +62,13 @@ export class WordSchema extends DiscardableSchema {
    * 渡された単語データと番号が同じ単語データがすでに存在する場合は、渡された単語データでそれを上書きします。
    * そうでない場合は、渡された単語データを新しいデータとして追加します。
    * 番号によってデータの修正か新規作成かを判断するので、既存の単語データの番号を変更する編集はできません。*/
-  public static async edit(dictionary: Dictionary, word: EditableWord): Promise<Word> {
+  public static async edit(dictionary: Dictionary, word: EditableWord, user: User): Promise<Word> {
     const currentWord = await WordModel.findOneExist().where("dictionary", dictionary).where("number", word.number);
     let resultWord;
     if (currentWord) {
       resultWord = new WordModel(word);
       resultWord.dictionary = dictionary;
+      resultWord.updatedUser = user;
       resultWord.createdDate = currentWord.createdDate;
       resultWord.updatedDate = new Date();
       await this.filterRelations(dictionary, resultWord);
@@ -78,6 +83,7 @@ export class WordSchema extends DiscardableSchema {
       }
       resultWord = new WordModel(word);
       resultWord.dictionary = dictionary;
+      resultWord.updatedUser = user;
       resultWord.createdDate = new Date();
       resultWord.updatedDate = new Date();
       await this.filterRelations(dictionary, resultWord);

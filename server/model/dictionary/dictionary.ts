@@ -318,9 +318,9 @@ export class DictionarySchema extends DiscardableSchema {
     return this;
   }
 
-  public async editWord(this: Dictionary, word: EditableWord): Promise<Word> {
+  public async editWord(this: Dictionary, word: EditableWord, user: User): Promise<Word> {
     if (this.status !== "saving") {
-      const resultWord = await WordModel.edit(this, word);
+      const resultWord = await WordModel.edit(this, word, user);
       this.status = "ready";
       this.updatedDate = new Date();
       await this.save();
