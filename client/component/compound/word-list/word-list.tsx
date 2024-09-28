@@ -15,18 +15,20 @@ export const WordList = create(
   function ({
     dictionary,
     words,
+    pageSpec,
     canEdit,
     showEmpty = true,
     showHeader = false,
-    pageSpec,
+    onSelect,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    words: Array<Word | WordWithExamples>,
+    words?: Array<Word | WordWithExamples>,
+    pageSpec: PageSpec,
     canEdit: boolean,
     showEmpty?: boolean,
     showHeader?: boolean,
-    pageSpec: PageSpec,
+    onSelect?: (offer: Word) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 

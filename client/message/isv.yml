@@ -368,6 +368,9 @@ editWordDialog:
   button:
     external: "Open in new tab"
 editWordForm:
+  tab:
+    edit: "Edit"
+    old: "History"
   heading:
     basic: "Основне информације"
     equivalents: "Прєводы"

@@ -14,7 +14,7 @@ export class RegularJobController extends JobController {
   @schedule("0 3 * * *")
   public async [Symbol()](job: Job<any>): Promise<void> {
     LogUtil.log("worker/discardOldHistoryWords", {});
-    await WordModel.discardOldHistory(90);
+    await WordModel.discardOlds(90);
   }
 
   @job("addHistories")

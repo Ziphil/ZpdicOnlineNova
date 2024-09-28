@@ -368,6 +368,9 @@ editWordDialog:
   button:
     external: "別タブで表示"
 editWordForm:
+  tab:
+    edit: "編集"
+    old: "履歴"
   heading:
     basic: "基本情報"
     equivalents: "訳語"

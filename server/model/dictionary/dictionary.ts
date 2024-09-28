@@ -403,6 +403,12 @@ export class DictionarySchema extends DiscardableSchema {
     return examples;
   }
 
+  public async fetchOldWords(this: Dictionary, wordNumber: number, range?: QueryRange): Promise<WithSize<Word>> {
+    const query = WordModel.where().ne("removedDate", undefined).where("dictionary", this).where("number", wordNumber).sort("-updatedDate");
+    const words = await QueryRange.restrictWithSize(query, range);
+    return words;
+  }
+
   public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {
     const key = (() => {
       if (propertyName === "equivalent") {
