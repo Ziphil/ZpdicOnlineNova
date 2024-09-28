@@ -81,9 +81,6 @@ export class DictionarySchema extends DiscardableSchema {
   @prop({required: true})
   public settings!: DictionarySettingsSchema;
 
-  @prop({required: true, default: {}})
-  public externalData!: object;
-
   @prop()
   public createdDate?: Date;
 
@@ -215,7 +212,6 @@ export class DictionarySchema extends DiscardableSchema {
   private async startUpload(this: Dictionary): Promise<void> {
     this.status = "saving";
     this.updatedDate = new Date();
-    this.externalData = {};
     await this.save();
     await Promise.all([
       WordModel.deleteManyExist().where("dictionary", this),
