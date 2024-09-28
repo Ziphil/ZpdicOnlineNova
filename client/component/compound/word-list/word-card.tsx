@@ -22,7 +22,7 @@ import {ShareMenu} from "/client/component/compound/share-menu";
 import {WordCardHeader} from "/client/component/compound/word-list/word-card-header";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
@@ -44,7 +44,7 @@ export const WordCard = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    word: Word | OldWord | WordWithExamples,
     showHeader: boolean,
     showSelectButton: boolean,
     onSelect?: (offer: Word) => void,

@@ -55,6 +55,13 @@ export interface Word {
 }
 
 
+export interface OldWord extends Word {
+
+  precedence: number;
+
+}
+
+
 export interface WordWithExamples extends Word {
 
   examples: Array<Example>;

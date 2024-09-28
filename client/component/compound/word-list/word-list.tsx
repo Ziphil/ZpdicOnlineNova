@@ -6,7 +6,7 @@ import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, List, ListBody, Lis
 import {AddCommissionDialog} from "/client/component/compound/add-commission-dialog";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/client/skeleton";
 import {WordCard} from "./word-card";
 
 
@@ -23,7 +23,7 @@ export const WordList = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    words?: Array<Word | WordWithExamples>,
+    words?: Array<Word | OldWord | WordWithExamples>,
     pageSpec: PageSpec,
     emptyType: "create" | "commission" | "history" | "none",
     showHeader?: boolean,

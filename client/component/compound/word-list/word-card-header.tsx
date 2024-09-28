@@ -1,10 +1,11 @@
 //
 
+import {faClockRotateLeft} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
-import {AdditionalProps, useTrans} from "zographia";
+import {AdditionalProps, GeneralIcon, useTrans} from "zographia";
 import {UserView} from "/client/component/atom/user-view";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/client/skeleton";
 
 
 export const WordCardHeader = create(
@@ -15,20 +16,28 @@ export const WordCardHeader = create(
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    word: Word | OldWord | WordWithExamples,
     className?: string
   } & AdditionalProps): ReactElement {
 
-    const {transDate} = useTrans("wordCard");
+    const {transNumber, transDate} = useTrans("wordCard");
 
     return (
       <div styleName="root" {...rest}>
-        <div styleName="date">
-          {transDate(word.updatedDate)}
-        </div>
-        {(word.updatedUser !== undefined) && (
-          <UserView user={{id: word.updatedUser}} variant="simple"/>
+        {("precedence" in word) && (
+          <div styleName="number">
+            <GeneralIcon styleName="number-icon" icon={faClockRotateLeft}/>
+            {transNumber(word.precedence)}
+          </div>
         )}
+        <div styleName="main">
+          <div styleName="date">
+            {transDate(word.updatedDate)}
+          </div>
+          {(word.updatedUser !== undefined) && (
+            <UserView user={{id: word.updatedUser}} variant="simple"/>
+          )}
+        </div>
       </div>
     );
 

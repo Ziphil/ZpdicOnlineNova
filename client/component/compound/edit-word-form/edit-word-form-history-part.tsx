@@ -1,6 +1,6 @@
 //
 
-import {ReactElement, useCallback, useState} from "react";
+import {ReactElement, useCallback, useMemo, useState} from "react";
 import {AdditionalProps} from "zographia";
 import {WordList} from "/client/component/compound/word-list";
 import {create} from "/client/component/create";
@@ -27,8 +27,10 @@ export const EditWordFormHistoryPart = create(
     const {form} = formSpec;
 
     const wordNumber = form.watch("number");
+
     const [page, setPage] = useState(0);
-    const [[offers, hitSize] = []] = useResponse("fetchOldWords", (wordNumber !== null) && {number: dictionary.number, wordNumber, ...calcOffsetSpec(page, 50)}, {keepPreviousData: true});
+    const [[words, hitSize] = []] = useResponse("fetchOldWords", (wordNumber !== null) && {number: dictionary.number, wordNumber, ...calcOffsetSpec(page, 50)}, {keepPreviousData: true});
+    const oldWords = useMemo(() => words?.map((word, index) => ({...word, precedence: page * 50 + index + 1})), [words, page]);
 
     const handleSelect = useCallback(function (word: Word): void {
       form.reset(getEditWordFormValue({type: "word", word}));
@@ -37,7 +39,7 @@ export const EditWordFormHistoryPart = create(
 
     return (
       <div styleName="root" {...rest}>
-        <WordList dictionary={dictionary} words={offers} pageSpec={{size: 50, hitSize, page, onPageSet: setPage}} emptyType="history" showHeader={true} showSelectButton={true} onSelect={handleSelect}/>
+        <WordList dictionary={dictionary} words={oldWords} pageSpec={{size: 50, hitSize, page, onPageSet: setPage}} emptyType="history" showHeader={true} showSelectButton={true} onSelect={handleSelect}/>
       </div>
     );
 
