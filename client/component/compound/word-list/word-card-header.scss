@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+@use "zographia/source/component/function.scss" as *;
+
+
+.root {
+  padding-block-end: 3zu;
+  column-gap: 2zu;
+  font-size: 3zu;
+  border-block-end: dashed 1zx var(--glob-border-color);
+  display: flex;
+  align-items: baseline;
+  flex: 0 0 auto;
+}
+
+.date {
+  color: var(--glob-mute-text-color);
+}

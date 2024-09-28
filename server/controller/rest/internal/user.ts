@@ -179,8 +179,8 @@ export class UserRestController extends InternalRestController {
 
   @post("/fetchUser")
   public async [Symbol()](request: Request<"fetchUser">, response: Response<"fetchUser">): Promise<void> {
-    const {name} = request.body;
-    const user = await UserModel.fetchOneByName(name);
+    const {id, name} = request.body;
+    const user = (id !== undefined) ? await UserModel.findById(id) : await UserModel.fetchOneByName(name ?? "");
     if (user) {
       const body = UserCreator.skeletonize(user);
       InternalRestController.respond(response, body);

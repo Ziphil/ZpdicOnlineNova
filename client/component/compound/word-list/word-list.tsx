@@ -17,6 +17,7 @@ export const WordList = create(
     words,
     canEdit,
     showEmpty = true,
+    showHeader = false,
     pageSpec,
     ...rest
   }: {
@@ -24,6 +25,7 @@ export const WordList = create(
     words: Array<Word | WordWithExamples>,
     canEdit: boolean,
     showEmpty?: boolean,
+    showHeader?: boolean,
     pageSpec: PageSpec,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -33,7 +35,7 @@ export const WordList = create(
     return (
       <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(word) => <WordCard key={word.id} dictionary={dictionary} word={word}/>}
+          {(word) => <WordCard key={word.id} dictionary={dictionary} word={word} showHeader={showHeader}/>}
           <ListLoadingView/>
           {(showEmpty) ? (
             <ListEmptyView styleName="empty">

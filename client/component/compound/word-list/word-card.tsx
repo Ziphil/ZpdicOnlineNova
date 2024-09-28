@@ -19,6 +19,7 @@ import {
 } from "zographia";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {ShareMenu} from "/client/component/compound/share-menu";
+import {WordCardHeader} from "/client/component/compound/word-list/word-card-header";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
 import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
@@ -37,10 +38,12 @@ export const WordCard = create(
   function ({
     dictionary,
     word,
+    showHeader,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     word: Word | WordWithExamples,
+    showHeader: boolean,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -58,8 +61,9 @@ export const WordCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
-          {word.updatedDate}
-          {word.updatedUser}
+          {(showHeader) && (
+            <WordCardHeader dictionary={dictionary} word={word}/>
+          )}
           <WordCardHeading dictionary={dictionary} word={word}/>
           <Collapsible styleName="collapsible">
             <CollapsibleBody styleName="collapsible-body" height="20rem">

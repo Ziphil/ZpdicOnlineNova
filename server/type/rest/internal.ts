@@ -467,7 +467,7 @@ type ServerSpecs = {
     }
   },
   fetchUser: {
-    request: {name: string},
+    request: {id?: ObjectId, name?: string},
     response: {
       success: User,
       error: CustomError<"noSuchUser">
