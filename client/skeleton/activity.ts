@@ -1,5 +1,6 @@
 //
 
+import {DateString} from "/client/skeleton/common";
 import {LinkedDictionary} from "/client/skeleton/dictionary/linked-dictionary";
 
 
@@ -10,7 +11,7 @@ export interface ActivityWord {
   dictionary: LinkedDictionary;
   word: unknown;
   user: unknown;
-  date: string;
+  date: DateString;
 
 }
 

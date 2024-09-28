@@ -1,12 +1,12 @@
 //
 
-import {ObjectId} from "/client/skeleton/common";
+import {DateString, ObjectId} from "/client/skeleton/common";
 
 
 export interface History {
 
   id: ObjectId;
-  date: string;
+  date: DateString;
   wordSize: number;
 
 }

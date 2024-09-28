@@ -58,6 +58,8 @@ export const WordCard = create(
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
+          {word.updatedDate}
+          {word.updatedUser}
           <WordCardHeading dictionary={dictionary} word={word}/>
           <Collapsible styleName="collapsible">
             <CollapsibleBody styleName="collapsible-body" height="20rem">

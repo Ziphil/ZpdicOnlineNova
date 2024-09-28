@@ -48,6 +48,7 @@ export interface Word {
   informations: Array<Information>;
   variations: Array<Variation>;
   relations: Array<Relation>;
+  updatedUser?: ObjectId;
   createdDate?: string;
   updatedDate?: string;
 
