@@ -569,6 +569,7 @@ wordList:
     duplicate: "Duplicate"
     discard: "Одстранити"
     share: "Share"
+    select: "Revert to this version"
     create: "Create"
     commission: "Request creation"
   dialog:

@@ -569,6 +569,7 @@ wordList:
     duplicate: "Duobligi"
     discard: "Forigi"
     share: "Kunhavigi"
+    select: "Reveni al tiu versio"
     create: "Krei"
     commission: "Peti kreadon"
   dialog:

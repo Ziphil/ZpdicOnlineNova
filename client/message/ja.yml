@@ -569,6 +569,7 @@ wordList:
     duplicate: "複製編集"
     discard: "削除"
     share: "共有"
+    select: "この版に戻す"
     create: "作成"
     commission: "造語依頼"
   dialog:

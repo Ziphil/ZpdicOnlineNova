@@ -16,18 +16,18 @@ export const WordList = create(
     dictionary,
     words,
     pageSpec,
-    canEdit,
-    showEmpty = true,
+    emptyType,
     showHeader = false,
+    showSelectButton = false,
     onSelect,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     words?: Array<Word | WordWithExamples>,
     pageSpec: PageSpec,
-    canEdit: boolean,
-    showEmpty?: boolean,
+    emptyType: "create" | "commission" | "history" | "none",
     showHeader?: boolean,
+    showSelectButton?: boolean,
     onSelect?: (offer: Word) => void,
     className?: string
   } & AdditionalProps): ReactElement {
@@ -37,26 +37,26 @@ export const WordList = create(
     return (
       <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(word) => <WordCard key={word.id} dictionary={dictionary} word={word} showHeader={showHeader}/>}
+          {(word) => <WordCard key={word.id} dictionary={dictionary} word={word} showHeader={showHeader} showSelectButton={showSelectButton} onSelect={onSelect}/>}
           <ListLoadingView/>
-          {(showEmpty) ? (
+          {(emptyType !== "none") ? (
             <ListEmptyView styleName="empty">
               <span>{trans("empty")}</span>
-              {(canEdit) ? (
+              {(emptyType === "create") ? (
                 <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
                   <Button scheme="gray" variant="light">
                     <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
                     {trans("button.create")}
                   </Button>
                 )}/>
-              ) : (
+              ) : (emptyType === "commission") ? (
                 <AddCommissionDialog dictionary={dictionary} trigger={(
                   <Button scheme="gray" variant="light">
                     <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
                     {trans("button.commission")}
                   </Button>
                 )}/>
-              )}
+              ) : null}
             </ListEmptyView>
           ) : (
             <div/>

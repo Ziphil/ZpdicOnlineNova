@@ -61,7 +61,7 @@ export const DictionaryMainPart = create(
           )}
           <div styleName="main">
             <SuggestionCard dictionary={dictionary} suggestions={hitSuggestions}/>
-            <WordList dictionary={dictionary} words={hitWords} canEdit={canEdit} showEmpty={hitSuggestions.length <= 0} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}/>
+            <WordList dictionary={dictionary} words={hitWords} emptyType={(hitSuggestions.length > 0) ? "none" : (canEdit) ? "create" : "commission"} pageSpec={{size: 50, hitSize, page: query.page, onPageSet: handlePageSet}}/>
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement} from "react";
+import {faCheck, faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {ReactElement, useCallback} from "react";
 import {useHref} from "react-router";
 import {
   AdditionalProps,
@@ -39,11 +39,15 @@ export const WordCard = create(
     dictionary,
     word,
     showHeader,
+    showSelectButton,
+    onSelect,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
     word: Word | WordWithExamples,
     showHeader: boolean,
+    showSelectButton: boolean,
+    onSelect?: (offer: Word) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -57,6 +61,10 @@ export const WordCard = create(
     const shareUrl = location.origin + useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}?kind=exact&number=${word.number}`);
 
     const discardWord = useDiscardWord(dictionary, word);
+
+    const handleSelect = useCallback(function (): void {
+      onSelect?.(word);
+    }, [onSelect, word]);
 
     return (
       <Card styleName="root" {...rest}>
@@ -80,7 +88,16 @@ export const WordCard = create(
             <CollapsibleButton styleName="collapsible-button"/>
           </Collapsible>
         </CardBody>
-        {(canEdit) && (
+        {(showSelectButton) ? (
+          <CardFooter styleName="footer">
+            <div styleName="footer-left">
+              <Button scheme="secondary" variant="underline" onClick={handleSelect}>
+                <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
+                {trans("button.select")}
+              </Button>
+            </div>
+          </CardFooter>
+        ) : (canEdit) && (
           <CardFooter styleName="footer">
             <div styleName="footer-left">
               <EditWordDialog dictionary={dictionary} initialData={{type: "word", word}} trigger={(
