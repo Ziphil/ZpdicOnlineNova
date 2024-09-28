@@ -72,6 +72,7 @@ export function useEditWord(dictionary: Dictionary, initialData: EditWordInitial
       await request("addRelations", getQueryForRelations(dictionary, word, value)).catch(noop);
       await Promise.all([
         invalidateResponses("searchWords", (query) => query.number === dictionary.number),
+        invalidateResponses("fetchOldWords", (query) => query.number === dictionary.number && query.wordNumber === word.number),
         invalidateResponses("fetchDictionarySizes", (query) => query.number === dictionary.number)
       ]);
       await onSubmit?.(word);
