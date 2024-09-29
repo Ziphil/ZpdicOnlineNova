@@ -81,9 +81,6 @@ export class DictionarySchema extends DiscardableSchema {
   @prop({required: true})
   public settings!: DictionarySettingsSchema;
 
-  @prop({required: true, default: {}})
-  public externalData!: object;
-
   @prop()
   public createdDate?: Date;
 
@@ -215,7 +212,6 @@ export class DictionarySchema extends DiscardableSchema {
   private async startUpload(this: Dictionary): Promise<void> {
     this.status = "saving";
     this.updatedDate = new Date();
-    this.externalData = {};
     await this.save();
     await Promise.all([
       WordModel.deleteManyExist().where("dictionary", this),
@@ -405,6 +401,12 @@ export class DictionarySchema extends DiscardableSchema {
     const query = parameter.createQuery(this);
     const examples = await QueryRange.restrictWithSize(query, range);
     return examples;
+  }
+
+  public async fetchOldWords(this: Dictionary, wordNumber: number, range?: QueryRange): Promise<WithSize<Word>> {
+    const query = WordModel.where().ne("removedDate", undefined).where("dictionary", this).where("number", wordNumber).sort("-updatedDate");
+    const words = await QueryRange.restrictWithSize(query, range);
+    return words;
   }
 
   public async suggestTitles(propertyName: string, pattern: string): Promise<Array<string>> {

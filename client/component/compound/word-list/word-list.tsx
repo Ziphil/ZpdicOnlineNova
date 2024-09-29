@@ -6,7 +6,7 @@ import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, List, ListBody, Lis
 import {AddCommissionDialog} from "/client/component/compound/add-commission-dialog";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {create} from "/client/component/create";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/client/skeleton";
 import {WordCard} from "./word-card";
 
 
@@ -15,16 +15,20 @@ export const WordList = create(
   function ({
     dictionary,
     words,
-    canEdit,
-    showEmpty = true,
     pageSpec,
+    emptyType,
+    showHeader = false,
+    showSelectButton = false,
+    onSelect,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    words: Array<Word | WordWithExamples>,
-    canEdit: boolean,
-    showEmpty?: boolean,
+    words?: Array<Word | OldWord | WordWithExamples>,
     pageSpec: PageSpec,
+    emptyType: "create" | "commission" | "history" | "none",
+    showHeader?: boolean,
+    showSelectButton?: boolean,
+    onSelect?: (offer: Word) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -33,26 +37,26 @@ export const WordList = create(
     return (
       <List styleName="root" items={words} pageSpec={pageSpec} {...rest}>
         <ListBody styleName="body">
-          {(word) => <WordCard key={word.id} dictionary={dictionary} word={word}/>}
+          {(word) => <WordCard key={word.id} dictionary={dictionary} word={word} showHeader={showHeader} showSelectButton={showSelectButton} onSelect={onSelect}/>}
           <ListLoadingView/>
-          {(showEmpty) ? (
+          {(emptyType !== "none") ? (
             <ListEmptyView styleName="empty">
               <span>{trans("empty")}</span>
-              {(canEdit) ? (
+              {(emptyType === "create") ? (
                 <EditWordDialog dictionary={dictionary} initialData={null} trigger={(
                   <Button scheme="gray" variant="light">
                     <ButtonIconbag><GeneralIcon icon={faPlus}/></ButtonIconbag>
                     {trans("button.create")}
                   </Button>
                 )}/>
-              ) : (
+              ) : (emptyType === "commission") ? (
                 <AddCommissionDialog dictionary={dictionary} trigger={(
                   <Button scheme="gray" variant="light">
                     <ButtonIconbag><GeneralIcon icon={faCommentQuestion}/></ButtonIconbag>
                     {trans("button.commission")}
                   </Button>
                 )}/>
-              )}
+              ) : null}
             </ListEmptyView>
           ) : (
             <div/>

@@ -160,16 +160,15 @@ export class SlimeSerializer extends Serializer {
   }
 
   private createExternalString(): string {
-    let externalData = {} as any;
-    externalData["zpdicOnline"] = {};
-    externalData = Object.assign({}, externalData, this.dictionary.externalData);
-    externalData["zpdicOnline"]["explanation"] = this.dictionary.explanation;
-    externalData["zpdicOnline"]["punctuations"] = this.dictionary.settings.punctuations;
-    externalData["zpdicOnline"]["pronunciationTitle"] = this.dictionary.settings.pronunciationTitle;
-    externalData["zpdicOnline"]["enableMarkdown"] = this.dictionary.settings.enableMarkdown;
-    externalData["snoj"] = this.dictionary.settings.akrantiainSource;
-    externalData["zatlin"] = this.dictionary.settings.zatlinSource;
-    const string = JSON.stringify(externalData).slice(1, -1);
+    const raw = {} as any;
+    raw["zpdicOnline"] = {};
+    raw["zpdicOnline"]["explanation"] = this.dictionary.explanation;
+    raw["zpdicOnline"]["punctuations"] = this.dictionary.settings.punctuations;
+    raw["zpdicOnline"]["pronunciationTitle"] = this.dictionary.settings.pronunciationTitle;
+    raw["zpdicOnline"]["enableMarkdown"] = this.dictionary.settings.enableMarkdown;
+    raw["snoj"] = this.dictionary.settings.akrantiainSource;
+    raw["zatlin"] = this.dictionary.settings.zatlinSource;
+    const string = JSON.stringify(raw).slice(1, -1);
     return string;
   }
 

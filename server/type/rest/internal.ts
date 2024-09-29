@@ -291,6 +291,13 @@ type ServerSpecs = {
       error: CustomError<"noSuchDictionary">
     }
   },
+  fetchOldWords: {
+    request: {number: number, wordNumber: number, offset?: number, size?: number},
+    response: {
+      success: WithSize<Word>,
+      error: CustomError<"noSuchDictionary" | "noSuchWord">
+    }
+  },
   checkDuplicateWordName: {
     request: {number: number, name: string, excludedWordNumber?: number},
     response: {
@@ -467,7 +474,7 @@ type ServerSpecs = {
     }
   },
   fetchUser: {
-    request: {name: string},
+    request: {id?: ObjectId, name?: string},
     response: {
       success: User,
       error: CustomError<"noSuchUser">

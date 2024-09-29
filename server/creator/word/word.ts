@@ -27,9 +27,10 @@ export namespace WordCreator {
     const informations = raw.informations.map(InformationCreator.skeletonize);
     const variations = raw.variations.map(VariationCreator.skeletonize);
     const relations = raw.relations.map(RelationCreator.skeletonize);
+    const updatedUser = (raw.updatedUser !== undefined) ? {id: raw.updatedUser} : undefined;
     const createdDate = raw.createdDate?.toISOString() ?? undefined;
     const updatedDate = raw.updatedDate?.toISOString() ?? undefined;
-    const skeleton = {id, number, name, pronunciation, equivalents, tags, informations, variations, relations, createdDate, updatedDate};
+    const skeleton = {id, number, name, pronunciation, equivalents, tags, informations, variations, relations, updatedUser, createdDate, updatedDate};
     return skeleton;
   }
 

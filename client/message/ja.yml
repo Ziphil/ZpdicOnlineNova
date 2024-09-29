@@ -241,6 +241,9 @@ addCommissionDialog:
     comment: "コメント"
   button:
     confirm: "決定"
+  error:
+    nameRequired: >-
+      単語を入力してください。
 changeLocaleForm:
   label: "言語"
 changeAppearanceForm:
@@ -368,6 +371,9 @@ editWordDialog:
   button:
     external: "別タブで表示"
 editWordForm:
+  tab:
+    edit: "編集"
+    old: "履歴"
   heading:
     basic: "基本情報"
     equivalents: "訳語"
@@ -566,6 +572,7 @@ wordList:
     duplicate: "複製編集"
     discard: "削除"
     share: "共有"
+    select: "この版に戻す"
     create: "作成"
     commission: "造語依頼"
   dialog:

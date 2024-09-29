@@ -1,18 +1,14 @@
 //
 
-import {faCheck} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement, Ref, useCallback} from "react";
-import {AdditionalProps, Button, ButtonIconbag, GeneralIcon, useTrans} from "zographia";
-import {EditWordFormRelationSection} from "/client/component/compound/edit-word-form/edit-word-form-relation-section";
+import {faClockRotateLeft, faPen} from "@fortawesome/sharp-regular-svg-icons";
+import {ReactElement, Ref, useCallback, useState} from "react";
+import {AdditionalProps, GeneralIcon, Tab, TabIconbag, TabList, data, useTrans} from "zographia";
 import {create} from "/client/component/create";
 import {DictionaryWithExecutors, EditableWord} from "/client/skeleton";
-import {preventDefault} from "/client/util/form";
 import {assignRef} from "/client/util/ref";
-import {EditWordFormBasicSection} from "./edit-word-form-basic-section";
-import {EditWordFormEquivalentSection} from "./edit-word-form-equivalent-section";
+import {EditWordFormEditPart} from "./edit-word-form-edit-part";
+import {EditWordFormHistoryPart} from "./edit-word-form-history-part";
 import {EditWordFormValue, EditWordInitialData, useEditWord} from "./edit-word-form-hook";
-import {EditWordFormInformationSection} from "./edit-word-form-information-section";
-import {EditWordFormVariationSection} from "./edit-word-form-variation-section";
 
 
 export const EditWordForm = create(
@@ -33,7 +29,11 @@ export const EditWordForm = create(
 
     const {trans} = useTrans("editWordForm");
 
-    const {form, handleSubmit} = useEditWord(dictionary, initialData, onSubmit);
+    const formSpec = useEditWord(dictionary, initialData, onSubmit);
+    const {form} = formSpec;
+    const editing = form.watch("number") !== null;
+
+    const [tabValue, setTabValue] = useState<"edit" | "history">("edit");
 
     const getFormValue = useCallback(function (): EditWordFormValue {
       return form.getValues();
@@ -42,21 +42,28 @@ export const EditWordForm = create(
     assignRef(formRef, getFormValue);
 
     return (
-      <form styleName="root" onSubmit={preventDefault} {...rest}>
-        <div styleName="main">
-          <EditWordFormBasicSection dictionary={dictionary} form={form}/>
-          <EditWordFormEquivalentSection dictionary={dictionary} form={form}/>
-          <EditWordFormInformationSection dictionary={dictionary} form={form}/>
-          <EditWordFormVariationSection dictionary={dictionary} form={form}/>
-          <EditWordFormRelationSection dictionary={dictionary} form={form}/>
+      <div styleName="root" {...rest}>
+        {(editing) && (
+          <TabList styleName="tab-list" value={tabValue} scheme="primary">
+            <Tab value="edit" onClick={() => setTabValue("edit")}>
+              <TabIconbag><GeneralIcon icon={faPen}/></TabIconbag>
+              {trans("tab.edit")}
+            </Tab>
+            <Tab value="history" onClick={() => setTabValue("history")}>
+              <TabIconbag><GeneralIcon icon={faClockRotateLeft}/></TabIconbag>
+              {trans("tab.old")}
+            </Tab>
+          </TabList>
+        )}
+        <div styleName="part" {...data({shown: tabValue === "edit"})}>
+          <EditWordFormEditPart dictionary={dictionary} formSpec={formSpec}/>
         </div>
-        <div styleName="button">
-          <Button onClick={handleSubmit}>
-            <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
-            {trans("button.confirm")}
-          </Button>
-        </div>
-      </form>
+        {(editing) && (
+          <div styleName="part" {...data({shown: tabValue === "history"})}>
+            <EditWordFormHistoryPart dictionary={dictionary} formSpec={formSpec} setTabValue={setTabValue}/>
+          </div>
+        )}
+      </div>
     );
 
   }

@@ -5,6 +5,8 @@ import {FilledMiddlewareBody, InternalRestController, Request, Response} from "/
 import {checkDictionary, checkMe} from "/server/controller/rest/internal/middleware";
 import {WordCreator} from "/server/creator";
 import {SERVER_PATH_PREFIX} from "/server/type/rest/internal";
+import {QueryRange} from "/server/util/query";
+import {mapWithSize} from "/server/util/with-size";
 
 
 @restController(SERVER_PATH_PREFIX)
@@ -75,10 +77,21 @@ export class WordRestController extends InternalRestController {
   @post("/fetchWordNames")
   @before(checkDictionary())
   public async [Symbol()](request: Request<"fetchWordNames">, response: Response<"fetchWordNames">): Promise<void> {
-    const {dictionary} = request.middlewareBody as FilledMiddlewareBody< "dictionary">;
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
     const {wordNumbers} = request.body;
     const names = await dictionary.fetchWordNames(wordNumbers);
     const body = {names};
+    InternalRestController.respond(response, body);
+  }
+
+  @post("/fetchOldWords")
+  @before(checkMe(), checkDictionary("edit"))
+  public async [Symbol()](request: Request<"fetchOldWords">, response: Response<"fetchOldWords">): Promise<void> {
+    const {dictionary} = request.middlewareBody as FilledMiddlewareBody<"dictionary">;
+    const {wordNumber, offset, size} = request.body;
+    const range = new QueryRange(offset, size);
+    const words = await dictionary.fetchOldWords(wordNumber, range);
+    const body = mapWithSize(words, WordCreator.skeletonize);
     InternalRestController.respond(response, body);
   }
 

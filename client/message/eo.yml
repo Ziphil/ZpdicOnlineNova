@@ -241,6 +241,9 @@ addCommissionDialog:
     comment: "Komento"
   button:
     confirm: "Konfirmi"
+  error:
+    nameRequired: >-
+      Enigu la vorton por peti.
 changeLocaleForm:
   label: "Lingvo"
 changeAppearanceForm:
@@ -368,6 +371,9 @@ editWordDialog:
   button:
     external: "Malfermi en nova langeto"
 editWordForm:
+  tab:
+    edit: "Redakti"
+    old: "Historio"
   heading:
     basic: "Bazaj informoj"
     equivalents: "Tradukaĵoj"
@@ -566,6 +572,7 @@ wordList:
     duplicate: "Duobligi"
     discard: "Forigi"
     share: "Kunhavigi"
+    select: "Reveni al tiu versio"
     create: "Krei"
     commission: "Peti kreadon"
   dialog:

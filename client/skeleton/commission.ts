@@ -1,6 +1,6 @@
 //
 
-import {ObjectId} from "/client/skeleton/common";
+import {DateString, ObjectId} from "/client/skeleton/common";
 
 
 export interface Commission {
@@ -8,6 +8,6 @@ export interface Commission {
   id: ObjectId;
   name: string;
   comment?: string;
-  createdDate: string;
+  createdDate: DateString;
 
 }

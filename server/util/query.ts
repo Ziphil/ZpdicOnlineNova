@@ -1,7 +1,8 @@
 //
 
-import {Aggregate, Model, Query} from "mongoose";
+import {Aggregate, Query} from "mongoose";
 import {WithSize} from "/server/type/common";
+import {cloneQuery, getModelOfQuery} from "/server/util/mongo";
 
 
 export class QueryRange {
@@ -20,13 +21,14 @@ export class QueryRange {
   public restrict<T, D>(query: QueryLike<Array<T>, D>): QueryLike<Array<T>, D>;
   public restrict<T, D>(query: QueryLike<Array<T>, D>): QueryLike<Array<T>, D> {
     if ("skip" in query && "limit" in query) {
+      let clonedQuery = cloneQuery(query);
       if (this.offset !== undefined) {
-        query = query.skip(this.offset);
+        clonedQuery = clonedQuery.skip(this.offset);
       }
       if (this.size !== undefined) {
-        query = query.limit(this.size);
+        clonedQuery = clonedQuery.limit(this.size);
       }
-      return query;
+      return clonedQuery;
     } else {
       const promise = query.then((array) => {
         const start = this.offset ?? 0;
@@ -65,7 +67,7 @@ export class QueryRange {
     }
   }
 
-  public static restrictWithSize<T, D>(query: QueryLike<Array<T>, D>, range?: QueryRange): PromiseLike<WithSize<T>> {
+  public static restrictWithSize<T, D>(query: QueryLike<Array<T>, D>, range?: QueryRange): Promise<WithSize<T>> {
     const restrictedQuery = QueryRange.restrict(query, range);
     const sizeQuery = QueryRange.count(query);
     const promise = Promise.all([restrictedQuery, sizeQuery]);
@@ -81,13 +83,12 @@ export class QueryRange {
 
   private static count<T, D>(query: QueryLike<Array<T>, D>): PromiseLike<number> {
     if ("skip" in query && "limit" in query) {
-      const model = QueryRange.getModel(query);
+      const model = getModelOfQuery(query);
       if (query instanceof Query) {
-        const promise = model.countDocuments(query.getFilter());
+        const promise = model.countDocuments(query.getFilter()) ?? 0;
         return promise;
       } else if (query instanceof Aggregate) {
-        const rawPromise = model.aggregate(query.pipeline()).count("count").exec() as Promise<any>;
-        const promise = rawPromise.then((object) => object.count);
+        const promise = model.aggregate(query.pipeline()).count("count").then((object) => object[0]?.count ?? 0);
         return promise;
       } else {
         throw new Error("cannot happen");
@@ -101,17 +102,6 @@ export class QueryRange {
   private static countArray<T>(query: Array<T>): number {
     const size = query.length;
     return size;
-  }
-
-  private static getModel<T, D>(query: Query<Array<T>, D> | Aggregate<Array<T>>): Model<any> {
-    const anyQuery = query as any;
-    if (query instanceof Query) {
-      return anyQuery.model;
-    } else if (query instanceof Aggregate) {
-      return anyQuery.model();
-    } else {
-      throw new Error("cannot happen");
-    }
   }
 
 }

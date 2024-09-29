@@ -4,14 +4,18 @@
 
 
 .root {
-  padding-block: 0.5zu;
-  padding-inline-start: 0.5zu;
-  padding-inline-end: 1.5zu;
   line-height: 1;
-  border-radius: 1000px;
-  border: 1zx solid var(--glob-border-color);
   display: inline-flex;
   align-items: center;
+  &[data-subvariant="bordered"] {
+    padding-block: 0.5zu;
+    padding-inline-start: 0.5zu;
+    padding-inline-end: 1.5zu;
+    border-radius: 1000px;
+    border: 1zx solid var(--glob-border-color);  
+  }
+  &[data-subvariant="simple"] {
+  }
 }
 
 .avatar {

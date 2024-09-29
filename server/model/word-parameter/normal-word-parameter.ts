@@ -5,7 +5,6 @@ import {Dictionary} from "/server/model/dictionary/dictionary";
 import {Word, WordModel} from "/server/model/word/word";
 import {RawSuggestion, WordIgnoreOptions, WordMode, WordOrder, WordParameter, WordType} from "/server/model/word-parameter/word-parameter";
 import {QueryLike} from "/server/util/query";
-import {Random} from "/server/util/random";
 
 
 export class NormalWordParameter extends WordParameter {
@@ -32,14 +31,12 @@ export class NormalWordParameter extends WordParameter {
     const needle = WordParameter.createNeedle(this.text, this.type, this.options.ignore);
     const sortKey = WordParameter.createSortKey(this.order);
     const disjunctFilters = keys.map((key) => WordModel.find().where(key, needle).getFilter());
-    const query = WordModel.findExist().where("dictionary", dictionary).or(disjunctFilters).sort(sortKey);
+    const query = WordModel.findExist().where("dictionary", dictionary["_id"]).or(disjunctFilters).sort(sortKey);
     if (this.options.shuffleSeed !== null) {
-      const random = new Random(this.options.shuffleSeed);
-      const promise = query.then((words) => {
-        random.shuffle(words);
-        return words;
-      });
-      return promise;
+      let aggregate = WordModel.aggregate();
+      aggregate = aggregate.match(query.getFilter());
+      aggregate = aggregate.sample(50);
+      return aggregate;
     } else {
       return query;
     }
@@ -53,10 +50,10 @@ export class NormalWordParameter extends WordParameter {
         const needle = WordParameter.createNeedle(this.text, "exact", {case: false});
         let aggregate = WordModel.aggregate();
         aggregate = aggregate.match(WordModel.findExist().where("dictionary", dictionary["_id"]).where("variations.name", needle).getFilter());
-        aggregate = aggregate.addFields({oldVariations: "$variations"});
+        aggregate = aggregate.addFields({"oldVariations": "$variations"});
         aggregate = aggregate.unwind("$oldVariations");
         aggregate = aggregate.match(WordModel.where("oldVariations.name", needle).getFilter());
-        aggregate = aggregate.project({title: "$oldVariations.title", word: "$$CURRENT"});
+        aggregate = aggregate.project({"title": "$oldVariations.title", "word": "$$CURRENT"});
         return aggregate;
       } else {
         return null;

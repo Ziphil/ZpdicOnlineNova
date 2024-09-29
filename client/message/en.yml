@@ -241,6 +241,9 @@ addCommissionDialog:
     comment: "Comment"
   button:
     confirm: "Confirm"
+  error:
+    nameRequired: >-
+      Enter the word to request.
 changeLocaleForm:
   label: "Language"
 changeAppearanceForm:
@@ -368,6 +371,9 @@ editWordDialog:
   button:
     external: "Open in new tab"
 editWordForm:
+  tab:
+    edit: "Edit"
+    old: "History"
   heading:
     basic: "Basic information"
     equivalents: "Translations"
@@ -566,6 +572,7 @@ wordList:
     duplicate: "Duplicate"
     discard: "Delete"
     share: "Share"
+    select: "Revert to this version"
     create: "Create"
     commission: "Request creation"
   dialog:

@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-closing-bracket-location */
 
-import {faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
-import {ReactElement} from "react";
+import {faCheck, faClone, faEdit, faShare, faTrashAlt} from "@fortawesome/sharp-regular-svg-icons";
+import {ReactElement, useCallback} from "react";
 import {useHref} from "react-router";
 import {
   AdditionalProps,
@@ -19,9 +19,10 @@ import {
 } from "zographia";
 import {EditWordDialog} from "/client/component/compound/edit-word-dialog";
 import {ShareMenu} from "/client/component/compound/share-menu";
+import {WordCardHeader} from "/client/component/compound/word-list/word-card-header";
 import {create} from "/client/component/create";
 import {useResponse} from "/client/hook/request";
-import {DictionaryWithExecutors, Word, WordWithExamples} from "/client/skeleton";
+import {DictionaryWithExecutors, OldWord, Word, WordWithExamples} from "/client/skeleton";
 import {getDictionaryIdentifier} from "/client/util/dictionary";
 import {WordCardEquivalentList} from "./word-card-equivalent-list";
 import {WordCardExampleList} from "./word-card-example-list";
@@ -37,10 +38,16 @@ export const WordCard = create(
   function ({
     dictionary,
     word,
+    showHeader,
+    showSelectButton,
+    onSelect,
     ...rest
   }: {
     dictionary: DictionaryWithExecutors,
-    word: Word | WordWithExamples,
+    word: Word | OldWord | WordWithExamples,
+    showHeader: boolean,
+    showSelectButton: boolean,
+    onSelect?: (offer: Word) => void,
     className?: string
   } & AdditionalProps): ReactElement {
 
@@ -55,9 +62,16 @@ export const WordCard = create(
 
     const discardWord = useDiscardWord(dictionary, word);
 
+    const handleSelect = useCallback(function (): void {
+      onSelect?.(word);
+    }, [onSelect, word]);
+
     return (
       <Card styleName="root" {...rest}>
         <CardBody styleName="body">
+          {(showHeader) && (
+            <WordCardHeader dictionary={dictionary} word={word}/>
+          )}
           <WordCardHeading dictionary={dictionary} word={word}/>
           <Collapsible styleName="collapsible">
             <CollapsibleBody styleName="collapsible-body" height="20rem">
@@ -74,7 +88,16 @@ export const WordCard = create(
             <CollapsibleButton styleName="collapsible-button"/>
           </Collapsible>
         </CardBody>
-        {(canEdit) && (
+        {(showSelectButton) ? (
+          <CardFooter styleName="footer">
+            <div styleName="footer-left">
+              <Button scheme="secondary" variant="underline" onClick={handleSelect}>
+                <ButtonIconbag><GeneralIcon icon={faCheck}/></ButtonIconbag>
+                {trans("button.select")}
+              </Button>
+            </div>
+          </CardFooter>
+        ) : (canEdit) && (
           <CardFooter styleName="footer">
             <div styleName="footer-left">
               <EditWordDialog dictionary={dictionary} initialData={{type: "word", word}} trigger={(
