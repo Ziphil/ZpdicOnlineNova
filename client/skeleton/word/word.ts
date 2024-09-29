@@ -1,6 +1,6 @@
 //
 
-import {ObjectId} from "/client/skeleton/common";
+import {DateString, ObjectId} from "/client/skeleton/common";
 import {Example} from "/client/skeleton/example/example";
 import {Equivalent} from "/client/skeleton/word/equivalent";
 import {Information} from "/client/skeleton/word/information";
@@ -48,9 +48,9 @@ export interface Word {
   informations: Array<Information>;
   variations: Array<Variation>;
   relations: Array<Relation>;
-  updatedUser?: ObjectId;
-  createdDate?: string;
-  updatedDate?: string;
+  updatedUser?: {id: ObjectId};
+  createdDate?: DateString;
+  updatedDate?: DateString;
 
 }
 

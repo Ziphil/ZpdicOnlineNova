@@ -1,6 +1,7 @@
 //
 
 import {faClockRotateLeft} from "@fortawesome/sharp-regular-svg-icons";
+import dayjs from "dayjs";
 import {ReactElement} from "react";
 import {AdditionalProps, GeneralIcon, useTrans} from "zographia";
 import {UserView} from "/client/component/atom/user-view";
@@ -32,10 +33,10 @@ export const WordCardHeader = create(
         )}
         <div styleName="main">
           <div styleName="date">
-            {transDate(word.updatedDate)}
+            <time dateTime={dayjs(word.updatedDate).toISOString()}>{transDate(word.updatedDate)}</time>
           </div>
           {(word.updatedUser !== undefined) && (
-            <UserView user={{id: word.updatedUser}} variant="simple"/>
+            <UserView user={word.updatedUser} variant="simple"/>
           )}
         </div>
       </div>

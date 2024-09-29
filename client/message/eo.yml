@@ -241,6 +241,9 @@ addCommissionDialog:
     comment: "Komento"
   button:
     confirm: "Konfirmi"
+  error:
+    nameRequired: >-
+      Enigu la vorton por peti.
 changeLocaleForm:
   label: "Lingvo"
 changeAppearanceForm:

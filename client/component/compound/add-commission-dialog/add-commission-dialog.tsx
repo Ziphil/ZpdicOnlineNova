@@ -16,6 +16,7 @@ import {
   Textarea,
   useTrans
 } from "zographia";
+import {ControlErrorMessage} from "/client/component/atom/control-container";
 import {create} from "/client/component/create";
 import {useDialogOpen} from "/client/hook/dialog";
 import {DictionaryWithExecutors} from "/client/skeleton";
@@ -38,7 +39,7 @@ export const AddCommissionDialog = create(
 
     const {form, handleSubmit} = useAddCommission(dictionary);
     const {open, setOpen, openDialog, handleSubmitAndClose} = useDialogOpen({handleSubmit, onOpen: form.resetAll});
-    const {register, formState: {errors}} = form;
+    const {register, getFieldState, formState: {errors}} = form;
 
     return (
       <Fragment>
@@ -53,13 +54,23 @@ export const AddCommissionDialog = create(
                   <ControlLabel>
                     {trans("label.name")}
                   </ControlLabel>
-                  <Input {...register("name")}/>
+                  <Input
+                    error={getFieldState("name").error !== undefined}
+                    required={true}
+                    {...register("name")}
+                  />
+                  <ControlErrorMessage name="name" form={form} trans={trans}/>
                 </ControlContainer>
                 <ControlContainer>
                   <ControlLabel>
                     {trans("label.comment")}
                   </ControlLabel>
-                  <Textarea styleName="textarea" {...register("comment")}/>
+                  <Textarea
+                    styleName="textarea"
+                    error={getFieldState("comment").error !== undefined}
+                    {...register("comment")}
+                  />
+                  <ControlErrorMessage name="comment" form={form} trans={trans}/>
                 </ControlContainer>
               </div>
               <div styleName="button">

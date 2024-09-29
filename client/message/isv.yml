@@ -241,6 +241,9 @@ addCommissionDialog:
     comment: "Comment"
   button:
     confirm: "Confirm"
+  error:
+    nameRequired: >-
+      Enter the word to request.
 changeLocaleForm:
   label: "Language"
 changeAppearanceForm:

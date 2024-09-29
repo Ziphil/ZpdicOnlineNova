@@ -241,6 +241,9 @@ addCommissionDialog:
     comment: "コメント"
   button:
     confirm: "決定"
+  error:
+    nameRequired: >-
+      単語を入力してください。
 changeLocaleForm:
   label: "言語"
 changeAppearanceForm:
