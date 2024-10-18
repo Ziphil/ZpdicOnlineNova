@@ -17,8 +17,8 @@ export class SlimeDeserializer extends Deserializer {
   private pronunciationTitle?: string;
 
   public start(): void {
-    this.readSettings().then(() => {
-      this.readMain();
+    this.readSettings().then(() => this.readMain()).catch((error) => {
+      this.emit("error", error);
     });
   }
 
@@ -33,7 +33,6 @@ export class SlimeDeserializer extends Deserializer {
         resolve();
       });
       stream.on("fail", (reason) => {
-        this.emit("error", reason.thrown);
         reject(reason.thrown);
       });
     });
@@ -72,7 +71,6 @@ export class SlimeDeserializer extends Deserializer {
         resolve();
       });
       stream.on("fail", (reason) => {
-        this.emit("error", reason.thrown);
         reject(reason.thrown);
       });
     });

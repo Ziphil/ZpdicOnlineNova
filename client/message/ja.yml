@@ -215,6 +215,7 @@ exampleOfferTag:
     appleBeta: "リンゴを食べ足りない 57 文"
     appleGamma: "リンゴをもっと食べたい 55 文"
     survival: "今日を生き抜く実用例文"
+    weaving: "手袋と辞書を編む 50 文"
   number: "#{number, number}"
 wordModeSelect:
   label:

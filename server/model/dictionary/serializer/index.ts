@@ -8,16 +8,16 @@ export * from "/server/model/dictionary/serializer/slime-serializer";
 
 
 /** 与えられたパスの拡張子を調べ、対応するシリアライザを返します。
-  * 拡張子が対応していないものだった場合は `null` を返します。*/
-export function createSerializer(path: string, dictionary: Dictionary): Serializer | null {
+  * 拡張子が対応していないものだった場合は、エラーを発生させます。*/
+export function createSerializer(path: string, dictionary: Dictionary): Serializer {
   try {
     const extension = path.split(/\.(?=[^.]+$)/)[1];
     if (extension === "json") {
       return new SlimeSerializer(path, dictionary);
     } else {
-      return null;
+      throw new Error("unsupported file type");
     }
   } catch (error) {
-    return null;
+    throw new Error("failed to create serializer");
   }
 }

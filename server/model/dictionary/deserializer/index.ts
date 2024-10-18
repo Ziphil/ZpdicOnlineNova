@@ -11,8 +11,8 @@ export * from "/server/model/dictionary/deserializer/slime-deserializer";
 
 
 /** 与えられたパスの拡張子を調べ、対応するデシリアライザを返します。
-  * 拡張子が対応していないものだったり、デシリアライザの生成に失敗した場合は、`null` を返します。*/
-export function createDeserializer(path: string, originalPath: string, dictionary: Dictionary, cacheSize?: {word: number, example: number}): Deserializer | null {
+  * 拡張子が対応していないものだったり、デシリアライザの生成に失敗した場合は、エラーを発生させます。*/
+export function createDeserializer(path: string, originalPath: string, dictionary: Dictionary, cacheSize?: {word: number, example: number}): Deserializer {
   try {
     const extension = originalPath.split(/\.(?=[^.]+$)/)[1];
     if (fs.existsSync(path)) {
@@ -21,12 +21,12 @@ export function createDeserializer(path: string, originalPath: string, dictionar
       } else if (extension === "dic") {
         return new BinaryDeserializer(path, dictionary, cacheSize);
       } else {
-        return null;
+        throw new Error("unsupported file type");
       }
     } else {
-      return null;
+      throw new Error("failed to create deserializer");
     }
   } catch (error) {
-    return null;
+    throw new Error("failed to create deserializer");
   }
 }

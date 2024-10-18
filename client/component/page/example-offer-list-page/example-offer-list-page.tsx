@@ -24,7 +24,7 @@ export const ExampleOfferListPage = create(
     const {trans} = useTrans("exampleOfferListPage");
 
     const [query, , setQuery] = useSearchState({serialize: serializeQuery, deserialize: deserializeQuery}, 500);
-    const [[hitOffers, hitSize]] = useSuspenseResponse("searchExampleOffers", {parameter: query.parameter, ...calcOffsetSpec(query.page, 25)}, {keepPreviousData: true});
+    const [[hitOffers, hitSize]] = useSuspenseResponse("searchExampleOffers", {parameter: query.parameter, ...calcOffsetSpec(query.page, 10)}, {keepPreviousData: true});
 
     const handleParameterSet = useCallback(function (parameter: SetStateAction<ExampleOfferParameter>): void {
       setQuery((prevQuery) => {
@@ -47,7 +47,7 @@ export const ExampleOfferListPage = create(
             </div>
           </div>
           <div styleName="right">
-            <ExampleOfferList offers={hitOffers} pageSpec={{size: 25, hitSize, page: query.page, onPageSet: handlePageSet}} showExamples={true}/>
+            <ExampleOfferList offers={hitOffers} pageSpec={{size: 10, hitSize, page: query.page, onPageSet: handlePageSet}} showExamples={true}/>
           </div>
         </MainContainer>
       </Page>

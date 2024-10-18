@@ -20,10 +20,10 @@ import type {
   WordNameFrequency
 } from "/client/skeleton";
 import {DiscardableSchema} from "/server/model/base";
-import {createDeserializer} from "/server/model/dictionary/deserializer";
+import {Deserializer} from "/server/model/dictionary/deserializer";
 import {DICTIONARY_AUTHORITIES, DictionaryAuthority, DictionaryAuthorityUtil, DictionaryFullAuthority} from "/server/model/dictionary/dictionary-authority";
 import {DictionarySettings, DictionarySettingsModel, DictionarySettingsSchema} from "/server/model/dictionary/dictionary-settings";
-import {createSerializer} from "/server/model/dictionary/serializer";
+import {Serializer} from "/server/model/dictionary/serializer";
 import {DictionaryParameter} from "/server/model/dictionary-parameter/dictionary-parameter";
 import {CustomError} from "/server/model/error";
 import {Example, ExampleModel} from "/server/model/example/example";
@@ -161,50 +161,48 @@ export class DictionarySchema extends DiscardableSchema {
     return dictionaries;
   }
 
-  /** この辞書に登録されている単語データを全て削除し、ファイルから読み込んだデータを代わりに保存します。
-   * 辞書の内部データも、ファイルから読み込んだものに更新されます。*/
-  public async upload(this: Dictionary, path: string, originalPath: string): Promise<Dictionary> {
+  /** この辞書に登録されているデータを全て削除し、ファイルから読み込んだデータを代わりに保存します。
+   * 辞書の内部データも、ファイルから読み込んだものに更新されます。
+   * `deserializer` にはデシリアライズ開始前 (`start` メソッドを呼ぶ前) のデシリアライザを渡してください。 */
+  public async upload(this: Dictionary, deserializer: Deserializer): Promise<Dictionary> {
     await this.startUpload();
-    const stream = createDeserializer(path, originalPath, this);
-    if (stream !== null) {
-      const settings = this.settings as any;
-      await new Promise<Dictionary>((resolve, reject) => {
-        const counts = {word: 0, example: 0};
-        stream.on("words", (words) => {
-          WordModel.insertMany(words).catch(reject);
-          counts.word += words.length;
-          LogUtil.log("model/dictionary/upload", {number: this.number, counts});
-          LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
-        });
-        stream.on("examples", (examples) => {
-          ExampleModel.insertMany(examples).catch(reject);;
-          counts.example += examples.length;
-          LogUtil.log("model/dictionary/upload", {number: this.number, counts});
-          LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
-        });
-        stream.on("property", (key, value) => {
-          if (value !== undefined) {
-            this[key] = value;
-          }
-        });
-        stream.on("settings", (key, value) => {
-          if (value !== undefined) {
-            settings[key] = value;
-          }
-        });
-        stream.on("end", () => {
-          this.status = "ready";
-          this.settings = settings;
-          resolve(this);
-        });
-        stream.on("error", (error) => {
-          this.status = "error";
-          LogUtil.error("model/dictionary/upload", null, error);
-          resolve(this);
-        });
-        stream.start();
+    const settings = this.settings as any;
+    await new Promise<Dictionary>((resolve, reject) => {
+      const counts = {word: 0, example: 0};
+      deserializer.on("words", (words) => {
+        WordModel.insertMany(words).catch(reject);
+        counts.word += words.length;
+        LogUtil.log("model/dictionary/upload", {number: this.number, counts});
+        LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
       });
-    }
+      deserializer.on("examples", (examples) => {
+        ExampleModel.insertMany(examples).catch(reject);;
+        counts.example += examples.length;
+        LogUtil.log("model/dictionary/upload", {number: this.number, counts});
+        LogUtil.log("model/dictionary/upload", Object.fromEntries(Object.entries(process.memoryUsage()).map(([key, value]) => [key.toLowerCase(), Math.round(value / 1048576 * 100) / 100])));
+      });
+      deserializer.on("property", (key, value) => {
+        if (value !== undefined) {
+          this[key] = value;
+        }
+      });
+      deserializer.on("settings", (key, value) => {
+        if (value !== undefined) {
+          settings[key] = value;
+        }
+      });
+      deserializer.on("end", () => {
+        this.status = "ready";
+        this.settings = settings;
+        resolve(this);
+      });
+      deserializer.on("error", (error) => {
+        this.status = "error";
+        LogUtil.error("model/dictionary/upload", null, error);
+        reject(error);
+      });
+      deserializer.start();
+    });
     await this.save();
     return this;
   }
@@ -220,22 +218,18 @@ export class DictionarySchema extends DiscardableSchema {
     LogUtil.log("model/dictionary/startUpload", {number: this.number});
   }
 
-  public async download(this: Dictionary, path: string): Promise<void> {
-    const promise = new Promise<void>((resolve, reject) => {
-      const stream = createSerializer(path, this);
-      if (stream !== null) {
-        stream.on("end", () => {
-          resolve();
-        });
-        stream.on("error", (error) => {
-          reject(error);
-        });
-        stream.start();
-      } else {
-        reject();
-      }
+  /** この辞書に登録されているデータを JSON ファイルに出力します。
+   * `serializer` にはシリアライズ開始前 (`start` メソッドを呼ぶ前) のシリアライザを渡してください。 */
+  public async download(this: Dictionary, serializer: Serializer): Promise<void> {
+    await new Promise<void>((resolve, reject) => {
+      serializer.on("end", () => {
+        resolve();
+      });
+      serializer.on("error", (error) => {
+        reject(error);
+      });
+      serializer.start();
     });
-    await promise;
   }
 
   /** この辞書を削除 (削除フラグを付加) します。
