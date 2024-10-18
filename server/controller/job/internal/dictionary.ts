@@ -4,7 +4,7 @@ import {Job} from "agenda";
 import fs from "fs/promises";
 import {JobController} from "/server/controller/job/controller";
 import {job, jobController} from "/server/controller/job/decorator";
-import {DictionaryModel} from "/server/model";
+import {DictionaryModel, createDeserializer, createSerializer} from "/server/model";
 import {LogUtil} from "/server/util/log";
 
 
@@ -17,8 +17,11 @@ export class DictionaryJobController extends JobController {
     LogUtil.log("worker/uploadDictionary", {number});
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary !== null) {
-      await dictionary.upload(path, originalPath);
-      await fs.unlink(path);
+      const deserializer = createDeserializer(path, originalPath, dictionary);
+      if (deserializer !== null) {
+        await dictionary.upload(deserializer);
+        await fs.unlink(path).catch(() => null);
+      }
     }
   }
 
@@ -28,7 +31,10 @@ export class DictionaryJobController extends JobController {
     LogUtil.log("worker/downloadDictionary", {number});
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary !== null) {
-      await dictionary.download(path);
+      const serializer = createSerializer(path, dictionary);
+      if (serializer !== null) {
+        await dictionary.download(serializer);
+      }
     }
   }
 

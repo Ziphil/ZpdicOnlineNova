@@ -23,7 +23,7 @@ export function jobController(): ClassDecorator {
       originalSetup.call(this);
       const constructor = this.constructor as typeof JobController;
       for (const spec of metadata) {
-        constructor.agenda.define(spec.name, (job, done) => (this as any)[spec.key](job).then(done));
+        constructor.agenda.define(spec.name, (this as any)[spec.key]);
       }
     };
     clazz.prototype.setupAfter = function (this: JobController): void {
