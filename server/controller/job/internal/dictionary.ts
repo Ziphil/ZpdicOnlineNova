@@ -18,10 +18,8 @@ export class DictionaryJobController extends JobController {
     const dictionary = await DictionaryModel.fetchOneByNumber(number);
     if (dictionary !== null) {
       const deserializer = createDeserializer(path, originalPath, dictionary);
-      if (deserializer !== null) {
-        await dictionary.upload(deserializer);
-        await fs.unlink(path).catch(() => null);
-      }
+      await dictionary.upload(deserializer);
+      await fs.unlink(path).catch(() => null);
     }
   }
 

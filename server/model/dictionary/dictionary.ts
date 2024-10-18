@@ -199,7 +199,7 @@ export class DictionarySchema extends DiscardableSchema {
       deserializer.on("error", (error) => {
         this.status = "error";
         LogUtil.error("model/dictionary/upload", null, error);
-        resolve(this);
+        reject(error);
       });
       deserializer.start();
     });
