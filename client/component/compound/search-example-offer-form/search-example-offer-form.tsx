@@ -43,4 +43,4 @@ export const SearchExampleOfferForm = create(
 );
 
 
-const CATALOGS = ["zpdicDaily", "appleAlpha", "appleBeta", "appleGamma", "survival"];
+const CATALOGS = ["zpdicDaily", "appleAlpha", "appleBeta", "appleGamma", "survival", "weaving"];

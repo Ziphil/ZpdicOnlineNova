@@ -215,6 +215,7 @@ exampleOfferTag:
     appleBeta: "Sentences to eat enough apples"
     appleGamma: "Sentences to eat more apples"
     survival: "Practical sentences to survive today"
+    weaving: "Sentences to weave gloves and dictionaries"
   number: "#{number, number}"
 wordModeSelect:
   label:

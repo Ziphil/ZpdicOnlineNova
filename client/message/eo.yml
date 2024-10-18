@@ -215,6 +215,7 @@ exampleOfferTag:
     appleBeta: "Frazoj por manĝi sufiĉaj pomoj"
     appleGamma: "Frazoj por manĝi pli da pomoj"
     survival: "Praktikaj frazoj por pluvivi hodiaŭ"
+    weaving: "Frazoj por teksi gantojn kaj vortarojn"
   number: "#{number, number}"
 wordModeSelect:
   label:
