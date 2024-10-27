@@ -11,7 +11,6 @@ import Fuse from "fuse.js";
 import {DictionaryModel} from "/server/model/dictionary/dictionary";
 import {CustomError} from "/server/model/error";
 import {ResetTokenModel, ResetTokenSchema} from "/server/model/user/reset-token";
-import {LogUtil} from "/server/util/log";
 import {EMAIL_REGEXP, IDENTIFIER_REGEXP, validatePassword} from "/server/util/validation";
 
 
@@ -125,23 +124,18 @@ export class UserSchema {
   public static async resetPassword(key: string, password: string, timeout: number): Promise<User> {
     const name = ResetTokenModel.getName(key);
     const user = await UserModel.findOne().where("resetToken.name", name);
-    LogUtil.log("user/resetPassword", {key, password, timeout, pos: "start"});
     if (user && user.resetToken && user.resetToken.checkKey(key)) {
-      LogUtil.log("user/resetPassword", {key, password, timeout, user, pos: "key"});
       if (user.resetToken.checkTime(timeout)) {
-        LogUtil.log("user/resetPassword", {key, password, timeout, user, pos: "time"});
         user.resetToken = undefined;
         await user.changePassword(password);
         await user.save();
         return user;
       } else {
-        LogUtil.log("user/resetPassword", {key, password, timeout, user, pos: "timeExceeded"});
         user.resetToken = undefined;
         await user.save();
         throw new CustomError("invalidResetToken");
       }
     } else {
-      LogUtil.log("user/resetPassword", {key, password, timeout, user, pos: "invalid"});
       throw new CustomError("invalidResetToken");
     }
   }
