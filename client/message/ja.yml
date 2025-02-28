@@ -245,6 +245,18 @@ addCommissionDialog:
   error:
     nameRequired: >-
       単語を入力してください。
+articleList:
+  empty: "記事は作成されていません"
+  button:
+    edit: "編集"
+    discard: "削除"
+  dialog:
+    discard:
+      message: >-
+        この記事を削除します。
+        削除した後にデータを戻すことはできません。
+        本当によろしいですか?
+      confirm: "削除"
 changeLocaleForm:
   label: "言語"
 changeAppearanceForm:

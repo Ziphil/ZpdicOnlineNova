@@ -245,6 +245,18 @@ addCommissionDialog:
   error:
     nameRequired: >-
       Enter the word to request.
+articleList:
+  empty: "No articles are created"
+  button:
+    edit: "Edit"
+    discard: "Delete"
+  dialog:
+    discard:
+      message: >-
+        This article will be deleted permanently.
+        You cannot restore it afterwards.
+        Are you really sure?
+      confirm: "Delete"
 changeLocaleForm:
   label: "Language"
 changeAppearanceForm:

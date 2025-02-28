@@ -245,6 +245,18 @@ addCommissionDialog:
   error:
     nameRequired: >-
       Enigu la vorton por peti.
+articleList:
+  empty: "Neniuj artikoloj estas kreitaj"
+  button:
+    edit: "Redakti"
+    discard: "Forigi"
+  dialog:
+    discard:
+      message: >-
+        Tiu artikolo estos forigita konstante.
+        Vi ne povas restaŭri ĝin poste.
+        Ĉu vi vere certas?
+      confirm: "Forigi"
 changeLocaleForm:
   label: "Lingvo"
 changeAppearanceForm:
