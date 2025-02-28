@@ -7,6 +7,7 @@
   row-gap: 3zu;
   column-gap: 3zu;
   display: grid;
+  align-items: flex-start;
   @include device("desktop") {
     grid-template-columns: repeat(2, 1fr);
   }
