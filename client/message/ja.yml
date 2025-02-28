@@ -296,6 +296,7 @@ dictionaryHeader:
   tab:
     dictionary: "辞書"
     example: "例文"
+    article: "記事"
     resource: "画像"
     information: "詳細情報"
     commission: "造語依頼"

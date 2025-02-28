@@ -21,6 +21,7 @@ import {
   RegularJobController
 } from "/server/controller/job/internal";
 import {
+  ArticleRestController,
   CommissionRestController,
   DebugRestController,
   DictionaryRestController,
@@ -173,6 +174,7 @@ export class Main {
     CommissionRestController.use(this.application, this.server, this.agenda);
     DictionaryRestController.use(this.application, this.server, this.agenda);
     ExampleRestController.use(this.application, this.server, this.agenda);
+    ArticleRestController.use(this.application, this.server, this.agenda);
     HistoryRestController.use(this.application, this.server, this.agenda);
     InvitationRestController.use(this.application, this.server, this.agenda);
     NotificationRestController.use(this.application, this.server, this.agenda);

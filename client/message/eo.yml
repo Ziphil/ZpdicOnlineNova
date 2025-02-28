@@ -296,6 +296,7 @@ dictionaryHeader:
   tab:
     dictionary: "Vortaro"
     example: "Frazoj"
+    article: "Artikoloj"
     resource: "Bildoj"
     information: "Detaloj"
     commission: "Petoj"

@@ -1,5 +1,6 @@
 //
 
+export * from "./article";
 export * from "./commission";
 export * from "./dictionary";
 export * from "./debug";

@@ -1,6 +1,6 @@
 //
 
-import {faBook, faCircleInfo, faCog, faImage, faListCheck, faQuotes} from "@fortawesome/sharp-regular-svg-icons";
+import {faBook, faCircleInfo, faCog, faImage, faListCheck, faQuotes, faScroll} from "@fortawesome/sharp-regular-svg-icons";
 import {ReactElement} from "react";
 import {useMatch} from "react-router-dom";
 import {AdditionalProps, GeneralIcon, Indicator, TabIconbag, TabList, useTrans} from "zographia";
@@ -54,6 +54,10 @@ export const DictionaryHeader = create(
                 {trans("tab.example")}
               </LinkTab>
             </Indicator>
+            <LinkTab value="article" href={`/dictionary/${match?.params.identifier}/articles`}>
+              <TabIconbag><GeneralIcon icon={faScroll}/></TabIconbag>
+              {trans("tab.article")}
+            </LinkTab>
             {(canEdit) && (
               <Indicator styleName="indicator" scheme="secondary" disabled={(commissionSize === undefined || commissionSize <= 0) || tabValue === "commission"} animate={true}>
                 <LinkTab value="commission" href={`/dictionary/${match?.params.identifier}/requests`}>
@@ -87,4 +91,4 @@ export const DictionaryHeader = create(
 );
 
 
-export type DictionaryHeaderTabValue = "dictionary" | "example" | "resource" | "information" | "commission" | "setting" | null;
+export type DictionaryHeaderTabValue = "dictionary" | "example" | "article" | "resource" | "information" | "commission" | "setting" | null;

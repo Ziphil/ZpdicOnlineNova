@@ -296,6 +296,7 @@ dictionaryHeader:
   tab:
     dictionary: "Dictionary"
     example: "Sentences"
+    article: "Articles"
     resource: "Images"
     information: "Details"
     commission: "Requests"
