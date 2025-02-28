@@ -2,6 +2,7 @@
 
 import type {
   Aggregation,
+  Article,
   Commission,
   CustomError,
   Dictionary,
@@ -11,6 +12,7 @@ import type {
   DictionaryVisibility,
   DictionaryWithAuthorities,
   DictionaryWithUser,
+  EditableArticle,
   EditableExample,
   EditableWord,
   Example,
@@ -149,6 +151,20 @@ type ServerSpecs = {
     response: {
       success: Example,
       error: CustomError<"noSuchDictionary" | "noSuchExample" | "dictionarySaving">
+    }
+  },
+  editArticle: {
+    request: {number: number, article: EditableArticle},
+    response: {
+      success: Article,
+      error: CustomError<"noSuchDictionary" | "dictionarySaving">
+    }
+  },
+  discardArticle: {
+    request: {number: number, articleNumber: number},
+    response: {
+      success: Article,
+      error: CustomError<"noSuchDictionary" | "noSuchArticle" | "dictionarySaving">
     }
   },
   addCommission: {
@@ -352,6 +368,13 @@ type ServerSpecs = {
     response: {
       success: Array<string>,
       error: never
+    }
+  },
+  searchArticles: {
+    request: {number: number, offset?: number, size?: number},
+    response: {
+      success: WithSize<Article>,
+      error: CustomError<"noSuchDictionary">
     }
   },
   fetchInvitations: {

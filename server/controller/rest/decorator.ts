@@ -1,9 +1,9 @@
 //
 
+import "reflect-metadata";
 import {Router} from "express";
 import {NextFunction, Request, RequestHandlerParams, Response} from "express-serve-static-core";
-import "reflect-metadata";
-import {RestController} from "./controller";
+import {RestController} from "/server/controller/rest/controller";
 
 
 const REST_METADATA_KEY = Symbol("rest");

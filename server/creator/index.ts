@@ -16,6 +16,7 @@ export * from "./word/suggestion";
 export * from "./word/variation";
 export * from "./word/word";
 export * from "./word-parameter/word-parameter";
+export * from "./article";
 export * from "./commission";
 export * from "./history";
 export * from "./invitation";
