@@ -77,6 +77,8 @@ export const ShareMenu = create(
 function getWindowUrl(platform: SharePlatform, text: string, url?: string): string {
   if (platform === "twitter") {
     return `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}` + ((url !== undefined) ? `&url=${encodeURIComponent(url)}` : "");
+  } else if (platform === "bluesky") {
+    return `https://bsky.app/intent/compose?text=${encodeURIComponent(text + ((url !== undefined) ? "\n" + url : ""))}`;
   } else if (platform === "misskey") {
     return `https://misskey.io/share?text=${encodeURIComponent(text)}` + ((url !== undefined) ? `&url=${encodeURIComponent(url)}` : "");
   } else {
@@ -84,5 +86,5 @@ function getWindowUrl(platform: SharePlatform, text: string, url?: string): stri
   }
 }
 
-const SHARE_PLATFORMS = ["twitter", "misskey"] as const;
+const SHARE_PLATFORMS = ["twitter", "bluesky", "misskey"] as const;
 type SharePlatform = (typeof SHARE_PLATFORMS)[number];

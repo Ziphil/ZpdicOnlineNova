@@ -557,6 +557,7 @@ searchWordForm:
 shareMenu:
   label:
     twitter: "X (Twitter)"
+    bluesky: "Bluesky"
     misskey: "Misskey.io"
     copy: "Kopii ligilon"
     other: "Aliaj"
