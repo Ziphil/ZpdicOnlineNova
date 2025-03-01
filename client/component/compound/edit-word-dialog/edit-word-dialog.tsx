@@ -39,7 +39,7 @@ export const EditWordDialog = create(
     const {trans} = useTrans("editWordDialog");
 
     const [open, setOpen] = useState(false);
-    const addWordPageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/word`);
+    const addWordPageUrlBase = useHref(`/dictionary/${getDictionaryIdentifier(dictionary)}/edit/word`);
 
     const formRef = useRef<() => EditWordFormValue>(null);
 
